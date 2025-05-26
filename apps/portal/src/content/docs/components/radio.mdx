@@ -15,6 +15,7 @@ import { DocsPage } from "@/components/docs-page";
     const [group1Value, setGroup1Value] = React.useState('option1');
     const [group2Value, setGroup2Value] = React.useState('');
     const [group3Value, setGroup3Value] = React.useState('option2');
+    const [group4Value, setGroup4Value] = React.useState('option1');
 
     return (
       <div className="flex flex-col space-y-8">
@@ -52,6 +53,14 @@ import { DocsPage } from "@/components/docs-page";
             label="Disabled radio"
           >
             <Radio.Item value="option1" label="Option 1" caption="This option is disabled" disabled />
+            <Radio.Item value="option2" label="Option 2" />
+          </Radio.Root>
+        </div>
+
+        {/* Error */}
+        <div className="space-y-2">
+          <Radio.Root label="Error radio" error>
+            <Radio.Item value="option1" label="Option 1" caption="This is an error state" />
             <Radio.Item value="option2" label="Option 2" />
           </Radio.Root>
         </div>

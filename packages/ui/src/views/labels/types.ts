@@ -31,6 +31,7 @@ export const createLabelFormSchema = z.object({
   color: z.nativeEnum(ColorsEnum),
   description: z.string().optional(),
   type: z.nativeEnum(LabelType),
+  isDynamic: z.boolean().optional(),
   values: z.array(
     z.object({
       id: z.number().optional(),

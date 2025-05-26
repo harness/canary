@@ -1,3 +1,4 @@
+import { FormCheckbox, type FormCheckboxPropsType } from './components/form-checkbox'
 import { FormMultiSelect, type FormMultiSelectPropsType } from './components/form-multi-select-v2'
 import { FormNumberInput, type FormNumberInputPropsType } from './components/form-number-input'
 import { FormRadio, type FormRadioPropsType } from './components/form-radio'
@@ -9,7 +10,8 @@ const FormInput = {
   MultiSelect: FormMultiSelect,
   Textarea: FormTextarea,
   Number: FormNumberInput,
-  Radio: FormRadio
+  Radio: FormRadio,
+  Checkbox: FormCheckbox
 }
 
 export {
@@ -17,5 +19,6 @@ export {
   type FormTextInputPropsType,
   type FormMultiSelectPropsType,
   type FormNumberInputPropsType,
-  type FormRadioPropsType
+  type FormRadioPropsType,
+  type FormCheckboxPropsType
 }

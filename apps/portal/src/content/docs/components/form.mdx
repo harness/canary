@@ -37,7 +37,8 @@ name: z.string().trim().min(3, "Input must be at least 3 characters"),
     comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
     permission: z.enum(['public', 'private'], {
       required_error: 'Please select an option.'
-    }).optional()
+    }).optional(),
+    checkboxField: z.boolean().refine(val => val === true, { message: 'You must check this box' })
 
 });
 
@@ -51,7 +52,8 @@ defaultValues: {
 name: "John doe",
 age: 1,
 comment: "Lorem ipsum",
-permission: "public"
+permission: "public",
+checkboxField: false
 },
 });
 
@@ -95,6 +97,8 @@ placeholder="Enter at least 3 characters"
           <Radio.Item value="public" label="Public" caption="Anyone with the link can access" />
           <Radio.Item value="private" label="Private" caption="Only you and your team members can access" />
         </FormInput.Radio>
+
+        <FormInput.Checkbox {...register('checkboxField')} label="Accept terms and conditions" />
 
         <Button type="submit" disabled={formMethods.formState.isSubmitting}>
           {formMethods.formState.isSubmitting ? "Submitting..." : "Submit"}

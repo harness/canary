@@ -26,7 +26,7 @@
     },
     "fade-height": {
       "$type": "sizing",
-      "$value": "{size.18}"
+      "$value": "{size.20}"
     }
   }
 }

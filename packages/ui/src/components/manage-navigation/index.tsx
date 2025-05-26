@@ -133,7 +133,7 @@ export const ManageNavigation = ({
               Pinned
             </Text>
             {!currentPinnedItems.length ? (
-              <Text className="mt-3 block" variant="body-normal" color="foreground-3">
+              <Text className="mt-3" color="foreground-3">
                 No pinned items
               </Text>
             ) : (
@@ -163,9 +163,7 @@ export const ManageNavigation = ({
                                 {...listeners}
                               >
                                 <Icon className="w-3.5" name="grid-dots" size={14} />
-                                <Text variant="body-normal" className="w-full" align="left" color="inherit">
-                                  {item.title}
-                                </Text>
+                                <Text color="inherit">{item.title}</Text>
                               </Button>
                               <Button
                                 className="absolute right-1 top-0.5 z-20"
@@ -199,9 +197,7 @@ export const ManageNavigation = ({
                     <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
                       <div className="flex w-full grow items-center gap-x-2.5">
                         <Icon className="text-icons-4" name="clock-icon" size={14} />
-                        <Text variant="body-normal" className="w-full" align="left" color="foreground-1">
-                          {item.title}
-                        </Text>
+                        <Text color="foreground-1">{item.title}</Text>
                       </div>
                       <Button
                         className="absolute -right-2 top-0.5 text-icons-4"

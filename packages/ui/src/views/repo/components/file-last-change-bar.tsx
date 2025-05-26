@@ -7,10 +7,10 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
       <Avatar name={user?.name} src={user?.avatarUrl} rounded />
-      <Text variant="body-normal" color="foreground-3" wrap="nowrap">
+      <Text color="foreground-3" wrap="nowrap">
         {user?.name || ''}
       </Text>
-      <Text variant="body-normal" color="foreground-1" className="line-clamp-1" truncate wrap="wrap">
+      <Text color="foreground-1" className="line-clamp-1" truncate wrap="wrap">
         {lastCommitMessage}
       </Text>
       <Icon className="text-icons-success shrink-0" name="tick" size={12} />

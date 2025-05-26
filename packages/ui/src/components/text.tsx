@@ -62,7 +62,7 @@ const textVariants = cva('', {
       'foreground-1': 'text-cn-foreground-1',
       'foreground-2': 'text-cn-foreground-2',
       'foreground-3': 'text-cn-foreground-3',
-      'state-disabled': 'text-cn-foreground-disabled',
+      disabled: 'text-cn-foreground-disabled',
       success: 'text-cn-foreground-success',
       warning: 'text-cn-foreground-warning',
       danger: 'text-cn-foreground-danger'
@@ -101,13 +101,15 @@ const textVariantToElement: Record<TextVariant, TextElement> = {
   'caption-single-line-soft': 'span'
 }
 
-const getTextNode = ({ as, variant, asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {
+const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {
   if (asChild) return Slot
 
   if (as) return as
 
-  if (textVariantToElement[variant ?? 'body-normal']) {
-    return textVariantToElement[variant ?? 'body-normal']
+  const safeVariant = (variant ?? 'body-normal') as TextVariant
+
+  if (textVariantToElement[safeVariant]) {
+    return textVariantToElement[safeVariant]
   }
 
   return 'span' as ElementType
@@ -132,7 +134,21 @@ type TextComponent = <E extends TextElement = 'span'>(
 ) => ReactElement | null
 
 const TextWithRef = forwardRef<HTMLElement, TextProps>(
-  ({ className, children, truncate, variant, asChild, align, color, wrap, as, ...props }, ref) => {
+  (
+    {
+      className,
+      children,
+      truncate = false,
+      variant = 'body-normal',
+      asChild,
+      align = 'left',
+      color = 'foreground-2',
+      wrap,
+      as,
+      ...props
+    },
+    ref
+  ) => {
     const [withTooltip, setWithTooltip] = useState(false)
     const localRef = useRef<HTMLElement>(null)
 

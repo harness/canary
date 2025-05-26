@@ -106,12 +106,12 @@ export const Summary = ({
                 </div>
               </Table.Cell>
               <Table.Cell>
-                <Text variant="body-normal" color="foreground-3" className="line-clamp-1">
+                <Text color="foreground-3" className="line-clamp-1">
                   {file.lastCommitMessage}
                 </Text>
               </Table.Cell>
               <Table.Cell className="text-right">
-                <Text variant="body-normal" color="foreground-3" wrap="nowrap">
+                <Text color="foreground-3" wrap="nowrap" align="right">
                   {file.timestamp}
                 </Text>
               </Table.Cell>

@@ -93,9 +93,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     <>
       {!projectScope ? (
         <>
-          <Text variant="body-normal" className="mb-2.5">
-            {t('views:repos.rules', 'Rules')}
-          </Text>
+          <Text className="mb-2.5">{t('views:repos.rules', 'Rules')}</Text>
 
           <div className="flex flex-row">
             <span className="max-w-[440px]">
@@ -221,9 +219,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <>
               <Spacer size={2} />
-              <Text variant="body-normal" color="danger">
-                {apiError.message}
-              </Text>
+              <Text color="danger">{apiError.message}</Text>
             </>
           )}
         </>

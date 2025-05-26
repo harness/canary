@@ -122,8 +122,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         <Text
           variant="heading-small"
           align="left"
+          color="foreground-3"
           className={cn(
-            'text-cn-foreground-3 group-hover:text-cn-foreground-1 relative z-10 duration-100 ease-in-out',
+            'group-hover:text-cn-foreground-1 relative z-10 duration-100 ease-in-out',
             { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
             { 'text-cn-foreground-1': active },
             { 'text-sidebar-foreground-1': active && isMainNav }

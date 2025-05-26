@@ -46,9 +46,7 @@ export function RepoWebhookList({
     return (
       <>
         <Spacer size={2} />
-        <Text variant="body-normal" color="danger">
-          {error || 'Something went wrong'}
-        </Text>
+        <Text color="danger">{error || 'Something went wrong'}</Text>
       </>
     )
   }

@@ -26,7 +26,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>
-      {connectorDetails.description ? <Text className="mt-3">{connectorDetails.description}</Text> : null}
+      {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}
       {connectorDetails.tags ? (
         <Layout.Horizontal gap="xs" className="mt-5">
           <Text>Labels:</Text>

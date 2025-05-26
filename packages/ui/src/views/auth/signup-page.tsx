@@ -78,7 +78,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
           <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Sign up to Harness
           </Text>
-          <Text className="mt-0.5" variant="body-normal" color="foreground-2" align="center" as="p">
+          <Text className="mt-0.5" align="center">
             Let’s start your journey with us today.
           </Text>
         </div>
@@ -123,7 +123,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
             </Button>
           </FormWrapper>
           <Spacer size={4} />
-          <Text className="block" variant="body-normal" color="foreground-3" align="center" as="p">
+          <Text color="foreground-3" align="center">
             Already have an account? <Link to="/signin">Sign in</Link>
           </Text>
         </div>

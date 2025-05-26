@@ -88,7 +88,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
           <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Create new password
           </Text>
-          <Text className="mt-0.5" variant="body-normal" color="foreground-2" align="center" as="p">
+          <Text className="mt-0.5" align="center">
             Your new password must be different from your previously used password.
           </Text>
         </div>

@@ -51,7 +51,7 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         <div className="mt-1 flex items-center justify-between gap-3">
           <div>{actions && <div className="flex items-center justify-start gap-1">{actions}</div>}</div>
           {time && (
-            <Text variant="body-normal" className="opacity-20" color="foreground-1">
+            <Text className="opacity-20" color="foreground-1">
               {time}
             </Text>
           )}

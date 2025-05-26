@@ -32,9 +32,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           }}
         >
           <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
-          <Text variant="body-normal" wrap="nowrap">
-            Edit
-          </Text>
+          <Text wrap="nowrap">Edit</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
@@ -45,9 +43,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text variant="body-normal" wrap="nowrap">
-            Add stage before
-          </Text>
+          <Text wrap="nowrap">Add stage before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key="add-after"
@@ -57,9 +53,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text variant="body-normal" wrap="nowrap">
-            Add stage after
-          </Text>
+          <Text wrap="nowrap">Add stage after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         {/* <RevealDropdownMenuItem /> */}
@@ -72,9 +66,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           }}
         >
           <Icon name="trash" size={12} className="text-cn-foreground-1" />
-          <Text variant="body-normal" wrap="nowrap">
-            Delete
-          </Text>
+          <Text wrap="nowrap">Delete</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

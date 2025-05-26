@@ -93,7 +93,7 @@ export function OTPPage({
           <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Verify your email
           </Text>
-          <Text className="mt-0.5" variant="body-normal" color="foreground-2" align="center" as="p">
+          <Text className="mt-0.5" align="center">
             Please enter the verification code we’ve sent to your email{' '}
             <span className="text-cn-foreground-1">{email}</span>
           </Text>
@@ -139,7 +139,7 @@ export function OTPPage({
             </Button>
           </form>
           <Spacer size={4} />
-          <Text className="block" variant="body-normal" color="foreground-3" align="center" as="p">
+          <Text color="foreground-3" align="center">
             Didn&apos;t receive the code?{' '}
             <Button className="h-5 p-0 leading-none" variant="ghost" onClick={handleResend}>
               Resend

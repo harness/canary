@@ -92,9 +92,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
       {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
         <>
           <Spacer size={2} />
-          <Text variant="body-normal" color="danger">
-            {apiError.message}
-          </Text>
+          <Text color="danger">{apiError.message}</Text>
         </>
       )}
     </Fieldset>

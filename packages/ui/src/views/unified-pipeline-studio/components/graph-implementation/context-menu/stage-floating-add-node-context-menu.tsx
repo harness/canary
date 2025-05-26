@@ -34,9 +34,7 @@ export const StageFloatingAddNodeContextMenu = ({
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text variant="body-normal" wrap="nowrap">
-            Add stage
-          </Text>
+          <Text wrap="nowrap">Add stage</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

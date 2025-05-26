@@ -119,21 +119,17 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
         <Spacer size={6} />
         <div className="flex items-center gap-10">
           <div className="flex gap-1">
-            <Text variant="body-normal" color="foreground-3">
-              Triggered Event:
-            </Text>
+            <Text color="foreground-3">Triggered Event:</Text>
             <Text> {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}</Text>
           </div>
           <div className="flex items-center gap-1">
-            <Text variant="body-normal" color="foreground-3" className="flex items-center">
+            <Text color="foreground-3" className="flex items-center">
               At:
             </Text>
             <Text>{timeAgo(execution?.created)}</Text>
           </div>
           <div className="flex gap-1">
-            <Text variant="body-normal" color="foreground-3">
-              Duration:
-            </Text>
+            <Text color="foreground-3">Duration:</Text>
             <Text>{formatDuration(execution?.duration ?? 0, 'ns')}</Text>
           </div>
         </div>

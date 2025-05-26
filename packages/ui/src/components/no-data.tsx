@@ -68,7 +68,7 @@ export const NoData: FC<NoDataProps> = ({
         {description && (
           <div className="flex flex-col">
             {description.map((line, index) => (
-              <Text key={index} variant="body-normal" align="center" color="foreground-3">
+              <Text key={index} align="center" color="foreground-3">
                 {line}
               </Text>
             ))}

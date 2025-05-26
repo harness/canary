@@ -38,9 +38,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
         <SandboxLayout.Main>
           <SandboxLayout.Content>
             <Spacer size={2} />
-            <Text variant="body-normal" color="danger">
-              {errorMessage || 'Something went wrong'}
-            </Text>
+            <Text color="danger">{errorMessage || 'Something went wrong'}</Text>
           </SandboxLayout.Content>
         </SandboxLayout.Main>
       </>

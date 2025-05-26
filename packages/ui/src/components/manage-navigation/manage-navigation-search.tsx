@@ -116,7 +116,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
               aria-hidden
             />
             {countFilteredItems === 0 ? (
-              <Text className="block w-full px-2 py-4" variant="body-normal" color="foreground-3">
+              <Text className="px-2 py-4" color="foreground-3">
                 No results found
               </Text>
             ) : (
@@ -137,7 +137,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
                         onClick={() => handleItemClick(item)}
                       >
                         <div className="flex w-full items-center gap-x-2">
-                          <Text className="truncate leading-tight" variant="body-normal" color="foreground-1">
+                          <Text className="leading-tight" color="foreground-1" truncate>
                             {item.title}
                           </Text>
                         </div>

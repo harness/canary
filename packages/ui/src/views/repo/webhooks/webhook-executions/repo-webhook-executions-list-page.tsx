@@ -62,7 +62,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                     className="cursor-pointer"
                   >
                     <Table.Cell className="content-center">
-                      <Text variant="body-normal" color="foreground-1">{`#${execution.id}`}</Text>
+                      <Text color="foreground-1">{`#${execution.id}`}</Text>
                     </Table.Cell>
                     <Table.Cell className="content-center">
                       {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}

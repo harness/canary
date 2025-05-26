@@ -38,14 +38,7 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
           {label}
         </Label>
         {description && (
-          <Text
-            className="ml-2.5"
-            as="p"
-            variant="body-normal"
-            color="foreground-2"
-            id={`${id}-description`}
-            role="note"
-          >
+          <Text className="ml-2.5" id={`${id}-description`} role="note">
             {description}
           </Text>
         )}

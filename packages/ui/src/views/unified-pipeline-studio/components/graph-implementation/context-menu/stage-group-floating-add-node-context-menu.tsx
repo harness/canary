@@ -31,9 +31,7 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text variant="body-normal" wrap="nowrap">
-            Add Serial Stages Group
-          </Text>
+          <Text wrap="nowrap">Add Serial Stages Group</Text>
         </DropdownMenu.Item>
 
         <DropdownMenu.Separator />
@@ -45,9 +43,7 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text variant="body-normal" wrap="nowrap">
-            Add Parallel Stages Group
-          </Text>
+          <Text wrap="nowrap">Add Parallel Stages Group</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

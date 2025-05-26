@@ -177,11 +177,7 @@ export const RepoSettingsGeneralForm: FC<{
             </ControlGroup>
           </Fieldset>
 
-          {!!apiError && errorTypes.has(apiError.type) && (
-            <Text variant="body-normal" color="danger">
-              {apiError.message}
-            </Text>
-          )}
+          {!!apiError && errorTypes.has(apiError.type) && <Text color="danger">{apiError.message}</Text>}
         </FormWrapper>
       )}
     </Fieldset>

@@ -80,7 +80,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
           <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Forgot password?
           </Text>
-          <Text className="mt-0.5" variant="body-normal" color="foreground-2" align="center" as="p">
+          <Text className="mt-0.5" align="center">
             Enter your email to receive the verification code.
           </Text>
         </div>
@@ -104,7 +104,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
             </Button>
           </FormWrapper>
           <Spacer size={4} />
-          <Text className="block" variant="body-normal" color="foreground-3" align="center" as="p">
+          <Text color="foreground-3" align="center">
             Don’t have an account? <Link to="/signup">Sign up</Link>
           </Text>
         </div>

@@ -108,12 +108,12 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text variant="body-normal" className="block" truncate title={tag.name}>
+              <Text className="block" truncate title={tag.name}>
                 {tag.name}
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Text variant="body-normal" color="foreground-3" className="line-clamp-3 break-all">
+              <Text color="foreground-3" className="line-clamp-3 break-all">
                 {tag?.message}
               </Text>
             </Table.Cell>
@@ -133,9 +133,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell>
-              <Text variant="body-normal" color="foreground-3">
-                {tag.tagger?.when ? getCreationDate(tag) : ''}
-              </Text>
+              <Text color="foreground-3">{tag.tagger?.when ? getCreationDate(tag) : ''}</Text>
             </Table.Cell>
             <Table.Cell className="w-[46px] !py-2.5 text-right">
               <MoreActionsTooltip

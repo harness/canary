@@ -60,12 +60,8 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
           {!selectedFile ? (
             <>
               <Icon name="upload" />
-              <Text variant="body-normal" color="foreground-1">
-                Click to browse or drag and drop a file
-              </Text>
-              <Text variant="body-normal" color="foreground-2">
-                Up to 50MB
-              </Text>
+              <Text color="foreground-1">Click to browse or drag and drop a file</Text>
+              <Text>Up to 50MB</Text>
             </>
           ) : (
             <div className="flex w-full flex-col">

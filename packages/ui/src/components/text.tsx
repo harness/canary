@@ -106,16 +106,15 @@ const getTextNode = ({ as, variant, asChild }: Pick<TextProps, 'as' | 'asChild' 
 
   if (as) return as
 
-  if (textVariantToElement[variant]) {
-    return textVariantToElement[variant]
+  if (textVariantToElement[variant ?? 'body-normal']) {
+    return textVariantToElement[variant ?? 'body-normal']
   }
 
   return 'span' as ElementType
 }
 
 type TextProps<E extends TextElement = 'span'> = Omit<ComponentProps<E>, 'color'> &
-  Omit<VariantProps<typeof textVariants>, 'variant'> & {
-    variant: TextVariant
+  VariantProps<typeof textVariants> & {
     /**
      * Shorthand for changing the default rendered element
      * into a semantically appropriate alternative.

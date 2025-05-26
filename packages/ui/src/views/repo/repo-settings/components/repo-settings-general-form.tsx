@@ -96,9 +96,7 @@ export const RepoSettingsGeneralForm: FC<{
 
   return (
     <Fieldset>
-      <Text size={13} weight="medium">
-        {t('views:repos.generalSettings', 'General settings')}
-      </Text>
+      <Text variant="heading-subsection">{t('views:repos.generalSettings', 'General settings')}</Text>
       {isLoadingRepoData ? (
         <SkeletonForm />
       ) : (
@@ -180,7 +178,7 @@ export const RepoSettingsGeneralForm: FC<{
           </Fieldset>
 
           {!!apiError && errorTypes.has(apiError.type) && (
-            <Text size={1} className="text-cn-foreground-danger">
+            <Text variant="body-normal" color="danger">
               {apiError.message}
             </Text>
           )}

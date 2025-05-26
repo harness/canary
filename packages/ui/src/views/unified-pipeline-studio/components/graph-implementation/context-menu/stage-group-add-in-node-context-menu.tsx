@@ -31,7 +31,9 @@ export const StageGroupAddInNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Stage</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Stage
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
@@ -42,7 +44,9 @@ export const StageGroupAddInNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Serial group</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Serial group
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key={`add-${YamlEntityType.ParallelStageGroup}`}
@@ -52,7 +56,9 @@ export const StageGroupAddInNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Parallel group</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Parallel group
+          </Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

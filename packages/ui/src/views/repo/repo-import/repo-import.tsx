@@ -146,9 +146,7 @@ export function RepoImportPage({
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          {t('views:repos.importRepo', 'Import a repository')}
-        </Text>
+        <Text variant="heading-section">{t('views:repos.importRepo', 'Import a repository')}</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}

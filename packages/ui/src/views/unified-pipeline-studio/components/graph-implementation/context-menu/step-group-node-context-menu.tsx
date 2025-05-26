@@ -31,7 +31,9 @@ export const StepGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Edit</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Edit
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
@@ -42,7 +44,9 @@ export const StepGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add before</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add before
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key="add-after"
@@ -52,7 +56,9 @@ export const StepGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add after</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add after
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         {/* <RevealDropdownMenuItem /> */}
@@ -65,7 +71,9 @@ export const StepGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="trash" size={12} className="text-cn-foreground-1" />
-          <Text wrap="nowrap">Delete</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Delete
+          </Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

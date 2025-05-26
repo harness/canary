@@ -142,7 +142,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Text className="mt-3 text-center text-cn-foreground-1" weight="medium" size={5} align="center" as="h1">
+          <Text className="mt-3" variant="heading-section" color="foreground-1" align="center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Text>
 

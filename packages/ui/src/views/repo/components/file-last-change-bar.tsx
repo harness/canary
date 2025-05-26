@@ -7,13 +7,13 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
       <Avatar name={user?.name} src={user?.avatarUrl} rounded />
-      <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
+      <Text variant="body-normal" color="foreground-3" wrap="nowrap">
         {user?.name || ''}
       </Text>
-      <Text size={2} weight="normal" color="primary" className="line-clamp-1 text-wrap" truncate>
+      <Text variant="body-normal" color="foreground-1" className="line-clamp-1" truncate wrap="wrap">
         {lastCommitMessage}
       </Text>
-      <Icon className="shrink-0 text-icons-success" name="tick" size={12} />
+      <Icon className="text-icons-success shrink-0" name="tick" size={12} />
     </div>
   )
 }
@@ -22,8 +22,8 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
   return (
     <div className="flex items-center gap-2">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
-      <span className="h-3 border-l border-cn-borders-2" />
-      <span className="text-sm text-cn-foreground-3">{timestamp}</span>
+      <span className="border-cn-borders-2 h-3 border-l" />
+      <span className="text-cn-foreground-3 text-sm">{timestamp}</span>
     </div>
   )
 }

@@ -34,13 +34,13 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   return (
     <SandboxLayout.Main className="mx-0">
       <SandboxLayout.Content className="pl-0">
-        <h1 className="mb-4 text-2xl font-medium text-cn-foreground-1">Order Status Update Webhook</h1>
+        <h1 className="text-cn-foreground-1 mb-4 text-2xl font-medium">Order Status Update Webhook</h1>
         <Text>
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
         <FormSeparator className="my-6" />
-        <h1 className="mb-4 text-xl font-medium text-cn-foreground-1">Executions</h1>
+        <h1 className="text-cn-foreground-1 mb-4 text-xl font-medium">Executions</h1>
         {isLoading ? (
           <SkeletonList />
         ) : executions && executions.length > 0 ? (
@@ -62,7 +62,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                     className="cursor-pointer"
                   >
                     <Table.Cell className="content-center">
-                      <Text className="text-cn-foreground-1" size={2}>{`#${execution.id}`}</Text>
+                      <Text variant="body-normal" color="foreground-1">{`#${execution.id}`}</Text>
                     </Table.Cell>
                     <Table.Cell className="content-center">
                       {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}

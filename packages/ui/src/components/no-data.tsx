@@ -64,13 +64,11 @@ export const NoData: FC<NoDataProps> = ({
     >
       {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} themeDependent />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
-        <Text size={5} weight="medium">
-          {title}
-        </Text>
+        <Text variant="heading-section">{title}</Text>
         {description && (
           <div className="flex flex-col">
             {description.map((line, index) => (
-              <Text key={index} size={2} weight="normal" align="center" color="tertiaryBackground">
+              <Text key={index} variant="body-normal" align="center" color="foreground-3">
                 {line}
               </Text>
             ))}

@@ -93,7 +93,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     <>
       {!projectScope ? (
         <>
-          <Text size={13} weight="medium" className="mb-2.5" as="div">
+          <Text variant="body-normal" className="mb-2.5">
             {t('views:repos.rules', 'Rules')}
           </Text>
 
@@ -221,7 +221,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <>
               <Spacer size={2} />
-              <Text size={1} className="text-cn-foreground-danger">
+              <Text variant="body-normal" color="danger">
                 {apiError.message}
               </Text>
             </>

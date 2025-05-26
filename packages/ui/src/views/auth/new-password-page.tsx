@@ -85,10 +85,10 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
       <div className="relative z-10 mb-8 max-w-full text-cn-foreground-1 w-80">
         <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Text className="mt-3 leading-snug" weight="medium" size={5} align="center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Create new password
           </Text>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          <Text className="mt-0.5" variant="body-normal" color="foreground-2" align="center" as="p">
             Your new password must be different from your previously used password.
           </Text>
         </div>

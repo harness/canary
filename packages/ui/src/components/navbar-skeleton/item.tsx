@@ -61,9 +61,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           </div>
           <div className="col-start-2 flex min-w-0 flex-col items-start">
             <Text
-              size={2}
+              variant="body-strong"
               truncate
-              weight="medium"
               className={cn(
                 'text-cn-foreground-2 group-hover:text-cn-foreground-1 z-10 w-full duration-0 ease-in-out',
                 { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
@@ -75,10 +74,10 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             </Text>
             {!!description && (
               <Text
-                className={cn('z-10 w-full leading-4 text-cn-foreground-2 duration-0 ease-in-out', {
+                variant="body-single-line-normal"
+                className={cn('z-10 w-full duration-0 ease-in-out', {
                   'text-sidebar-foreground-4': isMainNav
                 })}
-                size={1}
                 truncate
               >
                 {description}
@@ -121,10 +120,10 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           </div>
         )}
         <Text
-          size={2}
-          weight="medium"
+          variant="heading-small"
+          align="left"
           className={cn(
-            'text-cn-foreground-3 group-hover:text-cn-foreground-1 relative z-10 text-left duration-100 ease-in-out',
+            'text-cn-foreground-3 group-hover:text-cn-foreground-1 relative z-10 duration-100 ease-in-out',
             { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
             { 'text-cn-foreground-1': active },
             { 'text-sidebar-foreground-1': active && isMainNav }

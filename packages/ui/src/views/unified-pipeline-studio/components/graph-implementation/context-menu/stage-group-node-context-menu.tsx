@@ -32,7 +32,9 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Edit</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Edit
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
@@ -43,7 +45,9 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Serial Stages Group before</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Serial Stages Group before
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key={`add-${YamlEntityType.SerialStageGroup}-after`}
@@ -53,7 +57,9 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Serial Stages Group after</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Serial Stages Group after
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
@@ -64,7 +70,9 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Parallel Stages Group before</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Parallel Stages Group before
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key={`add-${YamlEntityType.ParallelStageGroup}-after`}
@@ -74,7 +82,9 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Parallel Stages Group after</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Add Parallel Stages Group after
+          </Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         {/* <RevealDropdownMenuItem /> */}
@@ -87,7 +97,9 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="trash" size={12} className="text-cn-foreground-1" />
-          <Text wrap="nowrap">Delete</Text>
+          <Text variant="body-normal" wrap="nowrap">
+            Delete
+          </Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

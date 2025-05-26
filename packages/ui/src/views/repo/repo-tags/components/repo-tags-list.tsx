@@ -108,12 +108,12 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text className="block leading-snug" truncate title={tag.name}>
+              <Text variant="body-normal" className="block" truncate title={tag.name}>
                 {tag.name}
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
+              <Text variant="body-normal" color="foreground-3" className="line-clamp-3 break-all">
                 {tag?.message}
               </Text>
             </Table.Cell>
@@ -125,7 +125,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
-                    <Text color="tertiary" className="block leading-none" truncate>
+                    <Text variant="body-single-line-normal" color="foreground-3" className="block" truncate>
                       {tag.tagger?.identity.name}
                     </Text>
                   </>
@@ -133,7 +133,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell>
-              <Text color="tertiary" className="leading-snug">
+              <Text variant="body-normal" color="foreground-3">
                 {tag.tagger?.when ? getCreationDate(tag) : ''}
               </Text>
             </Table.Cell>

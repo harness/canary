@@ -12,7 +12,7 @@ export const RepoSettingsGeneralDelete: FC<{
   const { t } = useTranslationStore()
   return (
     <div>
-      <Text size={13} weight="medium" className="mb-2.5" as="div">
+      <Text variant="heading-subsection" className="mb-2.5">
         {t('views:repos.deleteRepo', 'Delete Repository')}
       </Text>
       <span>
@@ -29,7 +29,7 @@ export const RepoSettingsGeneralDelete: FC<{
       {apiError && apiError.type === ErrorTypes.DELETE_REPO && (
         <>
           <Spacer size={2} />
-          <Text size={1} className="text-cn-foreground-danger">
+          <Text variant="body-normal" color="danger">
             {apiError.message}
           </Text>
         </>

@@ -95,7 +95,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 setComment={setComment}
               />
             ) : (
-              <Text size={2} color="primary">
+              <Text variant="body-normal" color="foreground-1">
                 {description && <MarkdownViewer source={description} />}
               </Text>
             )}

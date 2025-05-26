@@ -36,7 +36,7 @@ export function Message({ children, theme, className }: MessageProps) {
 
   return (
     <div className={cn(textClass, className)} role={role} aria-live={ariaLive}>
-      <Text as="p" size={2} className="text-inherit">
+      <Text as="p" variant="body-normal" color="inherit">
         {children}
       </Text>
     </div>

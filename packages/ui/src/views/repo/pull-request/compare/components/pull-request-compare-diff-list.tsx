@@ -246,7 +246,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     }}
                     className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
                   >
-                    <Text size={1} className="flex-1 overflow-hidden truncate text-cn-foreground-1">
+                    <Text variant="body-normal" color="foreground-1" className="flex-1 overflow-hidden truncate">
                       {diff.filePath}
                     </Text>
                     <div className="ml-4 flex items-center space-x-2">

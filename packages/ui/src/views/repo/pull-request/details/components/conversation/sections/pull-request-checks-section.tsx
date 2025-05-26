@@ -63,10 +63,10 @@ const PullRequestCheckSection = ({
             <div key={check.check?.id} className={cn('flex items-center justify-between gap-2 border-t py-2.5')}>
               <div className="flex items-center gap-2">
                 {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                <Text size={1} color="primary" truncate className="max-w-[300px] overflow-hidden">
+                <Text variant="body-normal" color="foreground-1" truncate className="max-w-[300px] overflow-hidden">
                   {check?.check?.identifier}
                 </Text>
-                <Text size={1} color="tertiaryBackground">
+                <Text variant="body-normal" color="foreground-3">
                   {check?.check?.status === ExecutionState.SUCCESS
                     ? `Succeeded in ${time}`
                     : check?.check?.status === ExecutionState.FAILURE
@@ -102,7 +102,7 @@ const PullRequestCheckSection = ({
                         }) || ''
                       }
                     >
-                      <Text size={1} color="tertiaryBackground">
+                      <Text variant="body-normal" color="foreground-3">
                         Details
                       </Text>
                     </Link>
@@ -111,7 +111,7 @@ const PullRequestCheckSection = ({
                 <div className="col-span-1 flex justify-end">
                   {check?.check?.status === ExecutionState.PENDING ? (
                     <StatusBadge variant="outline" size="sm">
-                      <Text size={1} color="tertiaryBackground">
+                      <Text variant="body-normal" color="foreground-3">
                         Required
                       </Text>
                     </StatusBadge>

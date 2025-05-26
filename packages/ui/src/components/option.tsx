@@ -39,10 +39,10 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
         </Label>
         {description && (
           <Text
-            className="ml-2.5 leading-snug tracking-tight"
+            className="ml-2.5"
             as="p"
-            size={2}
-            color="foreground-4"
+            variant="body-normal"
+            color="foreground-2"
             id={`${id}-description`}
             role="note"
           >

@@ -1439,27 +1439,43 @@
           "$value": "{bg.1}",
           "$description": "Background color for unselected state in selection controls. Creates visual distinction from selected items."
         },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{bg.2}"
+        },
         "border": {
           "$type": "color",
           "$value": "{border.1}",
           "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
+        },
+        "border-hover": {
+          "$type": "color",
+          "$value": "{border.accent}"
         }
       },
       "selected": {
         "item": {
           "$type": "color",
-          "$value": "{chrome.950}",
+          "$value": "{set.brand.solid.text}",
           "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "bg": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{set.brand.solid.bg}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg-hover}"
         },
         "border": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{set.brand.solid.bg}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
+        },
+        "border-hover": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg-hover}"
         }
       }
     },

@@ -3,10 +3,23 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 import { FormCaption, Icon, Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import { cva } from 'class-variance-authority'
+
+const checkboxVariants = cva('cn-checkbox-root', {
+  variants: {
+    error: {
+      true: 'cn-checkbox-error'
+    }
+  },
+  defaultVariants: {
+    error: false
+  }
+})
 
 export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   label?: string
   caption?: string
+  error?: boolean
   showOptionalLabel?: boolean
 }
 
@@ -15,12 +28,12 @@ export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxP
  * Built on top of Radix UI Checkbox primitive with additional styling.
  */
 const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<CheckboxProps, 'required'>>(
-  ({ className, label, caption, showOptionalLabel, ...props }, ref) => {
+  ({ className, label, caption, error, showOptionalLabel, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
     return (
       <div className={cn('cn-checkbox-wrapper', className)}>
-        <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={cn('cn-checkbox-root')} {...props}>
+        <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={checkboxVariants({ error })} {...props}>
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (
               <Icon name="minus" className="cn-checkbox-icon" skipSize />

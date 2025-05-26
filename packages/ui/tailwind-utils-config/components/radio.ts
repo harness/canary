@@ -54,7 +54,7 @@ export default {
     }
   },
 
-  '.cn-radio-error .cn-radio-item:where(:not([data-state=checked]))': {
+  '.cn-radio-error:not(:has(.cn-radio-item[data-state=checked])) .cn-radio-item': {
     borderColor: 'var(--cn-border-danger)',
     boxShadow: `var(--cn-ring-danger)`,
     '&:where(:hover)': {

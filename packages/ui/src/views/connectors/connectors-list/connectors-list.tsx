@@ -40,25 +40,25 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
     </div>
   ) : (
     <>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
-            <Icon name="dot" size={8} className="text-icons-danger" />
-            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
-              {t('views:connectors.failure', 'Failed')}
-            </Text>
-          </Button>
-        </Tooltip.Trigger>
-        <Tooltip.Content className="w-72 whitespace-normal" side="bottom">
-          <h3 className="font-medium text-cn-foreground-1">
-            {t('views:connectors.errorEncountered', 'Error Encountered')}
-          </h3>
-          <p className="mt-1.5 text-cn-foreground-3">{item?.status?.errorSummary}</p>
-          <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
-            {t('views:connectors.viewDetails', 'View details')}
-          </Button>
-        </Tooltip.Content>
-      </Tooltip.Root>
+      <Tooltip
+        side="bottom"
+        title={t('views:connectors.errorEncountered', 'Error Encountered')}
+        content={
+          <>
+            <p className="mt-1.5">{item?.status?.errorSummary}</p>
+            <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
+              {t('views:connectors.viewDetails', 'View details')}
+            </Button>
+          </>
+        }
+      >
+        <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
+          <Icon name="dot" size={8} className="text-icons-danger" />
+          <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+            {t('views:connectors.failure', 'Failed')}
+          </Text>
+        </Button>
+      </Tooltip>
 
       <ConnectorTestConnectionDialog
         title={item?.name}

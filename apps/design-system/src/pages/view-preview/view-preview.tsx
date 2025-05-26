@@ -53,7 +53,7 @@ import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
-import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, Tooltip } from '@harnessio/ui/components'
+import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { AppViewWrapper } from './app-view-wrapper'
@@ -552,7 +552,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
 
 const ViewPreview: FC = () => {
   return (
-    <Tooltip.Provider>
+    <TooltipProvider>
       <Routes>
         {Object.entries(viewPreviews).map(([_, group]) =>
           Object.entries(group.items).map(([route, { element }]) => (
@@ -562,7 +562,7 @@ const ViewPreview: FC = () => {
         <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
       </Routes>
       <ViewSettings routes={Object.keys(viewPreviews)} />
-    </Tooltip.Provider>
+    </TooltipProvider>
   )
 }
 

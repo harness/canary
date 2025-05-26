@@ -19,7 +19,6 @@ const radioRootVariants = cva('cn-radio-root', {
 interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
   label?: string | ReactElement
   caption?: string | ReactElement
-  error?: boolean
   showOptionalLabel?: boolean
 }
 
@@ -35,7 +34,7 @@ export interface RadioProps extends ComponentPropsWithoutRef<typeof RadioGroupPr
  * <Radio.Item value="option1" name="group" label="Option 1" caption="This is option 1" />
  */
 const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<RadioItemProps, 'required'>>(
-  ({ className, label, caption, error, showOptionalLabel, ...props }, ref) => {
+  ({ className, label, caption, showOptionalLabel, ...props }, ref) => {
     const radioId = props.id || `radio-${Math.random().toString(36).slice(2, 11)}`
 
     return (

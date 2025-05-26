@@ -1416,6 +1416,10 @@
           "$value": "{text.3}",
           "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
+        "item-hover": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
         "bg": {
           "$type": "color",
           "$value": "{bg.1}",

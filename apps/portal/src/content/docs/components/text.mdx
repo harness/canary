@@ -57,7 +57,7 @@ return (
 
 ## `Variant`
 
-The `Text` component supports various typographic variants that map to semantic HTML elements. 
+The `Text` component supports various typographic variants that map to semantic HTML elements.
 The default variant is `body-normal`, which renders as a `<p>` element. Other variants include:
 
 <DocsPage.ComponentExample
@@ -230,7 +230,10 @@ The `Text` component supports various color options to enhance visibility and co
         <Text variant="heading-base" color="foreground-1" className="underline mb-1">right:</Text>
         <Text align="right">dummyText</Text>
     </div>
-</div>`.replaceAll('dummyText', `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`)}
+</div>`.replaceAll(
+    "dummyText",
+    `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`,
+  )}
 />
 
 ## `Wrap`
@@ -254,9 +257,11 @@ The `Text` component supports various color options to enhance visibility and co
         <Text variant="heading-base" color="foreground-1" className="underline mb-1">balance:</Text>
         <Text wrap="balance">dummyText</Text>
     </div>
-</div>`.replaceAll('dummyText', `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`)}
+</div>`.replaceAll(
+    "dummyText",
+    `Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.`,
+  )}
 />
-
 
 ## API Reference
 

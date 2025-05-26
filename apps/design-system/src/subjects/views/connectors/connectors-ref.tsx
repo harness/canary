@@ -4,7 +4,7 @@ import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connect
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonGroup, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayFormInput,
   BooleanFormInput,
@@ -118,8 +118,8 @@ export const ConnectorsRefPage = ({
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
             />
-            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
-              <Drawer.Content nested>
+            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
+              <Drawer.Content>
                 {!!connectorEntity && (
                   <ConnectorEntityForm
                     intent={EntityIntent.CREATE}
@@ -169,13 +169,12 @@ export const ConnectorsRefPage = ({
   }
 
   return (
-    <Drawer.Root direction="right" open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+    <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <Drawer.Content>
         <Drawer.Header>
           <Drawer.Title>Connectors</Drawer.Title>
-          <Drawer.Close onClick={() => setIsDrawerOpen(false)} srOnly />
         </Drawer.Header>
-        <Drawer.Inner>
+        <Drawer.Body>
           <Text as="div" className="text-cn-foreground-2 mb-4">
             Choose type
           </Text>
@@ -186,12 +185,14 @@ export const ConnectorsRefPage = ({
           <Spacer size={5} />
 
           {renderConnectorContent()}
-        </Drawer.Inner>
+        </Drawer.Body>
         <Drawer.Footer>
-          <Button type="button" variant="outline" onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button>Save</Button>
+          <ButtonGroup>
+            <Button type="button" variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button>Save</Button>
+          </ButtonGroup>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>

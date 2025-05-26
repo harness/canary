@@ -1,6 +1,6 @@
-import { ElementType, useMemo, useState } from 'react'
+import { ElementType, ReactNode, useMemo, useState } from 'react'
 
-import { Button, Drawer, EntityFormLayout, Input } from '@/components'
+import { Button, ButtonGroup, Drawer, EntityFormLayout, Input } from '@/components'
 import { TranslationStore } from '@/views'
 
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
@@ -12,20 +12,20 @@ const componentsMap: Record<
     Header: ElementType
     Title: ElementType
     Content: ElementType
-    Inner: ElementType
+    Body: ElementType
   }
 > = {
   true: {
     Header: Drawer.Header,
     Title: Drawer.Title,
     Content: Drawer.Content,
-    Inner: Drawer.Inner
+    Body: Drawer.Body
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Content: 'div',
-    Inner: 'div'
+    Body: 'div'
   }
 }
 
@@ -38,6 +38,7 @@ interface ConnectorsPaletteProps {
   title?: string
   isDrawer?: boolean
   showCategory?: boolean
+  children?: ReactNode
 }
 
 export const ConnectorsPalette = ({
@@ -48,10 +49,11 @@ export const ConnectorsPalette = ({
   useTranslationStore,
   title = 'Connector Setup',
   isDrawer = false,
-  showCategory
+  showCategory,
+  children
 }: ConnectorsPaletteProps): JSX.Element => {
   const { t: _t } = useTranslationStore()
-  const { Header, Title, Content, Inner } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Header, Title, Content, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const [query, setQuery] = useState('')
 
@@ -72,7 +74,7 @@ export const ConnectorsPalette = ({
           }}
         />
       </Header>
-      <Inner>
+      <Body>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
@@ -86,14 +88,17 @@ export const ConnectorsPalette = ({
           useTranslationStore={useTranslationStore}
           showCategory={showCategory}
         />
-      </Inner>
+      </Body>
       {isDrawer && (
         <Drawer.Footer>
-          <Button variant="outline" onClick={requestClose}>
-            Cancel
-          </Button>
+          <ButtonGroup>
+            <Button variant="outline" onClick={requestClose}>
+              Cancel
+            </Button>
+          </ButtonGroup>
         </Drawer.Footer>
       )}
+      {children}
     </Content>
   )
 }

@@ -10,7 +10,7 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
+import { Button, ButtonGroup, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 // *****************************************************
 // 1. Import CSS
@@ -76,9 +76,9 @@ export function StepNodeComponent({
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root>
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
+      <Drawer.Content size="md">
         <Drawer.Header className="p-0">
           <ExecutionHeader
             commitName="8fbru3ix"
@@ -91,7 +91,7 @@ export function StepNodeComponent({
             pipelineName="npm_build"
           />
         </Drawer.Header>
-        <Drawer.Inner viewportClassName="p-0">
+        <Drawer.Body className="p-0">
           <ExecutionInfo
             isDrawer
             useLogsStore={() => ({ logs })}
@@ -99,7 +99,7 @@ export function StepNodeComponent({
             onDownload={() => {}}
             onEdit={() => {}}
           />
-        </Drawer.Inner>
+        </Drawer.Body>
       </Drawer.Content>
     </Drawer.Root>
   )
@@ -131,23 +131,25 @@ export function ApprovalStepNodeComponent({
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root>
       <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
-      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
-        <div className="flex flex-col gap-4">
-          <Drawer.Header>
-            <Drawer.Title>Approval</Drawer.Title>
-            <Drawer.Description>Approve/Reject step execution</Drawer.Description>
-          </Drawer.Header>
-          <div className="flex justify-center gap-2">
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Approval</Drawer.Title>
+          <Drawer.Description>Approve/Reject step execution</Drawer.Description>
+        </Drawer.Header>
+        <Drawer.Body>
+          <ButtonGroup>
             <Button type="submit">Approve</Button>
             <Button variant="secondary">Cancel</Button>
-          </div>
-        </div>
+          </ButtonGroup>
+        </Drawer.Body>
         <Drawer.Footer>
-          <Drawer.Close>
-            <Button variant="outline">Close</Button>
-          </Drawer.Close>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Close</Button>
+            </Drawer.Close>
+          </ButtonGroup>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>

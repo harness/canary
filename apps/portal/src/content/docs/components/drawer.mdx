@@ -4,57 +4,88 @@ description: Drawer component with stacking
 beta: true
 ---
 
-The Drawer component works similar to a Sheet component, but allows animated stacking as well.
+The `Drawer` component provides a way to display content in a panel that slides in from the edge of the screen. Supports multiple configuration options, including direction (left, right, top, bottom), size constraints, and nested drawers for building complex, multi-level interfaces.
+
+It is composed of several subcomponents such as `Drawer.Root`, `Drawer.Trigger`, `Drawer.Content`, `Drawer.Header`, `Drawer.Tagline`, `Drawer.Title`, `Drawer.Description`, `Drawer.Body`, `Drawer.Footer` and `Drawer.Close` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Drawer.Root direction='right'>
-    <Drawer.Trigger><Button>Open Drawer</Button></Drawer.Trigger>
-    <Drawer.Content>
-      <Drawer.Header>
-        <Drawer.Title>Run Step</Drawer.Title>
-        <Drawer.Description>
-          <Spacer size={2} />
-          <Fieldset>
-            <Input
-              id="name"
-              label="Step name"
-              placeholder="Enter step name"
-            />
-            <Drawer.Root direction='right' nested>
-              <Drawer.Trigger><Button>Add Connector</Button></Drawer.Trigger>
-              <Drawer.Content>
-                <Drawer.Header>
-                  <Drawer.Title>Create Connector</Drawer.Title>
-                  <Drawer.Description>
-                    <Spacer size={2} />
-                    <Fieldset>
-                      <Input
-                        id="name"
-                        label="Connector name"
-                        placeholder="Enter connector name"
-                      />
-                      <Drawer.Root direction='right' nested>
-                        <Drawer.Trigger><Button>Add Secret</Button></Drawer.Trigger>
-                        <Drawer.Content>
-                          <Drawer.Header>
-                            <Drawer.Title>Create Secret</Drawer.Title>
-                            <Drawer.Description>Shhh. This is a secret.</Drawer.Description>
-                          </Drawer.Header>
-                        </Drawer.Content>
-                      </Drawer.Root>
-                    </Fieldset>
-                  </Drawer.Description>
-                </Drawer.Header>
-              </Drawer.Content>
-            </Drawer.Root>  
-          </Fieldset>
-        </Drawer.Description>
-      </Drawer.Header>
-    </Drawer.Content>
-  </Drawer.Root>`}
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header icon="repositories">
+          <Drawer.Tagline>tagline</Drawer.Tagline>
+          <Drawer.Title>Title</Drawer.Title>
+          <Drawer.Description>
+            Description
+          </Drawer.Description>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sagittis justo.
+            Integer vehicula turpis at justo gravida, at convallis lorem tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sagittis justo.
+            Integer vehicula turpis at justo gravida, at convallis lorem tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sagittis justo.
+            Integer vehicula turpis at justo gravida, at convallis lorem tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+        </Drawer.Body>
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+            <Button>Action</Button>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
 />
 
 ## Usage
@@ -65,20 +96,628 @@ import { Drawer } from '@harnessio/ui/components'
 //...
 
 return (
-  <Drawer.Root>
-    <Drawer.Trigger>Open</Drawer.Trigger>
-    <Drawer.Content>
-        <Drawer.Header>
-          <Drawer.Title>Are you absolutely sure?</Drawer.Title>
-          <Drawer.Description>This action cannot be undone.</Drawer.Description>
-        </Drawer.Header>
-        <Drawer.Footer>
-          <Button>Submit</Button>
-          <Drawer.Close>
-              <Button variant="outline">Cancel</Button>
+  <Drawer.Root
+    direction="left"
+    open={isDrawerOpen}
+    onOpenChange={setIsDrawerOpen}
+  >
+    <Drawer.Trigger asChild>
+      <Button>Open drawer</Button>
+    </Drawer.Trigger>
+
+    <Drawer.Content size="md" hideClose>
+      <Drawer.Header icon="info">
+        <Drawer.Tagline>Section</Drawer.Tagline>
+        <Drawer.Title>Title of the drawer</Drawer.Title>
+        <Drawer.Description>Description of the drawer</Drawer.Description>
+      </Drawer.Header>
+
+      <Drawer.Body className="">
+        Content of the drawer goes here
+
+        <Drawer.Root nested>
+          <Drawer.Trigger asChild>
+            <Button>Open Nested Drawer</Button>
+          </Drawer.Trigger>
+
+          <Drawer.Content>
+            <Drawer.Header>
+              <Drawer.Title>Title</Drawer.Title>
+            </Drawer.Header>
+
+            <Drawer.Body>
+              Content
+            </Drawer.Body>
+
+            <Drawer.Footer>
+              Footer
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer.Root>
+      </Drawer.Body>
+
+      <Drawer.Footer>
+        <ButtonGroup>
+          <Drawer.Close asChild>
+            <Button variant="outline">Cancel</Button>
           </Drawer.Close>
-        </Drawer.Footer>
+          <Button>Submit</Button>
+        </ButtonGroup>
+      </Drawer.Footer>
     </Drawer.Content>
   </Drawer.Root>
 )
 ```
+
+## Anatomy
+
+All parts of the `Drawer` component can be imported and composed as required.
+
+```typescript jsx
+<Drawer.Root>
+  <Drawer.Trigger />
+  <Drawer.Content>
+    <Drawer.Header>
+      <Drawer.Tagline />
+      <Drawer.Title />
+      <Drawer.Description />
+    </Drawer.Header>
+    <Drawer.Body />
+    <Drawer.Footer>
+      <Drawer.Close />
+    </Drawer.Footer>
+  </Drawer.Content>
+</Drawer.Root>
+```
+
+## Nested drawers
+
+Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`, and adding the `nested` prop to the nested root.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with Nested Drawers</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+          <Drawer.Description>
+            Description
+          </Drawer.Description>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <Drawer.Root nested>
+            <Drawer.Trigger asChild>
+              <Button>Open Nested Drawer</Button>
+            </Drawer.Trigger>
+
+            <Drawer.Content>
+              <Drawer.Header>
+                <Drawer.Title>Title</Drawer.Title>
+              </Drawer.Header>
+
+              <Drawer.Body>
+                <Drawer.Root nested>
+                  <Drawer.Trigger asChild>
+                    <Button>Open Nested Drawer</Button>
+                  </Drawer.Trigger>
+
+                  <Drawer.Content>
+                    <Drawer.Header>
+                      <Drawer.Title>Title</Drawer.Title>
+                    </Drawer.Header>
+
+                    <Drawer.Body />
+                  </Drawer.Content>
+                </Drawer.Root>
+              </Drawer.Body>
+            </Drawer.Content>
+          </Drawer.Root>
+
+          <p className="mt-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sagittis justo.
+            Integer vehicula turpis at justo gravida, at convallis lorem tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sagittis justo.
+            Integer vehicula turpis at justo gravida, at convallis lorem tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sagittis justo.
+            Integer vehicula turpis at justo gravida, at convallis lorem tincidunt.
+          </p>
+          <p>
+            Suspendisse potenti. Praesent in vestibulum lacus. Cras feugiat eros at ex cursus,
+            vel consequat enim mattis. Quisque nec magna ac leo tempor scelerisque.
+          </p>
+          <p>
+            Nullam tristique, justo vitae laoreet pretium, nisl nunc facilisis nulla, non porta erat sapien in justo.
+            Sed nec massa nec turpis interdum volutpat. Morbi sed justo ac leo sagittis tincidunt.
+          </p>
+        </Drawer.Body>
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Button>Action</Button>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+## Drawer sizes
+
+The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `sm`, `md`, and `lg`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <ButtonGroup direction="vertical">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'sm' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'md' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'lg' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="lg">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+  </ButtonGroup>
+`}
+/>
+
+## Drawer opening direction
+
+The `Drawer.Root` component accepts a `direction` prop to control which side the drawer opens from. Supported values are: `right`, `left`, `top`, and `bottom`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <ButtonGroup direction="vertical">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'right' direction</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root direction="left">
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'left' direction</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root direction="top">
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'top' direction</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root direction="bottom">
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'bottom' direction</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonGroup>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonGroup>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+  </ButtonGroup>
+`}
+/>
+
+## API Reference
+
+### `Root`
+
+Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) components.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "defaultOpen",
+      description:
+        "The open state of the drawer when it is initially rendered. Use when you do not need to control its open state.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
+    },
+    {
+      name: "open",
+      description:
+        "When set, operate in controlled mode in combination with onOpenChange.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
+    },
+    {
+      name: "onOpenChange",
+      description: "Callback notified when open state changes.",
+      required: false,
+      value: "(open: boolean) => void",
+      defaultValue: "undefined",
+    },
+    {
+      name: "modal",
+      description:
+        "The modality of the dialog. When set to true, interaction with outside elements will be disabled and only dialog content will be visible to screen readers.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "container",
+      description: "Specify a container element to portal the drawer into.",
+      required: false,
+      value: "HTMLElement",
+      defaultValue: "document.body",
+    },
+    {
+      name: "direction",
+      description: "Direction the drawer will originate from.",
+      required: false,
+      value: "'right' | 'left' | 'top' | 'bottom'",
+      defaultValue: "right",
+    },
+    {
+      name: "onAnimationEnd",
+      description:
+        "Gets triggered after the open or close animation ends, it receives an open argument with the open state of the drawer by the time the function was triggered.",
+      required: false,
+      value: "(open: boolean) => void",
+      defaultValue: "undefined",
+    },
+    {
+      name: "dismissible",
+      description:
+        "When false dragging, clicking outside, pressing esc, etc. will not close the drawer. Use this in combination with the open prop, otherwise you won't be able to open/close the drawer.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "handleOnly",
+      description: "When true dragging will only be possible by the handle.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "nested",
+      description: "Whether the drawer is nested in another drawer.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "repositionInputs",
+      description:
+        "When true will reposition inputs rather than scroll then into view if the keyboard is in the way. Setting it to false will fall back to the default browser behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "children",
+      description: "Drawer.Trigger and Drawer.Content components.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Trigger`
+
+An optional button that opens the drawer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Close`
+
+An optional button that closes the drawer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Content`
+
+Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`](#footer) components to be rendered in the open drawer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Width | height of the drawer.",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "sm",
+    },
+    {
+      name: "hideClose",
+      description: "When set, do not display the close 'x' button.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description: "Drawer.Header, Drawer.Body and Drawer.Footer components.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Header`
+
+An optional container for the [`Drawer.Tagline`](#tagline), [`Drawer.Title`](#title) and [`Drawer.Description`](#description) components.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "icon",
+      description: "Name of an icon to display (cannot be combined with logo).",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "logo",
+      description: "Name of a logo to display (cannot be combined with icon).",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "children",
+      description:
+        "Drawer.Tagline, Drawer.Title and Drawer.Description components.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Tagline`
+
+An optional tagline above the title.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Title`
+
+An optional accessible title to be announced when the drawer is opened.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Description`
+
+An optional accessible description to be announced when the drawer is opened.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Body`
+
+A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Header`](#header) or [`Drawer.Footer`](#footer).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Class to apply to the viewport of the scrollable area.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "children",
+      description: "Content to display, rendered as a ScrollArea.",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Footer`
+
+An optional footer wrapper.

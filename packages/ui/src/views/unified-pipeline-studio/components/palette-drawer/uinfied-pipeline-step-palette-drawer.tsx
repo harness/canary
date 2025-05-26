@@ -1,6 +1,6 @@
 import { ElementType, useCallback, useMemo, useRef, useState } from 'react'
 
-import { Button, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
+import { Button, ButtonGroup, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
@@ -12,20 +12,20 @@ const componentsMap: Record<
   {
     Header: ElementType
     Title: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
   true: {
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Inner: 'div',
+    Body: 'div',
     Footer: EntityFormLayout.Footer
   }
 }
@@ -37,7 +37,7 @@ interface PipelineStudioStepFormProps {
 
 export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
   const { requestClose, isDrawer = false } = props
-  const { Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
   const { xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
 
@@ -78,7 +78,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
           }}
         />
       </Header>
-      <Inner>
+      <Body>
         <StepPaletteSection
           title="Group"
           steps={harnessStepGroupsFiltered}
@@ -142,11 +142,13 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         )}
 
         <Spacer size={8} />
-      </Inner>
+      </Body>
       <Footer>
-        <Button variant="secondary" onClick={requestClose}>
-          Cancel
-        </Button>
+        <ButtonGroup>
+          <Button variant="secondary" onClick={requestClose}>
+            Cancel
+          </Button>
+        </ButtonGroup>
       </Footer>
     </>
   )

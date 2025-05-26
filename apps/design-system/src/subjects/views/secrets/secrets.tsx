@@ -4,7 +4,7 @@ import { secretsFormDefinition } from '@utils/secrets/secrets-form-schema'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonGroup, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayFormInput,
   BooleanFormInput,
@@ -165,13 +165,12 @@ export const SecretsPage = ({
 
   return (
     <>
-      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <Drawer.Content>
           <Drawer.Header>
             <Drawer.Title>Secret</Drawer.Title>
-            <Drawer.Close onClick={() => setIsDrawerOpen(false)} srOnly />
           </Drawer.Header>
-          <Drawer.Inner>
+          <Drawer.Body>
             <Text as="div" className="text-cn-foreground-2 mb-4">
               Choose type
             </Text>
@@ -180,12 +179,14 @@ export const SecretsPage = ({
             <FormSeparator className="w-full" />
             <Spacer size={6} />
             {renderSecretContent()}
-          </Drawer.Inner>
+          </Drawer.Body>
           <Drawer.Footer>
-            <Button variant="outline" onClick={handleCancel}>
-              Back
-            </Button>
-            <Button onClick={selectedType === SecretType.NEW ? handleSubmitEntityForm : noop}>Save</Button>
+            <ButtonGroup>
+              <Button variant="outline" onClick={handleCancel}>
+                Back
+              </Button>
+              <Button onClick={selectedType === SecretType.NEW ? handleSubmitEntityForm : noop}>Save</Button>
+            </ButtonGroup>
           </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>

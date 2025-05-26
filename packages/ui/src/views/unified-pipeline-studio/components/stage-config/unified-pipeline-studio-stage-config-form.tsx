@@ -23,7 +23,7 @@ const componentsMap: Record<
     Header: ElementType
     Title: ElementType
     Description: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
@@ -32,7 +32,7 @@ const componentsMap: Record<
     Header: Drawer.Header,
     Title: Drawer.Title,
     Description: Drawer.Description,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
@@ -40,7 +40,7 @@ const componentsMap: Record<
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
-    Inner: Fragment,
+    Body: Fragment,
     Footer: EntityFormLayout.Footer
   }
 }
@@ -52,7 +52,7 @@ interface UnifiedPipelineStudioStageConfigFormProps {
 
 export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudioStageConfigFormProps) => {
   const { requestClose, isDrawer = false } = props
-  const { Content, Header, Title, Description, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Content, Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     addStageIntention,
@@ -119,30 +119,33 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
               <Button variant={'outline'}> Use Template</Button>
             </ButtonGroup>
           </Header>
-          <Inner>
+          <Body>
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
             </EntityFormLayout.Form>
-          </Inner>
+          </Body>
           <Footer>
-            <ButtonGroup>
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              <Button variant="secondary" onClick={requestClose}>
-                Cancel
-              </Button>
+            <ButtonGroup className="justify-between">
+              <ButtonGroup>
+                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+                <Button variant="secondary" onClick={requestClose}>
+                  Cancel
+                </Button>
+              </ButtonGroup>
+              {!!editStageIntention && (
+                <Button
+                  variant="secondary"
+                  iconOnly
+                  onClick={() => {
+                    requestYamlModifications.deleteInArray({ path: editStageIntention.path })
+                    requestClose()
+                  }}
+                  aria-label="Remove Stage"
+                >
+                  <Icon name="trash" />
+                </Button>
+              )}
             </ButtonGroup>
-            {editStageIntention && (
-              <Button
-                variant="secondary"
-                iconOnly
-                onClick={() => {
-                  requestYamlModifications.deleteInArray({ path: editStageIntention.path })
-                  requestClose()
-                }}
-              >
-                <Icon name="trash" />
-              </Button>
-            )}
           </Footer>
         </Content>
       )}

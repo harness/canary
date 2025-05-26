@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, Drawer, SkeletonList } from '@/components'
+import { Button, ButtonGroup, Drawer, SkeletonList } from '@/components'
 import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
@@ -53,10 +53,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
   const [allowDisableRun, setAllowDisableRun] = useState(false)
 
   return (
-    <Drawer.Content
-      //TODO: width
-      style={{ width: '500px' }}
-    >
+    <Drawer.Content>
       <Drawer.Header>
         <Drawer.Title>Run Pipeline</Drawer.Title>
         <VisualYamlToggle
@@ -70,7 +67,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
         />
       </Drawer.Header>
 
-      <Drawer.Inner viewportClassName={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
+      <Drawer.Body className={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
         {loading ? (
           <SkeletonList className="p-5" />
         ) : (
@@ -100,26 +97,28 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
           </div>
         )}
         {!!error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
-      </Drawer.Inner>
+      </Drawer.Body>
 
       <Drawer.Footer>
-        <Button
-          disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
-          loading={isExecutingPipeline}
-          onClick={() => {
-            if (view === 'visual') {
-              setAllowDisableRun(true)
-              rootFormRef.current?.submitForm()
-            } else {
-              onRun()
-            }
-          }}
-        >
-          Run pipeline
-        </Button>
-        <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
-          Cancel
-        </Button>
+        <ButtonGroup>
+          <Button
+            disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
+            loading={isExecutingPipeline}
+            onClick={() => {
+              if (view === 'visual') {
+                setAllowDisableRun(true)
+                rootFormRef.current?.submitForm()
+              } else {
+                onRun()
+              }
+            }}
+          >
+            Run pipeline
+          </Button>
+          <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
+            Cancel
+          </Button>
+        </ButtonGroup>
       </Drawer.Footer>
     </Drawer.Content>
   )

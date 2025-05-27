@@ -55,6 +55,10 @@ export type EditStageIntentionType = {
   path: string
 } | null
 
+export type EditPipelineIntentionType = {
+  path: 'pipeline'
+} | null
+
 export interface UnifiedPipelineStudioContextProps {
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
@@ -89,6 +93,9 @@ export interface UnifiedPipelineStudioContextProps {
   editStageIntention: EditStageIntentionType
   setEditStageIntention: (editStepIntention: EditStageIntentionType) => void
   clearEditStageIntention: () => void
+  editPipelineIntention: EditPipelineIntentionType
+  setEditPipelineIntention: (editStepIntention: EditPipelineIntentionType) => void
+  clearEditPipelineIntention: () => void
   requestYamlModifications: {
     injectInArray: (props: {
       path: string
@@ -109,6 +116,7 @@ export interface UnifiedPipelineStudioContextProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   stageFormDefinition?: IFormDefinition
+  pipelineFormDefinition?: IFormDefinition
 }
 
 export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioContextProps>({
@@ -142,6 +150,9 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   editStageIntention: null,
   setEditStageIntention: (_editStepIntention: EditStepIntentionType) => undefined,
   clearEditStageIntention: () => undefined,
+  editPipelineIntention: null,
+  setEditPipelineIntention: (_editStepIntention: EditPipelineIntentionType) => undefined,
+  clearEditPipelineIntention: () => undefined,
   requestYamlModifications: {
     injectInArray: (_props: {
       path: string
@@ -194,6 +205,7 @@ export interface UnifiedPipelineStudioProviderProps {
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
   stageFormDefinition?: IFormDefinition
+  pipelineFormDefinition?: IFormDefinition
 }
 
 export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProviderProps> = props => {
@@ -233,6 +245,13 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     setAddStageIntention(null)
   }, [setAddStepIntention])
 
+  const [editPipelineIntention, setEditPipelineIntention] = useState<EditPipelineIntentionType>(null)
+
+  const clearEditPipelineIntention = useCallback(() => {
+    setEditPipelineIntention(null)
+    onSelectedPathChange(undefined)
+  }, [setEditStepIntention])
+
   // TODO: rename to stepFormEntity
   const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
 
@@ -267,6 +286,8 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
 
     clearAddStageIntention()
     clearEditStageIntention()
+
+    clearEditPipelineIntention()
   }, [clearAddStepIntention, clearEditStepIntention, setFormEntity])
 
   const requestYamlModifications = useMemo(
@@ -303,6 +324,9 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         editStageIntention,
         setEditStageIntention,
         clearEditStageIntention,
+        editPipelineIntention,
+        setEditPipelineIntention,
+        clearEditPipelineIntention,
         yamlRevision,
         onYamlRevisionChange,
         requestYamlModifications,

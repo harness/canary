@@ -17,7 +17,6 @@ const inputs: IInputConfigWithConfig[] = [
       {
         inputType: 'group',
         path: '',
-        inputConfig: { autoExpandGroups: true },
         inputs: [
           {
             inputType: 'text',
@@ -32,7 +31,6 @@ const inputs: IInputConfigWithConfig[] = [
         inputType: 'group',
         path: '',
         label: 'Optional configuration',
-        inputConfig: { autoExpandGroups: true },
         inputs: [
           {
             inputType: 'text',

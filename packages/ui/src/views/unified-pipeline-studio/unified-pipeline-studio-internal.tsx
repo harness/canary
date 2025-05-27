@@ -1,8 +1,9 @@
-import { Button, FileToolbarActions } from '@components/index'
+import { Button, FileToolbarActions, Icon } from '@components/index'
 import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
 
+import { UnifiedPipelinePipelineConfigDrawer } from './components/unified-pipeline-pipeline-config-drawer'
 import { UnifiedPipelineStageConfigDrawer } from './components/unified-pipeline-stage-config-drawer'
 import { UnifiedPipelineStepDrawer } from './components/unified-pipeline-step-drawer'
 import { UnifiedPipelineStudioFooter } from './components/unified-pipeline-studio-footer'
@@ -11,6 +12,7 @@ import PipelineStudioLayout from './components/unified-pipeline-studio-layout'
 import { UnifiedPipelineStudioPanel } from './components/unified-pipeline-studio-panel'
 import { VisualYamlToggle } from './components/visual-yaml-toggle'
 import { useUnifiedPipelineStudioContext } from './context/unified-pipeline-studio-context'
+import { RightDrawer } from './types/right-drawer-types'
 
 export const PipelineStudioInternal = (): JSX.Element => {
   const {
@@ -26,7 +28,9 @@ export const PipelineStudioInternal = (): JSX.Element => {
     saveInProgress,
     isYamlDirty,
     hideSaveBtn,
-    lastCommitInfo
+    lastCommitInfo,
+    setRightDrawer,
+    setEditPipelineIntention
   } = useUnifiedPipelineStudioContext()
 
   return (
@@ -35,6 +39,18 @@ export const PipelineStudioInternal = (): JSX.Element => {
         <PipelineStudioLayout.Header isYamlView={view === 'yaml'}>
           <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>
+            <Button
+              size="sm"
+              variant="outline"
+              iconOnly
+              aria-label="Edit pipeline"
+              onClick={() => {
+                setEditPipelineIntention({ path: 'pipeline' })
+                setRightDrawer(RightDrawer.PipelineConfig)
+              }}
+            >
+              <Icon name="edit-pen" />
+            </Button>
             {view === 'yaml' ? (
               <FileToolbarActions
                 onDownloadClick={() => {
@@ -83,6 +99,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
 
       <UnifiedPipelineStepDrawer />
       <UnifiedPipelineStageConfigDrawer />
+      <UnifiedPipelinePipelineConfigDrawer />
     </YamlEditorContextProvider>
   )
 }

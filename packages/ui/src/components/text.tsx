@@ -106,10 +106,8 @@ const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, '
 
   if (as) return as
 
-  const safeVariant = (variant ?? 'body-normal') as TextVariant
-
-  if (textVariantToElement[safeVariant]) {
-    return textVariantToElement[safeVariant]
+  if (textVariantToElement[variant ?? 'body-normal']) {
+    return textVariantToElement[variant ?? 'body-normal']
   }
 
   return 'span' as ElementType
@@ -155,17 +153,16 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
     const Comp = getTextNode({ as, variant, asChild })
 
     const isHeading = !as && !!variant?.startsWith('heading')
-    const isTruncated = truncate === true
 
     const compRef = useMergeRefs<HTMLElement>([localRef, ref])
 
     useLayoutEffect(() => {
-      if (!isTruncated) return
+      if (!truncate) return
       if (!localRef.current) return
 
       const { scrollWidth, scrollHeight, clientWidth, clientHeight } = localRef.current
       setWithTooltip(scrollWidth > clientWidth || scrollHeight > clientHeight)
-    }, [isTruncated])
+    }, [truncate])
 
     return (
       <Comp

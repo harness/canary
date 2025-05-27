@@ -22,7 +22,7 @@ export default {
 
     backgroundColor: `var(--cn-comp-selection-unselected-bg)`,
     borderColor: `var(--cn-comp-selection-unselected-border)`,
-    '&:hover': {
+    '&:where(:not([disabled])):hover': {
       backgroundColor: `var(--cn-comp-selection-unselected-bg-hover)`,
       borderColor: `var(--cn-comp-selection-unselected-border-hover)`,
 

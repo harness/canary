@@ -27,7 +27,7 @@ export default {
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: '50%',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
-    '&:hover': {
+    '&:where(:not([disabled])):hover': {
       backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
       borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
     },
@@ -42,7 +42,7 @@ export default {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
       borderColor: 'var(--cn-comp-selection-selected-border)',
 
-      '&:hover': {
+      '&:where(:not([disabled])):hover': {
         backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
         borderColor: 'var(--cn-comp-selection-selected-border-hover)'
       }

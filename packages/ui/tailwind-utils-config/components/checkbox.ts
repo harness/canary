@@ -30,7 +30,7 @@ export default {
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
-    '&:hover': {
+    '&:where(:not([disabled])):hover': {
       backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
       borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
     },

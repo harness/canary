@@ -6,7 +6,6 @@ import { timeAgo } from '@/utils'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 
-import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
@@ -93,8 +92,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <StatusBadge variant="outline" theme={stateObject.theme}>
-            <Icon name={stateObject.icon as IconType} size={13} />
+          <StatusBadge icon={stateObject.icon} variant="outline" theme={stateObject.theme}>
             {stateObject.text}
           </StatusBadge>
 

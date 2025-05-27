@@ -1,3 +1,4 @@
+import { Icon, IconNameMap } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -37,6 +38,7 @@ type BadgeBaseProps = Omit<
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
 > & {
   size?: 'default' | 'sm'
+  icon?: keyof typeof IconNameMap
 }
 
 // Status theme props (variant is required)
@@ -44,6 +46,7 @@ type StatusBadgeStatusVariantProps = BadgeBaseProps & {
   theme?: VariantProps<typeof statusBadgeVariants>['theme']
   variant: 'status'
   pulse?: boolean
+  icon?: never
 }
 
 // Other theme props (variant is required)
@@ -56,7 +59,7 @@ type StatusBadgeOtherThemeProps = BadgeBaseProps & {
 // Combined props using discriminated union
 export type StatusBadgeProps = StatusBadgeOtherThemeProps | StatusBadgeStatusVariantProps
 
-function StatusBadge({ className, variant, size, pulse, theme = 'muted', children, ...props }: StatusBadgeProps) {
+function StatusBadge({ className, variant, size, pulse, theme = 'muted', children, icon, ...props }: StatusBadgeProps) {
   const isStatusVariant = variant === 'status'
 
   return (
@@ -74,6 +77,7 @@ function StatusBadge({ className, variant, size, pulse, theme = 'muted', childre
       {isStatusVariant && (
         <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
       )}
+      {icon && <Icon skipSize className="cn-badge-icon" name={icon} />}
       {children}
     </div>
   )

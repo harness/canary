@@ -190,12 +190,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{chrome.150}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{chrome.200}",
           "$description": "Selected state background color for active brand items."
         }
       },

@@ -1,6 +1,6 @@
-import { ElementType, useCallback, useMemo, useRef, useState } from 'react'
+import { ElementType, useCallback, useMemo, useRef } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Pagination, SearchInput, Spacer } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
@@ -39,43 +39,45 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
   const { requestClose, isDrawer = false } = props
   const { Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
-  const { xNextPage, xPrevPage, setPage, templates, templatesError } = useTemplateListStore()
-
-  const [query, setQuery] = useState('')
+  const { page, setPage, pageSize, totalItems, templates, templatesError, searchQuery, setSearchQuery } =
+    useTemplateListStore()
 
   const { t } = useTranslationStore()
 
   const templatesSectionRef = useRef<HTMLDivElement | null>(null)
 
   const harnessStepGroupsFiltered = useMemo(
-    () => harnessStepGroups.filter(harnessStepGroup => harnessStepGroup.identifier.includes(query)),
-    [query, harnessStepGroups]
+    () => harnessStepGroups.filter(harnessStepGroup => harnessStepGroup.identifier.includes(searchQuery)),
+    [searchQuery, harnessStepGroups]
   )
 
   const harnessStepsFiltered = useMemo(
-    () => harnessSteps.filter(harnessStep => harnessStep.identifier.includes(query)),
-    [query, harnessSteps]
+    () => harnessSteps.filter(harnessStep => harnessStep.identifier.includes(searchQuery)),
+    [searchQuery, harnessSteps]
   )
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery(query ?? '')
+  }
 
-  const onPreviousPage = useCallback(() => {
-    templatesSectionRef.current?.scrollIntoView()
-    setPage(xPrevPage, query)
-  }, [xPrevPage, query, setPage])
-
-  const onNextPage = useCallback(() => {
-    templatesSectionRef.current?.scrollIntoView()
-    setPage(xNextPage, query)
-  }, [xNextPage, query, setPage])
+  const goToPage = useCallback(
+    (page: number) => {
+      templatesSectionRef.current?.scrollIntoView()
+      setPage(page)
+    },
+    [setPage]
+  )
 
   return (
     <>
       <Header>
         <Title>Add Step</Title>
-        <Input
+        <SearchInput
+          size="sm"
+          autoFocus
+          id="search"
+          defaultValue={searchQuery}
           placeholder="Search"
-          onChange={value => {
-            setQuery(value.target.value)
-          }}
+          onChange={handleSearchQuery}
         />
       </Header>
       <Body>
@@ -130,14 +132,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
                 setRightDrawer(RightDrawer.Form)
               }}
             />
-            <Pagination
-              indeterminate
-              hasNext={xNextPage > 0}
-              hasPrevious={xPrevPage > 0}
-              onPrevious={onPreviousPage}
-              onNext={onNextPage}
-              t={t}
-            />
+            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={goToPage} t={t} />
           </>
         )}
 

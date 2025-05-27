@@ -6,11 +6,10 @@ import { templateStepForm } from './mocks/template-step-form'
 
 export const useTemplateListStore = (): ITemplateListStore => {
   const [templates, setTemplates] = useState<ITemplateListItem[] | null>([])
-  const [totalPages, setTotalPages] = useState(1)
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const setTemplatesData = (templates: ITemplateListItem[] | null, pagesCount: number) => {
+  const setTemplatesData = (templates: ITemplateListItem[] | null) => {
     setTemplates(templates)
-    setTotalPages(pagesCount)
   }
 
   const [page, setPage] = useState(1)
@@ -36,8 +35,9 @@ export const useTemplateListStore = (): ITemplateListStore => {
     setPage,
     setTemplatesData,
     templates,
-    totalPages,
-    xNextPage: page + 1,
-    xPrevPage: page - 1
+    totalItems: 10,
+    pageSize: 10,
+    searchQuery,
+    setSearchQuery
   }
 }

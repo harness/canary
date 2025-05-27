@@ -8,7 +8,7 @@
         },
         "compact": {
           "$type": "sizing",
-          "$value": "{size.9}"
+          "$value": "{size.10}"
         },
         "wide": {
           "$type": "sizing",
@@ -22,7 +22,7 @@
         },
         "compact": {
           "$type": "spacing",
-          "$value": "{spacing.2}"
+          "$value": "{spacing.2-half}"
         },
         "wide": {
           "$type": "spacing",

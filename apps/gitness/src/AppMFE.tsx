@@ -6,7 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Toast, Tooltip } from '@harnessio/ui/components'
-import { PortalProvider } from '@harnessio/ui/context'
+import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -17,6 +17,7 @@ import { queryClient } from './framework/queryClient'
 import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
+import { useTranslationStore } from './i18n/stores/i18n-store'
 import { mfeRoutes, repoRoutes } from './routes'
 import { decodeURIComponentIfValid } from './utils/path-utils'
 
@@ -159,6 +160,7 @@ export default function AppMFE({
   )
 
   const router = createBrowserRouter(routesToRender, { basename })
+  const { t } = useTranslationStore()
 
   return (
     <div ref={shadowRef}>
@@ -183,17 +185,19 @@ export default function AppMFE({
               >
                 <I18nextProvider i18n={i18n}>
                   <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                    <QueryClientProvider client={queryClient}>
-                      <Toast.Provider>
-                        <Tooltip.Provider>
-                          <ExitConfirmProvider>
-                            <NavigationProvider routes={routesToRender}>
-                              <RouterProvider router={router} />
-                            </NavigationProvider>
-                          </ExitConfirmProvider>
-                        </Tooltip.Provider>
-                      </Toast.Provider>
-                    </QueryClientProvider>
+                    <TranslationProvider t={t}>
+                      <QueryClientProvider client={queryClient}>
+                        <Toast.Provider>
+                          <Tooltip.Provider>
+                            <ExitConfirmProvider>
+                              <NavigationProvider routes={routesToRender}>
+                                <RouterProvider router={router} />
+                              </NavigationProvider>
+                            </ExitConfirmProvider>
+                          </Tooltip.Provider>
+                        </Toast.Provider>
+                      </QueryClientProvider>
+                    </TranslationProvider>
                   </ThemeProvider>
                 </I18nextProvider>
               </MFEContext.Provider>

@@ -80,14 +80,8 @@ class FigmaIconDownloader {
     const icons = []
 
     function traverseNode(node, depth = 0) {
-      // TODO: Design System: Check with Anastasia regarding the type
-      if (
-        node.type === 'COMPONENT' ||
-        node.type === 'FRAME' ||
-        node.type === 'GROUP' ||
-        node.type === 'VECTOR' ||
-        node.type === 'INSTANCE'
-      ) {
+      // Only component type needs to be downloaded
+      if (node.type === 'COMPONENT') {
         // Skip nested icons to avoid duplicates (only take top-level icons)
         if (depth <= 2) {
           icons.push({

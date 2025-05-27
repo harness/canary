@@ -141,7 +141,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   defaultValue={createdTokenData?.token}
                   readOnly
                   label={t('views:profileSettings.token', 'Token')}
-                  suffix={<CopyButton iconSize={14} name={createdTokenData?.token || ''} />}
+                  suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={createdTokenData?.token || ''} />}
                 />
               </Fieldset>
               <span className="text-2 text-cn-foreground-1">

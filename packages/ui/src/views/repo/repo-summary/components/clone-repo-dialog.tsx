@@ -83,10 +83,11 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           {currentTab === 'https' ? (
             <>
               <TextInput
+                className="truncate"
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
-                suffix={<CopyButton iconSize={14} name={httpsUrl} />}
+                suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
                 <span className="leading-snug text-cn-foreground-2">

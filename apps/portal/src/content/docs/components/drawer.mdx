@@ -75,12 +75,16 @@ import { DocsPage } from "@/components/docs-page";
         </Drawer.Body>
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-            <Button>Action</Button>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button>Action</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -137,12 +141,16 @@ return (
       </Drawer.Body>
 
       <Drawer.Footer>
-        <ButtonGroup>
-          <Drawer.Close asChild>
-            <Button variant="outline">Cancel</Button>
-          </Drawer.Close>
-          <Button>Submit</Button>
-        </ButtonGroup>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button>Action</Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Drawer.Close asChild>
+              <Button variant="outline">Cancel</Button>
+            </Drawer.Close>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       </Drawer.Footer>
     </Drawer.Content>
   </Drawer.Root>
@@ -266,9 +274,9 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
         </Drawer.Body>
 
         <Drawer.Footer>
-          <ButtonGroup>
+          <ButtonLayout>
             <Button>Action</Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -283,7 +291,7 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
 <DocsPage.ComponentExample
   client:only
   code={`
-  <ButtonGroup direction="vertical">
+  <ButtonLayout orientation="vertical">
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'sm' size</Button>
@@ -297,11 +305,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -319,11 +329,13 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -341,16 +353,18 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
 
-  </ButtonGroup>
+  </ButtonLayout>
 `}
 />
 
@@ -361,7 +375,7 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 <DocsPage.ComponentExample
   client:only
   code={`
-  <ButtonGroup direction="vertical">
+  <ButtonLayout orientation="vertical">
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'right' direction</Button>
@@ -375,11 +389,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -397,11 +413,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -419,11 +437,13 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -441,16 +461,18 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
         <Drawer.Body />
 
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Cancel</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
 
-  </ButtonGroup>
+  </ButtonLayout>
 `}
 />
 

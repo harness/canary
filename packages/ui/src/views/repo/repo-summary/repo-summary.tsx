@@ -1,6 +1,6 @@
 import {
   Button,
-  ButtonGroup,
+  ButtonLayout,
   Icon,
   ListActions,
   MarkdownViewer,
@@ -181,17 +181,17 @@ export function RepoSummaryView({
             */}
             <ListActions.Root>
               <ListActions.Left>
-                <ButtonGroup className="gap-2.5">
+                <ButtonLayout>
                   {branchSelectorRenderer}
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}
                     useTranslationStore={useTranslationStore}
                   />
-                </ButtonGroup>
+                </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
-                <ButtonGroup className="gap-2.5">
+                <ButtonLayout>
                   {refType === BranchSelectorTab.BRANCHES ? (
                     <Button variant="outline" asChild>
                       <Link
@@ -210,7 +210,7 @@ export function RepoSummaryView({
                     useTranslationStore={useTranslationStore}
                     tokenGenerationError={tokenGenerationError}
                   />
-                </ButtonGroup>
+                </ButtonLayout>
               </ListActions.Right>
             </ListActions.Root>
             {selectedBranchOrTag?.name !== repository?.default_branch && (

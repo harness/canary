@@ -2,7 +2,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -282,7 +282,7 @@ export function RepoImportMultiplePage({
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repositories' : 'Importing repositories...'}
@@ -290,7 +290,7 @@ export function RepoImportMultiplePage({
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

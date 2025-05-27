@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper } from '@/components'
 import { useRouterContext } from '@/context'
 import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -169,7 +169,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         </div>
         <Fieldset className="mt-5">
           <ControlGroup>
-            <ButtonGroup>
+            <ButtonLayout horizontalAlign="start">
               <Button type="submit" disabled={isLoading}>
                 {!isLoading
                   ? presetRuleData
@@ -182,7 +182,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
               <Button type="button" variant="outline">
                 <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
               </Button>
-            </ButtonGroup>
+            </ButtonLayout>
           </ControlGroup>
         </Fieldset>
 

@@ -4,7 +4,7 @@ import { secretsFormDefinition } from '@utils/secrets/secrets-form-schema'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Button, ButtonGroup, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
   ArrayFormInput,
   BooleanFormInput,
@@ -181,12 +181,16 @@ export const SecretsPage = ({
             {renderSecretContent()}
           </Drawer.Body>
           <Drawer.Footer>
-            <ButtonGroup>
-              <Button variant="outline" onClick={handleCancel}>
-                Back
-              </Button>
-              <Button onClick={selectedType === SecretType.NEW ? handleSubmitEntityForm : noop}>Save</Button>
-            </ButtonGroup>
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
+                <Button onClick={selectedType === SecretType.NEW ? handleSubmitEntityForm : noop}>Save</Button>
+              </ButtonLayout.Primary>
+              <ButtonLayout.Secondary>
+                <Button variant="outline" onClick={handleCancel}>
+                  Back
+                </Button>
+              </ButtonLayout.Secondary>
+            </ButtonLayout.Root>
           </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>

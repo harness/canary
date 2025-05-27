@@ -1,6 +1,6 @@
 import { ElementType, ReactNode, useMemo, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout, Input } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Input } from '@/components'
 import { TranslationStore } from '@/views'
 
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
@@ -91,11 +91,13 @@ export const ConnectorsPalette = ({
       </Body>
       {isDrawer && (
         <Drawer.Footer>
-          <ButtonGroup>
-            <Button variant="outline" onClick={requestClose}>
-              Cancel
-            </Button>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Button variant="outline" onClick={requestClose}>
+                Cancel
+              </Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       )}
       {children}

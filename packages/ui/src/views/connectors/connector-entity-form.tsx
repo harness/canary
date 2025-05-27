@@ -1,6 +1,6 @@
 import { ElementType, FC, Fragment, useEffect, useMemo, useState } from 'react'
 
-import { Alert, Button, ButtonGroup, Drawer, EntityFormLayout } from '@/components'
+import { Alert, Button, ButtonLayout, Drawer, EntityFormLayout } from '@/components'
 import { TranslationStore } from '@/views'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
@@ -168,14 +168,18 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
             </EntityFormLayout.Form>
           </Body>
           <Footer>
-            <ButtonGroup>
+            <ButtonLayout.Root>
               {isCreate && !!onBack && (
-                <Button variant="outline" onClick={onBack}>
-                  Back
-                </Button>
+                <ButtonLayout.Secondary>
+                  <Button variant="outline" onClick={onBack}>
+                    Back
+                  </Button>
+                </ButtonLayout.Secondary>
               )}
-              <Button onClick={() => rootForm.submitForm()}>{isCreate ? 'Submit' : 'Apply changes'}</Button>
-            </ButtonGroup>
+              <ButtonLayout.Primary>
+                <Button onClick={() => rootForm.submitForm()}>{isCreate ? 'Submit' : 'Apply changes'}</Button>
+              </ButtonLayout.Primary>
+            </ButtonLayout.Root>
           </Footer>
         </Content>
       )}

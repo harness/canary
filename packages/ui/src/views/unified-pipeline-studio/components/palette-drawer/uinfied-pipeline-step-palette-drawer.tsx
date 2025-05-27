@@ -1,6 +1,6 @@
 import { ElementType, useCallback, useMemo, useRef, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Input, Pagination, Spacer } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
@@ -144,11 +144,13 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         <Spacer size={8} />
       </Body>
       <Footer>
-        <ButtonGroup>
-          <Button variant="secondary" onClick={requestClose}>
-            Cancel
-          </Button>
-        </ButtonGroup>
+        <ButtonLayout.Root>
+          <ButtonLayout.Secondary>
+            <Button variant="secondary" onClick={requestClose}>
+              Cancel
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       </Footer>
     </>
   )

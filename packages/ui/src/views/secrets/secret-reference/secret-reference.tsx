@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, EntityFormLayout, Icon, Spacer, StackedList } from '@/components'
+import { Button, ButtonLayout, EntityFormLayout, Icon, Spacer, StackedList } from '@/components'
 import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
@@ -91,12 +91,12 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
       />
 
       {!isDrawer && (
-        <ButtonGroup className="flex flex-row justify-between">
+        <ButtonLayout horizontalAlign="start">
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
           <Button type="submit">Save</Button>
-        </ButtonGroup>
+        </ButtonLayout>
       )}
     </div>
   )

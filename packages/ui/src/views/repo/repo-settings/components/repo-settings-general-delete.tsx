@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonGroup, Spacer, Text } from '@/components'
+import { Button, ButtonLayout, Spacer, Text } from '@/components'
 import { ErrorTypes, TranslationStore } from '@/views'
 
 export const RepoSettingsGeneralDelete: FC<{
@@ -21,11 +21,11 @@ export const RepoSettingsGeneralDelete: FC<{
           'This will permanently delete this repository, and everything contained in it.'
         )}
       </span>
-      <ButtonGroup className="mt-7">
+      <ButtonLayout horizontalAlign="start" className="mt-7">
         <Button type="button" variant="primary" theme="danger" onClick={openRepoAlertDeleteDialog}>
           {t('views:repos.deleteRepoButton', 'Delete repository')}
         </Button>
-      </ButtonGroup>
+      </ButtonLayout>
       {apiError && apiError.type === ErrorTypes.DELETE_REPO && (
         <>
           <Spacer size={2} />

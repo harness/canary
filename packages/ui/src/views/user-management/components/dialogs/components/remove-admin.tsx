@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, ControlGroup, Dialog, Fieldset } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Dialog, Fieldset } from '@/components'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -39,7 +39,7 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
         </Dialog.Header>
 
         {/*  TODO: Design system: Update this example with FormWrapper
-              Check whether form is required or not 
+              Check whether form is required or not
          */}
         <form className="flex flex-col gap-y-7" onSubmit={handleSubmit} id="remove-admin-form">
           <Fieldset>
@@ -66,7 +66,7 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
         </form>
 
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
+          <ButtonLayout>
             <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUserAdmin}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Button>
@@ -84,7 +84,7 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
                   ? t('views:userManagement.removeAdmin.confirm', 'Yes, remove admin')
                   : t('views:userManagement.grantAdmin.confirm', 'Yes, grant admin')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

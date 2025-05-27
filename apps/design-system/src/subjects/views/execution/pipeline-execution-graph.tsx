@@ -10,7 +10,7 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Button, ButtonGroup, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 // *****************************************************
 // 1. Import CSS
@@ -139,17 +139,23 @@ export function ApprovalStepNodeComponent({
           <Drawer.Description>Approve/Reject step execution</Drawer.Description>
         </Drawer.Header>
         <Drawer.Body>
-          <ButtonGroup>
-            <Button type="submit">Approve</Button>
-            <Button variant="secondary">Cancel</Button>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button type="submit">Approve</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Button variant="secondary">Cancel</Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Body>
         <Drawer.Footer>
-          <ButtonGroup>
-            <Drawer.Close asChild>
-              <Button variant="outline">Close</Button>
-            </Drawer.Close>
-          </ButtonGroup>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Close</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>

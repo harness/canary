@@ -3,7 +3,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -202,14 +202,14 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import project' : 'Importing project...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

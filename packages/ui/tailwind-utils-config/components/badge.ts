@@ -56,14 +56,13 @@ function createBadgeVariantStyles() {
 
 export default {
   '.cn-badge': {
-    height: 'var(--cn-badge-size-default)',
     paddingBlock: 'var(--cn-badge-default-py)',
     paddingInline: 'var(--cn-badge-default-px)',
+    gap: 'var(--cn-badge-default-gap)',
     '@apply select-none font-body-single-line-normal truncate': '',
 
     /** Size */
     '&:where(.cn-badge-sm)': {
-      height: 'var(--cn-badge-size-sm)',
       gap: 'var(--cn-badge-sm-gap)',
       paddingBlock: 'var(--cn-badge-sm-py)',
       paddingInline: 'var(--cn-badge-sm-px)',
@@ -76,9 +75,21 @@ export default {
     },
 
     '&:where(:not(.cn-badge-status, .cn-badge-ghost))': {
+      height: 'var(--cn-badge-size-default)',
       borderRadius: 'var(--cn-badge-radius)',
       border: 'var(--cn-badge-border) solid var(--cn-set-gray-surface-border)',
-      gap: 'var(--cn-badge-default-gap)'
+
+      '&:where(.cn-badge-sm)': {
+        height: 'var(--cn-badge-size-sm)'
+      }
+    },
+
+    '&:where(.cn-badge-status, .cn-badge-ghost)': {
+      '@apply font-body-normal': '',
+
+      '&:where(.cn-badge-sm)': {
+        '@apply font-caption-normal': ''
+      }
     },
 
     '&:where(.cn-badge-counter)': {
@@ -102,6 +113,11 @@ export default {
         height: 'var(--cn-badge-indicator-size-default)',
         backgroundColor: 'var(--cn-set-gray-solid-bg)'
       }
+    },
+
+    ':where(.cn-badge-icon)': {
+      width: 'var(--cn-icon-size-sm)',
+      height: 'var(--cn-icon-size-sm)'
     },
 
     /** Variants */

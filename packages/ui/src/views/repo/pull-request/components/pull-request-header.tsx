@@ -93,8 +93,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <StatusBadge variant="outline" theme={stateObject.theme}>
-            <Icon name={stateObject.icon as IconType} size={13} />
+          <StatusBadge icon={stateObject.icon} variant="outline" theme={stateObject.theme}>
             {stateObject.text}
           </StatusBadge>
 

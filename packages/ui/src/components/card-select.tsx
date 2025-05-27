@@ -138,6 +138,18 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         )}
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
+        role="radio"
+        aria-checked={checked}
+        aria-disabled={isDisabled}
+        tabIndex={isDisabled ? -1 : 0}
+        onKeyDown={e => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault()
+            if (!isDisabled) {
+              onValueChange(value)
+            }
+          }
+        }}
       >
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
@@ -151,6 +163,8 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
           type={type === 'multiple' ? 'checkbox' : 'radio'}
           name={name}
           className="cn-card-select-hidden-input"
+          aria-hidden="true"
+          tabIndex={-1}
           value={String(value)}
           checked={checked}
           disabled={isDisabled}

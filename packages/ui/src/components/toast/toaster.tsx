@@ -8,7 +8,7 @@ export function Toaster() {
     <>
       {toasts.map(({ id, title, description, action, variant, showIcon = true, ...props }) => (
         <Toast.Root key={id} variant={variant} {...props}>
-          <Layout.Horizontal gap="space-x-2.5" className="items-center">
+          <Layout.Horizontal gap="xs" align="center">
             {showIcon && (
               <>
                 {variant === 'success' && <Icon name="checkbox" className="text-icons-success" size={12} />}
@@ -18,7 +18,7 @@ export function Toaster() {
                 {variant === 'failed' && <Icon name="cross" className="text-icons-danger" size={12} />}
               </>
             )}
-            <Layout.Horizontal gap="space-x-1">
+            <Layout.Horizontal gap="xs">
               {!!title && <Toast.Title>{title}</Toast.Title>}
               {!!description && <Toast.Description>{description}</Toast.Description>}
             </Layout.Horizontal>

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 
 import { Icon } from '@components/icon'
-import { Accordion, FormCaption } from '@components/index'
+import { Accordion, FormCaption, Layout } from '@components/index'
 import { get } from 'lodash-es'
 
 import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
 
 import { InputLabel } from './common/InputLabel'
-import { Layout } from './common/Layout'
 
 export interface GroupFormInputConfig {
   inputType: 'group'
@@ -67,7 +66,7 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInput
     >
       <Accordion.Item value={'group'}>
         <Accordion.Trigger>
-          <Layout.Horizontal className="items-center">
+          <Layout.Horizontal align="center">
             <InputLabel label={label} required={required} className="mb-0" />
             <FormCaption>{description}</FormCaption>
             {allowShowWarning && groupError ? (

@@ -22,7 +22,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           Back to Connectors
         </Link>
       ) : null}
-      <Layout.Horizontal gap="space-x-2" className="items-center">
+      <Layout.Horizontal gap="xs" align="center">
         <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>
@@ -32,7 +32,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         </Text>
       ) : null}
       {connectorDetails.tags ? (
-        <Layout.Horizontal gap="space-x-2" className="mt-5">
+        <Layout.Horizontal gap="xs" className="mt-5">
           <Text className="text-cn-foreground-4">Labels:</Text>
           {Object.entries(connectorDetails.tags || {}).map(([key, value]) => (
             <StatusBadge key={`${key}-${value}`} variant="outline" theme="merged" size="sm">

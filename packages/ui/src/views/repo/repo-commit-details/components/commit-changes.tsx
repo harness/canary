@@ -99,7 +99,7 @@ const CommitsAccordion: FC<{
             <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
+                  <Layout.Vertical align="center" className="w-full py-5">
                     <Button
                       className="text-cn-foreground-accent"
                       variant="link"

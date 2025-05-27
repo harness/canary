@@ -17,7 +17,7 @@ interface StepInfoProps {
 const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
-      <Layout.Horizontal className="gap-x-1">
+      <Layout.Horizontal gap="xs">
         <h3 className="flex-none text-2 font-medium text-cn-foreground-1">{item.step}</h3>
         <Layout.Vertical className="w-[90%] max-w-full">
           <p className="text-2 text-cn-foreground-2">{item.description}</p>
@@ -27,7 +27,7 @@ const StepInfo: FC<StepInfoProps> = item => {
               '!my-1': item.comment
             })}
           >
-            <Layout.Horizontal className="items-center justify-between">
+            <Layout.Horizontal align="center" justify="between">
               <p>{item.code ? item.code : item.comment}</p>
               {!!item.code && <CopyButton name={item.code} />}
             </Layout.Horizontal>
@@ -130,7 +130,7 @@ const PullRequestMergeSection = ({
               {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
               {isConflicted && (
                 <Layout.Vertical className="ml-6">
-                  <p className="text-14 text-foreground-4 font-normal">
+                  <p className="text-14 text-cn-foreground-4 font-normal">
                     Use the&nbsp;
                     <Button variant="link" onClick={handleCommandLineClick} asChild>
                       <span

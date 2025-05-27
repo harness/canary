@@ -106,7 +106,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
             <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
+                  <Layout.Vertical align="center" className="w-full py-5">
                     <Button variant="link" size="sm" aria-label="show diff" onClick={() => setShowHiddenDiff(true)}>
                       {_ts('views:pullRequests.showDiff')}
                     </Button>

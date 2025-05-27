@@ -124,7 +124,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             description: !forced ? (
               <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
             ) : (
-              <Layout.Horizontal gap="gap-x-1.5" className="items-center">
+              <Layout.Horizontal gap="xs" align="center">
                 <span>forced pushed</span>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(old)} />
                 <span>to</span>

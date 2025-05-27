@@ -81,8 +81,8 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
 
   return (
     <Tabs.Root variant="pills" defaultValue={StepExecutionTab.LOG} className="size-full">
-      <Layout.Vertical className="space-y-0">
-        <Layout.Horizontal className="flex justify-between py-2.5 pl-5 pr-3.5">
+      <Layout.Vertical>
+        <Layout.Horizontal justify="between" className="py-2.5 pl-5 pr-3.5">
           <Tabs.List className="h-8 w-fit gap-x-0.5 border border-cn-borders-2 bg-cn-background-3">
             <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.LOG}>
               Logs

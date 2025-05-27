@@ -232,7 +232,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
       </Accordion.Trigger>
 
       <Accordion.Content>
-        <Layout.Vertical gap={'gap-y-2'}>
+        <Layout.Vertical gap="xs">
           {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
             (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (

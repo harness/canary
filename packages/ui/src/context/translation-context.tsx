@@ -1,51 +1,38 @@
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 
-type Substitutions = Record<string, string | undefined>
+type Options = Record<string, any>
 
-export type TFunctionWithFallback = (key: string, fallback?: string, substitutions?: Substitutions) => string
+export type TFunction = (key: string, options?: Options) => string
+export type TFunctionWithFallback = (key: string, fallback?: string, options?: Options) => string
 
 interface TranslationPayload {
   t: TFunctionWithFallback
 }
 
-type TranslationProviderProps = PropsWithChildren<{
-  t?: TFunctionWithFallback
+type TranslationProps = PropsWithChildren<{
+  t?: TFunction
 }>
 
-const defaultTranslator: TFunctionWithFallback = (_key, fallback = '') => fallback
-
-const TranslationContext = createContext<TranslationPayload>({
-  t: defaultTranslator
-})
-
-const escapeHtml = (unsafe: string): string =>
-  unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-
-const applySubstitutions = (template: string, substitutions?: Substitutions): string => {
-  if (!substitutions) return template
-
-  return template.replace(/{{(.*?)}}/g, (_, key: string) => escapeHtml(substitutions[key.trim()] ?? ''))
+function defaultTranslator(_: string, options?: Options): string {
+  return options?.defaultValue ?? ''
 }
 
-export function TranslationProvider({ t: rawTranslator = defaultTranslator, children }: TranslationProviderProps) {
-  const payload = useMemo<TranslationPayload>(
-    () => ({
-      t: (key, fallback = '', substitutions) => {
-        const translation = rawTranslator(key, fallback)
-        return applySubstitutions(translation, substitutions)
-      }
-    }),
-    [rawTranslator]
-  )
+const TranslationContext = createContext<TranslationPayload>({
+  t: (key, fallback = '', options) => defaultTranslator(key, { ...options, defaultValue: fallback })
+})
+
+export const getT = (translator: TFunction) => {
+  return {
+    t: (key: string, fallback: string = '', options?: Options) =>
+      translator(key, { ...options, defaultValue: fallback }) || fallback
+  }
+}
+
+export function TranslationProvider({ t: translator = defaultTranslator, children }: TranslationProps) {
+  const payload = useMemo(() => getT(translator), [translator])
 
   return <TranslationContext.Provider value={payload}>{children}</TranslationContext.Provider>
 }
-
 export function useTranslation(): TranslationPayload {
   return useContext(TranslationContext)
 }

@@ -19,15 +19,12 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
       inputType: 'text',
       path: `${stepIdentifier}.container.image`,
       label: 'Image',
-      required: true,
       outputTransform: unsetEmptyStringOutputTransformer()
     },
     {
       inputType: 'text',
       path: `${stepIdentifier}.container.connector`,
       label: 'Connector',
-      required: true,
-
       outputTransform: unsetEmptyStringOutputTransformer()
     },
     {
@@ -37,7 +34,6 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
       inputs: [
         {
           inputType: 'text',
-          required: true,
 
           path: `${stepIdentifier}.container.credentials.username`,
           label: 'Username',
@@ -45,8 +41,6 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
         },
         {
           inputType: 'text',
-          required: true,
-
           path: `${stepIdentifier}.container.credentials.password`,
           label: 'Password',
           outputTransform: unsetEmptyStringOutputTransformer()
@@ -58,8 +52,6 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
       inputType: 'select',
       path: `${stepIdentifier}.container.pull`,
       label: 'Pull',
-      required: true,
-
       inputConfig: {
         options: [
           { label: 'Always', value: 'always' },
@@ -72,8 +64,6 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
       inputType: 'array',
       path: `${stepIdentifier}.container.entrypoint`,
       label: 'Entrypoint',
-      required: true,
-
       inputConfig: {
         input: {
           inputType: 'text',
@@ -85,8 +75,6 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
     },
     {
       inputType: 'array',
-      required: true,
-
       path: `${stepIdentifier}.container.args`,
       label: 'Args',
       inputConfig: {
@@ -100,8 +88,6 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
     },
     {
       inputType: 'array',
-      required: true,
-
       path: `${stepIdentifier}.container.dns`,
       label: 'DNS',
       inputConfig: {
@@ -123,16 +109,12 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
           {
             inputType: 'text',
             relativePath: 'key',
-            required: true,
-
             label: 'Key',
             outputTransform: unsetEmptyStringOutputTransformer()
           },
           {
             inputType: 'text',
             relativePath: 'value',
-            required: true,
-
             label: 'Value',
             outputTransform: unsetEmptyStringOutputTransformer()
           }
@@ -164,15 +146,12 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
     },
     {
       inputType: 'text',
-      required: true,
-
       path: `${stepIdentifier}.container.network-mode`,
       label: 'Network mode',
       outputTransform: unsetEmptyStringOutputTransformer()
     },
     {
       inputType: 'boolean',
-      required: true,
       path: `${stepIdentifier}.container.privileged`,
       label: 'Privileged',
       description: 'Description shod be caption'

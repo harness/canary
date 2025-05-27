@@ -128,6 +128,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
     const checked = isChecked(value, currentValue)
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <label
         ref={ref}
         className={cn(
@@ -141,6 +142,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         aria-checked={checked}
         aria-disabled={isDisabled}
         tabIndex={isDisabled ? -1 : 0}
+        role={type === 'multiple' ? 'checkbox' : 'radio'}
         onKeyDown={e => {
           if (e.key === ' ' || e.key === 'Enter') {
             e.preventDefault()

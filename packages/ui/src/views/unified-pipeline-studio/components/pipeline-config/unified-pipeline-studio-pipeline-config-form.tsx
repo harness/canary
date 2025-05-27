@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -23,7 +23,7 @@ const componentsMap: Record<
     Header: ElementType
     Title: ElementType
     Description: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
@@ -32,7 +32,7 @@ const componentsMap: Record<
     Header: Drawer.Header,
     Title: Drawer.Title,
     Description: Drawer.Description,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
@@ -40,7 +40,7 @@ const componentsMap: Record<
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
-    Inner: Fragment,
+    Body: Fragment,
     Footer: EntityFormLayout.Footer
   }
 }
@@ -52,7 +52,7 @@ interface UnifiedPipelineStudioPipelineConfigFormProps {
 
 export const UnifiedPipelineStudioPipelineConfigForm = (props: UnifiedPipelineStudioPipelineConfigFormProps) => {
   const { requestClose, isDrawer = false } = props
-  const { Content, Header, Title, Description, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Content, Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     editPipelineIntention,
@@ -105,23 +105,23 @@ export const UnifiedPipelineStudioPipelineConfigForm = (props: UnifiedPipelineSt
           <Header>
             <Title>Edit Pipeline</Title>
             <Description>Configure a pipeline.</Description>
-            <ButtonGroup>
+            <ButtonLayout.Root>
               <Button variant={'ai'}>AI Autofill</Button>
               {/* <Button variant={'outline'}>Use Template</Button> */}
-            </ButtonGroup>
+            </ButtonLayout.Root>
           </Header>
-          <Inner>
+          <Body>
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={pipelineFormDefinition} />
             </EntityFormLayout.Form>
-          </Inner>
+          </Body>
           <Footer>
-            <ButtonGroup>
+            <ButtonLayout.Root>
               <Button onClick={() => rootForm.submitForm()}>Submit</Button>
               <Button variant="secondary" onClick={requestClose}>
                 Cancel
               </Button>
-            </ButtonGroup>
+            </ButtonLayout.Root>
           </Footer>
         </Content>
       )}

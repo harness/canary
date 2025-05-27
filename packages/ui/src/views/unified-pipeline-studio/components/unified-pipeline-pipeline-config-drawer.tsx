@@ -8,7 +8,7 @@ export const UnifiedPipelinePipelineConfigDrawer = () => {
   const { rightDrawer, setRightDrawer, clearRightDrawerData } = useUnifiedPipelineStudioContext()
 
   return (
-    <Drawer.Lazy
+    <Drawer.Root
       direction="right"
       open={rightDrawer === RightDrawer.PipelineConfig}
       onOpenChange={open => {
@@ -27,6 +27,6 @@ export const UnifiedPipelinePipelineConfigDrawer = () => {
           isDrawer
         />
       </Drawer.Content>
-    </Drawer.Lazy>
+    </Drawer.Root>
   )
 }

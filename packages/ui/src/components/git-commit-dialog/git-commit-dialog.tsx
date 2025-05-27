@@ -161,7 +161,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 label={
                   <span className="flex items-center gap-2">
                     Commit directly to the
-                    <Tag size="sm" icon="branch-2" value={currentBranch} showIcon />
+                    <Tag size="sm" value={currentBranch} icon="branch-2" showIcon />
                     branch
                   </span>
                 }

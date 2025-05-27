@@ -138,7 +138,6 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         )}
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
-        role="radio"
         aria-checked={checked}
         aria-disabled={isDisabled}
         tabIndex={isDisabled ? -1 : 0}

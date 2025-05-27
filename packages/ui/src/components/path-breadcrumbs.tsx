@@ -1,6 +1,6 @@
 import { ChangeEvent, Fragment } from 'react'
 
-import { Breadcrumb, Icon, Tag, TextInput } from '@/components'
+import { Breadcrumb, Tag, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface InputPathBreadcrumbItemProps {

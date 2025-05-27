@@ -22,6 +22,14 @@ export default {
 
     backgroundColor: `var(--cn-comp-selection-unselected-bg)`,
     borderColor: `var(--cn-comp-selection-unselected-border)`,
+    '&:hover': {
+      backgroundColor: `var(--cn-comp-selection-unselected-bg-hover)`,
+      borderColor: `var(--cn-comp-selection-unselected-border-hover)`,
+
+      '.cn-switch-thumb:not([disabled]):not([data-state=checked])': {
+        backgroundColor: `var(--cn-comp-selection-unselected-item-hover)`
+      }
+    },
 
     '&:where([disabled])': {
       backgroundColor: `var(--cn-state-disabled-bg)`,
@@ -31,7 +39,12 @@ export default {
 
     '&:where([data-state=checked])': {
       backgroundColor: `var(--cn-comp-selection-selected-bg)`,
-      borderColor: `var(--cn-comp-selection-selected-border)`
+      borderColor: `var(--cn-comp-selection-selected-border)`,
+
+      '&:hover': {
+        backgroundColor: `var(--cn-comp-selection-selected-bg-hover)`,
+        borderColor: `var(--cn-comp-selection-selected-border-hover)`
+      }
     },
 
     '&:where([data-state=checked][disabled])': {
@@ -51,22 +64,18 @@ export default {
     'transition-duration': '100ms',
 
     backgroundColor: `var(--cn-comp-selection-unselected-item)`,
-    borderColor: `var(--cn-comp-selection-unselected-border)`,
 
     '&:where([disabled])': {
-      backgroundColor: `var(--cn-state-disabled-text)`,
-      borderColor: `var(--cn-state-disabled-border)`
+      backgroundColor: `var(--cn-state-disabled-text)`
     },
 
     '&:where([data-state=checked])': {
       backgroundColor: `var(--cn-comp-selection-selected-item)`,
-      borderColor: `var(--cn-comp-selection-selected-border)`,
       transform: 'translateX(var(--cn-size-4))'
     },
 
     '&:where([data-state=checked][disabled])': {
-      backgroundColor: `var(--cn-state-disabled-text-selected)`,
-      borderColor: `var(--cn-state-disabled-border-selected)`
+      backgroundColor: `var(--cn-state-disabled-text-selected)`
     }
   },
 

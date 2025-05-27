@@ -91,7 +91,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="font-medium text-cn-foreground-1">
+      <h2 className="text-cn-foreground-1 font-medium">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -352,7 +352,7 @@ const PullRequestPanel = ({
                     </SplitButton>
                   ) : (
                     <Button
-                      disabled={!checkboxBypass && prPanelData.ruleViolation && !isClosed}
+                      disabled={(!checkboxBypass && prPanelData.ruleViolation && !isClosed) || showRestoreBranchButton}
                       onClick={actions[0].action}
                     >
                       Open for review

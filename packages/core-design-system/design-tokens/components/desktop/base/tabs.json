@@ -8,6 +8,10 @@
       "px": {
         "$type": "spacing",
         "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       }
     },
     "radius": {

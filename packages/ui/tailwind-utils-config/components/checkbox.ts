@@ -38,7 +38,9 @@ export default {
     '&:where(.cn-checkbox-error:where(:not([data-state=checked])))': {
       borderColor: 'var(--cn-border-danger)',
       boxShadow: `var(--cn-ring-danger)`,
-      '&:where(:hover)': {
+      '&:hover': {
+        backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+        borderColor: 'var(--cn-border-danger)',
         boxShadow: `var(--cn-ring-danger-hover)`
       }
     },
@@ -52,7 +54,6 @@ export default {
     '&:where([data-state=checked])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
       borderColor: 'var(--cn-comp-selection-selected-border)',
-
       '&:hover': {
         backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
         borderColor: 'var(--cn-comp-selection-selected-border-hover)'
@@ -67,7 +68,6 @@ export default {
     '&:where([data-state=indeterminate])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
       borderColor: 'var(--cn-comp-selection-selected-border)',
-
       '&:hover': {
         backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
         borderColor: 'var(--cn-comp-selection-selected-border-hover)'
@@ -77,7 +77,9 @@ export default {
         backgroundColor: 'var(--cn-set-red-solid-bg)',
         borderColor: 'var(--cn-border-danger)',
         boxShadow: `var(--cn-ring-danger)`,
-        '&:where(:hover)': {
+        '&:hover': {
+          backgroundColor: 'var(--cn-set-red-solid-bg)',
+          borderColor: 'var(--cn-border-danger)',
           boxShadow: `var(--cn-ring-danger-hover)`
         }
       }

@@ -10,11 +10,10 @@ export interface InformerProps extends Omit<TooltipProps, 'children'> {
   iconProps?: Omit<IconProps, 'name'> & { name?: IconProps['name'] }
 }
 
-// TODO(@andrew.koreikin): Temporary solution. The Informer component isn't finished in the design system.
 export const Informer = ({ className, disabled, iconProps, ...props }: InformerProps) => (
   <Tooltip {...props}>
-    {/*<Tooltip.Trigger className={cn({ 'pointer-events-none': disabled }, className)} disabled={disabled}>*/}
-    <Icon name="info-circle" {...iconProps} />
-    {/*</Tooltip.Trigger>*/}
+    <button className={cn({ 'pointer-events-none': disabled }, className)} disabled={disabled}>
+      <Icon name="info-circle" {...iconProps} />
+    </button>
   </Tooltip>
 )

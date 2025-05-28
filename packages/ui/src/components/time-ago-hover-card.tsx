@@ -46,7 +46,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
     }
 
     return (
-      <div className="grid min-w-80 grid-cols-[auto_1fr_auto] gap-x-3 gap-y-2 whitespace-nowrap p-2.5 text-sm">
+      <div className="grid min-w-80 grid-cols-[auto_1fr_auto] gap-x-3 gap-y-2 whitespace-nowrap py-2 text-sm">
         {(['UTC', 'Local'] as const).map(zone => {
           const date = zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate
           const time = zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime
@@ -69,11 +69,9 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
 
   return (
     <Tooltip content={content}>
-      {/*<Tooltip.Trigger className="text-cn-foreground-2 data-[state=delayed-open]:text-cn-foreground-1">*/}
       <time className="mx-1 h-auto p-0 text-cn-foreground-2 data-[state=delayed-open]:text-cn-foreground-1">
         {formattedDate}
       </time>
-      {/*</Tooltip.Trigger>*/}
     </Tooltip>
   )
 }

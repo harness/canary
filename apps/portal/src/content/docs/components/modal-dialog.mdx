@@ -4,38 +4,38 @@ description: A dialog overlay that appears above the page content
 beta: true
 ---
 
-The `ModalDialog` component provides an accessible and customizable dialog overlay for displaying important content or requesting user input. It supports different sizes, themes, and can include icons or logos in the header.
+The `ModalDialog` component provides an accessible and customizable dialog overlay for displaying important content or requesting user input. It supports different sizes, themes, and can include an icon or logo in the header.
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-4">
-  <ModalDialog.Root>
+  code={`<ModalDialog.Root>
     <ModalDialog.Trigger asChild>
       <Button>Open Dialog</Button>
     </ModalDialog.Trigger>
     <ModalDialog.Content>
       <ModalDialog.Header>
-        <ModalDialog.Title>Basic Dialog</ModalDialog.Title>
-        <ModalDialog.Description>A simple dialog with title, description and body</ModalDialog.Description>
+        <ModalDialog.Title>Delete Environment</ModalDialog.Title>
+        <ModalDialog.Description>Please confirm that you want to delete this environment</ModalDialog.Description>
       </ModalDialog.Header>
       <ModalDialog.Body>
         <p className="font-body-normal bg-pink-100/80 p-4 rounded-lg text-black">
-          This is the body of the dialog. You can include any content here such as text, forms, or images and style it however you like, as this example does with a pink background.
+          You are about to delete the <strong>Production</strong> environment. This action cannot be undone and will result in:
           <br /><br />
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          <br /><br />
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <ul>
+            <li>• Termination of all running services and deployments</li>
+            <li>• Removal of all configurations and variables</li>
+            <li>• Deletion of all associated CI/CD pipelines and their history</li>
+          </ul>
         </p>
       </ModalDialog.Body>
       <ModalDialog.Footer>
-        <ModalDialog.Close>Close</ModalDialog.Close>
-        <Button variant="primary">Confirm</Button>
+        <ModalDialog.Close>Cancel</ModalDialog.Close>
+        <Button variant="primary">Delete Environment</Button>
       </ModalDialog.Footer>
     </ModalDialog.Content>
-  </ModalDialog.Root>
-</div>`}
+  </ModalDialog.Root>`}
 />
 
 ## Usage

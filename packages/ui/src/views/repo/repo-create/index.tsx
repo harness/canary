@@ -20,11 +20,15 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { isEmpty } from 'lodash-es'
 import { z } from 'zod'
 
 // Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide a name' }),
+  name: z
+    .string()
+    .min(1, { message: 'Please provide a name' })
+    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain the following characters [a-zA-Z0-9-_.]' }),
   description: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),
@@ -105,7 +109,7 @@ export function RepoCreatePage({
           {t('views:repos.createNewRepo', 'Create a new repository')}
         </Text>
         <Spacer size={2.5} />
-        <Text className="max-w-[476px] text-cn-foreground-2" size={2} as="p">
+        <Text className="text-cn-foreground-2 max-w-[476px]" size={2} as="p">
           {t(
             'views:repos.repoContains',
             'A repository contains all project files, including the revision history. Already have a project repository elsewhere?'
@@ -202,7 +206,7 @@ export function RepoCreatePage({
           {/* README */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
+              <Text className="text-cn-foreground-2 leading-none" size={2}>
                 Initialize this repository with
               </Text>
               <div className="mt-6">
@@ -230,7 +234,7 @@ export function RepoCreatePage({
             <ControlGroup>
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
-                <Button type="submit" disabled={isLoading}>
+                <Button type="submit" disabled={isLoading || !isEmpty(errors)}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={onFormCancel}>

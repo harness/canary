@@ -27,6 +27,10 @@ export default {
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: '50%',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+    '&:where(:not([disabled])):hover': {
+      backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
+      borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
+    },
 
     '&:where([disabled])': {
       backgroundColor: 'var(--cn-state-disabled-bg)',
@@ -36,7 +40,12 @@ export default {
 
     '&:where([data-state=checked])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
-      borderColor: 'var(--cn-comp-selection-selected-border)'
+      borderColor: 'var(--cn-comp-selection-selected-border)',
+
+      '&:where(:not([disabled])):hover': {
+        backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
+        borderColor: 'var(--cn-comp-selection-selected-border-hover)'
+      }
     },
 
     '&:where([data-state=checked][disabled])': {

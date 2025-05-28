@@ -14,7 +14,8 @@ import {
   Link,
   Message,
   MessageTheme,
-  Radio
+  Radio,
+  Tag
 } from '@/components'
 import { UsererrorError, ViolationState } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -158,18 +159,9 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 className="mt-px"
                 value={CommitToGitRefOption.DIRECTLY}
                 label={
-                  <span>
+                  <span className="flex items-center gap-2">
                     Commit directly to the
-                    {/* TODO: Design system: Add correct component for branch here */}
-                    <span
-                      className="
-                        text-cn-foreground-1 before:bg-cn-background-8 relative mx-1.5 inline-flex gap-1
-                        px-2.5 before:absolute before:-top-1 before:left-0 before:z-[-1] before:h-6 before:w-full before:rounded
-                      "
-                    >
-                      <Icon className="text-icons-9 translate-y-0.5" name="branch" size={14} />
-                      {currentBranch}
-                    </span>
+                    <Tag size="sm" value={currentBranch} icon="branch-2" showIcon />
                     branch
                   </span>
                 }

@@ -1,6 +1,6 @@
 import { ChangeEvent, Fragment } from 'react'
 
-import { Breadcrumb, Icon, TextInput } from '@/components'
+import { Breadcrumb, Tag, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface InputPathBreadcrumbItemProps {
@@ -42,10 +42,7 @@ const InputPathBreadcrumbItem = ({
         autoFocus={!!isNew}
       />
       <span>in</span>
-      <span className="flex h-6 items-center gap-1 rounded bg-cn-background-8 px-2.5 text-cn-foreground-1">
-        <Icon className="text-icons-9" name="branch" size={14} />
-        {gitRefName}
-      </span>
+      <Tag value={gitRefName} icon="branch-2" showIcon />
     </div>
   )
 }

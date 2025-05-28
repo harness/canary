@@ -49,12 +49,12 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
           {/* NAME */}
 
           <TextInput
-            className="py-px"
+            className="py-px truncate"
             id="identifier"
             label={t('views:repos.name')}
             value={tokenData?.identifier}
             readOnly
-            suffix={<CopyButton iconSize={14} name={tokenData?.identifier} />}
+            suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={tokenData?.identifier} />}
           />
 
           <TextInput
@@ -72,7 +72,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
             label={t('views:repos.token')}
             value={tokenData?.token}
             readOnly
-            suffix={<CopyButton iconSize={14} name={tokenData?.token} />}
+            suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={tokenData?.token} />}
             autoFocus
           />
 

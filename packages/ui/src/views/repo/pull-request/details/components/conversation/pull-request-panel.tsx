@@ -308,7 +308,7 @@ const PullRequestPanel = ({
             <StackedList.Field
               right
               title={
-                <Layout.Horizontal className="items-center justify-center space-x-2.5">
+                <Layout.Horizontal align="center" justify="center" gap="xs">
                   {!!commitSuggestionsBatchCount && (
                     <Button variant="outline" onClick={() => onCommitSuggestions()}>
                       Commit suggestion
@@ -441,8 +441,8 @@ const PullRequestPanel = ({
               )}
             </Accordion.Root>
           ) : (
-            <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
-              <Layout.Horizontal className="flex w-full items-center" gap="space-x-1">
+            <Layout.Horizontal gap="xs" align="center" justify="between" className="w-full py-4">
+              <Layout.Horizontal align="center" className="w-full" gap="xs">
                 <StatusBadge variant="secondary" size="sm">
                   <Link
                     className="flex items-center gap-x-1.5"

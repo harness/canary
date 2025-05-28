@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, Icon, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
+import { Avatar, Button, Icon, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
 import { useRouterContext } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -16,7 +16,6 @@ import {
   TypesCommit
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Layout } from '@views/layouts/layout'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
@@ -196,14 +195,14 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               'Choose two branches to see what’s changed or to start a new pull request.'
             )}
           </p>
-          <Layout.Horizontal className="items-center" gap="gap-x-2.5">
+          <Layout.Horizontal align="center" gap="xs">
             <Icon name="compare" size={14} className="text-icons-1" />
 
             {branchSelectorRenderer}
 
             {isBranchSelected &&
               !isLoading && ( // Only render this block if isBranchSelected is true
-                <Layout.Horizontal gap="gap-x-1" className="items-center">
+                <Layout.Horizontal gap="xs" align="center">
                   {mergeability ? (
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />
@@ -250,7 +249,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 p-4">
+          <Layout.Horizontal
+            align="center"
+            justify="between"
+            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
+          >
             <p className="text-2 leading-none">
               {isBranchSelected ? (
                 <>
@@ -286,10 +289,14 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         )}
         {prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 p-4">
+          <Layout.Horizontal
+            align="center"
+            justify="between"
+            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
+          >
             <div className="flex items-center gap-x-1.5">
               <div>
-                <Layout.Horizontal className="items-center">
+                <Layout.Horizontal align="center">
                   <Icon name="compare" size={14} className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}

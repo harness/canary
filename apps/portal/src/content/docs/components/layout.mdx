@@ -1,5 +1,5 @@
 ---
-title: Layout V2
+title: Layout
 description: Flexible layout components using Tailwind CSS
 beta: true
 ---
@@ -8,7 +8,7 @@ import { DocsPage } from "../../../components/docs-page";
 
 ## Overview
 
-The LayoutV2 component provides a set of flexible layout primitives for building consistent UI layouts. It includes Grid, Flex, Horizontal, and Vertical components with a clean, type-safe API.
+The Layout component provides a set of flexible layout primitives for building consistent UI layouts. It includes Grid, Flex, Horizontal, and Vertical components with a clean, type-safe API.
 
 ## Flex Component
 
@@ -18,7 +18,7 @@ The Flex component is a versatile layout container that allows you to arrange it
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Flex className="p-4">
+  code={`<Layout.Flex className="p-4">
   <Card.Root>
     <Card.Content>Item 1</Card.Content>
   </Card.Root>
@@ -28,14 +28,14 @@ The Flex component is a versatile layout container that allows you to arrange it
   <Card.Root>
     <Card.Content>Item 3</Card.Content>
   </Card.Root>
-</LayoutV2.Flex>`}
+</Layout.Flex>`}
 />
 
 ### Flex with Column Direction
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Flex direction="column" className="p-4">
+  code={`<Layout.Flex direction="column" className="p-4">
   <Card.Root>
     <Card.Content>Item 1</Card.Content>
   </Card.Root>
@@ -45,14 +45,14 @@ The Flex component is a versatile layout container that allows you to arrange it
   <Card.Root>
     <Card.Content>Item 3</Card.Content>
   </Card.Root>
-</LayoutV2.Flex>`}
+</Layout.Flex>`}
 />
 
 ### Flex with Alignment and Justification
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Flex 
+  code={`<Layout.Flex 
   direction="row" 
   align="center" 
   justify="between" 
@@ -67,14 +67,14 @@ The Flex component is a versatile layout container that allows you to arrange it
   <Card.Root>
     <Card.Content>End</Card.Content>
   </Card.Root>
-</LayoutV2.Flex>`}
+</Layout.Flex>`}
 />
 
 ### Flex with Gap
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Flex gap="md" className="p-4">
+  code={`<Layout.Flex gap="md" className="p-4">
   <Card.Root>
     <Card.Content>Item 1</Card.Content>
   </Card.Root>
@@ -84,14 +84,14 @@ The Flex component is a versatile layout container that allows you to arrange it
   <Card.Root>
     <Card.Content>Item 3</Card.Content>
   </Card.Root>
-</LayoutV2.Flex>`}
+</Layout.Flex>`}
 />
 
 ### Flex with Wrap
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Flex wrap="wrap" gap="md" className="p-4 w-64">
+  code={`<Layout.Flex wrap="wrap" gap="md" className="p-4 w-64">
   <Card.Root size="sm">
     <Card.Content>Item 1</Card.Content>
   </Card.Root>
@@ -107,16 +107,16 @@ The Flex component is a versatile layout container that allows you to arrange it
   <Card.Root size="sm">
     <Card.Content>Item 5</Card.Content>
   </Card.Root>
-</LayoutV2.Flex>`}
+</Layout.Flex>`}
 />
 
 ### Flex with Custom Element
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Flex as="span" className="border border-cn-borders-1 p-4 inline-flex">
+  code={`<Layout.Flex as="span" className="border border-cn-borders-1 p-4 inline-flex">
   I'm in a span!
-</LayoutV2.Flex>`}
+</Layout.Flex>`}
 />
 
 ## Grid Component
@@ -127,7 +127,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid columns="1fr 1fr" gap="md" className="p-4">
+  code={`<Layout.Grid columns="1fr 1fr" gap="md" className="p-4">
   <Card.Root>
     <Card.Content>Column 1</Card.Content>
   </Card.Root>
@@ -140,14 +140,14 @@ The Grid component provides a powerful way to create grid layouts with precise c
   <Card.Root>
     <Card.Content>Column 4</Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />
 
 ### Grid with Different Column Sizes
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid columns="2fr 1fr 1fr" gap="md" className="p-4">
+  code={`<Layout.Grid columns="2fr 1fr 1fr" gap="md" className="p-4">
   <Card.Root>
     <Card.Content>2fr</Card.Content>
   </Card.Root>
@@ -157,14 +157,14 @@ The Grid component provides a powerful way to create grid layouts with precise c
   <Card.Root>
     <Card.Content>1fr</Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />
 
 ### Grid with Defined Rows
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid 
+  code={`<Layout.Grid 
   columns="1fr 1fr" 
   rows="auto auto" 
   gap="md" 
@@ -182,14 +182,14 @@ The Grid component provides a powerful way to create grid layouts with precise c
   <Card.Root>
     <Card.Content>Row 2, Col 2</Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />
 
 ### Grid with Numeric Columns
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid 
+  code={`<Layout.Grid 
   columns={6} 
   gap="md" 
   className="p-4"
@@ -212,14 +212,14 @@ The Grid component provides a powerful way to create grid layouts with precise c
   <Card.Root>
     <Card.Content>Column 6</Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />
 
 ### Grid with Numeric Rows and Columns
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid 
+  code={`<Layout.Grid 
   columns={2} 
   rows={2}
   gap="md" 
@@ -237,14 +237,14 @@ The Grid component provides a powerful way to create grid layouts with precise c
   <Card.Root>
     <Card.Content>Row 2, Col 2</Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />
 
 ### Grid with Alignment and Justification
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid 
+  code={`<Layout.Grid 
   columns="1fr 1fr" 
   gap="md" 
   align="center" 
@@ -263,7 +263,7 @@ The Grid component provides a powerful way to create grid layouts with precise c
   <Card.Root>
     <Card.Content>Item 4</Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />
 
 ## Horizontal Component
@@ -274,7 +274,7 @@ The Horizontal component is a convenient wrapper around Flex that's pre-configur
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Horizontal align="center" className="p-4 h-32">
+  code={`<Layout.Horizontal align="center" className="p-4 h-32">
   <Card.Root className="h-16">
     <Card.Content>Taller</Card.Content>
   </Card.Root>
@@ -284,7 +284,7 @@ The Horizontal component is a convenient wrapper around Flex that's pre-configur
   <Card.Root className="h-24">
     <Card.Content>Tallest</Card.Content>
   </Card.Root>
-</LayoutV2.Horizontal>`}
+</Layout.Horizontal>`}
 />
 
 ## Vertical Component
@@ -295,7 +295,7 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Vertical align="center" className="p-4 w-64">
+  code={`<Layout.Vertical align="center" className="p-4 w-64">
   <Card.Root className="w-32">
     <Card.Content>Narrower</Card.Content>
   </Card.Root>
@@ -305,14 +305,14 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
   <Card.Root className="w-16">
     <Card.Content>Narrowest</Card.Content>
   </Card.Root>
-</LayoutV2.Vertical>`}
+</Layout.Vertical>`}
 />
 
 ## Two-Column Layout
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LayoutV2.Grid columns="2fr 1fr" gap="md" className="p-4">
+  code={`<Layout.Grid columns="2fr 1fr" gap="md" className="p-4">
   <Card.Root>
     <Card.Content>
       <Card.Title>Main Content</Card.Title>
@@ -325,5 +325,5 @@ The Vertical component is a convenient wrapper around Flex that's pre-configured
       <p>This is the sidebar with additional information.</p>
     </Card.Content>
   </Card.Root>
-</LayoutV2.Grid>`}
+</Layout.Grid>`}
 />

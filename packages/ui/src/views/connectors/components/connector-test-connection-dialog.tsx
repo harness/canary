@@ -79,18 +79,17 @@ export const ConnectorTestConnectionDialog = ({
         </Dialog.Header>
         <Dialog.Description className="gap-y-0.5">
           <div className="text-sm font-normal text-cn-foreground-4">
-            <Layout.Horizontal className="items-center justify-between space-x-2">
-              <div className="mb-2.5 flex flex-row items-start space-x-2">
-                <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
-                <span className="text-cn-foreground-1">{apiUrl}</span>
-              </div>
+            <Layout.Horizontal gap="xs" align="center">
+              <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
+              <span className="text-cn-foreground-1">{apiUrl}</span>
+
               {status === 'error' && (
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" className="ml-auto">
                   {t('views:connectors.viewConnectorDetails', 'View Connector Details')}
                 </Button>
               )}
             </Layout.Horizontal>
-            <Layout.Horizontal className="space-x-2">
+            <Layout.Horizontal gap="xs">
               <span>{t('views:connectors.status', 'Status') + ':'}</span>
 
               <div className="text-cn-foreground-1">
@@ -100,7 +99,7 @@ export const ConnectorTestConnectionDialog = ({
           </div>
 
           <div className="mb-2 mt-4 gap-y-3">
-            <Layout.Horizontal className="items-center space-x-2 text-center">
+            <Layout.Horizontal gap="xs" align="center" className="text-center">
               {(status === 'success' || status === 'error') && (
                 <Icon
                   className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}

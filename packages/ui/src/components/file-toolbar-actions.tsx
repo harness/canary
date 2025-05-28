@@ -17,7 +17,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   showEdit = false
 }) => {
   return (
-    <Layout.Horizontal gap="gap-0">
+    <Layout.Horizontal>
       <CopyButton className="rounded-r-none" name={copyContent} />
       {showEdit && (
         <Button

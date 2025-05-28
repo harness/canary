@@ -48,7 +48,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </h1>
       <Spacer size={10} />
-      <Layout.Vertical gap="space-y-7">
+      <Layout.Vertical gap="xl">
         <Fieldset className="gap-y-5">
           <div className="flex items-end justify-between">
             <Legend

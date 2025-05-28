@@ -21,11 +21,12 @@ export interface ITemplateListStore {
   templates: ITemplateListItem[] | null
   templatesError?: Error
   setTemplatesData: (data: ITemplateListItem[] | null, totalPages: number) => void
-  totalPages: number
   page: number
-  xNextPage: number
-  xPrevPage: number
-  setPage: (page: number, query: string) => void
+  setPage: (page: number) => void
+  totalItems: number
+  pageSize: number
+  searchQuery: string
+  setSearchQuery: (query: string) => void
   getTemplateFormDefinition: (identifierWithVersion: string) => Promise<IFormDefinition>
 }
 

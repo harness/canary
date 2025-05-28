@@ -45,8 +45,8 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
         title={t('views:connectors.errorEncountered', 'Error Encountered')}
         content={
           <>
-            <p className="mt-1.5">{item?.status?.errorSummary}</p>
-            <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
+            <p className="whitespace-normal">{item?.status?.errorSummary}</p>
+            <Button variant="link" onClick={() => setErrorConnectionOpen(true)}>
               {t('views:connectors.viewDetails', 'View details')}
             </Button>
           </>

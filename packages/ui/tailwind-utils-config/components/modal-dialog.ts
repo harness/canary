@@ -57,24 +57,27 @@ export default {
 
   // Header Icon/Logo and Title
   '.cn-modal-dialog-header-title-row': {
-    gap: 'var(--cn-spacing-2-half)',
+    gap: 'var(--cn-spacing-1-half)',
     paddingRight: 'var(--cn-spacing-6)',
-    '@apply flex items-center': ''
+    '@apply flex': ''
   },
   '.cn-modal-dialog-header-icon': {
     '@apply flex items-center justify-center': '',
-    width: `var(--cn-icon-size-default)`,
-    height: `var(--cn-icon-size-default)`,
+    color: 'var(--cn-text-2)',
+    width: `var(--cn-icon-size-lg)`,
+    height: `var(--cn-icon-size-lg)`,
     flexShrink: '0'
   },
   '.cn-modal-dialog-header-logo': {
-    '@apply flex items-center': '',
-    height: `var(--cn-icon-size-default)`,
+    '@apply flex items-center justify-center': '',
+    width: `var(--cn-icon-size-lg)`,
+    height: `var(--cn-icon-size-lg)`,
     flexShrink: '0'
   },
   '.cn-modal-dialog-title': {
     '@apply font-dialog-title': '',
-    fontFamily: 'var(--cn-comp-dialog-title)'
+    color: 'var(--cn-text-1)',
+    paddingTop: 'var(--cn-spacing-1)'
   },
 
   // Header Description

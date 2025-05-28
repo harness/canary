@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, ScrollArea, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchBox, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
@@ -87,8 +87,8 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
   }
 
   return (
-    <>
-      <div className="relative px-2 py-1.5">
+    <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+      <DropdownMenu.Header className="relative">
         <SearchBox.Root
           className="w-full"
           inputClassName="pl-1.5 pr-8"
@@ -107,41 +107,37 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         <Button iconOnly size="sm" className="absolute right-2.5 top-2 z-20" variant="ghost" onClick={onSearchClean}>
           <IconV2 name="xmark" size={12} />
         </Button>
-      </div>
+      </DropdownMenu.Header>
 
-      {(isAllowAddNewValue || !!values.length) && <DropdownMenu.Separator />}
+      {values.map(value => (
+        <DropdownMenu.Item
+          key={value.id}
+          onSelect={handleOnSelect(value)}
+          title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />}
+          checkmark={label.selectedValueId === value.id}
+        />
+      ))}
 
-      <ScrollArea viewportClassName="max-h-[224px]">
-        {values.map(value => (
-          <DropdownMenu.Item
-            key={value.id}
-            onSelect={handleOnSelect(value)}
-            title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />}
-            checkmark={label.selectedValueId === value.id}
-          />
-        ))}
+      {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
 
-        {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
-
-        {isAllowAddNewValue && !!label?.isCustom && (
-          <>
-            <span className="px-2 pb-1.5 pt-1 leading-[1.125rem] text-cn-foreground-2">
-              {t('views:pullRequests.addValue', 'Add new value')}
-            </span>
-
-            <DropdownMenu.Item
-              onSelect={handleAddNewValue}
-              title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />}
-            />
-          </>
-        )}
-
-        {!values.length && !label?.isCustom && (
-          <span className="block flex-none gap-x-5 px-2 py-[7px] text-cn-foreground-2">
-            {t('views:pullRequests.labelNotFound', 'Label not found')}
+      {isAllowAddNewValue && !!label?.isCustom && (
+        <>
+          <span className="text-cn-foreground-2 px-2 pb-1.5 pt-1 leading-[1.125rem]">
+            {t('views:pullRequests.addValue', 'Add new value')}
           </span>
-        )}
-      </ScrollArea>
-    </>
+
+          <DropdownMenu.Item
+            onSelect={handleAddNewValue}
+            title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />}
+          />
+        </>
+      )}
+
+      {!values.length && !label?.isCustom && (
+        <span className="text-cn-foreground-2 block flex-none gap-x-5 px-2 py-[7px]">
+          {t('views:pullRequests.labelNotFound', 'Label not found')}
+        </span>
+      )}
+    </DropdownMenu.Content>
   )
 }

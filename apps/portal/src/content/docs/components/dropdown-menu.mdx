@@ -20,24 +20,12 @@ It can be composed with several subcomponents such as `DropdownMenu.Root`, `Drop
         <Icon name="menu-dots" />
     </DropdownMenu.Trigger>
 
-    <DropdownMenu.Content className="flex">
-        <ScrollArea>
-          <DropdownMenu.Item title="Item title" />
-          <DropdownMenu.Item title="With description" description="Item description" />
-          <DropdownMenu.Item title="With label" label="Label" />
-          <DropdownMenu.Item title="With checkmark" checkmark />
-          <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
-
-          <DropdownMenu.Separator />
-
-          <DropdownMenu.Group label="Pre-built group">
-
-
-              <DropdownMenu.IndicatorItem color="pink" title="With indicator" />
-              <DropdownMenu.IndicatorItem color="cyan" title="With icon and description" description="Item description" />
-          </DropdownMenu.Group>
-
-        </ScrollArea>
+    <DropdownMenu.Content>
+        <DropdownMenu.Item title="Item title" />
+        <DropdownMenu.Item title="With description" description="Item description" />
+        <DropdownMenu.Item title="With label" label="Label" />
+        <DropdownMenu.Item title="With checkmark" checkmark />
+        <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
 
   </DropdownMenu.Content>
 </DropdownMenu.Root>`}
@@ -164,6 +152,11 @@ The `DropdownMenu` component supports header and footer sections using the `Drop
         <DropdownMenu.Item title="Item 3" />
         <DropdownMenu.Item title="Item 4" />
         <DropdownMenu.Item title="Item 5" />
+        <DropdownMenu.Item title="Item 6" />
+        <DropdownMenu.Item title="Item 7" />
+        <DropdownMenu.Item title="Item 8" />
+        <DropdownMenu.Item title="Item 9" />
+        <DropdownMenu.Item title="Item 10" />
         <DropdownMenu.Footer>
             <Link suffixIcon>Click me</Link>
         </DropdownMenu.Footer>
@@ -215,7 +208,6 @@ The `DropdownMenu` component supports radio items using the `DropdownMenu.RadioI
             <DropdownMenu.RadioItem value="option4" title="Default" />
             <DropdownMenu.RadioItem value="option5" title="Checked" />
             <DropdownMenu.RadioItem value="option6" title="Disabled" disabled />
-            <DropdownMenu.RadioItem value="option6" title="Checked disabled" description="Item description" disabled />
         </DropdownMenu.RadioGroup>
 
   </DropdownMenu.Content>
@@ -292,8 +284,8 @@ The `DropdownMenu` component supports indicator items using the `DropdownMenu.In
         <Icon name="menu-dots" />
     </DropdownMenu.Trigger>
 
-    <DropdownMenu.Content className="flex">
-      <ScrollArea>
+    <DropdownMenu.Content >
+      {/* <ScrollArea> */}
         <DropdownMenu.IndicatorItem color="gray" title="Gray" />
         <DropdownMenu.IndicatorItem color="green" title="Green" />
         <DropdownMenu.IndicatorItem color="red" title="Red" />
@@ -320,7 +312,7 @@ The `DropdownMenu` component supports indicator items using the `DropdownMenu.In
         <DropdownMenu.IndicatorItem color="orange" title="Orange pulse" pulse />
         <DropdownMenu.IndicatorItem color="pink" title="Pink pulse" pulse />
         <DropdownMenu.IndicatorItem color="violet" title="Violet pulse" pulse />
-      </ScrollArea>
+      {/* </ScrollArea> */}
 
   </DropdownMenu.Content>
 </DropdownMenu.Root>`}

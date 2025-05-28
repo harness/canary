@@ -11,6 +11,7 @@ import { filterChildrenByDisplayNames } from '@utils/index'
 import { omit } from 'lodash-es'
 
 import { IconPropsV2, IconV2 } from './icon-v2'
+import { ScrollArea } from './scroll-area'
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
@@ -62,20 +63,29 @@ interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof Dropd
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(
-  ({ className, children, sideOffset = 4, isSubContent, ...props }, ref) => {
+  ({ className, children: _children, sideOffset = 4, isSubContent, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const Primitive = isSubContent ? DropdownMenuPrimitive.SubContent : DropdownMenuPrimitive.Content
+    const header = filterChildrenByDisplayNames(_children, [displayNames.header])[0]
+    const footer = filterChildrenByDisplayNames(_children, [displayNames.footer])[0]
+    const children = filterChildrenByDisplayNames(_children, [displayNames.header, displayNames.footer], true)
 
     return (
       <DropdownMenuPortal container={portalContainer}>
         <Primitive
           ref={ref}
           sideOffset={sideOffset}
-          className={cn('cn-dropdown-menu-content', className)}
+          className={cn('cn-dropdown-menu', className)}
           onCloseAutoFocus={event => event.preventDefault()}
           {...props}
         >
-          {children}
+          {!!header && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-header">{header}</div>}
+
+          <ScrollArea viewportClassName="cn-dropdown-menu-content">
+            <div className="cn-dropdown-menu-container">{children}</div>
+          </ScrollArea>
+
+          {!!footer && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-footer">{footer}</div>}
         </Primitive>
       </DropdownMenuPortal>
     )
@@ -341,18 +351,12 @@ const DropdownMenuSeparator = forwardRef<
 DropdownMenuSeparator.displayName = displayNames.separator
 
 const DropdownMenuHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <>
-    <div className={cn('cn-dropdown-menu-header', className)} {...props} />
-    <DropdownMenuSeparator />
-  </>
+  <div className={cn('cn-dropdown-menu-header', className)} {...props} />
 )
 DropdownMenuHeader.displayName = displayNames.header
 
 const DropdownMenuFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <>
-    <DropdownMenuSeparator />
-    <div className={cn('cn-dropdown-menu-footer', className)} {...props} />
-  </>
+  <div className={cn('cn-dropdown-menu-footer', className)} {...props} />
 )
 DropdownMenuFooter.displayName = displayNames.footer
 

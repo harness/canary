@@ -83,13 +83,17 @@ export const timeAgo = (
   }
 }
 
-export const filterChildrenByDisplayNames = (children: ReactNode, displayNames: string[]): ReactElement[] => {
+export const filterChildrenByDisplayNames = (
+  children: ReactNode,
+  displayNames: string[],
+  exclude?: true
+): ReactElement[] => {
   return Children.toArray(children).filter((child): child is ReactElement => {
     if (!isValidElement(child) || !child.type || typeof child.type === 'string') {
       return false
     }
 
     const childDisplayName = (child.type as any).displayName
-    return displayNames.includes(childDisplayName)
+    return exclude ? !displayNames.includes(childDisplayName) : displayNames.includes(childDisplayName)
   })
 }

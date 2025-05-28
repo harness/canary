@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, ScrollArea, SearchInput, StatusBadge, Tabs } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { Button, DropdownMenu, SearchInput, StatusBadge, Tabs } from '@/components'
+import { useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 
 export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
@@ -19,7 +19,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   isFilesPage = false,
   setCreateBranchDialogOpen
 }) => {
-  const { Link } = useRouterContext()
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(preSelectedTab)
   const { t } = useTranslation()
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
@@ -39,76 +38,77 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   return (
     <DropdownMenu.Content
-      className="flex max-h-[calc(var(--radix-popper-available-height)-4px)] flex-col"
       style={{
         width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '298px'
       }}
       align="start"
     >
-      <div className="px-3 pt-2">
-        {isBranchOnly ? (
-          <span className="text-2 font-medium leading-none">Switch branches</span>
-        ) : (
-          <span className="text-2 font-medium leading-none">Switch branches/tags</span>
-        )}
-        <div role="presentation" onKeyDown={e => e.stopPropagation()}>
-          <SearchInput
-            autoFocus
-            inputContainerClassName="mt-2"
-            id="search"
-            size="sm"
-            placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
-            defaultValue={searchQuery}
-            onChange={handleSearchChange}
-          />
+      <DropdownMenu.Header>
+        <div className="">
+          {isBranchOnly ? (
+            <span className="text-2 font-medium leading-none">Switch branches</span>
+          ) : (
+            <span className="text-2 font-medium leading-none">Switch branches/tags</span>
+          )}
+          <div role="presentation" onKeyDown={e => e.stopPropagation()}>
+            <SearchInput
+              autoFocus
+              inputContainerClassName="mt-2"
+              id="search"
+              size="sm"
+              placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
+              defaultValue={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </div>
         </div>
-      </div>
 
-      {!isBranchOnly && (
-        <Tabs.Root
-          className="mt-2"
-          value={activeTab}
-          onValueChange={value => {
-            setActiveTab(value as BranchSelectorTab)
-            setSearchQuery('')
-          }}
-        >
-          <Tabs.List className="px-3">
-            <DropdownMenu.Item
-              title={
-                <Tabs.Trigger
-                  className="data-[state=active]:bg-cn-background-2"
-                  value="branches"
-                  onClick={e => e.stopPropagation()}
-                >
-                  {t('views:repos.branches', 'Branches')}
-                </Tabs.Trigger>
-              }
-              className="rounded-t-md p-0"
-              onSelect={e => {
-                e.preventDefault()
-                setActiveTab(BranchSelectorTab.BRANCHES)
-              }}
-            />
-            <DropdownMenu.Item
-              title={
-                <Tabs.Trigger
-                  className="data-[state=active]:bg-cn-background-2"
-                  value="tags"
-                  onClick={e => e.stopPropagation()}
-                >
-                  {t('views:repos.tags', 'Tags')}
-                </Tabs.Trigger>
-              }
-              className="rounded-t-md p-0"
-              onSelect={e => {
-                e.preventDefault()
-                setActiveTab(BranchSelectorTab.TAGS)
-              }}
-            />
-          </Tabs.List>
-        </Tabs.Root>
-      )}
+        {!isBranchOnly && (
+          <Tabs.Root
+            className="mb-[-11px] mt-2"
+            value={activeTab}
+            onValueChange={value => {
+              setActiveTab(value as BranchSelectorTab)
+              setSearchQuery('')
+            }}
+          >
+            <Tabs.List className="px-3">
+              <DropdownMenu.Item
+                title={
+                  <Tabs.Trigger
+                    className="data-[state=active]:bg-cn-background-2"
+                    value="branches"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    {t('views:repos.branches', 'Branches')}
+                  </Tabs.Trigger>
+                }
+                className="rounded-t-md p-0"
+                onSelect={e => {
+                  e.preventDefault()
+                  setActiveTab(BranchSelectorTab.BRANCHES)
+                }}
+              />
+              <DropdownMenu.Item
+                title={
+                  <Tabs.Trigger
+                    className="data-[state=active]:bg-cn-background-2"
+                    value="tags"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    {t('views:repos.tags', 'Tags')}
+                  </Tabs.Trigger>
+                }
+                className="rounded-t-md p-0"
+                onSelect={e => {
+                  e.preventDefault()
+                  setActiveTab(BranchSelectorTab.TAGS)
+                }}
+              />
+            </Tabs.List>
+          </Tabs.Root>
+        )}
+      </DropdownMenu.Header>
 
       {filteredItems.length === 0 && (
         <div className="px-5 py-4 text-center">
@@ -125,15 +125,15 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               </Button>
             </div>
           ) : (
-            <span className="text-14 leading-tight text-cn-foreground-2">
+            <span className="text-14 text-cn-foreground-2 leading-tight">
               {t('views:noData.noResults', 'No search results')}
             </span>
           )}
         </div>
       )}
 
-      <ScrollArea viewportClassName="max-h-[360px] px-1 mt-1">
-        {filteredItems.map(item => {
+      {!!filteredItems.length &&
+        filteredItems.map(item => {
           const isSelected = selectedBranch ? item.name === selectedBranch.name : false
           const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
 
@@ -156,26 +156,17 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             />
           )
         })}
-      </ScrollArea>
 
-      <DropdownMenu.Item
-        className="p-0"
-        asChild
-        title={
-          <Link to={viewAllUrl}>
-            <div className="w-full border-t border-cn-borders-2 px-3 py-2">
-              <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-cn-foreground-1">
-                {t('views:repos.viewAll', `View all ${activeTab}`, {
-                  type:
-                    activeTab === BranchSelectorTab.BRANCHES
-                      ? t('views:repos.branchesLowercase', 'branches')
-                      : t('views:repos.tagsLowercase', 'tags')
-                })}
-              </span>
-            </div>
-          </Link>
-        }
-      />
+      <DropdownMenu.Footer>
+        <Link to={viewAllUrl} variant="secondary" className="w-full">
+          {t('views:repos.viewAll', `View all ${activeTab}`, {
+            type:
+              activeTab === BranchSelectorTab.BRANCHES
+                ? t('views:repos.branchesLowercase', 'branches')
+                : t('views:repos.tagsLowercase', 'tags')
+          })}
+        </Link>
+      </DropdownMenu.Footer>
     </DropdownMenu.Content>
   )
 }

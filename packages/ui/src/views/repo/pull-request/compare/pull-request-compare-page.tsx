@@ -85,7 +85,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
-  setSearchLabelQuery?: (query: string) => void
+  setSearchLabelQuery: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
   editLabelsProps: LinkProps
@@ -182,11 +182,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
+        <span className="text-6 text-cn-foreground-1 mt-7 font-medium leading-snug tracking-tight">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-2 leading-snug text-cn-foreground-2">
+          <p className="text-2 text-cn-foreground-2 max-w-xl leading-snug">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
@@ -312,7 +312,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <Tabs.List className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-cn-background-2">
+              <Tabs.List className="before:bg-cn-background-2 relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
                     value="overview"

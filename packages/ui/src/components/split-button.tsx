@@ -5,8 +5,6 @@ import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 
-import { ScrollArea } from './scroll-area'
-
 export interface SplitButtonOptionType<T extends string> {
   value: T
   label: string
@@ -87,35 +85,33 @@ export const SplitButton = <T extends string>({
           <Icon name="chevron-down" size={14} className="chevron-down" />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className={cn('mt-1 max-w-80 flex', dropdownContentClassName)} align="end">
-          <ScrollArea>
-            {selectedValue ? (
-              <DropdownMenu.RadioGroup value={String(selectedValue)}>
-                {options.map(option => (
-                  <DropdownMenu.RadioItem
-                    title={option.label}
-                    description={option?.description}
-                    value={String(option.value)}
-                    key={String(option.value)}
-                    onClick={() => handleOptionChange(option.value)}
-                    disabled={loading || option.disabled}
-                  />
-                ))}
-              </DropdownMenu.RadioGroup>
-            ) : (
-              <DropdownMenu.Group>
-                {options.map(option => (
-                  <DropdownMenu.Item
-                    title={option.label}
-                    description={option.description}
-                    key={String(option.value)}
-                    className="px-3 py-2.5"
-                    onClick={() => handleOptionChange(option.value)}
-                    disabled={loading || option.disabled}
-                  />
-                ))}
-              </DropdownMenu.Group>
-            )}
-          </ScrollArea>
+          {selectedValue ? (
+            <DropdownMenu.RadioGroup value={String(selectedValue)}>
+              {options.map(option => (
+                <DropdownMenu.RadioItem
+                  title={option.label}
+                  description={option?.description}
+                  value={String(option.value)}
+                  key={String(option.value)}
+                  onClick={() => handleOptionChange(option.value)}
+                  disabled={loading || option.disabled}
+                />
+              ))}
+            </DropdownMenu.RadioGroup>
+          ) : (
+            <DropdownMenu.Group>
+              {options.map(option => (
+                <DropdownMenu.Item
+                  title={option.label}
+                  description={option.description}
+                  key={String(option.value)}
+                  className="px-3 py-2.5"
+                  onClick={() => handleOptionChange(option.value)}
+                  disabled={loading || option.disabled}
+                />
+              ))}
+            </DropdownMenu.Group>
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

@@ -31,17 +31,30 @@ const createIndicatorVariantStyles = () => {
 
 export default {
   '.cn-dropdown-menu': {
-    '&-content': {
-      zIndex: '50',
-      minWidth: 'var(--cn-dropdown-min-width)',
-      maxHeight: 'var(--cn-dropdown-max-height)',
+    zIndex: '50',
+    minWidth: 'var(--cn-dropdown-min-width)',
+    maxHeight: 'calc(var(--radix-dropdown-menu-content-available-height) - 4px)',
+    border: 'var(--cn-dropdown-border) solid var(--cn-border-2)',
+    borderRadius: 'var(--cn-dropdown-radius)',
+    backgroundColor: 'var(--cn-bg-3)',
+    boxShadow: 'var(--cn-shadow-4)',
+    '@apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2':
+      '',
+
+    '&-container': {
       padding: 'var(--cn-dropdown-container)',
-      border: 'var(--cn-dropdown-border) solid var(--cn-border-2)',
-      borderRadius: 'var(--cn-dropdown-radius)',
-      backgroundColor: 'var(--cn-bg-3)',
-      boxShadow: 'var(--cn-shadow-4)',
-      '@apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2':
-        ''
+
+      '&-header': {
+        borderBottom: '1px solid var(--cn-border-3)'
+      },
+
+      '&-footer': {
+        borderTop: '1px solid var(--cn-border-3)'
+      }
+    },
+
+    '&-content': {
+      maxHeight: 'var(--cn-dropdown-max-height)'
     },
 
     '&-base-item': {
@@ -107,7 +120,7 @@ export default {
     },
 
     '&-header, &-footer': {
-      padding: 'var(--cn-dropdown-container)'
+      padding: 'var(--cn-spacing-1-half) var(--cn-spacing-2)'
     }
   }
 }

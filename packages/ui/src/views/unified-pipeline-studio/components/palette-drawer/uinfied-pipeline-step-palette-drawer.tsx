@@ -62,7 +62,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
   const goToPage = useCallback(
     (page: number) => {
       templatesSectionRef.current?.scrollIntoView()
-      setPage(page)
+      setPage(page - 1)
     },
     [setPage]
   )
@@ -132,7 +132,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
                 setRightDrawer(RightDrawer.Form)
               }}
             />
-            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={goToPage} t={t} />
+            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page + 1} goToPage={goToPage} t={t} />
           </>
         )}
 

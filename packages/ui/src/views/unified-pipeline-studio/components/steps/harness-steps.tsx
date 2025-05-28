@@ -59,6 +59,16 @@ export const harnessSteps: (HarnessStepDefinitionType | HarnessStepGroupDefiniti
     identifier: ACTION_STEP_IDENTIFIER,
     description: ACTION_STEP_DESCRIPTION,
     formDefinition: actionStepFormDefinition
+  },
+  {
+    identifier: GROUP_IDENTIFIER,
+    description: GROUP_DESCRIPTION,
+    formDefinition: groupFormDefinition
+  },
+  {
+    identifier: PARALLEL_IDENTIFIER,
+    description: PARALLEL_DESCRIPTION,
+    formDefinition: parallelFormDefinition
   }
 ]
 

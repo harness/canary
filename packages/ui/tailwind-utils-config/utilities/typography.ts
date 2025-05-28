@@ -56,6 +56,12 @@ export default {
     },
     '&-family-default': {
       font: 'var(--cn-font-family-default)'
+    },
+    '&-comp-button-default': {
+      font: 'var(--cn-comp-button-default)'
+    },
+    '&-comp-button-sm': {
+      font: 'var(--cn-comp-button-sm)'
     }
   }
 }

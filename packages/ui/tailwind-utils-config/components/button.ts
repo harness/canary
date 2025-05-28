@@ -85,7 +85,7 @@ export default {
     height: 'var(--cn-btn-size-default)',
     gap: 'var(--cn-btn-gap-default)',
     border: 'var(--cn-btn-border) solid var(--cn-set-gray-surface-border)',
-    '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
+    '@apply font-comp-button-default select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
 
     '&:where(.cn-button-split-dropdown)': {
@@ -108,7 +108,7 @@ export default {
       height: 'var(--cn-btn-size-sm)',
       padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
       gap: 'var(--cn-btn-gap-sm)',
-      '@apply font-caption-single-line-normal': ''
+      '@apply font-comp-button-sm': ''
     },
     '&:where(.cn-button-lg)': {
       height: 'var(--cn-btn-size-lg)',

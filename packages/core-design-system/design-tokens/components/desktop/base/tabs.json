@@ -1,26 +1,36 @@
 {
-  "tabs": {
-    "height": {
-      "$type": "sizing",
-      "$value": "{size.8}"
-    },
-    "sub": {
+  "tab": {
+    "item": {
       "height": {
         "$type": "sizing",
         "$value": "{size.6}"
       },
-      "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.2}"
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       }
     },
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
-    },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "item": {
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
+      },
+      "container": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      }
+    },
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.1}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

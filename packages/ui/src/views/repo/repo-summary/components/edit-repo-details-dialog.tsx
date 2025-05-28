@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { Button, ModalDialog, Textarea } from '@/components'
+import { Button, ButtonLayout, ModalDialog, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -45,10 +45,12 @@ export const EditRepoDetails = ({
           />
         </ModalDialog.Body>
         <ModalDialog.Footer>
-          <ModalDialog.Close onClick={handleClose}>Cancel</ModalDialog.Close>
-          <Button type="button" onClick={() => onSave(newDesc)}>
-            Save
-          </Button>
+          <ButtonLayout>
+            <ModalDialog.Close onClick={handleClose}>Cancel</ModalDialog.Close>
+            <Button type="button" onClick={() => onSave(newDesc)}>
+              Save
+            </Button>
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Fieldset, FormWrapper, Input, ModalDialog, Select } from '@/components'
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Fieldset,
+  FormWrapper,
+  Input,
+  ModalDialog,
+  Select
+} from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -137,17 +147,19 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
           </ModalDialog.Body>
 
           <ModalDialog.Footer>
-            <ModalDialog.Close
-              onClick={() => {
-                onCancel()
-                reset()
-              }}
-            >
-              Cancel
-            </ModalDialog.Close>
-            <Button type="submit" disabled={isLoadingBranchNames}>
-              Create Pipeline
-            </Button>
+            <ButtonLayout>
+              <ModalDialog.Close
+                onClick={() => {
+                  onCancel()
+                  reset()
+                }}
+              >
+                Cancel
+              </ModalDialog.Close>
+              <Button type="submit" disabled={isLoadingBranchNames}>
+                Create Pipeline
+              </Button>
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

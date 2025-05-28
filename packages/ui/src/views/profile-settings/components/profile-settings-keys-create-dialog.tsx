@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Alert, Button, ButtonLayout, FormInput, FormWrapper, ModalDialog } from '@/components'
 import { useTranslation } from '@/context'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -81,8 +81,10 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
             </div>
           </ModalDialog.Body>
           <ModalDialog.Footer>
-            <ModalDialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</ModalDialog.Close>
-            <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
+            <ButtonLayout>
+              <ModalDialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</ModalDialog.Close>
+              <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

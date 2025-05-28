@@ -51,15 +51,17 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
         </ModalDialog.Body>
 
         <ModalDialog.Footer>
-          {!isDeletingUser && (
-            <ModalDialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</ModalDialog.Close>
-          )}
+          <ButtonLayout>
+            {!isDeletingUser && (
+              <ModalDialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</ModalDialog.Close>
+            )}
 
-          <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
-            {isDeletingUser
-              ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
-              : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
-          </Button>
+            <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
+              {isDeletingUser
+                ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
+                : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
+            </Button>
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

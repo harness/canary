@@ -68,16 +68,18 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
         </ModalDialog.Body>
 
         <ModalDialog.Footer>
-          <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
-            {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
-          </Button>
-          {!generatePassword && (
-            <Button type="button" onClick={onSubmit} disabled={isUpdatingUser}>
-              {isUpdatingUser
-                ? t('views:userManagement.resetPassword.pending', 'Resetting Password...')
-                : t('views:userManagement.resetPassword.confirm', 'Confirm')}
-            </Button>
-          )}
+          <ButtonLayout>
+            <ModalDialog.Close onClick={onClose} disabled={isUpdatingUser}>
+              {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
+            </ModalDialog.Close>
+            {!generatePassword && (
+              <Button type="button" onClick={onSubmit} disabled={isUpdatingUser}>
+                {isUpdatingUser
+                  ? t('views:userManagement.resetPassword.pending', 'Resetting Password...')
+                  : t('views:userManagement.resetPassword.confirm', 'Confirm')}
+              </Button>
+            )}
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

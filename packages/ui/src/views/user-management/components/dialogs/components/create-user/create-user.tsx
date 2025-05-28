@@ -75,14 +75,16 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
         </ModalDialog.Body>
 
         <ModalDialog.Footer>
-          <ModalDialog.Close onClick={onClose} disabled={isCreatingUser}>
-            {t('views:userManagement.cancel', 'Cancel')}
-          </ModalDialog.Close>
-          <Button type="submit" disabled={isCreatingUser} form="create-user-form">
-            {isCreatingUser
-              ? t('views:userManagement.createUser.inviting', 'Inviting...')
-              : t('views:userManagement.createUser.inviteNewUser', 'Invite new user')}
-          </Button>
+          <ButtonLayout>
+            <ModalDialog.Close onClick={onClose} disabled={isCreatingUser}>
+              {t('views:userManagement.cancel', 'Cancel')}
+            </ModalDialog.Close>
+            <Button type="submit" disabled={isCreatingUser} form="create-user-form">
+              {isCreatingUser
+                ? t('views:userManagement.createUser.inviting', 'Inviting...')
+                : t('views:userManagement.createUser.inviteNewUser', 'Invite new user')}
+            </Button>
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

@@ -1,7 +1,12 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+<<<<<<< HEAD
 import { Button, FormInput, FormWrapper, ModalDialog } from '@/components'
+=======
+import { Button, ButtonLayout, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { TranslationStore } from '@/views'
+>>>>>>> eab5cb900 (add button layout component for buttons inside modal dialog footer)
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -112,11 +117,13 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           </ModalDialog.Body>
 
           <ModalDialog.Footer>
-            <ModalDialog.Close onClick={handleDialogClose}>Cancel</ModalDialog.Close>
+            <ButtonLayout>
+              <ModalDialog.Close onClick={handleDialogClose}>Cancel</ModalDialog.Close>
 
-            <Button type="submit" disabled={isDisabled}>
-              {isLoading ? 'Saving...' : 'Save'}
-            </Button>
+              <Button type="submit" disabled={isDisabled}>
+                {isLoading ? 'Saving...' : 'Save'}
+              </Button>
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

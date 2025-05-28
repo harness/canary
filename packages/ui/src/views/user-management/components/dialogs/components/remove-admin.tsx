@@ -69,23 +69,25 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
         </ModalDialog.Body>
 
         <ModalDialog.Footer>
-          <ModalDialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
-            {t('views:userManagement.cancel', 'Cancel')}
-          </ModalDialog.Close>
-          <Button
-            type="submit"
-            theme={isAdmin ? 'danger' : 'default'}
-            disabled={isUpdatingUserAdmin}
-            form="remove-admin-form"
-          >
-            {isUpdatingUserAdmin
-              ? isAdmin
-                ? t('views:userManagement.removeAdmin.pending', 'Removing admin...')
-                : t('views:userManagement.grantAdmin.pending', 'Granting admin...')
-              : isAdmin
-                ? t('views:userManagement.removeAdmin.confirm', 'Yes, remove admin')
-                : t('views:userManagement.grantAdmin.confirm', 'Yes, grant admin')}
-          </Button>
+          <ButtonLayout>
+            <ModalDialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
+              {t('views:userManagement.cancel', 'Cancel')}
+            </ModalDialog.Close>
+            <Button
+              type="submit"
+              theme={isAdmin ? 'danger' : 'default'}
+              disabled={isUpdatingUserAdmin}
+              form="remove-admin-form"
+            >
+              {isUpdatingUserAdmin
+                ? isAdmin
+                  ? t('views:userManagement.removeAdmin.pending', 'Removing admin...')
+                  : t('views:userManagement.grantAdmin.pending', 'Granting admin...')
+                : isAdmin
+                  ? t('views:userManagement.removeAdmin.confirm', 'Yes, remove admin')
+                  : t('views:userManagement.grantAdmin.confirm', 'Yes, grant admin')}
+            </Button>
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

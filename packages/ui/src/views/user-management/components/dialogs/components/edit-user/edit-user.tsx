@@ -98,14 +98,16 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
         </ModalDialog.Body>
 
         <ModalDialog.Footer>
-          <ModalDialog.Close onClick={onClose} disabled={isUpdatingUser}>
-            {t('views:userManagement.cancel', 'Cancel')}
-          </ModalDialog.Close>
-          <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
-            {isUpdatingUser
-              ? t('views:userManagement.editUser.pending', 'Saving...')
-              : t('views:userManagement.editUser.save', 'Save')}
-          </Button>
+          <ButtonLayout>
+            <ModalDialog.Close onClick={onClose} disabled={isUpdatingUser}>
+              {t('views:userManagement.cancel', 'Cancel')}
+            </ModalDialog.Close>
+            <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
+              {isUpdatingUser
+                ? t('views:userManagement.editUser.pending', 'Saving...')
+                : t('views:userManagement.editUser.save', 'Save')}
+            </Button>
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

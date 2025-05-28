@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ControlGroup, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Button, ButtonLayout, ControlGroup, FormInput, FormWrapper, ModalDialog } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -72,12 +72,14 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
           </ModalDialog.Body>
 
           <ModalDialog.Footer>
-            <ModalDialog.Close onClick={onClose} disabled={isSubmitting}>
-              Cancel
-            </ModalDialog.Close>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Committing...' : 'Commit changes'}
-            </Button>
+            <ButtonLayout>
+              <ModalDialog.Close onClick={onClose} disabled={isSubmitting}>
+                Cancel
+              </ModalDialog.Close>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Committing...' : 'Commit changes'}
+              </Button>
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

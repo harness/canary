@@ -1,7 +1,17 @@
 import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Avatar, Button, ControlGroup, Fieldset, FormWrapper, ModalDialog, Select } from '@/components'
+import {
+  Alert,
+  Avatar,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Fieldset,
+  FormWrapper,
+  ModalDialog,
+  Select
+} from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
@@ -177,12 +187,14 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         </ModalDialog.Body>
 
         <ModalDialog.Footer>
-          <ModalDialog.Close onClick={onClose} loading={isInvitingMember}>
-            {t('views:repos.cancel', 'Cancel')}
-          </ModalDialog.Close>
-          <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
-            {t('views:projectSettings.addMember', 'Add member to this project')}
-          </Button>
+          <ButtonLayout>
+            <ModalDialog.Close onClick={onClose} loading={isInvitingMember}>
+              {t('views:repos.cancel', 'Cancel')}
+            </ModalDialog.Close>
+            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
+              {t('views:projectSettings.addMember', 'Add member to this project')}
+            </Button>
+          </ButtonLayout>
         </ModalDialog.Footer>
       </ModalDialog.Content>
     </ModalDialog.Root>

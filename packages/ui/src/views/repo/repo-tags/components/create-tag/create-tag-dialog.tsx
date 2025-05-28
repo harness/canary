@@ -1,9 +1,14 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+<<<<<<< HEAD
 import { Alert, Button, ControlGroup, FormInput, FormWrapper, Label, ModalDialog } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorListItem } from '@/views/repo'
+=======
+import { Alert, Button, ButtonLayout, ControlGroup, FormInput, FormWrapper, Label, ModalDialog } from '@/components'
+import { BranchSelectorListItem, TranslationStore } from '@/views/repo'
+>>>>>>> eab5cb900 (add button layout component for buttons inside modal dialog footer)
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -107,14 +112,16 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           </ModalDialog.Body>
 
           <ModalDialog.Footer>
-            <ModalDialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
-              {t('views:repos.cancel', 'Cancel')}
-            </ModalDialog.Close>
-            <Button type="submit" disabled={isLoading} loading={isLoading}>
-              {isLoading
-                ? t('views:repos.creatingTagButton', 'Creating tag...')
-                : t('views:repos.createTagButton', 'Create tag')}
-            </Button>
+            <ButtonLayout>
+              <ModalDialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
+                {t('views:repos.cancel', 'Cancel')}
+              </ModalDialog.Close>
+              <Button type="submit" disabled={isLoading} loading={isLoading}>
+                {isLoading
+                  ? t('views:repos.creatingTagButton', 'Creating tag...')
+                  : t('views:repos.createTagButton', 'Create tag')}
+              </Button>
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

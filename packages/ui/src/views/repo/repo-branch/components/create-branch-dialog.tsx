@@ -1,8 +1,22 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+<<<<<<< HEAD
 import { Alert, Button, ControlGroup, Fieldset, FormInput, FormWrapper, Label, ModalDialog } from '@/components'
 import { TFunctionWithFallback, useTranslation } from '@/context'
+=======
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Fieldset,
+  FormInput,
+  FormWrapper,
+  Label,
+  ModalDialog
+} from '@/components'
+>>>>>>> eab5cb900 (add button layout component for buttons inside modal dialog footer)
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -118,12 +132,14 @@ export function CreateBranchDialog({
           </ModalDialog.Body>
 
           <ModalDialog.Footer>
-            <ModalDialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
-              {t('views:repos.cancel', 'Cancel')}
-            </ModalDialog.Close>
-            <Button type="submit" disabled={isCreatingBranch}>
-              {t('views:repos.createBranchButton', 'Create branch')}
-            </Button>
+            <ButtonLayout>
+              <ModalDialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+                {t('views:repos.cancel', 'Cancel')}
+              </ModalDialog.Close>
+              <Button type="submit" disabled={isCreatingBranch}>
+                {t('views:repos.createBranchButton', 'Create branch')}
+              </Button>
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

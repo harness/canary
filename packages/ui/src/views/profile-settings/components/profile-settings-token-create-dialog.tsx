@@ -1,7 +1,17 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, CopyButton, Fieldset, FormInput, FormWrapper, ModalDialog, Select } from '@/components'
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  CopyButton,
+  Fieldset,
+  FormInput,
+  FormWrapper,
+  ModalDialog,
+  Select
+} from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -196,18 +206,20 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
             </div>
           </ModalDialog.Body>
           <ModalDialog.Footer>
-            <ModalDialog.Close onClick={onClose}>
-              {createdTokenData
-                ? t('views:profileSettings.gotItButton', 'Got it')
-                : t('views:profileSettings.cancel', 'Cancel')}
-            </ModalDialog.Close>
-            {!createdTokenData && (
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading
-                  ? t('views:profileSettings.generateTokenButton', 'Generate token')
-                  : t('views:profileSettings.generatingTokenButton', 'Generating token...')}
-              </Button>
-            )}
+            <ButtonLayout>
+              <ModalDialog.Close onClick={onClose}>
+                {createdTokenData
+                  ? t('views:profileSettings.gotItButton', 'Got it')
+                  : t('views:profileSettings.cancel', 'Cancel')}
+              </ModalDialog.Close>
+              {!createdTokenData && (
+                <Button type="submit" disabled={isLoading}>
+                  {!isLoading
+                    ? t('views:profileSettings.generateTokenButton', 'Generate token')
+                    : t('views:profileSettings.generatingTokenButton', 'Generating token...')}
+                </Button>
+              )}
+            </ButtonLayout>
           </ModalDialog.Footer>
         </FormWrapper>
       </ModalDialog.Content>

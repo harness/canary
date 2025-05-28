@@ -54,6 +54,14 @@ export default {
     }
   },
 
+  '.cn-radio-error:not(:has(.cn-radio-item[data-state=checked])) .cn-radio-item': {
+    borderColor: 'var(--cn-border-danger)',
+    boxShadow: `var(--cn-ring-danger)`,
+    '&:where(:hover)': {
+      boxShadow: `var(--cn-ring-danger-hover)`
+    }
+  },
+
   '.cn-radio-item-indicator': {
     width: 'var(--cn-size-2)',
     height: 'var(--cn-size-2)',

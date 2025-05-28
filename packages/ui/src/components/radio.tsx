@@ -3,6 +3,18 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactElement } from '
 import { ControlGroup, FormCaption, Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
+import { cva } from 'class-variance-authority'
+
+const radioRootVariants = cva('cn-radio-root', {
+  variants: {
+    error: {
+      true: 'cn-radio-error'
+    }
+  },
+  defaultVariants: {
+    error: false
+  }
+})
 
 interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
   label?: string | ReactElement
@@ -12,6 +24,7 @@ interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimi
 
 export interface RadioProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> {
   label?: string
+  error?: boolean
 }
 
 /**
@@ -26,7 +39,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<R
 
     return (
       <div className={cn('cn-radio-item-wrapper', className)}>
-        <RadioGroupPrimitive.Item ref={ref} id={radioId} className={cn('cn-radio-item')} {...props}>
+        <RadioGroupPrimitive.Item ref={ref} id={radioId} className="cn-radio-item" {...props}>
           <RadioGroupPrimitive.Indicator className="cn-radio-item-indicator" />
         </RadioGroupPrimitive.Item>
 
@@ -40,7 +53,6 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<R
               {label}
             </Label>
             <FormCaption disabled={props.disabled}>{caption}</FormCaption>
-            {/* TODO: Design system: Need to add Link component here once merged */}
           </div>
         )}
       </div>
@@ -58,11 +70,11 @@ RadioItem.displayName = RadioGroupPrimitive.Item.displayName
  * </Radio.Root>
  */
 const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioProps>(
-  ({ className, label, ...props }, ref) => {
+  ({ className, label, error, ...props }, ref) => {
     return (
       <ControlGroup className={cn('cn-radio-control')}>
         <Label>{label}</Label>
-        <RadioGroupPrimitive.Root className={cn('cn-radio-root', className)} {...props} ref={ref} />
+        <RadioGroupPrimitive.Root className={cn(radioRootVariants({ error }), className)} {...props} ref={ref} />
       </ControlGroup>
     )
   }

@@ -71,11 +71,9 @@ export const ConnectorTestConnectionDialog = ({
   }
   return (
     <ModalDialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
-      <ModalDialog.Content className={cn('sm:max-w-[689px]', className)}>
+      <ModalDialog.Content>
         <ModalDialog.Header>
-          <ModalDialog.Title className="letter-spacing-1 w-11/12 truncate text-xl font-medium">
-            {title}
-          </ModalDialog.Title>
+          <ModalDialog.Title>{title}</ModalDialog.Title>
           <ModalDialog.Body>
             <div className="gap-y-0.5">
               <div className="text-sm font-normal text-cn-foreground-4">

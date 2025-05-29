@@ -36,14 +36,13 @@ function Root({ logo }: ProjectProps) {
         handleChange={openSearchDialog}
       />
       <ModalDialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <ModalDialog.Content className="h-[600px] max-w-[800px]">
+        <ModalDialog.Content size="md" className="h-[600px]">
           <ModalDialog.Header>
             <ModalDialog.Title>Search</ModalDialog.Title>
-            <ModalDialog.Description>
-              <Spacer size={6} />
-              <SearchBox width="full" placeholder="Search..." />
-            </ModalDialog.Description>
           </ModalDialog.Header>
+          <ModalDialog.Body>
+            <SearchBox width="full" placeholder="Search..." />
+          </ModalDialog.Body>
         </ModalDialog.Content>
       </ModalDialog.Root>
     </div>

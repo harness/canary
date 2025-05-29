@@ -98,12 +98,12 @@ const Header = ({ className, icon, logo, theme = 'default', children, ...props }
       <div className="cn-modal-dialog-header-title-row">
         {icon && (
           <div className="cn-modal-dialog-header-icon">
-            <Icon name={icon as any} size={24} />
+            <Icon name={icon} size={24} />
           </div>
         )}
         {logo && (
           <div className="cn-modal-dialog-header-logo">
-            <Logo name={logo as any} />
+            <Logo name={logo} />
           </div>
         )}
         {title}

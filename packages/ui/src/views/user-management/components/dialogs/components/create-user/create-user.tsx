@@ -36,11 +36,9 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
 
   return (
     <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-xl">
+      <ModalDialog.Content>
         <ModalDialog.Header>
-          <ModalDialog.Title className="font-medium">
-            {t('views:userManagement.createUser.title', 'Add a new user')}
-          </ModalDialog.Title>
+          <ModalDialog.Title>{t('views:userManagement.createUser.title', 'Add a new user')}</ModalDialog.Title>
         </ModalDialog.Header>
 
         <ModalDialog.Body>

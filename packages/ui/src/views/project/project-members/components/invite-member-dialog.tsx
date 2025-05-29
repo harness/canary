@@ -112,7 +112,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
 
   return (
     <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-[420px]">
+      <ModalDialog.Content>
         <ModalDialog.Header>
           <ModalDialog.Title>{t('views:projectSettings.newMember', 'New member')}</ModalDialog.Title>
         </ModalDialog.Header>

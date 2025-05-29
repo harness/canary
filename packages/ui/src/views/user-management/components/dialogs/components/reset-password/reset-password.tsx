@@ -25,9 +25,9 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
 
   return (
     <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-xl">
+      <ModalDialog.Content>
         <ModalDialog.Header>
-          <ModalDialog.Title className="font-medium">
+          <ModalDialog.Title>
             {t('views:userManagement.resetPassword.title', 'Are you sure you want to reset password for {name}?', {
               name: user?.display_name || ''
             })}

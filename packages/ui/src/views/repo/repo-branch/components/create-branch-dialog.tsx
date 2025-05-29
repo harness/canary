@@ -94,10 +94,7 @@ export function CreateBranchDialog({
 
   return (
     <ModalDialog.Root open={open} onOpenChange={handleClose}>
-      <ModalDialog.Content
-        className="max-w-[460px] border-cn-borders-2 bg-cn-background-1"
-        aria-describedby={undefined}
-      >
+      <ModalDialog.Content aria-describedby={undefined}>
         <ModalDialog.Header>
           <ModalDialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</ModalDialog.Title>
         </ModalDialog.Header>

@@ -27,7 +27,7 @@ export const EditRepoDetails = ({
   }, [description])
   return (
     <ModalDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
-      <ModalDialog.Content className="h-80 max-h-[70vh] w-[460px] !rounded">
+      <ModalDialog.Content>
         <ModalDialog.Header>
           <ModalDialog.Title className="mb-4">Repository Description</ModalDialog.Title>
         </ModalDialog.Header>

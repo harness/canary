@@ -45,7 +45,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
 
   return (
     <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-xl">
+      <ModalDialog.Content>
         <ModalDialog.Header>
           <ModalDialog.Title className="font-medium">
             {t('views:userManagement.editUser.title', 'Update user')}

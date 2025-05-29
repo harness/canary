@@ -90,7 +90,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         reset()
       }}
     >
-      <ModalDialog.Content className="max-w-xl" aria-describedby={undefined}>
+      <ModalDialog.Content aria-describedby={undefined}>
         <ModalDialog.Header>
           <ModalDialog.Title>Create Pipeline</ModalDialog.Title>
         </ModalDialog.Header>

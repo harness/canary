@@ -26,9 +26,9 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
 
   return (
     <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-xl">
+      <ModalDialog.Content>
         <ModalDialog.Header>
-          <ModalDialog.Title className="font-medium">
+          <ModalDialog.Title>
             {t('views:userManagement.deleteUser.title', 'Are you sure you want to delete {{name}}?', {
               name: user?.display_name
             })}

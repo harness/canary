@@ -26,9 +26,9 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
 
   return (
     <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-xl">
+      <ModalDialog.Content>
         <ModalDialog.Header>
-          <ModalDialog.Title className="font-medium">
+          <ModalDialog.Title>
             {isAdmin
               ? t('views:userManagement.removeAdmin.title', 'Are you sure you want to remove {name} as an admin?', {
                   name: user?.display_name

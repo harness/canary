@@ -309,16 +309,16 @@ class FigmaIconDownloader {
  * Harness Design System
  * Generated icon map - DO NOT EDIT DIRECTLY
  */
-
-{%- for icon in icons %}
+{% for icon in icons %}
 import {{ icon.componentName }} from './icons/{{ icon.filename }}'
 {%- endfor %}
 
 export const IconNameMapV2 = {
 {%- for icon in icons %}
-'{{ icon.iconKey }}': {{ icon.componentName }}{%- unless forloop.last %},
+  '{{ icon.iconKey }}': {{ icon.componentName }}{%- unless forloop.last %},
 {%- endunless %}
-{%- endfor %}}
+{%- endfor %}
+}
 `
 
       // Render the template with the data

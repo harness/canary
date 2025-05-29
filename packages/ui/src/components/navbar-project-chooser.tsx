@@ -2,7 +2,6 @@ import { FormEvent, ReactNode, useState } from 'react'
 
 import { ModalDialog } from './modal-dialog'
 import { Root as SearchBox } from './search-box'
-import { Spacer } from './spacer'
 
 interface ProjectProps {
   logo: ReactNode

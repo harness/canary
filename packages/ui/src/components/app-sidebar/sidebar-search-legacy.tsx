@@ -1,6 +1,6 @@
 import { FormEvent, MouseEvent, ReactNode, useState } from 'react'
 
-import { Button, Icon, ModalDialog, SearchBox, Spacer, useSidebar } from '@/components'
+import { Button, Icon, ModalDialog, SearchBox, useSidebar } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 

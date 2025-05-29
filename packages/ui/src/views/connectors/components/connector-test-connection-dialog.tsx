@@ -41,7 +41,6 @@ export const ConnectorTestConnectionDialog = ({
   apiUrl,
   title = 'Test Connection',
   description = 'Validating connector authentication and permissions',
-  className,
   percentageFilled = 50,
   errorMessage,
   errorData,

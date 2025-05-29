@@ -1,4 +1,4 @@
-import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode, useState } from 'react'
+import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
@@ -35,29 +35,10 @@ const headerVariants = cva('cn-modal-dialog-header', {
   }
 })
 
-export interface ModalDialogRootProps {
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  children: ReactNode
-}
+export type ModalDialogRootProps = Pick<Dialog.DialogProps, 'open' | 'onOpenChange' | 'children'>
 
-const Root = ({ open, onOpenChange, children }: ModalDialogRootProps) => {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(open ?? false)
-  const isControlled = open !== undefined
-  const isOpen = isControlled ? open : uncontrolledOpen
-
-  const handleOpenChange = (newOpen: boolean) => {
-    if (!isControlled) {
-      setUncontrolledOpen(newOpen)
-    }
-    onOpenChange?.(newOpen)
-  }
-
-  return (
-    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
-      {children}
-    </Dialog.Root>
-  )
+const Root = ({ children, ...props }: ModalDialogRootProps) => {
+  return <Dialog.Root {...props}>{children}</Dialog.Root>
 }
 
 const Trigger = Dialog.Trigger

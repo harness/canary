@@ -124,7 +124,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
 
   return (
     <ModalDialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <ModalDialog.Content className="max-w-[576px]">
+      <ModalDialog.Content>
         <ModalDialog.Header>
           <ModalDialog.Title>Commit Changes</ModalDialog.Title>
         </ModalDialog.Header>

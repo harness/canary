@@ -1,6 +1,15 @@
 import { ElementType, useCallback, useMemo, useRef } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Pagination, SearchInput, Spacer } from '@/components'
+import {
+  Button,
+  ButtonLayout,
+  Drawer,
+  EntityFormLayout,
+  Pagination,
+  SearchInput,
+  SkeletonList,
+  Spacer
+} from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
@@ -39,8 +48,17 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
   const { requestClose, isDrawer = false } = props
   const { Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore, useTranslationStore } = useUnifiedPipelineStudioContext()
-  const { page, setPage, pageSize, totalItems, templates, templatesError, searchQuery, setSearchQuery } =
-    useTemplateListStore()
+  const {
+    page,
+    setPage,
+    pageSize,
+    totalItems,
+    templates,
+    templatesError,
+    searchQuery,
+    setSearchQuery,
+    isLoading: isFetchingTemplates
+  } = useTemplateListStore()
 
   const { t } = useTranslationStore()
 
@@ -113,6 +131,8 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         />
         {templatesError ? (
           <p className="text-sm text-cn-foreground-danger">{templatesError.message}</p>
+        ) : isFetchingTemplates ? (
+          <SkeletonList />
         ) : (
           <>
             <StepPaletteSection

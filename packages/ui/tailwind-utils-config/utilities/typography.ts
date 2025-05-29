@@ -56,6 +56,9 @@ export default {
     },
     '&-family-default': {
       font: 'var(--cn-font-family-default)'
+    },
+    '&-dialog-title': {
+      font: 'var(--cn-comp-dialog-title)'
     }
   }
 }

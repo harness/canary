@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
+import { Button, ButtonLayout, CopyButton, ModalDialog, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -38,56 +38,56 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
     defaultValues: tokenData
   })
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
-        <Dialog.Header>
-          <Dialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</Dialog.Title>
-        </Dialog.Header>
-        <div className="flex flex-col gap-y-7">
-          {/* NAME */}
+    <ModalDialog.Root open={open} onOpenChange={onClose}>
+      <ModalDialog.Content>
+        <ModalDialog.Header>
+          <ModalDialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</ModalDialog.Title>
+        </ModalDialog.Header>
+        <ModalDialog.Body>
+          <div className="flex flex-col gap-y-7">
+            {/* NAME */}
 
-          <TextInput
-            className="py-px truncate"
-            id="identifier"
-            label={t('views:repos.name')}
-            value={tokenData?.identifier}
-            readOnly
-            suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={tokenData?.identifier} />}
-          />
+            <TextInput
+              className="py-px truncate"
+              id="identifier"
+              label={t('views:repos.name')}
+              value={tokenData?.identifier}
+              readOnly
+              suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={tokenData?.identifier} />}
+            />
 
-          <TextInput
-            className="py-px"
-            id="lifetime"
-            label={t('views:repos.expiration')}
-            value={tokenData?.lifetime}
-            readOnly
-          />
+            <TextInput
+              className="py-px"
+              id="lifetime"
+              label={t('views:repos.expiration')}
+              value={tokenData?.lifetime}
+              readOnly
+            />
 
-          {/* Expiration Info */}
-          <TextInput
-            className="truncate py-px"
-            id="token"
-            label={t('views:repos.token')}
-            value={tokenData?.token}
-            readOnly
-            suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={tokenData?.token} />}
-            autoFocus
-          />
+            {/* Expiration Info */}
+            <TextInput
+              className="truncate py-px"
+              id="token"
+              label={t('views:repos.token')}
+              value={tokenData?.token}
+              readOnly
+              suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={tokenData?.token} />}
+              autoFocus
+            />
 
-          <span>{t('views:repos.cloneCredGenerated')}</span>
-        </div>
-        <Dialog.Footer>
+            <span>{t('views:repos.cloneCredGenerated')}</span>
+          </div>
+        </ModalDialog.Body>
+        <ModalDialog.Footer>
           <ButtonLayout>
-            <Button variant="outline" onClick={onClose}>
-              Close
-            </Button>
+            <ModalDialog.Close onClick={onClose}>Close</ModalDialog.Close>
             <Button type="button" onClick={() => navigateToManageToken?.()}>
               {t('views:repos.manageAPIToken')}
             </Button>
           </ButtonLayout>
-        </Dialog.Footer>
-      </Dialog.Content>
-    </Dialog.Root>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
   )
 }
 

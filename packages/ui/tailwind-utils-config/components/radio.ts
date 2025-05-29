@@ -20,6 +20,7 @@ export default {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: '0',
     position: 'relative',
     top: 'var(--cn-spacing-half)',
     width: 'var(--cn-size-4)',
@@ -32,13 +33,13 @@ export default {
       borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
     },
 
-    '&:where([disabled])': {
+    '&:where([disabled]), &:has([disabled])': {
       backgroundColor: 'var(--cn-state-disabled-bg)',
       borderColor: 'var(--cn-state-disabled-border)',
       cursor: 'not-allowed'
     },
 
-    '&:where([data-state=checked])': {
+    '&:where([data-state=checked]), &:has([data-state=checked])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
       borderColor: 'var(--cn-comp-selection-selected-border)',
 
@@ -48,7 +49,7 @@ export default {
       }
     },
 
-    '&:where([data-state=checked][disabled])': {
+    '&:where([data-state=checked][disabled]), &:has([data-state=checked][disabled])': {
       backgroundColor: 'var(--cn-state-disabled-bg-selected)',
       borderColor: 'var(--cn-state-disabled-border-selected)'
     }

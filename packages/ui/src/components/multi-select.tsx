@@ -88,22 +88,23 @@ export const MultiSelect = <T = unknown,>({
 
                 return (
                   <DropdownMenu.Item
+                    title={
+                      <div className="flex items-center gap-x-2">
+                        {isSelected && <Icon className="min-w-3 text-icons-2" name="tick" size={12} />}
+                        {customOptionElem ? (
+                          customOptionElem(option)
+                        ) : (
+                          <span className="font-medium">{option.label}</span>
+                        )}
+                      </div>
+                    }
                     key={option.id}
                     className={cn('px-3', { 'pl-8': !isSelected })}
                     onSelect={e => {
                       e.preventDefault()
                       handleChange(option)
                     }}
-                  >
-                    <div className="flex items-center gap-x-2">
-                      {isSelected && <Icon className="min-w-3 text-icons-2" name="tick" size={12} />}
-                      {customOptionElem ? (
-                        customOptionElem(option)
-                      ) : (
-                        <span className="font-medium">{option.label}</span>
-                      )}
-                    </div>
-                  </DropdownMenu.Item>
+                  />
                 )
               })}
             </ScrollArea>

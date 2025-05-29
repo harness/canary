@@ -315,7 +315,7 @@ import {{ icon.componentName }} from './icons/{{ icon.filename }}'
 
 export const IconNameMapV2 = {
 {%- for icon in icons %}
-  '{{ icon.iconKey }}': {{ icon.componentName }}{%- unless forloop.last %},
+  {% if icon.iconKey contains '-' %}'{{ icon.iconKey }}'{% else %}{{ icon.iconKey }}{% endif %}: {{ icon.componentName }}{%- unless forloop.last %},
 {%- endunless %}
 {%- endfor %}
 }

@@ -58,8 +58,10 @@ export default {
   // Header Icon/Logo and Title
   '.cn-modal-dialog-header-title-row': {
     gap: 'var(--cn-spacing-1-half)',
-    paddingRight: 'var(--cn-spacing-6)',
-    '@apply flex': ''
+    '@apply flex': '',
+    '.cn-modal-dialog-content:has(.cn-modal-dialog-close) > .cn-modal-dialog-header &': {
+      paddingRight: 'var(--cn-spacing-6)'
+    }
   },
   '.cn-modal-dialog-header-icon': {
     '@apply flex items-center justify-center': '',

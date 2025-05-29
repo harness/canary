@@ -1,21 +1,16 @@
 import { FC, useRef } from 'react'
 
 import { Button, DropdownMenu, Icon, Link } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 
 export interface FileAdditionsTriggerProps {
-  useTranslationStore: () => TranslationStore
   pathNewFile: string
   pathUploadFiles: string
 }
 
-export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({
-  useTranslationStore,
-  pathNewFile,
-  pathUploadFiles
-}) => {
+export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({ pathNewFile, pathUploadFiles }) => {
   const triggerRef = useRef<HTMLButtonElement>(null)
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <DropdownMenu.Root>

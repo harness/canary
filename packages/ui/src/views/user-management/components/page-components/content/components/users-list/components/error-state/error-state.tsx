@@ -1,11 +1,9 @@
 import { NoData } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const ErrorState = () => {
-  const { useTranslationStore } = useUserManagementStore()
-
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { errorStates } = useStates()
   const { fetchUsersError } = errorStates

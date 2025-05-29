@@ -7,7 +7,6 @@ import { RepoWebhookExecutionsPage, WebhookExecutionType } from '@harnessio/ui/v
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
@@ -42,7 +41,6 @@ export const WebhookExecutionsContainer = () => {
 
   return (
     <RepoWebhookExecutionsPage
-      useTranslationStore={useTranslationStore}
       useWebhookStore={useWebhookStore}
       toRepoWebhooks={() => routes.toRepoWebhooks({ webhookId })}
       repo_ref={repo_ref}

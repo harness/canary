@@ -13,7 +13,8 @@ import {
   Input,
   Spacer
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -53,7 +54,6 @@ interface CreateSecretProps {
   prefilledFormData?: SecretDataType
   onFormSubmit: (data: CreateSecretFormFields) => void
   onFormCancel: () => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   apiError: string | null
   connectorInput: React.ReactElement
@@ -62,13 +62,12 @@ interface CreateSecretProps {
 export function CreateSecretPage({
   onFormSubmit,
   onFormCancel,
-  useTranslationStore,
   isLoading = false,
   apiError = null,
   prefilledFormData,
   connectorInput
 }: CreateSecretProps) {
-  const { t: _t } = useTranslationStore()
+  const { t: _t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const formMethods = useForm<CreateSecretFormFields>({

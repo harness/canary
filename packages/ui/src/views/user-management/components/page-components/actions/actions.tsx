@@ -1,13 +1,11 @@
 import { Button, ListActions, SearchBox } from '@/components'
+import { useTranslation } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { useSearch } from '@/views/user-management/providers/search-provider'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const Actions = () => {
-  const { useTranslationStore } = useUserManagementStore()
-
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { searchInput, handleInputChange } = useSearch()
 

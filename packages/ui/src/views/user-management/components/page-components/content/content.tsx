@@ -1,4 +1,5 @@
 import { Pagination, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { EmptyState } from '@/views/user-management/components/empty-state/empty-state'
 import { Actions } from '@/views/user-management/components/page-components/actions'
@@ -8,14 +9,14 @@ import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentProps) => {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
 
   const { users } = useAdminListUsersStore()
 
   const { loadingStates } = useStates()
   const { isFetchingUsers } = loadingStates
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (!isFetchingUsers && !users?.length) {
     return <EmptyState />
@@ -37,7 +38,6 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentP
         pageSize={pageSize}
         currentPage={currentPage}
         goToPage={(pageNum: number) => setPage(pageNum)}
-        t={t}
       />
     </SandboxLayout.Content>
   )

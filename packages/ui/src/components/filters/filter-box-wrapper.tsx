@@ -1,16 +1,15 @@
 import { ReactNode, useEffect, useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 interface FiltersProps {
   handleRemoveFilter: () => void
   defaultOpen: boolean
   filterLabel: string
-  t: TFunction
   onOpenChange?: (open: boolean) => void
   valueLabel?: ReactNode
   contentClassName?: string
@@ -24,9 +23,10 @@ const FilterBoxWrapper = ({
   filterLabel,
   valueLabel,
   onOpenChange,
-  contentClassName,
-  t
+  contentClassName
 }: FiltersProps) => {
+  const { t } = useTranslation()
+
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
   useEffect(() => {

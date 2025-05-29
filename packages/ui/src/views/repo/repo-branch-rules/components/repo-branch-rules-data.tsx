@@ -1,5 +1,5 @@
+import { TFunctionWithFallback } from '@/context'
 import { BranchRuleId, MergeStrategy } from '@/views'
-import { TFunction } from 'i18next'
 
 export interface BranchRuleType {
   id: BranchRuleId
@@ -14,7 +14,7 @@ export interface BranchRuleType {
   hasInput?: boolean
 }
 
-export const getBranchRules = (t: TFunction): BranchRuleType[] => [
+export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
   {
     id: BranchRuleId.REQUIRE_LATEST_COMMIT,
     label: t('views:repos.RequestApprovalRule', 'Request approval of new changes'),

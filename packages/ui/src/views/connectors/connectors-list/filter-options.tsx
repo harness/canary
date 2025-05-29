@@ -1,12 +1,14 @@
+import { TFunctionWithFallback } from '@/context'
 import { CheckboxOptions, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import { Icon } from '@components/icon'
-import { TFunction } from 'i18next'
 
 import { booleanParser } from '@harnessio/filters'
 
 import { ConnectorListFilters } from './types'
 
-export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionConfig<keyof ConnectorListFilters>> => {
+export const getConnectorListFilterOptions = (
+  t: TFunctionWithFallback
+): Array<FilterOptionConfig<keyof ConnectorListFilters>> => {
   const options = [
     { label: t('views:connectors.filterOptions.statusOption.success', 'Success'), value: 'SUCCESS' },
     { label: t('views:connectors.filterOptions.statusOption.failure', 'Failed'), value: 'FAILURE' }

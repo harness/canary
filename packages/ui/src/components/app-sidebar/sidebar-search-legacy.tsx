@@ -1,15 +1,16 @@
 import { FormEvent, MouseEvent, ReactNode, useState } from 'react'
 
 import { Button, Dialog, Icon, SearchBox, Spacer, useSidebar } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { TFunction } from 'i18next'
 
 interface ProjectProps {
   logo: ReactNode
-  t: TFunction
 }
 
-function SidebarSearchLegacy({ logo, t }: ProjectProps) {
+function SidebarSearchLegacy({ logo }: ProjectProps) {
+  const { t } = useTranslation()
+
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const { collapsed } = useSidebar()

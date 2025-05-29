@@ -1,25 +1,24 @@
 import { FC, useCallback } from 'react'
 
 import { NoData, Pagination, SkeletonList } from '@/components'
-import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
+import { useTranslation } from '@/context'
+import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TypesCommit } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
 }
 interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
-  useTranslationStore: () => TranslationStore
   usePullRequestCommitsStore: () => IPullRequestCommitsStore
 }
 
 const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
-  useTranslationStore,
   usePullRequestCommitsStore,
   toCommitDetails,
   toCode
 }) => {
   const { commitsList, xNextPage, xPrevPage, isFetchingCommits } = usePullRequestCommitsStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const getPrevPageLink = useCallback(() => {
     return `?page=${xPrevPage}`
@@ -64,7 +63,6 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         hasPrevious={xPrevPage > 0}
         getPrevPageLink={getPrevPageLink}
         getNextPageLink={getNextPageLink}
-        t={t}
       />
     </SandboxLayout.Content>
   )

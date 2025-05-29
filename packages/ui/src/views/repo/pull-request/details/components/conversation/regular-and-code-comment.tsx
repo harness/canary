@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useState } from 'react'
 
 import { Avatar, Icon, Layout } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import {
   CommentItem,
@@ -8,7 +9,6 @@ import {
   PullRequestCommentBox,
   PullRequestOverviewProps,
   removeLastPlus,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -129,7 +129,6 @@ export interface PullRequestRegularAndCodeCommentProps
   commentItems: CommentItem<TypesPullReqActivity>[]
   parentItem?: CommentItem<TypesPullReqActivity>
   isLast: boolean
-  useTranslationStore: () => TranslationStore
   componentViewBase: FC<{
     commentItem: PRCommentViewProps['commentItem']
     parentItem?: CommentItem<TypesPullReqActivity>
@@ -146,11 +145,10 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   handleSaveComment,
   onCopyClick,
   handleDeleteComment,
-  useTranslationStore,
   handleUpdateComment,
   componentViewBase: ComponentViewBase
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
 
   const [hideReplyHeres, setHideReplyHeres] = useState<Record<string, boolean>>({})
@@ -312,7 +310,6 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               mode={DiffModeEnum.Unified}
               wrap={wrap}
               addWidget={false}
-              useTranslationStore={useTranslationStore}
             />
 
             {renderContentItemsBlock()}

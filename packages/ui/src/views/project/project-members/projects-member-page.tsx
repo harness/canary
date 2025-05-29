@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
@@ -11,7 +12,6 @@ import { ProjectMemberListViewProps } from './types'
 export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   isLoading,
   isInvitingMember,
-  useTranslationStore,
   useMemberListStore,
   usePrincipalListStore,
   isInviteMemberDialogOpen,
@@ -25,7 +25,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   principalsSearchQuery,
   onDeleteHandler
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { memberList, totalItems, pageSize, page, setPage } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
 
@@ -102,7 +102,6 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
               memberList={memberList}
               handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
               onDeleteHandler={onDeleteHandler}
-              useTranslationStore={useTranslationStore}
               onEditMember={onEditMember}
               totalItems={totalItems}
               pageSize={pageSize}
@@ -119,7 +118,6 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
           setIsInviteMemberDialogOpen(false)
         }}
         onSubmit={onSubmit}
-        useTranslationStore={useTranslationStore}
         principals={principalList}
         isInvitingMember={isInvitingMember}
         error={inviteMemberError}

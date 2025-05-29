@@ -1,4 +1,3 @@
-import { TranslationStore } from '@views/repo'
 import { CreateWebhookFormFields } from '@views/repo/webhooks/webhook-create/types'
 
 export interface WebhookType {
@@ -94,7 +93,6 @@ export type EnumWebhookTrigger =
 
 export interface RepoWebhookListPageProps {
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
   openDeleteWebhookDialog: (id: number) => void
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void

@@ -2,7 +2,8 @@ import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
-import { BranchSelectorListItem, TranslationStore } from '@/views/repo'
+import { useTranslation } from '@/context'
+import { BranchSelectorListItem } from '@/views/repo'
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -17,7 +18,6 @@ interface CreateTagDialogProps {
   onClose: () => void
   onSubmit: (data: CreateTagFormFields) => void
   error?: string
-  useTranslationStore: () => TranslationStore
   isLoading?: boolean
   selectedBranchOrTag: BranchSelectorListItem | null
   branchSelectorRenderer: () => JSX.Element | null
@@ -28,12 +28,11 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   onClose,
   onSubmit,
   error,
-  useTranslationStore,
   isLoading = false,
   selectedBranchOrTag,
   branchSelectorRenderer: BranchSelectorContainer
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const formMethods = useForm<CreateTagFormFields>({
     resolver: zodResolver(makeCreateTagFormSchema(t)),

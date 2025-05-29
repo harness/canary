@@ -18,7 +18,6 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { orderSortDate, PageResponseHeader } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
@@ -180,7 +179,6 @@ export function ProjectMemberListPage() {
     <>
       <ProjectMemberListView
         isLoading={isLoading}
-        useTranslationStore={useTranslationStore}
         useMemberListStore={useMemberListStore}
         usePrincipalListStore={usePrincipalListStore}
         isInvitingMember={isInvitingMember}
@@ -204,7 +202,6 @@ export function ProjectMemberListPage() {
         type="member"
         identifier={deleteMemberId ?? undefined}
         isLoading={isDeletingMember}
-        useTranslationStore={useTranslationStore}
         withForm
       />
     </>

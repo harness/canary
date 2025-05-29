@@ -14,15 +14,8 @@ import {
   SkeletonForm,
   Text
 } from '@/components'
-import {
-  AccessLevel,
-  ErrorTypes,
-  errorTypes,
-  generalSettingsFormSchema,
-  RepoData,
-  RepoUpdateData,
-  TranslationStore
-} from '@/views'
+import { useTranslation } from '@/context'
+import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -33,7 +26,6 @@ export const RepoSettingsGeneralForm: FC<{
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
-  useTranslationStore: () => TranslationStore
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }> = ({
   handleRepoUpdate,
@@ -41,11 +33,10 @@ export const RepoSettingsGeneralForm: FC<{
   isLoadingRepoData,
   isUpdatingRepoData,
   isRepoUpdateSuccess,
-  useTranslationStore,
   branchSelectorRenderer,
   repoData
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const BranchSelector = branchSelectorRenderer
 

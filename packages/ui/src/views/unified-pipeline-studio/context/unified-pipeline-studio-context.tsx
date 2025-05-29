@@ -1,7 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
-import { TranslationStore } from '@views/repo'
-
 import { IFormDefinition, InputFactory } from '@harnessio/forms'
 
 import { ITemplateListStore } from '..'
@@ -75,7 +73,6 @@ export interface UnifiedPipelineStudioContextProps {
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
   onPanelOpenChange?: (open: boolean) => void
-  useTranslationStore: () => TranslationStore
   view: VisualYamlValue
   setView: (view: VisualYamlValue) => void
   rightDrawer: RightDrawer
@@ -133,7 +130,6 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   onErrorsChange: (_errors: YamlErrorDataType) => undefined,
   panelOpen: false,
   onPanelOpenChange: (_open: boolean) => undefined,
-  useTranslationStore: () => ({}) as TranslationStore,
   view: 'visual',
   setView: (_view: VisualYamlValue) => undefined,
   rightDrawer: RightDrawer.None,
@@ -193,7 +189,6 @@ export interface UnifiedPipelineStudioProviderProps {
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
   onPanelOpenChange?: (open: boolean) => void
-  useTranslationStore: () => TranslationStore
   view: VisualYamlValue
   setView: (view: VisualYamlValue) => void
   useTemplateListStore: () => ITemplateListStore

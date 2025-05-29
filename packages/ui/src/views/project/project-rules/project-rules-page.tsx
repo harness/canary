@@ -1,13 +1,13 @@
 import { FC, useMemo } from 'react'
 
 import { NoData, Pagination } from '@/components'
-import { ErrorTypes, IProjectRulesStore, SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
 
 export interface ProjectRulesPageProps {
   useProjectRulesStore: () => IProjectRulesStore
   isLoading: boolean
-  useTranslationStore: () => TranslationStore
   searchQuery: string
   setSearchQuery: (query: string) => void
   page: number
@@ -19,7 +19,6 @@ export interface ProjectRulesPageProps {
 export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   useProjectRulesStore,
   isLoading,
-  useTranslationStore,
   searchQuery,
   setSearchQuery,
   page,
@@ -28,7 +27,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   apiError,
   handleRuleClick
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
 
   const isDirtyList = useMemo(() => {
@@ -38,7 +37,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="3xl">
-        <h1 className="mb-6 text-2xl font-medium text-cn-foreground-1">{t('views:projectSettings.rules', 'Rules')}</h1>
+        <h1 className="text-cn-foreground-1 mb-6 text-2xl font-medium">{t('views:projectSettings.rules', 'Rules')}</h1>
         {!rulesData?.length && !isDirtyList && !isLoading ? (
           <NoData
             withBorder
@@ -63,14 +62,13 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             apiError={apiError}
             handleRuleClick={handleRuleClick}
             openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-            useTranslationStore={useTranslationStore}
             rulesSearchQuery={searchQuery}
             setRulesSearchQuery={setSearchQuery}
             projectScope
           />
         )}
 
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

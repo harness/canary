@@ -1,4 +1,5 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/index'
@@ -30,12 +31,8 @@ const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
     </div>
   )
 }
-const ConnectorDetailsActivitiesList = ({
-  useTranslationStore,
-  isLoading,
-  activities
-}: ConnectorDetailsActivitiesListProps) => {
-  const { t } = useTranslationStore()
+const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDetailsActivitiesListProps) => {
+  const { t } = useTranslation()
   const content = activities?.content
   if (isLoading) {
     return <SkeletonList />

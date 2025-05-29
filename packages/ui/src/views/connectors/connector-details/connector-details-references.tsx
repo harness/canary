@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { ListActions, NoData, Pagination, SearchBox } from '@components/index'
 import { Spacer } from '@components/spacer'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
@@ -12,7 +12,6 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
   searchQuery,
   setSearchQuery,
   apiConnectorRefError,
-  useTranslationStore,
   currentPage,
   totalItems,
   pageSize,
@@ -23,7 +22,7 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
   toScope,
   ...props
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
@@ -73,14 +72,13 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
       <Spacer size={4} />
       <ConnectorDetailsReferenceList
         entities={entities}
-        useTranslationStore={useTranslationStore}
         isLoading={isLoading}
         toEntity={toEntity}
         toScope={toScope}
         {...props}
       />
       <Spacer size={8} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
     </div>
   )
 }

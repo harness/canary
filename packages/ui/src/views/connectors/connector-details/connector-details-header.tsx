@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Button, Layout, Link, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { Logo, LogoName } from '@components/logo'
 
@@ -10,11 +11,10 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   connectorDetails,
   onTest,
   onDelete,
-  useTranslationStore,
   toConnectorsList
 }) => {
   const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   return (
     <div className="px-8">
       {toConnectorsList ? (

@@ -2,7 +2,6 @@ import { FC, MouseEvent, ReactElement } from 'react'
 
 import { Spacer } from '@/components'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 import { PaginationPrimitive } from './pagination-primitive'
 
@@ -102,7 +101,6 @@ const PaginationItems: FC<PaginationItemsProps> = ({
 
 interface PaginationBaseProps {
   className?: string
-  t: TFunction
 }
 
 type DeterminatePaginationNavProps =
@@ -154,7 +152,6 @@ export const Pagination: FC<PaginationProps> = ({
   hasNext,
   hasPrevious,
   className,
-  t,
   getPrevPageLink,
   getNextPageLink,
   onPrevious,
@@ -192,7 +189,6 @@ export const Pagination: FC<PaginationProps> = ({
                 onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
                 href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
                 disabled={currentPage === 1}
-                t={t}
               />
             </PaginationPrimitive.Item>
 
@@ -213,7 +209,6 @@ export const Pagination: FC<PaginationProps> = ({
                 onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
                 href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
                 disabled={currentPage === totalPages}
-                t={t}
               />
             </PaginationPrimitive.Item>
           </PaginationPrimitive.Content>
@@ -221,16 +216,11 @@ export const Pagination: FC<PaginationProps> = ({
           <PaginationPrimitive.Content className="cn-pagination-hide-pages">
             {/* Previous Button */}
             <PaginationPrimitive.Item className="cn-pagination-item-previous">
-              <PaginationPrimitive.Previous
-                href={getPrevPageLink?.()}
-                onClick={onPrevious}
-                disabled={!hasPrevious}
-                t={t}
-              />
+              <PaginationPrimitive.Previous href={getPrevPageLink?.()} onClick={onPrevious} disabled={!hasPrevious} />
             </PaginationPrimitive.Item>
             {/* Next Button */}
             <PaginationPrimitive.Item className="cn-pagination-item-next">
-              <PaginationPrimitive.Next href={getNextPageLink?.()} onClick={onNext} disabled={!hasNext} t={t} />
+              <PaginationPrimitive.Next href={getNextPageLink?.()} onClick={onNext} disabled={!hasNext} />
             </PaginationPrimitive.Item>
           </PaginationPrimitive.Content>
         )}

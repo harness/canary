@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, ReactNode, useCallback, useState } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
 import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
@@ -102,7 +102,8 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               pinnedMenuItems={pinnedMenu}
               handleChangePinnedMenuItem={setPinned}
               handleRemoveRecentMenuItem={noop}
-              useTranslationStore={useTranslationStore}
+              changeLanguage={noop}
+              lang="en"
             />
             <Sidebar.Inset>
               {breadcrumbs}

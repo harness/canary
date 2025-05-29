@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
 import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 import { RepoList } from './repo-list'
@@ -9,7 +9,6 @@ import { RepoListProps } from './types'
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
-  useTranslationStore,
   isLoading,
   isError,
   errorMessage,
@@ -21,7 +20,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toImportMultipleRepos,
   ...routingProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   const handleSearch = useCallback(
@@ -129,14 +128,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           repos={repositories || []}
           handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
           isDirtyList={isDirtyList}
-          useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
           {...routingProps}
         />
         {!!repositories?.length && (
-          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

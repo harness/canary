@@ -18,7 +18,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate, PageResponseHeader } from '../../types'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
@@ -179,7 +178,6 @@ export function RepoBranchesListPage() {
         isCreatingBranch={isCreatingBranch}
         onSubmit={onSubmit}
         useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
         isCreateBranchDialogOpen={isCreateBranchDialogOpen}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         searchQuery={query}
@@ -212,7 +210,6 @@ export function RepoBranchesListPage() {
         type="branch"
         identifier={deleteBranchName ?? undefined}
         isLoading={isDeletingBranch}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

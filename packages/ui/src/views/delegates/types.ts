@@ -1,8 +1,5 @@
-import { TranslationStore } from '@/views'
-
 export interface DelegateConnectivityListProps {
   delegates: DelegateItem[]
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   selectedTags?: string[]
   isDelegateSelected: (selectors: string[], tags: string[]) => boolean

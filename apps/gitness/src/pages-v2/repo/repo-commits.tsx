@@ -8,7 +8,6 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@har
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
@@ -89,7 +88,6 @@ export default function RepoCommitsPage() {
       setPage={setPage}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
-      useTranslationStore={useTranslationStore}
       renderProp={() => (
         <BranchSelectorContainer
           onSelectBranchorTag={selectBranchOrTag}

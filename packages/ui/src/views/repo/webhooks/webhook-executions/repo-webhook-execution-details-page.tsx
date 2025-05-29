@@ -1,9 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
 import { Button, ListActions, Spacer, StatusBadge, Text } from '@/components'
-import { ModeType, useTheme } from '@/context'
+import { ModeType, useTheme, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { SandboxLayout, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
@@ -13,18 +13,16 @@ import { WebhookExecutionEditorControlBar } from './components/webhook-execution
 
 interface RepoWebhookExecutionDetailsPageProps {
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleRetriggerExecution: () => void
 }
 
 export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPageProps> = ({
   useWebhookStore,
-  useTranslationStore,
   isLoading,
   handleRetriggerExecution
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { executionId, executions } = useWebhookStore()
   const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
   const [view, setView] = useState('payload')

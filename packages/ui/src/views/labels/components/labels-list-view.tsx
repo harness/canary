@@ -1,13 +1,13 @@
 import { FC } from 'react'
 
 import { Icon, MoreActionsTooltip, NoData, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ILabelType, LabelValuesType, TranslationStore } from '@/views'
+import { ILabelType, LabelValuesType } from '@/views'
 
 import { LabelCellContent } from './label-cell-content'
 
 export interface LabelsListViewProps {
-  useTranslationStore: () => TranslationStore
   labels: ILabelType[]
   handleEditLabel: (label: ILabelType) => void
   handleDeleteLabel: (identifier: string) => void
@@ -28,14 +28,13 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   labels,
   handleEditLabel,
   handleDeleteLabel,
-  useTranslationStore,
   searchQuery,
   handleResetQueryAndPages,
   values,
   widthType = 'default',
   labelContext
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (!labels.length) {
     if (searchQuery) {

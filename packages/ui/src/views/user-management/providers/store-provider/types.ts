@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { TranslationStore, UsersProps } from '@/views'
+import { UsersProps } from '@/views'
 
 export interface IAdminListUsersStore {
   users: UsersProps[]
@@ -22,5 +22,4 @@ export interface StoreProviderProps extends PropsWithChildren<StoreContextType> 
 
 export interface StoreContextType {
   useAdminListUsersStore: () => IAdminListUsersStore
-  useTranslationStore: () => TranslationStore
 }

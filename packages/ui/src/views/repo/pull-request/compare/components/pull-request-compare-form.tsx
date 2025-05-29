@@ -2,7 +2,8 @@ import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs } from '@/components'
-import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { handleFileDrop, handlePaste, HandleUploadType } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
 
@@ -23,7 +24,6 @@ interface PullRequestFormProps {
   isLoading: boolean
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
-  useTranslationStore: () => TranslationStore
   handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
@@ -31,8 +31,8 @@ interface PullRequestFormProps {
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  ({ apiError, onFormSubmit, useTranslationStore, handleUpload, desc, setDesc, formMethods }, ref) => {
-    const { t } = useTranslationStore()
+  ({ apiError, onFormSubmit, handleUpload, desc, setDesc, formMethods }, ref) => {
+    const { t } = useTranslation()
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
     }

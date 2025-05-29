@@ -7,7 +7,6 @@ import { PullRequestCommitsView } from '@harnessio/ui/views'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestCommitsStore } from './stores/pull-request-commit-store'
 
@@ -49,7 +48,6 @@ export function PullRequestCommitPage() {
       toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       usePullRequestCommitsStore={usePullRequestCommitsStore}
-      useTranslationStore={useTranslationStore}
     />
   )
 }

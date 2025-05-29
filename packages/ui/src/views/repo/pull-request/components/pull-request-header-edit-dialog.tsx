@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, Dialog, FormInput, FormWrapper } from '@/components'
-import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -12,7 +11,6 @@ interface PullRequestHeaderEditDialogProps {
   onSubmit: (newTitle: string, newDescription: string) => void
   initialTitle: string
   initialDescription?: string
-  useTranslationStore?: () => TranslationStore
 }
 
 // Field names as constants to avoid lint warnings with string literals

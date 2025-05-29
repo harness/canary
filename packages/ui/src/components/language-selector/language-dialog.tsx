@@ -33,7 +33,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
   return (
     <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
       {!!children && <ModalDialog.Trigger asChild>{children}</ModalDialog.Trigger>}
-      <ModalDialog.Content className="max-w-[400px]">
+      <ModalDialog.Content>
         <ModalDialog.Header>
           <ModalDialog.Title className="text-5 font-medium">Language</ModalDialog.Title>
         </ModalDialog.Header>

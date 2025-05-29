@@ -47,9 +47,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   return (
     <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
       {!!children && <ModalDialog.Trigger asChild>{children}</ModalDialog.Trigger>}
-      <ModalDialog.Content size="md" className="max-w-[538px]">
+      <ModalDialog.Content size="md">
         <ModalDialog.Header>
-          <ModalDialog.Title className="text-5 font-medium">Appearance settings</ModalDialog.Title>
+          <ModalDialog.Title>Appearance settings</ModalDialog.Title>
         </ModalDialog.Header>
         <ModalDialog.Body>
           <div className="mt-1 flex flex-col gap-y-5">

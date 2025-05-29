@@ -58,14 +58,13 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
         />
       </div>
       <ModalDialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <ModalDialog.Content size="lg" className="h-[600px] max-w-[800px]">
+        <ModalDialog.Content size="lg" className="h-[600px]">
           <ModalDialog.Header>
             <ModalDialog.Title>{t('component:navbar.search', 'Search')}</ModalDialog.Title>
-            <ModalDialog.Description>
-              <Spacer size={6} />
-              <SearchBox.Root autoFocus width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
-            </ModalDialog.Description>
           </ModalDialog.Header>
+          <ModalDialog.Body>
+            <SearchBox.Root autoFocus width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
+          </ModalDialog.Body>
         </ModalDialog.Content>
       </ModalDialog.Root>
     </div>

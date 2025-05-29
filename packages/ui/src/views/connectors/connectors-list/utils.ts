@@ -19,5 +19,6 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = ne
   ['Vault', 'hashiCorpVault'],
   ['HttpHelmRepo', 'helm'],
   ['Rancher', 'rancher'],
-  ['Datadog', 'datadog']
+  ['Datadog', 'datadog'],
+  ['OciHelmRepo', 'helm']
 ])

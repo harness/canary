@@ -22,7 +22,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
         setZoomLevel(1)
       }}
     >
-      <ModalDialog.Content className="h-[600px] max-w-[800px] grid-rows-[1fr_auto]">
+      <ModalDialog.Content size="md">
         <ModalDialog.Header>
           <ModalDialog.Title>{title ? title : <Spacer size={7} />}</ModalDialog.Title>
         </ModalDialog.Header>

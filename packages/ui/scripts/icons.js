@@ -4,6 +4,10 @@ import path from 'path'
 import { URL } from 'url'
 
 import { config as dotenvConfig } from 'dotenv'
+import { Liquid } from 'liquidjs'
+import { optimize } from 'svgo'
+
+const engine = new Liquid()
 
 // Load environment variables from .env file
 dotenvConfig()
@@ -12,11 +16,11 @@ dotenvConfig()
 const DEFAULT_CONFIG = {
   FIGMA_TOKEN: process.env.FIGMA_TOKEN,
   FILE_ID: process.env.FIGMA_FILE_ID,
-  PAGE_NAME: process.env.FIGMA_PAGE_NAME || 'icons-to-dev',
-  OUTPUT_DIR: process.env.OUTPUT_DIR || './src/components/icon-v2/icons',
-  FORMAT: process.env.ICON_FORMAT || 'svg', // 'svg', 'png', 'jpg', 'pdf'
-  SCALE: parseInt(process.env.ICON_SCALE) || 1, // Only for raster formats
-  CONCURRENT_DOWNLOADS: parseInt(process.env.CONCURRENT_DOWNLOADS) || 5
+  PAGE_NAME: process.env.FIGMA_PAGE_NAME,
+  OUTPUT_DIR: './src/components/icon-v2/icons',
+  FORMAT: 'svg', // 'svg', 'png', 'jpg', 'pdf'
+  SCALE: 1, // Only for raster formats
+  CONCURRENT_DOWNLOADS: 10
 }
 
 class FigmaIconDownloader {
@@ -104,7 +108,13 @@ class FigmaIconDownloader {
 
   async downloadFile(url, filepath) {
     return new Promise((resolve, reject) => {
-      const parsedUrl = new URL(url)
+      let parsedUrl
+
+      try {
+        parsedUrl = new URL(url)
+      } catch (error) {
+        reject(new Error(`Invalid URL: ${url} - ${error.message}`))
+      }
       const isSvg = filepath.toLowerCase().endsWith('.svg')
 
       if (isSvg) {
@@ -155,6 +165,8 @@ class FigmaIconDownloader {
 
               fileStream.on('error', reject)
             } else if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+              console.log('res.headers.location', res.headers.location)
+
               // Handle redirects
               this.downloadFile(res.headers.location, filepath).then(resolve).catch(reject)
             } else {
@@ -167,43 +179,76 @@ class FigmaIconDownloader {
   }
 
   processSvgForTheming(svgContent) {
-    // Replace fill colors with currentColor
-    let processed = svgContent.replace(/fill="#[0-9A-Fa-f]{3,8}"/g, 'fill="currentColor"')
-    processed = processed.replace(/fill="rgb\([^)]+\)"/g, 'fill="currentColor"')
-    processed = processed.replace(/fill="[a-zA-Z]+"/g, match => {
-      // Don't replace 'fill="none"' as it's often needed for proper rendering
-      if (match === 'fill="none"') return match
-      return 'fill="currentColor"'
-    })
+    try {
+      const result = optimize(svgContent, {
+        plugins: [
+          {
+            name: 'preset-default',
+            params: {
+              overrides: {
+                // Disable some plugins from the preset
+                removeViewBox: false,
+                // Keep important attributes
+                removeUnknownsAndDefaults: {
+                  keepRoleAttr: true,
+                  keepAriaAttrs: true
+                }
+              }
+            }
+          },
+          // Remove width/height attributes from root SVG
+          {
+            name: 'removeAttrs',
+            params: {
+              attrs: ['width', 'height']
+            }
+          },
+          // Custom plugin to replace fill/stroke with currentColor
+          {
+            name: 'themify',
+            type: 'visitor',
+            fn: () => {
+              return {
+                element: {
+                  enter: node => {
+                    // Process style attribute
+                    if (node.attributes.style) {
+                      const styleAttr = node.attributes.style
+                      // Replace fill and stroke color values with currentColor
+                      node.attributes.style = styleAttr.replace(
+                        /(fill|stroke)\s*:\s*([^;]+)/g,
+                        (match, prop, value) => {
+                          if (value.trim() === 'none') {
+                            return match
+                          }
+                          return `${prop}:currentColor`
+                        }
+                      )
+                    }
 
-    // Replace stroke colors with currentColor
-    processed = processed.replace(/stroke="#[0-9A-Fa-f]{3,8}"/g, 'stroke="currentColor"')
-    processed = processed.replace(/stroke="rgb\([^)]+\)"/g, 'stroke="currentColor"')
-    processed = processed.replace(/stroke="[a-zA-Z]+"/g, match => {
-      // Don't replace 'stroke="none"' as it's often needed for proper rendering
-      if (match === 'stroke="none"') return match
-      return 'stroke="currentColor"'
-    })
+                    // Process fill attribute
+                    if (node.attributes.fill && node.attributes.fill !== 'none') {
+                      node.attributes.fill = 'currentColor'
+                    }
 
-    // Also handle style attributes that might contain fill or stroke
-    processed = processed.replace(
-      /style="([^"]*)(fill|stroke)\s*:\s*([^;"]+)([^"]*)"/g,
-      (match, prefix, property, value, suffix) => {
-        // Don't replace 'none' values
-        if (value.trim() === 'none') {
-          return match
-        }
-        return `style="${prefix}${property}:currentColor${suffix}"`
-      }
-    )
+                    // Process stroke attribute
+                    if (node.attributes.stroke && node.attributes.stroke !== 'none') {
+                      node.attributes.stroke = 'currentColor'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      })
 
-    // Remove width and height attributes from the root SVG element
-    // We keep the viewBox to maintain the correct aspect ratio
-    // We need multiple passes to handle both attributes
-    processed = processed.replace(/<svg([^>]*)\swidth="[^"]*"([^>]*)>/g, '<svg$1$2>')
-    processed = processed.replace(/<svg([^>]*)\sheight="[^"]*"([^>]*)>/g, '<svg$1$2>')
-
-    return processed
+      return result.data
+    } catch (error) {
+      console.error('Error processing SVG with SVGO:', error)
+      // Fallback to the original SVG content if SVGO processing fails
+      return svgContent
+    }
   }
 
   sanitizeFilename(name) {
@@ -250,32 +295,37 @@ class FigmaIconDownloader {
         return
       }
 
-      // Create imports and map entries
-      const imports = []
-      const mapEntries = []
-
-      for (const download of successfulDownloads) {
-        const filename = download.filename
-        const componentName = this.toComponentName(filename)
-        const iconKey = this.toIconKey(filename)
-
-        // Create relative path using './' since the map will be in the same directory
-        imports.push(`import ${componentName} from './${filename}'`)
-        mapEntries.push(`  '${iconKey}': ${componentName}`)
+      // Data for the LiquidJS template
+      const templateData = {
+        icons: successfulDownloads.map(download => ({
+          filename: download.filename,
+          componentName: this.toComponentName(download.filename),
+          iconKey: this.toIconKey(download.filename)
+        }))
       }
 
-      // Generate the TypeScript file content
-      const mapFileContent = `import * as React from 'react'
+      // File template
+      const template = `/**
+ * Harness Design System
+ * Generated icon map - DO NOT EDIT DIRECTLY
+ */
 
-${imports.join('\n')}
+{%- for icon in icons %}
+import {{ icon.componentName }} from './icons/{{ icon.filename }}'
+{%- endfor %}
 
 export const IconNameMapV2 = {
-${mapEntries.join(',\n')}
-} satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
+{%- for icon in icons %}
+'{{ icon.iconKey }}': {{ icon.componentName }}{%- unless forloop.last %},
+{%- endunless %}
+{%- endfor %}}
 `
 
+      // Render the template with the data
+      const mapFileContent = await engine.parseAndRender(template, templateData)
+
       // Write the map file
-      const mapFilePath = path.join(this.config.OUTPUT_DIR, 'icon-name-map.ts')
+      const mapFilePath = path.join(this.config.OUTPUT_DIR, '..', 'icon-name-map.ts')
       await fs.writeFile(mapFilePath, mapFileContent, 'utf8')
 
       console.log(`✅ Generated icon map at: ${mapFilePath}`)
@@ -315,11 +365,11 @@ ${mapEntries.join(',\n')}
   async downloadAllIcons() {
     try {
       // Validate configuration
-      if (!this.config.FIGMA_TOKEN || this.config.FIGMA_TOKEN === 'your-figma-personal-access-token') {
+      if (!this.config.FIGMA_TOKEN) {
         throw new Error('Please set your FIGMA_TOKEN in the configuration or environment variables')
       }
 
-      if (!this.config.FILE_ID || this.config.FILE_ID === 'your-figma-file-id') {
+      if (!this.config.FILE_ID) {
         throw new Error('Please set your FIGMA_FILE_ID in the configuration or environment variables')
       }
 
@@ -400,10 +450,9 @@ ${mapEntries.join(',\n')}
  * @param {Object} customConfig - Optional custom configuration that overrides default config
  * @returns {Promise<boolean>} - Returns true if successful
  */
-async function downloadIcons(customConfig) {
+async function downloadIcons() {
   try {
-    const config = customConfig || DEFAULT_CONFIG
-    const downloader = new FigmaIconDownloader(config)
+    const downloader = new FigmaIconDownloader(DEFAULT_CONFIG)
     return await downloader.downloadAllIcons()
   } catch (error) {
     console.error('❌ Error:', error.message)

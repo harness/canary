@@ -3,7 +3,7 @@ import { FC, SVGProps } from 'react'
 import { useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
-import { IconNameMapV2 } from './icons/icon-name-map'
+import { IconNameMapV2 } from './icon-name-map'
 
 export interface IconPropsV2 extends SVGProps<SVGSVGElement> {
   name: keyof typeof IconNameMapV2

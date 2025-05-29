@@ -11,10 +11,7 @@ import { IconV2, IconNameMapV2 } from "@harnessio/ui/components";
         class="aspect-square grid place-items-center bg-cn-background-2 border p-3 rounded"
         title={name}
       >
-        <IconV2
-          name={name as keyof typeof IconNameMapV2}
-          className="w-full h-full"
-        />
+        <IconV2 size={28} name={name as keyof typeof IconNameMapV2} />
       </div>
     ))
   }

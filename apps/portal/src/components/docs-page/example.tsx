@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
-import { Icon, Tooltip } from "@harnessio/ui/components";
+import { Icon, TooltipProvider } from "@harnessio/ui/components";
 import { cn } from "@harnessio/ui/utils";
 import { RouterContextProvider } from "@harnessio/ui/context";
 import ExampleLayout from "./example-layout";
@@ -64,9 +64,9 @@ const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
       path: "*",
       element: (
         <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
-          <Tooltip.Provider>
+          <TooltipProvider>
             <LivePreview />
-          </Tooltip.Provider>
+          </TooltipProvider>
         </RouterContextProvider>
       ),
     },

@@ -10,38 +10,42 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
+  code={`
+  <TooltipProvider>
     <div className="flex flex-col gap-4">
-        <h5>Standard usage</h5>
-        <Label htmlFor="name">Name</Label>
-        <input id="name" type="text" />
+      <div className="flex flex-col gap-4">
+          <h5>Standard usage</h5>
+          <Label htmlFor="name">Name</Label>
+          <input id="name" type="text" />
+      </div>
+
+      <hr />
+
+      <div className="flex flex-col gap-4">
+          <h5>With optional indicator</h5>
+          <Label htmlFor="email" optional>Email</Label>
+          <input id="email" type="email" />
+      </div>
+
+      <hr />
+
+      <div className="flex flex-col gap-4">
+          <h5>Primary variant</h5>
+          <Label variant="primary" htmlFor="password">Password</Label>
+          <input id="password" type="password" />
+      </div>
+
+      <hr />
+
+      <div className="flex flex-col gap-4">
+          <h5>With informer</h5>
+          <Label htmlFor="2" informerContent="Content here">Description</Label>
+          <input id="2" type="text" />
+      </div>
     </div>
 
-    <hr />
-
-    <div className="flex flex-col gap-4">
-        <h5>With optional indicator</h5>
-        <Label htmlFor="email" optional>Email</Label>
-        <input id="email" type="email" />
-    </div>
-
-    <hr />
-
-    <div className="flex flex-col gap-4">
-        <h5>Primary variant</h5>
-        <Label variant="primary" htmlFor="password">Password</Label>
-        <input id="password" type="password" />
-    </div>
-
-    <hr />
-
-    <div className="flex flex-col gap-4">
-        <h5>With informer</h5>
-        <Label htmlFor="2" informerContent="Content here">Description</Label>
-        <input id="2" type="text" />
-    </div>
-
-</div>`}
+  </TooltipProvider>
+`}
 />
 
 ## Usage

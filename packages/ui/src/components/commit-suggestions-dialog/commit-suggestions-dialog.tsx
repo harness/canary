@@ -48,7 +48,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
 
   return (
     <ModalDialog.Root open={isOpen} onOpenChange={onClose}>
-      <ModalDialog.Content className="max-w-[576px]">
+      <ModalDialog.Content>
         <ModalDialog.Header>
           <ModalDialog.Title>Commit Changes</ModalDialog.Title>
         </ModalDialog.Header>

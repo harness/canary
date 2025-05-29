@@ -38,6 +38,7 @@ export const useTemplateListStore = (): ITemplateListStore => {
     totalItems: 10,
     pageSize: 10,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    isLoading: false
   }
 }

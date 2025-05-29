@@ -28,6 +28,7 @@ export interface ITemplateListStore {
   searchQuery: string
   setSearchQuery: (query: string) => void
   getTemplateFormDefinition: (identifierWithVersion: string) => Promise<IFormDefinition>
+  isLoading: boolean
 }
 
 export interface UnifiedPipelineStudioProps {

@@ -2,11 +2,7 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, CopyButton, ModalDialog, TextInput } from '@/components'
-<<<<<<< HEAD
 import { useTranslation } from '@/context'
-=======
-import { TranslationStore } from '@/views'
->>>>>>> eab5cb900 (add button layout component for buttons inside modal dialog footer)
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 

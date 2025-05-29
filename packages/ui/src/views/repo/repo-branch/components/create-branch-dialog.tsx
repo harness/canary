@@ -1,10 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-<<<<<<< HEAD
-import { Alert, Button, ControlGroup, Fieldset, FormInput, FormWrapper, Label, ModalDialog } from '@/components'
-import { TFunctionWithFallback, useTranslation } from '@/context'
-=======
 import {
   Alert,
   Button,
@@ -16,7 +12,7 @@ import {
   Label,
   ModalDialog
 } from '@/components'
->>>>>>> eab5cb900 (add button layout component for buttons inside modal dialog footer)
+import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 

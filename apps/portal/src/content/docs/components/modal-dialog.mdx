@@ -350,6 +350,26 @@ The Body component automatically handles scrolling for long content:
 </div>`}
 />
 
+## `Anatomy`
+
+All parts of the `ModalDialog` component can be imported and composed as required.
+
+```tsx
+<ModalDialog.Root>
+  <ModalDialog.Trigger />
+  <ModalDialog.Content>
+    <ModalDialog.Header>
+      <ModalDialog.Title />
+      <ModalDialog.Description />
+    </ModalDialog.Header>
+    <ModalDialog.Body />
+    <ModalDialog.Footer>
+      <ModalDialog.Close />
+    </ModalDialog.Footer>
+  </ModalDialog.Content>
+</ModalDialog.Root>
+```
+
 ## API Reference
 
 ### `Root`

@@ -105,10 +105,10 @@ export const UnifiedPipelineStudioPipelineConfigForm = (props: UnifiedPipelineSt
           <Header>
             <Title>Edit Pipeline</Title>
             <Description>Configure a pipeline.</Description>
-            <ButtonLayout.Root>
+            {/* <ButtonLayout.Root>
               <Button variant={'ai'}>AI Autofill</Button>
-              {/* <Button variant={'outline'}>Use Template</Button> */}
-            </ButtonLayout.Root>
+              <Button variant={'outline'}>Use Template</Button>
+            </ButtonLayout.Root> */}
           </Header>
           <Body>
             <EntityFormLayout.Form>

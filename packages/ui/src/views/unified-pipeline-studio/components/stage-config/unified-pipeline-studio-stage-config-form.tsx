@@ -114,10 +114,10 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
             <Description>
               Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
             </Description>
-            <ButtonLayout horizontalAlign="start">
+            {/* <ButtonLayout horizontalAlign="start">
               <Button variant={'ai'}> AI Autofill</Button>
               <Button variant={'outline'}> Use Template</Button>
-            </ButtonLayout>
+            </ButtonLayout> */}
           </Header>
           <Body>
             <EntityFormLayout.Form>

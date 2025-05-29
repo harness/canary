@@ -10,7 +10,7 @@ import {
 
 import { IInputConfigWithConfig } from '../types'
 
-export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputConfigWithConfig => ({
+export const getContainerPartial = (stepIdentifier: 'run' | 'run-test' | 'background'): IInputConfigWithConfig => ({
   inputType: 'group',
   path: `${stepIdentifier}.container`,
   label: 'Container',

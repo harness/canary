@@ -68,9 +68,10 @@ export const PipelineStudioInternal = (): JSX.Element => {
                   onClick={() => onSave(yamlRevision.yaml)}
                   disabled={!isYamlDirty}
                 >
+                  {!saveInProgress && !isYamlDirty && <Icon name="tick" className="cn-text-success"></Icon>}
                   Save
                 </Button>
-                <Button loading={saveInProgress} size="sm" onClick={() => onRun()} disabled={isYamlDirty}>
+                <Button size="sm" onClick={() => onRun()} disabled={isYamlDirty || saveInProgress}>
                   Run
                 </Button>
               </>

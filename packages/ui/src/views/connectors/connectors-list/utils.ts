@@ -18,5 +18,6 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = ne
   ['TerraformCloud', 'terraform'],
   ['Vault', 'hashiCorpVault'],
   ['HttpHelmRepo', 'helm'],
-  ['Rancher', 'rancher']
+  ['Rancher', 'rancher'],
+  ['Datadog', 'datadog']
 ])

@@ -4,6 +4,7 @@ import {
   siAmazonwebservices,
   siAwssecretsmanager,
   siBitbucket,
+  siDatadog,
   siDocker,
   siGithub,
   siGitlab,
@@ -33,6 +34,7 @@ export type LogoName =
   | 'gcpSecretManager'
   | 'helm'
   | 'rancher'
+  | 'datadog'
 
 const LogoNameMap: Record<LogoName, SimpleIcon> = {
   github: siGithub,
@@ -49,7 +51,8 @@ const LogoNameMap: Record<LogoName, SimpleIcon> = {
   gcp: siGooglecloud,
   gcpSecretManager: siGooglecloud,
   helm: siHelm,
-  rancher: siRancher
+  rancher: siRancher,
+  datadog: siDatadog
 }
 
 export interface LogoProps extends SVGProps<SVGSVGElement> {

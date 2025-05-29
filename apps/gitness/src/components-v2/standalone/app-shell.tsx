@@ -40,7 +40,7 @@ export const AppShell: FC = () => {
     [t, routes, spaceIdPathParam]
   )
 
-  useLocationChange({ t, onRouteChange: setRecent, getNavbarMenuData })
+  useLocationChange({ onRouteChange: setRecent, getNavbarMenuData })
 
   useEffect(() => {
     const linksFromStorage = localStorage.getItem('nav-items')

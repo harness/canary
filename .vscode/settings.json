@@ -9,5 +9,8 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "prettier.trailingComma": "none"
+  "prettier.trailingComma": "none",
+  "workbench.editorAssociations": {
+    "*.svg": "default"
+  }
 }

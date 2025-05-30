@@ -199,7 +199,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
 
             {isBranchSelected &&
               !isLoading && ( // Only render this block if isBranchSelected is true
-                <Layout.Horizontal gap="xs" align="center">
+                <Layout.Horizontal gap="2xs" align="center">
                   {mergeability ? (
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />

@@ -17,7 +17,7 @@ interface StepInfoProps {
 const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
-      <Layout.Horizontal gap="xs">
+      <Layout.Horizontal gap="2xs">
         <h3 className="flex-none text-2 font-medium text-cn-foreground-1">{item.step}</h3>
         <Layout.Vertical className="w-[90%] max-w-full">
           <p className="text-2 text-cn-foreground-2">{item.description}</p>

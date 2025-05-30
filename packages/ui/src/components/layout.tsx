@@ -70,32 +70,38 @@ const gapVariants = cva('', {
   variants: {
     gap: {
       none: 'gap-0',
-      xs: 'gap-[var(--cn-layout-xs,var(--cn-spacing-2))]',
-      sm: 'gap-[var(--cn-layout-sm,var(--cn-spacing-3))]',
-      md: 'gap-[var(--cn-layout-md,var(--cn-spacing-4))]',
-      lg: 'gap-[var(--cn-layout-lg,var(--cn-spacing-6))]',
-      xl: 'gap-[var(--cn-layout-xl,var(--cn-spacing-8))]'
+      '2xs': 'gap-[var(--cn-layout-2xs)]',
+      xxs: 'gap-[var(--cn-layout-xxs)]',
+      xs: 'gap-[var(--cn-layout-xs)]',
+      sm: 'gap-[var(--cn-layout-sm)]',
+      md: 'gap-[var(--cn-layout-md)]',
+      lg: 'gap-[var(--cn-layout-lg)]',
+      xl: 'gap-[var(--cn-layout-xl)]'
     },
     gapX: {
       none: 'gap-x-0',
-      xs: 'gap-x-[var(--cn-layout-xs,var(--cn-spacing-2))]',
-      sm: 'gap-x-[var(--cn-layout-sm,var(--cn-spacing-3))]',
-      md: 'gap-x-[var(--cn-layout-md,var(--cn-spacing-4))]',
-      lg: 'gap-x-[var(--cn-layout-lg,var(--cn-spacing-6))]',
-      xl: 'gap-x-[var(--cn-layout-xl,var(--cn-spacing-8))]'
+      '2xs': 'gap-x-[var(--cn-layout-2xs)]',
+      xxs: 'gap-x-[var(--cn-layout-xxs)]',
+      xs: 'gap-x-[var(--cn-layout-xs)]',
+      sm: 'gap-x-[var(--cn-layout-sm)]',
+      md: 'gap-x-[var(--cn-layout-md)]',
+      lg: 'gap-x-[var(--cn-layout-lg)]',
+      xl: 'gap-x-[var(--cn-layout-xl)]'
     },
     gapY: {
       none: 'gap-y-0',
-      xs: 'gap-y-[var(--cn-layout-xs,var(--cn-spacing-2))]',
-      sm: 'gap-y-[var(--cn-layout-sm,var(--cn-spacing-3))]',
-      md: 'gap-y-[var(--cn-layout-md,var(--cn-spacing-4))]',
-      lg: 'gap-y-[var(--cn-layout-lg,var(--cn-spacing-6))]',
-      xl: 'gap-y-[var(--cn-layout-xl,var(--cn-spacing-8))]'
+      '2xs': 'gap-y-[var(--cn-layout-2xs)]',
+      xxs: 'gap-y-[var(--cn-layout-xxs)]',
+      xs: 'gap-y-[var(--cn-layout-xs)]',
+      sm: 'gap-y-[var(--cn-layout-sm)]',
+      md: 'gap-y-[var(--cn-layout-md)]',
+      lg: 'gap-y-[var(--cn-layout-lg)]',
+      xl: 'gap-y-[var(--cn-layout-xl)]'
     }
   }
 })
 
-type GapSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type GapSize = 'none' | '2xs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface LayoutProps {
   children?: ReactNode

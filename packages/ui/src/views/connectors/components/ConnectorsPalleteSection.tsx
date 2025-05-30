@@ -30,7 +30,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                 }}
               >
                 <StepsPaletteItemLayout.Left className="flex items-center">
-                  {logoName && <Logo name={logoName} size={32} />}
+                  {logoName ? <Logo name={logoName} size={32} /> : <Icon name="connectors" size={30} />}
                 </StepsPaletteItemLayout.Left>
                 <StepsPaletteItemLayout.Right>
                   <StepsPaletteItemLayout.Header>

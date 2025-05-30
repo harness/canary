@@ -30,7 +30,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // UI Configuration
   showFilter?: boolean
   showBreadcrumbEllipsis?: boolean
-  filterTypes: Record<string, string>
+  filterTypes?: Record<string, string>
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode

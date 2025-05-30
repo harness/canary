@@ -88,9 +88,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          Import a Project
-        </Text>
+        <Text variant="heading-section">Import a Project</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}

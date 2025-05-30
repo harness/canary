@@ -44,9 +44,7 @@ export function RepoWebhookList({
     return (
       <>
         <Spacer size={2} />
-        <Text size={1} className="text-cn-foreground-danger">
-          {error || 'Something went wrong'}
-        </Text>
+        <Text color="danger">{error || 'Something went wrong'}</Text>
       </>
     )
   }

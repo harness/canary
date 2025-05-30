@@ -29,7 +29,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
           description={!!commentsInfo?.content && <LineDescription text={commentsInfo.content} />}
         />
         {commentsInfo.status === 'failed' && !!handleAction && (
-          <Text className="pr-2" onClick={() => handleAction()} size={1}>
+          <Text className="pr-2" onClick={() => handleAction()}>
             View
           </Text>
         )}

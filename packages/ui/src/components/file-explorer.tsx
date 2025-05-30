@@ -40,7 +40,7 @@ function FolderItem({ children, value = '', isActive, content, link }: FolderIte
               size={16}
             />
             <Link to={link} className="overflow-hidden">
-              <Text className="duration-100 ease-in-out" color="inherit" as="p" size={2} truncate weight="medium">
+              <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" as="p" truncate>
                 {children}
               </Text>
             </Link>
@@ -80,7 +80,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
         name="file"
         size={16}
       />
-      <Text className="duration-100 ease-in-out" size={2} color="inherit" weight="medium" truncate>
+      <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" truncate>
         {children}
       </Text>
     </div>

@@ -26,14 +26,10 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>
-      {connectorDetails.description ? (
-        <Text as="div" weight="medium" className="mt-3 text-2 text-cn-foreground-2">
-          {connectorDetails.description}
-        </Text>
-      ) : null}
+      {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}
       {connectorDetails.tags ? (
         <Layout.Horizontal gap="xs" className="mt-5">
-          <Text className="text-cn-foreground-4">Labels:</Text>
+          <Text>Labels:</Text>
           {Object.entries(connectorDetails.tags || {}).map(([key, value]) => (
             <StatusBadge key={`${key}-${value}`} variant="outline" theme="merged" size="sm">
               {key}
@@ -77,7 +73,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
                   {status.toLowerCase() === 'success'
                     ? t('views:connectors.success', 'Success')
                     : t('views:connectors.failure', 'Failed')}

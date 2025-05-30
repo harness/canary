@@ -167,7 +167,7 @@ export function RepoSummaryView({
                   * Current user is the one who made the push
                   * Push was made less than 24h ago
                   * No PR has been created from this branch yet
-                - Format timestamps using timeAgoFromISOTime
+                - Format timestamps using timeAgo
                 - Remove mock data below
 
                 Example:
@@ -193,7 +193,7 @@ export function RepoSummaryView({
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
                         <Icon name="plus" size={12} />
-                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
+                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create New File')}</span>
                       </Link>
                     </Button>
                   ) : null}
@@ -292,7 +292,7 @@ export function RepoSummaryView({
                   to: props.toRepoPullRequests?.() ?? '#'
                 }
               ]}
-              timestamp={formatDate(repository?.created || '')}
+              timestamp={repository?.created ? new Date(repository.created).toISOString() : ''}
               description={repository?.description}
               saveDescription={saveDescription}
               updateRepoError={updateRepoError}

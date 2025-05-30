@@ -3,7 +3,7 @@ import { createElement, ReactNode } from 'react'
 import { TimeAgoHoverCard } from '@/components'
 import { formatDistanceToNow } from 'date-fns'
 
-import { formatDate, LOCALE } from './TimeUtils'
+import { LOCALE } from './TimeUtils'
 
 export const INITIAL_ZOOM_LEVEL = 1
 export const ZOOM_INC_DEC_LEVEL = 0.1

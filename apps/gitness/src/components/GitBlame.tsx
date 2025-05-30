@@ -7,7 +7,6 @@ import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface GitBlameProps {
@@ -38,7 +37,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
 
         const authorInfo = {
           identity: { ...commit?.author?.identity },
-          when: timeAgoFromISOTime(commit?.author?.when || ''),
+          when: commit?.author?.when ?? '',
           initials: getInitials(commit?.author?.identity?.name || commit?.author?.identity?.email || '')
         }
 

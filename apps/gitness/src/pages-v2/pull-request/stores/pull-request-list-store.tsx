@@ -3,7 +3,6 @@ import { create } from 'zustand'
 import { ListPullReqOkResponse } from '@harnessio/code-service-client'
 import { ColorsEnum, PullRequestType } from '@harnessio/ui/views'
 
-import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
 
 interface PullRequestListStore {
@@ -44,7 +43,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       sourceBranch: item?.source_branch,
       targetBranch: item?.target_branch,
       // TODO: fix 2 hours ago in timestamp
-      timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
+      timestamp: item?.created ? new Date(item.created).toISOString() : '',
       comments: item?.stats?.conversations,
       state: item?.state,
       updated: item?.updated ? item?.updated : 0,

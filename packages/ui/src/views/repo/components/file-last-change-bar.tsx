@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import { LatestFileTypes } from '@/views'
 
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
@@ -14,7 +15,7 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
       <Text size={2} weight="normal" color="primary" className="line-clamp-1 truncate text-wrap">
         {lastCommitMessage}
       </Text>
-      <Icon className="shrink-0 text-icons-success" name="tick" size={12} />
+      <Icon className="text-icons-success shrink-0" name="tick" size={12} />
     </div>
   )
 }
@@ -23,8 +24,8 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
   return (
     <div className="flex items-center gap-2">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
-      <span className="h-3 border-l border-cn-borders-2" />
-      <span className="text-sm text-cn-foreground-3">{timestamp}</span>
+      <span className="border-cn-borders-2 h-3 border-l" />
+      <span className="text-cn-foreground-3 text-sm">{timeAgo(timestamp, { dateStyle: 'medium' })}</span>
     </div>
   )
 }

@@ -15,8 +15,6 @@ export interface AlertDialogProps {
   onCancel?: () => void
   onConfirm: () => void
   theme?: 'default' | 'warning' | 'danger'
-  icon?: AlertDialogIcon
-  logo?: AlertDialogLogo
   loading?: boolean
   children: React.ReactNode
 }
@@ -36,8 +34,6 @@ const Root = ({
   onCancel,
   onConfirm,
   theme = 'default',
-  icon,
-  logo,
   loading = false,
   children
 }: AlertDialogProps) => {

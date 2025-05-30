@@ -3,7 +3,7 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/typography": "enabled",
+      "core/typography": "source",
       "core/dimensions": "source",
       "core/colors_lch": "source"
     },
@@ -20491,6 +20491,8 @@
       "breakpoint.viewportMin": "6be5f8330bfa441a8ad6e3e543365c7864021a72",
       "breakpoint.viewportMax": "8a8be6a3522300c276a7f78aed8779e0b6bd0fda",
       "breakpoint.container": "ed2c337e342e73dec8eef97c30c677b147362d8e",
+      "layout.3xs": "f22be0bc6dfe23c7200230adb739505a1abe3402",
+      "layout.2xs": "d15309b2acf4f35d5f2827114cd5d2c4abe69151",
       "layout.xs": "dd8a0fefa7206c72772a9c707f20d0f9620e38ad",
       "layout.sm": "b455227f8e86c0a5ee3b9addb52675ca3dbf7e21",
       "layout.md": "86aab0dd284dd48fc0c63fe94860ea19410e2b02",
@@ -20678,9 +20680,7 @@
       "sidebar.footer.gap": "7acf5d0f13fc56c0a822358c0bca99e0f3e12bb3",
       "sidebar.user-item.px": "f38377cdc697e2c19c1703ef4e664d61865eb932",
       "sidebar.user-item.gap": "07e466f93355f125bbe792696cc27af9271037a7",
-      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a",
-      "layout.3xs": "f22be0bc6dfe23c7200230adb739505a1abe3402",
-      "layout.2xs": "d15309b2acf4f35d5f2827114cd5d2c4abe69151"
+      "sidebar.user-item.size": "61625bce7d9b9fd4ece03cf3b67fc3e7c0a6695a"
     },
     "group": "breakpoint"
   }

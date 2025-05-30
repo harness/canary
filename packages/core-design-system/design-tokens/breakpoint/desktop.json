@@ -328,11 +328,11 @@
     }
   },
   "layout": {
-    "2xs": {
+    "3xs": {
       "$type": "number",
       "$value": "{spacing.1}"
     },
-    "xxs": {
+    "2xs": {
       "$type": "number",
       "$value": "{spacing.1-half}"
     },

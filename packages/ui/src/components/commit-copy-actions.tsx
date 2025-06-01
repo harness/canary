@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Button, Icon, ShaBadge } from '@/components'
+import { Button, IconV2, ShaBadge } from '@/components'
 import { useRouterContext } from '@/context'
 import copy from 'clipboard-copy'
 
@@ -48,7 +48,7 @@ export const CommitCopyActions = ({
           setCopied(true)
         }}
       >
-        <Icon size={16} name={copied ? 'tick' : 'clone'} />
+        <IconV2 name={copied ? 'check' : 'copy'} />
       </ShaBadge.Icon>
     </ShaBadge.Root>
   )

@@ -17,7 +17,7 @@ import {
   useListPrincipalsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { Icon } from '@harnessio/ui/components'
+import { Icon, IconV2 } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
@@ -537,7 +537,7 @@ export const CreatePullRequest = () => {
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
               selectedBranch={selectedTargetBranch}
             />
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+            <IconV2 name="arrow-long-left" />
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
               selectedBranch={selectedSourceBranch}

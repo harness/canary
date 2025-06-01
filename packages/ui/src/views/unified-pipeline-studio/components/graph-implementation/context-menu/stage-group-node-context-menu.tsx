@@ -1,5 +1,5 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, Text } from '@components/index'
+import { IconV2, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -31,7 +31,7 @@ export const StageGroupNodeContextMenu = () => {
             onEditIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="edit-pencil" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Edit</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -42,7 +42,7 @@ export const StageGroupNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.SerialStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Serial Stages Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -52,7 +52,7 @@ export const StageGroupNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.SerialStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Serial Stages Group after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -63,7 +63,7 @@ export const StageGroupNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.ParallelStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Parallel Stages Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -73,7 +73,7 @@ export const StageGroupNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.ParallelStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Parallel Stages Group after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -86,7 +86,7 @@ export const StageGroupNodeContextMenu = () => {
             onDeleteIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="trash" size={12} className="text-cn-foreground-1" />
+          <IconV2 name="trash" size={12} className="text-cn-foreground-1" />
           <Text wrap="nowrap">Delete</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

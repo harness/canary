@@ -193,7 +193,7 @@ export function RepoSummaryView({
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
                         <Icon name="plus" size={12} />
-                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create New File')}</span>
+                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
                       </Link>
                     </Button>
                   ) : null}

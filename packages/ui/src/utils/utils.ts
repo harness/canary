@@ -55,16 +55,20 @@ export const timeAgo = (
     return 'Unknown time'
   }
 
-  const date = new Date(timestamp)
+  const millisecondsPerDay = 24 * 60 * 60 * 1000
 
-  const now = Date.now()
-  const cutoffDaysMs = cutoffDays * 24 * 60 * 60 * 1000
-  const isBeyondCutoffDays = now - date.getTime() > cutoffDaysMs
+  const timestampDate = new Date(timestamp)
+  const nowDate = new Date()
+
+  const differenceInMilliseconds = nowDate.getTime() - timestampDate.getTime()
+  const cutoffDaysMilliseconds = cutoffDays * millisecondsPerDay
+
+  const isBeyondCutoffDays = differenceInMilliseconds > cutoffDaysMilliseconds
 
   if (isBeyondCutoffDays) {
-    const formattedDate = new Intl.DateTimeFormat(LOCALE, dateTimeFormatOptions).format(date)
+    const formattedDate = new Intl.DateTimeFormat(LOCALE, dateTimeFormatOptions).format(timestampDate)
 
-    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: date.getTime() })
+    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestampDate.getTime() })
   }
 
   try {
@@ -72,7 +76,7 @@ export const timeAgo = (
       addSuffix: true,
       includeSeconds: true
     })
-    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: date.getTime() })
+    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestampDate.getTime() })
   } catch (error) {
     console.error(`Failed to format time ago: ${error}`)
     return 'Unknown time'

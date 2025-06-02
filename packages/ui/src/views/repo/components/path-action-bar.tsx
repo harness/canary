@@ -57,7 +57,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
           <Button variant="outline" asChild>
             <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
               <Icon name="plus" size={12} />
-              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create New File')}</span>
+              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
             </Link>
           </Button>
         )}

@@ -261,25 +261,28 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }, {} as T)
   }
 
-  const resetFilters = () => {
+  const resetFilters = (filters?: FilterKeys[]) => {
     // add only sticky filters and remove other filters.
     // remove values also from sticky filters
     const updatedFiltersMap = { ...filtersMap }
+    const resetAllFilters = !filters || filters?.length === 0
     Object.keys(updatedFiltersMap).forEach(key => {
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
       const defaultValue = filtersConfig[key as FilterKeys]?.defaultValue
-
       const serializedDefaultValue = defaultValue
+      const resetCurrentFilter = resetAllFilters || filters?.includes(key)
       let filterState = isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
 
       if (!isNullable(serializedDefaultValue)) {
         filterState = FilterStatus.FILTER_APPLIED
       }
 
-      updatedFiltersMap[key as FilterKeys] = {
-        value: defaultValue,
-        query: serializedDefaultValue,
-        state: filterState
+      if (resetCurrentFilter) {
+        updatedFiltersMap[key as FilterKeys] = {
+          value: defaultValue,
+          query: serializedDefaultValue,
+          state: filterState
+        }
       }
     })
 

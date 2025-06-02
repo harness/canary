@@ -48,7 +48,7 @@ export function LabelsFilter({
               key={option.id}
               title={<LabelMarker color={option.color} label={option.key} value={String(option.value_count)} />}
               checked={value[option.id] ? value[option.id] === true || 'indeterminate' : false}
-              onClick={() => {
+              onCheckedChange={() => {
                 const { [option.id]: selectedIdValue, ...rest } = value
                 const newValue = selectedIdValue ? rest : { ...value, [option.id]: true }
                 onChange(newValue)
@@ -66,14 +66,12 @@ export function LabelsFilter({
                 <DropdownMenu.RadioItem
                   value={ANY_LABEL_VALUE}
                   title={<LabelMarker color={option.color} label={option.key} value={ANY_LABEL_VALUE} />}
-                  onSelect={e => e.preventDefault()}
                 />
                 {valueOptions[option.key]?.map(value => (
                   <DropdownMenu.RadioItem
                     key={value.id}
                     value={String(value.id)}
                     title={<LabelMarker color={option.color} label={option.key} value={value.value} />}
-                    onSelect={e => e.preventDefault()}
                   />
                 ))}
               </DropdownMenu.RadioGroup>
@@ -81,7 +79,6 @@ export function LabelsFilter({
           ) : (
             <DropdownMenu.CheckboxItem
               title={<LabelMarker color={option.color} label={option.key} />}
-              onSelect={e => e.preventDefault()}
               checked={value[option.id] === true}
               key={option.id}
               onCheckedChange={selectedValue => {
@@ -91,7 +88,7 @@ export function LabelsFilter({
           )
         )}
 
-      {description && <div className="mx-2 my-4 text-sm text-cn-foreground-3">{description}</div>}
+      {description && <div className="text-cn-foreground-3 mx-2 my-4 text-sm">{description}</div>}
     </>
   )
 }

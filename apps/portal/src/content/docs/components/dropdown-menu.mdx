@@ -16,8 +16,10 @@ It can be composed with several subcomponents such as `DropdownMenu.Root`, `Drop
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -87,8 +89,10 @@ The `DropdownMenu` component supports grouping items together using the `Dropdow
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -111,8 +115,10 @@ The `DropdownMenu` component supports subitems using the `DropdownMenu.Item` com
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -138,8 +144,10 @@ The `DropdownMenu` component supports header and footer sections using the `Drop
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -171,26 +179,79 @@ The `DropdownMenu` component supports checkbox items using the `DropdownMenu.Che
 
 <DocsPage.ComponentExample
   client:only
-  code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
-    </DropdownMenu.Trigger>
+  code={`() => {
+    const [checkedItems, setCheckedItems] = React.useState({
+        default: false,
+        checked: true,
+        disabled: false,
+        checkedDisabled: true,
+        withSubmenu: 'indeterminate',
+        subOption1: false,
+        subOption2: true
+    });
 
-    <DropdownMenu.Content>
-        <DropdownMenu.Group label="Checkbox group">
-            <DropdownMenu.CheckboxItem title="Default" />
-            <DropdownMenu.CheckboxItem title="Checked" checked />
-            <DropdownMenu.CheckboxItem title="Disabled" disabled />
-            <DropdownMenu.CheckboxItem title="Checked disabled" description="Item description" checked disabled  />
-            <DropdownMenu.CheckboxItem title="With submenu" checked="indeterminate">
-              <DropdownMenu.CheckboxItem title="Sub Option 1" />
-              <DropdownMenu.CheckboxItem title="Sub Option 2" checked />
-          </DropdownMenu.CheckboxItem>
-        </DropdownMenu.Group>
+    const handleCheckedChange = (itemKey, checked) => {
+        setCheckedItems(prev => ({
+            ...prev,
+            [itemKey]: checked
+        }));
+    };
 
-  </DropdownMenu.Content>
-</DropdownMenu.Root>`}
-/>
+    return (
+        <DropdownMenu.Root>
+            <DropdownMenu.Trigger aria-label="options menu" asChild>
+                <Button variant="ghost" iconOnly>
+                    <Icon name="menu-dots" />
+                </Button>
+            </DropdownMenu.Trigger>
+
+            <DropdownMenu.Content>
+                <DropdownMenu.Group label="Checkbox group">
+                    <DropdownMenu.CheckboxItem
+                        title="Default"
+                        checked={checkedItems.default}
+                        onCheckedChange={(checked) => handleCheckedChange('default', checked)}
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="Checked"
+                        checked={checkedItems.checked}
+                        onCheckedChange={(checked) => handleCheckedChange('checked', checked)}
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="Disabled"
+                        disabled
+                        checked={checkedItems.disabled}
+                        onCheckedChange={(checked) => handleCheckedChange('disabled', checked)}
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="Checked disabled"
+                        description="Item description"
+                        checked={checkedItems.checkedDisabled}
+                        onCheckedChange={(checked) => handleCheckedChange('checkedDisabled', checked)}
+                        disabled
+                    />
+                    <DropdownMenu.CheckboxItem
+                        title="With submenu"
+                        checked={checkedItems.withSubmenu}
+                        onCheckedChange={(checked) => handleCheckedChange('withSubmenu', checked)}
+                    >
+                        <DropdownMenu.CheckboxItem
+                            title="Sub Option 1"
+                            checked={checkedItems.subOption1}
+                            onCheckedChange={(checked) => handleCheckedChange('subOption1', checked)}
+                        />
+                        <DropdownMenu.CheckboxItem
+                            title="Sub Option 2"
+                            checked={checkedItems.subOption2}
+                            onCheckedChange={(checked) => handleCheckedChange('subOption2', checked)}
+                        />
+                    </DropdownMenu.CheckboxItem>
+                </DropdownMenu.Group>
+            </DropdownMenu.Content>
+        </DropdownMenu.Root>
+    );
+
+}`}/>
 
 ## Radio items
 
@@ -198,20 +259,33 @@ The `DropdownMenu` component supports radio items using the `DropdownMenu.RadioI
 
 <DocsPage.ComponentExample
   client:only
-  code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+  code={`() => {
+  const [selectedOption, setSelectedOption] = React.useState('option5');
+  const handleValueChange = (value) => {
+    setSelectedOption(value);
+  };
+
+return (
+
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
-        <DropdownMenu.RadioGroup label="Group 2" value="option5">
-            <DropdownMenu.RadioItem value="option4" title="Default" />
-            <DropdownMenu.RadioItem value="option5" title="Checked" />
-            <DropdownMenu.RadioItem value="option6" title="Disabled" disabled />
-        </DropdownMenu.RadioGroup>
+      <DropdownMenu.RadioGroup label="Group 2" value={selectedOption} onValueChange={handleValueChange}>
+        <DropdownMenu.RadioItem value="option4" title="Default" />
+        <DropdownMenu.RadioItem value="option5" title="Checked" />
+        <DropdownMenu.RadioItem value="option6" title="Disabled" disabled />
+      </DropdownMenu.RadioGroup>
 
-  </DropdownMenu.Content>
-</DropdownMenu.Root>`}
+    </DropdownMenu.Content>
+
+</DropdownMenu.Root>)
+  }`}
+
 />
 
 ## Avatar items
@@ -221,8 +295,10 @@ The `DropdownMenu` component supports avatar items using the `DropdownMenu.Avata
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -241,8 +317,10 @@ The `DropdownMenu` component supports logo items using the `DropdownMenu.LogoIte
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -261,8 +339,10 @@ The `DropdownMenu` component supports icon items using the `DropdownMenu.IconIte
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -280,8 +360,10 @@ The `DropdownMenu` component supports indicator items using the `DropdownMenu.In
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>
-    <DropdownMenu.Trigger className="flex gap-1 items-center" aria-label="options menu">
-        <Icon name="menu-dots" />
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+        <Button variant="ghost" iconOnly>
+            <Icon name="menu-dots" />
+        </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content >

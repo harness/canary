@@ -93,6 +93,7 @@ export default {
 
       '& .cn-radio-item, & .cn-checkbox-root': {
         position: 'static',
+        pointerEvents: 'none',
         outline: 'none'
       },
 
@@ -110,7 +111,9 @@ export default {
       paddingTop: 'var(--cn-dropdown-item-py)',
       paddingLeft: 'var(--cn-dropdown-item-px)',
       paddingRight: 'var(--cn-dropdown-item-px)',
+      paddingBottom: 'var(--cn-spacing-1)',
       color: 'var(--cn-text-3)',
+      userSelect: 'none',
       '@apply font-caption-normal': ''
     },
 

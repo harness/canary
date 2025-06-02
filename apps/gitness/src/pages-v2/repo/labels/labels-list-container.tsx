@@ -8,7 +8,6 @@ import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
 import { usePopulateLabelStore } from './hooks/use-populate-label-store.ts'
@@ -69,7 +68,6 @@ export const RepoLabelsList = () => {
     <>
       <LabelsListPage
         className="max-w-[772px] px-0"
-        useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
         createdIn={space_ref}
         searchQuery={query}
@@ -84,7 +82,6 @@ export const RepoLabelsList = () => {
         type="label"
         deleteFn={handleDeleteLabel}
         isLoading={isDeletingRepoLabel || isDeletingSpaceLabel}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

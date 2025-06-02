@@ -38,7 +38,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
@@ -487,7 +486,6 @@ export const CreatePullRequest = () => {
         isSuccess={createPullRequestMutation.isSuccess}
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
-        useTranslationStore={useTranslationStore}
         prBranchCombinationExists={prBranchCombinationExists}
         diffData={
           diffStats?.files_changed || 0

@@ -17,5 +17,8 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = ne
   ['AwsKms', 'awskms'],
   ['TerraformCloud', 'terraform'],
   ['Vault', 'hashiCorpVault'],
-  ['HttpHelmRepo', 'helm']
+  ['HttpHelmRepo', 'helm'],
+  ['Rancher', 'rancher'],
+  ['Datadog', 'datadog'],
+  ['OciHelmRepo', 'helm']
 ])

@@ -15,11 +15,12 @@ import {
   Legend
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
-import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout, TranslationStore } from '@/views'
+import { TFunctionWithFallback, useTranslation } from '@/context'
+import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const makeProfileSchema = (t: TranslationStore['t']) =>
+const makeProfileSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()
@@ -45,7 +46,7 @@ const makeProfileSchema = (t: TranslationStore['t']) =>
       })
   })
 
-const makePasswordSchema = (t: TranslationStore['t']) =>
+const makePasswordSchema = (t: TFunctionWithFallback) =>
   z
     .object({
       newPassword: z
@@ -81,7 +82,6 @@ interface SettingsAccountGeneralPageProps {
   onUpdateUser: (data: Omit<ProfileFields, 'username'>) => void
   onUpdatePassword: (data: PasswordFields) => void
   useProfileSettingsStore: () => IProfileSettingsStore
-  useTranslationStore: () => TranslationStore
 }
 
 const SUCCESS_MESSAGE_DURATION = 2000
@@ -95,10 +95,9 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   passwordUpdateSuccess,
   error,
   onUpdateUser,
-  onUpdatePassword,
-  useTranslationStore
+  onUpdatePassword
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { userData } = useProfileSettingsStore()
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)

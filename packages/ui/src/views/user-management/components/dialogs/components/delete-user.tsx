@@ -1,4 +1,5 @@
-import { Button, ButtonLayout, Dialog } from '@/components'
+import { Button, ButtonLayout, ModalDialog } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -9,8 +10,8 @@ interface DeleteUserDialogProps {
 }
 
 export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUserDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()
@@ -24,15 +25,15 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
-        <Dialog.Header>
-          <Dialog.Title className="font-medium">
+    <ModalDialog.Root open={open} onOpenChange={onClose}>
+      <ModalDialog.Content>
+        <ModalDialog.Header>
+          <ModalDialog.Title>
             {t('views:userManagement.deleteUser.title', 'Are you sure you want to delete {{name}}?', {
               name: user?.display_name
             })}
-          </Dialog.Title>
-          <Dialog.Description>
+          </ModalDialog.Title>
+          <ModalDialog.Description>
             <span
               dangerouslySetInnerHTML={{
                 __html: t(
@@ -42,17 +43,17 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
                 )
               }}
             />
-          </Dialog.Description>
-        </Dialog.Header>
+          </ModalDialog.Description>
+        </ModalDialog.Header>
 
-        {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
+        <ModalDialog.Body>
+          {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
+        </ModalDialog.Body>
 
-        <Dialog.Footer>
+        <ModalDialog.Footer>
           <ButtonLayout>
             {!isDeletingUser && (
-              <Button type="button" variant="outline" onClick={onClose}>
-                {t('views:userManagement.cancel', 'Cancel')}
-              </Button>
+              <ModalDialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</ModalDialog.Close>
             )}
 
             <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
@@ -61,8 +62,8 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
                 : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
             </Button>
           </ButtonLayout>
-        </Dialog.Footer>
-      </Dialog.Content>
-    </Dialog.Root>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
   )
 }

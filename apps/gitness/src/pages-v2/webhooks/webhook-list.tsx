@@ -17,7 +17,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
@@ -119,7 +118,6 @@ export default function WebhookListPage() {
     <>
       <RepoWebhookListPage
         useWebhookStore={useWebhookStore}
-        useTranslationStore={useTranslationStore}
         openDeleteWebhookDialog={openDeleteWebhookDialog}
         searchQuery={query}
         setSearchQuery={setQuery}
@@ -138,7 +136,6 @@ export default function WebhookListPage() {
         type="webhook"
         isLoading={deleteIsLoading}
         error={apiError}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

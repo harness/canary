@@ -18,7 +18,8 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { isEmpty } from 'lodash-es'
 import { z } from 'zod'
@@ -45,7 +46,6 @@ interface RepoCreatePageProps {
   isSuccess: boolean
   gitIgnoreOptions?: string[]
   licenseOptions?: { value?: string; label?: string }[]
-  useTranslationStore: () => TranslationStore
   apiError?: string
 }
 
@@ -56,10 +56,9 @@ export function RepoCreatePage({
   isSuccess,
   gitIgnoreOptions,
   licenseOptions,
-  useTranslationStore,
   apiError
 }: RepoCreatePageProps) {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const formMethods = useForm<FormFields>({
     resolver: zodResolver(formSchema),

@@ -1,13 +1,12 @@
 import { FC, useState } from 'react'
 
 import { Alert, Button, CopyButton, DropdownMenu, Icon, Tabs, TextInput } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
   sshUrl?: string
   httpsUrl: string
   handleCreateToken: () => void
-  useTranslationStore: () => TranslationStore
   tokenGenerationError?: string | null
 }
 
@@ -20,11 +19,10 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   httpsUrl,
   sshUrl,
   handleCreateToken,
-  useTranslationStore,
   tokenGenerationError
 }) => {
   const [currentTab, setCurrentTab] = useState(CloneRepoTabs.HTTPS)
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const isSSHAvailable = !!sshUrl
 

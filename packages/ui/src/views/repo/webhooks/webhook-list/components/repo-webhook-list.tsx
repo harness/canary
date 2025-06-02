@@ -1,11 +1,10 @@
 import { MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Table, Text } from '@/components'
-import { useRouterContext } from '@/context'
-import { TranslationStore, WebhookType } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { WebhookType } from '@/views'
 
 export interface RepoWebhookListProps {
   webhooks: WebhookType[]
   error?: string
-  useTranslationStore: () => TranslationStore
   isDirtyList: boolean
   handleReset: () => void
   totalItems: number
@@ -21,7 +20,6 @@ export interface RepoWebhookListProps {
 export function RepoWebhookList({
   webhooks,
   error,
-  useTranslationStore,
   isDirtyList,
   handleReset,
   totalItems,
@@ -33,7 +31,7 @@ export function RepoWebhookList({
   toRepoWebhookDetails,
   toRepoWebhookCreate
 }: RepoWebhookListProps) {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   const handleNavigate = () => {
@@ -169,7 +167,7 @@ export function RepoWebhookList({
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
     </>
   )
 }

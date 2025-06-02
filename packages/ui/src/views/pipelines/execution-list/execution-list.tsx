@@ -1,4 +1,5 @@
 import { Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo, timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
 
@@ -47,13 +48,12 @@ export const ExecutionList = ({
   LinkComponent,
   handleResetQuery,
   isLoading,
-  useTranslationStore,
   query,
   handleExecutePipeline
 }: IExecutionListProps) => {
   const noData = !executions || executions.length === 0
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />

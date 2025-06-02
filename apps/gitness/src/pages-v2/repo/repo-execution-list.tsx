@@ -10,7 +10,6 @@ import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { getExecutionStatus } from '../../utils/execution-utils'
@@ -58,7 +57,6 @@ export default function RepoExecutionListPage() {
     <>
       <ExecutionListPage
         useExecutionListStore={useExecutionListStore}
-        useTranslationStore={useTranslationStore}
         isLoading={isFetching}
         isError={isError}
         errorMessage={error?.message}

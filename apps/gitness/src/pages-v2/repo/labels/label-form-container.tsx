@@ -4,7 +4,6 @@ import { useSaveRepoLabelMutation } from '@harnessio/code-service-client'
 import { CreateLabelFormFields, LabelFormPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
-import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
 import { usePopulateLabelStore } from './hooks/use-populate-label-store'
@@ -34,7 +33,6 @@ export const RepoLabelFormContainer = () => {
     <LabelFormPage
       className="w-[570px] px-0"
       useLabelsStore={useLabelsStore}
-      useTranslationStore={useTranslationStore}
       isSaving={isSaving}
       onSubmit={onSubmit}
       onFormCancel={onFormCancel}

@@ -13,18 +13,17 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { useRouterContext } from '@/context'
-import { ErrorTypes, RuleDataType, TranslationStore } from '@/views'
-import { TFunction } from 'i18next'
+import { useRouterContext, useTranslation } from '@/context'
+import { ErrorTypes, RuleDataType } from '@/views'
 
 interface DescriptionProps {
   targetPatternsCount: number
   rulesAppliedCount: number
   bypassAllowed: boolean
-  t: TFunction
 }
 
-const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed, t }) => {
+const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
+  const { t } = useTranslation()
   return (
     <div className="flex items-center gap-1.5 pl-6 text-sm">
       {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
@@ -53,7 +52,6 @@ export interface RepoSettingsGeneralRulesProps {
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   rulesSearchQuery?: string
   setRulesSearchQuery?: (query: string) => void
@@ -65,14 +63,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   apiError,
   handleRuleClick,
   openRulesAlertDeleteDialog,
-  useTranslationStore,
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
   projectScope = false
 }) => {
   const { Link, NavLink } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const handleSearchChange = useCallback(
     (val: string) => {
@@ -166,7 +163,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             targetPatternsCount={rule.targetPatternsCount ?? 0}
                             rulesAppliedCount={rule.rulesAppliedCount ?? 0}
                             bypassAllowed={rule.bypassAllowed ?? false}
-                            t={t}
                           />
                         }
                       />

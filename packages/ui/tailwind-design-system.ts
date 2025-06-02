@@ -8,24 +8,26 @@ import {
   alertStyles,
   avatarStyles,
   badgeStyles,
+  buttonLayoutStyles,
   buttonStyles,
   captionStyles,
   cardSelectStyles,
   cardStyles,
   checkboxStyles,
   dialogStyles,
+  drawerStyles,
   formSharedStyles,
   inputStyles,
   labelStyles,
   linkStyles,
+  modalDialogStyles,
   multiSelectV2Styles,
   paginationStyles,
   radioStyles,
+  scrollAreaStyles,
   switchStyles,
   tagStyles,
-  textareaStyles,
-  drawerStyles,
-  buttonLayoutStyles
+  textareaStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -454,6 +456,8 @@ export default {
         paginationStyles,
         drawerStyles,
         buttonLayoutStyles,
+        modalDialogStyles,
+        scrollAreaStyles,
 
         // Form styles
         formSharedStyles,

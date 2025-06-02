@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -14,7 +14,6 @@ const SecretListPage: FC<SecretListPageProps> = ({
   setSearchQuery,
   isError,
   errorMessage,
-  useTranslationStore,
   currentPage,
   totalItems,
   pageSize,
@@ -25,7 +24,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   onDeleteSecret,
   ...props
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
@@ -78,15 +77,9 @@ const SecretListPage: FC<SecretListPageProps> = ({
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />
-        <SecretList
-          secrets={secrets}
-          useTranslationStore={useTranslationStore}
-          isLoading={isLoading}
-          onDeleteSecret={onDeleteSecret}
-          {...props}
-        />
+        <SecretList secrets={secrets} isLoading={isLoading} onDeleteSecret={onDeleteSecret} {...props} />
         <Spacer size={8} />
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

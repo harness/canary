@@ -1,4 +1,4 @@
-import { PipelineExecutionStatus, TLinkComponent, TranslationStore } from '@/views'
+import { PipelineExecutionStatus, TLinkComponent } from '@/views'
 import { MeterState } from '@components/meter'
 
 export interface IPipeline {
@@ -36,7 +36,6 @@ interface RoutingProps {
  */
 export interface IPipelineListPageProps extends Partial<RoutingProps> {
   usePipelineListStore: () => IPipelineListStore
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   isError: boolean
   errorMessage?: string
@@ -54,7 +53,6 @@ export interface IPipelineListProps extends Partial<RoutingProps> {
   LinkComponent: TLinkComponent
   query?: string
   handleResetQuery: () => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleCreatePipeline: () => void
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { Tabs } from '@components/index'
 
@@ -10,11 +11,10 @@ const ConnectorDetailsLayout = ({
   connectorDetails,
   onTest,
   onDelete,
-  useTranslationStore,
   children,
   toConnectorsList
 }: ConnectorDetailsLayoutProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<ConnectorDetailsTabsKeys>(ConnectorDetailsTabsKeys.CONFIGURATION)
 
   const handleTabChange = (tab: string) => {
@@ -28,7 +28,6 @@ const ConnectorDetailsLayout = ({
             connectorDetails={connectorDetails}
             onTest={onTest}
             onDelete={onDelete}
-            useTranslationStore={useTranslationStore}
             toConnectorsList={toConnectorsList}
           />
           <Tabs.Root

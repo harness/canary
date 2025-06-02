@@ -9,7 +9,6 @@ import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessi
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
@@ -63,7 +62,6 @@ export const WebhookExecutionDetailsContainer = () => {
   return (
     <RepoWebhookExecutionDetailsPage
       useWebhookStore={useWebhookStore}
-      useTranslationStore={useTranslationStore}
       isLoading={isTriggeringExecution}
       handleRetriggerExecution={handleRetriggerExecution}
     />

@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useState } from 'react'
 
 import { Command, Popover, SearchInput, Text } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
 
@@ -37,13 +37,12 @@ interface FilteredFile {
 interface SearchFilesProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
-  useTranslationStore: () => TranslationStore
 }
 
-export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: SearchFilesProps) => {
+export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const filterQuery = useCallback(
     (query: string) => {

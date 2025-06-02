@@ -1,5 +1,3 @@
-import { TranslationStore } from '@views/repo'
-
 interface RoutingProps {
   toSecretDetails: (secret: SecretListItem) => string
 }
@@ -16,7 +14,6 @@ export interface SecretListItem {
 
 export interface SecretListProps extends Partial<RoutingProps> {
   secrets: SecretListItem[]
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   onEditSecret: (secret: SecretListItem) => void
   onDeleteSecret: (secretId: string) => void

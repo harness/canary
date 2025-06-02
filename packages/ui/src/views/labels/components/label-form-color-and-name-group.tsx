@@ -1,27 +1,26 @@
-import { FC } from 'react'
+import { ComponentProps, FC } from 'react'
 
-import { Button, FormInput, Icon, Select, SelectRootProps, type FormTextInputPropsType } from '@/components'
+import { Button, FormInput, Icon, Select, SelectRootProps } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ColorsEnum, TranslationStore } from '@/views'
+import { ColorsEnum } from '@/views'
 
 interface LabelFormColorAndNameGroupProps {
   className?: string
   isValue?: boolean
-  useTranslationStore: () => TranslationStore
   handleDeleteValue?: () => void
   selectProps?: SelectRootProps
-  inputProps: FormTextInputPropsType
+  inputProps: ComponentProps<typeof FormInput.Text>
 }
 
 export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = ({
   className,
   isValue = false,
-  useTranslationStore,
   handleDeleteValue,
   selectProps,
   inputProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const isWithDeleteButton = isValue && !!handleDeleteValue
 

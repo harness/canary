@@ -1,15 +1,14 @@
 import { FC, useMemo } from 'react'
 
 import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { SandboxLayout, WebhookStore } from '@/views'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
 
 interface RepoWebhookExecutionsPageProps {
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
   toRepoWebhooks: (repoRef?: string) => string
   repo_ref: string
   isLoading: boolean
@@ -18,13 +17,12 @@ interface RepoWebhookExecutionsPageProps {
 
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
-  useTranslationStore,
   toRepoWebhooks,
   repo_ref,
   isLoading,
   toRepoWebhookExecutionDetails
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalItems, pageSize } = useWebhookStore()
   const { navigate } = useRouterContext()
   const events = useMemo(() => {
@@ -95,7 +93,6 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
               pageSize={pageSize}
               currentPage={webhookExecutionPage}
               goToPage={setWebhookExecutionPage}
-              t={t}
             />
           </>
         ) : (

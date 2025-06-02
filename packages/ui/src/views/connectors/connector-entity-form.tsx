@@ -1,7 +1,7 @@
 import { ElementType, FC, Fragment, useEffect, useMemo, useState } from 'react'
 
 import { Alert, Button, ButtonLayout, Drawer, EntityFormLayout } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
 import {
@@ -49,7 +49,6 @@ interface ConnectorEntityFormProps {
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   onBack?: () => void
-  useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
@@ -62,12 +61,11 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
   onFormSubmit,
   getConnectorDefinition,
   onBack,
-  useTranslationStore,
   inputComponentFactory,
   intent,
   isDrawer = false
 }) => {
-  const { t: _t } = useTranslationStore()
+  const { t: _t } = useTranslation()
   const [connectorEditValues, setConnectorEditValues] = useState({})
   const { Content, Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const isCreate = intent === EntityIntent.CREATE

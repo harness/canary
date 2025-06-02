@@ -18,7 +18,7 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
       <Sidebar.Provider className="flex justify-start">
         <Sidebar.Root className="h-[500px]">
           <Sidebar.Header>
-            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+            <SidebarSearchLegacy logo={<HarnessLogo />} />
           </Sidebar.Header>
           <Sidebar.Content>
             <Sidebar.Group>
@@ -82,7 +82,6 @@ The `Sidebar` component provides a responsive, collapsible navigation interface 
               openThemeDialog={() => {}}
               openLanguageDialog={() => {}}
               handleLogOut={() => {}}
-              t={t}
             />
           </Sidebar.Footer>
           <Sidebar.Rail />

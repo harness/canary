@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 
 import { Button, Icon } from '@/components'
+import { useTranslation } from '@/context'
 import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
 import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
 import { FilterOptionConfig } from '@components/filters/types'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknown>> {
   openedFilter: string | undefined
@@ -22,7 +22,6 @@ interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknow
   renderFilterOptions: (
     filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<Extract<keyof T, string>>) => ReactNode
   ) => ReactNode
-  t: TFunction
 }
 
 interface FilterOptionsRendererProps<T> {
@@ -38,17 +37,17 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   sortSelectionsCnt,
   renderSelectedSort,
   setOpenedFilter,
-  t,
   renderSelectedFilters,
   renderFilterOptions
 }: FiltersBarProps<T, V, CustomValue>) => {
+  const { t } = useTranslation()
+
   const filtersFieldRenderer = (
     props: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
   ) => (
     <FiltersField<Extract<keyof T, string>, V, CustomValue>
       {...props}
       shouldOpenFilter={props.filterOption.value === openedFilter}
-      t={t}
     />
   )
 

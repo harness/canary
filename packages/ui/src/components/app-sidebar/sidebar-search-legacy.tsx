@@ -1,15 +1,16 @@
 import { FormEvent, MouseEvent, ReactNode, useState } from 'react'
 
-import { Button, Dialog, Icon, SearchBox, Spacer, useSidebar } from '@/components'
+import { Button, Icon, ModalDialog, SearchBox, useSidebar } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { TFunction } from 'i18next'
 
 interface ProjectProps {
   logo: ReactNode
-  t: TFunction
 }
 
-function SidebarSearchLegacy({ logo, t }: ProjectProps) {
+function SidebarSearchLegacy({ logo }: ProjectProps) {
+  const { t } = useTranslation()
+
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const { collapsed } = useSidebar()
@@ -56,17 +57,16 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
           tabIndex={collapsed ? -1 : 0}
         />
       </div>
-      <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <Dialog.Content className="h-[600px] max-w-[800px]">
-          <Dialog.Header>
-            <Dialog.Title>{t('component:navbar.search', 'Search')}</Dialog.Title>
-            <Dialog.Description>
-              <Spacer size={6} />
-              <SearchBox.Root width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
-            </Dialog.Description>
-          </Dialog.Header>
-        </Dialog.Content>
-      </Dialog.Root>
+      <ModalDialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
+        <ModalDialog.Content size="lg" className="h-[600px]">
+          <ModalDialog.Header>
+            <ModalDialog.Title>{t('component:navbar.search', 'Search')}</ModalDialog.Title>
+          </ModalDialog.Header>
+          <ModalDialog.Body>
+            <SearchBox.Root autoFocus width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
+          </ModalDialog.Body>
+        </ModalDialog.Content>
+      </ModalDialog.Root>
     </div>
   )
 }

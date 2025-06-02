@@ -1,3 +1,5 @@
+import { useTranslation } from '@/context'
+
 import { Icon, NoData, SkeletonList, StackedList } from '../../../components'
 import { Meter } from '../../../components/meter'
 import { PipelineExecutionStatus } from '../common/execution-types'
@@ -38,14 +40,13 @@ export const PipelineList = ({
   LinkComponent,
   handleResetQuery,
   isLoading,
-  useTranslationStore,
   query,
   handleCreatePipeline,
   toPipelineDetails
 }: IPipelineListProps) => {
   const noData = !pipelines || pipelines.length === 0
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />

@@ -1,9 +1,8 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
 
 import { CounterBadge, Icon, IconProps, TabNav } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
-import { TranslationStore } from '@views/repo'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
 import { IPullRequestStore } from '@views/repo/pull-request/pull-request.types'
 
@@ -25,7 +24,6 @@ interface PullRequestLayoutProps {
   usePullRequestStore: () => IPullRequestStore
   spaceId?: string
   repoId?: string
-  useTranslationStore: () => TranslationStore
   updateTitle: (title: string, description: string) => void
 }
 
@@ -37,25 +35,19 @@ enum PullRequestTabsKeys {
 
 export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   usePullRequestStore,
-  useTranslationStore,
   spaceId,
   repoId,
   updateTitle
 }) => {
   const { Outlet } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="mx-auto max-w-[1500px] px-6">
         {pullRequest && (
-          <PullRequestHeader
-            className="mb-10"
-            updateTitle={updateTitle}
-            data={{ ...pullRequest, spaceId, repoId }}
-            useTranslationStore={useTranslationStore}
-          />
+          <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
         )}
 
         <TabNav.Root variant="tabs" className="mb-7 before:-left-6 before:w-[calc(100%+3rem)]">

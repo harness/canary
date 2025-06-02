@@ -1,13 +1,12 @@
-import { TranslationStore } from '@/views'
+import { TFunctionWithFallback } from '@/context'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
-import { TFunction } from 'i18next'
 
 export enum BranchSelectorTab {
   BRANCHES = 'branches',
   TAGS = 'tags'
 }
 
-export const getBranchSelectorLabels = (t: TFunction) => ({
+export const getBranchSelectorLabels = (t: TFunctionWithFallback) => ({
   [BranchSelectorTab.BRANCHES]: {
     label: t('views:repos.branches', 'Branches'),
     searchPlaceholder: t('views:repos.findBranch', 'Find a branch')
@@ -25,7 +24,6 @@ export interface BranchSelectorDropdownProps {
   onSelectBranch?: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   repoId: string
   spaceId: string
-  useTranslationStore: () => TranslationStore
   isBranchOnly?: boolean
   searchQuery: string
   setSearchQuery: (query: string) => void
@@ -39,7 +37,6 @@ export interface BranchSelectorProps extends BranchSelectorDropdownProps {
   size?: 'default' | 'sm'
   prefix?: string
   className?: string
-  useTranslationStore: () => TranslationStore
 }
 
 export interface BranchSelectorContainerProps {

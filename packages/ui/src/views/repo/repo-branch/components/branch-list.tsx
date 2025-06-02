@@ -13,7 +13,7 @@ import {
   Table,
   Tag
 } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
@@ -24,7 +24,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
   isLoading,
   branches,
   defaultBranch,
-  useTranslationStore,
   isDirtyList,
   setCreateBranchDialogOpen,
   handleResetFiltersAndPages,
@@ -34,7 +33,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   toCode,
   onDeleteBranch
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { Link, navigate } = useRouterContext()
 
   if (!branches?.length && !isLoading) {
@@ -170,10 +169,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         {t('views:repos.default', 'Default')}
                       </StatusBadge>
                     ) : (
-                      <DivergenceGauge
-                        behindAhead={branch?.behindAhead || {}}
-                        useTranslationStore={useTranslationStore}
-                      />
+                      <DivergenceGauge behindAhead={branch?.behindAhead || {}} />
                     )}
                   </div>
                 </Table.Cell>

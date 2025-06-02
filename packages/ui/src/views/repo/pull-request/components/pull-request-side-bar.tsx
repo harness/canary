@@ -9,8 +9,7 @@ import {
   LabelAssignmentType,
   LabelValuesType,
   PRReviewer,
-  PullReqReviewDecision,
-  TranslationStore
+  PullReqReviewDecision
 } from '@/views'
 
 import { LabelsHeader, LabelsList } from './labels'
@@ -41,7 +40,6 @@ export interface PullRequestSideBarProps {
   addLabel?: (data: HandleAddLabelType) => void
   editLabelsProps: LinkProps
   removeLabel?: (id: number) => void
-  useTranslationStore: () => TranslationStore
   isCreatingPr?: boolean
 }
 
@@ -65,7 +63,6 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   addLabel,
   editLabelsProps,
   removeLabel,
-  useTranslationStore,
   isCreatingPr = false
 }) => {
   return (
@@ -79,7 +76,6 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
           handleDelete={handleDelete}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          useTranslationStore={useTranslationStore}
         />
         <ReviewersList
           reviewers={reviewers}
@@ -101,7 +97,6 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
             removeLabel={removeLabel}
             searchQuery={searchLabelQuery}
             setSearchQuery={setSearchLabelQuery}
-            useTranslationStore={useTranslationStore}
           />
           <LabelsList
             showReset={true}

@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
 import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
-import { useRouterContext } from '@/context'
-import { BranchSelectorTab, CodeModes, TranslationStore } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { BranchSelectorTab, CodeModes } from '@/views'
 
 export interface PathActionBarProps {
   codeMode: CodeModes
@@ -11,7 +11,6 @@ export interface PathActionBarProps {
   onBlurFileName?: () => void
   gitRefName?: string
   fileName?: string
-  useTranslationStore: () => TranslationStore
   pathNewFile?: string
   pathUploadFiles?: string
   handleOpenCommitDialog?: () => void
@@ -28,7 +27,6 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   onBlurFileName,
   gitRefName,
   fileName,
-  useTranslationStore,
   pathNewFile,
   pathUploadFiles,
   handleOpenCommitDialog,
@@ -38,7 +36,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   selectedRefType
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs

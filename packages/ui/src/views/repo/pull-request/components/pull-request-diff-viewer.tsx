@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Avatar, Layout } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import {
   activitiesToDiffCommentItems,
@@ -9,7 +10,6 @@ import {
   CreateCommentPullReqRequest,
   HandleUploadType,
   PullRequestCommentBox,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
@@ -60,7 +60,6 @@ interface PullRequestDiffviewerProps {
   handleSaveComment?: (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => void
   deleteComment?: (id: number) => void
   updateComment?: (id: number, comment: string) => void
-  useTranslationStore: () => TranslationStore
   onCopyClick?: (commentId?: number) => void
   suggestionsBatch?: CommitSuggestion[]
   onCommitSuggestion?: (suggestion: CommitSuggestion) => void
@@ -89,7 +88,6 @@ const PullRequestDiffViewer = ({
   handleSaveComment,
   deleteComment,
   updateComment,
-  useTranslationStore,
   onCopyClick,
   suggestionsBatch,
   onCommitSuggestion,
@@ -102,7 +100,7 @@ const PullRequestDiffViewer = ({
   setScrolledToComment,
   collapseDiff
 }: PullRequestDiffviewerProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
   const [, setLoading] = useState(false)
   const highlighter = useDiffHighlighter({ setLoading })

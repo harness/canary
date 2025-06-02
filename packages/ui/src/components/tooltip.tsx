@@ -41,4 +41,6 @@ export const Tooltip: FC<TooltipProps> = ({
   )
 }
 
-export const TooltipProvider = TooltipPrimitive.Provider
+export const TooltipProvider = (props: ComponentProps<typeof TooltipPrimitive.Provider>) => (
+  <TooltipPrimitive.Provider skipDelayDuration={0} {...props} />
+)

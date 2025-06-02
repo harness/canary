@@ -70,8 +70,8 @@ const gapVariants = cva('', {
   variants: {
     gap: {
       none: 'gap-0',
+      '3xs': 'gap-[var(--cn-layout-3xs)]',
       '2xs': 'gap-[var(--cn-layout-2xs)]',
-      xxs: 'gap-[var(--cn-layout-xxs)]',
       xs: 'gap-[var(--cn-layout-xs)]',
       sm: 'gap-[var(--cn-layout-sm)]',
       md: 'gap-[var(--cn-layout-md)]',
@@ -80,8 +80,8 @@ const gapVariants = cva('', {
     },
     gapX: {
       none: 'gap-x-0',
+      '3xs': 'gap-x-[var(--cn-layout-3xs)]',
       '2xs': 'gap-x-[var(--cn-layout-2xs)]',
-      xxs: 'gap-x-[var(--cn-layout-xxs)]',
       xs: 'gap-x-[var(--cn-layout-xs)]',
       sm: 'gap-x-[var(--cn-layout-sm)]',
       md: 'gap-x-[var(--cn-layout-md)]',
@@ -90,8 +90,8 @@ const gapVariants = cva('', {
     },
     gapY: {
       none: 'gap-y-0',
+      '3xs': 'gap-y-[var(--cn-layout-3xs)]',
       '2xs': 'gap-y-[var(--cn-layout-2xs)]',
-      xxs: 'gap-y-[var(--cn-layout-xxs)]',
       xs: 'gap-y-[var(--cn-layout-xs)]',
       sm: 'gap-y-[var(--cn-layout-sm)]',
       md: 'gap-y-[var(--cn-layout-md)]',
@@ -101,7 +101,7 @@ const gapVariants = cva('', {
   }
 })
 
-type GapSize = 'none' | '2xs' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type GapSize = 'none' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface LayoutProps {
   children?: ReactNode

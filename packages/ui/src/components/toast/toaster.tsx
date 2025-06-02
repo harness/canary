@@ -18,7 +18,7 @@ export function Toaster() {
                 {variant === 'failed' && <Icon name="cross" className="text-icons-danger" size={12} />}
               </>
             )}
-            <Layout.Horizontal gap="2xs">
+            <Layout.Horizontal gap="3xs">
               {!!title && <Toast.Title>{title}</Toast.Title>}
               {!!description && <Toast.Description>{description}</Toast.Description>}
             </Layout.Horizontal>

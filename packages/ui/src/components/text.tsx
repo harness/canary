@@ -1,6 +1,6 @@
-import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useLayoutEffect, useRef, useState } from 'react'
+import { ComponentProps, ElementType, forwardRef, ReactElement, Ref, useCallback, useState } from 'react'
 
-import { extractTextFromReactNode, useMergeRefs, wrapConditionalObjectElement } from '@/utils'
+import { useMergeRefs, wrapConditionalObjectElement } from '@/utils'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -147,22 +147,21 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
     },
     ref
   ) => {
-    const [withTooltip, setWithTooltip] = useState(false)
-    const localRef = useRef<HTMLElement>(null)
+    const [titleText, setTitleText] = useState('')
 
     const Comp = getTextNode({ as, variant, asChild })
-
     const isHeading = !as && !!variant?.startsWith('heading')
 
-    const compRef = useMergeRefs<HTMLElement>([localRef, ref])
+    const getTitleFromRef = useCallback(
+      (element: HTMLElement | null) => {
+        if (element && truncate) {
+          setTitleText(element.innerText || '')
+        }
+      },
+      [truncate]
+    )
 
-    useLayoutEffect(() => {
-      if (!truncate) return
-      if (!localRef.current) return
-
-      const { scrollWidth, scrollHeight, clientWidth, clientHeight } = localRef.current
-      setWithTooltip(scrollWidth > clientWidth || scrollHeight > clientHeight)
-    }, [truncate])
+    const compRef = useMergeRefs<HTMLElement>([getTitleFromRef, ref])
 
     return (
       <Comp
@@ -170,7 +169,7 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
         className={cn(textVariants({ variant, align, color, truncate, wrap }), className)}
         {...props}
         {...wrapConditionalObjectElement({ role: 'heading' }, isHeading)}
-        {...wrapConditionalObjectElement({ title: extractTextFromReactNode(children) }, withTooltip)}
+        {...wrapConditionalObjectElement({ title: titleText }, !!truncate)}
       >
         {children}
       </Comp>

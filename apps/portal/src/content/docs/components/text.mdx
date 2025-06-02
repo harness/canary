@@ -287,8 +287,9 @@ The `Text` component supports various color options to enhance visibility and co
     },
     {
       name: "as",
-      description: "Override the element type that will be rendered",
-      defaultValue: "Based on variant or 'span'",
+      description:
+        "Override the element type that will be rendered. By default it depends on the variant. For example, 'heading-hero' will render as an <h1> element, while 'body-normal' will render as a <p> element.",
+      defaultValue: "'span'",
       required: false,
       value:
         "'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label' | 'legend' | 'caption' | 'figcaption' | 'blockquote' | 'pre' | 'kbd' | 'var' | 'code' | 'samp' | 'cite' | 'time' | 'address' | 'strong' | 'abbr' | 'em'",

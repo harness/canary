@@ -125,7 +125,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
                   className={cn(index > 0 ? 'border-cn-borders-4 mt-0.5 border-t pt-2' : 'pt-1')}
                   key={`category-${category.groupId}-${index}`}
                 >
-                  <Text className="inline-block px-2" variant="body-single-line-normal" color="foreground-3">
+                  <Text variant="heading-small" color="foreground-3">
                     {category.title}
                   </Text>
                   <div className="mt-2.5 flex flex-col">
@@ -137,7 +137,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
                         onClick={() => handleItemClick(item)}
                       >
                         <div className="flex w-full items-center gap-x-2">
-                          <Text className="leading-tight" color="foreground-1" truncate>
+                          <Text color="foreground-1" truncate>
                             {item.title}
                           </Text>
                         </div>

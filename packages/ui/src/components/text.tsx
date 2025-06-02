@@ -6,6 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
 type TextElement =
+  | 'div'
   | 'p'
   | 'h1'
   | 'h2'
@@ -30,6 +31,9 @@ type TextElement =
   | 'strong'
   | 'abbr'
   | 'em'
+  | 'li'
+  | 'dt'
+  | 'dd'
 
 const textVariants = cva('', {
   variants: {

@@ -21,7 +21,7 @@ import {
   labelStyles,
   linkStyles,
   modalDialogStyles,
-  multiSelectV2Styles,
+  multiSelectStyles,
   paginationStyles,
   radioStyles,
   scrollAreaStyles,
@@ -466,7 +466,7 @@ export default {
         textareaStyles,
         inputStyles,
         captionStyles,
-        multiSelectV2Styles
+        multiSelectStyles
       ])
     }),
     tailwindcssAnimate,

@@ -7,7 +7,7 @@ interface CheckboxFilterProps {
   onUpdateFilter: (values: Array<CheckboxOptions>) => void
 }
 
-const Checkbox = ({ filter, filterOption, onUpdateFilter }: CheckboxFilterProps) => {
+const MultiSelectFilter = ({ filter, filterOption, onUpdateFilter }: CheckboxFilterProps) => {
   const filteredOptions = filterOption
   const filterValue = filter
 
@@ -19,7 +19,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter }: CheckboxFilterProps)
             <DropdownMenu.CheckboxItem
               title={option.label}
               checked={filterValue.map(v => v.value).includes(option.value)}
-              onSelect={event => {
+              onClick={event => {
                 event?.preventDefault()
                 event?.stopPropagation()
                 const newValues = filterValue.map(v => v.value).includes(option.value)
@@ -36,4 +36,4 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter }: CheckboxFilterProps)
   )
 }
 
-export default Checkbox
+export { MultiSelectFilter }

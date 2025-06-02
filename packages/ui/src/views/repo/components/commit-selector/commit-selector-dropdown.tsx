@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
-import { useTranslation } from '@/context'
 import { DropdownMenu, SearchBox } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { CommitSelectorListItem } from '@views/repo/pull-request'
 

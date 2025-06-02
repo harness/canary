@@ -183,58 +183,89 @@ DropdownMenuItem.displayName = displayNames.item
 
 interface DropdownMenuCheckboxItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
-    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title'> {}
+    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {}
 
 const DropdownMenuCheckboxItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   DropdownMenuCheckboxItemProps
->(({ className, children, checked, title, description, label, shortcut, checkmark, ...props }, ref) => {
-  const filteredChildren = filterChildrenByDisplayNames(children, innerComponentsDisplayNames)
-  const withChildren = filteredChildren.length > 0
-  const checkedState = checked === true ? 'checked' : checked
+>(
+  (
+    {
+      className,
+      children,
+      checked,
+      title,
+      description,
+      label,
+      shortcut,
+      checkmark,
+      onCheckedChange,
+      onClick,
+      ...props
+    },
+    ref
+  ) => {
+    const filteredChildren = filterChildrenByDisplayNames(children, innerComponentsDisplayNames)
+    const withChildren = filteredChildren.length > 0
+    const checkedDataState = checked === true ? 'checked' : checked
 
-  const ItemContent = () => (
-    <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, withSubIndicator: withChildren }}>
-      <div className="cn-checkbox-root" {...{ 'data-state': checkedState }}>
-        {checked && (
-          <div className="cn-checkbox-indicator" {...{ 'data-state': checkedState }}>
-            {checked === 'indeterminate' ? (
-              <Icon name="minus" className="cn-checkbox-icon" skipSize />
-            ) : (
-              <Icon name="check" className="cn-checkbox-icon" skipSize />
-            )}
-          </div>
-        )}
-      </div>
-    </DropdownBaseItem>
-  )
+    const ItemContent = () => (
+      <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, withSubIndicator: withChildren }}>
+        <div className="cn-checkbox-root" {...{ 'data-state': checkedDataState }}>
+          {checked && (
+            <div className="cn-checkbox-indicator" {...{ 'data-state': checkedDataState }}>
+              {checked === 'indeterminate' ? (
+                <Icon name="minus" className="cn-checkbox-icon" skipSize />
+              ) : (
+                <Icon name="check" className="cn-checkbox-icon" skipSize />
+              )}
+            </div>
+          )}
+        </div>
+      </DropdownBaseItem>
+    )
 
-  if (withChildren) {
+    if (withChildren) {
+      return (
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger
+            ref={ref}
+            className={cn('cn-dropdown-menu-item cn-dropdown-menu-item-subtrigger', className)}
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+
+              if (props.disabled) return
+
+              onClick?.(e)
+              onCheckedChange?.(checked === 'indeterminate' ? false : !checked)
+            }}
+            {...props}
+          >
+            <ItemContent />
+          </DropdownMenuSubTrigger>
+          <DropdownMenuContent isSubContent>{filteredChildren}</DropdownMenuContent>
+        </DropdownMenuSub>
+      )
+    }
+
     return (
-      <DropdownMenuSub>
-        <DropdownMenuSubTrigger
-          ref={ref}
-          className={cn('cn-dropdown-menu-item cn-dropdown-menu-item-subtrigger', className)}
-          {...omit(props, ['onSelect'])}
-        >
-          <ItemContent />
-        </DropdownMenuSubTrigger>
-        <DropdownMenuContent isSubContent>{filteredChildren}</DropdownMenuContent>
-      </DropdownMenuSub>
+      <DropdownMenuPrimitive.CheckboxItem
+        ref={ref}
+        className={cn('cn-dropdown-menu-item', className)}
+        checked={checked}
+        onSelect={e => {
+          e.stopPropagation()
+          e.preventDefault()
+        }}
+        onCheckedChange={onCheckedChange}
+        {...props}
+      >
+        <ItemContent />
+      </DropdownMenuPrimitive.CheckboxItem>
     )
   }
-
-  return (
-    <DropdownMenuPrimitive.CheckboxItem
-      ref={ref}
-      className={cn('cn-dropdown-menu-item', className)}
-      checked={checked}
-      {...props}
-    >
-      <ItemContent />
-    </DropdownMenuPrimitive.CheckboxItem>
-  )
-})
+)
 DropdownMenuCheckboxItem.displayName = displayNames.checkboxItem
 
 interface DropdownMenuRadioItemProps
@@ -256,9 +287,17 @@ DropdownMenuRadioGroup.displayName = displayNames.radioGroup
 
 const DropdownMenuRadioItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
-  Omit<DropdownMenuRadioItemProps, 'children'>
+  Omit<DropdownMenuRadioItemProps, 'children' | 'onSelect'>
 >(({ className, title, description, label, shortcut, checkmark, ...props }, ref) => (
-  <DropdownMenuPrimitive.RadioItem ref={ref} className={cn('cn-dropdown-menu-item', className)} {...props}>
+  <DropdownMenuPrimitive.RadioItem
+    ref={ref}
+    className={cn('cn-dropdown-menu-item', className)}
+    onSelect={e => {
+      e.stopPropagation()
+      e.preventDefault()
+    }}
+    {...props}
+  >
     <DropdownBaseItem {...{ title, description, label, shortcut, checkmark }}>
       <div className="cn-radio-item">
         <DropdownMenuPrimitive.ItemIndicator className="cn-radio-item-indicator" />

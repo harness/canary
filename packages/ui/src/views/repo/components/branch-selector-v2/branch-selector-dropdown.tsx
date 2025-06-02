@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, SearchInput, StatusBadge, Tabs } from '@/components'
+import { Button, DropdownMenu, Link, SearchInput, StatusBadge, Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 

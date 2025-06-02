@@ -135,8 +135,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, checkName: string) => {
-    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, checkName })
+  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string[]) => {
+    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
   }
 
   const handleInputChange = (ruleId: string, value: string) => {

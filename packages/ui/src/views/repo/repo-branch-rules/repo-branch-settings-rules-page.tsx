@@ -31,7 +31,7 @@ interface RepoBranchSettingsRulesPageProps {
   useBranchRulesStore: () => IBranchRulesStore
   handleCheckboxChange: (id: string, checked: boolean) => void
   handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (id: string, selectedOption: string) => void
+  handleSelectChangeForRule: (id: string, selectedOptions: string[]) => void
   handleInputChange: (id: string, input: string) => void
   handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void

@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { FormCaption, Label } from '@/components'
-import { MultiSelect, type MultiSelectOption, type MultiSelectRef } from '@/components/multi-select-v2'
+import { MultiSelect, type MultiSelectOption, type MultiSelectRef } from '@components/multi-select'
 
 interface FormMultiSelectPropsType
   extends Omit<React.ComponentPropsWithoutRef<typeof MultiSelect>, 'value' | 'onChange'> {

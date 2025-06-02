@@ -11,6 +11,7 @@ import {
   ViewTypeValue
 } from '@/components'
 import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
+import { AnimatePresence } from 'motion/react'
 
 export interface FileViewerControlBarProps {
   view: ViewTypeValue
@@ -75,19 +76,21 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
-        <ToggleGroup.Root
-          className="gap-0"
-          onValueChange={onChangeView}
-          value={view}
-          type="single"
-          unselectable={'on'}
-          size="xs"
-        >
-          {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
-          <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
-          <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
-          <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
-        </ToggleGroup.Root>
+        <AnimatePresence>
+          <ToggleGroup.Root
+            className="gap-0"
+            onValueChange={onChangeView}
+            value={view}
+            type="single"
+            unselectable={'on'}
+            size="xs"
+          >
+            {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
+            <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
+            <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
+            <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
+          </ToggleGroup.Root>
+        </AnimatePresence>
         <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>
     </StackedList.Root>

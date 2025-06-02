@@ -1,8 +1,9 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useMemo } from 'react'
 
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
+import { motion } from 'motion/react'
 
 const formCaptionVariants = cva('cn-caption', {
   variants: {
@@ -30,27 +31,24 @@ export const FormCaption = ({
   disabled,
   children
 }: PropsWithChildren<FormCaptionProps>) => {
-  /**
-   * Return null if no message, errorMessage, or warningMessage is provided
-   */
-  if (!children) {
-    return null
-  }
-
   const canShowIcon = theme === 'danger' || theme === 'warning'
-
-  /**
-   * cross-circle - danger
-   * triangle-warning - warning
-   */
   const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
 
-  return (
-    <p className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}>
+  const captionId = useMemo(() => `caption-${Math.random().toString(36).substring(2, 9)}`, [])
+
+  return children ? (
+    <motion.p
+      key={captionId}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.15, ease: 'easeInOut' }}
+      className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}
+    >
       {canShowIcon && <Icon name={effectiveIconName} size={14} />}
       <span>{children}</span>
-    </p>
-  )
+    </motion.p>
+  ) : null
 }
 
 FormCaption.displayName = 'FormCaption'

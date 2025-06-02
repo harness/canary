@@ -3,8 +3,13 @@ import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { motion } from 'motion/react'
 
 import { Icon } from './icon'
+
+// // Helper to check if we're in a browser environment
+// const isBrowser =
+//   typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof SVGElement !== 'undefined'
 
 const buttonVariants = cva('cn-button', {
   variants: {
@@ -124,8 +129,46 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children
     )
 
+    const defaultMotionProps = {
+      whileTap: {
+        scale: 0.95
+      },
+      transition: {
+        duration: 0.05,
+        type: 'spring',
+        stiffness: 300,
+        damping: 10
+      }
+    }
+
+    // // Return standard button during SSR
+    // if (!isBrowser) {
+    //   return (
+    //     <Comp
+    //       className={cn(
+    //         buttonVariants({
+    //           variant: variant || 'primary',
+    //           size,
+    //           theme,
+    //           rounded,
+    //           iconOnly
+    //         }),
+    //         className
+    //       )}
+    //       ref={ref}
+    //       disabled={disabled || loading}
+    //       type={type}
+    //       {...props}
+    //     >
+    //       {_children}
+    //     </Comp>
+    //   )
+    // }
+
+    // Client-side rendering with motion effects
     return (
-      <Comp
+      <motion.button
+        {...defaultMotionProps}
         className={cn(
           buttonVariants({
             variant: variant || 'primary',
@@ -142,7 +185,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {_children}
-      </Comp>
+      </motion.button>
     )
   }
 )

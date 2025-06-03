@@ -38,7 +38,10 @@ const displayNames = {
   indicatorItem: 'DropdownMenuIndicatorItem',
   separator: 'DropdownMenuSeparator',
   header: 'DropdownMenuHeader',
-  footer: 'DropdownMenuFooter'
+  footer: 'DropdownMenuFooter',
+  spinner: 'DropdownMenuSpinner',
+  noOptions: 'DropdownMenuNoOptions',
+  slot: 'DropdownMenuSlot'
 }
 
 DropdownMenuRoot.displayName = displayNames.root
@@ -66,6 +69,7 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
   ({ className, children: _children, sideOffset = 4, isSubContent, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const Primitive = isSubContent ? DropdownMenuPrimitive.SubContent : DropdownMenuPrimitive.Content
+
     const header = filterChildrenByDisplayNames(_children, [displayNames.header])[0]
     const footer = filterChildrenByDisplayNames(_children, [displayNames.footer])[0]
     const children = filterChildrenByDisplayNames(_children, [displayNames.header, displayNames.footer], true)
@@ -110,7 +114,7 @@ interface DropdownBaseItemProps {
   title: ReactNode
   children?: ReactNode
   className?: string
-  description?: string
+  description?: ReactNode
   label?: string
   shortcut?: string
   checkmark?: boolean
@@ -130,11 +134,25 @@ const DropdownBaseItem = ({
   <div className={cn('cn-dropdown-menu-base-item', className)}>
     {children}
     <div className="grid w-full">
-      <Text className="text-cn-foreground-1 font-body-normal">{title}</Text>
-      {description && <Text className="text-cn-foreground-2 font-body-normal">{description}</Text>}
+      {typeof title === 'string' ? (
+        <Text className="grid" color="foreground-1">
+          {title}
+        </Text>
+      ) : (
+        title
+      )}
+      {typeof description === 'string' ? <Text color="foreground-2">{description}</Text> : description}
     </div>
-    {label && <Text className="text-cn-foreground-2 font-caption-soft">{label}</Text>}
-    {shortcut && <Text className="text-cn-foreground-2 font-caption-soft">{shortcut}</Text>}
+    {label && (
+      <Text className="grid" variant="caption-soft" color="foreground-2">
+        {label}
+      </Text>
+    )}
+    {shortcut && (
+      <Text variant="caption-soft" color="foreground-2">
+        {shortcut}
+      </Text>
+    )}
     {checkmark && <Icon name="check" size={16} />}
     {withSubIndicator && <Icon name="chevron-right" size={14} />}
   </div>
@@ -309,15 +327,16 @@ DropdownMenuRadioItem.displayName = displayNames.radioItem
 
 interface DropdownMenuAvatarItemProps extends Omit<DropdownMenuItemProps, 'prefix'> {
   src?: AvatarProps['src']
+  name?: AvatarProps['name']
   rounded?: AvatarProps['rounded']
 }
 
 const DropdownMenuAvatarItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuAvatarItemProps>(
-  ({ src, rounded = true, ...props }, ref) => (
+  ({ src, rounded = true, name, ...props }, ref) => (
     <DropdownMenuItem
       ref={ref}
       {...props}
-      prefix={<Avatar size={props.description ? 'lg' : 'default'} src={src} rounded={rounded} />}
+      prefix={<Avatar size={props.description ? 'lg' : 'default'} src={src} rounded={rounded} name={name} />}
     />
   )
 )
@@ -399,6 +418,23 @@ const DropdownMenuFooter = ({ className, ...props }: HTMLAttributes<HTMLDivEleme
 )
 DropdownMenuFooter.displayName = displayNames.footer
 
+const DropdownMenuSpinner = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('cn-dropdown-menu-spinner', className)} {...props}>
+    <Icon className="animate-spin" name="spinner" />
+  </div>
+)
+DropdownMenuSpinner.displayName = displayNames.spinner
+
+const DropdownMenuNoOptions = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('cn-dropdown-menu-no-options', className)} {...props}>
+    <Text className="text-cn-foreground-3">{children ?? 'No options available'}</Text>
+  </div>
+)
+DropdownMenuNoOptions.displayName = displayNames.noOptions
+
+const DropdownMenuSlot = (props: HTMLAttributes<HTMLDivElement>) => <div {...props} />
+DropdownMenuSlot.displayName = displayNames.slot
+
 const DropdownMenu = {
   Root: DropdownMenuRoot,
   Trigger: DropdownMenuTrigger,
@@ -414,7 +450,10 @@ const DropdownMenu = {
   Group: DropdownMenuGroup,
   RadioGroup: DropdownMenuRadioGroup,
   Header: DropdownMenuHeader,
-  Footer: DropdownMenuFooter
+  Footer: DropdownMenuFooter,
+  Spinner: DropdownMenuSpinner,
+  NoOptions: DropdownMenuNoOptions,
+  Slot: DropdownMenuSlot
 }
 
-export { DropdownMenu }
+export { DropdownMenu, DropdownMenuItemProps }

@@ -59,28 +59,26 @@ const FilterBoxWrapper = ({
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content className={cn('w-[276px]', contentClassName)} align="start">
-        <div className="flex items-center justify-between px-3 py-2.5">
-          <div className="flex items-center gap-x-2 text-cn-foreground-2">{filterLabel}</div>
+        <DropdownMenu.Header>{filterLabel}</DropdownMenu.Header>
 
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
-              <IconV2
-                className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
-                name="more-horizontal"
-                size={12}
-              />
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content align="start">
-              <DropdownMenu.IconItem
-                icon="trash"
-                onSelect={handleRemoveFilter}
-                title={t('component:filter.delete', 'Delete filter')}
-              />
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-        </div>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
+            <IconV2
+              className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
+              name="more-horizontal"
+              size={12}
+            />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content align="start">
+            <DropdownMenu.IconItem
+              icon="trash"
+              onSelect={handleRemoveFilter}
+              title={t('component:filter.delete', 'Delete filter')}
+            />
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
 
-        <section id="dropdown-filter-field">{children}</section>
+        {children}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

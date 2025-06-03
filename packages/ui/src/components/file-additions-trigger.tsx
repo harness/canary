@@ -22,7 +22,7 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({ pathNewFil
           </span>
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="min-w-[157px]" align="end">
+      <DropdownMenu.Content align="end">
         <DropdownMenu.Item
           title={
             <Link variant="secondary" to={pathNewFile} prefixIcon="plus">

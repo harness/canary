@@ -51,13 +51,12 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
                   {getRoleLabel(member.role)}
                   <IconV2 className="chevron-down text-icons-7" name="nav-solid-arrow-down" size={6} />
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content align="start" className="w-[300px]">
+                <DropdownMenu.Content align="start">
                   {roleOptions.map(role => (
                     <DropdownMenu.Item
                       title={role.label}
                       description={role.description}
                       key={role.uid}
-                      className="flex-col items-start gap-y-1.5 px-3 py-2"
                       onClick={() => onEdit({ ...member, role: role.uid })}
                     />
                   ))}

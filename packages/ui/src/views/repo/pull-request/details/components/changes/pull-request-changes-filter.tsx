@@ -202,7 +202,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       <div className="flex grow items-center gap-x-5">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
-            <div className="text-2 text-cn-foreground-2 group-hover:text-cn-foreground-1 flex items-center gap-x-0.5">
+            <div className="flex items-center gap-x-0.5 text-2 text-cn-foreground-2 group-hover:text-cn-foreground-1">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
@@ -218,12 +218,12 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <IconV2 name="nav-arrow-down" size={6} className="chevron-down text-icons-7" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-96" align="start">
-            <div className="max-h-[360px] overflow-y-auto px-1">{commitDropdownItems}</div>
+            {commitDropdownItems}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="text-2 group flex items-center gap-x-1.5">
+          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
             <span className="text-cn-foreground-2 group-hover:text-cn-foreground-1">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
             </span>
@@ -245,7 +245,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <p className="text-2 text-cn-foreground-2 leading-tight">
+          <p className="text-2 leading-tight text-cn-foreground-2">
             {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
             <DropdownMenu.Trigger className="group">
               <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
@@ -257,14 +257,13 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
             {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
           </p>
-          <DropdownMenu.Content className="max-h-[360px] max-w-[396px] overflow-y-auto" align="start">
+          <DropdownMenu.Content className="max-w-[396px]" align="start">
             {diffData?.map(diff => (
               <DropdownMenu.Item
                 key={diff.filePath}
                 onClick={() => {
                   setJumpToDiff(diff.filePath)
                 }}
-                className="flex w-full items-center justify-between gap-x-5 py-1.5"
                 title={
                   <>
                     <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">

@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Avatar, Button, DropdownMenu, IconV2, ScrollArea, SearchInput } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
@@ -35,7 +35,7 @@ const ReviewersHeader = ({
 
   return (
     <div className="mb-0.5 flex items-center justify-between">
-      <h5 className="text-2 text-cn-foreground-1 font-medium">{t('views:pullRequests.reviewers', 'Reviewers')}</h5>
+      <h5 className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.reviewers', 'Reviewers')}</h5>
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
@@ -44,7 +44,7 @@ const ReviewersHeader = ({
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
-          <div className="px-2 py-1.5" role="presentation" onKeyDown={e => e.stopPropagation()}>
+          <DropdownMenu.Header role="presentation" onKeyDown={e => e.stopPropagation()}>
             <SearchInput
               size="sm"
               autoFocus
@@ -53,20 +53,15 @@ const ReviewersHeader = ({
               placeholder={t('views:pullRequests.searchUsers', 'Search users')}
               onChange={handleSearchQuery}
             />
-          </div>
-          <DropdownMenu.Separator />
+          </DropdownMenu.Header>
 
           {!usersList?.length && (
-            <div className="text-cn-foreground-2 px-5 py-4 text-center leading-tight">
-              {t('views:pullRequests.noUsers', 'No users found.')}
-            </div>
+            <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           )}
           {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
-            <div className="text-cn-foreground-2 px-5 py-4 text-center leading-tight">
-              {t('views:pullRequests.noUsers', 'No users found.')}
-            </div>
+            <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           ) : (
-            <ScrollArea viewportClassName="max-h-80">
+            <>
               {usersList?.map(({ display_name, id, uid }) => {
                 if (uid === currentUserId) return null
 
@@ -74,15 +69,15 @@ const ReviewersHeader = ({
 
                 return (
                   <DropdownMenu.AvatarItem
-                    title={<Avatar name={display_name} rounded />}
-                    description={display_name}
+                    name={display_name}
+                    title={display_name}
                     checkmark={!!isSelected}
                     key={uid}
                     onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
                   />
                 )
               })}
-            </ScrollArea>
+            </>
           )}
         </DropdownMenu.Content>
       </DropdownMenu.Root>

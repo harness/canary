@@ -40,7 +40,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
             <IconV2 name="more-vert" size={12} />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-[200px]" align="end">
+        <DropdownMenu.Content align="end">
           <DropdownMenu.Item
             title="Edit"
             onClick={e => {

@@ -33,7 +33,7 @@ export const StageFloatingAddNodeContextMenu = ({
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.Stage)
           }}
-        ></DropdownMenu.IconItem>
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

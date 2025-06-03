@@ -157,7 +157,7 @@ export default function MultiSort() {
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content className="min-w-[310px] px-3 py-2.5" align="start">
+      <DropdownMenu.Content align="start">
         <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
           <SortableContext
             items={sortSelections.map((_, index) => getItemId(index))}
@@ -192,7 +192,7 @@ export default function MultiSort() {
           </SortableContext>
         </DndContext>
 
-        <div className="mt-3 inline-flex flex-col gap-1">
+        <DropdownMenu.Slot className="mt-3 inline-flex flex-col gap-1">
           {filteredBySearchSortOptions.length > 0 && (
             <SearchableDropdown
               options={filteredBySearchSortOptions}
@@ -218,7 +218,7 @@ export default function MultiSort() {
             <IconV2 name="trash" size={12} />
             Delete sort
           </Button>
-        </div>
+        </DropdownMenu.Slot>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

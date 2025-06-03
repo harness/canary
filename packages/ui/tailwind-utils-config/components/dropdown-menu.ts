@@ -124,6 +124,18 @@ export default {
 
     '&-header, &-footer': {
       padding: 'var(--cn-spacing-1-half) var(--cn-spacing-2)'
+    },
+
+    '&-spinner': {
+      display: 'flex',
+      placeContent: 'center',
+      padding: 'var(--cn-dropdown-item-py) var(--cn-dropdown-item-px)'
+    },
+
+    '&-no-options': {
+      display: 'flex',
+      placeContent: 'center',
+      padding: 'calc(var(--cn-dropdown-item-py) + var(--cn-spacing-4)) var(--cn-dropdown-item-px)'
     }
   }
 }

@@ -20,7 +20,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
         </span>
         <IconV2 name="nav-solid-arrow-down" size={6} className="chevron-down text-icons-7" />
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-56" align="end">
+      <DropdownMenu.Content align="end">
         {items.map(item => (
           <DropdownMenu.Item key={item.value} onClick={() => onItemSelect(item)} title={item.label} />
         ))}

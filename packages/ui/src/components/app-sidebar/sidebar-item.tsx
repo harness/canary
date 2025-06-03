@@ -1,13 +1,10 @@
-import { DropdownMenu, Icon, IconProps, IconV2, Sidebar, Text, useSidebar } from '@/components'
+import { DropdownMenu, IconV2, IconPropsV2, Sidebar, useSidebar } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-
-const dropdownItemClassNames =
-  'text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1'
 
 interface NavbarItemType {
   id: number | string
   title: string
-  iconName?: IconProps['name']
+  iconName?: IconPropsV2['name']
   description?: string
   to: string
   permanentlyPinned?: boolean
@@ -33,7 +30,7 @@ export const SidebarItem = ({
   const { collapsed } = useSidebar()
 
   // TODO: Design System: Update it once gradient icons are available in IconV2
-  const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
+  const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconPropsV2['name'])
 
   const handlePin = () => {
     handleChangePinnedMenuItem(item, isRecent)
@@ -45,48 +42,14 @@ export const SidebarItem = ({
 
   const dropdownItems = isRecent ? (
     <>
-      <DropdownMenu.Item
-        className={dropdownItemClassNames}
-        onSelect={handlePin}
-        title={
-          <Text truncate color="inherit">
-            {t('component:navbar.pin', 'Pin')}
-          </Text>
-        }
-      />
-
-      <DropdownMenu.Item
-        className={dropdownItemClassNames}
-        onSelect={handleRemoveRecent}
-        title={
-          <Text truncate color="inherit">
-            {t('component:navbar.remove', 'Remove')}
-          </Text>
-        }
-      />
+      <DropdownMenu.Item onSelect={handlePin} title={t('component:navbar.pin', 'Pin')} />
+      <DropdownMenu.Item onSelect={handleRemoveRecent} title={t('component:navbar.remove', 'Remove')} />
     </>
   ) : (
     <>
-      <DropdownMenu.Item
-        className={dropdownItemClassNames}
-        onSelect={handleCustomNav}
-        title={
-          <Text truncate color="inherit">
-            {t('component:navbar.reorder', 'Reorder')}
-          </Text>
-        }
-      />
-
+      <DropdownMenu.Item onSelect={handleCustomNav} title={t('component:navbar.reorder', 'Reorder')} />
       {!item.permanentlyPinned && (
-        <DropdownMenu.Item
-          className={dropdownItemClassNames}
-          onSelect={handlePin}
-          title={
-            <Text truncate color="inherit">
-              {t('component:navbar.unpin', 'Unpin')}
-            </Text>
-          }
-        />
+        <DropdownMenu.Item onSelect={handlePin} title={t('component:navbar.unpin', 'Unpin')} />
       )}
     </>
   )
@@ -98,7 +61,7 @@ export const SidebarItem = ({
           <Sidebar.MenuButton asChild isActive={isActive}>
             <Sidebar.MenuItemText
               text={item.title}
-              icon={iconName && <Icon name={iconName} size={14} />}
+              icon={iconName && <IconV2 name={iconName} size={14} />}
               active={isActive}
             />
           </Sidebar.MenuButton>
@@ -112,12 +75,7 @@ export const SidebarItem = ({
               <IconV2 name="more-vert" size={12} />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content
-            className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
-            align="end"
-            sideOffset={3}
-            alignOffset={4}
-          >
+          <DropdownMenu.Content align="end" sideOffset={3} alignOffset={4}>
             {dropdownItems}
           </DropdownMenu.Content>
         </DropdownMenu.Root>

@@ -8,13 +8,13 @@ const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
   const userName = user?.display_name || user?.uid || ''
 
   return (
-    <>
+    <div className="flex items-center gap-2">
       <Avatar name={userName} src={user?.url} rounded className="mr-2" />
       <div className="grid flex-1 text-left text-2 leading-tight">
         <span className="truncate font-medium text-sidebar-foreground-1">{userName}</span>
         <span className="truncate text-sidebar-foreground-4">{user?.email}</span>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -41,16 +41,10 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut }
               <UserAvatar user={user} />
             </Sidebar.MenuButton>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 !rounded-lg border-sidebar-border-3 bg-sidebar-background-4"
-            side="right"
-            align="end"
-            sideOffset={4}
-          >
-            <DropdownMenu.Header className="flex items-center gap-2 p-0 px-1 py-1.5 font-normal">
+          <DropdownMenu.Content side="right" align="end" sideOffset={4}>
+            <DropdownMenu.Header>
               <UserAvatar user={user} />
             </DropdownMenu.Header>
-            <DropdownMenu.Separator className="bg-sidebar-border-1" />
             <DropdownMenu.Group>
               <Link to="/profile-settings">
                 <DropdownMenu.IconItem icon="settings" title={t('component:navbar.settings', 'Settings')} />

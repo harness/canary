@@ -50,12 +50,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           <IconV2 name={iconName} size={12} />
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content
-        className={cn('w-[180px]', className)}
-        align="end"
-        sideOffset={sideOffset}
-        alignOffset={alignOffset}
-      >
+      <DropdownMenu.Content className={className} align="end" sideOffset={sideOffset} alignOffset={alignOffset}>
         {actions.map((action, idx) =>
           action.to ? (
             <Link

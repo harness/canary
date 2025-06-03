@@ -78,8 +78,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="w-60 p-4" align="end">
-            <div className="flex gap-x-2">
+          <DropdownMenu.Content align="end">
+            <DropdownMenu.Slot className="flex gap-x-2">
               <div className="border-cn-borders-4 flex size-6 shrink-0 items-center justify-center rounded-full border">
                 <IconV2 name="git-pull-request" size={12} />
               </div>
@@ -96,8 +96,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                   Open a pull request to contribute your changes upstream.
                 </p>
               </div>
-            </div>
-            <div className="mt-4 flex flex-col gap-y-2.5">
+            </DropdownMenu.Slot>
+            <DropdownMenu.Slot className="mt-4 flex flex-col gap-y-2.5">
               <Button className="w-full" variant="outline" asChild>
                 <Link
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
@@ -113,7 +113,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                   Open pull request
                 </Link>
               </Button>
-            </div>
+            </DropdownMenu.Slot>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       ) : null}

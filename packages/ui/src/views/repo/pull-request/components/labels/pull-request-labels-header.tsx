@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Tag } from '@/components'
+import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
@@ -78,6 +78,7 @@ export const LabelsHeader = ({
       return res
     })
   }, [labelsList, labelsValues, selectedLabels])
+  console.log('🚀 ~ labelsListWithValues ~ labelsListWithValues:', labelsListWithValues)
 
   const handleOnSelect = (label: LabelsWithValueType) => (e: Event) => {
     e.preventDefault()
@@ -127,7 +128,7 @@ export const LabelsHeader = ({
         )}
 
         {!labelWithValuesToShow && (
-          <DropdownMenu.Content>
+          <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
             <DropdownMenu.Header>
               <SearchInput
                 size="sm"
@@ -139,32 +140,30 @@ export const LabelsHeader = ({
               />
             </DropdownMenu.Header>
 
-            {!!labelsListWithValues.length && (
-              <>
-                {labelsListWithValues?.map((label, idx) => (
-                  <DropdownMenu.Item
-                    key={`${label.id}-${idx}`}
-                    onSelect={handleOnSelect(label)}
-                    title={
-                      <Tag
-                        variant="secondary"
-                        size="sm"
-                        theme={label.color}
-                        label={label.key}
-                        value={(label.values?.length || '').toString()}
-                      />
-                    }
-                    description={label.description}
-                    checkmark={label.isSelected}
+            {labelsListWithValues?.map((label, idx) => (
+              <DropdownMenu.Item
+                key={`${label.id}-${idx}`}
+                onSelect={handleOnSelect(label)}
+                title={
+                  <Tag
+                    variant="secondary"
+                    size="sm"
+                    theme={label.color}
+                    label={label.key}
+                    value={(label.values?.length || '').toString()}
                   />
-                ))}
-              </>
-            )}
+                }
+                description={
+                  <Text color="foreground-2" truncate>
+                    {label.description}
+                  </Text>
+                }
+                checkmark={label.isSelected}
+              />
+            ))}
 
             {!labelsListWithValues.length && (
-              <span className="text-cn-foreground-2 block px-5 py-4 text-center leading-tight">
-                {t('views:pullRequests.noLabels', 'No labels found')}
-              </span>
+              <DropdownMenu.NoOptions>{t('views:pullRequests.noLabels', 'No labels found')}</DropdownMenu.NoOptions>
             )}
 
             <DropdownMenu.Footer>

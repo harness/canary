@@ -38,11 +38,9 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
                 <Breadcrumb.Item key={match.pathname}>
                   {!isFirst && <Breadcrumb.Separator className="text-cn-foreground-disabled" />}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page className={isLast ? 'text-cn-foreground-3' : 'text-cn-foreground-1'}>
-                      {breadcrumbContent}
-                    </Breadcrumb.Page>
+                    <Breadcrumb.Page>{breadcrumbContent}</Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link className="text-cn-foreground-2 hover:text-cn-foreground-2" asChild>
+                    <Breadcrumb.Link asChild>
                       <Link to={match.pathname}>{breadcrumbContent}</Link>
                     </Breadcrumb.Link>
                   )}

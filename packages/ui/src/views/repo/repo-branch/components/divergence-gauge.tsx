@@ -46,23 +46,8 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
         <div className="mx-auto grid w-28 grid-flow-col grid-cols-2 items-center justify-center">
-          <Progress
-            className="rounded-l-none"
-            variant="divergence"
-            value={adjustedBehindPercentage}
-            size="sm"
-            rotated="180deg"
-            indicatorRounded="right-sm"
-            indicatorColor="dark-gray"
-          />
-          <Progress
-            className="rounded-l-none"
-            variant="divergence"
-            value={adjustedAheadPercentage}
-            size="sm"
-            indicatorRounded="right-sm"
-            indicatorColor="light-gray"
-          />
+          <Progress value={adjustedBehindPercentage / 100} size="sm" />
+          <Progress value={adjustedAheadPercentage / 100} size="sm" />
         </div>
       )}
     </div>

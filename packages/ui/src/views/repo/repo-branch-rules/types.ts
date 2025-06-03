@@ -23,7 +23,7 @@ export enum BranchRulesActionType {
 export type BranchRulesAction =
   | { type: BranchRulesActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
   | { type: BranchRulesActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
-  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; checkName: string }
+  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: string[] }
   | { type: BranchRulesActionType.SET_INITIAL_RULES; payload: Rule[] }
   | { type: BranchRulesActionType.SET_INPUT_VALUE; ruleId: string; value: string }
 

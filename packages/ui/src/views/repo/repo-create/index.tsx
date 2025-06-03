@@ -21,11 +21,15 @@ import {
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { isEmpty } from 'lodash-es'
 import { z } from 'zod'
 
 // Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide a name' }),
+  name: z
+    .string()
+    .min(1, { message: 'Please provide a name' })
+    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
   description: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),
@@ -225,7 +229,7 @@ export function RepoCreatePage({
             <ControlGroup>
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
-                <Button type="submit" disabled={isLoading}>
+                <Button type="submit" disabled={isLoading || !isEmpty(errors)}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={onFormCancel}>

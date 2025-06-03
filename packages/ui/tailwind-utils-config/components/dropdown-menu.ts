@@ -45,11 +45,11 @@ export default {
       padding: 'var(--cn-dropdown-container)',
 
       '&-header': {
-        borderBottom: '1px solid var(--cn-border-3)'
+        borderBottom: 'var(--cn-dropdown-border) solid var(--cn-border-3)'
       },
 
       '&-footer': {
-        borderTop: '1px solid var(--cn-border-3)'
+        borderTop: 'var(--cn-dropdown-border) solid var(--cn-border-3)'
       }
     },
 
@@ -88,7 +88,7 @@ export default {
       },
 
       '&:where([data-disabled])': {
-        opacity: '0.5'
+        opacity: 'var(--cn-disabled-opacity)'
       },
 
       '& .cn-radio-item, & .cn-checkbox-root': {
@@ -108,9 +108,7 @@ export default {
     },
 
     '&-group-label': {
-      paddingTop: 'var(--cn-dropdown-item-py)',
-      paddingLeft: 'var(--cn-dropdown-item-px)',
-      paddingRight: 'var(--cn-dropdown-item-px)',
+      padding: 'var(--cn-dropdown-item-py) var(--cn-dropdown-item-px)',
       paddingBottom: 'var(--cn-spacing-1)',
       color: 'var(--cn-text-3)',
       userSelect: 'none',
@@ -118,7 +116,7 @@ export default {
     },
 
     '&-separator': {
-      height: '1px',
+      height: 'var(--cn-dropdown-border)',
       backgroundColor: 'var(--cn-border-3)'
     },
 

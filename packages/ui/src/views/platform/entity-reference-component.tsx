@@ -30,7 +30,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // UI Configuration
   showFilter?: boolean
   showBreadcrumbEllipsis?: boolean
-  filterTypes: Record<string, string>
+  filterTypes?: Record<string, string>
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -60,7 +60,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // configs
   showFilter = true,
   showBreadcrumbEllipsis = false,
-  filterTypes = {},
+  filterTypes,
 
   // Custom renderers
   renderEntity,
@@ -145,15 +145,17 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             <ListActions.Left>
               <SearchBox.Root
                 width="full"
-                className="max-w-96"
+                className={cn({ 'max-w-96': filterTypes })}
                 value={search}
                 handleChange={handleSearchChange}
                 placeholder="Search"
               />
             </ListActions.Left>
-            <ListActions.Right>
-              <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
-            </ListActions.Right>
+            {filterTypes && (
+              <ListActions.Right>
+                <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
+              </ListActions.Right>
+            )}
           </ListActions.Root>
         )}
         {isLoading ? (

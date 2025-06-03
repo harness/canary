@@ -19,7 +19,7 @@ export const Tooltip: FC<TooltipProps> = ({
   title,
   content,
   hideArrow = false,
-  delay = 700,
+  delay = 500,
   side = 'top',
   align = 'center'
 }) => {

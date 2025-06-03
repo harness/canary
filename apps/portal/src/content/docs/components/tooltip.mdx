@@ -15,7 +15,7 @@ import { DocsPage } from "../../../components/docs-page";
         title="Full-Stack Development"
         content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
     >
-        <Button theme="default">Trigger</Button>
+        <Button>Trigger</Button>
     </Tooltip.Root>
 </TooltipProvider>`}
 />
@@ -47,56 +47,60 @@ return (
   code={`
     <TooltipProvider>
       <Tooltip title="Title" content={<p>This is a tooltip</p>} hideArrow>
-        <Button theme="default">trigger</Button>
+        <Button>trigger</Button>
       </Tooltip>
     </TooltipProvider>
   `}
 />
 
-## Tooltip `side` configuration
+## Sides
 
-The preferred side of the trigger to render against when open (e.g., `top`, `bottom`, `left`, `right`).
+The `Tooltip` component can be displayed to any side of the trigger element. If there isn't any room to display the tooltip on the preferred side, the tooltip will instead be displayed on the opposite side. Using the `side` prop, the `Tooltip` component supports `top`, `bottom`, `left` and `right` sides.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <TooltipProvider>
       <ButtonLayout orientation="vertical">
-      <Tooltip
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button theme="default">Top side</Button>
-      </Tooltip>
-      <Tooltip
-        side="bottom"
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button theme="default">Bottom side</Button>
-      </Tooltip>
-      <Tooltip
-        side="right"
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button theme="default">Right side</Button>
-      </Tooltip>
-      <Tooltip
-        side="left"
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button theme="default">Left side</Button>
-      </Tooltip>
+        <Tooltip
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Top side</Button>
+        </Tooltip>
+
+        <Tooltip
+          side="bottom"
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Bottom side</Button>
+        </Tooltip>
+
+        <Tooltip
+          side="right"
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Right side</Button>
+        </Tooltip>
+
+        <Tooltip
+          side="left"
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Left side</Button>
+        </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
-  `}
+
+`}
 />
 
-## Tooltip `align` configuration
+## Alignment
 
-Specifies the alignment of the tooltip in relation to the anchor or trigger component (e.g., `start`, `center`, `end`).
+The `Tooltip` component can be aligned relative to the anchor or trigger element using the `align` prop. It supports `start`, `center`, and `end` values. This controls how the tooltip is positioned along the side it appears on.
 
 <DocsPage.ComponentExample
   client:only
@@ -107,21 +111,21 @@ Specifies the alignment of the tooltip in relation to the anchor or trigger comp
         title="Full-Stack Development"
         content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
       >
-        <Button theme="default">Center align</Button>
+        <Button>Center align</Button>
       </Tooltip>
       <Tooltip
         align="start"
         title="Full-Stack Development"
         content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
       >
-        <Button theme="default">Start align</Button>
+        <Button>Start align</Button>
       </Tooltip>
       <Tooltip
         align="end"
         title="Full-Stack Development"
         content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
       >
-        <Button theme="default">End align</Button>
+        <Button>End align</Button>
       </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
@@ -154,7 +158,6 @@ The provider component that manages tooltips. Typically wrapped around the entir
       description: "Content to display in the tooltip.",
       required: true,
       value: "ReactNode",
-      defaultValue: "undefined",
     },
     {
       name: "title",
@@ -190,7 +193,7 @@ The provider component that manages tooltips. Typically wrapped around the entir
         "Delay in ms between hovering/focusing the item and showing the tooltip.",
       required: false,
       value: "number",
-      defaultValue: "700",
+      defaultValue: "500",
     },
     {
       name: "children",

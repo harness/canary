@@ -22,6 +22,8 @@
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
+    "compareBranchesToSeeChanges": "Compare branches to see your changes.",
+    "afterComparingOpenPullRequest": "After comparing changes, you may open a pull request to contribute your changes upstream.",
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",

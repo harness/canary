@@ -86,7 +86,7 @@ export const SplitButton = <T extends string>({
           className={cn(buttonVariants({ theme, variant }), 'cn-button-split-dropdown')}
           disabled={disabled || loading}
         >
-          <Icon name="chevron-down" size={12} className="chevron-down" />
+          <Icon name="chevron-down" size={14} className="chevron-down" />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
           {selectedValue ? (

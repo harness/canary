@@ -95,12 +95,12 @@ export const Summary = ({
                 </div>
               </Table.Cell>
               <Table.Cell>
-                <Text color="tertiaryBackground" className="line-clamp-1">
+                <Text color="foreground-3" className="line-clamp-1">
                   {file.lastCommitMessage}
                 </Text>
               </Table.Cell>
               <Table.Cell className="text-right">
-                <Text color="tertiaryBackground" wrap="nowrap">
+                <Text color="foreground-3" wrap="nowrap" align="right">
                   {timeAgo(file.timestamp, { dateStyle: 'medium' })}
                 </Text>
               </Table.Cell>

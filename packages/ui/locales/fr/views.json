@@ -2,7 +2,6 @@
   "repos": {
     "create-new-file-no-plus": "Créer un nouveau fichier",
     "upload-files": "Télécharger des fichiers",
-    "search": "Rechercher",
     "summary": "Résumé",
     "files": "Fichiers",
     "pipelines": "Pipelines",
@@ -17,6 +16,7 @@
     "saving": "Enregistrement...",
     "save": "Enregistrer",
     "cancel": "Annuler",
+    "search": "Rechercher",
     "general": "Général",
     "details": "Details",
     "executions": "Executions",
@@ -215,8 +215,42 @@
     "clone": "Cloner",
     "addFile": "Ajouter un fichier"
   },
+  "search": "Rechercher",
+  "connectors": {
+    "connector": "Connecteur",
+    "viewConnectorDetails": "Voir les détails du connecteur",
+    "status": "Status",
+    "viewDocumentation": "Voir la documentation",
+    "activity": "Activité",
+    "time": "Heure",
+    "success": "Succès",
+    "failure": "Échec",
+    "delete": "Supprimer",
+    "configuration": "Configuration",
+    "references": "Références",
+    "activityHistory": "Historique des activités",
+    "sort": {
+      "lastModifiedAt": "Last modified",
+      "createdAt": "Created",
+      "name": "Name"
+    },
+    "createNew": "Créer un nouveau connecteur",
+    "errorEncountered": "Erreur rencontrée",
+    "viewDetails": "Voir les détails",
+    "id": "ID du connecteur",
+    "connectivityStatus": "État de la connexion",
+    "updated": "Dernière mise à jour",
+    "filterOptions": {
+      "statusOption": {
+        "success": "Succès",
+        "failure": "Échec",
+        "label": "Statut",
+        "favorite": "Favorites"
+      }
+    },
+    "created": "Créé"
+  },
   "noData": {
-    "noResults": "Aucun résultat de recherche",
     "noActivities": "Aucune activité disponible",
     "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
     "errorApiTitle": "Échec du chargement de {{type}}",
@@ -225,6 +259,7 @@
     "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
     "noConnectors": "Aucun connecteur pour le moment",
     "noDelegates": "There are no delegates in this project yet.",
+    "noResults": "Aucun résultat de recherche",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
     "clearSearch": "Effacer la recherche",
@@ -269,41 +304,6 @@
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "search": "Rechercher",
-  "connectors": {
-    "connector": "Connecteur",
-    "viewConnectorDetails": "Voir les détails du connecteur",
-    "status": "Status",
-    "viewDocumentation": "Voir la documentation",
-    "activity": "Activité",
-    "time": "Heure",
-    "success": "Succès",
-    "failure": "Échec",
-    "delete": "Supprimer",
-    "configuration": "Configuration",
-    "references": "Références",
-    "activityHistory": "Historique des activités",
-    "sort": {
-      "lastModifiedAt": "Last modified",
-      "createdAt": "Created",
-      "name": "Name"
-    },
-    "createNew": "Créer un nouveau connecteur",
-    "errorEncountered": "Erreur rencontrée",
-    "viewDetails": "Voir les détails",
-    "id": "ID du connecteur",
-    "connectivityStatus": "État de la connexion",
-    "updated": "Dernière mise à jour",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Succès",
-        "failure": "Échec",
-        "label": "Statut",
-        "favorite": "Favorites"
-      }
-    },
-    "created": "Créé"
   },
   "notFound": {
     "button": "Recharger la page",

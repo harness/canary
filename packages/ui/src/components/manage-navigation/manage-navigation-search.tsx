@@ -116,14 +116,16 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
               aria-hidden
             />
             {countFilteredItems === 0 ? (
-              <Text className="block w-full px-2 py-4 text-cn-foreground-3">No results found</Text>
+              <Text className="px-2 py-4" color="foreground-3">
+                No results found
+              </Text>
             ) : (
               filteredItems.map((category, index) => (
                 <div
                   className={cn(index > 0 ? 'border-cn-borders-4 mt-0.5 border-t pt-2' : 'pt-1')}
                   key={`category-${category.groupId}-${index}`}
                 >
-                  <Text className="inline-block px-2 leading-none text-cn-foreground-3" size={1}>
+                  <Text variant="heading-small" color="foreground-3">
                     {category.title}
                   </Text>
                   <div className="mt-2.5 flex flex-col">
@@ -135,7 +137,9 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
                         onClick={() => handleItemClick(item)}
                       >
                         <div className="flex w-full items-center gap-x-2">
-                          <Text className="truncate leading-tight text-cn-foreground-1">{item.title}</Text>
+                          <Text color="foreground-1" truncate>
+                            {item.title}
+                          </Text>
                         </div>
                       </Button>
                     ))}

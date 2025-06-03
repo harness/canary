@@ -13,7 +13,7 @@ import { DocsPage } from "@/components/docs-page";
   code={`<div className="w-[600px] grid gap-4">
     <Progress value={0.75} state='processing' showPercentage />
 </div>`}
-  />
+/>
 
 ## Usage
 
@@ -34,7 +34,6 @@ The `Progress` component supports several variants to indicate the current progr
 - `default`: Indicates the default progress.
 - `indeterminate`: Indicates that the progress is ongoing but the exact progress is unknown.
 
-
 <DocsPage.ComponentExample
   client:only
   code={`<div className="w-[600px] grid gap-4">
@@ -54,6 +53,7 @@ The `Progress` component supports several variants to indicate the current progr
         variant='indeterminate'
       />
     </div>
+
 </div>`}
 />
 
@@ -97,7 +97,7 @@ The `Progress` component supports several states to indicate the current progres
 
     <div>
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">failed:</Text>
-      <Progress 
+      <Progress
         value={0.5}
         label='Analytics_Report_March.csv'
         subtitle='Failed'
@@ -128,6 +128,7 @@ The `Progress` component supports several states to indicate the current progres
         showIcon
       />
     </div>
+
 </div>`}
 />
 
@@ -182,84 +183,89 @@ The `Progress` component supports several sizes to indicate the current progress
     <Progress size='sm' value={0.75} state='processing' showPercentage />
     <Progress size='default' value={0.75} state='processing' showPercentage />
     <Progress size='md' value={0.75} state='processing' showPercentage />
+
   </div>`}
 />
-
 
 ## API Reference
 
 <DocsPage.PropsTable
-props={[
-  {
-    name: "variant",
-    description: "Type of progress. Use 'default' for determinate progress or 'indeterminate' for loading state.",
-    required: false,
-    defaultValue: "'default'",
-    value: "'default' | 'indeterminate'",
-  },
-  {
-    name: "value",
-    description: "Progress value from 0 to 1. Required when variant is 'default'.",
-    required: false,
-    value: "number from 0 to 1.",
-  },
-  {
-    name: "state",
-    description: "Visual state of the progress. Affects styling and optional icon.",
-    required: false,
-    defaultValue: "'default'",
-    value: "'default' | 'processing' | 'completed' | 'paused' | 'failed'",
-  },
-  {
-    name: "size",
-    description: "Size of the progress component.",
-    required: false,
-    defaultValue: "'default'",
-    value: "'sm' | 'default' | 'md'",
-  },
-  {
-    name: "label",
-    description: "Primary label displayed above the progress bar.",
-    required: false,
-    value: "string",
-  },
-  {
-    name: "description",
-    description: "Additional description shown below the progress bar.",
-    required: false,
-    value: "string",
-  },
-  {
-    name: "subtitle",
-    description: "Secondary subtitle shown below the description.",
-    required: false,
-    value: "string",
-  },
-  {
-    name: "showPercentage",
-    description: "If true, displays the progress percentage next to the label.",
-    required: false,
-    defaultValue: "false",
-    value: "boolean",
-  },
-  {
-    name: "showIcon",
-    description: "If true, displays a status icon depending on the state.",
-    required: false,
-    defaultValue: "false",
-    value: "boolean",
-  },
-  {
-    name: "id",
-    description: "Custom ID for the progress element. Auto-generated if not provided.",
-    required: false,
-    value: "string",
-  },
-  {
-    name: "className",
-    description: "Additional class names to apply to the root container.",
-    required: false,
-    value: "string",
-  }
-]}
+  props={[
+    {
+      name: "variant",
+      description:
+        "Type of progress. Use 'default' for determinate progress or 'indeterminate' for loading state.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'indeterminate'",
+    },
+    {
+      name: "value",
+      description:
+        "Progress value from 0 to 1. Required when variant is 'default'.",
+      required: false,
+      value: "number from 0 to 1.",
+    },
+    {
+      name: "state",
+      description:
+        "Visual state of the progress. Affects styling and optional icon.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'processing' | 'completed' | 'paused' | 'failed'",
+    },
+    {
+      name: "size",
+      description: "Size of the progress component.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'sm' | 'default' | 'md'",
+    },
+    {
+      name: "label",
+      description: "Primary label displayed above the progress bar.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Additional description shown below the progress bar.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "subtitle",
+      description: "Secondary subtitle shown below the description.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "showPercentage",
+      description:
+        "If true, displays the progress percentage next to the label.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "showIcon",
+      description: "If true, displays a status icon depending on the state.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "id",
+      description:
+        "Custom ID for the progress element. Auto-generated if not provided.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the root container.",
+      required: false,
+      value: "string",
+    },
+  ]}
 />

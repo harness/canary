@@ -16,7 +16,6 @@ import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { sortFilesByType } from '../../utils/common-utils'
 import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
@@ -114,7 +113,7 @@ export const RepoCode = () => {
                     : SummaryItemType.File,
                   name: getLastPathSegment(item?.path || '') || '',
                   lastCommitMessage: item?.last_commit?.message || '',
-                  timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                  timestamp: item?.last_commit?.author?.when ?? '',
                   user: { name: item?.last_commit?.author?.identity?.name || '' },
                   sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
                   path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${item?.path}`
@@ -138,7 +137,7 @@ export const RepoCode = () => {
         name: author?.identity?.name || ''
       },
       lastCommitMessage: message || '',
-      timestamp: author?.when ? timeAgoFromISOTime(author.when) : '',
+      timestamp: author?.when ?? '',
       sha: sha && sha
     }
   }, [repoDetails?.latest_commit])

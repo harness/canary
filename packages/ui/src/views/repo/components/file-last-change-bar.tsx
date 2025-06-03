@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import { LatestFileTypes } from '@/views'
 
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
@@ -24,7 +25,7 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
     <div className="flex items-center gap-2">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
       <span className="border-cn-borders-2 h-3 border-l" />
-      <span className="text-cn-foreground-3 text-sm">{timestamp}</span>
+      <span className="text-cn-foreground-3 text-sm">{timeAgo(timestamp, { dateStyle: 'medium' })}</span>
     </div>
   )
 }

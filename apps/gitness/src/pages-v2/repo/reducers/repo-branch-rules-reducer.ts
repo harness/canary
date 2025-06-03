@@ -31,9 +31,7 @@ export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction):
         rule.id === action.ruleId
           ? {
               ...rule,
-              selectOptions: rule.selectOptions.includes(action.checkName)
-                ? rule.selectOptions.filter((option: string) => option !== action.checkName)
-                : [...rule.selectOptions, action.checkName]
+              selectOptions: action.selectedOptions
             }
           : rule
       )

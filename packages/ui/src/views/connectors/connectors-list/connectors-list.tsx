@@ -34,7 +34,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
   return isSuccess ? (
     <div className="flex items-center gap-2">
       <Icon name="dot" size={8} className="text-icons-success" />
-      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
         {t('views:connectors.success', 'Success')}
       </Text>
     </div>
@@ -44,7 +44,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
         <Tooltip.Trigger asChild>
           <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
             <Icon name="dot" size={8} className="text-icons-danger" />
-            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
               {t('views:connectors.failure', 'Failed')}
             </Text>
           </Button>

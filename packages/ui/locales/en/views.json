@@ -2,7 +2,6 @@
   "repos": {
     "create-new-file-no-plus": "Create new file",
     "upload-files": "Upload files",
-    "search": "Search",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
@@ -17,6 +16,7 @@
     "saving": "Saving…",
     "save": "Save",
     "cancel": "Cancel",
+    "search": "Search",
     "general": "General",
     "details": "Details",
     "executions": "Executions",
@@ -223,8 +223,42 @@
     "clone": "Clone",
     "addFile": "Add file"
   },
+  "search": "Search",
+  "connectors": {
+    "connector": "Connector",
+    "viewConnectorDetails": "View Connector Details",
+    "status": "Status",
+    "viewDocumentation": "View Documentation",
+    "activity": "Activity",
+    "time": "Time",
+    "success": "Success",
+    "failure": "Failed",
+    "delete": "Delete",
+    "configuration": "Configuration",
+    "references": "References",
+    "activityHistory": "Activity history",
+    "sort": {
+      "lastModifiedAt": "Last modified",
+      "createdAt": "Created",
+      "name": "Name"
+    },
+    "createNew": "Create new connector",
+    "errorEncountered": "Error Encountered",
+    "viewDetails": "View Details",
+    "id": "Connector ID",
+    "connectivityStatus": "Connectivity status",
+    "updated": "Last updated",
+    "filterOptions": {
+      "statusOption": {
+        "success": "Success",
+        "failure": "Failure",
+        "label": "Status",
+        "favorite": "Favorites"
+      }
+    },
+    "created": "Created"
+  },
   "noData": {
-    "noResults": "No search results",
     "noActivities": "No activities yet",
     "noActivitiesDescription": "There are no activities yet. ",
     "errorApiTitle": "Failed to load {{type}}",
@@ -233,6 +267,7 @@
     "noEntitiesDescription": "There are no entities yet. ",
     "noConnectors": "No connectors yet",
     "noDelegates": "There are no delegates in this project yet.",
+    "noResults": "No search results",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",
@@ -278,41 +313,6 @@
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "search": "Search",
-  "connectors": {
-    "connector": "Connector",
-    "viewConnectorDetails": "View Connector Details",
-    "status": "Status",
-    "viewDocumentation": "View Documentation",
-    "activity": "Activity",
-    "time": "Time",
-    "success": "Success",
-    "failure": "Failed",
-    "delete": "Delete",
-    "configuration": "Configuration",
-    "references": "References",
-    "activityHistory": "Activity history",
-    "sort": {
-      "lastModifiedAt": "Last modified",
-      "createdAt": "Created",
-      "name": "Name"
-    },
-    "createNew": "Create new connector",
-    "errorEncountered": "Error Encountered",
-    "viewDetails": "View Details",
-    "id": "Connector ID",
-    "connectivityStatus": "Connectivity status",
-    "updated": "Last updated",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Success",
-        "failure": "Failure",
-        "label": "Status",
-        "favorite": "Favorites"
-      }
-    },
-    "created": "Created"
   },
   "notFound": {
     "button": "Reload page",

@@ -64,9 +64,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
 
   return (
     <Fieldset className="gap-y-6">
-      <Text size={13} weight="medium">
-        {t('views:repos.security', 'Security')}
-      </Text>
+      <Text variant="heading-subsection">{t('views:repos.security', 'Security')}</Text>
       {isLoadingSecuritySettings ? (
         <SkeletonForm linesCount={2} />
       ) : (
@@ -92,9 +90,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
       {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
         <>
           <Spacer size={2} />
-          <Text size={1} className="text-cn-foreground-danger">
-            {apiError.message}
-          </Text>
+          <Text color="danger">{apiError.message}</Text>
         </>
       )}
     </Fieldset>

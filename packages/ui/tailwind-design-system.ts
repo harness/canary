@@ -21,7 +21,7 @@ import {
   labelStyles,
   linkStyles,
   modalDialogStyles,
-  multiSelectV2Styles,
+  multiSelectStyles,
   paginationStyles,
   radioStyles,
   scrollAreaStyles,
@@ -58,11 +58,11 @@ export default {
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
+          disabled: 'var(--cn-state-disabled-text)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
-          disabled: 'var(--cn-state-disabled-text)',
           4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
@@ -466,7 +466,7 @@ export default {
         textareaStyles,
         inputStyles,
         captionStyles,
-        multiSelectV2Styles
+        multiSelectStyles
       ])
     }),
     tailwindcssAnimate,

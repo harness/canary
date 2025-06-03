@@ -30,5 +30,5 @@ export enum FilterStatus {
 
 export interface FilterRefType<T> {
   getValues: () => T
-  reset: () => void
+  reset: (filters?: string[]) => void
 }

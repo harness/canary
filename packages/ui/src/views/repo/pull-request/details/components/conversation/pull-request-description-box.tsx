@@ -95,9 +95,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 setComment={setComment}
               />
             ) : (
-              <Text size={2} color="primary">
-                {description && <MarkdownViewer source={description} />}
-              </Text>
+              <Text color="foreground-1">{description && <MarkdownViewer source={description} />}</Text>
             )}
             {!edit && <div className="float-right">{moreTooltip()}</div>}
           </div>

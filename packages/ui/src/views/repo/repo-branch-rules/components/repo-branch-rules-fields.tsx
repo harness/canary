@@ -12,7 +12,7 @@ import {
   Message,
   MessageTheme,
   MultiSelect,
-  MultiSelectV2,
+  MultiSelectOption,
   SplitButton,
   StackedList,
   Switch
@@ -192,7 +192,7 @@ export const BranchSettingsRuleBypassListField: FC<
 > = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
   const { t } = useTranslation()
 
-  const multiSelectOptions: MultiSelectV2.MultiSelectOption[] = useMemo(() => {
+  const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
         id: option.id!,
@@ -237,7 +237,7 @@ export const BranchSettingsRuleListField: FC<{
   recentStatusChecks?: string[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (ruleId: string, check: string) => void
+  handleSelectChangeForRule: (ruleId: string, checks: string[]) => void
   handleInputChange: (ruleId: string, value: string) => void
 }> = ({
   rules,
@@ -283,13 +283,18 @@ export const BranchSettingsRuleListField: FC<{
               )}
 
               {!!rule?.hasSelect && isChecked && (
-                <MultiSelect
-                  className="pl-[26px]"
-                  selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
-                  placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                  handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
-                  options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}
-                />
+                <div className="pl-[26px]">
+                  <MultiSelect
+                    value={rules[index].selectOptions.map(option => ({ id: option, key: option }))}
+                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                    onChange={options => {
+                      const selectedKeys = options.map(option => option.key)
+                      handleSelectChangeForRule(rule.id, selectedKeys)
+                    }}
+                    options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
+                    disallowCreation
+                  />
+                </div>
               )}
 
               {!!rule?.hasInput && isChecked && (

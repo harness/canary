@@ -199,7 +199,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
                   error={errors.tags?.message?.toString()}
                 />
               </Fieldset>
-              <Text size={4}>{t('views:delegates.testDelegate', 'Test Delegate connectivity')}</Text>
+              <Text variant="heading-base">{t('views:delegates.testDelegate', 'Test Delegate connectivity')}</Text>
               <p>
                 {t('views:delegates.delegateMatches', 'Matches: ')}
                 {matchedDelegates}

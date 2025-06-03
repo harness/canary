@@ -45,12 +45,12 @@ export const SidebarItem = ({
   const dropdownItems = isRecent ? (
     <>
       <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
-        <Text size={2} truncate color="inherit">
+        <Text truncate color="inherit">
           {t('component:navbar.pin', 'Pin')}
         </Text>
       </DropdownMenu.Item>
       <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleRemoveRecent}>
-        <Text size={2} truncate color="inherit">
+        <Text truncate color="inherit">
           {t('component:navbar.remove', 'Remove')}
         </Text>
       </DropdownMenu.Item>
@@ -58,14 +58,14 @@ export const SidebarItem = ({
   ) : (
     <>
       <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleCustomNav}>
-        <Text size={2} truncate color="inherit">
+        <Text truncate color="inherit">
           {t('component:navbar.reorder', 'Reorder')}
         </Text>
       </DropdownMenu.Item>
 
       {!item.permanentlyPinned && (
         <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
-          <Text size={2} truncate color="inherit">
+          <Text truncate color="inherit">
             {t('component:navbar.unpin', 'Unpin')}
           </Text>
         </DropdownMenu.Item>

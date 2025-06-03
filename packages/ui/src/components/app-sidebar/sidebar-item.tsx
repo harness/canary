@@ -1,8 +1,5 @@
-import { DropdownMenu, Icon, IconProps, Sidebar, Text, useSidebar } from '@/components'
+import { DropdownMenu, Icon, IconProps, Sidebar, useSidebar } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-
-const dropdownItemClassNames =
-  'text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1'
 
 interface NavbarItemType {
   id: number | string
@@ -44,48 +41,14 @@ export const SidebarItem = ({
 
   const dropdownItems = isRecent ? (
     <>
-      <DropdownMenu.Item
-        className={dropdownItemClassNames}
-        onSelect={handlePin}
-        title={
-          <Text truncate color="inherit">
-            {t('component:navbar.pin', 'Pin')}
-          </Text>
-        }
-      />
-
-      <DropdownMenu.Item
-        className={dropdownItemClassNames}
-        onSelect={handleRemoveRecent}
-        title={
-          <Text truncate color="inherit">
-            {t('component:navbar.remove', 'Remove')}
-          </Text>
-        }
-      />
+      <DropdownMenu.Item onSelect={handlePin} title={t('component:navbar.pin', 'Pin')} />
+      <DropdownMenu.Item onSelect={handleRemoveRecent} title={t('component:navbar.remove', 'Remove')} />
     </>
   ) : (
     <>
-      <DropdownMenu.Item
-        className={dropdownItemClassNames}
-        onSelect={handleCustomNav}
-        title={
-          <Text truncate color="inherit">
-            {t('component:navbar.reorder', 'Reorder')}
-          </Text>
-        }
-      />
-
+      <DropdownMenu.Item onSelect={handleCustomNav} title={t('component:navbar.reorder', 'Reorder')} />
       {!item.permanentlyPinned && (
-        <DropdownMenu.Item
-          className={dropdownItemClassNames}
-          onSelect={handlePin}
-          title={
-            <Text truncate color="inherit">
-              {t('component:navbar.unpin', 'Unpin')}
-            </Text>
-          }
-        />
+        <DropdownMenu.Item onSelect={handlePin} title={t('component:navbar.unpin', 'Unpin')} />
       )}
     </>
   )
@@ -107,16 +70,11 @@ export const SidebarItem = ({
       {!collapsed && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
-            <Sidebar.MenuAction className="right-[3px] text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
+            <Sidebar.MenuAction className="text-sidebar-icon-3 hover:text-sidebar-icon-1 right-[3px]" showOnHover>
               <Icon name="menu-dots" size={12} />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content
-            className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
-            align="end"
-            sideOffset={3}
-            alignOffset={4}
-          >
+          <DropdownMenu.Content align="end" sideOffset={3} alignOffset={4}>
             {dropdownItems}
           </DropdownMenu.Content>
         </DropdownMenu.Root>

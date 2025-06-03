@@ -111,7 +111,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       </DropdownMenu.Header>
 
       {filteredItems.length === 0 && (
-        <div className="px-5 py-4 text-center">
+        <DropdownMenu.Slot className="px-5 py-4 text-center">
           {isFilesPage && activeTab === BranchSelectorTab.BRANCHES ? (
             <div className="w-full overflow-hidden">
               <Button
@@ -125,11 +125,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               </Button>
             </div>
           ) : (
-            <span className="text-14 text-cn-foreground-2 leading-tight">
+            <span className="text-14 leading-tight text-cn-foreground-2">
               {t('views:noData.noResults', 'No search results')}
             </span>
           )}
-        </div>
+        </DropdownMenu.Slot>
       )}
 
       {!!filteredItems.length &&

@@ -26,7 +26,6 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
           icon="plus"
           title="Add Serial Stages Group"
           key={`add-${YamlEntityType.SerialStageGroup}-before`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.SerialStageGroup)
           }}
@@ -36,7 +35,6 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
           icon="plus"
           title="Add Parallel Stages Group"
           key={`add-${YamlEntityType.ParallelStageGroup}-before`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.ParallelStageGroup)
           }}

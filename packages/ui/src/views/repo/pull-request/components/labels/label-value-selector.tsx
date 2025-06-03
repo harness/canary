@@ -121,22 +121,16 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
       {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
 
       {isAllowAddNewValue && !!label?.isCustom && (
-        <>
-          <span className="text-cn-foreground-2 px-2 pb-1.5 pt-1 leading-[1.125rem]">
-            {t('views:pullRequests.addValue', 'Add new value')}
-          </span>
-
+        <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
             onSelect={handleAddNewValue}
             title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />}
           />
-        </>
+        </DropdownMenu.Group>
       )}
 
       {!values.length && !label?.isCustom && (
-        <span className="text-cn-foreground-2 block flex-none gap-x-5 px-2 py-[7px]">
-          {t('views:pullRequests.labelNotFound', 'Label not found')}
-        </span>
+        <DropdownMenu.NoOptions>{t('views:pullRequests.labelNotFound', 'Label not found')}</DropdownMenu.NoOptions>
       )}
     </DropdownMenu.Content>
   )

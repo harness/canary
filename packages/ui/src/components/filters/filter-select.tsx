@@ -32,8 +32,8 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">{displayLabel}</DropdownMenu.Trigger>
-      <DropdownMenu.Content className="min-w-[224px]" align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
-        <div className="border-cn-borders-4 flex items-center border-b px-3 py-2.5">
+      <DropdownMenu.Content align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
+        <DropdownMenu.Header>
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -55,17 +55,13 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
               </Button>
             }
           />
-        </div>
+        </DropdownMenu.Header>
 
         {filteredBySearchOptions.map(option => (
           <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)} title={option.label} />
         ))}
 
-        {filteredBySearchOptions.length === 0 && (
-          <div className="flex items-center justify-center p-4">
-            <span className="text-2 leading-none text-cn-foreground-2">No results</span>
-          </div>
-        )}
+        {filteredBySearchOptions.length === 0 && <DropdownMenu.NoOptions>No results</DropdownMenu.NoOptions>}
 
         {onReset && (
           <DropdownMenu.Footer title={buttonLabel} onClick={onReset}>

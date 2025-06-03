@@ -25,6 +25,7 @@ It can be composed with several subcomponents such as `DropdownMenu.Root`, `Drop
     <DropdownMenu.Content>
         <DropdownMenu.Item title="Item title" />
         <DropdownMenu.Item title="With description" description="Item description" />
+        <DropdownMenu.Separator />
         <DropdownMenu.Item title="With label" label="Label" />
         <DropdownMenu.Item title="With checkmark" checkmark />
         <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
@@ -261,9 +262,6 @@ The `DropdownMenu` component supports radio items using the `DropdownMenu.RadioI
   client:only
   code={`() => {
   const [selectedOption, setSelectedOption] = React.useState('option5');
-  const handleValueChange = (value) => {
-    setSelectedOption(value);
-  };
 
 return (
 
@@ -275,7 +273,7 @@ return (
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
-      <DropdownMenu.RadioGroup label="Group 2" value={selectedOption} onValueChange={handleValueChange}>
+      <DropdownMenu.RadioGroup label="Group 2" value={selectedOption} onValueChange={setSelectedOption}>
         <DropdownMenu.RadioItem value="option4" title="Default" />
         <DropdownMenu.RadioItem value="option5" title="Checked" />
         <DropdownMenu.RadioItem value="option6" title="Disabled" disabled />
@@ -367,7 +365,6 @@ The `DropdownMenu` component supports indicator items using the `DropdownMenu.In
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content >
-      {/* <ScrollArea> */}
         <DropdownMenu.IndicatorItem color="gray" title="Gray" />
         <DropdownMenu.IndicatorItem color="green" title="Green" />
         <DropdownMenu.IndicatorItem color="red" title="Red" />
@@ -394,10 +391,74 @@ The `DropdownMenu` component supports indicator items using the `DropdownMenu.In
         <DropdownMenu.IndicatorItem color="orange" title="Orange pulse" pulse />
         <DropdownMenu.IndicatorItem color="pink" title="Pink pulse" pulse />
         <DropdownMenu.IndicatorItem color="violet" title="Violet pulse" pulse />
-      {/* </ScrollArea> */}
 
   </DropdownMenu.Content>
 </DropdownMenu.Root>`}
+/>
+
+## Spinner
+
+The `DropdownMenu` component supports loading states using the `DropdownMenu.Spinner` component. This is useful when the dropdown content is being loaded asynchronously.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+      <Button variant="ghost" iconOnly>
+        <Icon name="menu-dots" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+        <DropdownMenu.Spinner />
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>`}
+/>
+
+## No Options
+
+The `DropdownMenu` component supports empty states using the `DropdownMenu.NoOptions` component. This is useful when there are no items to display in the dropdown menu.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+      <Button variant="ghost" iconOnly>
+        <Icon name="menu-dots" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+        <DropdownMenu.NoOptions />
+        <DropdownMenu.Separator />
+        <DropdownMenu.NoOptions>Custom 'No options' message</DropdownMenu.NoOptions>
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>`}
+/>
+
+## Slot
+
+The `DropdownMenu.Slot` component provides a simple wrapper for custom content within the dropdown menu. This is useful for adding custom components or layouts that don't fit the standard item patterns.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+    <DropdownMenu.Trigger aria-label="options menu" asChild>
+      <Button variant="ghost" iconOnly>
+        <Icon name="menu-dots" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+      <DropdownMenu.Item title="Standard Item" />
+      <DropdownMenu.Separator />
+      <DropdownMenu.Slot className="p-2">
+          <div className="flex items-center gap-2">
+              <Icon name="star" />
+              <Text>Custom content in slot</Text>
+          </div>
+      </DropdownMenu.Slot>
+      <DropdownMenu.Separator />
+      <DropdownMenu.Item title="Another Item" />
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>`}
 />
 
 ## API Reference
@@ -1404,6 +1465,94 @@ The `IndicatorItem` component is a specialized item that displays a color indica
     {
       name: "children",
       description: "Nested items for creating a submenu",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Spinner`
+
+The `Spinner` component displays a loading indicator within the dropdown menu.
+
+```typescript jsx
+<DropdownMenu.Spinner
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Optional children content */}
+</DropdownMenu.Spinner>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Optional content to display alongside the spinner",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `NoOptions`
+
+The `NoOptions` component displays a message when there are no menu items available.
+
+```typescript jsx
+<DropdownMenu.NoOptions
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Custom message - defaults to "No options available" */}
+</DropdownMenu.NoOptions>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Custom message text",
+      required: false,
+      value: "ReactNode",
+      defaultValue: '"No options available"',
+    },
+  ]}
+/>
+
+### `Slot`
+
+The `Slot` component provides a flexible container for custom content within the dropdown menu.
+
+```typescript jsx
+<DropdownMenu.Slot
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Custom content */}
+</DropdownMenu.Slot>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Custom content to display",
       required: false,
       value: "ReactNode",
     },

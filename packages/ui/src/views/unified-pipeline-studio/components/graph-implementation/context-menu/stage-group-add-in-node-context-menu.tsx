@@ -26,7 +26,6 @@ export const StageGroupAddInNodeContextMenu = () => {
           icon="plus"
           title="Add Stage"
           key={`add-${YamlEntityType.Stage}`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.Stage)
           }}
@@ -36,7 +35,6 @@ export const StageGroupAddInNodeContextMenu = () => {
           icon="plus"
           title="Add Serial group"
           key={`add-${YamlEntityType.SerialStageGroup}`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.SerialStageGroup)
           }}
@@ -45,7 +43,6 @@ export const StageGroupAddInNodeContextMenu = () => {
           icon="plus"
           title="Add Parallel group"
           key={`add-${YamlEntityType.ParallelStageGroup}`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.ParallelStageGroup)
           }}

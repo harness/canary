@@ -84,7 +84,7 @@ export const SplitButton = <T extends string>({
         >
           <Icon name="chevron-down" size={14} className="chevron-down" />
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className={cn('mt-1 max-w-80 flex', dropdownContentClassName)} align="end">
+        <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
           {selectedValue ? (
             <DropdownMenu.RadioGroup value={String(selectedValue)}>
               {options.map(option => (
@@ -105,7 +105,6 @@ export const SplitButton = <T extends string>({
                   title={option.label}
                   description={option.description}
                   key={String(option.value)}
-                  className="px-3 py-2.5"
                   onClick={() => handleOptionChange(option.value)}
                   disabled={loading || option.disabled}
                 />

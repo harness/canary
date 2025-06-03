@@ -30,11 +30,10 @@ export const StageFloatingAddNodeContextMenu = ({
           icon="plus"
           title="Add stage"
           key="add-before"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.Stage)
           }}
-        ></DropdownMenu.IconItem>
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

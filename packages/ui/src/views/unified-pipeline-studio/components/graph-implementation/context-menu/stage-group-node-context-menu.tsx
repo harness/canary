@@ -27,7 +27,6 @@ export const StageGroupNodeContextMenu = () => {
           icon="edit-pen"
           title="Edit"
           key="edit"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onEditIntention(contextMenuData.nodeData)
           }}
@@ -37,7 +36,6 @@ export const StageGroupNodeContextMenu = () => {
           icon="plus"
           title="Add Serial Stages Group before"
           key={`add-${YamlEntityType.SerialStageGroup}-before`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.SerialStageGroup)
           }}
@@ -46,7 +44,6 @@ export const StageGroupNodeContextMenu = () => {
           icon="plus"
           title="Add Serial Stages Group after"
           key={`add-${YamlEntityType.SerialStageGroup}-after`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.SerialStageGroup)
           }}
@@ -56,7 +53,6 @@ export const StageGroupNodeContextMenu = () => {
           icon="plus"
           title="Add Parallel Stages Group before"
           key={`add-${YamlEntityType.ParallelStageGroup}-before`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.ParallelStageGroup)
           }}
@@ -65,7 +61,6 @@ export const StageGroupNodeContextMenu = () => {
           icon="plus"
           title="Add Parallel Stages Group after"
           key={`add-${YamlEntityType.ParallelStageGroup}-after`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.ParallelStageGroup)
           }}
@@ -75,7 +70,6 @@ export const StageGroupNodeContextMenu = () => {
           icon="trash"
           title="Delete"
           key="delete"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onDeleteIntention(contextMenuData.nodeData)
           }}

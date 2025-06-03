@@ -27,7 +27,6 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           icon="edit-pen"
           title="Edit"
           key="edit"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onEditIntention(contextMenuData.nodeData)
           }}
@@ -37,7 +36,6 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           icon="plus"
           title="Add stage before"
           key="add-before"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.Stage)
           }}
@@ -46,7 +44,6 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           icon="plus"
           title="Add stage after"
           key="add-after"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.Stage)
           }}
@@ -56,7 +53,6 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           icon="trash"
           title="Delete"
           key="delete"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onDeleteIntention(contextMenuData.nodeData)
           }}

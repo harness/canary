@@ -12,9 +12,13 @@
       "$type": "sizing",
       "$value": "{size.9}"
     },
-    "radius": {
+    "radius-top": {
       "$type": "borderRadius",
       "$value": "{rounded.3}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     }
   }
 }

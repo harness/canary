@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Button, CounterBadge, DropdownMenu, Icon, IconProps, Spacer, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -66,7 +67,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!timestamp?.length && (
           <>
             <Spacer size={2} />
-            <span className="text-2 text-cn-foreground-2">Created {timestamp}</span>
+            <span className="text-2 text-cn-foreground-2">Created {timeAgo(timestamp, { dateStyle: 'medium' })}</span>
           </>
         )}
         <Spacer size={3} />

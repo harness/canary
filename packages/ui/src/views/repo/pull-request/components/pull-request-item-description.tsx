@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Icon, Tag } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 
 interface PullRequestItemDescriptionProps {
   number: number
@@ -27,13 +28,13 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
 
   return (
-    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-2 text-cn-foreground-2">
+    <div className="text-2 text-cn-foreground-2 inline-flex max-w-full items-center gap-1.5 pl-[22px]">
       <p>
-        {`#${number}`} opened {timestamp} by{' '}
+        {`#${number}`} opened {timeAgo(timestamp, { dateStyle: 'medium' })} by{' '}
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
       </p>
 
-      <span className="pointer-events-none h-3.5 w-px bg-cn-background-3" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
 
       <p>{reviewRequired ? 'Review required' : 'Draft'}</p>
 
@@ -46,7 +47,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           </p>
         </div>
       )}
-      <span className="pointer-events-none h-3.5 w-px bg-cn-background-3" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
 
       {sourceBranch && (
         <>

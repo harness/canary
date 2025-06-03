@@ -1,5 +1,6 @@
 import { Icon, Spacer, Table, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -58,10 +59,10 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'absolute left-0 border-l-2 border-cn-borders-warning'
+                        ? 'border-cn-borders-warning absolute left-0 border-l-2'
                         : file.status === FileStatus.MEDIUM_RISK
-                          ? 'absolute left-0 border-l-2 border-cn-borders-warning'
-                          : 'absolute left-0 border-l-2 border-cn-borders-danger'
+                          ? 'border-cn-borders-warning absolute left-0 border-l-2'
+                          : 'border-cn-borders-danger absolute left-0 border-l-2'
                       : ''
                   }`}
                 >
@@ -71,10 +72,10 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'ml-3 text-icons-alert'
+                            ? 'text-icons-alert ml-3'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'ml-3 text-icons-warning'
-                              : 'ml-3 text-icons-danger'
+                              ? 'text-icons-warning ml-3'
+                              : 'text-icons-danger ml-3'
                         : 'text-icons-9'
                     }
                     name={
@@ -90,7 +91,7 @@ export const Summary = ({
                     }
                     size={16}
                   />
-                  <span className="w-44 truncate text-cn-foreground-1">{file.name}</span>
+                  <span className="text-cn-foreground-1 w-44 truncate">{file.name}</span>
                 </div>
               </Table.Cell>
               <Table.Cell>
@@ -100,7 +101,7 @@ export const Summary = ({
               </Table.Cell>
               <Table.Cell className="text-right">
                 <Text color="foreground-3" wrap="nowrap" align="right">
-                  {file.timestamp}
+                  {timeAgo(file.timestamp, { dateStyle: 'medium' })}
                 </Text>
               </Table.Cell>
             </Table.Row>

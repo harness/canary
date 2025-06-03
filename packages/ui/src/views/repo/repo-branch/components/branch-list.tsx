@@ -14,6 +14,7 @@ import {
   Tag
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
@@ -93,7 +94,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
-              <div className="h-3 w-px bg-cn-background-3" aria-hidden />
+              <div className="bg-cn-background-3 h-3 w-px" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </Table.Head>
@@ -131,7 +132,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
-                    <time className="truncate text-cn-foreground-1">{branch?.timestamp}</time>
+                    <time className="text-cn-foreground-1 truncate">
+                      {timeAgo(branch?.timestamp, { dateStyle: 'medium' })}
+                    </time>
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
@@ -139,7 +142,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   {branch?.checks && (
                     <div className="flex items-center">
                       {checkState === 'running' ? (
-                        <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
+                        <span className="bg-icons-alert mr-1.5 size-2 rounded-full" />
                       ) : (
                         <Icon
                           className={cn('mr-1.5', {
@@ -155,9 +158,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           size={12}
                         />
                       )}
-                      <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
+                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.done}</span>
                       <span className="mx-px">/</span>
-                      <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
+                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.total}</span>
                     </div>
                   )}
                 </Table.Cell>

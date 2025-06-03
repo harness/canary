@@ -11,7 +11,6 @@ import {
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { formatDate } from '@/utils'
 import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout } from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 

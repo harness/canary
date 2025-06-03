@@ -29,7 +29,7 @@ const formSchema = z.object({
   name: z
     .string()
     .min(1, { message: 'Please provide a name' })
-    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain the following characters [a-zA-Z0-9-_.]' }),
+    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
   description: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),

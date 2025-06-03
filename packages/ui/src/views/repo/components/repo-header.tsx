@@ -23,7 +23,7 @@ export const RepoHeader = ({ name, isPublic, isLoading, className }: RepoHeaderP
 
       {!isLoading && (
         <>
-          <Text className="font-heading-hero truncate" as="h2" color="primary">
+          <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
             {name}
           </Text>
           <StatusBadge variant="outline" theme="success" className="min-w-fit rounded-full">

@@ -51,6 +51,7 @@ import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
+import TableV2Demo from '@subjects/views/table-v2-demo'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
@@ -500,6 +501,15 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'multi-select-demo': {
         label: 'Multi Select Demo',
         element: <MultipleSelectorWithDisabledOption />
+      }
+    }
+  },
+  tableV2: {
+    label: 'Table V2 Demo',
+    items: {
+      'table-v2-demo': {
+        label: 'Table V2 Demo',
+        element: <TableV2Demo />
       }
     }
   },

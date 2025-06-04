@@ -73,7 +73,7 @@ const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioP
   ({ className, label, error, ...props }, ref) => {
     return (
       <ControlGroup className={cn('cn-radio-control')}>
-        <Label>{label}</Label>
+        {label && <Label>{label}</Label>}
         <RadioGroupPrimitive.Root className={cn(radioRootVariants({ error }), className)} {...props} ref={ref} />
       </ControlGroup>
     )

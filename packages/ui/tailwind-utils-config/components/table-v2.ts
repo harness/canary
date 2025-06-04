@@ -60,6 +60,10 @@ export default {
 
       '&:where([data-state=selected])': {
         '@apply bg-cn-background-2': ''
+      },
+      
+      '&-expanded': {
+        '@apply bg-cn-background-2': ''
       }
     },
 

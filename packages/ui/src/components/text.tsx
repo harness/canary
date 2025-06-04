@@ -184,4 +184,4 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
 TextWithRef.displayName = 'Text'
 const Text = TextWithRef as unknown as TextComponent
 
-export { Text }
+export { Text, type TextProps }

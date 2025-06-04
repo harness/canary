@@ -78,7 +78,6 @@ export const LabelsHeader = ({
       return res
     })
   }, [labelsList, labelsValues, selectedLabels])
-  console.log('🚀 ~ labelsListWithValues ~ labelsListWithValues:', labelsListWithValues)
 
   const handleOnSelect = (label: LabelsWithValueType) => (e: Event) => {
     e.preventDefault()
@@ -153,11 +152,7 @@ export const LabelsHeader = ({
                     value={(label.values?.length || '').toString()}
                   />
                 }
-                description={
-                  <Text color="foreground-2" truncate>
-                    {label.description}
-                  </Text>
-                }
+                description={<Text truncate>{label.description}</Text>}
                 checkmark={label.isSelected}
               />
             ))}

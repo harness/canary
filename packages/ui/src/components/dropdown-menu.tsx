@@ -1,16 +1,15 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, ReactNode } from 'react'
 
 import { usePortal } from '@/context'
+import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Icon, IconProps } from '@components/icon'
+import { Layout } from '@components/layout'
 import { Logo, LogoProps } from '@components/logo'
-import { Text } from '@components/text'
+import { ScrollArea } from '@components/scroll-area'
+import { Text, TextProps } from '@components/text'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { cn } from '@utils/cn'
-import { filterChildrenByDisplayNames } from '@utils/index'
 import { omit } from 'lodash-es'
-
-import { ScrollArea } from './scroll-area'
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
@@ -132,26 +131,12 @@ const DropdownBaseItem = ({
 }: DropdownBaseItemProps) => (
   <div className={cn('cn-dropdown-menu-base-item', className)}>
     {children}
-    <div className="grid w-full">
-      {typeof title === 'string' ? (
-        <Text className="grid" color="foreground-1">
-          {title}
-        </Text>
-      ) : (
-        title
-      )}
-      {typeof description === 'string' ? <Text color="foreground-2">{description}</Text> : description}
-    </div>
-    {label && (
-      <Text className="grid" variant="caption-soft" color="foreground-2">
-        {label}
-      </Text>
-    )}
-    {shortcut && (
-      <Text variant="caption-soft" color="foreground-2">
-        {shortcut}
-      </Text>
-    )}
+    <Layout.Grid gap="none" className="w-full">
+      {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
+      {typeof description === 'string' ? <Text>{description}</Text> : description}
+    </Layout.Grid>
+    {label && <Text variant="caption-soft">{label}</Text>}
+    {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
     {checkmark && <Icon name="check" size={16} />}
     {withSubIndicator && <Icon name="chevron-right" size={14} />}
   </div>
@@ -424,10 +409,10 @@ const DropdownMenuSpinner = ({ className, ...props }: HTMLAttributes<HTMLDivElem
 )
 DropdownMenuSpinner.displayName = displayNames.spinner
 
-const DropdownMenuNoOptions = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-no-options', className)} {...props}>
-    <Text className="text-cn-foreground-3">{children ?? 'No options available'}</Text>
-  </div>
+const DropdownMenuNoOptions = ({ className, children, ...props }: Omit<TextProps, 'ref'>) => (
+  <Text className={cn('cn-dropdown-menu-no-options', className)} color="foreground-3" {...props}>
+    {children ?? 'No options available'}
+  </Text>
 )
 DropdownMenuNoOptions.displayName = displayNames.noOptions
 

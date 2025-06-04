@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes, ReactNode } from 'react'
+import { forwardRef, HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -57,19 +57,15 @@ const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
 TableFooter.displayName = 'TableFooter'
 
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
-  expanded?: boolean;
-  expandedContent?: ReactNode;
+  expanded?: boolean
+  expandedContent?: ReactNode
 }
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
   ({ className, expanded, expandedContent, ...props }, ref) => (
     <>
       <tr ref={ref} className={cn('cn-table-v2-row', className)} {...props} />
-      {expanded && expandedContent && (
-        <tr className="cn-table-v2-row-expanded">
-          {expandedContent}
-        </tr>
-      )}
+      {expanded && expandedContent && <tr className="cn-table-v2-row-expanded">{expandedContent}</tr>}
     </>
   )
 )

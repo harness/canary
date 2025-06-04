@@ -11,10 +11,6 @@ export default {
     transitionDuration: '0.15s',
     transitionTimingFunction: 'ease-in-out',
 
-    '&:focus-visible': {
-      outline: 'none'
-    },
-
     '&:where(.cn-link-default)': {
       color: 'var(--cn-comp-link-text)'
     },

@@ -26,6 +26,7 @@ import {
   paginationStyles,
   radioStyles,
   scrollAreaStyles,
+  selectStyles,
   switchStyles,
   tagStyles,
   textareaStyles,
@@ -464,6 +465,7 @@ export default {
         tooltipStyles,
 
         // Form styles
+        selectStyles,
         formSharedStyles,
         checkboxStyles,
         radioStyles,

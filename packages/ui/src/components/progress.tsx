@@ -72,7 +72,7 @@ const Progress: FC<ProgressProps> = ({
 }) => {
   const value = variant === 'default' ? ((rest as DeterminateProgressProps).value ?? 0) : undefined
 
-  const percentageValue = value && Math.round(value * 100)
+  const percentageValue = value && (value > 1 ? 100 : Math.round(value * 100))
 
   const id = useMemo(() => defaultId || `progress-${generateAlphaNumericHash(10)}`, [defaultId])
 
@@ -119,14 +119,16 @@ const Progress: FC<ProgressProps> = ({
         <label className="cn-progress-header" htmlFor={id}>
           <div className="cn-progress-header-left">
             {label && (
-              <Text className="font-body-strong text-cn-foreground-1" truncate>
+              <Text variant="body-strong" color="foreground-1" truncate>
                 {label}
               </Text>
             )}
           </div>
           <div className="cn-progress-header-right">
             {showPercentage && variant === 'default' && (
-              <Text className="font-body-strong text-cn-foreground-1">{percentageValue}%</Text>
+              <Text variant="body-strong" color="foreground-1">
+                {percentageValue}%
+              </Text>
             )}
             {getIcon()}
           </div>
@@ -139,13 +141,13 @@ const Progress: FC<ProgressProps> = ({
         <div className="cn-progress-footer">
           <div className="cn-progress-description-wrap">
             {description && (
-              <Text className="cn-progress-description font-body-strong text-cn-foreground-3" truncate>
+              <Text className="cn-progress-description" variant="body-strong" color="foreground-3" truncate>
                 {description}
               </Text>
             )}
           </div>
           {subtitle && (
-            <Text className="cn-progress-subtitle font-body-normal text-cn-foreground-3" truncate>
+            <Text className="cn-progress-subtitle" align="right" variant="body-normal" color="foreground-3" truncate>
               {subtitle}
             </Text>
           )}

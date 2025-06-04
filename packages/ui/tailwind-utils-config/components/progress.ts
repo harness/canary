@@ -30,40 +30,7 @@ const stateStyleMapper: Record<
 
 const gradientColor = 'var(--cn-comp-slider-track-progress-stripes)'
 
-const smLinearGradient = `linear-gradient(45deg,
-  ${gradientColor} 4.6875%,
-  transparent 4.6875%,
-  transparent 12.5%,
-  ${gradientColor} 12.5%,
-  ${gradientColor} 17.1875%,
-  transparent 17.1875%,
-  transparent 25%,
-  ${gradientColor} 25%,
-  ${gradientColor} 29.6875%,
-  transparent 29.6875%,
-  transparent 37.5%,
-  ${gradientColor} 37.5%,
-  ${gradientColor} 42.1875%,
-  transparent 42.1875%,
-  transparent 50%,
-  ${gradientColor} 50%,
-  ${gradientColor} 54.6875%,
-  transparent 54.6875%,
-  transparent 62.5%,
-  ${gradientColor} 62.5%,
-  ${gradientColor} 67.1875%,
-  transparent 67.1875%,
-  transparent 75%,
-  ${gradientColor} 75%,
-  ${gradientColor} 79.6875%,
-  transparent 79.6875%,
-  transparent 87.5%,
-  ${gradientColor} 87.5%,
-  ${gradientColor} 92.1875%,
-  transparent 92.1875%,
-  transparent)`
-
-const mdLinearGradient = `linear-gradient(45deg,
+const defaultLinearGradient = `linear-gradient(45deg,
   ${gradientColor} 18.75%,
   transparent 18.75%,
   transparent 50%,
@@ -72,31 +39,14 @@ const mdLinearGradient = `linear-gradient(45deg,
   transparent 68.75%,
   transparent)`
 
-const defaultLinearGradient = `linear-gradient(45deg,
-  ${gradientColor} 9.375%,
-  transparent 9.375%,
-  transparent 25%,
-  ${gradientColor} 25%,
-  ${gradientColor} 34.375%,
-  transparent 34.375%,
-  transparent 50%,
-  ${gradientColor} 50%,
-  ${gradientColor} 59.375%,
-  transparent 59.375%,
-  transparent 75%,
-  ${gradientColor} 75%,
-  ${gradientColor} 84.375%,
-  transparent 84.375%,
-  transparent)`
-
-const getLinearGradient = (size: (typeof sizes)[number]) => {
+const getBackgroundSize = (size: (typeof sizes)[number]) => {
   if (size === 'sm') {
-    return smLinearGradient
+    return '8px 8px'
   }
   if (size === 'md') {
-    return mdLinearGradient
+    return '32px 32px'
   }
-  return defaultLinearGradient
+  return '16px 16px'
 }
 
 function createProgressVariantStyles() {
@@ -109,7 +59,8 @@ function createProgressVariantStyles() {
     }
 
     style[` .cn-progress-processing-fake`] = {
-      'background-image': getLinearGradient(size)
+      'background-size': getBackgroundSize(size),
+      'animation-name': `cnProgressBar-${size}`
     }
 
     combinationStyles[`&:where(.cn-progress-${size})`] = style
@@ -172,7 +123,7 @@ export default {
 
     '&-footer': {
       display: 'grid',
-      gridTemplateColumns: '1fr auto',
+      gridTemplateColumns: 'auto auto',
       gap: 'var(--cn-spacing-1-half)'
     },
 
@@ -236,11 +187,11 @@ export default {
 
     '&-processing-fake': {
       'background-color': 'var(--cn-comp-slider-track-progress)',
-      'background-image': getLinearGradient('default'),
-      'background-size': '32px 32px',
+      'background-image': defaultLinearGradient,
+      'background-size': '16px 16px',
       height: '100%',
       width: '100%',
-      animation: 'cnProgressBar 0.8s linear infinite'
+      animation: 'cnProgressBar-default 0.8s linear infinite'
     },
 
     ...createProgressVariantStyles(),
@@ -253,7 +204,23 @@ export default {
         transform: 'translateX(200%)'
       }
     },
-    '@keyframes cnProgressBar': {
+    '@keyframes cnProgressBar-sm': {
+      '0%': {
+        'background-position': '0 0'
+      },
+      '100%': {
+        'background-position': '8px 0'
+      }
+    },
+    '@keyframes cnProgressBar-default': {
+      '0%': {
+        'background-position': '0 0'
+      },
+      '100%': {
+        'background-position': '16px 0'
+      }
+    },
+    '@keyframes cnProgressBar-md': {
       '0%': {
         'background-position': '0 0'
       },

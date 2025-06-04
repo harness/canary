@@ -29,10 +29,7 @@ return (
 
 ### `Variant`
 
-The `Progress` component supports several variants to indicate the current progress status:
-
-- `default`: Indicates the default progress.
-- `indeterminate`: Indicates that the progress is ongoing but the exact progress is unknown.
+The `Progress` component supports the `variant` prop to indicate the type of progress being displayed. It accepts `default` and `indeterminate` values. This defines whether the progress is measurable or ongoing without a known completion percentage.
 
 <DocsPage.ComponentExample
   client:only
@@ -59,13 +56,7 @@ The `Progress` component supports several variants to indicate the current progr
 
 ### `State`
 
-The `Progress` component supports several states to indicate the current progress status:
-
-- `completed`: Indicates that the progress has been completed successfully.
-- `paused`: Indicates that the progress has been paused.
-- `failed`: Indicates that the progress has failed.
-- `processing`: Indicates that the progress is ongoing.
-- `default`: Indicates that the progress is in its default state.
+The `Progress` component supports the `state` prop to reflect the current status of the operation. It accepts `completed`, `paused`, `failed`, `processing`, and `default` values. This controls the visual feedback based on the progress state.
 
 <DocsPage.ComponentExample
   client:only
@@ -134,11 +125,7 @@ The `Progress` component supports several states to indicate the current progres
 
 ### `Size`
 
-The `Progress` component supports several sizes to indicate the current progress status:
-
-- `sm`: Indicates a small progress bar.
-- `default`: Indicates a default progress bar.
-- `md`: Indicates a medium progress bar.
+The `Progress` component supports the `size` prop to adjust the height of the progress bar. It accepts `sm`, `default`, and `md` values. This allows customization of the component’s visual size to fit different UI contexts.
 
 <DocsPage.ComponentExample
   client:only
@@ -204,7 +191,7 @@ The `Progress` component supports several sizes to indicate the current progress
       description:
         "Progress value from 0 to 1. Required when variant is 'default'.",
       required: false,
-      value: "number from 0 to 1.",
+      value: "number",
     },
     {
       name: "state",

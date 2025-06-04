@@ -62,12 +62,7 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 }
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, checked, ...props }, ref) => (
-  <tr 
-    ref={ref} 
-    className={cn('cn-table-v2-row', className)} 
-    data-checked={checked ? 'true' : undefined}
-    {...props} 
-  />
+  <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={checked ? 'true' : undefined} {...props} />
 ))
 TableRow.displayName = 'TableRow'
 

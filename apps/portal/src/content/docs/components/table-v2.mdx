@@ -14,7 +14,7 @@ import { Aside } from "@astrojs/starlight/components";
   code={`
 <div className="flex flex-col space-y-8">
   <div>
-    <h5>Default variant</h5>
+    <h5>Default variant with hover</h5>
     <TableV2.Root>
       <TableV2.Header>
         <TableV2.Row>
@@ -125,30 +125,30 @@ import { Aside } from "@astrojs/starlight/components";
     <TableV2.Root>
       <TableV2.Header>
         <TableV2.Row>
-          <TableV2.Head></TableV2.Head>
+          <TableV2.Head><Checkbox checked="indeterminate" /></TableV2.Head>
           <TableV2.Head>Name</TableV2.Head>
           <TableV2.Head>Email</TableV2.Head>
           <TableV2.Head>Display Name</TableV2.Head>
           <TableV2.Head>Date added</TableV2.Head>
         </TableV2.Row>
       </TableV2.Header>
-      <TableV2.Body>
-        <TableV2.Row>
-          <TableV2.Cell><Checkbox /></TableV2.Cell>
+      <TableV2.Body hasHighlightOnHover>
+        <TableV2.Row checked>
+          <TableV2.Cell><Checkbox checked /></TableV2.Cell>
           <TableV2.Cell>John Doe</TableV2.Cell>
           <TableV2.Cell>john@example.com</TableV2.Cell>
           <TableV2.Cell>John</TableV2.Cell>
           <TableV2.Cell>2023-01-01</TableV2.Cell>
         </TableV2.Row>
         <TableV2.Row>
-          <TableV2.Cell><Checkbox /></TableV2.Cell>
+          <TableV2.Cell><Checkbox checked={false}/></TableV2.Cell>
           <TableV2.Cell>Jane Smith</TableV2.Cell>
           <TableV2.Cell>jane@example.com</TableV2.Cell>
           <TableV2.Cell>Jane</TableV2.Cell>
           <TableV2.Cell>2023-02-15</TableV2.Cell>
         </TableV2.Row>
         <TableV2.Row>
-          <TableV2.Cell><Checkbox /></TableV2.Cell>
+          <TableV2.Cell><Checkbox checked={false}/></TableV2.Cell>
           <TableV2.Cell>Bob Johnson</TableV2.Cell>
           <TableV2.Cell>bob@example.com</TableV2.Cell>
           <TableV2.Cell>Bob</TableV2.Cell>
@@ -159,7 +159,7 @@ import { Aside } from "@astrojs/starlight/components";
   </div>
   <div>
     <h5>Table with radio button</h5>
-    <Radio.Root name="user-selection" defaultValue="john">
+    <Radio.Root name="user-selection" value="jane">
       <TableV2.Root>
         <TableV2.Header>
           <TableV2.Row>
@@ -170,7 +170,7 @@ import { Aside } from "@astrojs/starlight/components";
             <TableV2.Head>Date added</TableV2.Head>
           </TableV2.Row>
         </TableV2.Header>
-        <TableV2.Body>
+        <TableV2.Body>  
           <TableV2.Row>
             <TableV2.Cell>
               <Radio.Item value="john" />
@@ -180,7 +180,7 @@ import { Aside } from "@astrojs/starlight/components";
             <TableV2.Cell>John</TableV2.Cell>
             <TableV2.Cell>2023-01-01</TableV2.Cell>
           </TableV2.Row>
-          <TableV2.Row>
+          <TableV2.Row checked>
             <TableV2.Cell>
               <Radio.Item value="jane" />
             </TableV2.Cell>

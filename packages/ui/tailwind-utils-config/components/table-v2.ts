@@ -4,7 +4,7 @@ export default {
 
     // Table container
     '&-container': {
-      '@apply relative w-full overflow-auto': ''
+      '@apply relative w-full rounded-lg border border-cn-borders-3 overflow-hidden': ''
     },
 
     // Table element
@@ -18,7 +18,10 @@ export default {
 
     // Variants
     '&:where(.cn-table-v2-default)': {
-      '@apply caption-bottom py-2': ''
+      '@apply caption-bottom': '',
+      '.cn-table-v2-cell': {
+        '@apply py-2': ''
+      }
     },
 
     '&:where(.cn-table-v2-relaxed)': {
@@ -37,13 +40,11 @@ export default {
 
     // Header
     '&-header': {
-      '@apply [&_tr]:border rounded-t-xl border-cn-borders-3 bg-cn-background-2': ''
+      '@apply border-b border-cn-borders-3 bg-cn-background-2': ''
     },
 
     // Body
     '&-body': {
-      '@apply rounded-b-xl border-b border-l border-r border-cn-borders-3': '',
-
       '&:where(.cn-table-v2-highlight-hover)': {
         '@apply [&>tr:hover]:bg-cn-background-hover': ''
       }
@@ -56,10 +57,15 @@ export default {
 
     // Row
     '&-row': {
-      '@apply border-b border-cn-borders-3 transition-colors': '',
+      '@apply border-b border-cn-borders-3 transition-colors overflow-hidden': '',
+      '@apply last:border-b-0': '',
 
       '&:where([data-state=selected])': {
         '@apply bg-cn-background-2': ''
+      },
+
+      '&:where([data-checked=true])': {
+        '@apply bg-cn-background-3': ''
       },
 
       '&-expanded': {
@@ -69,7 +75,7 @@ export default {
 
     // Head cell
     '&-head': {
-      '@apply text-cn-foreground-4 h-11 px-2 text-left align-middle font-medium': '',
+      '@apply text-cn-foreground-4 h-11 px-2 text-left align-middle font-medium overflow-hidden': '',
       '@apply [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]': ''
     },
 

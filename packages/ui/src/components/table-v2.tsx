@@ -58,10 +58,16 @@ TableFooter.displayName = 'TableFooter'
 
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode
+  checked?: boolean
 }
 
-const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, ...props }, ref) => (
-  <tr ref={ref} className={cn('cn-table-v2-row', className)} {...props} />
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, checked, ...props }, ref) => (
+  <tr 
+    ref={ref} 
+    className={cn('cn-table-v2-row', className)} 
+    data-checked={checked ? 'true' : undefined}
+    {...props} 
+  />
 ))
 TableRow.displayName = 'TableRow'
 

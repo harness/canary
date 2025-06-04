@@ -59,8 +59,7 @@ export const TableV2Demo: React.FC = () => {
   return (
     <SandboxLayout.Main className="justify-center items-center">
       <SandboxLayout.Content className="max-w-[1000px] justify-center items-center">
-        <TableV2.Root variant="relaxed">
-          <TableV2.Caption>A list of users and their details</TableV2.Caption>
+        <TableV2.Root variant="compact">
           <TableV2.Header>
             <TableV2.Row>
               <TableV2.Head>Name</TableV2.Head>

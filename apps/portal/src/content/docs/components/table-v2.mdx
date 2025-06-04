@@ -207,6 +207,80 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [expanded, setExpanded] = React.useState(true);
+  
+    return (
+      <div className="flex flex-col space-y-8">
+        <div>
+          <h5>Table with Expandable Rows</h5>
+          <TableV2.Root>
+            <TableV2.Header>
+              <TableV2.Row>
+                <TableV2.Head className="w-10"></TableV2.Head>
+                <TableV2.Head>Name</TableV2.Head>
+                <TableV2.Head>Email</TableV2.Head>
+                <TableV2.Head>Display Name</TableV2.Head>
+                <TableV2.Head>Status</TableV2.Head>
+              </TableV2.Row>
+            </TableV2.Header>
+            <TableV2.Body>
+              <TableV2.Row
+                expanded={expanded}
+                expandedContent={
+                  <TableV2.Cell colSpan={5} className="pl-4">
+                    <h6 className="font-medium">Additional Information</h6>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 Main St, City, Country</p>
+                  </TableV2.Cell>
+                }
+              >
+                <TableV2.Cell className="w-10">
+                  <Button 
+                    onClick={() => setExpanded(!expanded)} 
+                    iconOnly
+                    variant="ghost"
+                    size="sm"
+                  >
+                    <Icon 
+                      name="chevron-down" 
+                      className={expanded ? "" : "transform -rotate-180"} 
+                    />
+                  </Button>
+                </TableV2.Cell>
+                <TableV2.Cell>John Doe</TableV2.Cell>
+                <TableV2.Cell>john@example.com</TableV2.Cell>
+                <TableV2.Cell>John</TableV2.Cell>
+                <TableV2.Cell>{expanded ? "Expanded" : "Collapsed"}</TableV2.Cell>
+              </TableV2.Row>
+              <TableV2.Row>
+              <TableV2.Cell className="w-10">
+                  <Button 
+                    iconOnly
+                    variant="ghost"
+                    size="sm"
+                  >
+                    <Icon 
+                      name="chevron-down" 
+                      className={expanded ? "" : "transform -rotate-180"} 
+                    />
+                  </Button>
+                </TableV2.Cell>                <TableV2.Cell>Jane Smith</TableV2.Cell>
+                <TableV2.Cell>jane@example.com</TableV2.Cell>
+                <TableV2.Cell>Jane</TableV2.Cell>
+          <TableV2.Cell>Not expanded</TableV2.Cell>
+              </TableV2.Row>
+            </TableV2.Body>
+          </TableV2.Root>
+        </div>
+      </div>
+    )
+  }
+`}
+/>
+
 ## Usage
 
 ```typescript jsx
@@ -390,6 +464,8 @@ A row within the table.
 ```typescript jsx
 <Table.Row
   className="custom-class" // [OPTIONAL] Custom class name
+  expanded={false}       // [OPTIONAL] Whether the row is expanded
+  expandedContent={<TableV2.Cell colSpan={4}>Expanded content</TableV2.Cell>} // [OPTIONAL] Content to display when expanded
 >
   {/* Row content */}
 </Table.Row>

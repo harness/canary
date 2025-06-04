@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Icon, IconV2 } from '@/components'
+import { IconV2 } from '@/components'
 import { useTranslation } from '@/context'
 
 import { CommandPalette } from './command-palette'
@@ -50,7 +50,7 @@ export function CommandPaletteWrapper() {
         label: 'Search repositories...',
         key: PageKey.REPOSITORIES,
         shortcut: ['⇧', 'R'],
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => <IconV2 name="repository" size={14} className="text-icons-1" />
       },
       {
         label: 'Create repository',
@@ -68,7 +68,7 @@ export function CommandPaletteWrapper() {
         label: 'Search projects...',
         key: PageKey.PROJECTS,
         shortcut: ['⇧', 'P'],
-        icon: () => <Icon name="environment" size={14} className="text-icons-1" />
+        icon: () => <IconV2 name="environments" size={14} className="text-icons-1" />
       },
       {
         label: 'Create project',
@@ -128,19 +128,19 @@ export function CommandPaletteWrapper() {
       {
         label: 'Canary',
         url: '/canary/repos/petstore-app/summary',
-        icon: () => <Icon name="file" size={14} className="text-icons-1" />
+        icon: () => <IconV2 name="page" size={14} className="text-icons-1" />
       },
       {
         label: 'Paypal',
         url: '/canary/repos/real-world/summary',
-        icon: () => <Icon name="file" size={14} className="text-icons-1" />
+        icon: () => <IconV2 name="page" size={14} className="text-icons-1" />
       }
     ],
     [PageKey.PIPELINES]: [
       {
         label: 'build-pipeline',
         url: '/canary/pipelines/build-pipeline/studio',
-        icon: () => <Icon name="pipelines" size={14} className="text-icons-1" />
+        icon: () => <IconV2 name="pipeline" size={14} className="text-icons-1" />
       }
     ]
   }

@@ -3,6 +3,7 @@ import { TypesUser } from '@/types'
 import { Avatar } from '@components/avatar'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { Sidebar } from '@components/sidebar/sidebar'
 
 const UserAvatar = ({ user }: Pick<UserProps, 'user'>) => {
@@ -60,9 +61,9 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut }
                   to="/profile-settings"
                   className="group gap-2.5 text-sidebar-foreground-6 data-[highlighted]:text-sidebar-foreground-1"
                 >
-                  <Icon
+                  <IconV2
                     className="text-sidebar-icon-3 transition-colors group-hover:text-sidebar-icon-1"
-                    name="settings-1"
+                    name="settings"
                     size={12}
                   />
                   <span>{t('component:navbar.settings', 'Settings')}</span>
@@ -72,9 +73,9 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut }
                 className="group gap-2.5 text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1"
                 onClick={openThemeDialog}
               >
-                <Icon
+                <IconV2
                   className="text-sidebar-icon-3 transition-colors group-hover:text-sidebar-icon-1"
-                  name="paint"
+                  name="theme"
                   size={12}
                 />
                 <span>{t('component:navbar.appearence', 'Appearance')}</span>

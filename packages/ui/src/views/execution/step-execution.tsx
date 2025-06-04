@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { Button, Icon, Layout, ScrollArea, SearchBox, Tabs, TabsTriggerProps } from '@/components'
+import { Button, Icon, IconV2, Layout, ScrollArea, SearchBox, Tabs, TabsTriggerProps } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -50,7 +50,7 @@ const StepExecutionToolbar: FC<
           className="rounded-l-none border-l-0 border-cn-borders-2"
           onClick={onDownload}
         >
-          <Icon name="download" className="size-4 text-icons-3" />
+          <IconV2 name="download" className="size-4 text-icons-3" />
         </Button>
       </div>
     </Layout.Horizontal>

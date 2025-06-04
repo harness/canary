@@ -1,4 +1,4 @@
-import { Button, FileToolbarActions, Icon } from '@components/index'
+import { Button, FileToolbarActions, Icon, IconV2 } from '@components/index'
 import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
@@ -68,7 +68,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
                   onClick={() => onSave(yamlRevision.yaml)}
                   disabled={!isYamlDirty}
                 >
-                  {!saveInProgress && !isYamlDirty && <Icon name="tick" className="cn-text-success"></Icon>}
+                  {!saveInProgress && !isYamlDirty && <IconV2 name="check" className="cn-text-success" />}
                   Save
                 </Button>
                 <Button size="sm" onClick={() => onRun()} disabled={isYamlDirty || saveInProgress}>

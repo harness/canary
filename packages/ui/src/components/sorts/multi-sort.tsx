@@ -1,6 +1,6 @@
 // TODO: we should rethink the approach and stop using the @dnd-kit library
 
-import { Button, DropdownMenu, Icon } from '@/components'
+import { Button, DropdownMenu, Icon, IconV2 } from '@/components'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -217,7 +217,7 @@ export default function MultiSort() {
             className="hover:text-cn-foreground-danger"
             onClick={handleResetSorts}
           >
-            <Icon name="trash" size={12} />
+            <IconV2 name="trash" size={12} />
             Delete sort
           </Button>
         </div>

@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react'
 
-import { Button, Icon, Input, Text } from '@/components'
+import { Button, IconV2, Input, Text } from '@/components'
 
 export interface FileUploadProps {
   selectedFile?: File
@@ -59,7 +59,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
         >
           {!selectedFile ? (
             <>
-              <Icon name="upload" />
+              <IconV2 name="upload" />
               <Text color="foreground-1">Click to browse or drag and drop a file</Text>
               <Text>Up to 50MB</Text>
             </>

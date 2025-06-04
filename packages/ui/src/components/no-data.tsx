@@ -4,13 +4,13 @@ import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 import { Button } from './button'
-import { IconPropsV2, IconV2 } from './icon-v2'
+import { Icon, IconProps } from './icon'
 import { Text } from './text'
 
 export interface NoDataProps {
   title: string
   iconName?:
-    | Pick<IconPropsV2, 'name'>
+    | Pick<IconProps, 'name'>
     | 'no-data-folder'
     | 'no-search-magnifying-glass'
     | 'no-data-merge'
@@ -62,7 +62,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {iconName && <IconV2 name={iconName as IconPropsV2['name']} size={iconSize} themeDependent />}
+      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} themeDependent />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
         <Text variant="heading-section">{title}</Text>
         {description && (

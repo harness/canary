@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, ReactNode, useCallback, useEffect, type ChangeEventHandler } from 'react'
 
-import { Icon, Input, InputProps } from '@/components'
+import { Icon, IconV2, Input, InputProps } from '@/components'
 import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
 
@@ -110,7 +110,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
               { 'text-sidebar-foreground-4 bg-cn-background-0': restInputProps?.theme === 'sidebar' }
             )}
           >
-            <Icon name="search" size={12} className="ml-0.5" />
+            <IconV2 name="search" className="ml-0.5" />
           </div>
         )}
 

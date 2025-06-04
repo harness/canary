@@ -2,7 +2,7 @@ import { CSSProperties, forwardRef, PropsWithChildren, useLayoutEffect, useRef, 
 
 import { useTranslation } from '@/context'
 import { Button } from '@components/button'
-import { Icon, IconNameMap } from '@components/icon'
+import { IconNameMapV2, IconV2 } from '@components/icon-v2'
 import { useResizeObserver } from '@hooks/use-resize-observer'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -20,10 +20,10 @@ const alertVariants = cva('cn-alert', {
   }
 })
 
-const iconMap: Record<NonNullable<VariantProps<typeof alertVariants>['theme']>, keyof typeof IconNameMap> = {
+const iconMap: Record<NonNullable<VariantProps<typeof alertVariants>['theme']>, keyof typeof IconNameMapV2> = {
   info: 'info-circle',
-  danger: 'cross-circle',
-  warning: 'warning-triangle-outline'
+  danger: 'xmark-circle',
+  warning: 'warning-triangle'
 }
 
 const MAX_HEIGHT = 138
@@ -48,7 +48,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
       onDismiss?.()
     }
 
-    const iconName: keyof typeof IconNameMap = iconMap[theme ?? 'info']
+    const iconName: keyof typeof IconNameMapV2 = iconMap[theme ?? 'info']
 
     const toggleExpand = () => setIsExpanded(prev => !prev)
 
@@ -89,11 +89,11 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
             iconOnly
             aria-label={t('component:alert.close', 'Close alert')}
           >
-            <Icon className="cn-alert-close-button-icon" name="close" skipSize />
+            <IconV2 className="cn-alert-close-button-icon" name="xmark" skipSize />
           </Button>
         )}
 
-        <Icon className="cn-alert-icon" name={iconName} skipSize />
+        <IconV2 className="cn-alert-icon" name={iconName} skipSize />
 
         <div className={cn('cn-alert-text-wrap', { 'cn-alert-text-wrap-expanded': isExpanded })}>
           <div
@@ -122,11 +122,11 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
                 aria-expanded={isExpanded}
               >
                 {isExpanded ? t('component:alert.showLess', 'Show less') : t('component:alert.showMore', 'Show more')}
-                <Icon
+                <IconV2
                   className={cn('cn-alert-expand-button-icon', {
                     'cn-alert-expand-button-icon-rotate-180': isExpanded
                   })}
-                  name="chevron-down"
+                  name="nav-arrow-down"
                   skipSize
                 />
               </Button>

@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useEffect, useState } from 'react'
 
-import { Button, Icon, type ButtonVariants } from '@/components'
+import { Button, IconV2, type ButtonVariants } from '@/components'
 import { cva, type VariantProps } from 'class-variance-authority'
 import copy from 'clipboard-copy'
 
@@ -55,7 +55,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
   }, [copied, name])
 
   const iconCopyStyle = copied ? 'success' : color
-  const changeIcon = copied ? 'tick' : 'clone'
+  const changeIcon = copied ? 'check' : 'copy'
 
   return (
     <Button
@@ -68,7 +68,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
       aria-label="Copy"
       onClick={handleClick}
     >
-      <Icon className={copyIconVariants({ color: iconCopyStyle })} name={changeIcon} size={iconSize} />
+      <IconV2 className={copyIconVariants({ color: iconCopyStyle })} name={changeIcon} size={iconSize} />
     </Button>
   )
 }

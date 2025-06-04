@@ -1,6 +1,4 @@
-import { Icon } from '@components/icon'
-
-import { IconV2 } from './icon-v2'
+import { IconV2 } from '@components/icon-v2'
 
 export type ProblemSeverity = 'error' | 'warning' | 'info'
 
@@ -112,7 +110,7 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
 function NoProblemsFound(): JSX.Element {
   return (
     <div className="flex items-center gap-2 pl-4">
-      <Icon name="success" className="text-cn-foreground-success" /> No problems found
+      <IconV2 name="check-circle-solid" className="text-cn-foreground-success" /> No problems found
     </div>
   )
 }

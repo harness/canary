@@ -3,6 +3,7 @@ import { useState } from 'react'
 import {
   HarnessLogo,
   Icon,
+  IconV2,
   LanguageCode,
   LanguageDialog,
   LanguageInterface,
@@ -118,7 +119,7 @@ export const SidebarView = ({
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.more', 'More')}
-                      icon={<Icon name="ellipsis" size={14} />}
+                      icon={<IconV2 name="menu-more-horizontal" />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -155,7 +156,7 @@ export const SidebarView = ({
                       <Sidebar.MenuItemText
                         className="pl-0"
                         text={t('component:navbar.user-management', 'User Management')}
-                        icon={<Icon name="account" size={14} />}
+                        icon={<IconV2 name="user" />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
@@ -165,7 +166,7 @@ export const SidebarView = ({
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.settings', 'Settings')}
-                      icon={<Icon name="settings-1" size={14} />}
+                      icon={<IconV2 name="settings" size={14} />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>

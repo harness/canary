@@ -4,6 +4,7 @@ import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 interface FiltersProps {
@@ -73,7 +74,7 @@ const FilterBoxWrapper = ({
             <DropdownMenu.Content align="start">
               <DropdownMenu.Item onSelect={() => handleRemoveFilter()} asChild>
                 <Button size="sm" variant="transparent" className="data-[highlighted]:text-cn-foreground-danger">
-                  <Icon name="trash" size={12} />
+                  <IconV2 name="trash" size={12} />
                   {t('component:filter.delete', 'Delete filter')}
                 </Button>
               </DropdownMenu.Item>

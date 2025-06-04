@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { CounterBadge } from '@components/counter-badge'
-import { Icon, IconProps } from '@components/icon'
+import { IconPropsV2, IconV2 } from '@components/icon-v2'
 import { Tabs } from '@components/tabs'
 
 interface TabTriggerItemProps {
@@ -15,7 +15,7 @@ const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCoun
   return (
     <Tabs.Trigger value={value} className="gap-x-1.5">
       <div className="flex items-center gap-x-1">
-        <Icon size={14} name={icon as IconProps['name']} />
+        <IconV2 size={14} name={icon as IconPropsV2['name']} />
         <span>{label}</span>
       </div>
       {badgeCount !== undefined && <CounterBadge>{badgeCount}</CounterBadge>}

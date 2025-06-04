@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, SearchInput, StatusBadge, Tabs } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchInput, StatusBadge, Tabs } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
@@ -152,7 +152,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-cn-foreground-1" />}
+                  {isSelected && <IconV2 name="check" size={12} className="min-w-[12px] text-cn-foreground-1" />}
                   <span
                     className={cn('text-cn-foreground-2 truncate', {
                       'text-cn-foreground-1': isSelected

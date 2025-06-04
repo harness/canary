@@ -17,7 +17,7 @@ import {
   useListPrincipalsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { Icon, IconV2 } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,

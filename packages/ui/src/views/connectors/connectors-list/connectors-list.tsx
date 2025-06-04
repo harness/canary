@@ -3,6 +3,7 @@ import { useState } from 'react'
 import {
   Button,
   Icon,
+  IconV2,
   Logo,
   MoreActionsTooltip,
   NoData,
@@ -131,7 +132,7 @@ export function ConnectorsList({
                 <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
                     <div className="flex w-full max-w-8 items-center justify-center">
-                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={30} />}
+                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <IconV2 name="connectors" size={30} />}
                     </div>
                     <Title title={identifier} />
                   </div>

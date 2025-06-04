@@ -3,7 +3,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Button,
-  Icon,
+  IconV2,
   ListActions,
   MoreActionsTooltip,
   NoData,
@@ -33,12 +33,12 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
-            <Icon className="text-icons-success" name="tick" size={12} />
+            <IconV2 className="text-icons-success" name="check" size={12} />
             <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
           </>
         ) : (
           <>
-            <Icon className="text-icons-danger" name="x-mark" size={12} />
+            <IconV2 className="text-icons-danger" name="xmark" size={12} />
             <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
           </>
         )}
@@ -149,9 +149,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                         title={
                           <div className="flex items-center gap-2">
                             {rule.state === 'active' ? (
-                              <Icon className="text-icons-success" name="tick-circle" />
+                              <IconV2 className="text-icons-success" name="check-circle" />
                             ) : (
-                              <Icon className="text-icons-9" name="cancel-grey" />
+                              <IconV2 className="text-icons-9" name="minus-circle" />
                             )}
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                           </div>

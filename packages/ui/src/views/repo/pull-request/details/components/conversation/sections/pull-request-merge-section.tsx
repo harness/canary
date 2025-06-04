@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useState } from 'react'
 
-import { Accordion, Button, CopyButton, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Button, CopyButton, Icon, IconV2, Layout, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -115,7 +115,7 @@ const PullRequestMergeSection = ({
               }
               icon={
                 unchecked ? (
-                  <Icon name="clock" className="text-icons-alert" />
+                  <IconV2 name="clock" className="text-icons-alert" />
                 ) : (
                   <Icon
                     className={mergeable ? 'text-icons-success' : 'text-icons-danger'}
@@ -185,7 +185,7 @@ const PullRequestMergeSection = ({
               <div className="mt-1">
                 {conflictingFiles?.map(file => (
                   <div className="flex items-center gap-x-2 py-1.5" key={file}>
-                    <Icon className="text-icons-1" size={16} name="file" />
+                    <IconV2 className="text-icons-1" name="page" />
                     <span className="text-2 text-cn-foreground-1">{file}</span>
                   </div>
                 ))}

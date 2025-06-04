@@ -104,6 +104,8 @@ import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import Community from './icons/community.svg'
+import ConnectorsSolid from './icons/connectors-solid.svg'
+import Connectors from './icons/connectors.svg'
 import ControlSlider from './icons/control-slider.svg'
 import Cookie from './icons/cookie.svg'
 import Copy from './icons/copy.svg'
@@ -111,6 +113,7 @@ import CpuWarning from './icons/cpu-warning.svg'
 import Cpu from './icons/cpu.svg'
 import Crop from './icons/crop.svg'
 import CursorPointer from './icons/cursor-pointer.svg'
+import CustomSecretManager from './icons/custom-secret-manager.svg'
 import CustomizeNavigation from './icons/customize-navigation.svg'
 import DashboardDots from './icons/dashboard-dots.svg'
 import DashboardSpeed from './icons/dashboard-speed.svg'
@@ -205,6 +208,7 @@ import GoogleOne from './icons/google-one.svg'
 import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
+import HarnessPlugins from './icons/harness-plugins.svg'
 import HeadsetHelp from './icons/headset-help.svg'
 import HealthShield from './icons/health-shield.svg'
 import HeartSolid from './icons/heart-solid.svg'
@@ -320,6 +324,7 @@ import PhonePaused from './icons/phone-paused.svg'
 import PhonePlus from './icons/phone-plus.svg'
 import PhoneXmark from './icons/phone-xmark.svg'
 import Phone from './icons/phone.svg'
+import PhysicalDataCenter from './icons/physical-data-center.svg'
 import PinSlashSolid from './icons/pin-slash-solid.svg'
 import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
@@ -367,8 +372,6 @@ import Send from './icons/send.svg'
 import ServiceAccounts from './icons/service-accounts.svg'
 import Services from './icons/services.svg'
 import Settings from './icons/settings.svg'
-import ShareAndroidSolid from './icons/share-android-solid.svg'
-import ShareAndroid from './icons/share-android.svg'
 import ShareIos from './icons/share-ios.svg'
 import ShieldCheck from './icons/shield-check.svg'
 import Shield from './icons/shield.svg'
@@ -543,6 +546,8 @@ export const IconNameMapV2 = {
   'collapse-sidebar': CollapseSidebar,
   collapse: Collapse,
   community: Community,
+  'connectors-solid': ConnectorsSolid,
+  connectors: Connectors,
   'control-slider': ControlSlider,
   cookie: Cookie,
   copy: Copy,
@@ -550,6 +555,7 @@ export const IconNameMapV2 = {
   cpu: Cpu,
   crop: Crop,
   'cursor-pointer': CursorPointer,
+  'custom-secret-manager': CustomSecretManager,
   'customize-navigation': CustomizeNavigation,
   'dashboard-dots': DashboardDots,
   'dashboard-speed': DashboardSpeed,
@@ -644,6 +650,7 @@ export const IconNameMapV2 = {
   'grip-dots': GripDots,
   'group-1': Group1,
   'half-moon': HalfMoon,
+  'harness-plugins': HarnessPlugins,
   'headset-help': HeadsetHelp,
   'health-shield': HealthShield,
   'heart-solid': HeartSolid,
@@ -759,6 +766,7 @@ export const IconNameMapV2 = {
   'phone-plus': PhonePlus,
   'phone-xmark': PhoneXmark,
   phone: Phone,
+  'physical-data-center': PhysicalDataCenter,
   'pin-slash-solid': PinSlashSolid,
   'pin-slash': PinSlash,
   'pin-solid': PinSolid,
@@ -806,8 +814,6 @@ export const IconNameMapV2 = {
   'service-accounts': ServiceAccounts,
   services: Services,
   settings: Settings,
-  'share-android-solid': ShareAndroidSolid,
-  'share-android': ShareAndroid,
   'share-ios': ShareIos,
   'shield-check': ShieldCheck,
   shield: Shield,

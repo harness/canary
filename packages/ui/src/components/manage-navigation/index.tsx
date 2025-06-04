@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, ButtonLayout, Icon, ModalDialog, Text } from '@/components'
+import { Button, ButtonLayout, Icon, IconV2, ModalDialog, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -233,7 +233,7 @@ export const ManageNavigation = ({
                 disabled={submitted}
               >
                 Saved
-                <Icon name="tick" size={14} />
+                <IconV2 name="check" size={14} />
               </Button>
             )}
           </ButtonLayout>

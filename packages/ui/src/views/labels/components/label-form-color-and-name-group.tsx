@@ -1,6 +1,6 @@
 import { ComponentProps, FC } from 'react'
 
-import { Button, FormInput, Icon, Select, SelectRootProps } from '@/components'
+import { Button, FormInput, IconV2, Select, SelectRootProps } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ColorsEnum } from '@/views'
@@ -61,7 +61,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
           iconOnly
           onClick={handleDeleteValue}
         >
-          <Icon name="close" size={14} />
+          <IconV2 name="xmark" size={14} />
         </Button>
       )}
     </div>

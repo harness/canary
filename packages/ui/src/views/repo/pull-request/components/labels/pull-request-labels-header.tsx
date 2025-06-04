@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
+import { Button, DropdownMenu, Icon, IconV2, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
@@ -163,7 +163,7 @@ export const LabelsHeader = ({
                         )}
 
                         {label.isSelected && (
-                          <Icon className="absolute right-0 top-1 text-icons-2" name="tick" size={12} />
+                          <IconV2 className="absolute right-0 top-1 text-icons-2" name="check" size={12} />
                         )}
                       </div>
                     </DropdownMenu.Item>

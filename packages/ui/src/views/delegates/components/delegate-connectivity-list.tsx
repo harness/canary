@@ -1,4 +1,4 @@
-import { Icon, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { Icon, IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
@@ -88,7 +88,7 @@ export function DelegateConnectivityList({
                       {isDelegateSelected(
                         [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
                         selectedTags || []
-                      ) && <Icon name="tick" size={12} className="text-icons-success" />}
+                      ) && <IconV2 name="check" size={12} className="text-icons-success" />}
                     </div>
                   </Table.Cell>
                 </Table.Row>

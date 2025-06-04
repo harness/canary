@@ -72,6 +72,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setPage(1)
   }
 
+  // return null
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>

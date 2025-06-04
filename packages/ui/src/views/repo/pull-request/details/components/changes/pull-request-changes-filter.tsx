@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, SplitButton } from '@/components'
+import { Button, Checkbox, CounterBadge, DropdownMenu, Icon, IconV2, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
@@ -270,7 +270,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                 className="flex w-full items-center justify-between gap-x-5 py-1.5"
               >
                 <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
-                  <Icon name="file" size={16} className="shrink-0 text-icons-1" />
+                  <IconV2 name="page" className="shrink-0 text-icons-1" />
                   <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
                     {diff.filePath}
                   </span>

@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, Icon, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
+import { Avatar, Button, Icon, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -202,7 +202,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Horizontal gap="xs" align="center">
                   {mergeability ? (
                     <>
-                      <Icon className="text-icons-success" name="tick" size={12} />
+                      <IconV2 className="text-icons-success" name="check" size={12} />
                       <p className="text-2 leading-none text-cn-foreground-success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                         <span className="text-cn-foreground-2">
@@ -217,7 +217,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     <>
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
-                          <Icon name={'x-mark'} size={12} className="text-icons-1" />
+                          <IconV2 name="xmark" size={12} className="text-icons-1" />
                           <p className="text-2 leading-none text-cn-foreground-2">
                             {t(
                               'views:pullRequests.compareChangesApiError',
@@ -227,7 +227,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         </>
                       ) : (
                         <>
-                          <Icon className="text-icons-danger" name="x-mark" size={12} />
+                          <IconV2 className="text-icons-danger" name="xmark" size={12} />
                           <p className="text-2 leading-none text-cn-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-cn-foreground-2">
@@ -316,19 +316,19 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
                     value="overview"
-                    icon="comments"
+                    icon="message"
                     label={t('views:pullRequests.compareChangesTabOverview', 'Overview')}
                   />
                 )}
                 <TabTriggerItem
                   value="commits"
-                  icon="tube-sign"
+                  icon="git-commit"
                   label={t('views:pullRequests.compareChangesTabCommits', 'Commits')}
                   badgeCount={diffStats.commits ? diffStats.commits : undefined}
                 />
                 <TabTriggerItem
                   value="changes"
-                  icon="changes"
+                  icon="page"
                   label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                   badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
                 />

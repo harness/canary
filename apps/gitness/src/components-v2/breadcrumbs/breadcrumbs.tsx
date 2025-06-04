@@ -26,7 +26,7 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
             <Separator orientation="vertical" className="ml-1 mr-2 h-4 bg-cn-background-0" />
           </>
         )}
-        <Breadcrumb.Root className="select-none">
+        <Breadcrumb.Root>
           <Breadcrumb.List>
             {breadcrumbs.map((match, index) => {
               const { breadcrumb, asLink = true } = match.handle ?? {}
@@ -36,7 +36,7 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
 
               return (
                 <Breadcrumb.Item key={match.pathname}>
-                  {!isFirst && <Breadcrumb.Separator className="text-cn-foreground-disabled" />}
+                  {!isFirst && <Breadcrumb.Separator />}
                   {isLast || !asLink ? (
                     <Breadcrumb.Page>{breadcrumbContent}</Breadcrumb.Page>
                   ) : (

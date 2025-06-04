@@ -1,6 +1,6 @@
 export default {
   '.cn-breadcrumb': {
-    '@apply flex flex-wrap items-center break-words': '',
+    '@apply flex flex-wrap items-center break-words select-none': '',
     gap: 'var(--cn-spacing-1)',
     color: 'var(--cn-text-2)'
   },
@@ -49,6 +49,7 @@ export default {
   },
 
   '.cn-breadcrumb-separator': {
+    color: `var(--cn-state-disabled-text)`,
     '& > svg': {
       width: 'var(--cn-size-3-half)',
       height: 'var(--cn-size-3-half)'

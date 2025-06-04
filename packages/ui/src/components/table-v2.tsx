@@ -57,18 +57,12 @@ const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
 TableFooter.displayName = 'TableFooter'
 
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
-  expanded?: boolean
-  expandedContent?: ReactNode
+  children?: ReactNode
 }
 
-const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(
-  ({ className, expanded, expandedContent, ...props }, ref) => (
-    <>
-      <tr ref={ref} className={cn('cn-table-v2-row', className)} {...props} />
-      {expanded && expandedContent && <tr className="cn-table-v2-row-expanded">{expandedContent}</tr>}
-    </>
-  )
-)
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, ...props }, ref) => (
+  <tr ref={ref} className={cn('cn-table-v2-row', className)} {...props} />
+))
 TableRow.displayName = 'TableRow'
 
 const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement>>(

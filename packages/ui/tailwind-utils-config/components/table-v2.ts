@@ -37,12 +37,12 @@ export default {
 
     // Header
     '&-header': {
-      '@apply [&_tr]:border-b bg-cn-background-2': ''
+      '@apply [&_tr]:border rounded-t-xl border-cn-borders-3 bg-cn-background-2': ''
     },
 
     // Body
     '&-body': {
-      '@apply [&_tr:last-child]:border-0': '',
+      '@apply rounded-b-xl border-b border-l border-r border-cn-borders-3': '',
 
       '&:where(.cn-table-v2-highlight-hover)': {
         '@apply [&>tr:hover]:bg-cn-background-hover': ''
@@ -61,7 +61,7 @@ export default {
       '&:where([data-state=selected])': {
         '@apply bg-cn-background-2': ''
       },
-      
+
       '&-expanded': {
         '@apply bg-cn-background-2': ''
       }

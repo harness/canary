@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { AlertDialog, Button, ButtonLayout, Icon, ScrollArea, Text } from '@/components'
+import { Button, ButtonLayout, Icon, ModalDialog, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -114,113 +114,111 @@ export const ManageNavigation = ({
   )
 
   return (
-    <AlertDialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
-      <AlertDialog.Content
-        className="h-[574px] max-h-[70vh] max-w-[410px]"
-        onClose={handleCancel}
-        onOverlayClick={handleCancel}
-      >
-        <AlertDialog.Header>
-          <AlertDialog.Title className="mb-4">Manage navigation</AlertDialog.Title>
+    <ModalDialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
+      <ModalDialog.Content className="h-[574px] max-h-[70vh]">
+        <ModalDialog.Header>
+          <ModalDialog.Title className="mb-4">Manage navigation</ModalDialog.Title>
           <ManageNavigationSearch
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
           />
-        </AlertDialog.Header>
-        <ScrollArea className="-mx-5 -mb-5 mt-1">
-          <div className="px-5">
-            <Text className="inline-block" variant="body-single-line-normal" color="foreground-3">
-              Pinned
+        </ModalDialog.Header>
+
+        <ModalDialog.Body>
+          <ManageNavigationSearch
+            navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
+            addToPinnedItems={addToPinnedItems}
+          />
+          <Text className="inline-block mt-6" variant="body-single-line-normal" color="foreground-3">
+            Pinned
+          </Text>
+          {!currentPinnedItems.length ? (
+            <Text className="mt-3" color="foreground-3">
+              No pinned items
             </Text>
-            {!currentPinnedItems.length ? (
-              <Text className="mt-3" color="foreground-3">
-                No pinned items
-              </Text>
-            ) : (
-              <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
-                <SortableContext items={currentPinnedItems.map((_, index) => getItemId(index))}>
-                  <ul className="-mx-3 mb-1 mt-3.5 flex flex-col gap-y-0.5">
-                    {permanentlyPinnedItems.map(item => {
-                      return (
-                        <div
-                          key={item.id}
-                          className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-3 opacity-55"
-                        >
-                          <Icon className="w-3.5" name="lock" size={14} />
-                          <Text>{item.title}</Text>
-                        </div>
-                      )
-                    })}
-                    {draggablePinnedItems.map((item, index) => (
-                      <DraggableItem id={getItemId(index + permanentlyPinnedItems.length)} tag="li" key={item.title}>
-                        {({ attributes, listeners }) => {
-                          return (
-                            <>
-                              <Button
-                                className={'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing'}
-                                variant="ghost"
-                                {...attributes}
-                                {...listeners}
-                              >
-                                <Icon className="w-3.5" name="grid-dots" size={14} />
-                                <Text color="inherit">{item.title}</Text>
-                              </Button>
-                              <Button
-                                className="absolute right-1 top-0.5 z-20"
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => removeFromPinnedItems(item)}
-                              >
-                                <Icon className="w-3.5" name="x-mark" size={14} />
-                              </Button>
-                            </>
-                          )
-                        }}
-                      </DraggableItem>
-                    ))}
-                  </ul>
-                </SortableContext>
-              </DndContext>
-            )}
-            {currentFilteredRecentItems.length > 0 && (
-              <>
-                <div className="mt-4 flex items-center justify-between">
-                  <Text variant="body-single-line-normal" className="inline-block" color="foreground-3">
-                    Recent
-                  </Text>
-                  <Button variant="link" size="sm" onClick={handleClearRecent}>
-                    Clear all
-                  </Button>
-                </div>
-                <ul className="mt-3 flex flex-col gap-y-0.5 pb-5">
-                  {currentFilteredRecentItems.map((item, index) => (
-                    <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
-                      <div className="flex w-full grow items-center gap-x-2.5">
-                        <Icon className="text-icons-4" name="clock-icon" size={14} />
-                        <Text color="foreground-1">{item.title}</Text>
-                      </div>
-                      <Button
-                        className="absolute -right-2 top-0.5 text-icons-4"
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => addToPinnedItems(item)}
+          ) : (
+            <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+              <SortableContext items={currentPinnedItems.map((_, index) => getItemId(index))}>
+                <ul className="-mx-3 mb-1 mt-3.5 flex flex-col gap-y-0.5">
+                  {permanentlyPinnedItems.map(item => {
+                    return (
+                      <div
+                        key={item.id}
+                        className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-3 opacity-55"
                       >
-                        <Icon name="pin" size={14} />
-                      </Button>
-                    </li>
+                        <Icon className="w-3.5" name="lock" size={14} />
+                        <Text>{item.title}</Text>
+                      </div>
+                    )
+                  })}
+                  {draggablePinnedItems.map((item, index) => (
+                    <DraggableItem id={getItemId(index + permanentlyPinnedItems.length)} tag="li" key={item.title}>
+                      {({ attributes, listeners }) => {
+                        return (
+                          <>
+                            <Button
+                              className={'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing'}
+                              variant="ghost"
+                              {...attributes}
+                              {...listeners}
+                            >
+                              <Icon className="w-3.5" name="grid-dots" size={14} />
+                              <Text color="inherit">{item.title}</Text>
+                            </Button>
+                            <Button
+                              className="absolute right-1 top-0.5 z-20"
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => removeFromPinnedItems(item)}
+                            >
+                              <Icon className="w-3.5" name="x-mark" size={14} />
+                            </Button>
+                          </>
+                        )
+                      }}
+                    </DraggableItem>
                   ))}
                 </ul>
-              </>
-            )}
-          </div>
-        </ScrollArea>
-        <AlertDialog.Footer>
+              </SortableContext>
+            </DndContext>
+          )}
+          {currentFilteredRecentItems.length > 0 && (
+            <>
+              <div className="mt-4 flex items-center justify-between">
+                <Text variant="body-single-line-normal" className="inline-block" color="foreground-3">
+                  Recent
+                </Text>
+                <Button variant="link" size="sm" onClick={handleClearRecent}>
+                  Clear all
+                </Button>
+              </div>
+              <ul className="mt-3 flex flex-col gap-y-0.5 pb-5">
+                {currentFilteredRecentItems.map((item, index) => (
+                  <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
+                    <div className="flex w-full grow items-center gap-x-2.5">
+                      <Icon className="text-icons-4" name="clock-icon" size={14} />
+                      <Text color="foreground-1">{item.title}</Text>
+                    </div>
+                    <Button
+                      className="absolute -right-2 top-0.5 text-icons-4"
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => addToPinnedItems(item)}
+                    >
+                      <Icon name="pin" size={14} />
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </ModalDialog.Body>
+
+        <ModalDialog.Footer>
           <ButtonLayout>
             {!submitted ? (
               <>
-                <Button variant="outline" onClick={handleCancel} disabled={isSubmitting}>
-                  Cancel
-                </Button>
+                <ModalDialog.Close disabled={isSubmitting}>Cancel</ModalDialog.Close>
                 <Button type="button" variant="primary" onClick={onSubmit} disabled={isSubmitting}>
                   {isSubmitting ? 'Saving...' : 'Save'}
                 </Button>
@@ -239,8 +237,8 @@ export const ManageNavigation = ({
               </Button>
             )}
           </ButtonLayout>
-        </AlertDialog.Footer>
-      </AlertDialog.Content>
-    </AlertDialog.Root>
+        </ModalDialog.Footer>
+      </ModalDialog.Content>
+    </ModalDialog.Root>
   )
 }

@@ -11,7 +11,7 @@ export default {
     '& .cn-breadcrumb-item': {
       height: 'var(--cn-size-5)'
     },
-    '& .cn-breadcrumb-item:last-child': {
+    '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-body-strong': '',
       borderRadius: '0',
       color: 'var(--cn-text-1)'
@@ -24,7 +24,7 @@ export default {
     '& .cn-breadcrumb-item': {
       height: 'var(--cn-size-4-half)'
     },
-    '& .cn-breadcrumb-item:last-child': {
+    '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-caption-soft': '',
       borderRadius: 'var(--cn-size-5)',
       color: 'var(--cn-text-1)'

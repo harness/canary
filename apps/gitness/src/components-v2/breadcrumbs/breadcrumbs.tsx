@@ -35,16 +35,18 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
               const breadcrumbContent = breadcrumb!(match.params)
 
               return (
-                <Breadcrumb.Item key={match.pathname}>
+                <>
                   {!isFirst && <Breadcrumb.Separator />}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page>{breadcrumbContent}</Breadcrumb.Page>
+                    <Breadcrumb.Page key={match.pathname}>{breadcrumbContent}</Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link asChild>
-                      <Link to={match.pathname}>{breadcrumbContent}</Link>
-                    </Breadcrumb.Link>
+                    <Breadcrumb.Item key={match.pathname}>
+                      <Breadcrumb.Link asChild>
+                        <Link to={match.pathname}>{breadcrumbContent}</Link>
+                      </Breadcrumb.Link>
+                    </Breadcrumb.Item>
                   )}
-                </Breadcrumb.Item>
+                </>
               )
             })}
           </Breadcrumb.List>

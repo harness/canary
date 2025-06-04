@@ -5,21 +5,10 @@ export default {
     gridTemplateColumns: 'auto auto',
     justifyContent: 'start',
     gap: 'var(--cn-spacing-half)',
+    color: 'var(--cn-text-1)',
 
-    '&:where(.cn-label-default)': {
-      color: 'var(--cn-text-2)',
-
-      '+ .cn-label-informer': {
-        color: 'var(--cn-text-2)'
-      }
-    },
-
-    '&:where(.cn-label-primary)': {
-      color: 'var(--cn-text-1)',
-
-      '+ .cn-label-informer': {
-        color: 'var(--cn-text-1)'
-      }
+    '&-informer': {
+      color: 'var(--cn-text-1)'
     },
 
     '&:where(.cn-label-disabled), &:where(.cn-label-disabled) > .cn-label-optional': {

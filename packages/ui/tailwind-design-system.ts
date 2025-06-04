@@ -28,6 +28,7 @@ import {
   progressStyles,
   radioStyles,
   scrollAreaStyles,
+  selectStyles,
   switchStyles,
   tableV2Styles,
   tagStyles,
@@ -469,6 +470,7 @@ export default {
         breadcrumbStyles,
 
         // Form styles
+        selectStyles,
         formSharedStyles,
         checkboxStyles,
         radioStyles,

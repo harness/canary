@@ -65,7 +65,7 @@ interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof Dropd
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(
-  ({ className, children: _children, sideOffset = 4, isSubContent, ...props }, ref) => {
+  ({ className, children: _children, sideOffset = 4, isSubContent, onScroll, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const Primitive = isSubContent ? DropdownMenuPrimitive.SubContent : DropdownMenuPrimitive.Content
 
@@ -84,7 +84,7 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
         >
           {!!header && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-header">{header}</div>}
 
-          <ScrollArea viewportClassName="cn-dropdown-menu-content">
+          <ScrollArea viewportClassName="cn-dropdown-menu-content" onScroll={onScroll}>
             <div className="cn-dropdown-menu-container">{children}</div>
           </ScrollArea>
 

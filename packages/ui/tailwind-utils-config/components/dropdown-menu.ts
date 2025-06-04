@@ -71,12 +71,9 @@ export default {
       '@apply transition-colors': '',
 
       '&:not(:where([data-disabled]))': {
-        '&:hover, &:where([data-highlighted]), &:where([data-state="open"])': {
+        '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
-          outline: 'none'
-        },
-
-        '&:hover': {
+          outline: 'none',
           cursor: 'pointer'
         }
       },

@@ -27,7 +27,8 @@ import {
   scrollAreaStyles,
   switchStyles,
   tagStyles,
-  textareaStyles
+  textareaStyles,
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -458,6 +459,7 @@ export default {
         buttonLayoutStyles,
         modalDialogStyles,
         scrollAreaStyles,
+        tooltipStyles,
 
         // Form styles
         formSharedStyles,

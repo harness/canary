@@ -44,9 +44,7 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
         <span className={cn('cn-label-container', className)}>
           <LabelComponent />
 
-          <Informer {...informerProps} className="cn-label-informer" disabled={disabled}>
-            {informerContent}
-          </Informer>
+          <Informer {...informerProps} className="cn-label-informer" disabled={disabled} content={informerContent} />
         </span>
       )
     }

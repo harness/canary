@@ -6,6 +6,7 @@ import {
   ElementRef,
   forwardRef,
   ReactElement,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -13,7 +14,7 @@ import {
   useState
 } from 'react'
 
-import { Button, Icon, Input, ScrollArea, Sheet, Tooltip } from '@/components'
+import { Button, Icon, Input, ScrollArea, Sheet, Tooltip, TooltipProvider } from '@/components'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -136,7 +137,7 @@ const SidebarProvider = forwardRef<
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <Tooltip.Provider delayDuration={0}>
+      <TooltipProvider delayDuration={0}>
         <div
           className={cn(
             'group/sidebar-wrapper flex justify-between w-full has-[[data-variant=inset]]:bg-sidebar',
@@ -147,7 +148,7 @@ const SidebarProvider = forwardRef<
         >
           {children}
         </div>
-      </Tooltip.Provider>
+      </TooltipProvider>
     </SidebarContext.Provider>
   )
 })
@@ -447,11 +448,10 @@ const SidebarMenuButton = forwardRef<
   ComponentPropsWithoutRef<'button'> & {
     asChild?: boolean
     isActive?: boolean
-    tooltip?: string | ComponentProps<typeof Tooltip.Content>
+    tooltip?: ReactNode
   } & VariantProps<typeof sidebarMenuButtonVariants>
 >(({ asChild = false, isActive = false, variant = 'default', size = 'default', tooltip, className, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button'
-  const { isMobile, state } = useSidebar()
 
   const button = (
     <Comp
@@ -467,17 +467,10 @@ const SidebarMenuButton = forwardRef<
     return button
   }
 
-  if (typeof tooltip === 'string') {
-    tooltip = {
-      children: tooltip
-    }
-  }
-
   return (
-    <Tooltip.Root>
-      <Tooltip.Trigger asChild>{button}</Tooltip.Trigger>
-      <Tooltip.Content side="right" align="center" hidden={state !== 'collapsed' || isMobile} {...tooltip} />
-    </Tooltip.Root>
+    <Tooltip side="right" hideArrow content={tooltip}>
+      {button}
+    </Tooltip>
   )
 })
 SidebarMenuButton.displayName = 'SidebarMenuButton'

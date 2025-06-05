@@ -27,6 +27,7 @@ import {
   radioStyles,
   scrollAreaStyles,
   switchStyles,
+  tableV2Styles,
   tagStyles,
   textareaStyles,
   tooltipStyles
@@ -470,7 +471,8 @@ export default {
         textareaStyles,
         inputStyles,
         captionStyles,
-        multiSelectStyles
+        multiSelectStyles,
+        tableV2Styles
       ])
     }),
     tailwindcssAnimate,

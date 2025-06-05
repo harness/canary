@@ -1,0 +1,476 @@
+---
+title: TableV2
+description: TableV2 component
+beta: true
+---
+
+The `TableV2` component provides a way to display tabular data with various sub-components for customization.
+
+import { DocsPage } from "../../../components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div className="flex flex-col space-y-8">
+  <div>
+    <h5>Default variant</h5>
+    <TableV2.Root>
+      <TableV2.Header>
+        <TableV2.Row>
+          <TableV2.Head>Name</TableV2.Head>
+          <TableV2.Head>Email</TableV2.Head>
+          <TableV2.Head>Display Name</TableV2.Head>
+          <TableV2.Head>Date added</TableV2.Head>
+        </TableV2.Row>
+      </TableV2.Header>
+      <TableV2.Body >
+        <TableV2.Row>
+          <TableV2.Cell>John Doe</TableV2.Cell>
+          <TableV2.Cell>john@example.com</TableV2.Cell>
+          <TableV2.Cell>John</TableV2.Cell>
+          <TableV2.Cell>2023-01-01</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Jane Smith</TableV2.Cell>
+          <TableV2.Cell>jane@example.com</TableV2.Cell>
+          <TableV2.Cell>Jane</TableV2.Cell>
+          <TableV2.Cell>2023-02-15</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Bob Johnson</TableV2.Cell>
+          <TableV2.Cell>bob@example.com</TableV2.Cell>
+          <TableV2.Cell>Bob</TableV2.Cell>
+          <TableV2.Cell>2023-03-20</TableV2.Cell>
+        </TableV2.Row>
+      </TableV2.Body>
+    </TableV2.Root>
+  </div>
+  <div>
+    <h5>Compact variant</h5>
+    <TableV2.Root variant="compact">
+      <TableV2.Header>
+        <TableV2.Row>
+          <TableV2.Head>Name</TableV2.Head>
+          <TableV2.Head>Email</TableV2.Head>
+          <TableV2.Head>Display Name</TableV2.Head>
+          <TableV2.Head>Date added</TableV2.Head>
+        </TableV2.Row>
+      </TableV2.Header>
+      <TableV2.Body>
+        <TableV2.Row>
+          <TableV2.Cell>John Doe</TableV2.Cell>
+          <TableV2.Cell>john@example.com</TableV2.Cell>
+          <TableV2.Cell>John</TableV2.Cell>
+          <TableV2.Cell>2023-01-01</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Jane Smith</TableV2.Cell>
+          <TableV2.Cell>jane@example.com</TableV2.Cell>
+          <TableV2.Cell>Jane</TableV2.Cell>
+          <TableV2.Cell>2023-02-15</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Bob Johnson</TableV2.Cell>
+          <TableV2.Cell>bob@example.com</TableV2.Cell>
+          <TableV2.Cell>Bob</TableV2.Cell>
+          <TableV2.Cell>2023-03-20</TableV2.Cell>
+        </TableV2.Row>
+      </TableV2.Body>
+    </TableV2.Root>
+  </div>
+  <hr />
+  <div>
+    <h5>Relaxed Variant</h5>
+    <TableV2.Root variant="relaxed">
+      <TableV2.Header>
+        <TableV2.Row>
+          <TableV2.Head>Name</TableV2.Head>
+          <TableV2.Head>Email</TableV2.Head>
+          <TableV2.Head>Display Name</TableV2.Head>
+          <TableV2.Head>Date added</TableV2.Head>
+        </TableV2.Row>
+      </TableV2.Header>
+      <TableV2.Body>
+        <TableV2.Row>
+          <TableV2.Cell>John Doe</TableV2.Cell>
+          <TableV2.Cell>john@example.com</TableV2.Cell>
+          <TableV2.Cell>John</TableV2.Cell>
+          <TableV2.Cell>2023-01-01</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Jane Smith</TableV2.Cell>
+          <TableV2.Cell>jane@example.com</TableV2.Cell>
+          <TableV2.Cell>Jane</TableV2.Cell>
+          <TableV2.Cell>2023-02-15</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Bob Johnson</TableV2.Cell>
+          <TableV2.Cell>bob@example.com</TableV2.Cell>
+          <TableV2.Cell>Bob</TableV2.Cell>
+          <TableV2.Cell>2023-03-20</TableV2.Cell>
+        </TableV2.Row>
+      </TableV2.Body>
+    </TableV2.Root>
+  </div>
+</div>
+`}
+/>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div className="flex flex-col space-y-8">
+  <div>
+    <h5>Table with Checkbox</h5>
+    <TableV2.Root>
+      <TableV2.Header>
+        <TableV2.Row>
+          <TableV2.Head></TableV2.Head>
+          <TableV2.Head>Name</TableV2.Head>
+          <TableV2.Head>Email</TableV2.Head>
+          <TableV2.Head>Display Name</TableV2.Head>
+          <TableV2.Head>Date added</TableV2.Head>
+        </TableV2.Row>
+      </TableV2.Header>
+      <TableV2.Body>
+        <TableV2.Row>
+          <TableV2.Cell><Checkbox /></TableV2.Cell>
+          <TableV2.Cell>John Doe</TableV2.Cell>
+          <TableV2.Cell>john@example.com</TableV2.Cell>
+          <TableV2.Cell>John</TableV2.Cell>
+          <TableV2.Cell>2023-01-01</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell><Checkbox /></TableV2.Cell>
+          <TableV2.Cell>Jane Smith</TableV2.Cell>
+          <TableV2.Cell>jane@example.com</TableV2.Cell>
+          <TableV2.Cell>Jane</TableV2.Cell>
+          <TableV2.Cell>2023-02-15</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell><Checkbox /></TableV2.Cell>
+          <TableV2.Cell>Bob Johnson</TableV2.Cell>
+          <TableV2.Cell>bob@example.com</TableV2.Cell>
+          <TableV2.Cell>Bob</TableV2.Cell>
+          <TableV2.Cell>2023-03-20</TableV2.Cell>
+        </TableV2.Row>
+      </TableV2.Body>
+    </TableV2.Root>
+  </div>
+  <div>
+    <h5>Table with radio button</h5>
+    <Radio.Root name="user-selection" defaultValue="john">
+      <TableV2.Root>
+        <TableV2.Header>
+          <TableV2.Row>
+            <TableV2.Head></TableV2.Head>
+            <TableV2.Head>Name</TableV2.Head>
+            <TableV2.Head>Email</TableV2.Head>
+            <TableV2.Head>Display Name</TableV2.Head>
+            <TableV2.Head>Date added</TableV2.Head>
+          </TableV2.Row>
+        </TableV2.Header>
+        <TableV2.Body>
+          <TableV2.Row>
+            <TableV2.Cell>
+              <Radio.Item value="john" />
+            </TableV2.Cell>
+            <TableV2.Cell>John Doe</TableV2.Cell>
+            <TableV2.Cell>john@example.com</TableV2.Cell>
+            <TableV2.Cell>John</TableV2.Cell>
+            <TableV2.Cell>2023-01-01</TableV2.Cell>
+          </TableV2.Row>
+          <TableV2.Row>
+            <TableV2.Cell>
+              <Radio.Item value="jane" />
+            </TableV2.Cell>
+            <TableV2.Cell>Jane Smith</TableV2.Cell>
+            <TableV2.Cell>jane@example.com</TableV2.Cell>
+            <TableV2.Cell>Jane</TableV2.Cell>
+            <TableV2.Cell>2023-02-15</TableV2.Cell>
+          </TableV2.Row>
+          <TableV2.Row>
+            <TableV2.Cell>
+              <Radio.Item value="bob" />
+            </TableV2.Cell>
+            <TableV2.Cell>Bob Johnson</TableV2.Cell>
+            <TableV2.Cell>bob@example.com</TableV2.Cell>
+            <TableV2.Cell>Bob</TableV2.Cell>
+            <TableV2.Cell>2023-03-20</TableV2.Cell>
+          </TableV2.Row>
+        </TableV2.Body>
+      </TableV2.Root>
+    </Radio.Root>
+  </div>
+</div>
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { TableV2 } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <TableV2.Root variant="default">
+    <TableV2.Header>
+      <TableV2.Row>
+        <TableV2.Head>Name</TableV2.Head>
+        <TableV2.Head>Email</TableV2.Head>
+        <TableV2.Head>Display Name</TableV2.Head>
+        <TableV2.Head>Date added</TableV2.Head>
+      </TableV2.Row>
+    </TableV2.Header>
+    <TableV2.Body>
+      <TableV2.Row>
+        <TableV2.Cell>John Doe</TableV2.Cell>
+        <TableV2.Cell>john@example.com</TableV2.Cell>
+        <TableV2.Cell>John</TableV2.Cell>
+        <TableV2.Cell>2023-01-01</TableV2.Cell>
+      </TableV2.Row>
+    </TableV2.Body>
+  </TableV2.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `TableV2` component can be imported and composed as required.
+
+```typescript jsx
+<TableV2.Root>
+  <TableV2.Caption />
+  <TableV2.Header>
+    <TableV2.Row>
+      <TableV2.Head />
+    </TableV2.Row>
+  </TableV2.Header>
+  <TableV2.Body>
+    <TableV2.Row>
+      <TableV2.Cell />
+    </TableV2.Row>
+  </TableV2.Body>
+  <TableV2.Footer>
+    <TableV2.Row>
+      <TableV2.Cell />
+    </TableV2.Row>
+  </TableV2.Footer>
+</TableV2.Root>
+```
+
+## API Reference
+
+<Aside>
+  All components extend their HTML equivalents, so all relevant HTML props also
+  apply.
+</Aside>
+
+### `Root`
+
+The root component for the table.
+
+```typescript jsx
+<TableV2.Root
+  variant="asStackedList"             // [OPTIONAL] Variant of the table
+  disableXScroll={false}              // [OPTIONAL] Disable horizontal scroll
+  className="custom-class"            // [OPTIONAL] Custom class name
+  tableClassName="custom-table-class" // [OPTIONAL] Custom table class name
+>
+  {/* Table content */}
+</TableV2.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Variant of the table",
+      required: false,
+      defaultValue: "default",
+      value: "'default' | 'asStackedList'",
+    },
+    {
+      name: "disableXScroll",
+      description: "Disable horizontal scroll",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "tableClassName",
+      description: "Custom table class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Header`
+
+The header section of the table.
+
+```typescript jsx
+<Table.Header
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Header content */}
+</Table.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Body`
+
+The body section of the table.
+
+```typescript jsx
+<Table.Body
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Body content */}
+</Table.Body>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Footer`
+
+The footer section of the table.
+
+```typescript jsx
+<Table.Footer
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Footer content */}
+</Table.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Row`
+
+A row within the table.
+
+```typescript jsx
+<Table.Row
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Row content */}
+</Table.Row>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Head`
+
+A header cell within the table.
+
+```typescript jsx
+<Table.Head
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Header cell content */}
+</Table.Head>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Cell`
+
+A cell within the table.
+
+```typescript jsx
+<Table.Cell
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Cell content */}
+</Table.Cell>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Caption`
+
+A caption for the table.
+
+```typescript jsx
+<Table.Caption
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Caption content */}
+</Table.Caption>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

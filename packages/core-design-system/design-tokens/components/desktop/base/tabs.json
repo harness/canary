@@ -65,6 +65,10 @@
         "value": "{spacing.2}",
         "type": "spacing"
       },
+      "container-gap": {
+        "value": "{spacing.6}",
+        "type": "spacing"
+      },
       "py": {
         "value": "{spacing.2-half}",
         "type": "spacing"

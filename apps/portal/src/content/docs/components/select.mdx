@@ -108,55 +108,96 @@ The `Select` component integrates seamlessly with form elements like labels, cap
 
 ## Search Functionality
 
-Enable client-side search filtering to help users find options quickly in large lists.
+Enable client-side search filtering to help users find options quickly in large or structured lists.
 
 <DocsPage.ComponentExample
   client:only
   code={`() => {
     const [value, setValue] = React.useState()
     const [customSearchValue, setCustomSearchValue] = React.useState()
-    
-    const fruits = [
-      { label: 'Apple', value: 'apple' },
-      { label: 'Apricot', value: 'apricot' },
-      { label: 'Banana', value: 'banana' },
-      { label: 'Blackberry', value: 'blackberry' },
-      { label: 'Blueberry', value: 'blueberry' },
-      { label: 'Cherry', value: 'cherry' },
-      { label: 'Grape', value: 'grape' },
-      { label: 'Orange', value: 'orange' },
-      { label: 'Peach', value: 'peach' },
-      { label: 'Pear', value: 'pear' },
-      { label: 'Strawberry', value: 'strawberry' },
-      { label: 'Watermelon', value: 'watermelon' },
+
+    const groupedOptions = [
+      {
+        label: 'Fruits',
+        options: [
+          { label: 'Apple', value: 'apple' },
+          { label: 'Apricot', value: 'apricot' },
+          { label: 'Avocado', value: 'avocado' },
+          { label: 'Banana', value: 'banana' },
+          { label: 'Blackberry', value: 'blackberry' },
+          '-',
+          { label: 'Blueberry', value: 'blueberry' },
+          { label: 'Cherry', value: 'cherry' },
+          { label: 'Grape', value: 'grape' },
+          { label: 'Kiwi', value: 'kiwi' },
+          { label: 'Mango', value: 'mango' },
+          '-',
+          { label: 'Orange', value: 'orange' },
+          { label: 'Peach', value: 'peach' },
+          { label: 'Pear', value: 'pear' },
+          { label: 'Pineapple', value: 'pineapple' },
+          { label: 'Plum', value: 'plum' },
+          '-',
+          { label: 'Raspberry', value: 'raspberry' },
+          { label: 'Strawberry', value: 'strawberry' },
+          { label: 'Watermelon', value: 'watermelon' },
+        ]
+      },
+      '-',
+      {
+        label: 'Vegetables',
+        options: [
+          { label: 'Artichoke', value: 'artichoke' },
+          { label: 'Asparagus', value: 'asparagus' },
+          { label: 'Broccoli', value: 'broccoli' },
+          { label: 'Carrot', value: 'carrot' },
+          { label: 'Cauliflower', value: 'cauliflower' },
+          '-',
+          { label: 'Celery', value: 'celery' },
+          { label: 'Corn', value: 'corn' },
+          { label: 'Cucumber', value: 'cucumber' },
+          { label: 'Eggplant', value: 'eggplant' },
+          { label: 'Lettuce', value: 'lettuce' },
+          '-',
+          { label: 'Mushroom', value: 'mushroom' },
+          { label: 'Onion', value: 'onion' },
+          { label: 'Pea', value: 'pea' },
+          { label: 'Potato', value: 'potato' },
+          '-',
+          { label: 'Spinach', value: 'spinach' },
+          { label: 'Tomato', value: 'tomato' },
+          { label: 'Zucchini', value: 'zucchini' },
+        ]
+      }
     ]
-    
+
     const users = [
       { label: 'John Doe', value: 'john', email: 'john@example.com' },
       { label: 'Jane Smith', value: 'jane', email: 'jane@example.com' },
       { label: 'Bob Johnson', value: 'bob', email: 'bob@example.com' },
       { label: 'Alice Brown', value: 'alice', email: 'alice@example.com' },
+      { label: 'Charlie White', value: 'charlie', email: 'charlie@example.com' },
+      { label: 'Eve Black', value: 'eve', email: 'eve@example.com' },
     ]
-    
+
     return (
       <div className="grid gap-4">
         <SelectV2
-          options={fruits}
+          options={groupedOptions}
           value={value}
           onChange={setValue}
           allowSearch
-          placeholder="Search and select a fruit"
-          label="Basic search"
+          placeholder="Search items..."
+          label="Grouped and searchable"
         />
-        
+
         <SelectV2
           options={users}
           value={customSearchValue}
           onChange={setCustomSearchValue}
           allowSearch
           onSearch={(query) => {
-            // Custom search that includes email addresses
-            return users.filter(user => 
+            return users.filter(user =>
               user.label.toLowerCase().includes(query.toLowerCase()) ||
               user.email.toLowerCase().includes(query.toLowerCase())
             )
@@ -167,69 +208,8 @@ Enable client-side search filtering to help users find options quickly in large 
         />
       </div>
     )
-  }`}
-/>
 
-## Custom Option Rendering
-
-Use the `optionRenderer` prop to customize how options are displayed in the dropdown.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [status, setStatus] = React.useState('active')
-    const [user, setUser] = React.useState()
-    
-    const statusOptions = [
-      { label: 'Active', value: 'active' },
-      { label: 'Inactive', value: 'inactive' },
-      { label: 'Pending', value: 'pending' },
-    ]
-    
-    const userOptions = [
-      { label: 'John Doe', value: 'john', role: 'Admin', avatar: '/avatar1.png' },
-      { label: 'Jane Smith', value: 'jane', role: 'Developer', avatar: '/avatar2.png' },
-      { label: 'Bob Johnson', value: 'bob', role: 'Designer', avatar: '/avatar3.png' },
-    ]
-    
-    return (
-      <div className="grid gap-4">
-        <SelectV2
-          label="Status"
-          options={statusOptions}
-          value={status}
-          onChange={setStatus}
-          optionRenderer={(option) => (
-            <div className="flex items-center gap-2">
-              <span className={\`w-2 h-2 rounded-full \${
-                option.value === 'active' ? 'bg-green-500' :
-                option.value === 'inactive' ? 'bg-gray-500' :
-                'bg-yellow-500'
-              }\`} />
-              {option.label}
-            </div>
-          )}
-        />
-        
-        <SelectV2
-          label="Assigned to"
-          options={userOptions}
-          value={user}
-          onChange={setUser}
-          optionRenderer={(option) => (
-            <div className="flex items-center gap-3">
-              <Avatar src={option.avatar} size="sm" />
-              <div>
-                <div className="font-medium">{option.label}</div>
-                <div className="text-xs text-cn-foreground-3">{option.role}</div>
-              </div>
-            </div>
-          )}
-          placeholder="Select a user"
-        />
-      </div>
-    )
-  }`}
+}`}
 />
 
 ## Async Loading
@@ -405,6 +385,44 @@ Options can have ReactNode labels for rich content display.
   }`}
 />
 
+## Grouped Options and Separators
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState()
+
+    return (
+      <SelectV2
+        label="Grouped options"
+        options={[
+          {
+            label: 'Fruits',
+            options: [
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              '-',
+              { label: 'Orange', value: 'orange' },
+            ]
+          },
+          '-',
+          {
+            label: 'Vegetables',
+            options: [
+              { label: 'Carrot', value: 'carrot' },
+              { label: 'Lettuce', value: 'lettuce' },
+            ]
+          }
+        ]}
+        value={value}
+        onChange={setValue}
+        placeholder="Select an item"
+      />
+    )
+
+}`}
+/>
+
 ## API Reference
 
 ### `Select`
@@ -441,9 +459,10 @@ The `Select` component is the main component for creating dropdown selections.
   props={[
     {
       name: "options",
-      description: "Array of options or async function that returns options",
+      description:
+        "Flat or grouped array of selectable items, including optional separators. Can be async.",
       required: true,
-      value: "SelectOption<T>[] | () => Promise<SelectV2Option<T>[]>",
+      value: "SelectOption<T>[] | () => Promise<SelectOption<T>[]>",
     },
     {
       name: "value",
@@ -543,13 +562,6 @@ The `Select` component is the main component for creating dropdown selections.
       defaultValue: "false",
     },
     {
-      name: "optionRenderer",
-      description: "Custom renderer for each option",
-      required: false,
-      value: "(option: SelectOption<T>) => React.ReactElement",
-      defaultValue: "(option) => option.label",
-    },
-    {
       name: "allowSearch",
       description: "Enable client-side search filtering",
       required: false,
@@ -571,11 +583,24 @@ The `Select` component is the main component for creating dropdown selections.
 The `SelectOption` interface defines the shape of each option in the select dropdown.
 
 ```typescript
-interface SelectOption<T = string> {
-  label: string | ReactNode;
-  value: T;
-  disabled?: boolean;
-}
+type SelectOption<T = string> =
+  | {
+      label: string | ReactNode;
+      value: T;
+      disabled?: boolean;
+    }
+  | {
+      label: string;
+      options: Array<
+        | {
+            label: string | ReactNode;
+            value: T;
+            disabled?: boolean;
+          }
+        | "-"
+      >;
+    }
+  | "-";
 ```
 
 <DocsPage.PropsTable
@@ -606,12 +631,6 @@ interface SelectOption<T = string> {
   Only unique props are documented here. Common input props like `label`,
   `placeholder`, `caption`, `error` etc. follow the same patterns as other form
   components.
-</Aside>
-
-<Aside title="Tip">
-  Use the `DropdownMenu` component directly if you need more advanced
-  customization of the dropdown behavior beyond what the `optionRenderer` prop
-  provides.
 </Aside>
 
 ## Behavior

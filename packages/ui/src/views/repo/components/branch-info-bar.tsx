@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button, DropdownMenu, Icon, StatusBadge, Link as StyledLink } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
@@ -26,6 +26,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   currentBranchDivergence,
   refType = BranchSelectorTab.BRANCHES
 }) => {
+  const { t } = useTranslation()
   const { Link } = useRouterContext()
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
@@ -78,7 +79,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="w-60 p-4" align="end">
+          <DropdownMenu.Content className="w-80 p-4" align="end">
             <div className="flex gap-x-2">
               <div className="border-cn-borders-4 flex size-6 shrink-0 items-center justify-center rounded-full border">
                 <Icon name="merged" size={12} />
@@ -93,7 +94,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                 </StatusBadge>
                 .
                 <p className="text-2 text-cn-foreground-2 mt-2.5 leading-tight">
-                  Open a pull request to contribute your changes upstream.
+                  {t('views:repos.compareBranchesToSeeChanges', 'Compare branches to see your changes.')}
+                </p>
+                <p className="text-2 text-cn-foreground-2 mt-2.5 leading-tight">
+                  {t(
+                    'views:repos.afterComparingOpenPullRequest',
+                    'After comparing changes, you may open a pull request to contribute your changes upstream.'
+                  )}
                 </p>
               </div>
             </div>
@@ -103,14 +110,6 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
                 >
                   Compare
-                </Link>
-              </Button>
-
-              <Button className="w-full" asChild>
-                <Link
-                  to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
-                >
-                  Open pull request
                 </Link>
               </Button>
             </div>

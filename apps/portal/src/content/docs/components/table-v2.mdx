@@ -305,13 +305,9 @@ import { Aside } from "@astrojs/starlight/components";
           <TableV2.Cell>UI component library for Harness</TableV2.Cell>
           <TableV2.Cell>★ 245</TableV2.Cell>
         </TableV2.Row>
-        <TableV2.Row>
-          <TableV2.Cell 
-            to="/repositories/gitness"
-            linkProps={{ 
-              prefixIcon: 'git-branch',
-            }}
-          >
+        {/* Example of a linked row - entire row is clickable */}
+        <TableV2.Row to="/repositories/gitness">
+          <TableV2.Cell>
             gitness
           </TableV2.Cell>
           <TableV2.Cell>Git server with a modern UI</TableV2.Cell>

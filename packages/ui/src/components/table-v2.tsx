@@ -1,4 +1,12 @@
-import { forwardRef, HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react'
+import React, {
+  cloneElement,
+  forwardRef,
+  HTMLAttributes,
+  isValidElement,
+  ReactNode,
+  TdHTMLAttributes,
+  ThHTMLAttributes
+} from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -57,11 +65,32 @@ TableFooter.displayName = 'TableFooter'
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode
   selected?: boolean
+  to?: string
 }
 
-const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => (
-  <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props} />
-))
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
+  // <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props} />
+
+  let rowChildren = props.children
+  if (props.to) {
+    rowChildren = React.Children.map(rowChildren, child => {
+      // Only process React elements
+      if (isValidElement(child)) {
+        // Add to and linkProps to the child
+        return cloneElement(child, {
+          to: props.to
+        } as any)
+      }
+      return child
+    })
+  }
+
+  return (
+    <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props}>
+      {rowChildren}
+    </tr>
+  )
+})
 TableRow.displayName = 'TableRow'
 
 const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement>>(
@@ -80,10 +109,10 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
 
     if (shouldRenderLink) {
       return (
-        <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+        <td ref={ref} className={cn('cn-table-v2-cell p-0', className)} {...props}>
           <Link
             to={to || ''}
-            className={cn('block size-full flex items-center', linkProps?.className)}
+            className={cn('cn-table-v2-cell-link', linkProps?.className)}
             {...(linkProps || {})}
           >
             {children}

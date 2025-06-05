@@ -86,6 +86,11 @@ export default {
       '@apply [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]': ''
     },
 
+    // Cell link
+    '&-cell-link': {
+      '@apply block w-full h-full p-2 flex items-center': ''
+    },
+
     // Caption
     '&-caption': {
       '@apply text-cn-foreground-3 mt-4 text-sm': ''

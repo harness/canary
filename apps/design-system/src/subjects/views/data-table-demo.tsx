@@ -53,7 +53,7 @@ const users: User[] = [
 // Each column definition has:
 // - header: What appears in the column header
 // - accessorKey: Which property from the data object to display
-// - cell (optional): Custom rendering function for the cell content
+// - cell?: Custom rendering function for the cell content
 const columns: ColumnDef<User>[] = [
   {
     header: 'Name',

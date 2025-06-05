@@ -15,7 +15,6 @@ export function AddNode(props: AddNodeProp) {
         rounded
         style={{ alignSelf: 'center' }}
         variant="outline"
-        size="lg"
         onMouseDown={e => e.stopPropagation()}
         onClick={onClick}
       >

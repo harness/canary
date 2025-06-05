@@ -69,7 +69,7 @@ export const TableV2Demo: React.FC = () => {
               <TableV2.Head>Last Login</TableV2.Head>
             </TableV2.Row>
           </TableV2.Header>
-          <TableV2.Body hasHighlightOnHover>
+          <TableV2.Body>
             {users.map(user => (
               <TableV2.Row key={user.id}>
                 <TableV2.Cell className="font-medium">{user.name}</TableV2.Cell>

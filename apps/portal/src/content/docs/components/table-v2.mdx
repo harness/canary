@@ -12,43 +12,10 @@ import { Aside } from "@astrojs/starlight/components";
 <DocsPage.ComponentExample
   client:only
   code={`
-<div className="flex flex-col space-y-8">
+<Layout.Flex direction="column" gap="lg">
   <div>
-    <h5>Default variant with hover</h5>
+    <h5 className="mb-2">Default variant</h5>
     <TableV2.Root>
-      <TableV2.Header>
-        <TableV2.Row>
-          <TableV2.Head>Name</TableV2.Head>
-          <TableV2.Head>Email</TableV2.Head>
-          <TableV2.Head>Display Name</TableV2.Head>
-          <TableV2.Head>Date added</TableV2.Head>
-        </TableV2.Row>
-      </TableV2.Header>
-      <TableV2.Body hasHighlightOnHover>
-        <TableV2.Row>
-          <TableV2.Cell>John Doe</TableV2.Cell>
-          <TableV2.Cell>john@example.com</TableV2.Cell>
-          <TableV2.Cell>John</TableV2.Cell>
-          <TableV2.Cell>2023-01-01</TableV2.Cell>
-        </TableV2.Row>
-        <TableV2.Row>
-          <TableV2.Cell>Jane Smith</TableV2.Cell>
-          <TableV2.Cell>jane@example.com</TableV2.Cell>
-          <TableV2.Cell>Jane</TableV2.Cell>
-          <TableV2.Cell>2023-02-15</TableV2.Cell>
-        </TableV2.Row>
-        <TableV2.Row>
-          <TableV2.Cell>Bob Johnson</TableV2.Cell>
-          <TableV2.Cell>bob@example.com</TableV2.Cell>
-          <TableV2.Cell>Bob</TableV2.Cell>
-          <TableV2.Cell>2023-03-20</TableV2.Cell>
-        </TableV2.Row>
-      </TableV2.Body>
-    </TableV2.Root>
-  </div>
-  <div>
-    <h5>Compact variant</h5>
-    <TableV2.Root variant="compact">
       <TableV2.Header>
         <TableV2.Row>
           <TableV2.Head>Name</TableV2.Head>
@@ -80,7 +47,40 @@ import { Aside } from "@astrojs/starlight/components";
     </TableV2.Root>
   </div>
   <div>
-    <h5>Relaxed Variant</h5>
+    <h5 className="mb-2">Compact variant with hover disabled</h5>
+    <TableV2.Root variant="compact" disableHighlightOnHover>
+      <TableV2.Header>
+        <TableV2.Row>
+          <TableV2.Head>Name</TableV2.Head>
+          <TableV2.Head>Email</TableV2.Head>
+          <TableV2.Head>Display Name</TableV2.Head>
+          <TableV2.Head>Date added</TableV2.Head>
+        </TableV2.Row>
+      </TableV2.Header>
+      <TableV2.Body>
+        <TableV2.Row>
+          <TableV2.Cell>John Doe</TableV2.Cell>
+          <TableV2.Cell>john@example.com</TableV2.Cell>
+          <TableV2.Cell>John</TableV2.Cell>
+          <TableV2.Cell>2023-01-01</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Jane Smith</TableV2.Cell>
+          <TableV2.Cell>jane@example.com</TableV2.Cell>
+          <TableV2.Cell>Jane</TableV2.Cell>
+          <TableV2.Cell>2023-02-15</TableV2.Cell>
+        </TableV2.Row>
+        <TableV2.Row>
+          <TableV2.Cell>Bob Johnson</TableV2.Cell>
+          <TableV2.Cell>bob@example.com</TableV2.Cell>
+          <TableV2.Cell>Bob</TableV2.Cell>
+          <TableV2.Cell>2023-03-20</TableV2.Cell>
+        </TableV2.Row>
+      </TableV2.Body>
+    </TableV2.Root>
+  </div>
+  <div>
+    <h5 className="mb-2">Relaxed Variant</h5>
     <TableV2.Root variant="relaxed">
       <TableV2.Header>
         <TableV2.Row>
@@ -112,16 +112,16 @@ import { Aside } from "@astrojs/starlight/components";
       </TableV2.Body>
     </TableV2.Root>
   </div>
-</div>
+</Layout.Flex>
 `}
 />
 
 <DocsPage.ComponentExample
   client:only
   code={`
-<div className="flex flex-col space-y-8">
+<Layout.Flex direction="column" gap="lg">
   <div>
-    <h5>Table with Checkbox</h5>
+    <h5 className="mb-2">Table with Checkbox</h5>
     <TableV2.Root>
       <TableV2.Header>
         <TableV2.Row>
@@ -132,8 +132,8 @@ import { Aside } from "@astrojs/starlight/components";
           <TableV2.Head>Date added</TableV2.Head>
         </TableV2.Row>
       </TableV2.Header>
-      <TableV2.Body hasHighlightOnHover>
-        <TableV2.Row checked>
+      <TableV2.Body>
+        <TableV2.Row selected>
           <TableV2.Cell><Checkbox checked /></TableV2.Cell>
           <TableV2.Cell>John Doe</TableV2.Cell>
           <TableV2.Cell>john@example.com</TableV2.Cell>
@@ -158,7 +158,7 @@ import { Aside } from "@astrojs/starlight/components";
     </TableV2.Root>
   </div>
   <div>
-    <h5>Table with radio button</h5>
+    <h5 className="mb-2">Table with radio button</h5>
     <Radio.Root name="user-selection" value="jane">
       <TableV2.Root>
         <TableV2.Header>
@@ -180,7 +180,7 @@ import { Aside } from "@astrojs/starlight/components";
             <TableV2.Cell>John</TableV2.Cell>
             <TableV2.Cell>2023-01-01</TableV2.Cell>
           </TableV2.Row>
-          <TableV2.Row checked>
+          <TableV2.Row selected>
             <TableV2.Cell>
               <Radio.Item value="jane" />
             </TableV2.Cell>
@@ -202,7 +202,7 @@ import { Aside } from "@astrojs/starlight/components";
       </TableV2.Root>
     </Radio.Root>
   </div>
-</div>
+</Layout.Flex>
 `}
 />
 
@@ -211,7 +211,7 @@ import { Aside } from "@astrojs/starlight/components";
   code={`
 <div className="flex flex-col">
   <div>
-    <h5>Table with Pagination</h5>
+    <h5 className="mb-2">Table with Submenu and Pagination</h5>
     <TableV2.Root>
       <TableV2.Header>
         <TableV2.Row>
@@ -219,26 +219,57 @@ import { Aside } from "@astrojs/starlight/components";
           <TableV2.Head>Email</TableV2.Head>
           <TableV2.Head>Display Name</TableV2.Head>
           <TableV2.Head>Date added</TableV2.Head>
+          <TableV2.Head></TableV2.Head>
         </TableV2.Row>
       </TableV2.Header>
-      <TableV2.Body >
+      <TableV2.Body>
         <TableV2.Row>
           <TableV2.Cell>John Doe</TableV2.Cell>
           <TableV2.Cell>john@example.com</TableV2.Cell>
           <TableV2.Cell>John</TableV2.Cell>
           <TableV2.Cell>2023-01-01</TableV2.Cell>
+          <TableV2.Cell><MoreActionsTooltip actions={[
+            {
+              title: 'Action 1',
+              onClick: () => {}
+            },
+            {
+              title: 'Action 2',
+              onClick: () => {}
+            }
+          ]} /></TableV2.Cell>
         </TableV2.Row>
         <TableV2.Row>
           <TableV2.Cell>Jane Smith</TableV2.Cell>
           <TableV2.Cell>jane@example.com</TableV2.Cell>
           <TableV2.Cell>Jane</TableV2.Cell>
           <TableV2.Cell>2023-02-15</TableV2.Cell>
+          <TableV2.Cell><MoreActionsTooltip actions={[
+            {
+              title: 'Action 1',
+              onClick: () => {}
+            },
+            {
+              title: 'Action 2',
+              onClick: () => {}
+            }
+          ]} /></TableV2.Cell>
         </TableV2.Row>
         <TableV2.Row>
           <TableV2.Cell>Bob Johnson</TableV2.Cell>
           <TableV2.Cell>bob@example.com</TableV2.Cell>
           <TableV2.Cell>Bob</TableV2.Cell>
           <TableV2.Cell>2023-03-20</TableV2.Cell>
+          <TableV2.Cell><MoreActionsTooltip actions={[
+            {
+              title: 'Action 1',
+              onClick: () => {}
+            },
+            {
+              title: 'Action 2',
+              onClick: () => {}
+            }
+          ]} /></TableV2.Cell>
         </TableV2.Row>
       </TableV2.Body>
     </TableV2.Root>
@@ -256,70 +287,55 @@ import { Aside } from "@astrojs/starlight/components";
 <DocsPage.ComponentExample
   client:only
   code={`
-<div className="flex flex-col space-y-8">
   <div>
-    <h5>Table with Submenu</h5>
+    <h5 className="mb-2">Table with Linked Cells</h5>
     <TableV2.Root>
       <TableV2.Header>
         <TableV2.Row>
-          <TableV2.Head>Name</TableV2.Head>
-          <TableV2.Head>Email</TableV2.Head>
-          <TableV2.Head>Display Name</TableV2.Head>
-          <TableV2.Head></TableV2.Head>
+          <TableV2.Head>Repository</TableV2.Head>
+          <TableV2.Head>Description</TableV2.Head>
+          <TableV2.Head>Stars</TableV2.Head>
         </TableV2.Row>
       </TableV2.Header>
-      <TableV2.Body >
+      <TableV2.Body>
         <TableV2.Row>
-          <TableV2.Cell>John Doe</TableV2.Cell>
-          <TableV2.Cell>john@example.com</TableV2.Cell>
-          <TableV2.Cell>John</TableV2.Cell>
-          <TableV2.Cell><MoreActionsTooltip actions={[
-            {
-              title: 'Action 1',
-              onClick: () => {}
-            },
-            {
-              title: 'Action 2',
-              onClick: () => {}
-            }
-          ]} /></TableV2.Cell>
+          <TableV2.Cell to="/repositories/canary">
+            canary
+          </TableV2.Cell>
+          <TableV2.Cell>UI component library for Harness</TableV2.Cell>
+          <TableV2.Cell>★ 245</TableV2.Cell>
         </TableV2.Row>
         <TableV2.Row>
-          <TableV2.Cell>Jane Smith</TableV2.Cell>
-          <TableV2.Cell>jane@example.com</TableV2.Cell>
-          <TableV2.Cell>Jane</TableV2.Cell>
-          <TableV2.Cell><MoreActionsTooltip actions={[
-            {
-              title: 'Action 1',
-              onClick: () => {}
-            },
-            {
-              title: 'Action 2',
-              onClick: () => {}
-            }
-          ]} /></TableV2.Cell>
+          <TableV2.Cell 
+            to="/repositories/gitness"
+            linkProps={{ 
+              prefixIcon: 'git-branch',
+            }}
+          >
+            gitness
+          </TableV2.Cell>
+          <TableV2.Cell>Git server with a modern UI</TableV2.Cell>
+          <TableV2.Cell>★ 189</TableV2.Cell>
         </TableV2.Row>
         <TableV2.Row>
-          <TableV2.Cell>Bob Johnson</TableV2.Cell>
-          <TableV2.Cell>bob@example.com</TableV2.Cell>
-          <TableV2.Cell>Bob</TableV2.Cell>
-          <TableV2.Cell><MoreActionsTooltip actions={[
-            {
-              title: 'Action 1',
-              onClick: () => {}
-            },
-            {
-              title: 'Action 2',
-              onClick: () => {}
-            }
-          ]} /></TableV2.Cell>
+          {/* Link with onClick handler */}
+          <TableV2.Cell 
+            to="/repositories/drone"
+            linkProps={{ 
+              suffixIcon: true,
+            }}
+          >
+            drone
+          </TableV2.Cell>
+          <TableV2.Cell>CI/CD platform built on Docker</TableV2.Cell>
+          <TableV2.Cell>★ 312</TableV2.Cell>
         </TableV2.Row>
       </TableV2.Body>
     </TableV2.Root>
   </div>
-</div>
 `}
 />
+
 ## Usage
 
 ```typescript jsx
@@ -388,10 +404,11 @@ The root component for the table.
 ```typescript jsx
 <TableV2.Root
   variant="default"                 // [OPTIONAL] Variant of the table
-  disableXScroll={false}            // [OPTIONAL] Disable horizontal scroll
   className="custom-class"          // [OPTIONAL] Custom class name
   tableClassName="custom-table-class" // [OPTIONAL] Custom table class name
+  disableHighlightOnHover={false}   // [OPTIONAL] Disable row highlighting on hover (enabled by default)
 >
+  {/* Table content */}
 </TableV2.Root>
 ```
 
@@ -401,27 +418,26 @@ The root component for the table.
       name: "variant",
       description: "Variant of the table",
       required: false,
-      defaultValue: "default",
-      value: "'default' | 'asStackedList'",
-    },
-    {
-      name: "disableXScroll",
-      description: "Disable horizontal scroll",
-      required: false,
-      defaultValue: "false",
-      value: "boolean",
+      value: "'default' | 'relaxed' | 'compact'",
     },
     {
       name: "className",
-      description: "Custom class name",
+      description: "Custom class name for the container",
       required: false,
       value: "string",
     },
     {
       name: "tableClassName",
-      description: "Custom table class name",
+      description: "Custom class name for the table element",
       required: false,
       value: "string",
+    },
+    {
+      name: "disableHighlightOnHover",
+      description:
+        "Disable row highlighting on hover (highlighting is enabled by default)",
+      required: false,
+      value: "boolean",
     },
   ]}
 />
@@ -497,13 +513,11 @@ The footer section of the table.
 
 ### `Row`
 
-A row within the table.
-
 ```typescript jsx
 <Table.Row
   className="custom-class" // [OPTIONAL] Custom class name
-  expanded={false}       // [OPTIONAL] Whether the row is expanded
-  expandedContent={<TableV2.Cell colSpan={4}>Expanded content</TableV2.Cell>} // [OPTIONAL] Content to display when expanded
+  selected={true} // [OPTIONAL] Whether the row is checked/selected
+  onClick={(e) => console.log('Row clicked', e)} // [OPTIONAL] Click handler for the row
 >
   {/* Row content */}
 </Table.Row>
@@ -516,6 +530,18 @@ A row within the table.
       description: "Custom class name",
       required: false,
       value: "string",
+    },
+    {
+      name: "selected",
+      description: "Whether the row is checked/selected",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onClick",
+      description: "Click handler for the row.",
+      required: false,
+      value: "(event: React.MouseEvent<HTMLTableRowElement>) => void",
     },
   ]}
 />
@@ -550,6 +576,9 @@ A cell within the table.
 ```typescript jsx
 <Table.Cell
   className="custom-class" // [OPTIONAL] Custom class name
+  onClick={(e) => console.log('Cell clicked', e)} // [OPTIONAL] Click handler for the cell
+  to="/path/to/page" // [OPTIONAL] URL to navigate to when the cell is clicked
+  linkProps={{ prefixIcon: 'arrow-right', variant: 'secondary' }} // [OPTIONAL] Additional props for the Link component
 >
   {/* Cell content */}
 </Table.Cell>
@@ -562,6 +591,26 @@ A cell within the table.
       description: "Custom class name",
       required: false,
       value: "string",
+    },
+    {
+      name: "onClick",
+      description: "Click handler for the cell.",
+      required: false,
+      value: "(event: React.MouseEvent<HTMLTableCellElement>) => void",
+    },
+    {
+      name: "to",
+      description:
+        "URL to navigate to when the cell is clicked. Renders the cell content inside a Link component.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "linkProps",
+      description:
+        "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
+      required: false,
+      value: "LinkProps",
     },
   ]}
 />

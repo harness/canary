@@ -3,6 +3,8 @@ import { forwardRef, HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttribut
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { Link, type LinkProps } from './link'
+
 const tableVariants = cva('cn-table-v2', {
   variants: {
     variant: {
@@ -18,11 +20,19 @@ const tableVariants = cva('cn-table-v2', {
 
 export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
   tableClassName?: string
+  disableHighlightOnHover?: boolean
 }
 
 const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
-  ({ variant, className, tableClassName, ...props }, ref) => (
-    <div className={cn('cn-table-v2-container', tableVariants({ variant }), className)}>
+  ({ variant, className, tableClassName, disableHighlightOnHover = false, ...props }, ref) => (
+    <div
+      className={cn(
+        'cn-table-v2-container',
+        tableVariants({ variant }),
+        { 'cn-table-v2-highlight-hover': !disableHighlightOnHover },
+        className
+      )}
+    >
       <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
     </div>
   )
@@ -34,16 +44,9 @@ const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
 )
 TableHeader.displayName = 'TableHeader'
 
-const TableBody = forwardRef<
-  HTMLTableSectionElement,
-  HTMLAttributes<HTMLTableSectionElement> & { hasHighlightOnHover?: boolean }
->(({ className, hasHighlightOnHover, ...props }, ref) => (
-  <tbody
-    ref={ref}
-    className={cn('cn-table-v2-body', { 'cn-table-v2-highlight-hover': hasHighlightOnHover }, className)}
-    {...props}
-  />
-))
+const TableBody = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
+  ({ className, ...props }, ref) => <tbody ref={ref} className={cn('cn-table-v2-body', className)} {...props} />
+)
 TableBody.displayName = 'TableBody'
 
 const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
@@ -53,11 +56,11 @@ TableFooter.displayName = 'TableFooter'
 
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode
-  checked?: boolean
+  selected?: boolean
 }
 
-const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, checked, ...props }, ref) => (
-  <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={checked ? 'true' : undefined} {...props} />
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => (
+  <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props} />
 ))
 TableRow.displayName = 'TableRow'
 
@@ -66,8 +69,35 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
 )
 TableHead.displayName = 'TableHead'
 
-const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props} />
+interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
+  to?: string
+  linkProps?: Omit<LinkProps, 'to'>
+}
+
+const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
+  ({ className, to, linkProps, children, ...props }, ref) => {
+    const shouldRenderLink = to || linkProps
+
+    if (shouldRenderLink) {
+      return (
+        <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+          <Link
+            to={to || ''}
+            className={cn('block size-full flex items-center', linkProps?.className)}
+            {...(linkProps || {})}
+          >
+            {children}
+          </Link>
+        </td>
+      )
+    }
+
+    return (
+      <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+        {children}
+      </td>
+    )
+  }
 )
 TableCell.displayName = 'TableCell'
 

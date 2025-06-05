@@ -135,7 +135,6 @@ export default {
       'border-radius': 'var(--cn-progress-radius, 9999px)',
       height: 'var(--cn-progress-size-default, 8px)',
       'background-color': 'var(--cn-comp-slider-track-base)',
-      transform: 'translateZ(0)',
       border: 'none',
       '-webkit-appearance': 'none',
       '-moz-appearance': 'none',
@@ -182,7 +181,7 @@ export default {
       'background-color': 'var(--cn-comp-slider-track-progress)',
       height: '100%',
       width: '50%',
-      animation: 'cnProgressIndeterminateAnimation 1s infinite linear'
+      animation: 'cnProgressIndeterminateAnimation 2s infinite linear'
     },
 
     '&-processing-fake': {

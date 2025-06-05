@@ -41,17 +41,18 @@ interface CommonProgressProps extends VariantProps<typeof progressVariants> {
   label?: string
   description?: string
   subtitle?: string
-  showPercentage?: boolean
-  showIcon?: boolean
   className?: string
 }
-
 interface DeterminateProgressProps extends CommonProgressProps {
   value: number
+  hidePercentage?: boolean
+  hideIcon?: boolean
   variant?: 'default'
 }
-
 interface IndeterminateProgressProps extends CommonProgressProps {
+  value?: never
+  hidePercentage?: never
+  hideIcon?: never
   variant: 'indeterminate'
 }
 
@@ -62,22 +63,20 @@ const Progress: FC<ProgressProps> = ({
   variant = 'default',
   state,
   size = 'default',
-  showIcon = false,
+  hideIcon = false,
   label,
   description,
   subtitle,
-  showPercentage = false,
-  className,
-  ...rest
+  hidePercentage = false,
+  value = 0,
+  className
 }) => {
-  const value = variant === 'default' ? ((rest as DeterminateProgressProps).value ?? 0) : undefined
-
-  const percentageValue = value && (value > 1 ? 100 : Math.round(value * 100))
+  const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
 
   const id = useMemo(() => defaultId || `progress-${generateAlphaNumericHash(10)}`, [defaultId])
 
   const getIcon = () => {
-    if (!showIcon) return null
+    if (hideIcon || variant === 'indeterminate') return null
     const iconName: IconName = getIconName(state)
     return <Icon className="cn-progress-icon" name={iconName} skipSize />
   }
@@ -95,6 +94,7 @@ const Progress: FC<ProgressProps> = ({
         </>
       )
     }
+
     return (
       <>
         <progress className="cn-progress-root" id={id} value={percentageValue} max={100} />
@@ -104,7 +104,7 @@ const Progress: FC<ProgressProps> = ({
             <div className="cn-progress-overlay">
               <div
                 className="cn-progress-processing-fake"
-                style={{ transform: `translateX(-${100 - (percentageValue || 0)}%)` }}
+                style={{ transform: `translateX(-${100 - percentageValue}%)` }}
               />
             </div>
           </div>
@@ -115,7 +115,7 @@ const Progress: FC<ProgressProps> = ({
 
   return (
     <div className={cn(progressVariants({ size, state }), className)}>
-      {(label || showPercentage || showIcon) && (
+      {(label || !hidePercentage || !hideIcon) && (
         <label className="cn-progress-header" htmlFor={id}>
           <div className="cn-progress-header-left">
             {label && (
@@ -125,7 +125,7 @@ const Progress: FC<ProgressProps> = ({
             )}
           </div>
           <div className="cn-progress-header-right">
-            {showPercentage && variant === 'default' && (
+            {!hidePercentage && variant === 'default' && (
               <Text variant="body-strong" color="foreground-1">
                 {percentageValue}%
               </Text>

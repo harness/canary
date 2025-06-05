@@ -10,8 +10,8 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="w-[600px] grid gap-4">
-    <Progress value={0.75} state='processing' showPercentage />
+  code={`<div className="w-[600px]">
+    <Progress value={0.75} state="processing" />
 </div>`}
 />
 
@@ -23,11 +23,11 @@ import { Progress } from '@harnessio/ui/components'
 //...
 
 return (
-  <Progress value={0.75} state='processing' showPercentage />
+  <Progress value={0.75} state="processing" />
 )
 ```
 
-### `Variant`
+### Variants
 
 The `Progress` component supports the `variant` prop to indicate the type of progress being displayed. It accepts `default` and `indeterminate` values. This defines whether the progress is measurable or ongoing without a known completion percentage.
 
@@ -38,23 +38,21 @@ The `Progress` component supports the `variant` prop to indicate the type of pro
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
       <Progress
         value={0.75}
-        showPercentage
-        state='processing'
+        state="processing"
       />
     </div>
 
     <div>
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">indeterminate:</Text>
       <Progress
-        showPercentage
-        variant='indeterminate'
+        variant="indeterminate"
       />
     </div>
 
 </div>`}
 />
 
-### `State`
+### States
 
 The `Progress` component supports the `state` prop to reflect the current status of the operation. It accepts `completed`, `paused`, `failed`, `processing`, and `default` values. This controls the visual feedback based on the progress state.
 
@@ -66,11 +64,9 @@ The `Progress` component supports the `state` prop to reflect the current status
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">completed:</Text>
       <Progress 
         value={1}
-        subtitle='Completed'
-        label='Analytics_Report_March.csv'
-        showIcon
-        showPercentage
-        state='completed'
+        subtitle="Completed"
+        label="Analytics_Report_March.csv"
+        state="completed"
       />
     </div>
     
@@ -78,11 +74,9 @@ The `Progress` component supports the `state` prop to reflect the current status
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">paused:</Text>
       <Progress 
         value={0.5}
-        label='Analytics_Report_March.csv'
-        subtitle='Paused'
-        showIcon
-        showPercentage
-        state='paused'
+        label="Analytics_Report_March.csv"
+        subtitle="Paused"
+        state="paused"
       />
     </div>
 
@@ -90,11 +84,10 @@ The `Progress` component supports the `state` prop to reflect the current status
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">failed:</Text>
       <Progress
         value={0.5}
-        label='Analytics_Report_March.csv'
-        subtitle='Failed'
-        description='Upload process failed due to connection issues.'
-        showIcon
-        state='failed'
+        label="Analytics_Report_March.csv"
+        subtitle="Failed"
+        description="Upload process failed due to connection issues."
+        state="failed"
       />
     </div>
 
@@ -102,10 +95,9 @@ The `Progress` component supports the `state` prop to reflect the current status
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">processing:</Text>
       <Progress
         value={0.5}
-        label='Analytics_Report_March.csv'
-        subtitle='5 min left'
-        showIcon
-        state='processing'
+        label="Analytics_Report_March.csv"
+        subtitle="5 min left"
+        state="processing"
       />
     </div>
 
@@ -113,17 +105,16 @@ The `Progress` component supports the `state` prop to reflect the current status
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
       <Progress
         value={0.5}
-        label='Analytics_Report_March.csv'
-        subtitle='Subtitle'
-        description='This is a description text'
-        showIcon
+        label="Analytics_Report_March.csv"
+        subtitle="Subtitle"
+        description="This is a description text"
       />
     </div>
 
 </div>`}
 />
 
-### `Size`
+### Sizes
 
 The `Progress` component supports the `size` prop to adjust the height of the progress bar. It accepts `sm`, `default`, and `md` values. This allows customization of the component’s visual size to fit different UI contexts.
 
@@ -134,42 +125,39 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
     <div>
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">small:</Text>
       <Progress
-        size='sm'
+        size="sm"
         value={0.5}
-        label='Title'
-        subtitle='Subtitle'
-        description='This is a description text'
-        showIcon
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
       />
     </div>
 
     <div>
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
       <Progress
-        size='default'
+        size="default"
         value={0.5}
-        label='Title'
-        subtitle='Subtitle'
-        description='This is a description text'
-        showIcon
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
       />
     </div>
 
     <div>
       <Text variant="heading-base" color="foreground-1" className="underline mb-1">md:</Text>
       <Progress
-        size='md'
+        size="md"
         value={0.5}
-        label='Title'
-        subtitle='Subtitle'
-        description='This is a description text'
-        showIcon
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
       />
     </div>
 
-    <Progress size='sm' value={0.75} state='processing' showPercentage />
-    <Progress size='default' value={0.75} state='processing' showPercentage />
-    <Progress size='md' value={0.75} state='processing' showPercentage />
+    <Progress size="sm" value={0.75} state="processing"  />
+    <Progress size="default" value={0.75} state="processing" />
+    <Progress size="md" value={0.75} state="processing" />
 
   </div>`}
 />
@@ -227,16 +215,16 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
       value: "string",
     },
     {
-      name: "showPercentage",
+      name: "hidePercentage",
       description:
-        "If true, displays the progress percentage next to the label.",
+        "If true, hides the progress percentage next to the label.",
       required: false,
       defaultValue: "false",
       value: "boolean",
     },
     {
-      name: "showIcon",
-      description: "If true, displays a status icon depending on the state.",
+      name: "hideIcon",
+      description: "If true, hides the status icon depending on the state.",
       required: false,
       defaultValue: "false",
       value: "boolean",

@@ -1,9 +1,10 @@
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
 
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+
+import { Icon } from './icon'
 
 const breadcrumbVariants = cva('cn-breadcrumb', {
   variants: {
@@ -70,7 +71,7 @@ type BreadcrumbSeparatorProps = ComponentProps<'li'>
 
 const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
   <span role="presentation" aria-hidden="true" className={cn('cn-breadcrumb-separator', className)} {...props}>
-    {children ?? '/'}
+    {children ?? <Icon name="slash" skipSize />}
   </span>
 )
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator'
@@ -79,7 +80,7 @@ type BreadcrumbEllipsisProps = ComponentProps<'span'>
 
 const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) => (
   <span role="presentation" aria-hidden="true" className={cn('cn-breadcrumb-ellipsis', className)} {...props}>
-    <DotsHorizontalIcon className="size-4" />
+    <Icon name="more-horizontal" skipSize />
     <span className="sr-only">More</span>
   </span>
 )

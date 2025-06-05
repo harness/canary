@@ -51,14 +51,18 @@ export default {
   '.cn-breadcrumb-separator': {
     color: `var(--cn-state-disabled-text)`,
     '& > svg': {
-      width: 'var(--cn-size-3-half)',
-      height: 'var(--cn-size-3-half)'
-    }
+      width: 'var(--cn-icon-size-default)',
+      height: 'var(--cn-icon-size-default)'
+    },
+    '@apply flex items-center justify-center shrink-0': ''
   },
 
   '.cn-breadcrumb-ellipsis': {
-    '@apply flex items-center justify-center': '',
-    width: 'var(--cn-size-9)',
-    height: 'var(--cn-size-9)'
+    color: `var(--cn-text-3)`,
+    '& > svg': {
+      width: 'var(--cn-icon-size-default)',
+      height: 'var(--cn-icon-size-default)'
+    },
+    '@apply flex items-center justify-center shrink-0': ''
   }
 }

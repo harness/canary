@@ -37,7 +37,7 @@ interface GroupOption<T = string> {
 
 type SelectOption<T = string> = ValueOption<T> | GroupOption<T> | SeparatorOption
 
-export interface SelectV2Props<T = string> {
+interface SelectV2Props<T = string> {
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
   value?: T
   defaultValue?: T
@@ -90,7 +90,7 @@ const getAllValueOptions = <T,>(options: SelectOption<T>[]): ValueOption<T>[] =>
   return valueOptions
 }
 
-export function SelectV2<T = string>({
+function SelectV2<T = string>({
   options: optionsProp,
   value,
   defaultValue,
@@ -295,7 +295,11 @@ export function SelectV2<T = string>({
         }}
       >
         <DropdownMenu.Trigger id={id} className={cn(selectVariants({ theme }), className)} disabled={disabled}>
-          <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
+          <Text
+            variant="body-single-line-normal"
+            color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'}
+            truncate
+          >
             {selectedOption ? selectedOption.label : placeholder}
           </Text>
           <Icon name="chevron-down" size={14} className="cn-select-indicator-icon" />
@@ -337,4 +341,13 @@ export function SelectV2<T = string>({
       ) : null}
     </ControlGroup>
   )
+}
+
+export {
+  SelectV2,
+  type SelectV2Props,
+  type SelectOption,
+  type ValueOption as SelectValueOption,
+  type GroupOption as SelectGroupOption,
+  type SeparatorOption as SelectSeparatorOption
 }

@@ -9,7 +9,7 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Select,
+  SelectV2,
   Spacer,
   Text
 } from '@/components'
@@ -40,6 +40,12 @@ const formSchema = z
   })
 
 export type ImportProjectFormFields = z.infer<typeof formSchema>
+
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({
+  value: option,
+  label: option,
+  disabled: option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
+}))
 
 interface ImportProjectPageProps {
   onFormSubmit: (data: ImportProjectFormFields) => void
@@ -92,34 +98,14 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Git provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item
-                          key={option}
-                          value={option}
-                          disabled={
-                            option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
-                          }
-                        >
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <SelectV2
+            value={providerValue}
+            options={providerOptions}
+            onChange={value => handleSelectChange('provider', value)}
+            placeholder="Select"
+            label="Git provider"
+          />
+
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
             <Fieldset>
               <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />

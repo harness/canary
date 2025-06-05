@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -14,7 +14,8 @@ import {
   Message,
   MessageTheme,
   Radio,
-  Select,
+  SelectV2,
+  SelectValueOption,
   Spacer,
   Text
 } from '@/components'
@@ -54,8 +55,8 @@ export function RepoCreatePage({
   onFormCancel,
   isLoading,
   isSuccess,
-  gitIgnoreOptions,
-  licenseOptions,
+  gitIgnoreOptions: _gitIgnoreOptions,
+  licenseOptions: _licenseOptions,
   apiError
 }: RepoCreatePageProps) {
   const { t } = useTranslation()
@@ -85,6 +86,16 @@ export function RepoCreatePage({
   const gitignoreValue = watch('gitignore')
   const licenseValue = watch('license')
   const readmeValue = watch('readme')
+
+  const gitIgnoreOptions: SelectValueOption[] = useMemo(
+    () => _gitIgnoreOptions?.map(option => ({ value: option, label: option })) ?? [],
+    [_gitIgnoreOptions]
+  )
+
+  const licenseOptions: SelectValueOption[] = useMemo(
+    () => _licenseOptions?.map(option => ({ value: option.value ?? '', label: option.label })) ?? [],
+    [_licenseOptions]
+  )
 
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -137,50 +148,26 @@ export function RepoCreatePage({
           </Fieldset>
 
           {/* GITIGNORE */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="gitignore"
-                value={gitignoreValue}
-                onValueChange={value => handleSelectChange('gitignore', value)}
-                placeholder="Select"
-                label="Add a .gitignore"
-                error={errors.gitignore?.message?.toString()}
-                caption="Choose which files not to track from a list of templates."
-              >
-                <Select.Content>
-                  {!!gitIgnoreOptions &&
-                    gitIgnoreOptions.map(option => (
-                      <Select.Item key={option} value={option}>
-                        {option}
-                      </Select.Item>
-                    ))}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
+          <SelectV2
+            value={gitignoreValue}
+            options={gitIgnoreOptions}
+            onChange={value => handleSelectChange('gitignore', value)}
+            placeholder="Select"
+            label="Add a .gitignore"
+            error={errors.gitignore?.message?.toString()}
+            caption="Choose which files not to track from a list of templates."
+          />
 
-            {/* LICENSE */}
-            <ControlGroup>
-              <Select.Root
-                name="license"
-                value={licenseValue}
-                onValueChange={value => handleSelectChange('license', value)}
-                placeholder="Select"
-                label="Choose a license"
-                error={errors.license?.message?.toString()}
-                caption="A license tells others what they can and can't do with your code."
-              >
-                <Select.Content>
-                  {licenseOptions &&
-                    licenseOptions?.map(option => (
-                      <Select.Item key={option.value} value={option.value ?? ''}>
-                        {option.label}
-                      </Select.Item>
-                    ))}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          {/* LICENSE */}
+          <SelectV2
+            value={licenseValue}
+            options={licenseOptions}
+            onChange={value => handleSelectChange('license', value)}
+            placeholder="Select"
+            label="Choose a license"
+            error={errors.license?.message?.toString()}
+            caption="A license tells others what they can and can't do with your code."
+          />
 
           {/* ACCESS */}
           <Fieldset className="mt-4">

@@ -5,12 +5,12 @@ import {
   Alert,
   Button,
   ButtonLayout,
-  ControlGroup,
   Fieldset,
   FormWrapper,
   Input,
   ModalDialog,
-  Select
+  SelectV2,
+  SelectValueOption
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -58,6 +58,9 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
 
   const branch = watch('branch')
 
+  const branchOptions: SelectValueOption[] =
+    branchNames?.map(branchName => ({ label: branchName, value: branchName })) ?? []
+
   useEffect(() => {
     setValue('branch', defaultBranch ?? '')
   }, [defaultBranch, setValue])
@@ -96,7 +99,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         </ModalDialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
           <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+            <div className="mb-7 space-y-7">
               <Fieldset>
                 <Input
                   id="name"
@@ -117,26 +120,14 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 />
               </Fieldset>
 
-              <Fieldset>
-                <ControlGroup>
-                  <Select.Root
-                    disabled={isLoadingBranchNames}
-                    name="branch"
-                    value={branch}
-                    onValueChange={value => handleSelectChange('branch', value)}
-                    placeholder="Select"
-                    label="Branch"
-                  >
-                    <Select.Content>
-                      {branchNames?.map(branchName => (
-                        <Select.Item key={branchName} value={branchName}>
-                          {branchName}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
-                </ControlGroup>
-              </Fieldset>
+              <SelectV2
+                label="Branch"
+                placeholder="Select"
+                options={branchOptions}
+                value={branch}
+                onChange={value => handleSelectChange('branch', value)}
+                disabled={isLoadingBranchNames}
+              />
 
               {errorMessage && (
                 <Alert.Root theme="danger">

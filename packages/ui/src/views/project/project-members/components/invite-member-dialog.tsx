@@ -1,17 +1,7 @@
 import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Avatar,
-  Button,
-  ButtonLayout,
-  ControlGroup,
-  Fieldset,
-  FormWrapper,
-  ModalDialog,
-  Select
-} from '@/components'
+import { Alert, Avatar, Button, ButtonLayout, ControlGroup, FormWrapper, ModalDialog, Select } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
@@ -37,7 +27,7 @@ const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ prin
         <span className={`truncate ${isShortView ? 'text-cn-foreground-1' : 'text-cn-foreground-1'}`}>
           {principal.display_name}
         </span>
-        {!isShortView && <span className="truncate text-1 text-cn-foreground-2">{principal.email}</span>}
+        {!isShortView && <span className="text-1 text-cn-foreground-2 truncate">{principal.email}</span>}
       </span>
     </div>
   )
@@ -119,62 +109,58 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
 
         <ModalDialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-            <Fieldset>
-              <ControlGroup>
-                <Select.Root
-                  name="member"
-                  value={invitedMember}
-                  onValueChange={handleMemberChange}
-                  placeholder={t('views:forms.selectMember', 'Select member')}
-                  label={t('views:projectSettings.member', 'Member')}
-                  error={errors.member?.message?.toString()}
-                  selectValueChildren={
-                    !!invitedMemberFullModel && <PrincipalOption isShortView principal={invitedMemberFullModel} />
-                  }
+            <ControlGroup>
+              <Select.Root
+                name="member"
+                value={invitedMember}
+                onValueChange={handleMemberChange}
+                placeholder={t('views:forms.selectMember', 'Select member')}
+                label={t('views:projectSettings.member', 'Member')}
+                error={errors.member?.message?.toString()}
+                selectValueChildren={
+                  !!invitedMemberFullModel && <PrincipalOption isShortView principal={invitedMemberFullModel} />
+                }
+              >
+                <Select.Content
+                  withSearch
+                  searchProps={{
+                    placeholder: t('views:repos.search', 'Search'),
+                    handleChangeSearchValue: setPrincipalsSearchQuery,
+                    searchValue: principalsSearchQuery
+                  }}
                 >
-                  <Select.Content
-                    withSearch
-                    searchProps={{
-                      placeholder: t('views:repos.search', 'Search'),
-                      handleChangeSearchValue: setPrincipalsSearchQuery,
-                      searchValue: principalsSearchQuery
-                    }}
-                  >
-                    {principals.map(principal => (
-                      <Select.Item key={principal.uid} value={principal.uid} isItemTextAsChild>
-                        <PrincipalOption principal={principal} />
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
-              </ControlGroup>
-              <ControlGroup>
-                <Select.Root
-                  name="role"
-                  value={memberRole}
-                  onValueChange={value => handleSelectChange('role', value)}
-                  placeholder={t('views:forms.selectRole', 'Select role')}
-                  label={t('views:projectSettings.role', 'Role')}
-                  error={errors.role?.message?.toString()}
-                  selectValueChildren={
-                    !!selectedRoleFullModel && (
-                      <span className="text-cn-foreground-1">{selectedRoleFullModel.label}</span>
-                    )
-                  }
-                >
-                  <Select.Content>
-                    {roleOptions.map(option => (
-                      <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
-                        <div className="flex cursor-pointer flex-col gap-y-1.5">
-                          <span className="leading-none text-cn-foreground-1">{option.label}</span>
-                          <span className="leading-tight text-cn-foreground-2">{option.description}</span>
-                        </div>
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
-              </ControlGroup>
-            </Fieldset>
+                  {principals.map(principal => (
+                    <Select.Item key={principal.uid} value={principal.uid} isItemTextAsChild>
+                      <PrincipalOption principal={principal} />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Root>
+            </ControlGroup>
+            <ControlGroup>
+              <Select.Root
+                name="role"
+                value={memberRole}
+                onValueChange={value => handleSelectChange('role', value)}
+                placeholder={t('views:forms.selectRole', 'Select role')}
+                label={t('views:projectSettings.role', 'Role')}
+                error={errors.role?.message?.toString()}
+                selectValueChildren={
+                  !!selectedRoleFullModel && <span className="text-cn-foreground-1">{selectedRoleFullModel.label}</span>
+                }
+              >
+                <Select.Content>
+                  {roleOptions.map(option => (
+                    <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
+                      <div className="flex cursor-pointer flex-col gap-y-1.5">
+                        <span className="text-cn-foreground-1 leading-none">{option.label}</span>
+                        <span className="text-cn-foreground-2 leading-tight">{option.description}</span>
+                      </div>
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Root>
+            </ControlGroup>
 
             {!!error && (
               <Alert.Root theme="danger" className="!mt-0">

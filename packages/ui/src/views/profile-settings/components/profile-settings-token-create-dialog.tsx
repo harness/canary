@@ -10,7 +10,7 @@ import {
   FormInput,
   FormWrapper,
   ModalDialog,
-  Select
+  SelectV2
 } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -118,7 +118,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
         </ModalDialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
           <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+            <div className="mb-7 space-y-7">
               <Fieldset>
                 <FormInput.Text
                   id="identifier"
@@ -164,39 +164,29 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   </span>
                 </>
               ) : (
-                <>
-                  <Fieldset className="gap-y-0">
-                    <Select.Root
-                      value={expirationValue}
-                      onValueChange={value => handleSelectChange('lifetime', value)}
-                      label={t('views:profileSettings.expiration', 'Expiration')}
-                      placeholder={t('views:profileSettings.select', 'Select')}
-                      error={errors.lifetime?.message?.toString()}
-                    >
-                      <Select.Content>
-                        {expirationOptions.map(expirationOption => {
-                          return (
-                            <Select.Item key={expirationOption.value} value={expirationOption.value}>
-                              <span className="text-cn-foreground-1">{expirationOption.label}</span>
-                            </Select.Item>
-                          )
-                        })}
-                      </Select.Content>
-                    </Select.Root>
-                    {isValid && (
-                      <span className="mt-1.5 text-2 text-cn-foreground-3">
-                        {watch('lifetime') === 'never' ? (
-                          <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
-                        ) : (
-                          <span>
-                            {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
-                            {calculateExpirationDate(watch('lifetime'))}
-                          </span>
-                        )}
-                      </span>
-                    )}
-                  </Fieldset>
-                </>
+                <Fieldset className="gap-y-0">
+                  <SelectV2
+                    value={expirationValue}
+                    options={expirationOptions}
+                    onChange={value => handleSelectChange('lifetime', value)}
+                    label={t('views:profileSettings.expiration', 'Expiration')}
+                    placeholder={t('views:profileSettings.select', 'Select')}
+                    error={errors.lifetime?.message?.toString()}
+                  />
+
+                  {isValid && (
+                    <span className="text-2 text-cn-foreground-3 mt-1.5">
+                      {watch('lifetime') === 'never' ? (
+                        <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
+                      ) : (
+                        <span>
+                          {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
+                          {calculateExpirationDate(watch('lifetime'))}
+                        </span>
+                      )}
+                    </span>
+                  )}
+                </Fieldset>
               )}
               {error?.type === ApiErrorType.TokenCreate && (
                 <Alert.Root theme="danger">

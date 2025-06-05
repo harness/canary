@@ -2,86 +2,86 @@
   "btn": {
     "size": {
       "xs": {
-        "$type": "sizing",
-        "$value": "{size.7}"
+        "value": "{size.7}",
+        "type": "sizing"
       },
       "sm": {
-        "$type": "sizing",
-        "$value": "{size.8}"
+        "value": "{size.8}",
+        "type": "sizing"
       },
       "default": {
-        "$type": "sizing",
-        "$value": "{size.9}"
+        "value": "{size.9}",
+        "type": "sizing"
       }
     },
     "gap": {
       "xs": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       },
       "sm": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "value": "{spacing.1-half}",
+        "type": "spacing"
       },
       "default": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
+        "value": "{spacing.2}",
+        "type": "spacing"
       }
     },
     "default": {
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "value": "{rounded.2}",
+        "type": "borderRadius"
       }
     },
     "rounded": {
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.full}"
+        "value": "{rounded.full}",
+        "type": "borderRadius"
       }
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     },
     "px": {
       "xs": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
+        "value": "{spacing.3}",
+        "type": "spacing"
       },
       "sm": {
-        "$type": "spacing",
-        "$value": "{spacing.4}"
+        "value": "{spacing.4}",
+        "type": "spacing"
       },
       "default": {
-        "$type": "spacing",
-        "$value": "{spacing.5}"
+        "value": "{spacing.5}",
+        "type": "spacing"
       }
     },
     "py": {
       "xs": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       },
       "sm": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "value": "{spacing.1-half}",
+        "type": "spacing"
       },
       "default": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
+        "value": "{spacing.2}",
+        "type": "spacing"
       }
     }
   },
   "link": {
     "gap": {
       "sm": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       },
       "default": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "value": "{spacing.1}",
+        "type": "spacing"
       }
     }
   }

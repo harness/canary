@@ -41,7 +41,6 @@
     "components/desktop/base/dropdown",
     "components/desktop/base/diff",
     "components/desktop/base/table",
-    "components/desktop/base/navtab",
     "components/desktop/base/menubar",
     "components/desktop/base/tabs",
     "components/desktop/base/pagination",

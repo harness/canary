@@ -1,28 +1,28 @@
 {
   "tooltip": {
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "value": "{rounded.2}",
+      "type": "borderRadius"
     },
     "py": {
-      "$type": "spacing",
-      "$value": "{spacing.1-half}"
+      "value": "{spacing.1-half}",
+      "type": "spacing"
     },
     "px": {
-      "$type": "spacing",
-      "$value": "{spacing.2-half}"
+      "value": "{spacing.2-half}",
+      "type": "spacing"
     },
     "max": {
-      "$type": "sizing",
-      "$value": "{size.90}"
+      "value": "{size.90}",
+      "type": "sizing"
     },
     "min": {
-      "$type": "sizing",
-      "$value": "{size.6}"
+      "value": "{size.6}",
+      "type": "sizing"
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     }
   }
 }

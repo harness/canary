@@ -2,42 +2,42 @@
   "dropdown": {
     "item": {
       "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "value": "{spacing.2-half}",
+        "type": "spacing"
       },
       "py": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
+        "value": "{spacing.2}",
+        "type": "spacing"
       },
       "px": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
+        "value": "{spacing.2}",
+        "type": "spacing"
       },
       "radius": {
-        "$type": "borderRadius",
-        "$value": "{rounded.1}"
+        "value": "{rounded.1}",
+        "type": "borderRadius"
       }
     },
     "container": {
-      "$type": "spacing",
-      "$value": "{spacing.1}",
-      "$description": "\n"
+      "value": "{spacing.1}",
+      "description": "\n",
+      "type": "spacing"
     },
     "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "value": "{rounded.2}",
+      "type": "borderRadius"
     },
     "min-width": {
-      "$type": "sizing",
-      "$value": "{size.52}"
+      "value": "{size.52}",
+      "type": "sizing"
     },
     "max-height": {
-      "$type": "sizing",
-      "$value": "{size.90}"
+      "value": "{size.90}",
+      "type": "sizing"
     },
     "border": {
-      "$type": "borderWidth",
-      "$value": "{borderWidth.1}"
+      "value": "{borderWidth.1}",
+      "type": "borderWidth"
     }
   }
 }

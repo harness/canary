@@ -1,26 +1,25 @@
 {
   "breakpoint": {
     "viewport": {
-      "$type": "number",
-      "$value": "1440"
+      "value": "1440",
+      "type": "number"
     },
     "viewportMin": {
-      "$type": "number",
-      "$value": "1080"
+      "value": "1080",
+      "type": "number"
     },
     "viewportMax": {
-      "$type": "number",
-      "$value": "1919"
+      "value": "1919",
+      "type": "number"
     },
     "container": {
-      "$type": "number",
-      "$value": "{spacing.9}"
+      "value": "{spacing.9}",
+      "type": "number"
     }
   },
   "heading": {
     "hero": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.7}",
@@ -28,11 +27,11 @@
         "letterSpacing": "{tracking.tighter}",
         "textCase": "{textCase.none}"
       },
-      "$description": "Extra-large display typography for high-impact visual elements. Establishes the primary focal point while maintaining readability across devices. Use with appropriate spacing to create breathing room around this dominant element.\n\nCommon uses: Landing page main headlines, Marketing campaign banners, Product feature introductions, Welcome screens, Section dividers in long-scrolling pages."
+      "description": "Extra-large display typography for high-impact visual elements. Establishes the primary focal point while maintaining readability across devices. Use with appropriate spacing to create breathing room around this dominant element.\n\nCommon uses: Landing page main headlines, Marketing campaign banners, Product feature introductions, Welcome screens, Section dividers in long-scrolling pages.",
+      "type": "typography"
     },
     "section": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.6}",
@@ -40,46 +39,46 @@
         "letterSpacing": "{tracking.tighter}",
         "textCase": "{textCase.none}"
       },
-      "$description": "Primary organizational heading that creates clear content boundaries. Establishes consistent rhythm through proper spacing relationships with surrounding elements. Maintains sufficient contrast with body text while creating a harmonious scale progression.\n\nCommon uses: Main topic dividers in articles, Dashboard section headers, Product category headers, Page-level navigation anchors, Form section dividers."
+      "description": "Primary organizational heading that creates clear content boundaries. Establishes consistent rhythm through proper spacing relationships with surrounding elements. Maintains sufficient contrast with body text while creating a harmonious scale progression.\n\nCommon uses: Main topic dividers in articles, Dashboard section headers, Product category headers, Page-level navigation anchors, Form section dividers.",
+      "type": "typography"
     },
     "subsection": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.4}",
         "lineHeight": "{lineHeight.4.snug}",
         "letterSpacing": "{tracking.tight}"
       },
-      "$description": "Secondary heading for logical grouping within larger content sections. Creates clear visual hierarchy through weight and size contrast while maintaining typographic cohesion with section headings above it.\n\nCommon uses: Sub-topics within longer articles, Feature description headers, FAQ question headings, Setting category labels, Card headers in grid layouts."
+      "description": "Secondary heading for logical grouping within larger content sections. Creates clear visual hierarchy through weight and size contrast while maintaining typographic cohesion with section headings above it.\n\nCommon uses: Sub-topics within longer articles, Feature description headers, FAQ question headings, Setting category labels, Card headers in grid layouts.",
+      "type": "typography"
     },
     "base": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.3}",
         "lineHeight": "{lineHeight.3.tight}",
         "letterSpacing": "{tracking.tight}"
       },
-      "$description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommin uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers."
+      "description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommin uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers.",
+      "type": "typography"
     },
     "small": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.normal}"
       },
-      "$description": "Compact heading treatment that maintains hierarchical presence while optimizing for space efficiency. Uses increased weight to compensate for reduced size, ensuring sufficient contrast with body text.\n\nCommon uses: Data visualization labels, Small card titles."
+      "description": "Compact heading treatment that maintains hierarchical presence while optimizing for space efficiency. Uses increased weight to compensate for reduced size, ensuring sufficient contrast with body text.\n\nCommon uses: Data visualization labels, Small card titles.",
+      "type": "typography"
     }
   },
   "body": {
     "normal": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.2}",
@@ -87,11 +86,11 @@
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
-      "$description": "Core reading typography optimized for extended content consumption. Balances character density, line height, and spacing to reduce eye fatigue across different screen sizes and reading environments.\n\nCommon uses: Main content, Product descriptions."
+      "description": "Core reading typography optimized for extended content consumption. Balances character density, line height, and spacing to reduce eye fatigue across different screen sizes and reading environments.\n\nCommon uses: Main content, Product descriptions.",
+      "type": "typography"
     },
     "strong": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
@@ -99,48 +98,59 @@
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
-      "$description": "Emphasized body text that creates focal points within content flow. Uses increased weight rather than size to maintain vertical rhythm and paragraph cohesion while drawing attention to key information.\n\nCommon uses: Important warnings or notices, Key points in explanatory text, First sentences in important paragraphs, Feature highlights."
+      "description": "Emphasized body text that creates focal points within content flow. Uses increased weight rather than size to maintain vertical rhythm and paragraph cohesion while drawing attention to key information.\n\nCommon uses: Important warnings or notices, Key points in explanatory text, First sentences in important paragraphs, Feature highlights.",
+      "type": "typography"
     },
     "code": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.mono}",
         "fontWeight": "{fontWeight.default.normal.300}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.normal}",
         "letterSpacing": "{tracking.tight}"
       },
-      "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
+      "description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints.",
+      "type": "typography"
     },
     "single-line": {
+      "code": {
+        "value": {
+          "fontFamily": "{fontFamily.mono}",
+          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.none}",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "type": "typography",
+        "description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
+      },
       "normal": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
           "letterSpacing": "{tracking.tight}"
         },
-        "$description": "Component-optimized text style with zero line-height for precise vertical positioning. Designed specifically for UI elements with fixed height constraints where text must maintain consistent vertical alignment."
+        "description": "Component-optimized text style with zero line-height for precise vertical positioning. Designed specifically for UI elements with fixed height constraints where text must maintain consistent vertical alignment.",
+        "type": "typography"
       },
       "strong": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
           "letterSpacing": "{tracking.tight}"
         },
-        "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
+        "description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements.",
+        "type": "typography"
       }
     }
   },
   "caption": {
     "normal": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.1}",
@@ -148,11 +158,11 @@
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
-      "$description": "Supporting typography for contextual information and annotations. Creates clear visual separation from body content through size contrast while maintaining readability for explanatory text.\n\nCommon uses: Image descriptions, Chart legends and labels, Source attributions, Supplementary clarifications, Figure captions."
+      "description": "Supporting typography for contextual information and annotations. Creates clear visual separation from body content through size contrast while maintaining readability for explanatory text.\n\nCommon uses: Image descriptions, Chart legends and labels, Source attributions, Supplementary clarifications, Figure captions.",
+      "type": "typography"
     },
     "soft": {
-      "$type": "typography",
-      "$value": {
+      "value": {
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.1}",
@@ -160,38 +170,38 @@
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       },
-      "$description": "Reduced-emphasis supporting text for secondary information. Creates visual hierarchy through weight reduction while maintaining size consistency with normal captions. Visually recedes while remaining accessible.\n\nCommon uses: Timestamps, Metadata displays, Copyright information, Secondary attributions, Optional information."
+      "description": "Reduced-emphasis supporting text for secondary information. Creates visual hierarchy through weight reduction while maintaining size consistency with normal captions. Visually recedes while remaining accessible.\n\nCommon uses: Timestamps, Metadata displays, Copyright information, Secondary attributions, Optional information.",
+      "type": "typography"
     },
     "single-line": {
       "normal": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"
         },
-        "$description": "Component-specific annotation style with zero line-height for precise positioning. Designed for compact UI elements requiring single-line supporting text with consistent vertical alignment."
+        "description": "Component-specific annotation style with zero line-height for precise positioning. Designed for compact UI elements requiring single-line supporting text with consistent vertical alignment.",
+        "type": "typography"
       },
       "soft": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"
         },
-        "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
+        "description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements.",
+        "type": "typography"
       }
     }
   },
   "comp": {
     "link": {
       "default": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
@@ -199,11 +209,11 @@
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.none}"
         },
-        "$description": "Interactive text treatments that provide consistent affordances across the interface. Maintains typographic harmony with surrounding content while clearly signaling clickable elements through subtle decoration changes.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
+        "description": "Interactive text treatments that provide consistent affordances across the interface. Maintains typographic harmony with surrounding content while clearly signaling clickable elements through subtle decoration changes.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links.",
+        "type": "typography"
       },
       "default-underline": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
@@ -211,11 +221,11 @@
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.underline}"
         },
-        "$description": "Default size link, hover state.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
+        "description": "Default size link, hover state.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links.",
+        "type": "typography"
       },
       "sm": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
@@ -223,11 +233,11 @@
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.none}"
         },
-        "$description": "Small size link. Interactive text treatments that provide consistent affordances across the interface. Maintains typographic harmony with surrounding content while clearly signaling clickable elements through subtle decoration changes.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
+        "description": "Small size link. Interactive text treatments that provide consistent affordances across the interface. Maintains typographic harmony with surrounding content while clearly signaling clickable elements through subtle decoration changes.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links.",
+        "type": "typography"
       },
       "sm-underline": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
@@ -235,62 +245,62 @@
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.underline}"
         },
-        "$description": "Small size link, hover state.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
+        "description": "Small size link, hover state.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links.",
+        "type": "typography"
       }
     },
     "dialog": {
       "title": {
-        "$type": "typography",
-        "$value": {
+        "value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.5}",
           "lineHeight": "{lineHeight.5.tight}",
           "letterSpacing": "{tracking.tight}"
         },
-        "$description": "Prominent typography for modal interface headers. Creates immediate context for interrupting content while establishing visual hierarchy within the dialog component.\n\nCommon uses: Confirmation dialogs, Settings modals, Feature popups, Alert notifications, Form submission dialogs, Drawers."
+        "description": "Prominent typography for modal interface headers. Creates immediate context for interrupting content while establishing visual hierarchy within the dialog component.\n\nCommon uses: Confirmation dialogs, Settings modals, Feature popups, Alert notifications, Form submission dialogs, Drawers.",
+        "type": "typography"
       }
     },
     "markdown": {
       "title": {
         "h1": {
-          "$type": "typography",
-          "$value": {
+          "value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.7}",
             "lineHeight": "{lineHeight.7.snug}",
             "letterSpacing": "{tracking.tighter}"
           },
-          "$description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles."
+          "description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles.",
+          "type": "typography"
         },
         "h2": {
-          "$type": "typography",
-          "$value": {
+          "value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.6.normal}",
             "letterSpacing": "{tracking.tighter}"
           },
-          "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."
+          "description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions.",
+          "type": "typography"
         },
         "h3": {
-          "$type": "typography",
-          "$value": {
+          "value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.5}",
             "lineHeight": "{lineHeight.3.normal}",
             "letterSpacing": "{tracking.tight}"
           },
-          "$description": "Tertiary heading for smaller content groupings. Provides additional organization while preserving clear hierarchy within document structure.\n\nCommon uses: Subtopics, Feature headers, Step groupings, Related concept clusters."
+          "description": "Tertiary heading for smaller content groupings. Provides additional organization while preserving clear hierarchy within document structure.\n\nCommon uses: Subtopics, Feature headers, Step groupings, Related concept clusters.",
+          "type": "typography"
         }
       },
       "content": {
         "lead": {
-          "$type": "typography",
-          "$value": {
+          "value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.5}",
@@ -298,11 +308,11 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.5}"
           },
-          "$description": "Introductory paragraph with increased size for document openings. Sets context and summarizes key information.\n\nCommon uses: Article introductions, Executive summaries, Feature overviews, Tutorial introductions."
+          "description": "Introductory paragraph with increased size for document openings. Sets context and summarizes key information.\n\nCommon uses: Article introductions, Executive summaries, Feature overviews, Tutorial introductions.",
+          "type": "typography"
         },
         "paragraph": {
-          "$type": "typography",
-          "$value": {
+          "value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
             "fontSize": "{fontSize.3}",
@@ -310,11 +320,11 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.3}"
           },
-          "$description": "Standard typography for document body content. Optimized for comfortable reading with appropriate spacing and line height.\n\nCommon uses: Main content, Explanations, Process descriptions, Detailed information."
+          "description": "Standard typography for document body content. Optimized for comfortable reading with appropriate spacing and line height.\n\nCommon uses: Main content, Explanations, Process descriptions, Detailed information.",
+          "type": "typography"
         },
         "emphasized": {
-          "$type": "typography",
-          "$value": {
+          "value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
             "fontSize": "{fontSize.3}",
@@ -322,39 +332,40 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.3}"
           },
-          "$description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points."
+          "description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points.",
+          "type": "typography"
         }
       }
     }
   },
   "layout": {
     "3xs": {
-      "$type": "number",
-      "$value": "{spacing.1}"
+      "value": "{spacing.1}",
+      "type": "number"
     },
     "2xs": {
-      "$type": "number",
-      "$value": "{spacing.1-half}"
+      "value": "{spacing.1-half}",
+      "type": "number"
     },
     "xs": {
-      "$type": "number",
-      "$value": "{spacing.2}"
+      "value": "{spacing.2}",
+      "type": "number"
     },
     "sm": {
-      "$type": "number",
-      "$value": "{spacing.3}"
+      "value": "{spacing.3}",
+      "type": "number"
     },
     "md": {
-      "$type": "number",
-      "$value": "{spacing.4}"
+      "value": "{spacing.4}",
+      "type": "number"
     },
     "lg": {
-      "$type": "number",
-      "$value": "{spacing.6}"
+      "value": "{spacing.6}",
+      "type": "number"
     },
     "xl": {
-      "$type": "number",
-      "$value": "{spacing.8}"
+      "value": "{spacing.8}",
+      "type": "number"
     }
   }
 }

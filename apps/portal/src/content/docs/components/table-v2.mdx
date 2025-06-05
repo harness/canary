@@ -539,6 +539,20 @@ The footer section of the table.
       required: false,
       value: "(event: React.MouseEvent<HTMLTableRowElement>) => void",
     },
+    {
+      name: "to",
+      description:
+        "URL to navigate to when the row is clicked. Renders the each table cell with a Link component.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "linkProps",
+      description:
+        "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
+      required: false,
+      value: "LinkProps",
+    },
   ]}
 />
 

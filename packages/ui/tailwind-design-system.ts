@@ -8,6 +8,7 @@ import {
   alertStyles,
   avatarStyles,
   badgeStyles,
+  breadcrumbStyles,
   buttonLayoutStyles,
   buttonStyles,
   captionStyles,
@@ -460,6 +461,7 @@ export default {
         modalDialogStyles,
         scrollAreaStyles,
         tooltipStyles,
+        breadcrumbStyles,
 
         // Form styles
         formSharedStyles,

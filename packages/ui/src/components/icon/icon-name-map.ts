@@ -155,6 +155,7 @@ import MenuDots from '../../icons/menu-dots-icon.svg'
 import Merged from '../../icons/merged.svg'
 import Minus from '../../icons/minus-icon.svg'
 import Ellipsis from '../../icons/more-dots-icon.svg'
+import MoreHorizontal from '../../icons/more-horizontal.svg'
 import Navigation from '../../icons/navigation-icon.svg'
 import NodeIcon from '../../icons/node-icon.svg'
 import NodeLogo from '../../icons/node-logo.svg'
@@ -199,6 +200,7 @@ import SidebarMobile from '../../icons/sidebar-mobile.svg'
 import SidebarRight from '../../icons/sidebar-right.svg'
 import Signpost from '../../icons/signpost.svg'
 import Slack from '../../icons/slack.svg'
+import Slash from '../../icons/slash.svg'
 import Snow from '../../icons/snow-icon.svg'
 import SparksGradientDark from '../../icons/sparks-gradient-dark.svg'
 import SparksGradientLight from '../../icons/sparks-gradient-light.svg'
@@ -472,5 +474,7 @@ export const IconNameMap = {
   spinner: Spinner,
   'close-2': Close2,
   'tag-2': Tag2,
-  avatar: Avatar
+  avatar: Avatar,
+  slash: Slash,
+  'more-horizontal': MoreHorizontal
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

@@ -19,7 +19,7 @@ const buttonVariants = cva('cn-button', {
     },
     size: {
       default: '',
-      lg: 'cn-button-lg',
+      xs: 'cn-button-xs',
       sm: 'cn-button-sm'
     },
     rounded: {

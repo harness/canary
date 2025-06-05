@@ -71,7 +71,6 @@ export function StageNode(props: StageNodeProps) {
           rounded
           className="self-center p-3"
           variant="outline"
-          size="lg"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}
         >

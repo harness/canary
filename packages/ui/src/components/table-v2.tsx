@@ -1,4 +1,5 @@
-import React, {
+import {
+  Children,
   cloneElement,
   forwardRef,
   HTMLAttributes,
@@ -66,19 +67,17 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode
   selected?: boolean
   to?: string
+  linkProps?: Omit<LinkProps, 'to'>
 }
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
-  // <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props} />
-
   let rowChildren = props.children
-  if (props.to) {
-    rowChildren = React.Children.map(rowChildren, child => {
-      // Only process React elements
+  if (props.to || props.linkProps) {
+    rowChildren = Children.map(rowChildren, child => {
       if (isValidElement(child)) {
-        // Add to and linkProps to the child
         return cloneElement(child, {
-          to: props.to
+          to: props.to,
+          linkProps: props.linkProps
         } as any)
       }
       return child
@@ -110,11 +109,7 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
     if (shouldRenderLink) {
       return (
         <td ref={ref} className={cn('cn-table-v2-cell p-0', className)} {...props}>
-          <Link
-            to={to || ''}
-            className={cn('cn-table-v2-cell-link', linkProps?.className)}
-            {...(linkProps || {})}
-          >
+          <Link to={to || ''} className={cn('cn-table-v2-cell-link', linkProps?.className)} {...(linkProps || {})}>
             {children}
           </Link>
         </td>

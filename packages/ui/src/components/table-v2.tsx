@@ -17,18 +17,13 @@ const tableVariants = cva('cn-table-v2', {
 })
 
 export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
-  disableXScroll?: boolean
   tableClassName?: string
 }
 
 const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
-  ({ variant, disableXScroll, className, tableClassName, ...props }, ref) => (
+  ({ variant, className, tableClassName, ...props }, ref) => (
     <div className={cn('cn-table-v2-container', tableVariants({ variant }), className)}>
-      <table
-        ref={ref}
-        className={cn('cn-table-v2-element', { 'cn-table-v2-disable-x-scroll': disableXScroll }, tableClassName)}
-        {...props}
-      />
+      <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
     </div>
   )
 )

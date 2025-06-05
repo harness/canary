@@ -3,66 +3,66 @@
     "cell": {
       "min": {
         "default": {
-          "value": "{size.11-half}",
-          "type": "sizing"
+          "$type": "sizing",
+          "$value": "{size.11-half}"
         },
         "compact": {
-          "value": "{size.10}",
-          "type": "sizing"
+          "$type": "sizing",
+          "$value": "{size.10}"
         },
         "relaxed": {
-          "value": "{size.15}",
-          "type": "sizing"
+          "$type": "sizing",
+          "$value": "{size.15}"
         }
       },
       "py": {
         "default": {
-          "value": "{spacing.3}",
-          "type": "spacing"
+          "$type": "spacing",
+          "$value": "{spacing.3}"
         },
         "compact": {
-          "value": "{spacing.2-half}",
-          "type": "spacing"
+          "$type": "spacing",
+          "$value": "{spacing.2-half}"
         },
         "relaxed": {
-          "value": "{spacing.5}",
-          "type": "spacing"
+          "$type": "spacing",
+          "$value": "{spacing.5}"
         }
       },
       "px": {
-        "value": "{spacing.4}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.4}"
       },
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       }
     },
     "header": {
       "px": {
-        "value": "{spacing.4}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.4}"
       },
       "py": {
-        "value": "{spacing.3}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       },
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "min": {
-        "value": "{size.11-half}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.11-half}"
       }
     },
     "border": {
-      "value": "{borderWidth.1}",
-      "type": "borderWidth"
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     },
     "radius": {
-      "value": "{rounded.3}",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

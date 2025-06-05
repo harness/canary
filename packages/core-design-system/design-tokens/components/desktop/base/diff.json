@@ -2,26 +2,26 @@
   "diff": {
     "number": {
       "pl": {
-        "value": "{spacing.5}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.5}"
       },
       "pr": {
-        "value": "{spacing.3}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       }
     },
     "expanded": {
-      "value": "{size.11}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{size.11}"
     },
     "single": {
-      "value": "{size.6}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{size.6}"
     },
     "code": {
       "px": {
-        "value": "{spacing.3}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       }
     }
   }

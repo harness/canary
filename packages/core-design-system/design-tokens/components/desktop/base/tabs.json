@@ -1,100 +1,100 @@
 {
   "tabs": {
     "container": {
-      "value": "{spacing.1}",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.1}"
     },
     "item": {
       "gap": {
-        "value": "{spacing.1}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1}"
       },
       "py": {
-        "value": "{spacing.px}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.px}"
       },
       "px": {
-        "value": "{spacing.4}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.4}"
       },
       "min-height": {
-        "value": "{size.6-half}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.6-half}"
       },
       "border": {
-        "value": "{borderWidth.1}",
-        "type": "borderWidth"
+        "$type": "borderWidth",
+        "$value": "{borderWidth.1}"
       },
       "radius": {
-        "value": "{rounded.2}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
       }
     },
     "item-overlined": {
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "py": {
-        "value": "{spacing.1-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       },
       "px": {
-        "value": "{spacing.4}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.4}"
       },
       "min-height": {
-        "value": "{size.9}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.9}"
       },
       "border": {
-        "value": "{borderWidth.1}",
-        "type": "borderWidth"
+        "$type": "borderWidth",
+        "$value": "{borderWidth.1}"
       },
       "rt": {
-        "value": "{rounded.3}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
       },
       "rb": {
-        "value": "{rounded.none}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.none}"
       }
     },
     "item-underlined": {
       "gap": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "py": {
-        "value": "{spacing.2-half}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
       },
       "px": {
-        "value": "{spacing.0}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.0}"
       },
       "min-height": {
-        "value": "{size.11}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.11}"
       },
       "border": {
-        "value": "{borderWidth.2}",
-        "type": "borderWidth"
+        "$type": "borderWidth",
+        "$value": "{borderWidth.2}"
       }
     },
     "underlined": {
       "container-gap": {
-        "value": "{spacing.6}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.6}"
       }
     },
     "container-border": {
-      "value": "{borderWidth.1}",
-      "type": "borderWidth"
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     },
     "container-radius": {
-      "value": "{rounded.3}",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

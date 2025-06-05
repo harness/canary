@@ -2,27 +2,27 @@
   "progress": {
     "container": {
       "py": {
-        "value": "{spacing.2}",
-        "type": "spacing"
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       }
     },
     "size": {
       "sm": {
-        "value": "{size.1}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.1}"
       },
       "default": {
-        "value": "{size.2}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.2}"
       },
       "md": {
-        "value": "{size.3}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.3}"
       }
     },
     "radius": {
-      "value": "{rounded.full}",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.full}"
     }
   }
 }

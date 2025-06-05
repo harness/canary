@@ -1,36 +1,36 @@
 {
   "drawer": {
     "sm": {
-      "value": "488",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "488"
     },
     "md": {
-      "value": "700",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "700"
     },
     "lg": {
-      "value": "920",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "920"
     },
     "container": {
-      "value": "{spacing.5}",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.5}"
     },
     "gap": {
-      "value": "{spacing.4}",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.4}"
     },
     "border": {
-      "value": "{borderWidth.1}",
-      "type": "borderWidth"
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     },
     "radius": {
-      "value": "{rounded.4}",
-      "type": "borderRadius"
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
     },
     "fade-height": {
-      "value": "{drawer.container}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{drawer.container}"
     }
   }
 }

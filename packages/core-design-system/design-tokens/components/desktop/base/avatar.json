@@ -2,26 +2,26 @@
   "avatar": {
     "size": {
       "sm": {
-        "value": "{size.4-half}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.4-half}"
       },
       "default": {
-        "value": "{size.6}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.6}"
       },
       "lg": {
-        "value": "{size.8}",
-        "type": "sizing"
+        "$type": "sizing",
+        "$value": "{size.8}"
       }
     },
     "radius": {
       "default": {
-        "value": "{rounded.2}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.2}"
       },
       "rounded": {
-        "value": "{rounded.full}",
-        "type": "borderRadius"
+        "$type": "borderRadius",
+        "$value": "{rounded.full}"
       }
     }
   }

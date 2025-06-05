@@ -56,22 +56,13 @@ export default {
       color: 'var(--cn-state-disabled-text)',
       cursor: 'not-allowed',
 
-      '.cn-select-value': {
+      '.cn-select-indicator-icon': {
         color: 'var(--cn-state-disabled-text)'
       }
     },
 
     '&:where(:hover):not(:disabled):not(.cn-select-danger)': {
       borderColor: 'var(--cn-border-1)'
-    },
-
-    '&-value': {
-      color: 'var(--cn-text-1)',
-      '@apply truncate': ''
-    },
-
-    '&-placeholder': {
-      color: 'var(--cn-text-2)'
     },
 
     '&-indicator-icon': {

@@ -1,12 +1,13 @@
-import { ReactNode, UIEvent, useCallback, useEffect, useMemo, useState } from 'react'
+import { ReactNode, UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
-import { generateAlphaNumericHash } from '@/utils'
+import { cn, generateAlphaNumericHash } from '@/utils'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Input } from '@components/input'
-import { cn } from '@utils/cn'
+import { Text } from '@components/text'
 import { cva, VariantProps } from 'class-variance-authority'
+import debounce from 'lodash-es/debounce'
 
 const selectVariants = cva('cn-select', {
   variants: {
@@ -21,11 +22,20 @@ const selectVariants = cva('cn-select', {
   }
 })
 
-interface SelectOption<T = string> {
+type SeparatorOption = '-'
+
+interface ValueOption<T = string> {
   label: string | ReactNode
   value: T
   disabled?: boolean
 }
+
+interface GroupOption<T = string> {
+  label: string
+  options: Array<ValueOption<T> | SeparatorOption>
+}
+
+type SelectOption<T = string> = ValueOption<T> | GroupOption<T> | SeparatorOption
 
 export interface SelectV2Props<T = string> {
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
@@ -44,9 +54,40 @@ export interface SelectV2Props<T = string> {
   error?: string
   warning?: string
   optional?: boolean
-  optionRenderer?: (option: SelectOption<T>) => React.ReactElement
   allowSearch?: boolean
   onSearch?: (query: string) => SelectOption<T>[]
+}
+
+// Helper function to check option types
+const isValueOption = <T,>(option: SelectOption<T>): option is ValueOption<T> => {
+  return typeof option === 'object' && 'value' in option
+}
+
+const isGroupOption = <T,>(option: SelectOption<T>): option is GroupOption<T> => {
+  return typeof option === 'object' && 'options' in option
+}
+
+const isSeparatorOption = <T,>(option: SelectOption<T>): option is SeparatorOption => {
+  return option === '-'
+}
+
+// Helper to get all value options (flattened)
+const getAllValueOptions = <T,>(options: SelectOption<T>[]): ValueOption<T>[] => {
+  const valueOptions: ValueOption<T>[] = []
+
+  options.forEach(option => {
+    if (isValueOption(option)) {
+      valueOptions.push(option)
+    } else if (isGroupOption(option)) {
+      option.options.forEach(subOption => {
+        if (isValueOption(subOption)) {
+          valueOptions.push(subOption)
+        }
+      })
+    }
+  })
+
+  return valueOptions
 }
 
 export function SelectV2<T = string>({
@@ -65,13 +106,13 @@ export function SelectV2<T = string>({
   warning,
   caption,
   optional,
-  optionRenderer,
   allowSearch = false,
   onSearch,
   ...props
 }: SelectV2Props<T>) {
   const [isOpen, setIsOpen] = useState(false)
   const [internalValue, setInternalValue] = useState<T | undefined>(defaultValue)
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('')
   const [options, setOptions] = useState<SelectOption<T>[]>([])
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -101,30 +142,66 @@ export function SelectV2<T = string>({
     }
   }, [optionsProp])
 
+  // Get all value options for finding selected option
+  const allValueOptions = useMemo(() => getAllValueOptions(options), [options])
+
   // Filter options based on search
   const filteredOptions = useMemo(() => {
-    if (!allowSearch || !searchQuery.trim()) {
+    if (!allowSearch || !debouncedSearchQuery.trim()) {
       return options
     }
 
     if (onSearch) {
-      return onSearch(searchQuery)
+      return onSearch(debouncedSearchQuery)
     }
 
     // Default search implementation
-    return options.filter(option => {
-      const labelText =
-        typeof option.label === 'string' ? option.label.toLowerCase() : option.value?.toString().toLowerCase()
-      return labelText?.includes(searchQuery.toLowerCase())
-    })
-  }, [options, searchQuery, allowSearch, onSearch])
+    const searchLower = debouncedSearchQuery.toLowerCase()
 
-  const selectedOption = options.find(option => option.value === selectedValue)
+    return options.reduce<SelectOption<T>[]>((acc, option) => {
+      if (isSeparatorOption(option)) {
+        // Don't include separators in search results
+        return acc
+      }
 
-  const isItemsLoading = isLoadingOptions || (isLoading && filteredOptions.length === 0)
-  const isNoItems = !isLoadingOptions && !isLoading && filteredOptions.length === 0
-  const isWithItems = !isLoadingOptions && filteredOptions.length !== 0
-  const isLoadingMoreItems = (isLoading || isLoadingMore) && filteredOptions.length > 0
+      if (isValueOption(option)) {
+        const labelText =
+          typeof option.label === 'string' ? option.label.toLowerCase() : option.value?.toString().toLowerCase()
+        if (labelText?.includes(searchLower)) {
+          acc.push(option)
+        }
+      } else if (isGroupOption(option)) {
+        const filteredGroupOptions = option.options.filter(subOption => {
+          if (isValueOption(subOption)) {
+            const labelText =
+              typeof subOption.label === 'string'
+                ? subOption.label.toLowerCase()
+                : subOption.value?.toString().toLowerCase()
+            return labelText?.includes(searchLower)
+          }
+          return false
+        })
+
+        if (filteredGroupOptions.length > 0) {
+          acc.push({
+            ...option,
+            options: filteredGroupOptions
+          } as GroupOption<T>)
+        }
+      }
+
+      return acc
+    }, [])
+  }, [allowSearch, debouncedSearchQuery, onSearch, options])
+
+  const selectedOption = allValueOptions.find(option => option.value === selectedValue)
+
+  const hasNoOptions =
+    filteredOptions.length === 0 || (filteredOptions.length === 1 && isSeparatorOption(filteredOptions[0]))
+
+  const isNoItems = !isLoadingOptions && !isLoading && hasNoOptions
+  const isWithItems = !isLoadingOptions && !hasNoOptions
+  const showSpinner = [isLoadingOptions, isLoading, isLoadingMore && filteredOptions.length > 0].some(Boolean)
 
   const handleSelect = useCallback(
     (optionValue: T) => {
@@ -138,33 +215,69 @@ export function SelectV2<T = string>({
     [isControlled, onChange]
   )
 
-  const handleScroll = useCallback(
-    (event: UIEvent<HTMLDivElement>) => {
-      if (!onScrollEnd || isLoadingMore) return
-
-      const element = event.currentTarget
+  const debouncedCheckScroll = useRef(
+    debounce((element: HTMLDivElement, onScrollEnd: () => void, setIsLoadingMore: (value: boolean) => void) => {
       const threshold = 50
       const isNearBottom = element.scrollHeight - element.scrollTop - element.clientHeight < threshold
 
       if (isNearBottom) {
         setIsLoadingMore(true)
         onScrollEnd()
-        // Reset loading state after a delay (parent should handle this)
         setTimeout(() => setIsLoadingMore(false), 100)
       }
+    }, 150)
+  ).current
+
+  const handleScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      if (!onScrollEnd || isLoadingMore) return
+      debouncedCheckScroll(event.currentTarget, onScrollEnd, setIsLoadingMore)
     },
-    [onScrollEnd, isLoadingMore]
+    [onScrollEnd, isLoadingMore, debouncedCheckScroll]
   )
 
-  const renderOption = useCallback(
-    (option: SelectOption<T>) => {
-      if (optionRenderer) {
-        return optionRenderer(option)
+  // Render options recursively
+  const renderOptions = (options: SelectOption<T>[], level = 0) => {
+    return options.map((option, index) => {
+      if (isSeparatorOption(option)) {
+        return <DropdownMenu.Separator key={`separator-${level}-${index}`} />
       }
-      return <>{option.label}</>
-    },
-    [optionRenderer]
-  )
+
+      if (isValueOption(option)) {
+        return (
+          <DropdownMenu.Item
+            key={option.value?.toString()}
+            title={option.label}
+            disabled={option.disabled}
+            onSelect={() => handleSelect(option.value)}
+            checkmark={option.value === selectedValue}
+          />
+        )
+      }
+
+      if (isGroupOption(option)) {
+        return (
+          <DropdownMenu.Group key={`group-${level}-${index}`} label={option.label}>
+            {renderOptions(option.options, level + 1)}
+          </DropdownMenu.Group>
+        )
+      }
+
+      return null
+    })
+  }
+
+  useEffect(() => {
+    const handler = debounce(() => {
+      setDebouncedSearchQuery(searchQuery)
+    }, 300)
+
+    handler()
+
+    return () => {
+      handler.cancel()
+    }
+  }, [searchQuery])
 
   return (
     <ControlGroup>
@@ -182,9 +295,9 @@ export function SelectV2<T = string>({
         }}
       >
         <DropdownMenu.Trigger id={id} className={cn(selectVariants({ theme }), className)} disabled={disabled}>
-          <span className={cn('cn-select-value', { 'cn-select-placeholder': !selectedOption })}>
+          <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
             {selectedOption ? selectedOption.label : placeholder}
-          </span>
+          </Text>
           <Icon name="chevron-down" size={14} className="cn-select-indicator-icon" />
         </DropdownMenu.Trigger>
 
@@ -201,26 +314,13 @@ export function SelectV2<T = string>({
             </DropdownMenu.Header>
           )}
 
-          {isItemsLoading && <DropdownMenu.Spinner />}
-
           {isNoItems && (
             <DropdownMenu.NoOptions>{searchQuery ? 'No results found' : 'No options available'}</DropdownMenu.NoOptions>
           )}
 
-          {isWithItems &&
-            filteredOptions.map((option, index) => (
-              <DropdownMenu.Item
-                key={index}
-                title={option.label}
-                disabled={option.disabled}
-                onSelect={() => handleSelect(option.value)}
-                checkmark={option.value === selectedValue}
-              >
-                {renderOption(option)}
-              </DropdownMenu.Item>
-            ))}
+          {isWithItems && renderOptions(filteredOptions)}
 
-          {isLoadingMoreItems && <DropdownMenu.Spinner />}
+          {showSpinner && <DropdownMenu.Spinner />}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 

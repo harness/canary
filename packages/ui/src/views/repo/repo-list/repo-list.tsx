@@ -1,4 +1,4 @@
-import { Icon, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
+import { IconV2, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
@@ -16,7 +16,7 @@ export interface PageProps extends Partial<RoutingProps> {
 const Stats = ({ pulls }: { pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
-      <Icon size={16} name="pull" className="text-icons-7" />
+      <IconV2 name="git-pull-request" className="text-icons-7" />
       <span className="text-2 text-cn-foreground-1 font-normal">{pulls || 0}</span>
     </span>
   </div>

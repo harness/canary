@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, Icon, Layout } from '@/components'
+import { Avatar, Icon, IconV2, Layout } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import {
@@ -287,7 +287,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       }
       customProps={{
         isResolved: !!payload?.resolved,
-        icon: <Icon name="pr-review" size={12} />,
+        icon: <IconV2 name="eye" size={12} />,
         isLast,
         handleSaveComment,
         isNotCodeComment: true,

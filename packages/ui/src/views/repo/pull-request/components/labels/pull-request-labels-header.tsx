@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, IconV2, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
+import { Button, DropdownMenu, IconV2, Link, LinkProps, ScrollArea, SearchInput, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
@@ -114,7 +114,7 @@ export const LabelsHeader = ({
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
           <Button iconOnly variant="ghost" size="sm">
-            <Icon name="vertical-ellipsis" size={12} />
+            <IconV2 name="more-vert" size={12} />
           </Button>
         </DropdownMenu.Trigger>
 

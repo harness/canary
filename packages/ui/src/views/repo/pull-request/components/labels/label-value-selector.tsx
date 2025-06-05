@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, IconV2, ScrollArea, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, IconV2, ScrollArea, SearchBox, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
@@ -105,7 +105,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         </SearchBox.Root>
 
         <Button iconOnly size="sm" className="absolute right-2.5 top-2 z-20" variant="ghost" onClick={onSearchClean}>
-          <Icon name="cross" size={12} />
+          <IconV2 name="xmark" size={12} />
         </Button>
       </div>
 

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Avatar, DropdownMenu, Icon, MoreActionsTooltip, Table } from '@/components'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -49,7 +49,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-cn-foreground-2 hover:text-cn-foreground-1">
                   {getRoleLabel(member.role)}
-                  <Icon className="chevron-down text-icons-7" name="chevron-fill-down" size={6} />
+                  <IconV2 className="chevron-down text-icons-7" name="nav-solid-arrow-down" size={6} />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content align="start" className="w-[300px]">
                   {roleOptions.map(role => (

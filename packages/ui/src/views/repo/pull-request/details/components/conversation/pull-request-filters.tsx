@@ -1,4 +1,4 @@
-import { DropdownMenu, Icon } from '@/components'
+import { DropdownMenu, IconV2 } from '@/components'
 import { cn } from '@utils/cn'
 
 interface DropdownMenuComponentProps<T> {
@@ -18,7 +18,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
         <span className="text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
           {selectedItem.label}
         </span>
-        <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
+        <IconV2 name="nav-solid-arrow-down" size={6} className="chevron-down text-icons-7" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-56" align="end">
         {items.map(item => (

@@ -1,6 +1,6 @@
 import { forwardRef, KeyboardEvent, useMemo, useRef } from 'react'
 
-import { Button, ControlGroup, FormCaption, Icon, Label } from '@/components'
+import { Button, ControlGroup, FormCaption, IconV2, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
@@ -123,7 +123,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                   disabled={disabled}
                   size="sm"
                 >
-                  <Icon name="chevron-up" size={14} />
+                  <IconV2 name="nav-arrow-up" size={14} />
                 </Button>
                 <hr />
                 <Button
@@ -135,7 +135,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                   disabled={disabled}
                   size="sm"
                 >
-                  <Icon name="chevron-down" size={14} />
+                  <IconV2 name="nav-arrow-down" size={14} />
                 </Button>
               </div>
             )

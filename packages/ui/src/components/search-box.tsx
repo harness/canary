@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, ReactNode, useCallback, useEffect, type ChangeEventHandler } from 'react'
 
-import { Icon, IconV2, Input, InputProps } from '@/components'
+import { IconV2, Input, InputProps } from '@/components'
 import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
 
@@ -124,7 +124,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
               }
             )}
           >
-            <Icon name="apple-shortcut" size={12} />
+            <IconV2 name="apple-shortcut" size={12} />
 
             <span className="text-inherit">{shortcutLetter}</span>
           </div>

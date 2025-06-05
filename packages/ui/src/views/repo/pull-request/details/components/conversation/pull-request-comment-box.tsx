@@ -1,6 +1,6 @@
 import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
 
-import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Avatar, Button, Icon, IconProps, IconV2, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -125,6 +125,7 @@ export const PullRequestCommentBox = ({
       { icon: 'italicize', action: ToolbarAction.ITALIC },
       { icon: 'attachment', action: ToolbarAction.UPLOAD, onClick: handleFileSelect },
       { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+      // list-select -  IconV2
       { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
@@ -210,7 +211,7 @@ export const PullRequestCommentBox = ({
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button size="sm" variant="ghost" onClick={handleFileSelect}>
-                <Icon size={16} name="attachment-image" />
+                <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
             </div>

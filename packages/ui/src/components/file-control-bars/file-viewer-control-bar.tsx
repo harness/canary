@@ -4,7 +4,7 @@ import {
   Button,
   DropdownMenu,
   FileToolbarActions,
-  Icon,
+  IconV2,
   Layout,
   StackedList,
   ToggleGroup,
@@ -56,7 +56,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="-mr-2" asChild>
             <Button variant="ghost" iconOnly>
-              <Icon name="more-dots-fill" size={16} />
+              <IconV2 name="more-horizontal" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end">

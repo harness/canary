@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, Icon, IconProps, Label } from '@/components'
+import { Button, Caption, ControlGroup, Icon, IconProps, IconV2, Label } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -147,10 +147,10 @@ export const InputReference = <T,>({
         {hasValue && !disabled && (
           <div className="ml-3 flex items-center">
             <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly>
-              <Icon name="edit-pen" />
+              <IconV2 name="edit-pencil" />
             </Button>
             <Button onClick={handleClear} size="sm" variant="ghost" iconOnly>
-              <Icon name="cross" className="text-cn-foreground-danger" />
+              <IconV2 name="xmark" className="text-cn-foreground-danger" />
             </Button>
           </div>
         )}

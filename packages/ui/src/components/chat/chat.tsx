@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
-import { Button, Icon, IconV2, Input } from '@/components'
+import { Button, IconV2, Input } from '@/components'
 import { useTheme } from '@/context'
 import ChatAvatarIconLightTheme from '@/icons/chat-avatar-light-theme.svg'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
@@ -168,7 +168,7 @@ const InputField: FC<InputFieldProps> = ({
   onSend = () => {},
   placeholder = 'Type a message...',
   disabled = false,
-  sendIcon = <Icon name="arrow" size={12} />
+  sendIcon = <IconV2 name="arrow-up" size={12} />
 }) => {
   return (
     <div className="relative">

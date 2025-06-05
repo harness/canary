@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, IconV2, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 
@@ -56,7 +56,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         selectedRefType === BranchSelectorTab.BRANCHES && (
           <Button variant="outline" asChild>
             <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
-              <Icon name="plus" size={12} />
+              <IconV2 name="plus" size={12} />
               <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
             </Link>
           </Button>

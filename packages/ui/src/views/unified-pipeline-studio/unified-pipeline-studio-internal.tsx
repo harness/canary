@@ -1,4 +1,4 @@
-import { Button, FileToolbarActions, Icon, IconV2 } from '@components/index'
+import { Button, FileToolbarActions, IconV2 } from '@components/index'
 import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
@@ -49,7 +49,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
                 setRightDrawer(RightDrawer.PipelineConfig)
               }}
             >
-              <Icon name="edit-pen" />
+              <IconV2 name="edit-pencil" />
             </Button>
             {view === 'yaml' ? (
               <FileToolbarActions

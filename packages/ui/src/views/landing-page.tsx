@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, DropdownMenu, Icon } from '@/components'
+import { Button, ButtonLayout, DropdownMenu, IconV2 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -48,7 +48,7 @@ export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, 
             <DropdownMenu.Trigger asChild>
               <Button>
                 <span>{t('views:landingPage.projectSelector', 'Select Project')}</span>
-                <Icon name="chevron-down" size={15} className="chevron-down" />
+                <IconV2 name="nav-arrow-down" className="chevron-down" />
               </Button>
             </DropdownMenu.Trigger>
 

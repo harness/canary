@@ -6,7 +6,7 @@ import {
   Button,
   Checkbox,
   CounterBadge,
-  Icon,
+  IconV2,
   Layout,
   MoreActionsTooltip,
   SplitButton,
@@ -61,11 +61,11 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <StatusBadge icon="branch" variant="secondary" theme="muted" size="sm">
+            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.source_branch}
             </StatusBadge>
             <span>into</span>
-            <StatusBadge icon="branch" variant="secondary" theme="muted" size="sm">
+            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.target_branch}
             </StatusBadge>
             <span>{formattedTime}</span>
@@ -362,7 +362,7 @@ const PullRequestPanel = ({
                   {isShowMoreTooltip && (
                     <MoreActionsTooltip
                       className="!ml-2"
-                      iconName="more-dots-fill"
+                      iconName="more-horizontal"
                       sideOffset={-8}
                       alignOffset={2}
                       actions={[
@@ -448,7 +448,7 @@ const PullRequestPanel = ({
                     className="flex items-center gap-x-1.5"
                     to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
                   >
-                    <Icon name="branch" size={12} className="text-icons-9" />
+                    <IconV2 name="git-branch" size={12} className="text-icons-9" />
                     {pullReqMetadata?.source_branch}
                   </Link>
                 </StatusBadge>

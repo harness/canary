@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Avatar, Button, DropdownMenu, Icon, IconV2, ScrollArea, SearchInput } from '@/components'
+import { Avatar, Button, DropdownMenu, IconV2, ScrollArea, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
@@ -41,7 +41,7 @@ const ReviewersHeader = ({
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
           <Button iconOnly variant="ghost" size="sm">
-            <Icon name="vertical-ellipsis" size={12} />
+            <IconV2 name="more-vert" size={12} />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>

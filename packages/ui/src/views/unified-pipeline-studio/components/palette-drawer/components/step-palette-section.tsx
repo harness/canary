@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { StepsPaletteContentLayout } from './step-palette-content-layout'
 import { StepsPaletteItemLayout } from './step-palette-item-layout'
@@ -33,7 +33,7 @@ const StepPaletteSection = forwardRef<
               }}
             >
               <StepsPaletteItemLayout.Left>
-                <Icon name="harness-plugin" size={36} />
+                <IconV2 name="harness-plugins" size={36} />
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>

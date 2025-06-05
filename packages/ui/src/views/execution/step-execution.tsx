@@ -42,7 +42,7 @@ const StepExecutionToolbar: FC<
           <Icon name="clone" className="size-4 text-icons-3" />
         </Button>
         <Button variant="outline" size="sm" className="rounded-none border-cn-borders-2" onClick={onEdit}>
-          <Icon name="edit-pen" className="size-4 text-icons-3" />
+          <IconV2 name="edit-pencil" className="size-4 text-icons-3" />
         </Button>
         <Button
           variant="outline"

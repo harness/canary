@@ -1,4 +1,4 @@
-import { Icon, IconV2, Logo } from '@/components'
+import { IconV2, Logo } from '@/components'
 import { useTranslation } from '@/context'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
@@ -45,7 +45,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                   )}
                 </StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.RightItem>
-                  <Icon name="chevron-right" size={12} />
+                  <IconV2 name="nav-arrow-right" size={12} />
                 </StepsPaletteItemLayout.RightItem>
               </StepsPaletteItemLayout.Root>
             </StepsPaletteContentLayout.SectionItem>

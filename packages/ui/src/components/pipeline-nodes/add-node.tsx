@@ -1,5 +1,5 @@
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 export interface AddNodeProp {
   onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -18,7 +18,7 @@ export function AddNode(props: AddNodeProp) {
         onMouseDown={e => e.stopPropagation()}
         onClick={onClick}
       >
-        <Icon name="plus" size={15} />
+        <IconV2 name="plus" size={15} />
       </Button>
     </div>
   )

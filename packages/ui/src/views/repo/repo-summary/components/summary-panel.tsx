@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, Icon, IconProps, Spacer, Tag, Text } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconPropsV2, IconV2, Spacer, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -8,7 +8,7 @@ import { EditRepoDetails } from './edit-repo-details-dialog'
 
 interface DetailItem {
   id: string
-  iconName: 'tube-sign' | 'open-pr' | 'tag' | 'branch' | IconProps['name']
+  iconName: 'git-commit' | 'git-pull-request' | 'tag' | 'git-branch' | IconPropsV2['name']
   name: string
   count: number
   to: string
@@ -54,7 +54,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" aria-label="More options">
-                <Icon name="more-dots-fill" size={12} className="text-icons-3" />
+                <IconV2 name="more-horizontal" size={12} className="text-icons-3" />
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
@@ -91,7 +91,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             details.map(item => (
               <Link key={item.id} to={item.to}>
                 <div className="flex cursor-pointer items-center gap-1.5">
-                  <Icon name={item.iconName} size={14} className="text-cn-foreground-3 fill-none" />
+                  <IconV2 name={item.iconName} size={14} className="text-cn-foreground-3 fill-none" />
                   <Text>{item.name}</Text>
                   <CounterBadge>{item.count}</CounterBadge>
                 </div>

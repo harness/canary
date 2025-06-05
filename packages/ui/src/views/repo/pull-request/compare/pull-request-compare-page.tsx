@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, Icon, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -193,7 +193,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             )}
           </p>
           <Layout.Horizontal align="center" gap="xs">
-            <Icon name="compare" size={14} className="text-icons-1" />
+            <IconV2 name="git-compare" size={14} className="text-icons-1" />
 
             {branchSelectorRenderer}
 
@@ -293,7 +293,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal align="center">
-                  <Icon name="compare" size={14} className="text-icons-success" />
+                  <IconV2 name="git-compare" size={14} className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <p className="text-2 text-cn-foreground-1">{prBranchCombinationExists.title}</p>

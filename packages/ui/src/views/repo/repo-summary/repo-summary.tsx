@@ -1,7 +1,7 @@
 import {
   Button,
   ButtonLayout,
-  Icon,
+  IconV2,
   ListActions,
   MarkdownViewer,
   SearchFiles,
@@ -191,7 +191,7 @@ export function RepoSummaryView({
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
-                        <Icon name="plus" size={12} />
+                        <IconV2 name="plus" size={12} />
                         <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
                       </Link>
                     </Button>
@@ -244,7 +244,7 @@ export function RepoSummaryView({
                   title={
                     <Button variant="outline" iconOnly asChild>
                       <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}>
-                        <Icon name="edit-pen" size={16} className="text-icons-3" />
+                        <IconV2 name="edit-pencil" className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
                       </Link>
                     </Button>

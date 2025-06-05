@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { useTranslation } from '@/context'
 import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
 import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
@@ -69,7 +69,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
         displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
       />
       <Button size="sm" variant="transparent" onClick={resetFilters} className="hover:text-cn-foreground-danger">
-        <Icon className="rotate-45" name="plus" size={12} />
+        <IconV2 className="rotate-45" name="plus" size={12} />
         {t('component:filter.reset', 'Reset')}
       </Button>
     </>

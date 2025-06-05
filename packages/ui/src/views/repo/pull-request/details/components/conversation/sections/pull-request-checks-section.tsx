@@ -1,4 +1,4 @@
-import { Accordion, Icon, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, IconV2, StackedList, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
@@ -34,14 +34,14 @@ const PullRequestCheckSection = ({
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <Icon name="pending-clock" className="text-icons-alert" />
+        return <IconV2 name="clock-solid" className="text-icons-alert" />
       case ExecutionState.RUNNING:
-        return <Icon name="comments" className="text-cn-foreground-warning" />
+        return <IconV2 name="message" className="text-cn-foreground-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+        return <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
       default:
-        return <Icon name="success" className="text-cn-foreground-success" />
+        return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     }
   }
 

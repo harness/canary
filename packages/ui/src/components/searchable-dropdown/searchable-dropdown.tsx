@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, DropdownMenu, Icon, Input } from '@/components'
+import { Button, DropdownMenu, IconV2, Input } from '@/components'
 
 interface SearchableDropdownProps<T> {
   options: T[]
@@ -52,7 +52,7 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
                   setSearchQuery('')
                 }}
               >
-                <Icon className="rotate-45" name="plus" size={12} />
+                <IconV2 className="rotate-45" name="plus" size={12} />
               </Button>
             }
           />

@@ -5,6 +5,7 @@
 
 import Agile from './icons/agile.svg'
 import AppNotification from './icons/app-notification.svg'
+import AppleShortcut from './icons/apple-shortcut.svg'
 import Archive from './icons/archive.svg'
 import AreaSearch from './icons/area-search.svg'
 import ArrowDownCircle from './icons/arrow-down-circle.svg'
@@ -31,6 +32,7 @@ import ArrowUp from './icons/arrow-up.svg'
 import Artifact from './icons/artifact.svg'
 import AtSignCircle from './icons/at-sign-circle.svg'
 import AtSign from './icons/at-sign.svg'
+import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
 import BatteryCharging from './icons/battery-charging.svg'
 import BatteryEmpty from './icons/battery-empty.svg'
@@ -48,6 +50,8 @@ import BinHalf from './icons/bin-half.svg'
 import BinMinusIn from './icons/bin-minus-in.svg'
 import BinPlusIn from './icons/bin-plus-in.svg'
 import Bin from './icons/bin.svg'
+import BoldSquere from './icons/bold-squere.svg'
+import Bold from './icons/bold.svg'
 import BookmarkSolid from './icons/bookmark-solid.svg'
 import Bookmark from './icons/bookmark.svg'
 import BubbleDownload from './icons/bubble-download.svg'
@@ -83,6 +87,7 @@ import ChatPlusIn from './icons/chat-plus-in.svg'
 import CheckCircleSolid from './icons/check-circle-solid.svg'
 import CheckCircle from './icons/check-circle.svg'
 import Check from './icons/check.svg'
+import CircleWithSector from './icons/circle-with-sector.svg'
 import Circle from './icons/circle.svg'
 import ClipboardCheck from './icons/clipboard-check.svg'
 import ClockSolid from './icons/clock-solid.svg'
@@ -196,6 +201,7 @@ import GitPullRequest from './icons/git-pull-request.svg'
 import GitRebase from './icons/git-rebase.svg'
 import GitSquashMerge from './icons/git-squash-merge.svg'
 import Git from './icons/git.svg'
+import GithubAction from './icons/github-action.svg'
 import GithubCircleSolid from './icons/github-circle-solid.svg'
 import GitlabSolid from './icons/gitlab-solid.svg'
 import Globe from './icons/globe.svg'
@@ -222,6 +228,7 @@ import Infrastructure from './icons/infrastructure.svg'
 import InputSearch from './icons/input-search.svg'
 import Internet from './icons/internet.svg'
 import ItalicSquare from './icons/italic-square.svg'
+import Italic from './icons/italic.svg'
 import JournalPage from './icons/journal-page.svg'
 import Journal from './icons/journal.svg'
 import KanbanBoard from './icons/kanban-board.svg'
@@ -358,6 +365,8 @@ import Repository from './icons/repository.svg'
 import Restart from './icons/restart.svg'
 import Roles from './icons/roles.svg'
 import Ruler from './icons/ruler.svg'
+import RunTest from './icons/run-test.svg'
+import Run from './icons/run.svg'
 import Safari from './icons/safari.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
@@ -385,6 +394,7 @@ import Sort2Up from './icons/sort-2-up.svg'
 import Sort2 from './icons/sort-2.svg'
 import SparksSolid from './icons/sparks-solid.svg'
 import Sparks from './icons/sparks.svg'
+import SshKey from './icons/ssh-key.svg'
 import StarDashed from './icons/star-dashed.svg'
 import StarHalfDashed from './icons/star-half-dashed.svg'
 import StarMinus from './icons/star-minus.svg'
@@ -447,6 +457,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   agile: Agile,
   'app-notification': AppNotification,
+  'apple-shortcut': AppleShortcut,
   archive: Archive,
   'area-search': AreaSearch,
   'arrow-down-circle': ArrowDownCircle,
@@ -473,6 +484,7 @@ export const IconNameMapV2 = {
   artifact: Artifact,
   'at-sign-circle': AtSignCircle,
   'at-sign': AtSign,
+  'attachment-image': AttachmentImage,
   attachment: Attachment,
   'battery-charging': BatteryCharging,
   'battery-empty': BatteryEmpty,
@@ -490,6 +502,8 @@ export const IconNameMapV2 = {
   'bin-minus-in': BinMinusIn,
   'bin-plus-in': BinPlusIn,
   bin: Bin,
+  'bold-squere': BoldSquere,
+  bold: Bold,
   'bookmark-solid': BookmarkSolid,
   bookmark: Bookmark,
   'bubble-download': BubbleDownload,
@@ -525,6 +539,7 @@ export const IconNameMapV2 = {
   'check-circle-solid': CheckCircleSolid,
   'check-circle': CheckCircle,
   check: Check,
+  'circle-with-sector': CircleWithSector,
   circle: Circle,
   'clipboard-check': ClipboardCheck,
   'clock-solid': ClockSolid,
@@ -638,6 +653,7 @@ export const IconNameMapV2 = {
   'git-rebase': GitRebase,
   'git-squash-merge': GitSquashMerge,
   git: Git,
+  'github-action': GithubAction,
   'github-circle-solid': GithubCircleSolid,
   'gitlab-solid': GitlabSolid,
   globe: Globe,
@@ -664,6 +680,7 @@ export const IconNameMapV2 = {
   'input-search': InputSearch,
   internet: Internet,
   'italic-square': ItalicSquare,
+  italic: Italic,
   'journal-page': JournalPage,
   journal: Journal,
   'kanban-board': KanbanBoard,
@@ -800,6 +817,8 @@ export const IconNameMapV2 = {
   restart: Restart,
   roles: Roles,
   ruler: Ruler,
+  'run-test': RunTest,
+  run: Run,
   safari: Safari,
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
@@ -827,6 +846,7 @@ export const IconNameMapV2 = {
   'sort-2': Sort2,
   'sparks-solid': SparksSolid,
   sparks: Sparks,
+  'ssh-key': SshKey,
   'star-dashed': StarDashed,
   'star-half-dashed': StarHalfDashed,
   'star-minus': StarMinus,

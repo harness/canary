@@ -1,8 +1,7 @@
 import { FormHTMLAttributes, ReactNode } from 'react'
 
-import { Button, Input, Label } from '@/components'
+import { Button, IconV2, Input, Label } from '@/components'
 import { useTranslation } from '@/context'
-import { Icon } from '@components/icon'
 import { Sidebar } from '@components/sidebar/sidebar'
 
 import { useSearch } from './search-context'
@@ -41,7 +40,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
         />
 
         <Button variant="ghost" iconOnly size="sm" type="button">
-          <Icon name="search" size={12} />
+          <IconV2 name="search" size={12} />
         </Button>
         <Button
           variant="ghost"

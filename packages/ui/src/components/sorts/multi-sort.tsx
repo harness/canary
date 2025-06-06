@@ -1,6 +1,6 @@
 // TODO: we should rethink the approach and stop using the @dnd-kit library
 
-import { Button, DropdownMenu, Icon } from '@/components'
+import { Button, DropdownMenu, Icon, IconV2 } from '@/components'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -68,14 +68,14 @@ const SortableItem = ({
         {...attributes}
         {...listeners}
       >
-        <Icon className="text-icons-1" name="grid-dots" size={12} />
+        <IconV2 className="text-icons-1" name="grip-dots" size={12} />
       </div>
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button variant="outline" size="sm" className="gap-x-1.5">
             {sortOptions.find(opt => opt.value === sort.type)?.label}
-            <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
+            <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size={10} />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="start">
@@ -94,7 +94,7 @@ const SortableItem = ({
         <DropdownMenu.Trigger asChild>
           <Button variant="outline" size="sm" className="gap-x-1.5">
             {sortDirections.find(dir => dir.value === sort.direction)?.label}
-            <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
+            <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size={10} />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="start">
@@ -110,7 +110,7 @@ const SortableItem = ({
       </DropdownMenu.Root>
 
       <Button variant="transparent" size="sm" iconOnly className="ml-auto" onClick={() => onRemoveSort(index)}>
-        <Icon className="rotate-45" name="plus" size={12} />
+        <IconV2 name="xmark" size={12} />
       </Button>
     </div>
   )
@@ -155,7 +155,7 @@ export default function MultiSort() {
             size={10}
           />
           <span className="text-cn-foreground-1">{getSortTriggerLabel(sortSelections, sortOptions).label}</span>
-          <Icon className="chevron-down ml-3 text-icons-1" name="chevron-down" size={10} />
+          <IconV2 className="chevron-down ml-3 text-icons-1" name="nav-arrow-down" size={10} />
         </Button>
       </DropdownMenu.Trigger>
 
@@ -205,7 +205,7 @@ export default function MultiSort() {
               }
               displayLabel={
                 <Button size="sm" variant="transparent" className="justify-start">
-                  <Icon name="plus" size={12} />
+                  <IconV2 name="plus" size={12} />
                   Add sort
                 </Button>
               }
@@ -217,7 +217,7 @@ export default function MultiSort() {
             className="hover:text-cn-foreground-danger"
             onClick={handleResetSorts}
           >
-            <Icon name="trash" size={12} />
+            <IconV2 name="trash" size={12} />
             Delete sort
           </Button>
         </div>

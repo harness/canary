@@ -1,6 +1,6 @@
 import {
   Button,
-  Icon,
+  IconV2,
   ThemeDialog,
   type ThemeDialogProps,
 } from "@harnessio/ui/components";
@@ -32,7 +32,7 @@ export function ThemeSelector() {
       theme={theme}
     >
       <Button iconOnly onClick={() => setOpen(true)}>
-        <Icon name="paint" />
+        <IconV2 name="theme" />
       </Button>
     </ThemeDialog>
   );
@@ -45,7 +45,7 @@ export default function ThemeSelectorWrapper() {
 
   return (
     <Button iconOnly>
-      <Icon name="paint" />
+      <IconV2 name="theme" />
     </Button>
   );
 }

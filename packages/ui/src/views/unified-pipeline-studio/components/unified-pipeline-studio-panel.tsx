@@ -1,4 +1,4 @@
-import { Button, Icon, Tabs } from '@components/index'
+import { Button, IconV2, Tabs } from '@components/index'
 
 import { UnifiedPipelineStudioProblemsPanel } from './panel/unified-pipeline-studio-problems-panel'
 
@@ -32,7 +32,7 @@ export const UnifiedPipelineStudioPanel = ({
             size="sm"
             className="mx-2 px-2"
           >
-            <Icon name="x-mark" />
+            <IconV2 name="xmark" />
           </Button>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { Text } from './text'
 
 export interface NoDataProps {
   title: string
+  // TODO: Design system: Update it to IconPropsV2
   iconName?:
     | Pick<IconProps, 'name'>
     | 'no-data-folder'

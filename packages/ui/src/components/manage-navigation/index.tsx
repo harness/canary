@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, ButtonLayout, Icon, ModalDialog, Text } from '@/components'
+import { Button, ButtonLayout, IconV2, ModalDialog, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -146,7 +146,7 @@ export const ManageNavigation = ({
                         key={item.id}
                         className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-3 opacity-55"
                       >
-                        <Icon className="w-3.5" name="lock" size={14} />
+                        <IconV2 className="w-3.5" name="lock" size={14} />
                         <Text>{item.title}</Text>
                       </div>
                     )
@@ -162,7 +162,7 @@ export const ManageNavigation = ({
                               {...attributes}
                               {...listeners}
                             >
-                              <Icon className="w-3.5" name="grid-dots" size={14} />
+                              <IconV2 className="w-3.5" name="grip-dots" size={14} />
                               <Text color="inherit">{item.title}</Text>
                             </Button>
                             <Button
@@ -171,7 +171,7 @@ export const ManageNavigation = ({
                               variant="ghost"
                               onClick={() => removeFromPinnedItems(item)}
                             >
-                              <Icon className="w-3.5" name="x-mark" size={14} />
+                              <IconV2 className="w-3.5" name="xmark" size={14} />
                             </Button>
                           </>
                         )
@@ -196,7 +196,7 @@ export const ManageNavigation = ({
                 {currentFilteredRecentItems.map((item, index) => (
                   <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
                     <div className="flex w-full grow items-center gap-x-2.5">
-                      <Icon className="text-icons-4" name="clock-icon" size={14} />
+                      <IconV2 className="text-icons-4" name="clock" size={14} />
                       <Text color="foreground-1">{item.title}</Text>
                     </div>
                     <Button
@@ -205,7 +205,7 @@ export const ManageNavigation = ({
                       variant="ghost"
                       onClick={() => addToPinnedItems(item)}
                     >
-                      <Icon name="pin" size={14} />
+                      <IconV2 name="pin" size={14} />
                     </Button>
                   </li>
                 ))}
@@ -233,7 +233,7 @@ export const ManageNavigation = ({
                 disabled={submitted}
               >
                 Saved
-                <Icon name="tick" size={14} />
+                <IconV2 name="check" size={14} />
               </Button>
             )}
           </ButtonLayout>

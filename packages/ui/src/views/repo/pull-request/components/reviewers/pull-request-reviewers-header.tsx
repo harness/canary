@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Avatar, Button, DropdownMenu, Icon, ScrollArea, SearchInput } from '@/components'
+import { Avatar, Button, DropdownMenu, IconV2, ScrollArea, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
@@ -41,7 +41,7 @@ const ReviewersHeader = ({
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
           <Button iconOnly variant="ghost" size="sm">
-            <Icon name="vertical-ellipsis" size={12} />
+            <IconV2 name="more-vert" size={12} />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
@@ -82,7 +82,7 @@ const ReviewersHeader = ({
                     onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
                   >
                     <div className="flex w-full min-w-0 items-center gap-x-2 pl-1">
-                      {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
+                      {isSelected && <IconV2 name="check" size={12} className="shrink-0 text-icons-2" />}
                       <Avatar name={display_name} rounded />
                       <span className="truncate text-2 font-medium text-cn-foreground-1">{display_name}</span>
                     </div>

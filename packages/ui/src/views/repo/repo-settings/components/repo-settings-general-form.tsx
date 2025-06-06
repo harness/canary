@@ -8,7 +8,7 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  Icon,
+  IconV2,
   Label,
   Radio,
   SkeletonForm,
@@ -161,7 +161,7 @@ export const RepoSettingsGeneralForm: FC<{
                 ) : (
                   <Button variant="primary" theme="success" type="button" className="pointer-events-none">
                     Saved
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size={14} />
                   </Button>
                 )}
               </ButtonLayout>

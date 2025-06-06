@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, Icon, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
+import { Button, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
@@ -96,7 +96,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
         className={cn({ 'bg-cn-background-hover': isSelected })}
-        thumbnail={<Icon name="file" size={16} className="text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="page" className="text-cn-foreground-3" />}
         actions={
           <Button
             size="sm"
@@ -117,7 +117,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="folder" size={14} className="text-cn-foreground-3" />}
         className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">..</span>} />
@@ -129,7 +129,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(folder)}
-        thumbnail={<Icon name="folder" size={14} className="text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="folder" size={14} className="text-cn-foreground-3" />}
         className="h-12 p-3"
       >
         <StackedList.Field title={<span className="capitalize">{String(folder)}</span>} />

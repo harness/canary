@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, Icon, ScrollArea, StackedList } from '@/components'
+import { Breadcrumb, IconV2, ScrollArea, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
 import {
@@ -54,7 +54,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   <Breadcrumb.Ellipsis className="ml-1 h-0 w-4" />
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
-                  <Icon name="chevron-right" size={6} className="scale-75" />
+                  <IconV2 name="nav-arrow-right" size={6} className="scale-75" />
                 </Breadcrumb.Separator>
               </>
             ) : null}
@@ -69,7 +69,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   </Breadcrumb.Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
-                  <Icon name="chevron-right" size={6} className="scale-75" />
+                  <IconV2 name="nav-arrow-right" size={6} className="scale-75" />
                 </Breadcrumb.Separator>
               </>
             ) : null}

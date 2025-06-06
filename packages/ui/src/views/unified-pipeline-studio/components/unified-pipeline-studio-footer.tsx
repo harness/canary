@@ -1,4 +1,4 @@
-import { Icon, Popover, Select } from '@/components'
+import { IconV2, Popover, Select } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PopoverCommitInfo } from './unified-popover-commit-info'
@@ -49,9 +49,9 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-cn-background-accent/10"
         >
           <div className="flex items-center gap-1.5">
-            <Icon
+            <IconV2
               size={14}
-              name="cross-circle"
+              name="xmark-circle"
               className={problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-3'}
             />
             <span
@@ -64,11 +64,11 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon size={14} name="warning-triangle-outline" className="text-cn-foreground-3" />
+            <IconV2 size={14} name="warning-triangle" className="text-cn-foreground-3" />
             <span className="text-[12px] text-cn-foreground-1">{problemsCount.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon size={14} name="info-circle" className="text-cn-foreground-3" />
+            <IconV2 size={14} name="info-circle" className="text-cn-foreground-3" />
             <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
           </div>
         </div>

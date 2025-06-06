@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { DropdownMenu, Icon, SearchBox } from '@/components'
+import { DropdownMenu, IconV2, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { CommitSelectorListItem } from '@views/repo/pull-request'
@@ -66,7 +66,7 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
                 key={item.title}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-cn-foreground-1" />}
+                  {isSelected && <IconV2 name="check" size={12} className="min-w-[12px] text-cn-foreground-1" />}
                   <span
                     className={cn('text-cn-foreground-2 truncate', {
                       'text-cn-foreground-1': isSelected

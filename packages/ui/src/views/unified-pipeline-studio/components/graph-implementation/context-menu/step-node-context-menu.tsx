@@ -1,5 +1,5 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, Text } from '@components/index'
+import { IconV2, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 
@@ -30,7 +30,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
             onEditIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="edit-pencil" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Edit</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -41,7 +41,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
             onAddIntention(contextMenuData.nodeData, 'before')
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -51,7 +51,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
             onAddIntention(contextMenuData.nodeData, 'after') // TODO what to add
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -64,7 +64,7 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
             onDeleteIntention(contextMenuData.nodeData)
           }}
         >
-          <Icon name="trash" size={12} className="text-cn-foreground-1" />
+          <IconV2 name="trash" size={12} className="text-cn-foreground-1" />
           <Text wrap="nowrap">Delete</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

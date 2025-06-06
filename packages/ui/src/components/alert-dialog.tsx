@@ -1,12 +1,12 @@
 import { Children, createContext, isValidElement, ReactNode, useContext } from 'react'
 
-import { Button } from './button'
-import { Icon } from './icon'
+import { Button, IconV2 } from '@/components'
+
 import { Logo } from './logo'
 import { ModalDialog } from './modal-dialog'
 
 export type AlertDialogTheme = 'default' | 'warning' | 'danger'
-export type AlertDialogIcon = React.ComponentProps<typeof Icon>['name']
+export type AlertDialogIcon = React.ComponentProps<typeof IconV2>['name']
 export type AlertDialogLogo = React.ComponentProps<typeof Logo>['name']
 
 export interface AlertDialogProps {

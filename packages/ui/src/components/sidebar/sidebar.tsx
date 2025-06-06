@@ -14,7 +14,7 @@ import {
   useState
 } from 'react'
 
-import { Button, Icon, Input, ScrollArea, Sheet, Tooltip, TooltipProvider } from '@/components'
+import { Button, IconV2, Input, ScrollArea, Sheet, Tooltip, TooltipProvider } from '@/components'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -243,7 +243,7 @@ const SidebarTrigger = forwardRef<ElementRef<typeof Button>, ComponentProps<type
         }}
         {...props}
       >
-        <Icon name="sidebar-mobile" />
+        <IconV2 name="sidebar" />
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
     )

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Accordion, Icon, Text } from '@/components'
+import { Accordion, IconV2, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -31,7 +31,7 @@ function FolderItem({ children, value = '', isActive, content, link }: FolderIte
           )}
         >
           <div className="flex w-full items-center gap-1.5 py-1.5">
-            <Icon
+            <IconV2
               className={cn(
                 'min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
                 { 'text-icons-2': isActive }
@@ -73,12 +73,11 @@ function FileItem({ children, isActive, link }: FileItemProps) {
         }
       )}
     >
-      <Icon
+      <IconV2
         className={cn('min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2', {
           'text-icons-2': isActive
         })}
-        name="file"
-        size={16}
+        name="page"
       />
       <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" truncate>
         {children}

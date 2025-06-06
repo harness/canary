@@ -2,10 +2,11 @@ import { MouseEvent, ReactNode } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
 import { Option } from '@components/option'
 import { Radio } from '@components/radio'
 import { cn } from '@utils/cn'
+
+import { IconV2 } from './icon-v2'
 
 export interface SplitButtonOptionType<T extends string> {
   value: T
@@ -86,7 +87,7 @@ export const SplitButton = <T extends string>({
           className={cn(buttonVariants({ theme, variant }), 'cn-button-split-dropdown')}
           disabled={disabled || loading}
         >
-          <Icon name="chevron-down" size={14} className="chevron-down" />
+          <IconV2 name="nav-arrow-down" />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
           {selectedValue ? (

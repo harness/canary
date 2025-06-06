@@ -4,7 +4,7 @@ import { Slot, Slottable } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 
 const listItemVariants = cva(
   'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle',
@@ -111,7 +111,7 @@ const ListItem = ({
       {thumbnail && <div className="mr-2 flex items-center">{thumbnail}</div>}
       <Slottable>{children}</Slottable>
       {actions && <div className="ml-2 flex items-center">{actions}</div>}
-      <Icon name="chevron-right" className="hidden" />
+      <IconV2 name="nav-arrow-right" className="hidden" />
     </Comp>
   )
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, Icon, Input } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Input } from '@/components'
 
 import { FilterOptionConfig } from './types'
 
@@ -55,7 +55,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
                   setSearchQuery('')
                 }}
               >
-                <Icon className="rotate-45" name="plus" size={12} />
+                <IconV2 name="xmark" size={12} />
               </Button>
             }
           />
@@ -104,7 +104,7 @@ const FilterSelectLabel = ({
     <Button size="sm" variant="transparent">
       {displayLabel}
       {selectedFilters > 0 && <CounterBadge>{selectedFilters}</CounterBadge>}
-      <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+      <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size={6} />
     </Button>
   )
 }
@@ -112,7 +112,7 @@ const FilterSelectLabel = ({
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
     <Button size="sm" variant="transparent">
-      <Icon name="plus" size={10} />
+      <IconV2 name="plus" size={10} />
       <span>{displayLabel}</span>
     </Button>
   )

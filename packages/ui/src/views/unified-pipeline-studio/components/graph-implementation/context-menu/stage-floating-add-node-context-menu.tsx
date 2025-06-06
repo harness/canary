@@ -1,4 +1,4 @@
-import { DropdownMenu, Icon, Text } from '@components/index'
+import { DropdownMenu, IconV2, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -33,7 +33,7 @@ export const StageFloatingAddNodeContextMenu = ({
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.Stage)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add stage</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

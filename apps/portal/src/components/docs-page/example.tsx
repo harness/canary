@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
-import { Icon, TooltipProvider } from "@harnessio/ui/components";
+import { IconV2, TooltipProvider } from "@harnessio/ui/components";
 import { cn } from "@harnessio/ui/utils";
 import {
   RouterContextProvider,
@@ -85,7 +85,7 @@ const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
         </div>
         <details className="example-expand bg-cn-background-2 border-t p-3">
           <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
-            <Icon name="chevron-right" size={12} className="disclosure-icon" />
+            <IconV2 name="nav-arrow-right" className="disclosure-icon" />
             Show code
           </summary>
           <LiveEditor

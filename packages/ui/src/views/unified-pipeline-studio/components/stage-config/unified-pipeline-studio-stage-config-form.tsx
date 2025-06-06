@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -144,7 +144,7 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
                     }}
                     aria-label="Remove Stage"
                   >
-                    <Icon name="trash" />
+                    <IconV2 name="trash" />
                   </Button>
                 </ButtonLayout.Secondary>
               )}

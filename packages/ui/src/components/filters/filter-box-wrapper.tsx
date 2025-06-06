@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 interface FiltersProps {
@@ -54,7 +54,7 @@ const FilterBoxWrapper = ({
             </span>
             <span className="text-cn-foreground-2">{valueLabel}</span>
           </div>
-          <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
+          <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size={10} />
         </Button>
       </DropdownMenu.Trigger>
 
@@ -64,16 +64,16 @@ const FilterBoxWrapper = ({
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
-              <Icon
+              <IconV2
                 className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
-                name="more-dots-fill"
+                name="more-horizontal"
                 size={12}
               />
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="start">
               <DropdownMenu.Item onSelect={() => handleRemoveFilter()} asChild>
                 <Button size="sm" variant="transparent" className="data-[highlighted]:text-cn-foreground-danger">
-                  <Icon name="trash" size={12} />
+                  <IconV2 name="trash" size={12} />
                   {t('component:filter.delete', 'Delete filter')}
                 </Button>
               </DropdownMenu.Item>

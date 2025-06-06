@@ -1,6 +1,6 @@
 import { FormEvent, MouseEvent, ReactNode, useState } from 'react'
 
-import { Button, Icon, ModalDialog, SearchBox, useSidebar } from '@/components'
+import { Button, IconV2, ModalDialog, SearchBox, useSidebar } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 
@@ -37,7 +37,7 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
           tabIndex={collapsed ? 0 : -1}
           onClick={openSearchDialog}
         >
-          <Icon name="search" size={12} />
+          <IconV2 name="search" size={12} />
           <span className="sr-only">{t('component:navbar.searchButton', 'Open search dialog')}</span>
         </Button>
 

@@ -6,6 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Button, ButtonProps } from './button'
 import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 import { Logo } from './logo'
 import { ScrollArea } from './scroll-area'
 
@@ -56,7 +57,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
         {!hideClose && (
           <Dialog.Close asChild>
             <Button variant="transparent" className="cn-modal-dialog-close">
-              <Icon name="close-2" skipSize />
+              <IconV2 name="xmark" skipSize />
             </Button>
           </Dialog.Close>
         )}

@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { useRouterContext } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, IconProps } from '@components/icon'
+import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 export interface ActionData {
@@ -16,7 +16,7 @@ export interface ActionData {
 export interface MoreActionsTooltipProps {
   actions: ActionData[]
   isInTable?: boolean
-  iconName?: IconProps['name']
+  iconName?: IconPropsV2['name']
   sideOffset?: number
   alignOffset?: number
   className?: string
@@ -28,7 +28,7 @@ export interface MoreActionsTooltipProps {
 export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   actions,
   isInTable = false,
-  iconName = 'vertical-ellipsis',
+  iconName = 'more-vert',
   sideOffset = -6,
   alignOffset = 10,
   className
@@ -47,7 +47,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           iconOnly
           size="sm"
         >
-          <Icon name={iconName} size={12} />
+          <IconV2 name={iconName} size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon } from '@/components'
+import { IconV2 } from '@/components'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -81,7 +81,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Simple Operation</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {simpleOperation}
-                <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size={14} />
               </span>
             </div>
           )}
@@ -90,7 +90,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Advanced Operations</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {advancedOperations}
-                <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size={14} />
               </span>
             </div>
           )}
@@ -99,7 +99,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Data Transfer</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {dataTransfer}
-                <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size={14} />
               </span>
             </div>
           )}

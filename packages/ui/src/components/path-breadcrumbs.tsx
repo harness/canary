@@ -42,7 +42,7 @@ const InputPathBreadcrumbItem = ({
         autoFocus={!!isNew}
       />
       <span>in</span>
-      <Tag value={gitRefName} icon="branch-2" showIcon />
+      <Tag value={gitRefName} icon="git-branch" showIcon />
     </div>
   )
 }

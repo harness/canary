@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import {
   AnyFormikValue,
@@ -106,7 +106,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
                           }}
                           disabled={readonly}
                         >
-                          <Icon name="trash" />
+                          <IconV2 name="trash" />
                         </Button>
                       </div>
                     </div>

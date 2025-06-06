@@ -1,6 +1,6 @@
 import { ElementType, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon, SkeletonList } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, SkeletonList } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
@@ -266,7 +266,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
                     }}
                     aria-label="Remove Step"
                   >
-                    <Icon name="trash" />
+                    <IconV2 name="trash" />
                   </Button>
                 </ButtonLayout.Secondary>
               )}

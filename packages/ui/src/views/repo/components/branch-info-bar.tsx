@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon, StatusBadge, Link as StyledLink } from '@/components'
+import { Button, DropdownMenu, IconV2, StatusBadge, Link as StyledLink } from '@/components'
 import { useRouterContext } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@/views'
 
@@ -58,7 +58,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         </span>
         {/* TODO: Design system: change it to tag */}
         <StatusBadge variant="secondary" theme="muted" size="sm">
-          <Icon name="branch" size={14} />
+          <IconV2 name="git-branch" size={14} />
           <span>{defaultBranchName}</span>
         </StatusBadge>
       </div>
@@ -69,11 +69,11 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               className="group/contribute data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1 [&_svg]:data-[state=open]:text-icons-9 gap-x-2 px-2.5"
               variant="outline"
             >
-              <Icon name="merged" size={14} />
+              <IconV2 name="git-pull-request" size={14} />
               <span>Contribute</span>
-              <Icon
+              <IconV2
                 className="chevron-down text-icons-7 group-data-[state=open]/contribute:text-icons-2"
-                name="chevron-down"
+                name="nav-arrow-down"
                 size={12}
               />
             </Button>
@@ -81,14 +81,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <DropdownMenu.Content className="w-60 p-4" align="end">
             <div className="flex gap-x-2">
               <div className="border-cn-borders-4 flex size-6 shrink-0 items-center justify-center rounded-full border">
-                <Icon name="merged" size={12} />
+                <IconV2 name="git-pull-request" size={12} />
               </div>
               <div>
                 <span className="text-2 text-cn-foreground-1 leading-snug">
                   This branch is {ahead} commits ahead of{' '}
                 </span>
                 <StatusBadge className="mt-1" variant="secondary" theme="muted" size="sm">
-                  <Icon name="branch" size={14} />
+                  <IconV2 name="git-branch" size={14} />
                   <span>{defaultBranchName}</span>
                 </StatusBadge>
                 .

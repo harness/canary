@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, ReactNode } from 'react'
 
-import { CounterBadge, Icon, IconProps, TabNav } from '@/components'
+import { CounterBadge, IconPropsV2, IconV2, TabNav } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
@@ -10,10 +10,10 @@ const TabTitleWithIcon = ({
   icon,
   children,
   badgeContent
-}: PropsWithChildren<{ icon: IconProps['name']; badgeContent?: ReactNode }>) => (
+}: PropsWithChildren<{ icon: IconPropsV2['name']; badgeContent?: ReactNode }>) => (
   <>
     <div className="flex items-center gap-x-1">
-      <Icon className="text-icons-1 group-[.is-active]:text-icons-2" size={14} name={icon} />
+      <IconV2 className="text-icons-1 group-[.is-active]:text-icons-2" size={14} name={icon} />
       {children}
     </div>
     {!!badgeContent && <CounterBadge>{badgeContent}</CounterBadge>}
@@ -53,7 +53,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         <TabNav.Root variant="tabs" className="mb-7 before:-left-6 before:w-[calc(100%+3rem)]">
           <TabNav.Item to={PullRequestTabsKeys.CONVERSATION}>
             <TabTitleWithIcon
-              icon="comments"
+              icon="message"
               badgeContent={!!pullRequest?.stats?.conversations && pullRequest?.stats?.conversations}
             >
               {t('views:pullRequests.conversation', 'Conversation')}
@@ -61,13 +61,13 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           </TabNav.Item>
 
           <TabNav.Item to={PullRequestTabsKeys.COMMITS}>
-            <TabTitleWithIcon icon="tube-sign" badgeContent={pullRequest?.stats?.commits}>
+            <TabTitleWithIcon icon="git-commit" badgeContent={pullRequest?.stats?.commits}>
               {t('views:pullRequests.commits', 'Commits')}
             </TabTitleWithIcon>
           </TabNav.Item>
 
           <TabNav.Item to={PullRequestTabsKeys.CHANGES}>
-            <TabTitleWithIcon icon="changes" badgeContent={pullRequest?.stats?.files_changed}>
+            <TabTitleWithIcon icon="page-edit" badgeContent={pullRequest?.stats?.files_changed}>
               {t('views:pullRequests.changes', 'Changes')}
             </TabTitleWithIcon>
           </TabNav.Item>

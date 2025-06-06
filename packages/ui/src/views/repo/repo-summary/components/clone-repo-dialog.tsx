@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Alert, Button, CopyButton, DropdownMenu, Icon, Tabs, TextInput } from '@/components'
+import { Alert, Button, CopyButton, DropdownMenu, IconV2, Tabs, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
@@ -31,7 +31,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button className="items-center gap-x-2 pl-5 pr-2.5">
           {t('views:repos.cloneRepo', 'Clone repository')}
-          <Icon name="chevron-down" size={12} className="text-cn-foreground-primary" />
+          <IconV2 name="nav-arrow-down" size={12} className="text-cn-foreground-primary" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px] p-0 shadow-2" align="end">

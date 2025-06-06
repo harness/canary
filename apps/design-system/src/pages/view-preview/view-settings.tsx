@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { getTheme, Themes } from '@utils/theme-utils'
 import { clsx } from 'clsx'
 
-import { Button, Icon, Select, Spacer } from '@harnessio/ui/components'
+import { Button, IconV2, Select, Spacer } from '@harnessio/ui/components'
 
 import { viewPreviews } from './view-preview'
 import css from './view-settings.module.css'
@@ -50,7 +50,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
         className={css.showHideButton}
         title={showSettings ? 'Hide view settings' : 'Show view settings'}
       >
-        <Icon name={showSettings ? 'close' : 'settings-1'} />
+        <IconV2 name={showSettings ? 'xmark' : 'settings'} />
       </Button>
 
       {showSettings && (

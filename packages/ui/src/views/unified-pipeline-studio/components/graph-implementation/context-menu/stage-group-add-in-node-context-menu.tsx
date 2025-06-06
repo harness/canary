@@ -1,5 +1,5 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, Text } from '@components/index'
+import { IconV2, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -30,7 +30,7 @@ export const StageGroupAddInNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.Stage)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Stage</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
@@ -41,7 +41,7 @@ export const StageGroupAddInNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.SerialStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Serial group</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
@@ -51,7 +51,7 @@ export const StageGroupAddInNodeContextMenu = () => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.ParallelStageGroup)
           }}
         >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
+          <IconV2 name="plus" size={12} className="text-cn-foreground-3" />
           <Text wrap="nowrap">Add Parallel group</Text>
         </DropdownMenu.Item>
       </DropdownMenu.Content>

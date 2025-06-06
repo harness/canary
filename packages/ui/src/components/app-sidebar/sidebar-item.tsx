@@ -1,4 +1,4 @@
-import { DropdownMenu, Icon, IconProps, Sidebar, Text, useSidebar } from '@/components'
+import { DropdownMenu, Icon, IconProps, IconV2, Sidebar, Text, useSidebar } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 
 const dropdownItemClassNames =
@@ -32,6 +32,7 @@ export const SidebarItem = ({
   const { NavLink } = useRouterContext()
   const { collapsed } = useSidebar()
 
+  // TODO: Design System: Update it once gradient icons are available in IconV2
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
   const handlePin = () => {
@@ -91,7 +92,7 @@ export const SidebarItem = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Sidebar.MenuAction className="right-[3px] text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
-              <Icon name="menu-dots" size={12} />
+              <IconV2 name="more-vert" size={12} />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content

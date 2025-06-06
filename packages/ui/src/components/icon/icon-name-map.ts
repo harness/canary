@@ -46,6 +46,7 @@ import ChevronUpDown from '../../icons/chevron-up-down.svg'
 import ChevronUp from '../../icons/chevron-up.svg'
 import CircleArrowTop from '../../icons/circle-arrow-top.svg'
 import CircleArrowsUpDown from '../../icons/circle-arrows-updown.svg'
+import CirclePause from '../../icons/circle-pause.svg'
 import CirclePlus from '../../icons/circle-plus.svg'
 import CircleWithSector from '../../icons/circle-with-sector.svg'
 import Circle from '../../icons/circle.svg'
@@ -445,6 +446,7 @@ export const IconNameMap = {
   cross: Cross,
   'collapse-diff': CollapseDiff,
   'expand-diff': ExpandDiff,
+  'circle-pause': CirclePause,
   'circle-plus': CirclePlus,
   'code-brackets': CodeBrackets,
   'attachment-image': AttachmentImage,

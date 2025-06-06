@@ -109,7 +109,7 @@ export const ConnectorTestConnectionDialog = ({
 
                 {status === 'running' && (
                   <div className="mb-1 mt-4">
-                    <Progress value={percentageFilled} size="sm" color="accent" rounded="sm" />
+                    <Progress value={percentageFilled / 100} state="processing" size="sm" hideIcon hidePercentage />
                   </div>
                 )}
                 {status === 'error' && (

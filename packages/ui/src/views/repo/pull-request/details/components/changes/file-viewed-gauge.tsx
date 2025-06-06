@@ -29,9 +29,9 @@ function Content({ ...props }: RootProps) {
   )
 }
 function Bar({ total, filled }: BarProps) {
-  const percentageFilled = (filled / total) * 100
+  const percentageFilled = filled / total
 
-  return <Progress value={percentageFilled} size="sm" color="accent" rounded="sm" />
+  return <Progress value={percentageFilled} size="sm" hideIcon hidePercentage />
 }
 
 export { Root, Content, Bar }

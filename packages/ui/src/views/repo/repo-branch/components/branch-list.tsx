@@ -4,8 +4,7 @@ import {
   Avatar,
   Button,
   CopyButton,
-  Icon,
-  IconProps,
+  IconPropsV2,
   IconV2,
   MoreActionsTooltip,
   NoData,
@@ -145,16 +144,16 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       {checkState === 'running' ? (
                         <span className="bg-icons-alert mr-1.5 size-2 rounded-full" />
                       ) : (
-                        <Icon
+                        <IconV2
                           className={cn('mr-1.5', {
                             'text-icons-success': checkState === 'success',
                             'text-icons-danger': checkState === 'failure'
                           })}
                           name={
                             cn({
-                              tick: checkState === 'success',
-                              cross: checkState === 'failure'
-                            }) as IconProps['name']
+                              check: checkState === 'success',
+                              xmark: checkState === 'failure'
+                            }) as IconPropsV2['name']
                           }
                           size={12}
                         />

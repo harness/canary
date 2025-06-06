@@ -32,6 +32,7 @@ export const SidebarItem = ({
   const { NavLink } = useRouterContext()
   const { collapsed } = useSidebar()
 
+  // TODO: Design System: Update it once gradient icons are available in IconV2
   const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
   const handlePin = () => {

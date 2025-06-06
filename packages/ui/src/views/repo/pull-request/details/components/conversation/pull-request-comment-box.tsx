@@ -117,6 +117,7 @@ export const PullRequestCommentBox = ({
   // TODO: add the remaining required logic for the toolbar
   const toolbar: ToolbarItem[] = useMemo(() => {
     const initial: ToolbarItem[] = []
+    // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
       { icon: 'suggestion', action: ToolbarAction.SUGGESTION },

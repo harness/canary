@@ -18,6 +18,7 @@ import {
   drawerStyles,
   dropdownStyles,
   formSharedStyles,
+  selectStyles,
   inputStyles,
   labelStyles,
   linkStyles,
@@ -464,6 +465,7 @@ export default {
         tooltipStyles,
 
         // Form styles
+        selectStyles,
         formSharedStyles,
         checkboxStyles,
         radioStyles,

@@ -19,12 +19,14 @@ interface StatusButtonProps {
 }
 
 const StatusButton = ({ codeCommentStatus, onChange }: StatusButtonProps) => (
-  <Select.Root placeholder={codeCommentStatus} onValueChange={onChange}>
-    <Select.Content>
-      <Select.Item value={CodeCommentState.ACTIVE}>Active</Select.Item>
-      <Select.Item value={CodeCommentState.RESOLVED}>Resolved</Select.Item>
-    </Select.Content>
-  </Select.Root>
+  <Select
+    options={[
+      { value: CodeCommentState.ACTIVE, label: 'Active' },
+      { value: CodeCommentState.RESOLVED, label: 'Resolved' }
+    ]}
+    onChange={onChange}
+    placeholder={codeCommentStatus}
+  />
 )
 StatusButton.displayName = 'StatusButton'
 

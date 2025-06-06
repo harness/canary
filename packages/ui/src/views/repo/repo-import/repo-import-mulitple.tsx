@@ -99,6 +99,8 @@ const formSchema = z
 
 export type ImportMultipleReposFormFields = z.infer<typeof formSchema>
 
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({ value: option, label: option }))
+
 interface RepoImportMultiplePageProps {
   onFormSubmit: (data: ImportMultipleReposFormFields) => void
   onFormCancel: () => void
@@ -150,28 +152,13 @@ export function RepoImportMultiplePage({
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Git provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item key={option} value={option}>
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <Select
+            options={providerOptions}
+            value={providerValue}
+            onChange={value => handleSelectChange('provider', value)}
+            placeholder="Select"
+            label="Git provider"
+          />
 
           {[
             ProviderOptionsEnum.GITHUB_ENTERPRISE,

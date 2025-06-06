@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
 
 import { DataTable, StatusBadge } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
@@ -101,14 +101,46 @@ export const DataTableDemo: React.FC = () => {
     }
   ]
 
+  // Sorting state for server-side sorting
+  const [tableSorting, setTableSorting] = useState<SortingState>([])
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 3
   const totalItems = users.length
 
+  // This function would typically make an API call to fetch sorted data
+  const handleSortingChange: OnChangeFn<SortingState> = updaterOrValue => {
+    // Handle both direct values and updater functions
+    const newSorting = typeof updaterOrValue === 'function' ? updaterOrValue(tableSorting) : updaterOrValue
+
+    console.log('Server-side sorting requested:', newSorting)
+    setTableSorting(newSorting)
+
+    // In a real app, you would fetch data from the server with the new sorting parameters
+    // For this demo, we'll just sort the data client-side to simulate server-side sorting
+    setCurrentPage(1) // Reset to first page when sorting changes
+  }
+
+  // Simulate server-side sorting and pagination
+  const sortedData = [...users].sort((a, b) => {
+    if (tableSorting.length === 0) return 0
+
+    const sort = tableSorting[0]
+    const key = sort.id as keyof User
+
+    if (a[key] < b[key]) return sort.desc ? 1 : -1
+    if (a[key] > b[key]) return sort.desc ? -1 : 1
+    return 0
+  })
+
   // Slice data for current page (in a real app, this would be handled by the backend)
-  // const paginatedData = users.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-  const paginatedData = users
+  const paginatedData = sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+
+  // Handler for row clicks
+  const handleRowClick = (data: User, index: number) => {
+    console.log('Row clicked:', { data, index })
+  }
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
@@ -117,14 +149,17 @@ export const DataTableDemo: React.FC = () => {
           columns={columns}
           data={paginatedData}
           size="compact"
-          enableSorting={true}
-          defaultSorting={[{ id: 'name', desc: false }]}
+          // defaultSorting={tableSorting}
+          currentSorting={tableSorting}
+          onSortingChange={handleSortingChange}
           pagination={{
             currentPage,
             pageSize,
             totalItems,
             goToPage: setCurrentPage
           }}
+          onRowClick={handleRowClick}
+          // disableHighlightOnHover
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

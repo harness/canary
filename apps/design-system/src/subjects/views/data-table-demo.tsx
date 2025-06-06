@@ -107,7 +107,8 @@ export const DataTableDemo: React.FC = () => {
   const totalItems = users.length
 
   // Slice data for current page (in a real app, this would be handled by the backend)
-  const paginatedData = users.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  // const paginatedData = users.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  const paginatedData = users
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">

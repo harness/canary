@@ -80,6 +80,9 @@
     "inputLabel": "To confirm, type",
     "cancel": "Cancel"
   },
+  "dropdownMenu": {
+    "noOptions": "No options available"
+  },
   "filter": {
     "delete": "Delete Filter",
     "inputPlaceholder": "Filter by...",
@@ -110,6 +113,11 @@
     "author": "Author",
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
+  },
+  "select": {
+    "placeholder": "Select an option",
+    "noResults": "No results found",
+    "noOptions": "No options available"
   },
   "pagination": {
     "previous": "Previous",

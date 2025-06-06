@@ -9,7 +9,7 @@ import {
   FormWrapper,
   Input,
   ModalDialog,
-  SelectV2,
+  Select,
   SelectValueOption
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -120,7 +120,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 />
               </Fieldset>
 
-              <SelectV2
+              <Select
                 label="Branch"
                 placeholder="Select"
                 options={branchOptions}

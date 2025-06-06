@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { SelectV2 } from '@/components'
+import { Select } from '@/components'
 import { useEmitCodeCommentStatus } from '@views/repo/pull-request/hooks/useEmitCodeCommentStatus'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -19,7 +19,7 @@ interface StatusButtonProps {
 }
 
 const StatusButton = ({ codeCommentStatus, onChange }: StatusButtonProps) => (
-  <SelectV2
+  <Select
     options={[
       { value: CodeCommentState.ACTIVE, label: 'Active' },
       { value: CodeCommentState.RESOLVED, label: 'Resolved' }

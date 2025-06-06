@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 
-import { SelectV2 } from '@components/form-primitives'
+import { Select } from '@components/form-primitives'
 
 import { InputComponent, InputProps, useController, useFormContext, type AnyFormikValue } from '@harnessio/forms'
 
@@ -52,7 +52,7 @@ function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
 
   return (
     <InputWrapper {...props}>
-      <SelectV2
+      <Select
         label={label}
         options={inputConfigOptions}
         caption={description}

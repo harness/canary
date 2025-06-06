@@ -98,7 +98,7 @@ const getAllValueOptions = <T,>(options: SelectOption<T>[]): ValueOption<T>[] =>
   return valueOptions
 }
 
-function SelectV2<T = string>({
+function Select<T = string>({
   options: optionsProp,
   value,
   defaultValue,
@@ -269,7 +269,7 @@ function SelectV2<T = string>({
 
           if (!isAllowed) {
             console.warn(
-              `[SelectV2] optionRenderer should return either DropdownMenu.Item, DropdownMenu.AvatarItem,
+              `[Select] optionRenderer should return either DropdownMenu.Item, DropdownMenu.AvatarItem,
               DropdownMenu.IconItem, DropdownMenu.LogoItem or DropdownMenu.IndicatorItem`
             )
           }
@@ -370,7 +370,7 @@ function SelectV2<T = string>({
 }
 
 export {
-  SelectV2,
+  Select,
   type SelectV2Props,
   type SelectOption,
   type ValueOption as SelectValueOption,

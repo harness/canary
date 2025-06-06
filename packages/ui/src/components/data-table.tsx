@@ -2,8 +2,10 @@ import { useState } from 'react'
 
 import {
   ColumnDef,
+  ExpandedState,
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
   OnChangeFn,
   Row,
   RowSelectionState,
@@ -13,7 +15,9 @@ import {
   useReactTable
 } from '@tanstack/react-table'
 
+import { Button } from './button'
 import { Checkbox } from './checkbox'
+import { Icon } from './icon'
 import { IconV2 } from './icon-v2'
 import { Pagination, PaginationProps } from './pagination/pagination'
 import { TableV2 } from './table-v2'
@@ -45,6 +49,22 @@ export interface DataTableProps<TData> {
    * Callback for when row selection changes
    */
   onRowSelectionChange?: OnChangeFn<RowSelectionState>
+  /**
+   * Enable expandable rows
+   */
+  enableExpanding?: boolean
+  /**
+   * Current expanded rows state
+   */
+  currentExpanded?: ExpandedState
+  /**
+   * Callback for when expanded state changes
+   */
+  onExpandedChange?: OnChangeFn<ExpandedState>
+  /**
+   * Render function for expanded row content
+   */
+  renderSubComponent?: (props: { row: Row<TData> }) => React.ReactNode
 }
 
 export function DataTable<TData>({
@@ -60,43 +80,80 @@ export function DataTable<TData>({
   currentRowSelection,
   onSortingChange: externalOnSortingChange,
   enableRowSelection = false,
-  onRowSelectionChange: externalOnRowSelectionChange
+  onRowSelectionChange: externalOnRowSelectionChange,
+  enableExpanding = false,
+  currentExpanded,
+  onExpandedChange: externalOnExpandedChange,
+  renderSubComponent
 }: DataTableProps<TData>) {
-  // If row selection is enabled, add a checkbox column at the beginning
-  const columnsWithSelection = enableRowSelection
-    ? [
-        {
-          id: 'select',
-          header: ({ table }: { table: Table<TData> }) => {
-            // Create a handler function that can be safely passed to onChange
-            const handleToggleAll = () => {
-              table.toggleAllRowsSelected()
-            }
+  // Start with the base columns
+  let enhancedColumns = [...columns]
 
-            return (
-              <Checkbox
-                checked={table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected()}
-                onCheckedChange={handleToggleAll}
-                aria-label="Select all rows"
-              />
-            )
-          },
-          cell: ({ row }: { row: Row<TData> }) => {
-            return (
-              <Checkbox
-                checked={row.getIsSelected()}
-                disabled={!row.getCanSelect()}
-                onCheckedChange={row.getToggleSelectedHandler()}
-                aria-label="Select row"
-                onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              />
-            )
-          },
-          size: 40
+  // If row selection is enabled, add a checkbox column at the beginning
+  if (enableRowSelection) {
+    enhancedColumns = [
+      {
+        id: 'select',
+        header: ({ table }: { table: Table<TData> }) => {
+          // Create a handler function that can be safely passed to onChange
+          const handleToggleAll = () => {
+            table.toggleAllRowsSelected()
+          }
+
+          return (
+            <Checkbox
+              checked={table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected()}
+              onCheckedChange={handleToggleAll}
+              aria-label="Select all rows"
+            />
+          )
         },
-        ...columns
-      ]
-    : columns
+        cell: ({ row }: { row: Row<TData> }) => {
+          return (
+            <Checkbox
+              checked={row.getIsSelected()}
+              disabled={!row.getCanSelect()}
+              onCheckedChange={row.getToggleSelectedHandler()}
+              aria-label="Select row"
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            />
+          )
+        },
+        size: 40
+      },
+      ...enhancedColumns
+    ]
+  }
+
+  // If expanding is enabled, add an expander column at the beginning
+  if (enableExpanding) {
+    enhancedColumns = [
+      {
+        id: 'expander',
+        header: () => null,
+        cell: ({ row }: { row: Row<TData> }) => {
+          return (
+            <Button
+              type="button"
+              variant="ghost"
+              iconOnly
+              onClick={e => {
+                e.stopPropagation()
+                row.toggleExpanded()
+              }}
+              aria-label="Toggle Row Expanded"
+            >
+              {row.getIsExpanded() ? <Icon name="chevron-down" size={16} /> : <Icon name="chevron-up" size={16} />}
+            </Button>
+          )
+        },
+        size: 40
+      },
+      ...enhancedColumns
+    ]
+  }
+
+  const columnsWithSelection = enhancedColumns
 
   const tableOptions: TableOptions<TData> = {
     data,
@@ -111,11 +168,21 @@ export function DataTable<TData>({
     enableRowSelection,
     // Handle row selection changes
     onRowSelectionChange: externalOnRowSelectionChange,
-    // We pass the currentSorting and rowSelection to the state so that react - table internally knows what state to maintain and toggle to onClick
-    // React table internally maintains state for each column, so we dont have to do it ourselves
+    // Enable row expansion if specified
+    enableExpanding,
+    // Get expanded row model for rendering expanded rows
+    getExpandedRowModel: enableExpanding ? getExpandedRowModel() : undefined,
+    // Handle expanded state changes
+    onExpandedChange: externalOnExpandedChange,
+    // Make all rows expandable if expansion is enabled
+    getRowCanExpand: enableExpanding ? () => true : undefined,
+    // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
     state: {
       sorting: currentSorting,
-      rowSelection: currentRowSelection
+      // Make sure rowSelection is always an object, even if undefined
+      rowSelection: currentRowSelection || {},
+      // Set expanded state if provided
+      expanded: currentExpanded || {}
     }
   }
 
@@ -150,16 +217,26 @@ export function DataTable<TData>({
         </TableV2.Header>
         <TableV2.Body>
           {table.getRowModel().rows.map(row => (
-            <TableV2.Row
-              key={row.id}
-              className={getRowClassName?.(row)}
-              onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
-              selected={enableRowSelection ? row.getIsSelected() : undefined}
-            >
-              {row.getVisibleCells().map(cell => (
-                <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>
-              ))}
-            </TableV2.Row>
+            <>
+              <TableV2.Row
+                key={row.id}
+                className={getRowClassName?.(row)}
+                onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
+                selected={enableRowSelection ? row.getIsSelected() : undefined}
+              >
+                {row.getVisibleCells().map(cell => (
+                  <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>
+                ))}
+              </TableV2.Row>
+              {/* Render expanded content if row is expanded */}
+              {row.getIsExpanded() && renderSubComponent && (
+                <TableV2.Row key={`${row.id}-expanded`} className="expanded-row">
+                  <TableV2.Cell colSpan={row.getVisibleCells().length} className="p-0">
+                    {renderSubComponent({ row })}
+                  </TableV2.Cell>
+                </TableV2.Row>
+              )}
+            </>
           ))}
         </TableV2.Body>
       </TableV2.Root>

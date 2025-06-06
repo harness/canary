@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { ColumnDef, OnChangeFn, RowSelectionState, SortingState } from '@tanstack/react-table'
+import type { ColumnDef, ExpandedState, OnChangeFn, Row, RowSelectionState, SortingState } from '@tanstack/react-table'
 
 import { DataTable, StatusBadge } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
@@ -63,11 +63,31 @@ export const DataTableDemo: React.FC = () => {
   // Row selection state
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
 
+  // Row expansion state
+  const [expanded, setExpanded] = useState<ExpandedState>({})
+
   // Log selection changes
   const handleRowSelectionChange: OnChangeFn<RowSelectionState> = updaterOrValue => {
     const newSelection = typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue
     console.log('Row selection changed:', newSelection)
     setRowSelection(newSelection)
+  }
+
+  // Handle expanded state changes
+  const handleExpandedChange: OnChangeFn<ExpandedState> = updaterOrValue => {
+    const newExpanded = typeof updaterOrValue === 'function' ? updaterOrValue(expanded) : updaterOrValue
+    console.log('Expanded state changed:', newExpanded)
+    setExpanded(newExpanded)
+  }
+
+  // Render expanded row content
+  const renderSubComponent = ({ row }: { row: Row<User> }) => {
+    const user = row.original
+    return (
+      <div className="p-4 bg-gray-50">
+        <p>This is a placeholder for expanded content for {user.name}</p>
+      </div>
+    )
   }
 
   // Define columns for the data table
@@ -154,7 +174,7 @@ export const DataTableDemo: React.FC = () => {
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
-      <SandboxLayout.Content className="max-w-[600px] flex justify-center">
+      <SandboxLayout.Content className="max-w-[700px] flex justify-center">
         <DataTable
           columns={columns}
           data={paginatedData}
@@ -171,6 +191,10 @@ export const DataTableDemo: React.FC = () => {
           enableRowSelection={true}
           currentRowSelection={rowSelection}
           onRowSelectionChange={handleRowSelectionChange}
+          enableExpanding={true}
+          currentExpanded={expanded}
+          onExpandedChange={handleExpandedChange}
+          renderSubComponent={renderSubComponent}
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

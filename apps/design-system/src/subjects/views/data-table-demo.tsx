@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
+import type { ColumnDef, OnChangeFn, RowSelectionState, SortingState } from '@tanstack/react-table'
 
 import { DataTable, StatusBadge } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
@@ -60,6 +60,16 @@ const users: User[] = [
 ]
 
 export const DataTableDemo: React.FC = () => {
+  // Row selection state
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+
+  // Log selection changes
+  const handleRowSelectionChange: OnChangeFn<RowSelectionState> = updaterOrValue => {
+    const newSelection = typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue
+    console.log('Row selection changed:', newSelection)
+    setRowSelection(newSelection)
+  }
+
   // Define columns for the data table
   const columns: ColumnDef<User>[] = [
     {
@@ -149,7 +159,6 @@ export const DataTableDemo: React.FC = () => {
           columns={columns}
           data={paginatedData}
           size="compact"
-          // defaultSorting={tableSorting}
           currentSorting={tableSorting}
           onSortingChange={handleSortingChange}
           pagination={{
@@ -159,7 +168,9 @@ export const DataTableDemo: React.FC = () => {
             goToPage: setCurrentPage
           }}
           onRowClick={handleRowClick}
-          // disableHighlightOnHover
+          enableRowSelection={true}
+          currentRowSelection={rowSelection}
+          onRowSelectionChange={handleRowSelectionChange}
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

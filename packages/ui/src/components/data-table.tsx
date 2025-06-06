@@ -6,11 +6,14 @@ import {
   getCoreRowModel,
   OnChangeFn,
   Row,
+  RowSelectionState,
   SortingState,
+  Table,
   TableOptions,
   useReactTable
 } from '@tanstack/react-table'
 
+import { Checkbox } from './checkbox'
 import { IconV2 } from './icon-v2'
 import { Pagination, PaginationProps } from './pagination/pagination'
 import { TableV2 } from './table-v2'
@@ -25,10 +28,23 @@ export interface DataTableProps<TData> {
   disableHighlightOnHover?: boolean
   className?: string
   currentSorting?: SortingState
+  currentRowSelection?: RowSelectionState
   /**
    * Callback for when sorting changes. Use this for server-side sorting.
    */
   onSortingChange?: OnChangeFn<SortingState>
+  /**
+   * Enable row selection
+   */
+  enableRowSelection?: boolean
+  /**
+   * Default row selection state
+   */
+  defaultRowSelection?: RowSelectionState
+  /**
+   * Callback for when row selection changes
+   */
+  onRowSelectionChange?: OnChangeFn<RowSelectionState>
 }
 
 export function DataTable<TData>({
@@ -41,21 +57,65 @@ export function DataTable<TData>({
   disableHighlightOnHover = false,
   className,
   currentSorting,
-  onSortingChange: externalOnSortingChange
+  currentRowSelection,
+  onSortingChange: externalOnSortingChange,
+  enableRowSelection = false,
+  onRowSelectionChange: externalOnRowSelectionChange
 }: DataTableProps<TData>) {
+  // If row selection is enabled, add a checkbox column at the beginning
+  const columnsWithSelection = enableRowSelection
+    ? [
+        {
+          id: 'select',
+          header: ({ table }: { table: Table<TData> }) => {
+            // Create a handler function that can be safely passed to onChange
+            const handleToggleAll = () => {
+              table.toggleAllRowsSelected()
+            }
+
+            return (
+              <Checkbox
+                checked={table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected()}
+                onCheckedChange={handleToggleAll}
+                aria-label="Select all rows"
+              />
+            )
+          },
+          cell: ({ row }: { row: Row<TData> }) => {
+            return (
+              <Checkbox
+                checked={row.getIsSelected()}
+                disabled={!row.getCanSelect()}
+                onCheckedChange={row.getToggleSelectedHandler()}
+                aria-label="Select row"
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              />
+            )
+          },
+          size: 40
+        },
+        ...columns
+      ]
+    : columns
+
   const tableOptions: TableOptions<TData> = {
     data,
-    columns,
+    columns: columnsWithSelection,
     getCoreRowModel: getCoreRowModel(),
     // Enable manual sorting (server-side sorting)
     manualSorting: true,
     // Use the external sorting change handler, we link it to the onSortingChange handler so we dont have to do shenannigans to figure out which column was clicked, and its sort state
     //  React table gives it to us directly
     onSortingChange: externalOnSortingChange,
-    // We pass the currentSorting to the state so that the UI indicators are updated when the sorting changes
+    // Enable row selection if specified
+    enableRowSelection,
+    // Handle row selection changes
+    onRowSelectionChange: externalOnRowSelectionChange,
+    // We pass the currentSorting and rowSelection to the state so that react - table internally knows what state to maintain and toggle to onClick
     // React table internally maintains state for each column, so we dont have to do it ourselves
     state: {
-      sorting: currentSorting
+      sorting: currentSorting,
+      rowSelection: currentRowSelection
     }
   }
 
@@ -94,6 +154,7 @@ export function DataTable<TData>({
               key={row.id}
               className={getRowClassName?.(row)}
               onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
+              selected={enableRowSelection ? row.getIsSelected() : undefined}
             >
               {row.getVisibleCells().map(cell => (
                 <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>

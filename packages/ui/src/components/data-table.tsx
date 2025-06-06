@@ -4,13 +4,14 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getSortedRowModel,
+  OnChangeFn,
   Row,
   SortingState,
   TableOptions,
   useReactTable
 } from '@tanstack/react-table'
 
+import { IconV2 } from './icon-v2'
 import { Pagination, PaginationProps } from './pagination/pagination'
 import { TableV2 } from './table-v2'
 
@@ -19,12 +20,15 @@ export interface DataTableProps<TData> {
   columns: ColumnDef<TData, unknown>[]
   size?: 'default' | 'relaxed' | 'compact'
   pagination?: PaginationProps
-  enableSorting?: boolean
-  defaultSorting?: SortingState
   getRowClassName?: (row: Row<TData>) => string | undefined
   onRowClick?: (data: TData, index: number) => void
   disableHighlightOnHover?: boolean
   className?: string
+  currentSorting?: SortingState
+  /**
+   * Callback for when sorting changes. Use this for server-side sorting.
+   */
+  onSortingChange?: OnChangeFn<SortingState>
 }
 
 export function DataTable<TData>({
@@ -32,25 +36,27 @@ export function DataTable<TData>({
   columns,
   size = 'default',
   pagination,
-  defaultSorting = [],
   getRowClassName,
   onRowClick,
   disableHighlightOnHover = false,
-  className
+  className,
+  currentSorting,
+  onSortingChange: externalOnSortingChange
 }: DataTableProps<TData>) {
-  const [sorting, setSorting] = useState<SortingState>(defaultSorting)
-
   const tableOptions: TableOptions<TData> = {
     data,
     columns,
-    getCoreRowModel: getCoreRowModel()
-  }
-
-  tableOptions.getSortedRowModel = getSortedRowModel()
-  tableOptions.onSortingChange = setSorting
-  tableOptions.state = {
-    ...tableOptions.state,
-    sorting
+    getCoreRowModel: getCoreRowModel(),
+    // Enable manual sorting (server-side sorting)
+    manualSorting: true,
+    // Use the external sorting change handler, we link it to the onSortingChange handler so we dont have to do shenannigans to figure out which column was clicked, and its sort state
+    //  React table gives it to us directly
+    onSortingChange: externalOnSortingChange,
+    // We pass the currentSorting to the state so that the UI indicators are updated when the sorting changes
+    // React table internally maintains state for each column, so we dont have to do it ourselves
+    state: {
+      sorting: currentSorting
+    }
   }
 
   const table = useReactTable(tableOptions)
@@ -71,11 +77,9 @@ export function DataTable<TData>({
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     {header.column.getCanSort() && (
                       <span className="ml-1">
-                        {{
-                          asc: String.fromCharCode(8593), // Up arrow
-                          desc: String.fromCharCode(8595) // Down arrow
-                        }[header.column.getIsSorted() as string] ?? String.fromCharCode(8645)}{' '}
-                        {/* Up-down arrow */}
+                        {header.column.getIsSorted() === 'asc' && <IconV2 name="arrow-up" size={12} />}
+                        {header.column.getIsSorted() === 'desc' && <IconV2 name="arrow-down" size={12} />}
+                        {!header.column.getIsSorted() && <IconV2 name="sort-1" size={16} />}
                       </span>
                     )}
                   </div>

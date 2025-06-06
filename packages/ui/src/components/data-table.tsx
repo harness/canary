@@ -32,7 +32,6 @@ export function DataTable<TData>({
   columns,
   size = 'default',
   pagination,
-  enableSorting = false,
   defaultSorting = [],
   getRowClassName,
   onRowClick,
@@ -47,16 +46,11 @@ export function DataTable<TData>({
     getCoreRowModel: getCoreRowModel()
   }
 
-  if (enableSorting) {
-    tableOptions.getSortedRowModel = getSortedRowModel()
-  }
-
-  if (enableSorting) {
-    tableOptions.onSortingChange = setSorting
-    tableOptions.state = {
-      ...tableOptions.state,
-      sorting
-    }
+  tableOptions.getSortedRowModel = getSortedRowModel()
+  tableOptions.onSortingChange = setSorting
+  tableOptions.state = {
+    ...tableOptions.state,
+    sorting
   }
 
   const table = useReactTable(tableOptions)
@@ -70,14 +64,12 @@ export function DataTable<TData>({
               {headerGroup.headers.map(header => (
                 <TableV2.Head
                   key={header.id}
-                  className={enableSorting && header.column.getCanSort() ? 'cursor-pointer select-none' : undefined}
-                  onClick={
-                    enableSorting && header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined
-                  }
+                  className={header.column.getCanSort() ? 'cursor-pointer select-none' : undefined}
+                  onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                 >
                   <div className="flex items-center gap-1">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    {enableSorting && header.column.getCanSort() && (
+                    {header.column.getCanSort() && (
                       <span className="ml-1">
                         {{
                           asc: String.fromCharCode(8593), // Up arrow
@@ -110,7 +102,7 @@ export function DataTable<TData>({
       {pagination && (
         <Pagination
           currentPage={pagination.currentPage || 1}
-          pageSize={pagination.pageSize || 10} // Provide default value to avoid undefined
+          pageSize={pagination.pageSize || 10}
           totalItems={pagination.totalItems || 0}
           goToPage={pagination?.goToPage || (() => {})}
           indeterminate={false}

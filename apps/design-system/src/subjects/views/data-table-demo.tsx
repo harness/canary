@@ -76,7 +76,7 @@ export const DataTableDemo: React.FC = () => {
     {
       accessorKey: 'role',
       header: 'Role',
-      enableSorting: true
+      enableSorting: false
     },
     {
       accessorKey: 'status',

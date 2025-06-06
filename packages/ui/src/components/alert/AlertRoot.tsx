@@ -1,23 +1,11 @@
-import {
-  Children,
-  CSSProperties,
-  forwardRef,
-  isValidElement,
-  PropsWithChildren,
-  ReactNode,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react'
+import { CSSProperties, forwardRef, PropsWithChildren, useLayoutEffect, useRef, useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { Icon, IconNameMap } from '@components/icon'
 import { useResizeObserver } from '@hooks/use-resize-observer'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-import { AlertTitle } from './AlertTitle'
 
 const alertVariants = cva('cn-alert', {
   variants: {
@@ -38,8 +26,7 @@ const iconMap: Record<NonNullable<VariantProps<typeof alertVariants>['theme']>, 
   warning: 'warning-triangle-outline'
 }
 
-const MAX_HEIGHT_WITH_TITLE = 138
-const MAX_HEIGHT_WITHOUT_TITLE = 134
+const MAX_HEIGHT = 138
 
 export interface AlertRootProps extends PropsWithChildren<VariantProps<typeof alertVariants>> {
   className?: string
@@ -50,6 +37,7 @@ export interface AlertRootProps extends PropsWithChildren<VariantProps<typeof al
 
 export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
   ({ className, theme, children, dismissible, onDismiss, expandable }, ref) => {
+    const { t } = useTranslation()
     const [isVisible, setIsVisible] = useState(true)
     const [isExpanded, setIsExpanded] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
@@ -66,11 +54,6 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
 
     const shouldShowButton = expandable && isOverflowing
 
-    const hasTitle = Children.toArray(children).some(
-      (child: ReactNode) => isValidElement(child) && child?.type === AlertTitle
-    )
-
-    const MAX_HEIGHT = useMemo(() => (hasTitle ? MAX_HEIGHT_WITH_TITLE : MAX_HEIGHT_WITHOUT_TITLE), [hasTitle])
     const alertStyle = {
       '--cn-alert-min-h': `${MAX_HEIGHT}px`
     } as CSSProperties
@@ -104,7 +87,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
             variant="transparent"
             size="sm"
             iconOnly
-            aria-label="Close alert"
+            aria-label={t('component:alert.close', 'Close alert')}
           >
             <Icon className="cn-alert-close-button-icon" name="close" skipSize />
           </Button>
@@ -123,7 +106,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
               ref={contentRef}
               className={cn('cn-alert-content', { 'cn-alert-min-h-content': shouldShowButton })}
               role="region"
-              aria-label="Alert content"
+              aria-label={t('component:alert.contentRegion', 'Alert content')}
             >
               {children}
             </div>
@@ -138,7 +121,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
                 variant="transparent"
                 aria-expanded={isExpanded}
               >
-                {isExpanded ? 'Show less' : 'Show more'}
+                {isExpanded ? t('component:alert.showLess', 'Show less') : t('component:alert.showMore', 'Show more')}
                 <Icon
                   className={cn('cn-alert-expand-button-icon', {
                     'cn-alert-expand-button-icon-rotate-180': isExpanded

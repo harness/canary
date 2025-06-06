@@ -97,6 +97,7 @@ export default {
       height: 'var(--cn-alert-fade-height)',
       opacity: '1',
       transition: 'opacity 0.2s linear',
+      borderRadius: 'var(--cn-alert-radius)',
       '@apply absolute bottom-0 left-0 right-0 pointer-events-none': '',
 
       '&-not-visible': {

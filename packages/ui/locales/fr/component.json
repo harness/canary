@@ -1,4 +1,10 @@
 {
+  "alert": {
+    "close": "Close alert",
+    "contentRegion": "Alert content",
+    "showLess": "Show less",
+    "showMore": "Show more"
+  },
   "navbar": {
     "pin": "Épingler",
     "remove": "Supprimer",

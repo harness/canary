@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode, UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { ControlGroup, FormCaption, IconV2, Label, SearchInput } from '@/components'
+import { ControlGroup, FormCaption, Label, IconV2, SearchInput } from '@/components'
+import { useTranslation } from '@/context'
 import { cn, generateAlphaNumericHash } from '@/utils'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Text } from '@components/text'
@@ -104,7 +105,7 @@ function Select<T = string>({
   onChange,
   disabled,
   onScrollEnd,
-  placeholder = 'Select an option',
+  placeholder: _placeholder,
   className,
   isLoading = false,
   id: defaultId,
@@ -127,8 +128,12 @@ function Select<T = string>({
   const [searchQuery, setSearchQuery] = useState(searchValue || '')
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
+  const { t } = useTranslation()
+
   const isControlled = value !== undefined
   const selectedValue = isControlled ? value : internalValue
+
+  const placeholder = _placeholder || t('component:select.placeholder', 'Select an option')
 
   const theme = error ? 'danger' : warning ? 'warning' : props.theme
 
@@ -320,11 +325,7 @@ function Select<T = string>({
         }}
       >
         <DropdownMenu.Trigger id={id} className={cn(selectVariants({ theme }), className)} disabled={disabled}>
-          <Text
-            variant="body-single-line-normal"
-            color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'}
-            truncate
-          >
+          <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
             {selectedOption ? selectedOption.label : placeholder}
           </Text>
           <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
@@ -344,7 +345,11 @@ function Select<T = string>({
           )}
 
           {isNoItems && (
-            <DropdownMenu.NoOptions>{searchQuery ? 'No results found' : 'No options available'}</DropdownMenu.NoOptions>
+            <DropdownMenu.NoOptions>
+              {searchQuery
+                ? t('component:select.noResults', 'No results found')
+                : t('component:select.noOptions', 'No options available')}
+            </DropdownMenu.NoOptions>
           )}
 
           {isWithItems && renderOptions(filteredOptions)}

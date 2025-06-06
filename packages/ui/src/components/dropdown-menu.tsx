@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, ReactNode } from 'react'
 
-import { usePortal } from '@/context'
+import { usePortal, useTranslation } from '@/context'
 import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
@@ -410,11 +410,15 @@ const DropdownMenuSpinner = ({ className, ...props }: HTMLAttributes<HTMLDivElem
 )
 DropdownMenuSpinner.displayName = displayNames.spinner
 
-const DropdownMenuNoOptions = ({ className, children, ...props }: Omit<TextProps, 'ref'>) => (
-  <Text className={cn('cn-dropdown-menu-no-options', className)} color="foreground-3" {...props}>
-    {children ?? 'No options available'}
-  </Text>
-)
+const DropdownMenuNoOptions = ({ className, children, ...props }: Omit<TextProps, 'ref'>) => {
+  const { t } = useTranslation()
+
+  return (
+    <Text className={cn('cn-dropdown-menu-no-options', className)} color="foreground-3" {...props}>
+      {children ?? t('component:dropdownMenu.noOptions', 'No options available')}
+    </Text>
+  )
+}
 DropdownMenuNoOptions.displayName = displayNames.noOptions
 
 const DropdownMenuSlot = (props: HTMLAttributes<HTMLDivElement>) => <div {...props} />

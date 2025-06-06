@@ -511,13 +511,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'table-v2-demo': {
         label: 'Table V2 Demo',
         element: <TableV2Demo />
-<<<<<<< HEAD
-=======
       },
       'data-table-demo': {
         label: 'Data Table Demo',
         element: <DataTableDemo />
->>>>>>> 7582d736e (chore: rebase)
       }
     }
   },

@@ -85,7 +85,12 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
   }
 
   return (
-    <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props}>
+    <tr
+      ref={ref}
+      className={cn('cn-table-v2-row', props.to || props.linkProps ? 'row-link-no-underline' : '', className)}
+      data-checked={selected ? 'true' : undefined}
+      {...props}
+    >
       {rowChildren}
     </tr>
   )
@@ -108,7 +113,7 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
 
     if (shouldRenderLink) {
       return (
-        <td ref={ref} className={cn('cn-table-v2-cell p-0', className)} {...props}>
+        <td ref={ref} className={cn('cn-table-v2-cell !p-0', className)} {...props}>
           <Link to={to || ''} className={cn('cn-table-v2-cell-link', linkProps?.className)} {...(linkProps || {})}>
             {children}
           </Link>

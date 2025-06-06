@@ -61,12 +61,16 @@ export default {
       '@apply border-b border-cn-borders-3 transition-colors overflow-hidden': '',
       '@apply last:border-b-0': '',
 
+      '&:where(.row-link-no-underline)': {
+        '@apply [&_.cn-table-v2-cell-link]:no-underline': ''
+      },
+
       '&:where([data-state=selected])': {
         '@apply bg-cn-background-3': ''
       },
 
       '&:where([data-checked=true])': {
-        '@apply bg-cn-background-3': ''
+        '@apply bg-cn-background-2': ''
       },
 
       '&-expanded': {

@@ -13,10 +13,11 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/ui": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
-    "@harnessio/forms": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
     "@types/lodash-es": "^4.17.12",
     "clsx": "^2.1.1",
     "lodash-es": "^4.17.21",

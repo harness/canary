@@ -86,6 +86,9 @@ importers:
       '@harnessio/yaml-editor':
         specifier: workspace:*
         version: link:../../packages/yaml-editor
+      '@tanstack/react-table':
+        specifier: ^8.21.3
+        version: 8.21.3(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -761,6 +764,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.15
         version: 0.5.16(tailwindcss@3.4.17)
+      '@tanstack/react-table':
+        specifier: ^8.21.3
+        version: 8.21.3(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@uiw/react-markdown-preview':
         specifier: ^5.1.1
         version: 5.1.4(@types/react@17.0.87)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
@@ -3747,6 +3753,17 @@ packages:
         optional: true
       react-native:
         optional: true
+
+  '@tanstack/react-table@8.21.3':
+    resolution: {integrity: sha512-5nNMTSETP4ykGegmVkhjcS8tTLW6Vl4axfEGQN3v0zdHYbK4UfoqfPChclTrJ4EoK9QynqAu9oUf8VEmrpZ5Ww==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: 17.0.2
+      react-dom: 17.0.2
+
+  '@tanstack/table-core@8.21.3':
+    resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
+    engines: {node: '>=12'}
 
   '@testing-library/dom@10.4.0':
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
@@ -13712,6 +13729,14 @@ snapshots:
       use-sync-external-store: 1.5.0(react@17.0.2)
     optionalDependencies:
       react-dom: 17.0.2(react@17.0.2)
+
+  '@tanstack/react-table@8.21.3(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
+    dependencies:
+      '@tanstack/table-core': 8.21.3
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+
+  '@tanstack/table-core@8.21.3': {}
 
   '@testing-library/dom@10.4.0':
     dependencies:

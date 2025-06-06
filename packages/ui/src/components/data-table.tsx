@@ -1,16 +1,30 @@
-import React from 'react'
-import { ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, SortingState, TableOptions, useReactTable } from '@tanstack/react-table'
+import { useState } from 'react'
+
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  Row,
+  SortingState,
+  TableOptions,
+  useReactTable
+} from '@tanstack/react-table'
 
 import { Pagination, PaginationProps } from './pagination/pagination'
 import { TableV2 } from './table-v2'
 
 export interface DataTableProps<TData> {
   data: TData[]
-  columns: ColumnDef<TData>[]
+  columns: ColumnDef<TData, unknown>[]
   size?: 'default' | 'relaxed' | 'compact'
   pagination?: PaginationProps
   enableSorting?: boolean
   defaultSorting?: SortingState
+  getRowClassName?: (row: Row<TData>) => string | undefined
+  onRowClick?: (data: TData, index: number) => void
+  disableHighlightOnHover?: boolean
+  className?: string
 }
 
 export function DataTable<TData>({
@@ -19,18 +33,24 @@ export function DataTable<TData>({
   size = 'default',
   pagination,
   enableSorting = false,
-  defaultSorting = []
+  defaultSorting = [],
+  getRowClassName,
+  onRowClick,
+  disableHighlightOnHover = false,
+  className
 }: DataTableProps<TData>) {
-  const [sorting, setSorting] = React.useState<SortingState>(defaultSorting)
+  const [sorting, setSorting] = useState<SortingState>(defaultSorting)
 
   const tableOptions: TableOptions<TData> = {
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    getCoreRowModel: getCoreRowModel()
   }
-  
-  // Add sorting state if enabled
+
+  if (enableSorting) {
+    tableOptions.getSortedRowModel = getSortedRowModel()
+  }
+
   if (enableSorting) {
     tableOptions.onSortingChange = setSorting
     tableOptions.state = {
@@ -42,25 +62,28 @@ export function DataTable<TData>({
   const table = useReactTable(tableOptions)
 
   return (
-    <div>
-      <TableV2.Root variant={size}>
+    <div className={className}>
+      <TableV2.Root variant={size} disableHighlightOnHover={disableHighlightOnHover}>
         <TableV2.Header>
           {table.getHeaderGroups().map(headerGroup => (
             <TableV2.Row key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <TableV2.Head 
+                <TableV2.Head
                   key={header.id}
-                  className={header.column.getCanSort() ? 'cursor-pointer select-none' : undefined}
-                  onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                  className={enableSorting && header.column.getCanSort() ? 'cursor-pointer select-none' : undefined}
+                  onClick={
+                    enableSorting && header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined
+                  }
                 >
                   <div className="flex items-center gap-1">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    {header.column.getCanSort() && (
+                    {enableSorting && header.column.getCanSort() && (
                       <span className="ml-1">
                         {{
                           asc: String.fromCharCode(8593), // Up arrow
                           desc: String.fromCharCode(8595) // Down arrow
-                        }[header.column.getIsSorted() as string] ?? String.fromCharCode(8645)} {/* Up-down arrow */}
+                        }[header.column.getIsSorted() as string] ?? String.fromCharCode(8645)}{' '}
+                        {/* Up-down arrow */}
                       </span>
                     )}
                   </div>
@@ -70,21 +93,17 @@ export function DataTable<TData>({
           ))}
         </TableV2.Header>
         <TableV2.Body>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map(row => (
-              <TableV2.Row key={row.id}>
-                {row.getVisibleCells().map(cell => (
-                  <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>
-                ))}
-              </TableV2.Row>
-            ))
-          ) : (
-            <TableV2.Row>
-              <TableV2.Cell colSpan={columns.length} className="py-6 text-center">
-                {'No results found.'}
-              </TableV2.Cell>
+          {table.getRowModel().rows.map(row => (
+            <TableV2.Row
+              key={row.id}
+              className={getRowClassName?.(row)}
+              onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
+            >
+              {row.getVisibleCells().map(cell => (
+                <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>
+              ))}
             </TableV2.Row>
-          )}
+          ))}
         </TableV2.Body>
       </TableV2.Root>
 

@@ -28,12 +28,8 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>{displayLabel}</DropdownMenu.Trigger>
-      <DropdownMenu.Content
-        className="min-w-[224px] p-0"
-        align={dropdownAlign}
-        onCloseAutoFocus={e => e.preventDefault()}
-      >
-        <div className="border-cn-borders-4 flex items-center border-b px-3 py-2.5">
+      <DropdownMenu.Content className="min-w-[224px]" align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
+        <DropdownMenu.Header>
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -56,27 +52,15 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
               </Button>
             }
           />
-        </div>
+        </DropdownMenu.Header>
 
-        <div className="p-1">
-          {filteredBySearchOptions.map(option => (
-            <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)}>
-              {option.label}
-            </DropdownMenu.Item>
-          ))}
+        {filteredBySearchOptions.map(option => (
+          <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)} title={option.label} />
+        ))}
 
-          {filteredBySearchOptions.length === 0 && (
-            <div className="flex items-center justify-center p-4">
-              <span className="text-2 leading-none text-cn-foreground-2">No results</span>
-            </div>
-          )}
-        </div>
+        {filteredBySearchOptions.length === 0 && <DropdownMenu.NoOptions>No results</DropdownMenu.NoOptions>}
 
-        {customFooter && (
-          <div className="border-cn-borders-4 border-t p-1">
-            <DropdownMenu.Item asChild>{customFooter}</DropdownMenu.Item>
-          </div>
-        )}
+        {customFooter && <DropdownMenu.Footer>{customFooter}</DropdownMenu.Footer>}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

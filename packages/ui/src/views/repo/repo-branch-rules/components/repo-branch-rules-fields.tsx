@@ -115,7 +115,6 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           />
           <SplitButton<PatternsButtonType>
             buttonClassName="px-0 w-full"
-            id="patterns-type"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}

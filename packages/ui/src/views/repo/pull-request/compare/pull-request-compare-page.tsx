@@ -85,7 +85,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
-  setSearchLabelQuery?: (query: string) => void
+  setSearchLabelQuery: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
   editLabelsProps: LinkProps
@@ -182,11 +182,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
+        <span className="text-6 text-cn-foreground-1 mt-7 font-medium leading-snug tracking-tight">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-2 leading-snug text-cn-foreground-2">
+          <p className="text-2 text-cn-foreground-2 max-w-xl leading-snug">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
@@ -203,7 +203,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   {mergeability ? (
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />
-                      <p className="text-2 leading-none text-cn-foreground-success">
+                      <p className="text-2 text-cn-foreground-success leading-none">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                         <span className="text-cn-foreground-2">
                           {t(
@@ -218,7 +218,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-2 leading-none text-cn-foreground-2">
+                          <p className="text-2 text-cn-foreground-2 leading-none">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
@@ -228,7 +228,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       ) : (
                         <>
                           <Icon className="text-icons-danger" name="x-mark" size={12} />
-                          <p className="text-2 leading-none text-cn-foreground-danger">
+                          <p className="text-2 text-cn-foreground-danger leading-none">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-cn-foreground-2">
                               {t(
@@ -312,7 +312,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <Tabs.List className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-cn-background-2">
+              <Tabs.List className="before:bg-cn-background-2 relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
                     value="overview"

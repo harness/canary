@@ -6,7 +6,7 @@ import { Label } from '@components/form-primitives'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import { default as MulltiSelect } from './filters-bar/actions/variants/checkbox'
+import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -69,7 +69,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
     case FilterFieldTypes.MultiSelect: {
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
-        <MulltiSelect
+        <MultiSelectFilter
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}

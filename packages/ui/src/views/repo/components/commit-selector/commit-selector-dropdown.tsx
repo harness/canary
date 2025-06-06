@@ -1,8 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
-import { DropdownMenu, Icon, SearchBox } from '@/components'
+import { DropdownMenu, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
-import { cn } from '@utils/cn'
 import { CommitSelectorListItem } from '@views/repo/pull-request'
 
 import { CommitSelectorDropdownProps } from '../../pull-request/pull-request.types'
@@ -30,8 +29,8 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   }, [commitList, searchQuery])
 
   return (
-    <DropdownMenu.Content className="p-0" align="start">
-      <div className="px-3 pt-2">
+    <DropdownMenu.Content align="start">
+      <DropdownMenu.Header>
         <SearchBox.Root
           className="w-full"
           placeholder={t('views:repos.search')}
@@ -39,47 +38,26 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
           handleChange={handleSearchChange}
           showOnFocus
         />
-      </div>
+      </DropdownMenu.Header>
 
-      <div className="mt-1">
-        {filteredItems.length === 0 && (
-          <div className="px-5 py-4 text-center">
-            <span className="text-2 leading-tight text-cn-foreground-2">Nothing to show</span>
-          </div>
-        )}
+      {filteredItems.length === 0 && <DropdownMenu.NoOptions>Nothing to show</DropdownMenu.NoOptions>}
 
-        <div className="max-h-[360px] overflow-y-auto px-1">
-          {filteredItems.map((item, idx) => {
-            const isSelected = selectedCommit
-              ? item.title === selectedCommit.title && item.sha === selectedCommit.sha
-              : false
+      {filteredItems.map((item, idx) => {
+        const isSelected = selectedCommit
+          ? item.title === selectedCommit.title && item.sha === selectedCommit.sha
+          : false
 
-            return (
-              <DropdownMenu.Item
-                className={cn('hover:bg-cn-background-hover cursor-pointer py-2 leading-none', {
-                  'bg-cn-background-hover': isSelected,
-                  'pl-7': !isSelected
-                })}
-                onClick={() => {
-                  onSelectCommit?.(item)
-                }}
-                key={item.title}
-              >
-                <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-cn-foreground-1" />}
-                  <span
-                    className={cn('text-cn-foreground-2 truncate', {
-                      'text-cn-foreground-1': isSelected
-                    })}
-                  >
-                    {item.title && idx === 0 ? `${item.title} (${commitList.length - 1})` : item.title}
-                  </span>
-                </div>
-              </DropdownMenu.Item>
-            )
-          })}
-        </div>
-      </div>
+        return (
+          <DropdownMenu.Item
+            onClick={() => {
+              onSelectCommit?.(item)
+            }}
+            key={item.title}
+            checkmark={isSelected}
+            title={item.title && idx === 0 ? `${item.title} (${commitList.length - 1})` : item.title}
+          />
+        )
+      })}
     </DropdownMenu.Content>
   )
 }

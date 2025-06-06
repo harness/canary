@@ -332,7 +332,6 @@ const PullRequestPanel = ({
 
                   {actions && !pullReqMetadata?.closed ? (
                     <SplitButton
-                      id="pr-type"
                       theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                       disabled={buttonState.disabled}
                       variant="outline"

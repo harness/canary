@@ -6,6 +6,7 @@ import {
   CopyButton,
   Icon,
   IconProps,
+  IconV2,
   MoreActionsTooltip,
   NoData,
   SkeletonTable,
@@ -185,7 +186,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                         onClick={e => e.stopPropagation()}
                       >
-                        <Icon
+                        <IconV2
                           name={
                             getPrState(
                               branch.pullRequests[0].is_draft,

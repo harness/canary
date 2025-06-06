@@ -159,7 +159,8 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
       <Body>
         <div className="flex">
           {t('views:delegates.noDelegatesInstalled', `Haven't installed a delegate yet?`)}
-          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="attachment-link">
+          {/* TODO: Design system : Update Attachment icon */}
+          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="chain">
             {t('views:delegates.installDelegate', 'Install Delegate')}
           </Link>
         </div>

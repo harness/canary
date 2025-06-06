@@ -64,7 +64,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
           </div>
           <div className="flex items-center justify-between px-4 py-3">
             {/* TODO: get branch name from commitData */}
-            <Tag value="main" icon="branch-2" variant="secondary" showIcon />
+            <Tag value="main" icon="git-branch" variant="secondary" showIcon />
             <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
           </div>
         </div>

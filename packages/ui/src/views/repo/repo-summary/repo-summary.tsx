@@ -264,14 +264,14 @@ export function RepoSummaryView({
                   id: '0',
                   name: t('views:repos.commits', 'Commits'),
                   count: default_branch_commit_count,
-                  iconName: 'tube-sign',
+                  iconName: 'git-commit',
                   to: props.toRepoCommits?.() ?? '#'
                 },
                 {
                   id: '1',
                   name: t('views:repos.branches', 'Branches'),
                   count: branch_count,
-                  iconName: 'branch',
+                  iconName: 'git-branch',
                   to: props.toRepoBranches?.() ?? '#'
                 },
                 {
@@ -285,7 +285,7 @@ export function RepoSummaryView({
                   id: '3',
                   name: t('views:repos.openPullReq', 'Open pull requests'),
                   count: pull_req_summary?.open_count || 0,
-                  iconName: 'open-pr',
+                  iconName: 'git-pull-request',
                   to: props.toRepoPullRequests?.() ?? '#'
                 }
               ]}

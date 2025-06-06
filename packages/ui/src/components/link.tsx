@@ -5,7 +5,6 @@ import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
-import { Icon, IconProps } from './icon'
 import { IconPropsV2, IconV2 } from './icon-v2'
 
 export const linkVariants = cva('cn-link', {

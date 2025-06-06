@@ -1,9 +1,8 @@
 import { ReactElement, ReactNode, UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { ControlGroup, FormCaption, Label, SearchInput } from '@/components'
+import { ControlGroup, FormCaption, IconV2, Label, SearchInput } from '@/components'
 import { cn, generateAlphaNumericHash } from '@/utils'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
 import { Text } from '@components/text'
 import { cva, VariantProps } from 'class-variance-authority'
 import debounce from 'lodash-es/debounce'
@@ -98,7 +97,7 @@ const getAllValueOptions = <T,>(options: SelectOption<T>[]): ValueOption<T>[] =>
   return valueOptions
 }
 
-function SelectV2<T = string>({
+function Select<T = string>({
   options: optionsProp,
   value,
   defaultValue,
@@ -269,7 +268,7 @@ function SelectV2<T = string>({
 
           if (!isAllowed) {
             console.warn(
-              `[SelectV2] optionRenderer should return either DropdownMenu.Item, DropdownMenu.AvatarItem,
+              `[Select] optionRenderer should return either DropdownMenu.Item, DropdownMenu.AvatarItem,
               DropdownMenu.IconItem, DropdownMenu.LogoItem or DropdownMenu.IndicatorItem`
             )
           }
@@ -328,7 +327,7 @@ function SelectV2<T = string>({
           >
             {selectedOption ? selectedOption.label : placeholder}
           </Text>
-          <Icon name="chevron-down" size={14} className="cn-select-indicator-icon" />
+          <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Content className="w-[--radix-dropdown-menu-trigger-width]" align="start" onScroll={handleScroll}>
@@ -370,7 +369,7 @@ function SelectV2<T = string>({
 }
 
 export {
-  SelectV2,
+  Select,
   type SelectV2Props,
   type SelectOption,
   type ValueOption as SelectValueOption,

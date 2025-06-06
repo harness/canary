@@ -8,7 +8,7 @@ import {
   DropdownMenu,
   FormWrapper,
   ModalDialog,
-  SelectV2,
+  Select,
   SelectValueOption
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -89,7 +89,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
 
         <ModalDialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-            <SelectV2
+            <Select
               options={memberOptions}
               value={invitedMember}
               placeholder={t('views:forms.selectMember', 'Select member')}
@@ -109,7 +109,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
               allowSearch
             />
 
-            <SelectV2
+            <Select
               options={roleOptions}
               value={memberRole}
               placeholder={t('views:forms.selectRole', 'Select role')}

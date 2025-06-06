@@ -1,6 +1,6 @@
 import { ComponentProps, FC } from 'react'
 
-import { Button, FormInput, IconV2, SelectV2, SelectV2Props, SelectValueOption } from '@/components'
+import { Button, FormInput, IconV2, Select, SelectV2Props, SelectValueOption } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ColorsEnum } from '@/views'
@@ -42,7 +42,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
         className
       )}
     >
-      <SelectV2 options={options} {...selectProps} />
+      <Select options={options} {...selectProps} />
 
       <FormInput.Text
         placeholder={

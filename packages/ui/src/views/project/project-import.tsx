@@ -9,7 +9,7 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  SelectV2,
+  Select,
   Spacer,
   Text
 } from '@/components'
@@ -98,7 +98,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <SelectV2
+          <Select
             value={providerValue}
             options={providerOptions}
             onChange={value => handleSelectChange('provider', value)}

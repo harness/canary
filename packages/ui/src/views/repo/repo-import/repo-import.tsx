@@ -9,7 +9,7 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  SelectV2,
+  Select,
   Spacer,
   Text
 } from '@/components'
@@ -146,7 +146,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <SelectV2
+          <Select
             options={providerOptions}
             value={providerValue}
             onChange={value => handleSelectChange('provider', value)}

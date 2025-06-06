@@ -14,7 +14,7 @@ import {
   Message,
   MessageTheme,
   Radio,
-  SelectV2,
+  Select,
   SelectValueOption,
   Spacer,
   Text
@@ -148,7 +148,7 @@ export function RepoCreatePage({
           </Fieldset>
 
           {/* GITIGNORE */}
-          <SelectV2
+          <Select
             value={gitignoreValue}
             options={gitIgnoreOptions}
             onChange={value => handleSelectChange('gitignore', value)}
@@ -159,7 +159,7 @@ export function RepoCreatePage({
           />
 
           {/* LICENSE */}
-          <SelectV2
+          <Select
             value={licenseValue}
             options={licenseOptions}
             onChange={value => handleSelectChange('license', value)}

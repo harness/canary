@@ -14,7 +14,7 @@ The `Select` component provides a dropdown interface for selecting a single valu
     const [value, setValue] = React.useState('banana');
     
     return (
-      <SelectV2
+      <Select
         options={[
           { label: 'Apple', value: 'apple' },
           { label: 'Banana', value: 'banana' },
@@ -37,7 +37,7 @@ import { Select } from "@harnessio/ui/components";
 //...
 
 return (
-  <SelectV2
+  <Select
     options={[
       { label: "One", value: "one" },
       { label: "Two", value: "two" },
@@ -63,7 +63,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
     
     return (
       <div className="grid gap-4">
-        <SelectV2
+        <Select
           label="Choose your country"
           options={[
             { label: 'United States', value: 'us' },
@@ -77,7 +77,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           optional
         />
         
-        <SelectV2
+        <Select
           label="Priority Level"
           options={[
             { label: 'Low', value: 'low' },
@@ -90,7 +90,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           error="Please select a priority level"
         />
         
-        <SelectV2
+        <Select
           label="Environment"
           options={[
             { label: 'Development', value: 'dev' },
@@ -182,7 +182,7 @@ Enable client-side search filtering to help users find options quickly in large 
 
     return (
       <div className="grid gap-4">
-        <SelectV2
+        <Select
           options={groupedOptions}
           value={value}
           onChange={setValue}
@@ -191,7 +191,7 @@ Enable client-side search filtering to help users find options quickly in large 
           label="Grouped and searchable"
         />
 
-        <SelectV2
+        <Select
           options={users}
           value={customSearchValue}
           onChange={setCustomSearchValue}
@@ -235,7 +235,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
     
     return (
       <div className="grid gap-4">
-        <SelectV2
+        <Select
           label="Async options"
           options={fetchOptions}
           value={value}
@@ -243,7 +243,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
           placeholder="Loading options..."
         />
         
-        <SelectV2
+        <Select
           label="With default value"
           options={async () => {
             await new Promise(resolve => setTimeout(resolve, 1500))
@@ -273,7 +273,7 @@ Both the entire select and individual options can be disabled.
     
     return (
       <div className="grid gap-4">
-        <SelectV2
+        <Select
           label="Disabled select"
           options={[
             { label: 'Option 1', value: '1' },
@@ -284,7 +284,7 @@ Both the entire select and individual options can be disabled.
           placeholder="This select is disabled"
         />
         
-        <SelectV2
+        <Select
           label="With disabled options"
           options={[
             { label: 'Available', value: 'available' },
@@ -310,14 +310,14 @@ The Select component provides clear loading indicators for different scenarios.
   code={`() => {
     return (
       <div className="grid gap-4">
-        <SelectV2
+        <Select
           label="Initial loading"
           options={[]}
           isLoading={true}
           placeholder="Loading options..."
         />
         
-        <SelectV2
+        <Select
           label="Loading more items"
           options={[
             { label: 'Item 1', value: '1' },
@@ -374,7 +374,7 @@ Options can have ReactNode labels for rich content display.
     ]
     
     return (
-      <SelectV2
+      <Select
         label="Select branch"
         options={options}
         value={value}
@@ -410,7 +410,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
     ];
 
     return (
-      <SelectV2
+      <Select
         label="Invite a user"
         value={value}
         onChange={setValue}
@@ -441,7 +441,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
     const [value, setValue] = React.useState()
 
     return (
-      <SelectV2
+      <Select
         label="Grouped options"
         options={[
           {
@@ -478,7 +478,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
 The `Select` component is the main component for creating dropdown selections.
 
 ```typescript jsx
-<SelectV2
+<Select
   options={options}         // Array of options or async function
   value={value}             // [OPTIONAL] controlled value
   defaultValue              // [OPTIONAL] default value for uncontrolled mode

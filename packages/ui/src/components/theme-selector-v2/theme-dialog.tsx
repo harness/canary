@@ -4,7 +4,7 @@ import {
   getModeColorContrastFromFullTheme,
   Icon,
   ModalDialog,
-  SelectV2,
+  Select,
   SelectValueOption,
   Separator
 } from '@/components'
@@ -136,7 +136,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     </p>
                   </div>
 
-                  <SelectV2
+                  <Select
                     value={contrast}
                     options={contrastOptions}
                     onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
@@ -155,7 +155,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     </p>
                   </div>
 
-                  <SelectV2
+                  <Select
                     value={colorAdjustment}
                     options={colorOptions}
                     onChange={(value: ColorType) => setTheme(`${mode}-${value}-${contrast}`)}

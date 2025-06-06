@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { getTheme, Themes } from '@utils/theme-utils'
 import { clsx } from 'clsx'
 
-import { Button, IconV2, SelectGroupOption, SelectV2, SelectValueOption, Spacer } from '@harnessio/ui/components'
+import { Button, IconV2, Select, SelectGroupOption, SelectValueOption, Spacer } from '@harnessio/ui/components'
 
 import { viewPreviews } from './view-preview'
 import css from './view-settings.module.css'
@@ -62,7 +62,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
 
       {showSettings && (
         <>
-          <SelectV2<string>
+          <Select<string>
             allowSearch
             options={viewOptions}
             label="View"
@@ -73,7 +73,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
 
           <Spacer size={5} />
 
-          <SelectV2<Themes>
+          <Select<Themes>
             options={themeOptions}
             placeholder="Select theme"
             label="Theme"

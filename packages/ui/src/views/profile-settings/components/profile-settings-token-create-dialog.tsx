@@ -10,7 +10,7 @@ import {
   FormInput,
   FormWrapper,
   ModalDialog,
-  SelectV2
+  Select
 } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -165,7 +165,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 </>
               ) : (
                 <Fieldset className="gap-y-0">
-                  <SelectV2
+                  <Select
                     value={expirationValue}
                     options={expirationOptions}
                     onChange={value => handleSelectChange('lifetime', value)}

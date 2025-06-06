@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { IconV2, Popover, SelectV2 } from '@/components'
+import { IconV2, Popover, Select } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PopoverCommitInfo } from './unified-popover-commit-info'
@@ -81,7 +81,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
             <div className={'flex items-center'}>
               <span className="text-cn-foreground-3 text-[12px]">Branch:</span>
 
-              <SelectV2
+              <Select
                 options={branchOptions}
                 value={currentBranch}
                 disabled={branchesLoading}

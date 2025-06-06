@@ -1,10 +1,9 @@
-import { ReactNode, UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactElement, ReactNode, UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { ControlGroup, FormCaption, Label } from '@/components'
+import { ControlGroup, FormCaption, Label, SearchInput } from '@/components'
 import { cn, generateAlphaNumericHash } from '@/utils'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
-import { Input } from '@components/input'
 import { Text } from '@components/text'
 import { cva, VariantProps } from 'class-variance-authority'
 import debounce from 'lodash-es/debounce'
@@ -37,6 +36,13 @@ interface GroupOption<T = string> {
 
 type SelectOption<T = string> = ValueOption<T> | GroupOption<T> | SeparatorOption
 
+type SelectItemType =
+  | ReactElement<typeof DropdownMenu.Item>
+  | ReactElement<typeof DropdownMenu.AvatarItem>
+  | ReactElement<typeof DropdownMenu.IconItem>
+  | ReactElement<typeof DropdownMenu.LogoItem>
+  | ReactElement<typeof DropdownMenu.IndicatorItem>
+
 interface SelectV2Props<T = string> {
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
   value?: T
@@ -55,7 +61,9 @@ interface SelectV2Props<T = string> {
   warning?: string
   optional?: boolean
   allowSearch?: boolean
-  onSearch?: (query: string) => SelectOption<T>[]
+  onSearch?: (query: string) => void
+  searchValue?: string
+  optionRenderer?: (option: ValueOption<T>) => SelectItemType
 }
 
 // Helper function to check option types
@@ -108,6 +116,8 @@ function SelectV2<T = string>({
   optional,
   allowSearch = false,
   onSearch,
+  searchValue,
+  optionRenderer,
   ...props
 }: SelectV2Props<T>) {
   const [isOpen, setIsOpen] = useState(false)
@@ -115,7 +125,7 @@ function SelectV2<T = string>({
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('')
   const [options, setOptions] = useState<SelectOption<T>[]>([])
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState(searchValue || '')
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   const isControlled = value !== undefined
@@ -147,12 +157,10 @@ function SelectV2<T = string>({
 
   // Filter options based on search
   const filteredOptions = useMemo(() => {
+    onSearch?.(debouncedSearchQuery)
+
     if (!allowSearch || !debouncedSearchQuery.trim()) {
       return options
-    }
-
-    if (onSearch) {
-      return onSearch(debouncedSearchQuery)
     }
 
     // Default search implementation
@@ -183,10 +191,7 @@ function SelectV2<T = string>({
         })
 
         if (filteredGroupOptions.length > 0) {
-          acc.push({
-            ...option,
-            options: filteredGroupOptions
-          } as GroupOption<T>)
+          acc.push({ ...option, options: filteredGroupOptions } as GroupOption<T>)
         }
       }
 
@@ -243,6 +248,35 @@ function SelectV2<T = string>({
         return <DropdownMenu.Separator key={`separator-${level}-${index}`} />
       }
 
+      if (isGroupOption(option)) {
+        return (
+          <DropdownMenu.Group key={`group-${level}-${index}`} label={option.label}>
+            {renderOptions(option.options, level + 1)}
+          </DropdownMenu.Group>
+        )
+      }
+
+      if (optionRenderer) {
+        const element = optionRenderer(option)
+
+        if (process.env.NODE_ENV === 'development') {
+          const isAllowed =
+            element.type === DropdownMenu.Item ||
+            element.type === DropdownMenu.AvatarItem ||
+            element.type === DropdownMenu.IconItem ||
+            element.type === DropdownMenu.LogoItem ||
+            element.type === DropdownMenu.IndicatorItem
+
+          if (!isAllowed) {
+            console.warn(
+              `[SelectV2] optionRenderer should return either DropdownMenu.Item, DropdownMenu.AvatarItem,
+              DropdownMenu.IconItem, DropdownMenu.LogoItem or DropdownMenu.IndicatorItem`
+            )
+          }
+        }
+        return element
+      }
+
       if (isValueOption(option)) {
         return (
           <DropdownMenu.Item
@@ -252,14 +286,6 @@ function SelectV2<T = string>({
             onSelect={() => handleSelect(option.value)}
             checkmark={option.value === selectedValue}
           />
-        )
-      }
-
-      if (isGroupOption(option)) {
-        return (
-          <DropdownMenu.Group key={`group-${level}-${index}`} label={option.label}>
-            {renderOptions(option.options, level + 1)}
-          </DropdownMenu.Group>
         )
       }
 
@@ -308,11 +334,11 @@ function SelectV2<T = string>({
         <DropdownMenu.Content className="w-[--radix-dropdown-menu-trigger-width]" align="start" onScroll={handleScroll}>
           {allowSearch && (
             <DropdownMenu.Header>
-              <Input
-                placeholder="Search..."
+              <SearchInput
+                placeholder="Search"
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="cn-select-search"
+                onChange={setSearchQuery}
+                debounce={false}
                 autoFocus
               />
             </DropdownMenu.Header>

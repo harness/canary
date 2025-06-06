@@ -385,6 +385,54 @@ Options can have ReactNode labels for rich content display.
   }`}
 />
 
+## Custom Option Renderer
+
+Customize how individual options are rendered using the `optionRenderer` prop. This allows advanced layouts or UI elements for each option.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState();
+
+    const users = [
+      {
+        value: 'alice',
+        label: 'Alice Brown',
+        email: 'alice@example.com',
+        avatar: 'https://i.pravatar.cc/40?u=alice'
+      },
+      {
+        value: 'bob',
+        label: 'Bob Johnson',
+        email: 'bob@example.com',
+        avatar: 'https://i.pravatar.cc/40?u=bob'
+      }
+    ];
+
+    return (
+      <SelectV2
+        label="Invite a user"
+        value={value}
+        onChange={setValue}
+        options={users}
+        optionRenderer={(option) => (
+          <DropdownMenu.AvatarItem
+            key={option.value}
+            title={option.label}
+            onSelect={() => setValue(option.value)}
+            name={option.label}
+            description={users.find(u => u.value === option.value)?.email}
+            src={users.find(u => u.value === option.value)?.avatar}
+          />
+        )}
+        placeholder="Select a user"
+        allowSearch
+      />
+    );
+
+}`}
+/>
+
 ## Grouped Options and Separators
 
 <DocsPage.ComponentExample
@@ -575,6 +623,18 @@ The `Select` component is the main component for creating dropdown selections.
       value: "(query: string) => SelectOption<T>[]",
       defaultValue: "Filters by label containing query",
     },
+    {
+      name: "searchValue",
+      description: "Controlled search input value",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optionRenderer",
+      description: "Function to render custom ReactNode for each value option",
+      required: false,
+      value: "(option: ValueOption<T>) => ReactNode",
+    },
   ]}
 />
 
@@ -642,6 +702,7 @@ type SelectOption<T = string> =
 - Search query is cleared when the dropdown closes or an option is selected
 - Form validation states (`error`, `warning`) automatically set the appropriate theme
 - The component supports generic types for option values, not limited to strings
+- If optionRenderer is provided, it overrides the default option rendering logic. This can be used to inject custom components such as avatars, icons, or descriptions for each option.
 
 ## Accessibility
 

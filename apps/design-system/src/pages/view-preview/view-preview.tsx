@@ -10,6 +10,7 @@ import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connect
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
 import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
+import DataTableDemo from '@subjects/views/data-table-demo'
 import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
 import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
@@ -510,6 +511,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'table-v2-demo': {
         label: 'Table V2 Demo',
         element: <TableV2Demo />
+      },
+      'data-table-demo': {
+        label: 'Data Table Demo',
+        element: <DataTableDemo />
       }
     }
   },

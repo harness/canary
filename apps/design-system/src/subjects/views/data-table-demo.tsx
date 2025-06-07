@@ -84,7 +84,7 @@ export const DataTableDemo: React.FC = () => {
   const renderSubComponent = ({ row }: { row: Row<User> }) => {
     const user = row.original
     return (
-      <div className="p-4 bg-gray-50">
+      <div className="p-4">
         <p>This is a placeholder for expanded content for {user.name}</p>
       </div>
     )
@@ -174,7 +174,7 @@ export const DataTableDemo: React.FC = () => {
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
-      <SandboxLayout.Content className="max-w-[700px] flex justify-center">
+      <SandboxLayout.Content className="w-[900px] flex justify-center">
         <DataTable
           columns={columns}
           data={paginatedData}

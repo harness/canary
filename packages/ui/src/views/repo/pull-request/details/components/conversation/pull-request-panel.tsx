@@ -442,7 +442,7 @@ const PullRequestPanel = ({
             </Accordion.Root>
           ) : (
             <Layout.Horizontal gap="xs" align="center" justify="between" className="w-full py-4">
-              <Layout.Horizontal align="center" className="w-full" gap="xs">
+              <Layout.Horizontal align="center" className="w-full" gap="2xs">
                 <StatusBadge variant="secondary" size="sm">
                   <Link
                     className="flex items-center gap-x-1.5"

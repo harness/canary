@@ -95,7 +95,6 @@ export function DataTable<TData>({
       {
         id: 'select',
         header: ({ table }: { table: Table<TData> }) => {
-          // Create a handler function that can be safely passed to onChange
           const handleToggleAll = () => {
             table.toggleAllRowsSelected()
           }
@@ -118,8 +117,7 @@ export function DataTable<TData>({
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             />
           )
-        },
-        size: 40
+        }
       },
       ...enhancedColumns
     ]
@@ -146,8 +144,7 @@ export function DataTable<TData>({
               {row.getIsExpanded() ? <Icon name="chevron-down" size={16} /> : <Icon name="chevron-up" size={16} />}
             </Button>
           )
-        },
-        size: 40
+        }
       },
       ...enhancedColumns
     ]
@@ -179,9 +176,7 @@ export function DataTable<TData>({
     // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
     state: {
       sorting: currentSorting,
-      // Make sure rowSelection is always an object, even if undefined
       rowSelection: currentRowSelection || {},
-      // Set expanded state if provided
       expanded: currentExpanded || {}
     }
   }

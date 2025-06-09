@@ -1129,6 +1129,12 @@
         "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
       }
     },
+    "chat": {
+      "ai-icon": {
+        "$type": "color",
+        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
+      }
+    },
     "dialog": {
       "backdrop": {
         "$extensions": {
@@ -1962,6 +1968,20 @@
       "gradient-stop-4": {
         "$type": "color",
         "$value": "{cyan.200}"
+      }
+    },
+    "ai-chat": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{cyan.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{indigo.400}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{violet.400}"
       }
     },
     "alert": {

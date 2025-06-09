@@ -87,6 +87,24 @@
         "$type": "sizing",
         "$value": "{size.7}"
       }
+    },
+    "sub-group": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
+      "px-1": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      },
+      "px-2": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      }
     }
   }
 }

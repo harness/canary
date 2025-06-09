@@ -1,29 +1,41 @@
 ---
 title: Icon
-description: Icon component
+description: IconV2 component
 beta: true
 ---
 
-The `Icon` component allows you to render various icons with customizable properties such as size, color theme, and name.
+The `IconV2` component allows you to render various icons with customizable properties such as size, color theme, and name. It will soon replace the old `Icon` component.
 
 import { DocsPage } from "../../../components/docs-page";
 import IconGrid from "../../../components/IconGrid.astro";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid place-items-center">
-    <Icon name="double-tick" size={48} />
-</div>`}
+  code={`<IconV2 name="check" size={48} />`}
+/>
+
+## Colored Icon
+
+By default, IconV2 components will inherit the color from the parent. You can also set the color explicitly using the `className` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md">
+    <div className="text-cn-foreground-success">
+      <IconV2 name="check" size={32} />
+    </div>
+    <IconV2 className="text-cn-foreground-danger" name="xmark" size={32} />
+  </Layout.Flex>`}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Icon } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 
 //...
 
-return <Icon name="double-tick" size={48} />
+return <IconV2 name="check" size={48} />
 ```
 
 ## Available Icons
@@ -36,13 +48,13 @@ The following icons are available:
 
 ## API Reference
 
-The `Icon` component can be sized either using the `size` prop or the `height` and `width` props.
+The `IconV2` component can be sized either using the `size` prop or the `height` and `width` props.
 The `size` prop can be used as a shorthand to set both height and width. Some icons have specific alternatives
 that can be used in light and dark modes; setting the `themeDependent` prop will opt into switching between
 the light and dark versions of the icon.
 
 ```typescript jsx
-<Icon
+<IconV2
   name="double-tick"   // name of the icon
   size={16}            // [OPTIONAL] size of the icon in pixels
   height={16}          // [OPTIONAL] height of the icon in pixels

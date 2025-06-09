@@ -1,16 +1,25 @@
 ---
-import { IconV2, IconNameMapV2, Card, Text } from "@harnessio/ui/components";
+import {
+  IconV2,
+  IconNameMapV2,
+  Card,
+  Text,
+  CopyButton,
+} from "@harnessio/ui/components";
 ---
 
 <div
-  class="not-content grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-2"
+  class="not-content grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2"
 >
   {
     Object.keys(IconNameMapV2).map((name) => (
-      <Card.Root className="aspect-square grid place-items-center" title={name}>
-        <Card.Content className="grid place-items-center text-center gap-3">
-          <IconV2 size={28} name={name as keyof typeof IconNameMapV2} />
-          <Text color="foreground-3">{name}</Text>
+      <Card.Root className="grid place-items-center" title={name}>
+        <Card.Content className="grid grid-rows-[auto_60px_auto] place-items-center text-center gap-3">
+          <IconV2 size={40} name={name as keyof typeof IconNameMapV2} />
+          <Text align="center" color="foreground-3">
+            {name}
+          </Text>
+          <CopyButton name={name} client:only />
         </Card.Content>
       </Card.Root>
     ))

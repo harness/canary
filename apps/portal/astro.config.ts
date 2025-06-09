@@ -72,6 +72,6 @@ export default defineConfig({
     react(),
   ],
   redirects: {
-    "/": "/components/accordion",
+    "/": "/getting-started/installation",
   },
 });

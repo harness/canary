@@ -6,9 +6,10 @@ interface Color {
   $value?: string;
   [key: string]: unknown;
 }
+
 const shades = Object.keys(styles.colors.blue);
 const colors = Object.keys(styles.colors).filter(
-  (color) => color !== "pure"
+  (color) => color !== "pure",
 ); /** Excluding "pure" colors intentionally */
 ---
 

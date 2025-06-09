@@ -41,7 +41,7 @@
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
-      "width": {
+      "full-width": {
         "$type": "sizing",
         "$value": "{size.56}"
       }

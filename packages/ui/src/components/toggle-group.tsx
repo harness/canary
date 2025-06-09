@@ -1,10 +1,43 @@
 import * as React from 'react'
 
-import { toggleVariants } from '@/components'
 import { useTheme } from '@/context'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+
+// TODO: Temporarily moved toggleVariants out of the Toggle component. To be removed when migrating the component to the new design system.
+const toggleVariants = cva(
+  `inline-flex items-center justify-center text-2 font-medium text-cn-foreground-2 
+  transition-colors 
+  hover:text-cn-foreground-2 disabled:pointer-events-none 
+  disabled:opacity-50 data-[state=on]:text-cn-foreground-1`,
+  {
+    variants: {
+      variant: {
+        default: 'rounded bg-transparent',
+        outline:
+          'rounded border border-cn-borders-2 bg-transparent shadow-sm hover:bg-cn-background-3 hover:text-cn-foreground-1',
+        compact: ''
+      },
+      size: {
+        default: 'h-9 px-3',
+        sm: 'h-8 px-2',
+        lg: 'h-10 px-3',
+        xs: 'h-6 px-[1.125rem]',
+        icon: 'size-8'
+      },
+      theme: {
+        light: 'data-[state=on]:bg-cn-background-1',
+        dark: 'data-[state=on]:bg-cn-background-hover'
+      }
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+      theme: 'dark'
+    }
+  }
+)
 
 const toggleGroupVariants = cva('flex items-center justify-center gap-1', {
   variants: {

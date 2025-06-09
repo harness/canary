@@ -10,36 +10,9 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
-    <div>
-        <h5>Standard toggle</h5>
-        <Toggle>Default</Toggle>
-    </div>
-
-    <hr />
-
-    <div className="flex flex-col gap-4">
-        <h5>Variants</h5>
-        <div className="flex items-center flex-wrap gap-4">
-            <Toggle variant="default">Default</Toggle>
-            <Toggle variant="outline">Outline</Toggle>
-            <Toggle variant="compact">Compact</Toggle>
-        </div>
-    </div>
-
-    <hr />
-
-    <div className="flex flex-col gap-4">
-        <h5>Sizes <span className="italic text-1">(pressed)</span></h5>
-        <div className="flex items-center flex-wrap gap-4">
-            <Toggle size="default" defaultPressed>Default</Toggle>
-            <Toggle size="xs" defaultPressed>Extra small</Toggle>
-            <Toggle size="sm" defaultPressed>Small</Toggle>
-            <Toggle size="lg" defaultPressed>Large</Toggle>
-        </div>
-    </div>
-
-</div>`}
+  code={`
+    <Toggle>Default</Toggle>
+  `}
 />
 
 ## Usage
@@ -47,50 +20,119 @@ import { DocsPage } from "../../../components/docs-page";
 ```typescript jsx
 import { Toggle } from '@harnessio/ui/components'
 
-// ...
+//...
 
-const [pressed, setPressed] = useState(false)
-
-return <Toggle pressed={pressed} onPressedChange={setPressed}>Dark Mode</Toggle>
+return (
+    <Toggle
+        size="sm"
+        variant="outline-secondary"
+        rounded
+        tooltipProps={{
+            content: <p>This is a tooltip</p>
+        }}
+    >
+        Toggle
+    </Toggle>
+)
 ```
+
+## Variants
+
+The `Toggle` component accepts a `variant` prop to control its appearance in active and inactive states. Supported values are: `outline-primary`, `outline-secondary`, `ghost-primary`, and `ghost-secondary`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <ButtonLayout orientation="vertical">
+        <Toggle>outline-primary</Toggle>
+        <Toggle variant="outline-secondary">outline-secondary</Toggle>
+        <Toggle variant="ghost-primary">ghost-primary</Toggle>
+        <Toggle variant="ghost-secondary">ghost-secondary</Toggle>
+    </ButtonLayout>
+`}
+/>
+
+## Sizes
+
+The `Toggle` component accepts a `size` prop to control its overall dimensions. Supported values are: `default`, `sm`, and `xs`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <ButtonLayout orientation="vertical">
+        <Toggle>default size</Toggle>
+        <Toggle size="sm">sm size</Toggle>
+        <Toggle size="xs">xs size</Toggle>
+    </ButtonLayout>
+`}
+/>
+
+## Rounded
+
+The `Toggle` component accepts a `rounded` prop. When provided, the underlying button will have fully rounded corners.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Toggle rounded>Rounded</Toggle>
+`}
+/>
+
+## Icon only
+
+The `Toggle` component accepts a `iconOnly` prop. When this prop is set, the `Toggle` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Toggle iconOnly>
+        <Icon name="plus" />
+    </Toggle>
+`}
+/>
+
+## With tooltip
+
+The `Toggle` component accepts a `tooltipProps` prop. When provided, the `Toggle` will be wrapped in a `Tooltip` component. The `tooltipProps` object can include the following properties from `TooltipProps`: `title`, `content`, `side`, and `align`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Toggle
+      tooltipProps={{
+        title: 'Title',
+        content: <p>This is a tooltip</p>
+      }}
+    >
+        With tooltip
+    </Toggle>
+`}
+/>
 
 ## API Reference
 
 The `Toggle` component is a button that can be toggled on and off.
 
-```typescript jsx
-<Toggle
-  variant="default"           // [OPTIONAL] visual style variant, can be 'default', 'outline', 'compact'
-  size="default"              // [OPTIONAL] size, can 'default', 'sm', 'lg', 'xs', 'icon'
-  className="custom"          // [OPTIONAL] additional CSS classes to apply
-  defaultPressed              // [OPTIONAL] initial pressed state
-  pressed                     // [OPTIONAL] current pressed state
-  onPressedChange={onPressed} // [OPTIONAL] event handler called when the pressed state changes
-  disabled                    // [OPTIONAL] disable the toggle
->
-  Toggle Text
-</Toggle>
-```
-
 <DocsPage.PropsTable
   props={[
     {
       name: "variant",
-      description: "The visual style variant of the toggle",
+      description: "The visual style variant of the toggle.",
       required: false,
-      defaultValue: "default",
-      value: "'default' | 'outline' | 'compact'",
+      defaultValue: "outline-primary",
+      value:
+        "'outline-primary' | 'outline-secondary' | 'ghost-primary' | 'ghost-secondary'",
     },
     {
       name: "size",
-      description: "The size of the toggle",
+      description: "The size of the toggle.",
       required: false,
       defaultValue: "default",
-      value: "'default' | 'sm' | 'lg' | 'xs' | 'icon'",
+      value: "'default' | 'sm' | 'xs'",
     },
     {
       name: "className",
-      description: "Additional CSS classes to apply to the toggle",
+      description: "Additional CSS classes to apply to the toggle.",
       required: false,
       value: "string",
     },
@@ -102,29 +144,54 @@ The `Toggle` component is a button that can be toggled on and off.
     },
     {
       name: "defaultPressed",
-      description: "The initial pressed state of the toggle",
+      description:
+        "The pressed state of the toggle when it is initially rendered. Use when you do not need to control its pressed state.",
       required: false,
       defaultValue: "false",
       value: "boolean",
     },
     {
       name: "pressed",
-      description: "The controlled pressed state of the toggle",
+      description:
+        "The controlled pressed state of the toggle. Must be used in conjunction with 'onPressedChange'.",
       required: false,
       value: "boolean",
     },
     {
       name: "onPressedChange",
-      description: "Event handler called when the pressed state changes",
+      description:
+        "Event handler called when the pressed state of the toggle changes.",
       required: false,
       value: "(pressed: boolean) => void",
     },
     {
       name: "disabled",
-      description: "Whether the toggle is disabled",
+      description: "Whether the toggle is disabled.",
       required: false,
       defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "rounded",
+      description: "Whether the toggle is rounded.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "iconOnly",
+      description: "Whether the toggle is sized to fit an icon only.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "tooltipProps",
+      description:
+        "If provided, wraps the toggle in a tooltip with the specified properties.",
+      required: false,
+      defaultValue: "undefined",
+      value: "Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>",
     },
   ]}
 />

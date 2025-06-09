@@ -5,7 +5,6 @@ import {
   ExpandedState,
   flexRender,
   getCoreRowModel,
-  getExpandedRowModel,
   OnChangeFn,
   Row,
   RowSelectionState,
@@ -54,6 +53,10 @@ export interface DataTableProps<TData> {
    */
   enableExpanding?: boolean
   /**
+   * Function to determine if a row can be expanded
+   */
+  getRowCanExpand?: (row: Row<TData>) => boolean
+  /**
    * Current expanded rows state
    */
   currentExpanded?: ExpandedState
@@ -82,6 +85,7 @@ export function DataTable<TData>({
   enableRowSelection = false,
   onRowSelectionChange: externalOnRowSelectionChange,
   enableExpanding = false,
+  getRowCanExpand,
   currentExpanded,
   onExpandedChange: externalOnExpandedChange,
   renderSubComponent
@@ -130,7 +134,7 @@ export function DataTable<TData>({
         id: 'expander',
         header: () => null,
         cell: ({ row }: { row: Row<TData> }) => {
-          return (
+          return row.getCanExpand() ? (
             <Button
               type="button"
               variant="ghost"
@@ -141,9 +145,9 @@ export function DataTable<TData>({
               }}
               aria-label="Toggle Row Expanded"
             >
-              {row.getIsExpanded() ? <Icon name="chevron-down" size={16} /> : <Icon name="chevron-up" size={16} />}
+              {row.getIsExpanded() ? <Icon name="chevron-down" size={12} /> : <Icon name="chevron-up" size={12} />}
             </Button>
-          )
+          ) : null
         }
       },
       ...enhancedColumns
@@ -167,12 +171,12 @@ export function DataTable<TData>({
     onRowSelectionChange: externalOnRowSelectionChange,
     // Enable row expansion if specified
     enableExpanding,
-    // Get expanded row model for rendering expanded rows
-    getExpandedRowModel: enableExpanding ? getExpandedRowModel() : undefined,
+    // enable server-side expansion
+    manualExpanding: true,
     // Handle expanded state changes
     onExpandedChange: externalOnExpandedChange,
-    // Make all rows expandable if expansion is enabled
-    getRowCanExpand: enableExpanding ? () => true : undefined,
+    // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
+    getRowCanExpand: enableExpanding ? getRowCanExpand || (() => true) : undefined,
     // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
     state: {
       sorting: currentSorting,
@@ -225,8 +229,8 @@ export function DataTable<TData>({
               </TableV2.Row>
               {/* Render expanded content if row is expanded */}
               {row.getIsExpanded() && renderSubComponent && (
-                <TableV2.Row key={`${row.id}-expanded`} className="expanded-row">
-                  <TableV2.Cell colSpan={row.getVisibleCells().length} className="p-0">
+                <TableV2.Row key={`${row.id}-expanded`} className="bg-cn-background-2">
+                  <TableV2.Cell colSpan={row.getAllCells().length} className="p-0 ml-[var(--cn-spacing-11)]">
                     {renderSubComponent({ row })}
                   </TableV2.Cell>
                 </TableV2.Row>

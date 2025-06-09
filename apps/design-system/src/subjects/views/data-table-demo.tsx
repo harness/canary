@@ -80,6 +80,13 @@ export const DataTableDemo: React.FC = () => {
     setExpanded(newExpanded)
   }
 
+  // Demo fn to detrmine if a row can be expanded
+  // Only allows rows with 'active' status to be expanded
+  const getRowCanExpand = (row: Row<User>) => {
+    const user = row.original
+    return user.status === 'active'
+  }
+
   // Render expanded row content
   const renderSubComponent = ({ row }: { row: Row<User> }) => {
     const user = row.original
@@ -195,6 +202,7 @@ export const DataTableDemo: React.FC = () => {
           currentExpanded={expanded}
           onExpandedChange={handleExpandedChange}
           renderSubComponent={renderSubComponent}
+          getRowCanExpand={getRowCanExpand}
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

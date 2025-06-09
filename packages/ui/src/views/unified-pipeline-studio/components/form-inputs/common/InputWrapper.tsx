@@ -5,20 +5,19 @@ import { Input } from '@components/index'
 import { AnyFormikValue, InputProps, useController } from '@harnessio/forms'
 
 import { InputCaption, InputLabel } from '.'
-import { InputValueType, RuntimeInputConfig } from '../types/types'
-import { constructRuntimeInputValue, extractRuntimeInputName, getInputValueType } from '../utils/input-value-utils'
+import { RuntimeInputConfig } from '../types/types'
+import {
+  constructRuntimeInputValue,
+  extractRuntimeInputName,
+  getInputValueType,
+  isOnlyFixedValueAllowed
+} from '../utils/input-value-utils'
 import InputValueTypeSelection from './InputValueTypeSelector'
 
 export interface InputWrapperProps extends InputProps<AnyFormikValue, { inputConfig?: RuntimeInputConfig }> {
   children: JSX.Element | JSX.Element[]
   preserveFixedValue?: boolean
   defaultEmptyValue?: any
-}
-
-const isOnlyFixedValueAllowed = (inputValueTypes?: InputValueType[]) => {
-  return (
-    !inputValueTypes || inputValueTypes.length === 0 || (inputValueTypes.length === 1 && inputValueTypes[0] === 'fixed')
-  )
 }
 
 export function InputWrapper({

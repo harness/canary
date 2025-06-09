@@ -40,3 +40,9 @@ export function constructRuntimeInputValue(value?: string) {
   const inputName = extractRuntimeInputName(value)
   return `<+input.${inputName}>`
 }
+
+export function isOnlyFixedValueAllowed(inputValueTypes?: InputValueType[]) {
+  return (
+    !inputValueTypes || inputValueTypes.length === 0 || (inputValueTypes.length === 1 && inputValueTypes[0] === 'fixed')
+  )
+}

@@ -26,9 +26,15 @@ type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
 export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
   contentClassName?: string;
+  hideCode?: boolean;
 };
 
-const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
+const Example: FC<ExampleProps> = ({
+  code,
+  scope,
+  contentClassName,
+  hideCode = false,
+}) => {
   const [isLightTheme, setIsLightTheme] = useState(
     () => document.querySelector("html")?.dataset.theme === "light",
   );
@@ -83,16 +89,18 @@ const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
         <div className={cn("grid place-items-center p-12", contentClassName)}>
           <RouterProvider router={router} />
         </div>
-        <details className="example-expand bg-cn-background-2 border-t p-3">
-          <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
-            <IconV2 name="nav-arrow-right" className="disclosure-icon" />
-            Show code
-          </summary>
-          <LiveEditor
-            theme={isLightTheme ? themes.vsLight : themes.vsDark}
-            className="p-1 text-sm"
-          />
-        </details>
+        {!hideCode && (
+          <details className="example-expand bg-cn-background-2 border-t p-3">
+            <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
+              <IconV2 name="nav-arrow-right" className="disclosure-icon" />
+              Show code
+            </summary>
+            <LiveEditor
+              theme={isLightTheme ? themes.vsLight : themes.vsDark}
+              className="p-1 text-sm"
+            />
+          </details>
+        )}
       </LiveProvider>
     </div>
   );

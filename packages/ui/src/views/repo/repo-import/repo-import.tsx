@@ -9,7 +9,6 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Select,
   Spacer,
   Text
 } from '@/components'
@@ -120,16 +119,11 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
 
   const { register, handleSubmit, setValue, watch } = formMethods
 
-  const providerValue = watch('provider')
   const repositoryValue = watch('repository')
 
   useEffect(() => {
     setValue('identifier', repositoryValue)
   }, [repositoryValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportRepoFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const onSubmit: SubmitHandler<ImportRepoFormFields> = data => {
     onFormSubmit(data)
@@ -146,13 +140,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Select
-            options={providerOptions}
-            value={providerValue}
-            onChange={value => handleSelectChange('provider', value)}
-            placeholder="Select"
-            label="Provider"
-          />
+          <FormInput.Select options={providerOptions} placeholder="Select" label="Provider" {...register('provider')} />
 
           {[
             ProviderOptionsEnum.GITHUB_ENTERPRISE,

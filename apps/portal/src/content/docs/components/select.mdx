@@ -531,6 +531,13 @@ The `Select` component is the main component for creating dropdown selections.
       value: "(value: T) => void",
     },
     {
+      name: "onSelectedChange",
+      description:
+        "Callback fired when the selected option changes (useful for controlled components)",
+      required: false,
+      value: "(event: ChangeEvent<HTMLInputElement>) => void",
+    },
+    {
       name: "disabled",
       description: "Disable the entire select",
       required: false,
@@ -570,6 +577,12 @@ The `Select` component is the main component for creating dropdown selections.
       required: false,
       value: "string",
       defaultValue: "Auto-generated",
+    },
+    {
+      name: "name",
+      description: "HTML name attribute for form submission",
+      required: false,
+      value: "string",
     },
     {
       name: "label",
@@ -631,9 +644,10 @@ The `Select` component is the main component for creating dropdown selections.
     },
     {
       name: "optionRenderer",
-      description: "Function to render custom ReactNode for each value option",
+      description:
+        "Function to render custom SelectItemType for each value option",
       required: false,
-      value: "(option: ValueOption<T>) => ReactNode",
+      value: "(option: ValueOption<T>) => SelectItemType",
     },
   ]}
 />

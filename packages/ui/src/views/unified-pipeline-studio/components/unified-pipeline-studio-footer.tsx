@@ -40,7 +40,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
   return (
     <footer
       className={
-        'bg-grey-6 text-grey-60 border-cn-borders-3 flex h-10 shrink-0 items-center justify-between border-t px-4 text-[12px] font-normal not-italic leading-[15px]'
+        'bg-grey-6 text-grey-60 flex h-10 shrink-0 items-center justify-between border-t border-cn-borders-3 px-4 text-[12px] font-normal not-italic leading-[15px]'
       }
     >
       <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           onClick={() => {
             togglePane?.()
           }}
-          className="hover:bg-cn-background-accent/10 flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out"
+          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-cn-background-accent/10"
         >
           <div className="flex items-center gap-1.5">
             <IconV2
@@ -69,17 +69,17 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           </div>
           <div className="flex items-center gap-1.5">
             <IconV2 size={14} name="warning-triangle" className="text-cn-foreground-3" />
-            <span className="text-cn-foreground-1 text-[12px]">{problemsCount.warning}</span>
+            <span className="text-[12px] text-cn-foreground-1">{problemsCount.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <IconV2 size={14} name="info-circle" className="text-cn-foreground-3" />
-            <span className="text-cn-foreground-1 text-[12px]">{problemsCount.info}</span>
+            <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
           </div>
         </div>
         {(branchesLoading || branches || currentBranch) && (
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
-              <span className="text-cn-foreground-3 text-[12px]">Branch:</span>
+              <span className="text-[12px] text-cn-foreground-3">Branch:</span>
 
               <Select
                 options={branchOptions}
@@ -94,7 +94,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
       {committedTimeAgo && authorName && (
         <Popover.Root>
           <Popover.Trigger>
-            <div className="text-cn-foreground-3 flex text-[12px]">
+            <div className="flex text-[12px] text-cn-foreground-3">
               Last edited
               <span className="text-cn-foreground-1">&nbsp;{committedTimeAgo}&nbsp;</span> by
               <span className="text-cn-foreground-1">&nbsp;{authorName}&nbsp;</span>

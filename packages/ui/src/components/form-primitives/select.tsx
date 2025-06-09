@@ -1,6 +1,18 @@
-import { ReactElement, ReactNode, UIEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  ForwardedRef,
+  forwardRef,
+  InputHTMLAttributes,
+  ReactElement,
+  ReactNode,
+  UIEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
-import { ControlGroup, FormCaption, Label, IconV2, SearchInput } from '@/components'
+import { ControlGroup, FormCaption, IconV2, Label, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { cn, generateAlphaNumericHash } from '@/utils'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -43,17 +55,15 @@ type SelectItemType =
   | ReactElement<typeof DropdownMenu.LogoItem>
   | ReactElement<typeof DropdownMenu.IndicatorItem>
 
-interface SelectV2Props<T = string> {
+interface SelectProps<T = string>
+  extends Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'placeholder' | 'className'> {
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
   value?: T
   defaultValue?: T
   onChange?: (value: T) => void
-  disabled?: boolean
+  onSelectedChange?: InputHTMLAttributes<HTMLInputElement>['onChange']
   onScrollEnd?: () => void
-  placeholder?: string
-  className?: string
   isLoading?: boolean
-  id?: string
   label?: string
   theme?: VariantProps<typeof selectVariants>['theme']
   caption?: string
@@ -98,28 +108,33 @@ const getAllValueOptions = <T,>(options: SelectOption<T>[]): ValueOption<T>[] =>
   return valueOptions
 }
 
-function Select<T = string>({
-  options: optionsProp,
-  value,
-  defaultValue,
-  onChange,
-  disabled,
-  onScrollEnd,
-  placeholder: _placeholder,
-  className,
-  isLoading = false,
-  id: defaultId,
-  label,
-  error,
-  warning,
-  caption,
-  optional,
-  allowSearch = false,
-  onSearch,
-  searchValue,
-  optionRenderer,
-  ...props
-}: SelectV2Props<T>) {
+function SelectInner<T = string>(
+  {
+    options: optionsProp,
+    value,
+    defaultValue,
+    onChange,
+    onSelectedChange,
+    disabled,
+    onScrollEnd,
+    placeholder: _placeholder,
+    className,
+    isLoading = false,
+    id: defaultId,
+    name,
+    label,
+    error,
+    warning,
+    caption,
+    optional,
+    allowSearch = false,
+    onSearch,
+    searchValue,
+    optionRenderer,
+    ...props
+  }: SelectProps<T>,
+  ref: ForwardedRef<HTMLButtonElement>
+) {
   const [isOpen, setIsOpen] = useState(false)
   const [internalValue, setInternalValue] = useState<T | undefined>(defaultValue)
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('')
@@ -212,16 +227,25 @@ function Select<T = string>({
   const isWithItems = !isLoadingOptions && !hasNoOptions
   const showSpinner = [isLoadingOptions, isLoading, isLoadingMore && filteredOptions.length > 0].some(Boolean)
 
+  const hiddenInputRef = useRef<HTMLInputElement>(null)
+
   const handleSelect = useCallback(
     (optionValue: T) => {
       if (!isControlled) {
         setInternalValue(optionValue)
       }
       onChange?.(optionValue)
+
+      if (onSelectedChange && hiddenInputRef.current) {
+        hiddenInputRef.current.value = String(optionValue)
+        const event = new Event('change', { bubbles: true })
+        hiddenInputRef.current.dispatchEvent(event)
+      }
+
       setIsOpen(false)
       setSearchQuery('')
     },
-    [isControlled, onChange]
+    [isControlled, onSelectedChange, onChange]
   )
 
   const debouncedCheckScroll = useRef(
@@ -317,6 +341,16 @@ function Select<T = string>({
         </Label>
       )}
 
+      {/* Hidden input for form integration */}
+      <input
+        ref={hiddenInputRef}
+        type="hidden"
+        className="sr-only"
+        name={name}
+        value={String(selectedValue || '')}
+        onChange={onSelectedChange}
+      />
+
       <DropdownMenu.Root
         open={isOpen}
         onOpenChange={open => {
@@ -324,7 +358,12 @@ function Select<T = string>({
           if (!open) setSearchQuery('')
         }}
       >
-        <DropdownMenu.Trigger id={id} className={cn(selectVariants({ theme }), className)} disabled={disabled}>
+        <DropdownMenu.Trigger
+          id={id}
+          ref={ref}
+          className={cn(selectVariants({ theme }), className)}
+          disabled={disabled}
+        >
           <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
             {selectedOption ? selectedOption.label : placeholder}
           </Text>
@@ -373,9 +412,14 @@ function Select<T = string>({
   )
 }
 
+const Select = forwardRef(SelectInner) as <T = string>(
+  props: SelectProps<T> & { ref?: ForwardedRef<HTMLButtonElement> }
+) => ReturnType<typeof SelectInner>
+
 export {
   Select,
-  type SelectV2Props,
+  type SelectItemType,
+  type SelectProps,
   type SelectOption,
   type ValueOption as SelectValueOption,
   type GroupOption as SelectGroupOption,

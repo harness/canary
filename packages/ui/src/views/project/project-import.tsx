@@ -9,7 +9,6 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Select,
   Spacer,
   Text
 } from '@/components'
@@ -71,16 +70,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
 
   const { register, handleSubmit, setValue, watch } = formMethods
 
-  const providerValue = watch('provider')
   const orgValue = watch('organization')
 
   useEffect(() => {
     setValue('identifier', orgValue)
   }, [orgValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportProjectFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const onSubmit: SubmitHandler<ImportProjectFormFields> = data => {
     onFormSubmit(data)
@@ -98,32 +92,25 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Select
-            value={providerValue}
+          <FormInput.Select
             options={providerOptions}
-            onChange={value => handleSelectChange('provider', value)}
             placeholder="Select"
             label="Git provider"
+            {...register('provider')}
           />
 
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
-            <Fieldset>
-              <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
-            </Fieldset>
+            <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
           )}
 
           {/* token */}
-          <Fieldset>
-            <ControlGroup>
-              <FormInput.Text
-                type="password"
-                id="password"
-                label="Token"
-                {...register('password')}
-                placeholder="Enter your access token"
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Text
+            type="password"
+            id="password"
+            label="Token"
+            {...register('password')}
+            placeholder="Enter your access token"
+          />
 
           <FormSeparator />
 

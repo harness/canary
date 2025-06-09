@@ -95,7 +95,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
     reset,
     watch,
     trigger,
-    formState: { errors, isValid }
+    formState: { isValid }
   } = formMethods
 
   useEffect(() => {
@@ -112,15 +112,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   useEffect(() => {
     setValue('type', isDynamic ? LabelType.DYNAMIC : LabelType.STATIC)
   }, [isDynamic, setValue])
-
-  const handleLabelColorChange = (val: ColorsEnum) => {
-    setValue('color', val)
-  }
-
-  const makeHandleValueColorChange = (idx: number) => (val: ColorsEnum) => {
-    const newValues = values.map((item, index) => (index === idx ? { ...item, color: val } : item))
-    setValue('values', newValues)
-  }
 
   const handleAddValue = () => {
     if (!isValid) {
@@ -150,7 +141,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <h1 className="text-cn-foreground-1 mb-10 text-2xl font-medium">
+      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
@@ -167,11 +158,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               </Label>
 
               <LabelFormColorAndNameGroup
-                selectProps={{
-                  onChange: handleLabelColorChange,
-                  value: color,
-                  error: errors.color?.message?.toString()
-                }}
+                selectProps={{ ...register('color') }}
                 inputProps={{ id: 'label-name', ...register('key'), autoFocus: !key }}
               />
             </ControlGroup>
@@ -187,20 +174,14 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
             <ControlGroup>
               <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
-              {values.map((value, idx) => (
+              {values.map((_, idx) => (
                 <LabelFormColorAndNameGroup
                   isValue
                   key={idx}
                   className="mt-5 first-of-type:mt-0"
                   handleDeleteValue={() => handleDeleteValue(idx)}
-                  selectProps={{
-                    value: value.color,
-                    error: errors.values?.[idx]?.color?.message?.toString(),
-                    onChange: makeHandleValueColorChange(idx)
-                  }}
-                  inputProps={{
-                    ...register(`values.${idx}.value` as keyof CreateLabelFormFields)
-                  }}
+                  selectProps={{ ...register(`values.${idx}.color`) }}
+                  inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
                 />
               ))}
 
@@ -220,7 +201,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </Fieldset>
 
           <section className="mt-1 flex flex-col gap-y-5">
-            <h3 className="text-cn-foreground-2 text-sm leading-none">
+            <h3 className="text-sm leading-none text-cn-foreground-2">
               {t('views:labelData.form.previewLabel', 'Label preview')}
             </h3>
 

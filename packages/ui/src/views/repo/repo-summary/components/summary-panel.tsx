@@ -50,7 +50,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
     <>
       <div className="flex flex-col items-start">
         <div className="flex w-full items-center justify-between">
-          <span className="text-4 truncate font-medium">{title}</span>
+          <span className="truncate text-4 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" aria-label="More options">
@@ -58,9 +58,10 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
-              <DropdownMenu.Item className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
-                <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
-              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                onClick={() => setEditDialogOpen(true)}
+                title={<span>{description?.length ? 'Edit Description' : 'Add description'}</span>}
+              />
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </div>
@@ -79,7 +80,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="border-cn-borders-4 text-2 text-cn-foreground-2 line-clamp-6 w-full border-y py-1">
+            <span className="border-cn-borders-4 line-clamp-6 w-full border-y py-1 text-2 text-cn-foreground-2">
               {description}
             </span>
           </>

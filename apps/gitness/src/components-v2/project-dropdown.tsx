@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
+import { DropdownMenu, IconV2 } from '@harnessio/ui/components'
 
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
@@ -21,16 +21,14 @@ function ProjectDropdown(): JSX.Element {
       <DropdownMenu.Content className="w-[300px]">
         {spaces.map(({ identifier }) => (
           <DropdownMenu.Item
-            className="flex flex-col"
+            title={identifier}
             key={identifier}
             onClick={() => {
               if (identifier) {
                 navigate(routes.toRepositories({ spaceId: identifier }))
               }
             }}
-          >
-            <Text className="inline-block w-full text-left">{identifier}</Text>
-          </DropdownMenu.Item>
+          />
         ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

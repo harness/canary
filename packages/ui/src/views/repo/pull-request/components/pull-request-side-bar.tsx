@@ -36,7 +36,7 @@ export interface PullRequestSideBarProps {
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
-  setSearchLabelQuery?: (query: string) => void
+  setSearchLabelQuery: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   editLabelsProps: LinkProps
   removeLabel?: (id: number) => void

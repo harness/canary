@@ -34,10 +34,10 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           <IconV2 name="nav-arrow-down" size={12} className="text-cn-foreground-primary" />
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-[328px] p-0 shadow-2" align="end">
-        <div className="px-4 pt-4 leading-none">
+      <DropdownMenu.Content className="w-[328px]" align="end">
+        <DropdownMenu.Header>
           <span className="inline-block text-2 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
-        </div>
+        </DropdownMenu.Header>
         <Tabs.Root className="mt-4" value={currentTab} onValueChange={val => setCurrentTab(val as CloneRepoTabs)}>
           <Tabs.List className="px-4">
             <DropdownMenu.Item
@@ -46,11 +46,12 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 e.preventDefault()
                 setCurrentTab(CloneRepoTabs.HTTPS)
               }}
-            >
-              <Tabs.Trigger className="px-4 data-[state=active]:bg-cn-background-2" value={CloneRepoTabs.HTTPS}>
-                {t('views:repos.cloneHttps', 'HTTPS')}
-              </Tabs.Trigger>
-            </DropdownMenu.Item>
+              title={
+                <Tabs.Trigger className="px-4 data-[state=active]:bg-cn-background-2" value={CloneRepoTabs.HTTPS}>
+                  {t('views:repos.cloneHttps', 'HTTPS')}
+                </Tabs.Trigger>
+              }
+            />
             <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
@@ -60,19 +61,20 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 }
               }}
               disabled={!isSSHAvailable}
-            >
-              <Tabs.Trigger
-                className="px-4 data-[disabled]:cursor-not-allowed data-[state=active]:bg-cn-background-2 data-[disabled]:opacity-50"
-                value={CloneRepoTabs.SSH}
-                onClick={e => e.stopPropagation()}
-                disabled={!isSSHAvailable}
-              >
-                {t('views:repos.cloneSsh', 'SSH')}
-              </Tabs.Trigger>
-            </DropdownMenu.Item>
+              title={
+                <Tabs.Trigger
+                  className="px-4 data-[disabled]:cursor-not-allowed data-[state=active]:bg-cn-background-2 data-[disabled]:opacity-50"
+                  value={CloneRepoTabs.SSH}
+                  onClick={e => e.stopPropagation()}
+                  disabled={!isSSHAvailable}
+                >
+                  {t('views:repos.cloneSsh', 'SSH')}
+                </Tabs.Trigger>
+              }
+            />
           </Tabs.List>
         </Tabs.Root>
-        <div className="p-4">
+        <DropdownMenu.Slot className="p-4">
           <div className="mb-2.5 flex items-center">
             <span className="inline-block leading-none text-cn-foreground-2">
               {t('views:repos.gitCloneUrl', 'Git clone URL')}
@@ -106,7 +108,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           ) : (
             <TextInput id="sshUrl" readOnly value={sshUrl} suffix={<CopyButton name={sshUrl || ''} />} />
           )}
-        </div>
+        </DropdownMenu.Slot>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

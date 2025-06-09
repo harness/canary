@@ -81,7 +81,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-2xl font-medium text-cn-foreground-1">
+              <h1 className="text-cn-foreground-1 text-2xl font-medium">
                 {t('views:repos.repositories', 'Repositories')}
               </h1>
             </div>
@@ -98,7 +98,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <SplitButton<string>
-                  id="repository"
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toCreateRepo?.() || '')}
                   handleOptionChange={option => {

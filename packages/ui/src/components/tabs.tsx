@@ -101,7 +101,7 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
     return (
       <TabsPrimitive.Trigger
         ref={ref}
-        className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
+        className={cn(tabsTriggerVariants({ variant: context.variant ?? variant }), className)}
         {...props}
       >
         {children}

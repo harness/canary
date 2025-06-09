@@ -1955,15 +1955,15 @@
     "ai-chat": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{cyan.200}"
+        "$value": "{cyan.150}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{indigo.400}"
+        "$value": "{indigo.300}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{violet.400}"
+        "$value": "{violet.300}"
       }
     },
     "alert": {

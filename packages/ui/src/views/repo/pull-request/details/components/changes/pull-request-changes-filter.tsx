@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { useTranslation } from '@/context'
 import { Button, CounterBadge, DropdownMenu, IconV2, SplitButton } from '@/components'
+import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
 import { DiffModeOptions, TypesCommit } from '@/views'

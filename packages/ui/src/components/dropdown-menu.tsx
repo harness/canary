@@ -3,13 +3,14 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, React
 import { usePortal } from '@/context'
 import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
-import { IconPropsV2, IconV2 } from './icon-v2'
 import { Layout } from '@components/layout'
 import { Logo, LogoProps } from '@components/logo'
 import { ScrollArea } from '@components/scroll-area'
 import { Text, TextProps } from '@components/text'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { omit } from 'lodash-es'
+
+import { IconPropsV2, IconV2 } from './icon-v2'
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal

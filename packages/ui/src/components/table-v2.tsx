@@ -12,6 +12,7 @@ import {
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { IconV2 } from './icon-v2'
 import { Link, type LinkProps } from './link'
 
 const tableVariants = cva('cn-table-v2', {
@@ -97,8 +98,42 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
 })
 TableRow.displayName = 'TableRow'
 
-const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => <th ref={ref} className={cn('cn-table-v2-head', className)} {...props} />
+interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
+  /**
+   * Sort direction, if this column is sorted
+   */
+  sortDirection?: 'asc' | 'desc' | false
+  /**
+   * Whether this column can be sorted
+   */
+  sortable?: boolean
+}
+
+const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
+  ({ className, sortDirection, sortable, children, ...props }, ref) => {
+    return (
+      <th 
+        ref={ref} 
+        className={cn(
+          'cn-table-v2-head', 
+          sortable && 'cursor-pointer select-none',
+          className
+        )} 
+        {...props}
+      >
+        <div className="flex items-center gap-1">
+          {children}
+          {sortable && (
+            <span className="ml-1">
+              {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
+              {sortDirection === 'desc' && <IconV2 name="arrow-down" size={12} />}
+              {!sortDirection && <IconV2 name="sort-1" size={16} />}
+            </span>
+          )}
+        </div>
+      </th>
+    )
+  }
 )
 TableHead.displayName = 'TableHead'
 
@@ -147,3 +182,4 @@ const TableV2 = {
 }
 
 export { TableV2 }
+export type { TableHeadProps }

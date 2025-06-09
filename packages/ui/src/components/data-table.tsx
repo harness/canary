@@ -13,6 +13,7 @@ import {
   TableOptions,
   useReactTable
 } from '@tanstack/react-table'
+import { cn } from '@utils/cn'
 
 import { Button } from './button'
 import { Checkbox } from './checkbox'
@@ -68,6 +69,10 @@ export interface DataTableProps<TData> {
    * Render function for expanded row content
    */
   renderSubComponent?: (props: { row: Row<TData> }) => React.ReactNode
+  /**
+   * Enable column resizing
+   */
+  enableColumnResizing?: boolean
 }
 
 export function DataTable<TData>({
@@ -88,7 +93,8 @@ export function DataTable<TData>({
   getRowCanExpand,
   currentExpanded,
   onExpandedChange: externalOnExpandedChange,
-  renderSubComponent
+  renderSubComponent,
+  enableColumnResizing = false
 }: DataTableProps<TData>) {
   // Start with the base columns
   let enhancedColumns = [...columns]
@@ -121,7 +127,8 @@ export function DataTable<TData>({
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             />
           )
-        }
+        },
+        size: 20
       },
       ...enhancedColumns
     ]
@@ -148,7 +155,8 @@ export function DataTable<TData>({
               {row.getIsExpanded() ? <Icon name="chevron-down" size={12} /> : <Icon name="chevron-up" size={12} />}
             </Button>
           ) : null
-        }
+        },
+        size: 20
       },
       ...enhancedColumns
     ]
@@ -171,12 +179,15 @@ export function DataTable<TData>({
     onRowSelectionChange: externalOnRowSelectionChange,
     // Enable row expansion if specified
     enableExpanding,
-    // enable server-side expansion
+    // enable manual expansion
     manualExpanding: true,
     // Handle expanded state changes
     onExpandedChange: externalOnExpandedChange,
     // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
     getRowCanExpand: enableExpanding ? getRowCanExpand || (() => true) : undefined,
+    // Enable column resizing if specified
+    enableColumnResizing,
+    columnResizeMode: 'onChange',
     // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
     state: {
       sorting: currentSorting,
@@ -196,19 +207,22 @@ export function DataTable<TData>({
               {headerGroup.headers.map(header => (
                 <TableV2.Head
                   key={header.id}
-                  className={header.column.getCanSort() ? 'cursor-pointer select-none' : undefined}
+                  className={cn(enableColumnResizing ? 'relative' : undefined)}
+                  sortable={header.column.getCanSort()}
+                  sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
                   onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                  style={{
+                    width: header.getSize()
+                  }}
                 >
-                  <div className="flex items-center gap-1">
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    {header.column.getCanSort() && (
-                      <span className="ml-1">
-                        {header.column.getIsSorted() === 'asc' && <IconV2 name="arrow-up" size={12} />}
-                        {header.column.getIsSorted() === 'desc' && <IconV2 name="arrow-down" size={12} />}
-                        {!header.column.getIsSorted() && <IconV2 name="sort-1" size={16} />}
-                      </span>
-                    )}
-                  </div>
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  {enableColumnResizing && header.column.getCanResize() && (
+                    <div
+                      onMouseDown={header.getResizeHandler()}
+                      onTouchStart={header.getResizeHandler()}
+                      className="absolute right-0 top-0 h-full w-1 cursor-col-resize bg-gray-300"
+                    />
+                  )}
                 </TableV2.Head>
               ))}
             </TableV2.Row>
@@ -240,15 +254,7 @@ export function DataTable<TData>({
         </TableV2.Body>
       </TableV2.Root>
 
-      {pagination && (
-        <Pagination
-          currentPage={pagination.currentPage || 1}
-          pageSize={pagination.pageSize || 10}
-          totalItems={pagination.totalItems || 0}
-          goToPage={pagination?.goToPage || (() => {})}
-          indeterminate={false}
-        />
-      )}
+      {pagination && <Pagination {...pagination} />}
     </div>
   )
 }

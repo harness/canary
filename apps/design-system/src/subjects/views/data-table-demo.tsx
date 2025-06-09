@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import type { ColumnDef, ExpandedState, OnChangeFn, Row, RowSelectionState, SortingState } from '@tanstack/react-table'
 
@@ -91,52 +91,55 @@ export const DataTableDemo: React.FC = () => {
   const renderSubComponent = ({ row }: { row: Row<User> }) => {
     const user = row.original
     return (
-      <div className="p-4">
+      <div>
         <p>This is a placeholder for expanded content for {user.name}</p>
       </div>
     )
   }
 
   // Define columns for the data table
-  const columns: ColumnDef<User>[] = [
-    {
-      accessorKey: 'name',
-      header: 'Name',
-      enableSorting: true,
-      cell: info => <div className="font-medium">{String(info.getValue())}</div>
-    },
-    {
-      accessorKey: 'email',
-      header: 'Email',
-      enableSorting: true
-    },
-    {
-      accessorKey: 'role',
-      header: 'Role',
-      enableSorting: false
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      enableSorting: true,
-      cell: info => {
-        const status = String(info.getValue())
-        return (
-          <StatusBadge
-            variant="secondary"
-            theme={status === 'active' ? 'success' : status === 'inactive' ? 'danger' : 'warning'}
-          >
-            {status}
-          </StatusBadge>
-        )
+  const columns: ColumnDef<User>[] = useMemo(
+    () => [
+      {
+        accessorKey: 'name',
+        header: 'Name',
+        enableSorting: true,
+        cell: info => <div className="font-medium">{String(info.getValue())}</div>
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        enableSorting: true
+      },
+      {
+        accessorKey: 'role',
+        header: 'Role',
+        enableSorting: false
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        enableSorting: true,
+        cell: info => {
+          const status = String(info.getValue())
+          return (
+            <StatusBadge
+              variant="secondary"
+              theme={status === 'active' ? 'success' : status === 'inactive' ? 'danger' : 'warning'}
+            >
+              {status}
+            </StatusBadge>
+          )
+        }
+      },
+      {
+        accessorKey: 'lastLogin',
+        header: 'Last Login',
+        enableSorting: true
       }
-    },
-    {
-      accessorKey: 'lastLogin',
-      header: 'Last Login',
-      enableSorting: true
-    }
-  ]
+    ],
+    []
+  )
 
   // Sorting state for server-side sorting
   const [tableSorting, setTableSorting] = useState<SortingState>([])
@@ -181,11 +184,11 @@ export const DataTableDemo: React.FC = () => {
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
-      <SandboxLayout.Content className="w-[900px] flex justify-center">
+      <SandboxLayout.Content className="w-[600px] flex justify-center">
         <DataTable
           columns={columns}
           data={paginatedData}
-          size="compact"
+          size="default"
           currentSorting={tableSorting}
           onSortingChange={handleSortingChange}
           pagination={{

@@ -18,6 +18,7 @@ export interface InputWrapperProps extends InputProps<AnyFormikValue, { inputCon
   children: JSX.Element | JSX.Element[]
   preserveFixedValue?: boolean
   defaultEmptyValue?: any
+  hideInputValueTypeSelection?: boolean
 }
 
 export function InputWrapper({
@@ -26,7 +27,8 @@ export function InputWrapper({
   readonly,
   preserveFixedValue = true,
   defaultEmptyValue = '',
-  input
+  input,
+  hideInputValueTypeSelection
 }: InputWrapperProps): JSX.Element {
   const { label, placeholder, required, inputConfig } = input
   const isOnlyFixed = isOnlyFixedValueAllowed(inputConfig?.allowedValueTypes)
@@ -102,7 +104,7 @@ export function InputWrapper({
   return (
     <div className={'flex items-end gap-4'}>
       <div className={'flex grow flex-col gap-2'}>{renderContent()}</div>
-      {!isOnlyFixed && (
+      {!isOnlyFixed && !hideInputValueTypeSelection ? (
         <InputValueTypeSelection
           inputValueType={inputValueType}
           setInputValueType={newInputValueType => {
@@ -136,7 +138,7 @@ export function InputWrapper({
             setInputValueType(newInputValueType)
           }}
         />
-      )}
+      ) : null}
     </div>
   )
 }

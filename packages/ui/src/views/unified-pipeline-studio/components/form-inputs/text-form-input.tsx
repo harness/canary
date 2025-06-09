@@ -32,7 +32,7 @@ function TextFormInputInternal(props: TextFormInputProps): JSX.Element {
   const [inputValueType, setInputValueType] = useState(isOnlyFixed ? 'fixed' : getInputValueType(field.value))
 
   return (
-    <InputWrapper {...props}>
+    <InputWrapper {...props} hideInputValueTypeSelection>
       <TextInput
         label={label}
         caption={description}

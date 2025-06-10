@@ -21108,6 +21108,7 @@
       "sidebar.group.gap": "f80e4907b1c8a148bfd7bcf49d44922d7ccb2593",
       "sidebar.container.px": "488b7d5620b509629101b088ad9c1a9f3320ed2b",
       "sidebar.container.py": "f2d5c3728cf2f0930cc322d62a064dfc5cac9941",
+      "sidebar.container.full-width": "1eea22521ac284a32ae50b1b0661212781661cdf",
       "sidebar.header.pt": "563b26f8a795f821d1c09090d41831b4ec96dd4c",
       "sidebar.header.pb": "dd685714f9bf81e8ee56b25ed42aada8210d29e1",
       "sidebar.header.gap": "3e73971df988bc4709a9b8fa8980c6daee936b31",
@@ -21120,8 +21121,7 @@
       "sidebar.sub-group.py": "ae35147baa4489a0afdbfb4c4be2e82d215ee722",
       "sidebar.sub-group.px-1": "a9216992440c36677f57883bb2625b21619c0223",
       "sidebar.sub-group.px-2": "5006092a42bb07d1e40ae23b2baec1ee97f03ffd",
-      "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352",
-      "sidebar.container.full-width": "1eea22521ac284a32ae50b1b0661212781661cdf"
+      "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352"
     },
     "group": "breakpoint"
   }

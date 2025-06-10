@@ -2,7 +2,7 @@
   "drawer": {
     "xs": {
       "$type": "sizing",
-      "$value": "364"
+      "$value": "388"
     },
     "sm": {
       "$type": "sizing",

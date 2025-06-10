@@ -37,7 +37,7 @@ describe('pipelineInputs2FormInputs', () => {
     })
   })
 
-  it.only('includes duplicate keys in layout', () => {
+  it('includes duplicate keys in layout', () => {
     const layout = [
       {
         title: 'Main Group',

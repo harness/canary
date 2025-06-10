@@ -36,7 +36,7 @@ export function pipelineInputs2FormInputs({
 
   const processedInputKeys = new Set<string>()
 
-  function processLayout(layout: InputLayout): IInputDefinition[] {
+  const processLayout = (layout: InputLayout): IInputDefinition[] => {
     return layout.map(item => {
       if (typeof item === 'string') {
         processedInputKeys.add(item)
@@ -68,10 +68,10 @@ export function pipelineInputs2FormInputs({
   return [...inputsFromLayout, ...remainingInputs]
 }
 
-export function validateUniqueInputKeysInLayout(layout: InputLayout): string[] {
+export const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
   const inputOccurrences = new Map<string, number>()
 
-  function traverse(layout: InputLayout) {
+  const traverse = (layout: InputLayout) => {
     layout.forEach(item => {
       if (typeof item === 'string') {
         inputOccurrences.set(item, (inputOccurrences.get(item) || 0) + 1)

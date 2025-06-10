@@ -3,10 +3,12 @@ import { useState } from 'react'
 import { InputFactory } from '@harnessio/forms'
 import {
   BooleanFormInput,
+  GroupFormInput,
   NumberFormInput,
   RunPipelineDrawerContent as RunPipelineDrawerContentView,
   TextFormInput,
-  VisualYamlValue
+  VisualYamlValue,
+  type InputLayout
 } from '@harnessio/ui/views'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
@@ -14,6 +16,7 @@ const inputComponentFactory = new InputFactory()
 inputComponentFactory.registerComponent(new TextFormInput())
 inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
 
 const pipelineInputs = {
   stringRequired: { type: 'string', required: true },
@@ -27,6 +30,32 @@ const pipelineInputs = {
   booleanDefaultTrue: { type: 'boolean', default: true },
   booleanDefaultFalse: { type: 'boolean', default: false }
 }
+
+const layout: InputLayout = [
+  'stringRequired',
+  {
+    items: ['stringPattern', 'stringRequiredPattern']
+  },
+  {
+    title: 'Advanced',
+    open: true,
+    items: [
+      'stringEnum',
+      'stringEnumDefault',
+      {
+        title: 'Subgroup',
+        items: [
+          'stringRequiredDefault',
+          {
+            title: 'Nested Subgroup',
+            items: ['boolean', 'booleanDefaultTrue', 'booleanDefaultFalse']
+          }
+        ]
+      }
+    ]
+  }
+  /* excluding "stringDefault" deliberately */
+]
 
 export interface RunPipelineFormProps {
   onClose: () => void
@@ -51,6 +80,7 @@ export default function RunPipelineDrawerContent({ onClose }: RunPipelineFormPro
       onCancel={onClose}
       onRun={() => setError({ message: 'Pipeline execution failed. Error message ...' })}
       pipelineInputs={pipelineInputs}
+      pipelineInputLayout={layout}
       inputComponentFactory={inputComponentFactory}
       theme={'dark'}
       error={error}

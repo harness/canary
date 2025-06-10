@@ -73,12 +73,12 @@ export default {
         '@apply [&_.cn-table-v2-cell-link]:no-underline': ''
       },
 
-      '&:where([data-state=selected])': {
-        '@apply bg-cn-background-2': ''
+      '&:where([data-checked=true])': {
+        backgroundColor: 'var(--cn-state-selected)'
       },
 
       '&-expanded': {
-        '@apply bg-cn-background-2': ''
+        backgroundColor: 'var(--cn-state-selected)'
       }
     },
 

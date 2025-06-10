@@ -37,11 +37,16 @@ export function pipelineInputs2FormInputs({
   const processedInputKeys = new Set<string>()
 
   const processLayout = (layout: InputLayout): IInputDefinition[] => {
-    return layout.map(item => {
+    return layout.flatMap(item => {
       if (typeof item === 'string') {
         processedInputKeys.add(item)
         const value = pipelineInputs[item]
         return pipelineInput2FormInput(item, value, options)
+      }
+
+      // If group has no title, flatten its items
+      if (!item.title) {
+        return processLayout(item.items)
       }
 
       return {

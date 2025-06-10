@@ -6,7 +6,8 @@ export default {
     '&-container': {
       '@apply relative w-full overflow-hidden border-cn-borders-3': '',
       borderWidth: 'var(--cn-table-border)',
-      borderRadius: 'var(--cn-table-radius)'
+      borderRadius: 'var(--cn-table-radius)',
+      borderColor: 'var(--cn-border-3)'
     },
 
     // Table element
@@ -52,8 +53,8 @@ export default {
     },
 
     // Container highlight on hover
-    '&:where(.cn-table-v2-highlight-hover)': {
-      '@apply [&_tbody>tr:hover]:bg-cn-background-hover': ''
+    '&:where(.cn-table-v2-highlight-hover) tbody > tr:hover': {
+      backgroundColor: 'var(--cn-state-hover)'
     },
 
     // Body
@@ -93,6 +94,14 @@ export default {
       paddingBottom: 'var(--cn-table-header-py)',
       gap: 'var(--cn-table-header-gap)',
       minHeight: 'var(--cn-table-header-min)'
+    },
+
+    // Sortable head cell
+    '&-head-sortable': {
+      '@apply cursor-pointer select-none': ''
+    },
+    '&-head-sortable:hover': {
+      backgroundColor: 'var(--cn-state-hover)'
     },
 
     // Data cell

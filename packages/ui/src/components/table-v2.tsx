@@ -14,6 +14,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2 } from './icon-v2'
 import { Link, type LinkProps } from './link'
+import { Tooltip, type TooltipProps } from './tooltip'
 
 const tableVariants = cva('cn-table-v2', {
   variants: {
@@ -98,37 +99,56 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
 })
 TableRow.displayName = 'TableRow'
 
-interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
+export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
   /**
-   * Sort direction, if this column is sorted
+   * Sort direction
    */
   sortDirection?: 'asc' | 'desc' | false
   /**
-   * Whether this column can be sorted
+   * Whether the column is sortable
    */
   sortable?: boolean
+  /**
+   * Props for the tooltip component
+   */
+  tooltipProps?: Omit<TooltipProps, 'children'>
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, sortable, children, ...props }, ref) => {
+  ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
+    // Create the content that will be displayed in the header
+    const contentElement = (
+      <div className="flex items-center gap-1">
+        {children}
+        {sortable && (
+          <span className="ml-1">
+            {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
+            {sortDirection === 'desc' && <IconV2 name="arrow-down" size={12} />}
+            {!sortDirection && <IconV2 name="sort-1" size={16} />}
+          </span>
+        )}
+      </div>
+    )
+
+    const contentWithTooltip = tooltipProps?.content ? (
+      <Tooltip {...tooltipProps}>{contentElement}</Tooltip>
+    ) : (
+      contentElement
+    )
+
     return (
-      <th 
-        ref={ref} 
-        className={cn('cn-table-v2-head', {
-          'cursor-pointer select-none hover:bg-cn-background-hover': sortable
-        }, className)} 
+      <th
+        ref={ref}
+        className={cn(
+          'cn-table-v2-head',
+          {
+            'cn-table-v2-head-sortable': sortable
+          },
+          className
+        )}
         {...props}
       >
-        <div className="flex items-center gap-1">
-          {children}
-          {sortable && (
-            <span className="ml-1">
-              {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
-              {sortDirection === 'desc' && <IconV2 name="arrow-down" size={12} />}
-              {!sortDirection && <IconV2 name="sort-1" size={16} />}
-            </span>
-          )}
-        </div>
+        {contentWithTooltip}
       </th>
     )
   }
@@ -180,4 +200,3 @@ const TableV2 = {
 }
 
 export { TableV2 }
-export type { TableHeadProps }

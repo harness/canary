@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { IconNameMap } from './icon-name-map'
 
 /**
- * @deprecated Use IconPropsV2 component instead. This type will be removed soon.
+ * @deprecated Use IconPropsV2 type instead. This type will be removed soon.
  */
 export interface IconProps extends SVGProps<SVGSVGElement> {
   name: keyof typeof IconNameMap

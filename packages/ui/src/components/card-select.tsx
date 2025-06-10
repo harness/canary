@@ -4,6 +4,7 @@ import { cn } from '@utils/cn'
 import { cva } from 'class-variance-authority'
 
 import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 import { Logo } from './logo'
 
 type CardSelectType = 'single' | 'multiple'
@@ -158,7 +159,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
             {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
-          {checked && <Icon name="check" className="cn-card-select-check" />}
+          {checked && <IconV2 name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}

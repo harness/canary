@@ -69,6 +69,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
           setSearchQuery={noop}
         />
       }
+      setSearchLabelQuery={noop}
       {...props}
     />
   )

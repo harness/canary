@@ -42,7 +42,7 @@ export interface PullRequestType {
   labels: PRListLabelType[]
 }
 
-export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
+export type IconType = 'git-pull-request-draft' | 'git-pull-request-closed' | 'git-merge' | 'git-pull-request'
 
 export interface PullRequestListStore {
   pullRequests: PullRequestType[] | null

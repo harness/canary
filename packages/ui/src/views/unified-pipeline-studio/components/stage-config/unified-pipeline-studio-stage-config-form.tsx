@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -52,7 +52,7 @@ interface UnifiedPipelineStudioStageConfigFormProps {
 
 export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudioStageConfigFormProps) => {
   const { requestClose, isDrawer = false } = props
-  const { Content, Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Content, Header, Title, Description, Footer } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     addStageIntention,
@@ -119,11 +119,12 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
               <Button variant={'outline'}> Use Template</Button>
             </ButtonLayout> */}
           </Header>
-          <Body>
+          {/* TODO workaround for scroll area issue */}
+          <div className="cn-drawer-body overflow-scroll">
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
             </EntityFormLayout.Form>
-          </Body>
+          </div>
           <Footer>
             <ButtonLayout.Root>
               <ButtonLayout.Primary>
@@ -143,7 +144,7 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
                     }}
                     aria-label="Remove Stage"
                   >
-                    <Icon name="trash" />
+                    <IconV2 name="trash" />
                   </Button>
                 </ButtonLayout.Secondary>
               )}

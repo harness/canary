@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, Icon, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -85,7 +85,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
-  setSearchLabelQuery?: (query: string) => void
+  setSearchLabelQuery: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
   editLabelsProps: LinkProps
@@ -182,18 +182,18 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
+        <span className="text-6 text-cn-foreground-1 mt-7 font-medium leading-snug tracking-tight">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-2 leading-snug text-cn-foreground-2">
+          <p className="text-2 text-cn-foreground-2 max-w-xl leading-snug">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
             )}
           </p>
           <Layout.Horizontal align="center" gap="xs">
-            <Icon name="compare" size={14} className="text-icons-1" />
+            <IconV2 name="git-compare" size={14} className="text-icons-1" />
 
             {branchSelectorRenderer}
 
@@ -202,7 +202,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Horizontal gap="xs" align="center">
                   {mergeability ? (
                     <>
-                      <Icon className="text-icons-success" name="tick" size={12} />
+                      <IconV2 className="text-icons-success" name="check" size={12} />
                       <p className="text-2 leading-none text-cn-foreground-success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                         <span className="text-cn-foreground-2">
@@ -217,7 +217,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     <>
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
-                          <Icon name={'x-mark'} size={12} className="text-icons-1" />
+                          <IconV2 name="xmark" size={12} className="text-icons-1" />
                           <p className="text-2 leading-none text-cn-foreground-2">
                             {t(
                               'views:pullRequests.compareChangesApiError',
@@ -227,7 +227,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         </>
                       ) : (
                         <>
-                          <Icon className="text-icons-danger" name="x-mark" size={12} />
+                          <IconV2 className="text-icons-danger" name="xmark" size={12} />
                           <p className="text-2 leading-none text-cn-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-cn-foreground-2">
@@ -293,7 +293,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal align="center">
-                  <Icon name="compare" size={14} className="text-icons-success" />
+                  <IconV2 name="git-compare" size={14} className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <p className="text-2 text-cn-foreground-1">{prBranchCombinationExists.title}</p>
@@ -312,23 +312,23 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <Tabs.List className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-cn-background-2">
+              <Tabs.List className="before:bg-cn-background-2 relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
                     value="overview"
-                    icon="comments"
+                    icon="message"
                     label={t('views:pullRequests.compareChangesTabOverview', 'Overview')}
                   />
                 )}
                 <TabTriggerItem
                   value="commits"
-                  icon="tube-sign"
+                  icon="git-commit"
                   label={t('views:pullRequests.compareChangesTabCommits', 'Commits')}
                   badgeCount={diffStats.commits ? diffStats.commits : undefined}
                 />
                 <TabTriggerItem
                   value="changes"
-                  icon="changes"
+                  icon="page"
                   label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                   badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
                 />

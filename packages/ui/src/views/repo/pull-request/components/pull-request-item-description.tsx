@@ -52,12 +52,12 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {sourceBranch && (
         <>
           <Link to={`${relativePath}/code/${targetBranch}`}>
-            <Tag variant="secondary" icon="branch-2" value={targetBranch} showIcon />
+            <Tag variant="secondary" icon="git-branch" value={targetBranch} showIcon />
           </Link>
 
           <span>&larr;</span>
           <Link to={`${relativePath}/code/${sourceBranch}`}>
-            <Tag variant="secondary" icon="branch-2" value={sourceBranch} showIcon />
+            <Tag variant="secondary" icon="git-branch" value={sourceBranch} showIcon />
           </Link>
         </>
       )}

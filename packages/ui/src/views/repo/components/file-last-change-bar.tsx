@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
+import { Avatar, CommitCopyActions, IconV2, StackedList, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { LatestFileTypes } from '@/views'
@@ -15,7 +15,7 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
       <Text color="foreground-1" className="line-clamp-1" truncate wrap="wrap">
         {lastCommitMessage}
       </Text>
-      <Icon className="text-icons-success shrink-0" name="tick" size={12} />
+      <IconV2 className="text-icons-success shrink-0" name="check" size={12} />
     </div>
   )
 }

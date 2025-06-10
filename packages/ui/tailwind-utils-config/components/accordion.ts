@@ -17,14 +17,12 @@ export default {
     '&-item': {
       borderBottom: '1px solid var(--cn-border-3)',
 
-      '&:where([data-disabled]) [class*="cn-accordion"]': {
-        color: 'var(--cn-state-disabled-text)'
+      '&:last-child': {
+        '@apply border-0': ''
       },
 
-      '&:where([data-state="open"])': {
-        '.cn-accordion-trigger-indicator': {
-          '@apply rotate-180': ''
-        }
+      '&:where([data-disabled]) [class*="cn-accordion"]': {
+        color: 'var(--cn-state-disabled-text)'
       }
     },
 
@@ -39,6 +37,12 @@ export default {
       '&:hover:not([data-disabled])': {
         '.cn-accordion-trigger-indicator': {
           color: 'var(--cn-text-1)'
+        }
+      },
+
+      '&:where([data-state="open"])': {
+        '.cn-accordion-trigger-indicator': {
+          '@apply rotate-180': ''
         }
       },
 

@@ -5,6 +5,7 @@
 
 import Agile from './icons/agile.svg'
 import AppNotification from './icons/app-notification.svg'
+import AppleShortcut from './icons/apple-shortcut.svg'
 import Archive from './icons/archive.svg'
 import AreaSearch from './icons/area-search.svg'
 import ArrowDownCircle from './icons/arrow-down-circle.svg'
@@ -31,6 +32,7 @@ import ArrowUp from './icons/arrow-up.svg'
 import Artifact from './icons/artifact.svg'
 import AtSignCircle from './icons/at-sign-circle.svg'
 import AtSign from './icons/at-sign.svg'
+import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
 import BatteryCharging from './icons/battery-charging.svg'
 import BatteryEmpty from './icons/battery-empty.svg'
@@ -48,6 +50,8 @@ import BinHalf from './icons/bin-half.svg'
 import BinMinusIn from './icons/bin-minus-in.svg'
 import BinPlusIn from './icons/bin-plus-in.svg'
 import Bin from './icons/bin.svg'
+import BoldSquere from './icons/bold-squere.svg'
+import Bold from './icons/bold.svg'
 import BookmarkSolid from './icons/bookmark-solid.svg'
 import Bookmark from './icons/bookmark.svg'
 import BubbleDownload from './icons/bubble-download.svg'
@@ -83,6 +87,7 @@ import ChatPlusIn from './icons/chat-plus-in.svg'
 import CheckCircleSolid from './icons/check-circle-solid.svg'
 import CheckCircle from './icons/check-circle.svg'
 import Check from './icons/check.svg'
+import CircleWithSector from './icons/circle-with-sector.svg'
 import Circle from './icons/circle.svg'
 import ClipboardCheck from './icons/clipboard-check.svg'
 import ClockSolid from './icons/clock-solid.svg'
@@ -104,6 +109,8 @@ import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import Community from './icons/community.svg'
+import ConnectorsSolid from './icons/connectors-solid.svg'
+import Connectors from './icons/connectors.svg'
 import ControlSlider from './icons/control-slider.svg'
 import Cookie from './icons/cookie.svg'
 import Copy from './icons/copy.svg'
@@ -111,6 +118,7 @@ import CpuWarning from './icons/cpu-warning.svg'
 import Cpu from './icons/cpu.svg'
 import Crop from './icons/crop.svg'
 import CursorPointer from './icons/cursor-pointer.svg'
+import CustomSecretManager from './icons/custom-secret-manager.svg'
 import CustomizeNavigation from './icons/customize-navigation.svg'
 import DashboardDots from './icons/dashboard-dots.svg'
 import DashboardSpeed from './icons/dashboard-speed.svg'
@@ -193,6 +201,7 @@ import GitPullRequest from './icons/git-pull-request.svg'
 import GitRebase from './icons/git-rebase.svg'
 import GitSquashMerge from './icons/git-squash-merge.svg'
 import Git from './icons/git.svg'
+import GithubAction from './icons/github-action.svg'
 import GithubCircleSolid from './icons/github-circle-solid.svg'
 import GitlabSolid from './icons/gitlab-solid.svg'
 import Globe from './icons/globe.svg'
@@ -205,6 +214,7 @@ import GoogleOne from './icons/google-one.svg'
 import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
+import HarnessPlugins from './icons/harness-plugins.svg'
 import HeadsetHelp from './icons/headset-help.svg'
 import HealthShield from './icons/health-shield.svg'
 import HeartSolid from './icons/heart-solid.svg'
@@ -218,6 +228,7 @@ import Infrastructure from './icons/infrastructure.svg'
 import InputSearch from './icons/input-search.svg'
 import Internet from './icons/internet.svg'
 import ItalicSquare from './icons/italic-square.svg'
+import Italic from './icons/italic.svg'
 import JournalPage from './icons/journal-page.svg'
 import Journal from './icons/journal.svg'
 import KanbanBoard from './icons/kanban-board.svg'
@@ -320,6 +331,7 @@ import PhonePaused from './icons/phone-paused.svg'
 import PhonePlus from './icons/phone-plus.svg'
 import PhoneXmark from './icons/phone-xmark.svg'
 import Phone from './icons/phone.svg'
+import PhysicalDataCenter from './icons/physical-data-center.svg'
 import PinSlashSolid from './icons/pin-slash-solid.svg'
 import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
@@ -353,6 +365,8 @@ import Repository from './icons/repository.svg'
 import Restart from './icons/restart.svg'
 import Roles from './icons/roles.svg'
 import Ruler from './icons/ruler.svg'
+import RunTest from './icons/run-test.svg'
+import Run from './icons/run.svg'
 import Safari from './icons/safari.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
@@ -367,8 +381,6 @@ import Send from './icons/send.svg'
 import ServiceAccounts from './icons/service-accounts.svg'
 import Services from './icons/services.svg'
 import Settings from './icons/settings.svg'
-import ShareAndroidSolid from './icons/share-android-solid.svg'
-import ShareAndroid from './icons/share-android.svg'
 import ShareIos from './icons/share-ios.svg'
 import ShieldCheck from './icons/shield-check.svg'
 import Shield from './icons/shield.svg'
@@ -382,6 +394,7 @@ import Sort2Up from './icons/sort-2-up.svg'
 import Sort2 from './icons/sort-2.svg'
 import SparksSolid from './icons/sparks-solid.svg'
 import Sparks from './icons/sparks.svg'
+import SshKey from './icons/ssh-key.svg'
 import StarDashed from './icons/star-dashed.svg'
 import StarHalfDashed from './icons/star-half-dashed.svg'
 import StarMinus from './icons/star-minus.svg'
@@ -444,6 +457,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   agile: Agile,
   'app-notification': AppNotification,
+  'apple-shortcut': AppleShortcut,
   archive: Archive,
   'area-search': AreaSearch,
   'arrow-down-circle': ArrowDownCircle,
@@ -470,6 +484,7 @@ export const IconNameMapV2 = {
   artifact: Artifact,
   'at-sign-circle': AtSignCircle,
   'at-sign': AtSign,
+  'attachment-image': AttachmentImage,
   attachment: Attachment,
   'battery-charging': BatteryCharging,
   'battery-empty': BatteryEmpty,
@@ -487,6 +502,8 @@ export const IconNameMapV2 = {
   'bin-minus-in': BinMinusIn,
   'bin-plus-in': BinPlusIn,
   bin: Bin,
+  'bold-squere': BoldSquere,
+  bold: Bold,
   'bookmark-solid': BookmarkSolid,
   bookmark: Bookmark,
   'bubble-download': BubbleDownload,
@@ -522,6 +539,7 @@ export const IconNameMapV2 = {
   'check-circle-solid': CheckCircleSolid,
   'check-circle': CheckCircle,
   check: Check,
+  'circle-with-sector': CircleWithSector,
   circle: Circle,
   'clipboard-check': ClipboardCheck,
   'clock-solid': ClockSolid,
@@ -543,6 +561,8 @@ export const IconNameMapV2 = {
   'collapse-sidebar': CollapseSidebar,
   collapse: Collapse,
   community: Community,
+  'connectors-solid': ConnectorsSolid,
+  connectors: Connectors,
   'control-slider': ControlSlider,
   cookie: Cookie,
   copy: Copy,
@@ -550,6 +570,7 @@ export const IconNameMapV2 = {
   cpu: Cpu,
   crop: Crop,
   'cursor-pointer': CursorPointer,
+  'custom-secret-manager': CustomSecretManager,
   'customize-navigation': CustomizeNavigation,
   'dashboard-dots': DashboardDots,
   'dashboard-speed': DashboardSpeed,
@@ -632,6 +653,7 @@ export const IconNameMapV2 = {
   'git-rebase': GitRebase,
   'git-squash-merge': GitSquashMerge,
   git: Git,
+  'github-action': GithubAction,
   'github-circle-solid': GithubCircleSolid,
   'gitlab-solid': GitlabSolid,
   globe: Globe,
@@ -644,6 +666,7 @@ export const IconNameMapV2 = {
   'grip-dots': GripDots,
   'group-1': Group1,
   'half-moon': HalfMoon,
+  'harness-plugins': HarnessPlugins,
   'headset-help': HeadsetHelp,
   'health-shield': HealthShield,
   'heart-solid': HeartSolid,
@@ -657,6 +680,7 @@ export const IconNameMapV2 = {
   'input-search': InputSearch,
   internet: Internet,
   'italic-square': ItalicSquare,
+  italic: Italic,
   'journal-page': JournalPage,
   journal: Journal,
   'kanban-board': KanbanBoard,
@@ -759,6 +783,7 @@ export const IconNameMapV2 = {
   'phone-plus': PhonePlus,
   'phone-xmark': PhoneXmark,
   phone: Phone,
+  'physical-data-center': PhysicalDataCenter,
   'pin-slash-solid': PinSlashSolid,
   'pin-slash': PinSlash,
   'pin-solid': PinSolid,
@@ -792,6 +817,8 @@ export const IconNameMapV2 = {
   restart: Restart,
   roles: Roles,
   ruler: Ruler,
+  'run-test': RunTest,
+  run: Run,
   safari: Safari,
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
@@ -806,8 +833,6 @@ export const IconNameMapV2 = {
   'service-accounts': ServiceAccounts,
   services: Services,
   settings: Settings,
-  'share-android-solid': ShareAndroidSolid,
-  'share-android': ShareAndroid,
   'share-ios': ShareIos,
   'shield-check': ShieldCheck,
   shield: Shield,
@@ -821,6 +846,7 @@ export const IconNameMapV2 = {
   'sort-2': Sort2,
   'sparks-solid': SparksSolid,
   sparks: Sparks,
+  'ssh-key': SshKey,
   'star-dashed': StarDashed,
   'star-half-dashed': StarHalfDashed,
   'star-minus': StarMinus,

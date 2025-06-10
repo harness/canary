@@ -4,7 +4,7 @@ import {
   Button,
   DropdownMenu,
   FileToolbarActions,
-  Icon,
+  IconV2,
   Layout,
   StackedList,
   ToggleGroup,
@@ -56,16 +56,15 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="-mr-2" asChild>
             <Button variant="ghost" iconOnly>
-              <Icon name="more-dots-fill" size={16} />
+              <IconV2 name="more-horizontal" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end">
-            <DropdownMenu.Item onSelect={handleViewRaw}>
-              <span className="truncate text-sm">View Raw</span>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item onSelect={handleOpenDeleteDialog}>
-              <span className="truncate text-sm text-cn-foreground-danger">Delete</span>
-            </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={handleViewRaw} title="View Raw" />
+            <DropdownMenu.Item
+              onSelect={handleOpenDeleteDialog}
+              title={<span className="truncate text-sm text-cn-foreground-danger">Delete</span>}
+            />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </Layout.Horizontal>

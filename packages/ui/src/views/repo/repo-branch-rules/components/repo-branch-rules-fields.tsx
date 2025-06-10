@@ -6,7 +6,7 @@ import {
   ControlGroup,
   Fieldset,
   FormInput,
-  Icon,
+  IconV2,
   Input,
   Label,
   Message,
@@ -115,7 +115,6 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           />
           <SplitButton<PatternsButtonType>
             buttonClassName="px-0 w-full"
-            id="patterns-type"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
@@ -145,16 +144,16 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                 onClick={() => handleRemovePattern(pattern.pattern)}
               >
                 <span className="flex items-center gap-1">
-                  <Icon
+                  <IconV2
                     className={cn('text-icons-success', {
                       'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
                     })}
-                    name="circle-plus"
+                    name="plus-circle"
                     size={10}
                   />
                   {pattern.pattern}
                 </span>
-                <Icon className="rotate-45" name="plus" size={10} />
+                <IconV2 name="xmark" size={10} />
               </Button>
             ))}
           </div>

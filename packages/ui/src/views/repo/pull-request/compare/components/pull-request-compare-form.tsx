@@ -1,7 +1,7 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs } from '@/components'
+import { Button, Fieldset, FormInput, FormWrapper, IconV2, MarkdownViewer, Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { handleFileDrop, handlePaste, HandleUploadType } from '@/views'
 import { cn } from '@utils/cn'
@@ -170,7 +170,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                   <Button variant="ghost" onClick={e => handleFileSelect(e)}>
-                    <Icon size={16} name="attachment-image" />
+                    <IconV2 name="attachment-image" />
                     <span>Drag & drop, select, or paste to attach files</span>
                   </Button>
                 </div>

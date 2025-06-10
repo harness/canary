@@ -3,6 +3,7 @@ import { useState } from 'react'
 import {
   Button,
   Icon,
+  IconV2,
   Logo,
   MoreActionsTooltip,
   NoData,
@@ -40,25 +41,25 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
     </div>
   ) : (
     <>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
-            <Icon name="dot" size={8} className="text-icons-danger" />
-            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
-              {t('views:connectors.failure', 'Failed')}
-            </Text>
-          </Button>
-        </Tooltip.Trigger>
-        <Tooltip.Content className="w-72 whitespace-normal" side="bottom">
-          <h3 className="font-medium text-cn-foreground-1">
-            {t('views:connectors.errorEncountered', 'Error Encountered')}
-          </h3>
-          <p className="mt-1.5 text-cn-foreground-3">{item?.status?.errorSummary}</p>
-          <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
-            {t('views:connectors.viewDetails', 'View details')}
-          </Button>
-        </Tooltip.Content>
-      </Tooltip.Root>
+      <Tooltip
+        side="bottom"
+        title={t('views:connectors.errorEncountered', 'Error Encountered')}
+        content={
+          <>
+            <p className="whitespace-normal">{item?.status?.errorSummary}</p>
+            <Button variant="link" onClick={() => setErrorConnectionOpen(true)}>
+              {t('views:connectors.viewDetails', 'View details')}
+            </Button>
+          </>
+        }
+      >
+        <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
+          <Icon name="dot" size={8} className="text-icons-danger" />
+          <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+            {t('views:connectors.failure', 'Failed')}
+          </Text>
+        </Button>
+      </Tooltip>
 
       <ConnectorTestConnectionDialog
         title={item?.name}
@@ -131,7 +132,7 @@ export function ConnectorsList({
                 <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
                     <div className="flex w-full max-w-8 items-center justify-center">
-                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={30} />}
+                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <IconV2 name="connectors" size={30} />}
                     </div>
                     <Title title={identifier} />
                   </div>

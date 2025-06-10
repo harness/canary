@@ -429,11 +429,15 @@ export const IconNameMapV2 = {
       const failed = results.length - successful
 
       console.log(`\n🎉 Download complete!`)
-      console.log(`✅ Successfully downloaded: ${successful} icons`)
-      if (failed > 0) {
-        console.log(`❌ Failed downloads: ${failed} icons`)
-      }
-      console.log(`📁 Icons saved to: ${path.resolve(this.config.OUTPUT_DIR)}`)
+
+      // Display results in table format
+      console.table({
+        'Icon Status': {
+          'Successfully Downloaded': `${successful} icons`,
+          'Failed Downloads': failed > 0 ? `${failed} icons` : 0,
+          'Output Directory': path.resolve(this.config.OUTPUT_DIR)
+        }
+      })
 
       // Generate icon-name-map.ts file
       await this.generateIconNameMap(results)

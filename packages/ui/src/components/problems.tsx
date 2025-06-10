@@ -1,4 +1,4 @@
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 export type ProblemSeverity = 'error' | 'warning' | 'info'
 
@@ -16,11 +16,11 @@ export interface Problem<T = unknown> {
 const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {
   switch (severity) {
     case 'error':
-      return <Icon name="fail-legacy" className="text-cn-foreground-error" />
+      return <IconV2 name="xmark-circle-solid" className="text-cn-foreground-error" />
     case 'warning':
-      return <Icon name="triangle-warning" className="text-cn-foreground-warning" />
+      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />
     case 'info':
-      return <Icon name="info-circle" />
+      return <IconV2 name="info-circle" />
   }
 }
 
@@ -110,7 +110,7 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
 function NoProblemsFound(): JSX.Element {
   return (
     <div className="flex items-center gap-2 pl-4">
-      <Icon name="success" className="text-cn-foreground-success" /> No problems found
+      <IconV2 name="check-circle-solid" className="text-cn-foreground-success" /> No problems found
     </div>
   )
 }

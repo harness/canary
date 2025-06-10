@@ -9,7 +9,7 @@ import {
   FormInput,
   FormWrapper,
   GitCommitFormType,
-  Icon,
+  IconV2,
   Link,
   Message,
   MessageTheme,
@@ -162,7 +162,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   label={
                     <span className="flex items-center gap-2">
                       Commit directly to the
-                      <Tag size="sm" value={currentBranch} icon="branch-2" showIcon />
+                      <Tag size="sm" value={currentBranch} icon="git-branch" showIcon />
                       branch
                     </span>
                   }
@@ -201,7 +201,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     autoFocus
                     prefix={
                       <div className="grid place-items-center px-2">
-                        <Icon name="branch" size={14} />
+                        <IconV2 name="git-branch" size={14} />
                       </div>
                     }
                     id="newBranchName"

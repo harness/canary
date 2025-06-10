@@ -331,6 +331,10 @@
       "$type": "sizing",
       "$value": "384px"
     },
+    "6-half": {
+      "$type": "sizing",
+      "$value": "26px"
+    },
     "11-half": {
       "$type": "sizing",
       "$value": "46px"

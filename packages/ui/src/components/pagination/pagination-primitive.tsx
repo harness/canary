@@ -1,10 +1,10 @@
 import * as React from 'react'
 
 import { useRouterContext, useTranslation } from '@/context'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 import { Button, buttonVariants } from '../button'
-import { Icon } from '../icon'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav role="navigation" aria-label="pagination" className={cn('cn-pagination-root', className)} {...props} />
@@ -108,7 +108,7 @@ const PaginationPrimitivePrevious = ({
       href={href}
       {...props}
     >
-      <Icon name="chevron-left" size={16} />
+      <IconV2 name="nav-arrow-left" />
       <span>{t('component:pagination.previous', 'Previous')}</span>
     </PaginationPrimitiveLink>
   )
@@ -131,7 +131,7 @@ const PaginationPrimitiveNext = ({
       {...props}
     >
       <span>{t('component:pagination.next', 'Next')}</span>
-      <Icon name="chevron-right" size={16} />
+      <IconV2 name="nav-arrow-right" />
     </PaginationPrimitiveLink>
   )
 }

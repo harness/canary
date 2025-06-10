@@ -8,6 +8,7 @@ import {
   alertStyles,
   avatarStyles,
   badgeStyles,
+  breadcrumbStyles,
   buttonLayoutStyles,
   buttonStyles,
   captionStyles,
@@ -16,6 +17,7 @@ import {
   checkboxStyles,
   dialogStyles,
   drawerStyles,
+  dropdownStyles,
   formSharedStyles,
   inputStyles,
   labelStyles,
@@ -23,11 +25,14 @@ import {
   modalDialogStyles,
   multiSelectStyles,
   paginationStyles,
+  progressStyles,
   radioStyles,
   scrollAreaStyles,
   switchStyles,
+  tableV2Styles,
   tagStyles,
-  textareaStyles
+  textareaStyles,
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -446,6 +451,7 @@ export default {
         badgeStyles,
         buttonStyles,
         dialogStyles,
+        dropdownStyles,
         switchStyles,
         labelStyles,
         tagStyles,
@@ -454,10 +460,13 @@ export default {
         cardStyles,
         cardSelectStyles,
         paginationStyles,
+        progressStyles,
         drawerStyles,
         buttonLayoutStyles,
         modalDialogStyles,
         scrollAreaStyles,
+        tooltipStyles,
+        breadcrumbStyles,
 
         // Form styles
         formSharedStyles,
@@ -466,7 +475,8 @@ export default {
         textareaStyles,
         inputStyles,
         captionStyles,
-        multiSelectStyles
+        multiSelectStyles,
+        tableV2Styles
       ])
     }),
     tailwindcssAnimate,

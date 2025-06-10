@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon } from '@/components'
+import { IconV2 } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PULL_REQUEST_LIST_HEADER_FILTER_STATES } from '../pull-request.types'
@@ -28,10 +28,10 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
         Have to check with design team.
        */}
       <button onClick={onOpenClick} className="flex items-center gap-1.5">
-        <Icon
+        <IconV2
           className={cn({ 'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN })}
           size={14}
-          name="pr-open"
+          name="git-pull-request"
         />
         <p
           className={cn(
@@ -45,12 +45,12 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
         </p>
       </button>
       <button onClick={onCloseClick} className="flex items-center gap-1.5">
-        <Icon
+        <IconV2
           className={cn({
             'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
           })}
           size={14}
-          name="tick"
+          name="check"
         />
         <p
           className={cn(

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, Icon, IconProps, Label } from '@/components'
+import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -63,7 +63,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * Icon to display at the start of the input
    */
-  icon?: IconProps['name']
+  icon?: IconPropsV2['name']
 
   /**
    * Label text to display above the input
@@ -142,15 +142,15 @@ export const InputReference = <T,>({
         }}
         {...props}
       >
-        {icon && <Icon className="mr-2.5" name={icon} />}
+        {icon && <IconV2 className="mr-2.5" name={icon} />}
         <div className="flex-1 truncate">{displayContent}</div>
         {hasValue && !disabled && (
           <div className="ml-3 flex items-center">
             <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly>
-              <Icon name="edit-pen" />
+              <IconV2 name="edit-pencil" />
             </Button>
             <Button onClick={handleClear} size="sm" variant="ghost" iconOnly>
-              <Icon name="cross" className="text-cn-foreground-danger" />
+              <IconV2 name="xmark" className="text-cn-foreground-danger" />
             </Button>
           </div>
         )}

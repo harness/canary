@@ -1,4 +1,4 @@
-import { Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -56,7 +56,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
             >
               <Table.Cell className="w-[361px] content-center truncate">
                 <div className="flex items-center gap-2.5 !py-2.5">
-                  <Icon name="ssh-key" size={24} />
+                  <IconV2 name="ssh-key" size={24} />
                   <Title title={secret.identifier} />
                 </div>
               </Table.Cell>

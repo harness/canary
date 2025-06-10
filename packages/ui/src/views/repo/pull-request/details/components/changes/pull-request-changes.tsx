@@ -1,6 +1,6 @@
 import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, StackedList } from '@/components'
 import { useTranslation } from '@/context'
 import {
   CommentItem,
@@ -114,7 +114,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
               toggleFullDiff()
             }}
           >
-            <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
+            <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <span className="font-medium leading-tight text-cn-foreground-1">{text}</span>
           <CopyButton name={text} className="size-6" color="gray" />

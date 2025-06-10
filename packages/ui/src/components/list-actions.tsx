@@ -1,10 +1,9 @@
 import { ReactNode } from 'react'
 
-import { CheckIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
 import { DropdownMenu } from './dropdown-menu'
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 import { Text } from './text'
 
 interface DropdownItemProps {
@@ -43,16 +42,18 @@ function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
         >
           {title}
         </Text>
-        <Icon name="chevron-down" size={12} className="chevron-down" />
+        <IconV2 name="nav-arrow-down" />
       </DropdownMenu.Trigger>
       {items && (
         <DropdownMenu.Content align="end">
           {items.map((i, i_idx) => {
             return (
-              <DropdownMenu.Item className="cursor-pointer" onClick={() => onChange?.(i.value ?? i.name)} key={i_idx}>
-                <div className="mr-1 w-4">{Boolean(i.value) && selectedValue === i.value ? <CheckIcon /> : null}</div>
-                {i.name}
-              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                onClick={() => onChange?.(i.value ?? i.name)}
+                key={i_idx}
+                title={i.name}
+                checkmark={Boolean(i.value) && selectedValue === i.value}
+              />
             )
           })}
         </DropdownMenu.Content>

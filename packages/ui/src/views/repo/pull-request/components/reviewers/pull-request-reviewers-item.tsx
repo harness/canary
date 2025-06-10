@@ -1,4 +1,4 @@
-import { Avatar, Icon, Text } from '@/components'
+import { Avatar, IconV2, Text } from '@/components'
 import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
 
 const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
@@ -6,13 +6,13 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
   const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
     switch (decision) {
       case PullReqReviewDecision.outdated:
-        return <Icon name="comments" className="text-cn-foreground-warning" />
+        return <IconV2 name="message" className="text-cn-foreground-warning" />
       case PullReqReviewDecision.approved:
-        return <Icon name="success" className="text-cn-foreground-success" />
+        return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
       case PullReqReviewDecision.changeReq:
-        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+        return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
       case PullReqReviewDecision.pending:
-        return <Icon name="pending-clock" className="text-icons-alert" />
+        return <IconV2 name="clock-solid" className="text-icons-alert" />
       default:
         return null
     }

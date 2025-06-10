@@ -1,10 +1,9 @@
 import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, ReactNode, useContext } from 'react'
 
+import { IconPropsV2, IconV2 } from '@components/icon-v2'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
-
-import { Icon, IconProps } from '../icon'
 
 const accordionVariants = cva('cn-accordion', {
   variants: {
@@ -53,7 +52,7 @@ AccordionItem.displayName = 'AccordionItem'
 type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   prefix?: ReactNode
   suffix?: ReactNode
-  indicatorProps?: Omit<IconProps, 'name'>
+  indicatorProps?: Omit<IconPropsV2, 'name'>
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
@@ -61,8 +60,8 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
     const { indicatorPosition } = useContext(AccordionContext)
 
     const Indicator = () => (
-      <Icon
-        name="chevron-down"
+      <IconV2
+        name="nav-arrow-down"
         size={14}
         {...indicatorProps}
         className={cn('cn-accordion-trigger-indicator', indicatorProps?.className)}

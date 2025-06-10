@@ -2,7 +2,16 @@ import { FC } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { HarnessLogo, Icon, IconProps, Sidebar, SidebarSearchLegacy, User, useSidebar } from '@harnessio/ui/components'
+import {
+  HarnessLogo,
+  Icon,
+  IconProps,
+  IconV2,
+  Sidebar,
+  SidebarSearchLegacy,
+  User,
+  useSidebar
+} from '@harnessio/ui/components'
 import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
@@ -22,7 +31,7 @@ const SideBarToggleMenuItem: FC = () => {
               : t('component:navbar.sidebarToggle.collapse', 'Collapse')
           }
           text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-          icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+          icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size={14} />}
         />
       </Sidebar.MenuButton>
     </Sidebar.MenuItem>
@@ -104,7 +113,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
               >
                 <Sidebar.MenuItemText
                   text={t('component:navbar.sidebarToggle.switchToCodeV1', 'Switch to Code V1')}
-                  icon={<Icon name="arrow-left" size={14} />}
+                  icon={<IconV2 name="arrow-left" size={14} />}
                 />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>

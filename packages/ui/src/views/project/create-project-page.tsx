@@ -169,7 +169,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
           </Fieldset>
 
           <ControlGroup type="button">
-            <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError} size="lg">
+            <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
               {isLoading
                 ? t('views:createProject.create.projectCreation', 'Creating project...')
                 : t('views:createProject.create.createProject', 'Create project')}
@@ -182,7 +182,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
-            <Button asChild className="mt-3 w-full" rounded variant="outline" size="lg">
+            <Button asChild className="mt-3 w-full" rounded variant="outline">
               <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
             </Button>
           </ControlGroup>

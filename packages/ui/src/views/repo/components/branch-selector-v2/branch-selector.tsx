@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon, type ButtonSizes } from '@/components'
+import { Button, DropdownMenu, IconV2, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
@@ -50,13 +50,15 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
       <DropdownMenu.Trigger asChild>
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
         <Button className="justify-start px-3" variant="outline" size={buttonSize}>
-          {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
+          {!branchPrefix && (
+            <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size={14} />
+          )}
           <span className="text-ellipsis whitespace-nowrap">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
           </span>
-          <Icon name="chevron-down" className="chevron-down ml-auto shrink-0" size={12} />
+          <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0" size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

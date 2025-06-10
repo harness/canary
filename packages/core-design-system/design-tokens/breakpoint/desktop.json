@@ -113,6 +113,17 @@
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
     "single-line": {
+      "code": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.mono}",
+          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.none}",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
+      },
       "normal": {
         "$type": "typography",
         "$value": {

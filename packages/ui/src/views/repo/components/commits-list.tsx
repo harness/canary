@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
+import { Avatar, Button, CommitCopyActions, IconV2, NodeGroup, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
 import { formatDate, timeAgo } from '@/utils'
 import { TypesCommit } from '@/views'
@@ -99,7 +99,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                   navigate(toCode?.({ sha: commit?.sha || '' }) || '')
                                 }}
                               >
-                                <Icon name="code-brackets" />
+                                <IconV2 name="code-brackets" />
                               </Button>
                             </div>
                           }

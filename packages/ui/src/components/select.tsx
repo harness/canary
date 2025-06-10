@@ -9,7 +9,7 @@ import {
   ReactNode
 } from 'react'
 
-import { Caption, Icon, Label, Message, MessageTheme, SearchBox } from '@/components'
+import { Caption, IconV2, Label, Message, MessageTheme, SearchBox } from '@/components'
 import { usePortal } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import * as SelectPrimitive from '@radix-ui/react-select'
@@ -96,7 +96,7 @@ const SelectTrigger = forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <Icon name="chevron-down" size={12} className={iconClassName} />
+      <IconV2 name="nav-arrow-down" size={12} className={iconClassName} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))

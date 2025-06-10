@@ -51,9 +51,10 @@ import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
+import TableV2Demo from '@subjects/views/table-v2-demo'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
-import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, Tooltip } from '@harnessio/ui/components'
+import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { AppViewWrapper } from './app-view-wrapper'
@@ -503,6 +504,15 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
+  tableV2: {
+    label: 'Table V2 Demo',
+    items: {
+      'table-v2-demo': {
+        label: 'Table V2 Demo',
+        element: <TableV2Demo />
+      }
+    }
+  },
   platform: {
     label: 'Platform',
     items: {
@@ -552,7 +562,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
 
 const ViewPreview: FC = () => {
   return (
-    <Tooltip.Provider>
+    <TooltipProvider>
       <Routes>
         {Object.entries(viewPreviews).map(([_, group]) =>
           Object.entries(group.items).map(([route, { element }]) => (
@@ -562,7 +572,7 @@ const ViewPreview: FC = () => {
         <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
       </Routes>
       <ViewSettings routes={Object.keys(viewPreviews)} />
-    </Tooltip.Provider>
+    </TooltipProvider>
   )
 }
 

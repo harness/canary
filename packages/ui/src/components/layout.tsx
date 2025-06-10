@@ -56,9 +56,9 @@ const flexVariants = cva('flex', {
 const spacingVariants = cva('', {
   variants: {
     spacing: {
-      small: 'var(--cn-spacing-2)',
-      medium: 'var(--cn-spacing-4)',
-      large: 'var(--cn-spacing-6)'
+      small: 'gap-[var(--cn-spacing-2)]',
+      medium: 'gap-[var(--cn-spacing-4)]',
+      large: 'gap-[var(--cn-spacing-6)]'
     }
   },
   defaultVariants: {

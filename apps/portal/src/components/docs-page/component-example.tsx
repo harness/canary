@@ -4,12 +4,14 @@ import Example, { type ExampleProps } from "./example";
 
 export type ComponentExampleProps = Omit<ExampleProps, "scope"> & {
   scope?: ExampleProps["scope"];
+  hideCode?: boolean;
 };
 
 const ComponentExample: FC<ComponentExampleProps> = ({
   code,
   scope,
   contentClassName,
+  hideCode,
 }) => {
   const combinedScope = useMemo<ExampleProps["scope"]>(
     () => ({ ...components, ...scope }),
@@ -21,6 +23,7 @@ const ComponentExample: FC<ComponentExampleProps> = ({
       contentClassName={contentClassName}
       code={code}
       scope={combinedScope}
+      hideCode={hideCode}
     />
   );
 };

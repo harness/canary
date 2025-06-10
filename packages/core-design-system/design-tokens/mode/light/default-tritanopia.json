@@ -1120,6 +1120,12 @@
         "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
       }
     },
+    "chat": {
+      "ai-icon": {
+        "$type": "color",
+        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
+      }
+    },
     "dialog": {
       "backdrop": {
         "$extensions": {
@@ -1418,6 +1424,16 @@
           "$value": "{cyan.400}",
           "$description": "Icon color for Logo in sidebar navigation."
         }
+      },
+      "icon-asset": {
+        "bg": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.sidebar.icon.bg.from} 0%, {gradient.sidebar.icon.bg.to} 80%)"
+        },
+        "item": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.sidebar.icon.item.from} 0%, {gradient.sidebar.icon.item.to} 100%)"
+        }
       }
     },
     "scrollbar": {
@@ -1565,201 +1581,6 @@
           "$type": "color",
           "$value": "{chrome.25}"
         }
-      }
-    }
-  },
-  "gradient": {
-    "ai": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{orange.200}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{pink.300}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{orange.300}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{cyan.200}"
-      }
-    },
-    "alert": {
-      "fade-default": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{set.gray.soft.bg}"
-      },
-      "fade-danger": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{set.red.soft.bg}"
-      },
-      "fade-warning": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{set.yellow.soft.bg}"
-      }
-    },
-    "skeleton": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{chrome.100}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{pure.white}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{chrome.100}"
-      }
-    },
-    "pipeline": {
-      "running": {
-        "gradient-stop-1": {
-          "$type": "color",
-          "$value": "{blue.400}"
-        },
-        "gradient-stop-2": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.4",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{chrome.200}"
-        },
-        "gradient-stop-3": {
-          "$type": "color",
-          "$value": "{blue.400}"
-        }
-      },
-      "arrows": {
-        "gradient-stop-1": {
-          "$type": "color",
-          "$value": "{chrome.100}"
-        },
-        "gradient-stop-2": {
-          "$type": "color",
-          "$value": "{blue.400}"
-        },
-        "gradient-stop-3": {
-          "$type": "color",
-          "$value": "{border.1}"
-        }
-      },
-      "card": {
-        "bg": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{pure.white}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{chrome.50}"
-          }
-        },
-        "border": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{chrome.50}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{chrome.100}"
-          }
-        }
-      },
-      "widget": {
-        "number": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{chrome.500}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{chrome.600}"
-          }
-        },
-        "blob": {
-          "big": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{chrome.100}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{pure.white}"
-            }
-          },
-          "small": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{chrome.150}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{pure.white}"
-            }
-          }
-        }
-      }
-    },
-    "card": {
-      "from": {
-        "$type": "color",
-        "$value": "{pure.white}"
-      },
-      "to": {
-        "$type": "color",
-        "$value": "{chrome.25}"
-      }
-    },
-    "dialog": {
-      "fade": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{bg.2}"
       }
     }
   },
@@ -2128,6 +1949,239 @@
         "spread": "4",
         "color": "{set.yellow.soft.bg-hover}",
         "type": "dropShadow"
+      }
+    }
+  },
+  "gradient": {
+    "ai": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{orange.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{pink.300}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{orange.300}"
+      },
+      "gradient-stop-4": {
+        "$type": "color",
+        "$value": "{cyan.200}"
+      }
+    },
+    "ai-chat": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{cyan.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{indigo.400}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{violet.400}"
+      }
+    },
+    "alert": {
+      "fade-default": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.gray.soft.bg}"
+      },
+      "fade-danger": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.red.soft.bg}"
+      },
+      "fade-warning": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.yellow.soft.bg}"
+      }
+    },
+    "skeleton": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{chrome.100}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{pure.white}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{chrome.100}"
+      }
+    },
+    "pipeline": {
+      "running": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{blue.400}"
+        },
+        "gradient-stop-2": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.4",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{chrome.200}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{blue.400}"
+        }
+      },
+      "arrows": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{chrome.100}"
+        },
+        "gradient-stop-2": {
+          "$type": "color",
+          "$value": "{blue.400}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{border.1}"
+        }
+      },
+      "card": {
+        "bg": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{chrome.50}"
+          }
+        },
+        "border": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{chrome.50}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{chrome.100}"
+          }
+        }
+      },
+      "widget": {
+        "number": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{chrome.500}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{chrome.600}"
+          }
+        },
+        "blob": {
+          "big": {
+            "gradient-from": {
+              "$type": "color",
+              "$value": "{chrome.100}"
+            },
+            "gradient-to": {
+              "$type": "color",
+              "$value": "{pure.white}"
+            }
+          },
+          "small": {
+            "gradient-from": {
+              "$type": "color",
+              "$value": "{chrome.150}"
+            },
+            "gradient-to": {
+              "$type": "color",
+              "$value": "{pure.white}"
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "from": {
+        "$type": "color",
+        "$value": "{pure.white}"
+      },
+      "to": {
+        "$type": "color",
+        "$value": "{chrome.25}"
+      }
+    },
+    "dialog": {
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.2}"
+      }
+    },
+    "sidebar": {
+      "icon": {
+        "bg": {
+          "from": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          }
+        },
+        "item": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          }
+        }
       }
     }
   },

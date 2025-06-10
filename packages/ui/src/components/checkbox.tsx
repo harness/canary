@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { FormCaption, Icon, Label } from '@/components'
+import { FormCaption, IconV2, Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { cva } from 'class-variance-authority'
@@ -36,9 +36,9 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
         <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={checkboxVariants({ error })} {...props}>
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (
-              <Icon name="minus" className="cn-checkbox-icon" skipSize />
+              <IconV2 name="minus" className="cn-checkbox-icon" skipSize />
             ) : (
-              <Icon name="check" className="cn-checkbox-icon" skipSize />
+              <IconV2 name="check" className="cn-checkbox-icon" skipSize />
             )}
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>

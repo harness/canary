@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
+import { Button, IconV2, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 
 interface RepoSidebarProps {
@@ -27,7 +27,7 @@ export const RepoSidebar = ({
               <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">
                 {branchSelectorRenderer}
                 <Button iconOnly variant="outline" aria-label="Create File" onClick={navigateToNewFile}>
-                  <Icon size={16} name="plus" className="text-icons-3" />
+                  <IconV2 name="plus" className="text-icons-3" />
                 </Button>
               </div>
               <div className="px-5">

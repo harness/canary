@@ -1,4 +1,5 @@
 import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { useCanvasContext } from '@harnessio/pipeline-graph'
 
@@ -10,10 +11,10 @@ export function CanvasControls() {
   return (
     <div className="absolute bottom-2 right-2 flex flex-col gap-y-2">
       <CanvasButton onClick={increase}>
-        <Icon name="plus" />
+        <IconV2 name="plus" />
       </CanvasButton>
       <CanvasButton onClick={decrease}>
-        <Icon name="minus" />
+        <IconV2 name="minus" />
       </CanvasButton>
       <CanvasButton onClick={reset}>
         <Icon name="square-dashed" />

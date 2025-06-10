@@ -1,36 +1,100 @@
 {
-  "tab": {
+  "tabs": {
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.1}"
+    },
     "item": {
-      "height": {
-        "$type": "sizing",
-        "$value": "{size.6}"
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.px}"
       },
       "px": {
         "$type": "spacing",
         "$value": "{spacing.4}"
       },
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
-      }
-    },
-    "radius": {
-      "item": {
+      "min-height": {
+        "$type": "sizing",
+        "$value": "{size.6-half}"
+      },
+      "border": {
+        "$type": "borderWidth",
+        "$value": "{borderWidth.1}"
+      },
+      "radius": {
         "$type": "borderRadius",
         "$value": "{rounded.2}"
-      },
-      "container": {
-        "$type": "borderRadius",
-        "$value": "{rounded.3}"
       }
     },
-    "container": {
-      "$type": "spacing",
-      "$value": "{spacing.1}"
+    "item-overlined": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "min-height": {
+        "$type": "sizing",
+        "$value": "{size.9}"
+      },
+      "border": {
+        "$type": "borderWidth",
+        "$value": "{borderWidth.1}"
+      },
+      "rt": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      },
+      "rb": {
+        "$type": "borderRadius",
+        "$value": "{rounded.none}"
+      }
     },
-    "border": {
+    "item-underlined": {
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.0}"
+      },
+      "min-height": {
+        "$type": "sizing",
+        "$value": "{size.11}"
+      },
+      "border": {
+        "$type": "borderWidth",
+        "$value": "{borderWidth.2}"
+      }
+    },
+    "underlined": {
+      "container-gap": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      }
+    },
+    "container-border": {
       "$type": "borderWidth",
       "$value": "{borderWidth.1}"
+    },
+    "container-radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

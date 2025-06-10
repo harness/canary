@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, CopyButton, Icon, Layout } from '@/components'
+import { Button, CopyButton, IconV2, Layout } from '@/components'
 import { cn } from '@utils/cn'
 
 export interface FileToolbarActionsProps {
@@ -28,7 +28,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
           aria-label="Edit"
           onClick={onEditClick}
         >
-          <Icon name="edit-pen" size={16} className="text-icons-3" />
+          <IconV2 name="edit-pencil" className="text-icons-3" />
         </Button>
       )}
       <Button
@@ -39,7 +39,7 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
         aria-label="Download"
         onClick={onDownloadClick}
       >
-        <Icon name="download" size={16} className="text-icons-3" />
+        <IconV2 name="download" className="text-icons-3" />
       </Button>
     </Layout.Horizontal>
   )

@@ -11,7 +11,7 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Icon,
+  IconV2,
   Legend
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
@@ -240,7 +240,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size={14} />
                   </Button>
                 )}
               </ButtonLayout>
@@ -291,7 +291,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size={14} />
                   </Button>
                 )}
               </ButtonLayout>

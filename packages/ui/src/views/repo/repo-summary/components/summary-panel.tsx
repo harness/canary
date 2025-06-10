@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, Icon, IconProps, Spacer, Tag, Text } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconPropsV2, IconV2, Spacer, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -8,7 +8,7 @@ import { EditRepoDetails } from './edit-repo-details-dialog'
 
 interface DetailItem {
   id: string
-  iconName: 'tube-sign' | 'open-pr' | 'tag' | 'branch' | IconProps['name']
+  iconName: 'git-commit' | 'git-pull-request' | 'tag' | 'git-branch' | IconPropsV2['name']
   name: string
   count: number
   to: string
@@ -50,17 +50,18 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
     <>
       <div className="flex flex-col items-start">
         <div className="flex w-full items-center justify-between">
-          <span className="text-4 truncate font-medium">{title}</span>
+          <span className="truncate text-4 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" aria-label="More options">
-                <Icon name="more-dots-fill" size={12} className="text-icons-3" />
+                <IconV2 name="more-horizontal" size={12} className="text-icons-3" />
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
-              <DropdownMenu.Item className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
-                <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
-              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                onClick={() => setEditDialogOpen(true)}
+                title={<span>{description?.length ? 'Edit Description' : 'Add description'}</span>}
+              />
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </div>
@@ -79,7 +80,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="border-cn-borders-4 text-2 text-cn-foreground-2 line-clamp-6 w-full border-y py-1">
+            <span className="border-cn-borders-4 line-clamp-6 w-full border-y py-1 text-2 text-cn-foreground-2">
               {description}
             </span>
           </>
@@ -91,7 +92,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             details.map(item => (
               <Link key={item.id} to={item.to}>
                 <div className="flex cursor-pointer items-center gap-1.5">
-                  <Icon name={item.iconName} size={14} className="text-cn-foreground-3 fill-none" />
+                  <IconV2 name={item.iconName} size={14} className="text-cn-foreground-3 fill-none" />
                   <Text>{item.name}</Text>
                   <CounterBadge>{item.count}</CounterBadge>
                 </div>

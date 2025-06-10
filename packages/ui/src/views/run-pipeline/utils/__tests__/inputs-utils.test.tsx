@@ -101,4 +101,18 @@ describe('pipelineInputs2FormInputs', () => {
     expect(result[1].inputType).not.toBe('group')
     expect(result[2].inputType).not.toBe('group')
   })
+
+  it('render with no layout specified', () => {
+    const result = pipelineInputs2FormInputs({
+      pipelineInputs,
+      options
+    })
+
+    // Assert group
+    expect(result).toHaveLength(3)
+    // Assert no grouping
+    expect(result[0].inputType).not.toBe('group')
+    expect(result[1].inputType).not.toBe('group')
+    expect(result[2].inputType).not.toBe('group')
+  })
 })

@@ -5,6 +5,9 @@ import { cn } from '@utils/cn'
 
 import { IconNameMap } from './icon-name-map'
 
+/**
+ * @deprecated Use IconPropsV2 component instead. This type will be removed soon.
+ */
 export interface IconProps extends SVGProps<SVGSVGElement> {
   name: keyof typeof IconNameMap
   size?: number
@@ -15,6 +18,9 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
   skipSize?: boolean
 }
 
+/**
+ * @deprecated Use IconV2 component instead. This component will be removed soon.
+ */
 const Icon: FC<IconProps> = ({
   name,
   size = 16,

@@ -5,7 +5,6 @@ import { cn } from '@utils/cn'
 
 export type ScrollAreaProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
   viewportClassName?: string
-  scrollThumbClassName?: string
   orientation?: 'vertical' | 'horizontal' | 'both'
   scrollBarProps?: ScrollBarProps & {
     vertical?: ScrollBarProps
@@ -13,16 +12,18 @@ export type ScrollAreaProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitiv
   }
 }
 
+const SCROLL_TIMEOUT = 1000
+
 const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, ScrollAreaProps>(
   (
     {
       className,
       children,
       viewportClassName,
-      scrollThumbClassName,
       orientation = 'vertical',
       scrollBarProps,
       onScroll,
+      type = 'auto',
       ...props
     },
     ref
@@ -45,7 +46,7 @@ const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, Scrol
       timeoutRef.current = window.setTimeout(() => {
         setIsScrolling(false)
         timeoutRef.current = null
-      }, 1000)
+      }, SCROLL_TIMEOUT)
     }
 
     const getScrollBarProps = (orientation: 'vertical' | 'horizontal') => ({
@@ -53,21 +54,27 @@ const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, Scrol
       ...scrollBarProps,
       ...scrollBarProps?.[orientation],
       className: cn(
-        { 'opacity-100': isScrolling },
+        { 'cn-scroll-area-visible': isScrolling || type === 'always' || type === 'auto' },
         scrollBarProps?.className,
         scrollBarProps?.[orientation]?.className
-      ),
-      scrollThumbClassName: cn(
-        scrollThumbClassName,
-        scrollBarProps?.scrollThumbClassName,
-        scrollBarProps?.[orientation]?.scrollThumbClassName
       )
     })
 
     return (
-      <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden flex-1', className)} {...props}>
+      <ScrollAreaPrimitive.Root
+        ref={ref}
+        className={cn(
+          'cn-scroll-area',
+          {
+            'cn-scroll-area-hover': type === 'hover'
+          },
+          className
+        )}
+        type={type}
+        {...props}
+      >
         <ScrollAreaPrimitive.Viewport
-          className={cn('size-full rounded-[inherit] [&>div]:!flex [&>div]:flex-col', viewportClassName)}
+          className={cn('cn-scroll-area-viewport', viewportClassName)}
           onScroll={handleScroll}
         >
           {children}
@@ -82,29 +89,27 @@ const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, Scrol
 )
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
 
-type ScrollBarProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
-  scrollThumbClassName?: string
-}
+type ScrollBarProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
 
 const ScrollBar = forwardRef<ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>, ScrollBarProps>(
-  ({ className, orientation = 'vertical', scrollThumbClassName, ...props }, ref) => (
+  ({ className, orientation = 'vertical', ...props }, ref) => (
     <ScrollAreaPrimitive.ScrollAreaScrollbar
       ref={ref}
       orientation={orientation}
       className={cn(
-        'group absolute z-10 flex p-1 touch-none select-none opacity-0 hover:opacity-100 transition-opacity',
-        orientation === 'vertical' && 'right-0 top-0 h-full w-3.5 border-l border-l-transparent ',
-        orientation === 'horizontal' && 'bottom-0 left-0 h-3.5 flex-col border-t border-t-transparent',
+        'cn-scroll-area-scrollbar',
+        {
+          'cn-scroll-area-scrollbar-vertical': orientation === 'vertical',
+          'cn-scroll-area-scrollbar-horizontal': orientation === 'horizontal'
+        },
         className
       )}
       {...props}
     >
-      <ScrollAreaPrimitive.ScrollAreaThumb
-        className={cn('relative flex-1 rounded-full cn-scroll-area-thumb', scrollThumbClassName)}
-      />
+      <ScrollAreaPrimitive.ScrollAreaThumb className="cn-scroll-area-thumb" />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   )
 )
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
 
-export { ScrollArea, ScrollBar }
+export { ScrollArea }

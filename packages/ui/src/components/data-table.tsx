@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import {
   ColumnDef,
   ExpandedState,
@@ -15,6 +13,7 @@ import {
 } from '@tanstack/react-table'
 import { cn } from '@utils/cn'
 
+import { Button } from './button'
 import { Checkbox } from './checkbox'
 import { Icon } from './icon'
 import { Pagination, PaginationProps } from './pagination/pagination'
@@ -31,6 +30,7 @@ export interface DataTableProps<TData> {
   className?: string
   currentSorting?: SortingState
   currentRowSelection?: RowSelectionState
+  getRowId?: (row: TData) => string
   /**
    * Callback for when sorting changes. Use this for server-side sorting.
    */
@@ -55,6 +55,10 @@ export interface DataTableProps<TData> {
    * Function to determine if a row can be expanded
    */
   getRowCanExpand?: (row: Row<TData>) => boolean
+  /**
+   * Function to determine if a row can be selected
+   */
+  getRowCanSelect?: (row: Row<TData>) => boolean
   /**
    * Current expanded rows state
    */
@@ -89,17 +93,19 @@ export function DataTable<TData>({
   onRowSelectionChange: externalOnRowSelectionChange,
   enableExpanding = false,
   getRowCanExpand,
+  getRowCanSelect,
   currentExpanded,
   onExpandedChange: externalOnExpandedChange,
   renderSubComponent,
-  enableColumnResizing = false
+  enableColumnResizing = false,
+  getRowId
 }: DataTableProps<TData>) {
   // Start with the base columns
-  let enhancedColumns = [...columns]
+  let tableColumns = [...columns]
 
   // If row selection is enabled, add a checkbox column at the beginning
   if (enableRowSelection) {
-    enhancedColumns = [
+    tableColumns = [
       {
         id: 'select',
         header: ({ table }: { table: Table<TData> }) => {
@@ -128,51 +134,52 @@ export function DataTable<TData>({
         },
         size: 20
       },
-      ...enhancedColumns
+      ...tableColumns
     ]
   }
 
   // If expanding is enabled, add an expander column at the beginning
   if (enableExpanding) {
-    enhancedColumns = [
+    tableColumns = [
       {
         id: 'expander',
         header: () => null,
         cell: ({ row }: { row: Row<TData> }) => {
           return row.getCanExpand() ? (
-            <div
+            <Button
               onClick={e => {
                 e.stopPropagation()
                 row.toggleExpanded()
               }}
               aria-label="Toggle Row Expanded"
+              variant="ghost"
+              size="xs"
+              iconOnly
               role="button"
-              tabIndex={0}
-              className="cursor-pointer flex items-center justify-center hover:text-cn-foreground-1 !pr-0"
             >
               <Icon name={row.getIsExpanded() ? 'chevron-down' : 'chevron-up'} size={12} />
-            </div>
+            </Button>
           ) : null
         },
         size: 20
       },
-      ...enhancedColumns
+      ...tableColumns
     ]
   }
 
-  const columnsWithSelection = enhancedColumns
-
   const tableOptions: TableOptions<TData> = {
     data,
-    columns: columnsWithSelection,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
+
+    getRowId: getRowId,
     // Enable manual sorting (server-side sorting)
     manualSorting: true,
     // Use the external sorting change handler, we link it to the onSortingChange handler so we dont have to do shenannigans to figure out which column was clicked, and its sort state
     //  React table gives it to us directly
     onSortingChange: externalOnSortingChange,
     // Enable row selection if specified
-    enableRowSelection,
+    enableRowSelection: enableRowSelection ? getRowCanSelect || (() => true) : undefined,
     // Handle row selection changes
     onRowSelectionChange: externalOnRowSelectionChange,
     // Enable row expansion if specified
@@ -187,6 +194,7 @@ export function DataTable<TData>({
     enableColumnResizing,
     columnResizeMode: 'onChange',
     // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
+
     state: {
       sorting: currentSorting,
       rowSelection: currentRowSelection || {},
@@ -217,8 +225,7 @@ export function DataTable<TData>({
                   {enableColumnResizing && header.column.getCanResize() && (
                     <div
                       onMouseDown={header.getResizeHandler()}
-                      onTouchStart={header.getResizeHandler()}
-                      className="absolute right-0 top-0 h-full w-1 cursor-col-resize bg-gray-300"
+                      className="absolute right-0 top-0 h-full w-1 cursor-col-resize"
                     />
                   )}
                 </TableV2.Head>

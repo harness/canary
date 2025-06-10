@@ -120,7 +120,9 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       <Tooltip {...tooltipProps}>
         <span className="border-b border-dashed">{children}</span>
       </Tooltip>
-    ) : children;
+    ) : (
+      children
+    )
 
     const contentElement = (
       <div className="flex items-center gap-1">

@@ -5,9 +5,7 @@ import type { ColumnDef, ExpandedState, OnChangeFn, Row, RowSelectionState, Sort
 import { DataTable, StatusBadge } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 
-// Sample data types
 type User = {
-  id: string
   name: string
   email: string
   role: string
@@ -15,10 +13,8 @@ type User = {
   lastLogin: string
 }
 
-// Sample data
 const users: User[] = [
   {
-    id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
     role: 'Admin',
@@ -26,7 +22,6 @@ const users: User[] = [
     lastLogin: '2025-06-01'
   },
   {
-    id: '2',
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
     role: 'Developer',
@@ -34,7 +29,6 @@ const users: User[] = [
     lastLogin: '2025-06-02'
   },
   {
-    id: '3',
     name: 'Bob Johnson',
     email: 'bob.johnson@example.com',
     role: 'Designer',
@@ -42,7 +36,6 @@ const users: User[] = [
     lastLogin: '2025-05-28'
   },
   {
-    id: '4',
     name: 'Alice Williams',
     email: 'alice.williams@example.com',
     role: 'Product Manager',
@@ -50,7 +43,6 @@ const users: User[] = [
     lastLogin: '2025-06-03'
   },
   {
-    id: '5',
     name: 'Charlie Brown',
     email: 'charlie.brown@example.com',
     role: 'Developer',
@@ -69,22 +61,13 @@ export const DataTableDemo: React.FC = () => {
   // Log selection changes
   const handleRowSelectionChange: OnChangeFn<RowSelectionState> = updaterOrValue => {
     const newSelection = typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue
-    console.log('Row selection changed:', newSelection)
     setRowSelection(newSelection)
   }
 
   // Handle expanded state changes
   const handleExpandedChange: OnChangeFn<ExpandedState> = updaterOrValue => {
     const newExpanded = typeof updaterOrValue === 'function' ? updaterOrValue(expanded) : updaterOrValue
-    console.log('Expanded state changed:', newExpanded)
     setExpanded(newExpanded)
-  }
-
-  // Demo fn to detrmine if a row can be expanded
-  // Only allows rows with 'active' status to be expanded
-  const getRowCanExpand = (row: Row<User>) => {
-    const user = row.original
-    return user.status === 'active'
   }
 
   // Render expanded row content
@@ -146,22 +129,13 @@ export const DataTableDemo: React.FC = () => {
   // Sorting state for server-side sorting
   const [tableSorting, setTableSorting] = useState<SortingState>([])
 
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 3
-  const totalItems = users.length
-
   // This function would typically make an API call to fetch sorted data
+  // In a real app, you would fetch data from the server with the new sorting parameters
+  // For this demo, we'll just sort the data client-side to simulate server-side sorting
   const handleSortingChange: OnChangeFn<SortingState> = updaterOrValue => {
-    // Handle both direct values and updater functions
     const newSorting = typeof updaterOrValue === 'function' ? updaterOrValue(tableSorting) : updaterOrValue
 
-    console.log('Server-side sorting requested:', newSorting)
     setTableSorting(newSorting)
-
-    // In a real app, you would fetch data from the server with the new sorting parameters
-    // For this demo, we'll just sort the data client-side to simulate server-side sorting
-    setCurrentPage(1) // Reset to first page when sorting changes
   }
 
   // Simulate server-side sorting and pagination
@@ -176,9 +150,6 @@ export const DataTableDemo: React.FC = () => {
     return 0
   })
 
-  // Slice data for current page (in a real app, this would be handled by the backend)
-  const paginatedData = sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-
   // Handler for row clicks
   const handleRowClick = (data: User, index: number) => {
     console.log('Row clicked:', { data, index })
@@ -187,17 +158,18 @@ export const DataTableDemo: React.FC = () => {
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
       <SandboxLayout.Content className="w-[900px] flex justify-center">
-        <DataTable
+        <DataTable<User>
           columns={columns}
-          data={paginatedData}
-          size="default"
+          data={sortedData}
+          getRowId={row => row.email}
+          size="compact"
           currentSorting={tableSorting}
           onSortingChange={handleSortingChange}
           pagination={{
-            currentPage,
-            pageSize,
-            totalItems,
-            goToPage: setCurrentPage
+            currentPage: 1,
+            pageSize: 3,
+            totalItems: users.length,
+            goToPage: () => {}
           }}
           onRowClick={handleRowClick}
           enableRowSelection
@@ -207,7 +179,8 @@ export const DataTableDemo: React.FC = () => {
           currentExpanded={expanded}
           onExpandedChange={handleExpandedChange}
           renderSubComponent={renderSubComponent}
-          getRowCanExpand={getRowCanExpand}
+          getRowCanExpand={(row: Row<User>) => row.original.status === 'active'}
+          getRowCanSelect={(row: Row<User>) => row.original.status === 'active'}
           // enableColumnResizing
         />
       </SandboxLayout.Content>

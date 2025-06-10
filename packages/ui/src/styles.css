@@ -32,7 +32,9 @@
 
 @layer base {
   html {
-    @apply text-base;
+    @apply text-base antialiased;
+    scrollbar-color: var(--cn-comp-scrollbar-thumb) transparent;
+    scrollbar-width: thin;
   }
 
   body {

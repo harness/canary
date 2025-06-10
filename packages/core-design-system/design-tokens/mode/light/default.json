@@ -1415,6 +1415,16 @@
           "$value": "{cyan.400}",
           "$description": "Icon color for Logo in sidebar navigation."
         }
+      },
+      "icon-asset": {
+        "bg": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.sidebar.icon.bg.from} 0%, {gradient.sidebar.icon.bg.to} 80%)"
+        },
+        "item": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.sidebar.icon.item.from} 0%, {gradient.sidebar.icon.item.to} 100%)"
+        }
       }
     },
     "scrollbar": {

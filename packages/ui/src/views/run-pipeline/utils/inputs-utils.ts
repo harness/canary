@@ -67,16 +67,18 @@ const processLayout = (
       return pipelineInput2FormInput(item, pipelineInputs[item], options)
     }
 
+    const layoutedInputs = processLayout(item.items, pipelineInputs, options, processedInputKeys)
+
     // If group has no title, flatten its items
     if (!item.title && item.items && item.items.length > 0) {
-      return processLayout(item.items, pipelineInputs, options, processedInputKeys)
+      return layoutedInputs
     }
 
     return {
       inputType: 'group',
       path: '',
       label: item.title,
-      inputs: processLayout(item.items, pipelineInputs, options, processedInputKeys),
+      inputs: layoutedInputs,
       inputConfig: {
         autoExpandGroups: item.open
       }

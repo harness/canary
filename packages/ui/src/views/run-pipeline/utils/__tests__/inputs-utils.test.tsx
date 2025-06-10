@@ -29,7 +29,7 @@ const pipelineInputs = {
 const options = { prefix: 'input.' }
 
 describe('pipelineInputs2FormInputs', () => {
-  it('includes grouped inputs and appends unlisted ones', () => {
+  it('handles layout with groups and appends missing inputs (Rule 2)', () => {
     const layout = [
       {
         title: 'Main Group',
@@ -38,28 +38,15 @@ describe('pipelineInputs2FormInputs', () => {
       }
     ]
 
-    const result = pipelineInputs2FormInputs({
-      pipelineInputs,
-      options,
-      pipelineInputLayout: layout
-    })
+    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
 
-    // Assert group
+    // Expect group + one unlisted input
     expect(result).toHaveLength(2)
-    expect(result[0]).toMatchObject({
-      inputType: 'group',
-      path: '',
-      label: 'Main Group'
-    })
-
-    // Assert unlisted input
-    expect(result[1]).toMatchObject({
-      inputType: 'text',
-      path: 'input.baz'
-    })
+    expect(result[0]).toMatchObject({ inputType: 'group', label: 'Main Group' })
+    expect(result[1]).toMatchObject({ path: 'input.baz' }) // 'baz' not in layout
   })
 
-  it('includes grouped inputs with no label', () => {
+  it('flattens unnamed groups (no label)', () => {
     const layout = [
       {
         open: true,
@@ -67,52 +54,46 @@ describe('pipelineInputs2FormInputs', () => {
       }
     ]
 
-    const result = pipelineInputs2FormInputs({
-      pipelineInputs,
-      options,
-      pipelineInputLayout: layout
-    })
+    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
 
-    // Assert that all inputs are rendered as flat (not grouped) inputs
+    // All inputs should be flat
     expect(result).toHaveLength(3)
-    expect(result[0].inputType).not.toBe('group')
-    expect(result[1].inputType).not.toBe('group')
-    expect(result[2].inputType).not.toBe('group')
+    result.forEach(input => expect(input.inputType).not.toBe('group'))
   })
 
-  it('includes duplicate keys in layout', () => {
+  it('includes duplicate keys only once (Rule 1)', () => {
     const layout = [
       {
         title: 'Main Group',
         open: true,
-        items: ['foo', { title: 'Nested Group', items: ['bar', 'baz', 'foo'] }]
+        items: ['foo', { title: 'Nested Group', items: ['bar', 'baz', 'foo'] }] // 'foo' duplicated
       }
     ]
 
-    const result = pipelineInputs2FormInputs({
-      pipelineInputs,
-      options,
-      pipelineInputLayout: layout
-    })
+    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
 
-    expect(result).toHaveLength(3)
-    // Assert that all inputs are rendered as flat (not grouped) inputs
-    expect(result[0].inputType).not.toBe('group')
-    expect(result[1].inputType).not.toBe('group')
-    expect(result[2].inputType).not.toBe('group')
+    const flatInputs = result.flatMap(item => (item.inputType === 'group' ? item.inputs : [item]))
+
+    const fooInputs = flatInputs.filter(i => i && i.path === 'input.foo')
+    expect(fooInputs).toHaveLength(1) // 'foo' should appear only once
   })
 
-  it('render with no layout specified', () => {
-    const result = pipelineInputs2FormInputs({
-      pipelineInputs,
-      options
-    })
-
-    // Assert group
+  it('renders flat input list when no layout is provided (Rule 3)', () => {
+    const result = pipelineInputs2FormInputs({ pipelineInputs, options })
     expect(result).toHaveLength(3)
-    // Assert no grouping
-    expect(result[0].inputType).not.toBe('group')
-    expect(result[1].inputType).not.toBe('group')
-    expect(result[2].inputType).not.toBe('group')
+    result.forEach(input => expect(input.inputType).not.toBe('group'))
+  })
+
+  it('ignores non-existent keys in layout (Rule 4)', () => {
+    const layout = ['foo', 'qux', 'bar'] // 'qux' does not exist
+
+    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
+
+    // Should only include 'foo', 'bar', and 'baz' (baz is appended)
+    const paths = result.map(i => (i.inputType === 'group' ? null : i.path)).filter(Boolean)
+    expect(paths).toContain('input.foo')
+    expect(paths).toContain('input.bar')
+    expect(paths).toContain('input.baz')
+    expect(paths).not.toContain('input.qux')
   })
 })

@@ -18,20 +18,18 @@ export function pipelineInputs2FormInputs({
 }): IInputDefinition[] {
   /**
    * Pre-process inputs for valid layout.
-   * Rule 1 - If there are duplicate keys in the layout, we skip the layout and return all inputs flat
-   * Rule 2 - ...
+   *
+   * Rule 1 - If input keys are duplicated in the layout, only the first occurrence is considered
+   * Rule 2 - Inputs missing from layout appear at the end in the order of pipelineInputs
+   * Rule 3 - If layout is empty, return all inputs flat
+   * Rule 4 - If layout includes non-existent inputs, they get ignored
    */
   const duplicateKeys = validateUniqueInputKeysInLayout(pipelineInputLayout)
-
-  // If duplicates found, skip layout and return all inputs flat
   if (duplicateKeys.length > 0) {
-    console.warn('Duplicate input keys detected in layout. Using flat input list instead. Keys:', duplicateKeys)
-
-    const fallbackInputs: IInputDefinition[] = []
-    forOwn(pipelineInputs, (value, key) => {
-      fallbackInputs.push(pipelineInput2FormInput(key, value, options))
-    })
-    return fallbackInputs
+    console.warn(
+      'Duplicate input keys detected in layout. Only the first occurrence will be used. Keys:',
+      duplicateKeys
+    )
   }
 
   const processedInputKeys = new Set<string>()
@@ -48,13 +46,13 @@ export function pipelineInputs2FormInputs({
 }
 
 /**
- * Recursively processes a given input layout and converts it into a list of form input definitions.
+ * Recursively processes layout into form inputs, skipping duplicate keys after their first appearance.
  *
- * @param layout - The input layout to process, which may include strings or nested groups.
- * @param pipelineInputs - A map of input keys to their corresponding values.
- * @param options - Configuration options, such as a prefix to apply to input names.
- * @param processedInputKeys - A set to track which input keys have already been processed.
- * @returns An array of input definitions with grouping added where applicable.
+ * @param layout - The layout definition
+ * @param pipelineInputs - The input data
+ * @param options - Options for input formatting
+ * @param processedInputKeys - Tracks already-added input keys
+ * @returns An array of input definitions
  */
 const processLayout = (
   layout: InputLayout,
@@ -64,12 +62,11 @@ const processLayout = (
 ): IInputDefinition[] => {
   return layout.flatMap(item => {
     if (typeof item === 'string') {
+      if (processedInputKeys.has(item) || !(item in pipelineInputs)) return []
       processedInputKeys.add(item)
-      const value = pipelineInputs[item]
-      return pipelineInput2FormInput(item, value, options)
+      return pipelineInput2FormInput(item, pipelineInputs[item], options)
     }
 
-    // If group has no title, flatten its items
     if (!item.title && item.items && item.items.length > 0) {
       return processLayout(item.items, pipelineInputs, options, processedInputKeys)
     }

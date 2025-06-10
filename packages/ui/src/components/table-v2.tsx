@@ -116,10 +116,15 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
   ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
-    // Create the content that will be displayed in the header
+    const childrenWithTooltip = tooltipProps?.content ? (
+      <Tooltip {...tooltipProps}>
+        <span className="border-b border-dashed">{children}</span>
+      </Tooltip>
+    ) : children;
+
     const contentElement = (
       <div className="flex items-center gap-1">
-        {children}
+        {childrenWithTooltip}
         {sortable && (
           <span className="ml-1">
             {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
@@ -128,12 +133,6 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
           </span>
         )}
       </div>
-    )
-
-    const contentWithTooltip = tooltipProps?.content ? (
-      <Tooltip {...tooltipProps}>{contentElement}</Tooltip>
-    ) : (
-      contentElement
     )
 
     return (
@@ -148,7 +147,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
         )}
         {...props}
       >
-        {contentWithTooltip}
+        {contentElement}
       </th>
     )
   }

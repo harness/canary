@@ -49,7 +49,8 @@ export default {
 
     // Header
     '&-header': {
-      '@apply border-b border-cn-borders-3 bg-cn-background-2': ''
+      '@apply border-b bg-cn-background-2': '',
+      borderColor: 'var(--cn-border-3)'
     },
 
     // Container highlight on hover

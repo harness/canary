@@ -2140,6 +2140,30 @@
         "$type": "color",
         "$value": "{bg.2}"
       }
+    },
+    "sidebar": {
+      "icon": {
+        "bg": {
+          "from": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          }
+        },
+        "item": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          }
+        }
+      }
     }
   },
   "iconStrokeWidth": {

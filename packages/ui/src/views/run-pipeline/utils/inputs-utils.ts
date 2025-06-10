@@ -4,19 +4,51 @@ import * as z from 'zod'
 
 import { IInputDefinition, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 
-/** pipeline inputs to form inputs conversion */
-export function pipelineInputs2FormInputs(
-  pipelineInputs: Record<string, any>,
-  options: { prefix?: string }
-): IInputDefinition[] {
-  const formInputs: IInputDefinition[] = []
+import { type InputLayout } from './types'
 
+/** pipeline inputs to form inputs conversion */
+export function pipelineInputs2FormInputs({
+  pipelineInputs,
+  options,
+  pipelineInputLayout = []
+}: {
+  pipelineInputs: Record<string, any>
+  options: { prefix?: string }
+  pipelineInputLayout?: InputLayout
+}): IInputDefinition[] {
+  const processedInputKeys = new Set<string>()
+
+  function processLayout(layout: InputLayout): IInputDefinition[] {
+    return layout.map(item => {
+      if (typeof item === 'string') {
+        processedInputKeys.add(item)
+        const value = pipelineInputs[item]
+        return pipelineInput2FormInput(item, value, options)
+      }
+
+      // Nested group
+      const groupInputs = processLayout(item.items)
+
+      return {
+        inputType: 'group',
+        path: '', // Will be resolved at runtime
+        label: item.title,
+        inputs: groupInputs,
+        ...(item.open !== undefined ? { default: { open: item.open } } : {})
+      }
+    })
+  }
+
+  const inputsFromLayout = processLayout(pipelineInputLayout)
+
+  const remainingInputs: IInputDefinition[] = []
   forOwn(pipelineInputs, (value, key) => {
-    const formInput = pipelineInput2FormInput(key, value, options)
-    formInputs.push(formInput)
+    if (!processedInputKeys.has(key)) {
+      remainingInputs.push(pipelineInput2FormInput(key, value, options))
+    }
   })
 
-  return formInputs
+  return [...inputsFromLayout, ...remainingInputs]
 }
 
 /** pipeline input to form input conversion */

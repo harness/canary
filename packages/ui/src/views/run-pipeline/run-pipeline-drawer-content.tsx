@@ -8,6 +8,7 @@ import { YamlRevision } from '@harnessio/yaml-editor'
 
 import { VisualYamlToggle, VisualYamlValue } from '..'
 import RunPipelineFormInputs from './run-pipeline-from-inputs'
+import { type InputLayout } from './utils/types'
 
 export interface RunPipelineDrawerProps {
   isValid: boolean
@@ -25,6 +26,7 @@ export interface RunPipelineDrawerProps {
   inputComponentFactory: InputFactory
   theme: 'light' | 'dark'
   error?: { message?: string }
+  pipelineInputLayout?: InputLayout
 }
 
 export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
@@ -42,7 +44,8 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
     yamlRevision,
     inputComponentFactory,
     theme,
-    error
+    error,
+    pipelineInputLayout
   } = props
 
   const rootFormRef = useRef<{
@@ -93,6 +96,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
               yamlRevision={yamlRevision}
               inputComponentFactory={inputComponentFactory}
               theme={theme}
+              pipelineInputLayout={pipelineInputLayout}
             />
           </div>
         )}

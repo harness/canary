@@ -29,7 +29,7 @@
     },
     "min-width": {
       "$type": "sizing",
-      "$value": "{size.52}"
+      "$value": "{size.32}"
     },
     "max-height": {
       "$type": "sizing",

@@ -1,16 +1,20 @@
 {
-  "tooltip": {
+  "popover": {
     "radius": {
       "$type": "borderRadius",
       "$value": "{rounded.2}"
     },
     "py": {
       "$type": "spacing",
-      "$value": "{spacing.1}"
+      "$value": "{spacing.3}"
     },
     "px": {
       "$type": "spacing",
-      "$value": "{spacing.2-half}"
+      "$value": "{spacing.3}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
     },
     "max": {
       "$type": "sizing",

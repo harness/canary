@@ -4,7 +4,9 @@ export default {
 
     // Table container
     '&-container': {
-      '@apply relative w-full rounded-lg border border-cn-borders-3 overflow-hidden': ''
+      '@apply relative w-full overflow-hidden border-cn-borders-3': '',
+      borderWidth: 'var(--cn-table-border)',
+      borderRadius: 'var(--cn-table-radius)'
     },
 
     // Table element
@@ -20,21 +22,27 @@ export default {
     '&:where(.cn-table-v2-default)': {
       '@apply caption-bottom': '',
       '.cn-table-v2-cell': {
-        '@apply py-2': ''
+        paddingTop: 'var(--cn-table-cell-py-default)',
+        paddingBottom: 'var(--cn-table-cell-py-default)',
+        minHeight: 'var(--cn-table-cell-min-default)'
       }
     },
 
     '&:where(.cn-table-v2-relaxed)': {
       '@apply caption-bottom': '',
       '.cn-table-v2-cell': {
-        '@apply py-3': '' // More vertical padding for relaxed variant
+        paddingTop: 'var(--cn-table-cell-py-relaxed)',
+        paddingBottom: 'var(--cn-table-cell-py-relaxed)',
+        minHeight: 'var(--cn-table-cell-min-relaxed)'
       }
     },
 
     '&:where(.cn-table-v2-compact)': {
       '@apply caption-bottom': '',
       '.cn-table-v2-cell': {
-        '@apply py-1': '' // Less vertical padding for compact variant
+        paddingTop: 'var(--cn-table-cell-py-compact)',
+        paddingBottom: 'var(--cn-table-cell-py-compact)',
+        minHeight: 'var(--cn-table-cell-min-compact)'
       }
     },
 
@@ -66,10 +74,6 @@ export default {
       },
 
       '&:where([data-state=selected])': {
-        '@apply bg-cn-background-3': ''
-      },
-
-      '&:where([data-checked=true])': {
         '@apply bg-cn-background-2': ''
       },
 
@@ -80,19 +84,46 @@ export default {
 
     // Head cell
     '&-head': {
-      '@apply text-cn-foreground-4 h-11 px-2 text-left align-middle font-medium overflow-hidden': '',
-      '@apply [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]': ''
+      '@apply text-cn-foreground-4 text-left align-middle font-medium overflow-hidden': '',
+      '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
+      '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
+      paddingLeft: 'var(--cn-table-header-px)',
+      paddingRight: 'var(--cn-table-header-px)',
+      paddingTop: 'var(--cn-table-header-py)',
+      paddingBottom: 'var(--cn-table-header-py)',
+      gap: 'var(--cn-table-header-gap)',
+      minHeight: 'var(--cn-table-header-min)'
     },
 
     // Data cell
     '&-cell': {
-      '@apply px-2 py-2 align-middle': '',
-      '@apply [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]': ''
+      '@apply align-middle': '',
+      '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
+      '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
+      paddingLeft: 'var(--cn-table-cell-px)',
+      paddingRight: 'var(--cn-table-cell-px)',
+      gap: 'var(--cn-table-cell-gap)'
     },
 
     // Cell link
     '&-cell-link': {
-      '@apply block w-full h-full p-2 flex items-center': ''
+      '@apply block w-full h-full flex items-center': '',
+      paddingLeft: 'var(--cn-table-cell-px)',
+      paddingRight: 'var(--cn-table-cell-px)'
+    },
+
+    // Variant-specific cell link padding
+    '&:where(.cn-table-v2-default) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-default)',
+      paddingBottom: 'var(--cn-table-cell-py-default)'
+    },
+    '&:where(.cn-table-v2-relaxed) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-relaxed)',
+      paddingBottom: 'var(--cn-table-cell-py-relaxed)'
+    },
+    '&:where(.cn-table-v2-compact) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-compact)',
+      paddingBottom: 'var(--cn-table-cell-py-compact)'
     },
 
     // Caption

@@ -15,10 +15,8 @@ import {
 } from '@tanstack/react-table'
 import { cn } from '@utils/cn'
 
-import { Button } from './button'
 import { Checkbox } from './checkbox'
 import { Icon } from './icon'
-import { IconV2 } from './icon-v2'
 import { Pagination, PaginationProps } from './pagination/pagination'
 import { TableV2 } from './table-v2'
 
@@ -142,18 +140,18 @@ export function DataTable<TData>({
         header: () => null,
         cell: ({ row }: { row: Row<TData> }) => {
           return row.getCanExpand() ? (
-            <Button
-              type="button"
-              variant="ghost"
-              iconOnly
+            <div
               onClick={e => {
                 e.stopPropagation()
                 row.toggleExpanded()
               }}
               aria-label="Toggle Row Expanded"
+              role="button"
+              tabIndex={0}
+              className="cursor-pointer flex items-center justify-center hover:text-cn-foreground-1 !pr-0"
             >
-              {row.getIsExpanded() ? <Icon name="chevron-down" size={12} /> : <Icon name="chevron-up" size={12} />}
-            </Button>
+              <Icon name={row.getIsExpanded() ? 'chevron-down' : 'chevron-up'} size={12} />
+            </div>
           ) : null
         },
         size: 20
@@ -241,12 +239,10 @@ export function DataTable<TData>({
                   <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>
                 ))}
               </TableV2.Row>
-              {/* Render expanded content if row is expanded */}
               {row.getIsExpanded() && renderSubComponent && (
                 <TableV2.Row key={`${row.id}-expanded`} className="bg-cn-background-2">
-                  <TableV2.Cell colSpan={row.getAllCells().length} className="p-0 ml-[var(--cn-spacing-11)]">
-                    {renderSubComponent({ row })}
-                  </TableV2.Cell>
+                  <TableV2.Cell></TableV2.Cell>
+                  <TableV2.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</TableV2.Cell>
                 </TableV2.Row>
               )}
             </>

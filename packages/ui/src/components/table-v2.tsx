@@ -114,11 +114,9 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
     return (
       <th 
         ref={ref} 
-        className={cn(
-          'cn-table-v2-head', 
-          sortable && 'cursor-pointer select-none',
-          className
-        )} 
+        className={cn('cn-table-v2-head', {
+          'cursor-pointer select-none hover:bg-cn-background-hover': sortable
+        }, className)} 
         {...props}
       >
         <div className="flex items-center gap-1">

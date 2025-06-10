@@ -91,7 +91,7 @@ export const DataTableDemo: React.FC = () => {
   const renderSubComponent = ({ row }: { row: Row<User> }) => {
     const user = row.original
     return (
-      <div>
+      <div className="py-1">
         <p>This is a placeholder for expanded content for {user.name}</p>
       </div>
     )
@@ -126,6 +126,8 @@ export const DataTableDemo: React.FC = () => {
             <StatusBadge
               variant="secondary"
               theme={status === 'active' ? 'success' : status === 'inactive' ? 'danger' : 'warning'}
+              size="sm"
+              className="py-0"
             >
               {status}
             </StatusBadge>
@@ -184,7 +186,7 @@ export const DataTableDemo: React.FC = () => {
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
-      <SandboxLayout.Content className="w-[600px] flex justify-center">
+      <SandboxLayout.Content className="w-[900px] flex justify-center">
         <DataTable
           columns={columns}
           data={paginatedData}
@@ -198,14 +200,15 @@ export const DataTableDemo: React.FC = () => {
             goToPage: setCurrentPage
           }}
           onRowClick={handleRowClick}
-          enableRowSelection={true}
+          enableRowSelection
           currentRowSelection={rowSelection}
           onRowSelectionChange={handleRowSelectionChange}
-          enableExpanding={true}
+          enableExpanding
           currentExpanded={expanded}
           onExpandedChange={handleExpandedChange}
           renderSubComponent={renderSubComponent}
           getRowCanExpand={getRowCanExpand}
+          // enableColumnResizing
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

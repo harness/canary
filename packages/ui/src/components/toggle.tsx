@@ -23,7 +23,7 @@ export interface ToggleProps extends Pick<ButtonProps, 'rounded' | 'iconOnly'> {
   tooltipProps?: ToggleTooltipProps
 }
 
-const Wrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
+const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
   tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
 
 const Toggle = forwardRef<
@@ -65,7 +65,7 @@ const Toggle = forwardRef<
     )
 
     return (
-      <Wrapper tooltipProps={tooltipProps}>
+      <TooltipWrapper tooltipProps={tooltipProps}>
         <TogglePrimitive.Root ref={ref} asChild pressed={pressed} onPressedChange={onChange} disabled={disabled}>
           <Button
             className={className}
@@ -78,7 +78,7 @@ const Toggle = forwardRef<
             {children}
           </Button>
         </TogglePrimitive.Root>
-      </Wrapper>
+      </TooltipWrapper>
     )
   }
 )

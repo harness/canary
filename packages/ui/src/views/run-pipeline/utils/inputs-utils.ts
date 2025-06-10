@@ -24,7 +24,7 @@ export function pipelineInputs2FormInputs({
   const duplicateKeys = validateUniqueInputKeysInLayout(pipelineInputLayout)
 
   // If duplicates found, skip layout and return all inputs flat
-  if (validateUniqueInputKeysInLayout(pipelineInputLayout).length > 0) {
+  if (duplicateKeys.length > 0) {
     console.warn('Duplicate input keys detected in layout. Using flat input list instead. Keys:', duplicateKeys)
 
     const fallbackInputs: IInputDefinition[] = []

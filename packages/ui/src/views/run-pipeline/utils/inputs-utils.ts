@@ -35,33 +35,7 @@ export function pipelineInputs2FormInputs({
   }
 
   const processedInputKeys = new Set<string>()
-
-  const processLayout = (layout: InputLayout): IInputDefinition[] => {
-    return layout.flatMap(item => {
-      if (typeof item === 'string') {
-        processedInputKeys.add(item)
-        const value = pipelineInputs[item]
-        return pipelineInput2FormInput(item, value, options)
-      }
-
-      // If group has no title, flatten its items
-      if (!item.title && item.items && item.items.length > 0) {
-        return processLayout(item.items)
-      }
-
-      return {
-        inputType: 'group',
-        path: '',
-        label: item.title,
-        inputs: processLayout(item.items),
-        inputConfig: {
-          autoExpandGroups: item.open
-        }
-      }
-    })
-  }
-
-  const inputsFromLayout = processLayout(pipelineInputLayout)
+  const inputsFromLayout = processLayout(pipelineInputLayout, pipelineInputs, options, processedInputKeys)
 
   const remainingInputs: IInputDefinition[] = []
   forOwn(pipelineInputs, (value, key) => {
@@ -73,26 +47,62 @@ export function pipelineInputs2FormInputs({
   return [...inputsFromLayout, ...remainingInputs]
 }
 
-export const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
-  const inputOccurrences = new Map<string, number>()
+/**
+ * Recursively processes a given input layout and converts it into a list of form input definitions.
+ *
+ * @param layout - The input layout to process, which may include strings or nested groups.
+ * @param pipelineInputs - A map of input keys to their corresponding values.
+ * @param options - Configuration options, such as a prefix to apply to input names.
+ * @param processedInputKeys - A set to track which input keys have already been processed.
+ * @returns An array of input definitions with grouping added where applicable.
+ */
+const processLayout = (
+  layout: InputLayout,
+  pipelineInputs: Record<string, any>,
+  options: { prefix?: string },
+  processedInputKeys: Set<string>
+): IInputDefinition[] => {
+  return layout.flatMap(item => {
+    if (typeof item === 'string') {
+      processedInputKeys.add(item)
+      const value = pipelineInputs[item]
+      return pipelineInput2FormInput(item, value, options)
+    }
 
-  const traverse = (layout: InputLayout) => {
-    layout.forEach(item => {
-      if (typeof item === 'string') {
-        inputOccurrences.set(item, (inputOccurrences.get(item) || 0) + 1)
-      } else {
-        item.items && item.items.length > 0 && traverse(item.items)
+    // If group has no title, flatten its items
+    if (!item.title && item.items && item.items.length > 0) {
+      return processLayout(item.items, pipelineInputs, options, processedInputKeys)
+    }
+
+    return {
+      inputType: 'group',
+      path: '',
+      label: item.title,
+      inputs: processLayout(item.items, pipelineInputs, options, processedInputKeys),
+      inputConfig: {
+        autoExpandGroups: item.open
       }
-    })
-  }
+    }
+  })
+}
 
-  traverse(layout)
+const traverseInputLayout = (layout: InputLayout, inputOccurrences: Map<string, number>) => {
+  layout.forEach(item => {
+    if (typeof item === 'string') {
+      inputOccurrences.set(item, (inputOccurrences.get(item) || 0) + 1)
+    } else if (item.items && item.items.length > 0) {
+      traverseInputLayout(item.items, inputOccurrences)
+    }
+  })
+}
 
-  const duplicates = Array.from(inputOccurrences.entries())
+const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
+  const inputOccurrences = new Map<string, number>()
+  traverseInputLayout(layout, inputOccurrences)
+
+  return Array.from(inputOccurrences.entries())
     .filter(([, count]) => count > 1)
     .map(([key]) => key)
-
-  return duplicates
 }
 
 /** pipeline input to form input conversion */

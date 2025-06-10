@@ -1,4 +1,3 @@
-import label from 'tailwind-utils-config/components/label'
 import { describe, expect, it } from 'vitest'
 
 import { pipelineInputs2FormInputs } from '../inputs-utils'

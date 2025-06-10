@@ -23,7 +23,7 @@ function InputValueTypeSelection(props: InputLabelProps): JSX.Element {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger aria-label="options menu">
+      <DropdownMenu.Trigger className="cn-input-suffix" aria-label="options menu" asChild>
         <Button variant={'outline'}>{getButtonLabel(inputValueType)}</Button>
       </DropdownMenu.Trigger>
 

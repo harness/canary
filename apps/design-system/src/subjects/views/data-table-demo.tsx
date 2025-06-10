@@ -58,6 +58,9 @@ export const DataTableDemo: React.FC = () => {
   // Row expansion state
   const [expanded, setExpanded] = useState<ExpandedState>({})
 
+  // Sorting state for server-side sorting
+  const [tableSorting, setTableSorting] = useState<SortingState>([])
+
   // Log selection changes
   const handleRowSelectionChange: OnChangeFn<RowSelectionState> = updaterOrValue => {
     const newSelection = typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue
@@ -125,9 +128,6 @@ export const DataTableDemo: React.FC = () => {
     ],
     []
   )
-
-  // Sorting state for server-side sorting
-  const [tableSorting, setTableSorting] = useState<SortingState>([])
 
   // This function would typically make an API call to fetch sorted data
   // In a real app, you would fetch data from the server with the new sorting parameters

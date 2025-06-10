@@ -1,0 +1,167 @@
+---
+title: Scroll Area
+description: Scroll area component
+beta: true
+---
+
+The Scroll Area component provides a customizable scrollable container with optional scrollbars. It is useful for displaying content that exceeds the available viewport space. Component based on [Radix UI Scroll Area API](https://www.radix-ui.com/docs/primitives/components/scroll-area).
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <ScrollArea orientation="both" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+  </ScrollArea>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ScrollArea } from '@harnessio/ui/components';
+
+//...
+
+return (
+  <ScrollArea type="always" orientation="both" className="w-[300px] h-[200px] border">
+    <div className="p-4 space-y-4 w-[700px] h-[300px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
+);
+```
+
+### Types
+The `ScrollArea` component supports the `type` prop to control the visibility of the scrollbars. It accepts the following values: `auto` means that scrollbars are visible when content is overflowing on the corresponding orientation. `always` means that scrollbars are always visible regardless of whether the content is overflowing. `scroll` means that scrollbars are visible when the user is scrolling along its corresponding orientation. `hover` means that scrollbars are visible when the user is scrolling along its corresponding orientation and when the user is hovering over the scroll area.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div className="grid gap-4">
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">auto:</Text>
+    <ScrollArea orientation="both" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[180px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">always:</Text>
+    <ScrollArea type="always" orientation="both" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">scroll:</Text>
+    <ScrollArea type="scroll" orientation="both" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[180px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">hover:</Text>
+    <ScrollArea type="hover" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+</div>`}
+/>
+
+### Orientations
+The `ScrollArea` component also supports the `orientation` prop to control the scroll direction. It accepts the following values: `horizontal`, `vertical`, and `both`. The default value is `vertical`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div className="grid gap-4">
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">horizontal:</Text>
+    <ScrollArea type="always" orientation="horizontal" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">vertical:</Text>
+    <ScrollArea type="always" orientation="vertical" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport height.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">both:</Text>
+    <ScrollArea type="always" orientation="both" className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds both viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+</div>`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  componentName="ScrollArea"
+  props={[
+    {
+      name: "type",
+      description: "Defines the visibility of the scrollbars. Options are 'always', 'hover', and 'never'.",
+      required: false,
+      defaultValue: "'auto'",
+      value: "'auto' | 'always' | 'scroll' | 'hover'",
+    },
+    {
+      name: "orientation",
+      description: "Defines the orientation of the scroll area. Options are 'horizontal', 'vertical', and 'both'.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'horizontal' | 'vertical' | 'both'",
+    },
+    {
+      name: "viewportClassName",
+      description: "Custom CSS class for the viewport element ScrollAreaPrimitive.Viewport.",
+      required: false,
+      defaultValue: "",
+      value: "string"
+    }
+  ]}
+/>
+```
+

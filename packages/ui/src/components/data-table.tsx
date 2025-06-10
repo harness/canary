@@ -218,9 +218,11 @@ export function DataTable<TData>({
                 >
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   {enableColumnResizing && header.column.getCanResize() && (
-                    <div
+                    <button
+                      type="button"
                       onMouseDown={header.getResizeHandler()}
                       className="absolute right-0 top-0 h-full w-1 cursor-col-resize"
+                      aria-label="Resize column"
                     />
                   )}
                 </TableV2.Head>

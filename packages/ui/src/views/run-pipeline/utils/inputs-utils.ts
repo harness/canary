@@ -81,7 +81,7 @@ export const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] =
       if (typeof item === 'string') {
         inputOccurrences.set(item, (inputOccurrences.get(item) || 0) + 1)
       } else {
-        traverse(item.items)
+        item.items && item.items.length > 0 && traverse(item.items)
       }
     })
   }

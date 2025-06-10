@@ -62,6 +62,9 @@ export interface LogoProps extends SVGProps<SVGSVGElement> {
   className?: string
 }
 
+/**
+ * @deprecated Use LogoV2 component instead. This component will be removed soon.
+ */
 const Logo: FC<LogoProps> = ({ name, size = 24, original = true, ...props }) => {
   const icon = LogoNameMap[name]
 

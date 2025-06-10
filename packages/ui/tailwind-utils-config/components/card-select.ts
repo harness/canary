@@ -41,7 +41,7 @@ export default {
 
     '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-accent)',
-      backgroundColor: 'var(--cn-comp-card-gradient)'
+      backgroundImage: 'var(--cn-comp-card-gradient)'
     },
 
     '.cn-card-select-content': {

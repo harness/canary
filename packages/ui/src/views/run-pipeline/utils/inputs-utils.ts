@@ -16,6 +16,24 @@ export function pipelineInputs2FormInputs({
   options: { prefix?: string }
   pipelineInputLayout?: InputLayout
 }): IInputDefinition[] {
+  /**
+   * Pre-process inputs for valid layout.
+   * Rule 1 - If there are duplicate keys in the layout, we skip the layout and return all inputs flat
+   * Rule 2 - ...
+   */
+  const duplicateKeys = validateUniqueInputKeysInLayout(pipelineInputLayout)
+
+  // If duplicates found, skip layout and return all inputs flat
+  if (validateUniqueInputKeysInLayout(pipelineInputLayout).length > 0) {
+    console.warn('Duplicate input keys detected in layout. Using flat input list instead. Keys:', duplicateKeys)
+
+    const fallbackInputs: IInputDefinition[] = []
+    forOwn(pipelineInputs, (value, key) => {
+      fallbackInputs.push(pipelineInput2FormInput(key, value, options))
+    })
+    return fallbackInputs
+  }
+
   const processedInputKeys = new Set<string>()
 
   function processLayout(layout: InputLayout): IInputDefinition[] {
@@ -26,15 +44,14 @@ export function pipelineInputs2FormInputs({
         return pipelineInput2FormInput(item, value, options)
       }
 
-      // Nested group
-      const groupInputs = processLayout(item.items)
-
       return {
         inputType: 'group',
-        path: '', // Will be resolved at runtime
+        path: '',
         label: item.title,
-        inputs: groupInputs,
-        ...(item.open !== undefined ? { default: { open: item.open } } : {})
+        inputs: processLayout(item.items),
+        inputConfig: {
+          autoExpandGroups: item.open
+        }
       }
     })
   }
@@ -49,6 +66,28 @@ export function pipelineInputs2FormInputs({
   })
 
   return [...inputsFromLayout, ...remainingInputs]
+}
+
+export function validateUniqueInputKeysInLayout(layout: InputLayout): string[] {
+  const inputOccurrences = new Map<string, number>()
+
+  function traverse(layout: InputLayout) {
+    layout.forEach(item => {
+      if (typeof item === 'string') {
+        inputOccurrences.set(item, (inputOccurrences.get(item) || 0) + 1)
+      } else {
+        traverse(item.items)
+      }
+    })
+  }
+
+  traverse(layout)
+
+  const duplicates = Array.from(inputOccurrences.entries())
+    .filter(([, count]) => count > 1)
+    .map(([key]) => key)
+
+  return duplicates
 }
 
 /** pipeline input to form input conversion */

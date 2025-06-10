@@ -60,7 +60,6 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
       <Drawer.Header>
         <Drawer.Title>Run Pipeline</Drawer.Title>
         <VisualYamlToggle
-          className="self-start"
           isYamlValid={isYamlSyntaxValid}
           view={view}
           setView={view => {

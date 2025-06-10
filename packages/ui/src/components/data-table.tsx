@@ -1,3 +1,4 @@
+import { Button, Checkbox, Icon, Pagination, PaginationProps, TableV2 } from '@/components'
 import {
   ColumnDef,
   ExpandedState,
@@ -12,12 +13,6 @@ import {
   useReactTable
 } from '@tanstack/react-table'
 import { cn } from '@utils/cn'
-
-import { Button } from './button'
-import { Checkbox } from './checkbox'
-import { Icon } from './icon'
-import { Pagination, PaginationProps } from './pagination/pagination'
-import { TableV2 } from './table-v2'
 
 export interface DataTableProps<TData> {
   data: TData[]

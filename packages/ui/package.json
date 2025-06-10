@@ -41,7 +41,8 @@
     "test:changed": "vitest --run --changed=origin/main",
     "typecheck": "tsc -b",
     "extract": "i18next --config './i18n.config.ts'",
-    "update:icons": "node scripts/icons.js"
+    "update:icons": "node scripts/icons.js",
+    "update:logos": "node scripts/logos.js"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",

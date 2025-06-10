@@ -42,7 +42,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
         className
       )}
     >
-      <FormInput.Select<ColorsEnum> options={options} {...selectProps} />
+      <FormInput.Select options={options} {...selectProps} />
 
       <FormInput.Text
         placeholder={

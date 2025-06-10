@@ -61,7 +61,6 @@ interface SelectProps<T = string>
   value?: T
   defaultValue?: T
   onChange?: (value: T) => void
-  onSelectedChange?: InputHTMLAttributes<HTMLInputElement>['onChange']
   onScrollEnd?: () => void
   isLoading?: boolean
   label?: string
@@ -114,7 +113,6 @@ function SelectInner<T = string>(
     value,
     defaultValue,
     onChange,
-    onSelectedChange,
     disabled,
     onScrollEnd,
     placeholder: _placeholder,
@@ -236,7 +234,7 @@ function SelectInner<T = string>(
       }
       onChange?.(optionValue)
 
-      if (onSelectedChange && hiddenInputRef.current) {
+      if (onChange && hiddenInputRef.current) {
         hiddenInputRef.current.value = String(optionValue)
         const event = new Event('change', { bubbles: true })
         hiddenInputRef.current.dispatchEvent(event)
@@ -245,7 +243,7 @@ function SelectInner<T = string>(
       setIsOpen(false)
       setSearchQuery('')
     },
-    [isControlled, onSelectedChange, onChange]
+    [isControlled, onChange]
   )
 
   const debouncedCheckScroll = useRef(
@@ -348,7 +346,7 @@ function SelectInner<T = string>(
         className="sr-only"
         name={name}
         value={String(selectedValue || '')}
-        onChange={onSelectedChange}
+        onChange={e => onChange?.(e.target.value as T)}
       />
 
       <DropdownMenu.Root

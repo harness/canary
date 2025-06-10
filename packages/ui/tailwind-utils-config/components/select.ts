@@ -10,14 +10,9 @@ function createSelectThemeStyles() {
       borderColor: `var(--cn-border-${theme})`,
       boxShadow: `var(--cn-ring-${theme})`,
 
-      '&:where(:hover)': {
+      '&:where(:hover), &:where(:focus)': {
         borderColor: `var(--cn-border-${theme})`,
         boxShadow: `var(--cn-ring-${theme}-hover)`
-      },
-
-      '&:where(:focus)': {
-        borderColor: `var(--cn-border-${theme})`,
-        boxShadow: `var(--cn-ring-${theme})`
       }
     }
   })
@@ -39,6 +34,7 @@ export default {
     backgroundColor: 'var(--cn-bg-2)',
     color: 'var(--cn-text-1)',
     textAlign: 'start',
+    '@apply transition-[box-shadow,border-color]': '',
 
     '&:focus-visible': {
       outline: 'none'
@@ -61,7 +57,7 @@ export default {
       }
     },
 
-    '&:where(:hover):not(:disabled):not(.cn-select-danger)': {
+    '&:where(:hover):not(:disabled)': {
       borderColor: 'var(--cn-border-1)'
     },
 

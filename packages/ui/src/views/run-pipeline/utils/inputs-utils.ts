@@ -67,6 +67,7 @@ const processLayout = (
       return pipelineInput2FormInput(item, pipelineInputs[item], options)
     }
 
+    // If group has no title, flatten its items
     if (!item.title && item.items && item.items.length > 0) {
       return processLayout(item.items, pipelineInputs, options, processedInputKeys)
     }

@@ -1,6 +1,7 @@
 export * from './alert'
 export * from './icon'
 export * from './icon-v2'
+export * from './logo-v2'
 export * from './button'
 export * from './more-submenu'
 export * from './settings-menu'

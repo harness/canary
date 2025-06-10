@@ -45,7 +45,7 @@ export function pipelineInputs2FormInputs({
       }
 
       // If group has no title, flatten its items
-      if (!item.title) {
+      if (!item.title && item.items && item.items.length > 0) {
         return processLayout(item.items)
       }
 

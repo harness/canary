@@ -202,7 +202,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{pure.black}",
           "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
         },
         "bg": {
@@ -212,12 +212,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.400}",
+          "$value": "{chrome.300}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.500}",
+          "$value": "{chrome.400}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },

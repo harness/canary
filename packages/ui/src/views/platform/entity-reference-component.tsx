@@ -24,7 +24,6 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   currentFolder: string | null
 
   // Callbacks
-  onSelectEntity: ((entity: T) => void) | ((entities: T[]) => void)
   onScopeChange: (direction: DirectionEnum) => void
   onFilterChange?: (filter: string) => void
 

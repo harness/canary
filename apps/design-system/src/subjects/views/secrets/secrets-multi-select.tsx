@@ -37,7 +37,6 @@ export const SecretsMultiSelectPage = () => {
   // Handlers for existing secrets
   const handleSelectSecret = (secret: SecretItem[]) => {
     setSelectedSecret(secret)
-    console.log('Selected secrets:', secret)
   }
 
   const handleScopeChange = (direction: DirectionEnum) => {
@@ -66,7 +65,6 @@ export const SecretsMultiSelectPage = () => {
   }
 
   const handleCancel = () => {
-    console.log('Cancelled')
     setIsDrawerOpen(false)
   }
 

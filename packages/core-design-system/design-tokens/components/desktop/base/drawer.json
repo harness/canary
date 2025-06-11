@@ -34,7 +34,7 @@
     },
     "fade-height": {
       "$type": "sizing",
-      "$value": "{drawer.container}"
+      "$value": "{size.8}"
     }
   }
 }

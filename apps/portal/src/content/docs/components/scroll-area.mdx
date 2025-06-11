@@ -42,7 +42,7 @@ return (
 
 ### Directions
 
-The `ScrollArea` component supports the `dir` prop to set the text direction. It accepts values like `ltr` (left-to-right) and `rtl` (right-to-left). The default value is `ltr`.
+The `ScrollArea` component supports the `direction` prop to set the text direction. It accepts values like `ltr` (left-to-right) and `rtl` (right-to-left). The default value is `ltr`.
 
 <DocsPage.ComponentExample
   client:only
@@ -64,7 +64,7 @@ The `ScrollArea` component supports the `dir` prop to set the text direction. It
     rtl:
   </Text>
   <ScrollArea
-    dir="rtl"
+    direction="rtl"
     orientation="both"
     className="w-[300px] h-[200px] border"
   >
@@ -135,7 +135,7 @@ The `ScrollArea` component also supports the `orientation` prop to control the s
       value: "ReactNode",
     },
     {
-      name: "dir",
+      name: "direction",
       description:
         "Sets the text direction for the scroll area. Defaults to 'ltr'.",
       required: false,
@@ -163,6 +163,17 @@ The `ScrollArea` component also supports the `orientation` prop to control the s
       required: false,
       defaultValue: "",
       value: "string",
+    },
+    {
+      name: "onScroll",
+      description: "Callback function triggered on scroll events.",
+      required: false,
+      value: `(position: {
+        isTop: boolean,
+        isBottom: boolean,
+        isLeft: boolean,
+        isRight: boolean
+      }) => void`,
     },
   ]}
 />

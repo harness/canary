@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
+import { Button, Checkbox, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
@@ -18,12 +18,13 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Data
   entities: T[]
   selectedEntity: T | null
+  selectedEntities?: T[]
   parentFolder: S | null
   childFolder: F | null
   currentFolder: string | null
 
   // Callbacks
-  onSelectEntity: (entity: T) => void
+  onSelectEntity: ((entity: T) => void) | ((entities: T[]) => void)
   onScopeChange: (direction: DirectionEnum) => void
   onFilterChange?: (filter: string) => void
 
@@ -31,6 +32,7 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   showFilter?: boolean
   showBreadcrumbEllipsis?: boolean
   filterTypes?: Record<string, string>
+  enableMultiSelect?: boolean
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -48,6 +50,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Data
   entities,
   selectedEntity,
+  selectedEntities = [],
   parentFolder,
   childFolder,
   currentFolder,
@@ -61,6 +64,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   showFilter = true,
   showBreadcrumbEllipsis = false,
   filterTypes,
+  enableMultiSelect = false,
 
   // Custom renderers
   renderEntity,
@@ -79,9 +83,20 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   })
   const handleSelectEntity = useCallback(
     (entity: T) => {
-      onSelectEntity?.(entity)
+      if (enableMultiSelect) {
+        const isEntitySelected = selectedEntities.some(item => item.id === entity.id);
+        const newSelectedEntities = isEntitySelected
+          ? selectedEntities.filter(item => item.id !== entity.id)
+          : [...selectedEntities, entity];
+        
+        // Cast to handle both function signatures
+        (onSelectEntity as (entities: T[]) => void)(newSelectedEntities);
+      } else {
+        // Cast to handle both function signatures
+        (onSelectEntity as (entity: T) => void)(entity);
+      }
     },
-    [onSelectEntity]
+    [onSelectEntity, enableMultiSelect, selectedEntities]
   )
 
   const handleScopeChange = useCallback(
@@ -91,21 +106,29 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     [onScopeChange]
   )
 
-  const defaultEntityRenderer = ({ entity, isSelected, onSelect }: EntityRendererProps<T>) => {
+  const defaultEntityRenderer = ({ entity, isSelected, onSelect, showCheckbox }: EntityRendererProps<T>) => {
     return (
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
         className={cn({ 'bg-cn-background-hover': isSelected })}
-        thumbnail={<IconV2 name="page" className="text-cn-foreground-3" />}
+        thumbnail={
+          showCheckbox ? (
+            <Checkbox checked={isSelected} onChange={() => onSelect?.(entity)} />
+          ) : (
+            <IconV2 name="page" className="text-cn-foreground-3" />
+          )
+        }
         actions={
-          <Button
-            size="sm"
-            onClick={() => {
-              onSelect?.(entity)
-            }}
-          >
-            Select
-          </Button>
+          !showCheckbox && (
+            <Button
+              size="sm"
+              onClick={() => {
+                onSelect?.(entity)
+              }}
+            >
+              Select
+            </Button>
+          )
         }
       >
         <StackedList.Field title={entity.name} />
@@ -164,6 +187,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
           <EntityReferenceList
             entities={entities}
             selectedEntity={selectedEntity}
+            selectedEntities={selectedEntities}
             parentFolder={parentFolder}
             childFolder={childFolder}
             currentFolder={currentFolder}
@@ -175,6 +199,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             childFolderRenderer={childFolderRenderer}
             apiError={apiError}
             showBreadcrumbEllipsis={showBreadcrumbEllipsis}
+            enableMultiSelect={enableMultiSelect}
           />
         )}
       </div>

@@ -14,6 +14,7 @@ import {
 export interface EntityReferenceListProps<T extends BaseEntityProps, S = string, F = string> {
   entities: T[]
   selectedEntity: T | null
+  selectedEntities?: T[]
   parentFolder: S | null
   childFolder: F | null
   currentFolder: string | null
@@ -25,11 +26,13 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
   apiError?: string | null
   showBreadcrumbEllipsis?: boolean
+  enableMultiSelect?: boolean
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
   entities,
   selectedEntity,
+  selectedEntities = [],
   parentFolder,
   childFolder,
   currentFolder,
@@ -40,7 +43,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   parentFolderRenderer,
   childFolderRenderer,
   apiError,
-  showBreadcrumbEllipsis = false
+  showBreadcrumbEllipsis = false,
+  enableMultiSelect = false
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
@@ -105,7 +109,9 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              const isSelected = entity.id === selectedEntity?.id
+              const isSelected = enableMultiSelect
+                ? selectedEntities.some(item => item.id === entity.id)
+                : entity.id === selectedEntity?.id
 
               return (
                 <Fragment key={entity.id}>
@@ -113,12 +119,14 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                     ? renderEntity({
                         entity,
                         isSelected,
-                        onSelect: () => handleSelectEntity(entity)
+                        onSelect: () => handleSelectEntity(entity),
+                        showCheckbox: enableMultiSelect
                       })
                     : defaultEntityRenderer({
                         entity,
                         isSelected,
-                        onSelect: () => handleSelectEntity(entity)
+                        onSelect: () => handleSelectEntity(entity),
+                        showCheckbox: enableMultiSelect
                       })}
                 </Fragment>
               )

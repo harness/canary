@@ -73,7 +73,7 @@
     "sub-item": {
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.2-half}"
       },
       "py": {
         "$type": "spacing",
@@ -93,17 +93,17 @@
         "$type": "spacing",
         "$value": "{spacing.half}"
       },
-      "px-1": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
-      },
-      "px-2": {
+      "px": {
         "$type": "spacing",
         "$value": "{spacing.4-half}"
       },
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1}"
+      },
+      "gap-container": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       }
     }
   }

@@ -212,9 +212,10 @@ class FigmaLogoDownloader {
                 name: 'g',
                 attributes: {
                   // viewport is 18x18, hence added translate(9, 9) to center the logo
-                  // scale(0.8) is used to scale the logo to 80% of its original size
+                  // scale(0.5625) is used to scale the logo to 56.25% of its original size,
+                  // which is 18px if svg is 32px
                   // translate(-9, -9) is used to center the logo after scaling
-                  transform: 'translate(9, 9) scale(0.8) translate(-9, -9)'
+                  transform: 'translate(9, 9) scale(0.5625) translate(-9, -9)'
                 },
                 children: existingChildren
               }
@@ -228,6 +229,8 @@ class FigmaLogoDownloader {
                   attributes: {
                     width: '100%',
                     height: '100%',
+                    rx: '2px',
+                    ry: '2px',
                     fill: fillColor
                   },
                   children: []

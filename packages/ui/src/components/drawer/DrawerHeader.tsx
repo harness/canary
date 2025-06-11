@@ -1,6 +1,6 @@
 import { Children, HTMLAttributes, ReactNode } from 'react'
 
-import { IconPropsV2, IconV2, Logo, LogoProps } from '@/components'
+import { IconV2, IconV2NamesType, LogoV2, LogoV2NamesType } from '@/components'
 import { cn, getComponentDisplayName } from '@/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -11,12 +11,12 @@ type DrawerHeaderBaseProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & 
 }
 
 type DrawerHeaderIconOnlyProps = {
-  icon: IconPropsV2['name']
+  icon: IconV2NamesType
   logo?: never
 }
 
 type DrawerHeaderLogoOnlyProps = {
-  logo: LogoProps['name']
+  logo: LogoV2NamesType
   icon?: never
 }
 
@@ -31,7 +31,7 @@ export type DrawerHeaderProps = DrawerHeaderBaseProps &
 export const DrawerHeader = ({ className, children, icon, logo, ...props }: DrawerHeaderProps) => {
   const IconOrLogoComp =
     (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} skipSize />) ||
-    (!!logo && <Logo className="cn-drawer-header-icon" name={logo} />) ||
+    (!!logo && <LogoV2 size="lg" className="cn-drawer-header-icon" name={logo} />) ||
     null
 
   const { titleChildren, otherChildren } = Children.toArray(children).reduce<{

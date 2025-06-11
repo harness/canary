@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
+import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorListItem } from '@/views/repo'
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
@@ -105,14 +105,16 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           </Dialog.Body>
 
           <Dialog.Footer>
-            <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
-              {t('views:repos.cancel', 'Cancel')}
-            </Dialog.Close>
-            <Button type="submit" disabled={isLoading} loading={isLoading}>
-              {isLoading
-                ? t('views:repos.creatingTagButton', 'Creating tag...')
-                : t('views:repos.createTagButton', 'Create tag')}
-            </Button>
+            <ButtonLayout>
+              <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
+                {t('views:repos.cancel', 'Cancel')}
+              </Dialog.Close>
+              <Button type="submit" disabled={isLoading} loading={isLoading}>
+                {isLoading
+                  ? t('views:repos.creatingTagButton', 'Creating tag...')
+                  : t('views:repos.createTagButton', 'Create tag')}
+              </Button>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

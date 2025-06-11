@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Dialog } from '@/components'
+import { Button, ButtonLayout, Dialog } from '@/components'
 
 export interface ExitConfirmOptions {
   title?: string
@@ -35,8 +35,10 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
           <Dialog.Description>{subtitle}</Dialog.Description>
         </Dialog.Header>
         <Dialog.Footer>
-          <Dialog.Close onClick={() => onCancel?.()}>{cancelText}</Dialog.Close>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+          <ButtonLayout>
+            <Dialog.Close onClick={() => onCancel?.()}>{cancelText}</Dialog.Close>
+            <Button onClick={onConfirm}>{confirmText}</Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

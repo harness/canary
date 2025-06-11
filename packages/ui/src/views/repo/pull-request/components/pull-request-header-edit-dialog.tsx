@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -112,10 +112,12 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           </Dialog.Body>
 
           <Dialog.Footer>
-            <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
-            <Button type="submit" disabled={isDisabled}>
-              {isLoading ? 'Saving...' : 'Save'}
-            </Button>
+            <ButtonLayout>
+              <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
+              <Button type="submit" disabled={isDisabled}>
+                {isLoading ? 'Saving...' : 'Save'}
+              </Button>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import {
   createEditUserSchema,
@@ -96,14 +96,16 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
         </Dialog.Body>
 
         <Dialog.Footer>
-          <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
-            {t('views:userManagement.cancel', 'Cancel')}
-          </Dialog.Close>
-          <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
-            {isUpdatingUser
-              ? t('views:userManagement.editUser.pending', 'Saving...')
-              : t('views:userManagement.editUser.save', 'Save')}
-          </Button>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
+              {t('views:userManagement.cancel', 'Cancel')}
+            </Dialog.Close>
+            <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
+              {isUpdatingUser
+                ? t('views:userManagement.editUser.pending', 'Saving...')
+                : t('views:userManagement.editUser.save', 'Save')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

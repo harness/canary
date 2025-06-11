@@ -1,4 +1,4 @@
-import { Button, ControlGroup, Dialog, Fieldset } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Dialog, Fieldset } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
@@ -69,23 +69,25 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
         </Dialog.Body>
 
         <Dialog.Footer>
-          <Dialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
-            {t('views:userManagement.cancel', 'Cancel')}
-          </Dialog.Close>
-          <Button
-            type="submit"
-            theme={isAdmin ? 'danger' : 'default'}
-            disabled={isUpdatingUserAdmin}
-            form="remove-admin-form"
-          >
-            {isUpdatingUserAdmin
-              ? isAdmin
-                ? t('views:userManagement.removeAdmin.pending', 'Removing admin...')
-                : t('views:userManagement.grantAdmin.pending', 'Granting admin...')
-              : isAdmin
-                ? t('views:userManagement.removeAdmin.confirm', 'Yes, remove admin')
-                : t('views:userManagement.grantAdmin.confirm', 'Yes, grant admin')}
-          </Button>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
+              {t('views:userManagement.cancel', 'Cancel')}
+            </Dialog.Close>
+            <Button
+              type="submit"
+              theme={isAdmin ? 'danger' : 'default'}
+              disabled={isUpdatingUserAdmin}
+              form="remove-admin-form"
+            >
+              {isUpdatingUserAdmin
+                ? isAdmin
+                  ? t('views:userManagement.removeAdmin.pending', 'Removing admin...')
+                  : t('views:userManagement.grantAdmin.pending', 'Granting admin...')
+                : isAdmin
+                  ? t('views:userManagement.removeAdmin.confirm', 'Yes, remove admin')
+                  : t('views:userManagement.grantAdmin.confirm', 'Yes, grant admin')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

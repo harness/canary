@@ -1,7 +1,17 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label } from '@/components'
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Dialog,
+  Fieldset,
+  FormInput,
+  FormWrapper,
+  Label
+} from '@/components'
 import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -115,12 +125,14 @@ export function CreateBranchDialog({
           </Dialog.Body>
 
           <Dialog.Footer>
-            <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
-              {t('views:repos.cancel', 'Cancel')}
-            </Dialog.Close>
-            <Button type="submit" disabled={isCreatingBranch}>
-              {t('views:repos.createBranchButton', 'Create branch')}
-            </Button>
+            <ButtonLayout>
+              <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+                {t('views:repos.cancel', 'Cancel')}
+              </Dialog.Close>
+              <Button type="submit" disabled={isCreatingBranch}>
+                {t('views:repos.createBranchButton', 'Create branch')}
+              </Button>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

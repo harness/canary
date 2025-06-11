@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   Button,
+  ButtonLayout,
   CommitToGitRefOption,
   ControlGroup,
   Dialog,
@@ -214,20 +215,22 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
         </Dialog.Body>
 
         <Dialog.Footer>
-          <Dialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
-            Cancel
-          </Dialog.Close>
-          {!bypassable ? (
-            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
-              {isSubmitting ? 'Committing...' : 'Commit changes'}
-            </Button>
-          ) : (
-            <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
-              {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
-                ? 'Bypass rules and commit via new branch'
-                : 'Bypass rules and commit directly'}
-            </Button>
-          )}
+          <ButtonLayout>
+            <Dialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
+              Cancel
+            </Dialog.Close>
+            {!bypassable ? (
+              <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
+                {isSubmitting ? 'Committing...' : 'Commit changes'}
+              </Button>
+            ) : (
+              <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
+                {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
+                  ? 'Bypass rules and commit via new branch'
+                  : 'Bypass rules and commit directly'}
+              </Button>
+            )}
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

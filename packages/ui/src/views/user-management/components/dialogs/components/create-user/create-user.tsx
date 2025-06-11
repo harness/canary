@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -73,14 +73,16 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
         </Dialog.Body>
 
         <Dialog.Footer>
-          <Dialog.Close onClick={onClose} disabled={isCreatingUser}>
-            {t('views:userManagement.cancel', 'Cancel')}
-          </Dialog.Close>
-          <Button type="submit" disabled={isCreatingUser} form="create-user-form">
-            {isCreatingUser
-              ? t('views:userManagement.createUser.inviting', 'Inviting...')
-              : t('views:userManagement.createUser.inviteNewUser', 'Invite new user')}
-          </Button>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose} disabled={isCreatingUser}>
+              {t('views:userManagement.cancel', 'Cancel')}
+            </Dialog.Close>
+            <Button type="submit" disabled={isCreatingUser} form="create-user-form">
+              {isCreatingUser
+                ? t('views:userManagement.createUser.inviting', 'Inviting...')
+                : t('views:userManagement.createUser.inviteNewUser', 'Invite new user')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

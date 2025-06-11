@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, Dialog, DropdownMenu, FormWrapper, Select, SelectValueOption } from '@/components'
+import { Alert, Button, ButtonLayout, Dialog, DropdownMenu, FormWrapper, Select, SelectValueOption } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
@@ -126,12 +126,14 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         </Dialog.Body>
 
         <Dialog.Footer>
-          <Dialog.Close onClick={onClose} loading={isInvitingMember}>
-            {t('views:repos.cancel', 'Cancel')}
-          </Dialog.Close>
-          <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
-            {t('views:projectSettings.addMember', 'Add member to this project')}
-          </Button>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose} loading={isInvitingMember}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Dialog.Close>
+            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
+              {t('views:projectSettings.addMember', 'Add member to this project')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

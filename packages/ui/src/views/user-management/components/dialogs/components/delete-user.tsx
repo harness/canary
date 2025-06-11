@@ -1,4 +1,4 @@
-import { Button, Dialog } from '@/components'
+import { Button, ButtonLayout, Dialog } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
@@ -51,15 +51,17 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
         </Dialog.Body>
 
         <Dialog.Footer>
-          {!isDeletingUser && (
-            <Dialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</Dialog.Close>
-          )}
+          <ButtonLayout>
+            {!isDeletingUser && (
+              <Dialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</Dialog.Close>
+            )}
 
-          <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
-            {isDeletingUser
-              ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
-              : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
-          </Button>
+            <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
+              {isDeletingUser
+                ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
+                : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

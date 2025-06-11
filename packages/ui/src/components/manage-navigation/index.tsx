@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, Dialog, IconV2, Text } from '@/components'
+import { Button, ButtonLayout, Dialog, IconV2, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -215,26 +215,28 @@ export const ManageNavigation = ({
         </Dialog.Body>
 
         <Dialog.Footer>
-          {!submitted ? (
-            <>
-              <Dialog.Close disabled={isSubmitting}>Cancel</Dialog.Close>
-              <Button type="button" variant="primary" onClick={onSubmit} disabled={isSubmitting}>
-                {isSubmitting ? 'Saving...' : 'Save'}
+          <ButtonLayout>
+            {!submitted ? (
+              <>
+                <Dialog.Close disabled={isSubmitting}>Cancel</Dialog.Close>
+                <Button type="button" variant="primary" onClick={onSubmit} disabled={isSubmitting}>
+                  {isSubmitting ? 'Saving...' : 'Save'}
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="ghost"
+                type="button"
+                size="sm"
+                theme="success"
+                className="pointer-events-none flex gap-2"
+                disabled={submitted}
+              >
+                Saved
+                <IconV2 name="check" size={14} />
               </Button>
-            </>
-          ) : (
-            <Button
-              variant="ghost"
-              type="button"
-              size="sm"
-              theme="success"
-              className="pointer-events-none flex gap-2"
-              disabled={submitted}
-            >
-              Saved
-              <IconV2 name="check" size={14} />
-            </Button>
-          )}
+            )}
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

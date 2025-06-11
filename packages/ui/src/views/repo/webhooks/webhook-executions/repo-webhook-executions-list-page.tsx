@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text } from '@/components'
+import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, TableV2 as Table, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { SandboxLayout, WebhookStore } from '@/views'
@@ -43,7 +43,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           <SkeletonList />
         ) : executions && executions.length > 0 ? (
           <>
-            <Table.Root variant="asStackedList">
+            <Table.Root variant="default" disableHighlightOnHover>
               <Table.Header>
                 <Table.Row>
                   <Table.Head>ID</Table.Head>

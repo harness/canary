@@ -84,7 +84,6 @@ export const SecretsMultiSelectPage = () => {
             name: secret.secret.name
           })) as SecretItem[]
         }
-        selectedEntity={null}
         selectedEntities={selectedSecret || []}
         onSelectEntity={handleSelectSecret}
         onScopeChange={handleScopeChange}

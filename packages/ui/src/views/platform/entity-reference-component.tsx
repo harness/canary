@@ -17,7 +17,7 @@ import {
 export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
   // Data
   entities: T[]
-  selectedEntity: T | null
+  selectedEntity?: T | null
   selectedEntities?: T[]
   parentFolder: S | null
   childFolder: F | null

@@ -86,6 +86,9 @@
     "inputLabel": "To confirm, type",
     "cancel": "Annuler"
   },
+  "dropdownMenu": {
+    "noOptions": "Aucune option disponible"
+  },
   "filter": {
     "delete": "Delete filter",
     "inputPlaceholder": "Filtrer par...",
@@ -116,6 +119,11 @@
     "author": "Auteur",
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
+  },
+  "select": {
+    "placeholder": "Sélectionnez une option",
+    "noResults": "Aucun résultat trouvé",
+    "noOptions": "Aucune option disponible"
   },
   "pagination": {
     "previous": "Précédent",

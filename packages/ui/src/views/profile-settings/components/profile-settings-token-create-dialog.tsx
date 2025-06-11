@@ -1,17 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ButtonLayout,
-  CopyButton,
-  Fieldset,
-  FormInput,
-  FormWrapper,
-  ModalDialog,
-  Select
-} from '@/components'
+import { Alert, Button, ButtonLayout, CopyButton, Fieldset, FormInput, FormWrapper, ModalDialog } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -70,7 +60,6 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
     formState: { errors, isValid }
   } = formMethods
 
-  const expirationValue = watch('lifetime')
   const identifier = watch('identifier')
 
   useEffect(() => {
@@ -86,10 +75,6 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
       setValue('token', createdTokenData.token)
     }
   }, [createdTokenData, setValue])
-
-  const handleSelectChange = (fieldName: keyof TokenFormType, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const handleFormSubmit: SubmitHandler<TokenFormType> = data => {
     handleCreateToken(data)
@@ -118,7 +103,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
         </ModalDialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
           <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+            <div className="mb-7 space-y-7">
               <Fieldset>
                 <FormInput.Text
                   id="identifier"
@@ -164,39 +149,27 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   </span>
                 </>
               ) : (
-                <>
-                  <Fieldset className="gap-y-0">
-                    <Select.Root
-                      value={expirationValue}
-                      onValueChange={value => handleSelectChange('lifetime', value)}
-                      label={t('views:profileSettings.expiration', 'Expiration')}
-                      placeholder={t('views:profileSettings.select', 'Select')}
-                      error={errors.lifetime?.message?.toString()}
-                    >
-                      <Select.Content>
-                        {expirationOptions.map(expirationOption => {
-                          return (
-                            <Select.Item key={expirationOption.value} value={expirationOption.value}>
-                              <span className="text-cn-foreground-1">{expirationOption.label}</span>
-                            </Select.Item>
-                          )
-                        })}
-                      </Select.Content>
-                    </Select.Root>
-                    {isValid && (
-                      <span className="mt-1.5 text-2 text-cn-foreground-3">
-                        {watch('lifetime') === 'never' ? (
-                          <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
-                        ) : (
-                          <span>
-                            {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
-                            {calculateExpirationDate(watch('lifetime'))}
-                          </span>
-                        )}
-                      </span>
-                    )}
-                  </Fieldset>
-                </>
+                <Fieldset className="gap-y-0">
+                  <FormInput.Select
+                    options={expirationOptions}
+                    {...register('lifetime')}
+                    label={t('views:profileSettings.expiration', 'Expiration')}
+                    placeholder={t('views:profileSettings.select', 'Select')}
+                  />
+
+                  {isValid && (
+                    <span className="mt-1.5 text-2 text-cn-foreground-3">
+                      {watch('lifetime') === 'never' ? (
+                        <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
+                      ) : (
+                        <span>
+                          {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
+                          {calculateExpirationDate(watch('lifetime'))}
+                        </span>
+                      )}
+                    </span>
+                  )}
+                </Fieldset>
               )}
               {error?.type === ApiErrorType.TokenCreate && (
                 <Alert.Root theme="danger">

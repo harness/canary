@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { IconV2, Popover, Select } from '@/components'
 import { cn } from '@utils/cn'
 
@@ -32,6 +34,8 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
     togglePane,
     problemsCount
   } = props
+
+  const branchOptions = useMemo(() => branches?.map(branch => ({ value: branch, label: branch })) ?? [], [branches])
 
   return (
     <footer
@@ -72,22 +76,20 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
             <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
           </div>
         </div>
-        {branchesLoading || branches || currentBranch ? (
+        {(branchesLoading || branches || currentBranch) && (
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
               <span className="text-[12px] text-cn-foreground-3">Branch:</span>
-              <Select.Root value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
-                <Select.Content>
-                  {branches?.map(branch => (
-                    <Select.Item key={branch} value={branch}>
-                      {branch}
-                    </Select.Item>
-                  ))}
-                </Select.Content>
-              </Select.Root>
+
+              <Select
+                options={branchOptions}
+                value={currentBranch}
+                disabled={branchesLoading}
+                onChange={onBranchChange}
+              />
             </div>
           </div>
-        ) : null}
+        )}
       </div>
       {committedTimeAgo && authorName && (
         <Popover.Root>

@@ -1,12 +1,29 @@
 import { FC, useEffect, useState } from 'react'
 
-import { getModeColorContrastFromFullTheme, Icon, ModalDialog, Select, Separator } from '@/components'
+import {
+  getModeColorContrastFromFullTheme,
+  Icon,
+  ModalDialog,
+  Select,
+  SelectValueOption,
+  Separator
+} from '@/components'
 import { ColorType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
 
 import { AccentColor, GrayColor, ThemeDialogProps } from './types'
+
+const contrastOptions: SelectValueOption<ContrastType>[] = Object.entries(ContrastType).map(([key, value]) => ({
+  label: key,
+  value
+}))
+
+const colorOptions: SelectValueOption<ColorType>[] = Object.entries(ColorType).map(([key, value]) => ({
+  label: key,
+  value
+}))
 
 const ThemeDialog: FC<ThemeDialogProps> = ({
   theme,
@@ -118,22 +135,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                       High contrast improves readability, Dimmer mode reduces glare.
                     </p>
                   </div>
-                  <Select.Root
-                    name="contrast"
+
+                  <Select
                     value={contrast}
-                    onValueChange={(value: ContrastType) => {
-                      setTheme(`${mode}-${colorAdjustment}-${value}`)
-                    }}
+                    options={contrastOptions}
+                    onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
                     placeholder="Select"
-                  >
-                    <Select.Content>
-                      {Object.entries(ContrastType).map(([key, value]) => (
-                        <Select.Item key={value} value={value}>
-                          {key}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
+                  />
                 </div>
 
                 <Separator className="h-px bg-cn-background-2" />
@@ -146,22 +154,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                       Adjust colors for different types of color blindness.
                     </p>
                   </div>
-                  <Select.Root
-                    name="color-adjustment"
+
+                  <Select
                     value={colorAdjustment}
-                    onValueChange={(value: ColorType) => {
-                      setTheme(`${mode}-${value}-${contrast}`)
-                    }}
+                    options={colorOptions}
+                    onChange={(value: ColorType) => setTheme(`${mode}-${value}-${contrast}`)}
                     placeholder="Select"
-                  >
-                    <Select.Content>
-                      {Object.entries(ColorType).map(([key, value]) => (
-                        <Select.Item key={value} value={value}>
-                          {key}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
+                  />
                 </div>
 
                 <Separator className="h-px bg-cn-background-2" />

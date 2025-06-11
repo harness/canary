@@ -4,10 +4,17 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { getTheme, Themes } from '@utils/theme-utils'
 import { clsx } from 'clsx'
 
-import { Button, IconV2, Select, Spacer } from '@harnessio/ui/components'
+import { Button, IconV2, Select, SelectGroupOption, SelectValueOption, Spacer } from '@harnessio/ui/components'
 
 import { viewPreviews } from './view-preview'
 import css from './view-settings.module.css'
+
+const themeOptions: SelectValueOption<Themes>[] = Object.values(Themes).map(theme => ({ label: theme, value: theme }))
+
+const viewOptions: SelectGroupOption[] = Object.entries(viewPreviews).map(([_, group]) => ({
+  label: group.label,
+  options: Object.entries(group.items).map(([path, { label }]) => ({ label, value: path }))
+}))
 
 export interface ViewSettingsProps {
   routes: string[]
@@ -55,30 +62,24 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
 
       {showSettings && (
         <>
-          <Select.Root placeholder="Select view" label="View" value={currentView} onValueChange={navigate}>
-            <Select.Content>
-              {Object.entries(viewPreviews).map(([groupKey, group]) => (
-                <Select.Group key={groupKey} title={group.label} className="pt-2 first:pt-0">
-                  <div className="text-cn-foreground-3 px-2 py-1.5 text-sm font-medium">{group.label}</div>
-                  {Object.entries(group.items).map(([path, { label }]) => (
-                    <Select.Item key={path} value={path}>
-                      {label}
-                    </Select.Item>
-                  ))}
-                </Select.Group>
-              ))}
-            </Select.Content>
-          </Select.Root>
+          <Select<string>
+            allowSearch
+            options={viewOptions}
+            label="View"
+            placeholder="Select view"
+            value={currentView}
+            onChange={navigate}
+          />
+
           <Spacer size={5} />
-          <Select.Root placeholder="Select theme" label="Theme" value={currentTheme} onValueChange={onValueChange}>
-            <Select.Content>
-              {Object.values(Themes).map(theme => (
-                <Select.Item key={theme} value={theme}>
-                  {theme}
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Root>
+
+          <Select<Themes>
+            options={themeOptions}
+            placeholder="Select theme"
+            label="Theme"
+            value={currentTheme}
+            onChange={onValueChange}
+          />
         </>
       )}
     </aside>

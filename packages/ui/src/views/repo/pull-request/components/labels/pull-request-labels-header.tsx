@@ -109,7 +109,7 @@ export const LabelsHeader = ({
 
   return (
     <article className="flex items-center justify-between">
-      <h5 className="text-2 text-cn-foreground-1 font-medium">{t('views:pullRequests.labels')}</h5>
+      <h5 className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.labels')}</h5>
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button, DropdownMenu, IconV2, StatusBadge, Link as StyledLink } from '@/components'
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
@@ -26,6 +26,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   currentBranchDivergence,
   refType = BranchSelectorTab.BRANCHES
 }) => {
+  const { t } = useTranslation()
   const { Link } = useRouterContext()
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
@@ -93,7 +94,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                 </StatusBadge>
                 .
                 <p className="text-2 text-cn-foreground-2 mt-2.5 leading-tight">
-                  Open a pull request to contribute your changes upstream.
+                  {t('views:repos.compareBranchesToSeeChanges', 'Compare branches to see your changes.')}
+                </p>
+                <p className="text-2 text-cn-foreground-2 mt-2.5 leading-tight">
+                  {t(
+                    'views:repos.afterComparingOpenPullRequest',
+                    'After comparing changes, you may open a pull request to contribute your changes upstream.'
+                  )}
                 </p>
               </div>
             </DropdownMenu.Slot>
@@ -103,14 +110,6 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                   to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
                 >
                   Compare
-                </Link>
-              </Button>
-
-              <Button className="w-full" asChild>
-                <Link
-                  to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
-                >
-                  Open pull request
                 </Link>
               </Button>
             </DropdownMenu.Slot>

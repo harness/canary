@@ -12,7 +12,10 @@ import {
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { IconV2 } from './icon-v2'
+import { Layout } from './layout'
 import { Link, type LinkProps } from './link'
+import { Tooltip, type TooltipProps } from './tooltip'
 
 const tableVariants = cva('cn-table-v2', {
   variants: {
@@ -97,8 +100,62 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
 })
 TableRow.displayName = 'TableRow'
 
-const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => <th ref={ref} className={cn('cn-table-v2-head', className)} {...props} />
+export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
+  /**
+   * Sort direction
+   */
+  sortDirection?: 'asc' | 'desc' | false
+  /**
+   * Whether the column is sortable
+   */
+  sortable?: boolean
+  /**
+   * Props for the tooltip component
+   */
+  tooltipProps?: Omit<TooltipProps, 'children'>
+}
+
+const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
+  ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
+    const childrenWithTooltip = tooltipProps?.content ? (
+      <Tooltip {...tooltipProps}>
+        <span className="underline decoration-dashed">{children}</span>
+      </Tooltip>
+    ) : (
+      children
+    )
+
+    const contentElement = (
+      // <div className="flex items-center gap-1">
+      <Layout.Flex direction="row" gap="xs" align="center">
+        {childrenWithTooltip}
+        {sortable && (
+          <span className="ml-1">
+            {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
+            {sortDirection === 'desc' && <IconV2 name="arrow-down" size={12} />}
+            {!sortDirection && <IconV2 name="sort-1" size={16} />}
+          </span>
+        )}
+      </Layout.Flex>
+      // </div>
+    )
+
+    return (
+      <th
+        ref={ref}
+        className={cn(
+          'cn-table-v2-head',
+          {
+            'cn-table-v2-head-sortable': sortable
+          },
+          className
+        )}
+        {...props}
+      >
+        {contentElement}
+      </th>
+    )
+  }
 )
 TableHead.displayName = 'TableHead'
 

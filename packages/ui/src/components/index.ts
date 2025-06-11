@@ -82,6 +82,7 @@ export * from './entity-form-layout'
 export * from './multi-select'
 export * from './card-select'
 export * from './table-v2'
+export * from './data-table'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

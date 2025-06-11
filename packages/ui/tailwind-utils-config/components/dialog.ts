@@ -20,8 +20,14 @@ export default {
     paddingRight: 'var(--cn-dialog-px)',
     gap: 'var(--cn-dialog-gap)',
     '@apply fixed left-1/2 top-1/2 z-50 flex flex-col translate-x-[-50%] translate-y-[-50%] min-h-0': '',
-    '@apply duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]':
+    '@apply duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95':
       '',
+    '&[data-state="open"]': {
+      animation: 'cnDialogSlideIn 0.2s ease-out forwards'
+    },
+    '&[data-state="closed"]': {
+      animation: 'cnDialogSlideOut 0.2s ease-in forwards'
+    },
 
     '&.cn-modal-dialog-sm': {
       width: `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-sm))`
@@ -118,6 +124,28 @@ export default {
   '.dialog': {
     '&-backdrop': {
       backgroundColor: 'var(--cn-comp-dialog-backdrop)'
+    }
+  },
+
+  // Slide in and slide out animations
+  '@keyframes cnDialogSlideIn': {
+    '0%': {
+      transform: 'translate(-50%, -48%)',
+      opacity: '0'
+    },
+    '100%': {
+      transform: 'translate(-50%, -50%)',
+      opacity: '1'
+    }
+  },
+  '@keyframes cnDialogSlideOut': {
+    '0%': {
+      transform: 'translate(-50%, -50%)',
+      opacity: '1'
+    },
+    '100%': {
+      transform: 'translate(-50%, -48%)',
+      opacity: '0'
     }
   }
 }

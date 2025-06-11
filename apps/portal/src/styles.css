@@ -1,5 +1,8 @@
 body {
   @apply text-cn-foreground-2 text-base overscroll-none !important;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: auto;
 }
 
 main {

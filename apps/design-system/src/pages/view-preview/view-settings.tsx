@@ -11,11 +11,6 @@ import css from './view-settings.module.css'
 
 const themeOptions: SelectValueOption<Themes>[] = Object.values(Themes).map(theme => ({ label: theme, value: theme }))
 
-const viewOptions: SelectGroupOption[] = Object.entries(viewPreviews).map(([_, group]) => ({
-  label: group.label,
-  options: Object.entries(group.items).map(([path, { label }]) => ({ label, value: path }))
-}))
-
 export interface ViewSettingsProps {
   routes: string[]
 }
@@ -23,6 +18,11 @@ export interface ViewSettingsProps {
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   const [showSettings, setShowSettings] = useState(false)
   const [currentTheme, setCurrentTheme] = useState<Themes>(getTheme())
+
+  const viewOptions: SelectGroupOption[] = Object.entries(viewPreviews).map(([_, group]) => ({
+    label: group.label,
+    options: Object.entries(group.items).map(([path, { label }]) => ({ label, value: path }))
+  }))
 
   useEffect(() => {
     const bodyClass = document.body.classList

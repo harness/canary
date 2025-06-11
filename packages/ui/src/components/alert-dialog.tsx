@@ -2,8 +2,8 @@ import { Children, createContext, isValidElement, ReactNode, useContext } from '
 
 import { Button, IconV2 } from '@/components'
 
+import { Dialog } from './dialog'
 import { Logo } from './logo'
-import { ModalDialog } from './modal-dialog'
 
 export type AlertDialogTheme = 'default' | 'warning' | 'danger'
 export type AlertDialogIcon = React.ComponentProps<typeof IconV2>['name']
@@ -39,14 +39,14 @@ const Root = ({
 }: AlertDialogProps) => {
   return (
     <AlertDialogContext.Provider value={{ onCancel, onConfirm, theme, loading }}>
-      <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Root open={open} onOpenChange={onOpenChange}>
         {children}
-      </ModalDialog.Root>
+      </Dialog.Root>
     </AlertDialogContext.Provider>
   )
 }
 
-const Trigger = ModalDialog.Trigger
+const Trigger = Dialog.Trigger
 
 interface ContentProps {
   title: string
@@ -77,8 +77,8 @@ const Content = ({ title, children }: ContentProps) => {
   })
 
   return (
-    <ModalDialog.Content>
-      <ModalDialog.Header
+    <Dialog.Content>
+      <Dialog.Header
         icon={
           context.theme === 'danger'
             ? 'cross-circle'
@@ -88,16 +88,16 @@ const Content = ({ title, children }: ContentProps) => {
         }
         theme={context.theme}
       >
-        <ModalDialog.Title>{title}</ModalDialog.Title>
-      </ModalDialog.Header>
+        <Dialog.Title>{title}</Dialog.Title>
+      </Dialog.Header>
 
-      <ModalDialog.Body>{otherChildren}</ModalDialog.Body>
+      <Dialog.Body>{otherChildren}</Dialog.Body>
 
-      <ModalDialog.Footer>
+      <Dialog.Footer>
         {cancelEl ?? <Cancel />}
         {confirmEl ?? <Confirm />}
-      </ModalDialog.Footer>
-    </ModalDialog.Content>
+      </Dialog.Footer>
+    </Dialog.Content>
   )
 }
 
@@ -106,11 +106,11 @@ const Cancel = ({ children = 'Cancel', ...props }: { children?: ReactNode }) => 
   if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
 
   return (
-    <ModalDialog.Close asChild>
+    <Dialog.Close asChild>
       <Button variant="secondary" loading={context.loading} onClick={context.onCancel} {...props}>
         {children}
       </Button>
-    </ModalDialog.Close>
+    </Dialog.Close>
   )
 }
 Cancel.displayName = 'AlertDialog.Cancel'

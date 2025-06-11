@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, CopyButton, Fieldset, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Alert, Button, ButtonLayout, CopyButton, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -96,13 +96,13 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content aria-describedby={undefined}>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <ModalDialog.Body>
+          <Dialog.Body>
             <div className="mb-7 space-y-7">
               <Fieldset>
                 <FormInput.Text
@@ -177,14 +177,14 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 </Alert.Root>
               )}
             </div>
-          </ModalDialog.Body>
-          <ModalDialog.Footer>
+          </Dialog.Body>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close onClick={onClose}>
+              <Dialog.Close onClick={onClose}>
                 {createdTokenData
                   ? t('views:profileSettings.gotItButton', 'Got it')
                   : t('views:profileSettings.cancel', 'Cancel')}
-              </ModalDialog.Close>
+              </Dialog.Close>
               {!createdTokenData && (
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading
@@ -193,9 +193,9 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 </Button>
               )}
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Fieldset, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import {
   createEditUserSchema,
@@ -44,15 +44,13 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
   }, [user, reset])
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title className="font-medium">
-            {t('views:userManagement.editUser.title', 'Update user')}
-          </ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title className="font-medium">{t('views:userManagement.editUser.title', 'Update user')}</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <span
             dangerouslySetInnerHTML={{
               __html: t(
@@ -95,21 +93,21 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
 
             {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={onClose} disabled={isUpdatingUser}>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
-            </ModalDialog.Close>
+            </Dialog.Close>
             <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
               {isUpdatingUser
                 ? t('views:userManagement.editUser.pending', 'Saving...')
                 : t('views:userManagement.editUser.save', 'Save')}
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

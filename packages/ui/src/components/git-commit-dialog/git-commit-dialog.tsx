@@ -6,6 +6,7 @@ import {
   ButtonLayout,
   CommitToGitRefOption,
   ControlGroup,
+  Dialog,
   FormInput,
   FormWrapper,
   GitCommitFormType,
@@ -13,7 +14,6 @@ import {
   Link,
   Message,
   MessageTheme,
-  ModalDialog,
   Radio,
   Tag
 } from '@/components'
@@ -123,13 +123,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   }
 
   return (
-    <ModalDialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Commit Changes</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             {isFileNameRequired && (
               <FormInput.Text
@@ -212,13 +212,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               )}
             </ControlGroup>
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
+            <Dialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
               Cancel
-            </ModalDialog.Close>
+            </Dialog.Close>
             {!bypassable ? (
               <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
@@ -231,8 +231,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </Button>
             )}
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Fieldset, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,13 +35,13 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:userManagement.createUser.title', 'Add a new user')}</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:userManagement.createUser.title', 'Add a new user')}</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} id="create-user-form">
             <Fieldset>
               <FormInput.Text
@@ -70,21 +70,21 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
 
             {createUserError && <span className="text-2 text-cn-foreground-danger">{createUserError}</span>}
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={onClose} disabled={isCreatingUser}>
+            <Dialog.Close onClick={onClose} disabled={isCreatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
-            </ModalDialog.Close>
+            </Dialog.Close>
             <Button type="submit" disabled={isCreatingUser} form="create-user-form">
               {isCreatingUser
                 ? t('views:userManagement.createUser.inviting', 'Inviting...')
                 : t('views:userManagement.createUser.inviteNewUser', 'Invite new user')}
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

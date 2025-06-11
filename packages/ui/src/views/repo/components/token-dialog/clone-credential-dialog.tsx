@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, CopyButton, ModalDialog, TextInput } from '@/components'
+import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -38,12 +38,12 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
     defaultValues: tokenData
   })
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</ModalDialog.Title>
-        </ModalDialog.Header>
-        <ModalDialog.Body>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
           <div className="flex flex-col gap-y-7">
             {/* NAME */}
 
@@ -77,17 +77,17 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
 
             <span>{t('views:repos.cloneCredGenerated')}</span>
           </div>
-        </ModalDialog.Body>
-        <ModalDialog.Footer>
+        </Dialog.Body>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={onClose}>Close</ModalDialog.Close>
+            <Dialog.Close onClick={onClose}>Close</Dialog.Close>
             <Button type="button" onClick={() => navigateToManageToken?.()}>
               {t('views:repos.manageAPIToken')}
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 

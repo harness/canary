@@ -5,10 +5,10 @@ import {
   Alert,
   Button,
   ButtonLayout,
+  Dialog,
   Fieldset,
   FormWrapper,
   Input,
-  ModalDialog,
   Select,
   SelectValueOption
 } from '@/components'
@@ -86,19 +86,19 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   }
 
   return (
-    <ModalDialog.Root
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         onClose()
         reset()
       }}
     >
-      <ModalDialog.Content aria-describedby={undefined}>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Create Pipeline</ModalDialog.Title>
-        </ModalDialog.Header>
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Header>
+          <Dialog.Title>Create Pipeline</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <ModalDialog.Body>
+          <Dialog.Body>
             <div className="mb-7 space-y-7">
               <Fieldset>
                 <Input
@@ -135,25 +135,25 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 </Alert.Root>
               )}
             </div>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close
+              <Dialog.Close
                 onClick={() => {
                   onCancel()
                   reset()
                 }}
               >
                 Cancel
-              </ModalDialog.Close>
+              </Dialog.Close>
               <Button type="submit" disabled={isLoadingBranchNames}>
                 Create Pipeline
               </Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

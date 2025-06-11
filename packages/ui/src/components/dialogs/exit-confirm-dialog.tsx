@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, ModalDialog } from '@/components'
+import { Button, ButtonLayout, Dialog } from '@/components'
 
 export interface ExitConfirmOptions {
   title?: string
@@ -23,24 +23,24 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
   cancelText = 'Stay'
 }) => {
   return (
-    <ModalDialog.Root
+    <Dialog.Root
       open={open}
       onOpenChange={open => {
         if (!open) onCancel?.()
       }}
     >
-      <ModalDialog.Content className="max-w-[500px]">
-        <ModalDialog.Header>
-          <ModalDialog.Title>{title}</ModalDialog.Title>
-          <ModalDialog.Description>{subtitle}</ModalDialog.Description>
-        </ModalDialog.Header>
-        <ModalDialog.Footer>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title>{title}</Dialog.Title>
+          <Dialog.Description>{subtitle}</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={() => onCancel?.()}>{cancelText}</ModalDialog.Close>
+            <Dialog.Close onClick={() => onCancel?.()}>{cancelText}</Dialog.Close>
             <Button onClick={onConfirm}>{confirmText}</Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

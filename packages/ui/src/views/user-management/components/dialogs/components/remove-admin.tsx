@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, ControlGroup, Fieldset, ModalDialog } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Dialog, Fieldset } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
@@ -25,10 +25,10 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>
             {isAdmin
               ? t('views:userManagement.removeAdmin.title', 'Are you sure you want to remove {name} as an admin?', {
                   name: user?.display_name
@@ -36,13 +36,13 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
               : t('views:userManagement.grantAdmin.title', 'Are you sure you want to grant {name} admin privileges?', {
                   name: user?.display_name
                 })}
-          </ModalDialog.Title>
-        </ModalDialog.Header>
+          </Dialog.Title>
+        </Dialog.Header>
 
         {/*  TODO: Design system: Update this example with FormWrapper
               Check whether form is required or not
          */}
-        <ModalDialog.Body>
+        <Dialog.Body>
           <form className="flex flex-col gap-y-7" onSubmit={handleSubmit} id="remove-admin-form">
             <Fieldset>
               <ControlGroup>
@@ -66,13 +66,13 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
 
             {updateUserAdminError && <span className="text-2 text-cn-foreground-danger">{updateUserAdminError}</span>}
           </form>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
               {t('views:userManagement.cancel', 'Cancel')}
-            </ModalDialog.Close>
+            </Dialog.Close>
             <Button
               type="submit"
               theme={isAdmin ? 'danger' : 'default'}
@@ -88,8 +88,8 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
                   : t('views:userManagement.grantAdmin.confirm', 'Yes, grant admin')}
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

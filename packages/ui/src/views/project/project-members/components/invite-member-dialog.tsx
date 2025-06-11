@@ -1,16 +1,7 @@
 import { FC, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ButtonLayout,
-  DropdownMenu,
-  FormWrapper,
-  ModalDialog,
-  Select,
-  SelectValueOption
-} from '@/components'
+import { Alert, Button, ButtonLayout, Dialog, DropdownMenu, FormWrapper, Select, SelectValueOption } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
@@ -81,13 +72,13 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:projectSettings.newMember', 'New member')}</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:projectSettings.newMember', 'New member')}</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             <Select
               options={memberOptions}
@@ -132,19 +123,19 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
               </Alert.Root>
             )}
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={onClose} loading={isInvitingMember}>
+            <Dialog.Close onClick={onClose} loading={isInvitingMember}>
               {t('views:repos.cancel', 'Cancel')}
-            </ModalDialog.Close>
+            </Dialog.Close>
             <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
               {t('views:projectSettings.addMember', 'Add member to this project')}
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

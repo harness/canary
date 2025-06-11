@@ -377,6 +377,7 @@ function SelectInner<T = string>(
                 onChange={setSearchQuery}
                 debounce={false}
                 autoFocus
+                onKeyDown={e => e.stopPropagation()}
               />
             </DropdownMenu.Header>
           )}

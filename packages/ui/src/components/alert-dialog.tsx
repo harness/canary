@@ -80,11 +80,7 @@ const Content = ({ title, children }: ContentProps) => {
     <Dialog.Content>
       <Dialog.Header
         icon={
-          context.theme === 'danger'
-            ? 'cross-circle'
-            : context.theme === 'warning'
-              ? 'warning-triangle-outline'
-              : undefined
+          context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
         }
         theme={context.theme}
       >

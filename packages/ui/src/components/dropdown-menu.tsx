@@ -4,13 +4,14 @@ import { usePortal, useTranslation } from '@/context'
 import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
-import { Logo, LogoProps } from '@components/logo'
 import { ScrollArea } from '@components/scroll-area'
 import { Text, TextProps } from '@components/text'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { omit } from 'lodash-es'
 
 import { IconPropsV2, IconV2 } from './icon-v2'
+import { LogoProps } from './logo'
+import { LogoV2, LogoV2NamesType } from './logo-v2'
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
@@ -328,13 +329,13 @@ const DropdownMenuAvatarItem = forwardRef<ElementRef<typeof DropdownMenuPrimitiv
 DropdownMenuAvatarItem.displayName = displayNames.avatarItem
 
 interface DropdownMenuLogoItemProps extends Omit<DropdownMenuItemProps, 'prefix'> {
-  logo: LogoProps['name']
-  original?: LogoProps['original']
+  logo: LogoV2NamesType
+  original?: LogoProps['origin']
 }
 
 const DropdownMenuLogoItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuLogoItemProps>(
   ({ logo, original, ...props }, ref) => (
-    <DropdownMenuItem ref={ref} {...props} prefix={<Logo size={20} name={logo} original={original} />} />
+    <DropdownMenuItem ref={ref} {...props} prefix={<LogoV2 size="lg" name={logo} origin={original} />} />
   )
 )
 DropdownMenuLogoItem.displayName = displayNames.logoItem

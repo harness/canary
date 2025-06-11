@@ -1,4 +1,4 @@
-import { IconV2, Logo } from '@/components'
+import { IconV2, LogoV2 } from '@/components'
 import { useTranslation } from '@/context'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
@@ -30,7 +30,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                 }}
               >
                 <StepsPaletteItemLayout.Left className="flex items-center">
-                  {logoName ? <Logo name={logoName} size={32} /> : <IconV2 name="connectors" size={30} />}
+                  {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size={30} />}
                 </StepsPaletteItemLayout.Left>
                 <StepsPaletteItemLayout.Right>
                   <StepsPaletteItemLayout.Header>

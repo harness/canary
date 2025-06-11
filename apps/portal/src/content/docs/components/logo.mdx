@@ -8,13 +8,35 @@ import { DocsPage } from "../../../components/docs-page";
 import { LogoV2, LogoNameMapV2 } from "@harnessio/ui/components";
 import CompactLogoV2Grid from "../../../components/CompactLogoV2Grid.astro";
 
+The `LogoV2` component contains logos of various brands and can be used as icons. It follows the brand guidelines to choose colors.
+
 ## Usage
 
 ```typescript jsx
-<LogoV2 name="kubernetes" size={48} />
+<LogoV2 name="node-js" size="lg" />
 ```
 
-## Logos
+<DocsPage.ComponentExample
+  client:only
+  code={`<LogoV2 name="node-js" size="lg" />`}
+/>
+
+## Sizes
+
+The `LogoV2` component can be sized using the `size` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
+  <LogoV2 name="node-js" size="lg" />
+  <LogoV2 name="node-js" size="md" />
+  <LogoV2 name="node-js" size="default" />
+  <LogoV2 name="node-js" size="sm" />
+  <LogoV2 name="node-js" size="xs" />
+  </Layout.Flex>
+  `}
+/>
 
 The following logos are available:
 
@@ -25,10 +47,8 @@ The following logos are available:
 ```typescript jsx
 <LogoV2
   name="logo-name"     // name of the logo
-  size={24}            // [OPTIONAL] size of the logo in pixels
+  size="default"       // [OPTIONAL] size variant of the logo
   className="my-class" // [OPTIONAL] custom class name
-  original             // [OPTIONAL] if false, the logo will use the current text color,
-                       // otherwise will use its brand-specific color
 />
 ```
 
@@ -42,10 +62,10 @@ The following logos are available:
     },
     {
       name: "size",
-      description: "Size of the logo in pixels",
+      description: "Size variant of the logo",
       required: false,
-      value: "number",
-      defaultValue: "24",
+      value: "'xs' | 'default' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'default'",
     },
     {
       name: "className",

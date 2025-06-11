@@ -1,26 +1,39 @@
 import { FC, SVGProps } from 'react'
 
+import { cn } from '@utils/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
+
 import { LogoNameMapV2 } from './logo-name-map'
 
+const logoVariants = cva('cn-logo', {
+  variants: {
+    size: {
+      xs: 'cn-logo-xs',
+      default: 'cn-logo-default',
+      sm: 'cn-logo-sm',
+      md: 'cn-logo-md',
+      lg: 'cn-logo-lg'
+    }
+  },
+  defaultVariants: {
+    size: 'default'
+  }
+})
+
+export type LogoV2NamesType = keyof typeof LogoNameMapV2
 export interface LogoPropsV2 extends SVGProps<SVGSVGElement> {
-  name: keyof typeof LogoNameMapV2
-  size?: number
+  name: LogoV2NamesType
+  size?: VariantProps<typeof logoVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
 }
 
-const LogoV2: FC<LogoPropsV2> = ({ name, size = 16, height, width, className, skipSize = false }) => {
+const LogoV2: FC<LogoPropsV2> = ({ name, size, className, skipSize = false }) => {
   const Component = LogoNameMapV2[name]
 
-  const sizeProps = skipSize
-    ? {}
-    : {
-        width: width || size,
-        height: height || size,
-        style: { minWidth: `${width || size}px`, minHeight: `${height || size}px` }
-      }
+  const sizeClasses = skipSize ? '' : logoVariants({ size })
 
-  return <Component className={className} {...sizeProps} />
+  return <Component className={cn(sizeClasses, className)} />
 }
 
 export { LogoV2 }

@@ -14,6 +14,7 @@ export interface EntityRendererProps<T extends BaseEntityProps> {
   entity: T
   isSelected: boolean
   onSelect: (entity: T) => void
+  showCheckbox?: boolean
 }
 
 export interface ParentFolderRendererProps<S = string> {

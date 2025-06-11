@@ -17,7 +17,7 @@ const DEFAULT_CONFIG = {
   FIGMA_TOKEN: process.env.FIGMA_TOKEN,
   FILE_ID: process.env.FIGMA_FILE_ID,
   PAGE_NAME: process.env.FIGMA_LOGO_PAGE_NAME,
-  OUTPUT_DIR: './src/components/logo-v2/logos',
+  OUTPUT_DIR: './src/components/logo/logos',
   FORMAT: 'svg', // 'svg', 'png', 'jpg', 'pdf'
   SCALE: 1, // Only for raster formats
   CONCURRENT_DOWNLOADS: 10
@@ -111,8 +111,6 @@ class FigmaLogoDownloader {
   }
 
   async downloadFile(url, filepath, fillColor) {
-    console.log('fillColor', fillColor)
-
     return new Promise((resolve, reject) => {
       let parsedUrl
 
@@ -346,7 +344,7 @@ class FigmaLogoDownloader {
 import {{ logo.componentName }} from './logos/{{ logo.filename }}'
 {%- endfor %}
 
-export const LogoNameMapV2 = {
+export const LogoNameMap = {
 {%- for logo in logos %}
   {% if logo.logoKey contains '-' %}'{{ logo.logoKey }}'{% else %}{{ logo.logoKey }}{% endif %}: {{ logo.componentName }}{%- unless forloop.last %},
 {%- endunless %}

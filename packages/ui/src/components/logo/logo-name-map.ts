@@ -62,7 +62,7 @@ import Terraform from './logos/terraform.svg'
 import Terragrunt from './logos/terragrunt.svg'
 import Zoom from './logos/zoom.svg'
 
-export const LogoNameMapV2 = {
+export const LogoNameMap = {
   android: Android,
   'app-dynamics': AppDynamics,
   argo: Argo,

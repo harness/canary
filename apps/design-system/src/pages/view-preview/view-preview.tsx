@@ -49,6 +49,7 @@ import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-we
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
 import { SecretInputExample } from '@subjects/views/secrets/secret-input'
 import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
+import { SecretsMultiSelectPage } from '@subjects/views/secrets/secrets-multi-select'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
@@ -528,6 +529,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'secrets-list-page': {
         label: 'Secrets List Page',
         element: <SecretsListPage />
+      },
+      'secrets-multi-select-page': {
+        label: 'Secrets Multi Select Page',
+        element: <SecretsMultiSelectPage />
       },
       'connectors-list-page': {
         label: 'Connectors List Page',

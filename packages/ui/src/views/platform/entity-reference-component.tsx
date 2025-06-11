@@ -84,16 +84,16 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
-        const isEntitySelected = selectedEntities.some(item => item.id === entity.id);
+        const isEntitySelected = selectedEntities.some(item => item.id === entity.id)
         const newSelectedEntities = isEntitySelected
           ? selectedEntities.filter(item => item.id !== entity.id)
-          : [...selectedEntities, entity];
-        
+          : [...selectedEntities, entity]
+
         // Cast to handle both function signatures
-        (onSelectEntity as (entities: T[]) => void)(newSelectedEntities);
+        ;(onSelectEntity as (entities: T[]) => void)(newSelectedEntities)
       } else {
         // Cast to handle both function signatures
-        (onSelectEntity as (entity: T) => void)(entity);
+        ;(onSelectEntity as (entity: T) => void)(entity)
       }
     },
     [onSelectEntity, enableMultiSelect, selectedEntities]
@@ -110,10 +110,10 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
-        className={cn({ 'bg-cn-background-hover': isSelected })}
+        className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={
           showCheckbox ? (
-            <Checkbox checked={isSelected} onChange={() => onSelect?.(entity)} />
+            <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} />
           ) : (
             <IconV2 name="page" className="text-cn-foreground-3" />
           )

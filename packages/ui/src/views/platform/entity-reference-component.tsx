@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, Checkbox, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
+import { Button, Checkbox, IconPropsV2, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
@@ -14,7 +14,7 @@ import {
   ParentFolderRendererProps
 } from './types'
 
-export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
+export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
   // Data
   entities: T[]
   selectedEntity: T | null
@@ -44,7 +44,26 @@ export interface EntityReferenceProps<T extends BaseEntityProps, S = string, F =
   // Search
   searchValue?: string
   handleChangeSearchValue: (val: string) => void
+
+  // Icons for default entity renderer
+  defaultRendererIcon?: IconPropsV2['name']
 }
+
+export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
+  extends CommonEntityReferenceProps<T, S, F> {
+  enableMultiSelect: false
+  onSelectEntity: (entity: T) => void
+}
+
+export interface MultiSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
+  extends CommonEntityReferenceProps<T, S, F> {
+  enableMultiSelect: true
+  onSelectEntity: (entities: T[]) => void
+}
+
+export type EntityReferenceProps<T extends BaseEntityProps, S = string, F = string> =
+  | SingleSelectEntityReferenceProps<T, S, F>
+  | MultiSelectEntityReferenceProps<T, S, F>
 
 export function EntityReference<T extends BaseEntityProps, S = string, F = string>({
   // Data
@@ -64,11 +83,14 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   showFilter = true,
   showBreadcrumbEllipsis = false,
   filterTypes,
-  enableMultiSelect = false,
+  enableMultiSelect,
 
   // Custom renderers
   renderEntity,
   isLoading = false,
+
+  // Icons for default entity renderer
+  defaultRendererIcon,
 
   // Error
   apiError,
@@ -88,12 +110,9 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         const newSelectedEntities = isEntitySelected
           ? selectedEntities.filter(item => item.id !== entity.id)
           : [...selectedEntities, entity]
-
-        // Cast to handle both function signatures
-        ;(onSelectEntity as (entities: T[]) => void)(newSelectedEntities)
+        onSelectEntity(newSelectedEntities)
       } else {
-        // Cast to handle both function signatures
-        ;(onSelectEntity as (entity: T) => void)(entity)
+        onSelectEntity(entity)
       }
     },
     [onSelectEntity, enableMultiSelect, selectedEntities]
@@ -115,7 +134,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
           showCheckbox ? (
             <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} />
           ) : (
-            <IconV2 name="page" className="text-cn-foreground-3" />
+            <IconV2 name={defaultRendererIcon ?? 'page'} className="text-cn-foreground-3" />
           )
         }
         actions={

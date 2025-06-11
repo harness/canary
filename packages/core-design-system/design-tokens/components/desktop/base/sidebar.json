@@ -104,6 +104,10 @@
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1}"
+      },
+      "gap-2": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       }
     }
   }

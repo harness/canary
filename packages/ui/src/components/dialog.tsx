@@ -1,6 +1,6 @@
 import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode } from 'react'
 
-import * as Dialog from '@radix-ui/react-dialog'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -36,37 +36,37 @@ const headerVariants = cva('cn-modal-dialog-header', {
   }
 })
 
-export type ModalDialogRootProps = Pick<Dialog.DialogProps, 'open' | 'onOpenChange' | 'children'>
+export type ModalDialogRootProps = Pick<DialogPrimitive.DialogProps, 'open' | 'onOpenChange' | 'children'>
 
 const Root = ({ children, ...props }: ModalDialogRootProps) => {
-  return <Dialog.Root {...props}>{children}</Dialog.Root>
+  return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
 }
 
-const Trigger = Dialog.Trigger
+const Trigger = DialogPrimitive.Trigger
 
-interface ContentProps extends Dialog.DialogContentProps, VariantProps<typeof contentVariants> {
+interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<typeof contentVariants> {
   size?: 'sm' | 'md' | 'lg'
   hideClose?: boolean
 }
 
 const Content = forwardRef<HTMLDivElement, ContentProps>(
   ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => (
-    <Dialog.Portal>
-      <Dialog.Overlay className="cn-modal-dialog-overlay" />
-      <Dialog.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
+    <DialogPrimitive.Portal>
+      <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
+      <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
         {!hideClose && (
-          <Dialog.Close asChild>
+          <DialogPrimitive.Close asChild>
             <Button variant="transparent" className="cn-modal-dialog-close">
               <IconV2 name="xmark" skipSize />
             </Button>
-          </Dialog.Close>
+          </DialogPrimitive.Close>
         )}
         {children}
-      </Dialog.Content>
-    </Dialog.Portal>
+      </DialogPrimitive.Content>
+    </DialogPrimitive.Portal>
   )
 )
-Content.displayName = 'ModalDialog.Content'
+Content.displayName = 'Dialog.Content'
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   icon?: React.ComponentProps<typeof Icon>['name']
@@ -76,7 +76,7 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 const Header = ({ className, icon, logo, theme = 'default', children, ...props }: HeaderProps) => {
   if (icon && logo) {
-    console.warn('ModalDialog.Header: Cannot use both icon and logo props together')
+    console.warn('Dialog.Header: Cannot use both icon and logo props together')
     return null
   }
 
@@ -115,11 +115,11 @@ const Header = ({ className, icon, logo, theme = 'default', children, ...props }
 }
 
 const Title = ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-  <Dialog.Title className={cn('cn-modal-dialog-title', className)} {...props} />
+  <DialogPrimitive.Title className={cn('cn-modal-dialog-title', className)} {...props} />
 )
 
 const Description = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-  <Dialog.Description className={cn('cn-modal-dialog-description', className)} {...props} />
+  <DialogPrimitive.Description className={cn('cn-modal-dialog-description', className)} {...props} />
 )
 
 interface BodyProps {
@@ -138,15 +138,15 @@ const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
 )
 
 const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className, ...props }, ref) => (
-  <Dialog.Close asChild>
+  <DialogPrimitive.Close asChild>
     <Button variant="secondary" className={className} {...props} ref={ref}>
       {children}
     </Button>
-  </Dialog.Close>
+  </DialogPrimitive.Close>
 ))
-Close.displayName = 'ModalDialog.Close'
+Close.displayName = 'Dialog.Close'
 
-const ModalDialog = {
+const Dialog = {
   Root,
   Trigger,
   Content,
@@ -158,4 +158,4 @@ const ModalDialog = {
   Footer
 }
 
-export { ModalDialog }
+export { Dialog }

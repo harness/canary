@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, CopyButton, Input, ModalDialog } from '@/components'
+import { Button, CopyButton, Dialog, Input } from '@/components'
 import { useTranslation } from '@/context'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { useStates } from '@views/user-management/providers/state-provider'
@@ -24,17 +24,17 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>
             {t('views:userManagement.resetPassword.title', 'Are you sure you want to reset password for {name}?', {
               name: user?.display_name || ''
             })}
-          </ModalDialog.Title>
-        </ModalDialog.Header>
+          </Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           {generatePassword ? (
             <span>
               {t(
@@ -65,23 +65,21 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
           )}
 
           {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
-          <ButtonLayout>
-            <ModalDialog.Close onClick={onClose} disabled={isUpdatingUser}>
-              {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
-            </ModalDialog.Close>
-            {!generatePassword && (
-              <Button type="button" onClick={onSubmit} disabled={isUpdatingUser}>
-                {isUpdatingUser
-                  ? t('views:userManagement.resetPassword.pending', 'Resetting Password...')
-                  : t('views:userManagement.resetPassword.confirm', 'Confirm')}
-              </Button>
-            )}
-          </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        <Dialog.Footer>
+          <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
+            {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
+          </Dialog.Close>
+          {!generatePassword && (
+            <Button type="button" onClick={onSubmit} disabled={isUpdatingUser}>
+              {isUpdatingUser
+                ? t('views:userManagement.resetPassword.pending', 'Resetting Password...')
+                : t('views:userManagement.resetPassword.confirm', 'Confirm')}
+            </Button>
+          )}
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

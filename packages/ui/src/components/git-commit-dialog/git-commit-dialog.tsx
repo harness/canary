@@ -3,9 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   Button,
-  ButtonLayout,
   CommitToGitRefOption,
   ControlGroup,
+  Dialog,
   FormInput,
   FormWrapper,
   GitCommitFormType,
@@ -13,7 +13,6 @@ import {
   Link,
   Message,
   MessageTheme,
-  ModalDialog,
   Radio,
   Tag
 } from '@/components'
@@ -123,13 +122,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   }
 
   return (
-    <ModalDialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Commit Changes</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             {isFileNameRequired && (
               <FormInput.Text
@@ -212,27 +211,25 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               )}
             </ControlGroup>
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
-          <ButtonLayout>
-            <ModalDialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
-              Cancel
-            </ModalDialog.Close>
-            {!bypassable ? (
-              <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
-                {isSubmitting ? 'Committing...' : 'Commit changes'}
-              </Button>
-            ) : (
-              <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
-                {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
-                  ? 'Bypass rules and commit via new branch'
-                  : 'Bypass rules and commit directly'}
-              </Button>
-            )}
-          </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        <Dialog.Footer>
+          <Dialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
+            Cancel
+          </Dialog.Close>
+          {!bypassable ? (
+            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
+              {isSubmitting ? 'Committing...' : 'Commit changes'}
+            </Button>
+          ) : (
+            <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
+              {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
+                ? 'Bypass rules and commit via new branch'
+                : 'Bypass rules and commit directly'}
+            </Button>
+          )}
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

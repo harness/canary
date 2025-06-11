@@ -2,10 +2,10 @@ import { ReactNode } from 'react'
 
 import { useTranslation } from '@/context'
 import { Button } from '@components/button'
+import { Dialog } from '@components/dialog'
 import { Icon } from '@components/icon'
 import { Layout } from '@components/layout'
 import { MarkdownViewer } from '@components/markdown-viewer'
-import { ModalDialog } from '@components/modal-dialog'
 import { Progress } from '@components/progress'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -69,11 +69,11 @@ export const ConnectorTestConnectionDialog = ({
     )
   }
   return (
-    <ModalDialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{title}</ModalDialog.Title>
-          <ModalDialog.Body>
+    <Dialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>{title}</Dialog.Title>
+          <Dialog.Body>
             <div className="gap-y-0.5">
               <div className="text-sm font-normal text-cn-foreground-4">
                 <Layout.Horizontal gap="xs" align="center">
@@ -151,9 +151,9 @@ ${JSON.stringify(errorData, null, 2)}
                 )}
               </div>
             </div>
-          </ModalDialog.Body>
-        </ModalDialog.Header>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+          </Dialog.Body>
+        </Dialog.Header>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

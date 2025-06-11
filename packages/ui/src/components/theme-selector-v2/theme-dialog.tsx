@@ -1,13 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import {
-  getModeColorContrastFromFullTheme,
-  Icon,
-  ModalDialog,
-  Select,
-  SelectValueOption,
-  Separator
-} from '@/components'
+import { Dialog, getModeColorContrastFromFullTheme, Icon, Select, SelectValueOption, Separator } from '@/components'
 import { ColorType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
@@ -62,13 +55,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   const isAccessibilityThemeEnabled = showAccessibilityThemeOptions
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
-      {!!children && <ModalDialog.Trigger asChild>{children}</ModalDialog.Trigger>}
-      <ModalDialog.Content size="md">
-        <ModalDialog.Header>
-          <ModalDialog.Title>Appearance settings</ModalDialog.Title>
-        </ModalDialog.Header>
-        <ModalDialog.Body>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
+      <Dialog.Content size="md">
+        <Dialog.Header>
+          <Dialog.Title>Appearance settings</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
           <div className="mt-1 flex flex-col gap-y-5">
             <div className="flex flex-col">
               <span className="text-3 font-medium text-cn-foreground-1">Mode</span>
@@ -235,9 +228,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               </>
             )}
           </div>
-        </ModalDialog.Body>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 

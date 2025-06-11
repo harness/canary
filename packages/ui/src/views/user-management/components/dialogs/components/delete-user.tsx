@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, ModalDialog } from '@/components'
+import { Button, Dialog } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
@@ -25,15 +25,15 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>
             {t('views:userManagement.deleteUser.title', 'Are you sure you want to delete {{name}}?', {
               name: user?.display_name
             })}
-          </ModalDialog.Title>
-          <ModalDialog.Description>
+          </Dialog.Title>
+          <Dialog.Description>
             <span
               dangerouslySetInnerHTML={{
                 __html: t(
@@ -43,27 +43,25 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
                 )
               }}
             />
-          </ModalDialog.Description>
-        </ModalDialog.Header>
+          </Dialog.Description>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
-          <ButtonLayout>
-            {!isDeletingUser && (
-              <ModalDialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</ModalDialog.Close>
-            )}
+        <Dialog.Footer>
+          {!isDeletingUser && (
+            <Dialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</Dialog.Close>
+          )}
 
-            <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
-              {isDeletingUser
-                ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
-                : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
-            </Button>
-          </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+          <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>
+            {isDeletingUser
+              ? t('views:userManagement.deleteUser.pending', 'Deleting user...')
+              : t('views:userManagement.deleteUser.confirm', 'Yes, delete user')}
+          </Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

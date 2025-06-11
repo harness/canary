@@ -1,17 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ButtonLayout,
-  Fieldset,
-  FormWrapper,
-  Input,
-  ModalDialog,
-  Select,
-  SelectValueOption
-} from '@/components'
+import { Alert, Button, Dialog, Fieldset, FormWrapper, Input, Select, SelectValueOption } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -86,19 +76,19 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   }
 
   return (
-    <ModalDialog.Root
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         onClose()
         reset()
       }}
     >
-      <ModalDialog.Content aria-describedby={undefined}>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Create Pipeline</ModalDialog.Title>
-        </ModalDialog.Header>
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Header>
+          <Dialog.Title>Create Pipeline</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <ModalDialog.Body>
+          <Dialog.Body>
             <div className="mb-7 space-y-7">
               <Fieldset>
                 <Input
@@ -135,25 +125,23 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 </Alert.Root>
               )}
             </div>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
-            <ButtonLayout>
-              <ModalDialog.Close
-                onClick={() => {
-                  onCancel()
-                  reset()
-                }}
-              >
-                Cancel
-              </ModalDialog.Close>
-              <Button type="submit" disabled={isLoadingBranchNames}>
-                Create Pipeline
-              </Button>
-            </ButtonLayout>
-          </ModalDialog.Footer>
+          <Dialog.Footer>
+            <Dialog.Close
+              onClick={() => {
+                onCancel()
+                reset()
+              }}
+            >
+              Cancel
+            </Dialog.Close>
+            <Button type="submit" disabled={isLoadingBranchNames}>
+              Create Pipeline
+            </Button>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

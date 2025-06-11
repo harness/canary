@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, ButtonLayout, IconV2, ModalDialog, Text } from '@/components'
+import { Button, Dialog, IconV2, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -114,17 +114,17 @@ export const ManageNavigation = ({
   )
 
   return (
-    <ModalDialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
-      <ModalDialog.Content className="h-[574px] max-h-[70vh]">
-        <ModalDialog.Header>
-          <ModalDialog.Title className="mb-4">Manage navigation</ModalDialog.Title>
+    <Dialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
+      <Dialog.Content className="h-[574px] max-h-[70vh]">
+        <Dialog.Header>
+          <Dialog.Title className="mb-4">Manage navigation</Dialog.Title>
           <ManageNavigationSearch
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
           />
-        </ModalDialog.Header>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <ManageNavigationSearch
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
@@ -212,33 +212,31 @@ export const ManageNavigation = ({
               </ul>
             </>
           )}
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
-          <ButtonLayout>
-            {!submitted ? (
-              <>
-                <ModalDialog.Close disabled={isSubmitting}>Cancel</ModalDialog.Close>
-                <Button type="button" variant="primary" onClick={onSubmit} disabled={isSubmitting}>
-                  {isSubmitting ? 'Saving...' : 'Save'}
-                </Button>
-              </>
-            ) : (
-              <Button
-                variant="ghost"
-                type="button"
-                size="sm"
-                theme="success"
-                className="pointer-events-none flex gap-2"
-                disabled={submitted}
-              >
-                Saved
-                <IconV2 name="check" size={14} />
+        <Dialog.Footer>
+          {!submitted ? (
+            <>
+              <Dialog.Close disabled={isSubmitting}>Cancel</Dialog.Close>
+              <Button type="button" variant="primary" onClick={onSubmit} disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : 'Save'}
               </Button>
-            )}
-          </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              type="button"
+              size="sm"
+              theme="success"
+              className="pointer-events-none flex gap-2"
+              disabled={submitted}
+            >
+              Saved
+              <IconV2 name="check" size={14} />
+            </Button>
+          )}
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

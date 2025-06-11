@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react'
 import { Avatar } from '@components/avatar'
 
 import { CardSelect } from '../card-select'
-import { ModalDialog } from '../modal-dialog'
+import { Dialog } from '../dialog'
 import { Language, LanguageCode, LanguageDialogProps, LanguageInterface } from './types'
 
 export const languages: LanguageInterface[] = [
@@ -31,13 +31,13 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
   }, [defaultLanguage, language])
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
-      {!!children && <ModalDialog.Trigger asChild>{children}</ModalDialog.Trigger>}
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title className="text-5 font-medium">Language</ModalDialog.Title>
-        </ModalDialog.Header>
-        <ModalDialog.Body>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title className="text-5 font-medium">Language</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
           <CardSelect.Root
             type="single"
             value={selectedLanguage}
@@ -59,9 +59,9 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               </CardSelect.Item>
             ))}
           </CardSelect.Root>
-        </ModalDialog.Body>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 

@@ -181,7 +181,6 @@ export const DataTableDemo: React.FC = () => {
           renderSubComponent={renderSubComponent}
           getRowCanExpand={(row: Row<User>) => row.original.status === 'active'}
           getRowCanSelect={(row: Row<User>) => row.original.status === 'active'}
-          // enableColumnResizing
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

@@ -69,9 +69,11 @@ export interface DataTableProps<TData> {
    */
   renderSubComponent?: (props: { row: Row<TData> }) => React.ReactNode
   /**
-   * Enable column resizing
+   * @internal
+   * Enable column resizing - NOT READY FOR PUBLIC USE
+   * This prop is for internal development only and should not be used
    */
-  enableColumnResizing?: boolean
+  _enableColumnResizing?: boolean
 }
 
 export function DataTable<TData>({
@@ -94,7 +96,7 @@ export function DataTable<TData>({
   currentExpanded,
   onExpandedChange: externalOnExpandedChange,
   renderSubComponent,
-  enableColumnResizing = false,
+  _enableColumnResizing = false,
   getRowId
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
@@ -193,7 +195,7 @@ export function DataTable<TData>({
       // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
       getRowCanExpand: enableExpanding ? getRowCanExpand || (() => true) : undefined,
       // Enable column resizing if specified
-      enableColumnResizing,
+      enableColumnResizing: _enableColumnResizing,
       columnResizeMode: 'onChange',
       // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
 
@@ -214,7 +216,7 @@ export function DataTable<TData>({
       enableExpanding,
       externalOnExpandedChange,
       getRowCanExpand,
-      enableColumnResizing,
+      _enableColumnResizing,
       currentSorting,
       currentRowSelection,
       currentExpanded
@@ -232,7 +234,7 @@ export function DataTable<TData>({
               {headerGroup.headers.map(header => (
                 <TableV2.Head
                   key={header.id}
-                  className={cn(enableColumnResizing ? 'relative' : undefined)}
+                  className={cn(_enableColumnResizing ? 'relative' : undefined)}
                   sortable={header.column.getCanSort()}
                   sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
                   onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
@@ -241,7 +243,7 @@ export function DataTable<TData>({
                   }}
                 >
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                  {enableColumnResizing && header.column.getCanResize() && (
+                  {_enableColumnResizing && header.column.getCanResize() && (
                     <button
                       type="button"
                       onMouseDown={header.getResizeHandler()}

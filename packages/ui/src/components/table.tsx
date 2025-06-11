@@ -123,4 +123,7 @@ const Table = {
   Caption: TableCaption
 }
 
+/**
+ * @deprecated Use TableV2 component instead. This component will be removed soon.
+ */
 export { Table }

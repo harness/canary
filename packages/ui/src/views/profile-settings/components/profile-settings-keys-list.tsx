@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, TableV2 as Table } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -18,7 +18,8 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="relaxed"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>

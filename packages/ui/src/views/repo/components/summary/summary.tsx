@@ -1,4 +1,4 @@
-import { Icon, Spacer, Table, Text } from '@/components'
+import { Icon, Spacer, TableV2 as Table, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
@@ -34,7 +34,7 @@ export const Summary = ({
         </>
       )}
 
-      <Table.Root variant="asStackedList">
+      <Table.Root variant="default" disableHighlightOnHover>
         {!hideHeader && (
           <Table.Header>
             <Table.Row>

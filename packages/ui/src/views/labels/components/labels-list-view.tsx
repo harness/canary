@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, NoData, Table } from '@/components'
+import { Icon, MoreActionsTooltip, NoData, TableV2 as Table } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelValuesType } from '@/views'
@@ -66,7 +66,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed" variant="asStackedList">
+    <Table.Root tableClassName="table-fixed" variant="default">
       <Table.Header>
         <Table.Row>
           <Table.Head className={cn('w-1/4', { 'w-4/12': isSmallWidth })}>
@@ -80,7 +80,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
         </Table.Row>
       </Table.Header>
 
-      <Table.Body hasHighlightOnHover>
+      <Table.Body>
         {labels.map(label => (
           <Table.Row key={label.id}>
             <Table.Cell className={cn('w-1/4 !py-3', { 'w-4/12': isSmallWidth })}>

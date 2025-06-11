@@ -6,7 +6,7 @@ import { cn } from '@/utils'
 import { InputFactory } from '@harnessio/forms'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
-import { VisualYamlToggle, VisualYamlValue } from '..'
+import { PipelineInputDefinition, VisualYamlToggle, VisualYamlValue } from '..'
 import RunPipelineFormInputs from './run-pipeline-from-inputs'
 import { type InputLayout } from './utils/types'
 
@@ -22,7 +22,7 @@ export interface RunPipelineDrawerProps {
   onCancel: () => void
   onClose?: () => void
   onRun: () => void
-  pipelineInputs: Record<string, unknown>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   inputComponentFactory: InputFactory
   theme: 'light' | 'dark'
   error?: { message?: string }

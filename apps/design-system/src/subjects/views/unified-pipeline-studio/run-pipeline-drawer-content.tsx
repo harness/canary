@@ -6,6 +6,7 @@ import {
   GroupFormInput,
   NumberFormInput,
   RunPipelineDrawerContent as RunPipelineDrawerContentView,
+  SelectFormInput,
   TextFormInput,
   VisualYamlValue,
   type InputLayout
@@ -17,6 +18,7 @@ inputComponentFactory.registerComponent(new TextFormInput())
 inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
 inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
 
 const pipelineInputs = {
   stringRequired: { type: 'string', required: true },
@@ -28,10 +30,46 @@ const pipelineInputs = {
   stringRequiredDefault: { type: 'string', required: true, default: 'Default value 2' },
   boolean: { type: 'boolean' },
   booleanDefaultTrue: { type: 'boolean', default: true },
-  booleanDefaultFalse: { type: 'boolean', default: false }
+  booleanDefaultFalse: { type: 'boolean', default: false },
+  stringWithUIbroken: {
+    type: 'string',
+    required: true,
+    oneOf: ['docker', 'kubernetes', 'helm'],
+    ui: {
+      widget: 'select',
+      options: ['docker', 'kubernetes', 'helm'],
+      placeholder: 'select a connector type',
+      tooltip: 'docker connector will be selected by default',
+      visible: true
+    }
+  },
+  stringWithUIworking: {
+    type: 'string',
+    required: true,
+    oneOf: ['docker', 'kubernetes', 'helm'],
+    default: 'docker',
+    ui: {
+      widget: 'select',
+      options: [
+        { label: 'docker', value: 'docker' },
+        { label: 'kubernetes', value: 'kubernetes' },
+        { label: 'helm', value: 'helm' }
+      ],
+      placeholder: 'select a connector type',
+      tooltip: 'docker connector will be selected by default',
+      visible: true
+    }
+  },
+  nonComponentFactory: {
+    type: 'non-component-factory',
+    required: true
+  }
 }
 
 const layout: InputLayout = [
+  'stringWithUIbroken',
+  'stringWithUIworking',
+  'nonComponentFactory',
   'stringRequired',
   {
     items: ['stringPattern', 'stringRequiredPattern']

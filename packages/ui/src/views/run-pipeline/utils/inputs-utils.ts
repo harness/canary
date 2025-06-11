@@ -2,7 +2,7 @@ import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { cloneDeep, forOwn } from 'lodash-es'
 import * as z from 'zod'
 
-import { IInputDefinition, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
+import { IInputDefinition, InputFactory, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 
 import { type InputLayout } from './types'
 
@@ -10,11 +10,13 @@ import { type InputLayout } from './types'
 export function pipelineInputs2FormInputs({
   pipelineInputs,
   options,
-  pipelineInputLayout = []
+  pipelineInputLayout = [],
+  inputComponentFactory
 }: {
   pipelineInputs: Record<string, any>
   options: { prefix?: string }
   pipelineInputLayout?: InputLayout
+  inputComponentFactory: InputFactory
 }): IInputDefinition[] {
   /**
    * Pre-process inputs for valid layout.
@@ -33,12 +35,18 @@ export function pipelineInputs2FormInputs({
   }
 
   const processedInputKeys = new Set<string>()
-  const inputsFromLayout = processLayout(pipelineInputLayout, pipelineInputs, options, processedInputKeys)
+  const inputsFromLayout = processLayout(
+    pipelineInputLayout,
+    pipelineInputs,
+    options,
+    processedInputKeys,
+    inputComponentFactory
+  )
 
   const remainingInputs: IInputDefinition[] = []
   forOwn(pipelineInputs, (value, key) => {
     if (!processedInputKeys.has(key)) {
-      remainingInputs.push(pipelineInput2FormInput(key, value, options))
+      remainingInputs.push(pipelineInput2FormInput(key, value, options, inputComponentFactory))
     }
   })
 
@@ -58,16 +66,17 @@ const processLayout = (
   layout: InputLayout,
   pipelineInputs: Record<string, any>,
   options: { prefix?: string },
-  processedInputKeys: Set<string>
+  processedInputKeys: Set<string>,
+  inputComponentFactory: InputFactory
 ): IInputDefinition[] => {
   return layout.flatMap(item => {
     if (typeof item === 'string') {
       if (processedInputKeys.has(item) || !(item in pipelineInputs)) return []
       processedInputKeys.add(item)
-      return pipelineInput2FormInput(item, pipelineInputs[item], options)
+      return pipelineInput2FormInput(item, pipelineInputs[item], options, inputComponentFactory)
     }
 
-    const layoutedInputs = processLayout(item.items, pipelineInputs, options, processedInputKeys)
+    const layoutedInputs = processLayout(item.items, pipelineInputs, options, processedInputKeys, inputComponentFactory)
 
     // If group has no title, flatten its items
     if (!item.title && item.items && item.items.length > 0) {
@@ -109,9 +118,10 @@ const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
 export function pipelineInput2FormInput(
   name: string,
   inputProps: Record<string, unknown>,
-  options: { prefix?: string }
+  options: { prefix?: string },
+  inputComponentFactory: InputFactory
 ): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
-  const inputType = pipelineInputType2FormInputType(inputProps.type as string)
+  const inputType = pipelineInputType2FormInputType(inputProps.type as string, inputProps?.ui, inputComponentFactory)
 
   return {
     inputType,
@@ -121,7 +131,8 @@ export function pipelineInput2FormInput(
     required: inputProps.required as boolean,
     inputConfig: {
       allowedValueTypes: ['fixed', 'runtime', 'expression'],
-      ...(inputProps.description ? { tooltip: inputProps.description as string } : {})
+      ...(inputProps.description ? { tooltip: inputProps.description as string } : {}),
+      ...(inputProps?.ui ? inputProps.ui : {})
     },
     outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'
@@ -141,13 +152,8 @@ export function pipelineInput2FormInput(
 }
 
 /** pipeline input type to form input type conversion */
-function pipelineInputType2FormInputType(type: string) {
-  switch (type) {
-    case 'string':
-      return 'text'
-    default:
-      return type
-  }
+function pipelineInputType2FormInputType(type: string, uiProps: any, inputComponentFactory: InputFactory): string {
+  return inputComponentFactory?.getComponent(uiProps?.widget || type)?.internalType ?? 'text'
 }
 
 export function pipelineInputs2JsonSchema(pipelineInputs: Record<string, any>): Record<string, any> {

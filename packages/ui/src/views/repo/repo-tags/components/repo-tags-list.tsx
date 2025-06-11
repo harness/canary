@@ -1,6 +1,14 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
+import {
+  Avatar,
+  CommitCopyActions,
+  MoreActionsTooltip,
+  NoData,
+  SkeletonTable,
+  TableV2 as Table,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
@@ -91,7 +99,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
+    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="default">
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
           <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>
@@ -103,7 +111,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         </Table.Row>
       </Table.Header>
 
-      <Table.Body hasHighlightOnHover>
+      <Table.Body>
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>

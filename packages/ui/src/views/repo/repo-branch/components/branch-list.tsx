@@ -10,7 +10,7 @@ import {
   NoData,
   SkeletonTable,
   StatusBadge,
-  Table,
+  TableV2 as Table,
   Tag
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -84,7 +84,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="compact"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>

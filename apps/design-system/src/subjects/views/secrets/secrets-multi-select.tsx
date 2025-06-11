@@ -6,7 +6,6 @@ import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harn
 import {
   DirectionEnum,
   EntityReference,
-  onSubmitSecretProps,
   SecretEntityFormHandle,
   SecretItem,
   SecretsHeader,
@@ -34,11 +33,6 @@ export const SecretsMultiSelectPage = () => {
   const [currentFolder, setCurrentFolder] = useState<string | null>(
     mockOrgData[0].organizationResponse.organization.identifier
   )
-
-  const onSubmit = (data: onSubmitSecretProps) => {
-    console.log('Submitted data:', data)
-    setIsDrawerOpen(false)
-  }
 
   // Handlers for existing secrets
   const handleSelectSecret = (secret: SecretItem[]) => {

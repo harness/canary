@@ -39,8 +39,7 @@ const pipelineInputs = {
       widget: 'select',
       options: ['docker', 'kubernetes', 'helm'],
       placeholder: 'select a connector type',
-      tooltip: 'docker connector will be selected by default',
-      visible: true
+      tooltip: 'docker connector will be selected by default'
     }
   },
   stringWithUIworking: {
@@ -56,8 +55,7 @@ const pipelineInputs = {
         { label: 'helm', value: 'helm' }
       ],
       placeholder: 'select a connector type',
-      tooltip: 'docker connector will be selected by default',
-      visible: true
+      tooltip: 'docker connector will be selected by default'
     }
   },
   nonComponentFactory: {

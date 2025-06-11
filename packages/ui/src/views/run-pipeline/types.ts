@@ -2,15 +2,7 @@ export interface PipelineInput {
   /**
    * Type defines the input type.
    */
-  type:
-    | 'string'
-    | 'number'
-    | 'boolean'
-    | 'array'
-    | 'duration'
-    | 'choice' // GitHub compatibility
-    | 'environment' // GitHub compatibility
-    | 'secret'
+  type: string
 
   /**
    * Description defines the input description.

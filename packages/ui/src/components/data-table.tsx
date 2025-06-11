@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Button, Checkbox, Icon, Pagination, PaginationProps, TableV2 } from '@/components'
 import {
   ColumnDef,
@@ -95,107 +97,129 @@ export function DataTable<TData>({
   enableColumnResizing = false,
   getRowId
 }: DataTableProps<TData>) {
-  // Start with the base columns
-  let tableColumns = [...columns]
+  const tableColumns = useMemo(() => {
+    // Start with the base columns
+    let cols = [...columns]
 
-  // If row selection is enabled, add a checkbox column at the beginning
-  if (enableRowSelection) {
-    tableColumns = [
-      {
-        id: 'select',
-        header: ({ table }: { table: Table<TData> }) => {
-          const handleToggleAll = () => {
-            table.toggleAllRowsSelected()
-          }
+    // If row selection is enabled, add a checkbox column at the beginning
+    if (enableRowSelection) {
+      cols = [
+        {
+          id: 'select',
+          header: ({ table }: { table: Table<TData> }) => {
+            const handleToggleAll = () => {
+              table.toggleAllRowsSelected()
+            }
 
-          return (
-            <Checkbox
-              checked={table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected()}
-              onCheckedChange={handleToggleAll}
-              aria-label="Select all rows"
-            />
-          )
+            return (
+              <Checkbox
+                checked={table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected()}
+                onCheckedChange={handleToggleAll}
+                aria-label="Select all rows"
+              />
+            )
+          },
+          cell: ({ row }: { row: Row<TData> }) => {
+            return (
+              <Checkbox
+                checked={row.getIsSelected()}
+                disabled={!row.getCanSelect()}
+                onCheckedChange={row.getToggleSelectedHandler()}
+                aria-label="Select row"
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              />
+            )
+          },
+          size: 20
         },
-        cell: ({ row }: { row: Row<TData> }) => {
-          return (
-            <Checkbox
-              checked={row.getIsSelected()}
-              disabled={!row.getCanSelect()}
-              onCheckedChange={row.getToggleSelectedHandler()}
-              aria-label="Select row"
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            />
-          )
-        },
-        size: 20
-      },
-      ...tableColumns
-    ]
-  }
-
-  // If expanding is enabled, add an expander column at the beginning
-  if (enableExpanding) {
-    tableColumns = [
-      {
-        id: 'expander',
-        header: () => null,
-        cell: ({ row }: { row: Row<TData> }) => {
-          return row.getCanExpand() ? (
-            <Button
-              onClick={e => {
-                e.stopPropagation()
-                row.toggleExpanded()
-              }}
-              aria-label="Toggle Row Expanded"
-              variant="ghost"
-              size="xs"
-              iconOnly
-              role="button"
-            >
-              <Icon name={row.getIsExpanded() ? 'chevron-down' : 'chevron-up'} size={12} />
-            </Button>
-          ) : null
-        },
-        size: 20
-      },
-      ...tableColumns
-    ]
-  }
-
-  const tableOptions: TableOptions<TData> = {
-    data,
-    columns: tableColumns,
-    getCoreRowModel: getCoreRowModel(),
-
-    getRowId: getRowId,
-    // Enable manual sorting (server-side sorting)
-    manualSorting: true,
-    // Use the external sorting change handler, we link it to the onSortingChange handler so we dont have to do shenannigans to figure out which column was clicked, and its sort state
-    //  React table gives it to us directly
-    onSortingChange: externalOnSortingChange,
-    // Enable row selection if specified
-    enableRowSelection: enableRowSelection ? getRowCanSelect || (() => true) : undefined,
-    // Handle row selection changes
-    onRowSelectionChange: externalOnRowSelectionChange,
-    // Enable row expansion if specified
-    enableExpanding,
-    // enable manual expansion
-    manualExpanding: true,
-    // Handle expanded state changes
-    onExpandedChange: externalOnExpandedChange,
-    // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
-    getRowCanExpand: enableExpanding ? getRowCanExpand || (() => true) : undefined,
-    // Enable column resizing if specified
-    enableColumnResizing,
-    columnResizeMode: 'onChange',
-    // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
-
-    state: {
-      sorting: currentSorting,
-      rowSelection: currentRowSelection || {},
-      expanded: currentExpanded || {}
+        ...cols
+      ]
     }
-  }
+
+    // If expanding is enabled, add an expander column at the beginning
+    if (enableExpanding) {
+      cols = [
+        {
+          id: 'expander',
+          header: () => null,
+          cell: ({ row }: { row: Row<TData> }) => {
+            return row.getCanExpand() ? (
+              <Button
+                onClick={e => {
+                  e.stopPropagation()
+                  row.toggleExpanded()
+                }}
+                aria-label="Toggle Row Expanded"
+                variant="ghost"
+                size="xs"
+                iconOnly
+                role="button"
+              >
+                <Icon name={row.getIsExpanded() ? 'chevron-down' : 'chevron-up'} size={12} />
+              </Button>
+            ) : null
+          },
+          size: 20
+        },
+        ...cols
+      ]
+    }
+
+    return cols
+  }, [columns, enableRowSelection, enableExpanding])
+
+  const tableOptions = useMemo<TableOptions<TData>>(
+    () => ({
+      data,
+      columns: tableColumns,
+      getCoreRowModel: getCoreRowModel(),
+
+      getRowId: getRowId,
+      // Enable manual sorting (server-side sorting)
+      manualSorting: true,
+      // Use the external sorting change handler, we link it to the onSortingChange handler so we dont have to do shenannigans to figure out which column was clicked, and its sort state
+      //  React table gives it to us directly
+      onSortingChange: externalOnSortingChange,
+      // Enable row selection if specified
+      enableRowSelection: enableRowSelection ? getRowCanSelect || (() => true) : undefined,
+      // Handle row selection changes
+      onRowSelectionChange: externalOnRowSelectionChange,
+      // Enable row expansion if specified
+      enableExpanding,
+      // enable manual expansion
+      manualExpanding: true,
+      // Handle expanded state changes
+      onExpandedChange: externalOnExpandedChange,
+      // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
+      getRowCanExpand: enableExpanding ? getRowCanExpand || (() => true) : undefined,
+      // Enable column resizing if specified
+      enableColumnResizing,
+      columnResizeMode: 'onChange',
+      // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
+
+      state: {
+        sorting: currentSorting,
+        rowSelection: currentRowSelection || {},
+        expanded: currentExpanded || {}
+      }
+    }),
+    [
+      data,
+      tableColumns,
+      getRowId,
+      externalOnSortingChange,
+      enableRowSelection,
+      getRowCanSelect,
+      externalOnRowSelectionChange,
+      enableExpanding,
+      externalOnExpandedChange,
+      getRowCanExpand,
+      enableColumnResizing,
+      currentSorting,
+      currentRowSelection,
+      currentExpanded
+    ]
+  )
 
   const table = useReactTable(tableOptions)
 

@@ -13,6 +13,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2 } from './icon-v2'
+import { Layout } from './layout'
 import { Link, type LinkProps } from './link'
 import { Tooltip, type TooltipProps } from './tooltip'
 
@@ -118,14 +119,15 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
   ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
     const childrenWithTooltip = tooltipProps?.content ? (
       <Tooltip {...tooltipProps}>
-        <span className="border-b border-dashed">{children}</span>
+        <span className="underline decoration-dashed">{children}</span>
       </Tooltip>
     ) : (
       children
     )
 
     const contentElement = (
-      <div className="flex items-center gap-1">
+      // <div className="flex items-center gap-1">
+      <Layout.Flex direction="row" gap="xs" align="center">
         {childrenWithTooltip}
         {sortable && (
           <span className="ml-1">
@@ -134,7 +136,8 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
             {!sortDirection && <IconV2 name="sort-1" size={16} />}
           </span>
         )}
-      </div>
+      </Layout.Flex>
+      // </div>
     )
 
     return (

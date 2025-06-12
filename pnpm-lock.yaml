@@ -812,6 +812,9 @@ importers:
       input-otp:
         specifier: ^1.2.4
         version: 1.4.2(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      jexl:
+        specifier: ^2.3.0
+        version: 2.3.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -918,9 +921,6 @@ importers:
       i18next-parser:
         specifier: ^9.0.2
         version: 9.3.0
-      jexl:
-        specifier: ^2.3.0
-        version: 2.3.0
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1

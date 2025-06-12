@@ -17,11 +17,11 @@ import {
 export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
   // Data
   entities: T[]
-  selectedEntity?: T | null
-  selectedEntities?: T[]
   parentFolder: S | null
   childFolder: F | null
   currentFolder: string | null
+  selectedEntity?: T | null
+  selectedEntities?: T[]
 
   // Callbacks
   onScopeChange: (direction: DirectionEnum) => void
@@ -31,7 +31,6 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   showFilter?: boolean
   showBreadcrumbEllipsis?: boolean
   filterTypes?: Record<string, string>
-  enableMultiSelect?: boolean
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -46,12 +45,14 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
 
   // Icons for default entity renderer
   icon?: IconPropsV2['name']
+
+  // Custom entity comparison
+  isEntityEqual?: (entity1: T, entity2: T) => boolean
 }
 
 export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
   extends CommonEntityReferenceProps<T, S, F> {
-  enableMultiSelect: false
-  selectedEntity: T | null
+  enableMultiSelect?: false
   onSelectEntity: (entity: T) => void
 }
 
@@ -97,7 +98,10 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   // Search
   searchValue = '',
-  handleChangeSearchValue
+  handleChangeSearchValue,
+
+  // Custom entity comparison
+  isEntityEqual
 }: EntityReferenceProps<T, S, F>): JSX.Element {
   const { search, handleSearchChange } = useDebounceSearch({
     handleChangeSearchValue,
@@ -106,16 +110,22 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
-        const isEntitySelected = selectedEntities.some(item => item.id === entity.id)
+        const defaultIsEqual = (item: T, entity: T) => {
+          return item.id === entity.id
+        }
+
+        const compareEntities = isEntityEqual ?? defaultIsEqual
+
+        const isEntitySelected = selectedEntities.some(item => compareEntities(item, entity))
         const newSelectedEntities = isEntitySelected
-          ? selectedEntities.filter(item => item.id !== entity.id)
+          ? selectedEntities.filter(item => !compareEntities(item, entity))
           : [...selectedEntities, entity]
         onSelectEntity(newSelectedEntities)
       } else {
         onSelectEntity(entity)
       }
     },
-    [onSelectEntity, enableMultiSelect, selectedEntities]
+    [onSelectEntity, enableMultiSelect, selectedEntities, currentFolder, isEntityEqual]
   )
 
   const handleScopeChange = useCallback(

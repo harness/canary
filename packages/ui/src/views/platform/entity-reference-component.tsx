@@ -9,6 +9,7 @@ import { EntityReferenceList } from './entity-reference-list'
 import {
   BaseEntityProps,
   ChildFolderRendererProps,
+  defaultEntityComparator,
   DirectionEnum,
   EntityRendererProps,
   ParentFolderRendererProps
@@ -47,7 +48,7 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   icon?: IconPropsV2['name']
 
   // Custom entity comparison
-  isEntityEqual?: (entity1: T, entity2: T) => boolean
+  compareFn?: (entity1: T, entity2: T) => boolean
 }
 
 export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
@@ -101,7 +102,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   handleChangeSearchValue,
 
   // Custom entity comparison
-  isEntityEqual
+  compareFn
 }: EntityReferenceProps<T, S, F>): JSX.Element {
   const { search, handleSearchChange } = useDebounceSearch({
     handleChangeSearchValue,
@@ -110,22 +111,21 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
-        const defaultIsEqual = (item: T, entity: T) => {
-          return item.id === entity.id && entity.folderPath === item.folderPath
-        }
+        // Use either the custom comparator or the default one
+        const compareEntities = compareFn || defaultEntityComparator
 
-        const compareEntities = isEntityEqual ?? defaultIsEqual
-
+        // Handle entity selection logic
         const isEntitySelected = selectedEntities.some(item => compareEntities(item, entity))
         const newSelectedEntities = isEntitySelected
           ? selectedEntities.filter(item => !compareEntities(item, entity))
           : [...selectedEntities, entity]
+
         onSelectEntity(newSelectedEntities)
       } else {
         onSelectEntity(entity)
       }
     },
-    [onSelectEntity, enableMultiSelect, selectedEntities, isEntityEqual]
+    [onSelectEntity, enableMultiSelect, selectedEntities, compareFn]
   )
 
   const handleScopeChange = useCallback(
@@ -229,7 +229,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             apiError={apiError}
             showBreadcrumbEllipsis={showBreadcrumbEllipsis}
             enableMultiSelect={enableMultiSelect}
-            isEntityEqual={isEntityEqual}
+            compareFn={compareFn}
           />
         )}
       </div>

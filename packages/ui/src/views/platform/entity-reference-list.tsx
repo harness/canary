@@ -6,6 +6,7 @@ import { cn } from '@utils/cn'
 import {
   BaseEntityProps,
   ChildFolderRendererProps,
+  defaultEntityComparator,
   DirectionEnum,
   EntityRendererProps,
   ParentFolderRendererProps
@@ -27,7 +28,7 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   apiError?: string | null
   showBreadcrumbEllipsis?: boolean
   enableMultiSelect?: boolean
-  isEntityEqual?: (entity1: T, entity2: T) => boolean
+  compareFn?: (entity1: T, entity2: T) => boolean
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
@@ -46,7 +47,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   apiError,
   showBreadcrumbEllipsis = false,
   enableMultiSelect = false,
-  isEntityEqual
+  compareFn
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
@@ -111,11 +112,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              const defaultIsEqual = (item: T, entity: T) => {
-                return item.id === entity.id && entity.folderPath === item.folderPath
-              }
-
-              const compareEntities = isEntityEqual || defaultIsEqual
+              // Use either the custom comparator or the default one
+              const compareEntities = compareFn || defaultEntityComparator
 
               const isSelected = enableMultiSelect
                 ? selectedEntities.some(item => compareEntities(item, entity))

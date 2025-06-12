@@ -140,7 +140,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     <IconV2 name="nav-arrow-down" size={14} />
                   </Button>
                 </div>
-                <div className="border-inherit">{suffix}</div>
+                {suffix ? <div className="border-inherit">{suffix}</div> : null}
               </div>
             )
           }

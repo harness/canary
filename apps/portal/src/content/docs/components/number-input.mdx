@@ -107,6 +107,16 @@ import { DocsPage } from "@/components/docs-page";
     optional={true} 
   />
   
+  {/* With Suffix */}
+  <NumberInput 
+    id="suffix-input" 
+    label="Suffix Input" 
+    suffix={<Button variant="outline" iconOnly className="cn-input-suffix">
+      <Icon name="chevron-right" size={14} />
+    </Button>}
+    theme="warning"
+  />
+  
   {/* Without Stepper UI */}
   <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
   <NumberInput 

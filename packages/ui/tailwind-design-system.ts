@@ -33,7 +33,8 @@ import {
   tableV2Styles,
   tagStyles,
   textareaStyles,
-  tooltipStyles
+  tooltipStyles,
+  buttonGroupStyle
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -468,6 +469,7 @@ export default {
         tooltipStyles,
         breadcrumbStyles,
         iconsAndLogos,
+        buttonGroupStyle,
 
         // Form styles
         selectStyles,

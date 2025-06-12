@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { InputFactory } from '@harnessio/forms'
 import {
   BooleanFormInput,
+  CalendarInput,
   GroupFormInput,
   NumberFormInput,
   RunPipelineDrawerContent as RunPipelineDrawerContentView,
@@ -19,6 +20,7 @@ inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
 inputComponentFactory.registerComponent(new GroupFormInput())
 inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new CalendarInput())
 
 const pipelineInputs = {
   stringRequired: { type: 'string', required: true },
@@ -38,14 +40,14 @@ const pipelineInputs = {
       widget: 'non-component-factory'
     }
   },
-  stringSelectWithoutDefaultUI: {
+  stringCalendarUI: {
     type: 'string',
     required: true,
-    options: ['docker', 'kubernetes', 'helm'],
     ui: {
-      widget: 'select',
-      placeholder: 'select a connector type',
-      tooltip: 'docker connector will be selected by default'
+      widget: 'calendar',
+      placeholder: 'select a date',
+      tooltip: 'todays date will be selected by default',
+      visible: `stringSelectWithDefaultUI=='kubernetes'`
     }
   },
   stringSelectWithDefaultUI: {
@@ -62,8 +64,8 @@ const pipelineInputs = {
 }
 
 const layout: InputLayout = [
-  'stringSelectWithoutDefaultUI',
   'stringSelectWithDefaultUI',
+  'stringCalendarUI',
   'nonComponentFactory',
   'stringRequired',
   {

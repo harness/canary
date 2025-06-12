@@ -32,7 +32,7 @@
 
 @layer base {
   html {
-    @apply text-base antialiased;
+    @apply text-base;
   }
 
   body {

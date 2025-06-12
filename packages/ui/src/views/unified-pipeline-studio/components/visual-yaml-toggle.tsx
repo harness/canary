@@ -1,4 +1,4 @@
-import { Icon, ToggleGroup } from '@/components'
+import { IconV2, ToggleGroup } from '@/components'
 
 export type VisualYamlValue = 'visual' | 'yaml'
 
@@ -19,7 +19,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
   return (
     <ToggleGroup.Root variant="ghost-secondary" onValueChange={onChange} value={view} size="xs" unselectable>
       <ToggleGroup.Item disabled={!isYamlValid} value="visual">
-        {!isYamlValid && <Icon name="fail-legacy" className="text-cn-foreground-danger" />}
+        {!isYamlValid && <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />}
         Visual
       </ToggleGroup.Item>
       <ToggleGroup.Item value="yaml">YAML</ToggleGroup.Item>

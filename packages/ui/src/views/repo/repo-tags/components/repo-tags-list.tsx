@@ -54,7 +54,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   if (!isLoading && !tagsList?.length) {
     return (
       <NoData
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
+        name={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
         withBorder={isDirtyList}
         title={isDirtyList ? t('views:noData.noResults', 'No search results') : t('views:noData.noTags', 'No tags yet')}
         description={

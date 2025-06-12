@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon, Tag } from '@/components'
+import { IconV2, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -41,7 +41,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
         <div className="flex items-center gap-0.5">
-          <Icon className="text-icons-1" size={12} name="tasks" />
+          <IconV2 className="text-icons-1" size={12} name="tasks" />
           <p>
             {tasks} task{tasks === 1 ? '' : 's'}
           </p>

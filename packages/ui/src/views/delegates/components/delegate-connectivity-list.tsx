@@ -1,4 +1,4 @@
-import { Icon, IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
@@ -26,7 +26,7 @@ export function DelegateConnectivityList({
     return (
       <NoData
         withBorder
-        iconName="no-data-cog"
+        name="no-data-cog"
         title={t('views:noData.noDelegates', 'No delegates yet')}
         description={[t('views:noData.noDelegates', 'There are no delegates in this project yet.')]}
       />
@@ -68,8 +68,8 @@ export function DelegateConnectivityList({
                   </Table.Cell>
                   <Table.Cell className="content-center whitespace-nowrap truncate">
                     <div className="inline-flex items-center gap-2">
-                      <Icon
-                        name="dot"
+                      <IconV2
+                        name="circle"
                         size={8}
                         className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
                       />

@@ -54,7 +54,7 @@ export function RepoList({
     return isDirtyList ? (
       <NoData
         withBorder
-        iconName="no-search-magnifying-glass"
+        name="no-search-magnifying-glass"
         title={t('views:noData.noResults', 'No search results')}
         description={[
           t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -68,7 +68,7 @@ export function RepoList({
     ) : (
       <NoData
         withBorder
-        iconName="no-repository"
+        name="no-repository"
         title={t('views:noData.noRepos', 'No repositories yet')}
         description={[
           t('views:noData.noReposProject', 'There are no repositories in this project yet.'),

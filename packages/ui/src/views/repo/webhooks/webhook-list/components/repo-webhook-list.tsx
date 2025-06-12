@@ -54,7 +54,7 @@ export function RepoWebhookList({
       <NoData
         withBorder
         textWrapperClassName="max-w-[350px]"
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
+        name={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
         title={
           isDirtyList
             ? t('views:noData.noResults', 'No search results')

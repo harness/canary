@@ -4,6 +4,7 @@
  */
 
 import Agile from './icons/agile.svg'
+import Ai from './icons/ai.svg'
 import AppNotification from './icons/app-notification.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
 import Archive from './icons/archive.svg'
@@ -29,6 +30,7 @@ import ArrowUpLeft from './icons/arrow-up-left.svg'
 import ArrowUpRightCircle from './icons/arrow-up-right-circle.svg'
 import ArrowUpRight from './icons/arrow-up-right.svg'
 import ArrowUp from './icons/arrow-up.svg'
+import ArrowsUpdown from './icons/arrows-updown.svg'
 import Artifact from './icons/artifact.svg'
 import AtSignCircle from './icons/at-sign-circle.svg'
 import AtSign from './icons/at-sign.svg'
@@ -72,7 +74,6 @@ import CalendarRotate from './icons/calendar-rotate.svg'
 import CalendarXmark from './icons/calendar-xmark.svg'
 import Calendar from './icons/calendar.svg'
 import Cell2x2 from './icons/cell2x2.svg'
-import Chain from './icons/chain.svg'
 import ChaosEngineering from './icons/chaos-engineering.svg'
 import ChatBubbleCheck from './icons/chat-bubble-check.svg'
 import ChatBubbleEmpty from './icons/chat-bubble-empty.svg'
@@ -94,6 +95,7 @@ import ClockSolid from './icons/clock-solid.svg'
 import Clock from './icons/clock.svg'
 import CloudBookmark from './icons/cloud-bookmark.svg'
 import CloudCheck from './icons/cloud-check.svg'
+import CloudCosts from './icons/cloud-costs.svg'
 import CloudDesync from './icons/cloud-desync.svg'
 import CloudDownload from './icons/cloud-download.svg'
 import CloudSquare from './icons/cloud-square.svg'
@@ -101,7 +103,6 @@ import CloudSync from './icons/cloud-sync.svg'
 import CloudUpload from './icons/cloud-upload.svg'
 import CloudXmark from './icons/cloud-xmark.svg'
 import Cloud from './icons/cloud.svg'
-import Cloudcosts from './icons/cloudcosts.svg'
 import CodeBracketsSquare from './icons/code-brackets-square.svg'
 import CodeBrackets from './icons/code-brackets.svg'
 import Code from './icons/code.svg'
@@ -137,6 +138,7 @@ import DatabaseWarning from './icons/database-warning.svg'
 import DatabaseXmark from './icons/database-xmark.svg'
 import Database from './icons/database.svg'
 import Delegates from './icons/delegates.svg'
+import DevPortal from './icons/dev-portal.svg'
 import DeveloperEnvironments from './icons/developer-environments.svg'
 import DeveloperInsights from './icons/developer-insights.svg'
 import Developer from './icons/developer.svg'
@@ -172,7 +174,7 @@ import FastArrowLeft from './icons/fast-arrow-left.svg'
 import FastArrowRight from './icons/fast-arrow-right.svg'
 import FastArrowUp from './icons/fast-arrow-up.svg'
 import FavouriteWindow from './icons/favourite-window.svg'
-import Featuredflags from './icons/featuredflags.svg'
+import FeaturedFlags from './icons/featured-flags.svg'
 import FilterAlt from './icons/filter-alt.svg'
 import FilterListCircle from './icons/filter-list-circle.svg'
 import FilterList from './icons/filter-list.svg'
@@ -215,6 +217,7 @@ import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
 import HarnessPlugins from './icons/harness-plugins.svg'
+import Header from './icons/header.svg'
 import HeadsetHelp from './icons/headset-help.svg'
 import HealthShield from './icons/health-shield.svg'
 import HeartSolid from './icons/heart-solid.svg'
@@ -342,6 +345,7 @@ import PlusCircle from './icons/plus-circle.svg'
 import PlusSquare from './icons/plus-square.svg'
 import Plus from './icons/plus.svg'
 import Podcast from './icons/podcast.svg'
+import PrComment from './icons/pr-comment.svg'
 import Presentation from './icons/presentation.svg'
 import PrivacyPolicy from './icons/privacy-policy.svg'
 import Prohibition from './icons/prohibition.svg'
@@ -374,6 +378,7 @@ import SearchEngine from './icons/search-engine.svg'
 import SearchWindow from './icons/search-window.svg'
 import Search from './icons/search.svg'
 import SecurityPass from './icons/security-pass.svg'
+import SecurityTest from './icons/security-test.svg'
 import SelectWindow from './icons/select-window.svg'
 import SendDiagonal from './icons/send-diagonal.svg'
 import SendMail from './icons/send-mail.svg'
@@ -382,18 +387,19 @@ import ServiceAccounts from './icons/service-accounts.svg'
 import Services from './icons/services.svg'
 import Settings from './icons/settings.svg'
 import ShareIos from './icons/share-ios.svg'
-import ShieldCheck from './icons/shield-check.svg'
 import Shield from './icons/shield.svg'
 import Sidebar from './icons/sidebar.svg'
+import SingleView from './icons/single-view.svg'
 import SlashSquare from './icons/slash-square.svg'
 import Slash from './icons/slash.svg'
 import Snowflake from './icons/snowflake.svg'
-import Sort1 from './icons/sort-1.svg'
 import Sort2Down from './icons/sort-2-down.svg'
 import Sort2Up from './icons/sort-2-up.svg'
 import Sort2 from './icons/sort-2.svg'
 import SparksSolid from './icons/sparks-solid.svg'
 import Sparks from './icons/sparks.svg'
+import SplitView from './icons/split-view.svg'
+import SquareDashed from './icons/square-dashed.svg'
 import SshKey from './icons/ssh-key.svg'
 import StarDashed from './icons/star-dashed.svg'
 import StarHalfDashed from './icons/star-half-dashed.svg'
@@ -406,18 +412,24 @@ import StatsReport from './icons/stats-report.svg'
 import StatsUpSquare from './icons/stats-up-square.svg'
 import Strategy from './icons/strategy.svg'
 import SubmitDocument from './icons/submit-document.svg'
+import Suggestion from './icons/suggestion.svg'
 import SunLight from './icons/sun-light.svg'
+import SupplyChain from './icons/supply-chain.svg'
 import SystemRestart from './icons/system-restart.svg'
 import TableRows from './icons/table-rows.svg'
+import TagSolid from './icons/tag-solid.svg'
 import Tag from './icons/tag.svg'
 import Target from './icons/target.svg'
 import TaskList from './icons/task-list.svg'
+import Tasks from './icons/tasks.svg'
 import Templates from './icons/templates.svg'
 import TerminalTag from './icons/terminal-tag.svg'
 import Terminal from './icons/terminal.svg'
 import TextSize from './icons/text-size.svg'
 import TextSquare from './icons/text-square.svg'
 import Theme from './icons/theme.svg'
+import ThumbsDown from './icons/thumbs-down.svg'
+import ThumbsUp from './icons/thumbs-up.svg'
 import TimeZone from './icons/time-zone.svg'
 import TimerSolid from './icons/timer-solid.svg'
 import Timer from './icons/timer.svg'
@@ -429,6 +441,7 @@ import UndoAction from './icons/undo-action.svg'
 import UndoCircleSolid from './icons/undo-circle-solid.svg'
 import UndoCircle from './icons/undo-circle.svg'
 import Undo from './icons/undo.svg'
+import UpDown from './icons/up-down.svg'
 import Upload from './icons/upload.svg'
 import UserBadgeCheck from './icons/user-badge-check.svg'
 import User from './icons/user.svg'
@@ -456,6 +469,7 @@ import ZoomOut from './icons/zoom-out.svg'
 
 export const IconNameMapV2 = {
   agile: Agile,
+  ai: Ai,
   'app-notification': AppNotification,
   'apple-shortcut': AppleShortcut,
   archive: Archive,
@@ -481,6 +495,7 @@ export const IconNameMapV2 = {
   'arrow-up-right-circle': ArrowUpRightCircle,
   'arrow-up-right': ArrowUpRight,
   'arrow-up': ArrowUp,
+  'arrows-updown': ArrowsUpdown,
   artifact: Artifact,
   'at-sign-circle': AtSignCircle,
   'at-sign': AtSign,
@@ -524,7 +539,6 @@ export const IconNameMapV2 = {
   'calendar-xmark': CalendarXmark,
   calendar: Calendar,
   cell2x2: Cell2x2,
-  chain: Chain,
   'chaos-engineering': ChaosEngineering,
   'chat-bubble-check': ChatBubbleCheck,
   'chat-bubble-empty': ChatBubbleEmpty,
@@ -546,6 +560,7 @@ export const IconNameMapV2 = {
   clock: Clock,
   'cloud-bookmark': CloudBookmark,
   'cloud-check': CloudCheck,
+  'cloud-costs': CloudCosts,
   'cloud-desync': CloudDesync,
   'cloud-download': CloudDownload,
   'cloud-square': CloudSquare,
@@ -553,7 +568,6 @@ export const IconNameMapV2 = {
   'cloud-upload': CloudUpload,
   'cloud-xmark': CloudXmark,
   cloud: Cloud,
-  cloudcosts: Cloudcosts,
   'code-brackets-square': CodeBracketsSquare,
   'code-brackets': CodeBrackets,
   code: Code,
@@ -589,6 +603,7 @@ export const IconNameMapV2 = {
   'database-xmark': DatabaseXmark,
   database: Database,
   delegates: Delegates,
+  'dev-portal': DevPortal,
   'developer-environments': DeveloperEnvironments,
   'developer-insights': DeveloperInsights,
   developer: Developer,
@@ -624,7 +639,7 @@ export const IconNameMapV2 = {
   'fast-arrow-right': FastArrowRight,
   'fast-arrow-up': FastArrowUp,
   'favourite-window': FavouriteWindow,
-  featuredflags: Featuredflags,
+  'featured-flags': FeaturedFlags,
   'filter-alt': FilterAlt,
   'filter-list-circle': FilterListCircle,
   'filter-list': FilterList,
@@ -667,6 +682,7 @@ export const IconNameMapV2 = {
   'group-1': Group1,
   'half-moon': HalfMoon,
   'harness-plugins': HarnessPlugins,
+  header: Header,
   'headset-help': HeadsetHelp,
   'health-shield': HealthShield,
   'heart-solid': HeartSolid,
@@ -794,6 +810,7 @@ export const IconNameMapV2 = {
   'plus-square': PlusSquare,
   plus: Plus,
   podcast: Podcast,
+  'pr-comment': PrComment,
   presentation: Presentation,
   'privacy-policy': PrivacyPolicy,
   prohibition: Prohibition,
@@ -826,6 +843,7 @@ export const IconNameMapV2 = {
   'search-window': SearchWindow,
   search: Search,
   'security-pass': SecurityPass,
+  'security-test': SecurityTest,
   'select-window': SelectWindow,
   'send-diagonal': SendDiagonal,
   'send-mail': SendMail,
@@ -834,18 +852,19 @@ export const IconNameMapV2 = {
   services: Services,
   settings: Settings,
   'share-ios': ShareIos,
-  'shield-check': ShieldCheck,
   shield: Shield,
   sidebar: Sidebar,
+  'single-view': SingleView,
   'slash-square': SlashSquare,
   slash: Slash,
   snowflake: Snowflake,
-  'sort-1': Sort1,
   'sort-2-down': Sort2Down,
   'sort-2-up': Sort2Up,
   'sort-2': Sort2,
   'sparks-solid': SparksSolid,
   sparks: Sparks,
+  'split-view': SplitView,
+  'square-dashed': SquareDashed,
   'ssh-key': SshKey,
   'star-dashed': StarDashed,
   'star-half-dashed': StarHalfDashed,
@@ -858,18 +877,24 @@ export const IconNameMapV2 = {
   'stats-up-square': StatsUpSquare,
   strategy: Strategy,
   'submit-document': SubmitDocument,
+  suggestion: Suggestion,
   'sun-light': SunLight,
+  'supply-chain': SupplyChain,
   'system-restart': SystemRestart,
   'table-rows': TableRows,
+  'tag-solid': TagSolid,
   tag: Tag,
   target: Target,
   'task-list': TaskList,
+  tasks: Tasks,
   templates: Templates,
   'terminal-tag': TerminalTag,
   terminal: Terminal,
   'text-size': TextSize,
   'text-square': TextSquare,
   theme: Theme,
+  'thumbs-down': ThumbsDown,
+  'thumbs-up': ThumbsUp,
   'time-zone': TimeZone,
   'timer-solid': TimerSolid,
   timer: Timer,
@@ -881,6 +906,7 @@ export const IconNameMapV2 = {
   'undo-circle-solid': UndoCircleSolid,
   'undo-circle': UndoCircle,
   undo: Undo,
+  'up-down': UpDown,
   upload: Upload,
   'user-badge-check': UserBadgeCheck,
   user: User,

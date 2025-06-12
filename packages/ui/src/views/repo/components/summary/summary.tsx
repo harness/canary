@@ -1,4 +1,4 @@
-import { Icon, Spacer, Table, Text } from '@/components'
+import { IconV2, Spacer, Table, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
@@ -66,7 +66,7 @@ export const Summary = ({
                       : ''
                   }`}
                 >
-                  <Icon
+                  <IconV2
                     className={
                       file.status
                         ? file.status === FileStatus.SAFE
@@ -82,11 +82,11 @@ export const Summary = ({
                       file.status
                         ? file.status === FileStatus.SAFE
                           ? file.type === SummaryItemType.File
-                            ? 'file'
+                            ? 'page'
                             : 'folder'
-                          : 'triangle-warning'
+                          : 'warning-triangle'
                         : file.type === SummaryItemType.File
-                          ? 'file'
+                          ? 'page'
                           : 'folder'
                     }
                     size={16}

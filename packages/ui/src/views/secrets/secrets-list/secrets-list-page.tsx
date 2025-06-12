@@ -36,7 +36,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-error"
+        name="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'secrets'
         })}

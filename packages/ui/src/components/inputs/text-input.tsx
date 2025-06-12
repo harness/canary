@@ -11,10 +11,11 @@ export interface TextInputProps extends InputProps {
   error?: string
   warning?: string
   optional?: boolean
+  labelSuffix?: boolean
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
-  const { label, optional, caption, error, warning, wrapperClassName, disabled, ...restProps } = props
+  const { label, labelSuffix, optional, caption, error, warning, wrapperClassName, disabled, ...restProps } = props
 
   // override theme based on error and warning
   const theme = error ? 'danger' : warning ? 'warning' : props.theme
@@ -25,7 +26,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   return (
     <ControlGroup className={wrapperClassName}>
       {!!label && (
-        <Label disabled={disabled} optional={optional} htmlFor={inputId}>
+        <Label disabled={disabled} optional={optional} htmlFor={inputId} suffix={labelSuffix}>
           {label}
         </Label>
       )}

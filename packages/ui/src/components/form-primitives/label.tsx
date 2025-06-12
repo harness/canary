@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from 'react'
 
 import { Informer, InformerProps } from '@/components'
 import { NonEmptyReactNode } from '@/types'
@@ -10,10 +10,11 @@ export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Roo
   optional?: boolean
   informerProps?: InformerProps
   informerContent?: NonEmptyReactNode
+  suffix?: ReactNode
 }
 
 const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ className, children, optional, disabled, informerContent, informerProps, ...props }, ref) => {
+  ({ className, children, optional, disabled, informerContent, informerProps, suffix, ...props }, ref) => {
     if (!children) return null
 
     const LabelComponent = ({ className }: { className?: string }) => (
@@ -27,12 +28,16 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
       </LabelPrimitive.Root>
     )
 
-    if (informerContent) {
+    if (informerContent || suffix) {
       return (
         <span className={cn('cn-label-container', className)}>
           <LabelComponent />
 
-          <Informer {...informerProps} className="cn-label-informer" disabled={disabled} content={informerContent} />
+          {informerContent && (
+            <Informer {...informerProps} className="cn-label-informer" disabled={disabled} content={informerContent} />
+          )}
+
+          {suffix}
         </span>
       )
     }

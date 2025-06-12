@@ -4,6 +4,7 @@ import * as z from 'zod'
 
 import { IInputDefinition, InputFactory, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 
+import { PipelineInputDefinition } from '../types'
 import { type InputLayout } from './types'
 
 /** pipeline inputs to form inputs conversion */
@@ -13,7 +14,7 @@ export function pipelineInputs2FormInputs({
   pipelineInputLayout = [],
   inputComponentFactory
 }: {
-  pipelineInputs: Record<string, any>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   options: { prefix?: string }
   pipelineInputLayout?: InputLayout
   inputComponentFactory: InputFactory
@@ -64,7 +65,7 @@ export function pipelineInputs2FormInputs({
  */
 const processLayout = (
   layout: InputLayout,
-  pipelineInputs: Record<string, any>,
+  pipelineInputs: Record<string, PipelineInputDefinition>,
   options: { prefix?: string },
   processedInputKeys: Set<string>,
   inputComponentFactory: InputFactory
@@ -117,22 +118,26 @@ const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
 /** pipeline input to form input conversion */
 export function pipelineInput2FormInput(
   name: string,
-  inputProps: Record<string, unknown>,
+  inputProps: PipelineInputDefinition,
   options: { prefix?: string },
   inputComponentFactory: InputFactory
 ): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
-  const inputType = pipelineInputType2FormInputType(inputProps.type as string, inputProps?.ui, inputComponentFactory)
+  const inputType = pipelineInputType2FormInputType(inputProps.type, inputProps?.ui, inputComponentFactory)
 
   return {
     inputType,
     path: options.prefix + name,
-    label: name,
+    label: typeof inputProps.label === 'string' ? inputProps.label : name,
     default: inputProps.default,
     required: inputProps.required as boolean,
     inputConfig: {
       allowedValueTypes: ['fixed', 'runtime', 'expression'],
       ...(inputProps.description ? { tooltip: inputProps.description as string } : {}),
-      ...(inputProps?.ui ? inputProps.ui : {})
+      ...(inputProps?.ui ? inputProps.ui : {}),
+      // special handling for select dropdown items
+      ...(inputType === 'select'
+        ? { options: inputProps?.options?.map(option => ({ label: option, value: option })) }
+        : {})
     },
     outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'
@@ -152,7 +157,11 @@ export function pipelineInput2FormInput(
 }
 
 /** pipeline input type to form input type conversion */
-function pipelineInputType2FormInputType(type: string, uiProps: any, inputComponentFactory: InputFactory): string {
+function pipelineInputType2FormInputType(
+  type: string,
+  uiProps: PipelineInputDefinition['ui'],
+  inputComponentFactory: InputFactory
+): string {
   return inputComponentFactory?.getComponent(uiProps?.widget || type)?.internalType ?? 'text'
 }
 

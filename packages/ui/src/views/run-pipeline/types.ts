@@ -46,6 +46,11 @@ export interface PipelineInput {
    * @deprecated
    */
   mask?: boolean
+
+  /**
+   * Label defines the input label.
+   */
+  label?: string
 }
 
 export interface PipelineInputDefinition extends PipelineInput {

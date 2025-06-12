@@ -8,6 +8,7 @@ import { RuntimeInputConfig } from './types/types'
 export interface NumberFormInputConfig {
   inputType: 'number'
   inputConfig?: {
+    placeholder?: string
     tooltip?: string
   } & RuntimeInputConfig
 }
@@ -16,7 +17,9 @@ type NumberFormInputProps = InputProps<AnyFormikValue, NumberFormInputConfig>
 
 function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
   const { readonly, path, input } = props
-  const { label, required, placeholder, description } = input
+  const { label, required, placeholder, description, inputConfig } = input
+
+  const { placeholder: inputPlaceholder } = inputConfig ?? { placeholder: placeholder }
 
   const { field, fieldState } = useController({
     name: path,
@@ -30,7 +33,7 @@ function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
         required={required}
         caption={description}
         error={fieldState?.error?.message}
-        placeholder={placeholder}
+        placeholder={inputPlaceholder}
         {...field}
       />
     </InputWrapper>

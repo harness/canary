@@ -8,6 +8,7 @@ import { RuntimeInputConfig } from './types/types'
 export interface TextareaFormInputConfig {
   inputType: 'textarea'
   inputConfig?: {
+    placeholder?: string
     tooltip?: string
   } & RuntimeInputConfig
 }
@@ -16,8 +17,8 @@ type TextareaFormInputProps = InputProps<AnyFormikValue, TextareaFormInputConfig
 
 function TextareaFormInputInternal(props: TextareaFormInputProps): JSX.Element {
   const { readonly, path, input } = props
-  const { label, required, placeholder, description } = input
-
+  const { label, required, placeholder, description, inputConfig } = input
+  const { placeholder: inputPlaceholder } = inputConfig ?? { placeholder: placeholder }
   const { field, fieldState } = useController({
     name: path,
     disabled: readonly
@@ -28,7 +29,7 @@ function TextareaFormInputInternal(props: TextareaFormInputProps): JSX.Element {
       <Textarea
         label={label}
         optional={!required}
-        placeholder={placeholder}
+        placeholder={inputPlaceholder}
         caption={description}
         error={fieldState?.error?.message}
         {...field}

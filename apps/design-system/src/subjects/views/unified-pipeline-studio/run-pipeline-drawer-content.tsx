@@ -31,42 +31,39 @@ const pipelineInputs = {
   boolean: { type: 'boolean' },
   booleanDefaultTrue: { type: 'boolean', default: true },
   booleanDefaultFalse: { type: 'boolean', default: false },
-  stringWithUIbroken: {
+  nonComponentFactory: {
     type: 'string',
     required: true,
-    oneOf: ['docker', 'kubernetes', 'helm'],
+    ui: {
+      widget: 'non-component-factory'
+    }
+  },
+  stringSelectWithoutDefaultUI: {
+    type: 'string',
+    required: true,
+    options: ['docker', 'kubernetes', 'helm'],
     ui: {
       widget: 'select',
-      options: ['docker', 'kubernetes', 'helm'],
       placeholder: 'select a connector type',
       tooltip: 'docker connector will be selected by default'
     }
   },
-  stringWithUIworking: {
+  stringSelectWithDefaultUI: {
     type: 'string',
     required: true,
-    oneOf: ['docker', 'kubernetes', 'helm'],
+    options: ['docker', 'kubernetes', 'helm'],
     default: 'docker',
     ui: {
       widget: 'select',
-      options: [
-        { label: 'docker', value: 'docker' },
-        { label: 'kubernetes', value: 'kubernetes' },
-        { label: 'helm', value: 'helm' }
-      ],
       placeholder: 'select a connector type',
       tooltip: 'docker connector will be selected by default'
     }
-  },
-  nonComponentFactory: {
-    type: 'non-component-factory',
-    required: true
   }
 }
 
 const layout: InputLayout = [
-  'stringWithUIbroken',
-  'stringWithUIworking',
+  'stringSelectWithoutDefaultUI',
+  'stringSelectWithDefaultUI',
   'nonComponentFactory',
   'stringRequired',
   {

@@ -281,7 +281,7 @@ The `Text` component supports various color options to enhance visibility and co
     {
       name: "align",
       description: "The text alignment",
-      defaultValue: "left",
+      defaultValue: "initial",
       required: false,
       value: "'left' | 'center' | 'right'",
     },
@@ -308,6 +308,14 @@ The `Text` component supports various color options to enhance visibility and co
       defaultValue: "false",
       required: false,
       value: "boolean",
+    },
+    {
+      name: "lineClamp",
+      description:
+        "Controls how many lines of text are shown before truncating",
+      defaultValue: "none",
+      required: false,
+      value: "'1' | '2' | '3' | '4' | '5' | '6' | 'none'",
     },
     {
       name: "wrap",

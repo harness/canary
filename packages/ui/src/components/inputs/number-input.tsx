@@ -141,7 +141,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                   </Button>
                 </div>
               ) : null}
-              {suffix ? <div className="border-inherit">{suffix}</div> : null}
+              {suffix ? <div className={hideStepper ? '' : 'border-inherit'}>{suffix}</div> : null}
             </div>
           }
           {...props}

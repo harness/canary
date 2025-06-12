@@ -117,13 +117,15 @@ import { DocsPage } from "@/components/docs-page";
   />
   
   {/* With Suffix */}
-  <NumberInput 
-    id="suffix-input" 
-    label="Suffix Input" 
+  <NumberInput
+    id="suffix-input"
+    label="Suffix Input"
+    defaultValue={15}
     suffix={<Button variant="outline" iconOnly className="cn-input-suffix">
       <Icon name="chevron-right" size={14} />
     </Button>}
     theme="warning"
+    warning="Suffix icon with warning theme"
   />
 </div>`}
 />

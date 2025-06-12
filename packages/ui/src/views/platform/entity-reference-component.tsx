@@ -50,7 +50,7 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
 
 export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
   extends CommonEntityReferenceProps<T, S, F> {
-  enableMultiSelect: false
+  enableMultiSelect?: false
   onSelectEntity: (entity: T) => void
 }
 

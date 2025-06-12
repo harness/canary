@@ -88,7 +88,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         onFilterChange={onFilterChange}
         searchValue={searchValue}
         handleChangeSearchValue={handleChangeSearchValue}
-        enableMultiSelect
       />
 
       {!isDrawer && (

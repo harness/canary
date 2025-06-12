@@ -111,7 +111,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     (entity: T) => {
       if (enableMultiSelect) {
         const defaultIsEqual = (item: T, entity: T) => {
-          return item.id === entity.id && (currentFolder === null || currentFolder === item.folderPath)
+          return item.id === entity.id && entity.folderPath === item.folderPath
         }
 
         const compareEntities = isEntityEqual ?? defaultIsEqual
@@ -125,7 +125,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         onSelectEntity(entity)
       }
     },
-    [onSelectEntity, enableMultiSelect, selectedEntities, currentFolder, isEntityEqual]
+    [onSelectEntity, enableMultiSelect, selectedEntities, isEntityEqual]
   )
 
   const handleScopeChange = useCallback(

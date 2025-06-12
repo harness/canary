@@ -112,7 +112,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           <>
             {entities.map(entity => {
               const defaultIsEqual = (item: T, entity: T) => {
-                return item.id === entity.id && (currentFolder === null || currentFolder === item.folderPath)
+                return item.id === entity.id && entity.folderPath === item.folderPath
               }
 
               const compareEntities = isEntityEqual || defaultIsEqual

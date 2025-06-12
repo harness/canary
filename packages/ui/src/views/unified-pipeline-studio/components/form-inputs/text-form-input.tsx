@@ -17,9 +17,8 @@ type TextFormInputProps = InputProps<AnyFormikValue, TextFormInputConfig>
 
 function TextFormInputInternal(props: TextFormInputProps): JSX.Element {
   const { readonly, path, input } = props
-  const { label, required, placeholder, description, inputConfig } = input
+  const { label, required, placeholder, description } = input
 
-  const { placeholder: inputPlaceholder } = inputConfig ?? { placeholder: placeholder }
   const { field, fieldState } = useController({
     name: path,
     disabled: readonly
@@ -31,7 +30,7 @@ function TextFormInputInternal(props: TextFormInputProps): JSX.Element {
         label={label}
         caption={description}
         optional={!required}
-        placeholder={inputPlaceholder}
+        placeholder={placeholder}
         error={fieldState?.error?.message}
         {...field}
       />

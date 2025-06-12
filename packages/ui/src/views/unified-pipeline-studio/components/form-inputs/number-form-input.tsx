@@ -17,9 +17,7 @@ type NumberFormInputProps = InputProps<AnyFormikValue, NumberFormInputConfig>
 
 function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
   const { readonly, path, input } = props
-  const { label, required, placeholder, description, inputConfig } = input
-
-  const { placeholder: inputPlaceholder } = inputConfig ?? { placeholder: placeholder }
+  const { label, required, placeholder, description } = input
 
   const { field, fieldState } = useController({
     name: path,
@@ -33,7 +31,7 @@ function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
         required={required}
         caption={description}
         error={fieldState?.error?.message}
-        placeholder={inputPlaceholder}
+        placeholder={placeholder}
         {...field}
       />
     </InputWrapper>

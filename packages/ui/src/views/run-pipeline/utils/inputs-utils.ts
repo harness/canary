@@ -131,6 +131,7 @@ export function pipelineInput2FormInput(
     label: typeof inputProps.label === 'string' ? inputProps.label : name,
     default: inputProps.default,
     required: inputProps.required as boolean,
+    placeholder: inputProps.ui?.placeholder || '',
     isVisible: function (values) {
       return inputProps.ui?.visible?.length ? jexl.evalSync(inputProps.ui?.visible, values) : true
     },
@@ -160,15 +161,26 @@ export function pipelineInput2FormInput(
   }
 }
 
-/** pipeline input type to form input type conversion */
+/** pipeline input ui widget / input type to form input type conversion */
 function pipelineInputType2FormInputType(
   type: string,
   uiProps: PipelineInputDefinition['ui'],
   inputComponentFactory: InputFactory
 ): string {
-  return inputComponentFactory?.getComponent(uiProps?.widget || type)?.internalType ?? 'text'
+  return uiProps?.widget
+    ? (inputComponentFactory?.getComponent(uiProps?.widget)?.internalType ?? 'text')
+    : convertTypeToDefaultInputType(type)
 }
 
+/**  default input types for pipeline inputs **/
+function convertTypeToDefaultInputType(type: string): string {
+  switch (type) {
+    case 'string':
+      return 'text'
+    default:
+      return type
+  }
+}
 export function pipelineInputs2JsonSchema(pipelineInputs: Record<string, any>): Record<string, any> {
   const required: string[] = []
 

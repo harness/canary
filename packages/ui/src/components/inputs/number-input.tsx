@@ -113,8 +113,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             }
           }}
           suffix={
-            hideStepper ? null : (
-              <div className="flex">
+            <div className="flex">
+              {!hideStepper ? (
                 <div className="flex flex-col">
                   <Button
                     tabIndex={-1}
@@ -140,9 +140,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     <IconV2 name="nav-arrow-down" size={14} />
                   </Button>
                 </div>
-                {suffix ? <div className="border-inherit">{suffix}</div> : null}
-              </div>
-            )
+              ) : null}
+              {suffix ? <div className="border-inherit">{suffix}</div> : null}
+            </div>
           }
           {...props}
         />

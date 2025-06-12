@@ -45,7 +45,7 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   handleChangeSearchValue: (val: string) => void
 
   // Icons for default entity renderer
-  defaultRendererIcon?: IconPropsV2['name']
+  icon?: IconPropsV2['name']
 }
 
 export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
@@ -89,7 +89,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   isLoading = false,
 
   // Icons for default entity renderer
-  defaultRendererIcon,
+  icon,
 
   // Error
   apiError,
@@ -133,7 +133,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
           showCheckbox ? (
             <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} />
           ) : (
-            <IconV2 name={defaultRendererIcon ?? 'page'} className="text-cn-foreground-3" />
+            <IconV2 name={icon ?? 'page'} className="text-cn-foreground-3" />
           )
         }
         actions={

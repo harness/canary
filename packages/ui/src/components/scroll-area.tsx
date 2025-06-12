@@ -1,4 +1,4 @@
-import { FC, ReactNode, useCallback, useLayoutEffect, useRef } from 'react'
+import { FC, ReactNode, UIEvent, useCallback, useLayoutEffect, useRef } from 'react'
 
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
@@ -37,7 +37,7 @@ export type ScrollAreaProps = {
   children: ReactNode
   viewportClassName?: string
   orientation?: 'vertical' | 'horizontal' | 'both'
-  onScroll?: (position: ScrollPosition) => void
+  onScroll?: (event: UIEvent<HTMLDivElement>, position?: ScrollPosition) => void
   direction?: 'ltr' | 'rtl'
 }
 
@@ -51,49 +51,39 @@ const ScrollArea: FC<ScrollAreaProps> = ({
 }) => {
   const viewportRef = useRef<HTMLDivElement | null>(null)
 
-  const prevPositionRef = useRef<ScrollPosition | null>(null)
+  const handleScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      const el = viewportRef.current
+      if (!el || !onScroll) return
 
-  const handleScroll = useCallback(() => {
-    const el = viewportRef.current
-    if (!el || !onScroll) return
+      const { scrollTop, scrollLeft, scrollHeight, scrollWidth, clientHeight, clientWidth } = el
 
-    const { scrollTop, scrollLeft, scrollHeight, scrollWidth, clientHeight, clientWidth } = el
+      const isTop = scrollTop === 0
+      const isBottom = scrollTop + clientHeight >= scrollHeight - 1
 
-    const isTop = scrollTop === 0
-    const isBottom = scrollTop + clientHeight >= scrollHeight - 1
+      let isLeft: boolean, isRight: boolean
 
-    let isLeft: boolean, isRight: boolean
+      if (direction === 'rtl') {
+        const offset = Math.abs(scrollLeft)
+        isRight = offset === 0
+        isLeft = offset + clientWidth >= scrollWidth - 1
+      } else {
+        isLeft = scrollLeft === 0
+        isRight = scrollLeft + clientWidth >= scrollWidth - 1
+      }
 
-    if (direction === 'rtl') {
-      const offset = Math.abs(scrollLeft)
-      isRight = offset === 0
-      isLeft = offset + clientWidth >= scrollWidth - 1
-    } else {
-      isLeft = scrollLeft === 0
-      isRight = scrollLeft + clientWidth >= scrollWidth - 1
-    }
+      const newPosition: ScrollPosition = { isTop, isBottom, isLeft, isRight }
 
-    const newPosition: ScrollPosition = { isTop, isBottom, isLeft, isRight }
-
-    const prev = prevPositionRef.current
-    const changed =
-      !prev ||
-      prev.isTop !== newPosition.isTop ||
-      prev.isBottom !== newPosition.isBottom ||
-      prev.isLeft !== newPosition.isLeft ||
-      prev.isRight !== newPosition.isRight
-
-    if (changed) {
-      prevPositionRef.current = newPosition
-      onScroll(newPosition)
-    }
-  }, [direction, onScroll])
+      onScroll(event, newPosition)
+    },
+    [direction, onScroll]
+  )
 
   const isVertical = orientation === 'vertical' || orientation === 'both'
   const isHorizontal = orientation === 'horizontal' || orientation === 'both'
 
   useLayoutEffect(() => {
-    handleScroll()
+    handleScroll({ currentTarget: viewportRef.current as HTMLDivElement } as UIEvent<HTMLDivElement>)
   }, [handleScroll])
 
   return (

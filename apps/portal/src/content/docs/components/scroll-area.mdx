@@ -168,12 +168,15 @@ The `ScrollArea` component also supports the `orientation` prop to control the s
       name: "onScroll",
       description: "Callback function triggered on scroll events.",
       required: false,
-      value: `(position: {
-        isTop: boolean,
-        isBottom: boolean,
-        isLeft: boolean,
-        isRight: boolean
-      }) => void`,
+      value: `(
+        event: React.UIEvent<HTMLDivElement>, 
+        position?: {
+          isTop: boolean,
+          isBottom: boolean,
+          isLeft: boolean,
+          isRight: boolean
+        }
+      ) => void`,
     },
   ]}
 />

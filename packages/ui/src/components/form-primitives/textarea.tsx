@@ -1,4 +1,4 @@
-import { forwardRef, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
+import { forwardRef, ReactNode, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
 import { generateAlphaNumericHash, isAnyTypeOf, useMergeRefs } from '@/utils'
@@ -20,6 +20,7 @@ const textareaVariants = cva('cn-textarea', {
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
+  labelSuffix?: ReactNode
   theme?: VariantProps<typeof textareaVariants>['theme']
   caption?: string
   error?: string
@@ -48,6 +49,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       className,
       maxCharacters,
       resizable = false,
+      labelSuffix,
       ...props
     },
     ref
@@ -87,7 +89,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <ControlGroup>
         <div className="cn-textarea-label-wrapper">
           {label && (
-            <Label disabled={disabled} optional={optional} htmlFor={id}>
+            <Label disabled={disabled} optional={optional} htmlFor={id} suffix={labelSuffix}>
               {label}
             </Label>
           )}

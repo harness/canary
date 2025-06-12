@@ -5,8 +5,10 @@ import { cn } from '@utils/cn'
 
 import { IconNameMapV2 } from './icon-name-map'
 
+export type IconV2NamesType = keyof typeof IconNameMapV2
+
 export interface IconPropsV2 extends SVGProps<SVGSVGElement> {
-  name: keyof typeof IconNameMapV2
+  name: IconV2NamesType
   size?: number
   // This value should be true if the icon has separate files for different color themes or needs to be inverted.
   themeDependent?: boolean

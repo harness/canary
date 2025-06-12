@@ -19,7 +19,7 @@ import {
   drawerStyles,
   dropdownStyles,
   formSharedStyles,
-  selectStyles,
+  iconsAndLogos,
   inputStyles,
   labelStyles,
   linkStyles,
@@ -28,6 +28,7 @@ import {
   progressStyles,
   radioStyles,
   scrollAreaStyles,
+  selectStyles,
   switchStyles,
   tableV2Styles,
   tagStyles,
@@ -466,6 +467,7 @@ export default {
         scrollAreaStyles,
         tooltipStyles,
         breadcrumbStyles,
+        iconsAndLogos,
 
         // Form styles
         selectStyles,

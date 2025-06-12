@@ -3,9 +3,8 @@ import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useSt
 import { cn } from '@utils/cn'
 import { cva } from 'class-variance-authority'
 
-import { Icon } from './icon'
-import { IconV2 } from './icon-v2'
-import { Logo } from './logo'
+import { IconV2, IconV2NamesType } from './icon-v2'
+import { LogoV2, LogoV2NamesType } from './logo-v2'
 
 type CardSelectType = 'single' | 'multiple'
 
@@ -23,8 +22,8 @@ interface CardSelectRootProps<T> {
 
 interface CardSelectItemProps extends HTMLAttributes<HTMLInputElement> {
   value: unknown
-  icon?: React.ComponentProps<typeof Icon>['name']
-  logo?: React.ComponentProps<typeof Logo>['name']
+  icon?: IconV2NamesType
+  logo?: LogoV2NamesType
   disabled?: boolean
   children: ReactNode
 }
@@ -155,8 +154,8 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
       >
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
-            {icon && <Icon name={icon} className="cn-card-select-icon" />}
-            {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
+            {icon && <IconV2 name={icon} className="cn-card-select-icon" />}
+            {logo && !icon && <LogoV2 size="lg" name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
           {checked && <IconV2 name="check" className="cn-card-select-check" />}

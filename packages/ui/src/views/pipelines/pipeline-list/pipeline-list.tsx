@@ -1,6 +1,6 @@
 import { useTranslation } from '@/context'
 
-import { Icon, NoData, SkeletonList, StackedList } from '../../../components'
+import { Icon, IconV2, NoData, SkeletonList, StackedList } from '../../../components'
 import { Meter } from '../../../components/meter'
 import { PipelineExecutionStatus } from '../common/execution-types'
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
@@ -27,7 +27,7 @@ const Description = ({ sha, description, version }: { sha?: string; description?
       )}
       {sha && (
         <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-1 text-cn-foreground-1">
-          <Icon className="text-icons-9" size={12} name={'tube-sign'} />
+          <IconV2 className="text-icons-9" size={12} name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
       )}

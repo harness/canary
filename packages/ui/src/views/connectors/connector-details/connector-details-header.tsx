@@ -1,9 +1,8 @@
 import { FC } from 'react'
 
-import { Button, Layout, Link, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { Button, Layout, Link, LogoV2, LogoV2NamesType, MoreActionsTooltip, StatusBadge, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { Logo, LogoName } from '@components/logo'
 
 import { ConnectorDetailsHeaderProps } from './types'
 
@@ -23,7 +22,8 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         </Link>
       ) : null}
       <Layout.Horizontal gap="xs" align="center">
-        <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
+        {/* TODO: Design system: Check for proper name according to LogoV2 and update */}
+        <LogoV2 size="lg" name={connectorDetails.type.toLowerCase() as LogoV2NamesType} />
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>
       {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}

@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 import {
   Button,
-  Icon,
   IconV2,
-  Logo,
+  LogoV2,
   MoreActionsTooltip,
   NoData,
   SkeletonList,
@@ -34,8 +33,8 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
 
   return isSuccess ? (
     <div className="flex items-center gap-2">
-      <Icon name="dot" size={8} className="text-icons-success" />
-      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+      <IconV2 name="circle" size={8} className="text-icons-success" />
+      <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
         {t('views:connectors.success', 'Success')}
       </Text>
     </div>
@@ -54,8 +53,8 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
         }
       >
         <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
-          <Icon name="dot" size={8} className="text-icons-danger" />
-          <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+          <IconV2 name="circle" size={8} className="text-icons-danger" />
+          <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
             {t('views:connectors.failure', 'Failed')}
           </Text>
         </Button>
@@ -132,7 +131,11 @@ export function ConnectorsList({
                 <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
                     <div className="flex w-full max-w-8 items-center justify-center">
-                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <IconV2 name="connectors" size={30} />}
+                      {connectorLogo ? (
+                        <LogoV2 name={connectorLogo} size="md" />
+                      ) : (
+                        <IconV2 name="connectors" size={30} />
+                      )}
                     </div>
                     <Title title={identifier} />
                   </div>
@@ -157,9 +160,9 @@ export function ConnectorsList({
                     onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
                   >
                     {isFavorite ? (
-                      <Icon name="star-filled" size={12} className="fill-icons-alert" />
+                      <IconV2 name="star-solid" size={12} className="fill-icons-alert" />
                     ) : (
-                      <Icon name="star" size={12} className="text-icons-6" />
+                      <IconV2 name="star" size={12} className="text-icons-6" />
                     )}
                   </Button>
                 </Table.Cell>

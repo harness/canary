@@ -1,12 +1,11 @@
 import { FC, useMemo } from 'react'
 
 import { cn } from '@/utils/cn'
-import { Icon, IconNameMap } from '@components/icon'
 import { Text } from '@components/text'
 import { generateAlphaNumericHash } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-type IconName = keyof typeof IconNameMap
+import { IconV2, type IconV2NamesType } from './icon-v2'
 
 const progressVariants = cva('cn-progress', {
   variants: {
@@ -29,10 +28,10 @@ const progressVariants = cva('cn-progress', {
   }
 })
 
-const getIconName = (state: VariantProps<typeof progressVariants>['state']): IconName => {
-  if (state === 'completed') return 'tick-circle'
-  if (state === 'paused') return 'circle-pause'
-  if (state === 'failed') return 'cross-circle'
+const getIconName = (state: VariantProps<typeof progressVariants>['state']): IconV2NamesType => {
+  if (state === 'completed') return 'check-circle'
+  if (state === 'paused') return 'pause'
+  if (state === 'failed') return 'xmark-circle'
   return 'clock'
 }
 
@@ -77,8 +76,8 @@ const Progress: FC<ProgressProps> = ({
 
   const getIcon = () => {
     if (hideIcon || variant === 'indeterminate') return null
-    const iconName: IconName = getIconName(state)
-    return <Icon className="cn-progress-icon" name={iconName} skipSize />
+    const iconName: IconV2NamesType = getIconName(state)
+    return <IconV2 className="cn-progress-icon" name={iconName} skipSize />
   }
 
   const getProgress = () => {

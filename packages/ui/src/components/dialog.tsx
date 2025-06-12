@@ -5,9 +5,8 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Button, ButtonProps } from './button'
-import { Icon } from './icon'
-import { IconV2 } from './icon-v2'
-import { Logo } from './logo'
+import { IconV2, IconV2NamesType } from './icon-v2'
+import { LogoV2, LogoV2NamesType } from './logo-v2'
 import { ScrollArea } from './scroll-area'
 
 const contentVariants = cva('cn-modal-dialog-content', {
@@ -69,8 +68,8 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
 Content.displayName = 'Dialog.Content'
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
-  icon?: React.ComponentProps<typeof Icon>['name']
-  logo?: React.ComponentProps<typeof Logo>['name']
+  icon?: IconV2NamesType
+  logo?: LogoV2NamesType
   theme?: 'default' | 'warning' | 'danger'
 }
 
@@ -99,12 +98,12 @@ const Header = ({ className, icon, logo, theme = 'default', children, ...props }
       <div className="cn-modal-dialog-header-title-row">
         {icon && (
           <div className="cn-modal-dialog-header-icon">
-            <Icon name={icon} size={24} />
+            <IconV2 name={icon} size={24} />
           </div>
         )}
         {logo && (
           <div className="cn-modal-dialog-header-logo">
-            <Logo name={logo} />
+            <LogoV2 size="lg" name={logo} />
           </div>
         )}
         {title}

@@ -10,7 +10,7 @@ export const UnifiedPipelineStudioPanel = ({
   problems: any
 }): JSX.Element => {
   return (
-    <Tabs.Root defaultValue="problems" variant="underline" className="h-full">
+    <Tabs.Root defaultValue="problems" className="h-full">
       <div className="flex flex-row justify-between border-b">
         <Tabs.List className="ml-4 bg-transparent">
           <Tabs.Trigger value="problems">

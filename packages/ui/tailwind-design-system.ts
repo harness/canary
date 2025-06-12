@@ -31,10 +31,11 @@ import {
   selectStyles,
   switchStyles,
   tableV2Styles,
+  tabsStyles,
   tagStyles,
   textareaStyles,
-  tooltipStyles,
-  toggleGroupStyles
+  toggleGroupStyles,
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -464,6 +465,7 @@ export default {
         progressStyles,
         drawerStyles,
         buttonLayoutStyles,
+        tabsStyles,
         dialogStyles,
         scrollAreaStyles,
         tooltipStyles,

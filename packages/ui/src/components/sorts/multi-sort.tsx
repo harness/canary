@@ -1,6 +1,6 @@
 // TODO: we should rethink the approach and stop using the @dnd-kit library
 
-import { Button, DropdownMenu, Icon, IconV2 } from '@/components'
+import { Button, DropdownMenu, IconV2 } from '@/components'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -12,7 +12,7 @@ import { useSort } from './sort-context'
 import { Direction, SortDirection, SortOption, SortValue } from './type'
 
 export const getSortTriggerLabel = (sortSelections: SortValue[], sortOptions: SortOption[]) => {
-  if (sortSelections.length === 0) return { label: '', icon: 'circle-arrows-updown' as const }
+  if (sortSelections.length === 0) return { label: '', icon: 'arrows-updown' as const }
 
   if (sortSelections.length === 1) {
     const currentSort = sortSelections[0]
@@ -20,14 +20,14 @@ export const getSortTriggerLabel = (sortSelections: SortValue[], sortOptions: So
 
     return {
       label,
-      icon: 'circle-arrow-top' as const,
+      icon: 'arrow-long-up' as const,
       isDescending: currentSort.direction === Direction.DESC
     }
   }
 
   return {
     label: `${sortSelections.length} sorts`,
-    icon: 'circle-arrows-updown' as const,
+    icon: 'arrow-long-down' as const,
     isDescending: false
   }
 }
@@ -144,7 +144,7 @@ export default function MultiSort() {
     <DropdownMenu.Root open={sortOpen} onOpenChange={setSortOpen}>
       <DropdownMenu.Trigger asChild>
         <Button variant="secondary" className="gap-x-1.5">
-          <Icon
+          <IconV2
             className={cn(
               'text-icons-1',
               getSortTriggerLabel(sortSelections, sortOptions).isDescending && 'rotate-180'

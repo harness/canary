@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { Button, Icon, IconV2, Layout, ScrollArea, SearchBox, Tabs, TabsTriggerProps } from '@/components'
+import { Button, IconV2, Layout, ScrollArea, SearchBox, Tabs, TabsTriggerProps } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -27,7 +27,7 @@ const StepExecutionToolbar: FC<
         value={query}
       >
         <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
-          <Icon className="text-icons-3" name="command-symbol" size={10} />
+          <IconV2 className="text-icons-3" name="apple-shortcut" size={10} />
           <span className="text-1 leading-none">F</span>
         </div>
       </SearchBox.Root>
@@ -39,7 +39,7 @@ const StepExecutionToolbar: FC<
           className="rounded-r-none border-r-0 border-cn-borders-2"
           onClick={onCopy}
         >
-          <Icon name="clone" className="size-4 text-icons-3" />
+          <IconV2 name="copy" className="size-4 text-icons-3" />
         </Button>
         <Button variant="outline" size="sm" className="rounded-none border-cn-borders-2" onClick={onEdit}>
           <IconV2 name="edit-pencil" className="size-4 text-icons-3" />

@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, Icon, IconV2, Layout } from '@/components'
+import { Avatar, IconV2, Layout } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import {
@@ -329,7 +329,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       customProps={{
         titleClassName: '!flex max-w-full',
         isResolved: !!payload?.resolved,
-        icon: <Icon name="pr-comment" size={12} />,
+        icon: <IconV2 name="pr-comment" size={12} />,
         isLast,
         handleSaveComment,
         content: renderContentItemsBlock()

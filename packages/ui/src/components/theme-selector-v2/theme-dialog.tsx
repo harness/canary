@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import { Dialog, getModeColorContrastFromFullTheme, Icon, Select, SelectValueOption, Separator } from '@/components'
+import { Dialog, getModeColorContrastFromFullTheme, IconV2, Select, SelectValueOption, Separator } from '@/components'
 import { ColorType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
@@ -91,9 +91,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                           )}
                         />
                         {mode === value && (
-                          <Icon
+                          <IconV2
                             className="absolute bottom-2 left-2 text-cn-foreground-1"
-                            name="checkbox-circle"
+                            name="check-circle-solid"
                             size={16}
                           />
                         )}

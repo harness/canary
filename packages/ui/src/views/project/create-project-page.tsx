@@ -8,7 +8,7 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  Icon,
+  Illustration,
   Link as StyledLink,
   LinkProps as StyledLinkProps,
   Text
@@ -136,7 +136,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
       <div className="relative z-10 w-80 max-w-full">
         <div className="mb-10 grid justify-items-center">
           {isLightTheme ? (
-            <Icon size={112} name="create-workspace-light" />
+            <Illustration name="create-workspace-light" />
           ) : (
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}

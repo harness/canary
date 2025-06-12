@@ -114,7 +114,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     return (
       <NoData
         withBorder
-        iconName="no-data-folder"
+        name="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
         primaryButton={{ label: 'Create file' }}

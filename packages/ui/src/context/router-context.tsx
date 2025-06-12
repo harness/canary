@@ -119,3 +119,5 @@ export const RouterContextProvider = ({
     </RouterContext.Provider>
   )
 }
+
+export { NavLinkProps }

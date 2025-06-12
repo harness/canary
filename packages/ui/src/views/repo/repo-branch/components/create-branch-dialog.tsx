@@ -96,7 +96,7 @@ export function CreateBranchDialog({
         </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
           <Dialog.Body>
-            <div className="space-y-7 mb-7">
+            <div className="mb-7 space-y-7">
               <Fieldset>
                 <FormInput.Text
                   id="name"

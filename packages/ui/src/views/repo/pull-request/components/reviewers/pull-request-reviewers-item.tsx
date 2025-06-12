@@ -21,7 +21,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
     <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
       <div className="flex items-center space-x-2 overflow-hidden">
         <Avatar name={reviewer?.display_name} rounded />
-        <Text className="text-2 text-cn-foreground-1 truncate font-medium" title={reviewer?.display_name}>
+        <Text className="truncate text-2 font-medium text-cn-foreground-1" title={reviewer?.display_name}>
           {reviewer?.display_name}
         </Text>
       </div>

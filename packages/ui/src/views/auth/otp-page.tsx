@@ -83,11 +83,11 @@ export function OTPPage({
 
   return (
     <Floating1ColumnLayout
-      className="bg-cn-background-1 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-cn-background-1 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <div className="text-cn-foreground-1 relative z-10 mb-8 w-80 max-w-full">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
         <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
           <Text className="mt-3" variant="heading-section" align="center" as="h1">

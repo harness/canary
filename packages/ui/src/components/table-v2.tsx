@@ -131,7 +131,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
           <span className="ml-1">
             {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
             {sortDirection === 'desc' && <IconV2 name="arrow-down" size={12} />}
-            {!sortDirection && <IconV2 name="sort-1" size={16} />}
+            {!sortDirection && <IconV2 name="arrows-updown" size={16} />}
           </span>
         )}
       </Layout.Flex>

@@ -111,7 +111,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     (entity: T) => {
       if (enableMultiSelect) {
         const defaultIsEqual = (item: T, entity: T) => {
-          return item.id === entity.id
+          return item.id === entity.id && (currentFolder === null || currentFolder === item.folderPath)
         }
 
         const compareEntities = isEntityEqual ?? defaultIsEqual
@@ -213,7 +213,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         {isLoading ? (
           <SkeletonList />
         ) : (
-          <EntityReferenceList
+          <EntityReferenceList<T, S, F>
             entities={entities}
             selectedEntity={selectedEntity}
             selectedEntities={selectedEntities}
@@ -229,6 +229,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             apiError={apiError}
             showBreadcrumbEllipsis={showBreadcrumbEllipsis}
             enableMultiSelect={enableMultiSelect}
+            isEntityEqual={isEntityEqual}
           />
         )}
       </div>

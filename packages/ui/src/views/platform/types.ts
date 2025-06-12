@@ -7,6 +7,7 @@ export enum DirectionEnum {
 export interface BaseEntityProps {
   id: string
   name: string
+  folderPath?: string
 }
 
 // Props for rendering a single entity item

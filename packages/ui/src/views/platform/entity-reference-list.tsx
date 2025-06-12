@@ -27,6 +27,7 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   apiError?: string | null
   showBreadcrumbEllipsis?: boolean
   enableMultiSelect?: boolean
+  isEntityEqual?: (entity1: T, entity2: T) => boolean
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
@@ -44,7 +45,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   childFolderRenderer,
   apiError,
   showBreadcrumbEllipsis = false,
-  enableMultiSelect = false
+  enableMultiSelect = false,
+  isEntityEqual
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
@@ -109,9 +111,17 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
+              const defaultIsEqual = (item: T, entity: T) => {
+                return item.id === entity.id && (currentFolder === null || currentFolder === item.folderPath)
+              }
+
+              const compareEntities = isEntityEqual || defaultIsEqual
+
               const isSelected = enableMultiSelect
-                ? selectedEntities.some(item => item.id === entity.id)
-                : entity.id === selectedEntity?.id
+                ? selectedEntities.some(item => compareEntities(item, entity))
+                : selectedEntity
+                  ? compareEntities(selectedEntity, entity)
+                  : false
 
               return (
                 <Fragment key={entity.id}>

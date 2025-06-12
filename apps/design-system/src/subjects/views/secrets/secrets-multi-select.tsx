@@ -79,7 +79,8 @@ export const SecretsMultiSelectPage = () => {
           mockSecretsData.map(secret => ({
             ...secret,
             id: secret.secret.identifier,
-            name: secret.secret.name
+            name: secret.secret.name,
+            folderPath: currentFolder
           })) as SecretItem[]
         }
         selectedEntities={selectedSecret || []}

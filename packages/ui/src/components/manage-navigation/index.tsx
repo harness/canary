@@ -129,7 +129,7 @@ export const ManageNavigation = ({
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
           />
-          <Text className="inline-block mt-6" variant="body-single-line-normal" color="foreground-3">
+          <Text className="mt-6 inline-block" variant="body-single-line-normal" color="foreground-3">
             Pinned
           </Text>
           {!currentPinnedItems.length ? (

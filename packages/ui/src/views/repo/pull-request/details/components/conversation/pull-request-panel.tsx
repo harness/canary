@@ -91,7 +91,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="text-cn-foreground-1 font-medium">
+      <h2 className="font-medium text-cn-foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed

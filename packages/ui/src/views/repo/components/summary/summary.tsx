@@ -58,10 +58,10 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'border-cn-borders-warning absolute left-0 border-l-2'
+                        ? 'absolute left-0 border-l-2 border-cn-borders-warning'
                         : file.status === FileStatus.MEDIUM_RISK
-                          ? 'border-cn-borders-warning absolute left-0 border-l-2'
-                          : 'border-cn-borders-danger absolute left-0 border-l-2'
+                          ? 'absolute left-0 border-l-2 border-cn-borders-warning'
+                          : 'absolute left-0 border-l-2 border-cn-borders-danger'
                       : ''
                   }`}
                 >
@@ -71,10 +71,10 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'text-icons-alert ml-3'
+                            ? 'ml-3 text-icons-alert'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'text-icons-warning ml-3'
-                              : 'text-icons-danger ml-3'
+                              ? 'ml-3 text-icons-warning'
+                              : 'ml-3 text-icons-danger'
                         : 'text-icons-9'
                     }
                     name={
@@ -89,7 +89,7 @@ export const Summary = ({
                           : 'folder'
                     }
                   />
-                  <span className="text-cn-foreground-1 w-44 truncate">{file.name}</span>
+                  <span className="w-44 truncate text-cn-foreground-1">{file.name}</span>
                 </div>
               </Table.Cell>
               <Table.Cell>

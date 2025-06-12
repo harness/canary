@@ -130,7 +130,7 @@ const PullRequestMergeSection = ({
               {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
               {isConflicted && (
                 <Layout.Vertical className="ml-6">
-                  <p className="text-14 text-cn-foreground-4 font-normal">
+                  <p className="text-14 font-normal text-cn-foreground-4">
                     Use the&nbsp;
                     <Button variant="link" onClick={handleCommandLineClick} asChild>
                       <span

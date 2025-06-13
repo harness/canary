@@ -3,9 +3,11 @@ import { useState } from 'react'
 import { InputFactory } from '@harnessio/forms'
 import {
   BooleanFormInput,
+  CalendarInput,
   GroupFormInput,
   NumberFormInput,
   RunPipelineDrawerContent as RunPipelineDrawerContentView,
+  SelectFormInput,
   TextFormInput,
   VisualYamlValue,
   type InputLayout
@@ -17,6 +19,8 @@ inputComponentFactory.registerComponent(new TextFormInput())
 inputComponentFactory.registerComponent(new BooleanFormInput())
 inputComponentFactory.registerComponent(new NumberFormInput())
 inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new CalendarInput())
 
 const pipelineInputs = {
   stringRequired: { type: 'string', required: true },
@@ -28,10 +32,41 @@ const pipelineInputs = {
   stringRequiredDefault: { type: 'string', required: true, default: 'Default value 2' },
   boolean: { type: 'boolean' },
   booleanDefaultTrue: { type: 'boolean', default: true },
-  booleanDefaultFalse: { type: 'boolean', default: false }
+  booleanDefaultFalse: { type: 'boolean', default: false },
+  nonComponentFactory: {
+    type: 'string',
+    required: true,
+    ui: {
+      widget: 'non-component-factory'
+    }
+  },
+  stringCalendarUI: {
+    type: 'string',
+    required: true,
+    ui: {
+      widget: 'calendar',
+      placeholder: 'select a date',
+      tooltip: 'todays date will be selected by default',
+      visible: `stringSelectWithDefaultUI=='kubernetes'`
+    }
+  },
+  stringSelectWithDefaultUI: {
+    type: 'string',
+    required: true,
+    options: ['docker', 'kubernetes', 'helm'],
+    default: 'docker',
+    ui: {
+      widget: 'select',
+      placeholder: 'select a connector type',
+      tooltip: 'docker connector will be selected by default'
+    }
+  }
 }
 
 const layout: InputLayout = [
+  'stringSelectWithDefaultUI',
+  'stringCalendarUI',
+  'nonComponentFactory',
   'stringRequired',
   {
     items: ['stringPattern', 'stringRequiredPattern']

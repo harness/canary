@@ -19,6 +19,7 @@ export interface SelectFormInputConfig {
     tooltip?: string
     isDisabled?: (values: AnyFormikValue) => boolean
     disabledValue?: string
+    placeholder?: string
   } & RuntimeInputConfig
 }
 
@@ -27,7 +28,6 @@ type SelectFormInputProps = InputProps<AnyFormikValue, SelectFormInputConfig>
 function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
   const { path, input } = props
   const { label, description, inputConfig, readonly, placeholder } = input
-
   const methods = useFormContext()
   const values = methods.watch()
 

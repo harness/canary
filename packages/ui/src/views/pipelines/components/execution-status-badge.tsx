@@ -1,4 +1,4 @@
-import { Icon as CanaryIcon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { PipelineExecutionStatus } from '../common/execution-types'
 
@@ -23,7 +23,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-1 bg-cn-background-softgray/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
-            <CanaryIcon size={12} name="pending-clock" />
+            <IconV2 name="clock-solid" />
             <span className="text-cn-foreground-disabled">Pending</span>
           </div>
           {duration && <span className="text-cn-foreground-disabled">{duration}</span>}
@@ -38,7 +38,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="border-studio-3/[0.12] bg-studio-3/10 flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
           <div className="flex items-center gap-1">
-            <CanaryIcon size={16} name="running" className="animate-spin text-cn-foreground-warning" />
+            <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
             <span className="text-studio-3">Running</span>
           </div>
           {duration && <span className="text-studio-3">{duration}</span>}
@@ -55,7 +55,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-[#F76E6E1F] bg-[#F76E6E1A]/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
-            <CanaryIcon name="fail-legacy" width={20} />
+            <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />
             <span className="text-[#ED5E5E]">Failed</span>
           </div>
           {duration && <span className="text-[#ED5E5E]">{duration}</span>}
@@ -70,7 +70,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-success bg-cn-background-success/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5 text-cn-foreground-success">
-            <CanaryIcon size={12} name="success" />
+            <IconV2 name="check-circle-solid" />
             <span>Success</span>
           </div>
           {duration && <span className="text-cn-foreground-success">{duration}</span>}

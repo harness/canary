@@ -33,6 +33,7 @@ export default {
     display: 'flex',
     alignItems: 'center',
     color: 'var(--cn-text-2)',
+    '@apply transition-colors': '',
 
     '&-outlined': {
       minHeight: 'var(--cn-tabs-item-min-height)',
@@ -47,6 +48,10 @@ export default {
         backgroundColor: 'var(--cn-bg-3)',
         borderRadius: 'var(--cn-tabs-item-radius)',
         color: 'var(--cn-text-1)'
+      },
+
+      '&:hover': {
+        color: 'var(--cn-text-2)'
       }
     },
 
@@ -64,6 +69,10 @@ export default {
         borderColor: 'var(--cn-set-gray-soft-bg)',
         color: 'var(--cn-set-gray-soft-text)',
         boxShadow: 'var(--cn-shadow-1)'
+      },
+
+      '&:hover': {
+        color: 'var(--cn-text-2)'
       }
     },
 
@@ -83,6 +92,10 @@ export default {
           'var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rb) var(--cn-tabs-item-overlined-rb)',
         backgroundColor: 'var(--cn-bg-1)',
         color: 'var(--cn-text-1)'
+      },
+
+      '&:hover': {
+        color: 'var(--cn-text-1)'
       }
     },
 
@@ -97,6 +110,10 @@ export default {
 
       '&:where(.cn-tabs-trigger-active)': {
         borderColor: 'var(--cn-border-1)',
+        color: 'var(--cn-text-1)'
+      },
+
+      '&:hover': {
         color: 'var(--cn-text-1)'
       }
     }

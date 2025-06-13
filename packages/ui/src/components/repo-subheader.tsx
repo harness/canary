@@ -1,6 +1,6 @@
 import { Tabs } from '@/components'
 import { useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
+import { PageTabsNavHeader } from '@views/components/PageTabsNavHeader'
 
 export enum RepoTabsKeys {
   SUMMARY = 'summary',
@@ -23,19 +23,15 @@ export const RepoSubheader = ({ showPipelinesTab = true, className }: RepoSubhea
   const { t } = useTranslation()
 
   return (
-    <SandboxLayout.SubHeader className={className}>
-      <Tabs.NavRoot>
-        <Tabs.List className="border-cn-borders-3 border-b px-6">
-          <Tabs.Trigger value="summary">{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
-          <Tabs.Trigger value="code">{t('views:repos.files', 'Files')}</Tabs.Trigger>
-          {showPipelinesTab && <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>}
-          <Tabs.Trigger value="commits">{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
-          <Tabs.Trigger value="tags">{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
-          <Tabs.Trigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
-          <Tabs.Trigger value="branches">{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
-          <Tabs.Trigger value="settings">{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
-        </Tabs.List>
-      </Tabs.NavRoot>
-    </SandboxLayout.SubHeader>
+    <PageTabsNavHeader className={className}>
+      <Tabs.Trigger value="summary">{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
+      <Tabs.Trigger value="code">{t('views:repos.files', 'Files')}</Tabs.Trigger>
+      {showPipelinesTab && <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>}
+      <Tabs.Trigger value="commits">{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
+      <Tabs.Trigger value="tags">{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
+      <Tabs.Trigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
+      <Tabs.Trigger value="branches">{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
+      <Tabs.Trigger value="settings">{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
+    </PageTabsNavHeader>
   )
 }

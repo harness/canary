@@ -1,4 +1,4 @@
-import { IconProps, IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
+import { IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@/utils'
 
 export interface InformerProps extends Omit<TooltipProps, 'children'> {
@@ -7,7 +7,7 @@ export interface InformerProps extends Omit<TooltipProps, 'children'> {
    * If disabled, the tooltip will not be shown
    */
   disabled?: boolean
-  iconProps?: Omit<IconProps, 'name'> & { name?: IconPropsV2['name'] }
+  iconProps?: IconPropsV2
 }
 
 export const Informer = ({ className, disabled, iconProps, ...props }: InformerProps) => (

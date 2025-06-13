@@ -1,6 +1,6 @@
 import { TFunctionWithFallback } from '@/context'
 import { CheckboxOptions, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { booleanParser } from '@harnessio/filters'
 
@@ -44,7 +44,7 @@ export const getConnectorListFilterOptions = (
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
       filterFieldConfig: {
-        label: <Icon name="star-filled" className="fill-icons-alert" size={14} />
+        label: <IconV2 name="star-solid" className="fill-icons-alert" size={14} />
       },
       parser: booleanParser
     }

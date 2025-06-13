@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useState } from 'react'
 
-import { Accordion, Button, CopyButton, Icon, IconV2, Layout, StackedList } from '@/components'
+import { Accordion, Button, CopyButton, IconV2, Layout, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -117,9 +117,9 @@ const PullRequestMergeSection = ({
                 unchecked ? (
                   <IconV2 name="clock" className="text-icons-alert" />
                 ) : (
-                  <Icon
+                  <IconV2
                     className={mergeable ? 'text-icons-success' : 'text-icons-danger'}
-                    name={mergeable ? 'success' : 'triangle-warning'}
+                    name={mergeable ? 'check-circle-solid' : 'warning-triangle'}
                   />
                 )
               }

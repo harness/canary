@@ -1,4 +1,4 @@
-import { Icon, ToggleGroup } from '@/components'
+import { IconV2, ToggleGroup } from '@/components'
 import { useTheme } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -36,7 +36,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
         className="rounded text-2 disabled:opacity-100"
         size="xs"
       >
-        {!isYamlValid && <Icon name="fail-legacy" className="mr-1 text-cn-foreground-danger" />}
+        {!isYamlValid && <IconV2 name="xmark-circle-solid" className="mr-1 text-cn-foreground-danger" />}
         Visual
       </ToggleGroup.Item>
       <ToggleGroup.Item value="yaml" className="rounded text-2" size="xs">

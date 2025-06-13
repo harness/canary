@@ -99,7 +99,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           <NoData
             withBorder
             textWrapperClassName="max-w-[350px]"
-            iconName="no-data-cog"
+            name="no-data-cog"
             title={t('views:noData.noWebhookExecution', 'No webhook executions yet')}
             description={[
               t(

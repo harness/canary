@@ -1,7 +1,8 @@
 import { ComponentProps, FC, ReactNode } from 'react'
 
-import TooltipArrowIcon from '@/icons/tooltip-arrow.svg'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+
+import { Illustration } from './illustration'
 
 type TooltipPrimitiveRootType = ComponentProps<typeof TooltipPrimitive.Root>
 type TooltipPrimitiveContentType = ComponentProps<typeof TooltipPrimitive.Content>
@@ -31,9 +32,7 @@ export const Tooltip: FC<TooltipProps> = ({
         <div>{content}</div>
         {!hideArrow && (
           <TooltipPrimitive.Arrow width={20} height={8} asChild>
-            <div className="cn-tooltip-arrow">
-              <TooltipArrowIcon />
-            </div>
+            <Illustration className="cn-tooltip-arrow" name="tooltip-arrow" />
           </TooltipPrimitive.Arrow>
         )}
       </TooltipPrimitive.Content>

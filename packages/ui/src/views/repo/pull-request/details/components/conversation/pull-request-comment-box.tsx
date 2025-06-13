@@ -1,11 +1,11 @@
 import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
 
-import { Avatar, Button, Icon, IconProps, IconV2, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 
 interface ToolbarItem {
-  icon: IconProps['name']
+  icon: IconV2NamesType
   action: ToolbarAction
   title?: string
   size?: number
@@ -123,11 +123,10 @@ export const PullRequestCommentBox = ({
       { icon: 'suggestion', action: ToolbarAction.SUGGESTION },
       { icon: 'header', action: ToolbarAction.HEADER },
       { icon: 'bold', action: ToolbarAction.BOLD },
-      { icon: 'italicize', action: ToolbarAction.ITALIC },
+      { icon: 'italic', action: ToolbarAction.ITALIC },
       { icon: 'attachment', action: ToolbarAction.UPLOAD, onClick: handleFileSelect },
       { icon: 'list', action: ToolbarAction.UNORDER_LIST },
-      // list-select -  IconV2
-      { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
+      { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
   }, [])
@@ -187,7 +186,7 @@ export const PullRequestCommentBox = ({
                   return (
                     <Fragment key={`${comment}-${index}`}>
                       <Button size="sm" variant="ghost" iconOnly onClick={item?.onClick}>
-                        <Icon className="text-icons-9" name={item.icon} />
+                        <IconV2 className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>

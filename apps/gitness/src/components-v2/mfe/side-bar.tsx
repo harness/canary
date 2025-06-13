@@ -4,9 +4,8 @@ import { noop } from 'lodash-es'
 
 import {
   HarnessLogo,
-  Icon,
-  IconProps,
   IconV2,
+  IconV2NamesType,
   Sidebar,
   SidebarSearchLegacy,
   User,
@@ -45,12 +44,12 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { routes, hooks } = useMFEContext()
   const { forceLogout } = hooks?.useLogout?.() || {}
 
-  const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
+  const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconV2NamesType }) => (
     <Sidebar.MenuItem>
       <NavLink className="block" to={to} end>
         {({ isActive }) => (
           <Sidebar.MenuButton asChild isActive={isActive}>
-            <Sidebar.MenuItemText text={text} icon={<Icon name={iconName} size={14} />} active={isActive} />
+            <Sidebar.MenuItemText text={text} icon={<IconV2 name={iconName} size={14} />} active={isActive} />
           </Sidebar.MenuButton>
         )}
       </NavLink>
@@ -67,8 +66,8 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
           <Sidebar.Group>
             <Sidebar.GroupContent>
               <Sidebar.Menu>
-                {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repositories-gradient' })}
-                {renderMenuItem({ to: '/manage-repositories', text: 'Manage Repositories', iconName: 'repositories' })}
+                {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repository' })}
+                {renderMenuItem({ to: '/manage-repositories', text: 'Manage Repositories', iconName: 'repository' })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
@@ -78,7 +77,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 {renderMenuItem({
                   to: routes?.toProjectSettings?.() || '',
                   text: 'Project Settings',
-                  iconName: 'settings-1'
+                  iconName: 'settings'
                 })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
@@ -89,12 +88,12 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 {renderMenuItem({
                   to: routes?.toAccountSettings?.() || '',
                   text: 'Account Settings',
-                  iconName: 'settings-1'
+                  iconName: 'settings'
                 })}
                 {renderMenuItem({
                   to: routes?.toOrgSettings?.() || '',
                   text: 'Organization Settings',
-                  iconName: 'settings-2'
+                  iconName: 'settings'
                 })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>

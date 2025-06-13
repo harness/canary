@@ -9,7 +9,7 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  Icon,
+  IconV2,
   Label,
   SkeletonForm,
   Tag
@@ -186,7 +186,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               ))}
 
               <Button className="mt-3.5 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
-                <Icon name="bold-plus" size={10} />
+                <IconV2 name="plus" size={10} />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>
             </ControlGroup>

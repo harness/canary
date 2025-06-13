@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -41,7 +41,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                 </Table.Cell>
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-x-1.5">
-                    <Icon name="dot" size={8} className="text-cn-foreground-success" />
+                    <IconV2 name="circle" size={8} className="text-cn-foreground-success" />
                     <span className="text-cn-foreground-3">{t('views:profileSettings.active', 'Active')}</span>
                   </div>
                 </Table.Cell>

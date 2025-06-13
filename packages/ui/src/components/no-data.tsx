@@ -4,27 +4,13 @@ import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 import { Button } from './button'
-import { Icon, IconProps } from './icon'
+import { Illustration, IllustrationsNameType } from './illustration'
 import { Text } from './text'
 
 export interface NoDataProps {
   title: string
-  // TODO: Design system: Update it to IconPropsV2
-  iconName?:
-    | Pick<IconProps, 'name'>
-    | 'no-data-folder'
-    | 'no-search-magnifying-glass'
-    | 'no-data-merge'
-    | 'no-data-cog'
-    | 'no-data-webhooks'
-    | 'no-data-branches'
-    | 'no-data-members'
-    | 'no-repository'
-    | 'no-data-error'
-    | 'no-data-commits'
-    | 'no-data-pr'
-    | 'no-data-tags'
-  iconSize?: number
+  name?: IllustrationsNameType
+  size?: number
   description: string[]
   primaryButton?: {
     label: string
@@ -44,8 +30,8 @@ export interface NoDataProps {
 }
 
 export const NoData: FC<NoDataProps> = ({
-  iconName,
-  iconSize = 112,
+  name,
+  size = 112,
   title,
   description,
   primaryButton,
@@ -63,7 +49,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} themeDependent />}
+      {name && <Illustration name={name} size={size} />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
         <Text variant="heading-section">{title}</Text>
         {description && (

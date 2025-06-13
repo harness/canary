@@ -14,7 +14,7 @@ export const getPinnedMenuItemsData = ({
 }): NavbarItemType[] => [
   {
     id: 0,
-    iconName: 'repositories-gradient',
+    iconName: 'repository',
     title: t('component:navbar.repositories'),
     description: 'Integrated & familiar git experience.',
     to: routes.toRepositories({ spaceId }),

@@ -1,49 +1,87 @@
-import * as React from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  FC,
+  forwardRef,
+  Fragment,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
+import { Button, ButtonProps, ButtonSizes, ButtonVariants, Tooltip, TooltipProps } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
-import { cn } from '@utils/cn'
-import { cva, type VariantProps } from 'class-variance-authority'
 
-const toggleVariants = cva(
-  `inline-flex items-center justify-center text-2 font-medium text-cn-foreground-2 
-  transition-colors 
-  hover:text-cn-foreground-2 disabled:pointer-events-none 
-  disabled:opacity-50 data-[state=on]:text-cn-foreground-1`,
-  {
-    variants: {
-      variant: {
-        default: 'rounded bg-transparent',
-        outline:
-          'rounded border border-cn-borders-2 bg-transparent shadow-sm hover:bg-cn-background-3 hover:text-cn-foreground-1',
-        compact: ''
-      },
-      size: {
-        default: 'h-9 px-3',
-        sm: 'h-8 px-2',
-        lg: 'h-10 px-3',
-        xs: 'h-6 px-[1.125rem]',
-        icon: 'size-8'
-      },
-      theme: {
-        light: 'data-[state=on]:bg-cn-background-1',
-        dark: 'data-[state=on]:bg-cn-background-hover'
-      }
+type ToggleVariant = 'outline-primary' | 'outline-secondary' | 'ghost-primary' | 'ghost-secondary'
+type ToggleTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
+
+export interface ToggleProps extends Pick<ButtonProps, 'rounded' | 'iconOnly'> {
+  variant?: ToggleVariant
+  size?: ButtonSizes
+  tooltipProps?: ToggleTooltipProps
+}
+
+const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
+  tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
+
+const Toggle = forwardRef<
+  ElementRef<typeof TogglePrimitive.Root>,
+  ComponentPropsWithoutRef<typeof TogglePrimitive.Root> & ToggleProps
+>(
+  (
+    {
+      className,
+      variant = 'outline-primary',
+      size = 'default',
+      pressed: pressedProp = false,
+      rounded,
+      iconOnly,
+      children,
+      onPressedChange,
+      disabled,
+      tooltipProps
     },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
-      theme: 'dark'
-    }
+    ref
+  ) => {
+    const [pressed, setPressed] = useState(pressedProp)
+
+    const buttonVariant = useMemo(() => {
+      const [inactiveVariant, activeVariant] = variant.split('-') as [ButtonVariants, ButtonVariants]
+      return pressed ? activeVariant : inactiveVariant
+    }, [variant, pressed])
+
+    useEffect(() => {
+      setPressed(pressedProp)
+    }, [pressedProp])
+
+    const onChange = useCallback(
+      (val: boolean) => {
+        setPressed(val)
+        onPressedChange?.(val)
+      },
+      [onPressedChange]
+    )
+
+    return (
+      <TooltipWrapper tooltipProps={tooltipProps}>
+        <TogglePrimitive.Root ref={ref} asChild pressed={pressed} onPressedChange={onChange} disabled={disabled}>
+          <Button
+            className={className}
+            variant={buttonVariant}
+            disabled={disabled}
+            size={size}
+            rounded={rounded}
+            iconOnly={iconOnly}
+          >
+            {children}
+          </Button>
+        </TogglePrimitive.Root>
+      </TooltipWrapper>
+    )
   }
 )
-
-const Toggle = React.forwardRef<
-  React.ElementRef<typeof TogglePrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>
->(({ className, variant, size, ...props }, ref) => (
-  <TogglePrimitive.Root ref={ref} className={cn(toggleVariants({ variant, size, className }))} {...props} />
-))
-
 Toggle.displayName = TogglePrimitive.Root.displayName
 
-export { Toggle, toggleVariants }
+export { Toggle }

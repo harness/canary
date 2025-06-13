@@ -72,13 +72,13 @@ const textVariants = cva('', {
       danger: 'text-cn-foreground-danger'
     },
     lineClamp: {
+      default: '',
       1: 'line-clamp-1',
       2: 'line-clamp-2',
       3: 'line-clamp-3',
       4: 'line-clamp-4',
       5: 'line-clamp-5',
-      6: 'line-clamp-6',
-      none: 'line-clamp-none'
+      6: 'line-clamp-6'
     },
     wrap: {
       wrap: 'text-wrap',
@@ -167,16 +167,16 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
 
     const getTitleFromRef = useCallback(
       (element: HTMLElement | null) => {
-        if (element && truncate) {
+        if (element && (truncate || lineClamp)) {
           setTitleText(element.innerText || '')
         }
       },
-      [truncate]
+      [truncate, lineClamp]
     )
 
     const compRef = useMergeRefs<HTMLElement>([getTitleFromRef, ref])
 
-    const isTruncated = lineClamp && lineClamp !== 'none' ? false : truncate
+    const isTruncated = lineClamp ? false : truncate
 
     return (
       <Comp
@@ -184,7 +184,7 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
         className={cn(textVariants({ variant, align, color, truncate: isTruncated, lineClamp, wrap }), className)}
         {...props}
         {...wrapConditionalObjectElement({ role: 'heading' }, isHeading)}
-        {...wrapConditionalObjectElement({ title: titleText }, !!isTruncated)}
+        {...wrapConditionalObjectElement({ title: titleText }, !!isTruncated || !!lineClamp)}
       >
         {children}
       </Comp>

@@ -214,6 +214,10 @@ The `Text` component supports various color options to enhance visibility and co
   client:only
   code={`<div className="grid gap-4">
     <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
+        <Text>dummyText</Text>
+    </div>
+    <div>
         <Text variant="heading-base" color="foreground-1" className="underline mb-1">left:</Text>
         <Text align="left">dummyText</Text>
     </div>
@@ -258,6 +262,34 @@ The `Text` component supports various color options to enhance visibility and co
   )}
 />
 
+## `Truncate`
+
+The `truncate` prop allows you to truncate text with an ellipsis if it overflows its container. This is particularly useful for single-line text that should not wrap.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="max-w-[400px]">
+    <Text variant="body-normal" truncate>
+        Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.
+    </Text>
+</div>`}
+/>
+
+## `Line Clamp`
+
+The `lineClamp` prop controls how many lines of text are shown before truncating. It can be set to a specific number or to 'default' for the component's default behavior.
+
+> Note: The `lineClamp` prop takes precedence over the `truncate` prop when both are used, as it provides more specific control over text clamping.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="max-w-[400px]">
+    <Text variant="body-normal" lineClamp="2">
+        Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.
+    </Text>
+</div>`}
+/>
+
 ## API Reference
 
 <DocsPage.PropsTable
@@ -281,7 +313,7 @@ The `Text` component supports various color options to enhance visibility and co
     {
       name: "align",
       description: "The text alignment",
-      defaultValue: "initial",
+      defaultValue: undefined,
       required: false,
       value: "'left' | 'center' | 'right'",
     },
@@ -313,9 +345,9 @@ The `Text` component supports various color options to enhance visibility and co
       name: "lineClamp",
       description:
         "Controls how many lines of text are shown before truncating",
-      defaultValue: "none",
+      defaultValue: undefined,
       required: false,
-      value: "'1' | '2' | '3' | '4' | '5' | '6' | 'none'",
+      value: "'1' | '2' | '3' | '4' | '5' | '6' | 'default'",
     },
     {
       name: "wrap",

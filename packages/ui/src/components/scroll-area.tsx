@@ -1,110 +1,107 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, UIEventHandler, useRef, useState } from 'react'
+import { FC, ReactNode, UIEvent, useCallback, useLayoutEffect, useRef } from 'react'
 
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
 
-export type ScrollAreaProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
-  viewportClassName?: string
-  scrollThumbClassName?: string
-  orientation?: 'vertical' | 'horizontal' | 'both'
-  scrollBarProps?: ScrollBarProps & {
-    vertical?: ScrollBarProps
-    horizontal?: ScrollBarProps
-  }
+type ScrollBarProps = {
+  className?: string
+  orientation?: 'vertical' | 'horizontal'
 }
 
-const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, ScrollAreaProps>(
-  (
-    {
-      className,
-      children,
-      viewportClassName,
-      scrollThumbClassName,
-      orientation = 'vertical',
-      scrollBarProps,
-      onScroll,
-      ...props
-    },
-    ref
-  ) => {
-    const [isScrolling, setIsScrolling] = useState(false)
-    const timeoutRef = useRef<number | null>(null)
+const ScrollBar: FC<ScrollBarProps> = ({ className, orientation = 'vertical', ...props }) => (
+  <ScrollAreaPrimitive.ScrollAreaScrollbar
+    orientation={orientation}
+    className={cn(
+      'cn-scroll-area-scrollbar',
+      {
+        'cn-scroll-area-scrollbar-vertical': orientation === 'vertical',
+        'cn-scroll-area-scrollbar-horizontal': orientation === 'horizontal'
+      },
+      className
+    )}
+    {...props}
+  >
+    <ScrollAreaPrimitive.ScrollAreaThumb className="cn-scroll-area-thumb" />
+  </ScrollAreaPrimitive.ScrollAreaScrollbar>
+)
 
-    const isVertical = orientation === 'vertical' || orientation === 'both'
-    const isHorizontal = orientation === 'horizontal' || orientation === 'both'
+type ScrollPosition = {
+  isTop: boolean
+  isBottom: boolean
+  isLeft: boolean
+  isRight: boolean
+}
 
-    const handleScroll: UIEventHandler<HTMLDivElement> = event => {
-      setIsScrolling(true)
+export type ScrollAreaProps = {
+  className?: string
+  children: ReactNode
+  viewportClassName?: string
+  orientation?: 'vertical' | 'horizontal' | 'both'
+  onScroll?: (event: UIEvent<HTMLDivElement>, position?: ScrollPosition) => void
+  direction?: 'ltr' | 'rtl'
+}
 
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+const ScrollArea: FC<ScrollAreaProps> = ({
+  className,
+  children,
+  viewportClassName,
+  orientation = 'vertical',
+  direction,
+  onScroll
+}) => {
+  const viewportRef = useRef<HTMLDivElement | null>(null)
+
+  const handleScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      const el = viewportRef.current
+      if (!el || !onScroll) return
+
+      const { scrollTop, scrollLeft, scrollHeight, scrollWidth, clientHeight, clientWidth } = el
+
+      const isTop = scrollTop === 0
+      const isBottom = scrollTop + clientHeight >= scrollHeight - 1
+
+      let isLeft: boolean, isRight: boolean
+
+      if (direction === 'rtl') {
+        const offset = Math.abs(scrollLeft)
+        isRight = offset === 0
+        isLeft = offset + clientWidth >= scrollWidth - 1
+      } else {
+        isLeft = scrollLeft === 0
+        isRight = scrollLeft + clientWidth >= scrollWidth - 1
       }
 
-      onScroll?.(event)
+      const newPosition: ScrollPosition = { isTop, isBottom, isLeft, isRight }
 
-      timeoutRef.current = window.setTimeout(() => {
-        setIsScrolling(false)
-        timeoutRef.current = null
-      }, 1000)
-    }
+      onScroll(event, newPosition)
+    },
+    [direction, onScroll]
+  )
 
-    const getScrollBarProps = (orientation: 'vertical' | 'horizontal') => ({
-      orientation,
-      ...scrollBarProps,
-      ...scrollBarProps?.[orientation],
-      className: cn(
-        { 'opacity-100': isScrolling },
-        scrollBarProps?.className,
-        scrollBarProps?.[orientation]?.className
-      ),
-      scrollThumbClassName: cn(
-        scrollThumbClassName,
-        scrollBarProps?.scrollThumbClassName,
-        scrollBarProps?.[orientation]?.scrollThumbClassName
-      )
-    })
+  const isVertical = orientation === 'vertical' || orientation === 'both'
+  const isHorizontal = orientation === 'horizontal' || orientation === 'both'
 
-    return (
-      <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden flex-1', className)} {...props}>
-        <ScrollAreaPrimitive.Viewport
-          className={cn('size-full rounded-[inherit] [&>div]:!flex [&>div]:flex-col', viewportClassName)}
-          onScroll={handleScroll}
-        >
-          {children}
-        </ScrollAreaPrimitive.Viewport>
+  useLayoutEffect(() => {
+    handleScroll({ currentTarget: viewportRef.current as HTMLDivElement } as UIEvent<HTMLDivElement>)
+  }, [handleScroll])
 
-        {isVertical && <ScrollBar {...getScrollBarProps('vertical')} />}
-        {isHorizontal && <ScrollBar {...getScrollBarProps('horizontal')} />}
-        <ScrollAreaPrimitive.Corner />
-      </ScrollAreaPrimitive.Root>
-    )
-  }
-)
+  return (
+    <ScrollAreaPrimitive.Root className={cn('cn-scroll-area cn-scroll-area-hover', className)} dir={direction}>
+      <ScrollAreaPrimitive.Viewport
+        className={cn('cn-scroll-area-viewport', viewportClassName)}
+        onScroll={handleScroll}
+        ref={viewportRef}
+      >
+        {children}
+      </ScrollAreaPrimitive.Viewport>
+
+      {isVertical && <ScrollBar />}
+      {isHorizontal && <ScrollBar orientation="horizontal" />}
+      <ScrollAreaPrimitive.Corner />
+    </ScrollAreaPrimitive.Root>
+  )
+}
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
 
-type ScrollBarProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
-  scrollThumbClassName?: string
-}
-
-const ScrollBar = forwardRef<ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>, ScrollBarProps>(
-  ({ className, orientation = 'vertical', scrollThumbClassName, ...props }, ref) => (
-    <ScrollAreaPrimitive.ScrollAreaScrollbar
-      ref={ref}
-      orientation={orientation}
-      className={cn(
-        'group absolute z-10 flex p-1 touch-none select-none opacity-0 hover:opacity-100 transition-opacity',
-        orientation === 'vertical' && 'right-0 top-0 h-full w-3.5 border-l border-l-transparent ',
-        orientation === 'horizontal' && 'bottom-0 left-0 h-3.5 flex-col border-t border-t-transparent',
-        className
-      )}
-      {...props}
-    >
-      <ScrollAreaPrimitive.ScrollAreaThumb
-        className={cn('relative flex-1 rounded-full cn-scroll-area-thumb', scrollThumbClassName)}
-      />
-    </ScrollAreaPrimitive.ScrollAreaScrollbar>
-  )
-)
-ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
-
-export { ScrollArea, ScrollBar }
+export { ScrollArea }

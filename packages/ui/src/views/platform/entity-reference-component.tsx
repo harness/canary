@@ -9,11 +9,11 @@ import { EntityReferenceList } from './entity-reference-list'
 import {
   BaseEntityProps,
   ChildFolderRendererProps,
-  defaultEntityComparator,
   DirectionEnum,
   EntityRendererProps,
   ParentFolderRendererProps
 } from './types'
+import { defaultEntityComparator } from './utils/utils'
 
 export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
   // Data

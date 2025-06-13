@@ -6,11 +6,11 @@ import { cn } from '@utils/cn'
 import {
   BaseEntityProps,
   ChildFolderRendererProps,
-  defaultEntityComparator,
   DirectionEnum,
   EntityRendererProps,
   ParentFolderRendererProps
 } from './types'
+import { defaultEntityComparator } from './utils/utils'
 
 export interface EntityReferenceListProps<T extends BaseEntityProps, S = string, F = string> {
   entities: T[]

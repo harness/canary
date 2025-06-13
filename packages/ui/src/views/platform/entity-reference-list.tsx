@@ -10,10 +10,12 @@ import {
   EntityRendererProps,
   ParentFolderRendererProps
 } from './types'
+import { defaultEntityComparator } from './utils/utils'
 
 export interface EntityReferenceListProps<T extends BaseEntityProps, S = string, F = string> {
   entities: T[]
-  selectedEntity: T | null
+  selectedEntity?: T | null
+  selectedEntities?: T[]
   parentFolder: S | null
   childFolder: F | null
   currentFolder: string | null
@@ -25,11 +27,14 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
   apiError?: string | null
   showBreadcrumbEllipsis?: boolean
+  enableMultiSelect?: boolean
+  compareFn?: (entity1: T, entity2: T) => boolean
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
   entities,
   selectedEntity,
+  selectedEntities = [],
   parentFolder,
   childFolder,
   currentFolder,
@@ -40,7 +45,9 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   parentFolderRenderer,
   childFolderRenderer,
   apiError,
-  showBreadcrumbEllipsis = false
+  showBreadcrumbEllipsis = false,
+  enableMultiSelect = false,
+  compareFn
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
@@ -105,7 +112,14 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              const isSelected = entity.id === selectedEntity?.id
+              // Use either the custom comparator or the default one
+              const compareEntities = compareFn || defaultEntityComparator
+
+              const isSelected = enableMultiSelect
+                ? selectedEntities.some(item => compareEntities(item, entity))
+                : selectedEntity
+                  ? compareEntities(selectedEntity, entity)
+                  : false
 
               return (
                 <Fragment key={entity.id}>
@@ -113,12 +127,14 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                     ? renderEntity({
                         entity,
                         isSelected,
-                        onSelect: () => handleSelectEntity(entity)
+                        onSelect: () => handleSelectEntity(entity),
+                        showCheckbox: enableMultiSelect
                       })
                     : defaultEntityRenderer({
                         entity,
                         isSelected,
-                        onSelect: () => handleSelectEntity(entity)
+                        onSelect: () => handleSelectEntity(entity),
+                        showCheckbox: enableMultiSelect
                       })}
                 </Fragment>
               )

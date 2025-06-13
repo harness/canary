@@ -7,6 +7,7 @@ export enum DirectionEnum {
 export interface BaseEntityProps {
   id: string
   name: string
+  folderPath?: string
 }
 
 // Props for rendering a single entity item
@@ -14,6 +15,7 @@ export interface EntityRendererProps<T extends BaseEntityProps> {
   entity: T
   isSelected: boolean
   onSelect: (entity: T) => void
+  showCheckbox?: boolean
 }
 
 export interface ParentFolderRendererProps<S = string> {

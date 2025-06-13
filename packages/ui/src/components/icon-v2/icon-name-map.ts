@@ -340,6 +340,8 @@ import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
 import Pin from './icons/pin.svg'
 import Pipeline from './icons/pipeline.svg'
+import PlaySolid from './icons/play-solid.svg'
+import Play from './icons/play.svg'
 import PlusCircleSolid from './icons/plus-circle-solid.svg'
 import PlusCircle from './icons/plus-circle.svg'
 import PlusSquare from './icons/plus-square.svg'
@@ -410,6 +412,8 @@ import Star from './icons/star.svg'
 import StatsDownSquare from './icons/stats-down-square.svg'
 import StatsReport from './icons/stats-report.svg'
 import StatsUpSquare from './icons/stats-up-square.svg'
+import StopSolid from './icons/stop-solid.svg'
+import Stop from './icons/stop.svg'
 import Strategy from './icons/strategy.svg'
 import SubmitDocument from './icons/submit-document.svg'
 import Suggestion from './icons/suggestion.svg'
@@ -805,6 +809,8 @@ export const IconNameMapV2 = {
   'pin-solid': PinSolid,
   pin: Pin,
   pipeline: Pipeline,
+  'play-solid': PlaySolid,
+  play: Play,
   'plus-circle-solid': PlusCircleSolid,
   'plus-circle': PlusCircle,
   'plus-square': PlusSquare,
@@ -875,6 +881,8 @@ export const IconNameMapV2 = {
   'stats-down-square': StatsDownSquare,
   'stats-report': StatsReport,
   'stats-up-square': StatsUpSquare,
+  'stop-solid': StopSolid,
+  stop: Stop,
   strategy: Strategy,
   'submit-document': SubmitDocument,
   suggestion: Suggestion,

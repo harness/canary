@@ -1,4 +1,4 @@
-import { IconProps } from '@/components'
+import { IconV2NamesType } from '@/components'
 
 export enum MenuGroupTypes {
   GENERAL = 'general',
@@ -17,7 +17,7 @@ type NavbarItemIdType = number | string
 interface NavbarItemType {
   id: NavbarItemIdType
   title: string
-  iconName?: IconProps['name']
+  iconName?: IconV2NamesType
   description?: string
   to: string
   permanentlyPinned?: boolean
@@ -33,7 +33,7 @@ export enum UserMenuKeys {
 
 interface UserMenuItemType {
   key: UserMenuKeys
-  iconName: IconProps['name']
+  iconName: IconV2NamesType
   title: string
   to: string | null
   isSeparated: boolean

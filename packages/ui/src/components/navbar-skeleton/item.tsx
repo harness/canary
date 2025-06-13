@@ -1,6 +1,6 @@
 import { forwardRef, ReactElement } from 'react'
 
-import { Illustration, Text } from '@/components'
+import { Text } from '@/components'
 import { useTheme } from '@/context/theme'
 import { cn } from '@utils/cn'
 
@@ -46,13 +46,13 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
                 )}
               >
-                <Illustration
+                {/* <Illustration
                   className={cn('absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-foreground-3', {
                     'text-sidebar-icon-2': isMainNav
                   })}
                   name="sub-menu-ellipse"
                   size={18}
-                />
+                /> */}
                 {icon}
               </div>
             ) : (

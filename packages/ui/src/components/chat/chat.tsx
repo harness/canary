@@ -1,9 +1,6 @@
 import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
-import { Button, IconV2, Input } from '@/components'
-import { useTheme } from '@/context'
-import ChatAvatarIconLightTheme from '@/icons/chat-avatar-light-theme.svg'
-import ChatAvatarIcon from '@/icons/chat-avatar.svg'
+import { Button, IconV2, Illustration, Input } from '@/components'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
@@ -41,19 +38,13 @@ interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
 }
 
 const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
-  const { isLightTheme } = useTheme()
-
   return (
     <div
       className={cn('flex gap-x-3 content-center items-start', {
         'place-content-end': self
       })}
     >
-      {!self && (
-        <div className="mt-0.5">
-          {avatar ? avatar : isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />}
-        </div>
-      )}
+      {!self && <div className="mt-0.5">{avatar ? avatar : <Illustration name="chat-avatar" themeDependent />}</div>}
       <div
         className={cn('flex flex-col gap-3', {
           'w-[85%] items-end': self,
@@ -91,11 +82,9 @@ interface TypingProps {
 }
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
-  const { isLightTheme } = useTheme()
-
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
-      {avatar || (isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />)}
+      {avatar || <Illustration name="chat-avatar" themeDependent />}
       <span className="size-2.5 rounded-full bg-cn-background-3" aria-hidden />
     </div>
   )

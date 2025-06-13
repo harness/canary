@@ -25,7 +25,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
   const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([
     {
       id: 0,
-      iconName: 'repositories-gradient',
+      iconName: 'repository',
       title: 'Repositories',
       description: 'Integrated & familiar git experience.',
       to: '/pixel/repos',
@@ -33,7 +33,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 1,
-      iconName: 'pipelines-gradient',
+      iconName: 'pipeline',
       title: 'Pipelines',
       description: 'Up to 4X faster than other solutions.',
       to: '/pipelines',
@@ -41,14 +41,14 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 3,
-      iconName: 'database-gradient',
+      iconName: 'database',
       title: 'Databases',
       description: 'Manage all your infrastructure.',
       to: '/databases'
     },
     {
       id: 7,
-      iconName: 'dev-portal-gradient',
+      iconName: 'dev-portal',
       title: 'Developer Portal',
       description: 'Built for developers, onboard in minutes.',
       to: '/developer/portal'
@@ -61,7 +61,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 9,
-      iconName: 'dev-insights-gradient',
+      iconName: 'developer-insights',
       title: 'Developer Insights',
       description: 'Actionable insights on SDLC.',
       to: '/developer/insights'

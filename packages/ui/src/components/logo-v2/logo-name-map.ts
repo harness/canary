@@ -26,6 +26,7 @@ import Gitlab from './logos/gitlab.svg'
 import Go from './logos/go.svg'
 import Google from './logos/google.svg'
 import Grype from './logos/grype.svg'
+import Harness from './logos/harness.svg'
 import Hashicorp from './logos/hashicorp.svg'
 import Helm from './logos/helm.svg'
 import Hubspot from './logos/hubspot.svg'
@@ -86,6 +87,7 @@ export const LogoNameMapV2 = {
   go: Go,
   google: Google,
   grype: Grype,
+  harness: Harness,
   hashicorp: Hashicorp,
   helm: Helm,
   hubspot: Hubspot,

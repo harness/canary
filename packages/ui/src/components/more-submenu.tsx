@@ -1,4 +1,4 @@
-import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
+import { IconV2, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
 
@@ -40,7 +40,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
                         <NavbarSkeleton.Item
                           text={item.title || ''}
                           description={item.description || ''}
-                          icon={item.iconName && <Icon name={item.iconName} size={18} />}
+                          icon={item.iconName && <IconV2 name={item.iconName} size={18} />}
                           active={isActive}
                           submenuItem
                           isMainNav

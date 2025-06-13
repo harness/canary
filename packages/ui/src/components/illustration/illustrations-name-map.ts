@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import ChatAvatarLight from './images/chat-avatar-light.svg'
+import ChatAvatar from './images/chat-avatar.svg'
 // Import light theme variants
 import CreateWorkspaceLight from './images/create-workspace-light.svg'
 // Import standard images
@@ -47,8 +49,10 @@ export const IllustrationsNameMap = {
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'harness-logo-text': HarnessLogoText,
   'sub-menu-ellipse': SubMenuEllipse,
+  'chat-avatar': ChatAvatar,
 
   // Light theme variants
+  'chat-avatar-light': ChatAvatarLight,
   'create-workspace-light': CreateWorkspaceLight,
   'no-data-branches-light': NoDataBranchesLight,
   'no-data-cog-light': NoDataCogLight,

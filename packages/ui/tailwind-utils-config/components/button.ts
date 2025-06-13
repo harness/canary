@@ -135,8 +135,8 @@ export default {
 
     // Ghost style
     '&:where(.cn-button-ghost)': {
-      border: 'none',
       color: 'var(--cn-set-gray-surface-text)',
+      '@apply border-transparent': '',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-hover)'

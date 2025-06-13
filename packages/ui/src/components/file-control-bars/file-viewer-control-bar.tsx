@@ -74,14 +74,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
-        <ToggleGroup.Root
-          className="gap-0"
-          onValueChange={onChangeView}
-          value={view}
-          type="single"
-          unselectable={'on'}
-          size="xs"
-        >
+        <ToggleGroup.Root variant="ghost-secondary" onValueChange={onChangeView} value={view} unselectable size="xs">
           {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
           <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
           <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>

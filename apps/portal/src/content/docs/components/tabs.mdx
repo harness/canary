@@ -78,7 +78,6 @@ All parts of the `Tabs` component can be imported and composed as required.
   <Tabs.List>
     <Tabs.Trigger />
   </Tabs.List>
-  <Tabs.Content />
 </Tabs.NavRoot>
 ```
 
@@ -206,7 +205,7 @@ Tab triggers can display counter badges to show quantities or notifications.
         <Tabs.Trigger value="drafts" counter={3}>
             Drafts
         </Tabs.Trigger>
-        <Tabs.Trigger value="spam" counter={null}>
+        <Tabs.Trigger value="spam">
             Spam
         </Tabs.Trigger>
     </Tabs.List>
@@ -222,43 +221,6 @@ Tab triggers can display counter badges to show quantities or notifications.
     </Tabs.Content>
     <Tabs.Content value="spam">
         <Text>Spam folder</Text>
-    </Tabs.Content>
-</Tabs.Root>`}
-/>
-
-## Combined Features
-
-Tab triggers can combine icons/logos with counters for richer information display.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="issues">
-    <Tabs.List>
-        <Tabs.Trigger value="issues" icon="github-circle-solid" counter={12}>
-            Issues
-        </Tabs.Trigger>
-        <Tabs.Trigger value="pull-requests" icon="git-pull-request" counter={5}>
-            Pull Requests
-        </Tabs.Trigger>
-        <Tabs.Trigger value="actions" icon="github-action" counter={0}>
-            Actions
-        </Tabs.Trigger>
-        <Tabs.Trigger value="projects" icon="folder" counter={2}>
-            Projects
-        </Tabs.Trigger>
-    </Tabs.List>
-    
-    <Tabs.Content value="issues">
-        <Text>12 open issues</Text>
-    </Tabs.Content>
-    <Tabs.Content value="pull-requests">
-        <Text>5 open pull requests</Text>
-    </Tabs.Content>
-    <Tabs.Content value="actions">
-        <Text>No running actions</Text>
-    </Tabs.Content>
-    <Tabs.Content value="projects">
-        <Text>2 active projects</Text>
     </Tabs.Content>
 </Tabs.Root>`}
 />

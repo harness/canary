@@ -36,7 +36,7 @@ const ConnectorDetailsLayout = ({
             value={activeTab}
             onValueChange={handleTabChange}
           >
-            <Tabs.List className="before:left-1/2 before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
+            <Tabs.List variant="overlined" className="-mx-8 px-8">
               <Tabs.Trigger value={ConnectorDetailsTabsKeys.CONFIGURATION}>
                 {t('views:connectors.configuration', 'Configuration')}
               </Tabs.Trigger>

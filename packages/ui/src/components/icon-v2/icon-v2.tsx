@@ -35,6 +35,11 @@ const IconV2: FC<IconPropsV2> = ({
       ? IconNameMapV2[`${name}-light` as keyof typeof IconNameMapV2]
       : IconNameMapV2[name]
 
+  if (!Component) {
+    console.warn(`Icon "${name}" not found in IconNameMapV2.`)
+    return null
+  }
+
   const shouldInvert = themeDependent && isLightTheme && !isLightIconAvailable
 
   const sizeProps = skipSize

@@ -89,6 +89,7 @@ export default {
     '&-underlined': {
       minHeight: 'var(--cn-tabs-item-underlined-min-height)',
       padding: 'var(--cn-tabs-item-underlined-py) var(--cn-tabs-item-underlined-px)',
+      paddingBottom: 'calc(var(--cn-tabs-item-underlined-py) - 1px)', // to compensate for the border and keep the height consistent to the design
       gap: 'var(--cn-tabs-item-underlined-gap)',
       color: 'var(--cn-text-2)',
       borderBottom: 'var(--cn-tabs-item-underlined-border) solid transparent',

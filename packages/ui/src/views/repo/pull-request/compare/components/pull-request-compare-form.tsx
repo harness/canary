@@ -113,7 +113,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
           <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
             <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-              <Tabs.List className="-mx-4 px-4" variant="overlined">
+              <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
                 <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
                 <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
               </Tabs.List>

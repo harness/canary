@@ -32,6 +32,7 @@ import NoDataWebhooks from './images/no-data-webhooks.svg'
 import NoSearchMagnifyingGlassLight from './images/no-search-magnifying-glass-light.svg'
 import NoSearchMagnifyingGlass from './images/no-search-magnifying-glass.svg'
 import SubMenuEllipse from './images/sub-menu-ellipse.svg'
+import TooltipArrow from './images/tooltip-arrow.svg'
 
 export const IllustrationsNameMap = {
   'create-workspace': CreateWorkspace,
@@ -50,6 +51,7 @@ export const IllustrationsNameMap = {
   'harness-logo-text': HarnessLogoText,
   'sub-menu-ellipse': SubMenuEllipse,
   'chat-avatar': ChatAvatar,
+  'tooltip-arrow': TooltipArrow,
 
   // Light theme variants
   'chat-avatar-light': ChatAvatarLight,

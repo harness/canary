@@ -74,7 +74,7 @@ export default {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
           outline: 'none',
-          cursor: 'pointer'
+          cursor: 'default'
         }
       },
 
@@ -85,7 +85,8 @@ export default {
       },
 
       '&:where([data-disabled])': {
-        opacity: 'var(--cn-disabled-opacity)'
+        opacity: 'var(--cn-disabled-opacity)',
+        cursor: 'not-allowed'
       },
 
       '& .cn-radio-item, & .cn-checkbox-root': {

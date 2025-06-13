@@ -471,6 +471,52 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
 }`}
 />
 
+## Header and Footer
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value1, setValue1] = React.useState('banana');
+    const [value2, setValue2] = React.useState('banana');
+    
+    return (
+      <div className="grid gap-4">
+        <Select
+          label="Without search"
+          options={[
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+            { label: 'Strawberry', value: 'strawberry' },
+          ]}
+          value={value1}
+          onChange={setValue1}
+          placeholder="Select a fruit"
+          header={<Text>Select a fruit</Text>}
+          footer={<Text>Footer content here</Text>}
+        />
+
+        <Select
+          label="With search"
+          options={[
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+            { label: 'Strawberry', value: 'strawberry' },
+          ]}
+          value={value2}
+          onChange={setValue2}
+          placeholder="Select a fruit"
+          allowSearch
+          header={<Text className="mt-2">Select a fruit</Text>}
+          footer={<Text>Footer content here</Text>}
+        />
+      </div>
+    );
+
+}`}
+/>
+
 ## API Reference
 
 ### `Select`
@@ -648,6 +694,18 @@ The `Select` component is the main component for creating dropdown selections.
         "Function to render custom SelectItemType for each value option",
       required: false,
       value: "(option: ValueOption<T>) => SelectItemType",
+    },
+    {
+      name: "header",
+      description: "Custom header content for the dropdown",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "footer",
+      description: "Custom footer content for the dropdown",
+      required: false,
+      value: "ReactNode",
     },
   ]}
 />

@@ -100,7 +100,7 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root variant="default" disableHighlightOnHover>
+      <Table.Root variant="default">
         <Table.Header>
           <Table.Row>
             <Table.Head>Name</Table.Head>
@@ -111,9 +111,7 @@ export function RepoWebhookList({
         <Table.Body>
           {webhooks.map(webhook => (
             <Table.Row
-              onClick={() =>
-                navigate(toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`)
-              }
+              to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
               <Table.Cell className="cursor-pointer">

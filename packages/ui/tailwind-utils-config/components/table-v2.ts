@@ -122,6 +122,19 @@ export default {
       paddingRight: 'var(--cn-table-cell-px)'
     },
 
+    '&:where(.cn-table-v2-default) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-default)',
+      paddingBottom: 'var(--cn-table-cell-py-default)'
+    },
+    '&:where(.cn-table-v2-relaxed) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-relaxed)',
+      paddingBottom: 'var(--cn-table-cell-py-relaxed)'
+    },
+    '&:where(.cn-table-v2-compact) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-compact)',
+      paddingBottom: 'var(--cn-table-cell-py-compact)'
+    },
+
     // Caption
     '&-caption': {
       '@apply text-cn-foreground-3 mt-4 text-sm': ''

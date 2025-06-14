@@ -35,7 +35,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslation()
-  const { Link, navigate } = useRouterContext()
+  const { Link } = useRouterContext()
 
   if (!branches?.length && !isLoading) {
     return (
@@ -111,11 +111,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
             const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
             return (
-              <Table.Row
-                key={branch.id}
-                className="cursor-pointer"
-                onClick={() => navigate(`${toCode?.({ branchName: branch.name })}`)}
-              >
+              <Table.Row key={branch.id} className="cursor-pointer" to={toCode?.({ branchName: branch.name })}>
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">

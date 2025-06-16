@@ -1,4 +1,4 @@
-import { TableV2 } from '@harnessio/ui/components'
+import { Table } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 
 // Sample data types
@@ -59,28 +59,28 @@ export const TableV2Demo: React.FC = () => {
   return (
     <SandboxLayout.Main className="justify-center items-center">
       <SandboxLayout.Content className="max-w-[600px] justify-center items-center">
-        <TableV2.Root variant="compact">
-          <TableV2.Header>
-            <TableV2.Row>
-              <TableV2.Head>Name</TableV2.Head>
-              <TableV2.Head>Email</TableV2.Head>
-              <TableV2.Head>Role</TableV2.Head>
-              <TableV2.Head>Status</TableV2.Head>
-              <TableV2.Head>Last Login</TableV2.Head>
-            </TableV2.Row>
-          </TableV2.Header>
-          <TableV2.Body>
+        <Table.Root variant="compact">
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>Name</Table.Head>
+              <Table.Head>Email</Table.Head>
+              <Table.Head>Role</Table.Head>
+              <Table.Head>Status</Table.Head>
+              <Table.Head>Last Login</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
             {users.map(user => (
-              <TableV2.Row key={user.id}>
-                <TableV2.Cell className="font-medium">{user.name}</TableV2.Cell>
-                <TableV2.Cell>{user.email}</TableV2.Cell>
-                <TableV2.Cell>{user.role}</TableV2.Cell>
-                <TableV2.Cell>{user.status}</TableV2.Cell>
-                <TableV2.Cell>{user.lastLogin}</TableV2.Cell>
-              </TableV2.Row>
+              <Table.Row key={user.id}>
+                <Table.Cell className="font-medium">{user.name}</Table.Cell>
+                <Table.Cell>{user.email}</Table.Cell>
+                <Table.Cell>{user.role}</Table.Cell>
+                <Table.Cell>{user.status}</Table.Cell>
+                <Table.Cell>{user.lastLogin}</Table.Cell>
+              </Table.Row>
             ))}
-          </TableV2.Body>
-        </TableV2.Root>
+          </Table.Body>
+        </Table.Root>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

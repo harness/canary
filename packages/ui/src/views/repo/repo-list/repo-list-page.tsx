@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton } from '@/components'
+import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -81,9 +81,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-cn-foreground-1 text-2xl font-medium">
+              <Text variant="heading-section" as="h1" color="foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
-              </h1>
+              </Text>
             </div>
             <Spacer size={6} />
             <ListActions.Root>

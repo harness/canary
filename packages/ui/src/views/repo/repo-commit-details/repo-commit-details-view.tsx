@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, StatusBadge, Tag } from '@/components'
+import { Avatar, Button, CommitCopyActions, StatusBadge, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { ICommitDetailsStore, SandboxLayout } from '@/views'
@@ -27,24 +27,26 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   return (
     <SandboxLayout.Main className="overflow-visible" fullWidth>
       <SandboxLayout.Content className="px-5 pb-0 pt-7">
-        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
+        <Text className="mt-7" variant="heading-section" color="foreground-1">
           {t('views:commits.commitDetailsTitle', 'Commit')}
-          <span className="ml-1.5 font-normal text-cn-foreground-2">{commitData?.sha?.substring(0, 7)}</span>
-        </span>
+          <Text className="ml-1.5" as="span">
+            {commitData?.sha?.substring(0, 7)}
+          </Text>
+        </Text>
         <div className="mt-4 flex items-center">
           {commitData?.author?.identity?.name && commitData?.author?.when && (
             <>
               <Avatar name={commitData.author.identity.name} rounded />
-              <span className="ml-2 text-2 font-medium leading-none text-cn-foreground-1">
+              <Text className="ml-2" as="span" variant="body-single-line-strong" color="foreground-1">
                 {commitData.author.identity.name}
-              </span>
-              <span className="ml-1.5 text-2 font-normal leading-none text-cn-foreground-2">
+              </Text>
+              <Text className="ml-1.5" as="span" variant="body-single-line-normal">
                 {t('views:commits.commitDetailsAuthored', 'authored')}{' '}
                 {timeAgo(new Date(commitData.author.when).getTime())}
-              </span>
+              </Text>
               {isVerified && (
                 <>
-                  <span className="mx-2.5 h-4 w-px bg-cn-background-3" />
+                  <span className="bg-cn-background-3 mx-2.5 h-4 w-px" />
                   <StatusBadge variant="outline" theme="success">
                     {t('views:commits.verified', 'Verified')}
                   </StatusBadge>
@@ -53,9 +55,9 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             </>
           )}
         </div>
-        <div className="mt-5 rounded-md border border-cn-borders-2">
-          <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
-            <span className="text-14 font-mono font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
+        <div className="border-cn-borders-2 mt-5 rounded-md border">
+          <div className="border-cn-borders-2 bg-cn-background-2 flex items-center justify-between rounded-t-md border-b px-4 py-3">
+            <span className="text-14 text-cn-foreground-1 font-mono font-medium leading-snug">{commitData?.title}</span>
             <Button variant="outline" asChild>
               <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
                 {t('views:commits.browseFiles', 'Browse files')}

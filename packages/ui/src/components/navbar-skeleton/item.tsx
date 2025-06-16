@@ -46,13 +46,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
                 )}
               >
-                {/* <Illustration
-                  className={cn('absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-foreground-3', {
-                    'text-sidebar-icon-2': isMainNav
-                  })}
-                  name="sub-menu-ellipse"
-                  size={18}
-                /> */}
                 {icon}
               </div>
             ) : (

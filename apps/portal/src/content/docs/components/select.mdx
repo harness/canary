@@ -75,6 +75,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           onChange={setCountry}
           caption="Select your country of residence"
           optional
+          contentWidth='triggerWidth'
         />
         
         <Select
@@ -88,6 +89,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           value={priority}
           onChange={setPriority}
           error="Please select a priority level"
+          contentWidth='triggerWidth'
         />
         
         <Select
@@ -100,6 +102,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           value={environment}
           onChange={setEnvironment}
           warning="Changing this will affect all deployments"
+          contentWidth='triggerWidth'
         />
       </div>
     )
@@ -706,6 +709,22 @@ The `Select` component is the main component for creating dropdown selections.
       description: "Custom footer content for the dropdown",
       required: false,
       value: "ReactNode",
+    },
+    {
+      name: "contentWidth",
+      description:
+        "Width of the dropdown content. Can be 'triggerWidth' or 'auto'. If 'auto', it will take the full width of the parent container.",
+      required: false,
+      value: "'triggerWidth' | 'auto'",
+      defaultValue: "'auto'",
+    },
+    {
+      name: "contentClassName",
+      description:
+        "Custom class name for the dropdown content container. This can be used to apply custom styles to the dropdown content, such as setting a custom maximum width",
+      required: false,
+      value: "string",
+      defaultValue: "''",
     },
   ]}
 />

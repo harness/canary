@@ -75,6 +75,8 @@ interface SelectProps<T = string>
   optionRenderer?: (option: ValueOption<T>) => SelectItemType
   header?: ReactNode
   footer?: ReactNode
+  contentWidth?: 'auto' | 'triggerWidth'
+  contentClassName?: string
 }
 
 // Helper function to check option types
@@ -133,6 +135,8 @@ function SelectInner<T = string>(
     optionRenderer,
     header,
     footer,
+    contentWidth = 'auto',
+    contentClassName,
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -372,7 +376,15 @@ function SelectInner<T = string>(
           <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content className="w-[--radix-dropdown-menu-trigger-width]" align="start" onScroll={handleScroll}>
+        <DropdownMenu.Content
+          className={cn(
+            'cn-select-content',
+            { 'max-w-none w-[--radix-dropdown-menu-trigger-width]': contentWidth === 'triggerWidth' },
+            contentClassName
+          )}
+          align="start"
+          onScroll={handleScroll}
+        >
           {(allowSearch || header) && (
             <DropdownMenu.Header>
               {allowSearch && (

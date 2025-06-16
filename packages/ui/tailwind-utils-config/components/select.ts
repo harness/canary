@@ -61,6 +61,10 @@ export default {
       borderColor: 'var(--cn-border-1)'
     },
 
+    '&-content': {
+      maxWidth: 'calc(var(--cn-dropdown-min-width) * 2)'
+    },
+
     '&-indicator-icon': {
       color: 'var(--cn-text-2)'
     },

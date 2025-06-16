@@ -9,8 +9,8 @@ import { Text } from './text'
 
 export interface NoDataProps {
   title: string
-  name?: IllustrationsNameType
-  size?: number
+  imageName?: IllustrationsNameType
+  imageSize?: number
   description: string[]
   primaryButton?: {
     label: string
@@ -30,8 +30,8 @@ export interface NoDataProps {
 }
 
 export const NoData: FC<NoDataProps> = ({
-  name,
-  size = 112,
+  imageName,
+  imageSize = 112,
   title,
   description,
   primaryButton,
@@ -49,7 +49,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {name && <Illustration name={name} size={size} themeDependent />}
+      {imageName && <Illustration name={imageName} size={imageSize} themeDependent />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
         <Text variant="heading-section">{title}</Text>
         {description && (

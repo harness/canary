@@ -56,7 +56,7 @@ export const PipelineList = ({
     return query ? (
       <StackedList.Root className="grow place-content-center">
         <NoData
-          name="no-search-magnifying-glass"
+          imageName="no-search-magnifying-glass"
           title="No search results"
           description={[
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -70,7 +70,7 @@ export const PipelineList = ({
       </StackedList.Root>
     ) : (
       <NoData
-        name="no-data-folder"
+        imageName="no-data-folder"
         title="No pipelines yet"
         description={['There are no pipelines in this project yet.', 'Create new one.']}
         primaryButton={{

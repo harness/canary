@@ -41,7 +41,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
     return (
       <NoData
         className="m-auto"
-        name={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
         withBorder={isDirtyList}
         title={
           isDirtyList

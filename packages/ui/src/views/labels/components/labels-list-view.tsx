@@ -41,7 +41,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       return (
         <NoData
           withBorder
-          name="no-search-magnifying-glass"
+          imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -55,7 +55,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     return (
       <NoData
         withBorder
-        name="no-data-branches"
+        imageName="no-data-branches"
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
         primaryButton={{ label: t('views:projectSettings.newLabels', 'Create label'), to: 'create' }}

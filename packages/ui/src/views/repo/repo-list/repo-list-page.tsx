@@ -43,7 +43,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        name="no-data-error"
+        imageName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'repositories'
         })}

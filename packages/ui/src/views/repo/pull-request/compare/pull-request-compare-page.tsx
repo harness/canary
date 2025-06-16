@@ -396,7 +396,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   />
                 ) : (
                   <NoData
-                    name="no-data-commits"
+                    imageName="no-data-commits"
                     title={t('views:noData.noCommitsYet', 'No commits yet')}
                     description={[
                       t(
@@ -419,7 +419,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   />
                 ) : (
                   <NoData
-                    name="no-data-folder"
+                    imageName="no-data-folder"
                     title="No changes to display"
                     description={['There are no changes to display for the selected branches.']}
                   />
@@ -431,7 +431,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <>
             <Spacer size={10} />
             <NoData
-              name="no-data-pr"
+              imageName="no-data-pr"
               title={t('views:noData.compareChanges')}
               description={[t('views:noData.compareChangesDescription')]}
             />

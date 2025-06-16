@@ -63,7 +63,7 @@ export const ExecutionList = ({
     return query ? (
       <StackedList.Root className="grow place-content-center">
         <NoData
-          name="no-search-magnifying-glass"
+          imageName="no-search-magnifying-glass"
           title="No search results"
           description={[
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -77,7 +77,7 @@ export const ExecutionList = ({
       </StackedList.Root>
     ) : (
       <NoData
-        name="no-data-folder"
+        imageName="no-data-folder"
         title="No executions yet"
         description={['There are no executions in this project yet.']}
         primaryButton={{

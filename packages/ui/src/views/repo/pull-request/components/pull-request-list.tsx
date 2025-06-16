@@ -79,7 +79,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           />
         </StackedList.Item>
         <NoData
-          name="no-data-folder"
+          imageName="no-data-folder"
           title="No open pull requests yet"
           description={[
             t('views:noData.noOpenPullRequests', 'There are no open pull requests in this project yet.'),
@@ -118,7 +118,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         </StackedList.Item>
 
         <NoData
-          name="no-data-folder"
+          imageName="no-data-folder"
           title="No closed pull requests yet"
           description={[
             t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),

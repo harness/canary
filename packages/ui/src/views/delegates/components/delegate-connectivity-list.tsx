@@ -26,7 +26,7 @@ export function DelegateConnectivityList({
     return (
       <NoData
         withBorder
-        name="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noDelegates', 'No delegates yet')}
         description={[t('views:noData.noDelegates', 'There are no delegates in this project yet.')]}
       />

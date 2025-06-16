@@ -62,7 +62,7 @@ git push -u origin main
         <Spacer size={6} />
         <NoData
           withBorder
-          name="no-repository"
+          imageName="no-repository"
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{

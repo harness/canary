@@ -27,8 +27,14 @@ export default {
     alignItems: 'center',
     gap: 'var(--cn-spacing-1-half)',
     borderRadius: 'var(--cn-input-radius)',
-    padding:
-      'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
+    '&:has(.cn-select-suffix)': {
+      paddingLeft: 'var(--cn-input-default-pl)'
+      // paddingBlock: 'var(--cn-input-default-py)'
+    },
+    '&:not(:has(.cn-select-suffix))': {
+      padding:
+        'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)'
+    },
     height: 'var(--cn-input-size-default)',
     border: 'var(--cn-input-border) solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-2)',
@@ -67,6 +73,14 @@ export default {
 
     '&-indicator-icon': {
       color: 'var(--cn-text-2)'
+    },
+
+    '&-suffix': {
+      '@apply border-l flex items-center justify-center': '',
+      borderRadius: '0 var(--cn-input-radius) var(--cn-input-radius) 0',
+      borderColor: 'inherit',
+      aspectRatio: '1',
+      height: '100%'
     },
 
     ...createSelectThemeStyles()

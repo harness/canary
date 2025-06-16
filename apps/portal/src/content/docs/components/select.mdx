@@ -23,6 +23,15 @@ The `Select` component provides a dropdown interface for selecting a single valu
         ]}
         value={value}
         onChange={setValue}
+        suffix={<Button
+          onClick={() => alert('suffix clicked')}
+          variant="ghost"
+          size="sm"
+          iconOnly
+          className="size-full"
+        >
+          <Icon name="chevron-right" size={14} />
+        </Button>}
         placeholder="Select a fruit"
       />
     );

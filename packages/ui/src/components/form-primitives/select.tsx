@@ -2,6 +2,7 @@ import {
   ForwardedRef,
   forwardRef,
   InputHTMLAttributes,
+  isValidElement,
   ReactElement,
   ReactNode,
   UIEvent,
@@ -366,15 +367,29 @@ function SelectInner<T = string>(
           if (!open) setSearchQuery('')
         }}
       >
-        <div className={cn(selectVariants({ theme }), className, 'cn-select-trigger-container')}>
-          <DropdownMenu.Trigger id={id} ref={ref} disabled={disabled} className="cn-select-trigger">
+        <DropdownMenu.Trigger
+          id={id}
+          ref={ref}
+          disabled={disabled}
+          className={cn(selectVariants({ theme }), className)}
+        >
+          <div className="cn-select-trigger">
             <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
               {selectedOption ? selectedOption.label : placeholder}
             </Text>
             <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
-          </DropdownMenu.Trigger>
-          {suffix ? <div className="cn-select-suffix">{suffix}</div> : null}
-        </div>
+          </div>
+          {suffix ? (
+            <span
+              className="cn-select-suffix"
+              onPointerDown={e => {
+                e.stopPropagation()
+              }}
+            >
+              {suffix}
+            </span>
+          ) : null}
+        </DropdownMenu.Trigger>
 
         <DropdownMenu.Content
           className={cn(

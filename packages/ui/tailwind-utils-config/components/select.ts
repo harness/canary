@@ -22,14 +22,13 @@ function createSelectThemeStyles() {
 
 export default {
   '.cn-select': {
-    display: 'grid',
-    gridTemplateColumns: '1fr auto',
+    display: 'flex',
+    // gridTemplateColumns: '1fr auto',
     alignItems: 'center',
     gap: 'var(--cn-spacing-1-half)',
     borderRadius: 'var(--cn-input-radius)',
     '&:has(.cn-select-suffix)': {
       paddingLeft: 'var(--cn-input-default-pl)'
-      // paddingBlock: 'var(--cn-input-default-py)'
     },
     '&:not(:has(.cn-select-suffix))': {
       padding:
@@ -73,11 +72,6 @@ export default {
 
     '&-indicator-icon': {
       color: 'var(--cn-text-2)'
-    },
-
-    '&-trigger-container': {
-      '@apply flex items-center truncate': '',
-      gap: 'var(--cn-spacing-1-half)'
     },
 
     '&-trigger': {

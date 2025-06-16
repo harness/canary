@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, TableV2 as Table } from '@/components'
 import { useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -21,7 +21,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
   }
 
   return (
-    <Table.Root variant="asStackedList">
+    <Table.Root variant="default">
       <Table.Header>
         <Table.Row>
           <Table.Head>{t('views:projectSettings.membersTable.user', 'User')}</Table.Head>

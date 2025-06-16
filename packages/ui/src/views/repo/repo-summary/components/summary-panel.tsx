@@ -50,7 +50,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
     <>
       <div className="flex flex-col items-start">
         <div className="flex w-full items-center justify-between">
-          <span className="truncate text-4 font-medium">{title}</span>
+          <span className="text-4 truncate font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" aria-label="More options">
@@ -68,7 +68,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!timestamp?.length && (
           <>
             <Spacer size={2} />
-            <span className="text-2 text-cn-foreground-2">Created {timeAgo(timestamp, { dateStyle: 'medium' })}</span>
+            <Text as="span">{`Created ${timeAgo(timestamp, { dateStyle: 'medium' })}`}</Text>
           </>
         )}
         <Spacer size={3} />
@@ -80,7 +80,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="border-cn-borders-4 line-clamp-6 w-full border-y py-1 text-2 text-cn-foreground-2">
+            <span className="border-cn-borders-4 text-2 text-cn-foreground-2 line-clamp-6 w-full border-y py-1">
               {description}
             </span>
           </>

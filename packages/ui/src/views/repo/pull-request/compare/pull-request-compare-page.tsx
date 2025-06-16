@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -186,12 +186,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="text-2 text-cn-foreground-2 max-w-xl leading-snug">
+          <Text className="max-w-xl">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
             )}
-          </p>
+          </Text>
           <Layout.Horizontal align="center" gap="xs">
             <IconV2 name="git-compare" size={14} className="text-icons-1" />
 

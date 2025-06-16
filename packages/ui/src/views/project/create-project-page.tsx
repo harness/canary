@@ -145,9 +145,9 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             {t('views:createProject.title', 'Create your new project')}
           </Text>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
+          <Text className="mt-0.5">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
-          </p>
+          </Text>
         </div>
 
         <FormWrapper {...formWrapper} onSubmit={handleSubmit(onFormSubmit)}>
@@ -177,7 +177,9 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
             <div className="mt-3 flex items-center justify-center gap-2">
               <div className="w-[145px] shrink border-t border-cn-borders-3" />
-              <span className="text-sm text-cn-foreground-3">{t('views:createProject.or', 'or')}</span>
+              <Text color="foreground-3" as="span">
+                {t('views:createProject.or', 'or')}
+              </Text>
               <div className="w-[145px] shrink border-t border-cn-borders-3" />
             </div>
 
@@ -189,10 +191,10 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-3">
+          <Text className="mt-4" align="center" color="foreground-3">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps}>{t('views:createProject.logout.link', 'Log out')}</StyledLink>
-          </p>
+          </Text>
         )}
       </div>
     </Floating1ColumnLayout>

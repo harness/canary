@@ -4,6 +4,7 @@ import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2 } from '@components/icon-v2'
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
 interface FiltersProps {
@@ -48,11 +49,11 @@ const FilterBoxWrapper = ({
       <DropdownMenu.Trigger asChild>
         <Button variant="secondary" className="gap-x-3">
           <div className="flex items-center gap-x-1.5 text-1">
-            <span className="text-cn-foreground-1">
+            <Text as="span" color="foreground-1">
               {filterLabel}
               {!!valueLabel && ': '}
-            </span>
-            <span className="text-cn-foreground-2">{valueLabel}</span>
+            </Text>
+            <Text as="span">{valueLabel}</Text>
           </div>
           <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size={10} />
         </Button>

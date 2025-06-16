@@ -138,8 +138,8 @@ const DropdownBaseItem = ({
     </Layout.Grid>
     {label && <Text variant="caption-soft">{label}</Text>}
     {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
-    {checkmark && <IconV2 name="check" size={16} />}
-    {withSubIndicator && <IconV2 name="nav-arrow-right" size={14} />}
+    {checkmark && <IconV2 name="check" />}
+    {withSubIndicator && <IconV2 name="nav-arrow-right" size="sm" />}
   </div>
 )
 
@@ -341,7 +341,7 @@ interface DropdownMenuIconItemProps extends Omit<DropdownMenuItemProps, 'prefix'
 }
 
 const DropdownMenuIconItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuIconItemProps>(
-  ({ icon, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<IconV2 size={12} name={icon} />} />
+  ({ icon, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<IconV2 size="xs" name={icon} />} />
 )
 DropdownMenuIconItem.displayName = displayNames.iconItem
 

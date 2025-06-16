@@ -47,7 +47,7 @@ export const FormCaption = ({
 
   return (
     <p className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}>
-      {canShowIcon && <IconV2 name={effectiveIconName} size={14} />}
+      {canShowIcon && <IconV2 name={effectiveIconName} size="sm" />}
       <span>{children}</span>
     </p>
   )

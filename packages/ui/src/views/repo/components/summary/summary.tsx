@@ -89,7 +89,6 @@ export const Summary = ({
                           ? 'page'
                           : 'folder'
                     }
-                    size={16}
                   />
                   <span className="text-cn-foreground-1 w-44 truncate">{file.name}</span>
                 </div>

@@ -201,7 +201,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     autoFocus
                     prefix={
                       <div className="grid place-items-center px-2">
-                        <IconV2 name="git-branch" size={14} />
+                        <IconV2 name="git-branch" size="sm" />
                       </div>
                     }
                     id="newBranchName"

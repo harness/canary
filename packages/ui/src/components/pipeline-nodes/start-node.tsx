@@ -12,7 +12,7 @@ export function StartNode() {
         isLightTheme ? 'bg-cn-background-1' : 'bg-cn-background-3'
       )}
     >
-      <IconV2 size={18} name="play" className="text-icons-4" />
+      <IconV2 size="md" name="play" className="text-icons-4" />
     </div>
   )
 }

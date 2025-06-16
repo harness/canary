@@ -15,7 +15,7 @@ const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCoun
   return (
     <Tabs.Trigger value={value} className="gap-x-1.5">
       <div className="flex items-center gap-x-1">
-        <IconV2 size={14} name={icon as IconPropsV2['name']} />
+        <IconV2 size="sm" name={icon as IconPropsV2['name']} />
         <span>{label}</span>
       </div>
       {badgeCount !== undefined && <CounterBadge>{badgeCount}</CounterBadge>}

@@ -86,7 +86,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
           {t(`views:pullRequests.compareChangesCreatedButton`)}&nbsp;&nbsp;
-          <IconV2 name="check" size={12} />
+          <IconV2 name="check" size="xs" />
         </Button>
       )}
     </>

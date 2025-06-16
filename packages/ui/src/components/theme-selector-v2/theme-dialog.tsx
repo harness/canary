@@ -91,11 +91,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                           )}
                         />
                         {mode === value && (
-                          <IconV2
-                            className="absolute bottom-2 left-2 text-cn-foreground-1"
-                            name="check-circle-solid"
-                            size={16}
-                          />
+                          <IconV2 className="absolute bottom-2 left-2 text-cn-foreground-1" name="check-circle-solid" />
                         )}
                         <div
                           className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"

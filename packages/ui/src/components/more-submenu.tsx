@@ -40,7 +40,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
                         <NavbarSkeleton.Item
                           text={item.title || ''}
                           description={item.description || ''}
-                          icon={item.iconName && <IconV2 name={item.iconName} size={18} />}
+                          icon={item.iconName && <IconV2 name={item.iconName} size="md" />}
                           active={isActive}
                           submenuItem
                           isMainNav

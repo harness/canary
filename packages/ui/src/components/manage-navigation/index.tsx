@@ -146,7 +146,7 @@ export const ManageNavigation = ({
                         key={item.id}
                         className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-3 opacity-55"
                       >
-                        <IconV2 className="w-3.5" name="lock" size={14} />
+                        <IconV2 className="w-3.5" name="lock" size="sm" />
                         <Text>{item.title}</Text>
                       </div>
                     )
@@ -162,7 +162,7 @@ export const ManageNavigation = ({
                               {...attributes}
                               {...listeners}
                             >
-                              <IconV2 className="w-3.5" name="grip-dots" size={14} />
+                              <IconV2 className="w-3.5" name="grip-dots" size="sm" />
                               <Text color="inherit">{item.title}</Text>
                             </Button>
                             <Button
@@ -171,7 +171,7 @@ export const ManageNavigation = ({
                               variant="ghost"
                               onClick={() => removeFromPinnedItems(item)}
                             >
-                              <IconV2 className="w-3.5" name="xmark" size={14} />
+                              <IconV2 className="w-3.5" name="xmark" size="sm" />
                             </Button>
                           </>
                         )
@@ -196,7 +196,7 @@ export const ManageNavigation = ({
                 {currentFilteredRecentItems.map((item, index) => (
                   <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
                     <div className="flex w-full grow items-center gap-x-2.5">
-                      <IconV2 className="text-icons-4" name="clock" size={14} />
+                      <IconV2 className="text-icons-4" name="clock" size="sm" />
                       <Text color="foreground-1">{item.title}</Text>
                     </div>
                     <Button
@@ -205,7 +205,7 @@ export const ManageNavigation = ({
                       variant="ghost"
                       onClick={() => addToPinnedItems(item)}
                     >
-                      <IconV2 name="pin" size={14} />
+                      <IconV2 name="pin" size="sm" />
                     </Button>
                   </li>
                 ))}
@@ -233,7 +233,7 @@ export const ManageNavigation = ({
                 disabled={submitted}
               >
                 Saved
-                <IconV2 name="check" size={14} />
+                <IconV2 name="check" size="sm" />
               </Button>
             )}
           </ButtonLayout>

@@ -125,7 +125,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     disabled={disabled}
                     size="sm"
                   >
-                    <IconV2 name="nav-arrow-up" size={14} />
+                    <IconV2 name="nav-arrow-up" size="sm" />
                   </Button>
                   <hr />
                   <Button
@@ -137,7 +137,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     disabled={disabled}
                     size="sm"
                   >
-                    <IconV2 name="nav-arrow-down" size={14} />
+                    <IconV2 name="nav-arrow-down" size="sm" />
                   </Button>
                 </div>
               ) : null}

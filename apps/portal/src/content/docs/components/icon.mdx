@@ -11,7 +11,22 @@ import IconGrid from "../../../components/IconGrid.astro";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<IconV2 name="check" size={48} />`}
+  code={`<IconV2 name="check" size="lg" />`}
+/>
+
+## Size Variants
+
+IconV2 supports multiple predefined size variants: `xs`, `default`, `sm`, `md`, and `lg`. The default size is `default`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" align="center">
+    <IconV2 name="star" size="xs" />
+    <IconV2 name="star" size="sm" />
+    <IconV2 name="star" size="default" />
+    <IconV2 name="star" size="md" />
+    <IconV2 name="star" size="lg" />
+  </Layout.Flex>`}
 />
 
 ## Colored Icon
@@ -22,9 +37,9 @@ By default, IconV2 components will inherit the color from the parent. You can al
   client:only
   code={`<Layout.Flex gap="md">
     <div className="text-cn-foreground-success">
-      <IconV2 name="check" size={32} />
+      <IconV2 name="check" size="md" />
     </div>
-    <IconV2 className="text-cn-foreground-danger" name="xmark" size={32} />
+    <IconV2 className="text-cn-foreground-danger" name="xmark" size="md" />
   </Layout.Flex>`}
 />
 
@@ -35,7 +50,7 @@ import { IconV2 } from '@harnessio/ui/components'
 
 //...
 
-return <IconV2 name="check" size={48} />
+return <IconV2 name="check" size="lg" />
 ```
 
 ## Available Icons
@@ -48,14 +63,14 @@ The following icons are available:
 
 ## API Reference
 
-The `IconV2` component can be sized either using the `size` prop.
-The `size` prop can be used as a shorthand to set both height and width.
+The `IconV2` component can be sized using the `size` prop, which applies predefined size classes.
 
 ```typescript jsx
 <IconV2
   name="double-tick"   // name of the icon
-  size={16}            // [OPTIONAL] size of the icon in pixels
+  size="md"           // [OPTIONAL] size variant (xs, default, sm, md, lg)
   className="my-class" // [OPTIONAL] custom class name
+  skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
 />
 ```
 
@@ -69,10 +84,17 @@ The `size` prop can be used as a shorthand to set both height and width.
     },
     {
       name: "size",
-      description: "Size of the icon in pixels",
+      description: "Size variant of the icon",
       required: false,
-      value: "number",
-      defaultValue: "16",
+      value: "'xs' | 'default' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "skipSize",
+      description: "Skip applying size classes when custom styling is needed",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "className",

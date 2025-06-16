@@ -112,7 +112,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                   placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
                   label={t('views:profileSettings.name', 'Name')}
                   error={errors.identifier?.message?.toString()}
-                  suffix={createdTokenData && <CopyButton iconSize={14} name={createdTokenData.identifier || ''} />}
+                  suffix={createdTokenData && <CopyButton iconSize="sm" name={createdTokenData.identifier || ''} />}
                   readOnly={!!createdTokenData}
                   autoFocus
                 />
@@ -137,7 +137,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                       readOnly
                       label={t('views:profileSettings.token', 'Token')}
                       suffix={
-                        <CopyButton buttonVariant="transparent" iconSize={14} name={createdTokenData?.token || ''} />
+                        <CopyButton buttonVariant="transparent" iconSize="sm" name={createdTokenData?.token || ''} />
                       }
                     />
                   </Fieldset>

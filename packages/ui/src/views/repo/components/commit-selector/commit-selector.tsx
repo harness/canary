@@ -54,7 +54,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
           <Text className="w-full text-cn-foreground-1" truncate align="left">
             {commitTitle}
           </Text>
-          <IconV2 className="chevron-down text-icons-2" name="nav-arrow-down" size={10} />
+          <IconV2 className="chevron-down text-icons-2" name="nav-arrow-down" size="xs" />
         </Button>
       </DropdownMenu.Trigger>
       <CommitSelectorDropdown

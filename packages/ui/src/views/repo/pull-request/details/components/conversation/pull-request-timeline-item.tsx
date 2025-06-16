@@ -226,7 +226,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               />
               {isResolved && !contentHeader && (
                 <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                  <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size={14} />
+                  <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="sm" />
                   {isExpanded ? 'Hide resolved' : 'Show resolved'}
                 </Button>
               )}
@@ -245,7 +245,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   {contentHeader}
                   {isResolved && (
                     <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size={14} />
+                      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="sm" />
                       {isExpanded ? 'Hide resolved' : 'Show resolved'}
                     </Button>
                   )}

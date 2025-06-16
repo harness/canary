@@ -74,7 +74,7 @@ export function StageNode(props: StageNodeProps) {
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}
         >
-          <IconV2 name="plus" size={15} />
+          <IconV2 name="plus" />
         </Button>
       )}
 

@@ -33,12 +33,12 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
-            <IconV2 className="text-icons-success" name="check" size={12} />
+            <IconV2 className="text-icons-success" name="check" size="xs" />
             <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
           </>
         ) : (
           <>
-            <IconV2 className="text-icons-danger" name="xmark" size={12} />
+            <IconV2 className="text-icons-danger" name="xmark" size="xs" />
             <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
           </>
         )}

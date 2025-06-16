@@ -31,7 +31,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button className="items-center gap-x-2 pl-5 pr-2.5">
           {t('views:repos.cloneRepo', 'Clone repository')}
-          <IconV2 name="nav-arrow-down" size={12} className="text-cn-foreground-primary" />
+          <IconV2 name="nav-arrow-down" size="xs" className="text-cn-foreground-primary" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px]" align="end">
@@ -87,7 +87,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
-                suffix={<CopyButton buttonVariant="transparent" iconSize={14} name={httpsUrl} />}
+                suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
                 <span className="leading-snug text-cn-foreground-2">

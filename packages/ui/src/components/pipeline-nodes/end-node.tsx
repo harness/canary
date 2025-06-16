@@ -12,7 +12,7 @@ export function EndNode() {
         { 'bg-cn-background-1': isLightTheme }
       )}
     >
-      <IconV2 name="stop" size={14} className="text-icons-4" />
+      <IconV2 name="stop" size="sm" className="text-icons-4" />
     </div>
   )
 }

@@ -62,7 +62,7 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
     const Indicator = () => (
       <IconV2
         name="nav-arrow-down"
-        size={14}
+        size="sm"
         {...indicatorProps}
         className={cn('cn-accordion-trigger-indicator', indicatorProps?.className)}
       />

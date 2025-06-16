@@ -37,7 +37,6 @@ function FolderItem({ children, value = '', isActive, content, link }: FolderIte
                 { 'text-icons-2': isActive }
               )}
               name="folder"
-              size={16}
             />
             <Link to={link} className="overflow-hidden">
               <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" as="p" truncate>

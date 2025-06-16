@@ -6,7 +6,7 @@ import { CollapseButtonProps } from '@harnessio/pipeline-graph'
 export const CollapseButton = ({ collapsed, onToggle }: CollapseButtonProps) => {
   return (
     <Button size="sm" variant="secondary" iconOnly onMouseDown={e => e.stopPropagation()} onClick={onToggle}>
-      <IconV2 size={18} name={collapsed ? 'enlarge' : 'reduce'} />
+      <IconV2 size="md" name={collapsed ? 'enlarge' : 'reduce'} />
     </Button>
   )
 }

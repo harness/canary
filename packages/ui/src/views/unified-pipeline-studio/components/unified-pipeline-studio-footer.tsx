@@ -54,7 +54,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
         >
           <div className="flex items-center gap-1.5">
             <IconV2
-              size={14}
+              size="sm"
               name="xmark-circle"
               className={problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-3'}
             />
@@ -68,11 +68,11 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <IconV2 size={14} name="warning-triangle" className="text-cn-foreground-3" />
+            <IconV2 size="sm" name="warning-triangle" className="text-cn-foreground-3" />
             <span className="text-[12px] text-cn-foreground-1">{problemsCount.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <IconV2 size={14} name="info-circle" className="text-cn-foreground-3" />
+            <IconV2 size="sm" name="info-circle" className="text-cn-foreground-3" />
             <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
           </div>
         </div>

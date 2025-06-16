@@ -155,7 +155,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                               xmark: checkState === 'failure'
                             }) as IconPropsV2['name']
                           }
-                          size={12}
+                          size="xs"
                         />
                       )}
                       <span className="text-cn-foreground-3 truncate">{branch?.checks?.done}</span>
@@ -193,7 +193,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                               branch.pullRequests[0].state
                             ).icon
                           }
-                          size={14}
+                          size="sm"
                           className={cn({
                             'text-icons-success':
                               branch.pullRequests[0].state === 'open' && !branch.pullRequests[0].is_draft,

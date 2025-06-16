@@ -152,7 +152,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
       return inputIconName ? (
         <span className="relative">
-          <IconV2 className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
+          <IconV2 className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size="sm" />
           {baseInputComp}
         </span>
       ) : (

@@ -105,7 +105,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         </SearchBox.Root>
 
         <Button iconOnly size="sm" className="absolute right-2.5 top-2 z-20" variant="ghost" onClick={onSearchClean}>
-          <IconV2 name="xmark" size={12} />
+          <IconV2 name="xmark" size="xs" />
         </Button>
       </DropdownMenu.Header>
 

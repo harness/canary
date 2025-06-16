@@ -210,7 +210,7 @@ export function MarkdownViewer({
                     className="absolute right-3 top-3 z-10 size-6 bg-cn-background-3"
                     buttonVariant="outline"
                     name={code}
-                    iconSize={13}
+                    iconSize="sm"
                   />
                   <pre
                     className={cn(

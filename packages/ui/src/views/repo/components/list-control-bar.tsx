@@ -75,7 +75,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
         onClick={() => resetFilters()}
         className="hover:text-cn-foreground-danger"
       >
-        <IconV2 className="rotate-45" name="plus" size={12} />
+        <IconV2 className="rotate-45" name="plus" size="2xs" />
         {t('component:filter.reset', 'Reset')}
       </Button>
     </>

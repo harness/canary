@@ -215,7 +215,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                 </>
               )}
             </div>
-            <IconV2 name="nav-arrow-down" size={6} className="chevron-down text-icons-7" />
+            <IconV2 name="nav-arrow-down" size="xs" className="chevron-down text-icons-7" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-96" align="start">
             {commitDropdownItems}
@@ -227,7 +227,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <span className="text-cn-foreground-2 group-hover:text-cn-foreground-1">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
             </span>
-            <IconV2 name="nav-arrow-down" size={6} className="chevron-down text-icons-7" />
+            <IconV2 name="nav-arrow-down" size="xs" className="chevron-down text-icons-7" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">
             {DiffModeOptions.map(item => (
@@ -267,7 +267,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                 title={
                   <>
                     <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
-                      <IconV2 name="page" size={16} className="shrink-0 text-icons-1" />
+                      <IconV2 name="page" className="shrink-0 text-icons-1" />
                       <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
                         {diff.filePath}
                       </span>

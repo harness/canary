@@ -97,7 +97,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="git-merge" size={12} />
+          icon: <IconV2 name="git-merge" size="xs" />
         }
 
       case CommentType.REVIEW_SUBMIT:
@@ -109,9 +109,9 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           },
           icon:
             decision === 'approved' ? (
-              <IconV2 name="check-circle-solid" size={18} className="text-cn-foreground-success" />
+              <IconV2 name="check-circle-solid" size="md" className="text-cn-foreground-success" />
             ) : (
-              <IconV2 name="warning-triangle" size={18} className="text-cn-foreground-danger" />
+              <IconV2 name="warning-triangle" size="md" className="text-cn-foreground-danger" />
             )
         }
 
@@ -132,7 +132,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Layout.Horizontal>
             )
           },
-          icon: <IconV2 name="git-commit" size={14} />
+          icon: <IconV2 name="git-commit" size="sm" />
         }
 
       case CommentType.BRANCH_RESTORE:
@@ -155,7 +155,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="git-branch" size={12} />
+          icon: <IconV2 name="git-branch" size="sm" />
         }
       }
 
@@ -179,7 +179,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name={iconName} size={12} />
+          icon: <IconV2 name={iconName} size="xs" />
         }
       }
 
@@ -192,7 +192,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="edit-pencil" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="sm" className="p-0.5" />
         }
 
       case CommentType.REVIEW_DELETE: {
@@ -209,7 +209,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="edit-pencil" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="sm" className="p-0.5" />
         }
       }
 
@@ -227,7 +227,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="eye" size={14} className="p-0.5" />
+          icon: <IconV2 name="eye" size="sm" className="p-0.5" />
         }
       }
 
@@ -253,7 +253,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="edit-pencil" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="sm" className="p-0.5" />
         }
       }
 

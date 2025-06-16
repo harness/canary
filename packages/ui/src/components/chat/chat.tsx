@@ -159,7 +159,7 @@ const InputField: FC<InputFieldProps> = ({
   onSend = () => {},
   placeholder = 'Type a message...',
   disabled = false,
-  sendIcon = <IconV2 name="arrow-up" size={12} />
+  sendIcon = <IconV2 name="arrow-up" size="xs" />
 }) => {
   return (
     <div className="relative">

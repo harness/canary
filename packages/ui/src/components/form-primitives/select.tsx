@@ -379,14 +379,14 @@ function SelectInner<T = string>(
             <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
           </div>
           {suffix ? (
-            <span
+            <div
               className="cn-select-suffix"
               onPointerDown={e => {
                 e.stopPropagation()
               }}
             >
               {suffix}
-            </span>
+            </div>
           ) : null}
         </DropdownMenu.Trigger>
 

@@ -1,4 +1,3 @@
-export * from './sidebar-search/command-palette'
 export * from './types'
 export * from './sidebar-item'
 export * from './sidebar-user'

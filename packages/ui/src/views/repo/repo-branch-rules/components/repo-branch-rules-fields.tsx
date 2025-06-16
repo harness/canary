@@ -189,7 +189,7 @@ export const BranchSettingsRuleBypassListField: FC<
     principalsSearchQuery: string
   }
 > = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
@@ -204,10 +204,10 @@ export const BranchSettingsRuleBypassListField: FC<
     <Fieldset className="gap-y-4">
       <ControlGroup>
         <FormInput.MultiSelect
-          label={t('views:repos.bypassList', 'Bypass list')}
+          label="Bypass list"
           name="bypass"
           options={multiSelectOptions}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
+          placeholder="Select users"
           searchQuery={principalsSearchQuery}
           setSearchQuery={setPrincipalsSearchQuery}
           disallowCreation
@@ -219,10 +219,7 @@ export const BranchSettingsRuleBypassListField: FC<
         <FormInput.Checkbox
           {...register!('repo_owners')}
           id="edit-permissons"
-          label={t(
-            'views:repos.editPermissionsCheckboxDescription',
-            'Allow users with edit permission on the repository to bypass'
-          )}
+          label="Allow users with edit permission on the repository to bypass"
         />
 
         {errors!.repo_owners && <Message theme={MessageTheme.ERROR}>{errors!.repo_owners.message?.toString()}</Message>}

@@ -23,7 +23,6 @@ function createSelectThemeStyles() {
 export default {
   '.cn-select': {
     display: 'flex',
-    // gridTemplateColumns: '1fr auto',
     alignItems: 'center',
     gap: 'var(--cn-spacing-1-half)',
     borderRadius: 'var(--cn-input-radius)',

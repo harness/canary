@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import { InputFactory } from '@harnessio/forms'
+
 import { pipelineInputs2FormInputs } from '../inputs-utils'
 
 const pipelineInputs = {
@@ -26,6 +28,8 @@ const pipelineInputs = {
   }
 }
 
+const inputComponentFactory = new InputFactory()
+
 const options = { prefix: 'input.' }
 
 describe('pipelineInputs2FormInputs', () => {
@@ -38,7 +42,12 @@ describe('pipelineInputs2FormInputs', () => {
       }
     ]
 
-    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
+    const result = pipelineInputs2FormInputs({
+      pipelineInputs,
+      options,
+      pipelineInputLayout: layout,
+      inputComponentFactory
+    })
 
     // Expect group + one unlisted input
     expect(result).toHaveLength(2)
@@ -54,7 +63,12 @@ describe('pipelineInputs2FormInputs', () => {
       }
     ]
 
-    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
+    const result = pipelineInputs2FormInputs({
+      pipelineInputs,
+      options,
+      pipelineInputLayout: layout,
+      inputComponentFactory
+    })
 
     // All inputs should be flat
     expect(result).toHaveLength(3)
@@ -70,7 +84,12 @@ describe('pipelineInputs2FormInputs', () => {
       }
     ]
 
-    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
+    const result = pipelineInputs2FormInputs({
+      pipelineInputs,
+      options,
+      pipelineInputLayout: layout,
+      inputComponentFactory
+    })
 
     const flatInputs = result.flatMap(item => (item.inputType === 'group' ? item.inputs : [item]))
 
@@ -79,7 +98,7 @@ describe('pipelineInputs2FormInputs', () => {
   })
 
   it('renders flat input list when no layout is provided (Rule 3)', () => {
-    const result = pipelineInputs2FormInputs({ pipelineInputs, options })
+    const result = pipelineInputs2FormInputs({ pipelineInputs, options, inputComponentFactory })
     expect(result).toHaveLength(3)
     result.forEach(input => expect(input.inputType).not.toBe('group'))
   })
@@ -87,7 +106,12 @@ describe('pipelineInputs2FormInputs', () => {
   it('ignores non-existent keys in layout (Rule 4)', () => {
     const layout = ['foo', 'qux', 'bar'] // 'qux' does not exist
 
-    const result = pipelineInputs2FormInputs({ pipelineInputs, options, pipelineInputLayout: layout })
+    const result = pipelineInputs2FormInputs({
+      pipelineInputs,
+      options,
+      pipelineInputLayout: layout,
+      inputComponentFactory
+    })
 
     // Should only include 'foo', 'bar', and 'baz' (baz is appended)
     const paths = result.map(i => (i.inputType === 'group' ? null : i.path)).filter(Boolean)

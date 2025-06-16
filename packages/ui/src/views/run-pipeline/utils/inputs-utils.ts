@@ -2,19 +2,22 @@ import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { cloneDeep, forOwn } from 'lodash-es'
 import * as z from 'zod'
 
-import { IInputDefinition, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
+import { IInputDefinition, InputFactory, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 
+import { PipelineInputDefinition } from '../types'
 import { type InputLayout } from './types'
 
 /** pipeline inputs to form inputs conversion */
 export function pipelineInputs2FormInputs({
   pipelineInputs,
   options,
-  pipelineInputLayout = []
+  pipelineInputLayout = [],
+  inputComponentFactory
 }: {
-  pipelineInputs: Record<string, any>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   options: { prefix?: string }
   pipelineInputLayout?: InputLayout
+  inputComponentFactory: InputFactory
 }): IInputDefinition[] {
   /**
    * Pre-process inputs for valid layout.
@@ -33,12 +36,18 @@ export function pipelineInputs2FormInputs({
   }
 
   const processedInputKeys = new Set<string>()
-  const inputsFromLayout = processLayout(pipelineInputLayout, pipelineInputs, options, processedInputKeys)
+  const inputsFromLayout = processLayout(
+    pipelineInputLayout,
+    pipelineInputs,
+    options,
+    processedInputKeys,
+    inputComponentFactory
+  )
 
   const remainingInputs: IInputDefinition[] = []
   forOwn(pipelineInputs, (value, key) => {
     if (!processedInputKeys.has(key)) {
-      remainingInputs.push(pipelineInput2FormInput(key, value, options))
+      remainingInputs.push(pipelineInput2FormInput(key, value, options, inputComponentFactory))
     }
   })
 
@@ -56,18 +65,19 @@ export function pipelineInputs2FormInputs({
  */
 const processLayout = (
   layout: InputLayout,
-  pipelineInputs: Record<string, any>,
+  pipelineInputs: Record<string, PipelineInputDefinition>,
   options: { prefix?: string },
-  processedInputKeys: Set<string>
+  processedInputKeys: Set<string>,
+  inputComponentFactory: InputFactory
 ): IInputDefinition[] => {
   return layout.flatMap(item => {
     if (typeof item === 'string') {
       if (processedInputKeys.has(item) || !(item in pipelineInputs)) return []
       processedInputKeys.add(item)
-      return pipelineInput2FormInput(item, pipelineInputs[item], options)
+      return pipelineInput2FormInput(item, pipelineInputs[item], options, inputComponentFactory)
     }
 
-    const layoutedInputs = processLayout(item.items, pipelineInputs, options, processedInputKeys)
+    const layoutedInputs = processLayout(item.items, pipelineInputs, options, processedInputKeys, inputComponentFactory)
 
     // If group has no title, flatten its items
     if (!item.title && item.items && item.items.length > 0) {
@@ -108,20 +118,31 @@ const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
 /** pipeline input to form input conversion */
 export function pipelineInput2FormInput(
   name: string,
-  inputProps: Record<string, unknown>,
-  options: { prefix?: string }
+  inputProps: PipelineInputDefinition,
+  options: { prefix?: string },
+  inputComponentFactory: InputFactory
 ): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
-  const inputType = pipelineInputType2FormInputType(inputProps.type as string)
+  const inputType = pipelineInputType2FormInputType(inputProps.type, inputProps?.ui, inputComponentFactory)
 
   return {
     inputType,
     path: options.prefix + name,
-    label: name,
+    label: typeof inputProps.label === 'string' ? inputProps.label : name,
     default: inputProps.default,
     required: inputProps.required as boolean,
+    placeholder: inputProps.ui?.placeholder || '',
+    isVisible: function () {
+      // return inputProps.ui?.visible?.length ? jexl.evalSync(inputProps.ui?.visible, values) : true
+      return true
+    },
     inputConfig: {
       allowedValueTypes: ['fixed', 'runtime', 'expression'],
-      ...(inputProps.description ? { tooltip: inputProps.description as string } : {})
+      ...(inputProps.description ? { tooltip: inputProps.description as string } : {}),
+      ...(inputProps?.ui ? inputProps.ui : {}),
+      // special handling for select dropdown items
+      ...(inputType === 'select'
+        ? { options: inputProps?.options?.map(option => ({ label: option, value: option })) }
+        : {})
     },
     outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'
@@ -140,8 +161,19 @@ export function pipelineInput2FormInput(
   }
 }
 
-/** pipeline input type to form input type conversion */
-function pipelineInputType2FormInputType(type: string) {
+/** pipeline input ui widget / input type to form input type conversion */
+function pipelineInputType2FormInputType(
+  type: string,
+  uiProps: PipelineInputDefinition['ui'],
+  inputComponentFactory: InputFactory
+): string {
+  return uiProps?.widget
+    ? (inputComponentFactory?.getComponent(uiProps?.widget)?.internalType ?? 'text')
+    : convertTypeToDefaultInputType(type)
+}
+
+/**  default input types for pipeline inputs **/
+function convertTypeToDefaultInputType(type: string): string {
   switch (type) {
     case 'string':
       return 'text'
@@ -149,7 +181,6 @@ function pipelineInputType2FormInputType(type: string) {
       return type
   }
 }
-
 export function pipelineInputs2JsonSchema(pipelineInputs: Record<string, any>): Record<string, any> {
   const required: string[] = []
 

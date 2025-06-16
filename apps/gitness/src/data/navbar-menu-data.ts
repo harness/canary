@@ -25,20 +25,6 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
         description: 'Integrated & familiar git experience.',
         to: routes.toRepositories({ spaceId })
       },
-      // {
-      //   id: 1,
-      //   iconName: 'pipeline',
-      //   title: t('component:navbar.pipelines'),
-      //   description: 'Up to 4X faster than other solutions.',
-      //   to: routes.toPipelines()
-      // },
-      // {
-      //   id: 2,
-      //   iconName: 'executions',
-      //   title: t('component:navbar.executions'),
-      //   description: 'Optimize feature rollout velocity.',
-      //   to: routes.toExecutions()
-      // },
       {
         id: 3,
         iconName: 'database',

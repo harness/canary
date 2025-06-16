@@ -73,6 +73,10 @@ interface SelectProps<T = string>
   onSearch?: (query: string) => void
   searchValue?: string
   optionRenderer?: (option: ValueOption<T>) => SelectItemType
+  header?: ReactNode
+  footer?: ReactNode
+  contentWidth?: 'auto' | 'triggerWidth'
+  contentClassName?: string
 }
 
 // Helper function to check option types
@@ -129,6 +133,10 @@ function SelectInner<T = string>(
     onSearch,
     searchValue,
     optionRenderer,
+    header,
+    footer,
+    contentWidth = 'auto',
+    contentClassName,
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -368,17 +376,29 @@ function SelectInner<T = string>(
           <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content className="w-[--radix-dropdown-menu-trigger-width]" align="start" onScroll={handleScroll}>
-          {allowSearch && (
+        <DropdownMenu.Content
+          className={cn(
+            'cn-select-content',
+            { 'max-w-none w-[--radix-dropdown-menu-trigger-width]': contentWidth === 'triggerWidth' },
+            contentClassName
+          )}
+          align="start"
+          onScroll={handleScroll}
+        >
+          {(allowSearch || header) && (
             <DropdownMenu.Header>
-              <SearchInput
-                placeholder="Search"
-                value={searchQuery}
-                onChange={setSearchQuery}
-                debounce={false}
-                autoFocus
-                onKeyDown={e => e.stopPropagation()}
-              />
+              {allowSearch && (
+                <SearchInput
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                  debounce={false}
+                  autoFocus
+                  onKeyDown={e => e.stopPropagation()}
+                />
+              )}
+
+              {header}
             </DropdownMenu.Header>
           )}
 
@@ -393,6 +413,8 @@ function SelectInner<T = string>(
           {isWithItems && renderOptions(filteredOptions)}
 
           {showSpinner && <DropdownMenu.Spinner />}
+
+          {footer && <DropdownMenu.Footer>{footer}</DropdownMenu.Footer>}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 

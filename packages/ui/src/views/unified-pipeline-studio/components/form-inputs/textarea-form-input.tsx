@@ -8,7 +8,6 @@ import { RuntimeInputConfig } from './types/types'
 export interface TextareaFormInputConfig {
   inputType: 'textarea'
   inputConfig?: {
-    placeholder?: string
     tooltip?: string
   } & RuntimeInputConfig
 }

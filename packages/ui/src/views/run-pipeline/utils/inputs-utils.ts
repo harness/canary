@@ -1,5 +1,4 @@
 import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
-import jexl from 'jexl'
 import { cloneDeep, forOwn } from 'lodash-es'
 import * as z from 'zod'
 
@@ -132,8 +131,9 @@ export function pipelineInput2FormInput(
     default: inputProps.default,
     required: inputProps.required as boolean,
     placeholder: inputProps.ui?.placeholder || '',
-    isVisible: function (values) {
-      return inputProps.ui?.visible?.length ? jexl.evalSync(inputProps.ui?.visible, values) : true
+    isVisible: function () {
+      // return inputProps.ui?.visible?.length ? jexl.evalSync(inputProps.ui?.visible, values) : true
+      return true
     },
     inputConfig: {
       allowedValueTypes: ['fixed', 'runtime', 'expression'],

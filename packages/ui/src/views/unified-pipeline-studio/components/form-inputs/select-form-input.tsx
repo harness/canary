@@ -19,7 +19,6 @@ export interface SelectFormInputConfig {
     tooltip?: string
     isDisabled?: (values: AnyFormikValue) => boolean
     disabledValue?: string
-    placeholder?: string
   } & RuntimeInputConfig
 }
 

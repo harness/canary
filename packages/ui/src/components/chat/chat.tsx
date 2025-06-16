@@ -44,7 +44,9 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         'place-content-end': self
       })}
     >
-      {!self && <div className="mt-0.5">{avatar ? avatar : <Illustration name="chat-avatar" themeDependent />}</div>}
+      {!self && (
+        <div className="mt-0.5">{avatar ? avatar : <Illustration size={16} name="chat-avatar" themeDependent />}</div>
+      )}
       <div
         className={cn('flex flex-col gap-3', {
           'w-[85%] items-end': self,
@@ -84,7 +86,7 @@ interface TypingProps {
 const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
-      {avatar || <Illustration name="chat-avatar" themeDependent />}
+      {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
       <span className="size-2.5 rounded-full bg-cn-background-3" aria-hidden />
     </div>
   )

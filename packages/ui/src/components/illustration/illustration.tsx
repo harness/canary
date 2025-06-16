@@ -24,8 +24,6 @@ const Illustration: FC<IllustrationProps> = ({
 }) => {
   const { isLightTheme } = useTheme()
 
-  console.log('isLightTheme', isLightTheme)
-
   const isLightIconAvailable = !!IllustrationsNameMap[`${name}-light` as keyof typeof IllustrationsNameMap]
 
   const Component =

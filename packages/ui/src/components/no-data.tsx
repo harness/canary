@@ -49,7 +49,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {name && <Illustration name={name} size={size} />}
+      {name && <Illustration name={name} size={size} themeDependent />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
         <Text variant="heading-section">{title}</Text>
         {description && (

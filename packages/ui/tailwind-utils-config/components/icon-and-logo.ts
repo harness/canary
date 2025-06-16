@@ -8,7 +8,9 @@ function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
   Sizes.forEach(size => {
     const style: CSSRuleObject = {}
     style[`width`] = `var(--cn-icon-size-${size})`
+    style[`min-width`] = `var(--cn-icon-size-${size})`
     style[`height`] = `var(--cn-icon-size-${size})`
+    style[`min-height`] = `var(--cn-icon-size-${size})`
 
     if (entity === 'icon') {
       style['stroke-width'] = `var(--cn-icon-stroke-width-${size})`
@@ -16,12 +18,6 @@ function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
 
     styles[`&:where(.cn-${entity}-${size})`] = style
   })
-
-  // if (entity === 'icon') {
-  //   Sizes.forEach(size => {
-  //     styles[`&:where(.cn-${entity}-${size})`]['stroke-width'] = `var(--cn-icon-stroke-width-${size})`
-  //   })
-  // }
 
   return styles
 }

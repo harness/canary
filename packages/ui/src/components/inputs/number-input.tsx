@@ -4,7 +4,7 @@ import { Button, ControlGroup, FormCaption, IconV2, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
-export interface NumberInputProps extends Omit<InputProps, 'type' | 'suffix'> {
+export interface NumberInputProps extends Omit<InputProps, 'type'> {
   wrapperClassName?: string
   caption?: string
   error?: string
@@ -36,6 +36,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       theme,
       hideStepper = false,
       integerOnly = false,
+      suffix,
       ...props
     },
     ref
@@ -112,33 +113,36 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             }
           }}
           suffix={
-            hideStepper ? null : (
-              <div className="flex flex-col">
-                <Button
-                  tabIndex={-1}
-                  aria-label="Increment value"
-                  variant="ghost"
-                  iconOnly
-                  onClick={handleIncrement}
-                  disabled={disabled}
-                  size="sm"
-                >
-                  <IconV2 name="nav-arrow-up" size={14} />
-                </Button>
-                <hr />
-                <Button
-                  tabIndex={-1}
-                  aria-label="Decrement value"
-                  variant="ghost"
-                  iconOnly
-                  onClick={handleDecrement}
-                  disabled={disabled}
-                  size="sm"
-                >
-                  <IconV2 name="nav-arrow-down" size={14} />
-                </Button>
-              </div>
-            )
+            <div className="flex">
+              {!hideStepper ? (
+                <div className="flex flex-col">
+                  <Button
+                    tabIndex={-1}
+                    aria-label="Increment value"
+                    variant="ghost"
+                    iconOnly
+                    onClick={handleIncrement}
+                    disabled={disabled}
+                    size="sm"
+                  >
+                    <IconV2 name="nav-arrow-up" size={14} />
+                  </Button>
+                  <hr />
+                  <Button
+                    tabIndex={-1}
+                    aria-label="Decrement value"
+                    variant="ghost"
+                    iconOnly
+                    onClick={handleDecrement}
+                    disabled={disabled}
+                    size="sm"
+                  >
+                    <IconV2 name="nav-arrow-down" size={14} />
+                  </Button>
+                </div>
+              ) : null}
+              {suffix ? <div className={hideStepper ? '' : 'border-inherit'}>{suffix}</div> : null}
+            </div>
           }
           {...props}
         />

@@ -105,7 +105,7 @@ import { DocsPage } from "@/components/docs-page";
     id="optional-input" 
     label="Optional Field" 
     optional={true} 
-  />
+  />  
   
   {/* Without Stepper UI */}
   <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
@@ -114,6 +114,18 @@ import { DocsPage } from "@/components/docs-page";
     id="no-stepper" 
     label="No Stepper UI" 
     placeholder="Enter a number manually"
+  />
+  
+  {/* With Suffix */}
+  <NumberInput
+    id="suffix-input"
+    label="Suffix Input"
+    defaultValue={15}
+    suffix={<Button variant="outline" iconOnly className="cn-input-suffix">
+      <Icon name="chevron-right" size={14} />
+    </Button>}
+    theme="error"
+    error="Suffix icon with error theme"
   />
 </div>`}
 />
@@ -182,6 +194,13 @@ return (
       required: false,
       defaultValue: "",
       value: "string",
+    },
+    {
+      name: "suffix",
+      description:
+        "Optional element to display after the input. Can be a React component or any other node.",
+      required: false,
+      value: "ReactNode",
     },
     {
       name: "error",

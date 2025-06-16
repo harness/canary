@@ -75,6 +75,16 @@ export default {
       color: 'var(--cn-text-2)'
     },
 
+    '&-trigger-container': {
+      '@apply flex items-center truncate': '',
+      gap: 'var(--cn-spacing-1-half)'
+    },
+
+    '&-trigger': {
+      '@apply w-full flex items-center justify-between truncate': '',
+      gap: 'var(--cn-spacing-1-half)'
+    },
+
     '&-suffix': {
       '@apply border-l flex items-center justify-center': '',
       borderRadius: '0 var(--cn-input-radius) var(--cn-input-radius) 0',

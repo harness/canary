@@ -366,14 +366,12 @@ function SelectInner<T = string>(
           if (!open) setSearchQuery('')
         }}
       >
-        <div className={cn(selectVariants({ theme }), className, 'flex items-center gap-2 truncate')}>
-          <DropdownMenu.Trigger id={id} ref={ref} disabled={disabled}>
-            <div className="flex items-center gap-2 truncate">
-              <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
-                {selectedOption ? selectedOption.label : placeholder}
-              </Text>
-              <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
-            </div>
+        <div className={cn(selectVariants({ theme }), className, 'cn-select-trigger-container')}>
+          <DropdownMenu.Trigger id={id} ref={ref} disabled={disabled} className="cn-select-trigger">
+            <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
+              {selectedOption ? selectedOption.label : placeholder}
+            </Text>
+            <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
           </DropdownMenu.Trigger>
           {suffix ? <div className="cn-select-suffix">{suffix}</div> : null}
         </div>

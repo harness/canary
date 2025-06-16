@@ -4,6 +4,7 @@ export default {
     alignItems: 'center',
 
     '&-outlined': {
+      width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
       border: 'var(--cn-tabs-container-border) solid var(--cn-border-2)',
@@ -12,6 +13,7 @@ export default {
     },
 
     '&-ghost': {
+      width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
       '@apply font-body-strong': ''
@@ -36,7 +38,6 @@ export default {
     '@apply transition-colors': '',
 
     '&-outlined': {
-      width: 'fit-content',
       minHeight: 'var(--cn-tabs-item-min-height)',
       padding: 'var(--cn-tabs-item-py) var(--cn-tabs-item-px)',
       gap: 'var(--cn-tabs-item-gap)',
@@ -44,20 +45,19 @@ export default {
       border: 'var(--cn-tabs-item-border) solid transparent',
       '@apply font-body-strong': '',
 
-      '&:where(.cn-tabs-trigger-active)': {
+      '&:where(:not([disabled]).cn-tabs-trigger-active)': {
         borderColor: 'var(--cn-border-2)',
         backgroundColor: 'var(--cn-bg-3)',
         borderRadius: 'var(--cn-tabs-item-radius)',
         color: 'var(--cn-text-1)'
       },
 
-      '&:hover': {
+      '&:where(:not([disabled]):hover)': {
         color: 'var(--cn-text-2)'
       }
     },
 
     '&-ghost': {
-      width: 'fit-content',
       minHeight: 'var(--cn-tabs-item-min-height)',
       padding: 'var(--cn-tabs-item-py) var(--cn-tabs-item-px)',
       gap: 'var(--cn-tabs-item-gap)',
@@ -65,7 +65,7 @@ export default {
       border: 'var(--cn-tabs-item-border) solid transparent',
       '@apply font-body-strong': '',
 
-      '&:where(.cn-tabs-trigger-active)': {
+      '&:where(:not([disabled]).cn-tabs-trigger-active)': {
         backgroundColor: 'var(--cn-set-gray-soft-bg)',
         borderRadius: 'var(--cn-tabs-item-radius)',
         borderColor: 'var(--cn-set-gray-soft-bg)',
@@ -73,7 +73,7 @@ export default {
         boxShadow: 'var(--cn-shadow-1)'
       },
 
-      '&:hover': {
+      '&:where(:not([disabled]):hover)': {
         color: 'var(--cn-text-2)'
       }
     },
@@ -87,7 +87,7 @@ export default {
       border: 'var(--cn-tabs-item-overlined-border) solid transparent',
       '@apply font-body-normal': '',
 
-      '&:where(.cn-tabs-trigger-active)': {
+      '&:where(:not([disabled]).cn-tabs-trigger-active)': {
         borderColor: 'var(--cn-border-3)',
         borderBottomColor: 'transparent',
         borderRadius:
@@ -96,7 +96,7 @@ export default {
         color: 'var(--cn-text-1)'
       },
 
-      '&:hover': {
+      '&:where(:not([disabled]):hover)': {
         color: 'var(--cn-text-1)'
       }
     },
@@ -110,14 +110,18 @@ export default {
       borderBottom: 'var(--cn-tabs-item-underlined-border) solid transparent',
       '@apply font-body-normal': '',
 
-      '&:where(.cn-tabs-trigger-active)': {
+      '&:where(:not([disabled]).cn-tabs-trigger-active)': {
         borderColor: 'var(--cn-border-1)',
         color: 'var(--cn-text-1)'
       },
 
-      '&:hover': {
+      '&:where(:not([disabled]):hover)': {
         color: 'var(--cn-text-1)'
       }
+    },
+
+    '&:where([disabled])': {
+      color: 'var(--cn-state-disabled-text)'
     }
   }
 }

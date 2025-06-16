@@ -14,7 +14,7 @@ It can be composed with several subcomponents such as `Tabs.Root`, `Tabs.NavRoot
 <DocsPage.ComponentExample
   client:only
   code={`<Tabs.Root className="grid gap-3" defaultValue="tab1">
-    <Tabs.List>
+    <Tabs.List variant="outlined">
         <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
         <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
         <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
@@ -94,6 +94,7 @@ The `Tabs` component supports multiple visual variants that can be applied via t
             <Tabs.Trigger value="tab1">Underlined 1</Tabs.Trigger>
             <Tabs.Trigger value="tab2">Underlined 2</Tabs.Trigger>
             <Tabs.Trigger value="tab3">Underlined 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Underlined 3</Tabs.Trigger>
         </Tabs.List>
     </Tabs.Root>
     
@@ -103,6 +104,7 @@ The `Tabs` component supports multiple visual variants that can be applied via t
             <Tabs.Trigger value="tab1">Overlined 1</Tabs.Trigger>
             <Tabs.Trigger value="tab2">Overlined 2</Tabs.Trigger>
             <Tabs.Trigger value="tab3">Overlined 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Overlined 3</Tabs.Trigger>
         </Tabs.List>
     </Tabs.Root>
     
@@ -112,6 +114,7 @@ The `Tabs` component supports multiple visual variants that can be applied via t
             <Tabs.Trigger value="tab1">Ghost 1</Tabs.Trigger>
             <Tabs.Trigger value="tab2">Ghost 2</Tabs.Trigger>
             <Tabs.Trigger value="tab3">Ghost 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Ghost 3</Tabs.Trigger>
         </Tabs.List>
     </Tabs.Root>
     
@@ -121,6 +124,7 @@ The `Tabs` component supports multiple visual variants that can be applied via t
             <Tabs.Trigger value="tab1">Outlined 1</Tabs.Trigger>
             <Tabs.Trigger value="tab2">Outlined 2</Tabs.Trigger>
             <Tabs.Trigger value="tab3">Outlined 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Outlined 3</Tabs.Trigger>
         </Tabs.List>
     </Tabs.Root>
 </div>`}

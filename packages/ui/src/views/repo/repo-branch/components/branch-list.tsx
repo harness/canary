@@ -85,7 +85,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       variant="compact"
-      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>

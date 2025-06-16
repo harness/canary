@@ -2,7 +2,6 @@ import {
   ForwardedRef,
   forwardRef,
   InputHTMLAttributes,
-  isValidElement,
   ReactElement,
   ReactNode,
   UIEvent,

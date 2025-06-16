@@ -141,10 +141,7 @@ export function RepoWebhookList({
                 </StatusBadge>
               </Table.Cell>
 
-              <Table.Cell
-                className="cursor-pointer content-center text-right"
-                // linkProps={{ className: 'flex w-full justify-end' }}
-              >
+              <Table.Cell className="cursor-pointer content-center text-right">
                 <MoreActionsTooltip
                   actions={[
                     {

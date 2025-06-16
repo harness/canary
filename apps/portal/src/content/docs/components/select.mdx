@@ -23,15 +23,6 @@ The `Select` component provides a dropdown interface for selecting a single valu
         ]}
         value={value}
         onChange={setValue}
-        suffix={<Button
-          onClick={() => alert('suffix clicked')}
-          variant="ghost"
-          size="sm"
-          iconOnly
-          className="size-full"
-        >
-          <Icon name="chevron-right" size={14} />
-        </Button>}
         placeholder="Select a fruit"
       />
     );
@@ -58,6 +49,41 @@ return (
   />
 )
 ```
+
+## Suffix Example
+
+The `Select` component can be customized with a suffix element that appears on the right side of the input.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState();
+    
+    return (
+      <div className="grid gap-4">
+        <Select
+          options={[
+            { label: 'Option 1', value: '1' },
+            { label: 'Option 2', value: '2' },
+            { label: 'Option 3', value: '3' },
+          ]}
+          value={value}
+          onChange={setValue}
+          suffix={<Button
+            onClick={() => alert('Suffix clicked.')}
+            variant="ghost"
+            size="sm"
+            iconOnly
+            className="size-full"
+          >
+            <Icon name="chevron-right" size={14} />
+          </Button>}
+          placeholder="With custom suffix"
+        />
+      </div>
+    );
+  }`}
+/>
 
 ## Form Integration
 
@@ -647,6 +673,13 @@ The `Select` component is the main component for creating dropdown selections.
       description: "Label text displayed above the select",
       required: false,
       value: "string",
+    },
+    {
+      name: "suffix",
+      description:
+        "Custom element to display on the right side of the select input",
+      required: false,
+      value: "ReactNode",
     },
     {
       name: "theme",

@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react'
+import { forwardRef, ReactNode, useMemo } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
 
@@ -11,7 +11,7 @@ export interface TextInputProps extends InputProps {
   error?: string
   warning?: string
   optional?: boolean
-  labelSuffix?: boolean
+  labelSuffix?: ReactNode
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {

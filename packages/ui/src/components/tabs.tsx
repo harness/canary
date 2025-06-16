@@ -63,12 +63,18 @@ interface TabsProps {
   className?: string
 }
 
-const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: TabsProps) => {
+const useManageActiveTabValue = ({
+  type,
+  value,
+  defaultValue,
+  onValueChange
+}: Partial<TabsProps> & { type: TabsContextType['type'] }) => {
   const [activeTabValue, setActiveTabValue] = useState<string | undefined>(value ?? defaultValue)
 
   const handleValueChange = (newValue: string) => {
-    setActiveTabValue(newValue)
     onValueChange?.(newValue)
+    if (type === 'tabsnav' && value !== undefined) return
+    setActiveTabValue(newValue)
   }
 
   useEffect(() => {
@@ -76,6 +82,17 @@ const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: T
       setActiveTabValue(value)
     }
   }, [value])
+
+  return { activeTabValue, handleValueChange }
+}
+
+const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: TabsProps) => {
+  const { activeTabValue, handleValueChange } = useManageActiveTabValue({
+    type: 'tabs',
+    value,
+    defaultValue,
+    onValueChange
+  })
 
   return (
     <TabsContext.Provider value={{ type: 'tabs', activeTabValue, onValueChange: handleValueChange }}>
@@ -92,20 +109,12 @@ const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: T
 }
 
 const TabsNavRoot = ({ children, onValueChange, value, defaultValue }: TabsProps) => {
-  const [activeTabValue, setActiveTabValue] = useState<string | undefined>(value ?? defaultValue)
-
-  useEffect(() => {
-    if (value !== undefined) {
-      setActiveTabValue(value)
-    }
-  }, [value])
-
-  const handleValueChange = (newValue: string) => {
-    if (value === undefined) {
-      setActiveTabValue(newValue)
-    }
-    onValueChange?.(newValue)
-  }
+  const { activeTabValue, handleValueChange } = useManageActiveTabValue({
+    type: 'tabsnav',
+    value,
+    defaultValue,
+    onValueChange
+  })
 
   return (
     <TabsContext.Provider value={{ type: 'tabsnav', activeTabValue, onValueChange: handleValueChange }}>
@@ -114,11 +123,9 @@ const TabsNavRoot = ({ children, onValueChange, value, defaultValue }: TabsProps
   )
 }
 
-const TabsListContext = createContext<
-  VariantProps<typeof tabsListVariants> & {
-    activeClassName?: string
-  }
->({ variant: 'underlined' })
+const TabsListContext = createContext<VariantProps<typeof tabsListVariants> & { activeClassName?: string }>({
+  variant: 'underlined'
+})
 
 interface TabsListProps
   extends ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
@@ -149,7 +156,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
 )
 TabsList.displayName = TabsPrimitive.List.displayName
 
-interface TabsTriggerBaseProps extends VariantProps<typeof tabsTriggerVariants> {
+interface TabsTriggerBaseProps {
   value: string
   children?: ReactNode
   className?: string
@@ -185,15 +192,18 @@ interface TabsTriggerComponent {
 }
 
 const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTriggerProps>((props, ref) => {
-  const { className, variant, children, value, icon, logo, counter, ...restProps } = props
-  const { variant: _variant, activeClassName } = useContext(TabsListContext)
+  const { className, children, value, icon, logo, counter, ...restProps } = props
+  const { variant, activeClassName } = useContext(TabsListContext)
   const { type, activeTabValue, onValueChange } = useContext(TabsContext)
   const { NavLink } = useRouterContext()
 
+  const iconSize = variant === 'ghost' || variant === 'outlined' ? 16 : 14
+  const logoSize: LogoPropsV2['size'] = variant === 'ghost' || variant === 'outlined' ? 'default' : 'sm'
+
   const TabTriggerContent = () => (
     <>
-      {!!icon && <IconV2 size={16} name={icon} />}
-      {!!logo && <LogoV2 size="default" name={logo} />}
+      {!!icon && <IconV2 size={iconSize} name={icon} />}
+      {!!logo && <LogoV2 size={logoSize} name={logo} />}
       {children}
       {Number.isInteger(counter) && <CounterBadge>{counter}</CounterBadge>}
     </>
@@ -215,11 +225,8 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
           const isLinkActive = activeTabValue !== undefined ? activeTabValue === value : isActive
 
           return cn(
-            tabsTriggerVariants({ variant: _variant ?? variant }),
-            {
-              'cn-tabs-trigger-active': isLinkActive,
-              [activeClassName ?? '']: isLinkActive
-            },
+            tabsTriggerVariants({ variant }),
+            { 'cn-tabs-trigger-active': isLinkActive, [activeClassName ?? '']: isLinkActive },
             className
           )
         }}
@@ -238,11 +245,8 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
       ref={ref as Ref<HTMLButtonElement>}
       value={value}
       className={cn(
-        tabsTriggerVariants({ variant: _variant ?? variant }),
-        {
-          'cn-tabs-trigger-active': isTabActive,
-          [activeClassName ?? '']: isTabActive
-        },
+        tabsTriggerVariants({ variant }),
+        { 'cn-tabs-trigger-active': isTabActive, [activeClassName ?? '']: isTabActive },
         className
       )}
       {...(restProps as Omit<ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>, 'value'>)}

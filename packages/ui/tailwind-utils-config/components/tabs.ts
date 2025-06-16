@@ -36,6 +36,7 @@ export default {
     '@apply transition-colors': '',
 
     '&-outlined': {
+      width: 'fit-content',
       minHeight: 'var(--cn-tabs-item-min-height)',
       padding: 'var(--cn-tabs-item-py) var(--cn-tabs-item-px)',
       gap: 'var(--cn-tabs-item-gap)',
@@ -56,6 +57,7 @@ export default {
     },
 
     '&-ghost': {
+      width: 'fit-content',
       minHeight: 'var(--cn-tabs-item-min-height)',
       padding: 'var(--cn-tabs-item-py) var(--cn-tabs-item-px)',
       gap: 'var(--cn-tabs-item-gap)',

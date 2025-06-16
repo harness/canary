@@ -411,7 +411,7 @@
     },
     "md": {
       "$type": "sizing",
-      "$value": "{size.4-half}"
+      "$value": "{size.5}"
     },
     "lg": {
       "$type": "sizing",

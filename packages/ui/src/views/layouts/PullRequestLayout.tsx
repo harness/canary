@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Tabs } from '@/components'
+import { Tabs } from '@/components/tabs'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'

@@ -10,14 +10,13 @@ import {
   useState
 } from 'react'
 
+import { CounterBadge } from '@/components/counter-badge'
+import { IconPropsV2, IconV2 } from '@/components/icon-v2'
+import { LogoPropsV2, LogoV2 } from '@/components/logo-v2'
 import { NavLinkProps, useRouterContext } from '@/context'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-import { CounterBadge } from './counter-badge'
-import { IconPropsV2, IconV2 } from './icon-v2'
-import { LogoPropsV2, LogoV2 } from './logo-v2'
 
 const tabsListVariants = cva('cn-tabs-list', {
   variants: {

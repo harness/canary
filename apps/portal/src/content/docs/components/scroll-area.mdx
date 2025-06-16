@@ -4,7 +4,7 @@ description: Scroll area component
 beta: true
 ---
 
-The Scroll Area component provides a customizable scrollable container with optional scrollbars. It is useful for displaying content that exceeds the available viewport space.
+The `ScrollArea` component offers a flexible, customizable container with scrollbars for overflowing content. Use it to display content that exceeds the visible area, supporting both horizontal and vertical scrolling.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -12,7 +12,7 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
 <div>
-  <ScrollArea orientation="both" className="w-[300px] h-[200px] border">
+  <ScrollArea className="w-[300px] h-[200px] border">
       <div className="p-4 space-y-4 w-[700px] h-[300px]">
         <p>Content that exceeds the viewport height and width.</p>
         <p>More content...</p>
@@ -30,7 +30,7 @@ import { ScrollArea } from '@harnessio/ui/components';
 //...
 
 return (
-  <ScrollArea orientation="both" className="w-[300px] h-[200px] border">
+  <ScrollArea className="w-[300px] h-[200px] border">
     <div className="p-4 space-y-4 w-[700px] h-[300px]">
       <p>Content that exceeds the viewport height and width.</p>
       <p>More content...</p>
@@ -50,7 +50,7 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
 <div className="grid gap-4">
   <div>
     <Text variant="heading-base" color="foreground-1" className="mb-1">ltr:</Text>
-    <ScrollArea orientation="both" className="w-[300px] h-[200px] border">
+    <ScrollArea className="w-[300px] h-[200px] border">
       <div className="p-4 space-y-4 w-[700px] h-[180px]">
         <p>Content that exceeds the viewport height and width.</p>
         <p>More content...</p>
@@ -65,7 +65,6 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
   </Text>
   <ScrollArea
     direction="rtl"
-    orientation="both"
     className="w-[300px] h-[200px] border"
   >
     <div dir="rtl" className="p-4 space-y-4 w-[700px] h-[180px]">
@@ -75,51 +74,6 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
     </div>
   </ScrollArea>
 </div>
-</div>`}
-/>
-
-### Orientations
-
-The `ScrollArea` component also supports the `orientation` prop to control the scroll direction. It accepts the following values: `horizontal`, `vertical`, and `both`. The default value is `vertical`.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`
-<div className="grid gap-4">
-  <div>
-    <Text variant="heading-base" color="foreground-1" className="mb-1">horizontal:</Text>
-    <ScrollArea orientation="horizontal" className="w-[300px] h-[200px] border">
-      <div className="p-4 space-y-4 w-[700px] h-[300px]">
-        <p>Content that exceeds the viewport width.</p>
-        <p>More content...</p>
-        <p>Even more content...</p>
-      </div>
-    </ScrollArea>
-  </div>
-
-<div>
-  <Text variant="heading-base" color="foreground-1" className="mb-1">
-    vertical:
-  </Text>
-  <ScrollArea orientation="vertical" className="w-[300px] h-[200px] border">
-    <div className="p-4 space-y-4 w-[700px] h-[300px]">
-      <p>Content that exceeds the viewport height.</p>
-      <p>More content...</p>
-      <p>Even more content...</p>
-    </div>
-  </ScrollArea>
-</div>
-
-  <div>
-    <Text variant="heading-base" color="foreground-1" className="mb-1">both:</Text>
-    <ScrollArea orientation="both" className="w-[300px] h-[200px] border">
-      <div className="p-4 space-y-4 w-[700px] h-[300px]">
-        <p>Content that exceeds both viewport height and width.</p>
-        <p>More content...</p>
-        <p>Even more content...</p>
-      </div>
-    </ScrollArea>
-  </div>
 </div>`}
 />
 
@@ -143,25 +97,10 @@ The `ScrollArea` component also supports the `orientation` prop to control the s
       value: "'ltr' | 'rtl'",
     },
     {
-      name: "orientation",
-      description:
-        "Defines the orientation of the scroll area. Options are 'horizontal', 'vertical', and 'both'.",
-      required: false,
-      defaultValue: "'vertical'",
-      value: "'horizontal' | 'vertical' | 'both'",
-    },
-    {
       name: "className",
       description:
         "Additional class names to apply to the scroll area container.",
       required: false,
-      value: "string",
-    },
-    {
-      name: "viewportClassName",
-      description: "Custom CSS class for the viewport element.",
-      required: false,
-      defaultValue: "",
       value: "string",
     },
     {
@@ -177,6 +116,14 @@ The `ScrollArea` component also supports the `orientation` prop to control the s
           isRight: boolean
         }
       ) => void`,
+    },
+    {
+      name: "debounceDelay",
+      description:
+        "Delay in milliseconds to debounce the scroll event callback. Defaults to 0.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
     },
   ]}
 />

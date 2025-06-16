@@ -132,7 +132,7 @@ interface BodyProps {
 }
 
 const Body = ({ className, children, ...props }: BodyProps) => (
-  <ScrollArea className="flex flex-col" viewportClassName={cn('cn-modal-dialog-body', className)} {...props}>
+  <ScrollArea className={cn('cn-modal-dialog-body', className)} {...props}>
     {children}
   </ScrollArea>
 )

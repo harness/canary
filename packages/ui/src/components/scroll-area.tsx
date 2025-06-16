@@ -1,29 +1,7 @@
-import { FC, ReactNode, UIEvent, useCallback, useLayoutEffect, useRef } from 'react'
+import { FC, ReactNode, UIEvent, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
 
-import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
-
-type ScrollBarProps = {
-  className?: string
-  orientation?: 'vertical' | 'horizontal'
-}
-
-const ScrollBar: FC<ScrollBarProps> = ({ className, orientation = 'vertical', ...props }) => (
-  <ScrollAreaPrimitive.ScrollAreaScrollbar
-    orientation={orientation}
-    className={cn(
-      'cn-scroll-area-scrollbar',
-      {
-        'cn-scroll-area-scrollbar-vertical': orientation === 'vertical',
-        'cn-scroll-area-scrollbar-horizontal': orientation === 'horizontal'
-      },
-      className
-    )}
-    {...props}
-  >
-    <ScrollAreaPrimitive.ScrollAreaThumb className="cn-scroll-area-thumb" />
-  </ScrollAreaPrimitive.ScrollAreaScrollbar>
-)
+import debounce from 'lodash-es/debounce'
 
 type ScrollPosition = {
   isTop: boolean
@@ -35,27 +13,16 @@ type ScrollPosition = {
 export type ScrollAreaProps = {
   className?: string
   children: ReactNode
-  viewportClassName?: string
-  orientation?: 'vertical' | 'horizontal' | 'both'
   onScroll?: (event: UIEvent<HTMLDivElement>, position?: ScrollPosition) => void
   direction?: 'ltr' | 'rtl'
+  debounceDelay?: number
 }
 
-const ScrollArea: FC<ScrollAreaProps> = ({
-  className,
-  children,
-  viewportClassName,
-  orientation = 'vertical',
-  direction,
-  onScroll
-}) => {
+const ScrollArea: FC<ScrollAreaProps> = ({ className, children, direction, onScroll, debounceDelay = 0 }) => {
   const viewportRef = useRef<HTMLDivElement | null>(null)
 
-  const handleScroll = useCallback(
-    (event: UIEvent<HTMLDivElement>) => {
-      const el = viewportRef.current
-      if (!el || !onScroll) return
-
+  const computePosition = useCallback(
+    (el: HTMLDivElement): ScrollPosition => {
       const { scrollTop, scrollLeft, scrollHeight, scrollWidth, clientHeight, clientWidth } = el
 
       const isTop = scrollTop === 0
@@ -72,36 +39,50 @@ const ScrollArea: FC<ScrollAreaProps> = ({
         isRight = scrollLeft + clientWidth >= scrollWidth - 1
       }
 
-      const newPosition: ScrollPosition = { isTop, isBottom, isLeft, isRight }
-
-      onScroll(event, newPosition)
+      return { isTop, isBottom, isLeft, isRight }
     },
-    [direction, onScroll]
+    [direction]
   )
 
-  const isVertical = orientation === 'vertical' || orientation === 'both'
-  const isHorizontal = orientation === 'horizontal' || orientation === 'both'
+  const debouncedHandleScroll = useMemo(() => {
+    if (!debounceDelay) return null
+
+    return debounce((el: HTMLDivElement) => {
+      if (!onScroll) return
+      const fakeEvent = { currentTarget: el } as UIEvent<HTMLDivElement>
+      onScroll(fakeEvent, computePosition(el))
+    }, debounceDelay)
+  }, [onScroll, computePosition, debounceDelay])
+
+  const handleScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      const el = event.currentTarget
+      if (!el || !onScroll) return
+
+      if (debouncedHandleScroll) {
+        debouncedHandleScroll(el)
+      } else {
+        onScroll(event, computePosition(el))
+      }
+    },
+    [onScroll, computePosition, debouncedHandleScroll]
+  )
 
   useLayoutEffect(() => {
-    handleScroll({ currentTarget: viewportRef.current as HTMLDivElement } as UIEvent<HTMLDivElement>)
-  }, [handleScroll])
+    const el = viewportRef.current
+    if (el && onScroll) {
+      const fakeEvent = { currentTarget: el } as UIEvent<HTMLDivElement>
+      onScroll(fakeEvent, computePosition(el))
+    }
+  }, [onScroll, computePosition])
 
   return (
-    <ScrollAreaPrimitive.Root className={cn('cn-scroll-area cn-scroll-area-hover', className)} dir={direction}>
-      <ScrollAreaPrimitive.Viewport
-        className={cn('cn-scroll-area-viewport', viewportClassName)}
-        onScroll={handleScroll}
-        ref={viewportRef}
-      >
-        {children}
-      </ScrollAreaPrimitive.Viewport>
-
-      {isVertical && <ScrollBar />}
-      {isHorizontal && <ScrollBar orientation="horizontal" />}
-      <ScrollAreaPrimitive.Corner />
-    </ScrollAreaPrimitive.Root>
+    <div className={cn('cn-scroll-area', className)} dir={direction} onScroll={handleScroll} ref={viewportRef}>
+      {children}
+    </div>
   )
 }
-ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
+
+ScrollArea.displayName = 'ScrollArea'
 
 export { ScrollArea }

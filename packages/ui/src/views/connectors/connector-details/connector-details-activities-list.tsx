@@ -54,7 +54,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
     >
       <Table.Header>
         <Table.Row>

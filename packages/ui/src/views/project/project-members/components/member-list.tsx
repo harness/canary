@@ -21,7 +21,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
   }
 
   return (
-    <Table.Root variant="asStackedList">
+    <Table.Root variant="default">
       <Table.Header>
         <Table.Row>
           <Table.Head>{t('views:projectSettings.membersTable.user', 'User')}</Table.Head>

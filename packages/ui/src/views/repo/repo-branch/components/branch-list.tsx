@@ -35,7 +35,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslation()
-  const { Link, navigate } = useRouterContext()
+  const { Link } = useRouterContext()
 
   if (!branches?.length && !isLoading) {
     return (
@@ -84,7 +84,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="compact"
     >
       <Table.Header>
         <Table.Row>
@@ -110,11 +110,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
             const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
             return (
-              <Table.Row
-                key={branch.id}
-                className="cursor-pointer"
-                onClick={() => navigate(`${toCode?.({ branchName: branch.name })}`)}
-              >
+              <Table.Row key={branch.id} className="cursor-pointer" to={toCode?.({ branchName: branch.name })}>
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
@@ -209,7 +205,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 </Table.Cell>
                 <Table.Cell className="text-right">
                   <MoreActionsTooltip
-                    isInTable
+                    // isInTable
                     actions={[
                       // Don't show New Pull Request option for default branch
                       ...(!branch?.behindAhead?.default

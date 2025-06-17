@@ -103,8 +103,9 @@ export function ConnectorsList({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
       tableClassName="table-fixed"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>

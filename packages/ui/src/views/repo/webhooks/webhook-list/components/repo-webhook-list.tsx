@@ -91,20 +91,18 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root variant="asStackedList">
+      <Table.Root variant="default">
         <Table.Header>
           <Table.Row>
-            <Table.Head>Name</Table.Head>
-            <Table.Head>Execution</Table.Head>
+            <Table.Head className="w-1/2">Name</Table.Head>
+            <Table.Head className="w-1/2">Execution</Table.Head>
             <Table.Head></Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {webhooks.map(webhook => (
             <Table.Row
-              onClick={() =>
-                navigate(toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`)
-              }
+              to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
               <Table.Cell className="cursor-pointer">

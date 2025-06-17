@@ -203,17 +203,34 @@ class FigmaLogoDownloader {
               // Clone the existing children
               const existingChildren = [...svgElement.children]
 
+              // Get viewBox values to calculate proper centering
+              let viewBox = svgElement.attributes?.viewBox || '0 0 20 20'
+              let [minX, minY, width, height] = viewBox.split(' ').map(Number)
+
+              // Default to 20x20 if viewBox parsing fails
+              if (isNaN(width) || isNaN(height)) {
+                width = height = 20
+                minX = minY = 0
+              }
+
+              // Calculate center points
+              const centerX = minX + width / 2
+              const centerY = minY + height / 2
+
+              // Calculate the transformation that will:
+              // 1. First translate to the center point
+              // 2. Apply scaling (using same 0.625 scale factor)
+              // 3. Translate back by the scaled center point
+              // This ensures perfect centering with proper scaling
+              const scale = 0.625
+              const transformValue = `translate(${centerX}, ${centerY}) scale(${scale}) translate(${-centerX}, ${-centerY})`
+
               // Add wrapper group for perfect centering
-              // This uses a combination of techniques to ensure centering works across different SVG structures
               const centeringGroup = {
                 type: 'element',
                 name: 'g',
                 attributes: {
-                  // viewport is 18x18, hence added translate(9, 9) to center the logo
-                  // scale(0.5625) is used to scale the logo to 56.25% of its original size,
-                  // which is 18px if svg is 32px
-                  // translate(-9, -9) is used to center the logo after scaling
-                  transform: 'translate(9, 9) scale(0.5625) translate(-9, -9)'
+                  transform: transformValue
                 },
                 children: existingChildren
               }

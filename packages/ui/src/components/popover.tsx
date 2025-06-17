@@ -1,8 +1,12 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { Text } from '@/components/text'
 import { usePortal } from '@/context'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { cn } from '@utils/cn'
+
+import { Illustration } from './illustration'
+import { Link, LinkProps } from './link'
 
 const PopoverRoot = PopoverPrimitive.Root
 
@@ -10,28 +14,55 @@ const PopoverTrigger = PopoverPrimitive.Trigger
 
 const PopoverAnchor = PopoverPrimitive.Anchor
 
-const PopoverContent = forwardRef<
-  ElementRef<typeof PopoverPrimitive.Content>,
-  ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className = 'w-72', align = 'center', sideOffset = 4, ...props }, ref) => {
-  const { portalContainer } = usePortal()
+interface PopoverContentProps extends ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> {
+  title?: string
+  description?: string
+  linkProps?: Omit<LinkProps, 'children'> & { text: string }
+  showArrow?: boolean
+}
 
-  return (
-    <PopoverPrimitive.Portal container={portalContainer}>
-      <PopoverPrimitive.Content
-        className={cn(
-          'bg-cn-background-2 text-cn-foreground-1 shadow-4 z-50 rounded border p-4 outline-none',
-          'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-          className
-        )}
-        ref={ref}
-        align={align}
-        sideOffset={sideOffset}
-        {...props}
-      />
-    </PopoverPrimitive.Portal>
-  )
-})
+const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, PopoverContentProps>(
+  (
+    { className, children, title, description, linkProps, showArrow, align = 'center', sideOffset = 4, ...props },
+    ref
+  ) => {
+    const { portalContainer } = usePortal()
+
+    return (
+      <PopoverPrimitive.Portal container={portalContainer}>
+        <PopoverPrimitive.Content
+          className={cn('cn-popover-content', className)}
+          ref={ref}
+          align={align}
+          sideOffset={sideOffset}
+          {...props}
+        >
+          {(title || description) && (
+            <div className="grid gap-1">
+              {title && (
+                <Text variant="body-strong" color="foreground-1" as="h4">
+                  {title}
+                </Text>
+              )}
+
+              {description && <Text>{description}</Text>}
+            </div>
+          )}
+
+          {children}
+
+          {linkProps?.text && <Link {...linkProps}>{linkProps.text}</Link>}
+
+          {showArrow && (
+            <PopoverPrimitive.Arrow width={20} height={8} asChild>
+              <Illustration className="cn-popover-arrow" name="tooltip-arrow" />
+            </PopoverPrimitive.Arrow>
+          )}
+        </PopoverPrimitive.Content>
+      </PopoverPrimitive.Portal>
+    )
+  }
+)
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
 const Popover = {

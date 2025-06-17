@@ -25,6 +25,7 @@ import {
   linkStyles,
   multiSelectStyles,
   paginationStyles,
+  popoverStyles,
   progressStyles,
   radioStyles,
   scrollAreaStyles,
@@ -33,8 +34,8 @@ import {
   tableV2Styles,
   tagStyles,
   textareaStyles,
-  tooltipStyles,
-  toggleGroupStyles
+  toggleGroupStyles,
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -466,6 +467,7 @@ export default {
         buttonLayoutStyles,
         dialogStyles,
         scrollAreaStyles,
+        popoverStyles,
         tooltipStyles,
         breadcrumbStyles,
         iconsAndLogos,

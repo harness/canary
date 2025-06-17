@@ -31,6 +31,11 @@ const Illustration: FC<IllustrationProps> = ({
       ? IllustrationsNameMap[`${name}-light` as keyof typeof IllustrationsNameMap]
       : IllustrationsNameMap[name]
 
+  if (!Component) {
+    console.warn(`Icon "${name}" not found in IllustrationsNameMap.`)
+    return null
+  }
+
   const shouldInvert = themeDependent && isLightTheme && !isLightIconAvailable
 
   const sizeProps = {

@@ -10,7 +10,7 @@ import {
   NoData,
   SkeletonTable,
   StatusBadge,
-  TableV2 as Table,
+  Table,
   Tag
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'

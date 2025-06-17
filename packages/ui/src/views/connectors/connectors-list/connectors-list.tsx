@@ -8,7 +8,7 @@ import {
   NoData,
   SkeletonList,
   SkeletonTable,
-  TableV2 as Table,
+  Table,
   Text,
   Tooltip
 } from '@/components'

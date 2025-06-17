@@ -1,4 +1,4 @@
-import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, TableV2 as Table } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 

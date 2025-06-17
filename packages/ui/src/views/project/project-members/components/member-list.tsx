@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, TableV2 as Table } from '@/components'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'

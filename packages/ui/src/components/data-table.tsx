@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Button, Checkbox, IconV2, Pagination, PaginationProps, TableV2 } from '@/components'
+import { Button, Checkbox, IconV2, Pagination, PaginationProps, Table } from '@/components'
 import {
   ColumnDef,
   ExpandedState,
@@ -10,8 +10,8 @@ import {
   Row,
   RowSelectionState,
   SortingState,
-  Table,
   TableOptions,
+  Table as TanstackTable,
   useReactTable
 } from '@tanstack/react-table'
 import { cn } from '@utils/cn'
@@ -108,7 +108,7 @@ export function DataTable<TData>({
       cols = [
         {
           id: 'select',
-          header: ({ table }: { table: Table<TData> }) => {
+          header: ({ table }: { table: TanstackTable<TData> }) => {
             const handleToggleAll = () => {
               table.toggleAllRowsSelected()
             }
@@ -227,12 +227,12 @@ export function DataTable<TData>({
 
   return (
     <div className={className}>
-      <TableV2.Root variant={size} disableHighlightOnHover={disableHighlightOnHover}>
-        <TableV2.Header>
+      <Table.Root variant={size} disableHighlightOnHover={disableHighlightOnHover}>
+        <Table.Header>
           {table.getHeaderGroups().map(headerGroup => (
-            <TableV2.Row key={headerGroup.id}>
+            <Table.Row key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <TableV2.Head
+                <Table.Head
                   key={header.id}
                   className={cn(_enableColumnResizing ? 'relative' : undefined)}
                   sortable={header.column.getCanSort()}
@@ -251,34 +251,34 @@ export function DataTable<TData>({
                       aria-label="Resize column"
                     />
                   )}
-                </TableV2.Head>
+                </Table.Head>
               ))}
-            </TableV2.Row>
+            </Table.Row>
           ))}
-        </TableV2.Header>
-        <TableV2.Body>
+        </Table.Header>
+        <Table.Body>
           {table.getRowModel().rows.map(row => (
             <>
-              <TableV2.Row
+              <Table.Row
                 key={row.id}
                 className={getRowClassName?.(row)}
                 onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
                 selected={enableRowSelection ? row.getIsSelected() : undefined}
               >
                 {row.getVisibleCells().map(cell => (
-                  <TableV2.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableV2.Cell>
+                  <Table.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Cell>
                 ))}
-              </TableV2.Row>
+              </Table.Row>
               {row.getIsExpanded() && renderSubComponent && (
-                <TableV2.Row key={`${row.id}-expanded`} className="bg-cn-background-2">
-                  <TableV2.Cell></TableV2.Cell>
-                  <TableV2.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</TableV2.Cell>
-                </TableV2.Row>
+                <Table.Row key={`${row.id}-expanded`} className="bg-cn-background-2">
+                  <Table.Cell></Table.Cell>
+                  <Table.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</Table.Cell>
+                </Table.Row>
               )}
             </>
           ))}
-        </TableV2.Body>
-      </TableV2.Root>
+        </Table.Body>
+      </Table.Root>
 
       {pagination && <Pagination {...pagination} />}
     </div>

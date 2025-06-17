@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, TableV2 as Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 

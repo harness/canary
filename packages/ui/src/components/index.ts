@@ -79,7 +79,7 @@ export * from './sorts'
 export * from './entity-form-layout'
 export * from './multi-select'
 export * from './card-select'
-export * from './table-v2'
+export * from './table'
 export * from './data-table'
 export * from './illustration'
 

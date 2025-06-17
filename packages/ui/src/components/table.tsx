@@ -195,7 +195,7 @@ const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTabl
 )
 TableCaption.displayName = 'TableCaption'
 
-const TableV2 = {
+const Table = {
   Root: TableRoot,
   Header: TableHeader,
   Body: TableBody,
@@ -206,4 +206,4 @@ const TableV2 = {
   Caption: TableCaption
 }
 
-export { TableV2 }
+export { Table }

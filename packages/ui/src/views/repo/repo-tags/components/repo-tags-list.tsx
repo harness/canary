@@ -1,14 +1,6 @@
 import { FC } from 'react'
 
-import {
-  Avatar,
-  CommitCopyActions,
-  MoreActionsTooltip,
-  NoData,
-  SkeletonTable,
-  TableV2 as Table,
-  Text
-} from '@/components'
+import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'

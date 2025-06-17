@@ -1,4 +1,4 @@
-import { TableV2 as Table } from '@/components'
+import { Table } from '@/components'
 import { cn } from '@utils/cn'
 
 import { Skeleton } from './components/skeleton'

@@ -205,7 +205,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 </Table.Cell>
                 <Table.Cell className="text-right">
                   <MoreActionsTooltip
-                    isInTable
+                    // isInTable
                     actions={[
                       // Don't show New Pull Request option for default branch
                       ...(!branch?.behindAhead?.default

@@ -1,4 +1,4 @@
-import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { NoData, SkeletonList, SkeletonTable, TableV2 as Table } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
@@ -54,7 +54,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
     >
       <Table.Header>
         <Table.Row>

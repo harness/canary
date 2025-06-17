@@ -103,8 +103,8 @@ export function RepoWebhookList({
       <Table.Root variant="default">
         <Table.Header>
           <Table.Row>
-            <Table.Head>Name</Table.Head>
-            <Table.Head>Execution</Table.Head>
+            <Table.Head className="w-1/2">Name</Table.Head>
+            <Table.Head className="w-1/2">Execution</Table.Head>
             <Table.Head></Table.Head>
           </Table.Row>
         </Table.Header>
@@ -150,7 +150,10 @@ export function RepoWebhookList({
                 </StatusBadge>
               </Table.Cell>
 
-              <Table.Cell className="cursor-pointer content-center text-right">
+              <Table.Cell
+                className="cursor-pointer content-center text-right"
+                // linkProps={{ className: 'flex w-full justify-end' }}
+              >
                 <MoreActionsTooltip
                   actions={[
                     {

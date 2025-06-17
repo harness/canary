@@ -8,7 +8,7 @@ import {
   NoData,
   SkeletonList,
   SkeletonTable,
-  Table,
+  TableV2 as Table,
   Text,
   Tooltip
 } from '@/components'
@@ -103,8 +103,9 @@ export function ConnectorsList({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
       tableClassName="table-fixed"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>

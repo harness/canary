@@ -1,4 +1,4 @@
-import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, TableV2 as Table } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
@@ -33,7 +33,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
       tableClassName="table-fixed"
     >
       <Table.Header>

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Accordion, Table, Text } from '@/components'
+import { Accordion, TableV2 as Table, Text } from '@/components'
 
 import { KeyValuePair, KeyValueTableProps } from './types'
 

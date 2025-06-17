@@ -390,6 +390,7 @@ function SelectInner<T = string>(
                   e.stopPropagation()
                 }
               }}
+              role="none"
             >
               {suffix}
             </div>

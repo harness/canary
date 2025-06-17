@@ -18,7 +18,7 @@ It can be composed with several subcomponents such as `DropdownMenu.Root`, `Drop
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -44,7 +44,7 @@ import { DropdownMenu } from "@harnessio/ui/components";
 return (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu">
-      <Icon name="menu-dots" />
+      <IconV2 name="more-horizontal" />
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
@@ -92,7 +92,7 @@ The `DropdownMenu` component supports grouping items together using the `Dropdow
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -118,7 +118,7 @@ The `DropdownMenu` component supports subitems using the `DropdownMenu.Item` com
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -147,7 +147,7 @@ The `DropdownMenu` component supports header and footer sections using the `Drop
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -202,7 +202,7 @@ The `DropdownMenu` component supports checkbox items using the `DropdownMenu.Che
         <DropdownMenu.Root>
             <DropdownMenu.Trigger aria-label="options menu" asChild>
                 <Button variant="ghost" iconOnly>
-                    <Icon name="menu-dots" />
+                    <IconV2 name="more-horizontal" />
                 </Button>
             </DropdownMenu.Trigger>
 
@@ -268,7 +268,7 @@ return (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -295,7 +295,7 @@ The `DropdownMenu` component supports avatar items using the `DropdownMenu.Avata
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -317,7 +317,7 @@ The `DropdownMenu` component supports logo items using the `DropdownMenu.LogoIte
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -339,13 +339,13 @@ The `DropdownMenu` component supports icon items using the `DropdownMenu.IconIte
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Content>
-        <DropdownMenu.IconItem icon="pr-closed" title="With icon" />
-        <DropdownMenu.IconItem icon="pr-open" title="With icon and description" description="Item description" />
+        <DropdownMenu.IconItem icon="git-pull-request-closed" title="With icon" />
+        <DropdownMenu.IconItem icon="git-pull-request" title="With icon and description" description="Item description" />
 
   </DropdownMenu.Content>
 </DropdownMenu.Root>`}
@@ -360,7 +360,7 @@ The `DropdownMenu` component supports indicator items using the `DropdownMenu.In
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
         <Button variant="ghost" iconOnly>
-            <Icon name="menu-dots" />
+            <IconV2 name="more-horizontal" />
         </Button>
     </DropdownMenu.Trigger>
 
@@ -405,7 +405,7 @@ The `DropdownMenu` component supports loading states using the `DropdownMenu.Spi
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
       <Button variant="ghost" iconOnly>
-        <Icon name="menu-dots" />
+        <IconV2 name="more-horizontal" />
       </Button>
     </DropdownMenu.Trigger>
     <DropdownMenu.Content>
@@ -423,7 +423,7 @@ The `DropdownMenu` component supports empty states using the `DropdownMenu.NoOpt
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
       <Button variant="ghost" iconOnly>
-        <Icon name="menu-dots" />
+        <IconV2 name="more-horizontal" />
       </Button>
     </DropdownMenu.Trigger>
     <DropdownMenu.Content>
@@ -443,7 +443,7 @@ The `DropdownMenu.Slot` component provides a simple wrapper for custom content w
   code={`<DropdownMenu.Root>
     <DropdownMenu.Trigger aria-label="options menu" asChild>
       <Button variant="ghost" iconOnly>
-        <Icon name="menu-dots" />
+        <IconV2 name="more-horizontal" />
       </Button>
     </DropdownMenu.Trigger>
     <DropdownMenu.Content>
@@ -451,7 +451,7 @@ The `DropdownMenu.Slot` component provides a simple wrapper for custom content w
       <DropdownMenu.Separator />
       <DropdownMenu.Slot className="p-2">
           <div className="flex items-center gap-2">
-              <Icon name="star" />
+              <IconV2 name="star" />
               <Text>Custom content in slot</Text>
           </div>
       </DropdownMenu.Slot>
@@ -544,7 +544,7 @@ The `Trigger` component represents the button that triggers the dropdown menu.
 
 ```typescript jsx
 <DropdownMenu.Trigger aria-label="options menu">
-  <Icon name="menu-dots" />
+  <IconV2 name="more-horizontal" />
 </DropdownMenu.Trigger>
 ```
 
@@ -552,7 +552,7 @@ Or
 
 ```typescript jsx
 <DropdownMenu.Trigger>
-  <Icon name="menu-dots" />
+  <IconV2 name="more-horizontal" />
   <span className="sr-only">Options menu</span>
 </DropdownMenu.Trigger>
 ```
@@ -673,7 +673,7 @@ The `Item` component represents a dropdown menu item.
   label="Label"             // [OPTIONAL] right-aligned label
   shortcut="⌘K"             // [OPTIONAL] keyboard shortcut
   checkmark                 // [OPTIONAL] show checkmark icon
-  prefix={<Icon />}         // [OPTIONAL] prefix element (icon, avatar, etc.)
+  prefix={<IconV2 />}         // [OPTIONAL] prefix element (icon, avatar, etc.)
   className="my-class"      // [OPTIONAL] custom class
   disabled                  // [OPTIONAL] disable the item
   onSelect={onSelect}       // [OPTIONAL] event handler called when the item is selected
@@ -1294,7 +1294,7 @@ The `IconItem` component is a specialized item that displays an icon.
 
 ```typescript jsx
 <DropdownMenu.IconItem
-  icon="pr-closed"          // icon name
+  icon="git-pull-request-closed"          // icon name
   title="Item title"        // title of the item
   description="Description" // [OPTIONAL] description text
   label="Label"             // [OPTIONAL] right-aligned label

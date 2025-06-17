@@ -41,7 +41,7 @@ import { CardSelect } from "@harnessio/ui/components";
 
 return (
   <CardSelect.Root type="single">
-    <CardSelect.Item value="option-1" icon="branch">
+    <CardSelect.Item value="option-1" icon="git-branch">
       <CardSelect.Title>Option 1</CardSelect.Title>
       <CardSelect.Description>With an icon</CardSelect.Description>
     </CardSelect.Item>
@@ -78,11 +78,11 @@ The `CardSelect` supports two selection types:
   <div className="flex flex-col space-y-2">
     <h1 className="text-lg font-semibold">Multiple Selection</h1>
     <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
-      <CardSelect.Item value="multi-1" icon="pr-draft">
+      <CardSelect.Item value="multi-1" icon="git-pull-request-draft">
         <CardSelect.Title>Option A</CardSelect.Title>
         <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
       </CardSelect.Item>
-      <CardSelect.Item value="multi-2" icon="merged">
+      <CardSelect.Item value="multi-2" icon="git-merge">
         <CardSelect.Title>Option B</CardSelect.Title>
         <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
       </CardSelect.Item>
@@ -192,7 +192,7 @@ Cards can display either an icon or a logo:
   client:only
   code={`<div className="flex flex-col space-y-4">
     <CardSelect.Root type="single">
-      <CardSelect.Item value="icon" icon="branch">
+      <CardSelect.Item value="icon" icon="git-branch">
         <CardSelect.Title>With Icon</CardSelect.Title>
       </CardSelect.Item>
       <CardSelect.Item value="logo" logo="kubernetes">
@@ -212,10 +212,10 @@ Cards can be disabled either individually or as a group:
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Individual Cards Disabled</h1>
       <CardSelect.Root type="single">
-        <CardSelect.Item value="enabled" icon="branch">
+        <CardSelect.Item value="enabled" icon="git-branch">
           <CardSelect.Title>Enabled Card</CardSelect.Title>
         </CardSelect.Item>
-        <CardSelect.Item value="disabled" icon="branch" disabled>
+        <CardSelect.Item value="disabled" icon="git-branch" disabled>
           <CardSelect.Title>Disabled Card</CardSelect.Title>
         </CardSelect.Item>
       </CardSelect.Root>
@@ -224,10 +224,10 @@ Cards can be disabled either individually or as a group:
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Entire Group Disabled</h1>
       <CardSelect.Root type="single" disabled>
-        <CardSelect.Item value="one" icon="branch">
+        <CardSelect.Item value="one" icon="git-branch">
           <CardSelect.Title>First Option</CardSelect.Title>
         </CardSelect.Item>
-        <CardSelect.Item value="two" icon="branch">
+        <CardSelect.Item value="two" icon="git-branch">
           <CardSelect.Title>Second Option</CardSelect.Title>
         </CardSelect.Item>
       </CardSelect.Root>
@@ -316,7 +316,7 @@ Represents an individual selectable card option.
 ```typescript jsx
 <CardSelect.Item
   value="unique-id"               // Required: Unique identifier
-  icon="branch"                  // [OPTIONAL] Icon to display
+  icon="git-branch"                  // [OPTIONAL] Icon to display
   logo="gitlab"                  // [OPTIONAL] Logo instead of icon
   disabled={false}               // [OPTIONAL] Disable this item
 >

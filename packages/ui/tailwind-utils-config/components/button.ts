@@ -159,8 +159,8 @@ export default {
       height: 'var(--cn-btn-size-default)',
       padding: '0',
       '& > svg': {
-        width: 'var(--cn-icon-size-default)',
-        height: 'var(--cn-icon-size-default)'
+        width: 'var(--cn-icon-size-sm)',
+        height: 'var(--cn-icon-size-sm)'
       }
     },
 

@@ -46,7 +46,6 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
   }
 
   const handleInputFocus = () => {
-    setSearchDialogOpen(true)
     if (searchQuery === '') {
       setFilteredItems(navbarMenuData)
     }
@@ -85,7 +84,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
 
   return (
     <Popover.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogOpen}>
-      <Popover.Trigger asChild>
+      <Popover.Anchor asChild>
         <SearchBox.Root
           className="w-full"
           inputClassName="h-9 placeholder:text-cn-foreground-3"
@@ -95,10 +94,11 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
           handleChange={handleSearchChange}
           hasSearchIcon={false}
           onFocus={handleInputFocus}
+          onClick={() => setSearchDialogOpen(true)}
         />
-      </Popover.Trigger>
+      </Popover.Anchor>
       <Popover.Content
-        className="w-[368px] overflow-hidden !rounded border-cn-borders-2 bg-cn-background-2 !p-0"
+        className="w-[--radix-popover-trigger-width] max-w-none p-0"
         ref={popoverRef}
         align="start"
         onWheel={e => e.stopPropagation()}

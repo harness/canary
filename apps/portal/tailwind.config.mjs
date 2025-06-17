@@ -9,8 +9,4 @@ export default {
     "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
   ],
   plugins: [starlightPlugin(), require("tailwindcss-animate")],
-  safelist: [
-    { pattern: /^grid-rows-/ },
-    { pattern: /^grid-cols-/ },
-  ]
 };

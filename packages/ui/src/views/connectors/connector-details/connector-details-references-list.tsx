@@ -44,6 +44,7 @@ const ConnectorDetailsReferenceList = ({
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       variant="default"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -75,12 +76,7 @@ const ConnectorDetailsReferenceList = ({
                   {scope}
                 </Table.Cell>
 
-                <Table.Cell
-                  onClick={() => toEntity?.(identifier)}
-                  className="max-w-full content-center truncate text-right text-sm font-normal leading-tight tracking-tight text-cn-foreground-4"
-                >
-                  {createdAt ? timeAgo(createdAt) : null}
-                </Table.Cell>
+                <Table.Cell onClick={() => toEntity?.(identifier)}>{createdAt ? timeAgo(createdAt) : null}</Table.Cell>
               </Table.Row>
             )
           })}

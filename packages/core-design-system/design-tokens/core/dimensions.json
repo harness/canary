@@ -397,30 +397,25 @@
     }
   },
   "iconSize": {
-    "xs": {
+    "2xs": {
       "$type": "sizing",
       "$value": "{size.3}"
     },
-    "sm": {
+    "xs": {
       "$type": "sizing",
       "$value": "{size.3-half}"
     },
-    "default": {
+    "sm": {
       "$type": "sizing",
       "$value": "{size.4}"
     },
     "md": {
       "$type": "sizing",
-      "$value": "{size.4-half}"
+      "$value": "{size.5}"
     },
     "lg": {
       "$type": "sizing",
       "$value": "{size.8}",
-      "$description": "\n"
-    },
-    "xl": {
-      "$type": "sizing",
-      "$value": "{size.11}",
       "$description": "\n"
     }
   },
@@ -464,6 +459,21 @@
     "90": {
       "$type": "opacity",
       "$value": "0.9"
+    }
+  },
+  "logoSize": {
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.5}"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "{size.8}"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "{size.11}",
+      "$description": "\n"
     }
   }
 }

@@ -66,6 +66,7 @@ export const ConnectorsPalette = ({
       <Header>
         <Title>{title}</Title>
         <Input
+          value={query}
           placeholder={'Search'}
           onChange={value => {
             setQuery(value.target.value)

@@ -64,11 +64,17 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
           addFilter(option.value)
           setOpenedFilter(option.value)
         }}
+        onReset={() => resetFilters()}
         inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
         buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
         displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
       />
-      <Button size="sm" variant="transparent" onClick={resetFilters} className="hover:text-cn-foreground-danger">
+      <Button
+        size="sm"
+        variant="transparent"
+        onClick={() => resetFilters()}
+        className="hover:text-cn-foreground-danger"
+      >
         <IconV2 className="rotate-45" name="plus" size={12} />
         {t('component:filter.reset', 'Reset')}
       </Button>

@@ -47,7 +47,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           iconOnly
           size="sm"
         >
-          <IconV2 name={iconName} size={12} />
+          <IconV2 name={iconName} size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={className} align="end" sideOffset={sideOffset} alignOffset={alignOffset}>

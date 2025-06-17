@@ -155,7 +155,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
             {icon && <IconV2 name={icon} className="cn-card-select-icon" />}
-            {logo && !icon && <LogoV2 size="lg" name={logo} className="cn-card-select-logo" />}
+            {logo && !icon && <LogoV2 name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
           {checked && <IconV2 name="check" className="cn-card-select-check" />}

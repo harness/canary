@@ -143,7 +143,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <IconV2 name="harness-plugins" className="m-2 size-8" />
+      icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
     } satisfies StepNodeDataType,
     config: {
       width: 160,
@@ -164,7 +164,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <IconV2 name="harness-plugins" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -175,7 +175,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <IconV2 name="harness-plugins" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -198,7 +198,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <IconV2 name="harness-plugins" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -209,7 +209,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <IconV2 name="harness-plugins" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,

@@ -60,7 +60,7 @@ export const SidebarItem = ({
           <Sidebar.MenuButton asChild isActive={isActive}>
             <Sidebar.MenuItemText
               text={item.title}
-              icon={item.iconName && <IconV2 name={item.iconName} size={14} />}
+              icon={item.iconName && <IconV2 name={item.iconName} size="xs" />}
               active={isActive}
             />
           </Sidebar.MenuButton>
@@ -71,7 +71,7 @@ export const SidebarItem = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Sidebar.MenuAction className="right-[3px] text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
-              <IconV2 name="more-vert" size={12} />
+              <IconV2 name="more-vert" size="2xs" />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end" sideOffset={3} alignOffset={4}>

@@ -240,7 +240,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <IconV2 name="check" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
               </ButtonLayout>
@@ -291,7 +291,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <IconV2 name="check" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
               </ButtonLayout>

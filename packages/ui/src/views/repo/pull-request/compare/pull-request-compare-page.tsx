@@ -193,7 +193,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             )}
           </Text>
           <Layout.Horizontal align="center" gap="xs">
-            <IconV2 name="git-compare" size={14} className="text-icons-1" />
+            <IconV2 name="git-compare" size="xs" className="text-icons-1" />
 
             {branchSelectorRenderer}
 
@@ -202,7 +202,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Horizontal gap="xs" align="center">
                   {mergeability ? (
                     <>
-                      <IconV2 className="text-icons-success" name="check" size={12} />
+                      <IconV2 className="text-icons-success" name="check" size="2xs" />
                       <p className="text-2 leading-none text-cn-foreground-success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                         <span className="text-cn-foreground-2">
@@ -217,7 +217,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     <>
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
-                          <IconV2 name="xmark" size={12} className="text-icons-1" />
+                          <IconV2 name="xmark" size="2xs" className="text-icons-1" />
                           <p className="text-2 leading-none text-cn-foreground-2">
                             {t(
                               'views:pullRequests.compareChangesApiError',
@@ -227,7 +227,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         </>
                       ) : (
                         <>
-                          <IconV2 className="text-icons-danger" name="xmark" size={12} />
+                          <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
                           <p className="text-2 leading-none text-cn-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-cn-foreground-2">
@@ -293,7 +293,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal align="center">
-                  <IconV2 name="git-compare" size={14} className="text-icons-success" />
+                  <IconV2 name="git-compare" size="xs" className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <p className="text-2 text-cn-foreground-1">{prBranchCombinationExists.title}</p>

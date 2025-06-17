@@ -18,7 +18,7 @@ function FolderItem({ children, value = '', isActive, content, link }: FolderIte
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
         className="relative w-full p-0 pr-1.5 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
-        indicatorProps={{ size: 12 }}
+        indicatorProps={{ size: '2xs' }}
       >
         <div
           className={cn(
@@ -37,7 +37,6 @@ function FolderItem({ children, value = '', isActive, content, link }: FolderIte
                 { 'text-icons-2': isActive }
               )}
               name="folder"
-              size={16}
             />
             <Link to={link} className="overflow-hidden">
               <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" as="p" truncate>

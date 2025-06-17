@@ -40,7 +40,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                         {({ isActive }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
-                            icon={item.iconName && <IconV2 name={item.iconName} size={14} />}
+                            icon={item.iconName && <IconV2 name={item.iconName} size="xs" />}
                             active={isActive}
                             isMainNav
                           />

@@ -70,7 +70,7 @@ export function DelegateConnectivityList({
                     <div className="inline-flex items-center gap-2">
                       <IconV2
                         name="circle"
-                        size={8}
+                        size="2xs"
                         className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
                       />
                       {lastHeartBeat ? timeAgo(lastHeartBeat) : null}
@@ -88,7 +88,7 @@ export function DelegateConnectivityList({
                       {isDelegateSelected(
                         [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
                         selectedTags || []
-                      ) && <IconV2 name="check" size={12} className="text-icons-success" />}
+                      ) && <IconV2 name="check" size="2xs" className="text-icons-success" />}
                     </div>
                   </Table.Cell>
                 </Table.Row>

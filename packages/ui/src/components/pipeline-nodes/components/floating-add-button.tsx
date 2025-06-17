@@ -70,7 +70,7 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
           onClick(e)
         }}
       >
-        <IconV2 className="text-icons-3" name="plus" size={10} />
+        <IconV2 className="text-icons-3" name="plus" size="2xs" />
       </Button>
     </div>
   )

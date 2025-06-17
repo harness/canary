@@ -44,7 +44,7 @@ export const getConnectorListFilterOptions = (
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
       filterFieldConfig: {
-        label: <IconV2 name="star-solid" className="fill-icons-alert" size={14} />
+        label: <IconV2 name="star-solid" className="fill-icons-alert" size="xs" />
       },
       parser: booleanParser
     }

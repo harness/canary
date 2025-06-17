@@ -31,7 +31,7 @@ export const ChatPreviewWrapper: FC = () => {
           <Chat.Message
             actions={
               <Button variant="secondary" size="sm">
-                <IconV2 name="repository" size={12} />
+                <IconV2 name="repository" size="2xs" />
                 main
               </Button>
             }

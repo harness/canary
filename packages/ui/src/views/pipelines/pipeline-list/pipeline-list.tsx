@@ -21,13 +21,13 @@ const Description = ({ sha, description, version }: { sha?: string; description?
       {description && <span className="w-full overflow-hidden break-words text-cn-foreground-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
-          <IconV2 size={11} name="version" />
+          <IconV2 size="2xs" name="version" />
           {version}
         </div>
       )}
       {sha && (
         <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-1 text-cn-foreground-1">
-          <IconV2 className="text-icons-9" size={12} name="git-commit" />
+          <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
       )}

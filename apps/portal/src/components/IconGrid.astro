@@ -4,6 +4,7 @@ import {
   CopyButton,
   IconNameMapV2,
   IconV2,
+  type IconV2NamesType,
 } from "@harnessio/ui/components";
 ---
 
@@ -14,11 +15,8 @@ import {
     Object.keys(IconNameMapV2).map((name) => {
       return (
         <Card.Root size="sm">
-          <Card.Content className="border-b text-cn-foreground text-center">
-            <IconV2
-              name={name as keyof typeof IconNameMapV2}
-              className="aspect-square h-full w-full p-[2em]"
-            />
+          <Card.Content className="border-b text-cn-foreground text-center grid place-items-center py-2">
+            <IconV2 size="lg" name={name as IconV2NamesType} />
           </Card.Content>
           <Card.Title
             as="h6"

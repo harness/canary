@@ -11,11 +11,11 @@ export function Toaster() {
           <Layout.Horizontal gap="xs" align="center">
             {showIcon && (
               <>
-                {variant === 'success' && <IconV2 name="check" className="text-icons-success" size={12} />}
+                {variant === 'success' && <IconV2 name="check" className="text-icons-success" size="2xs" />}
                 {variant === 'destructive' && (
-                  <IconV2 name="warning-triangle" size={12} className="text-toast-foreground-danger" />
+                  <IconV2 name="warning-triangle" size="2xs" className="text-toast-foreground-danger" />
                 )}
-                {variant === 'failed' && <IconV2 name="xmark" className="text-icons-danger" size={12} />}
+                {variant === 'failed' && <IconV2 name="xmark" className="text-icons-danger" size="2xs" />}
               </>
             )}
             <Layout.Horizontal gap="xs">

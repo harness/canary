@@ -13,7 +13,7 @@ const TabTitleWithIcon = ({
 }: PropsWithChildren<{ icon: IconPropsV2['name']; badgeContent?: ReactNode }>) => (
   <>
     <div className="flex items-center gap-x-1">
-      <IconV2 className="text-icons-1 group-[.is-active]:text-icons-2" size={14} name={icon} />
+      <IconV2 className="text-icons-1 group-[.is-active]:text-icons-2" size="xs" name={icon} />
       {children}
     </div>
     {!!badgeContent && <CounterBadge>{badgeContent}</CounterBadge>}

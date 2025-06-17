@@ -18,7 +18,7 @@ export function AddNode(props: AddNodeProp) {
         onMouseDown={e => e.stopPropagation()}
         onClick={onClick}
       >
-        <IconV2 name="plus" size={15} />
+        <IconV2 name="plus" />
       </Button>
     </div>
   )

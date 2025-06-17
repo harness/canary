@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useEffect, useState } from 'react'
 
-import { Button, IconV2, type ButtonVariants } from '@/components'
+import { Button, IconPropsV2, IconV2, type ButtonVariants } from '@/components'
 import { cva, type VariantProps } from 'class-variance-authority'
 import copy from 'clipboard-copy'
 
@@ -8,7 +8,7 @@ export interface CopyButtonProps extends VariantProps<typeof copyIconVariants> {
   name: string
   className?: string
   buttonVariant?: ButtonVariants
-  iconSize?: number
+  iconSize?: IconPropsV2['size']
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
@@ -29,7 +29,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
   name,
   className,
   buttonVariant = 'outline',
-  iconSize = 16,
+  iconSize = 'sm',
   onClick,
   color
 }) => {

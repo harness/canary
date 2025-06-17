@@ -161,7 +161,7 @@ export const RepoSettingsGeneralForm: FC<{
                 ) : (
                   <Button variant="primary" theme="success" type="button" className="pointer-events-none">
                     Saved
-                    <IconV2 name="check" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
               </ButtonLayout>

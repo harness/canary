@@ -56,7 +56,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
             >
               <Table.Cell className="w-[361px] content-center truncate">
                 <div className="flex items-center gap-2.5 !py-2.5">
-                  <IconV2 name="ssh-key" size={24} />
+                  <IconV2 name="ssh-key" size="md" />
                   <Title title={secret.identifier} />
                 </div>
               </Table.Cell>

@@ -48,7 +48,7 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
                   setSearchQuery('')
                 }}
               >
-                <IconV2 className="rotate-45" name="plus" size={12} />
+                <IconV2 className="rotate-45" name="plus" size="2xs" />
               </Button>
             }
           />

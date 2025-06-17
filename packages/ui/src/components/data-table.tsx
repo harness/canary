@@ -157,7 +157,7 @@ export function DataTable<TData>({
                 iconOnly
                 role="button"
               >
-                <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-up'} size={12} />
+                <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-up'} size="2xs" />
               </Button>
             ) : null
           },

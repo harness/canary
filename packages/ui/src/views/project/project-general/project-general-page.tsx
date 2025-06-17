@@ -153,7 +153,7 @@ export const ProjectSettingsGeneralPage = ({
                     ) : (
                       <Button variant="ghost" type="button" theme="success" className="pointer-events-none">
                         {t('views:projectSettings.general.formSubmitButton.savedState', 'Saved')}&nbsp;&nbsp;
-                        <IconV2 name="check" size={14} />
+                        <IconV2 name="check" size="xs" />
                       </Button>
                     )}
                   </ButtonLayout>

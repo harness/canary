@@ -30,7 +30,7 @@ const SideBarToggleMenuItem: FC = () => {
               : t('component:navbar.sidebarToggle.collapse', 'Collapse')
           }
           text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-          icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size={14} />}
+          icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size="sm" />}
         />
       </Sidebar.MenuButton>
     </Sidebar.MenuItem>
@@ -49,7 +49,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
       <NavLink className="block" to={to} end>
         {({ isActive }) => (
           <Sidebar.MenuButton asChild isActive={isActive}>
-            <Sidebar.MenuItemText text={text} icon={<IconV2 name={iconName} size={14} />} active={isActive} />
+            <Sidebar.MenuItemText text={text} icon={<IconV2 name={iconName} size="sm" />} active={isActive} />
           </Sidebar.MenuButton>
         )}
       </NavLink>
@@ -112,7 +112,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
               >
                 <Sidebar.MenuItemText
                   text={t('component:navbar.sidebarToggle.switchToCodeV1', 'Switch to Code V1')}
-                  icon={<IconV2 name="arrow-left" size={14} />}
+                  icon={<IconV2 name="arrow-left" size="sm" />}
                 />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>

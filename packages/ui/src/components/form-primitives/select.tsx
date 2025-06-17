@@ -373,7 +373,7 @@ function SelectInner<T = string>(
           <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
             {selectedOption ? selectedOption.label : placeholder}
           </Text>
-          <IconV2 name="nav-arrow-down" size={14} className="cn-select-indicator-icon" />
+          <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Content

@@ -33,7 +33,7 @@ const StepPaletteSection = forwardRef<
               }}
             >
               <StepsPaletteItemLayout.Left>
-                <IconV2 name="harness-plugins" size={36} />
+                <IconV2 name="harness-plugins" size="lg" />
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>

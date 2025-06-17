@@ -24,7 +24,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
         onChange={handleInputChange}
         rightElement={
           <Button iconOnly size="sm" variant="ghost" onClick={handleClear}>
-            <IconV2 name="xmark" size={12} />
+            <IconV2 name="xmark" size="2xs" />
           </Button>
         }
       />

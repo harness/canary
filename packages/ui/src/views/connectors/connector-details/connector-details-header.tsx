@@ -25,8 +25,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         </Link>
       ) : null}
       <Layout.Horizontal gap="xs" align="center">
-        {/* TODO: Design system: Check for proper name according to LogoV2 and update */}
-        {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size={30} />}
+        {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size="lg" />}
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>
       {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}

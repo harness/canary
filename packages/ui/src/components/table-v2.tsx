@@ -129,9 +129,9 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
         {childrenWithTooltip}
         {sortable && (
           <span className="ml-1">
-            {sortDirection === 'asc' && <IconV2 name="arrow-up" size={12} />}
-            {sortDirection === 'desc' && <IconV2 name="arrow-down" size={12} />}
-            {!sortDirection && <IconV2 name="up-down" size={16} />}
+            {sortDirection === 'asc' && <IconV2 name="arrow-up" size="2xs" />}
+            {sortDirection === 'desc' && <IconV2 name="arrow-down" size="2xs" />}
+            {!sortDirection && <IconV2 name="up-down" />}
           </span>
         )}
       </Layout.Flex>

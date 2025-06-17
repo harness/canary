@@ -1,28 +1,36 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const Sizes = ['xs', 'sm', 'default', 'md', 'lg'] as const
+const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg'] as const
+const logoSizes = ['sm', 'md', 'lg'] as const
 
-function createIconandLogoSizeStyles() {
+function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
+  // change it to logoSizes
+  const sizes = entity === 'icon' ? iconSizes : logoSizes
+
   const styles: CSSRuleObject = {}
 
-  Sizes.forEach(size => {
-    styles[`&:where(.cn-icon-${size}), &:where(.cn-logo-${size})`] = {
-      width: `var(--cn-icon-size-${size})`,
-      height: `var(--cn-icon-size-${size})`
-    }
-  })
+  sizes.forEach(size => {
+    const style: CSSRuleObject = {}
+    style[`width`] = `var(--cn-icon-size-${size})`
+    style[`min-width`] = `var(--cn-icon-size-${size})`
+    style[`height`] = `var(--cn-icon-size-${size})`
+    style[`min-height`] = `var(--cn-icon-size-${size})`
 
-  Sizes.forEach(size => {
-    styles[`&:where(:has(.cn-icon-${size}))`] = {
-      strokeWidth: `var(--cn-icon-stroke-width-${size})`
+    if (entity === 'icon') {
+      style['stroke-width'] = `var(--cn-icon-stroke-width-${size})`
     }
+
+    styles[`&:where(.cn-${entity}-${size})`] = style
   })
 
   return styles
 }
 
 export default {
-  '.cn-icon, .cn-logo': {
-    ...createIconandLogoSizeStyles()
+  '.cn-icon': {
+    ...createIconandLogoSizeStyles('icon')
+  },
+  '.cn-logo': {
+    ...createIconandLogoSizeStyles('logo')
   }
 }

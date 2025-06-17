@@ -8,15 +8,13 @@ import { LogoNameMapV2 } from './logo-name-map'
 const logoVariants = cva('cn-logo', {
   variants: {
     size: {
-      xs: 'cn-logo-xs',
-      default: 'cn-logo-default',
       sm: 'cn-logo-sm',
       md: 'cn-logo-md',
       lg: 'cn-logo-lg'
     }
   },
   defaultVariants: {
-    size: 'default'
+    size: 'lg'
   }
 })
 

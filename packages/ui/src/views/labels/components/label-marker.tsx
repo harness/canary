@@ -61,11 +61,11 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
           variant="ghost"
           onClick={onDelete}
         >
-          <IconV2 name="xmark" size={10} />
+          <IconV2 name="xmark" size="2xs" />
         </Button>
       )}
 
-      {isDynamic && <IconV2 name="plus-circle" size={12} className="min-w-3 text-icons-4" role="presentation" />}
+      {isDynamic && <IconV2 name="plus-circle" size="2xs" className="min-w-3 text-icons-4" role="presentation" />}
     </div>
   )
 }

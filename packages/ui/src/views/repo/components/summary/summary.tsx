@@ -34,7 +34,7 @@ export const Summary = ({
         </>
       )}
 
-      <Table.Root variant="asStackedList">
+      <Table.Root variant="default" disableHighlightOnHover>
         {!hideHeader && (
           <Table.Header>
             <Table.Row>

@@ -1,4 +1,6 @@
 import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
+import { evaluate } from 'cel-js'
+import jexl from 'jexl'
 import { cloneDeep, forOwn } from 'lodash-es'
 import * as z from 'zod'
 
@@ -6,6 +8,34 @@ import { IInputDefinition, InputFactory, unsetEmptyStringOutputTransformer } fro
 
 import { PipelineInputDefinition } from '../types'
 import { type InputLayout } from './types'
+
+enum PARSERTYPES {
+  JEXL = 'jexl',
+  CEL = 'cel'
+}
+
+export interface UnwrappedExpression {
+  kind: PARSERTYPES | 'none'
+  inner: string
+}
+export function getCorrectParserWithString(raw: string): UnwrappedExpression {
+  if (raw.startsWith('<+') && raw.endsWith('>')) {
+    return {
+      kind: PARSERTYPES.JEXL,
+      inner: raw.slice(2, -1).trim()
+    }
+  }
+
+  if (raw.startsWith('${{') && raw.endsWith('}}')) {
+    return {
+      kind: PARSERTYPES.CEL,
+      inner: raw.slice(3, -2).trim()
+    }
+  }
+
+  // No recognised wrapper
+  return { kind: 'none', inner: raw }
+}
 
 /** pipeline inputs to form inputs conversion */
 export function pipelineInputs2FormInputs({
@@ -131,9 +161,19 @@ export function pipelineInput2FormInput(
     default: inputProps.default,
     required: inputProps.required as boolean,
     placeholder: inputProps.ui?.placeholder || '',
-    isVisible: function () {
-      // return inputProps.ui?.visible?.length ? jexl.evalSync(inputProps.ui?.visible, values) : true
-      return true
+    isVisible: function (values) {
+      try {
+        if (typeof inputProps.ui?.visible === 'string') {
+          const unwrapped = getCorrectParserWithString(inputProps.ui?.visible)
+          if (unwrapped.kind === PARSERTYPES.JEXL) {
+            return jexl.evalSync(unwrapped.inner, values?.inputs)
+          } else if (unwrapped.kind === PARSERTYPES.CEL) {
+            return evaluate(unwrapped.inner, values?.inputs)
+          }
+        } else return true
+      } catch (e) {
+        console.error(`Error evaluating isVisible for input ${name}`, e)
+      }
     },
     inputConfig: {
       allowedValueTypes: ['fixed', 'runtime', 'expression'],

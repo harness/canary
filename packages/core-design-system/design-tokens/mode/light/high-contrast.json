@@ -1104,7 +1104,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.15",
+              "value": "0.25",
               "space": "lch"
             }
           }
@@ -2186,15 +2186,15 @@
     }
   },
   "iconStrokeWidth": {
-    "xs": {
+    "2xs": {
       "$type": "borderWidth",
       "$value": "1.2"
     },
-    "sm": {
+    "xs": {
       "$type": "borderWidth",
       "$value": "1"
     },
-    "default": {
+    "sm": {
       "$type": "borderWidth",
       "$value": "1"
     },

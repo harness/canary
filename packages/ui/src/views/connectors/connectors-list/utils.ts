@@ -20,5 +20,9 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['HttpHelmRepo', 'helm'],
   ['Rancher', 'rancher'],
   ['Datadog', 'data-dog'],
-  ['OciHelmRepo', 'helm']
+  ['ServiceNow', 'servicenow'],
+  ['SignalFX', 'sfx'],
+  ['NewRelic', 'new-relic'],
+  ['Git', 'git'],
+  ['Splunk', 'splunk']
 ])

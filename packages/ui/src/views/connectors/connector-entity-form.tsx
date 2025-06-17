@@ -84,7 +84,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
     if (connectorDefinition) {
       const formDef = {
         ...connectorDefinition.formDefinition,
-        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
+        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'connectorMeta.name')
       }
 
       formDef.inputs = formDef.inputs.map(input => {
@@ -111,10 +111,12 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
         const connectorValues = inputTransformValues(
           {
             ...connector?.spec,
-            name: connector.name,
-            type: connector.type,
-            ...(connector?.description && { description: connector?.description }),
-            ...(connector?.tags && { tags: connector?.tags })
+            connectorMeta: {
+              name: connector.name,
+              type: connector.type,
+              ...(connector?.description && { description: connector?.description }),
+              ...(connector?.tags && { tags: connector?.tags })
+            }
           },
           transformers
         )

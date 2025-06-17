@@ -33,7 +33,7 @@ const ConnectorDetailsReferenceList = ({
         withBorder
         className="min-h-[65vh]"
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noEntities', 'No entities yet')}
         description={[t('views:noData.noEntitiesDescription', 'There are no entities yet.')]}
       />

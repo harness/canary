@@ -1,10 +1,10 @@
-import { DropdownMenu, Icon, IconProps, IconV2, Sidebar, useSidebar } from '@/components'
+import { DropdownMenu, IconV2, IconV2NamesType, Sidebar, useSidebar } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 
 interface NavbarItemType {
   id: number | string
   title: string
-  iconName?: IconProps['name']
+  iconName?: IconV2NamesType
   description?: string
   to: string
   permanentlyPinned?: boolean
@@ -29,9 +29,6 @@ export const SidebarItem = ({
   const { NavLink } = useRouterContext()
   const { collapsed } = useSidebar()
 
-  // TODO: Design System: Update it once gradient icons are available in IconV2
-  const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
-
   const handlePin = () => {
     handleChangePinnedMenuItem(item, isRecent)
   }
@@ -54,6 +51,8 @@ export const SidebarItem = ({
     </>
   )
 
+  console.log('item.iconName', item.iconName)
+
   return (
     <Sidebar.MenuItem>
       <NavLink className="block" to={item.to || ''} end>
@@ -61,7 +60,7 @@ export const SidebarItem = ({
           <Sidebar.MenuButton asChild isActive={isActive}>
             <Sidebar.MenuItemText
               text={item.title}
-              icon={iconName && <Icon name={iconName} size={14} />}
+              icon={item.iconName && <IconV2 name={item.iconName} size={14} />}
               active={isActive}
             />
           </Sidebar.MenuButton>

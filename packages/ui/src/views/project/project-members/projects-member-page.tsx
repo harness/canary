@@ -48,7 +48,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
       {!memberList.length && !isDirtyList && !isLoading ? (
         <NoData
           textWrapperClassName="max-w-[350px]"
-          iconName="no-data-members"
+          imageName="no-data-members"
           title={t('views:noData.members', 'No members yet')}
           description={[
             t(

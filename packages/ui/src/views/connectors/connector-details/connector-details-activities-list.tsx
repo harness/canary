@@ -44,7 +44,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
         withBorder
         className="min-h-[65vh]"
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noActivities', 'No activities yet')}
         description={[t('views:noData.noActivitiesDescription', 'There are no activities yet.')]}
       />

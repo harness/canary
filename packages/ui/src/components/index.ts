@@ -1,5 +1,4 @@
 export * from './alert'
-export * from './icon'
 export * from './icon-v2'
 export * from './logo-v2'
 export * from './button'
@@ -83,6 +82,7 @@ export * from './multi-select'
 export * from './card-select'
 export * from './table-v2'
 export * from './data-table'
+export * from './illustration'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

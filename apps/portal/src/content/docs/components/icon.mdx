@@ -48,18 +48,13 @@ The following icons are available:
 
 ## API Reference
 
-The `IconV2` component can be sized either using the `size` prop or the `height` and `width` props.
-The `size` prop can be used as a shorthand to set both height and width. Some icons have specific alternatives
-that can be used in light and dark modes; setting the `themeDependent` prop will opt into switching between
-the light and dark versions of the icon.
+The `IconV2` component can be sized either using the `size` prop.
+The `size` prop can be used as a shorthand to set both height and width.
 
 ```typescript jsx
 <IconV2
   name="double-tick"   // name of the icon
   size={16}            // [OPTIONAL] size of the icon in pixels
-  height={16}          // [OPTIONAL] height of the icon in pixels
-  width={16}           // [OPTIONAL] width of the icon in pixels
-  themeDependent       // [OPTIONAL] if true, a light version of the icon will be used if available
   className="my-class" // [OPTIONAL] custom class name
 />
 ```
@@ -78,26 +73,6 @@ the light and dark versions of the icon.
       required: false,
       value: "number",
       defaultValue: "16",
-    },
-    {
-      name: "height",
-      description: "Height of the icon in pixels",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "width",
-      description: "Width of the icon in pixels",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "themeDependent",
-      description:
-        "If true, a light version of the icon will be used if available",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
     },
     {
       name: "className",

@@ -144,10 +144,6 @@ const LineTitle: React.FC<LineTitleProps> = ({
             label={t('views:pullRequests.markViewed')}
           />
         ) : null}
-
-        {/* <Button title="coming soon" variant="ghost" size="sm">
-        <Icon name="ellipsis" size={12} className="text-cn-foreground-3/40" />
-      </Button> */}
       </div>
     </div>
   )

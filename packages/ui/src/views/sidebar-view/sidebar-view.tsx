@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import {
   HarnessLogo,
-  Icon,
   IconV2,
   LanguageCode,
   LanguageDialog,
@@ -188,7 +187,7 @@ export const SidebarView = ({
                         : t('component:navbar.sidebarToggle.collapse', 'Collapse')
                     }
                     text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-                    icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+                    icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size={14} />}
                   />
                 </Sidebar.MenuButton>
               </Sidebar.MenuItem>

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Button, Checkbox, Icon, Pagination, PaginationProps, TableV2 } from '@/components'
+import { Button, Checkbox, IconV2, Pagination, PaginationProps, TableV2 } from '@/components'
 import {
   ColumnDef,
   ExpandedState,
@@ -157,7 +157,7 @@ export function DataTable<TData>({
                 iconOnly
                 role="button"
               >
-                <Icon name={row.getIsExpanded() ? 'chevron-down' : 'chevron-up'} size={12} />
+                <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-up'} size={12} />
               </Button>
             ) : null
           },

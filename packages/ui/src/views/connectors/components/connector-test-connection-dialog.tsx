@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { Dialog } from '@components/dialog'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { Layout } from '@components/layout'
 import { MarkdownViewer } from '@components/markdown-viewer'
 import { Progress } from '@components/progress'
@@ -98,9 +98,9 @@ export const ConnectorTestConnectionDialog = ({
               <div className="mb-2 mt-4 gap-y-3">
                 <Layout.Horizontal gap="xs" align="center" className="text-center">
                   {(status === 'success' || status === 'error') && (
-                    <Icon
+                    <IconV2
                       className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
-                      name={status === 'success' ? 'success' : 'triangle-warning'}
+                      name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
                       size={14}
                     />
                   )}
@@ -127,7 +127,7 @@ export const ConnectorTestConnectionDialog = ({
                                   className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
                                 >
                                   {t('views:connectors.viewDocumentation', 'View Documentation')}
-                                  <Icon name="attachment-link" className="ml-1 text-cn-foreground-accent" size={12} />
+                                  <IconV2 name="open-new-window" className="ml-1 text-cn-foreground-accent" size={12} />
                                 </Button>
                               </span>
                             )}

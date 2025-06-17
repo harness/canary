@@ -42,7 +42,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
           <NoData
             withBorder
             textWrapperClassName="max-w-[350px]"
-            iconName="no-data-members"
+            imageName="no-data-members"
             title={t('views:noData.rules', 'No rules yet')}
             description={[
               t(

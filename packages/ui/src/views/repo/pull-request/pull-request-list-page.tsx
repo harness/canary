@@ -132,7 +132,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       return selectedFiltersCnt > 0 || searchQuery ? (
         <StackedList.Root className="grow place-content-center">
           <NoData
-            iconName="no-search-magnifying-glass"
+            imageName="no-search-magnifying-glass"
             title={t('views:noData.noResults', 'No search results')}
             description={[
               t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -152,7 +152,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         </StackedList.Root>
       ) : (
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title="No pull requests yet"
           description={[
             t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),

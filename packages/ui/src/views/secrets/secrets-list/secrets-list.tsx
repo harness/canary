@@ -20,7 +20,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
     return (
       <NoData
         withBorder
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noSecrets', 'No secrets yet')}
         description={[
           t('views:noData.noSecrets', 'There are no secrets in this project yet.'),

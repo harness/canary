@@ -1,5 +1,5 @@
 import { IconV2, Spacer, Table, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
@@ -22,7 +22,6 @@ export const Summary = ({
   toCommitDetails,
   toRepoFileDetails
 }: SummaryProps) => {
-  const { navigate } = useRouterContext()
   const { t } = useTranslation()
 
   return (
@@ -34,7 +33,7 @@ export const Summary = ({
         </>
       )}
 
-      <Table.Root variant="default" disableHighlightOnHover>
+      <Table.Root variant="default">
         {!hideHeader && (
           <Table.Header>
             <Table.Row>
@@ -53,7 +52,7 @@ export const Summary = ({
             </Table.Row>
           )}
           {files.map(file => (
-            <Table.Row key={file.id} onClick={() => navigate(toRepoFileDetails?.({ path: file.path }) ?? '')}>
+            <Table.Row key={file.id} to={toRepoFileDetails?.({ path: file.path }) ?? ''}>
               <Table.Cell>
                 <div
                   className={`flex cursor-pointer items-center gap-1.5 ${

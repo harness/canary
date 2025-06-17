@@ -13,10 +13,10 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   onDelete,
   toConnectorsList
 }) => {
-  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
+  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status, type } = connectorDetails
   const { t } = useTranslation()
+  const logoName = ConnectorTypeToLogoNameMap.get(type)
 
-  const logoName = ConnectorTypeToLogoNameMap.get(connectorDetails.type)
   return (
     <div className="px-8">
       {toConnectorsList ? (

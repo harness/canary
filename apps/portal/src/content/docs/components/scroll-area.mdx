@@ -110,32 +110,38 @@ setScrollPosition2(changePosition(position));
 
 return (
 
-<div >
-<Text variant="heading-base" className="mb-2">
-Scroll Position:
-</Text>
-<Text variant="body-code" className="mb-2">
-{JSON.stringify(scrollPosition1, null, 2)}
-</Text>
-<ScrollArea
+  <div>
+    <div>
+      <Text variant="heading-base" className="mb-2">
+        Scroll Position:
+      </Text>
+
+      <Text variant="body-code" className="mb-2">
+        {JSON.stringify(scrollPosition1, null, 2)}
+      </Text>
+
+      <ScrollArea
         className="w-[300px] h-[200px] border"
         onScroll={handleScroll1}
       >
-<div className="p-4 space-y-4 w-[700px] h-[300px]">
-<p>Content that exceeds the viewport height and width.</p>
-<p>More content...</p>
-<p>Even more content...</p>
-</div>
-</ScrollArea>
+        <div className="p-4 space-y-4 w-[700px] h-[300px]">
+          <p>Content that exceeds the viewport height and width.</p>
+          <p>More content...</p>
+          <p>Even more content...</p>
+        </div>
+      </ScrollArea>
+    </div>
 
-      <hr className="my-4" />
+    <hr className="my-4" />
 
+    <div>
       <Text variant="heading-base" className="mb-2">
         Scroll Position with delay 1000ms:
       </Text>
       <Text variant="body-code" className="mb-2">
-       {JSON.stringify(scrollPosition2, null, 2)}
+        {JSON.stringify(scrollPosition2, null, 2)}
       </Text>
+
       <ScrollArea
         className="w-[300px] h-[200px] border"
         onScroll={handleScroll2}
@@ -149,6 +155,7 @@ Scroll Position:
       </ScrollArea>
     </div>
 
+  </div>
 );
 };
 `}

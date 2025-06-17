@@ -24,15 +24,7 @@ export default {
   '.cn-select': {
     display: 'flex',
     alignItems: 'center',
-    gap: 'var(--cn-spacing-1-half)',
     borderRadius: 'var(--cn-input-radius)',
-    '&:has(.cn-select-suffix)': {
-      paddingLeft: 'var(--cn-input-default-pl)'
-    },
-    '&:not(:has(.cn-select-suffix))': {
-      padding:
-        'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)'
-    },
     height: 'var(--cn-input-size-default)',
     border: 'var(--cn-input-border) solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-2)',
@@ -75,7 +67,9 @@ export default {
 
     '&-trigger': {
       '@apply w-full flex items-center justify-between truncate': '',
-      gap: 'var(--cn-spacing-1-half)'
+      padding:
+        'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
+      gap: 'var(--cn-input-default-gap)'
     },
 
     '&-suffix': {

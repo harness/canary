@@ -381,8 +381,14 @@ function SelectInner<T = string>(
           {suffix ? (
             <div
               className="cn-select-suffix"
+              // Don't trigger dropdown menu when suffix is clicked
               onPointerDown={e => {
                 e.stopPropagation()
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation()
+                }
               }}
             >
               {suffix}

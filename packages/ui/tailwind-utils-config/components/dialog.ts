@@ -117,8 +117,8 @@ export default {
     position: 'absolute',
     top: 'var(--cn-dialog-py)',
     right: 'var(--cn-dialog-px)',
-    width: `var(--cn-icon-size-default)`,
-    height: `var(--cn-icon-size-default)`
+    width: `var(--cn-icon-size-sm)`,
+    height: `var(--cn-icon-size-sm)`
   },
 
   '.dialog': {

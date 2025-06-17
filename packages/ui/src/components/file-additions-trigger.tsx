@@ -25,7 +25,7 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({ pathNewFil
       <DropdownMenu.Content align="end">
         <DropdownMenu.Item
           title={
-            <Link variant="secondary" to={pathNewFile} prefixIcon="plus">
+            <Link variant="secondary" to={pathNewFile} prefixIcon="check">
               <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create file')}</span>
             </Link>
           }

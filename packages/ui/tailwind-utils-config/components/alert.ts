@@ -138,8 +138,8 @@ export default {
       },
 
       '&-icon': {
-        width: 'var(--cn-icon-size-default)',
-        height: 'var(--cn-icon-size-default)',
+        width: 'var(--cn-icon-size-sm)',
+        height: 'var(--cn-icon-size-sm)',
 
         '&-rotate-180': {
           transform: 'rotate(180deg)',

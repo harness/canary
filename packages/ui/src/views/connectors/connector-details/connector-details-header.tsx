@@ -1,9 +1,10 @@
 import { FC } from 'react'
 
-import { Button, Layout, Link, LogoV2, LogoV2NamesType, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { Button, IconV2, Layout, Link, LogoV2, MoreActionsTooltip, StatusBadge, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
+import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
 import { ConnectorDetailsHeaderProps } from './types'
 
 const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
@@ -12,8 +13,10 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   onDelete,
   toConnectorsList
 }) => {
-  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
+  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status, type } = connectorDetails
   const { t } = useTranslation()
+  const logoName = ConnectorTypeToLogoNameMap.get(type)
+
   return (
     <div className="px-8">
       {toConnectorsList ? (
@@ -23,7 +26,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
       ) : null}
       <Layout.Horizontal gap="xs" align="center">
         {/* TODO: Design system: Check for proper name according to LogoV2 and update */}
-        <LogoV2 size="lg" name={connectorDetails.type.toLowerCase() as LogoV2NamesType} />
+        {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size={30} />}
         <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
       </Layout.Horizontal>
       {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}

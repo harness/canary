@@ -77,6 +77,83 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
 </div>`}
 />
 
+### Scroll Event Handling
+
+The `ScrollArea` component provides an `onScroll` prop that allows you to handle scroll events. This prop accepts a callback function that receives the scroll event and an optional position object indicating the scroll position.
+
+  <DocsPage.ComponentExample
+    client:only
+    code={`
+() => {
+  const [scrollPosition1, setScrollPosition1] = React.useState({ isTop: true, isBottom: false, isLeft: true, isRight: false });
+  const [scrollPosition2, setScrollPosition2] = React.useState({ isTop: true, isBottom: false, isLeft: true, isRight: false });
+
+const changePosition = (position) => (prev) => {
+if (
+prev.isTop !== position.isTop ||
+prev.isBottom !== position.isBottom ||
+prev.isLeft !== position.isLeft ||
+prev.isRight !== position.isRight
+) {
+return position;
+}
+return prev;
+}
+
+const handleScroll1 = React.useCallback((event, position) => {
+setScrollPosition1(changePosition(position));
+}, []);
+
+const handleScroll2 = React.useCallback((event, position) => {
+setScrollPosition2(changePosition(position));
+}, []);
+
+return (
+
+<div >
+<Text variant="heading-base" className="mb-2">
+Scroll Position:
+</Text>
+<Text variant="body-code" className="mb-2">
+{JSON.stringify(scrollPosition1, null, 2)}
+</Text>
+<ScrollArea
+        className="w-[300px] h-[200px] border"
+        onScroll={handleScroll1}
+      >
+<div className="p-4 space-y-4 w-[700px] h-[300px]">
+<p>Content that exceeds the viewport height and width.</p>
+<p>More content...</p>
+<p>Even more content...</p>
+</div>
+</ScrollArea>
+
+      <hr className="my-4" />
+
+      <Text variant="heading-base" className="mb-2">
+        Scroll Position with delay 1000ms:
+      </Text>
+      <Text variant="body-code" className="mb-2">
+       {JSON.stringify(scrollPosition2, null, 2)}
+      </Text>
+      <ScrollArea
+        className="w-[300px] h-[200px] border"
+        onScroll={handleScroll2}
+        debounceDelay={1000}
+      >
+        <div className="p-4 space-y-4 w-[700px] h-[300px]">
+          <p>Content that exceeds the viewport height and width.</p>
+          <p>More content...</p>
+          <p>Even more content...</p>
+        </div>
+      </ScrollArea>
+    </div>
+
+);
+};
+`}
+/>
+
 ## API Reference
 
 <DocsPage.PropsTable

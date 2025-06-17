@@ -1,4 +1,4 @@
-import { FC, ReactNode, UIEvent, useCallback, useLayoutEffect, useMemo, useRef } from 'react'
+import { FC, ReactNode, UIEvent, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 
 import { cn } from '@utils/cn'
 import debounce from 'lodash-es/debounce'
@@ -75,6 +75,12 @@ const ScrollArea: FC<ScrollAreaProps> = ({ className, children, direction, onScr
       onScroll(fakeEvent, computePosition(el))
     }
   }, [onScroll, computePosition])
+
+  useEffect(() => {
+    return () => {
+      debouncedHandleScroll?.cancel()
+    }
+  }, [debouncedHandleScroll])
 
   return (
     <div className={cn('cn-scroll-area', className)} dir={direction} onScroll={handleScroll} ref={viewportRef}>

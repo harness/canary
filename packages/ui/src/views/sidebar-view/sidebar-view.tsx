@@ -165,7 +165,7 @@ export const SidebarView = ({
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.settings', 'Settings')}
-                      icon={<IconV2 name="settings" size="sm" />}
+                      icon={<IconV2 name="settings" size="xs" />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -187,7 +187,7 @@ export const SidebarView = ({
                         : t('component:navbar.sidebarToggle.collapse', 'Collapse')
                     }
                     text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-                    icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size="sm" />}
+                    icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size="xs" />}
                   />
                 </Sidebar.MenuButton>
               </Sidebar.MenuItem>

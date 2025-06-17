@@ -81,7 +81,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Simple Operation</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {simpleOperation}
-                <IconV2 className="text-icons-7" name="circle-with-sector" size="sm" />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
             </div>
           )}
@@ -90,7 +90,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Advanced Operations</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {advancedOperations}
-                <IconV2 className="text-icons-7" name="circle-with-sector" size="sm" />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
             </div>
           )}
@@ -99,7 +99,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Data Transfer</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {dataTransfer}
-                <IconV2 className="text-icons-7" name="circle-with-sector" size="sm" />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
             </div>
           )}

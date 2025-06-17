@@ -54,7 +54,7 @@ export default function ComboBox({
           }}
         >
           <div className="mx-2 flex size-4 items-center">
-            {value === selectedFilterValue && <IconV2 name="check" size="xs" className="text-cn-foreground-1" />}
+            {value === selectedFilterValue && <IconV2 name="check" size="2xs" className="text-cn-foreground-1" />}
           </div>
           {label}
         </Command.Item>

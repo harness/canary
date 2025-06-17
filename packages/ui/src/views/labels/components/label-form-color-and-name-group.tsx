@@ -60,7 +60,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
           iconOnly
           onClick={handleDeleteValue}
         >
-          <IconV2 name="xmark" size="xs" />
+          <IconV2 name="xmark" size="2xs" />
         </Button>
       )}
     </div>

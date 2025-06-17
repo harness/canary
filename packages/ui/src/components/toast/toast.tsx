@@ -75,7 +75,7 @@ const ToastClose = forwardRef<
     toast-close=""
     {...props}
   >
-    <IconV2 name="xmark" size="xs" />
+    <IconV2 name="xmark" size="2xs" />
   </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName

@@ -21,9 +21,9 @@ IconV2 supports multiple predefined size variants: `xs`, `default`, `sm`, `md`, 
 <DocsPage.ComponentExample
   client:only
   code={`<Layout.Flex gap="md" align="center">
+    <IconV2 name="star" size="2xs" />
     <IconV2 name="star" size="xs" />
     <IconV2 name="star" size="sm" />
-    <IconV2 name="star" size="default" />
     <IconV2 name="star" size="md" />
     <IconV2 name="star" size="lg" />
   </Layout.Flex>`}
@@ -68,7 +68,7 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
 ```typescript jsx
 <IconV2
   name="double-tick"   // name of the icon
-  size="md"           // [OPTIONAL] size variant (xs, default, sm, md, lg)
+  size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg)
   className="my-class" // [OPTIONAL] custom class name
   skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
 />
@@ -86,8 +86,8 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
       name: "size",
       description: "Size variant of the icon",
       required: false,
-      value: "'xs' | 'default' | 'sm' | 'md' | 'lg'",
-      defaultValue: "'default'",
+      value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'sm'",
     },
     {
       name: "skipSize",

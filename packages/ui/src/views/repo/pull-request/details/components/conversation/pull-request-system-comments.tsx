@@ -97,7 +97,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="git-merge" size="xs" />
+          icon: <IconV2 name="git-merge" size="2xs" />
         }
 
       case CommentType.REVIEW_SUBMIT:
@@ -132,7 +132,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Layout.Horizontal>
             )
           },
-          icon: <IconV2 name="git-commit" size="sm" />
+          icon: <IconV2 name="git-commit" size="xs" />
         }
 
       case CommentType.BRANCH_RESTORE:
@@ -155,7 +155,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="git-branch" size="sm" />
+          icon: <IconV2 name="git-branch" size="xs" />
         }
       }
 
@@ -179,7 +179,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name={iconName} size="xs" />
+          icon: <IconV2 name={iconName} size="2xs" />
         }
       }
 
@@ -192,7 +192,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="sm" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
 
       case CommentType.REVIEW_DELETE: {
@@ -209,7 +209,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="sm" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
       }
 
@@ -227,7 +227,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="eye" size="sm" className="p-0.5" />
+          icon: <IconV2 name="eye" size="xs" className="p-0.5" />
         }
       }
 
@@ -253,7 +253,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="sm" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
       }
 

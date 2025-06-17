@@ -61,7 +61,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   <Breadcrumb.Ellipsis className="ml-1 h-0 w-4" />
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
-                  <IconV2 name="nav-arrow-right" size="xs" className="scale-75" />
+                  <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
                 </Breadcrumb.Separator>
               </>
             ) : null}
@@ -76,7 +76,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   </Breadcrumb.Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
-                  <IconV2 name="nav-arrow-right" size="xs" className="scale-75" />
+                  <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
                 </Breadcrumb.Separator>
               </>
             ) : null}

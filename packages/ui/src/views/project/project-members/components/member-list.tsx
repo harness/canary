@@ -49,7 +49,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-cn-foreground-2 hover:text-cn-foreground-1">
                   {getRoleLabel(member.role)}
-                  <IconV2 className="chevron-down text-icons-7" name="nav-solid-arrow-down" size="xs" />
+                  <IconV2 className="chevron-down text-icons-7" name="nav-solid-arrow-down" size="2xs" />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content align="start">
                   {roleOptions.map(role => (

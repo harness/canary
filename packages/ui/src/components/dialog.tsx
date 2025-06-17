@@ -103,7 +103,7 @@ const Header = ({ className, icon, logo, theme = 'default', children, ...props }
         )}
         {logo && (
           <div className="cn-modal-dialog-header-logo">
-            <LogoV2 size="lg" name={logo} />
+            <LogoV2 name={logo} />
           </div>
         )}
         {title}

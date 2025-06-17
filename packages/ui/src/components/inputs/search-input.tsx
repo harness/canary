@@ -60,7 +60,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         onChange={handleInputChange}
         prefix={
           <div className="grid w-8 place-items-center border-r-0">
-            <IconV2 name="search" size="xs" />
+            <IconV2 name="search" size="2xs" />
           </div>
         }
         placeholder={placeholder}

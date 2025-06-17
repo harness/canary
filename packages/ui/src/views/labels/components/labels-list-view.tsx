@@ -91,7 +91,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                 <IconV2
                   className="flex-none text-icons-9"
                   name={label.scope === 0 ? 'repository' : 'folder'}
-                  size="xs"
+                  size="2xs"
                 />
 
                 <span

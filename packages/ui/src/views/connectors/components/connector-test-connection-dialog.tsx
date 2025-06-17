@@ -101,7 +101,7 @@ export const ConnectorTestConnectionDialog = ({
                     <IconV2
                       className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
                       name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
-                      size="sm"
+                      size="xs"
                     />
                   )}
                   <div className="letter-spacing-1 text-base font-medium text-cn-foreground-1">{description}</div>
@@ -127,7 +127,11 @@ export const ConnectorTestConnectionDialog = ({
                                   className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
                                 >
                                   {t('views:connectors.viewDocumentation', 'View Documentation')}
-                                  <IconV2 name="open-new-window" className="ml-1 text-cn-foreground-accent" size="xs" />
+                                  <IconV2
+                                    name="open-new-window"
+                                    className="ml-1 text-cn-foreground-accent"
+                                    size="2xs"
+                                  />
                                 </Button>
                               </span>
                             )}

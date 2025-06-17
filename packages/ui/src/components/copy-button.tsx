@@ -29,7 +29,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
   name,
   className,
   buttonVariant = 'outline',
-  iconSize = 'default',
+  iconSize = 'sm',
   onClick,
   color
 }) => {

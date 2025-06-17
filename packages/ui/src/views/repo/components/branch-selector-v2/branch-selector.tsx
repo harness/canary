@@ -51,14 +51,14 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
         <Button className="justify-start px-3" variant="outline" size={buttonSize}>
           {!branchPrefix && (
-            <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="sm" />
+            <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
           )}
           <span className="text-ellipsis whitespace-nowrap">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
           </span>
-          <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0" size="xs" />
+          <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

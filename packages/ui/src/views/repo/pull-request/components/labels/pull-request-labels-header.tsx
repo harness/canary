@@ -114,7 +114,7 @@ export const LabelsHeader = ({
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
           <Button iconOnly variant="ghost" size="sm">
-            <IconV2 name="more-vert" size="xs" />
+            <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
 

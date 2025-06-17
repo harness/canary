@@ -213,7 +213,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <IconV2
             name="nav-arrow-right"
             className={cn('text-icons-1 mt-1', expendedItems?.includes(value) && 'rotate-90')}
-            size="xs"
+            size="2xs"
           />
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">

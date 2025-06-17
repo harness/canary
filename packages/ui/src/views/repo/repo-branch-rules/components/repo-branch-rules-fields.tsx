@@ -149,11 +149,11 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                       'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
                     })}
                     name="plus-circle"
-                    size="xs"
+                    size="2xs"
                   />
                   {pattern.pattern}
                 </span>
-                <IconV2 name="xmark" size="xs" />
+                <IconV2 name="xmark" size="2xs" />
               </Button>
             ))}
           </div>

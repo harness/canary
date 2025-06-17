@@ -37,7 +37,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-            <IconV2 name="more-vert" size="xs" />
+            <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="end">
@@ -54,7 +54,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   }
   return (
     <PullRequestTimelineItem
-      icon={<IconV2 name="git-pull-request" size="xs" />}
+      icon={<IconV2 name="git-pull-request" size="2xs" />}
       isLast={isLast}
       header={[
         {

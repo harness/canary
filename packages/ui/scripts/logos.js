@@ -111,8 +111,6 @@ class FigmaLogoDownloader {
   }
 
   async downloadFile(url, filepath, fillColor) {
-    console.log('fillColor', fillColor)
-
     return new Promise((resolve, reject) => {
       let parsedUrl
 

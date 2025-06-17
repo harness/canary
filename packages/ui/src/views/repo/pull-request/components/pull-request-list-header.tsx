@@ -30,7 +30,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
       <button onClick={onOpenClick} className="flex items-center gap-1.5">
         <IconV2
           className={cn({ 'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN })}
-          size="sm"
+          size="xs"
           name="git-pull-request"
         />
         <p
@@ -49,7 +49,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
           className={cn({
             'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
           })}
-          size="sm"
+          size="xs"
           name="check"
         />
         <p

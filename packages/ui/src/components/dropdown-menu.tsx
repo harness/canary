@@ -139,7 +139,7 @@ const DropdownBaseItem = ({
     {label && <Text variant="caption-soft">{label}</Text>}
     {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
     {checkmark && <IconV2 name="check" />}
-    {withSubIndicator && <IconV2 name="nav-arrow-right" size="sm" />}
+    {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
   </div>
 )
 
@@ -332,7 +332,7 @@ interface DropdownMenuLogoItemProps extends Omit<DropdownMenuItemProps, 'prefix'
 }
 
 const DropdownMenuLogoItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuLogoItemProps>(
-  ({ logo, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<LogoV2 size="lg" name={logo} />} />
+  ({ logo, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<LogoV2 name={logo} />} />
 )
 DropdownMenuLogoItem.displayName = displayNames.logoItem
 
@@ -341,7 +341,7 @@ interface DropdownMenuIconItemProps extends Omit<DropdownMenuItemProps, 'prefix'
 }
 
 const DropdownMenuIconItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuIconItemProps>(
-  ({ icon, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<IconV2 size="xs" name={icon} />} />
+  ({ icon, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<IconV2 size="2xs" name={icon} />} />
 )
 DropdownMenuIconItem.displayName = displayNames.iconItem
 

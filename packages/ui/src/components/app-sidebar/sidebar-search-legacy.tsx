@@ -37,7 +37,7 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
           tabIndex={collapsed ? 0 : -1}
           onClick={openSearchDialog}
         >
-          <IconV2 name="search" size="xs" />
+          <IconV2 name="search" size="2xs" />
           <span className="sr-only">{t('component:navbar.searchButton', 'Open search dialog')}</span>
         </Button>
 

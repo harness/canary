@@ -432,7 +432,9 @@ import Terminal from './icons/terminal.svg'
 import TextSize from './icons/text-size.svg'
 import TextSquare from './icons/text-square.svg'
 import Theme from './icons/theme.svg'
+import ThumbsDownSolid from './icons/thumbs-down-solid.svg'
 import ThumbsDown from './icons/thumbs-down.svg'
+import ThumbsUpSolid from './icons/thumbs-up-solid.svg'
 import ThumbsUp from './icons/thumbs-up.svg'
 import TimeZone from './icons/time-zone.svg'
 import TimerSolid from './icons/timer-solid.svg'
@@ -901,7 +903,9 @@ export const IconNameMapV2 = {
   'text-size': TextSize,
   'text-square': TextSquare,
   theme: Theme,
+  'thumbs-down-solid': ThumbsDownSolid,
   'thumbs-down': ThumbsDown,
+  'thumbs-up-solid': ThumbsUpSolid,
   'thumbs-up': ThumbsUp,
   'time-zone': TimeZone,
   'timer-solid': TimerSolid,

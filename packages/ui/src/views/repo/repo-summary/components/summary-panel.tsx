@@ -54,7 +54,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" aria-label="More options">
-                <IconV2 name="more-horizontal" size="xs" className="text-icons-3" />
+                <IconV2 name="more-horizontal" size="2xs" className="text-icons-3" />
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
@@ -92,7 +92,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             details.map(item => (
               <Link key={item.id} to={item.to}>
                 <div className="flex cursor-pointer items-center gap-1.5">
-                  <IconV2 name={item.iconName} size="sm" className="text-cn-foreground-3 fill-none" />
+                  <IconV2 name={item.iconName} size="xs" className="text-cn-foreground-3 fill-none" />
                   <Text>{item.name}</Text>
                   <CounterBadge>{item.count}</CounterBadge>
                 </div>

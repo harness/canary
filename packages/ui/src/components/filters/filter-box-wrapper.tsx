@@ -55,7 +55,7 @@ const FilterBoxWrapper = ({
             </Text>
             <Text as="span">{valueLabel}</Text>
           </div>
-          <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="xs" />
+          <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
 
@@ -67,7 +67,7 @@ const FilterBoxWrapper = ({
             <IconV2
               className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
               name="more-horizontal"
-              size="xs"
+              size="2xs"
             />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">

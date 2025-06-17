@@ -19,7 +19,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
     <div className="flex w-full items-center justify-between">
       <div className="flex w-full max-w-[calc(100%-82px)] items-center justify-start gap-1.5">
         <IconV2
-          size="sm"
+          size="xs"
           className={cn({
             'text-icons-success': state === 'open' && !isDraft,
             'text-icons-1': state === 'open' && isDraft,

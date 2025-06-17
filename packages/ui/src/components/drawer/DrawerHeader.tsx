@@ -31,7 +31,7 @@ export type DrawerHeaderProps = DrawerHeaderBaseProps &
 export const DrawerHeader = ({ className, children, icon, logo, ...props }: DrawerHeaderProps) => {
   const IconOrLogoComp =
     (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} skipSize />) ||
-    (!!logo && <LogoV2 size="lg" className="cn-drawer-header-icon" name={logo} />) ||
+    (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} />) ||
     null
 
   const { titleChildren, otherChildren } = Children.toArray(children).reduce<{

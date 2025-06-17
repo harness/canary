@@ -33,7 +33,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
 
   return isSuccess ? (
     <div className="flex items-center gap-2">
-      <IconV2 name="circle" size="xs" className="text-icons-success" />
+      <IconV2 name="circle" size="2xs" className="text-icons-success" />
       <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
         {t('views:connectors.success', 'Success')}
       </Text>
@@ -53,7 +53,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
         }
       >
         <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
-          <IconV2 name="circle" size="xs" className="text-icons-danger" />
+          <IconV2 name="circle" size="2xs" className="text-icons-danger" />
           <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
             {t('views:connectors.failure', 'Failed')}
           </Text>
@@ -160,9 +160,9 @@ export function ConnectorsList({
                     onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
                   >
                     {isFavorite ? (
-                      <IconV2 name="star-solid" size="sm" className="fill-icons-alert" />
+                      <IconV2 name="star-solid" size="xs" className="fill-icons-alert" />
                     ) : (
-                      <IconV2 name="star" size="sm" className="text-icons-6" />
+                      <IconV2 name="star" size="xs" className="text-icons-6" />
                     )}
                   </Button>
                 </Table.Cell>

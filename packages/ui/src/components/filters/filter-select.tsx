@@ -51,7 +51,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
                   setSearchQuery('')
                 }}
               >
-                <IconV2 name="xmark" size="xs" />
+                <IconV2 name="xmark" size="2xs" />
               </Button>
             }
           />
@@ -88,7 +88,7 @@ const FilterSelectLabel = ({
     <Button size="sm" variant="transparent">
       {displayLabel}
       {selectedFilters > 0 && <CounterBadge>{selectedFilters}</CounterBadge>}
-      <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size="xs" />
+      <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size="2xs" />
     </Button>
   )
 }
@@ -96,7 +96,7 @@ const FilterSelectLabel = ({
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
     <Button size="sm" variant="transparent">
-      <IconV2 name="plus" size="xs" />
+      <IconV2 name="plus" size="2xs" />
       <span>{displayLabel}</span>
     </Button>
   )

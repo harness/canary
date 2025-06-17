@@ -40,7 +40,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
         />
 
         <Button variant="ghost" iconOnly size="sm" type="button">
-          <IconV2 name="search" size="xs" />
+          <IconV2 name="search" size="2xs" />
         </Button>
         <Button
           variant="ghost"

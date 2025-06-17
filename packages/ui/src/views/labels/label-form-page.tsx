@@ -186,7 +186,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               ))}
 
               <Button className="mt-3.5 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
-                <IconV2 name="plus" size="xs" />
+                <IconV2 name="plus" size="2xs" />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>
             </ControlGroup>

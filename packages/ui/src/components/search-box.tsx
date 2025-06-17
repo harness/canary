@@ -124,7 +124,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
               }
             )}
           >
-            <IconV2 name="apple-shortcut" size="xs" />
+            <IconV2 name="apple-shortcut" size="2xs" />
 
             <span className="text-inherit">{shortcutLetter}</span>
           </div>

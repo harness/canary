@@ -29,11 +29,9 @@ The `LogoV2` component can be sized using the `size` prop.
   client:only
   code={`
   <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
-    <LogoV2 name="node-js" size="lg" />
-    <LogoV2 name="node-js" size="md" />
-    <LogoV2 name="node-js" size="default" />
     <LogoV2 name="node-js" size="sm" />
-    <LogoV2 name="node-js" size="xs" />
+    <LogoV2 name="node-js" size="md" />
+    <LogoV2 name="node-js" size="lg" />
   </Layout.Flex>
   `}
 />
@@ -49,7 +47,7 @@ The following logos are available:
 ```typescript jsx
 <LogoV2
   name="logo-name"     // name of the logo
-  size="default"       // [OPTIONAL] size variant of the logo
+  size="lg"       // [OPTIONAL] size variant of the logo
   className="my-class" // [OPTIONAL] custom class name
 />
 ```
@@ -66,8 +64,8 @@ The following logos are available:
       name: "size",
       description: "Size variant of the logo",
       required: false,
-      value: "'xs' | 'default' | 'sm' | 'md' | 'lg'",
-      defaultValue: "'default'",
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
     },
     {
       name: "className",

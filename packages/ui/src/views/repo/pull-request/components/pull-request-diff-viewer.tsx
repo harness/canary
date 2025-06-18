@@ -351,14 +351,6 @@ const PullRequestDiffViewer = ({
       const commentKey = `${side}:${lineNumber}`
       const commentText = newComments[commentKey] ?? ''
 
-      // console.debug('renderWidgetLine', {
-      //   side: side,
-      //   lineNumber: lineNumber,
-      //   sideKey: sideKey,
-      //   commentKey: commentKey,
-      //   commentText: commentText
-      // })
-
       return (
         <div className="border-cn-borders-2 bg-cn-background-1 flex w-full flex-col border-l p-4">
           <PullRequestCommentBox

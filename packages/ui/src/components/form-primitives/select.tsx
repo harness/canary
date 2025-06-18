@@ -77,6 +77,7 @@ interface SelectProps<T = string>
   footer?: ReactNode
   contentWidth?: 'auto' | 'triggerWidth'
   contentClassName?: string
+  suffix?: ReactNode
 }
 
 // Helper function to check option types
@@ -137,6 +138,7 @@ function SelectInner<T = string>(
     footer,
     contentWidth = 'auto',
     contentClassName,
+    suffix,
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -367,13 +369,32 @@ function SelectInner<T = string>(
         <DropdownMenu.Trigger
           id={id}
           ref={ref}
-          className={cn(selectVariants({ theme }), className)}
           disabled={disabled}
+          className={cn(selectVariants({ theme }), className)}
         >
-          <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
-            {selectedOption ? selectedOption.label : placeholder}
-          </Text>
-          <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
+          <div className="cn-select-trigger">
+            <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
+              {selectedOption ? selectedOption.label : placeholder}
+            </Text>
+            <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
+          </div>
+          {suffix ? (
+            <div
+              className="cn-select-suffix"
+              // Don't trigger dropdown menu when suffix is clicked
+              onPointerDown={e => {
+                e.stopPropagation()
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation()
+                }
+              }}
+              role="none"
+            >
+              {suffix}
+            </div>
+          ) : null}
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Content

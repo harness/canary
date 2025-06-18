@@ -56,7 +56,7 @@ type SelectItemType =
   | ReactElement<typeof DropdownMenu.IndicatorItem>
 
 interface SelectProps<T = string>
-  extends Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'placeholder' | 'className'> {
+  extends Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'placeholder'> {
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
   value?: T
   defaultValue?: T
@@ -78,6 +78,8 @@ interface SelectProps<T = string>
   contentWidth?: 'auto' | 'triggerWidth'
   contentClassName?: string
   suffix?: ReactNode
+  triggerClassName?: string
+  rootClassName?: string
 }
 
 // Helper function to check option types
@@ -121,7 +123,6 @@ function SelectInner<T = string>(
     disabled,
     onScrollEnd,
     placeholder: _placeholder,
-    className,
     isLoading = false,
     id: defaultId,
     name,
@@ -139,6 +140,8 @@ function SelectInner<T = string>(
     contentWidth = 'auto',
     contentClassName,
     suffix,
+    triggerClassName,
+    rootClassName,
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -342,7 +345,7 @@ function SelectInner<T = string>(
   }, [searchQuery])
 
   return (
-    <ControlGroup>
+    <ControlGroup className={rootClassName}>
       {label && (
         <Label disabled={disabled} optional={optional} htmlFor={id}>
           {label}
@@ -370,7 +373,7 @@ function SelectInner<T = string>(
           id={id}
           ref={ref}
           disabled={disabled}
-          className={cn(selectVariants({ theme }), className)}
+          className={cn(selectVariants({ theme }), triggerClassName)}
         >
           <div className="cn-select-trigger">
             <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>

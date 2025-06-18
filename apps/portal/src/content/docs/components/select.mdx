@@ -643,12 +643,6 @@ The `Select` component is the main component for creating dropdown selections.
       defaultValue: "'Select an option'",
     },
     {
-      name: "className",
-      description: "Custom class name for the trigger button",
-      required: false,
-      value: "string",
-    },
-    {
       name: "isLoading",
       description: "Show loading indicator",
       required: false,
@@ -759,6 +753,18 @@ The `Select` component is the main component for creating dropdown selections.
       required: false,
       value: "'triggerWidth' | 'auto'",
       defaultValue: "'auto'",
+    },
+    {
+      name: "rootClassName",
+      description: "Custom class name for the root container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "triggerClassName",
+      description: "Custom class name for the trigger button",
+      required: false,
+      value: "string",
     },
     {
       name: "contentClassName",

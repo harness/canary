@@ -26,8 +26,6 @@ interface StringSelection {
   after: string
   textSelectionStart: number
   textSelectionEnd: number
-  isStartOfLineSelected: boolean
-  isEndOfLineSelected: boolean
 }
 
 interface ToolbarItem {
@@ -178,9 +176,7 @@ export const PullRequestCommentBox = ({
       selected: selection,
       after: afterSelection,
       textSelectionStart: newTextSelectionStart,
-      textSelectionEnd: newTextSelectionEnd,
-      isStartOfLineSelected: isStartOfLineSelected,
-      isEndOfLineSelected: isEndOfLineSelected
+      textSelectionEnd: newTextSelectionEnd
     }
   }
 

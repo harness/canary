@@ -68,10 +68,10 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-baseline gap-1.5">
           {!!avatar && <div className="mr-0.5">{avatar}</div>}
-          {!!name && <span className="text-2 font-medium text-cn-foreground-1">{name}</span>}
+          {!!name && <span className="text-2 text-cn-foreground-1 font-medium">{name}</span>}
           {!!description && <span className="text-2 text-cn-foreground-2">{description}</span>}
         </div>
-        {!!selectStatus && <span className="justify-end text-2 text-cn-foreground-3">{selectStatus}</span>}
+        {!!selectStatus && <span className="text-2 text-cn-foreground-3 justify-end">{selectStatus}</span>}
         {isComment && !isDeleted && (
           <MoreActionsTooltip
             className="w-[200px]"
@@ -316,7 +316,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     {isResolved && (
                       <span className="text-2 text-cn-foreground-2">
                         {/* TODO: need to identify the author who resolved the conversation */}
-                        <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this conversation
+                        <span className="text-cn-foreground-1 font-medium">{currentUser}</span> marked this conversation
                         as resolved.
                       </span>
                     )}

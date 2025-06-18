@@ -13,6 +13,7 @@ import {
 import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
+import { isEmpty, isUndefined } from 'lodash-es'
 
 interface TextSelection {
   start: number
@@ -41,6 +42,10 @@ export interface PullRequestCommentBoxProps {
   className?: string
   onSaveComment: (comment: string) => void
   comment: string
+  lang?: string
+  diff?: string
+  lineNumber?: number
+  sideKey?: 'oldFile' | 'newFile'
   setComment: (comment: string) => void
   currentUser?: string
   onBoldClick?: () => void
@@ -66,6 +71,10 @@ export const PullRequestCommentBox = ({
   currentUser,
   inReplyMode = false,
   onCancelClick,
+  diff = '',
+  lang = '',
+  sideKey,
+  lineNumber,
   comment,
   setComment,
   isEditMode,
@@ -179,14 +188,15 @@ export const PullRequestCommentBox = ({
     comment: string,
     textSelection: TextSelection,
     injectedPreString: string,
-    injectedPostString: string = ''
+    injectedPostString: string = '',
+    injectedString: string = ''
   ) => {
     const parsedComment = parseComment(comment, textSelection, injectedPreString)
 
     setTextSelection({ start: parsedComment.textSelectionStart, end: parsedComment.textSelectionEnd })
 
     setComment(
-      `${parsedComment.before}${injectedPreString}${parsedComment.selected}${injectedPostString}${parsedComment.after}`
+      `${parsedComment.before}${injectedPreString}${injectedString}${parsedComment.selected}${injectedPostString}${parsedComment.after}`
     )
   }
 
@@ -215,12 +225,47 @@ export const PullRequestCommentBox = ({
   }
 
   const handleCode = (comment: string, textSelection: TextSelection) => {
-    console.log('handleCode', {
-      comment: comment,
-      textSelection: textSelection
-    })
+    parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```', parseDiff(diff, sideKey, lineNumber))
+  }
 
-    setComment(comment)
+  const parseDiff = (diff: string = '', sideKey?: 'oldFile' | 'newFile', lineNumber?: number): string => {
+    if (isUndefined(sideKey) || isUndefined(lineNumber)) {
+      return ''
+    }
+
+    const diffLines = diff.split('\n')
+
+    const sideChangedLineToken = sideKey === 'newFile' ? '+' : '-'
+    const otherSideChangedLineToken = sideKey === 'newFile' ? '-' : '+'
+
+    const sideDiffLines = diffLines.filter(diffLine => !diffLine.startsWith(otherSideChangedLineToken))
+
+    const found = sideDiffLines.reduce((previousValue, currentValue, currentIndex, array): string => {
+      if (isEmpty(previousValue) && currentValue.startsWith('@@')) {
+        const sectionInfoParts = currentValue.split(' ')
+
+        const fileLineNumber = +(
+          sectionInfoParts
+            .find(part => part.startsWith(sideChangedLineToken))
+            ?.split(',')
+            .at(0)
+            ?.substring(1) ?? ''
+        )
+        const fileLineOffset = lineNumber - fileLineNumber + 1
+
+        const sideDiffLine = sideDiffLines.at(currentIndex + fileLineOffset) ?? ''
+
+        const modifiedSideDiffLine = sideDiffLine.startsWith(sideChangedLineToken)
+          ? ` ${sideDiffLine.substring(1)}`
+          : sideDiffLine
+
+        return modifiedSideDiffLine
+      }
+
+      return previousValue
+    }, '')
+
+    return found
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {

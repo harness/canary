@@ -351,8 +351,16 @@ const PullRequestDiffViewer = ({
       const commentKey = `${side}:${lineNumber}`
       const commentText = newComments[commentKey] ?? ''
 
+      // console.debug('renderWidgetLine', {
+      //   side: side,
+      //   lineNumber: lineNumber,
+      //   sideKey: sideKey,
+      //   commentKey: commentKey,
+      //   commentText: commentText
+      // })
+
       return (
-        <div className="flex w-full flex-col border-l border-cn-borders-2 bg-cn-background-1 p-4">
+        <div className="border-cn-borders-2 bg-cn-background-1 flex w-full flex-col border-l p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -374,6 +382,10 @@ const PullRequestDiffViewer = ({
               onClose()
               setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
+            lineNumber={lineNumber}
+            sideKey={sideKey}
+            diff={data}
+            lang={lang}
             comment={commentText}
             setComment={value => setNewComments(prev => ({ ...prev, [commentKey]: value }))}
           />
@@ -388,7 +400,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border-l border-cn-borders-2 bg-cn-background-1">
+        <div className="border-cn-borders-2 bg-cn-background-1 border-l">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -417,7 +429,7 @@ const PullRequestDiffViewer = ({
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
-                      <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
+                      <span className="text-cn-foreground-1 font-medium">{parent.payload?.resolver?.display_name}</span>
                       <span className="text-cn-foreground-2">marked this conversation as resolved</span>
                     </div>
                   )
@@ -459,7 +471,7 @@ const PullRequestDiffViewer = ({
                       ]}
                       content={
                         parent?.deleted ? (
-                          <div className="rounded-md border bg-cn-background-1 p-1">
+                          <div className="bg-cn-background-1 rounded-md border p-1">
                             {t('views:pullRequests.deletedComment')}
                           </div>
                         ) : editModes[componentId] ? (
@@ -476,6 +488,8 @@ const PullRequestDiffViewer = ({
                             onCancelClick={() => {
                               toggleEditMode(componentId, '')
                             }}
+                            diff={data}
+                            lang={lang}
                             comment={editComments[componentId]}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                           />
@@ -536,7 +550,7 @@ const PullRequestDiffViewer = ({
                               ]}
                               content={
                                 reply?.deleted ? (
-                                  <div className="rounded-md border bg-cn-background-1 p-1">
+                                  <div className="bg-cn-background-1 rounded-md border p-1">
                                     {t('views:pullRequests.deletedComment')}
                                   </div>
                                 ) : editModes[replyComponentId] ? (
@@ -553,6 +567,8 @@ const PullRequestDiffViewer = ({
                                     onCancelClick={() => {
                                       toggleEditMode(replyComponentId, '')
                                     }}
+                                    diff={data}
+                                    lang={lang}
                                     comment={editComments[replyComponentId]}
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
@@ -614,7 +630,7 @@ const PullRequestDiffViewer = ({
           {/* @ts-ignore */}
           <DiffView<Thread[]>
             ref={ref}
-            className="bg-tr w-full text-cn-foreground-3"
+            className="bg-tr text-cn-foreground-3 w-full"
             renderWidgetLine={renderWidgetLine}
             renderExtendLine={renderExtendLine}
             diffFile={diffFileInstance}

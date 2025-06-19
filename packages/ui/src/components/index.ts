@@ -85,7 +85,6 @@ export * from './illustration'
 export * from './button-group'
 
 export * as NodeGroup from './node-group'
-export * as ShaBadge from './sha-badge'
 export * as ListActions from './list-actions'
 export * as SearchBox from './search-box'
 export * as NavbarProjectChooser from './navbar-project-chooser'

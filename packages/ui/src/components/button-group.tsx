@@ -5,7 +5,7 @@ import { cn } from '@utils/cn'
 
 type ButtonGroupTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
-type BaseButtonProps = Omit<ButtonProps, 'variant' | 'size' | 'theme' | 'asChild' | 'iconOnly' | 'rounded' | 'type'>
+type BaseButtonProps = Omit<ButtonProps, 'variant' | 'size' | 'theme' | 'asChild' | 'rounded' | 'type'>
 
 type ButtonWithTooltip = BaseButtonProps & {
   tooltipProps: ButtonGroupTooltipProps
@@ -17,7 +17,7 @@ type ButtonWithDropdown = BaseButtonProps & {
   tooltipProps?: undefined
 }
 
-export type ButtonGroupButtonProps = ButtonWithTooltip | ButtonWithDropdown
+export type ButtonGroupButtonProps = ButtonWithTooltip | ButtonWithDropdown | BaseButtonProps
 
 export interface ButtonGroupProps extends Pick<ButtonProps, 'size' | 'iconOnly'> {
   orientation?: 'horizontal' | 'vertical'
@@ -70,21 +70,27 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
         className
       )}
     >
-      {buttonsProps.map(({ tooltipProps, dropdownContent, className, ...restButtonProps }, index) => (
-        <Wrapper key={index} tooltipProps={tooltipProps} dropdownContent={dropdownContent} orientation={orientation}>
-          <Button
-            className={cn(
-              className,
-              { 'cn-button-group-first': !index },
-              { 'cn-button-group-last': index === buttonsProps.length - 1 }
-            )}
-            variant="outline"
-            size={size}
-            iconOnly={iconOnly}
-            {...restButtonProps}
-          />
-        </Wrapper>
-      ))}
+      {buttonsProps.map((buttonProps, index) => {
+        const { className, ...restButtonProps } = buttonProps
+        const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
+        const dropdownContent = 'dropdownContent' in buttonProps ? buttonProps.dropdownContent : undefined
+
+        return (
+          <Wrapper key={index} tooltipProps={tooltipProps} dropdownContent={dropdownContent} orientation={orientation}>
+            <Button
+              className={cn(
+                className,
+                { 'cn-button-group-first': !index },
+                { 'cn-button-group-last': index === buttonsProps.length - 1 }
+              )}
+              variant="outline"
+              size={size}
+              iconOnly={iconOnly}
+              {...restButtonProps}
+            />
+          </Wrapper>
+        )
+      })}
     </div>
   )
 }

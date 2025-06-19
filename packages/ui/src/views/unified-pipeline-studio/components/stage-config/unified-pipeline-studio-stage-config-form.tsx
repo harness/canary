@@ -80,6 +80,11 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
 
   const resolver = useZodValidationResolver(stageFormDefinition ?? { inputs: [] })
 
+  // TODO
+  if (editStageIntention && !defaultStageValues) {
+    return <></>
+  }
+
   return (
     <RootForm
       autoFocusPath={stageFormDefinition?.inputs?.[0]?.path}

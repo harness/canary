@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { InputFactory } from '@harnessio/forms'
 import {
+  AccordionFormInput,
   BooleanFormInput,
   CalendarInput,
   GroupFormInput,
@@ -21,9 +22,22 @@ inputComponentFactory.registerComponent(new NumberFormInput())
 inputComponentFactory.registerComponent(new GroupFormInput())
 inputComponentFactory.registerComponent(new SelectFormInput())
 inputComponentFactory.registerComponent(new CalendarInput())
+inputComponentFactory.registerComponent(new AccordionFormInput())
 
 const pipelineInputs = {
   stringRequired: { type: 'string', required: true },
+
+  A1: { type: 'string' },
+  A2: { type: 'string' },
+  A3: { type: 'string' },
+  B1: { type: 'string' },
+  B2Sub1: { type: 'string' },
+  B2Sub2: { type: 'string' },
+  B3: { type: 'string' },
+  C1: { type: 'string' },
+  C2: { type: 'string' },
+  C3: { type: 'string' },
+
   stringPattern: { type: 'string', pattern: '^[A-Z]*$' },
   stringRequiredPattern: { type: 'string', required: true, pattern: '^[A-Z]*$' },
   stringEnum: { type: 'string', enum: ['Option 1', 'Option 2', 'Option 3'] },
@@ -67,6 +81,20 @@ const layout: InputLayout = [
   'stringSelectWithDefaultUI',
   'stringCalendarUI',
   'nonComponentFactory',
+  'stringRequired',
+  {
+    title: 'A',
+
+    items: ['A1', 'A2']
+  },
+  {
+    title: 'B',
+    items: ['B1', { title: 'B2', items: ['B2Sub1', 'B2Sub2'] }, 'B3']
+  },
+  {
+    title: 'C',
+    items: ['C1', 'C2', 'C3']
+  },
   'stringRequired',
   {
     items: ['stringPattern', 'stringRequiredPattern']

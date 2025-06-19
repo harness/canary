@@ -80,7 +80,7 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
 
   const resolver = useZodValidationResolver(stageFormDefinition ?? { inputs: [] })
 
-  // TODO
+  // NOTE: prevent rendering "Edit" form before values are provided
   if (editStageIntention && !defaultStageValues) {
     return <></>
   }

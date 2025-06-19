@@ -9,8 +9,7 @@ import {
   InputProps,
   RenderInputs,
   useFormContext,
-  type AnyFormikValue,
-  type IFormDefinition
+  type AnyFormikValue
 } from '@harnessio/forms'
 
 import { InputLabel } from './common/InputLabel'
@@ -88,7 +87,7 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
                   <InputLabel
                     label={childInput.label}
                     required={childInput.required}
-                    className="mb-0 grow flex justify-between cursor-[inherit]"
+                    className="mb-0 flex grow cursor-[inherit] justify-between"
                   />
                   {allowShowWarning && errorPerGroup[idx] ? (
                     <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />

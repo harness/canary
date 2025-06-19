@@ -815,9 +815,6 @@ importers:
       input-otp:
         specifier: ^1.2.4
         version: 1.4.2(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-      jexl:
-        specifier: ^2.3.0
-        version: 2.3.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -885,9 +882,6 @@ importers:
       '@testing-library/user-event':
         specifier: ^13.5.0
         version: 13.5.0(@testing-library/dom@10.4.0)
-      '@types/jexl':
-        specifier: ^2.3.4
-        version: 2.3.4
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -3907,9 +3901,6 @@ packages:
 
   '@types/jest@27.5.2':
     resolution: {integrity: sha512-mpT8LJJ4CMeeahobofYWIjFo0xonRS/HfxnVEPMPFSQdGUt1uHCnoPT7Zhb+sjDU2wz0oKV0OLUR0WzrHNgfeA==}
-
-  '@types/jexl@2.3.4':
-    resolution: {integrity: sha512-3BU5DbkPvwqOeW8kZcB9Bvn5bspTFY3Lo0yBS6ephuI8kVSpCjzbGtRPbWnvdbr67tMvXDxiJRcL3fwbz/6+PQ==}
 
   '@types/js-yaml@4.0.9':
     resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
@@ -7053,9 +7044,6 @@ packages:
     peerDependenciesMeta:
       node-notifier:
         optional: true
-
-  jexl@2.3.0:
-    resolution: {integrity: sha512-ecqln4kTWNkMwbFvTukOMDq1jy1GcPzvshhMp/s4pxU86xdLDq7HbDRa87DfMfbSAOS8V6EwvCdfs0S+w/iycA==}
 
   jiti@1.21.7:
     resolution: {integrity: sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==}
@@ -13874,8 +13862,6 @@ snapshots:
       jest-matcher-utils: 27.5.1
       pretty-format: 27.5.1
 
-  '@types/jexl@2.3.4': {}
-
   '@types/js-yaml@4.0.9': {}
 
   '@types/json-schema@7.0.15': {}
@@ -18180,10 +18166,6 @@ snapshots:
       - babel-plugin-macros
       - supports-color
       - ts-node
-
-  jexl@2.3.0:
-    dependencies:
-      '@babel/runtime': 7.26.9
 
   jiti@1.21.7: {}
 

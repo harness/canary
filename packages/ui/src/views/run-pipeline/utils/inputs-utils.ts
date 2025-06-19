@@ -1,6 +1,5 @@
 import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { evaluate } from 'cel-js'
-import jexl from 'jexl'
 import { cloneDeep, forOwn } from 'lodash-es'
 import * as z from 'zod'
 
@@ -10,7 +9,6 @@ import { PipelineInputDefinition } from '../types'
 import { type InputLayout } from './types'
 
 enum PARSERTYPES {
-  JEXL = 'jexl',
   CEL = 'cel'
 }
 
@@ -19,13 +17,6 @@ export interface UnwrappedExpression {
   inner: string
 }
 export function getCorrectParserWithString(raw: string): UnwrappedExpression {
-  if (raw.startsWith('<+') && raw.endsWith('>')) {
-    return {
-      kind: PARSERTYPES.JEXL,
-      inner: raw.slice(2, -1).trim()
-    }
-  }
-
   if (raw.startsWith('${{') && raw.endsWith('}}')) {
     return {
       kind: PARSERTYPES.CEL,
@@ -165,14 +156,11 @@ export function pipelineInput2FormInput(
       try {
         if (typeof inputProps.ui?.visible === 'string') {
           const unwrapped = getCorrectParserWithString(inputProps.ui?.visible)
-          if (unwrapped.kind === PARSERTYPES.JEXL) {
-            return jexl.evalSync(unwrapped.inner, values?.inputs)
-          } else if (unwrapped.kind === PARSERTYPES.CEL) {
-            return evaluate(unwrapped.inner, values?.inputs)
-          }
+          return unwrapped.kind === PARSERTYPES.CEL ? (evaluate(unwrapped.inner, values?.inputs) as boolean) : true
         } else return true
       } catch (e) {
         console.error(`Error evaluating isVisible for input ${name}`, e)
+        return false // or return true, depending on your requirements
       }
     },
     inputConfig: {

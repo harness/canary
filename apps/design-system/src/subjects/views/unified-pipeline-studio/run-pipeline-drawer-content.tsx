@@ -40,14 +40,14 @@ const pipelineInputs = {
       widget: 'non-component-factory'
     }
   },
-  stringCalendarUIjexl: {
+  stringCalendarUIcel: {
     type: 'string',
     required: true,
     ui: {
       widget: 'calendar',
       placeholder: 'select a date',
       tooltip: 'todays date will be selected by default',
-      visible: `<+stringSelectWithDefaultUI=='kubernetes'>`
+      visible: "${{stringSelectWithDefaultUI=='kubernetes'}}"
     }
   },
   booleanUIcel: {
@@ -73,7 +73,7 @@ const pipelineInputs = {
 
 const layout: InputLayout = [
   'stringSelectWithDefaultUI',
-  'stringCalendarUIjexl',
+  'stringCalendarUIcel',
   'booleanUIcel',
   'nonComponentFactory',
   'stringRequired',

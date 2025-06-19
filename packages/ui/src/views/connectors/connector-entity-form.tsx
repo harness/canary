@@ -10,6 +10,7 @@ import {
   InputFactory,
   inputTransformValues,
   outputTransformValues,
+  removeTemporaryFieldsValue,
   RenderForm,
   RootForm,
   unsetHiddenInputsValues,
@@ -143,9 +144,11 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
         const definition = getConnectorDefinition(connector.type)
         const transformers = definition ? getTransformers(definition?.formDefinition) : undefined
         const transformedValues = transformers?.length ? outputTransformValues(values, transformers) : values
-        const formattedValues = definition
+        let formattedValues = definition
           ? unsetHiddenInputsValues(definition.formDefinition, transformedValues)
           : transformedValues
+        formattedValues = removeTemporaryFieldsValue(formattedValues)
+
         onSubmit({ values: formattedValues, connector, intent })
       }}
       validateAfterFirstSubmit={true}

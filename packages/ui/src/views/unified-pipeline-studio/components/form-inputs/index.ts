@@ -13,5 +13,6 @@ export * from './group-form-input'
 export * from './cards-form-input'
 
 export * from './calendar-form-input'
+export * from './accordion-form-input'
 
 export * from './types'

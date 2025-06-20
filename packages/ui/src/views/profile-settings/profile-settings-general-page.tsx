@@ -12,7 +12,8 @@ import {
   FormSeparator,
   FormWrapper,
   IconV2,
-  Legend
+  Legend,
+  Text
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
 import { TFunctionWithFallback, useTranslation } from '@/context'
@@ -180,9 +181,9 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <h1 className="mb-10 text-6 font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {t('views:profileSettings.accountSettings', 'Account settings')}
-      </h1>
+      </Text>
 
       {isLoadingUser && <SkeletonForm />}
 

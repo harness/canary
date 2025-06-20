@@ -1,4 +1,4 @@
-import { IconV2, LogoV2 } from '@/components'
+import { IconV2, LogoV2, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
@@ -52,7 +52,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
           )
         })
       ) : (
-        <p className="text-cn-foreground-3">There is no connector for provided query.</p>
+        <Text color="foreground-3">There is no connector for provided query.</Text>
       )}
     </StepsPaletteContentLayout.Section>
   )

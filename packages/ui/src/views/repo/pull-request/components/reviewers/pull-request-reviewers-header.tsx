@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Button, DropdownMenu, IconV2, SearchInput } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
@@ -35,7 +35,9 @@ const ReviewersHeader = ({
 
   return (
     <div className="mb-0.5 flex items-center justify-between">
-      <h5 className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.reviewers', 'Reviewers')}</h5>
+      <Text as="h5" variant="body-strong" color="foreground-1">
+        {t('views:pullRequests.reviewers', 'Reviewers')}
+      </Text>
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>

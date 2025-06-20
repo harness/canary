@@ -12,6 +12,7 @@ import {
   SplitButton,
   StackedList,
   StatusBadge,
+  Text,
   type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
@@ -91,7 +92,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="text-cn-foreground-1 font-medium">
+      <Text variant="body-strong" as="h2" color="foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -103,7 +104,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
                 : props.ruleViolation
                   ? 'Cannot merge pull request'
                   : `Pull request can be merged`}
-      </h2>
+      </Text>
     </div>
   )
 }

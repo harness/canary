@@ -39,7 +39,7 @@ interface LineTitleProps {
 const LineTitle: FC<LineTitleProps> = ({ text }) => (
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
-      <p className="font-medium">{text}</p>
+      <Text variant="body-strong">{text}</Text>
       <CopyButton name={text} />
     </div>
   </div>

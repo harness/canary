@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { AlertDialog, Fieldset, Input } from '@/components'
+import { AlertDialog, Fieldset, Input, Text } from '@/components'
 import { useTranslation } from '@/context'
 
 const DELETION_KEYWORD = 'DELETE'
@@ -68,7 +68,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           </Fieldset>
         )}
 
-        {!!error && error.message && <p className="text-2 text-cn-foreground-danger">{error.message}</p>}
+        {!!error && error.message && <Text color="danger">{error.message}</Text>}
 
         <AlertDialog.Cancel />
         <AlertDialog.Confirm>Yes, delete {type}</AlertDialog.Confirm>

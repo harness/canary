@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2 } from '@/components'
+import { IconV2, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -45,13 +45,13 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
   return (
     <div className={cn('px-6 py-5', className)}>
       <div className="flex flex-col gap-[18px]">
-        <h1 className="max-w-[600px] text-4 font-medium leading-snug">
+        <Text as="h1" variant="heading-subsection" className="max-w-[600px]">
           {title.number && <span className="text-cn-foreground-2">#{title.number} </span>}
           <span className="text-cn-foreground-1">{title.title}</span>
-        </h1>
+        </Text>
       </div>
 
-      <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-2 leading-none">
+      <div className="text-2 mt-6 flex w-full flex-wrap items-center justify-between gap-6 leading-none">
         <PipelineStatus
           branch={branch}
           commit={commit}
@@ -64,22 +64,22 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
         <div className="flex h-full items-end gap-11">
           {storage && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Storage</span>
+              <span className="text-cn-foreground-2 leading-tight">Storage</span>
               <span className="text-cn-foreground-1">{storage}</span>
             </div>
           )}
           {storageAverage && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Storage (average)</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
-                {storageAverage} <span className="size-3.5 rounded-full border border-icons-7" />
+              <span className="text-cn-foreground-2 leading-tight">Storage (average)</span>
+              <span className="text-cn-foreground-1 inline-flex gap-x-1.5">
+                {storageAverage} <span className="border-icons-7 size-3.5 rounded-full border" />
               </span>
             </div>
           )}
           {simpleOperation && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Simple Operation</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="text-cn-foreground-2 leading-tight">Simple Operation</span>
+              <span className="text-cn-foreground-1 inline-flex gap-x-1.5">
                 {simpleOperation}
                 <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
@@ -87,8 +87,8 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
           )}
           {advancedOperations && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Advanced Operations</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="text-cn-foreground-2 leading-tight">Advanced Operations</span>
+              <span className="text-cn-foreground-1 inline-flex gap-x-1.5">
                 {advancedOperations}
                 <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
@@ -96,8 +96,8 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
           )}
           {dataTransfer && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Data Transfer</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="text-cn-foreground-2 leading-tight">Data Transfer</span>
+              <span className="text-cn-foreground-1 inline-flex gap-x-1.5">
                 {dataTransfer}
                 <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>

@@ -1,6 +1,6 @@
 import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, StackedList } from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, StackedList, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   CommentItem,
@@ -338,7 +338,7 @@ const PullRequestAccordion: React.FC<{
                     >
                       {_ts('views:pullRequests.showDiff')}
                     </Button>
-                    <p className="font-medium">
+                    <Text variant="body-strong">
                       {fileDeleted
                         ? _ts('views:pullRequests.deletedFileDiff')
                         : isDiffTooLarge
@@ -346,7 +346,7 @@ const PullRequestAccordion: React.FC<{
                           : header?.isBinary
                             ? _ts('views:pullRequests.binaryNotShown')
                             : _ts('views:pullRequests.fileNoChanges')}
-                    </p>
+                    </Text>
                   </Layout.Vertical>
                 ) : (
                   <>

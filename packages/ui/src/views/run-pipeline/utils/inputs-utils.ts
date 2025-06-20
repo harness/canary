@@ -70,9 +70,13 @@ const processLayout = (
   processedInputKeys: Set<string>,
   inputComponentFactory: InputFactory
 ): IInputDefinition[] => {
-  return layout.flatMap(item => {
+  // NOTE: group are added to accordion
+  let accordion: IInputDefinition | null = null
+
+  const inputs = layout.flatMap(item => {
     if (typeof item === 'string') {
       if (processedInputKeys.has(item) || !(item in pipelineInputs)) return []
+      accordion = null
       processedInputKeys.add(item)
       return pipelineInput2FormInput(item, pipelineInputs[item], options, inputComponentFactory)
     }
@@ -84,7 +88,7 @@ const processLayout = (
       return layoutedInputs
     }
 
-    return {
+    const accordionItem = {
       inputType: 'group',
       path: '',
       label: item.title,
@@ -93,7 +97,22 @@ const processLayout = (
         autoExpandGroups: item.open
       }
     }
+
+    if (accordion) {
+      accordion.inputs?.push(accordionItem)
+      return []
+    } else {
+      accordion = {
+        inputType: 'accordion',
+        path: '',
+        inputs: []
+      }
+      accordion.inputs?.push(accordionItem)
+      return accordion
+    }
   })
+
+  return inputs.filter(input => !!input)
 }
 
 const traverseInputLayout = (layout: InputLayout, inputOccurrences: Map<string, number>) => {

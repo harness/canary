@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from 'react'
 
-import { Fieldset, FormSeparator } from '@/components'
+import { Fieldset, FormSeparator, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
@@ -66,7 +66,9 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">{t('views:repos.settings', 'Settings')}</h1>
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
+        {t('views:repos.settings', 'Settings')}
+      </Text>
 
       <Fieldset>
         <RepoSettingsGeneralForm

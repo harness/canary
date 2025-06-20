@@ -1,5 +1,6 @@
 import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode } from 'react'
 
+import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -49,21 +50,25 @@ interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<
 }
 
 const Content = forwardRef<HTMLDivElement, ContentProps>(
-  ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => (
-    <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
-      <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
-        {!hideClose && (
-          <DialogPrimitive.Close asChild>
-            <Button variant="transparent" className="cn-modal-dialog-close">
-              <IconV2 name="xmark" skipSize />
-            </Button>
-          </DialogPrimitive.Close>
-        )}
-        {children}
-      </DialogPrimitive.Content>
-    </DialogPrimitive.Portal>
-  )
+  ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => {
+    const { portalContainer } = usePortal()
+
+    return (
+      <DialogPrimitive.Portal container={portalContainer}>
+        <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
+        <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
+          {!hideClose && (
+            <DialogPrimitive.Close asChild>
+              <Button variant="transparent" className="cn-modal-dialog-close">
+                <IconV2 name="xmark" skipSize />
+              </Button>
+            </DialogPrimitive.Close>
+          )}
+          {children}
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    )
+  }
 )
 Content.displayName = 'Dialog.Content'
 

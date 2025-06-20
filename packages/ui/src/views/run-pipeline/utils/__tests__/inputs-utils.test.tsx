@@ -51,7 +51,18 @@ describe('pipelineInputs2FormInputs', () => {
 
     // Expect group + one unlisted input
     expect(result).toHaveLength(2)
-    expect(result[0]).toMatchObject({ inputType: 'group', label: 'Main Group' })
+
+    expect(result[0]).toMatchObject({
+      inputType: 'accordion',
+      path: '',
+      inputs: [
+        {
+          inputType: 'group',
+          path: '',
+          label: 'Main Group'
+        }
+      ]
+    })
     expect(result[1]).toMatchObject({ path: 'input.baz' }) // 'baz' not in layout
   })
 
@@ -91,7 +102,7 @@ describe('pipelineInputs2FormInputs', () => {
       inputComponentFactory
     })
 
-    const flatInputs = result.flatMap(item => (item.inputType === 'group' ? item.inputs : [item]))
+    const flatInputs = result.flatMap(item => (item.inputType === 'accordion' ? item.inputs?.[0].inputs : [item]))
 
     const fooInputs = flatInputs.filter(i => i && i.path === 'input.foo')
     expect(fooInputs).toHaveLength(1) // 'foo' should appear only once

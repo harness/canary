@@ -33,8 +33,8 @@ import {
   tableV2Styles,
   tagStyles,
   textareaStyles,
-  tooltipStyles,
-  toggleGroupStyles
+  toggleGroupStyles,
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -66,6 +66,11 @@ export default {
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
           disabled: 'var(--cn-state-disabled-text)',
+          multitype: {
+            codebrackets: 'var(--cn-set-blue-surface-text)',
+            code: 'var(--cn-set-purple-surface-text)',
+            variables: 'var(--cn-set-orange-surface-text)'
+          },
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',

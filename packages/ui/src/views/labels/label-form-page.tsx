@@ -12,7 +12,8 @@ import {
   IconV2,
   Label,
   SkeletonForm,
-  Tag
+  Tag,
+  Text
 } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
@@ -141,11 +142,11 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
-      </h1>
+      </Text>
 
       {isLoading && <SkeletonForm />}
 
@@ -201,9 +202,9 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </Fieldset>
 
           <section className="mt-1 flex flex-col gap-y-5">
-            <h3 className="text-sm leading-none text-cn-foreground-2">
+            <Text as="h3" variant="body-single-line-normal">
               {t('views:labelData.form.previewLabel', 'Label preview')}
-            </h3>
+            </Text>
 
             <div className="flex flex-col items-start gap-y-2.5">
               <Tag

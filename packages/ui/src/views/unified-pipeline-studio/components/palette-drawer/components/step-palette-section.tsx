@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 
 import { IconV2 } from '@components/icon-v2'
+import { Text } from '@components/text'
 
 import { StepsPaletteContentLayout } from './step-palette-content-layout'
 import { StepsPaletteItemLayout } from './step-palette-item-layout'
@@ -46,7 +47,7 @@ const StepPaletteSection = forwardRef<
           </StepsPaletteContentLayout.SectionItem>
         ))
       ) : (
-        <p className="text-cn-foreground-3">There is no steps for provided query.</p>
+        <Text color="foreground-3">There is no steps for provided query.</Text>
       )}
     </StepsPaletteContentLayout.Section>
   )

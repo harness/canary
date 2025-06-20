@@ -84,7 +84,7 @@ git push -u origin main
             <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
             </ButtonLayout>
-            <p className="mt-2">
+            <Text className="mt-2">
               You can also manage your git credential{' '}
               <span
                 role="button"
@@ -100,7 +100,7 @@ git push -u origin main
               >
                 here
               </span>
-            </p>
+            </Text>
           </ControlGroup>
 
           <FormSeparator />

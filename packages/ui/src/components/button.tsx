@@ -18,7 +18,7 @@ const buttonVariants = cva('cn-button', {
       transparent: 'cn-button-transparent'
     },
     size: {
-      default: '',
+      md: '',
       xs: 'cn-button-xs',
       sm: 'cn-button-sm'
     },
@@ -77,7 +77,7 @@ const buttonVariants = cva('cn-button', {
   ],
   defaultVariants: {
     variant: 'primary',
-    size: 'default',
+    size: 'md',
     theme: 'default'
   }
 })
@@ -100,7 +100,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       className,
       variant = 'primary',
-      size = 'default',
+      size = 'md',
       theme = 'default',
       rounded,
       iconOnly,
@@ -129,7 +129,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({
             variant: variant || 'primary',
-            size: size || 'default',
+            size: size || 'md',
             theme: theme || 'default',
             rounded,
             iconOnly,

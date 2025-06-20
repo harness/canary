@@ -203,32 +203,32 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   {mergeability ? (
                     <>
                       <IconV2 className="text-icons-success" name="check" size="2xs" />
-                      <p className="text-2 leading-none text-cn-foreground-success">
+                      <Text variant="body-single-line-normal" color="success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <span className="text-cn-foreground-2">
+                        <Text variant="body-single-line-normal" as="span" color="foreground-2">
                           {t(
                             'views:pullRequests.compareChangesAbleToMergeDescription',
                             'These branches can be automatically merged.'
                           )}
-                        </span>
-                      </p>
+                        </Text>
+                      </Text>
                     </>
                   ) : (
                     <>
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <IconV2 name="xmark" size="2xs" className="text-icons-1" />
-                          <p className="text-2 leading-none text-cn-foreground-2">
+                          <Text variant="body-single-line-normal">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
                             )}
-                          </p>
+                          </Text>
                         </>
                       ) : (
                         <>
                           <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
-                          <p className="text-2 leading-none text-cn-foreground-danger">
+                          <Text variant="body-single-line-normal" color="danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-cn-foreground-2">
                               {t(
@@ -236,7 +236,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                                 'You can still create the pull request.'
                               )}
                             </span>
-                          </p>
+                          </Text>
                         </>
                       )}
                     </>
@@ -249,7 +249,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
+            className="border-cn-borders-2 bg-cn-background-2 mt-4 rounded-md border p-4"
           >
             <p className="text-2 leading-none">
               {isBranchSelected ? (
@@ -288,7 +288,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
+            className="border-cn-borders-2 bg-cn-background-2 mt-4 rounded-md border p-4"
           >
             <div className="flex items-center gap-x-1.5">
               <div>
@@ -296,12 +296,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   <IconV2 name="git-compare" size="xs" className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
-                    <p className="text-2 text-cn-foreground-1">{prBranchCombinationExists.title}</p>
+                    <Text color="foreground-1">{prBranchCombinationExists.title}</Text>
                     <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
 
-                <p className="text-2  text-cn-foreground-2">{prBranchCombinationExists.description}</p>
+                <Text>{prBranchCombinationExists.description}</Text>
               </div>
             </div>
             <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>

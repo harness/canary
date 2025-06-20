@@ -3,6 +3,7 @@ import {
   ClipboardEvent,
   DragEvent,
   Fragment,
+  KeyboardEvent,
   SyntheticEvent,
   useEffect,
   useMemo,
@@ -21,9 +22,10 @@ interface TextSelection {
 }
 
 interface StringSelection {
-  before: string
-  selected: string
-  after: string
+  beforeSelection: string
+  selection: string
+  afterSelection: string
+  previousLine: string
   textSelectionStart: number
   textSelectionEnd: number
 }
@@ -153,7 +155,7 @@ export const PullRequestCommentBox = ({
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
       textAreaRef.current.focus()
     }
-  }, [comment])
+  }, [comment, textSelection])
 
   const parseComment = (comment: string, textSelection: TextSelection, injectedPreString: string): StringSelection => {
     const isStartOfLineSelected = textSelection.start === 0 || comment.substring(0, textSelection.start).endsWith('\n')
@@ -167,14 +169,18 @@ export const PullRequestCommentBox = ({
     const selection = comment.substring(textSelection.start, textSelection.end)
     const afterSelection = comment.substring(textSelection.end)
 
+    const beforeSelectionParts = beforeSelection.split('\n')
+    const previousLine = beforeSelectionParts.at(beforeSelectionParts.length - 2) ?? ''
+
     const newTextSelectionStart = textSelection.start + injectedPreString.length + injectedNewline.length
     const newTextSelectionEnd =
       newTextSelectionStart + (textSelection.end - textSelection.start) + injectedNewline.length
 
     return {
-      before: beforeSelection,
-      selected: selection,
-      after: afterSelection,
+      beforeSelection: beforeSelection,
+      selection: selection,
+      afterSelection: afterSelection,
+      previousLine: previousLine,
       textSelectionStart: newTextSelectionStart,
       textSelectionEnd: newTextSelectionEnd
     }
@@ -189,15 +195,14 @@ export const PullRequestCommentBox = ({
   ) => {
     const parsedComment = parseComment(comment, textSelection, injectedPreString)
 
-    setTextSelection({ start: parsedComment.textSelectionStart, end: parsedComment.textSelectionEnd })
-
-    setComment(
-      `${parsedComment.before}${injectedPreString}${injectedString}${parsedComment.selected}${injectedPostString}${parsedComment.after}`
+    setCommentAndTextSelection(
+      `${parsedComment.beforeSelection}${injectedPreString}${injectedString}${parsedComment.selection}${injectedPostString}${parsedComment.afterSelection}`,
+      { start: parsedComment.textSelectionStart, end: parsedComment.textSelectionEnd }
     )
   }
 
   const handleSuggestion = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '```suggestion\n', '\n```')
+    parseAndSetComment(comment, textSelection, '```suggestion\n', '\n```', parseDiff(diff, sideKey, lineNumber))
   }
 
   const handleHeader = (comment: string, textSelection: TextSelection) => {
@@ -221,7 +226,7 @@ export const PullRequestCommentBox = ({
   }
 
   const handleCode = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```', parseDiff(diff, sideKey, lineNumber))
+    parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```')
   }
 
   const parseDiff = (diff: string = '', sideKey?: 'oldFile' | 'newFile', lineNumber?: number): string => {
@@ -284,19 +289,40 @@ export const PullRequestCommentBox = ({
     setActiveTab(tab)
   }
 
-  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value)
+  const setCommentAndTextSelection = (comment: string, textSelection: TextSelection) => {
+    setTextSelection(textSelection)
+    setComment(comment)
+  }
 
-    if (textAreaRef.current) {
-      // Reset selection since setting comment above will caust textarea to update and move selection to the end
-      setTextSelection({ start: e.target.selectionStart, end: e.target.selectionEnd })
-    }
+  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentAndTextSelection(e.target.value, { start: e.target.selectionStart, end: e.target.selectionEnd })
   }
 
   const onCommentSelect = (e: SyntheticEvent<HTMLTextAreaElement>) => {
     const target = e.target as EventTarget & HTMLTextAreaElement
 
     setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
+  }
+
+  const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.code === 'Enter') {
+      const parsedComment = parseComment(comment, textSelection, '')
+
+      if (isListString(parsedComment.previousLine)) {
+        handleList(comment, textSelection)
+      }
+      if (isListSelectString(parsedComment.previousLine)) {
+        handleListSelect(comment, textSelection)
+      }
+    }
+  }
+
+  const isListString = (line: string): boolean => {
+    return line.startsWith('- ')
+  }
+
+  const isListSelectString = (line: string): boolean => {
+    return line.startsWith('- [ ] ')
   }
 
   return (
@@ -335,6 +361,7 @@ export const PullRequestCommentBox = ({
                 value={comment}
                 onChange={e => onCommentChange(e)}
                 onSelect={e => onCommentSelect(e)}
+                onKeyUpCapture={e => onKeyUp(e)}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {
                     handlePasteForUpload(e)

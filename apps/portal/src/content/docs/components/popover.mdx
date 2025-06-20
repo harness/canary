@@ -54,6 +54,12 @@ return (
       description="This is additional information about the feature."
     />
   </Popover.Root>
+
+  // --- or ---
+
+  <Popover title="Popover Title" description="Popover description" content="Popover content">
+    <Button>Show Info</Button>
+  </Popover>
 )
 ```
 
@@ -67,6 +73,14 @@ All parts of the `Popover` component can be imported and composed as required.
   <Popover.Anchor />
   <Popover.Content />
 </Popover.Root>
+
+// or
+
+<Popover
+  title="Popover Title"
+  description="Popover description"
+  content="Popover content"
+>
 ```
 
 ## Basic Popover
@@ -219,7 +233,7 @@ You can control the open state of the popover programmatically.
 
     return (
         <div className="flex gap-4 items-center">
-            <Popover.Root open={open} onOpenChange={setOpen}>
+            <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
                 <Popover.Trigger asChild>
                     <Button variant="outline">
                         {open ? 'Close' : 'Open'} Popover
@@ -252,116 +266,6 @@ You can control the open state of the popover programmatically.
     );
 
 }`}
-/>
-
-## Form in Popover
-
-Popovers are great for containing forms or interactive content.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
-
-    return (
-        <Popover.Root>
-            <Popover.Trigger asChild>
-                <Button variant="outline">
-                    <IconV2 name="user" />
-                    Add User
-                </Button>
-            </Popover.Trigger>
-
-            <Popover.Content
-                title="Add New User"
-                description="Enter the user details below."
-                className="w-80"
-            >
-                <div className="grid gap-3">
-                    <div className="grid gap-2">
-                        <Text size="sm" color="foreground-2">Name</Text>
-                        <Input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Enter name"
-                        />
-                    </div>
-                    <div className="grid gap-2">
-                        <Text size="sm" color="foreground-2">Email</Text>
-                        <Input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter email"
-                        />
-                    </div>
-                    <div className="flex gap-2 mt-2">
-                        <Button size="sm" className="flex-1">Add User</Button>
-                        <Button variant="outline" size="sm">Cancel</Button>
-                    </div>
-                </div>
-            </Popover.Content>
-        </Popover.Root>
-    );
-
-}`}
-/>
-
-## Rich Content Popover
-
-Popovers can contain complex layouts and multiple interactive elements.
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<Popover.Root>
-    <Popover.Trigger asChild>
-        <Button variant="outline">
-            <IconV2 name="bell" />
-            Notifications
-        </Button>
-    </Popover.Trigger>
-
-    <Popover.Content
-        title="Recent Notifications"
-        className="w-96"
-        linkProps={{
-            text: "View all notifications",
-            href: "/notifications"
-        }}
-    >
-        <div className="grid gap-3">
-            <div className="flex gap-3 p-3 rounded-md bg-gray-50">
-                <IconV2 name="check-circle" className="text-green-500 mt-0.5" />
-                <div className="grid gap-1">
-                    <Text size="sm" weight="medium">Build completed successfully</Text>
-                    <Text size="sm" color="foreground-2">Your deployment is now live</Text>
-                    <Text size="xs" color="foreground-3">2 minutes ago</Text>
-                </div>
-            </div>
-
-            <div className="flex gap-3 p-3 rounded-md bg-gray-50">
-                <IconV2 name="alert-triangle" className="text-yellow-500 mt-0.5" />
-                <div className="grid gap-1">
-                    <Text size="sm" weight="medium">Warning: High memory usage</Text>
-                    <Text size="sm" color="foreground-2">Consider upgrading your plan</Text>
-                    <Text size="xs" color="foreground-3">5 minutes ago</Text>
-                </div>
-            </div>
-
-            <div className="flex gap-3 p-3 rounded-md bg-gray-50">
-                <IconV2 name="user-plus" className="text-blue-500 mt-0.5" />
-                <div className="grid gap-1">
-                    <Text size="sm" weight="medium">New team member joined</Text>
-                    <Text size="sm" color="foreground-2">Sarah Connor has been added to your team</Text>
-                    <Text size="xs" color="foreground-3">10 minutes ago</Text>
-                </div>
-            </div>
-        </div>
-    </Popover.Content>
-
-</Popover.Root>`}
 />
 
 ## Using Anchor

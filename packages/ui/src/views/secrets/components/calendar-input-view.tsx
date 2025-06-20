@@ -29,7 +29,7 @@ export const CalendarInputView = ({
           className="cursor-pointer"
         />
       </Popover.Trigger>
-      <Popover.Content>
+      <Popover.Content hideArrow>
         <Calendar
           mode="single"
           selected={value ? new Date(value) : undefined}

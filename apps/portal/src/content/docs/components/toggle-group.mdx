@@ -180,7 +180,7 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
   code={`
     <Layout.Vertical spacing="large">
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">Default size</Text>
+        <Text variant="heading-subsection">Medium size (md)</Text>
         <ToggleGroup.Root value="2">
           <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
           <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
@@ -188,7 +188,7 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">SM size</Text>
+        <Text variant="heading-subsection">Small size (sm)</Text>
         <ToggleGroup.Root value="2" size="sm">
           <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
           <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
@@ -196,7 +196,7 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">XS size</Text>
+        <Text variant="heading-subsection">Extra Small size (xs)</Text>
         <ToggleGroup.Root value="2" size="xs">
           <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
           <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
@@ -390,8 +390,8 @@ The `Root` component serves as the main container for all toggle group elements.
       name: "size",
       description: "The size of the buttons",
       required: false,
-      value: "'default' | 'sm' | 'xs'",
-      defaultValue: "default",
+      value: "'md' | 'sm' | 'xs'",
+      defaultValue: "md",
     },
   ]}
 />

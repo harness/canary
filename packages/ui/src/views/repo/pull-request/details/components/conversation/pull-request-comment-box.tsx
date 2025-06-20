@@ -309,10 +309,10 @@ export const PullRequestCommentBox = ({
       const parsedComment = parseComment(comment, textSelection, '')
 
       if (isListString(parsedComment.previousLine)) {
-        handleList(comment, textSelection)
+        setTimeout(() => handleList(comment, textSelection), 0)
       }
       if (isListSelectString(parsedComment.previousLine)) {
-        handleListSelect(comment, textSelection)
+        setTimeout(() => handleListSelect(comment, textSelection), 0)
       }
     }
   }

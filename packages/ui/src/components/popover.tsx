@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, PropsWithChildren, ReactNode } from 'react'
 
 import { Text } from '@/components/text'
 import { usePortal } from '@/context'
@@ -18,12 +18,22 @@ interface PopoverContentProps extends ComponentPropsWithoutRef<typeof PopoverPri
   title?: string
   description?: string
   linkProps?: Omit<LinkProps, 'children'> & { text: string }
-  showArrow?: boolean
+  hideArrow?: boolean
 }
 
 const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, PopoverContentProps>(
   (
-    { className, children, title, description, linkProps, showArrow, align = 'center', sideOffset = 4, ...props },
+    {
+      className,
+      children,
+      title,
+      description,
+      linkProps,
+      hideArrow = false,
+      align = 'center',
+      sideOffset = 4,
+      ...props
+    },
     ref
   ) => {
     const { portalContainer } = usePortal()
@@ -53,7 +63,7 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
 
           {linkProps?.text && <Link {...linkProps}>{linkProps.text}</Link>}
 
-          {showArrow && (
+          {!hideArrow && (
             <PopoverPrimitive.Arrow width={20} height={8} asChild>
               <Illustration className="cn-popover-arrow" name="tooltip-arrow" />
             </PopoverPrimitive.Arrow>
@@ -65,11 +75,24 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
 )
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
-const Popover = {
+interface PopoverProps
+  extends PropsWithChildren<Omit<PopoverContentProps, 'children' | 'content'>>,
+    Omit<ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>, 'children' | 'modal'> {
+  content: ReactNode
+}
+
+const PopoverComponent = ({ children, content, open, defaultOpen, onOpenChange, ...props }: PopoverProps) => (
+  <Popover.Root {...{ open, defaultOpen, onOpenChange }}>
+    <Popover.Trigger asChild>{children}</Popover.Trigger>
+    <Popover.Content {...props}>{content}</Popover.Content>
+  </Popover.Root>
+)
+
+const Popover = Object.assign(PopoverComponent, {
   Root: PopoverRoot,
   Trigger: PopoverTrigger,
   Content: PopoverContent,
   Anchor: PopoverAnchor
-}
+})
 
 export { Popover }

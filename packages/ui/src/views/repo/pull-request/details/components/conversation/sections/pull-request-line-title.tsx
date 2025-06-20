@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
 
-import { cn } from '@/utils'
 import { Text } from '@components/text'
 
 interface LineTitleProps {

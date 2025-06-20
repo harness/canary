@@ -145,13 +145,9 @@ export const PullRequestCommentBox = ({
         })}
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.WRITE}>
-              Write
-            </Tabs.Trigger>
-            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.PREVIEW}>
-              Preview
-            </Tabs.Trigger>
+          <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+            <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+            <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
           </Tabs.List>
 
           <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
@@ -164,7 +160,7 @@ export const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
+                className="bg-cn-background-2 text-cn-foreground-1 min-h-24 p-3 pb-10"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -177,10 +173,10 @@ export const PullRequestCommentBox = ({
                 resizable
               />
               {isDragging && (
-                <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
               )}
 
-              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-cn-background-2 pb-2 pt-1">
+              <div className="bg-cn-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -188,7 +184,7 @@ export const PullRequestCommentBox = ({
                       <Button size="sm" variant="ghost" iconOnly onClick={item?.onClick}>
                         <IconV2 className="text-icons-9" name={item.icon} />
                       </Button>
-                      {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
+                      {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
                     </Fragment>
                   )
                 })}

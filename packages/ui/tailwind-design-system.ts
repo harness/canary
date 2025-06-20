@@ -31,6 +31,7 @@ import {
   selectStyles,
   switchStyles,
   tableV2Styles,
+  tabsStyles,
   tagStyles,
   textareaStyles,
   toggleGroupStyles,
@@ -469,6 +470,7 @@ export default {
         progressStyles,
         drawerStyles,
         buttonLayoutStyles,
+        tabsStyles,
         dialogStyles,
         scrollAreaStyles,
         tooltipStyles,
@@ -491,15 +493,7 @@ export default {
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {
-      addUtilities({
-        '.tabnav-active': {
-          boxShadow:
-            'inset 0 1px 0 0 var(--cn-border-3), inset 1px 0 0 0 var(--cn-border-3), inset -1px 0 0 0 var(--cn-border-3)'
-        },
-        '.tabnav-inactive': {
-          boxShadow: 'inset 0 -1px 0 0 var(--cn-border-3)'
-        }
-      })
+      addUtilities({})
     },
     function ({ addComponents, theme, e }: PluginAPI) {
       const hoverClasses: Record<string, Record<string, string>> = {}

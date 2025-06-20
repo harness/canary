@@ -4,37 +4,58 @@ description: Tabs component
 beta: true
 ---
 
-The `Tabs` component provides a way to organize content into separate views that can be navigated through tabs.
-
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The `Tabs` component provides a way to organize content into multiple panels, with each panel being associated with a tab trigger. It supports both regular tabs and navigation tabs that integrate with your router.
+
+It can be composed with several subcomponents such as `Tabs.Root`, `Tabs.NavRoot`, `Tabs.List`, `Tabs.Trigger`, and `Tabs.Content` to offer a structured and customizable interface.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root defaultValue="tab1">
-    <Tabs.List>
+  code={`<Tabs.Root className="grid gap-3" defaultValue="tab1">
+    <Tabs.List variant="outlined">
         <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
         <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
     </Tabs.List>
-    <Tabs.Content value="tab1">Content 1</Tabs.Content>
-    <Tabs.Content value="tab2">Content 2</Tabs.Content>
+    
+    <Tabs.Content value="tab1">
+        <Text>Content for Tab 1</Text>
+    </Tabs.Content>
+    <Tabs.Content value="tab2">
+        <Text>Content for Tab 2</Text>
+    </Tabs.Content>
+    <Tabs.Content value="tab3">
+        <Text>Content for Tab 3</Text>
+    </Tabs.Content>
 </Tabs.Root>`}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Tabs } from '@harnessio/ui/components'
+import { Tabs } from "@harnessio/ui/components";
 
 //...
 
 return (
-  <Tabs.Root defaultValue="tab1">
+  <Tabs.Root defaultValue="general">
     <Tabs.List>
-      <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
-      <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+      <Tabs.Trigger value="general">General</Tabs.Trigger>
+      <Tabs.Trigger value="security">Security</Tabs.Trigger>
+      <Tabs.Trigger value="advanced">Advanced</Tabs.Trigger>
     </Tabs.List>
-    <Tabs.Content value="tab1">Content 1</Tabs.Content>
-    <Tabs.Content value="tab2">Content 2</Tabs.Content>
+
+    <Tabs.Content value="general">
+      {/* General settings content */}
+    </Tabs.Content>
+    <Tabs.Content value="security">
+      {/* Security settings content */}
+    </Tabs.Content>
+    <Tabs.Content value="advanced">
+      {/* Advanced settings content */}
+    </Tabs.Content>
   </Tabs.Root>
 )
 ```
@@ -44,29 +65,310 @@ return (
 All parts of the `Tabs` component can be imported and composed as required.
 
 ```typescript jsx
+// Regular Tabs
 <Tabs.Root>
   <Tabs.List>
     <Tabs.Trigger />
   </Tabs.List>
   <Tabs.Content />
 </Tabs.Root>
+
+// Navigation Tabs
+<Tabs.NavRoot>
+  <Tabs.List>
+    <Tabs.Trigger />
+  </Tabs.List>
+</Tabs.NavRoot>
 ```
+
+## Variants
+
+The `Tabs` component supports multiple visual variants that can be applied via the `variant` prop on `Tabs.List`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-3">
+    {/* Underlined (default) */}
+    <Tabs.Root defaultValue="tab1">
+        <Tabs.List>
+            <Tabs.Trigger value="tab1">Underlined 1</Tabs.Trigger>
+            <Tabs.Trigger value="tab2">Underlined 2</Tabs.Trigger>
+            <Tabs.Trigger value="tab3">Underlined 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Underlined 3</Tabs.Trigger>
+        </Tabs.List>
+    </Tabs.Root>
+    
+    {/* Overlined */}
+    <Tabs.Root defaultValue="tab1">
+        <Tabs.List variant="overlined">
+            <Tabs.Trigger value="tab1">Overlined 1</Tabs.Trigger>
+            <Tabs.Trigger value="tab2">Overlined 2</Tabs.Trigger>
+            <Tabs.Trigger value="tab3">Overlined 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Overlined 3</Tabs.Trigger>
+        </Tabs.List>
+    </Tabs.Root>
+    
+    {/* Ghost */}
+    <Tabs.Root defaultValue="tab1">
+        <Tabs.List variant="ghost">
+            <Tabs.Trigger value="tab1">Ghost 1</Tabs.Trigger>
+            <Tabs.Trigger value="tab2">Ghost 2</Tabs.Trigger>
+            <Tabs.Trigger value="tab3">Ghost 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Ghost 3</Tabs.Trigger>
+        </Tabs.List>
+    </Tabs.Root>
+    
+    {/* Outlined */}
+    <Tabs.Root defaultValue="tab1">
+        <Tabs.List variant="outlined">
+            <Tabs.Trigger value="tab1">Outlined 1</Tabs.Trigger>
+            <Tabs.Trigger value="tab2">Outlined 2</Tabs.Trigger>
+            <Tabs.Trigger value="tab3">Outlined 3</Tabs.Trigger>
+            <Tabs.Trigger value="tab4" disabled>Outlined 3</Tabs.Trigger>
+        </Tabs.List>
+    </Tabs.Root>
+</div>`}
+/>
+
+## With Icons
+
+Tab triggers can include icons to enhance visual recognition and improve user experience.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root className="grid gap-3" defaultValue="overview">
+    <Tabs.List>
+        <Tabs.Trigger value="overview" icon="dashboard">
+            Overview
+        </Tabs.Trigger>
+        <Tabs.Trigger value="activity" icon="cookie">
+            Activity
+        </Tabs.Trigger>
+        <Tabs.Trigger value="settings" icon="settings">
+            Settings
+        </Tabs.Trigger>
+    </Tabs.List>
+    
+    <Tabs.Content value="overview">
+        <Text>Overview content</Text>
+    </Tabs.Content>
+    <Tabs.Content value="activity">
+        <Text>Activity content</Text>
+    </Tabs.Content>
+    <Tabs.Content value="settings">
+        <Text>Settings content</Text>
+    </Tabs.Content>
+</Tabs.Root>`}
+/>
+
+## With Logos
+
+Tab triggers can display logos for brand-specific navigation or integration tabs.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root className="grid gap-3" defaultValue="github">
+    <Tabs.List>
+        <Tabs.Trigger value="github" logo="github">
+            GitHub
+        </Tabs.Trigger>
+        <Tabs.Trigger value="gitlab" logo="gitlab">
+            GitLab
+        </Tabs.Trigger>
+        <Tabs.Trigger value="bitbucket" logo="bitbucket">
+            Bitbucket
+        </Tabs.Trigger>
+    </Tabs.List>
+    
+    <Tabs.Content value="github">
+        <Text>GitHub integration settings</Text>
+    </Tabs.Content>
+    <Tabs.Content value="gitlab">
+        <Text>GitLab integration settings</Text>
+    </Tabs.Content>
+    <Tabs.Content value="bitbucket">
+        <Text>Bitbucket integration settings</Text>
+    </Tabs.Content>
+</Tabs.Root>`}
+/>
+
+## With Counters
+
+Tab triggers can display counter badges to show quantities or notifications.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root className="grid gap-3" defaultValue="inbox">
+    <Tabs.List>
+        <Tabs.Trigger value="inbox" counter={24}>
+            Inbox
+        </Tabs.Trigger>
+        <Tabs.Trigger value="sent" counter={0}>
+            Sent
+        </Tabs.Trigger>
+        <Tabs.Trigger value="drafts" counter={3}>
+            Drafts
+        </Tabs.Trigger>
+        <Tabs.Trigger value="spam">
+            Spam
+        </Tabs.Trigger>
+    </Tabs.List>
+    
+    <Tabs.Content value="inbox">
+        <Text>24 unread messages</Text>
+    </Tabs.Content>
+    <Tabs.Content value="sent">
+        <Text>Sent messages</Text>
+    </Tabs.Content>
+    <Tabs.Content value="drafts">
+        <Text>3 draft messages</Text>
+    </Tabs.Content>
+    <Tabs.Content value="spam">
+        <Text>Spam folder</Text>
+    </Tabs.Content>
+</Tabs.Root>`}
+/>
+
+## Complex Children
+
+When icons, logos, and counters aren't sufficient, you can use custom children for more complex tab triggers.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root className="grid gap-3" defaultValue="custom1">
+    <Tabs.List>
+        <Tabs.Trigger value="custom1">
+            <Avatar src="/avatar.png" size="sm" />
+            <span>John Doe</span>
+            <StatusBadge variant="success">Active</StatusBadge>
+        </Tabs.Trigger>
+        <Tabs.Trigger value="custom2">
+            <IconV2 name="folder" />
+            <span>Documents</span>
+            <Text size="sm" color="disabled">(2.3 GB)</Text>
+        </Tabs.Trigger>
+    </Tabs.List>
+    
+    <Tabs.Content value="custom1">
+        <Text>User profile content</Text>
+    </Tabs.Content>
+    <Tabs.Content value="custom2">
+        <Text>Documents content</Text>
+    </Tabs.Content>
+</Tabs.Root>`}
+/>
+
+## Navigation Tabs
+
+The `Tabs.NavRoot` variant integrates with your router to create navigation-based tabs that update based on the current route.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.NavRoot defaultValue="/dashboard">
+    <Tabs.List>
+        <Tabs.Trigger value="/dashboard">
+            Dashboard
+        </Tabs.Trigger>
+        <Tabs.Trigger value="/analytics">
+            Analytics
+        </Tabs.Trigger>
+        <Tabs.Trigger value="/reports">
+            Reports
+        </Tabs.Trigger>
+    </Tabs.List>
+</Tabs.NavRoot>`}
+/>
+
+## Controlled Tabs
+
+Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `onValueChange` props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [activeTab, setActiveTab] = React.useState("tab2");
+    
+    return (
+        <div className="grid gap-3">
+            <div className="flex gap-2">
+                <Button size="sm" onClick={() => setActiveTab("tab1")}>
+                    Go to Tab 1
+                </Button>
+                <Button size="sm" onClick={() => setActiveTab("tab2")}>
+                    Go to Tab 2
+                </Button>
+                <Button size="sm" onClick={() => setActiveTab("tab3")}>
+                    Go to Tab 3
+                </Button>
+            </div>
+            
+            <Tabs.Root className="grid gap-3" value={activeTab} onValueChange={setActiveTab}>
+                <Tabs.List>
+                    <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+                    <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+                    <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+                </Tabs.List>
+                
+                <Tabs.Content value="tab1">
+                    <Text>Content for Tab 1</Text>
+                </Tabs.Content>
+                <Tabs.Content value="tab2">
+                    <Text>Content for Tab 2</Text>
+                </Tabs.Content>
+                <Tabs.Content value="tab3">
+                    <Text>Content for Tab 3</Text>
+                </Tabs.Content>
+            </Tabs.Root>
+            
+            <Text size="sm" className="text-muted-foreground">
+                Active tab: {activeTab}
+            </Text>
+        </div>
+    );
+}`}
+/>
+
+## Custom Active Class
+
+You can customize the active tab styling using the `activeClassName` prop on `Tabs.List`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root className="grid gap-3" defaultValue="tab1">
+    <Tabs.List 
+        variant="ghost" 
+        activeClassName="bg-primary text-primary-foreground rounded-md"
+    >
+        <Tabs.Trigger value="tab1">Custom Active 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Custom Active 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Custom Active 3</Tabs.Trigger>
+    </Tabs.List>
+    
+    <Tabs.Content value="tab1">
+        <Text>Content 1</Text>
+    </Tabs.Content>
+    <Tabs.Content value="tab2">
+        <Text>Content 2</Text>
+    </Tabs.Content>
+    <Tabs.Content value="tab3">
+        <Text>Content 3</Text>
+    </Tabs.Content>
+</Tabs.Root>`}
+/>
 
 ## API Reference
 
 ### `Root`
 
-The root component for the tabs.
+The `Root` component serves as the main container for regular tabs functionality. It manages the active tab state and provides context to child components.
 
 ```typescript jsx
 <Tabs.Root
-  defaultValue="tab1"      // Default value of the selected tab
-  value="tab1"             // [OPTIONAL] Value of the tab
-  variant="default"        // [OPTIONAL] Variant of the tabs
-  fontSize="sm"            // [OPTIONAL] Font size of the tabs
-  className="custom-class" // [OPTIONAL] Custom class name
+  value={activeTab}         // [OPTIONAL] controlled active tab value
+  onValueChange={onChange}  // [OPTIONAL] callback when active tab changes
+  defaultValue="tab1"       // [OPTIONAL] default active tab (uncontrolled)
 >
-  {/* Tabs content */}
+  {/* List and Content components */}
 </Tabs.Root>
 ```
 
@@ -74,49 +376,93 @@ The root component for the tabs.
   props={[
     {
       name: "defaultValue",
-      description: "Default value of the selected tab",
-      required: true,
+      description: "The default active tab value (uncontrolled)",
+      required: false,
       value: "string",
     },
     {
       name: "value",
-      description: "Value of the tab",
+      description: "The controlled value of the active tab",
       required: false,
       value: "string",
     },
     {
-      name: "variant",
-      description: "Variant of the tabs",
+      name: "onValueChange",
+      description: "Event handler called when the active tab changes",
       required: false,
-      value: "'pills' | 'underline' | 'tabs'",
+      value: "(value: string) => void",
     },
+
     {
-      name: "fontSize",
-      description: "Font size of the tabs",
-      required: false,
-      value: "'xs' | 'sm'",
+      name: "children",
+      description: "Tab List and Content components",
+      required: true,
+      value: "ReactNode",
     },
+
+]}
+/>
+
+### `NavRoot`
+
+The `NavRoot` component serves as the main container for navigation-based tabs. It integrates with your router to update the active tab based on the current route.
+
+```typescript jsx
+<Tabs.NavRoot
+  value={activeRoute}       // [OPTIONAL] controlled active route
+  onValueChange={navigate}  // [OPTIONAL] callback when route changes
+  defaultValue="/home"      // [OPTIONAL] default route
+>
+  {/* List and optional Content components */}
+</Tabs.NavRoot>
+```
+
+<DocsPage.PropsTable
+  props={[
     {
-      name: "className",
-      description: "Custom class name",
+      name: "value",
+      description: "The controlled value of the active route",
       required: false,
       value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Event handler called when the active route changes",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "defaultValue",
+      description: "The default active route (uncontrolled)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Tab List and optional Content components",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />
 
 ### `List`
 
-The list component that contains the tab triggers.
+The `List` component is a container for tab triggers that handles layout and styling variants.
+
+<Aside title="Accessibility">
+  For regular tabs, the `List` component renders as a `TabsList` with proper
+  ARIA attributes. For navigation tabs, it renders as a `nav` element. Both
+  implementations ensure proper keyboard navigation and screen reader support.
+</Aside>
 
 ```typescript jsx
 <Tabs.List
-  className="custom-class" // [OPTIONAL] Custom class name
-  variant="default"        // [OPTIONAL] Variant of the tabs
-  fontSize="sm"            // [OPTIONAL] Font size of the tabs
+  variant="underlined"      // [OPTIONAL] visual variant
+  className="my-class"      // [OPTIONAL] custom class
+  activeClassName="active"  // [OPTIONAL] class for active tab
 >
-  <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
-  <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+  {/* Trigger components */}
 </Tabs.List>
 ```
 
@@ -130,30 +476,53 @@ The list component that contains the tab triggers.
     },
     {
       name: "variant",
-      description: "Variant of the tabs",
+      description: "Visual style variant of the tabs",
       required: false,
-      value: "'pills' | 'underline' | 'tabs'",
+      value: "'underlined' | 'overlined' | 'ghost' | 'outlined'",
+      defaultValue: "'underlined'",
     },
     {
-      name: "fontSize",
-      description: "Font size of the tabs",
+      name: "activeClassName",
+      description: "Additional class name applied to the active tab trigger",
       required: false,
-      value: "'xs' | 'sm'",
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Tab Trigger components",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />
 
 ### `Trigger`
 
-The trigger component for individual tabs.
+The `Trigger` component represents an individual tab button or navigation link.
 
 ```typescript jsx
+// Regular tab trigger
 <Tabs.Trigger
-  value="tab1"             // Value of the tab
-  className="custom-class" // [OPTIONAL] Custom class name
-  variant="default"        // [OPTIONAL] Variant of the tabs
+  value="tab1"              // unique identifier for the tab
+  icon="dashboard"          // [OPTIONAL] icon name
+  logo="github"             // [OPTIONAL] logo name (mutually exclusive with icon)
+  counter={5}               // [OPTIONAL] counter badge value
+  variant="underlined"      // [OPTIONAL] override List variant
+  className="my-class"      // [OPTIONAL] custom class
+  disabled                  // [OPTIONAL] disable the trigger
 >
-  Tab 1
+  {/* Optional custom children */}
+</Tabs.Trigger>
+
+// Navigation tab trigger
+<Tabs.Trigger
+  value="/path"             // route path
+  linkProps={{              // [OPTIONAL] additional link properties
+    target: "_blank",
+    replace: true
+  }}
+>
+  Navigation Tab
 </Tabs.Trigger>
 ```
 
@@ -167,30 +536,69 @@ The trigger component for individual tabs.
     },
     {
       name: "variant",
-      description: "Variant of the tabs",
+      description: "Override the variant from List",
       required: false,
-      value: "'pills' | 'underline' | 'tabs'",
+      value: "'underlined' | 'overlined' | 'ghost' | 'outlined'",
     },
     {
       name: "value",
-      description: "Value of the tab",
+      description: "Unique identifier for the tab (or route path for nav tabs)",
       required: true,
       value: "string",
     },
-  ]}
+    {
+      name: "icon",
+      description: "Name of the icon to display (mutually exclusive with logo)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "logo",
+      description: "Name of the logo to display (mutually exclusive with icon)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "counter",
+      description: "Counter badge value to display",
+      required: false,
+      value: "number | null",
+    },
+
+    {
+      name: "disabled",
+      description: "Disable the trigger",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "linkProps",
+      description: "Additional props for navigation links (NavRoot only)",
+      required: false,
+      value: "Omit<NavLinkProps, 'to'>",
+    },
+    {
+      name: "children",
+      description:
+        "Custom content (used when icon/logo/counter are insufficient)",
+      required: false,
+      value: "ReactNode",
+    },
+
+]}
 />
 
 ### `Content`
 
-The content component for individual tabs.
+The `Content` component represents the panel content associated with a tab.
 
 ```typescript jsx
 <Tabs.Content
-  value="tab1"             // Value of the tab
-  className="custom-class" // [OPTIONAL] Custom class name
-  variant="default"        // [OPTIONAL] Variant of the tabs
+  value="tab1"         // matches the Trigger value
+  className="my-class" // [OPTIONAL] custom class
 >
-  Content 1
+  {/* Panel content */}
 </Tabs.Content>
 ```
 
@@ -203,16 +611,26 @@ The content component for individual tabs.
       value: "string",
     },
     {
-      name: "variant",
-      description: "Variant of the tabs",
-      required: false,
-      value: "'pills' | 'underline' | 'tabs'",
-    },
-    {
       name: "value",
-      description: "Value of the tab",
+      description: "The value that associates this content with its trigger",
       required: true,
       value: "string",
     },
+    {
+      name: "children",
+      description: "Content to display when this tab is active",
+      required: true,
+      value: "ReactNode",
+    },
   ]}
 />
+
+## Best Practices
+
+1. **Unique Values**: Ensure each tab trigger has a unique `value` prop
+2. **Default Selection**: Always provide either a `defaultValue` or controlled `value` to ensure a tab is selected by default
+3. **Accessible Labels**: Use descriptive text for tab triggers to ensure good accessibility
+4. **Icon Usage**: Choose between `icon` or `logo` props - don't use both on the same trigger
+5. **Navigation Tabs**: Use `NavRoot` when tabs represent different routes in your application
+6. **Content Loading**: Consider lazy loading tab content for better performance with heavy content
+7. **Keyboard Navigation**: The component supports standard keyboard navigation (Arrow keys, Home, End)

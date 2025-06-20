@@ -56,9 +56,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
 
 function SubHeader({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <header
-      className={cn('min-h-[var(--cn-tabs-nav-height)] max-h-[var(--cn-tabs-nav-height)] overflow-hidden', className)}
-    >
+    <header className={cn('min-h-[var(--cn-tabs-nav-height)] max-h-[var(--cn-tabs-nav-height)]', className)}>
       {children}
     </header>
   )

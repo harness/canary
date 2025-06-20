@@ -55,6 +55,7 @@ import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import TableV2Demo from '@subjects/views/table-v2-demo'
+import { ViewOnly } from '@subjects/views/templates/view-only'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
@@ -571,6 +572,20 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
     items: {
       'project-create': { label: 'Project Create', element: <CreateProjectView /> },
       'project-create-additional': { label: 'Project Create Additional', element: <CreateProjectView isAdditional /> }
+    }
+  },
+
+  templates: {
+    label: 'Templates',
+    items: {
+      'view-only': {
+        label: 'View only',
+        element: (
+          <RootViewWrapper>
+            <ViewOnly />
+          </RootViewWrapper>
+        )
+      }
     }
   }
 }

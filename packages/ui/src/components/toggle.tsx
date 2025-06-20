@@ -34,7 +34,7 @@ const Toggle = forwardRef<
     {
       className,
       variant = 'outline-primary',
-      size = 'default',
+      size = 'md',
       pressed: pressedProp = false,
       rounded,
       iconOnly,

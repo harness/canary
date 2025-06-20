@@ -29,7 +29,7 @@ interface ToggleGroupContextValue {
 
 const ToggleGroupContext = createContext<ToggleGroupContextValue>({
   variant: 'outline-primary',
-  size: 'default',
+  size: 'md',
   selectedValues: new Map<string, boolean>()
 })
 
@@ -59,7 +59,7 @@ const ToggleGroupRoot = forwardRef<ElementRef<typeof ToggleGroupPrimitive.Root>,
     {
       children,
       variant = 'outline-primary',
-      size = 'default',
+      size = 'md',
       disabled = false,
       type = 'single',
       value,

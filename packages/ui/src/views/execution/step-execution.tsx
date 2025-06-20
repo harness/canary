@@ -41,7 +41,7 @@ const StepExecutionToolbar: FC<
           <IconV2 name="copy" className="size-4 text-icons-3" />
         </Button>
         <Button variant="outline" size="sm" className="border-cn-borders-2 rounded-none" onClick={onEdit}>
-          <IconV2 name="edit-pencil" className="text-icons-3 size-4" />
+          <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
         </Button>
         <Button
           variant="outline"
@@ -49,7 +49,7 @@ const StepExecutionToolbar: FC<
           className="border-cn-borders-2 rounded-l-none border-l-0"
           onClick={onDownload}
         >
-          <IconV2 name="download" className="text-icons-3 size-4" />
+          <IconV2 name="download" className="text-icons-3" size="sm" />
         </Button>
       </div>
     </Layout.Horizontal>

@@ -35,6 +35,7 @@ export default {
     display: 'flex',
     alignItems: 'center',
     color: 'var(--cn-text-2)',
+    userSelect: 'none',
     '@apply transition-colors': '',
 
     '&-outlined': {
@@ -121,7 +122,8 @@ export default {
     },
 
     '&:where([disabled])': {
-      color: 'var(--cn-state-disabled-text)'
+      color: 'var(--cn-state-disabled-text)',
+      cursor: 'not-allowed'
     }
   }
 }

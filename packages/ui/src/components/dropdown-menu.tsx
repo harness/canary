@@ -84,7 +84,7 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
         >
           {!!header && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-header">{header}</div>}
 
-          <ScrollArea viewportClassName="cn-dropdown-menu-content" onScroll={onScroll}>
+          <ScrollArea className="cn-dropdown-menu-content" onScroll={onScroll}>
             <div className="cn-dropdown-menu-container">{children}</div>
           </ScrollArea>
 

@@ -1,5 +1,5 @@
 export default {
-  '.cn-scroll-area-thumb': {
-    backgroundColor: 'var(--cn-comp-scrollbar-thumb)'
+  '.cn-scroll-area': {
+    '@apply overflow-auto': ''
   }
 }

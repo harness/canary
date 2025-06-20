@@ -115,8 +115,12 @@ export default {
     },
 
     '&-body': {
-      padding: 'var(--cn-drawer-container)',
-      '@apply before:absolute before:inset-x-0 before:top-0 before:z-10 after:z-10 after:absolute after:inset-x-0 after:bottom-0':
+      '@apply size-full': '',
+      padding: 'var(--cn-drawer-container)'
+    },
+
+    '&-body-wrap': {
+      '@apply flex-1 overflow-hidden relative before:absolute before:inset-x-0 before:top-0 before:z-10 after:z-10 after:absolute after:inset-x-0 after:bottom-0':
         '',
 
       '&:before': {

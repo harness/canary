@@ -90,7 +90,7 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           </Dialog.Header>
 
           <Dialog.Body>
-            <div className="space-y-7 mb-7">
+            <div className="mb-7 space-y-7">
               <FormInput.Text
                 id="title"
                 {...register('title')}

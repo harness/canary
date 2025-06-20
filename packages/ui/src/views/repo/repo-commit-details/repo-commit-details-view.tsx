@@ -46,7 +46,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               </Text>
               {isVerified && (
                 <>
-                  <span className="bg-cn-background-3 mx-2.5 h-4 w-px" />
+                  <span className="mx-2.5 h-4 w-px bg-cn-background-3" />
                   <StatusBadge variant="outline" theme="success">
                     {t('views:commits.verified', 'Verified')}
                   </StatusBadge>
@@ -55,9 +55,9 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             </>
           )}
         </div>
-        <div className="border-cn-borders-2 mt-5 rounded-md border">
-          <div className="border-cn-borders-2 bg-cn-background-2 flex items-center justify-between rounded-t-md border-b px-4 py-3">
-            <span className="text-14 text-cn-foreground-1 font-mono font-medium leading-snug">{commitData?.title}</span>
+        <div className="mt-5 rounded-md border border-cn-borders-2">
+          <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
+            <span className="text-14 font-mono font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
             <Button variant="outline" asChild>
               <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
                 {t('views:commits.browseFiles', 'Browse files')}

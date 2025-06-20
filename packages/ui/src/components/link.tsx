@@ -83,7 +83,7 @@ const Link = ({
       {!!suffixIcon && (
         <IconV2
           className="cn-link-icon"
-          name={typeof suffixIcon === 'string' ? suffixIcon : 'nav-arrow-right'}
+          name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-up-right'}
           skipSize
         />
       )}

@@ -20,7 +20,7 @@ export const CalendarInputView = ({
 
   return (
     <Popover.Root>
-      <Popover.Trigger>
+      <Popover.Trigger asChild>
         <Input
           type="text"
           value={value ? new Date(value).toLocaleDateString() : ''}
@@ -29,7 +29,7 @@ export const CalendarInputView = ({
           className="cursor-pointer"
         />
       </Popover.Trigger>
-      <Popover.Content>
+      <Popover.Content hideArrow>
         <Calendar
           mode="single"
           selected={value ? new Date(value) : undefined}

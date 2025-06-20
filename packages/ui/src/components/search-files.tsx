@@ -92,8 +92,8 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
         </div>
       </Popover.Anchor>
       <Popover.Content
-        className="w-[300px] p-0"
         align="start"
+        hideArrow
         onOpenAutoFocus={event => {
           event.preventDefault()
         }}

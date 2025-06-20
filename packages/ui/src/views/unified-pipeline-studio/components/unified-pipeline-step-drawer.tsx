@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 
 import { Drawer } from '@/components'
-import { useExitConfirm } from '@views/common/hooks/useExitConfirm'
+import { useExitConfirm } from '@/views'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'

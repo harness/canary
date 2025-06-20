@@ -58,7 +58,7 @@ const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownContent, or
 export const ButtonGroup: FC<ButtonGroupProps> = ({
   orientation = 'horizontal',
   buttonsProps,
-  size = 'default',
+  size = 'md',
   iconOnly,
   className
 }) => {

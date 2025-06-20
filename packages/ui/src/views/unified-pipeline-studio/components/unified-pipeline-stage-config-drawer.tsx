@@ -1,4 +1,7 @@
+import { useRef } from 'react'
+
 import { Drawer } from '@/components'
+import { useExitConfirm } from '@/views'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'
@@ -7,25 +10,35 @@ import { UnifiedPipelineStudioStageConfigForm } from './stage-config/unified-pip
 export const UnifiedPipelineStageConfigDrawer = () => {
   const { rightDrawer, setRightDrawer, clearRightDrawerData } = useUnifiedPipelineStudioContext()
 
+  const isDirtyRef = useRef<boolean>()
+
+  const { show } = useExitConfirm()
+
+  const handleClose = () => {
+    setRightDrawer(RightDrawer.None)
+    clearRightDrawerData()
+  }
+
   return (
     <Drawer.Root
       direction="right"
       open={rightDrawer === RightDrawer.StageConfig}
       onOpenChange={open => {
         if (!open) {
-          setRightDrawer(RightDrawer.None)
-          clearRightDrawerData()
+          if (isDirtyRef.current) {
+            show({
+              onConfirm: () => {
+                handleClose()
+              }
+            })
+          } else {
+            handleClose()
+          }
         }
       }}
     >
       <Drawer.Content>
-        <UnifiedPipelineStudioStageConfigForm
-          requestClose={() => {
-            setRightDrawer(RightDrawer.None)
-            clearRightDrawerData()
-          }}
-          isDrawer
-        />
+        <UnifiedPipelineStudioStageConfigForm isDirtyRef={isDirtyRef} requestClose={handleClose} isDrawer />
       </Drawer.Content>
     </Drawer.Root>
   )

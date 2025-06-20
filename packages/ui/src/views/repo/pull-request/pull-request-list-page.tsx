@@ -1,6 +1,16 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchInput, SkeletonList, Spacer, StackedList } from '@/components'
+import {
+  Button,
+  ListActions,
+  NoData,
+  Pagination,
+  SearchInput,
+  SkeletonList,
+  Spacer,
+  StackedList,
+  Text
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
@@ -213,7 +223,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <h1 className="mb-6 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Pull Requests</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+              Pull Requests
+            </Text>
 
             <ListActions.Root>
               <ListActions.Left>

@@ -21,7 +21,7 @@ import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="max-w-full truncate font-medium text-cn-foreground-1" title={title}>
+  <span className="text-cn-foreground-1 max-w-full truncate font-medium" title={title}>
     {title}
   </span>
 )
@@ -45,7 +45,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
         title={t('views:connectors.errorEncountered', 'Error Encountered')}
         content={
           <>
-            <p className="whitespace-normal">{item?.status?.errorSummary}</p>
+            <Text className="whitespace-normal">{item?.status?.errorSummary}</Text>
             <Button variant="link" onClick={() => setErrorConnectionOpen(true)}>
               {t('views:connectors.viewDetails', 'View details')}
             </Button>

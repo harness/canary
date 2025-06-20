@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
@@ -54,7 +54,9 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         {!isLoading && (!!tagsList.length || isDirtyList) && (
           <>
             <Spacer size={2} />
-            <h1 className="text-cn-foreground-1 text-2xl font-medium">{t('views:repos.tags', 'Tags')}</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1">
+              {t('views:repos.tags', 'Tags')}
+            </Text>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

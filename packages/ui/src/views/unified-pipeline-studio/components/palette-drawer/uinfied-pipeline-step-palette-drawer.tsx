@@ -8,7 +8,8 @@ import {
   Pagination,
   SearchInput,
   SkeletonList,
-  Spacer
+  Spacer,
+  Text
 } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
@@ -128,7 +129,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
           }}
         />
         {templatesError ? (
-          <p className="text-sm text-cn-foreground-danger">{templatesError.message}</p>
+          <Text color="danger">{templatesError.message}</Text>
         ) : isFetchingTemplates ? (
           <SkeletonList />
         ) : (

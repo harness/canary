@@ -1,4 +1,4 @@
-import { Pagination, Spacer } from '@/components'
+import { Pagination, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { EmptyState } from '@/views/user-management/components/empty-state/empty-state'
@@ -25,10 +25,9 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentP
   return (
     <SandboxLayout.Content>
       <Spacer size={7} />
-      <h1 className="text-2xl font-medium text-cn-foreground-1">
-        {t('views:userManagement.usersHeader', 'Users')}{' '}
-        <span className="text-cn-foreground-2">({users?.length || 0})</span>
-      </h1>
+      <Text as="h1" variant="heading-section" color="foreground-1">
+        {t('views:userManagement.usersHeader', 'Users')} <Text as="span">({users?.length || 0})</Text>
+      </Text>
       <Spacer size={6} />
       <Actions />
       <Spacer size={4.5} />

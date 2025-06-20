@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, NoData, SearchBox, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
@@ -66,9 +66,9 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
       ) : (
         <SandboxLayout.Main>
           <SandboxLayout.Content maxWidth="3xl">
-            <h1 className="mb-6 text-2xl font-medium text-cn-foreground-1">
+            <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
               {t('views:projectSettings.members', 'Member')}
-            </h1>
+            </Text>
 
             {(!!memberList.length || (!memberList.length && isDirtyList)) && (
               <>

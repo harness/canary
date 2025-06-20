@@ -11,6 +11,7 @@ import {
   type UseFormReturn
 } from 'react-hook-form'
 
+import { Text } from '@components/text'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 

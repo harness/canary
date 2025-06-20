@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Fieldset, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Fieldset, FormWrapper, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -93,11 +93,11 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {preSetWebhookData
           ? t('views:repos.editWebhookTitle', 'Webhook details')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
-      </h1>
+      </Text>
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
           <WebhookToggleField register={register} setValue={setValue} watch={watch} />

@@ -36,47 +36,31 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px]" align="end">
         <DropdownMenu.Header>
-          <span className="inline-block text-2 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+          <span className="text-2 inline-block font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+
+          <Tabs.Root
+            className="mb-[-11px] mt-4"
+            value={currentTab}
+            onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
+          >
+            <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
+              <Tabs.Trigger value={CloneRepoTabs.HTTPS} onClick={() => setCurrentTab(CloneRepoTabs.HTTPS)}>
+                {t('views:repos.cloneHttps', 'HTTPS')}
+              </Tabs.Trigger>
+              <Tabs.Trigger
+                value={CloneRepoTabs.SSH}
+                onClick={() => setCurrentTab(CloneRepoTabs.SSH)}
+                disabled={!isSSHAvailable}
+              >
+                {t('views:repos.cloneSsh', 'SSH')}
+              </Tabs.Trigger>
+            </Tabs.List>
+          </Tabs.Root>
         </DropdownMenu.Header>
-        <Tabs.Root className="mt-4" value={currentTab} onValueChange={val => setCurrentTab(val as CloneRepoTabs)}>
-          <Tabs.List className="px-4">
-            <DropdownMenu.Item
-              className="rounded-t-md p-0"
-              onSelect={e => {
-                e.preventDefault()
-                setCurrentTab(CloneRepoTabs.HTTPS)
-              }}
-              title={
-                <Tabs.Trigger className="px-4 data-[state=active]:bg-cn-background-2" value={CloneRepoTabs.HTTPS}>
-                  {t('views:repos.cloneHttps', 'HTTPS')}
-                </Tabs.Trigger>
-              }
-            />
-            <DropdownMenu.Item
-              className="rounded-t-md p-0"
-              onSelect={e => {
-                e.preventDefault()
-                if (isSSHAvailable) {
-                  setCurrentTab(CloneRepoTabs.SSH)
-                }
-              }}
-              disabled={!isSSHAvailable}
-              title={
-                <Tabs.Trigger
-                  className="px-4 data-[disabled]:cursor-not-allowed data-[state=active]:bg-cn-background-2 data-[disabled]:opacity-50"
-                  value={CloneRepoTabs.SSH}
-                  onClick={e => e.stopPropagation()}
-                  disabled={!isSSHAvailable}
-                >
-                  {t('views:repos.cloneSsh', 'SSH')}
-                </Tabs.Trigger>
-              }
-            />
-          </Tabs.List>
-        </Tabs.Root>
+
         <DropdownMenu.Slot className="p-4">
           <div className="mb-2.5 flex items-center">
-            <span className="inline-block leading-none text-cn-foreground-2">
+            <span className="text-cn-foreground-2 inline-block leading-none">
               {t('views:repos.gitCloneUrl', 'Git clone URL')}
             </span>
           </div>
@@ -90,7 +74,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
-                <span className="leading-snug text-cn-foreground-2">
+                <span className="text-cn-foreground-2 leading-snug">
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>

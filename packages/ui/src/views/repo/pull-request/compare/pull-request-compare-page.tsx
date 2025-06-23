@@ -18,7 +18,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
-import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
@@ -312,26 +311,18 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <Tabs.List className="before:bg-cn-background-2 relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
+              <Tabs.List variant="overlined" className="-mx-20 px-20">
                 {!prBranchCombinationExists && (
-                  <TabTriggerItem
-                    value="overview"
-                    icon="message"
-                    label={t('views:pullRequests.compareChangesTabOverview', 'Overview')}
-                  />
+                  <Tabs.Trigger value="overview" icon="message">
+                    {t('views:pullRequests.compareChangesTabOverview', 'Overview')}
+                  </Tabs.Trigger>
                 )}
-                <TabTriggerItem
-                  value="commits"
-                  icon="git-commit"
-                  label={t('views:pullRequests.compareChangesTabCommits', 'Commits')}
-                  badgeCount={diffStats.commits ? diffStats.commits : undefined}
-                />
-                <TabTriggerItem
-                  value="changes"
-                  icon="page"
-                  label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
-                  badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
-                />
+                <Tabs.Trigger value="commits" icon="git-commit" counter={diffStats?.commits}>
+                  {t('views:pullRequests.compareChangesTabCommits', 'Commits')}
+                </Tabs.Trigger>
+                <Tabs.Trigger value="changes" icon="page" counter={diffStats?.files_changed}>
+                  {t('views:pullRequests.compareChangesTabChanges', 'Changes')}
+                </Tabs.Trigger>
               </Tabs.List>
               {!prBranchCombinationExists && (
                 <Tabs.Content className="pt-7" value="overview">

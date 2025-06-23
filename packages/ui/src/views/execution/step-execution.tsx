@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchBox, Tabs, TabsTriggerProps } from '@/components'
-import { useTheme } from '@/context'
+import { Button, IconV2, Layout, ScrollArea, SearchBox, Tabs } from '@/components'
 import { cn } from '@utils/cn'
 
 import ConsoleLogs from './console-logs'
@@ -36,38 +35,26 @@ const StepExecutionToolbar: FC<
           variant="outline"
           size="sm"
           iconOnly
-          className="rounded-r-none border-r-0 border-cn-borders-2"
+          className="border-cn-borders-2 rounded-r-none border-r-0"
           onClick={onCopy}
         >
           <IconV2 name="copy" className="size-4 text-icons-3" />
         </Button>
-        <Button variant="outline" size="sm" className="rounded-none border-cn-borders-2" onClick={onEdit}>
-          <IconV2 name="edit-pencil" className="size-4 text-icons-3" />
+        <Button variant="outline" size="sm" className="border-cn-borders-2 rounded-none" onClick={onEdit}>
+          <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
         </Button>
         <Button
           variant="outline"
           size="sm"
-          className="rounded-l-none border-l-0 border-cn-borders-2"
+          className="border-cn-borders-2 rounded-l-none border-l-0"
           onClick={onDownload}
         >
-          <IconV2 name="download" className="size-4 text-icons-3" />
+          <IconV2 name="download" className="text-icons-3" size="sm" />
         </Button>
       </div>
     </Layout.Horizontal>
   )
 }
-
-const TabsTrigger = ({ isLightTheme, ...props }: TabsTriggerProps & { isLightTheme?: boolean }) => (
-  <Tabs.Trigger
-    className={cn(
-      'h-6 w-[68px]',
-      isLightTheme
-        ? 'data-[state=active]:bg-cn-background-1 data-[state=active]:shadow-none'
-        : 'data-[state=active]:bg-cn-background-9 data-[state=active]:border-cn-borders-2 data-[state=active]:border'
-    )}
-    {...props}
-  />
-)
 
 export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDownload, onCopy, isDrawer = false }) => {
   const inputTable = step?.inputs || []
@@ -77,22 +64,15 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
     const value = event.target.value
     setQuery(value)
   }
-  const { isLightTheme } = useTheme()
 
   return (
-    <Tabs.Root variant="pills" defaultValue={StepExecutionTab.LOG} className="size-full">
+    <Tabs.Root defaultValue={StepExecutionTab.LOG}>
       <Layout.Vertical>
         <Layout.Horizontal justify="between" className="py-2.5 pl-5 pr-3.5">
-          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-cn-borders-2 bg-cn-background-3">
-            <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.LOG}>
-              Logs
-            </TabsTrigger>
-            <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.INPUT}>
-              Inputs
-            </TabsTrigger>
-            <TabsTrigger isLightTheme={isLightTheme} value={StepExecutionTab.OUTPUT}>
-              Outputs
-            </TabsTrigger>
+          <Tabs.List variant="outlined">
+            <Tabs.Trigger value={StepExecutionTab.LOG}>Logs</Tabs.Trigger>
+            <Tabs.Trigger value={StepExecutionTab.INPUT}>Inputs</Tabs.Trigger>
+            <Tabs.Trigger value={StepExecutionTab.OUTPUT}>Outputs</Tabs.Trigger>
           </Tabs.List>
           <StepExecutionToolbar
             onEdit={onEdit}

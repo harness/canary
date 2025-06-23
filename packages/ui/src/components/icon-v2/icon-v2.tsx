@@ -32,6 +32,11 @@ export interface IconPropsV2 extends SVGProps<SVGSVGElement> {
 const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false }) => {
   const Component = IconNameMapV2[name]
 
+  if (!Component) {
+    console.warn(`Icon "${name}" not found in IconNameMapV2.`)
+    return null
+  }
+
   const sizeClasses = skipSize ? '' : iconVariants({ size })
 
   return <Component className={cn(sizeClasses, className)} />

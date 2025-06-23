@@ -38,9 +38,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   return (
     <DropdownMenu.Content
-      style={{
-        width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '298px'
-      }}
+      style={{ width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '298px' }}
       align="start"
     >
       <DropdownMenu.Header>
@@ -72,39 +70,14 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               setSearchQuery('')
             }}
           >
-            <Tabs.List className="px-3">
-              <DropdownMenu.Item
-                title={
-                  <Tabs.Trigger
-                    className="data-[state=active]:bg-cn-background-2"
-                    value="branches"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    {t('views:repos.branches', 'Branches')}
-                  </Tabs.Trigger>
-                }
-                className="rounded-t-md p-0"
-                onSelect={e => {
-                  e.preventDefault()
-                  setActiveTab(BranchSelectorTab.BRANCHES)
-                }}
-              />
-              <DropdownMenu.Item
-                title={
-                  <Tabs.Trigger
-                    className="data-[state=active]:bg-cn-background-2"
-                    value="tags"
-                    onClick={e => e.stopPropagation()}
-                  >
-                    {t('views:repos.tags', 'Tags')}
-                  </Tabs.Trigger>
-                }
-                className="rounded-t-md p-0"
-                onSelect={e => {
-                  e.preventDefault()
-                  setActiveTab(BranchSelectorTab.TAGS)
-                }}
-              />
+            <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
+              <Tabs.Trigger value="branches" onClick={() => setActiveTab(BranchSelectorTab.BRANCHES)}>
+                {t('views:repos.branches', 'Branches')}
+              </Tabs.Trigger>
+
+              <Tabs.Trigger value="tags" onClick={() => setActiveTab(BranchSelectorTab.TAGS)}>
+                {t('views:repos.tags', 'Tags')}
+              </Tabs.Trigger>
             </Tabs.List>
           </Tabs.Root>
         )}
@@ -125,7 +98,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               </Button>
             </div>
           ) : (
-            <span className="text-14 leading-tight text-cn-foreground-2">
+            <span className="text-14 text-cn-foreground-2 leading-tight">
               {t('views:noData.noResults', 'No search results')}
             </span>
           )}

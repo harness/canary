@@ -227,6 +227,9 @@ Enable client-side search filtering to help users find options quickly in large 
           allowSearch
           placeholder="Search items..."
           label="Grouped and searchable"
+          onScrollEnd={() => {
+            console.log('Scrolled to end of options')
+          }}
         />
 
         <Select

@@ -13,11 +13,11 @@ import { DocsPage } from "@/components/docs-page";
   code={`
 <div>
   <ScrollArea className="w-[300px] h-[200px] border">
-      <div className="p-4 space-y-4 w-[700px] h-[300px]">
-        <p>Content that exceeds the viewport height and width.</p>
-        <p>More content...</p>
-        <p>Even more content...</p>
-      </div>
+    <div className="p-4 space-y-4 w-[700px] h-[300px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
   </ScrollArea>
 </div>`}
 />
@@ -77,88 +77,56 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
 </div>`}
 />
 
-### Scroll Event Handling
+### Scroll Events
 
-The `ScrollArea` component provides an `onScroll` prop that allows you to handle scroll events. This prop accepts a callback function that receives the scroll event and an optional position object indicating the scroll position.
+The `ScrollArea` component provides several event handlers to respond to scroll actions:
 
-  <DocsPage.ComponentExample
-    client:only
-    code={`
-() => {
-  const [scrollPosition1, setScrollPosition1] = React.useState({ isTop: true, isBottom: false, isLeft: true, isRight: false });
-  const [scrollPosition2, setScrollPosition2] = React.useState({ isTop: true, isBottom: false, isLeft: true, isRight: false });
+- `onScrollTop`: Triggered when the scroll area is scrolled to the top.
+- `onScrollBottom`: Triggered when the scroll area is scrolled to the bottom.
+- `onScrollLeft`: Triggered when the scroll area is scrolled to the left.
+- `onScrollRight`: Triggered when the scroll area is scrolled to the right.
 
-const changePosition = (position) => (prev) => {
-if (
-prev.isTop !== position.isTop ||
-prev.isBottom !== position.isBottom ||
-prev.isLeft !== position.isLeft ||
-prev.isRight !== position.isRight
-) {
-return position;
-}
-return prev;
-}
+`rootMargin` and `threshold` props can be used to customize the scroll event behavior.
+Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to define how much of the target should be visible before triggering the scroll event.
 
-const handleScroll1 = React.useCallback((event, position) => {
-setScrollPosition1(changePosition(position));
-}, []);
-
-const handleScroll2 = React.useCallback((event, position) => {
-setScrollPosition2(changePosition(position));
-}, []);
-
-return (
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <ScrollArea className="w-[300px] h-[200px] border" 
+    onScrollBottom={() => console.log('Reached bottom')}
+    onScrollTop={() => console.log('Reached top')}
+    onScrollLeft={() => console.log('Reached left')}
+    onScrollRight={() => console.log('Reached right')}
+  >
+    <div className="p-4 space-y-4 w-[700px] h-[300px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
 
   <div>
-    <div>
-      <Text variant="heading-base" className="mb-2">
-        Scroll Position:
-      </Text>
-
-      <Text variant="body-code" className="mb-2">
-        {JSON.stringify(scrollPosition1, null, 2)}
-      </Text>
-
-      <ScrollArea
-        className="w-[300px] h-[200px] border"
-        onScroll={handleScroll1}
-      >
-        <div className="p-4 space-y-4 w-[700px] h-[300px]">
+    <Text variant="heading-base" color="foreground-1" className="mt-4 mb-1">
+      Scroll Events with margin:
+    </Text>
+    
+    <ScrollArea className="w-[300px] h-[200px] border" 
+      onScrollBottom={() => console.log('Reached bottom')}
+      onScrollTop={() => console.log('Reached top')}
+      onScrollLeft={() => console.log('Reached left')}
+      onScrollRight={() => console.log('Reached right')}
+      rootMargin={{ top: '20px', right: '50px', bottom: '50px', left: '50px' }}
+    >
+      <div className="relative px-[50px] pt-[20px] pb-[50px] space-y-4 w-[700px] h-[300px]">
+        <div className="absolute top-[20px] right-[50px] bottom-[50px] left-[50px] outline-2 outline-offset-2 outline-dashed outline-primary-5"/>
           <p>Content that exceeds the viewport height and width.</p>
           <p>More content...</p>
           <p>Even more content...</p>
-        </div>
-      </ScrollArea>
-    </div>
-
-    <hr className="my-4" />
-
-    <div>
-      <Text variant="heading-base" className="mb-2">
-        Scroll Position with delay 1000ms:
-      </Text>
-      <Text variant="body-code" className="mb-2">
-        {JSON.stringify(scrollPosition2, null, 2)}
-      </Text>
-
-      <ScrollArea
-        className="w-[300px] h-[200px] border"
-        onScroll={handleScroll2}
-        debounceDelay={1000}
-      >
-        <div className="p-4 space-y-4 w-[700px] h-[300px]">
-          <p>Content that exceeds the viewport height and width.</p>
-          <p>More content...</p>
-          <p>Even more content...</p>
-        </div>
-      </ScrollArea>
-    </div>
-
+      </div>
+    </ScrollArea>
   </div>
-);
-};
-`}
+</div>`}
 />
 
 ## API Reference
@@ -188,26 +156,49 @@ return (
       value: "string",
     },
     {
-      name: "onScroll",
-      description: "Callback function triggered on scroll events.",
+      name: "onScrollTop",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the top.",
       required: false,
-      value: `(
-        event: React.UIEvent<HTMLDivElement>, 
-        position?: {
-          isTop: boolean,
-          isBottom: boolean,
-          isLeft: boolean,
-          isRight: boolean
-        }
-      ) => void`,
+      value: "() => void",
     },
     {
-      name: "debounceDelay",
+      name: "onScrollBottom",
       description:
-        "Delay in milliseconds to debounce the scroll event callback. Defaults to 0.",
+        "Callback function triggered when the scroll area is scrolled to the bottom.",
       required: false,
-      defaultValue: "0",
-      value: "number",
+      value: "() => void",
+    },
+    {
+      name: "onScrollLeft",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the left.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "onScrollRight",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the right.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "rootMargin",
+      description:
+        "Margin around the scroll area to trigger scroll events. Defaults to '0px'.",
+      required: false,
+      defaultValue: "'0px'",
+      value:
+        "string | { top?: string; right?: string; bottom?: string; left?: string; }",
+    },
+    {
+      name: "threshold",
+      description:
+        "Threshold for triggering scroll events. A value between 0 and 1, where 0 means the event is triggered immediately and 1 means it is triggered when the scroll area is fully scrolled.",
+      required: false,
+      defaultValue: "0.1",
+      value: "number | number[]",
     },
   ]}
 />

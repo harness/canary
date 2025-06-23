@@ -1,144 +1,64 @@
-import { forwardRef, ReactNode } from 'react'
-
-import { useSortable } from '@dnd-kit/sortable'
+import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core'
+import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { cn } from '@utils/cn'
+import useDragAndDrop from '@hooks/use-drag-and-drop'
 
-import { Card, CardRootProps } from './card'
+import { Card } from './card'
 import { IconV2 } from './icon-v2'
 
-export interface InfoCardProps extends Omit<CardRootProps, 'children'> {
-  /**
-   * Unique identifier for the card (required for drag and drop)
-   */
+interface InfoCardProps {
   id: string
-
-  /**
-   * Title of the card
-   */
-  title?: string
-
-  /**
-   * Description or content of the card
-   */
-  description?: string
-
-  /**
-   * Optional icon to display in the card
-   */
-  icon?: ReactNode
-
-  /**
-   * Optional image source for the card
-   */
-  imageSrc?: string
-
-  /**
-   * Optional image alt text
-   */
-  imageAlt?: string
-
-  /**
-   * Whether the card is draggable
-   */
-  draggable?: boolean
-
-  /**
-   * Optional footer content
-   */
-  footer?: ReactNode
-
-  /**
-   * Optional action buttons or content
-   */
-  actions?: ReactNode
-
-  /**
-   * Optional additional content
-   */
-  children?: ReactNode
+  title: string
+  description: string
+}
+export interface CardData {
+  id: string
+  title: string
+  description: string
 }
 
-/**
- * InfoCard component that can be used with drag and drop functionality
- */
-export const InfoCard = forwardRef<HTMLDivElement, InfoCardProps>(
-  (
-    {
-      id,
-      className,
-      title,
-      description,
-      icon,
-      imageSrc,
-      imageAlt,
-      draggable = false,
-      footer,
-      actions,
-      children,
-      ...cardProps
-    },
-    ref
-  ) => {
-    // Use useSortable with disabled option for conditional drag behavior
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-      id
-    })
+export const InfoCard = ({ id, title, description }: InfoCardProps) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
-    // Apply drag styles if draggable and transform exists
-    const style =
-      draggable && transform
-        ? {
-            transform: CSS.Transform.toString(transform),
-            transition,
-            opacity: isDragging ? 0.5 : 1
-          }
-        : {}
+  const style = transform
+    ? {
+        transform: CSS.Transform.toString(transform),
+        transition: transition,
+        opacity: isDragging ? 0.5 : 1,
+        zIndex: isDragging ? 10 : 0
+      }
+    : {}
 
-    // Forward the ref to either the sortable node or the card directly
-    const cardRef = draggable ? setNodeRef : ref
-
-    return (
-      <Card.Root
-        ref={cardRef as React.Ref<HTMLDivElement>}
-        className={cn('info-card', isDragging && 'z-10', className)}
-        style={style}
-        {...cardProps}
-      >
-        <Card.Content>
-          <div className="flex items-center gap-2">
-            {draggable && (
-              <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
-                <IconV2 className="size-4 text-gray-400" name="grip-dots" size="xs" />
-              </div>
-            )}
-
-            {icon && <div className="info-card-icon">{icon}</div>}
-
-            {title && <Card.Title className="info-card-title">{title}</Card.Title>}
+  return (
+    <Card.Root ref={setNodeRef} style={style}>
+      <Card.Content>
+        <div className="flex items-center gap-2">
+          <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
+            <IconV2 className="size-4 text-gray-400" name="grip-dots" size="xs" />
           </div>
+          <Card.Title>{title}</Card.Title>
+        </div>
+        <p className="mt-2">{description}</p>
+      </Card.Content>
+    </Card.Root>
+  )
+}
 
-          {description && <p className="info-card-description mt-2">{description}</p>}
+export const InfoCardList = ({ cards, setCards }: { cards: CardData[]; setCards: (newCards: CardData[]) => void }) => {
+  const { handleDragEnd, getItemId } = useDragAndDrop({
+    items: cards,
+    onReorder: setCards
+  })
 
-          {children}
-
-          {actions && <div className="info-card-actions mt-4">{actions}</div>}
-
-          {footer && <div className="info-card-footer mt-4 border-t pt-3">{footer}</div>}
-        </Card.Content>
-      </Card.Root>
-    )
-  }
-)
-
-InfoCard.displayName = 'InfoCard'
-
-/**
- * DraggableInfoCard is a wrapper component that makes InfoCard draggable
- * It's a convenience component that sets the draggable prop to true
- */
-export const DraggableInfoCard = forwardRef<HTMLDivElement, InfoCardProps>((props, ref) => (
-  <InfoCard {...props} draggable={true} ref={ref} />
-))
-
-DraggableInfoCard.displayName = 'DraggableInfoCard'
+  return (
+    <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+      <SortableContext items={cards.map((_, index) => getItemId(index))}>
+        <div className="flex flex-col gap-4">
+          {cards.map((card, index) => (
+            <InfoCard key={card.id} id={getItemId(index)} title={card.title} description={card.description} />
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
+  )
+}

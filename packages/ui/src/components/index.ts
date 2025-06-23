@@ -82,7 +82,6 @@ export * from './table'
 export * from './data-table'
 export * from './illustration'
 export * from './info-card'
-export * from './manage-navigation/draggable-item'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

@@ -425,6 +425,11 @@
       "$type": "sizing",
       "$value": "{size.8}",
       "$description": "\n"
+    },
+    "xl": {
+      "$type": "sizing",
+      "$value": "{size.10}",
+      "$description": "\n"
     }
   },
   "opacity": {

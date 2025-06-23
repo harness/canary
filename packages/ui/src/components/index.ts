@@ -82,6 +82,7 @@ export * from './card-select'
 export * from './table'
 export * from './data-table'
 export * from './illustration'
+export * from './view-only'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

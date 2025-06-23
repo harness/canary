@@ -72,21 +72,9 @@ const Link = ({
       data-disabled={disabled}
       aria-disabled={disabled}
     >
-      {!!prefixIcon && (
-        <IconV2
-          className="cn-link-icon"
-          name={typeof prefixIcon === 'string' ? prefixIcon : 'nav-arrow-left'}
-          skipSize
-        />
-      )}
+      {!!prefixIcon && <IconV2 name={typeof prefixIcon === 'string' ? prefixIcon : 'nav-arrow-left'} size="2xs" />}
       {children}
-      {!!suffixIcon && (
-        <IconV2
-          className="cn-link-icon"
-          name={typeof suffixIcon === 'string' ? suffixIcon : 'nav-arrow-right'}
-          skipSize
-        />
-      )}
+      {!!suffixIcon && <IconV2 name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-up-right'} size="2xs" />}
     </LinkBase>
   )
 }

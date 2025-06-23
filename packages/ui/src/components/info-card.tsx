@@ -5,6 +5,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@utils/cn'
 
 import { Card, CardRootProps } from './card'
+import { IconV2 } from './icon-v2'
 
 export interface InfoCardProps extends Omit<CardRootProps, 'children'> {
   /**
@@ -79,11 +80,12 @@ export const InfoCard = forwardRef<HTMLDivElement, InfoCardProps>(
     },
     ref
   ) => {
-    // Always call useSortable to avoid the React Hook conditional call error
-    // but only use its values when draggable is true
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
+    // Use useSortable with disabled option for conditional drag behavior
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+      id
+    })
 
-    // Apply drag styles if draggable
+    // Apply drag styles if draggable and transform exists
     const style =
       draggable && transform
         ? {
@@ -103,15 +105,11 @@ export const InfoCard = forwardRef<HTMLDivElement, InfoCardProps>(
         style={style}
         {...cardProps}
       >
-        {imageSrc && <Card.Image src={imageSrc} alt={imageAlt || ''} />}
-
         <Card.Content>
           <div className="flex items-center gap-2">
             {draggable && (
               <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
-                <svg className="size-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
-                </svg>
+                <IconV2 className="size-4 text-gray-400" name="grip-dots" size="xs" />
               </div>
             )}
 

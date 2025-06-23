@@ -128,11 +128,16 @@ const Description = ({ className, ...props }: HTMLAttributes<HTMLParagraphElemen
 
 interface BodyProps {
   className?: string
+  classNameContent?: string
   children: ReactNode
 }
 
-const Body = ({ className, children, ...props }: BodyProps) => (
-  <ScrollArea className={cn('cn-modal-dialog-body', className)} {...props}>
+const Body = ({ className, classNameContent, children, ...props }: BodyProps) => (
+  <ScrollArea
+    className={cn('cn-modal-dialog-body', className)}
+    classNameContent={cn('cn-modal-dialog-body-content', classNameContent)}
+    {...props}
+  >
     {children}
   </ScrollArea>
 )

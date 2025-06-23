@@ -25,7 +25,7 @@ const StepExecutionToolbar: FC<
         handleChange={handleInputChange}
         value={query}
       >
-        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
+        <div className="border-cn-borders-2 bg-cn-background-3 absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border">
           <IconV2 className="text-icons-3" name="apple-shortcut" size="2xs" />
           <span className="text-1 leading-none">F</span>
         </div>
@@ -38,7 +38,7 @@ const StepExecutionToolbar: FC<
           className="border-cn-borders-2 rounded-r-none border-r-0"
           onClick={onCopy}
         >
-          <IconV2 name="copy" className="size-4 text-icons-3" />
+          <IconV2 name="copy" className="text-icons-3 size-4" />
         </Button>
         <Button variant="outline" size="sm" className="border-cn-borders-2 rounded-none" onClick={onEdit}>
           <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
@@ -83,13 +83,16 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
           />
         </Layout.Horizontal>
         <Tabs.Content value={StepExecutionTab.LOG}>
-          <ScrollArea className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}>
+          <ScrollArea
+            className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}
+            classNameContent="w-full"
+          >
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
         </Tabs.Content>
         <Tabs.Content value={StepExecutionTab.INPUT}>
           {/*here is the execution details of input table */}
-          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
+          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4" classNameContent="w-full">
             <KeyValueTable
               className="pt-2"
               tableSpec={inputTable}
@@ -100,7 +103,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
         </Tabs.Content>
         <Tabs.Content value={StepExecutionTab.OUTPUT}>
           {/*here is the execution details of output table */}
-          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
+          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4" classNameContent="w-full">
             <KeyValueTable
               className="pt-2"
               tableSpec={outputTable}

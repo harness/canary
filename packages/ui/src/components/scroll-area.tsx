@@ -30,7 +30,7 @@ const ScrollArea: FC<ScrollAreaProps> = ({
   rootMargin = '0px',
   threshold = 0.1,
 
-  direction = 'ltr',
+  direction,
   className,
   classNameContent,
 

@@ -46,7 +46,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
           height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${INSET_LAYOUT_INDENT}px)`
         }}
       >
-        <ScrollArea className={cn('pb-11 !px-4 h-full', sidebarViewportClassName)}>
+        <ScrollArea className={cn('pb-11 !px-4 h-full', sidebarViewportClassName)} classNameContent="w-full">
           {sidebarMenu.map((group, group_idx) => (
             <NavbarSkeleton.Group
               className="gap-1 px-0"

@@ -1,5 +1,5 @@
-import { IconV2, LogoV2, PageHeader, Separator, Tag, ViewOnly, ViewOnlyProps } from '@harnessio/ui/components'
-import { SandboxLayout } from '@harnessio/ui/views'
+import { IconV2, LogoV2, Tag, ViewOnly, ViewOnlyProps } from '@harnessio/ui/components'
+import { PageHeader, SandboxLayout } from '@harnessio/ui/views'
 
 const dataMock: ViewOnlyProps[] = [
   {
@@ -54,14 +54,14 @@ const dataMock: ViewOnlyProps[] = [
       {
         label: 'Delegates',
         value: (
-          <>
+          <div className="flex flex-wrap items-center gap-4">
             <div className="inline-flex items-center gap-1">
               <LogoV2 size="sm" name="app-dynamics" /> delegate-1
             </div>
-            <div className="ml-4 inline-flex items-center gap-1">
+            <div className="inline-flex items-center gap-1">
               <LogoV2 size="sm" name="katalon" /> delegate-2
             </div>
-          </>
+          </div>
         )
       }
     ]
@@ -102,14 +102,14 @@ const dataMock: ViewOnlyProps[] = [
         label: 'Labels',
         value: (
           <div className="flex flex-wrap gap-1.5">
-            <Tag value="connector" theme="violet" />
-            <Tag value="new" theme="violet" />
-            <Tag value="main" theme="violet" />
-            <Tag value="integration" theme="violet" />
-            <Tag value="automation" theme="violet" />
-            <Tag value="test" theme="violet" />
-            <Tag value="dev" theme="violet" />
-            <Tag value="prod" theme="violet" />
+            <Tag variant="secondary" value="connector" theme="violet" />
+            <Tag variant="secondary" value="new" theme="violet" />
+            <Tag variant="secondary" value="main" theme="violet" />
+            <Tag variant="secondary" value="integration" theme="violet" />
+            <Tag variant="secondary" value="automation" theme="violet" />
+            <Tag variant="secondary" value="test" theme="violet" />
+            <Tag variant="secondary" value="dev" theme="violet" />
+            <Tag variant="secondary" value="prod" theme="violet" />
           </div>
         )
       },
@@ -141,10 +141,7 @@ export const ViewOnlyView = () => {
           }}
         />
         {dataMock.map((props, index) => (
-          <>
-            <ViewOnly key={index} {...props} layout="columns" />
-            {index < dataMock.length - 1 && <Separator className="my-5" />}
-          </>
+          <ViewOnly key={index} {...props} />
         ))}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

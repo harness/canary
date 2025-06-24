@@ -81,6 +81,7 @@ export * from './card-select'
 export * from './table'
 export * from './data-table'
 export * from './illustration'
+export * from './draggable-card'
 export * from './button-group'
 
 export * as NodeGroup from './node-group'

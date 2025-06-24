@@ -2174,6 +2174,70 @@
           }
         }
       }
+    },
+    "img": {
+      "empty-state": {
+        "bg": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{chrome.600}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{chrome.800}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          },
+          "stop-4": {
+            "$type": "color",
+            "$value": "{chrome.900}"
+          },
+          "stop-5": {
+            "$type": "color",
+            "$value": "{chrome.950}"
+          },
+          "stop-6": {
+            "$type": "color",
+            "$value": "{chrome.1000}"
+          }
+        },
+        "border": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.1000}"
+          }
+        },
+        "icon": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{chrome.100}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{chrome.200}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          }
+        },
+        "lines": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.900}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{pure.black}"
+          }
+        }
+      }
     }
   },
   "iconStrokeWidth": {
@@ -2206,6 +2270,26 @@
     "opacity": {
       "$type": "opacity",
       "$value": "{opacity.50}"
+    }
+  },
+  "img": {
+    "empty-state": {
+      "bg": {
+        "$type": "color",
+        "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)"
+      },
+      "lines": {
+        "$type": "color",
+        "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+      }
     }
   }
 }

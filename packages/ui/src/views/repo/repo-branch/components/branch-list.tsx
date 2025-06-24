@@ -94,7 +94,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
-              <div className="bg-cn-background-3 h-3 w-px" aria-hidden />
+              <div className="h-3 w-px bg-cn-background-3" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </Table.Head>
@@ -128,7 +128,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
-                    <time className="text-cn-foreground-1 truncate">
+                    <time className="truncate text-cn-foreground-1">
                       {timeAgo(branch?.timestamp, { dateStyle: 'medium' })}
                     </time>
                   </div>
@@ -138,7 +138,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   {branch?.checks && (
                     <div className="flex items-center">
                       {checkState === 'running' ? (
-                        <span className="bg-icons-alert mr-1.5 size-2 rounded-full" />
+                        <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
                       ) : (
                         <IconV2
                           className={cn('mr-1.5', {
@@ -154,9 +154,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           size="2xs"
                         />
                       )}
-                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.done}</span>
+                      <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
                       <span className="mx-px">/</span>
-                      <span className="text-cn-foreground-3 truncate">{branch?.checks?.total}</span>
+                      <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
                     </div>
                   )}
                 </Table.Cell>

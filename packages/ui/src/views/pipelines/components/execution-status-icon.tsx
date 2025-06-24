@@ -19,7 +19,7 @@ export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props =>
     case PipelineExecutionStatus.SUCCESS:
       return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     case PipelineExecutionStatus.RUNNING:
-      return <IconV2 name="loader" className="text-cn-foreground-warning animate-spin" />
+      return <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
     case PipelineExecutionStatus.SKIPPED:
     default:
       return <IconV2 name="clock-solid" className="opacity-50" />

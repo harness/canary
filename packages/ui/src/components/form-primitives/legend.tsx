@@ -25,7 +25,7 @@ interface LegendProps {
 export function Legend({ title, description, className, children }: PropsWithChildren<LegendProps>) {
   return (
     <section className={cn('grid gap-y-2.5', className)}>
-      <Text as="h6" className="text-4 text-cn-foreground-1 font-medium leading-tight">
+      <Text as="h6" className="text-4 font-medium leading-tight text-cn-foreground-1">
         {title}
       </Text>
 

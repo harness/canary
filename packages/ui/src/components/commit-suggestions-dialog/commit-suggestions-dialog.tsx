@@ -55,7 +55,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
 
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)} className="block">
           <Dialog.Body>
-            <ControlGroup className="space-y-7 mb-7">
+            <ControlGroup className="mb-7 space-y-7">
               <FormInput.Text
                 id="title"
                 label="Commit Message"

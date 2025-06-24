@@ -50,7 +50,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
     <>
       <div className="flex flex-col items-start">
         <div className="flex w-full items-center justify-between">
-          <span className="text-4 truncate font-medium">{title}</span>
+          <span className="truncate text-4 font-medium">{title}</span>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" aria-label="More options">
@@ -80,7 +80,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="border-cn-borders-4 text-2 text-cn-foreground-2 line-clamp-6 w-full border-y py-1">
+            <span className="border-cn-borders-4 line-clamp-6 w-full border-y py-1 text-2 text-cn-foreground-2">
               {description}
             </span>
           </>
@@ -92,7 +92,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             details.map(item => (
               <Link key={item.id} to={item.to}>
                 <div className="flex cursor-pointer items-center gap-1.5">
-                  <IconV2 name={item.iconName} size="xs" className="text-cn-foreground-3 fill-none" />
+                  <IconV2 name={item.iconName} size="xs" className="fill-none text-cn-foreground-3" />
                   <Text>{item.name}</Text>
                   <CounterBadge>{item.count}</CounterBadge>
                 </div>

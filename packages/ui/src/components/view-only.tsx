@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
+import { wrapConditionalObjectElement } from '@utils/mergeUtils'
 
 import { Layout } from './layout'
 import { Separator } from './separator'
@@ -40,10 +41,10 @@ export interface ViewOnlyProps {
 export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnlyProps) => {
   if (!data || data.length === 0) return null
 
-  const leftColumnData = layout === 'columns' ? splitArray(data)[0] : data
-  const rightColumnData = layout === 'columns' ? splitArray(data)[1] : null
-
-  const withSeparator = layout === 'columns' && data.length > 2
+  const isLayoutColumns = layout === 'columns'
+  const isSeparatorVisible = isLayoutColumns && data.length > 2
+  const leftColumnData = isLayoutColumns ? splitArray(data)[0] : data
+  const rightColumnData = isLayoutColumns ? splitArray(data)[1] : null
 
   return (
     <Layout.Grid className={cn('group', className)}>
@@ -51,14 +52,21 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
         {title}
       </Text>
 
-      <Layout.Grid as="dl" flow="column" columns="1fr auto 1fr" align="start">
+      <Layout.Grid
+        as="dl"
+        flow="column"
+        align="start"
+        {...wrapConditionalObjectElement({ columns: '1fr auto 1fr' }, isLayoutColumns)}
+      >
         <Layout.Grid className="gap-y-3.5">
           {leftColumnData.map(({ label, value }) => (
             <ViewOnlyItem key={label} label={label} value={value} />
           ))}
         </Layout.Grid>
 
-        <Separator orientation="vertical" className={cn('ml-4 mr-5', { invisible: !withSeparator })} />
+        {isLayoutColumns && (
+          <Separator orientation="vertical" className={cn('ml-4 mr-5', { invisible: !isSeparatorVisible })} />
+        )}
 
         {!!rightColumnData && (
           <Layout.Grid className="gap-y-3.5">

@@ -83,6 +83,7 @@ export * from './data-table'
 export * from './illustration'
 export * from './draggable-card'
 export * from './button-group'
+export * from './view-only'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

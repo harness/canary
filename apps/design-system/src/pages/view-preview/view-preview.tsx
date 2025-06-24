@@ -13,6 +13,7 @@ import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors
 import DataTableDemo from '@subjects/views/data-table-demo'
 import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
 import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
+import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -497,7 +498,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
-  multiSelec: {
+  multiSelect: {
     label: 'Multi Select Demo',
     items: {
       'multi-select-demo': {
@@ -557,6 +558,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'delegate-connectivity': {
         label: 'Delegate Connectivity',
         element: <DelegateConnectivityWrapper />
+      },
+      'draggable-cards-demo': {
+        label: 'Draggable Cards Demo',
+        element: <DraggableCardsDemo />
       }
     }
   },

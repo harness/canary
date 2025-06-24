@@ -88,8 +88,7 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
           <ScrollArea
             className="cn-dropdown-menu-content"
             classNameContent="cn-dropdown-menu-content-inner"
-            onScrollBottom={scrollAreaProps?.onScrollBottom}
-            rootMargin={scrollAreaProps?.rootMargin}
+            {...scrollAreaProps}
           >
             <div className="cn-dropdown-menu-container">{children}</div>
           </ScrollArea>

@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode, useCallback, useEffect, useRef } from 'react'
+import { FC, HTMLAttributes, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
 
 import { cn } from '@utils/cn'
 
@@ -12,7 +12,7 @@ export type ScrollAreaIntersectionProps = {
   threshold?: number | number[]
 }
 
-type ScrollAreaProps = {
+export type ScrollAreaProps = {
   children: ReactNode
   direction?: 'ltr' | 'rtl'
   className?: string
@@ -43,14 +43,14 @@ const ScrollArea: FC<ScrollAreaProps> = ({
   const leftMarkerRef = useRef<HTMLDivElement | null>(null)
   const rightMarkerRef = useRef<HTMLDivElement | null>(null)
 
-  if (typeof rootMargin === 'object') {
-    const { top, right, bottom, left } = rootMargin
-    rootMargin = `${top || '0px'} ${right || '0px'} ${bottom || '0px'} ${left || '0px'}`
-  }
-
   const createObserver = useCallback(
-    (markerRef: React.RefObject<HTMLElement>, callback?: () => void): IntersectionObserver | null => {
+    (markerRef: RefObject<HTMLElement>, callback?: () => void): IntersectionObserver | null => {
       if (!markerRef.current || !callback) return null
+
+      if (typeof rootMargin === 'object') {
+        const { top, right, bottom, left } = rootMargin
+        rootMargin = `${top || '0px'} ${right || '0px'} ${bottom || '0px'} ${left || '0px'}`
+      }
 
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -74,7 +74,7 @@ const ScrollArea: FC<ScrollAreaProps> = ({
   useEffect(() => {
     const observers: IntersectionObserver[] = []
 
-    const configs: [React.RefObject<HTMLElement>, (() => void) | undefined][] = [
+    const configs: [RefObject<HTMLElement>, (() => void) | undefined][] = [
       [topMarkerRef, onScrollTop],
       [bottomMarkerRef, onScrollBottom],
       [leftMarkerRef, onScrollLeft],
@@ -96,10 +96,10 @@ const ScrollArea: FC<ScrollAreaProps> = ({
       <div className={cn('cn-scroll-area-content', classNameContent)}>
         {children}
 
-        <div className="cn-scroll-area-marker cn-scroll-area-marker-top" ref={topMarkerRef} />
-        <div className="cn-scroll-area-marker cn-scroll-area-marker-bottom" ref={bottomMarkerRef} />
-        <div className="cn-scroll-area-marker cn-scroll-area-marker-left" ref={leftMarkerRef} />
-        <div className="cn-scroll-area-marker cn-scroll-area-marker-right" ref={rightMarkerRef} />
+        {onScrollTop && <div className="cn-scroll-area-marker cn-scroll-area-marker-top" ref={topMarkerRef} />}
+        {onScrollBottom && <div className="cn-scroll-area-marker cn-scroll-area-marker-bottom" ref={bottomMarkerRef} />}
+        {onScrollLeft && <div className="cn-scroll-area-marker cn-scroll-area-marker-left" ref={leftMarkerRef} />}
+        {onScrollRight && <div className="cn-scroll-area-marker cn-scroll-area-marker-right" ref={rightMarkerRef} />}
       </div>
     </div>
   )

@@ -5,6 +5,7 @@ import useDragAndDrop from '@hooks/use-drag-and-drop'
 
 import { Card } from './card'
 import { IconV2 } from './icon-v2'
+import { Layout } from './layout'
 
 interface InfoCardProps {
   id: string
@@ -56,13 +57,13 @@ export const InfoCardList = ({ cards, setCards }: { cards: CardData[]; setCards:
   return (
     <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
       <SortableContext items={cards.map((_, index) => getItemId(index))}>
-        <div className="flex flex-col gap-4">
+        <Layout.Flex dir="col" gap="md">
           {cards.map((card, index) => (
             <InfoCard key={card.id} id={getItemId(index)} title={card.title} description={card.description}>
               {card.children}
             </InfoCard>
           ))}
-        </div>
+        </Layout.Flex>
       </SortableContext>
     </DndContext>
   )

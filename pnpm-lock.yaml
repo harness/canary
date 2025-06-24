@@ -74,15 +74,6 @@ importers:
 
   apps/design-system:
     dependencies:
-      '@dnd-kit/core':
-        specifier: ^6.1.0
-        version: 6.3.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-      '@dnd-kit/sortable':
-        specifier: ^8.0.0
-        version: 8.0.0(@dnd-kit/core@6.3.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
-      '@dnd-kit/utilities':
-        specifier: ^3.2.2
-        version: 3.2.2(react@17.0.2)
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms

@@ -4,9 +4,9 @@ import {
   Accordion,
   CardData,
   Checkbox,
+  DraggableCardList,
   Drawer,
   IconV2,
-  InfoCardList,
   MoreActionsTooltip,
   Select
 } from '@harnessio/ui/components'
@@ -84,7 +84,7 @@ export const DraggableCardsDemo = () => {
           <Drawer.Title>Environment</Drawer.Title>
         </Drawer.Header>
         <Drawer.Body>
-          <InfoCardList cards={cards} setCards={setCards} />
+          <DraggableCardList cards={cards} setCards={setCards} />
         </Drawer.Body>
       </Drawer.Content>
     </Drawer.Root>

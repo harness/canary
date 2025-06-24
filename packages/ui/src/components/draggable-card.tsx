@@ -7,7 +7,7 @@ import { Card } from './card'
 import { IconV2 } from './icon-v2'
 import { Layout } from './layout'
 
-interface InfoCardProps {
+interface DraggableCardProps {
   id: string
   title: string | React.ReactNode
   description?: string | React.ReactNode
@@ -20,7 +20,7 @@ export interface CardData {
   disabled?: boolean
 }
 
-export const InfoCard = ({ id, title, description, disabled = false }: InfoCardProps) => {
+export const DraggableCard = ({ id, title, description, disabled = false }: DraggableCardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id, disabled })
 
   const style = transform
@@ -51,7 +51,13 @@ export const InfoCard = ({ id, title, description, disabled = false }: InfoCardP
   )
 }
 
-export const InfoCardList = ({ cards, setCards }: { cards: CardData[]; setCards: (newCards: CardData[]) => void }) => {
+export const DraggableCardList = ({
+  cards,
+  setCards
+}: {
+  cards: CardData[]
+  setCards: (newCards: CardData[]) => void
+}) => {
   const { handleDragEnd, getItemId } = useDragAndDrop({
     items: cards,
     onReorder: setCards
@@ -62,7 +68,7 @@ export const InfoCardList = ({ cards, setCards }: { cards: CardData[]; setCards:
       <SortableContext items={cards.map((_, index) => getItemId(index))}>
         <Layout.Flex direction="column" gap="md">
           {cards.map((card, index) => (
-            <InfoCard
+            <DraggableCard
               key={card.id}
               id={getItemId(index)}
               title={card.title}

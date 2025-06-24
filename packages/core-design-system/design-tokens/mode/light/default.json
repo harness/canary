@@ -2196,6 +2196,10 @@
     "lg": {
       "$type": "borderWidth",
       "$value": "2"
+    },
+    "xl": {
+      "$type": "borderWidth",
+      "$value": "2"
     }
   },
   "disabled": {

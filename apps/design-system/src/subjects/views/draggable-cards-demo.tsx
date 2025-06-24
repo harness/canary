@@ -1,14 +1,67 @@
 import { useState } from 'react'
 
-import { CardData, InfoCardList } from '@harnessio/ui/components'
+import {
+  Accordion,
+  CardData,
+  Checkbox,
+  Drawer,
+  IconV2,
+  InfoCardList,
+  MoreActionsTooltip,
+  Select
+} from '@harnessio/ui/components'
 
 export const DraggableCardsDemo = () => {
   // Sample card data
   const [cards, setCards] = useState<CardData[]>([
     {
       id: '1',
-      title: 'First Card',
-      description: 'This is the first card. You can drag it around.'
+      title: (
+        <div className="w-full flex items-center justify-between">
+          <span className="flex items-center">
+            <IconV2 name="ai" size="md" />
+            <span className="ml-2">First Card</span>
+          </span>
+          <MoreActionsTooltip
+            actions={[
+              {
+                title: 'Action 1',
+                onClick: () => {}
+              },
+              {
+                title: 'Action 2',
+                onClick: () => {}
+              }
+            ]}
+            iconName="more-horizontal"
+          />
+        </div>
+      ),
+      children: (
+        <div>
+          <Select
+            options={[
+              { label: 'AWS', value: 'aws' },
+              { label: 'GCP', value: 'gcp' },
+              { label: 'Azure', value: 'azure' },
+              { label: 'Kubernetes', value: 'k8s' }
+            ]}
+            placeholder="Select infrastructure"
+            onChange={() => {}}
+            label="Infrastructure Settings"
+          />
+
+          <Accordion.Root type="single" collapsible>
+            <Accordion.Item value="advanced">
+              <Accordion.Trigger>Advanced Settings</Accordion.Trigger>
+              <Accordion.Content>
+                <Checkbox id="enable-monitoring" label="Enable monitoring" />
+                <Checkbox id="auto-scaling" label="Enable auto-scaling" />
+              </Accordion.Content>
+            </Accordion.Item>
+          </Accordion.Root>
+        </div>
+      )
     },
     {
       id: '2',
@@ -23,11 +76,17 @@ export const DraggableCardsDemo = () => {
   ])
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Draggable Cards Demo</h2>
-      <p className="mb-4 text-gray-600">Drag and drop the cards below to reorder them</p>
-      <InfoCardList cards={cards} setCards={setCards} />
-    </div>
+    <Drawer.Root>
+      <Drawer.Trigger>Open</Drawer.Trigger>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Environment</Drawer.Title>
+        </Drawer.Header>
+        <Drawer.Body>
+          <InfoCardList cards={cards} setCards={setCards} />
+        </Drawer.Body>
+      </Drawer.Content>
+    </Drawer.Root>
   )
 }
 

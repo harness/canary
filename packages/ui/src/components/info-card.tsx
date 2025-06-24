@@ -8,16 +8,18 @@ import { IconV2 } from './icon-v2'
 
 interface InfoCardProps {
   id: string
-  title: string
-  description: string
+  title: string | React.ReactNode
+  description?: string
+  children?: React.ReactNode
 }
 export interface CardData {
   id: string
-  title: string
-  description: string
+  title: string | React.ReactNode
+  description?: string
+  children?: React.ReactNode
 }
 
-export const InfoCard = ({ id, title, description }: InfoCardProps) => {
+export const InfoCard = ({ id, title, description, children }: InfoCardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
   const style = transform
@@ -32,13 +34,14 @@ export const InfoCard = ({ id, title, description }: InfoCardProps) => {
   return (
     <Card.Root ref={setNodeRef} style={style}>
       <Card.Content>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 border-b pb-2 mb-2">
           <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
-            <IconV2 className="size-4 text-gray-400" name="grip-dots" size="xs" />
+            <IconV2 name="grip-dots" size="xs" />
           </div>
-          <Card.Title>{title}</Card.Title>
+          {title}
         </div>
         <p className="mt-2">{description}</p>
+        {children}
       </Card.Content>
     </Card.Root>
   )
@@ -55,7 +58,9 @@ export const InfoCardList = ({ cards, setCards }: { cards: CardData[]; setCards:
       <SortableContext items={cards.map((_, index) => getItemId(index))}>
         <div className="flex flex-col gap-4">
           {cards.map((card, index) => (
-            <InfoCard key={card.id} id={getItemId(index)} title={card.title} description={card.description} />
+            <InfoCard key={card.id} id={getItemId(index)} title={card.title} description={card.description}>
+              {card.children}
+            </InfoCard>
           ))}
         </div>
       </SortableContext>

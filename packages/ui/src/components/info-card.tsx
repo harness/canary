@@ -10,22 +10,22 @@ import { Layout } from './layout'
 interface InfoCardProps {
   id: string
   title: string | React.ReactNode
-  description?: string
-  children?: React.ReactNode
+  description?: string | React.ReactNode
+  disabled?: boolean
 }
 export interface CardData {
   id: string
   title: string | React.ReactNode
-  description?: string
-  children?: React.ReactNode
+  description?: string | React.ReactNode
+  disabled?: boolean
 }
 
-export const InfoCard = ({ id, title, description, children }: InfoCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
+export const InfoCard = ({ id, title, description, disabled = false }: InfoCardProps) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id, disabled })
 
   const style = transform
     ? {
-        transform: CSS.Transform.toString(transform),
+        transform: CSS.Translate.toString(transform),
         transition: transition,
         opacity: isDragging ? 0.5 : 1,
         zIndex: isDragging ? 10 : 0
@@ -35,14 +35,17 @@ export const InfoCard = ({ id, title, description, children }: InfoCardProps) =>
   return (
     <Card.Root ref={setNodeRef} style={style}>
       <Card.Content>
-        <div className="flex items-center gap-2 border-b pb-2 mb-2">
-          <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
-            <IconV2 name="grip-dots" size="xs" />
+        <div className="-mx-4 px-4 border-b">
+          <div className="pb-4 flex items-center gap-2">
+            {disabled ? null : (
+              <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
+                <IconV2 name="grip-dots" size="xs" />
+              </div>
+            )}
+            {title}
           </div>
-          {title}
         </div>
-        <p className="mt-2">{description}</p>
-        {children}
+        <div className="mt-4">{description}</div>
       </Card.Content>
     </Card.Root>
   )
@@ -57,11 +60,15 @@ export const InfoCardList = ({ cards, setCards }: { cards: CardData[]; setCards:
   return (
     <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
       <SortableContext items={cards.map((_, index) => getItemId(index))}>
-        <Layout.Flex dir="col" gap="md">
+        <Layout.Flex direction="column" gap="md">
           {cards.map((card, index) => (
-            <InfoCard key={card.id} id={getItemId(index)} title={card.title} description={card.description}>
-              {card.children}
-            </InfoCard>
+            <InfoCard
+              key={card.id}
+              id={getItemId(index)}
+              title={card.title}
+              description={card.description}
+              disabled={card.disabled}
+            />
           ))}
         </Layout.Flex>
       </SortableContext>

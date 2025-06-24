@@ -16,10 +16,6 @@ function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
     style[`height`] = `var(--cn-icon-size-${size})`
     style[`min-height`] = `var(--cn-icon-size-${size})`
 
-    if (entity === 'icon') {
-      style['stroke-width'] = `var(--cn-icon-stroke-width-${size})`
-    }
-
     styles[`&:where(.cn-${entity}-${size})`] = style
   })
 

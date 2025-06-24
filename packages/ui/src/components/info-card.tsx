@@ -1,4 +1,4 @@
-import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core'
+import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import useDragAndDrop from '@hooks/use-drag-and-drop'

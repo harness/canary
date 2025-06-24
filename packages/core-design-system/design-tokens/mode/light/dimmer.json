@@ -2180,27 +2180,27 @@
         "bg": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.150}"
+            "$value": "{pure.white}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.150}"
+            "$value": "{pure.white}"
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{chrome.25}"
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{chrome.50}"
+            "$value": "{chrome.25}"
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{chrome.50}"
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{chrome.100}"
           }
         },
         "border": {
@@ -2210,17 +2210,17 @@
           },
           "to": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{chrome.25}"
           }
         },
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.700}"
+            "$value": "{chrome.150}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.500}"
+            "$value": "{chrome.300}"
           },
           "stop-3": {
             "$type": "color",

@@ -2225,7 +2225,7 @@
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.150}"
+            "$value": "{chrome.200}"
           },
           "stop-2": {
             "$type": "color",

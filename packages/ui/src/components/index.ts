@@ -84,6 +84,7 @@ export * from './illustration'
 export * from './draggable-card'
 export * from './button-group'
 export * from './view-only'
+export * from './stats-panel'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

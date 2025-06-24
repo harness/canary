@@ -1,5 +1,16 @@
-import { IconV2, LogoV2, Tag, ViewOnly, ViewOnlyProps } from '@harnessio/ui/components'
-import { PageHeader, SandboxLayout } from '@harnessio/ui/views'
+import {
+  IconV2,
+  Layout,
+  LogoV2,
+  StatsPanel,
+  StatusBadge,
+  Tag,
+  Text,
+  ViewOnly,
+  ViewOnlyProps
+} from '@harnessio/ui/components'
+import { timeAgo } from '@harnessio/ui/utils'
+import { Page } from '@harnessio/ui/views'
 
 const dataMock: ViewOnlyProps[] = [
   {
@@ -101,7 +112,7 @@ const dataMock: ViewOnlyProps[] = [
       {
         label: 'Labels',
         value: (
-          <div className="flex flex-wrap gap-1.5">
+          <Layout.Flex wrap="wrap" gap="xs">
             <Tag variant="secondary" value="connector" theme="violet" />
             <Tag variant="secondary" value="new" theme="violet" />
             <Tag variant="secondary" value="main" theme="violet" />
@@ -110,7 +121,7 @@ const dataMock: ViewOnlyProps[] = [
             <Tag variant="secondary" value="test" theme="violet" />
             <Tag variant="secondary" value="dev" theme="violet" />
             <Tag variant="secondary" value="prod" theme="violet" />
-          </div>
+          </Layout.Flex>
         )
       },
       {
@@ -123,27 +134,57 @@ const dataMock: ViewOnlyProps[] = [
 
 export const ViewOnlyView = () => {
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content>
-        <PageHeader
-          backLink={{
-            linkText: 'Back to connectors',
-            linkProps: { to: '/' }
-          }}
-          logoName="node-js"
-          title="harnessdocker"
-          description="Preconfigured Docker connector for use in Harness."
-          button={{
-            props: {
-              onClick: () => console.log('Click')
-            },
-            text: 'Test Connection'
-          }}
+    <Page.Root>
+      <Page.Header
+        backLink={{
+          linkText: 'Back to connectors',
+          linkProps: { to: '/' }
+        }}
+        logoName="node-js"
+        title="harnessdocker"
+        description="Preconfigured Docker connector for use in Harness."
+        button={{
+          props: {
+            onClick: () => console.log('Click')
+          },
+          text: 'Test Connection'
+        }}
+        moreActions={[
+          { title: 'Action 1', onClick: () => console.log('Action 1') },
+          { title: 'Action 2', onClick: () => console.log('Action 2') }
+        ]}
+      >
+        <Layout.Flex wrap="wrap" gap="xs" align="baseline">
+          <Text color="foreground-3">Labels:</Text>
+          <Tag variant="secondary" value="connector" theme="violet" />
+          <Tag variant="secondary" value="new" theme="violet" />
+          <Tag variant="secondary" value="main" theme="violet" />
+          <Tag variant="secondary" value="integration" theme="violet" />
+          <Tag variant="secondary" value="automation" theme="violet" />
+          <Tag variant="secondary" value="+3 labels" theme="violet" />
+        </Layout.Flex>
+        <StatsPanel
+          data={[
+            { label: 'Created', value: timeAgo('Dec 6, 2024', { dateStyle: 'medium' }) },
+            { label: 'Last updated', value: null },
+            { label: 'Last status check', value: timeAgo('Jun 6, 2025', { dateStyle: 'medium' }) },
+            { label: 'Last successful check', value: null },
+            {
+              label: 'Connection status',
+              value: (
+                <StatusBadge variant="status" theme="success">
+                  Success
+                </StatusBadge>
+              )
+            }
+          ]}
         />
+      </Page.Header>
+      <Page.Content>
         {dataMock.map((props, index) => (
           <ViewOnly key={index} {...props} />
         ))}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Page.Content>
+    </Page.Root>
   )
 }

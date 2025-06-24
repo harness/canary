@@ -69,9 +69,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
 
   return (
     <Tooltip content={content}>
-      <time className="mx-1 h-auto p-0 text-cn-foreground-2 data-[state=delayed-open]:text-cn-foreground-1">
-        {formattedDate}
-      </time>
+      <time className="h-auto p-0 data-[state=delayed-open]:text-cn-foreground-1">{formattedDate}</time>
     </Tooltip>
   )
 }

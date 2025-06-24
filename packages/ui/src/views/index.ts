@@ -12,7 +12,7 @@ export * from './layouts/main-content-layout'
 
 // components
 export * from './components/RadioSelect'
-export * from './components/page-header'
+export * from './components/page'
 
 // Account
 export * from './account'

@@ -2263,6 +2263,70 @@
       "lines": {
         "$type": "color",
         "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+      },
+      "bubble-top": {
+        "bg": {
+          "$type": "color",
+          "$value": "{bg.0}"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "{bg.0}"
+        }
+      },
+      "bubble-bottom": {
+        "bg": {
+          "$type": "color",
+          "$value": "{bg.0}"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "{bg.0}"
+        }
+      }
+    }
+  },
+  "flow": {
+    "onboarding": {
+      "img-color-bubble": {
+        "default": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        }
+      },
+      "ellipse-up-1": {
+        "default": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        }
+      },
+      "ellipse-up-2": {
+        "default": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        }
+      },
+      "ellipse-down": {
+        "default": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        }
       }
     }
   }

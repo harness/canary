@@ -14,7 +14,8 @@ const iconVariants = cva('cn-icon', {
       xs: 'cn-icon-xs',
       sm: 'cn-icon-sm',
       md: 'cn-icon-md',
-      lg: 'cn-icon-lg'
+      lg: 'cn-icon-lg',
+      xl: 'cn-icon-xl'
     }
   },
   defaultVariants: {

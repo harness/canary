@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg'] as const
+const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'] as const
 const logoSizes = ['sm', 'md', 'lg'] as const
 
 function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
@@ -15,6 +15,10 @@ function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
     style[`min-width`] = `var(--cn-icon-size-${size})`
     style[`height`] = `var(--cn-icon-size-${size})`
     style[`min-height`] = `var(--cn-icon-size-${size})`
+
+    if (entity === 'icon') {
+      style['stroke-width'] = `var(--cn-icon-stroke-width-${size})`
+    }
 
     styles[`&:where(.cn-${entity}-${size})`] = style
   })

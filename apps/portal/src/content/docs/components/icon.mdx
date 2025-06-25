@@ -16,7 +16,7 @@ import IconGrid from "../../../components/IconGrid.astro";
 
 ## Size Variants
 
-IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, and `lg`. The default size is `sm`.
+IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, `lg` and `xl`. The default size is `sm`.
 
 <DocsPage.ComponentExample
   client:only
@@ -26,6 +26,7 @@ IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, and 
     <IconV2 name="star" size="sm" />
     <IconV2 name="star" size="md" />
     <IconV2 name="star" size="lg" />
+    <IconV2 name="star" size="xl" />
   </Layout.Flex>`}
 />
 
@@ -68,7 +69,7 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
 ```typescript jsx
 <IconV2
   name="double-tick"   // name of the icon
-  size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg)
+  size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg, xl)
   className="my-class" // [OPTIONAL] custom class name
   skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
 />
@@ -86,7 +87,7 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
       name: "size",
       description: "Size variant of the icon",
       required: false,
-      value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg'",
+      value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'",
       defaultValue: "'sm'",
     },
     {

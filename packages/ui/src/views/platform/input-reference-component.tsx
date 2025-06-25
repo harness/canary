@@ -148,7 +148,7 @@ export const InputReference = <T,>({
         }}
         {...props}
       >
-        <div className="w-full flex items-center justify-between px-3 py-2">
+        <div className="flex w-full items-center justify-between px-3 py-2">
           {icon && <IconV2 className="mr-2.5" name={icon} />}
           <div className="flex-1 truncate">{displayContent}</div>
           {hasValue && !disabled && (
@@ -164,7 +164,7 @@ export const InputReference = <T,>({
         </div>
         {suffix ? (
           <div
-            className="border-l rounded-l-none flex items-center justify-center border-inherit aspect-1 h-full"
+            className="aspect-1 flex h-full items-center justify-center rounded-l-none border-l border-inherit"
             // Don't trigger onClick of the parent div when suffix is clicked
             onPointerDown={e => {
               e.stopPropagation()

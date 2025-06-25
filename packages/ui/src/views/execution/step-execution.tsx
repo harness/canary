@@ -35,18 +35,18 @@ const StepExecutionToolbar: FC<
           variant="outline"
           size="sm"
           iconOnly
-          className="border-cn-borders-2 rounded-r-none border-r-0"
+          className="rounded-r-none border-r-0 border-cn-borders-2"
           onClick={onCopy}
         >
           <IconV2 name="copy" className="size-4 text-icons-3" />
         </Button>
-        <Button variant="outline" size="sm" className="border-cn-borders-2 rounded-none" onClick={onEdit}>
+        <Button variant="outline" size="sm" className="rounded-none border-cn-borders-2" onClick={onEdit}>
           <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
         </Button>
         <Button
           variant="outline"
           size="sm"
-          className="border-cn-borders-2 rounded-l-none border-l-0"
+          className="rounded-l-none border-l-0 border-cn-borders-2"
           onClick={onDownload}
         >
           <IconV2 name="download" className="text-icons-3" size="sm" />

@@ -146,7 +146,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                     label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
                   />
                   {isDragging && (
-                    <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
+                    <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
                   )}
                 </div>
               </Tabs.Content>

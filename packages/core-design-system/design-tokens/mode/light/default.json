@@ -2180,27 +2180,27 @@
         "bg": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.600}"
+            "$value": "{pure.white}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.800}"
+            "$value": "{pure.white}"
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{chrome.25}"
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{chrome.900}"
+            "$value": "{chrome.25}"
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{chrome.950}"
+            "$value": "{chrome.50}"
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{chrome.1000}"
+            "$value": "{chrome.100}"
           }
         },
         "border": {
@@ -2215,30 +2215,30 @@
               }
             },
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{pure.black}"
           },
           "to": {
             "$extensions": {
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.01",
+                  "value": "0.02",
                   "space": "lch"
                 }
               }
             },
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{pure.black}"
           }
         },
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{chrome.200}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{chrome.300}"
           },
           "stop-3": {
             "$type": "color",
@@ -2248,11 +2248,11 @@
         "lines": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.900}"
+            "$value": "{chrome.200}"
           },
           "to": {
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.white}"
           }
         },
         "bubble-t": {

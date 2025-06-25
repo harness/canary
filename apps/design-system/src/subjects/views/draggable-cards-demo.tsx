@@ -16,7 +16,6 @@ export const DraggableCardsDemo = () => {
   const [cards, setCards] = useState<CardData[]>([
     {
       id: '1',
-      disabled: true,
       title: (
         <div className="w-full flex items-center justify-between">
           <span className="flex items-center">

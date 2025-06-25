@@ -5,11 +5,7 @@
     "selectedTokenSets": {
       "core/typography": "source",
       "core/dimensions": "source",
-      "core/colors_lch": "source",
-      "mode/dark/figma-icon-stroke-width": "disabled",
-      "mode/dark/icon-stroke-width": "disabled",
-      "mode/light/figma-icon-stroke-width": "disabled",
-      "mode/light/icon-stroke-width": "disabled"
+      "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -22183,11 +22179,7 @@
       "components/desktop/base/dialog": "enabled",
       "components/desktop/base/pagination": "enabled",
       "components/desktop/base/progress": "enabled",
-      "components/desktop/base/popover": "enabled",
-      "mode/dark/figma-icon-stroke-width": "disabled",
-      "mode/dark/icon-stroke-width": "disabled",
-      "mode/light/figma-icon-stroke-width": "disabled",
-      "mode/light/icon-stroke-width": "disabled"
+      "components/desktop/base/popover": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

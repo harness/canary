@@ -2223,12 +2223,30 @@
         },
         "border": {
           "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.1",
+                  "space": "lch"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{pure.black}"
           },
           "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.02",
+                  "space": "lch"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{pure.black}"
           }
         },
         "icon": {

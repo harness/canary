@@ -2214,12 +2214,30 @@
         },
         "border": {
           "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.1",
+                  "space": "lch"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{pure.white}"
           },
           "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.01",
+                  "space": "lch"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{chrome.1000}"
+            "$value": "{pure.white}"
           }
         },
         "icon": {

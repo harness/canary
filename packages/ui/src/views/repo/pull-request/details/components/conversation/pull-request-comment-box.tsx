@@ -35,7 +35,6 @@ interface ToolbarItem {
   action: ToolbarAction
   title?: string
   size?: number
-  onClick: (comment: string, textSelection: TextSelection) => void
 }
 
 export interface PullRequestCommentBoxProps {
@@ -201,34 +200,6 @@ export const PullRequestCommentBox = ({
     )
   }
 
-  const handleSuggestion = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '```suggestion\n', '\n```', parseDiff(diff, sideKey, lineNumber))
-  }
-
-  const handleHeader = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '# ')
-  }
-
-  const handleBold = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '**', '**')
-  }
-
-  const handleItalic = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '*', '*')
-  }
-
-  const handleList = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '- ')
-  }
-
-  const handleListSelect = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '- [ ] ')
-  }
-
-  const handleCode = (comment: string, textSelection: TextSelection) => {
-    parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```')
-  }
-
   const parseDiff = (diff: string = '', sideKey?: 'oldFile' | 'newFile', lineNumber?: number): string => {
     if (isUndefined(sideKey) || isUndefined(lineNumber)) {
       return ''
@@ -274,16 +245,45 @@ export const PullRequestCommentBox = ({
     // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
-      { icon: 'suggestion', action: ToolbarAction.SUGGESTION, onClick: handleSuggestion },
-      { icon: 'header', action: ToolbarAction.HEADER, onClick: handleHeader },
-      { icon: 'bold', action: ToolbarAction.BOLD, onClick: handleBold },
-      { icon: 'italic', action: ToolbarAction.ITALIC, onClick: handleItalic },
-      { icon: 'attachment', action: ToolbarAction.UPLOAD, onClick: handleFileSelect },
-      { icon: 'list', action: ToolbarAction.UNORDER_LIST, onClick: handleList },
-      { icon: 'list-select', action: ToolbarAction.CHECK_LIST, onClick: handleListSelect },
-      { icon: 'code', action: ToolbarAction.CODE_BLOCK, onClick: handleCode }
+      { icon: 'suggestion', action: ToolbarAction.SUGGESTION },
+      { icon: 'header', action: ToolbarAction.HEADER },
+      { icon: 'bold', action: ToolbarAction.BOLD },
+      { icon: 'italic', action: ToolbarAction.ITALIC },
+      { icon: 'attachment', action: ToolbarAction.UPLOAD },
+      { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+      { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
+      { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
   }, [])
+
+  const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
+    switch (type) {
+      case ToolbarAction.SUGGESTION:
+        parseAndSetComment(comment, textSelection, '```suggestion\n', '\n```', parseDiff(diff, sideKey, lineNumber))
+        break
+      case ToolbarAction.HEADER:
+        parseAndSetComment(comment, textSelection, '# ')
+        break
+      case ToolbarAction.BOLD:
+        parseAndSetComment(comment, textSelection, '**', '**')
+        break
+      case ToolbarAction.ITALIC:
+        parseAndSetComment(comment, textSelection, '*', '*')
+        break
+      case ToolbarAction.UPLOAD:
+        handleFileSelect()
+        break
+      case ToolbarAction.UNORDER_LIST:
+        parseAndSetComment(comment, textSelection, '- ')
+        break
+      case ToolbarAction.CHECK_LIST:
+        parseAndSetComment(comment, textSelection, '- [ ] ')
+        break
+      case ToolbarAction.CODE_BLOCK:
+        parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```')
+        break
+    }
+  }
 
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
@@ -309,10 +309,10 @@ export const PullRequestCommentBox = ({
       const parsedComment = parseComment(comment, textSelection, '')
 
       if (isListString(parsedComment.previousLine)) {
-        setTimeout(() => handleList(comment, textSelection), 0)
+        setTimeout(() => handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection), 0)
       }
       if (isListSelectString(parsedComment.previousLine)) {
-        setTimeout(() => handleListSelect(comment, textSelection), 0)
+        setTimeout(() => handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection), 0)
       }
     }
   }
@@ -374,7 +374,12 @@ export const PullRequestCommentBox = ({
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button size="sm" variant="ghost" iconOnly onClick={() => item.onClick(comment, textSelection)}>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        iconOnly
+                        onClick={() => handleActionClick(item.action, comment, textSelection)}
+                      >
                         <IconV2 className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
@@ -398,7 +403,7 @@ export const PullRequestCommentBox = ({
         <div className="mt-4 flex items-center justify-between">
           {activeTab === TABS_KEYS.WRITE && (
             <div>
-              <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+              <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button size="sm" variant="ghost" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>

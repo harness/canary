@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { SidebarContext } from '@/components'
+import { UseSidebarSignature } from '@/components'
 import { cn } from '@/utils'
 
 /**
@@ -11,7 +11,7 @@ const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-[var(--cn-inset-layout-indent)] overflow-hidden">
     <div
       className={cn(
-        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_hsl(var(--canary-sidebar-background-01))]',
+        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_hsl(var(--cn-bg-0))]',
         className
       )}
     />
@@ -19,7 +19,7 @@ const HalfArch = ({ className }: { className?: string }) => (
 )
 
 type MainContentLayoutProps = PropsWithChildren<{
-  useSidebar?: () => SidebarContext
+  useSidebar?: UseSidebarSignature
   withBreadcrumbs?: boolean
   className?: string
 }>

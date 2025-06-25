@@ -25,6 +25,7 @@ const LinkDefault = ({ to, children, ...props }: LinkProps) => {
 const NavLinkDefault = ({ to, children, className, style, ...props }: NavLinkProps) => {
   const href = resolveTo(to)
   const isActive = new URL(href, window.location.origin).pathname === window.location.pathname
+  console.log('🚀 ~ NavLinkDefault ~ isActive:', [href, isActive])
 
   const finalClassName =
     typeof className === 'function' ? className({ isActive, isPending: false, isTransitioning: false }) : className

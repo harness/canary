@@ -31,6 +31,7 @@ import {
   radioStyles,
   scrollAreaStyles,
   selectStyles,
+  sidebarStyles,
   switchStyles,
   tableV2Styles,
   tabsStyles,
@@ -293,39 +294,6 @@ export default {
             lime: 'var(--canary-label-background-lime-01)'
           }
         },
-        sidebar: {
-          background: {
-            1: 'hsl(var(--canary-sidebar-background-01))',
-            2: 'var(--canary-sidebar-background-02)',
-            3: 'var(--canary-sidebar-background-03)',
-            4: 'hsl(var(--canary-sidebar-background-04))',
-            5: 'hsl(var(--canary-sidebar-background-05))',
-            6: 'var(--canary-sidebar-background-06)',
-            7: 'hsl(var(--canary-sidebar-background-07))',
-            8: 'hsl(var(--canary-sidebar-background-08))'
-          },
-          border: {
-            1: 'var(--cn-border-3)',
-            2: 'hsla(var(--canary-sidebar-border-02))',
-            3: 'hsl(var(--canary-sidebar-border-03))',
-            4: 'hsl(var(--canary-sidebar-border-04))',
-            5: 'hsl(var(--canary-sidebar-border-05))'
-          },
-          foreground: {
-            1: 'hsl(var(--canary-sidebar-foreground-01))',
-            2: 'hsl(var(--canary-sidebar-foreground-02))',
-            3: 'hsl(var(--canary-sidebar-foreground-03))',
-            4: 'hsl(var(--canary-sidebar-foreground-04))',
-            5: 'hsl(var(--canary-sidebar-foreground-05))',
-            6: 'hsl(var(--canary-sidebar-foreground-06))',
-            accent: 'hsl(var(--canary-sidebar-foreground-accent))'
-          },
-          icon: {
-            1: 'hsl(var(--canary-sidebar-icon-01))',
-            2: 'hsl(var(--canary-sidebar-icon-02))',
-            3: 'hsl(var(--canary-sidebar-icon-03))'
-          }
-        },
         topbar: {
           background: {
             1: 'hsl(var(--canary-topbar-background-01))'
@@ -481,6 +449,7 @@ export default {
         scrollAreaStyles,
         popoverStyles,
         tooltipStyles,
+        sidebarStyles,
         breadcrumbStyles,
         iconsAndLogos,
         timeAgoCardStyles,
@@ -581,11 +550,6 @@ export default {
     { pattern: /^bg-label-background-/ },
     { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
     { pattern: /^text-label-foreground-/ },
-    // sidebar classes
-    { pattern: /^bg-sidebar-background-/ },
-    { pattern: /^text-sidebar-foreground-/ },
-    { pattern: /^border-sidebar-border-/ },
-    { pattern: /^text-sidebar-icon-/ },
     // topbar classes
     { pattern: /^bg-topbar-background-/ },
     { pattern: /^text-topbar-foreground-/ },
@@ -603,11 +567,6 @@ export default {
     // label classes
     { pattern: /^hover:bg-label-background-/ },
     { pattern: /^hover:text-label-foreground-/ },
-    // sidebar classes
-    { pattern: /^hover:bg-sidebar-background-/ },
-    { pattern: /^hover:text-sidebar-foreground-/ },
-    { pattern: /^hover:border-sidebar-border-/ },
-    { pattern: /^hover:text-sidebar-icon-/ },
     // topbar classes
     { pattern: /^hover:bg-topbar-background-/ },
     { pattern: /^hover:text-topbar-foreground-/ },

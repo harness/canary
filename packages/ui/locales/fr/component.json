@@ -10,21 +10,18 @@
     "remove": "Supprimer",
     "reorder": "Réorganiser",
     "unpin": "Désépingler",
-    "searchButton": "Ouvrir la boîte de dialogue de recherche",
-    "search": "Rechercher",
     "command-palette": "Palette de commandes",
     "nothing-found": "Rien trouvé",
+    "search": "Rechercher",
     "settings": "Paramètres",
-    "appearence": "Appearance",
+    "appearance": "Appearance",
     "language": "Language",
     "logout": "Se déconnecter",
     "more": "Plus",
     "recent": "Récent",
     "user-management": "Gestion des utilisateurs",
-    "sidebarToggle": {
-      "expand": "Développer",
-      "collapse": "Réduire"
-    },
+    "searchButton": "Ouvrir la boîte de dialogue de recherche",
+    "appearence": "Appearance",
     "profile": "Profile",
     "theme": "Thème",
     "customNav": "Personnaliser la navigation",
@@ -135,6 +132,13 @@
   },
   "widgets": {
     "viewMore": "View more"
+  },
+  "sidebar": {
+    "sidebarToggle": {
+      "collapse": "Collapse",
+      "expand": "Expand"
+    },
+    "toggle": "Toggle sidebar"
   },
   "sort": {
     "defaultLabel": "Trier",

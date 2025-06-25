@@ -1,0 +1,341 @@
+export default {
+  '.cn-sidebar': {
+    '--cn-sidebar-min-height': '100vh',
+
+    '&.cn-sidebar': {
+      display: 'flex',
+      flexDirection: 'column',
+      height: 'var(--cn-sidebar-min-height)',
+      width: 'var(--cn-sidebar-width)',
+      backgroundColor: 'var(--cn-bg-0)',
+      padding: 'var(--cn-sidebar-container-py) 0',
+
+      '&-desktop': {
+        top: '0px',
+        position: 'sticky',
+        '@apply duration-200 transition-[width] ease-linear': ''
+      }
+    },
+
+    '&-wrapper': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+      height: 'var(--cn-sidebar-min-height)'
+    },
+
+    '&-rail': {
+      width: '16px',
+      zIndex: '20',
+      cursor: 'ew-resize',
+      position: 'absolute',
+      '@apply inset-y-0 hidden group-data-[side=left]:-right-2 group-data-[side=right]:-left-2 md:flex': ''
+    },
+
+    '&-inset': {
+      width: '100%',
+      height: 'var(--cn-sidebar-min-height)',
+      overflowY: 'auto',
+      backgroundColor: 'var(--cn-bg-0)'
+    },
+
+    '&-header': {
+      padding:
+        'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)'
+    },
+
+    '&-content': {
+      height: '100%',
+      padding: '0 var(--cn-sidebar-container-px)'
+    },
+
+    '&-footer': {
+      display: 'grid',
+      gap: 'var(--cn-sidebar-footer-gap)',
+      padding: 'var(--cn-sidebar-footer-pt) var(--cn-sidebar-container-px)',
+      paddingBottom: '0'
+    },
+
+    '&-separator': {
+      backgroundColor: 'var(--cn-borders-2)'
+    },
+
+    '&-group': {
+      display: 'grid',
+      gap: 'var(--cn-sidebar-group-gap)',
+      padding: 'var(--cn-sidebar-group-py) 0',
+
+      '&-label': {
+        opacity: '1',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        overflow: 'hidden',
+        '@apply duration-150 transition-[max-height,padding,opacity] ease-linear': ''
+      }
+    },
+
+    '&-menu': {
+      display: 'grid',
+      gap: 'var(--cn-sidebar-group-gap)'
+    },
+
+    '&-submenu': {
+      '&-group': {
+        padding: 'var(--cn-sidebar-sub-group-py) var(--cn-sidebar-sub-group-px)',
+        rowGap: 'var(--cn-sidebar-sub-group-gap)',
+        columnGap: 'var(--cn-sidebar-sub-group-gap-container)',
+        overflow: 'hidden',
+
+        '&:where([data-state="open"])': {
+          '@apply animate-accordion-down': ''
+        },
+
+        '&:where([data-state="closed"])': {
+          '@apply animate-accordion-up': ''
+        }
+      },
+
+      '&-item': {
+        display: 'grid',
+        alignItems: 'center',
+        minHeight: 'var(--cn-sidebar-sub-item-min)',
+        padding: 'var(--cn-sidebar-sub-item-py) var(--cn-sidebar-sub-item-px)',
+        borderRadius: 'var(--cn-sidebar-item-radius)',
+
+        '&:hover, &:focus-within': {
+          backgroundColor: 'var(--cn-state-hover)'
+        },
+
+        '&-active': {
+          '.cn-sidebar-submenu-item-content': {
+            color: 'var(--cn-text-1)'
+          }
+        }
+      }
+    },
+
+    '&-item': {
+      maxWidth: '100%',
+      overflow: 'hidden',
+      '@apply duration-150 transition-[max-width,margin-left] ease-linear': '',
+
+      '&-big': {
+        maxWidth: '100%'
+      },
+
+      '&-active': {
+        '.cn-sidebar-item-content-title': {
+          color: 'var(--cn-text-1)'
+        }
+      },
+
+      '&-wrapper': {
+        position: 'relative',
+        display: 'grid',
+        maxWidth: '100%',
+        overflow: 'hidden',
+
+        '&:where(:not([data-disabled=true]))': {
+          '&:hover, &:focus-within': {
+            '.cn-sidebar-item-content': {
+              backgroundColor: 'var(--cn-state-hover)'
+            },
+
+            '.cn-sidebar-item-content-title': {
+              color: 'var(--cn-text-1)'
+            },
+
+            '.cn-sidebar-item-action-menu': {
+              opacity: '1'
+            },
+
+            '.cn-sidebar-item-content-badge-secondary': {
+              opacity: '0'
+            }
+          }
+        },
+
+        '&:where([data-disabled=true])': {
+          opacity: 'var(--cn-disabled-opacity)',
+          cursor: 'not-allowed'
+        }
+      },
+
+      '&-content': {
+        rowGap: 'var(--cn-spacing-1-half)',
+        columnGap: 'var(--cn-sidebar-item-gap)',
+        justifyItems: 'start',
+        alignItems: 'center',
+        gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
+        gridTemplateAreas: '"icon title"',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        borderRadius: 'var(--cn-sidebar-item-radius)',
+        '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
+
+        '&-w-description': {
+          gridTemplateAreas: `
+            "icon title"
+            "icon description"
+          `,
+          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+        },
+
+        '&-w-r-element': {
+          gridTemplateAreas: '"icon title elem"',
+          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+        },
+
+        '&-complete': {
+          gridTemplateAreas: `
+            "icon title       elem"
+            "icon description elem"
+          `,
+          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+        },
+
+        '&-icon': {
+          gridArea: 'icon',
+
+          '&-w-border': {
+            width: 'var(--cn-icon-size-lg)',
+            height: 'var(--cn-icon-size-lg)',
+            borderRadius: 'var(--cn-rounded-2)',
+            border: '1px solid var(--cn-border-2)',
+            display: 'grid',
+            placeContent: 'center',
+            backgroundImage: 'var(--cn-comp-sidebar-icon-asset-bg)'
+          }
+        },
+
+        '&-title': {
+          maxWidth: '100%',
+          gridArea: 'title'
+        },
+
+        '&-description': {
+          maxWidth: '100%',
+          gridArea: 'description'
+        },
+
+        '&-badge': {
+          margin: '-2px 0',
+
+          '&-secondary': {
+            opacity: '1'
+          },
+
+          '&.cn-sidebar-item-content-badge-secondary': {
+            '@apply duration-150 transition-[opacity] ease-linear': ''
+          }
+        },
+
+        '&-right-element': {
+          gridArea: 'elem'
+        },
+
+        '&-action-item-placeholder': {
+          gridArea: 'elem',
+          width: '16px',
+          height: '16px'
+        },
+
+        '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder': {
+          opacity: '1',
+          overflow: 'hidden',
+          '@apply duration-150 transition-[max-width,opacity,padding] ease-linear': ''
+        }
+      },
+
+      '&-action-button': {
+        position: 'absolute',
+        zIndex: '1',
+        top: 'calc(50% - var(--cn-size-4)/2)',
+        right: 'var(--cn-sidebar-item-px)',
+        display: 'grid',
+        placeContent: 'center',
+        color: 'var(--cn-text-2)',
+        width: 'var(--cn-size-4)',
+        height: 'var(--cn-size-4)',
+        borderRadius: 'var(--cn-rounded-2)',
+        opacity: '1',
+        overflow: 'hidden',
+        '@apply duration-150 transition-[opacity] ease-linear': '',
+
+        '&:hover, &:focus-within': {
+          color: 'var(--cn-text-1)',
+          backgroundColor: 'var(--cn-state-hover)'
+        }
+      },
+
+      '&-action-menu': {
+        opacity: '0',
+        '@apply transition-opacity duration-200 ease-linear': '',
+
+        '&:where([data-state="open"])': {
+          color: 'var(--cn-text-1)',
+          opacity: '1'
+        }
+      },
+
+      '&-skeleton': {
+        display: 'flex',
+        alignItems: 'center',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        columnGap: 'var(--cn-sidebar-item-gap)',
+
+        '&-icon, &-text': {
+          flexShrink: '0',
+          height: 'var(--cn-icon-size-sm)',
+          borderRadius: 'var(--cn-rounded-1)',
+          backgroundColor: 'var(--cn-bg-1)',
+          '@apply animate-pulse': ''
+        },
+
+        '&-icon': {
+          width: 'var(--cn-icon-size-sm)'
+        },
+
+        '&-text': {
+          width: '100%',
+          maxWidth: 'var(--cn-sidebar-skeleton-width)'
+        }
+      }
+    },
+
+    '&:where([data-state=collapsed])': {
+      '.cn-sidebar-group-label': {
+        opacity: '0',
+        padding: '0',
+        maxHeight: '0'
+      },
+
+      '.cn-sidebar-item': {
+        '&-big': {
+          maxWidth: '32px',
+          marginLeft: '2px'
+        },
+
+        '&-content': {
+          rowGap: '0',
+          columnGap: '0',
+
+          '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder': {
+            maxWidth: '0',
+            padding: '0',
+            opacity: '0',
+            minWidth: '0'
+          },
+
+          '&-w-description, &-complete': {
+            padding: '0'
+          }
+        },
+
+        '&-action-button': {
+          maxWidth: '0',
+          minWidth: '0',
+          opacity: '0'
+        }
+      }
+    }
+  }
+}

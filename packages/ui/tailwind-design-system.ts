@@ -25,16 +25,19 @@ import {
   linkStyles,
   multiSelectStyles,
   paginationStyles,
+  popoverStyles,
   progressStyles,
   radioStyles,
   scrollAreaStyles,
   selectStyles,
   switchStyles,
   tableV2Styles,
+  tabsStyles,
   tagStyles,
   textareaStyles,
   toggleGroupStyles,
-  tooltipStyles
+  tooltipStyles,
+  buttonGroupStyle
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -469,12 +472,15 @@ export default {
         progressStyles,
         drawerStyles,
         buttonLayoutStyles,
+        tabsStyles,
         dialogStyles,
         scrollAreaStyles,
+        popoverStyles,
         tooltipStyles,
         breadcrumbStyles,
         iconsAndLogos,
         toggleGroupStyles,
+        buttonGroupStyle,
 
         // Form styles
         selectStyles,
@@ -491,15 +497,7 @@ export default {
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {
-      addUtilities({
-        '.tabnav-active': {
-          boxShadow:
-            'inset 0 1px 0 0 var(--cn-border-3), inset 1px 0 0 0 var(--cn-border-3), inset -1px 0 0 0 var(--cn-border-3)'
-        },
-        '.tabnav-inactive': {
-          boxShadow: 'inset 0 -1px 0 0 var(--cn-border-3)'
-        }
-      })
+      addUtilities({})
     },
     function ({ addComponents, theme, e }: PluginAPI) {
       const hoverClasses: Record<string, Record<string, string>> = {}

@@ -48,7 +48,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
             {/* NAME */}
 
             <TextInput
-              className="py-px truncate"
+              className="truncate py-px"
               id="identifier"
               label={t('views:repos.name')}
               value={tokenData?.identifier}

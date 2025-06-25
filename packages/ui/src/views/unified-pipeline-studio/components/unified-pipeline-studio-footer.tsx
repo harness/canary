@@ -100,7 +100,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
               <span className="text-cn-foreground-1">&nbsp;{authorName}&nbsp;</span>
             </div>
           </Popover.Trigger>
-          <Popover.Content side={'top'} className="mb-4 mr-4 w-80 p-0">
+          <Popover.Content side="top" className="mb-4 mr-4 w-80 p-0">
             <PopoverCommitInfo.Root>
               <PopoverCommitInfo.CommitInfo authorName={authorName} commit={commitSha} />
               <PopoverCommitInfo.CommitMessage>{commitMessage}</PopoverCommitInfo.CommitMessage>

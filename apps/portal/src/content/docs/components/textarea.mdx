@@ -74,6 +74,32 @@ return (
 )
 ```
 
+## Sizes
+
+The `Textarea` component supports the following sizes: `sm` and `default`. The default size is `default`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4 max-w-96 w-full">
+    <Textarea
+      id="1"
+      name="sm"
+      label="Size small:"
+      placeholder="Placeholder"
+      rows={4}
+      size="sm"
+    />
+    
+    <Textarea
+      id="2"
+      name="default"
+      label="Size default:"
+      placeholder="Placeholder"
+      rows={4}
+    />
+  </div>`}
+/>
+
 ## API Reference
 
 The `Textarea` can be used either controlled or uncontrolled. When controlled, the
@@ -146,6 +172,13 @@ all attributes of the `textarea` HTML element.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "size",
+      description: "Size of the textarea",
+      required: false,
+      value: "'sm' | 'default'",
+      defaultValue: "default",
     },
   ]}
 />

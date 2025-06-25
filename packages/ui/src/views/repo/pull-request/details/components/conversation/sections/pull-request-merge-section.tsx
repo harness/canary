@@ -166,11 +166,11 @@ const PullRequestMergeSection = ({
         <Accordion.Content className="ml-6">
           <>
             {showCommandLineInfo && (
-              <div className="border-cn-borders-2 mb-3.5 rounded-md border p-1 px-4 py-2">
+              <div className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2">
                 <Text as="h3" color="foreground-1">
                   Resolve conflicts via command line
                 </Text>
-                <p className="text-2 text-cn-foreground-2 pb-4 pt-1">
+                <p className="pb-4 pt-1 text-2 text-cn-foreground-2">
                   If the conflicts on this branch are too complex to resolve in the web editor, you can check it out via
                   command line to resolve the conflicts
                 </p>

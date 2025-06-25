@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg'] as const
+const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'] as const
 const logoSizes = ['sm', 'md', 'lg'] as const
 
 function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {

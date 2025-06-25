@@ -13,6 +13,7 @@ import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors
 import DataTableDemo from '@subjects/views/data-table-demo'
 import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
 import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
+import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -54,6 +55,7 @@ import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import TableV2Demo from '@subjects/views/table-v2-demo'
+import { ViewOnlyView } from '@subjects/views/templates/view-only'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
@@ -497,7 +499,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
-  multiSelec: {
+  multiSelect: {
     label: 'Multi Select Demo',
     items: {
       'multi-select-demo': {
@@ -557,6 +559,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'delegate-connectivity': {
         label: 'Delegate Connectivity',
         element: <DelegateConnectivityWrapper />
+      },
+      'draggable-cards-demo': {
+        label: 'Draggable Cards Demo',
+        element: <DraggableCardsDemo />
       }
     }
   },
@@ -566,6 +572,20 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
     items: {
       'project-create': { label: 'Project Create', element: <CreateProjectView /> },
       'project-create-additional': { label: 'Project Create Additional', element: <CreateProjectView isAdditional /> }
+    }
+  },
+
+  templates: {
+    label: 'Templates',
+    items: {
+      'view-only': {
+        label: 'View only',
+        element: (
+          <RootViewWrapper>
+            <ViewOnlyView />
+          </RootViewWrapper>
+        )
+      }
     }
   }
 }

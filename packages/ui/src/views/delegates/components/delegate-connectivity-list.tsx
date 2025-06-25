@@ -61,12 +61,12 @@ export function DelegateConnectivityList({
             }) => {
               return (
                 <Table.Row key={groupId}>
-                  <Table.Cell className="max-w-80 content-center whitespace-nowrap truncate">
+                  <Table.Cell className="max-w-80 content-center truncate whitespace-nowrap">
                     <div className="flex items-center gap-2.5">
                       <Title title={groupName} />
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="content-center whitespace-nowrap truncate">
+                  <Table.Cell className="content-center truncate whitespace-nowrap">
                     <div className="inline-flex items-center gap-2">
                       <IconV2
                         name="circle"
@@ -78,7 +78,7 @@ export function DelegateConnectivityList({
                   </Table.Cell>
                   <Table.Cell className="max-w-96 whitespace-normal break-words">
                     {groupCustomSelectors.map((selector: string) => (
-                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mr-2 mb-1">
+                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mb-1 mr-2">
                         {selector}
                       </StatusBadge>
                     ))}

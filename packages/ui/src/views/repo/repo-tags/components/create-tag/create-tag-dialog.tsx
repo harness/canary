@@ -71,7 +71,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
         <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
           <Dialog.Body>
-            <div className="space-y-7 mb-7">
+            <div className="mb-7 space-y-7">
               <FormInput.Text
                 id="name"
                 label={t('views:forms.tagName', 'Name')}

@@ -42,11 +42,6 @@ export default {
       '&:hover, &:focus': {
         cursor: 'not-allowed'
       }
-    },
-
-    '> .cn-link-icon': {
-      width: '12px',
-      height: '12px'
     }
   }
 }

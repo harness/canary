@@ -2189,27 +2189,27 @@
         "bg": {
           "stop-1": {
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{chrome.600}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{chrome.800}"
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{chrome.850}"
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{chrome.900}"
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{chrome.50}"
+            "$value": "{chrome.950}"
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{chrome.1000}"
           }
         },
         "border": {
@@ -2224,30 +2224,30 @@
               }
             },
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.white}"
           },
           "to": {
             "$extensions": {
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.02",
+                  "value": "0.01",
                   "space": "lch"
                 }
               }
             },
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.white}"
           }
         },
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{chrome.100}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.300}"
+            "$value": "{chrome.200}"
           },
           "stop-3": {
             "$type": "color",
@@ -2257,11 +2257,291 @@
         "lines": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{chrome.900}"
           },
           "to": {
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{pure.black}"
+          }
+        },
+        "bubble-t": {
+          "bg": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.50}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.150}"
+            }
+          },
+          "icon": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.600}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.300}"
+            }
+          }
+        },
+        "bubble-b": {
+          "bg": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.150}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.50}"
+            }
+          },
+          "icon": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.300}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.600}"
+            }
+          }
+        }
+      }
+    },
+    "flow": {
+      "onboard": {
+        "img-color-bubble": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.6",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{pure.white}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.6",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{pure.white}"
+            }
+          }
+        },
+        "ellipse-t-1": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.12",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.12",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
+          }
+        },
+        "ellipse-t-2": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.10",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.10",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
+          }
+        },
+        "ellipse-b": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.2",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.2",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
           }
         }
       }
@@ -2290,6 +2570,70 @@
       "lines": {
         "$type": "color",
         "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+      },
+      "bubble-t": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-t.bg.from} 11%, {gradient.img.empty-state.bubble-t.bg.to} 71%)"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-t.icon.from} 8%, {gradient.img.empty-state.bubble-t.icon.to} 92%)"
+        }
+      },
+      "bubble-b": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-b.bg.from} 11%, {gradient.img.empty-state.bubble-b.bg.to} 71%)"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-b.icon.from} 8%, {gradient.img.empty-state.bubble-b.icon.to} 92%)"
+        }
+      }
+    }
+  },
+  "flow": {
+    "onboard": {
+      "img-color-bubble": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.default.from} 0%, {gradient.flow.onboard.img-color-bubble.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.danger.from} 0%, {gradient.flow.onboard.img-color-bubble.danger.to} 100%)"
+        }
+      },
+      "ellipse-t-1": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.default.from} 26%, {gradient.flow.onboard.ellipse-t-1.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.danger.from} 26%, {gradient.flow.onboard.ellipse-t-1.danger.to} 100%)"
+        }
+      },
+      "ellipse-t-2": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.default.from} 26%, {gradient.flow.onboard.ellipse-t-2.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.danger.from} 26%, {gradient.flow.onboard.ellipse-t-2.danger.to} 100%)"
+        }
+      },
+      "ellipse-b": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.default.from} 26%, {gradient.flow.onboard.ellipse-b.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
+        }
       }
     }
   }

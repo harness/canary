@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, UIEventHandler, useRef, useState } from 'react'
 
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
@@ -22,6 +22,7 @@ const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, Scrol
       scrollThumbClassName,
       orientation = 'vertical',
       scrollBarProps,
+      onScroll,
       ...props
     },
     ref
@@ -32,12 +33,14 @@ const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, Scrol
     const isVertical = orientation === 'vertical' || orientation === 'both'
     const isHorizontal = orientation === 'horizontal' || orientation === 'both'
 
-    const handleScroll = () => {
+    const handleScroll: UIEventHandler<HTMLDivElement> = event => {
       setIsScrolling(true)
 
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
+
+      onScroll?.(event)
 
       timeoutRef.current = window.setTimeout(() => {
         setIsScrolling(false)
@@ -97,7 +100,7 @@ const ScrollBar = forwardRef<ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScr
       {...props}
     >
       <ScrollAreaPrimitive.ScrollAreaThumb
-        className={cn('relative flex-1 rounded-full bg-cn-background-9', scrollThumbClassName)}
+        className={cn('relative flex-1 rounded-full cn-scroll-area-thumb', scrollThumbClassName)}
       />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   )

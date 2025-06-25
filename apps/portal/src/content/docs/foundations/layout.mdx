@@ -1,0 +1,365 @@
+---
+title: Layout
+description: Principles and components for creating consistent layouts in your applications
+---
+
+import { DocsPage } from "../../../components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+import { Text } from "@harnessio/ui/components";
+
+Effective layouts are essential for creating intuitive, readable user interfaces. This guide covers the key layout components and principles used throughout the Harness design system.
+
+## Core Layout Components
+
+Harness provides two primary components for constructing layouts:
+
+1. **Layout Component** - A collection of flexible primitives for building layouts with Flex, Grid, Horizontal, and Vertical arrangements.
+2. **Spacer Component** - A utility for adding consistent vertical spacing between elements.
+
+<Aside>
+  Whenever possible, use Layout components with the `gap` property instead of
+  Spacer components. The Spacer component is primarily useful for specific cases
+  where gaps cannot be used.
+</Aside>
+
+## Layout Types
+
+### Flex Layouts
+
+Flex layouts allow you to arrange items in a row or column with flexible spacing and alignment options.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" className="p-4 border rounded-md">
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 1</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 2</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 3</Text>
+  </div>
+</Layout.Flex>`}
+/>
+
+### Grid Layouts
+
+Grid layouts give you precise control over two-dimensional layout with rows and columns.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr" gap="md" className="p-4 border rounded-md">
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 1</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 2</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 3</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 4</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Horizontal and Vertical
+
+Horizontal and Vertical are convenient wrappers around Flex that are pre-configured for row and column layouts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="p-4 border rounded-md">
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 1</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 2</Text>
+  </div>
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Item 3</Text>
+  </div>
+</Layout.Vertical>`}
+/>
+
+## Spacing
+
+Consistent spacing is critical for creating visually balanced layouts. Use the `gap` property on Layout components or the `Spacer` component when needed.
+
+> **Important:** To utilize the `gap` property, you must use the Layout components (`Layout.Flex` or `Layout.Grid`). Regular HTML elements or non-Layout components do not support the standardized `gap` property from the Harness design system.
+
+### Using the Gap Property
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+  // Small gap
+<Layout.Flex gap="xs" className="p-4 border rounded-md mb-4 ">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-md border">xs gap</Text>
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-md border">xs gap</Text>
+</Layout.Flex>
+
+// Medium gap
+
+<Layout.Flex gap="md" className="p-4 border rounded-md mb-4 ">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-md border">
+    md gap
+  </Text>
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-md border">
+    md gap
+  </Text>
+</Layout.Flex>
+
+// Large gap
+
+<Layout.Flex gap="xl" className="p-4 border rounded-md ">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-md border">xl gap</Text>
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-md border">xl gap</Text>
+</Layout.Flex>
+</>
+`}
+/>
+
+### Using the Spacer Component
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="p-4 border rounded-md">
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Content block</Text>
+  </div>
+  <Spacer size={8} />
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Content block with Spacer size={8}</Text>
+  </div>
+  <Spacer size={16} />
+  <div className="bg-cn-primary-1 p-3 rounded-md">
+    <Text color="on-primary-1">Content block with Spacer size={16}</Text>
+  </div>
+</div>`}
+/>
+
+## Common Layout Patterns
+
+### Sidebar Layout
+
+A common layout pattern with a sidebar and main content area.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="250px 1fr" gap="md" className="p-4 border rounded-md">
+  <div className="bg-cn-background-2 p-4 rounded-md">
+    <Text variant="heading-base" color="foreground-1" className="mb-3">Sidebar</Text>
+    <Layout.Vertical gap="sm">
+      <Text variant="body-normal" className="p-2 hover:bg-cn-background-3 rounded cursor-pointer">Navigation Item 1</Text>
+      <Text variant="body-normal" className="p-2 hover:bg-cn-background-3 rounded cursor-pointer">Navigation Item 2</Text>
+      <Text variant="body-normal" className="p-2 hover:bg-cn-background-3 rounded cursor-pointer">Navigation Item 3</Text>
+    </Layout.Vertical>
+  </div>
+  <div className="bg-cn-background-2 p-4 rounded-md">
+    <Text variant="heading-base" color="foreground-1" className="mb-3">Main Content</Text>
+    <Text variant="body-normal">This is the main content area. It takes up most of the available space.</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Header, Content, Footer Layout
+
+A traditional page layout with header, content, and footer sections.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="border rounded-md">
+  <div className="bg-cn-primary-1 text-cn-on-primary-1 p-4">
+    <Text variant="heading-base" className="font-bold">Header</Text>
+  </div>
+  <div className="px-4">
+    <Text variant="heading-base" color="foreground-1" className="mb-3">Main Content</Text>
+    <Text variant="body-normal">This is the main content area of the page.</Text>
+    <Spacer size={16} />
+    <Layout.Grid columns="1fr 1fr" gap="md">
+      <div className="bg-cn-background-2 p-4 rounded-md">
+        <Text variant="body-normal">Section 1</Text>
+      </div>
+      <div className="bg-cn-background-2 p-4 rounded-md">
+        <Text variant="body-normal">Section 2</Text>
+      </div>
+    </Layout.Grid>
+  </div>
+  <div className="bg-cn-background-2 p-4 mt-auto">
+    <Text variant="caption-normal" className="text-center">Footer content</Text>
+  </div>
+</Layout.Vertical>`}
+/>
+
+### Form Layout
+
+A common layout for forms with labels and inputs.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid gap="md" className="p-4 border rounded-md w-96">
+    <Text color="foreground-1" variant="heading-subsection">Contact Information</Text> 
+    <TextInput 
+        label="Name"
+        name="name"
+        placeholder="Enter your name" 
+    /> 
+    <TextInput 
+        label="Email"
+        name="email"
+        type="email"
+        placeholder="Enter your email" 
+    />
+    <Layout.Flex gap="sm" justify="end" className="mt-2">
+        <Button variant="outline">Cancel</Button>
+        <Button>Submit</Button>
+  </Layout.Flex>
+</Layout.Grid>`}
+/>
+
+### Dashboard Card Layout
+
+A grid of cards for dashboard displays.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" rows="auto" gap="md" className="p-4 border rounded-md">
+  <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
+    <Text variant="heading-base" color="foreground-1" className="mb-2">Total Users</Text>
+    <Text variant="heading-section">1,234</Text>
+    <Text variant="caption-normal" color="success" className="mt-2">+12% from last month</Text>
+  </div>
+  
+  <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
+    <Text variant="heading-base" color="foreground-1" className="mb-2">Revenue</Text>
+    <Text variant="heading-section">$48,234</Text>
+    <Text variant="caption-normal" color="success" className="mt-2">+5% from last month</Text>
+  </div>
+  
+  <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
+    <Text variant="heading-base" color="foreground-1" className="mb-2">Active Deployments</Text>
+    <Text variant="heading-section">26</Text>
+    <Text variant="caption-normal" color="danger" className="mt-2">-3 from last month</Text>
+  </div>
+  
+  <div className="bg-cn-background-2 p-4 rounded-md shadow-sm col-span-2">
+    <Text variant="heading-base" color="foreground-1" className="mb-2">Monthly Activity</Text>
+    <div className="h-32 bg-cn-background-3 rounded-md flex items-center justify-center">
+      <Text variant="body-normal" color="foreground-2">[Chart]</Text>
+    </div>
+  </div>
+  
+  <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
+    <Text variant="heading-base" color="foreground-1" className="mb-2">Recent Updates</Text>
+    <Layout.Vertical gap="sm">
+      <Text variant="caption-normal" className="p-2 bg-cn-background-3 rounded-md">System update completed</Text>
+      <Text variant="caption-normal" className="p-2 bg-cn-background-3 rounded-md">New feature deployed</Text>
+    </Layout.Vertical>
+  </div>
+</Layout.Grid>`}
+/>
+
+## Best Practices
+
+<ol className="list-decimal pl-6 space-y-4">
+  <li>
+    <Text variant="body-strong">
+      Use Layout Components Instead of Raw Flex/Grid
+    </Text>
+    <Text variant="body-normal" className="mt-1">
+      The Layout components provide consistent props and behavior across your
+      application
+    </Text>
+  </li>
+
+<li>
+  <Text variant="body-strong">Prefer Gap Over Spacer</Text>
+  <Text variant="body-normal" className="mt-1">
+    Use the `gap` property on Layout components rather than inserting Spacer
+    components between items
+  </Text>
+</li>
+
+<li>
+  <Text variant="body-strong">Responsive Considerations</Text>
+  <Text variant="body-normal" className="mt-1">
+    For complex responsive layouts, use the built-in responsive options or
+    combine with media queries
+  </Text>
+</li>
+
+<li>
+  <Text variant="body-strong">Grid vs. Flex</Text>
+  <ul className="list-disc pl-6 mt-1 space-y-1">
+    <li>
+      <Text variant="body-normal">
+        Use Grid for two-dimensional layouts with rows and columns
+      </Text>
+    </li>
+    <li>
+      <Text variant="body-normal">
+        Use Flex for one-dimensional layouts (either row or column)
+      </Text>
+    </li>
+  </ul>
+</li>
+
+  <li>
+    <Text variant="body-strong">Combine Layout Components</Text>
+    <Text variant="body-normal" className="mt-1">
+      Nest Layout components to create complex interface structures
+    </Text>
+  </li>
+</ol>
+
+## Layout Component API
+
+```typescript
+// Flex component
+<Layout.Flex
+  direction="row" | "column"
+  align="start" | "center" | "end" | "stretch" | "baseline"
+  justify="start" | "center" | "end" | "between" | "around" | "evenly"
+  wrap="nowrap" | "wrap" | "wrap-reverse"
+  gap="none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
+  className="custom-class"
+/>
+
+// Grid component
+<Layout.Grid
+  columns="1fr 2fr" | {number}
+  rows="auto 1fr" | {number}
+  align="start" | "center" | "end" | "stretch" | "baseline"
+  justify="start" | "center" | "end" | "between" | "around" | "evenly"
+  gap="none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
+  className="custom-class"
+/>
+
+// Horizontal component (pre-configured Flex)
+<Layout.Horizontal
+  align="start" | "center" | "end" | "stretch" | "baseline"
+  justify="start" | "center" | "end" | "between" | "around" | "evenly"
+  gap="none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
+  className="custom-class"
+/>
+
+// Vertical component (pre-configured Flex)
+<Layout.Vertical
+  align="start" | "center" | "end" | "stretch" | "baseline"
+  justify="start" | "center" | "end" | "between" | "around" | "evenly"
+  gap="none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl"
+  className="custom-class"
+/>
+```
+
+## Spacer Component API
+
+```typescript
+<Spacer
+  size={4} // Height of the spacer in pixels (default 4px)
+  className="custom-class"
+/>
+```

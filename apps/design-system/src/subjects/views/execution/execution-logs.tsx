@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAnimateTree } from '@/hooks/useAnimateTree'
 import { useLogs } from '@/hooks/useLogs'
-import { useTranslationStore } from '@utils/viewUtils'
 
 import { TreeViewElement } from '@harnessio/ui/components'
 import {
@@ -126,7 +125,7 @@ export const ExecutionLogsView = () => {
         createdTime={createdTimeElapsed}
         pipelineName="build scan push test - k8s - Clone 2"
       />
-      <ExecutionTabs className="border-cn-borders-3 border-t" useTranslationStore={useTranslationStore} />
+      <ExecutionTabs className="border-cn-borders-3 border-t" />
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="border-cn-borders-3 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
           <ExecutionTree

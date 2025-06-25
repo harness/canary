@@ -1,4 +1,5 @@
 import { Button, ButtonLayout, ControlGroup, Dialog, Fieldset } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -9,8 +10,8 @@ interface RemoveAdminDialogProps {
 }
 
 export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: RemoveAdminDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()
@@ -25,9 +26,9 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
+      <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title className="font-medium">
+          <Dialog.Title>
             {isAdmin
               ? t('views:userManagement.removeAdmin.title', 'Are you sure you want to remove {name} as an admin?', {
                   name: user?.display_name
@@ -41,35 +42,37 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
         {/*  TODO: Design system: Update this example with FormWrapper
               Check whether form is required or not
          */}
-        <form className="flex flex-col gap-y-7" onSubmit={handleSubmit} id="remove-admin-form">
-          <Fieldset>
-            <ControlGroup>
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: isAdmin
-                    ? t(
-                        'views:userManagement.removeAdmin.message',
-                        'This will remove the admin tag for <strong>"{{name}}"</strong> from the system.',
-                        { name: user?.display_name }
-                      )
-                    : t(
-                        'views:userManagement.grantAdmin.message',
-                        'This will grant admin privileges to <strong>"{{name}}"</strong> from the system.',
-                        { name: user?.display_name }
-                      )
-                }}
-              />
-            </ControlGroup>
-          </Fieldset>
+        <Dialog.Body>
+          <form className="flex flex-col gap-y-7" onSubmit={handleSubmit} id="remove-admin-form">
+            <Fieldset>
+              <ControlGroup>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: isAdmin
+                      ? t(
+                          'views:userManagement.removeAdmin.message',
+                          'This will remove the admin tag for <strong>"{{name}}"</strong> from the system.',
+                          { name: user?.display_name }
+                        )
+                      : t(
+                          'views:userManagement.grantAdmin.message',
+                          'This will grant admin privileges to <strong>"{{name}}"</strong> from the system.',
+                          { name: user?.display_name }
+                        )
+                  }}
+                />
+              </ControlGroup>
+            </Fieldset>
 
-          {updateUserAdminError && <span className="text-2 text-cn-foreground-danger">{updateUserAdminError}</span>}
-        </form>
+            {updateUserAdminError && <span className="text-2 text-cn-foreground-danger">{updateUserAdminError}</span>}
+          </form>
+        </Dialog.Body>
 
         <Dialog.Footer>
           <ButtonLayout>
-            <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUserAdmin}>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUserAdmin}>
               {t('views:userManagement.cancel', 'Cancel')}
-            </Button>
+            </Dialog.Close>
             <Button
               type="submit"
               theme={isAdmin ? 'danger' : 'default'}

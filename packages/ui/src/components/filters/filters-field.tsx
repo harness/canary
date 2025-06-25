@@ -3,11 +3,10 @@ import { useMemo } from 'react'
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
-import { TFunction } from 'i18next'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import { default as MulltiSelect } from './filters-bar/actions/variants/checkbox'
+import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -26,7 +25,6 @@ export interface FiltersFieldProps<
 > {
   filterOption: FilterOptionConfig<T, CustomValue>
   removeFilter: () => void
-  t: TFunction
   valueLabel?: string
   shouldOpenFilter: boolean
   onOpenChange?: (open: boolean) => void
@@ -71,7 +69,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
     case FilterFieldTypes.MultiSelect: {
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
-        <MulltiSelect
+        <MultiSelectFilter
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}
@@ -112,7 +110,6 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   removeFilter,
   shouldOpenFilter,
   onOpenChange,
-  t,
   onChange,
   value
 }: FiltersFieldProps<T, V, CustomValue>) => {
@@ -139,7 +136,6 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     <FilterBoxWrapper
       contentClassName={filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : ''}
       handleRemoveFilter={() => removeFilter()}
-      t={t}
       onOpenChange={onOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}

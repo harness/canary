@@ -2,15 +2,22 @@ import { FC } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { HarnessLogo, Icon, IconProps, Sidebar, SidebarSearchLegacy, User, useSidebar } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
+import {
+  HarnessLogo,
+  IconV2,
+  IconV2NamesType,
+  Sidebar,
+  SidebarSearchLegacy,
+  User,
+  useSidebar
+} from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const SideBarToggleMenuItem: FC = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { collapsed, toggleSidebar } = useSidebar()
   return (
     <Sidebar.MenuItem className="flex justify-center">
@@ -23,7 +30,7 @@ const SideBarToggleMenuItem: FC = () => {
               : t('component:navbar.sidebarToggle.collapse', 'Collapse')
           }
           text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-          icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+          icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size="sm" />}
         />
       </Sidebar.MenuButton>
     </Sidebar.MenuItem>
@@ -32,17 +39,17 @@ const SideBarToggleMenuItem: FC = () => {
 
 const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser } = useAppContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { NavLink } = useRouterContext()
   const { routes, hooks } = useMFEContext()
   const { forceLogout } = hooks?.useLogout?.() || {}
 
-  const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconProps['name'] }) => (
+  const renderMenuItem = ({ to, text, iconName }: { to: string; text: string; iconName: IconV2NamesType }) => (
     <Sidebar.MenuItem>
       <NavLink className="block" to={to} end>
         {({ isActive }) => (
           <Sidebar.MenuButton asChild isActive={isActive}>
-            <Sidebar.MenuItemText text={text} icon={<Icon name={iconName} size={14} />} active={isActive} />
+            <Sidebar.MenuItemText text={text} icon={<IconV2 name={iconName} size="sm" />} active={isActive} />
           </Sidebar.MenuButton>
         )}
       </NavLink>
@@ -53,14 +60,14 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
     <Sidebar.Provider className="min-h-svh">
       <Sidebar.Root className="h-svh">
         <Sidebar.Header className="pb-3">
-          <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+          <SidebarSearchLegacy logo={<HarnessLogo />} />
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
             <Sidebar.GroupContent>
               <Sidebar.Menu>
-                {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repositories-gradient' })}
-                {renderMenuItem({ to: '/manage-repositories', text: 'Manage Repositories', iconName: 'repositories' })}
+                {renderMenuItem({ to: '/repos', text: 'Repositories', iconName: 'repository' })}
+                {renderMenuItem({ to: '/manage-repositories', text: 'Manage Repositories', iconName: 'repository' })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
           </Sidebar.Group>
@@ -70,7 +77,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 {renderMenuItem({
                   to: routes?.toProjectSettings?.() || '',
                   text: 'Project Settings',
-                  iconName: 'settings-1'
+                  iconName: 'settings'
                 })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
@@ -81,12 +88,12 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
                 {renderMenuItem({
                   to: routes?.toAccountSettings?.() || '',
                   text: 'Account Settings',
-                  iconName: 'settings-1'
+                  iconName: 'settings'
                 })}
                 {renderMenuItem({
                   to: routes?.toOrgSettings?.() || '',
                   text: 'Organization Settings',
-                  iconName: 'settings-2'
+                  iconName: 'settings'
                 })}
               </Sidebar.Menu>
             </Sidebar.GroupContent>
@@ -105,7 +112,7 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
               >
                 <Sidebar.MenuItemText
                   text={t('component:navbar.sidebarToggle.switchToCodeV1', 'Switch to Code V1')}
-                  icon={<Icon name="arrow-left" size={14} />}
+                  icon={<IconV2 name="arrow-left" size="sm" />}
                 />
               </Sidebar.MenuButton>
             </Sidebar.MenuItem>
@@ -118,7 +125,6 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
             openThemeDialog={noop}
             openLanguageDialog={noop}
             handleLogOut={forceLogout || noop}
-            t={t}
           />
         </Sidebar.Footer>
         <Sidebar.Rail />

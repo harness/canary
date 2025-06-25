@@ -5,9 +5,9 @@
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
-      "size": {
-        "$type": "sizing",
-        "$value": "{size.8}"
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
       },
       "gap": {
         "$type": "spacing",
@@ -16,6 +16,10 @@
       "radius": {
         "$type": "borderRadius",
         "$value": "{rounded.2}"
+      },
+      "min": {
+        "$type": "sizing",
+        "$value": "{size.8}"
       }
     },
     "group": {
@@ -31,13 +35,13 @@
     "container": {
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.3}"
+        "$value": "{spacing.2-half}"
       },
       "py": {
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
-      "width": {
+      "full-width": {
         "$type": "sizing",
         "$value": "{size.56}"
       }
@@ -66,18 +70,40 @@
         "$value": "{spacing.2-half}"
       }
     },
-    "user-item": {
+    "sub-item": {
       "px": {
         "$type": "spacing",
         "$value": "{spacing.2-half}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       },
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.2}"
       },
-      "size": {
+      "min": {
         "$type": "sizing",
-        "$value": "{size.12}"
+        "$value": "{size.7}"
+      }
+    },
+    "sub-group": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4-half}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "gap-container": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
       }
     }
   }

@@ -109,8 +109,8 @@ export default {
     },
 
     '.cn-tag-icon': {
-      minWidth: `var(--cn-icon-size-default, 16px)`,
-      height: `var(--cn-icon-size-default, 16px)`
+      minWidth: `var(--cn-icon-size-sm, 16px)`,
+      height: `var(--cn-icon-size-sm, 16px)`
     },
     '.cn-tag-text': {
       '@apply truncate leading-normal align-middle inline-block': ''

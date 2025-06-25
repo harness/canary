@@ -1,4 +1,4 @@
-import { forwardRef, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
+import { forwardRef, ReactNode, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
 import { generateAlphaNumericHash, isAnyTypeOf, useMergeRefs } from '@/utils'
@@ -11,16 +11,23 @@ const textareaVariants = cva('cn-textarea', {
       default: '',
       danger: 'cn-textarea-danger',
       warning: 'cn-textarea-warning'
+    },
+    size: {
+      default: '',
+      sm: 'cn-textarea-sm'
     }
   },
   defaultVariants: {
-    theme: 'default'
+    theme: 'default',
+    size: 'default'
   }
 })
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
+  labelSuffix?: ReactNode
   theme?: VariantProps<typeof textareaVariants>['theme']
+  size?: VariantProps<typeof textareaVariants>['size']
   caption?: string
   error?: string
   warning?: string
@@ -48,6 +55,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       className,
       maxCharacters,
       resizable = false,
+      labelSuffix,
+      size,
       ...props
     },
     ref
@@ -87,7 +96,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <ControlGroup>
         <div className="cn-textarea-label-wrapper">
           {label && (
-            <Label disabled={disabled} optional={optional} htmlFor={id}>
+            <Label disabled={disabled} optional={optional} htmlFor={id} suffix={labelSuffix}>
               {label}
             </Label>
           )}
@@ -102,7 +111,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           id={id}
           ref={mergedRef}
-          className={cn(textareaVariants({ theme }), { 'cn-textarea-resizable': resizable }, className)}
+          className={cn(textareaVariants({ theme, size }), { 'cn-textarea-resizable': resizable }, className)}
           disabled={disabled}
           onChange={handleChange}
           {...props}

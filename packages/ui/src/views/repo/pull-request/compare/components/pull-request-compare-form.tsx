@@ -1,8 +1,9 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs } from '@/components'
-import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
+import { Button, FormInput, FormWrapper, IconV2, MarkdownViewer, Tabs } from '@/components'
+import { useTranslation } from '@/context'
+import { handleFileDrop, handlePaste, HandleUploadType } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
 
@@ -23,7 +24,6 @@ interface PullRequestFormProps {
   isLoading: boolean
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
-  useTranslationStore: () => TranslationStore
   handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
@@ -31,8 +31,8 @@ interface PullRequestFormProps {
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  ({ apiError, onFormSubmit, useTranslationStore, handleUpload, desc, setDesc, formMethods }, ref) => {
-    const { t } = useTranslationStore()
+  ({ apiError, onFormSubmit, handleUpload, desc, setDesc, formMethods }, ref) => {
+    const { t } = useTranslation()
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
     }
@@ -102,7 +102,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset className="gap-y-3">
+        <div className="gap-y-3">
           <FormInput.Text
             id="title"
             {...register('title')}
@@ -113,13 +113,9 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
           <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
             <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-              <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-                <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.WRITE}>
-                  Write
-                </Tabs.Trigger>
-                <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.PREVIEW}>
-                  Preview
-                </Tabs.Trigger>
+              <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+                <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+                <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
               </Tabs.List>
 
               <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
@@ -170,14 +166,14 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <div>
                   <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
                   <Button variant="ghost" onClick={e => handleFileSelect(e)}>
-                    <Icon size={16} name="attachment-image" />
+                    <IconV2 name="attachment-image" />
                     <span>Drag & drop, select, or paste to attach files</span>
                   </Button>
                 </div>
               )}
             </div>
           </div>
-        </Fieldset>
+        </div>
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
           <span className="text-1 text-cn-foreground-danger">{apiError?.toString()}</span>

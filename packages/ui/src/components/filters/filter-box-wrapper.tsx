@@ -1,16 +1,16 @@
 import { ReactNode, useEffect, useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 interface FiltersProps {
   handleRemoveFilter: () => void
   defaultOpen: boolean
   filterLabel: string
-  t: TFunction
   onOpenChange?: (open: boolean) => void
   valueLabel?: ReactNode
   contentClassName?: string
@@ -24,9 +24,10 @@ const FilterBoxWrapper = ({
   filterLabel,
   valueLabel,
   onOpenChange,
-  contentClassName,
-  t
+  contentClassName
 }: FiltersProps) => {
+  const { t } = useTranslation()
+
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
   useEffect(() => {
@@ -48,40 +49,37 @@ const FilterBoxWrapper = ({
       <DropdownMenu.Trigger asChild>
         <Button variant="secondary" className="gap-x-3">
           <div className="flex items-center gap-x-1.5 text-1">
-            <span className="text-cn-foreground-1">
+            <Text as="span" color="foreground-1">
               {filterLabel}
               {!!valueLabel && ': '}
-            </span>
-            <span className="text-cn-foreground-2">{valueLabel}</span>
+            </Text>
+            <Text as="span">{valueLabel}</Text>
           </div>
-          <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
+          <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content className={cn('w-[276px] p-0', contentClassName)} align="start">
-        <div className="flex items-center justify-between px-3 py-2.5">
-          <div className="flex items-center gap-x-2 text-cn-foreground-2">{filterLabel}</div>
+      <DropdownMenu.Content className={cn('w-[276px]', contentClassName)} align="start">
+        <DropdownMenu.Header>{filterLabel}</DropdownMenu.Header>
 
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
-              <Icon
-                className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
-                name="more-dots-fill"
-                size={12}
-              />
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content align="start">
-              <DropdownMenu.Item onSelect={() => handleRemoveFilter()} asChild>
-                <Button size="sm" variant="transparent" className="data-[highlighted]:text-cn-foreground-danger">
-                  <Icon name="trash" size={12} />
-                  {t('component:filter.delete', 'Delete filter')}
-                </Button>
-              </DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-        </div>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
+            <IconV2
+              className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
+              name="more-horizontal"
+              size="2xs"
+            />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content align="start">
+            <DropdownMenu.IconItem
+              icon="trash"
+              onSelect={handleRemoveFilter}
+              title={t('component:filter.delete', 'Delete filter')}
+            />
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
 
-        <section id="dropdown-filter-field">{children}</section>
+        {children}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

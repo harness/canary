@@ -1,4 +1,4 @@
-import { Button, Icon } from '@/components'
+import { Button, IconV2 } from '@/components'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 
 import { useSort } from './sort-context'
@@ -23,7 +23,7 @@ const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
       displayLabel={
         <Button size="sm" variant="transparent">
           {displayLabel}
-          <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+          <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size="2xs" />
         </Button>
       }
       inputPlaceholder="Select..."

@@ -16,6 +16,8 @@ import { DocsPage } from "@/components/docs-page";
     const [checkedIndeterminate, setCheckedIndeterminate] = React.useState<'indeterminate' | boolean>('indeterminate');
     const [checkedWOLabel, setCheckedWOLabel] = React.useState(false);
     const [optionalChecked, setOptionalChecked] = React.useState(false);
+    const [errorChecked, setErrorChecked] = React.useState(false);
+    const [errorIndeterminate, setErrorIndeterminate] = React.useState<'indeterminate' | boolean>('indeterminate');
 
     return (
       <div className="flex flex-col space-y-8">
@@ -77,6 +79,25 @@ import { DocsPage } from "@/components/docs-page";
             checked={checkedWOLabel}
             onCheckedChange={setCheckedWOLabel}
           />
+        </div>
+
+        {/* Error state */}
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium">Error state</h4>
+          <div className="flex items-center space-x-8">
+            <Checkbox
+              id="checkbox-error"
+              checked={errorChecked}
+              onCheckedChange={setErrorChecked}
+              error
+            />
+            <Checkbox
+              id="checkbox-error-indeterminate"
+              checked={errorIndeterminate ? "indeterminate" : false}
+              onCheckedChange={() => setErrorIndeterminate(!errorIndeterminate)}
+              error
+            />
+          </div>
         </div>
       </div>
     );

@@ -1,181 +1,137 @@
-import * as React from 'react'
+import { Children, createContext, isValidElement, ReactNode, useContext } from 'react'
 
-import { Button, Icon } from '@/components'
-import { buttonVariants } from '@/components/button'
-import { usePortal } from '@/context'
-import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
-import { cn } from '@utils/cn'
+import { Button, IconV2NamesType } from '@/components'
 
-const AlertDialogRoot = AlertDialogPrimitive.Root
+import { Dialog } from './dialog'
+import { LogoV2NamesType } from './logo-v2'
 
-const AlertDialogTrigger = AlertDialogPrimitive.Trigger
+export type AlertDialogTheme = 'default' | 'warning' | 'danger'
+export type AlertDialogIcon = IconV2NamesType
+export type AlertDialogLogo = LogoV2NamesType
 
-const AlertDialogPortal = AlertDialogPrimitive.Portal
-
-interface AlertDialogOverlayProps extends React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Overlay> {
-  onClick?: () => void
+export interface AlertDialogProps {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  onCancel?: () => void
+  onConfirm: () => void
+  theme?: 'default' | 'warning' | 'danger'
+  loading?: boolean
+  children: React.ReactNode
 }
 
-const AlertDialogOverlay = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
-  AlertDialogOverlayProps
->(({ className, onClick, ...props }, ref) => {
+interface AlertDialogContextProps {
+  onCancel?: () => void
+  onConfirm: () => void
+  theme: AlertDialogTheme
+  loading: boolean
+}
+
+const AlertDialogContext = createContext<AlertDialogContextProps | null>(null)
+
+const Root = ({
+  open,
+  onOpenChange,
+  onCancel,
+  onConfirm,
+  theme = 'default',
+  loading = false,
+  children
+}: AlertDialogProps) => {
   return (
-    <AlertDialogPrimitive.Overlay
-      className={cn(
-        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 dialog-backdrop fixed inset-0 z-50',
-        className
-      )}
-      {...props}
-      ref={ref}
-      onClick={onClick}
-    />
+    <AlertDialogContext.Provider value={{ onCancel, onConfirm, theme, loading }}>
+      <Dialog.Root open={open} onOpenChange={onOpenChange}>
+        {children}
+      </Dialog.Root>
+    </AlertDialogContext.Provider>
   )
-})
-AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName
-
-interface AlertDialogContentProps extends React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content> {
-  onOverlayClick?: () => void
-  onClose?: () => void
 }
 
-const AlertDialogContent = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Content>,
-  AlertDialogContentProps
->(({ className = 'max-w-lg', children, onOverlayClick, onClose, ...props }, ref) => {
-  const { portalContainer } = usePortal()
-  const mainContent: React.ReactNode[] = []
-  let footer: React.ReactNode = null
+const Trigger = Dialog.Trigger
 
-  React.Children.forEach(children, child => {
-    if (React.isValidElement(child) && child.type === AlertDialogFooter) {
-      footer = child
+interface ContentProps {
+  title: string
+  children?: ReactNode
+}
+
+const Content = ({ title, children }: ContentProps) => {
+  const context = useContext(AlertDialogContext)
+  if (!context) throw new Error('AlertDialog.Content must be used within AlertDialog.Root')
+
+  let cancelEl: ReactNode = null
+  let confirmEl: ReactNode = null
+  const otherChildren: ReactNode[] = []
+
+  Children.forEach(children, child => {
+    if (!isValidElement(child)) {
+      otherChildren.push(child)
+      return
+    }
+
+    if ((child.type as any).displayName === 'AlertDialog.Cancel') {
+      cancelEl = child
+    } else if ((child.type as any).displayName === 'AlertDialog.Confirm') {
+      confirmEl = child
     } else {
-      mainContent.push(child)
+      otherChildren.push(child)
     }
   })
 
   return (
-    <AlertDialogPortal container={portalContainer}>
-      <AlertDialogOverlay onClick={onOverlayClick} />
-      <AlertDialogPrimitive.Content
-        ref={ref}
-        className={cn(
-          'bg-cn-background-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] shadow-5 fixed left-[50%] top-[50%] z-50 flex w-full translate-x-[-50%] translate-y-[-50%] flex-col overflow-hidden rounded-4 border duration-200',
-          className
-        )}
-        {...props}
+    <Dialog.Content>
+      <Dialog.Header
+        icon={
+          context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
+        }
+        theme={context.theme}
       >
-        <Button
-          className="absolute right-3 top-[18px] z-10 text-icons-4 transition-colors duration-200 hover:text-icons-2 disabled:pointer-events-none"
-          type="button"
-          variant="ghost"
-          size="sm"
-          iconOnly
-          aria-label="Close"
-          onClick={onClose}
-        >
-          <Icon name="close" size={16} />
-        </Button>
+        <Dialog.Title>{title}</Dialog.Title>
+      </Dialog.Header>
 
-        <div
-          className={cn('flex flex-col gap-y-4 overflow-y-auto p-5', footer ? 'max-h-[calc(100%-65px)]' : 'max-h-full')}
-        >
-          {mainContent}
-        </div>
-        {footer}
-      </AlertDialogPrimitive.Content>
-    </AlertDialogPortal>
+      <Dialog.Body>{otherChildren}</Dialog.Body>
+
+      <Dialog.Footer>
+        {cancelEl ?? <Cancel />}
+        {confirmEl ?? <Confirm />}
+      </Dialog.Footer>
+    </Dialog.Content>
   )
-})
-AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName
-
-const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...props} />
-)
-AlertDialogHeader.displayName = 'AlertDialogHeader'
-
-const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'bg-cn-background-2 border-cn-borders-2 relative mt-auto flex h-fit flex-col-reverse gap-x-4 border-t px-5 py-4 sm:flex-row sm:justify-end',
-      'before:from-background-1 before:pointer-events-none before:absolute before:inset-x-0 before:-top-px before:h-3 before:-translate-y-full before:bg-gradient-to-t before:to-transparent',
-      className
-    )}
-    {...props}
-  />
-)
-AlertDialogFooter.displayName = 'AlertDialogFooter'
-
-const AlertDialogTitle = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Title
-    ref={ref}
-    className={cn('text-cn-foreground-1 text-xl font-medium tracking-tight', className)}
-    {...props}
-  />
-))
-AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
-
-const AlertDialogDescription = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description> & {
-    variant?: 'secondary' | 'quaternary'
-    size?: 'sm'
-  }
->(({ className, variant = 'quaternary', size = 'sm', ...props }, ref) => {
-  const variants = {
-    variant: {
-      secondary: 'text-cn-foreground-2',
-      quaternary: 'text-cn-foreground-2'
-    },
-    size: {
-      sm: 'text-sm'
-    }
-  }
-
-  return (
-    <AlertDialogPrimitive.Description
-      ref={ref}
-      className={cn(className, variants.variant[variant], variants.size[size])}
-      {...props}
-    />
-  )
-})
-AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayName
-
-const AlertDialogAction = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Action>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
->(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Action ref={ref} className={cn(buttonVariants(), className)} {...props} />
-))
-AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName
-
-const AlertDialogCancel = React.forwardRef<
-  React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
->(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Cancel
-    ref={ref}
-    className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 sm:mt-0', className)}
-    {...props}
-  />
-))
-AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
-
-const AlertDialog = {
-  Root: AlertDialogRoot,
-  Trigger: AlertDialogTrigger,
-  Content: AlertDialogContent,
-  Header: AlertDialogHeader,
-  Footer: AlertDialogFooter,
-  Title: AlertDialogTitle,
-  Description: AlertDialogDescription,
-  Action: AlertDialogAction,
-  Cancel: AlertDialogCancel
 }
 
-export { AlertDialog }
+const Cancel = ({ children = 'Cancel', ...props }: { children?: ReactNode }) => {
+  const context = useContext(AlertDialogContext)
+  if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
+
+  return (
+    <Dialog.Close asChild>
+      <Button variant="secondary" loading={context.loading} onClick={context.onCancel} {...props}>
+        {children}
+      </Button>
+    </Dialog.Close>
+  )
+}
+Cancel.displayName = 'AlertDialog.Cancel'
+
+const Confirm = ({ children = 'Confirm', ...props }: { children?: ReactNode }) => {
+  const context = useContext(AlertDialogContext)
+  if (!context) throw new Error('AlertDialog.Confirm must be used within AlertDialog.Root')
+
+  return (
+    <Button
+      theme={context.theme === 'danger' ? 'danger' : undefined}
+      loading={context.loading}
+      onClick={context.onConfirm}
+      {...props}
+    >
+      {context.loading ? 'Loading...' : children}
+    </Button>
+  )
+}
+Confirm.displayName = 'AlertDialog.Confirm'
+
+export const AlertDialog = {
+  Root,
+  Trigger,
+  Content,
+  Cancel,
+  Confirm
+}

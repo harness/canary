@@ -24,12 +24,27 @@ export default {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: '0',
     position: 'relative',
     width: 'var(--cn-size-4)',
     height: 'var(--cn-size-4)',
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+    '&:where(:not([disabled])):hover': {
+      backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
+      borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
+    },
+
+    '&:where(.cn-checkbox-error:where(:not([data-state=checked])))': {
+      borderColor: 'var(--cn-border-danger)',
+      boxShadow: `var(--cn-ring-danger)`,
+      '&:hover': {
+        backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+        borderColor: 'var(--cn-border-danger)',
+        boxShadow: `var(--cn-ring-danger-hover)`
+      }
+    },
 
     '&:where([disabled])': {
       backgroundColor: 'var(--cn-state-disabled-bg)',
@@ -39,7 +54,11 @@ export default {
 
     '&:where([data-state=checked])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
-      borderColor: 'var(--cn-comp-selection-selected-border)'
+      borderColor: 'var(--cn-comp-selection-selected-border)',
+      '&:hover': {
+        backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
+        borderColor: 'var(--cn-comp-selection-selected-border-hover)'
+      }
     },
 
     '&:where([data-state=checked][disabled])': {
@@ -49,7 +68,22 @@ export default {
 
     '&:where([data-state=indeterminate])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
-      borderColor: 'var(--cn-comp-selection-selected-border)'
+      borderColor: 'var(--cn-comp-selection-selected-border)',
+      '&:hover': {
+        backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
+        borderColor: 'var(--cn-comp-selection-selected-border-hover)'
+      },
+
+      '&:where(.cn-checkbox-error)': {
+        backgroundColor: 'var(--cn-set-red-solid-bg)',
+        borderColor: 'var(--cn-border-danger)',
+        boxShadow: `var(--cn-ring-danger)`,
+        '&:hover': {
+          backgroundColor: 'var(--cn-set-red-solid-bg)',
+          borderColor: 'var(--cn-border-danger)',
+          boxShadow: `var(--cn-ring-danger-hover)`
+        }
+      }
     },
 
     '&:where([data-state=indeterminate][disabled])': {
@@ -72,6 +106,10 @@ export default {
     '&:where([data-state=indeterminate][disabled])': {
       color: 'var(--cn-state-disabled-text-selected)'
     }
+  },
+
+  '.cn-checkbox-error .cn-checkbox-indicator:where([data-state=indeterminate])': {
+    color: `var(--cn-set-red-solid-text)`
   },
 
   '.cn-checkbox-icon': {

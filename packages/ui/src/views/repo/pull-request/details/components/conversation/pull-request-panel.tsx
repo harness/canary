@@ -6,12 +6,13 @@ import {
   Button,
   Checkbox,
   CounterBadge,
-  Icon,
+  IconV2,
   Layout,
   MoreActionsTooltip,
   SplitButton,
   StackedList,
   StatusBadge,
+  Text,
   type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
@@ -61,11 +62,11 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <StatusBadge icon="branch" variant="secondary" theme="muted" size="sm">
+            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.source_branch}
             </StatusBadge>
             <span>into</span>
-            <StatusBadge icon="branch" variant="secondary" theme="muted" size="sm">
+            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.target_branch}
             </StatusBadge>
             <span>{formattedTime}</span>
@@ -91,7 +92,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="font-medium text-cn-foreground-1">
+      <Text variant="body-strong" as="h2" color="foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -103,7 +104,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
                 : props.ruleViolation
                   ? 'Cannot merge pull request'
                   : `Pull request can be merged`}
-      </h2>
+      </Text>
     </div>
   )
 }
@@ -308,7 +309,7 @@ const PullRequestPanel = ({
             <StackedList.Field
               right
               title={
-                <Layout.Horizontal className="items-center justify-center space-x-2.5">
+                <Layout.Horizontal align="center" justify="center" gap="xs">
                   {!!commitSuggestionsBatchCount && (
                     <Button variant="outline" onClick={() => onCommitSuggestions()}>
                       Commit suggestion
@@ -332,7 +333,6 @@ const PullRequestPanel = ({
 
                   {actions && !pullReqMetadata?.closed ? (
                     <SplitButton
-                      id="pr-type"
                       theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                       disabled={buttonState.disabled}
                       variant="outline"
@@ -352,7 +352,7 @@ const PullRequestPanel = ({
                     </SplitButton>
                   ) : (
                     <Button
-                      disabled={!checkboxBypass && prPanelData.ruleViolation && !isClosed}
+                      disabled={(!checkboxBypass && prPanelData.ruleViolation && !isClosed) || showRestoreBranchButton}
                       onClick={actions[0].action}
                     >
                       Open for review
@@ -362,7 +362,7 @@ const PullRequestPanel = ({
                   {isShowMoreTooltip && (
                     <MoreActionsTooltip
                       className="!ml-2"
-                      iconName="more-dots-fill"
+                      iconName="more-horizontal"
                       sideOffset={-8}
                       alignOffset={2}
                       actions={[
@@ -441,14 +441,14 @@ const PullRequestPanel = ({
               )}
             </Accordion.Root>
           ) : (
-            <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
-              <Layout.Horizontal className="flex w-full items-center" gap="space-x-1">
+            <Layout.Horizontal gap="xs" align="center" justify="between" className="w-full py-4">
+              <Layout.Horizontal align="center" className="w-full" gap="xs">
                 <StatusBadge variant="secondary" size="sm">
                   <Link
                     className="flex items-center gap-x-1.5"
                     to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
                   >
-                    <Icon name="branch" size={12} className="text-icons-9" />
+                    <IconV2 name="git-branch" size="2xs" className="text-icons-9" />
                     {pullReqMetadata?.source_branch}
                   </Link>
                 </StatusBadge>

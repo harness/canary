@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
-import { Alert, Button, Fieldset, FormSeparator, Layout, Legend, Spacer } from '@/components'
-import { ApiErrorType, SandboxLayout, TranslationStore } from '@/views'
+import { Alert, Button, Fieldset, FormSeparator, Layout, Legend, Spacer, Text } from '@/components'
+import { useTranslation } from '@/context'
+import { ApiErrorType, SandboxLayout } from '@/views'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'
@@ -14,7 +15,6 @@ interface SettingsAccountKeysPageProps {
   error: { type: ApiErrorType; message: string } | null
   headers?: Headers
   useProfileSettingsStore: () => IProfileSettingsStore
-  useTranslationStore: () => TranslationStore
   isLoadingTokenList: boolean
   isLoadingKeysList: boolean
 }
@@ -30,7 +30,6 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   openTokenDialog,
   openSshKeyDialog,
   openAlertDeleteDialog,
-  useTranslationStore,
   error,
   isLoadingTokenList,
   isLoadingKeysList
@@ -40,15 +39,15 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   // const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   // const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
   const { publicKeys, tokens } = useProfileSettingsStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <SandboxLayout.Content className="px-0">
-      <h1 className="text-6 font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
-      </h1>
+      </Text>
       <Spacer size={10} />
-      <Layout.Vertical gap="space-y-7">
+      <Layout.Vertical gap="xl">
         <Fieldset className="gap-y-5">
           <div className="flex items-end justify-between">
             <Legend
@@ -73,7 +72,6 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
               tokens={tokens}
               isLoading={isLoadingTokenList}
               openAlertDeleteDialog={openAlertDeleteDialog}
-              useTranslationStore={useTranslationStore}
             />
           )}
         </Fieldset>
@@ -101,7 +99,6 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
               publicKeys={publicKeys}
               isLoading={isLoadingKeysList}
               openAlertDeleteDialog={openAlertDeleteDialog}
-              useTranslationStore={useTranslationStore}
             />
           )}
         </Fieldset>

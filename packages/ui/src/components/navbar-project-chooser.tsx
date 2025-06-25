@@ -2,7 +2,6 @@ import { FormEvent, ReactNode, useState } from 'react'
 
 import { Dialog } from './dialog'
 import { Root as SearchBox } from './search-box'
-import { Spacer } from './spacer'
 
 interface ProjectProps {
   logo: ReactNode
@@ -36,14 +35,13 @@ function Root({ logo }: ProjectProps) {
         handleChange={openSearchDialog}
       />
       <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <Dialog.Content className="h-[600px] max-w-[800px]">
+        <Dialog.Content size="md" className="h-[600px]">
           <Dialog.Header>
             <Dialog.Title>Search</Dialog.Title>
-            <Dialog.Description>
-              <Spacer size={6} />
-              <SearchBox width="full" placeholder="Search..." />
-            </Dialog.Description>
           </Dialog.Header>
+          <Dialog.Body>
+            <SearchBox width="full" placeholder="Search..." />
+          </Dialog.Body>
         </Dialog.Content>
       </Dialog.Root>
     </div>

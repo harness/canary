@@ -1,20 +1,22 @@
 import { FC } from 'react'
 
-import { Button, Layout, Link, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { Button, IconV2, Layout, Link, LogoV2, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { Logo, LogoName } from '@components/logo'
 
+import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
 import { ConnectorDetailsHeaderProps } from './types'
 
 const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   connectorDetails,
   onTest,
   onDelete,
-  useTranslationStore,
   toConnectorsList
 }) => {
-  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
-  const { t } = useTranslationStore()
+  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status, type } = connectorDetails
+  const { t } = useTranslation()
+  const logoName = ConnectorTypeToLogoNameMap.get(type)
+
   return (
     <div className="px-8">
       {toConnectorsList ? (
@@ -22,18 +24,16 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           Back to Connectors
         </Link>
       ) : null}
-      <Layout.Horizontal gap="space-x-2" className="items-center">
-        <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
-        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
-      </Layout.Horizontal>
-      {connectorDetails.description ? (
-        <Text as="div" weight="medium" className="mt-3 text-2 text-cn-foreground-2">
-          {connectorDetails.description}
+      <Layout.Horizontal gap="xs" align="center">
+        {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size="lg" />}
+        <Text as="h1" variant="heading-section" color="foreground-1">
+          {connectorDetails.name}
         </Text>
-      ) : null}
+      </Layout.Horizontal>
+      {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}
       {connectorDetails.tags ? (
-        <Layout.Horizontal gap="space-x-2" className="mt-5">
-          <Text className="text-cn-foreground-4">Labels:</Text>
+        <Layout.Horizontal gap="xs" className="mt-5">
+          <Text>Labels:</Text>
           {Object.entries(connectorDetails.tags || {}).map(([key, value]) => (
             <StatusBadge key={`${key}-${value}`} variant="outline" theme="merged" size="sm">
               {key}
@@ -77,7 +77,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
                   {status.toLowerCase() === 'success'
                     ? t('views:connectors.success', 'Success')
                     : t('views:connectors.failure', 'Failed')}

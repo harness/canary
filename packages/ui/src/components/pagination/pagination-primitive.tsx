@@ -1,11 +1,10 @@
 import * as React from 'react'
 
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 import { Button, buttonVariants } from '../button'
-import { Icon } from '../icon'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav role="navigation" aria-label="pagination" className={cn('cn-pagination-root', className)} {...props} />
@@ -25,7 +24,6 @@ PaginationPrimitiveItem.displayName = 'PaginationPrimitiveItem'
 type PaginationPrimitiveLinkGeneralProps = {
   isActive?: boolean
   disabled?: boolean
-  t: TFunction
   onClick?: (e: React.MouseEvent) => void
 } & React.ComponentProps<'a'> &
   React.ComponentProps<'button'>
@@ -96,43 +94,47 @@ const PaginationPrimitiveLink = ({
 PaginationPrimitiveLink.displayName = 'PaginationPrimitiveLink'
 
 const PaginationPrimitivePrevious = ({
-  t,
   disabled,
   className,
   href = '#',
   ...props
-}: PaginationPrimitiveLinkGeneralProps) => (
-  <PaginationPrimitiveLink
-    aria-label="Go to previous page"
-    disabled={disabled}
-    className={className}
-    href={href}
-    {...props}
-  >
-    <Icon name="chevron-left" size={16} />
-    <span>{t('component:pagination.previous', 'Previous')}</span>
-  </PaginationPrimitiveLink>
-)
+}: PaginationPrimitiveLinkGeneralProps) => {
+  const { t } = useTranslation()
+  return (
+    <PaginationPrimitiveLink
+      aria-label="Go to previous page"
+      disabled={disabled}
+      className={className}
+      href={href}
+      {...props}
+    >
+      <IconV2 name="nav-arrow-left" />
+      <span>{t('component:pagination.previous', 'Previous')}</span>
+    </PaginationPrimitiveLink>
+  )
+}
 PaginationPrimitivePrevious.displayName = 'PaginationPrimitivePrevious'
 
 const PaginationPrimitiveNext = ({
-  t,
   disabled,
   className,
   href = '#',
   ...props
-}: PaginationPrimitiveLinkGeneralProps) => (
-  <PaginationPrimitiveLink
-    aria-label="Go to next page"
-    disabled={disabled}
-    className={className}
-    href={href}
-    {...props}
-  >
-    <span>{t('component:pagination.next', 'Next')}</span>
-    <Icon name="chevron-right" size={16} />
-  </PaginationPrimitiveLink>
-)
+}: PaginationPrimitiveLinkGeneralProps) => {
+  const { t } = useTranslation()
+  return (
+    <PaginationPrimitiveLink
+      aria-label="Go to next page"
+      disabled={disabled}
+      className={className}
+      href={href}
+      {...props}
+    >
+      <span>{t('component:pagination.next', 'Next')}</span>
+      <IconV2 name="nav-arrow-right" />
+    </PaginationPrimitiveLink>
+  )
+}
 PaginationPrimitiveNext.displayName = 'PaginationPrimitiveNext'
 
 const PaginationPrimitiveEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (

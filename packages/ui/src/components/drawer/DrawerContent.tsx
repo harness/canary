@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
 import { cn } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -59,7 +59,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
             {!hideClose && (
               <DrawerPrimitive.Close asChild>
                 <Button className="cn-drawer-close-button" variant="transparent" iconOnly>
-                  <Icon className="cn-drawer-close-button-icon" name="close" skipSize />
+                  <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
                 </Button>
               </DrawerPrimitive.Close>
             )}

@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { BranchSelectorTab, CodeModes, IBranchSelectorStore, RepoFiles } from '@harnessio/ui/views'
 
@@ -60,7 +60,6 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       isDir={isDir}
       isShowSummary={true}
       latestFile={repoFilesStore.latestCommitInfo}
-      useTranslationStore={useTranslationStore}
       pathNewFile=""
       pathUploadFiles=""
       codeMode={codeMode}

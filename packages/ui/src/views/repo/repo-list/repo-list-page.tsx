@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton } from '@/components'
-import { useRouterContext } from '@/context'
+import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 import { RepoList } from './repo-list'
@@ -9,7 +9,6 @@ import { RepoListProps } from './types'
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
-  useTranslationStore,
   isLoading,
   isError,
   errorMessage,
@@ -21,7 +20,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toImportMultipleRepos,
   ...routingProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   const handleSearch = useCallback(
@@ -44,7 +43,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-error"
+        imageName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'repositories'
         })}
@@ -73,6 +72,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setPage(1)
   }
 
+  // return null
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
@@ -80,9 +81,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-2xl font-medium text-cn-foreground-1">
+              <Text variant="heading-section" as="h1" color="foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
-              </h1>
+              </Text>
             </div>
             <Spacer size={6} />
             <ListActions.Root>
@@ -97,7 +98,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <SplitButton<string>
-                  id="repository"
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toCreateRepo?.() || '')}
                   handleOptionChange={option => {
@@ -129,14 +129,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           repos={repositories || []}
           handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
           isDirtyList={isDirtyList}
-          useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
           {...routingProps}
         />
         {!!repositories?.length && (
-          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

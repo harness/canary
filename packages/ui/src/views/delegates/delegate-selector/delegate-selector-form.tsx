@@ -15,7 +15,8 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { DelegateConnectivityList, DelegateItem, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { DelegateConnectivityList, DelegateItem } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RadioSelect, RadioSelectOption } from '@views/components/RadioSelect'
 import { z } from 'zod'
@@ -67,7 +68,6 @@ export type DelegateSelectorFormFields = z.infer<typeof delegateSelectorFormSche
 export interface DelegateSelectorFormProps {
   delegates: DelegateItem[]
   tagsList: string[]
-  useTranslationStore: () => TranslationStore
   onFormSubmit: (data: DelegateSelectorFormFields) => void
   onBack: () => void
   apiError?: string
@@ -82,7 +82,6 @@ export interface DelegateSelectorFormProps {
 export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   delegates,
   tagsList,
-  useTranslationStore,
   onFormSubmit,
   onBack,
   apiError = null,
@@ -93,7 +92,8 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   disableAnyDelegate,
   isDrawer = false
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
+
   const [searchTag, setSearchTag] = useState('')
   const [matchedDelegates, setMatchedDelegates] = useState(0)
 
@@ -159,7 +159,8 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
       <Body>
         <div className="flex">
           {t('views:delegates.noDelegatesInstalled', `Haven't installed a delegate yet?`)}
-          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="attachment-link">
+          {/* TODO: Design system : Update Attachment icon */}
+          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="supply-chain">
             {t('views:delegates.installDelegate', 'Install Delegate')}
           </Link>
         </div>
@@ -199,14 +200,13 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
                   error={errors.tags?.message?.toString()}
                 />
               </Fieldset>
-              <Text size={4}>{t('views:delegates.testDelegate', 'Test Delegate connectivity')}</Text>
+              <Text variant="heading-base">{t('views:delegates.testDelegate', 'Test Delegate connectivity')}</Text>
               <p>
                 {t('views:delegates.delegateMatches', 'Matches: ')}
                 {matchedDelegates}
               </p>
               <DelegateConnectivityList
                 delegates={delegates}
-                useTranslationStore={useTranslationStore}
                 isLoading={isLoading}
                 selectedTags={selectedTags?.map(tag => tag.id)}
                 isDelegateSelected={isDelegateSelected}

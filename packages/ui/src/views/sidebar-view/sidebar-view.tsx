@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import {
   HarnessLogo,
-  Icon,
+  IconV2,
   LanguageCode,
   LanguageDialog,
   LanguageInterface,
@@ -17,9 +17,8 @@ import {
   User,
   useSidebar
 } from '@/components'
-import { useRouterContext, useTheme } from '@/context'
+import { useRouterContext, useTheme, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
-import { TranslationStore } from '@/views'
 
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]
@@ -33,13 +32,13 @@ interface SidebarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  useTranslationStore: () => TranslationStore
   showNewSearch?: boolean
   hasToggle?: boolean
+  changeLanguage: (language: string) => void
+  lang: string
 }
 
 export const SidebarView = ({
-  useTranslationStore,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
   pinnedMenuItems,
@@ -50,9 +49,11 @@ export const SidebarView = ({
   handleCustomNav,
   handleLogOut,
   hasToggle = true,
-  showNewSearch
+  showNewSearch,
+  changeLanguage,
+  lang
 }: SidebarProps) => {
-  const { t, i18n, changeLanguage } = useTranslationStore()
+  const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
   const { navigate } = useRouterContext()
   const { collapsed, toggleSidebar } = useSidebar()
@@ -84,10 +85,9 @@ export const SidebarView = ({
       <Sidebar.Root className="h-svh">
         <Sidebar.Header className="pb-3">
           {showNewSearch ? (
-            <SearchProvider t={t}>
+            <SearchProvider>
               <SidebarSearch
                 className="pb-3 pt-1.5"
-                t={t}
                 logo={
                   <div className="my-5 flex items-center pl-2">
                     <HarnessLogo />
@@ -96,7 +96,7 @@ export const SidebarView = ({
               />
             </SearchProvider>
           ) : (
-            <SidebarSearchLegacy t={t} logo={<HarnessLogo />} />
+            <SidebarSearchLegacy logo={<HarnessLogo />} />
           )}
         </Sidebar.Header>
         <Sidebar.Content>
@@ -110,7 +110,6 @@ export const SidebarView = ({
                     handleChangePinnedMenuItem={handleChangePinnedMenuItem}
                     handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
                     handleCustomNav={handleCustomNav}
-                    t={t}
                   />
                 ))}
 
@@ -119,7 +118,7 @@ export const SidebarView = ({
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.more', 'More')}
-                      icon={<Icon name="ellipsis" size={14} />}
+                      icon={<IconV2 name="menu-more-horizontal" />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -140,7 +139,6 @@ export const SidebarView = ({
                       handleChangePinnedMenuItem={handleChangePinnedMenuItem}
                       handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
                       handleCustomNav={handleCustomNav}
-                      t={t}
                     />
                   ))}
                 </Sidebar.Menu>
@@ -157,7 +155,7 @@ export const SidebarView = ({
                       <Sidebar.MenuItemText
                         className="pl-0"
                         text={t('component:navbar.user-management', 'User Management')}
-                        icon={<Icon name="account" size={14} />}
+                        icon={<IconV2 name="user" />}
                       />
                     </Sidebar.MenuButton>
                   </Sidebar.MenuItem>
@@ -167,7 +165,7 @@ export const SidebarView = ({
                     <Sidebar.MenuItemText
                       className="pl-0"
                       text={t('component:navbar.settings', 'Settings')}
-                      icon={<Icon name="settings-1" size={14} />}
+                      icon={<IconV2 name="settings" size="xs" />}
                     />
                   </Sidebar.MenuButton>
                 </Sidebar.MenuItem>
@@ -189,7 +187,7 @@ export const SidebarView = ({
                         : t('component:navbar.sidebarToggle.collapse', 'Collapse')
                     }
                     text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-                    icon={<Icon name={collapsed ? 'sidebar-right' : 'sidebar-left'} size={14} />}
+                    icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size="xs" />}
                   />
                 </Sidebar.MenuButton>
               </Sidebar.MenuItem>
@@ -203,7 +201,6 @@ export const SidebarView = ({
             openThemeDialog={() => setOpenThemeDialog(true)}
             openLanguageDialog={() => setOpenLanguageDialog(true)}
             handleLogOut={handleLogOut}
-            t={t}
           />
         </Sidebar.Footer>
         <Sidebar.Rail />
@@ -216,7 +213,7 @@ export const SidebarView = ({
       />
       <LanguageDialog
         supportedLanguages={languages}
-        defaultLanguage={i18n.language as LanguageCode}
+        defaultLanguage={lang as LanguageCode}
         open={openLanguageDialog}
         onOpenChange={() => setOpenLanguageDialog(false)}
         onChange={handleLanguageChange}

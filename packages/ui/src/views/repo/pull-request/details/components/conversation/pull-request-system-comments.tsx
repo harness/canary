@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, Icon, IconProps, Layout, Tag } from '@/components'
+import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Layout, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -97,7 +97,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="pr-merge" size={12} />
+          icon: <IconV2 name="git-merge" size="2xs" />
         }
 
       case CommentType.REVIEW_SUBMIT:
@@ -109,9 +109,9 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           },
           icon:
             decision === 'approved' ? (
-              <Icon name="success" size={18} className="text-cn-foreground-success" />
+              <IconV2 name="check-circle-solid" size="md" className="text-cn-foreground-success" />
             ) : (
-              <Icon name="triangle-warning" size={18} className="text-cn-foreground-danger" />
+              <IconV2 name="warning-triangle" size="md" className="text-cn-foreground-danger" />
             )
         }
 
@@ -124,7 +124,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             description: !forced ? (
               <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
             ) : (
-              <Layout.Horizontal gap="gap-x-1.5" className="items-center">
+              <Layout.Horizontal gap="xs" align="center">
                 <span>forced pushed</span>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(old)} />
                 <span>to</span>
@@ -132,7 +132,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Layout.Horizontal>
             )
           },
-          icon: <Icon name="tube-sign" size={14} />
+          icon: <IconV2 name="git-commit" size="xs" />
         }
 
       case CommentType.BRANCH_RESTORE:
@@ -155,19 +155,19 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="git-branch" size={12} />
+          icon: <IconV2 name="git-branch" size="xs" />
         }
       }
 
       case CommentType.STATE_CHANGE: {
-        const iconName: IconProps['name'] =
+        const iconName: IconPropsV2['name'] =
           openFromDraft || changedToDraft
             ? changedToDraft
-              ? 'pr-draft'
-              : 'pr-review'
+              ? 'git-pull-request-draft'
+              : 'eye'
             : old === 'closed' && newData === 'open'
-              ? 'pr-open'
-              : 'pr-closed'
+              ? 'git-pull-request'
+              : 'git-pull-request-closed'
 
         return {
           header: {
@@ -179,7 +179,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name={iconName} size={12} />
+          icon: <IconV2 name={iconName} size="2xs" />
         }
       }
 
@@ -192,7 +192,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="edit-pen" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
 
       case CommentType.REVIEW_DELETE: {
@@ -209,7 +209,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="edit-pen" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
       }
 
@@ -227,7 +227,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="pr-review" size={14} className="p-0.5" />
+          icon: <IconV2 name="eye" size="xs" className="p-0.5" />
         }
       }
 
@@ -253,7 +253,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="edit-pen" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
       }
 

@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, FormInput, FormWrapper } from '@/components'
-import { TranslationStore } from '@/views'
+import { Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -12,7 +11,6 @@ interface PullRequestHeaderEditDialogProps {
   onSubmit: (newTitle: string, newDescription: string) => void
   initialTitle: string
   initialDescription?: string
-  useTranslationStore?: () => TranslationStore
 }
 
 // Field names as constants to avoid lint warnings with string literals
@@ -81,37 +79,45 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   return (
     <Dialog.Root open={open} onOpenChange={handleDialogClose}>
       <Dialog.Content aria-describedby={undefined}>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} id="edit-pr-title-form">
+        <FormWrapper
+          {...formMethods}
+          onSubmit={handleSubmit(handleFormSubmit)}
+          id="edit-pr-title-form"
+          className="block"
+        >
           <Dialog.Header>
             <Dialog.Title>Edit PR title</Dialog.Title>
           </Dialog.Header>
 
-          <FormInput.Text
-            id="title"
-            {...register('title')}
-            placeholder="Enter pull request title"
-            label="Title"
-            onFocus={event => event.target.select()}
-            autoFocus
-          />
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
+              <FormInput.Text
+                id="title"
+                {...register('title')}
+                placeholder="Enter pull request title"
+                label="Title"
+                onFocus={event => event.target.select()}
+                autoFocus
+              />
 
-          <FormInput.Textarea
-            {...register(FIELD_DESCRIPTION)}
-            placeholder="Enter pull request description"
-            label="Description"
-            rows={5}
-          />
+              <FormInput.Textarea
+                {...register(FIELD_DESCRIPTION)}
+                placeholder="Enter pull request description"
+                label="Description"
+                rows={5}
+              />
 
-          {error && <p className="text-cn-foreground-danger">{error}</p>}
+              {error && <p className="text-cn-foreground-danger">{error}</p>}
+            </div>
+          </Dialog.Body>
 
           <Dialog.Footer>
-            <Button type="button" variant="outline" onClick={handleDialogClose}>
-              Cancel
-            </Button>
-
-            <Button type="submit" disabled={isDisabled}>
-              {isLoading ? 'Saving...' : 'Save'}
-            </Button>
+            <ButtonLayout>
+              <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
+              <Button type="submit" disabled={isDisabled}>
+                {isLoading ? 'Saving...' : 'Save'}
+              </Button>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

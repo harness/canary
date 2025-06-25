@@ -87,13 +87,13 @@ export function OTPPage({
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <div className="relative z-10 mb-8 max-w-full text-cn-foreground-1 w-80">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
         <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Text className="mt-3 leading-snug" weight="medium" size={5} align="center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Verify your email
           </Text>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          <Text className="mt-0.5" align="center">
             Please enter the verification code we’ve sent to your email{' '}
             <span className="text-cn-foreground-1">{email}</span>
           </Text>
@@ -124,9 +124,10 @@ export function OTPPage({
               />
               {(errors.otp || serverError) && (
                 <Text
-                  className="absolute top-full w-full translate-y-2 leading-none tracking-tight text-cn-foreground-danger"
+                  variant="body-single-line-normal"
+                  className="absolute top-full w-full translate-y-2"
+                  color="danger"
                   align="center"
-                  size={1}
                   as="p"
                 >
                   {errors.otp?.message || serverError}
@@ -138,7 +139,7 @@ export function OTPPage({
             </Button>
           </form>
           <Spacer size={4} />
-          <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
+          <Text color="foreground-3" align="center">
             Didn&apos;t receive the code?{' '}
             <Button className="h-5 p-0 leading-none" variant="ghost" onClick={handleResend}>
               Resend

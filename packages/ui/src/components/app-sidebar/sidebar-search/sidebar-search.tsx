@@ -1,19 +1,17 @@
 import { FormHTMLAttributes, ReactNode } from 'react'
 
-import { Button, Input, Label } from '@/components'
-import { Icon } from '@components/icon'
+import { Button, IconV2, Input, Label } from '@/components'
+import { useTranslation } from '@/context'
 import { Sidebar } from '@components/sidebar/sidebar'
-import { TFunction } from 'i18next'
 
 import { useSearch } from './search-context'
 
 interface SidebarSearchProps extends FormHTMLAttributes<HTMLFormElement> {
   logo: ReactNode
-  t: TFunction
 }
 
 export function SidebarSearch(props: SidebarSearchProps) {
-  const { t } = props
+  const { t } = useTranslation()
   const searchContext = useSearch()
 
   if (!searchContext) {
@@ -42,7 +40,7 @@ export function SidebarSearch(props: SidebarSearchProps) {
         />
 
         <Button variant="ghost" iconOnly size="sm" type="button">
-          <Icon name="search" size={12} />
+          <IconV2 name="search" size="2xs" />
         </Button>
         <Button
           variant="ghost"

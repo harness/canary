@@ -10,6 +10,7 @@ import {
   SettingsMenu,
   Sidebar
 } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 import { SidebarView } from '@harnessio/ui/views'
 
 import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
@@ -21,7 +22,8 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 
 const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
+  const { changeLanguage, i18n } = useTranslationStore()
   const { currentUser } = useAppContext()
   const { spaceId, repoId } = useParams<PathParams>()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
@@ -145,7 +147,8 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
         pinnedMenuItems={pinnedMenu}
         handleChangePinnedMenuItem={handleChangePinnedMenuItem}
         handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-        useTranslationStore={useTranslationStore}
+        changeLanguage={changeLanguage}
+        lang={i18n.language}
       />
 
       <Sidebar.Inset>

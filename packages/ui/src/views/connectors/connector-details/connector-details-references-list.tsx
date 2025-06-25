@@ -1,4 +1,5 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 
 import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
@@ -16,12 +17,11 @@ const Description = ({ description }: { description: string }): JSX.Element => (
 
 const ConnectorDetailsReferenceList = ({
   entities,
-  useTranslationStore,
   isLoading,
   toEntity,
   toScope
 }: ConnectorReferenceListProps): JSX.Element => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const content = entities?.content
   if (isLoading) {
     return <SkeletonList />
@@ -33,7 +33,7 @@ const ConnectorDetailsReferenceList = ({
         withBorder
         className="min-h-[65vh]"
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noEntities', 'No entities yet')}
         description={[t('views:noData.noEntitiesDescription', 'There are no entities yet.')]}
       />
@@ -43,7 +43,8 @@ const ConnectorDetailsReferenceList = ({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -75,12 +76,7 @@ const ConnectorDetailsReferenceList = ({
                   {scope}
                 </Table.Cell>
 
-                <Table.Cell
-                  onClick={() => toEntity?.(identifier)}
-                  className="max-w-full content-center truncate text-right text-sm font-normal leading-tight tracking-tight text-cn-foreground-4"
-                >
-                  {createdAt ? timeAgo(createdAt) : null}
-                </Table.Cell>
+                <Table.Cell onClick={() => toEntity?.(identifier)}>{createdAt ? timeAgo(createdAt) : null}</Table.Cell>
               </Table.Row>
             )
           })}

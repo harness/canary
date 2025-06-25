@@ -193,22 +193,22 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{pure.black}",
           "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.700}",
+          "$value": "{chrome.200}",
           "$description": "Background color for primary subtle brand items with strong emphasis."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{chrome.300}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.400}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },
@@ -1095,7 +1095,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.15",
+              "value": "0.25",
               "space": "lch"
             }
           }
@@ -1109,6 +1109,12 @@
       "gradient": {
         "$type": "color",
         "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
+      }
+    },
+    "chat": {
+      "ai-icon": {
+        "$type": "color",
+        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
       }
     },
     "dialog": {
@@ -1409,6 +1415,16 @@
           "$value": "{cyan.400}",
           "$description": "Icon color for Logo in sidebar navigation."
         }
+      },
+      "icon-asset": {
+        "bg": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.sidebar.icon.bg.from} 0%, {gradient.sidebar.icon.bg.to} 80%)"
+        },
+        "item": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.sidebar.icon.item.from} 0%, {gradient.sidebar.icon.item.to} 100%)"
+        }
       }
     },
     "scrollbar": {
@@ -1704,7 +1720,7 @@
             "x": "0",
             "y": "0",
             "blur": "0",
-            "spread": "1",
+            "spread": "0.6",
             "color": "{comp.avatar.border}",
             "type": "innerShadow"
           }
@@ -1946,6 +1962,20 @@
         "$value": "{cyan.200}"
       }
     },
+    "ai-chat": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{cyan.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{indigo.400}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{violet.400}"
+      }
+    },
     "alert": {
       "fade-default": {
         "$extensions": {
@@ -2120,34 +2150,138 @@
         "$type": "color",
         "$value": "{bg.2}"
       }
-    }
-  },
-  "iconStrokeWidth": {
-    "xs": {
-      "$type": "borderWidth",
-      "$value": "1.2"
     },
-    "sm": {
-      "$type": "borderWidth",
-      "$value": "1"
+    "sidebar": {
+      "icon": {
+        "bg": {
+          "from": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          }
+        },
+        "item": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          }
+        }
+      }
     },
-    "default": {
-      "$type": "borderWidth",
-      "$value": "1"
-    },
-    "md": {
-      "$type": "borderWidth",
-      "$value": "1.2"
-    },
-    "lg": {
-      "$type": "borderWidth",
-      "$value": "2"
+    "img": {
+      "empty-state": {
+        "bg": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          },
+          "stop-4": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          },
+          "stop-5": {
+            "$type": "color",
+            "$value": "{chrome.50}"
+          },
+          "stop-6": {
+            "$type": "color",
+            "$value": "{chrome.100}"
+          }
+        },
+        "border": {
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.1",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{pure.black}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.02",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{pure.black}"
+          }
+        },
+        "icon": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{chrome.200}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{chrome.300}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          }
+        },
+        "lines": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.200}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          }
+        }
+      }
     }
   },
   "disabled": {
     "opacity": {
       "$type": "opacity",
       "$value": "{opacity.50}"
+    }
+  },
+  "img": {
+    "empty-state": {
+      "bg": {
+        "$type": "color",
+        "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)"
+      },
+      "lines": {
+        "$type": "color",
+        "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+      }
     }
   }
 }

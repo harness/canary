@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { AlertDialog, Button, ButtonLayout, Textarea } from '@/components'
+import { Button, ButtonLayout, Dialog, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -26,37 +26,33 @@ export const EditRepoDetails = ({
     setNewDesc(description)
   }, [description])
   return (
-    <AlertDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
-      <AlertDialog.Content
-        className="h-80 max-h-[70vh] w-[460px] !rounded"
-        onClose={handleClose}
-        onOverlayClick={handleClose}
-      >
-        <AlertDialog.Header>
-          <AlertDialog.Title className="mb-4">Repository Description</AlertDialog.Title>
-        </AlertDialog.Header>
-        <Textarea
-          label="Description"
-          className="h-24 text-cn-foreground-1"
-          value={newDesc}
-          defaultValue={description}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-            setNewDesc(e?.target?.value)
-          }}
-          placeholder="Enter repository description here"
-          error={updateRepoError?.length ? updateRepoError : undefined}
-        />
-        <AlertDialog.Footer>
+    <Dialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title className="mb-4">Repository Description</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
+          <Textarea
+            label="Description"
+            className="h-24 text-cn-foreground-1"
+            value={newDesc}
+            defaultValue={description}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setNewDesc(e?.target?.value)
+            }}
+            placeholder="Enter repository description here"
+            error={updateRepoError?.length ? updateRepoError : undefined}
+          />
+        </Dialog.Body>
+        <Dialog.Footer>
           <ButtonLayout>
-            <Button variant="outline" onClick={handleClose}>
-              Cancel
-            </Button>
+            <Dialog.Close onClick={handleClose}>Cancel</Dialog.Close>
             <Button type="button" onClick={() => onSave(newDesc)}>
               Save
             </Button>
           </ButtonLayout>
-        </AlertDialog.Footer>
-      </AlertDialog.Content>
-    </AlertDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

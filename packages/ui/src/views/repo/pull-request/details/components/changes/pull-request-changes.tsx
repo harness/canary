@@ -1,6 +1,7 @@
 import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, StackedList, Text } from '@/components'
+import { useTranslation } from '@/context'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -12,7 +13,6 @@ import {
   HandleUploadType,
   InViewDiffRenderer,
   jumpToFile,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -47,7 +47,6 @@ interface HeaderProps {
 }
 
 interface LineTitleProps {
-  useTranslationStore: () => TranslationStore
   header: HeaderProps
   viewed: boolean
   setViewed: (val: boolean) => void
@@ -62,7 +61,6 @@ interface LineTitleProps {
 interface DataProps {
   data: HeaderProps[]
   diffMode: DiffModeEnum
-  useTranslationStore: () => TranslationStore
   currentUser?: string
   comments: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment: (comment: string, parentId?: number) => void
@@ -91,7 +89,6 @@ interface DataProps {
 
 const LineTitle: React.FC<LineTitleProps> = ({
   header,
-  useTranslationStore,
   viewed,
   setViewed,
   showViewed,
@@ -101,7 +98,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
   toggleFullDiff,
   useFullDiff
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { text, addedLines, deletedLines, filePath, checksumAfter } = header
   return (
     <div className="flex items-center justify-between gap-x-3">
@@ -117,7 +114,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
               toggleFullDiff()
             }}
           >
-            <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
+            <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <span className="font-medium leading-tight text-cn-foreground-1">{text}</span>
           <CopyButton name={text} className="size-6" color="gray" />
@@ -147,10 +144,6 @@ const LineTitle: React.FC<LineTitleProps> = ({
             label={t('views:pullRequests.markViewed')}
           />
         ) : null}
-
-        {/* <Button title="coming soon" variant="ghost" size="sm">
-        <Icon name="ellipsis" size={12} className="text-cn-foreground-3/40" />
-      </Button> */}
       </div>
     </div>
   )
@@ -160,7 +153,6 @@ const PullRequestAccordion: React.FC<{
   header: HeaderProps
   data?: string
   diffMode: DiffModeEnum
-  useTranslationStore: () => TranslationStore
   currentUser?: string
   comments: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment: (comment: string, parentId?: number) => void
@@ -190,7 +182,6 @@ const PullRequestAccordion: React.FC<{
 }> = ({
   header,
   diffMode,
-  useTranslationStore,
   currentUser,
   comments,
   handleSaveComment,
@@ -217,7 +208,7 @@ const PullRequestAccordion: React.FC<{
   onToggle,
   setCollapsed
 }) => {
-  const { t: _ts } = useTranslationStore()
+  const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [useFullDiff, setUseFullDiff] = useState(false)
   const diffViewerState = useMemo(() => new Map<string, DiffViewerState>(), [])
@@ -321,7 +312,6 @@ const PullRequestAccordion: React.FC<{
               <StackedList.Field
                 title={
                   <LineTitle
-                    useTranslationStore={useTranslationStore}
                     header={header}
                     viewed={viewed}
                     setViewed={setViewed}
@@ -338,7 +328,7 @@ const PullRequestAccordion: React.FC<{
             <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical gap="space-y-0" className="items-center py-5">
+                  <Layout.Vertical align="center" className="py-5">
                     <Button
                       className="text-cn-foreground-accent"
                       variant="link"
@@ -348,7 +338,7 @@ const PullRequestAccordion: React.FC<{
                     >
                       {_ts('views:pullRequests.showDiff')}
                     </Button>
-                    <p className="font-medium">
+                    <Text variant="body-strong">
                       {fileDeleted
                         ? _ts('views:pullRequests.deletedFileDiff')
                         : isDiffTooLarge
@@ -356,7 +346,7 @@ const PullRequestAccordion: React.FC<{
                           : header?.isBinary
                             ? _ts('views:pullRequests.binaryNotShown')
                             : _ts('views:pullRequests.fileNoChanges')}
-                    </p>
+                    </Text>
                   </Layout.Vertical>
                 ) : (
                   <>
@@ -380,7 +370,6 @@ const PullRequestAccordion: React.FC<{
                       handleSaveComment={handleSaveComment}
                       deleteComment={deleteComment}
                       updateComment={updateComment}
-                      useTranslationStore={useTranslationStore}
                       onCopyClick={onCopyClick}
                       onCommitSuggestion={onCommitSuggestion}
                       addSuggestionToBatch={addSuggestionToBatch}
@@ -406,7 +395,6 @@ const PullRequestAccordion: React.FC<{
 function PullRequestChangesInternal({
   data,
   diffMode,
-  useTranslationStore,
   currentUser,
   comments,
   handleSaveComment,
@@ -543,7 +531,6 @@ function PullRequestChangesInternal({
                       key={`${item.title}-${index}`}
                       header={item}
                       diffMode={diffMode}
-                      useTranslationStore={useTranslationStore}
                       currentUser={currentUser}
                       comments={fileComments}
                       handleSaveComment={handleSaveComment}

@@ -107,14 +107,14 @@ export default {
     '&:where(.cn-button-sm)': {
       height: 'var(--cn-btn-size-sm)',
       padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
-      gap: 'var(--cn-btn-gap-sm)',
-      '@apply font-caption-single-line-normal': ''
+      gap: 'var(--cn-btn-gap-sm)'
     },
-    '&:where(.cn-button-lg)': {
-      height: 'var(--cn-btn-size-lg)',
-      paddingBlock: 'var(--cn-btn-py-lg)',
-      paddingInline: 'var(--cn-btn-px-lg)',
-      gap: 'var(--cn-btn-gap-lg)'
+    '&:where(.cn-button-xs)': {
+      height: 'var(--cn-btn-size-xs)',
+      paddingBlock: 'var(--cn-btn-py-xs)',
+      paddingInline: 'var(--cn-btn-px-xs)',
+      gap: 'var(--cn-btn-gap-xs)',
+      '@apply font-caption-single-line-normal': ''
     },
 
     // AI button
@@ -135,8 +135,8 @@ export default {
 
     // Ghost style
     '&:where(.cn-button-ghost)': {
-      border: 'none',
       color: 'var(--cn-set-gray-surface-text)',
+      '@apply border-transparent': '',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
         backgroundColor: 'var(--cn-set-gray-surface-bg-hover)'
@@ -156,13 +156,26 @@ export default {
     // Icon Only
     '&:where(.cn-button-icon-only)': {
       width: 'var(--cn-btn-size-default)',
-      height: 'var(--cn-btn-size-default)'
+      height: 'var(--cn-btn-size-default)',
+      padding: '0',
+      '& > svg': {
+        width: 'var(--cn-icon-size-sm)',
+        height: 'var(--cn-icon-size-sm)'
+      }
     },
 
     // Icon Only sizing
     '&:where(.cn-button-icon-only.cn-button-sm)': {
       width: 'var(--cn-btn-size-sm)',
       height: 'var(--cn-btn-size-sm)'
+    },
+    '&:where(.cn-button-icon-only.cn-button-xs)': {
+      width: 'var(--cn-btn-size-xs)',
+      height: 'var(--cn-btn-size-xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-sm)',
+        height: 'var(--cn-icon-size-sm)'
+      }
     },
 
     // Focus

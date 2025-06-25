@@ -1,4 +1,5 @@
-import { Icon, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { defaultTo } from 'lodash-es'
@@ -11,12 +12,11 @@ const Title = ({ title }: { title: string }): JSX.Element => (
 
 export function DelegateConnectivityList({
   delegates,
-  useTranslationStore,
   isLoading,
   selectedTags,
   isDelegateSelected
 }: DelegateConnectivityListProps): JSX.Element {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -26,7 +26,7 @@ export function DelegateConnectivityList({
     return (
       <NoData
         withBorder
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noDelegates', 'No delegates yet')}
         description={[t('views:noData.noDelegates', 'There are no delegates in this project yet.')]}
       />
@@ -36,7 +36,7 @@ export function DelegateConnectivityList({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
     >
       <Table.Header>
         <Table.Row>
@@ -61,16 +61,16 @@ export function DelegateConnectivityList({
             }) => {
               return (
                 <Table.Row key={groupId}>
-                  <Table.Cell className="max-w-80 content-center whitespace-nowrap truncate">
+                  <Table.Cell className="max-w-80 content-center truncate whitespace-nowrap">
                     <div className="flex items-center gap-2.5">
                       <Title title={groupName} />
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="content-center whitespace-nowrap truncate">
+                  <Table.Cell className="content-center truncate whitespace-nowrap">
                     <div className="inline-flex items-center gap-2">
-                      <Icon
-                        name="dot"
-                        size={8}
+                      <IconV2
+                        name="circle"
+                        size="2xs"
                         className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
                       />
                       {lastHeartBeat ? timeAgo(lastHeartBeat) : null}
@@ -78,7 +78,7 @@ export function DelegateConnectivityList({
                   </Table.Cell>
                   <Table.Cell className="max-w-96 whitespace-normal break-words">
                     {groupCustomSelectors.map((selector: string) => (
-                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mr-2 mb-1">
+                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mb-1 mr-2">
                         {selector}
                       </StatusBadge>
                     ))}
@@ -88,7 +88,7 @@ export function DelegateConnectivityList({
                       {isDelegateSelected(
                         [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
                         selectedTags || []
-                      ) && <Icon name="tick" size={12} className="text-icons-success" />}
+                      ) && <IconV2 name="check" size="2xs" className="text-icons-success" />}
                     </div>
                   </Table.Cell>
                 </Table.Row>

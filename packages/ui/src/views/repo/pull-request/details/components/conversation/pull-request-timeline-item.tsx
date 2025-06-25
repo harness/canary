@@ -1,6 +1,6 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, Button, Icon, Input, MoreActionsTooltip, NodeGroup } from '@/components'
+import { Avatar, Button, IconV2, Input, MoreActionsTooltip, NodeGroup } from '@/components'
 import { HandleUploadType, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -75,7 +75,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
         {isComment && !isDeleted && (
           <MoreActionsTooltip
             className="w-[200px]"
-            iconName="more-dots-fill"
+            iconName="more-horizontal"
             sideOffset={-8}
             alignOffset={2}
             actions={actions}
@@ -226,7 +226,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               />
               {isResolved && !contentHeader && (
                 <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                  <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
+                  <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
                   {isExpanded ? 'Hide resolved' : 'Show resolved'}
                 </Button>
               )}
@@ -245,7 +245,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   {contentHeader}
                   {isResolved && (
                     <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                      <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
+                      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
                       {isExpanded ? 'Hide resolved' : 'Show resolved'}
                     </Button>
                   )}

@@ -2,10 +2,9 @@ import { MouseEvent, ReactNode } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
-import { Option } from '@components/option'
-import { Radio } from '@components/radio'
 import { cn } from '@utils/cn'
+
+import { IconV2 } from './icon-v2'
 
 export interface SplitButtonOptionType<T extends string> {
   value: T
@@ -16,7 +15,6 @@ export interface SplitButtonOptionType<T extends string> {
 
 // Base props shared by all variants
 interface SplitButtonBaseProps<T extends string> {
-  id: string
   handleButtonClick: (e: MouseEvent) => void
   loading?: boolean
   selectedValue?: T
@@ -25,6 +23,8 @@ interface SplitButtonBaseProps<T extends string> {
   className?: string
   buttonClassName?: string
   disabled?: boolean
+  disableButton?: boolean
+  disableDropdown?: boolean
   children: ReactNode
   dropdownContentClassName?: string
 }
@@ -54,7 +54,6 @@ export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | Spli
  * - variant=surface with theme=success|danger|muted
  */
 export const SplitButton = <T extends string>({
-  id,
   handleButtonClick,
   loading = false,
   selectedValue,
@@ -65,6 +64,8 @@ export const SplitButton = <T extends string>({
   theme = 'default',
   variant = 'primary',
   disabled = false,
+  disableDropdown = false,
+  disableButton = false,
   children,
   dropdownContentClassName
 }: SplitButtonProps<T>) => {
@@ -76,7 +77,7 @@ export const SplitButton = <T extends string>({
         variant={variant}
         onClick={handleButtonClick}
         type="button"
-        disabled={disabled}
+        disabled={disabled || disableButton}
         loading={loading}
       >
         {children}
@@ -84,52 +85,34 @@ export const SplitButton = <T extends string>({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger
           className={cn(buttonVariants({ theme, variant }), 'cn-button-split-dropdown')}
-          disabled={disabled || loading}
+          disabled={disabled || loading || disableDropdown}
         >
-          <Icon name="chevron-down" size={12} className="chevron-down" />
+          <IconV2 name="nav-arrow-down" />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
           {selectedValue ? (
-            <Radio.Root value={String(selectedValue)} id={id}>
-              <DropdownMenu.Group>
-                {options.map(option => (
-                  <DropdownMenu.Item
-                    key={String(option.value)}
-                    onClick={() => handleOptionChange(option.value)}
-                    disabled={loading || option.disabled}
-                  >
-                    <Option
-                      control={
-                        <Radio.Item
-                          className="mt-px"
-                          value={String(option.value)}
-                          id={String(option.value)}
-                          showOptionalLabel
-                        />
-                      }
-                      id={String(option.value)}
-                      label={option.label}
-                      ariaSelected={selectedValue === option.value}
-                      description={option?.description}
-                    />
-                  </DropdownMenu.Item>
-                ))}
-              </DropdownMenu.Group>
-            </Radio.Root>
+            <DropdownMenu.RadioGroup value={String(selectedValue)}>
+              {options.map(option => (
+                <DropdownMenu.RadioItem
+                  title={option.label}
+                  description={option?.description}
+                  value={String(option.value)}
+                  key={String(option.value)}
+                  onClick={() => handleOptionChange(option.value)}
+                  disabled={loading || option.disabled}
+                />
+              ))}
+            </DropdownMenu.RadioGroup>
           ) : (
             <DropdownMenu.Group>
               {options.map(option => (
                 <DropdownMenu.Item
+                  title={option.label}
+                  description={option.description}
                   key={String(option.value)}
-                  className="px-3 py-2.5"
                   onClick={() => handleOptionChange(option.value)}
                   disabled={loading || option.disabled}
-                >
-                  <span className="flex flex-col gap-y-1.5">
-                    <span className="leading-none text-cn-foreground-1">{option.label}</span>
-                    {option?.description && <span className="text-cn-foreground-2">{option.description}</span>}
-                  </span>
-                </DropdownMenu.Item>
+                />
               ))}
             </DropdownMenu.Group>
           )}

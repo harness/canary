@@ -9,11 +9,13 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  Icon,
+  IconV2,
   Label,
   SkeletonForm,
-  Tag
+  Tag,
+  Text
 } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import {
   ColorsEnum,
@@ -22,8 +24,7 @@ import {
   ILabelsStore,
   LabelType,
   NotFoundPage,
-  SandboxLayout,
-  TranslationStore
+  SandboxLayout
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -31,7 +32,6 @@ import { LabelFormColorAndNameGroup } from './components/label-form-color-and-na
 
 export interface LabelFormPageProps {
   useLabelsStore: () => ILabelsStore
-  useTranslationStore: () => TranslationStore
   onSubmit: (data: CreateLabelFormFields) => void
   isSaving: boolean
   onFormCancel: () => void
@@ -42,7 +42,6 @@ export interface LabelFormPageProps {
 
 export const LabelFormPage: FC<LabelFormPageProps> = ({
   useLabelsStore,
-  useTranslationStore,
   onSubmit,
   isSaving,
   onFormCancel,
@@ -50,7 +49,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   labelId,
   className
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { values: storeValues, labels: storeLabels, isLoading } = useLabelsStore()
 
   /**
@@ -97,7 +96,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
     reset,
     watch,
     trigger,
-    formState: { errors, isValid }
+    formState: { isValid }
   } = formMethods
 
   useEffect(() => {
@@ -114,15 +113,6 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   useEffect(() => {
     setValue('type', isDynamic ? LabelType.DYNAMIC : LabelType.STATIC)
   }, [isDynamic, setValue])
-
-  const handleLabelColorChange = (val: ColorsEnum) => {
-    setValue('color', val)
-  }
-
-  const makeHandleValueColorChange = (idx: number) => (val: ColorsEnum) => {
-    const newValues = values.map((item, index) => (index === idx ? { ...item, color: val } : item))
-    setValue('values', newValues)
-  }
 
   const handleAddValue = () => {
     if (!isValid) {
@@ -147,16 +137,16 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   }
 
   if (!fullLabelData && !!labelId && !isLoading) {
-    return <NotFoundPage useTranslationStore={useTranslationStore} />
+    return <NotFoundPage />
   }
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
-      </h1>
+      </Text>
 
       {isLoading && <SkeletonForm />}
 
@@ -169,18 +159,8 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               </Label>
 
               <LabelFormColorAndNameGroup
-                useTranslationStore={useTranslationStore}
-                selectProps={{
-                  name: 'color-label',
-                  onValueChange: handleLabelColorChange,
-                  value: color,
-                  error: errors.color?.message?.toString()
-                }}
-                inputProps={{
-                  id: 'label-name',
-                  ...register('key'),
-                  autoFocus: !key
-                }}
+                selectProps={{ ...register('color') }}
+                inputProps={{ id: 'label-name', ...register('key'), autoFocus: !key }}
               />
             </ControlGroup>
 
@@ -194,30 +174,20 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             />
 
             <ControlGroup>
-              <Label className="mb-2" optional>
-                {t('views:labelData.form.valueName', 'Label value')}
-              </Label>
-              {values.map((value, idx) => (
+              <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
+              {values.map((_, idx) => (
                 <LabelFormColorAndNameGroup
                   isValue
                   key={idx}
                   className="mt-5 first-of-type:mt-0"
-                  useTranslationStore={useTranslationStore}
                   handleDeleteValue={() => handleDeleteValue(idx)}
-                  selectProps={{
-                    name: `value-${idx}`,
-                    value: value.color,
-                    error: errors.values?.[idx]?.color?.message?.toString(),
-                    onValueChange: makeHandleValueColorChange(idx)
-                  }}
-                  inputProps={{
-                    ...register(`values.${idx}.value` as keyof CreateLabelFormFields)
-                  }}
+                  selectProps={{ ...register(`values.${idx}.color`) }}
+                  inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
                 />
               ))}
 
               <Button className="mt-3.5 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
-                <Icon name="bold-plus" size={10} />
+                <IconV2 name="plus" size="2xs" />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>
             </ControlGroup>
@@ -232,9 +202,9 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           </Fieldset>
 
           <section className="mt-1 flex flex-col gap-y-5">
-            <h3 className="text-sm leading-none text-cn-foreground-2">
+            <Text as="h3" variant="body-single-line-normal">
               {t('views:labelData.form.previewLabel', 'Label preview')}
-            </h3>
+            </Text>
 
             <div className="flex flex-col items-start gap-y-2.5">
               <Tag

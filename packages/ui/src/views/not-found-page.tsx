@@ -1,16 +1,15 @@
 import { FC } from 'react'
 
 import { Button } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import { TranslationStore } from '@views/repo'
 
 export interface NotFoundPageProps {
-  useTranslationStore: () => TranslationStore
   pageTypeText?: string
 }
 
-export const NotFoundPage: FC<NotFoundPageProps> = ({ useTranslationStore, pageTypeText }) => {
-  const { t } = useTranslationStore()
+export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
+  const { t } = useTranslation()
 
   const handleReload = () => {
     window.location.reload()
@@ -25,10 +24,11 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ useTranslationStore, pageT
         </span>
         <span className="mb-7 text-sm text-cn-foreground-3">
           {pageTypeText
-            ? t('views:notFound.descriptionWithType', {
-                defaultValue: `The requested page is not found. You can go back to view all ${pageTypeText} and manage your settings.`,
-                type: pageTypeText
-              })
+            ? t(
+                'views:notFound.descriptionWithType',
+                `The requested page is not found. You can go back to view all ${pageTypeText} and manage your settings.`,
+                { type: pageTypeText }
+              )
             : t('views:notFound.description', 'The requested page is not found.')}
         </span>
         <Button variant="outline" type="button" onClick={handleReload}>

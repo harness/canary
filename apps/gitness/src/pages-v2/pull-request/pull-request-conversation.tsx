@@ -43,7 +43,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
@@ -774,7 +773,6 @@ export default function PullRequestConversationPage() {
       <PullRequestConversationView
         rebaseErrorMessage={rebaseErrorMessage}
         filtersProps={filtersData}
-        useTranslationStore={useTranslationStore}
         panelProps={panelProps}
         overviewProps={overviewProps}
         // TODO: create useMemo of commentBoxProps

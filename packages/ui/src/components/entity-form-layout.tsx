@@ -1,5 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react'
 
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
 const EntityFormLayout = {
@@ -12,7 +13,11 @@ const EntityFormLayout = {
   },
 
   Description: function Description({ children }: { children: ReactNode }) {
-    return <div className="text-sm text-cn-foreground-3">{children}</div>
+    return (
+      <Text as="div" color="foreground-3">
+        {children}
+      </Text>
+    )
   },
 
   Form: function Form({ className, ...props }: HTMLAttributes<HTMLDivElement>) {

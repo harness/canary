@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Button } from './button'
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 
 const SheetRoot = SheetPrimitive.Root
 
@@ -102,7 +102,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
             asChild
           >
             <Button className={closeClassName} variant="ghost" size="sm" iconOnly>
-              <Icon name="close" size={16} />
+              <IconV2 name="xmark" />
               <span className="sr-only">Close</span>
             </Button>
           </SheetPrimitive.Close>

@@ -49,12 +49,12 @@ Primary buttons are the most prominent buttons in the interface.
 <h4>Primary Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="primary" size="lg">
-    Large
-  </Button>
-  <Button variant="primary">Default</Button>
+  <Button variant="primary">Medium</Button>
   <Button variant="primary" size="sm">
     Small
+  </Button>
+  <Button variant="primary" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -97,12 +97,12 @@ Secondary buttons are less prominent than primary buttons.
 <h4>Secondary Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="secondary" size="lg">
-    Large
-  </Button>
-  <Button variant="secondary">Default</Button>
+  <Button variant="secondary">Medium</Button>
   <Button variant="secondary" size="sm">
     Small
+  </Button>
+  <Button variant="secondary" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -153,12 +153,12 @@ Outline buttons have a transparent background with a visible border.
 <h4>Outline Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="outline" size="lg">
-    Large
-  </Button>
-  <Button variant="outline">Default</Button>
+  <Button variant="outline">Medium</Button>
   <Button variant="outline" size="sm">
     Small
+  </Button>
+  <Button variant="outline" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -219,9 +219,12 @@ Ghost buttons are minimally styled and blend into the background when not intera
 <h4>Ghost Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="ghost">Default</Button>
+  <Button variant="ghost">Medium</Button>
   <Button variant="ghost" size="sm">
     Small
+  </Button>
+  <Button variant="ghost" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -254,12 +257,12 @@ AI variant buttons are used specifically for AI-related actions.
 <h4>AI Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="ai" size="lg">
-    Large
-  </Button>
-  <Button variant="ai">Default</Button>
+  <Button variant="ai">Medium</Button>
   <Button variant="ai" size="sm">
     Small
+  </Button>
+  <Button variant="ai" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -292,9 +295,12 @@ Link buttons appear as text links and don't accept theme props.
 <h4>Link Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="link">Default</Button>
+  <Button variant="link">Medium</Button>
   <Button variant="link" size="sm">
     Small
+  </Button>
+  <Button variant="link" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -327,9 +333,12 @@ Transparent buttons have no background or border and don't accept theme props.
 <h4>Transparent Button with Sizes</h4>
 
 <div className="flex gap-3 items-end">
-  <Button variant="transparent">Default</Button>
+  <Button variant="transparent">Medium</Button>
   <Button variant="transparent" size="sm">
     Small
+  </Button>
+  <Button variant="transparent" size="xs">
+    Extra Small
   </Button>
 </div>
 
@@ -357,16 +366,16 @@ Transparent buttons have no background or border and don't accept theme props.
 
 <div className="flex gap-3">
   <Button iconOnly>
-    <Icon name="plus" />
+    <IconV2 name="plus" skipSize />
   </Button>
-  <Button variant="secondary" iconOnly>
-    <Icon name="branch" />
+  <Button variant="secondary" size="sm" iconOnly>
+    <IconV2 name="git-branch" skipSize />
   </Button>
-  <Button variant="outline" iconOnly>
-    <Icon name="check" />
+  <Button variant="outline" size="xs" iconOnly>
+    <IconV2 name="check" skipSize />
   </Button>
   <Button variant="transparent" size="sm" iconOnly>
-    <Icon name="cross" />
+    <IconV2 name="xmark" skipSize />
   </Button>
 </div>
 
@@ -417,16 +426,16 @@ import { Button } from '@harnessio/ui/components'
 <Button variant="transparent">Transparent Button</Button>
 
 // Button sizes
-<Button size="lg">Large Button</Button>
-<Button>Default Size Button</Button>
+<Button>Medium Size Button (default)</Button>
 <Button size="sm">Small Button</Button>
+<Button size="xs">Extra Small Button</Button>
 
 // Rounded button
 <Button rounded>Rounded Button</Button>
 
 // Icon only button
 <Button iconOnly>
-  <Icon name="plus" />
+  <IconV2 name="plus" />
 </Button>
 
 // Loading state
@@ -477,8 +486,8 @@ This ensures type safety and provides proper development-time feedback on invali
       name: "size",
       description: "Size of the button.",
       required: false,
-      value: "'default' | 'lg' | 'sm'",
-      defaultValue: "'default'",
+      value: "'md' | 'sm' | 'xs'",
+      defaultValue: "'md'",
     },
     {
       name: "rounded",

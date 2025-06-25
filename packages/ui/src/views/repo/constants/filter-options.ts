@@ -1,3 +1,4 @@
+import { TFunctionWithFallback } from '@/context'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import {
   CalendarFilterOptionConfig,
@@ -6,7 +7,6 @@ import {
   FilterFieldTypes,
   FilterOptionConfig
 } from '@components/filters/types'
-import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
 
@@ -26,7 +26,7 @@ type PRListFilterOptionConfig = Array<
 >
 
 interface PRListFilterOptions {
-  t: TFunction
+  t: TFunctionWithFallback
   onAuthorSearch: (name: string) => void
   isPrincipalsLoading?: boolean
   principalData: { label: string; value: string }[]

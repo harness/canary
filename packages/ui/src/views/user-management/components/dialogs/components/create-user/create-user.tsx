@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   createNewUserSchema,
@@ -16,8 +16,7 @@ interface CreateUserDialogProps {
 }
 
 export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUserDialogProps) {
-  const { useTranslationStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { loadingStates, errorStates } = useStates()
   const { isCreatingUser } = loadingStates
@@ -37,47 +36,47 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
+      <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title className="font-medium">
-            {t('views:userManagement.createUser.title', 'Add a new user')}
-          </Dialog.Title>
+          <Dialog.Title>{t('views:userManagement.createUser.title', 'Add a new user')}</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} id="create-user-form">
-          <Fieldset>
-            <FormInput.Text
-              id="memberName"
-              {...register('uid')}
-              label={t('views:userManagement.userId', 'User ID')}
-              caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
-              placeholder={t('views:userManagement.enterName', 'Enter name')}
-            />
+        <Dialog.Body>
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} id="create-user-form">
+            <Fieldset>
+              <FormInput.Text
+                id="memberName"
+                {...register('uid')}
+                label={t('views:userManagement.userId', 'User ID')}
+                caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
+                placeholder={t('views:userManagement.enterName', 'Enter name')}
+              />
 
-            <FormInput.Text
-              id="email"
-              type="email"
-              {...register('email')}
-              placeholder={t('views:userManagement.enterEmail', 'Enter email address')}
-              label={t('views:userManagement.email', 'Email')}
-            />
+              <FormInput.Text
+                id="email"
+                type="email"
+                {...register('email')}
+                placeholder={t('views:userManagement.enterEmail', 'Enter email address')}
+                label={t('views:userManagement.email', 'Email')}
+              />
 
-            <FormInput.Text
-              id="displayName"
-              {...register('display_name')}
-              placeholder={t('views:userManagement.createUser.enterDisplayName', 'Enter display name')}
-              label={t('views:userManagement.displayName', 'Display name')}
-            />
-          </Fieldset>
+              <FormInput.Text
+                id="displayName"
+                {...register('display_name')}
+                placeholder={t('views:userManagement.createUser.enterDisplayName', 'Enter display name')}
+                label={t('views:userManagement.displayName', 'Display name')}
+              />
+            </Fieldset>
 
-          {createUserError && <span className="text-2 text-cn-foreground-danger">{createUserError}</span>}
-        </FormWrapper>
+            {createUserError && <span className="text-2 text-cn-foreground-danger">{createUserError}</span>}
+          </FormWrapper>
+        </Dialog.Body>
 
         <Dialog.Footer>
           <ButtonLayout>
-            <Button variant="outline" onClick={onClose} disabled={isCreatingUser}>
+            <Dialog.Close onClick={onClose} disabled={isCreatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
-            </Button>
+            </Dialog.Close>
             <Button type="submit" disabled={isCreatingUser} form="create-user-form">
               {isCreatingUser
                 ? t('views:userManagement.createUser.inviting', 'Inviting...')

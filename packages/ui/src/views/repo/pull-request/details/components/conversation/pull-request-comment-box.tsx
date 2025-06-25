@@ -1,11 +1,11 @@
 import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
 
-import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 
 interface ToolbarItem {
-  icon: IconProps['name']
+  icon: IconV2NamesType
   action: ToolbarAction
   title?: string
   size?: number
@@ -117,15 +117,16 @@ export const PullRequestCommentBox = ({
   // TODO: add the remaining required logic for the toolbar
   const toolbar: ToolbarItem[] = useMemo(() => {
     const initial: ToolbarItem[] = []
+    // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
       { icon: 'suggestion', action: ToolbarAction.SUGGESTION },
       { icon: 'header', action: ToolbarAction.HEADER },
       { icon: 'bold', action: ToolbarAction.BOLD },
-      { icon: 'italicize', action: ToolbarAction.ITALIC },
+      { icon: 'italic', action: ToolbarAction.ITALIC },
       { icon: 'attachment', action: ToolbarAction.UPLOAD, onClick: handleFileSelect },
       { icon: 'list', action: ToolbarAction.UNORDER_LIST },
-      { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
+      { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
   }, [])
@@ -144,13 +145,9 @@ export const PullRequestCommentBox = ({
         })}
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.WRITE}>
-              Write
-            </Tabs.Trigger>
-            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.PREVIEW}>
-              Preview
-            </Tabs.Trigger>
+          <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+            <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+            <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
           </Tabs.List>
 
           <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
@@ -185,7 +182,7 @@ export const PullRequestCommentBox = ({
                   return (
                     <Fragment key={`${comment}-${index}`}>
                       <Button size="sm" variant="ghost" iconOnly onClick={item?.onClick}>
-                        <Icon className="text-icons-9" name={item.icon} />
+                        <IconV2 className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>
@@ -210,7 +207,7 @@ export const PullRequestCommentBox = ({
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button size="sm" variant="ghost" onClick={handleFileSelect}>
-                <Icon size={16} name="attachment-image" />
+                <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
             </div>

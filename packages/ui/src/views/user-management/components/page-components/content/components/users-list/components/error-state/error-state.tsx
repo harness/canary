@@ -1,11 +1,9 @@
 import { NoData } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
-import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const ErrorState = () => {
-  const { useTranslationStore } = useUserManagementStore()
-
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const { errorStates } = useStates()
   const { fetchUsersError } = errorStates
@@ -13,7 +11,7 @@ export const ErrorState = () => {
   return (
     <NoData
       textWrapperClassName="max-w-[350px]"
-      iconName="no-data-error"
+      imageName="no-data-error"
       title={t('views:noData.errorApiTitle', 'Failed to load', { type: 'users' })}
       description={[
         fetchUsersError ||

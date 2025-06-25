@@ -1,24 +1,28 @@
-import { FormCheckbox, type FormCheckboxPropsType } from './components/form-checkbox'
-import { FormMultiSelect, type FormMultiSelectPropsType } from './components/form-multi-select-v2'
-import { FormNumberInput, type FormNumberInputPropsType } from './components/form-number-input'
-import { FormRadio, type FormRadioPropsType } from './components/form-radio'
-import { FormTextInput, type FormTextInputPropsType } from './components/form-text-input'
-import { FormTextarea } from './components/form-textarea'
+import { Checkbox } from '@components/checkbox'
+import { Select, SelectProps, Textarea } from '@components/form-primitives'
+import { NumberInput, TextInput } from '@components/inputs'
+import { Radio } from '@components/radio'
+
+import { withForm, WithFormProps } from './components/form-hoc'
+import { FormMultiSelect } from './components/form-multi-select-v2'
 
 const FormInput = {
-  Text: FormTextInput,
-  MultiSelect: FormMultiSelect,
-  Textarea: FormTextarea,
-  Number: FormNumberInput,
-  Radio: FormRadio,
-  Checkbox: FormCheckbox
+  Text: withForm(TextInput),
+  Textarea: withForm(Textarea),
+  Number: withForm(NumberInput),
+  Radio: withForm(Radio.Root, ({ field }) => ({
+    onValueChange: field.onChange
+  })),
+  Checkbox: withForm(Checkbox, ({ field }) => ({
+    checked: field.value,
+    onCheckedChange: field.onChange
+  })),
+  Select: withForm(Select) as <T = string>(
+    props: FormSelectProps<T> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  ) => React.ReactElement,
+  MultiSelect: FormMultiSelect
 }
 
-export {
-  FormInput,
-  type FormTextInputPropsType,
-  type FormMultiSelectPropsType,
-  type FormNumberInputPropsType,
-  type FormRadioPropsType,
-  type FormCheckboxPropsType
-}
+type FormSelectProps<T = string> = Omit<SelectProps<T>, 'onChange'> & WithFormProps
+
+export { FormInput, FormSelectProps }

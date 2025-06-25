@@ -1,7 +1,7 @@
 import { ElementType, FC, Fragment, useEffect, useMemo, useState } from 'react'
 
 import { Alert, Button, ButtonLayout, Drawer, EntityFormLayout } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
 import {
@@ -10,6 +10,7 @@ import {
   InputFactory,
   inputTransformValues,
   outputTransformValues,
+  removeTemporaryFieldsValue,
   RenderForm,
   RootForm,
   unsetHiddenInputsValues,
@@ -49,7 +50,6 @@ interface ConnectorEntityFormProps {
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   onBack?: () => void
-  useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
@@ -62,12 +62,11 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
   onFormSubmit,
   getConnectorDefinition,
   onBack,
-  useTranslationStore,
   inputComponentFactory,
   intent,
   isDrawer = false
 }) => {
-  const { t: _t } = useTranslationStore()
+  const { t: _t } = useTranslation()
   const [connectorEditValues, setConnectorEditValues] = useState({})
   const { Content, Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const isCreate = intent === EntityIntent.CREATE
@@ -86,7 +85,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
     if (connectorDefinition) {
       const formDef = {
         ...connectorDefinition.formDefinition,
-        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
+        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'connectorMeta.name')
       }
 
       formDef.inputs = formDef.inputs.map(input => {
@@ -113,10 +112,12 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
         const connectorValues = inputTransformValues(
           {
             ...connector?.spec,
-            name: connector.name,
-            type: connector.type,
-            ...(connector?.description && { description: connector?.description }),
-            ...(connector?.tags && { tags: connector?.tags })
+            connectorMeta: {
+              name: connector.name,
+              type: connector.type,
+              ...(connector?.description && { description: connector?.description }),
+              ...(connector?.tags && { tags: connector?.tags })
+            }
           },
           transformers
         )
@@ -143,9 +144,11 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
         const definition = getConnectorDefinition(connector.type)
         const transformers = definition ? getTransformers(definition?.formDefinition) : undefined
         const transformedValues = transformers?.length ? outputTransformValues(values, transformers) : values
-        const formattedValues = definition
+        let formattedValues = definition
           ? unsetHiddenInputsValues(definition.formDefinition, transformedValues)
           : transformedValues
+        formattedValues = removeTemporaryFieldsValue(formattedValues)
+
         onSubmit({ values: formattedValues, connector, intent })
       }}
       validateAfterFirstSubmit={true}

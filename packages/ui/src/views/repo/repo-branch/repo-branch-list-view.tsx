@@ -1,6 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
 import { Button, ListActions, Pagination, SearchInput, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -10,14 +11,13 @@ import { RepoBranchListViewProps } from './types'
 export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
-  useTranslationStore,
   setCreateBranchDialogOpen,
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
   ...routingProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
 
   const handleResetFiltersAndPages = () => {
@@ -73,7 +73,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           isLoading={isLoading}
           defaultBranch={defaultBranch}
           branches={branchList}
-          useTranslationStore={useTranslationStore}
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
           handleResetFiltersAndPages={handleResetFiltersAndPages}
           onDeleteBranch={onDeleteBranch}
@@ -87,7 +86,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             hasPrevious={xPrevPage > 0}
             getPrevPageLink={getPrevPageLink}
             getNextPageLink={getNextPageLink}
-            t={t}
           />
         )}
       </SandboxLayout.Content>

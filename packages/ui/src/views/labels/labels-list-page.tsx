@@ -1,13 +1,12 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, ListActions, Pagination, SearchInput, SkeletonList } from '@/components'
-import { useRouterContext } from '@/context'
-import { ILabelsStore, SandboxLayout, TranslationStore } from '@/views'
+import { Button, Checkbox, ListActions, Pagination, SearchInput, SkeletonList, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { ILabelsStore, SandboxLayout } from '@/views'
 
 import { LabelsListView, LabelsListViewProps } from './components/labels-list-view'
 
 export interface LabelsListPageProps {
-  useTranslationStore: () => TranslationStore
   useLabelsStore: () => ILabelsStore
   createdIn?: string
   showSpacer?: boolean
@@ -19,7 +18,6 @@ export interface LabelsListPageProps {
 }
 
 export const LabelsListPage: FC<LabelsListPageProps> = ({
-  useTranslationStore,
   useLabelsStore,
   searchQuery,
   setSearchQuery,
@@ -28,7 +26,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   labelsListViewProps
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const {
     labels: spaceLabels,
     totalItems,
@@ -57,7 +55,9 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={className}>
-        <h1 className="mb-6 text-2xl font-medium text-cn-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
+        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+          {t('views:labelData.title', 'Labels')}
+        </Text>
 
         {isRepository && (
           <div className="mb-[18px]">
@@ -96,7 +96,6 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
               {...labelsListViewProps}
               labels={spaceLabels}
               labelContext={{ space: space_ref, repo: repo_ref }}
-              useTranslationStore={useTranslationStore}
               handleResetQueryAndPages={handleResetQueryAndPages}
               searchQuery={searchQuery}
               values={spaceValues}
@@ -104,7 +103,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           </div>
         )}
 
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

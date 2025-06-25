@@ -1,11 +1,11 @@
 import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
-import { Icon, MeterState } from '@harnessio/ui/components'
+import { IconV2, MeterState } from '@harnessio/ui/components'
 import { PipelineExecutionStatus } from '@harnessio/ui/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (
     <div className="flex items-center gap-1 rounded-md bg-cn-background-1/10 px-1.5 font-mono">
-      <Icon name="branch" size={11} className="text-cn-foreground-3" />
+      <IconV2 name="git-branch" size="2xs" className="text-cn-foreground-3" />
       {branch}
     </div>
   )

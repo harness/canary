@@ -10,7 +10,7 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Button, ButtonLayout, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, IconV2, PipelineNodes } from '@harnessio/ui/components'
 
 // *****************************************************
 // 1. Import CSS
@@ -273,7 +273,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />,
       logs: logs
     } satisfies StepNodeDataType,
     config: {
@@ -285,7 +285,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.approval,
     data: {
       name: 'Approval 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
     } satisfies StepNodeDataType,
     config: {
       width: 120,
@@ -306,7 +306,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -317,7 +317,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -340,7 +340,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -351,7 +351,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,

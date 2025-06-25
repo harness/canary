@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 
 import { secretsFormDefinition } from '@utils/secrets/secrets-form-schema'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
 import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
@@ -124,7 +124,6 @@ export const SecretsPage = ({
         return (
           <SecretEntityForm
             ref={formRef}
-            useTranslationStore={useTranslationStore}
             inputComponentFactory={inputComponentFactory}
             intent={EntityIntent.CREATE}
             secretsFormDefinition={secretsFormDefinition}
@@ -171,9 +170,7 @@ export const SecretsPage = ({
             <Drawer.Title>Secret</Drawer.Title>
           </Drawer.Header>
           <Drawer.Body>
-            <Text as="div" className="text-cn-foreground-2 mb-4">
-              Choose type
-            </Text>
+            <Text className="mb-4">Choose type</Text>
             <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
             <Spacer size={6} />
             <FormSeparator className="w-full" />

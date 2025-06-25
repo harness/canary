@@ -48,32 +48,34 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-[576px]">
+      <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>Commit Changes</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)}>
-          <ControlGroup className="gap-y-7 pb-4">
-            <FormInput.Text
-              id="title"
-              label="Commit Message"
-              {...register('title')}
-              placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-            />
-            <FormInput.Textarea
-              id="message"
-              {...register('message')}
-              placeholder="Add an optional extended description"
-              label="Extended description"
-            />
-          </ControlGroup>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)} className="block">
+          <Dialog.Body>
+            <ControlGroup className="mb-7 space-y-7">
+              <FormInput.Text
+                id="title"
+                label="Commit Message"
+                {...register('title')}
+                placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
+              />
+              <FormInput.Textarea
+                id="message"
+                {...register('message')}
+                placeholder="Add an optional extended description"
+                label="Extended description"
+              />
+            </ControlGroup>
+          </Dialog.Body>
 
-          <Dialog.Footer className="-mx-5 -mb-5">
+          <Dialog.Footer>
             <ButtonLayout>
-              <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+              <Dialog.Close onClick={onClose} disabled={isSubmitting}>
                 Cancel
-              </Button>
+              </Dialog.Close>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
               </Button>

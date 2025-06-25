@@ -8,24 +8,36 @@ import {
   alertStyles,
   avatarStyles,
   badgeStyles,
+  breadcrumbStyles,
+  buttonLayoutStyles,
   buttonStyles,
   captionStyles,
   cardSelectStyles,
   cardStyles,
   checkboxStyles,
   dialogStyles,
+  drawerStyles,
+  dropdownStyles,
   formSharedStyles,
+  iconsAndLogos,
   inputStyles,
   labelStyles,
   linkStyles,
-  multiSelectV2Styles,
+  multiSelectStyles,
   paginationStyles,
+  popoverStyles,
+  progressStyles,
   radioStyles,
+  scrollAreaStyles,
+  selectStyles,
   switchStyles,
+  tableV2Styles,
+  tabsStyles,
   tagStyles,
   textareaStyles,
-  drawerStyles,
-  buttonLayoutStyles
+  toggleGroupStyles,
+  tooltipStyles,
+  buttonGroupStyle
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -56,11 +68,16 @@ export default {
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
+          disabled: 'var(--cn-state-disabled-text)',
+          multitype: {
+            codebrackets: 'var(--cn-set-blue-surface-text)',
+            code: 'var(--cn-set-purple-surface-text)',
+            variables: 'var(--cn-set-orange-surface-text)'
+          },
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
-          disabled: 'var(--cn-state-disabled-text)',
           4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
@@ -443,7 +460,7 @@ export default {
         alertStyles,
         badgeStyles,
         buttonStyles,
-        dialogStyles,
+        dropdownStyles,
         switchStyles,
         labelStyles,
         tagStyles,
@@ -452,31 +469,35 @@ export default {
         cardStyles,
         cardSelectStyles,
         paginationStyles,
+        progressStyles,
         drawerStyles,
         buttonLayoutStyles,
+        tabsStyles,
+        dialogStyles,
+        scrollAreaStyles,
+        popoverStyles,
+        tooltipStyles,
+        breadcrumbStyles,
+        iconsAndLogos,
+        toggleGroupStyles,
+        buttonGroupStyle,
 
         // Form styles
+        selectStyles,
         formSharedStyles,
         checkboxStyles,
         radioStyles,
         textareaStyles,
         inputStyles,
         captionStyles,
-        multiSelectV2Styles
+        multiSelectStyles,
+        tableV2Styles
       ])
     }),
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {
-      addUtilities({
-        '.tabnav-active': {
-          boxShadow:
-            'inset 0 1px 0 0 var(--cn-border-3), inset 1px 0 0 0 var(--cn-border-3), inset -1px 0 0 0 var(--cn-border-3)'
-        },
-        '.tabnav-inactive': {
-          boxShadow: 'inset 0 -1px 0 0 var(--cn-border-3)'
-        }
-      })
+      addUtilities({})
     },
     function ({ addComponents, theme, e }: PluginAPI) {
       const hoverClasses: Record<string, Record<string, string>> = {}

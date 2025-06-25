@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react'
 
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
 export interface GroupProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
@@ -39,7 +40,7 @@ export function Group({
             titleClassName
           )}
         >
-          <p className="px-2.5 text-2 font-normal">{title}</p>
+          <Text className="px-2.5">{title}</Text>
         </div>
       )}
       {children}

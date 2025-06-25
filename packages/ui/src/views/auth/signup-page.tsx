@@ -72,13 +72,13 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
-      <div className="relative z-10 mb-8 max-w-full text-cn-foreground-1 w-80">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
         <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'green'} />
-          <Text className="mt-3 leading-snug" weight="medium" size={5} align="center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Sign up to Harness
           </Text>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          <Text className="mt-0.5" align="center">
             Let’s start your journey with us today.
           </Text>
         </div>
@@ -123,7 +123,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
             </Button>
           </FormWrapper>
           <Spacer size={4} />
-          <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
+          <Text color="foreground-3" align="center">
             Already have an account? <Link to="/signin">Sign in</Link>
           </Text>
         </div>

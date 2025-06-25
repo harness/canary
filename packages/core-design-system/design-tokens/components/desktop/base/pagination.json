@@ -3,7 +3,7 @@
     "btn": {
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.3}"
+        "$value": "{spacing.3-half}"
       }
     }
   }

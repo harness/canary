@@ -9,7 +9,6 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Select,
   Spacer,
   Text
 } from '@/components'
@@ -41,6 +40,12 @@ const formSchema = z
 
 export type ImportProjectFormFields = z.infer<typeof formSchema>
 
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({
+  value: option,
+  label: option,
+  disabled: option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
+}))
+
 interface ImportProjectPageProps {
   onFormSubmit: (data: ImportProjectFormFields) => void
   onFormCancel: () => void
@@ -65,16 +70,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
 
   const { register, handleSubmit, setValue, watch } = formMethods
 
-  const providerValue = watch('provider')
   const orgValue = watch('organization')
 
   useEffect(() => {
     setValue('identifier', orgValue)
   }, [orgValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportProjectFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const onSubmit: SubmitHandler<ImportProjectFormFields> = data => {
     onFormSubmit(data)
@@ -88,58 +88,29 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          Import a Project
-        </Text>
+        <Text variant="heading-section">Import a Project</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Git provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item
-                          key={option}
-                          value={option}
-                          disabled={
-                            option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
-                          }
-                        >
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Select
+            options={providerOptions}
+            placeholder="Select"
+            label="Git provider"
+            {...register('provider')}
+          />
+
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
-            <Fieldset>
-              <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
-            </Fieldset>
+            <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
           )}
 
           {/* token */}
-          <Fieldset>
-            <ControlGroup>
-              <FormInput.Text
-                type="password"
-                id="password"
-                label="Token"
-                {...register('password')}
-                placeholder="Enter your access token"
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Text
+            type="password"
+            id="password"
+            label="Token"
+            {...register('password')}
+            placeholder="Enter your access token"
+          />
 
           <FormSeparator />
 

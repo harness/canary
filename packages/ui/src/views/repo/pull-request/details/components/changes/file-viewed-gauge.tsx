@@ -22,16 +22,16 @@ function Content({ ...props }: RootProps) {
 
   return (
     <div className="flex justify-center leading-snug">
-      <Text truncate size={1} className="text-cn-foreground-1/70">
+      <Text truncate className="text-cn-foreground-1/70">
         {children}
       </Text>
     </div>
   )
 }
 function Bar({ total, filled }: BarProps) {
-  const percentageFilled = (filled / total) * 100
+  const percentageFilled = filled / total
 
-  return <Progress value={percentageFilled} size="sm" color="accent" rounded="sm" />
+  return <Progress value={percentageFilled} size="sm" hideIcon hidePercentage />
 }
 
 export { Root, Content, Bar }

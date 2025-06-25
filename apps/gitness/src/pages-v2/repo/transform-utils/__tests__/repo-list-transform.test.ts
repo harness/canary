@@ -31,7 +31,7 @@ describe('transformRepoList', () => {
         stars: 0,
         forks: 5,
         pulls: 10,
-        timestamp: 'Jan 19, 1970', // Assuming timeAgoFromEpochTime returns 'just now'
+        timestamp: '1970-01-19T17:13:01.723Z', // Epoch gets converted to ISO-8601 string
         createdAt: 1617181723,
         importing: false
       }

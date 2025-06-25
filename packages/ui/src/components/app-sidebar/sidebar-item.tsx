@@ -1,14 +1,10 @@
-import { DropdownMenu, Icon, IconProps, Sidebar, Text, useSidebar } from '@/components'
-import { useRouterContext } from '@/context'
-import { TFunction } from 'i18next'
-
-const dropdownItemClassNames =
-  'text-sidebar-foreground-6 data-[highlighted]:bg-sidebar-background-2 data-[highlighted]:text-sidebar-foreground-1'
+import { DropdownMenu, IconV2, IconV2NamesType, Sidebar, useSidebar } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 
 interface NavbarItemType {
   id: number | string
   title: string
-  iconName?: IconProps['name']
+  iconName?: IconV2NamesType
   description?: string
   to: string
   permanentlyPinned?: boolean
@@ -20,7 +16,6 @@ interface NavbarItemProps {
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   handleCustomNav: () => void
-  t: TFunction
 }
 
 export const SidebarItem = ({
@@ -28,13 +23,11 @@ export const SidebarItem = ({
   isRecent = false,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
-  handleCustomNav,
-  t
+  handleCustomNav
 }: NavbarItemProps) => {
+  const { t } = useTranslation()
   const { NavLink } = useRouterContext()
   const { collapsed } = useSidebar()
-
-  const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
   const handlePin = () => {
     handleChangePinnedMenuItem(item, isRecent)
@@ -46,31 +39,14 @@ export const SidebarItem = ({
 
   const dropdownItems = isRecent ? (
     <>
-      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
-        <Text size={2} truncate color="inherit">
-          {t('component:navbar.pin', 'Pin')}
-        </Text>
-      </DropdownMenu.Item>
-      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleRemoveRecent}>
-        <Text size={2} truncate color="inherit">
-          {t('component:navbar.remove', 'Remove')}
-        </Text>
-      </DropdownMenu.Item>
+      <DropdownMenu.Item onSelect={handlePin} title={t('component:navbar.pin', 'Pin')} />
+      <DropdownMenu.Item onSelect={handleRemoveRecent} title={t('component:navbar.remove', 'Remove')} />
     </>
   ) : (
     <>
-      <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handleCustomNav}>
-        <Text size={2} truncate color="inherit">
-          {t('component:navbar.reorder', 'Reorder')}
-        </Text>
-      </DropdownMenu.Item>
-
+      <DropdownMenu.Item onSelect={handleCustomNav} title={t('component:navbar.reorder', 'Reorder')} />
       {!item.permanentlyPinned && (
-        <DropdownMenu.Item className={dropdownItemClassNames} onSelect={handlePin}>
-          <Text size={2} truncate color="inherit">
-            {t('component:navbar.unpin', 'Unpin')}
-          </Text>
-        </DropdownMenu.Item>
+        <DropdownMenu.Item onSelect={handlePin} title={t('component:navbar.unpin', 'Unpin')} />
       )}
     </>
   )
@@ -82,7 +58,7 @@ export const SidebarItem = ({
           <Sidebar.MenuButton asChild isActive={isActive}>
             <Sidebar.MenuItemText
               text={item.title}
-              icon={iconName && <Icon name={iconName} size={14} />}
+              icon={item.iconName && <IconV2 name={item.iconName} size="xs" />}
               active={isActive}
             />
           </Sidebar.MenuButton>
@@ -93,15 +69,10 @@ export const SidebarItem = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Sidebar.MenuAction className="right-[3px] text-sidebar-icon-3 hover:text-sidebar-icon-1" showOnHover>
-              <Icon name="menu-dots" size={12} />
+              <IconV2 name="more-vert" size="2xs" />
             </Sidebar.MenuAction>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content
-            className="w-[128px] border-sidebar-border-3 bg-sidebar-background-4"
-            align="end"
-            sideOffset={3}
-            alignOffset={4}
-          >
+          <DropdownMenu.Content align="end" sideOffset={3} alignOffset={4}>
             {dropdownItems}
           </DropdownMenu.Content>
         </DropdownMenu.Root>

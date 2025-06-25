@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactElement } from 'react'
 
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import * as ToastPrimitives from '@radix-ui/react-toast'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -75,7 +75,7 @@ const ToastClose = forwardRef<
     toast-close=""
     {...props}
   >
-    <Icon name="cross" size={12} />
+    <IconV2 name="xmark" size="2xs" />
   </ToastPrimitives.Close>
 ))
 ToastClose.displayName = ToastPrimitives.Close.displayName

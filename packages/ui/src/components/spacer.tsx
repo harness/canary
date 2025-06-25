@@ -3,28 +3,27 @@ import { ComponentProps } from 'react'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const spacerVariants = cva('mt-4', {
+const spacerVariants = cva('mt-[var(--cn-spacing-4)]', {
   variants: {
     size: {
-      1: 'mt-1',
-      1.5: 'mt-1.5',
-      2: 'mt-2',
-      2.5: 'mt-2.5',
-      3: 'mt-3',
-      4: 'mt-4',
-      4.5: 'mt-[18px]',
-      5: 'mt-5',
-      6: 'mt-6',
-      7: 'mt-7',
-      8: 'mt-8',
-      9: 'mt-9',
-      10: 'mt-10',
-      11: 'mt-11',
-      12: 'mt-12',
-      13: 'mt-[3.25rem]',
-      14: 'mt-14',
-      15: 'mt-[3.75rem]',
-      16: 'mt-16'
+      1: 'mt-[var(--cn-spacing-1)]',
+      1.5: 'mt-[var(--cn-spacing-1-half)]',
+      2: 'mt-[var(--cn-spacing-2)]',
+      2.5: 'mt-[var(--cn-spacing-2-half)]',
+      3: 'mt-[var(--cn-spacing-3)]',
+      4: 'mt-[var(--cn-spacing-4)]',
+      4.5: 'mt-[var(--cn-spacing-4-half)]',
+      5: 'mt-[var(--cn-spacing-5)]',
+      6: 'mt-[var(--cn-spacing-6)]',
+      7: 'mt-[var(--cn-spacing-7)]',
+      8: 'mt-[var(--cn-spacing-8)]',
+      9: 'mt-[var(--cn-spacing-9)]',
+      10: 'mt-[var(--cn-spacing-10)]',
+      11: 'mt-[var(--cn-spacing-11)]',
+      12: 'mt-[var(--cn-spacing-12)]',
+      14: 'mt-[var(--cn-spacing-14)]',
+      15: 'mt-[var(--cn-spacing-15)]',
+      16: 'mt-[var(--cn-spacing-16)]'
     }
   }
 })
@@ -32,7 +31,7 @@ const spacerVariants = cva('mt-4', {
 export interface SpacerProps extends ComponentProps<'div'>, VariantProps<typeof spacerVariants> {}
 
 // TODO: Revisit the Spacer component
-// 1. Currently, Spacer uses a <span> with `display: block;` and relies on margins instead of height.
+// 1. Currently, Spacer relies on margins instead of height.
 //    This results in a confusing DevTools experience, where the spacer appears to have a height of 0,
 //    and developers need to manually calculate the rem values.
 //    Suggestion: Replace margins with height in `spacerVariants` for better DevEx.

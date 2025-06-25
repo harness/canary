@@ -1,6 +1,6 @@
 import { ElementType, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon, SkeletonList } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, SkeletonList, Text } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
@@ -48,10 +48,11 @@ const componentsMap: Record<
 interface UnifiedPipelineStudioEntityFormProps {
   requestClose: () => void
   isDrawer?: boolean
+  isDirtyRef: { current?: boolean }
 }
 
 export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps) => {
-  const { requestClose, isDrawer = false } = props
+  const { requestClose, isDrawer = false, isDirtyRef } = props
   const { Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const {
     yamlRevision,
@@ -220,60 +221,64 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       }}
       validateAfterFirstSubmit={true}
     >
-      {rootForm => (
-        <>
-          <Header>
-            <Title>
-              {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
-              {formEntity?.data?.identifier ?? defaultStepValues.template?.uses}
-            </Title>
-            <Description>{formEntity?.data.description}</Description>
-            {/*<AIButton label="AI Autofill" />*/}
-          </Header>
-          <Body>
-            {/* <StepFormSection.Header> */}
-            {/* <StepFormSection.Title>General</StepFormSection.Title> */}
-            {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
-            {/* </StepFormSection.Header> */}
-            <EntityFormLayout.Form>
-              {error?.message ? (
-                <p className="text-sm text-cn-foreground-danger">{error.message}</p>
-              ) : loading ? (
-                <SkeletonList />
-              ) : (
-                <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
-              )}
-            </EntityFormLayout.Form>
-          </Body>
-          <Footer>
-            <ButtonLayout.Root>
-              <ButtonLayout.Primary className="flex gap-x-3">
-                <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
-                  Submit
-                </Button>
-                <Button variant="secondary" onClick={requestClose}>
-                  Cancel
-                </Button>
-              </ButtonLayout.Primary>
-              {!!editStepIntention && (
-                <ButtonLayout.Secondary>
-                  <Button
-                    variant="secondary"
-                    iconOnly
-                    onClick={() => {
-                      requestYamlModifications.deleteInArray({ path: editStepIntention.path })
-                      requestClose()
-                    }}
-                    aria-label="Remove Step"
-                  >
-                    <Icon name="trash" />
+      {rootForm => {
+        isDirtyRef.current = rootForm.formState.isDirty
+
+        return (
+          <>
+            <Header>
+              <Title>
+                {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
+                {formEntity?.data?.identifier ?? defaultStepValues.template?.uses}
+              </Title>
+              <Description>{formEntity?.data.description}</Description>
+              {/*<AIButton label="AI Autofill" />*/}
+            </Header>
+            <Body>
+              {/* <StepFormSection.Header> */}
+              {/* <StepFormSection.Title>General</StepFormSection.Title> */}
+              {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
+              {/* </StepFormSection.Header> */}
+              <EntityFormLayout.Form>
+                {error?.message ? (
+                  <Text color="danger">{error.message}</Text>
+                ) : loading ? (
+                  <SkeletonList />
+                ) : (
+                  <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
+                )}
+              </EntityFormLayout.Form>
+            </Body>
+            <Footer>
+              <ButtonLayout.Root>
+                <ButtonLayout.Primary className="flex gap-x-3">
+                  <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
+                    Submit
                   </Button>
-                </ButtonLayout.Secondary>
-              )}
-            </ButtonLayout.Root>
-          </Footer>
-        </>
-      )}
+                  <Button variant="secondary" onClick={requestClose}>
+                    Cancel
+                  </Button>
+                </ButtonLayout.Primary>
+                {!!editStepIntention && (
+                  <ButtonLayout.Secondary>
+                    <Button
+                      variant="secondary"
+                      iconOnly
+                      onClick={() => {
+                        requestYamlModifications.deleteInArray({ path: editStepIntention.path })
+                        requestClose()
+                      }}
+                      aria-label="Remove Step"
+                    >
+                      <IconV2 name="trash" />
+                    </Button>
+                  </ButtonLayout.Secondary>
+                )}
+              </ButtonLayout.Root>
+            </Footer>
+          </>
+        )
+      }}
     </RootForm>
   )
 }

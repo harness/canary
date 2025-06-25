@@ -1,10 +1,10 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Dialog, FormInput, FormWrapper } from '@/components'
+import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
+import { useTranslation } from '@/context'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 type SshKeyFormType = z.infer<typeof formSchema>
@@ -14,7 +14,6 @@ interface ProfileSettingsKeysCreateDialogProps {
   onClose: () => void
   handleCreateSshKey: (data: SshKeyFormType) => void
   error: { type: string; message: string } | null
-  useTranslationStore: () => TranslationStore
 }
 
 const formSchema = z.object({
@@ -26,10 +25,9 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
   open,
   onClose,
   handleCreateSshKey,
-  useTranslationStore,
   error
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const formMethods = useForm<SshKeyFormType>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -58,31 +56,35 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
-          <FormInput.Text
-            id="identifier"
-            value={identifier}
-            {...register('identifier')}
-            placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
-            label={t('views:profileSettings.newSshKey', 'New SSH key')}
-            autoFocus
-          />
-          <FormInput.Textarea
-            id="content"
-            value={content}
-            {...register('content')}
-            label={t('views:profileSettings.publicKey', 'Public key')}
-          />
-          {error?.type === ApiErrorType.KeyCreate && (
-            <Alert.Root theme="danger">
-              <Alert.Title>{error.message}</Alert.Title>
-            </Alert.Root>
-          )}
-          <Dialog.Footer className="-mx-5 -mb-5">
-            <Button type="button" variant="outline" onClick={onClose}>
-              {t('views:profileSettings.cancel', 'Cancel')}
-            </Button>
-            <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
+              <FormInput.Text
+                id="identifier"
+                value={identifier}
+                {...register('identifier')}
+                placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
+                label={t('views:profileSettings.newSshKey', 'New SSH key')}
+                autoFocus
+              />
+              <FormInput.Textarea
+                id="content"
+                value={content}
+                {...register('content')}
+                label={t('views:profileSettings.publicKey', 'Public key')}
+              />
+              {error?.type === ApiErrorType.KeyCreate && (
+                <Alert.Root theme="danger">
+                  <Alert.Title>{error.message}</Alert.Title>
+                </Alert.Root>
+              )}
+            </div>
+          </Dialog.Body>
+          <Dialog.Footer>
+            <ButtonLayout>
+              <Dialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</Dialog.Close>
+              <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

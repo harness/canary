@@ -1,5 +1,9 @@
 {
   "drawer": {
+    "xs": {
+      "$type": "sizing",
+      "$value": "388"
+    },
     "sm": {
       "$type": "sizing",
       "$value": "488"
@@ -30,7 +34,7 @@
     },
     "fade-height": {
       "$type": "sizing",
-      "$value": "{drawer.container}"
+      "$value": "{size.8}"
     }
   }
 }

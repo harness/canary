@@ -1,7 +1,7 @@
+import { TFunctionWithFallback } from '@/context'
 import { EnumMembershipRole } from '@/views'
-import { TFunction } from 'i18next'
 
-export const getRolesData = (t: TFunction) => {
+export const getRolesData = (t: TFunctionWithFallback) => {
   return [
     {
       uid: EnumMembershipRole.SPACE_OWNER,

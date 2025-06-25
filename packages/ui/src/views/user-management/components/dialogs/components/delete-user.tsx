@@ -1,4 +1,5 @@
 import { Button, ButtonLayout, Dialog } from '@/components'
+import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
@@ -9,8 +10,8 @@ interface DeleteUserDialogProps {
 }
 
 export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUserDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()
@@ -25,9 +26,9 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
+      <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title className="font-medium">
+          <Dialog.Title>
             {t('views:userManagement.deleteUser.title', 'Are you sure you want to delete {{name}}?', {
               name: user?.display_name
             })}
@@ -45,14 +46,14 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
           </Dialog.Description>
         </Dialog.Header>
 
-        {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
+        <Dialog.Body>
+          {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
+        </Dialog.Body>
 
         <Dialog.Footer>
           <ButtonLayout>
             {!isDeletingUser && (
-              <Button type="button" variant="outline" onClick={onClose}>
-                {t('views:userManagement.cancel', 'Cancel')}
-              </Button>
+              <Dialog.Close onClick={onClose}>{t('views:userManagement.cancel', 'Cancel')}</Dialog.Close>
             )}
 
             <Button variant="primary" theme="danger" onClick={onSubmit} disabled={isDeletingUser}>

@@ -1,4 +1,3 @@
-import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
 export enum LabelType {
@@ -50,7 +49,6 @@ export interface CreateLabelDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (data: CreateLabelFormFields, identifier?: string) => void
-  useTranslationStore: () => TranslationStore
   isCreatingLabel: boolean
   error: string
   useLabelsStore: () => ILabelsStore

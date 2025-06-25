@@ -3,8 +3,8 @@ import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useSt
 import { cn } from '@utils/cn'
 import { cva } from 'class-variance-authority'
 
-import { Icon } from './icon'
-import { Logo } from './logo'
+import { IconV2, IconV2NamesType } from './icon-v2'
+import { LogoV2, LogoV2NamesType } from './logo-v2'
 
 type CardSelectType = 'single' | 'multiple'
 
@@ -22,8 +22,8 @@ interface CardSelectRootProps<T> {
 
 interface CardSelectItemProps extends HTMLAttributes<HTMLInputElement> {
   value: unknown
-  icon?: React.ComponentProps<typeof Icon>['name']
-  logo?: React.ComponentProps<typeof Logo>['name']
+  icon?: IconV2NamesType
+  logo?: LogoV2NamesType
   disabled?: boolean
   children: ReactNode
 }
@@ -128,6 +128,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
     const checked = isChecked(value, currentValue)
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <label
         ref={ref}
         className={cn(
@@ -138,19 +139,33 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         )}
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
+        aria-checked={checked}
+        aria-disabled={isDisabled}
+        tabIndex={isDisabled ? -1 : 0}
+        role={type === 'multiple' ? 'checkbox' : 'radio'}
+        onKeyDown={e => {
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault()
+            if (!isDisabled) {
+              onValueChange(value)
+            }
+          }
+        }}
       >
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
-            {icon && <Icon name={icon} className="cn-card-select-icon" />}
-            {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
+            {icon && <IconV2 name={icon} className="cn-card-select-icon" />}
+            {logo && !icon && <LogoV2 name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
-          {checked && <Icon name="check" className="cn-card-select-check" />}
+          {checked && <IconV2 name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}
           name={name}
           className="cn-card-select-hidden-input"
+          aria-hidden="true"
+          tabIndex={-1}
           value={String(value)}
           checked={checked}
           disabled={isDisabled}

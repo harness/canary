@@ -1,4 +1,4 @@
-import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
+import { IconV2, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
 
@@ -40,7 +40,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                         {({ isActive }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
-                            icon={item.iconName && <Icon name={item.iconName} size={14} />}
+                            icon={item.iconName && <IconV2 name={item.iconName} size="xs" />}
                             active={isActive}
                             isMainNav
                           />

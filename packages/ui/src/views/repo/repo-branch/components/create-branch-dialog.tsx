@@ -1,14 +1,24 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormInput, FormWrapper, Label } from '@/components'
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Dialog,
+  Fieldset,
+  FormInput,
+  FormWrapper,
+  Label
+} from '@/components'
+import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 
-export const createBranchFormSchema = (t: TranslationStore['t']) =>
+export const createBranchFormSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()
@@ -33,12 +43,11 @@ export function CreateBranchDialog({
   onSubmit,
   isCreatingBranch,
   error,
-  useTranslationStore,
   selectedBranchOrTag,
   renderProp: branchSelectorContainer,
   prefilledName
 }: CreateBranchDialogProps) {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const formMethods = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema(t)),
@@ -81,51 +90,49 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-[460px] border-cn-borders-2 bg-cn-background-1" aria-describedby={undefined}>
+      <Dialog.Content aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title className="font-medium">{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
+          <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
-          <Fieldset>
-            <FormInput.Text
-              id="name"
-              label="Branch name"
-              {...register('name')}
-              maxLength={250}
-              placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
-            />
-          </Fieldset>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
+              <Fieldset>
+                <FormInput.Text
+                  id="name"
+                  label="Branch name"
+                  {...register('name')}
+                  maxLength={250}
+                  placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+                />
+              </Fieldset>
 
-          <Fieldset>
-            <ControlGroup>
-              <Label htmlFor="target" className="mb-2">
-                {t('views:forms.basedOn', 'Based on')}
-              </Label>
-              {branchSelectorContainer}
-            </ControlGroup>
-          </Fieldset>
+              <Fieldset>
+                <ControlGroup>
+                  <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
+                  {branchSelectorContainer}
+                </ControlGroup>
+              </Fieldset>
 
-          {error ? (
-            <Alert.Root theme="danger">
-              <Alert.Title>
-                {t('views:repos.error', 'Error:')} {error}
-              </Alert.Title>
-            </Alert.Root>
-          ) : null}
+              {error ? (
+                <Alert.Root theme="danger">
+                  <Alert.Title>
+                    {t('views:repos.error', 'Error:')} {error}
+                  </Alert.Title>
+                </Alert.Root>
+              ) : null}
+            </div>
+          </Dialog.Body>
 
-          <Dialog.Footer className="-mx-5 -mb-5">
-            <Button
-              variant="outline"
-              type="button"
-              onClick={handleClose}
-              loading={isCreatingBranch}
-              disabled={isCreatingBranch}
-            >
-              {t('views:repos.cancel', 'Cancel')}
-            </Button>
-            <Button type="submit" disabled={isCreatingBranch}>
-              {t('views:repos.createBranchButton', 'Create branch')}
-            </Button>
+          <Dialog.Footer>
+            <ButtonLayout>
+              <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+                {t('views:repos.cancel', 'Cancel')}
+              </Dialog.Close>
+              <Button type="submit" disabled={isCreatingBranch}>
+                {t('views:repos.createBranchButton', 'Create branch')}
+              </Button>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

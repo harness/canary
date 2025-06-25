@@ -113,6 +113,17 @@
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
     "single-line": {
+      "code": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.mono}",
+          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.none}",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
+      },
       "normal": {
         "$type": "typography",
         "$value": {
@@ -195,7 +206,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.tight}",
+          "lineHeight": "{lineHeight.2.normal}",
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.none}"
         },
@@ -207,7 +218,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.tight}",
+          "lineHeight": "{lineHeight.2.normal}",
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.underline}"
         },
@@ -219,7 +230,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.tight}",
+          "lineHeight": "{lineHeight.1.snug}",
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.none}"
         },
@@ -231,7 +242,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.tight}",
+          "lineHeight": "{lineHeight.1.snug}",
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.underline}"
         },
@@ -328,11 +339,11 @@
     }
   },
   "layout": {
-    "2xs": {
+    "3xs": {
       "$type": "number",
       "$value": "{spacing.1}"
     },
-    "xxs": {
+    "2xs": {
       "$type": "number",
       "$value": "{spacing.1-half}"
     },

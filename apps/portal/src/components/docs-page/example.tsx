@@ -6,9 +6,12 @@ import {
   useState,
 } from "react";
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
-import { Icon, Tooltip } from "@harnessio/ui/components";
+import { CopyButton, IconV2, TooltipProvider } from "@harnessio/ui/components";
 import { cn } from "@harnessio/ui/utils";
-import { RouterContextProvider } from "@harnessio/ui/context";
+import {
+  RouterContextProvider,
+  TranslationProvider,
+} from "@harnessio/ui/context";
 import ExampleLayout from "./example-layout";
 import { themes } from "prism-react-renderer";
 import {
@@ -23,12 +26,19 @@ type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
 export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
   contentClassName?: string;
+  hideCode?: boolean;
 };
 
-const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
+const Example: FC<ExampleProps> = ({
+  code,
+  scope,
+  contentClassName,
+  hideCode = false,
+}) => {
   const [isLightTheme, setIsLightTheme] = useState(
     () => document.querySelector("html")?.dataset.theme === "light",
   );
+  const [currentCode, setCurrentCode] = useState(code || "");
   const scopeWithLayout = useMemo<ExampleProps["scope"]>(
     () => ({ ...scope, ExampleLayout }),
     [scope],
@@ -64,9 +74,11 @@ const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
       path: "*",
       element: (
         <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
-          <Tooltip.Provider>
-            <LivePreview />
-          </Tooltip.Provider>
+          <TranslationProvider>
+            <TooltipProvider>
+              <LivePreview />
+            </TooltipProvider>
+          </TranslationProvider>
         </RouterContextProvider>
       ),
     },
@@ -74,20 +86,28 @@ const Example: FC<ExampleProps> = ({ code, scope, contentClassName }) => {
 
   return (
     <div className="bg-cn-background-1 not-content my-12 overflow-hidden rounded-md border">
-      <LiveProvider code={code} scope={scopeWithLayout} enableTypeScript>
+      <LiveProvider code={currentCode} scope={scopeWithLayout} enableTypeScript>
         <div className={cn("grid place-items-center p-12", contentClassName)}>
           <RouterProvider router={router} />
         </div>
-        <details className="example-expand bg-cn-background-2 border-t p-3">
-          <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
-            <Icon name="chevron-right" size={12} className="disclosure-icon" />
-            Show code
-          </summary>
-          <LiveEditor
-            theme={isLightTheme ? themes.vsLight : themes.vsDark}
-            className="p-1 text-sm"
-          />
-        </details>
+        {!hideCode && (
+          <details className="relative example-expand bg-cn-background-2 border-t p-3">
+            <CopyButton
+              buttonVariant="transparent"
+              className="absolute top-3 right-3"
+              name={currentCode}
+            />
+            <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
+              <IconV2 name="nav-arrow-right" className="disclosure-icon" />
+              Show code
+            </summary>
+            <LiveEditor
+              theme={isLightTheme ? themes.vsLight : themes.vsDark}
+              className="font-body-code line-numbers p-1 text-sm leading-6"
+              onChange={setCurrentCode}
+            />
+          </details>
+        )}
       </LiveProvider>
     </div>
   );

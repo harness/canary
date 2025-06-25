@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { NoData, Pagination, SkeletonList } from '@/components'
+import { useTranslation } from '@/context'
 
 import { MembersList } from './member-list'
 import { ProjectMembersListProps } from './types'
@@ -8,7 +9,6 @@ import { ProjectMembersListProps } from './types'
 const ProjectMembersList: FC<ProjectMembersListProps> = ({
   isLoading,
   memberList,
-  useTranslationStore,
   handleResetFiltersQueryAndPages,
   onEditMember,
   totalItems,
@@ -17,7 +17,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
   setPage,
   onDeleteHandler
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -28,7 +28,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
       <NoData
         withBorder
         textWrapperClassName="max-w-[350px]"
-        iconName="no-search-magnifying-glass"
+        imageName="no-search-magnifying-glass"
         title={t('views:noData.noResults', 'No search results')}
         description={[
           t(
@@ -49,13 +49,8 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
 
   return (
     <>
-      <MembersList
-        members={memberList}
-        onEdit={onEditMember}
-        onDelete={onDeleteHandler}
-        useTranslationStore={useTranslationStore}
-      />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} t={t} />
+      <MembersList members={memberList} onEdit={onEditMember} onDelete={onDeleteHandler} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
     </>
   )
 }

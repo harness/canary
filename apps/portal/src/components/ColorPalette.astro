@@ -1,23 +1,28 @@
 ---
 import * as styles from "@harnessio/core-design-system/styles-esm";
+import { Text } from "@harnessio/ui/components";
 interface Color {
   name?: string;
   $value?: string;
   [key: string]: unknown;
 }
+
 const shades = Object.keys(styles.colors.blue);
 const colors = Object.keys(styles.colors).filter(
   (color) => color !== "pure",
 ); /** Excluding "pure" colors intentionally */
 ---
 
-<div class="grid grid-cols-[auto_repeat(11,1fr)] gap-1.5 not-content">
+<div
+  style={{ "--cols": shades?.length ?? 15 }}
+  class={`grid grid-cols-[auto_repeat(var(--cols),1fr)] gap-1 not-content`}
+>
   <div></div>
   {
     shades.map((shade) => (
-      <div class="text-cn-background-primary text-center font-medium align-middle">
+      <Text variant="caption-normal" align="center" color="foreground-2">
         {shade}
-      </div>
+      </Text>
     ))
   }
   {
@@ -25,15 +30,20 @@ const colors = Object.keys(styles.colors).filter(
       const colorGroup = styles.colors[colorName as keyof typeof styles.colors];
       return (
         <>
-          <div class="text-cn-background-primary text-right font-medium capitalize self-center pr-2">
+          <Text
+            className="self-center capitalize"
+            variant="caption-normal"
+            align="right"
+            color="foreground-2"
+          >
             {colorName}
-          </div>
+          </Text>
           {shades.map((shade) => {
             const color = colorGroup[shade as keyof typeof colorGroup];
             const colorValue = (color as Color)?.$value || "";
             return (
               <div
-                class="aspect-square rounded border border-cn-borders-3"
+                class="size-12 rounded border border-cn-borders-3"
                 style={{ backgroundColor: colorValue }}
                 title={`--${(color as Color)?.name}: ${colorValue}`}
               />

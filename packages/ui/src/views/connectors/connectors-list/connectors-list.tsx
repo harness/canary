@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import {
   Button,
-  Icon,
-  Logo,
+  IconV2,
+  LogoV2,
   MoreActionsTooltip,
   NoData,
   SkeletonList,
@@ -12,8 +12,8 @@ import {
   Text,
   Tooltip
 } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { TranslationStore } from '@views/repo'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
@@ -26,46 +26,39 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   </span>
 )
 
-const ConnectivityStatus = ({
-  item,
-  useTranslationStore
-}: {
-  item: ConnectorListItem
-  connectorDetailUrl: string
-  useTranslationStore: () => TranslationStore
-}): JSX.Element => {
-  const { t } = useTranslationStore()
+const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetailUrl: string }): JSX.Element => {
+  const { t } = useTranslation()
   const isSuccess = item?.status?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
   const [errorConnectionOpen, setErrorConnectionOpen] = useState(false)
 
   return isSuccess ? (
     <div className="flex items-center gap-2">
-      <Icon name="dot" size={8} className="text-icons-success" />
-      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+      <IconV2 name="circle" size="2xs" className="text-icons-success" />
+      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
         {t('views:connectors.success', 'Success')}
       </Text>
     </div>
   ) : (
     <>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
-            <Icon name="dot" size={8} className="text-icons-danger" />
-            <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
-              {t('views:connectors.failure', 'Failed')}
-            </Text>
-          </Button>
-        </Tooltip.Trigger>
-        <Tooltip.Content className="w-72 whitespace-normal" side="bottom">
-          <h3 className="font-medium text-cn-foreground-1">
-            {t('views:connectors.errorEncountered', 'Error Encountered')}
-          </h3>
-          <p className="mt-1.5 text-cn-foreground-3">{item?.status?.errorSummary}</p>
-          <Button className="mt-2.5" variant="link" onClick={() => setErrorConnectionOpen(true)}>
-            {t('views:connectors.viewDetails', 'View details')}
-          </Button>
-        </Tooltip.Content>
-      </Tooltip.Root>
+      <Tooltip
+        side="bottom"
+        title={t('views:connectors.errorEncountered', 'Error Encountered')}
+        content={
+          <>
+            <Text className="whitespace-normal">{item?.status?.errorSummary}</Text>
+            <Button variant="link" onClick={() => setErrorConnectionOpen(true)}>
+              {t('views:connectors.viewDetails', 'View details')}
+            </Button>
+          </>
+        }
+      >
+        <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
+          <IconV2 name="circle" size="2xs" className="text-icons-danger" />
+          <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+            {t('views:connectors.failure', 'Failed')}
+          </Text>
+        </Button>
+      </Tooltip>
 
       <ConnectorTestConnectionDialog
         title={item?.name}
@@ -74,7 +67,6 @@ const ConnectivityStatus = ({
         errorMessage={item?.status?.errorSummary}
         isOpen={errorConnectionOpen}
         onClose={() => setErrorConnectionOpen(false)}
-        useTranslationStore={useTranslationStore}
         errorData={item.status?.errors ? { errors: item.status?.errors } : undefined}
       />
     </>
@@ -83,13 +75,12 @@ const ConnectivityStatus = ({
 
 export function ConnectorsList({
   connectors,
-  useTranslationStore,
   isLoading,
   toConnectorDetails,
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -99,7 +90,7 @@ export function ConnectorsList({
     return (
       <NoData
         withBorder
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noConnectors', 'No connectors yet')}
         description={[
           t('views:noData.noConnectors', 'There are no connectors in this project yet.'),
@@ -112,8 +103,9 @@ export function ConnectorsList({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
       tableClassName="table-fixed"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -140,7 +132,11 @@ export function ConnectorsList({
                 <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
                     <div className="flex w-full max-w-8 items-center justify-center">
-                      {connectorLogo ? <Logo name={connectorLogo} size={20} /> : <Icon name="connectors" size={30} />}
+                      {connectorLogo ? (
+                        <LogoV2 name={connectorLogo} size="md" />
+                      ) : (
+                        <IconV2 name="connectors" size="lg" />
+                      )}
                     </div>
                     <Title title={identifier} />
                   </div>
@@ -153,7 +149,6 @@ export function ConnectorsList({
                     <ConnectivityStatus
                       item={{ name, identifier, type, spec, status, lastModifiedAt }}
                       connectorDetailUrl={connectorDetailUrl}
-                      useTranslationStore={useTranslationStore}
                     />
                   ) : null}
                 </Table.Cell>
@@ -166,9 +161,9 @@ export function ConnectorsList({
                     onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
                   >
                     {isFavorite ? (
-                      <Icon name="star-filled" size={12} className="fill-icons-alert" />
+                      <IconV2 name="star-solid" size="xs" className="fill-icons-alert" />
                     ) : (
-                      <Icon name="star" size={12} className="text-icons-6" />
+                      <IconV2 name="star" size="xs" className="text-icons-6" />
                     )}
                   </Button>
                 </Table.Cell>

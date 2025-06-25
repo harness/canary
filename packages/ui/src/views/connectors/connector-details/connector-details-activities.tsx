@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { NoData, Pagination } from '@components/index'
 import { Spacer } from '@components/spacer'
 
@@ -9,7 +9,6 @@ import { ConnectorDetailsActivityProps } from './types'
 
 const ConnectorDetailsActivities: FC<ConnectorDetailsActivityProps> = ({
   apiConnectorActivityError,
-  useTranslationStore,
   currentPage,
   totalItems,
   pageSize,
@@ -18,14 +17,14 @@ const ConnectorDetailsActivities: FC<ConnectorDetailsActivityProps> = ({
   activities,
   ...props
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   if (apiConnectorActivityError) {
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-error"
+        imageName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'entities'
         })}
@@ -49,14 +48,9 @@ const ConnectorDetailsActivities: FC<ConnectorDetailsActivityProps> = ({
   return (
     <div>
       <Spacer size={4} />
-      <ConnectorDetailsActivitiesList
-        activities={activities}
-        useTranslationStore={useTranslationStore}
-        isLoading={isLoading}
-        {...props}
-      />
+      <ConnectorDetailsActivitiesList activities={activities} isLoading={isLoading} {...props} />
       <Spacer size={8} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
     </div>
   )
 }

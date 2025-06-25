@@ -1,12 +1,14 @@
+import { TFunctionWithFallback } from '@/context'
 import { CheckboxOptions, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
-import { Icon } from '@components/icon'
-import { TFunction } from 'i18next'
+import { IconV2 } from '@components/icon-v2'
 
 import { booleanParser } from '@harnessio/filters'
 
 import { ConnectorListFilters } from './types'
 
-export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionConfig<keyof ConnectorListFilters>> => {
+export const getConnectorListFilterOptions = (
+  t: TFunctionWithFallback
+): Array<FilterOptionConfig<keyof ConnectorListFilters>> => {
   const options = [
     { label: t('views:connectors.filterOptions.statusOption.success', 'Success'), value: 'SUCCESS' },
     { label: t('views:connectors.filterOptions.statusOption.failure', 'Failed'), value: 'FAILURE' }
@@ -42,7 +44,7 @@ export const getConnectorListFilterOptions = (t: TFunction): Array<FilterOptionC
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
       filterFieldConfig: {
-        label: <Icon name="star-filled" className="fill-icons-alert" size={14} />
+        label: <IconV2 name="star-solid" className="fill-icons-alert" size="xs" />
       },
       parser: booleanParser
     }

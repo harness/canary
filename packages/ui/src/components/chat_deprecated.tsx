@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, ReactNode, RefObject } from 'react'
 
-import { Button, Icon, Input, Text } from '@/components'
+import { Button, IconV2, Input, Text } from '@/components'
 import { cn } from '@/utils/cn'
 
 // Root Container
@@ -51,7 +51,7 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         <div className="mt-1 flex items-center justify-between gap-3">
           <div>{actions && <div className="flex items-center justify-start gap-1">{actions}</div>}</div>
           {time && (
-            <Text size={1} className="text-cn-foreground-1 opacity-20">
+            <Text className="opacity-20" color="foreground-1">
               {time}
             </Text>
           )}
@@ -112,7 +112,7 @@ const InputField: React.FC<InputFieldProps> = ({
   onSend = () => {},
   placeholder = 'Type a message...',
   disabled = false,
-  sendIcon = <Icon name="chevron-up" size={16} />
+  sendIcon = <IconV2 name="nav-arrow-up" />
 }) => {
   return (
     <div className="sticky bottom-0 flex items-center gap-2 bg-cn-background">

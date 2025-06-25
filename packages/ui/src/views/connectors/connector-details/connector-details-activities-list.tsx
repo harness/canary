@@ -1,4 +1,5 @@
 import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/index'
@@ -30,12 +31,8 @@ const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
     </div>
   )
 }
-const ConnectorDetailsActivitiesList = ({
-  useTranslationStore,
-  isLoading,
-  activities
-}: ConnectorDetailsActivitiesListProps) => {
-  const { t } = useTranslationStore()
+const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDetailsActivitiesListProps) => {
+  const { t } = useTranslation()
   const content = activities?.content
   if (isLoading) {
     return <SkeletonList />
@@ -47,7 +44,7 @@ const ConnectorDetailsActivitiesList = ({
         withBorder
         className="min-h-[65vh]"
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noActivities', 'No activities yet')}
         description={[t('views:noData.noActivitiesDescription', 'There are no activities yet.')]}
       />
@@ -57,7 +54,7 @@ const ConnectorDetailsActivitiesList = ({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
     >
       <Table.Header>
         <Table.Row>

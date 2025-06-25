@@ -1,18 +1,18 @@
 import { useMemo } from 'react'
 
-import { Avatar, DropdownMenu, Icon, MoreActionsTooltip, Table } from '@/components'
-import { MembersProps, TranslationStore } from '@/views'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
+import { useTranslation } from '@/context'
+import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
 
 interface MembersListProps {
   members: MembersProps[]
   onDelete: (member: string) => void
   onEdit: (member: MembersProps) => void
-  useTranslationStore: () => TranslationStore
 }
 
-export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: MembersListProps) => {
-  const { t } = useTranslationStore()
+export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => {
+  const { t } = useTranslation()
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
 
@@ -21,7 +21,7 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
   }
 
   return (
-    <Table.Root variant="asStackedList">
+    <Table.Root variant="default">
       <Table.Header>
         <Table.Row>
           <Table.Head>{t('views:projectSettings.membersTable.user', 'User')}</Table.Head>
@@ -49,18 +49,16 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-cn-foreground-2 hover:text-cn-foreground-1">
                   {getRoleLabel(member.role)}
-                  <Icon className="chevron-down text-icons-7" name="chevron-fill-down" size={6} />
+                  <IconV2 className="chevron-down text-icons-7" name="nav-solid-arrow-down" size="2xs" />
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content align="start" className="w-[300px]">
+                <DropdownMenu.Content align="start">
                   {roleOptions.map(role => (
                     <DropdownMenu.Item
+                      title={role.label}
+                      description={role.description}
                       key={role.uid}
-                      className="flex-col items-start gap-y-1.5 px-3 py-2"
                       onClick={() => onEdit({ ...member, role: role.uid })}
-                    >
-                      <span className="leading-none">{role.label}</span>
-                      <span className="leading-tight text-cn-foreground-2">{role.description}</span>
-                    </DropdownMenu.Item>
+                    />
                   ))}
                 </DropdownMenu.Content>
               </DropdownMenu.Root>

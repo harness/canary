@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { TranslationStore } from '@views/repo'
 
 import { KeysList } from '../types'
 
@@ -10,21 +10,16 @@ interface ProfileKeysListProps {
   publicKeys: KeysList[]
   isLoading?: boolean
   openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
-  useTranslationStore: () => TranslationStore
 }
 
-export const ProfileKeysList: FC<ProfileKeysListProps> = ({
-  publicKeys,
-  isLoading,
-  openAlertDeleteDialog,
-  useTranslationStore
-}) => {
-  const { t } = useTranslationStore()
+export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoading, openAlertDeleteDialog }) => {
+  const { t } = useTranslation()
 
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      variant="default"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -44,7 +39,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
               <Table.Row key={key.identifier}>
                 <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
-                    <Icon name="ssh-key" size={32} className="rounded-md bg-cn-background-8 text-cn-foreground-2" />
+                    <IconV2 name="ssh-key" size="lg" className="rounded-md bg-cn-background-8 text-cn-foreground-2" />
                     <div className="flex flex-col">
                       <span className="block w-[200px] truncate font-medium text-cn-foreground-1">
                         {key.identifier}

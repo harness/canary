@@ -1,29 +1,38 @@
-import { FC } from 'react'
+import { ComponentProps, FC } from 'react'
 
-import { Button, FormInput, Icon, Select, SelectRootProps, type FormTextInputPropsType } from '@/components'
+import { Button, FormInput, FormSelectProps, IconV2, SelectValueOption } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ColorsEnum, TranslationStore } from '@/views'
+import { ColorsEnum } from '@/views'
 
 interface LabelFormColorAndNameGroupProps {
   className?: string
   isValue?: boolean
-  useTranslationStore: () => TranslationStore
   handleDeleteValue?: () => void
-  selectProps?: SelectRootProps
-  inputProps: FormTextInputPropsType
+  selectProps: Omit<FormSelectProps<ColorsEnum>, 'options'>
+  inputProps: ComponentProps<typeof FormInput.Text>
 }
 
 export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = ({
   className,
   isValue = false,
-  useTranslationStore,
   handleDeleteValue,
   selectProps,
   inputProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const isWithDeleteButton = isValue && !!handleDeleteValue
+
+  const options: SelectValueOption<ColorsEnum>[] = Object.values(ColorsEnum).map(color => ({
+    label: (
+      <div className="flex max-w-full items-center gap-x-1.5">
+        <div className={`bg-label-foreground-${color} size-2 min-h-2 min-w-2 rounded-full`} />
+        <span className="truncate text-cn-foreground-3">{color}</span>
+      </div>
+    ),
+    value: color
+  }))
 
   return (
     <div
@@ -33,18 +42,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
         className
       )}
     >
-      <Select.Root {...selectProps}>
-        <Select.Content>
-          {Object.values(ColorsEnum).map(color => (
-            <Select.Item key={color} value={color}>
-              <div className="flex max-w-full items-center gap-x-1.5">
-                <div className={`bg-label-foreground-${color} size-2 min-h-2 min-w-2 rounded-full`} />
-                <span className="truncate text-cn-foreground-3">{color}</span>
-              </div>
-            </Select.Item>
-          ))}
-        </Select.Content>
-      </Select.Root>
+      <FormInput.Select options={options} {...selectProps} />
 
       <FormInput.Text
         placeholder={
@@ -62,7 +60,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
           iconOnly
           onClick={handleDeleteValue}
         >
-          <Icon name="close" size={14} />
+          <IconV2 name="xmark" size="2xs" />
         </Button>
       )}
     </div>

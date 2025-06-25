@@ -1,8 +1,9 @@
 import { FC, MouseEvent, RefObject, useCallback, useState } from 'react'
 import { UseFormGetValues } from 'react-hook-form'
 
-import { Button, Icon, SplitButton } from '@/components'
-import { CompareFormFields, TranslationStore } from '@/views'
+import { Button, IconV2, SplitButton } from '@/components'
+import { useTranslation } from '@/context'
+import { CompareFormFields } from '@/views'
 
 interface PullRequestCompareButtonProps {
   isSubmitted: boolean
@@ -12,7 +13,6 @@ interface PullRequestCompareButtonProps {
   getFormValues: UseFormGetValues<CompareFormFields>
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
-  useTranslationStore: () => TranslationStore
 }
 
 enum PR_TYPE {
@@ -25,11 +25,10 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isLoading,
   getFormValues,
   onFormDraftSubmit,
-  onFormSubmit,
-  useTranslationStore
+  onFormSubmit
 }) => {
   const [prType, setPrType] = useState<PR_TYPE>(PR_TYPE.CREATE)
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const handleButtonClick = useCallback(
     (e: MouseEvent) => {
@@ -56,7 +55,6 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
     <>
       {!isSubmitted ? (
         <SplitButton<PR_TYPE>
-          id="pr-type"
           handleButtonClick={handleButtonClick}
           loading={isLoading}
           selectedValue={prType}
@@ -88,7 +86,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
           {t(`views:pullRequests.compareChangesCreatedButton`)}&nbsp;&nbsp;
-          <Icon name="tick" size={12} />
+          <IconV2 name="check" size="2xs" />
         </Button>
       )}
     </>

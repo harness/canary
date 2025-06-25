@@ -555,6 +555,54 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
 }`}
 />
 
+## Sizes
+
+The `Select` component supports two sizes: `default` and `sm`. The default size is suitable for most use cases, while the `sm` size is useful for compact layouts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('banana');
+    
+    return (
+      <div className="grid gap-4">
+        <div>
+          <Text>Size sm:</Text>
+          <Select
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="sm"
+          />
+        </div>
+
+        <div>
+          <Text>Size default:</Text>
+          <Select
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="default"
+          />
+        </div>
+      </div>
+    );
+
+}`}
+/>
+
 ## API Reference
 
 ### `Select`
@@ -634,6 +682,13 @@ The `Select` component is the main component for creating dropdown selections.
         "Callback fired when user scrolls near the bottom of options list",
       required: false,
       value: "() => void",
+    },
+    {
+      name: "size",
+      description: "Size of the select input",
+      required: false,
+      value: "'sm' | 'default'",
+      defaultValue: "'default'",
     },
     {
       name: "placeholder",

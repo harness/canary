@@ -1,6 +1,7 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const themes = ['danger', 'warning'] as const
+const sizes = ['sm'] as const
 
 function createInputThemeStyles() {
   const styles: CSSRuleObject = {}
@@ -19,6 +20,12 @@ function createInputThemeStyles() {
         borderColor: `var(--cn-border-${theme})`,
         boxShadow: `var(--cn-ring-${theme})`
       }
+    }
+  })
+
+  sizes.forEach(size => {
+    styles[`&.cn-textarea-${size}`] = {
+      padding: `var(--cn-input-${size}-py) var(--cn-input-${size}-pr) var(--cn-input-${size}-py) var(--cn-input-${size}-pl)`
     }
   })
 

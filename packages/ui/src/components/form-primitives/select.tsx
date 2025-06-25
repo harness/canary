@@ -26,10 +26,15 @@ const selectVariants = cva('cn-select', {
       default: '',
       danger: 'cn-select-danger',
       warning: 'cn-select-warning'
+    },
+    size: {
+      default: '',
+      sm: 'cn-select-sm'
     }
   },
   defaultVariants: {
-    theme: 'default'
+    theme: 'default',
+    size: 'default'
   }
 })
 
@@ -65,6 +70,7 @@ interface SelectProps<T = string>
   isLoading?: boolean
   label?: string
   theme?: VariantProps<typeof selectVariants>['theme']
+  size?: VariantProps<typeof selectVariants>['size']
   caption?: string
   error?: string
   warning?: string
@@ -142,6 +148,7 @@ function SelectInner<T = string>(
     suffix,
     triggerClassName,
     rootClassName,
+    size,
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -373,7 +380,7 @@ function SelectInner<T = string>(
           id={id}
           ref={ref}
           disabled={disabled}
-          className={cn(selectVariants({ theme }), triggerClassName)}
+          className={cn(selectVariants({ theme, size }), triggerClassName)}
         >
           <div className="cn-select-trigger">
             <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>

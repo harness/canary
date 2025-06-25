@@ -1,6 +1,8 @@
 import { ComponentProps, useEffect, useRef } from 'react'
 
+import { usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
+import styleText from 'vaul/style.css?raw'
 
 import { DrawerContext } from './drawer-context'
 
@@ -14,6 +16,17 @@ export const DrawerRoot = ({
 }: ComponentProps<typeof DrawerPrimitive.Root>) => {
   const triggerRef = useRef<HTMLButtonElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const { portalContainer } = usePortal()
+
+  useEffect(() => {
+    if (!portalContainer || portalContainer.querySelector('#vaul-style')) return
+
+    const style = document.createElement('style')
+    style.setAttribute('id', 'vaul-style')
+    style.textContent = styleText
+
+    portalContainer?.appendChild(style)
+  }, [portalContainer])
 
   useEffect(() => {
     if (!nested) return
@@ -49,7 +62,7 @@ export const DrawerRoot = ({
 
   return (
     <DrawerContext.Provider value={{ direction, nested }}>
-      <RootComponent {...rootProps}>
+      <RootComponent {...rootProps} container={portalContainer as HTMLElement}>
         {nested && FakeTriggers}
         {children}
       </RootComponent>

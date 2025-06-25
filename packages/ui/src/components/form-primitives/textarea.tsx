@@ -11,10 +11,15 @@ const textareaVariants = cva('cn-textarea', {
       default: '',
       danger: 'cn-textarea-danger',
       warning: 'cn-textarea-warning'
+    },
+    size: {
+      default: '',
+      sm: 'cn-textarea-sm'
     }
   },
   defaultVariants: {
-    theme: 'default'
+    theme: 'default',
+    size: 'default'
   }
 })
 
@@ -22,6 +27,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   label?: string
   labelSuffix?: ReactNode
   theme?: VariantProps<typeof textareaVariants>['theme']
+  size?: VariantProps<typeof textareaVariants>['size']
   caption?: string
   error?: string
   warning?: string
@@ -50,6 +56,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       maxCharacters,
       resizable = false,
       labelSuffix,
+      size,
       ...props
     },
     ref
@@ -104,7 +111,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           id={id}
           ref={mergedRef}
-          className={cn(textareaVariants({ theme }), { 'cn-textarea-resizable': resizable }, className)}
+          className={cn(textareaVariants({ theme, size }), { 'cn-textarea-resizable': resizable }, className)}
           disabled={disabled}
           onChange={handleChange}
           {...props}

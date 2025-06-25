@@ -1,6 +1,7 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const themes = ['danger', 'warning'] as const
+const sizes = ['sm'] as const
 
 function createSelectThemeStyles() {
   const styles: CSSRuleObject = {}
@@ -14,6 +15,16 @@ function createSelectThemeStyles() {
         borderColor: `var(--cn-border-${theme})`,
         boxShadow: `var(--cn-ring-${theme}-hover)`
       }
+    }
+  })
+
+  sizes.forEach(size => {
+    styles[`&.cn-select-${size}`] = {
+      height: `var(--cn-input-size-${size})`
+    }
+
+    styles[`&.cn-select-${size} .cn-select-trigger`] = {
+      padding: `var(--cn-input-${size}-py) var(--cn-input-${size}-pr) var(--cn-input-${size}-py) var(--cn-input-${size}-pl)`
     }
   })
 

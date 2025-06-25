@@ -366,6 +366,10 @@
     "xl": {
       "$type": "number",
       "$value": "{spacing.8}"
+    },
+    "2xl": {
+      "$type": "number",
+      "$value": "{spacing.10}"
     }
   }
 }

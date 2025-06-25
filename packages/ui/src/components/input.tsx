@@ -25,9 +25,7 @@ const inputVariants = cva(
         default:
           'border-cn-borders-2 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 disabled:border-cn-borders-disabled disabled:placeholder:text-cn-foreground-disabled',
         danger: 'border-cn-borders-danger',
-        clean: 'bg-transparent outline-none focus:outline-none',
-        sidebar:
-          'border-cn-borders-2 bg-transparent text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4'
+        clean: 'bg-transparent outline-none focus:outline-none'
       }
     },
     defaultVariants: {

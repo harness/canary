@@ -423,8 +423,11 @@
     },
     "lg": {
       "$type": "sizing",
-      "$value": "{size.8}",
-      "$description": "\n"
+      "$value": "{size.8}"
+    },
+    "xl": {
+      "$type": "sizing",
+      "$value": "{size.10}"
     }
   },
   "opacity": {

@@ -98,7 +98,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               </Button>
             </div>
           ) : (
-            <span className="text-14 text-cn-foreground-2 leading-tight">
+            <span className="text-14 leading-tight text-cn-foreground-2">
               {t('views:noData.noResults', 'No search results')}
             </span>
           )}

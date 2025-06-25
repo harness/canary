@@ -51,8 +51,6 @@ export const SidebarItem = ({
     </>
   )
 
-  console.log('item.iconName', item.iconName)
-
   return (
     <Sidebar.MenuItem>
       <NavLink className="block" to={item.to || ''} end>

@@ -17,7 +17,7 @@ export const StatsPanel: FC<StatsPanelProps> = ({ data }) => {
             {stat.label}
           </Text>
           <Text as="div" variant="body-single-line-normal" color="foreground-1">
-            {!!stat.value ? stat.value : '-'}
+            {stat.value ? stat.value : '-'}
           </Text>
         </Layout.Vertical>
       ))}

@@ -1,12 +1,8 @@
-import { ReactNode } from 'react'
+import { ReactNode, useLayoutEffect, useRef, useState } from 'react'
 
-import { cn } from '@utils/cn'
-import { wrapConditionalObjectElement } from '@utils/mergeUtils'
-
-import { Layout } from './layout'
-import { Separator } from './separator'
-import { Spacer } from './spacer'
-import { Text } from './text'
+import { Layout, Separator, Spacer, Text } from '@/components'
+import { useResizeObserver } from '@/hooks'
+import { cn, wrapConditionalObjectElement } from '@/utils'
 
 function splitArray<T>(array: T[]): [T[], T[]] {
   if (array.length <= 2) {
@@ -31,6 +27,8 @@ const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode }) => 
   </Layout.Grid>
 )
 
+const isWideEnoughForColumns = (width: number) => width >= 800
+
 export interface ViewOnlyProps {
   title?: string
   data: { label: string; value: ReactNode }[]
@@ -39,15 +37,36 @@ export interface ViewOnlyProps {
 }
 
 export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnlyProps) => {
+  const [isLayoutColumns, setIsLayoutColumns] = useState(layout === 'columns')
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    const el = contentRef.current
+    if (!el) return
+
+    const { offsetWidth } = el
+    setIsLayoutColumns(isWideEnoughForColumns(offsetWidth) && layout === 'columns')
+  }, [layout])
+
+  useResizeObserver(
+    contentRef,
+    el => {
+      if (!el || layout === 'singleColumn') return
+
+      const { offsetWidth } = el
+      setIsLayoutColumns(isWideEnoughForColumns(offsetWidth))
+    },
+    200
+  )
+
   if (!data || data.length === 0) return null
 
-  const isLayoutColumns = layout === 'columns'
   const isSeparatorVisible = isLayoutColumns && data.length > 2
   const leftColumnData = isLayoutColumns ? splitArray(data)[0] : data
   const rightColumnData = isLayoutColumns ? splitArray(data)[1] : null
 
   return (
-    <Layout.Grid className={cn('group', className)}>
+    <Layout.Grid ref={contentRef} className={cn('group', className)}>
       <Text variant="heading-base" color="foreground-1" as="h4" className="mb-4">
         {title}
       </Text>

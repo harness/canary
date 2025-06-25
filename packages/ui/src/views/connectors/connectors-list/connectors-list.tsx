@@ -21,7 +21,7 @@ import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate font-medium" title={title}>
+  <span className="max-w-full truncate font-medium text-cn-foreground-1" title={title}>
     {title}
   </span>
 )

@@ -25,7 +25,7 @@ export const RepoSubheader = ({ showPipelinesTab = true, className }: RepoSubhea
   return (
     <SandboxLayout.SubHeader className={className}>
       <Tabs.NavRoot>
-        <Tabs.List className="border-cn-borders-3 border-b px-6">
+        <Tabs.List className="border-b border-cn-borders-3 px-6">
           <Tabs.Trigger value="summary">{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
           <Tabs.Trigger value="code">{t('views:repos.files', 'Files')}</Tabs.Trigger>
           {showPipelinesTab && <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>}

@@ -35,8 +35,8 @@ export const DraggableCard = ({ id, title, description, disabled = false }: Drag
   return (
     <Card.Root ref={setNodeRef} style={style}>
       <Card.Content>
-        <div className="-mx-4 px-4 border-b">
-          <div className="pb-4 flex items-center gap-2">
+        <div className="-mx-4 border-b px-4">
+          <div className="flex items-center gap-2 pb-4">
             {disabled ? null : (
               <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
                 <IconV2 name="grip-dots" size="xs" />

@@ -36,7 +36,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px]" align="end">
         <DropdownMenu.Header>
-          <span className="text-2 inline-block font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+          <span className="inline-block text-2 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
 
           <Tabs.Root
             className="mb-[-11px] mt-4"
@@ -60,7 +60,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
 
         <DropdownMenu.Slot className="p-4">
           <div className="mb-2.5 flex items-center">
-            <span className="text-cn-foreground-2 inline-block leading-none">
+            <span className="inline-block leading-none text-cn-foreground-2">
               {t('views:repos.gitCloneUrl', 'Git clone URL')}
             </span>
           </div>
@@ -74,7 +74,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
-                <span className="text-cn-foreground-2 leading-snug">
+                <span className="leading-snug text-cn-foreground-2">
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>

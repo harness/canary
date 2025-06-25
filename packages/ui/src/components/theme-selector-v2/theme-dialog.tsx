@@ -101,7 +101,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                           )}
                         />
                         {mode === value && (
-                          <IconV2 className="text-cn-foreground-1 absolute bottom-2 left-2" name="check-circle-solid" />
+                          <IconV2 className="absolute bottom-2 left-2 text-cn-foreground-1" name="check-circle-solid" />
                         )}
                         <div
                           className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
@@ -116,7 +116,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                           aria-hidden
                         />
                       </div>
-                      <span className="text-2 text-cn-foreground-1 leading-tight">{key}</span>
+                      <span className="text-2 leading-tight text-cn-foreground-1">{key}</span>
                     </button>
                   )
                 })}
@@ -124,7 +124,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             </div>
             {isAccessibilityThemeEnabled && (
               <>
-                <Separator className="bg-cn-background-2 h-px" />
+                <Separator className="h-px bg-cn-background-2" />
 
                 {/* Contrast */}
                 <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -145,7 +145,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   />
                 </div>
 
-                <Separator className="bg-cn-background-2 h-px" />
+                <Separator className="h-px bg-cn-background-2" />
 
                 {/* Color Adjustment */}
                 <div className="grid grid-cols-[246px_1fr] gap-x-8">
@@ -166,12 +166,12 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   />
                 </div>
 
-                <Separator className="bg-cn-background-2 h-px" />
+                <Separator className="h-px bg-cn-background-2" />
 
                 {/* Accent Color */}
                 {showAccentColor ? (
                   <>
-                    <Separator className="bg-cn-background-2 h-px" />
+                    <Separator className="h-px bg-cn-background-2" />
                     <div className="grid grid-cols-[246px_1fr] gap-x-8">
                       <div>
                         <Text variant="heading-base" color="foreground-1">
@@ -210,7 +210,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 {/* Gray Color */}
                 {showGrayColor ? (
                   <>
-                    <Separator className="bg-cn-background-2 h-px" />
+                    <Separator className="h-px bg-cn-background-2" />
                     <div className="grid grid-cols-[246px_1fr] gap-x-8">
                       <div>
                         <Text variant="heading-base" color="foreground-1">

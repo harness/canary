@@ -38,7 +38,7 @@ export interface PageHeaderProps {
 const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, children, button, moreActions }) => {
   return (
     <Layout.Flex justify="between" gap="lg" className="mb-10">
-      <Layout.Vertical spacing="large">
+      <Layout.Vertical className="gap-[var(--cn-spacing-5)]">
         <Layout.Vertical>
           {!!backLink && (
             <Link prefixIcon {...backLink.linkProps}>
@@ -51,8 +51,8 @@ const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, c
               {title}
             </Text>
           </Layout.Flex>
-          {!!description && <Text>{description}</Text>}
         </Layout.Vertical>
+        {!!description && <Text>{description}</Text>}
         {children}
       </Layout.Vertical>
 

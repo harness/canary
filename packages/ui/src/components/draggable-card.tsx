@@ -22,13 +22,7 @@ export interface CardData extends Omit<CardRootProps, 'title' | 'children'> {
   disableDragAndDrop?: boolean
 }
 
-export const DraggableCard = ({
-  id,
-  title,
-  description,
-  disableDragAndDrop = false,
-  ...cardProps
-}: DraggableCardProps) => {
+export const DraggableCard = ({ id, description, disableDragAndDrop, title, ...cardProps }: DraggableCardProps) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
     disabled: disableDragAndDrop
@@ -91,10 +85,11 @@ export const DraggableCardList = ({
           {cards.map((card, index) => (
             <DraggableCard
               key={card.id}
-              description={card.description}
-              disableDragAndDrop={card.disableDragAndDrop}
               {...card}
               id={getItemId(index)}
+              disableDragAndDrop={card.disableDragAndDrop}
+              title={card.title}
+              description={card.description}
             />
           ))}
         </Layout.Flex>

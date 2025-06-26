@@ -33,11 +33,15 @@
       }
     },
     "container": {
+      "pt": {
+        "$type": "spacing",
+        "$value": "{spacing.5}"
+      },
       "px": {
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
-      "py": {
+      "pb": {
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
@@ -47,10 +51,6 @@
       }
     },
     "header": {
-      "pt": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      },
       "pb": {
         "$type": "spacing",
         "$value": "{spacing.1}"

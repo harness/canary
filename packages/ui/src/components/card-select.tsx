@@ -15,8 +15,10 @@ interface CardSelectRootProps<T> {
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
-  layout?: 'horizontal' | 'vertical'
+  layout?: 'horizontal' | 'vertical' | 'grid'
   gap?: 'sm' | 'md' | 'lg'
+  rows?: number
+  cols?: number
   children: ReactNode
 }
 
@@ -54,7 +56,8 @@ const cardSelectVariants = cva('cn-card-select-root', {
   variants: {
     layout: {
       vertical: 'cn-card-select-vertical',
-      horizontal: 'cn-card-select-horizontal'
+      horizontal: 'cn-card-select-horizontal',
+      grid: 'cn-card-select-grid'
     },
     gap: {
       sm: 'cn-card-select-gap-sm',
@@ -77,7 +80,9 @@ function CardSelectRoot<T extends CardSelectType>({
   defaultValue,
   onValueChange,
   disabled = false,
-  children
+  children,
+  rows,
+  cols
 }: CardSelectRootProps<T>) {
   const [internalValue, setInternalValue] = useState<unknown | unknown[]>(
     defaultValue ?? (type === 'multiple' ? [] : undefined)
@@ -114,7 +119,16 @@ function CardSelectRoot<T extends CardSelectType>({
         onValueChange: handleValueChange
       }}
     >
-      <div className={cardSelectVariants({ layout, gap })} role={type === 'single' ? 'radiogroup' : 'group'}>
+      <div
+        className={cardSelectVariants({ layout, gap })}
+        role={type === 'single' ? 'radiogroup' : 'group'}
+        style={
+          {
+            '--cols': cols,
+            '--rows': rows
+          } as React.CSSProperties
+        }
+      >
         {children}
       </div>
     </CardSelectContext.Provider>

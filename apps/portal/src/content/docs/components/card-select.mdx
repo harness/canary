@@ -1,10 +1,10 @@
 ---
 title: CardSelect
-description: A card-based selection interface for single and multiple selections
+description: A card-based selection interface for single and multiple selections with flexible layouts
 beta: true
 ---
 
-The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes, making it suitable for forms, settings, and decision workflows.
+The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes with flexible layouts (horizontal, vertical, or grid), making it suitable for forms, settings, and decision workflows.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -29,6 +29,22 @@ import { DocsPage } from "@/components/docs-page";
         <CardSelect.Title>Option B</CardSelect.Title>
       </CardSelect.Item>
     </CardSelect.Root>
+
+    <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
+      <CardSelect.Item value="grid-1">
+        <CardSelect.Title>Grid Item 1</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="grid-2">
+        <CardSelect.Title>Grid Item 2</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="grid-3">
+        <CardSelect.Title>Grid Item 3</CardSelect.Title>
+      </CardSelect.Item>
+      <CardSelect.Item value="grid-4">
+        <CardSelect.Title>Grid Item 4</CardSelect.Title>
+      </CardSelect.Item>
+    </CardSelect.Root>
+
   </div>`}
 />
 
@@ -248,7 +264,7 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
   value={selectedValue}             // [OPTIONAL] For controlled usage
   defaultValue={defaultValue}       // [OPTIONAL] For selecting item initially
   onValueChange={handleChange}      // [OPTIONAL] Selection change handler
-  layout="horizontal"               // [OPTIONAL] Card layout: 'horizontal' or 'vertical'
+  layout="horizontal"               // [OPTIONAL] Card layout: 'horizontal', 'vertical', or 'grid'
   gap="md"                          // [OPTIONAL] Space between cards
   disabled={false}                  // [OPTIONAL] Disable all selections
 >
@@ -289,7 +305,7 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       name: "layout",
       description: "Layout direction of the cards.",
       required: false,
-      value: "'horizontal' | 'vertical'",
+      value: "'horizontal' | 'vertical' | 'grid'",
       defaultValue: "'vertical'",
     },
     {
@@ -298,6 +314,20 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       required: false,
       value: "'sm' | 'md' | 'lg'",
       defaultValue: "'md'",
+    },
+    {
+      name: "rows",
+      description: "Number of rows for grid layout.",
+      required: false,
+      value: "number",
+      defaultValue: "undefined",
+    },
+    {
+      name: "cols",
+      description: "Number of columns for grid layout.",
+      required: false,
+      value: "number",
+      defaultValue: "undefined",
     },
     {
       name: "disabled",

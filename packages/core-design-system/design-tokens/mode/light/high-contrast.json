@@ -2254,6 +2254,16 @@
             "$value": "{chrome.400}"
           }
         },
+        "logo": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.1000}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.700}"
+          }
+        },
         "lines": {
           "from": {
             "$type": "color",

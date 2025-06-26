@@ -1,81 +1,93 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementRef,
-  FC,
-  forwardRef,
-  Fragment,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import { ElementRef, FC, forwardRef, Fragment, ReactNode, useCallback, useState } from 'react'
 
-import { Button, ButtonProps, ButtonSizes, ButtonVariants, Tooltip, TooltipProps } from '@/components'
+import { Button, ButtonProps, ButtonSizes, IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
+import { cn } from '@utils/cn'
 
-type ToggleVariant = 'outline-primary' | 'outline-secondary' | 'ghost-primary' | 'ghost-secondary'
+type ToggleVariant = 'ghost' | 'outline' | 'transparent'
+type TypeSelectedVariant = 'primary' | 'secondary'
 type ToggleTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
-export interface ToggleProps extends Pick<ButtonProps, 'rounded' | 'iconOnly'> {
+export interface ToggleProps extends Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> {
   variant?: ToggleVariant
+  selectedVariant?: TypeSelectedVariant
+  onChange?: (selected: boolean) => void
+  text?: string
   size?: ButtonSizes
+  prefixIcon?: IconPropsV2['name']
+  suffixIcon?: IconPropsV2['name']
+  selected?: boolean
+  defaultValue?: boolean
   tooltipProps?: ToggleTooltipProps
+  className?: string
 }
 
 const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
   tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
 
-const Toggle = forwardRef<
-  ElementRef<typeof TogglePrimitive.Root>,
-  ComponentPropsWithoutRef<typeof TogglePrimitive.Root> & ToggleProps
->(
+const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
   (
     {
       className,
-      variant = 'outline-primary',
+      variant = 'outline',
+      selectedVariant = 'primary',
       size = 'md',
-      pressed: pressedProp = false,
       rounded,
-      iconOnly,
-      children,
-      onPressedChange,
       disabled,
-      tooltipProps
+      iconOnly,
+      text,
+      prefixIcon,
+      suffixIcon,
+      onChange,
+      tooltipProps,
+      defaultValue,
+      selected: selectedProp
     },
     ref
   ) => {
-    const [pressed, setPressed] = useState(pressedProp)
+    const isControlled = selectedProp !== undefined
+    const [internalSelected, setInternalSelected] = useState(defaultValue)
+    const selected = isControlled ? selectedProp : internalSelected
 
-    const buttonVariant = useMemo(() => {
-      const [inactiveVariant, activeVariant] = variant.split('-') as [ButtonVariants, ButtonVariants]
-      return pressed ? activeVariant : inactiveVariant
-    }, [variant, pressed])
-
-    useEffect(() => {
-      setPressed(pressedProp)
-    }, [pressedProp])
-
-    const onChange = useCallback(
+    const handleChange = useCallback(
       (val: boolean) => {
-        setPressed(val)
-        onPressedChange?.(val)
+        if (!isControlled) {
+          setInternalSelected(val)
+        }
+        onChange?.(val)
       },
-      [onPressedChange]
+      [isControlled, onChange]
     )
+
+    const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
+
+    const renderContent = () => {
+      if (iconOnly) {
+        return prefixIcon ? <IconV2 name={prefixIcon} size={size} /> : null
+      }
+
+      return (
+        <>
+          {prefixIcon && <IconV2 name={prefixIcon} size={size} />}
+          {text}
+          {suffixIcon && <IconV2 name={suffixIcon} size={size} />}
+        </>
+      )
+    }
 
     return (
       <TooltipWrapper tooltipProps={tooltipProps}>
-        <TogglePrimitive.Root ref={ref} asChild pressed={pressed} onPressedChange={onChange} disabled={disabled}>
+        <TogglePrimitive.Root ref={ref} asChild pressed={selected} onPressedChange={handleChange} disabled={disabled}>
           <Button
-            className={className}
-            variant={buttonVariant}
+            className={cn(className, { [`cn-toggle-transparent-${size}`]: variant === 'transparent' && !iconOnly })}
+            variant={selected ? selectedVariant : variant}
             disabled={disabled}
             size={size}
             rounded={rounded}
             iconOnly={iconOnly}
+            {...accessibilityProps}
           >
-            {children}
+            {renderContent()}
           </Button>
         </TogglePrimitive.Root>
       </TooltipWrapper>

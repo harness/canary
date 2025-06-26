@@ -37,6 +37,7 @@ return (
 ```
 
 ## Controlled and Uncontrolled
+
 The `Toggle` component can be used in both controlled and uncontrolled modes. In controlled mode, the `selected` prop is used to control the toggle's state, and the `onChange` prop is called when the toggle's state changes. In uncontrolled mode, the `defaultValue` prop is used to set the initial state of the toggle, and the component manages its own state internally.
 
 <DocsPage.ComponentExample
@@ -52,6 +53,7 @@ The `Toggle` component can be used in both controlled and uncontrolled modes. In
       <Toggle text="Controlled" selected={controlled} onChange={handleControlledChange} />
       <Toggle text="Uncontrolled" defaultValue={true} />
     </ButtonLayout>
+
 )}`}
 />
 
@@ -144,8 +146,7 @@ The `Toggle` component is a button that can be toggled on and off.
       description: "The visual style variant of the toggle.",
       required: false,
       defaultValue: "outline",
-      value:
-        "'outline' | 'ghost' | 'transparent'",
+      value: "'outline' | 'ghost' | 'transparent'",
     },
     {
       name: "selectedVariant",
@@ -185,7 +186,8 @@ The `Toggle` component is a button that can be toggled on and off.
     },
     {
       name: "text",
-      description: "The text content of the toggle and its accessibility label.",
+      description:
+        "The text content of the toggle and its accessibility label.",
       required: false,
       value: "string",
     },
@@ -204,7 +206,8 @@ The `Toggle` component is a button that can be toggled on and off.
     },
     {
       name: "prefixIcon",
-      description: "An optional icon to display before the text. When iconOnly is true, this will be the only icon displayed.",
+      description:
+        "An optional icon to display before the text. When iconOnly is true, this will be the only icon displayed.",
       required: false,
       value: "string",
     },

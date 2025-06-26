@@ -9,11 +9,13 @@ function createToggleStyles() {
     const value = size === 'md' ? 'default' : size
 
     styles[`&-transparent-${size}`] = {
-      border: 'var(--cn-btn-border) solid transparent',
       paddingLeft: `var(--cn-btn-px-${value})`,
       paddingRight: `var(--cn-btn-px-${value})`,
       paddingTop: `var(--cn-btn-py-${value})`,
-      paddingBottom: `var(--cn-btn-py-${value})`
+      paddingBottom: `var(--cn-btn-py-${value})`,
+      '&[aria-pressed="false"]': {
+        border: 'var(--cn-btn-border) solid transparent'
+      }
     }
   })
 

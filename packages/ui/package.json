@@ -14,7 +14,7 @@
     "./locales": "./dist/locales.js",
     "./tailwind.config": "./dist/tailwind.config.js",
     "./styles.css": "./dist/styles.css",
-    "./shared-style-variables.css": "./src/shared-style-variables.css",
+    "./shared-style-variables.css": "./src/styles/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js",
     "./types": "./dist/types.js"

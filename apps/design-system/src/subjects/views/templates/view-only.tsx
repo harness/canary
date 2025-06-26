@@ -7,7 +7,9 @@ import {
   Tag,
   Text,
   ViewOnly,
-  ViewOnlyProps
+  ViewOnlyProps,
+  Widgets,
+  Table, Link
 } from '@harnessio/ui/components'
 import { timeAgo } from '@harnessio/ui/utils'
 import { Page } from '@harnessio/ui/views'
@@ -181,9 +183,59 @@ export const ViewOnlyView = () => {
         />
       </Page.Header>
       <Page.Content>
-        {dataMock.map((props, index) => (
-          <ViewOnly key={index} {...props} />
-        ))}
+        <Widgets.Root isTwoColumn>
+          <Widgets.Item title="Connector details">
+            {dataMock.map((props, index) => (
+              <ViewOnly key={index} {...props} />
+            ))}
+          </Widgets.Item>
+
+          <Widgets.Item
+            title="Activity history"
+            moreLink={{
+              to: '/'
+            }}
+          >
+            {dataMock.slice(0, 2).map((props, index) => (
+              <ViewOnly key={index} {...props} />
+            ))}
+          </Widgets.Item>
+
+          <Widgets.Item
+              title="Secrets"
+              moreLink={{
+                to: '/'
+              }}
+              isWidgetTable
+          >
+            <Table.Root>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head>Event</Table.Head>
+                  <Table.Head>Type</Table.Head>
+                  <Table.Head>Scope</Table.Head>
+                  <Table.Head>Created</Table.Head>
+                  <Table.Head />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>
+                    <Text color="foreground-1" variant="body-strong">secretfile</Text>
+                  </Table.Cell>
+                  <Table.Cell>Pipeline</Table.Cell>
+                  <Table.Cell>
+                    <Link to="/">default_project</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}
+                  </Table.Cell>
+                  <Table.Cell></Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table.Root>
+          </Widgets.Item>
+        </Widgets.Root>
       </Page.Content>
     </Page.Root>
   )

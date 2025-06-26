@@ -212,7 +212,7 @@ export const PullRequestCommentBox = ({
 
     const sideDiffLines = diffLines.filter(diffLine => !diffLine.startsWith(otherSideChangedLineToken))
 
-    const found = sideDiffLines.reduce((previousValue, currentValue, currentIndex, array): string => {
+    const found = sideDiffLines.reduce((previousValue, currentValue, currentIndex): string => {
       if (isEmpty(previousValue) && currentValue.startsWith('@@')) {
         const sectionInfoParts = currentValue.split(' ')
 

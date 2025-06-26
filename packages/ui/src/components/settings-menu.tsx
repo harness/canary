@@ -24,7 +24,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
         <Sheet.Title className="sr-only">System Administration menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[364px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
-            <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
+            <ScrollArea classNameContent="w-full">
               <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group

@@ -1,27 +1,38 @@
-import { closestCenter, DndContext } from '@dnd-kit/core'
+import { closestCenter, DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import useDragAndDrop from '@hooks/use-drag-and-drop'
+import { cn } from '@utils/cn'
 
-import { Card } from './card'
+import { Card, type CardRootProps } from './card'
 import { IconV2 } from './icon-v2'
 import { Layout } from './layout'
 
-interface DraggableCardProps {
+interface DraggableCardProps extends Omit<CardRootProps, 'title' | 'children'> {
   id: string
   title: string | React.ReactNode
   description?: string | React.ReactNode
-  disabled?: boolean
+  disableDragAndDrop?: boolean
 }
-export interface CardData {
+export interface CardData extends Omit<CardRootProps, 'title' | 'children'> {
   id: string
+  name?: string
   title: string | React.ReactNode
   description?: string | React.ReactNode
-  disabled?: boolean
+  disableDragAndDrop?: boolean
 }
 
-export const DraggableCard = ({ id, title, description, disabled = false }: DraggableCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id, disabled })
+export const DraggableCard = ({
+  id,
+  title,
+  description,
+  disableDragAndDrop = false,
+  ...cardProps
+}: DraggableCardProps) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+    disabled: disableDragAndDrop
+  })
 
   const style = transform
     ? {
@@ -33,11 +44,11 @@ export const DraggableCard = ({ id, title, description, disabled = false }: Drag
     : {}
 
   return (
-    <Card.Root ref={setNodeRef} style={style}>
+    <Card.Root ref={setNodeRef} style={style} {...cardProps}>
       <Card.Content>
-        <div className="-mx-4 border-b px-4">
-          <div className="flex items-center gap-2 pb-4">
-            {disabled ? null : (
+        <div className={cn('-mx-4 px-4', description ? 'border-b' : '')}>
+          <div className={cn('flex items-center gap-2', description ? 'pb-4' : '')}>
+            {disableDragAndDrop ? null : (
               <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
                 <IconV2 name="grip-dots" size="xs" />
               </div>
@@ -45,7 +56,7 @@ export const DraggableCard = ({ id, title, description, disabled = false }: Drag
             {title}
           </div>
         </div>
-        <div className="mt-4">{description}</div>
+        {description && <div className="mt-4">{description}</div>}
       </Card.Content>
     </Card.Root>
   )
@@ -63,17 +74,27 @@ export const DraggableCardList = ({
     onReorder: setCards
   })
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      // Add a small delay to allow clicks to be processed before starting drag
+      activationConstraint: {
+        delay: 100,
+        tolerance: 0
+      }
+    })
+  )
+
   return (
-    <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+    <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
       <SortableContext items={cards.map((_, index) => getItemId(index))}>
         <Layout.Flex direction="column" gap="md">
           {cards.map((card, index) => (
             <DraggableCard
               key={card.id}
-              id={getItemId(index)}
-              title={card.title}
               description={card.description}
-              disabled={card.disabled}
+              disableDragAndDrop={card.disableDragAndDrop}
+              {...card}
+              id={getItemId(index)}
             />
           ))}
         </Layout.Flex>

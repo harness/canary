@@ -33,11 +33,11 @@
       }
     },
     "container": {
-      "px": {
+      "py": {
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
-      "py": {
+      "px": {
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },

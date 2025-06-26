@@ -4,7 +4,7 @@ import { usePortal, useTranslation } from '@/context'
 import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
-import { ScrollArea } from '@components/scroll-area'
+import { ScrollArea, ScrollAreaIntersectionProps } from '@components/scroll-area'
 import { Text, TextProps } from '@components/text'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { omit } from 'lodash-es'
@@ -62,10 +62,11 @@ const innerComponentsDisplayNames = [
 
 interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
   isSubContent?: boolean
+  scrollAreaProps?: ScrollAreaIntersectionProps
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(
-  ({ className, children: _children, sideOffset = 4, isSubContent, onScroll, ...props }, ref) => {
+  ({ className, children: _children, sideOffset = 4, isSubContent, scrollAreaProps, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const Primitive = isSubContent ? DropdownMenuPrimitive.SubContent : DropdownMenuPrimitive.Content
 
@@ -84,7 +85,11 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
         >
           {!!header && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-header">{header}</div>}
 
-          <ScrollArea viewportClassName="cn-dropdown-menu-content" onScroll={onScroll}>
+          <ScrollArea
+            className="cn-dropdown-menu-content"
+            classNameContent="cn-dropdown-menu-content-inner"
+            {...scrollAreaProps}
+          >
             <div className="cn-dropdown-menu-container">{children}</div>
           </ScrollArea>
 

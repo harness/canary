@@ -11,7 +11,7 @@ import { DocsPage } from "../../../components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Toggle>Default</Toggle>
+    <Toggle text="Default"/>
   `}
 />
 
@@ -24,31 +24,57 @@ import { Toggle } from '@harnessio/ui/components'
 
 return (
     <Toggle
-        size="sm"
-        variant="outline-secondary"
-        rounded
-        tooltipProps={{
-            content: <p>This is a tooltip</p>
-        }}
-    >
-        Toggle
-    </Toggle>
+      size="sm"
+      variant="outline"
+      selectedVariant="primary"
+      rounded
+      tooltipProps={{
+        content: <p>This is a tooltip</p>
+      }}
+      text="Toggle"
+    />
 )
 ```
 
+## Controlled and Uncontrolled
+The `Toggle` component can be used in both controlled and uncontrolled modes. In controlled mode, the `selected` prop is used to control the toggle's state, and the `onChange` prop is called when the toggle's state changes. In uncontrolled mode, the `defaultValue` prop is used to set the initial state of the toggle, and the component manages its own state internally.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [controlled, setControlled] = React.useState(false);
+    const handleControlledChange = (selected: boolean) => {
+      setControlled(selected);
+    };
+
+    return (
+    <ButtonLayout orientation="vertical">
+      <Toggle text="Controlled" selected={controlled} onChange={handleControlledChange} />
+      <Toggle text="Uncontrolled" defaultValue={true} />
+    </ButtonLayout>
+)}`}
+/>
+
 ## Variants
 
-The `Toggle` component accepts a `variant` prop to control its appearance in active and inactive states. Supported values are: `outline-primary`, `outline-secondary`, `ghost-primary`, and `ghost-secondary`.
+The `Toggle` component accepts a `variant` prop to control its applyed styles. Supported values are: `outline`, `ghost`, and `transparent`. The `selectedVariant` prop controls the style when the toggle is pressed, with options for `primary` and `secondary`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
-    <ButtonLayout orientation="vertical">
-        <Toggle>outline-primary</Toggle>
-        <Toggle variant="outline-secondary">outline-secondary</Toggle>
-        <Toggle variant="ghost-primary">ghost-primary</Toggle>
-        <Toggle variant="ghost-secondary">ghost-secondary</Toggle>
-    </ButtonLayout>
+  <div className="flex gap-20">
+    <div className="grid gap-4 justify-items-center">
+      <Text>variant:</Text>
+      <Toggle text="outline" />
+      <Toggle text="ghost" variant="ghost" />
+      <Toggle text="transparent" variant="transparent" />
+    </div>
+    <div className="grid gap-4 justify-items-center">
+      <Text>selected variant:</Text>
+      <Toggle text="primary (selected)" selectedVariant="primary" selected />
+      <Toggle text="secondary (selected)" selectedVariant="secondary" selected />
+    </div>
+  </div>
 `}
 />
 
@@ -59,11 +85,11 @@ The `Toggle` component accepts a `size` prop to control its overall dimensions. 
 <DocsPage.ComponentExample
   client:only
   code={`
-    <ButtonLayout orientation="vertical">
-        <Toggle>Medium</Toggle>
-        <Toggle size="sm">Small</Toggle>
-        <Toggle size="xs">Extra Small</Toggle>
-    </ButtonLayout>
+    <div className="grid gap-4 justify-items-center">
+      <Toggle text="Toggle" prefixIcon="plus" suffixIcon="minus" />
+      <Toggle size="sm" text="Toggle" prefixIcon="plus" suffixIcon="minus" />
+      <Toggle size="xs" text="Toggle" prefixIcon="plus" suffixIcon="minus" />
+    </div>
 `}
 />
 
@@ -74,20 +100,19 @@ The `Toggle` component accepts a `rounded` prop. When provided, the underlying b
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Toggle rounded>Rounded</Toggle>
+    <Toggle text="Rounded" rounded />
 `}
 />
 
 ## Icon only
 
 The `Toggle` component accepts a `iconOnly` prop. When this prop is set, the `Toggle` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
+Note that when `iconOnly` is set, the `text` prop will be used for the `area-label`, and the `prefixIcon` prop will be used as the only icon displayed.
 
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Toggle iconOnly>
-        <IconV2 name="plus" />
-    </Toggle>
+    <Toggle iconOnly prefixIcon="plus" text="Add" />
 `}
 />
 
@@ -103,9 +128,8 @@ The `Toggle` component accepts a `tooltipProps` prop. When provided, the `Toggle
         title: 'Title',
         content: <p>This is a tooltip</p>
       }}
-    >
-        With tooltip
-    </Toggle>
+      text="With tooltip"
+    />
 `}
 />
 
@@ -119,50 +143,31 @@ The `Toggle` component is a button that can be toggled on and off.
       name: "variant",
       description: "The visual style variant of the toggle.",
       required: false,
-      defaultValue: "outline-primary",
+      defaultValue: "outline",
       value:
-        "'outline-primary' | 'outline-secondary' | 'ghost-primary' | 'ghost-secondary'",
+        "'outline' | 'ghost' | 'transparent'",
     },
     {
-      name: "size",
-      description: "The size of the toggle.",
-      required: false,
-      defaultValue: "'md'",
-      value: "'md' | 'sm' | 'xs'",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes to apply to the toggle.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "children",
-      description: "The content of the toggle",
-      required: true,
-      value: "ReactNode",
-    },
-    {
-      name: "defaultPressed",
+      name: "selectedVariant",
       description:
-        "The pressed state of the toggle when it is initially rendered. Use when you do not need to control its pressed state.",
+        "The visual style variant of the toggle when it is selected.",
       required: false,
-      defaultValue: "false",
-      value: "boolean",
+      defaultValue: "primary",
+      value: "'primary' | 'secondary'",
     },
     {
-      name: "pressed",
-      description:
-        "The controlled pressed state of the toggle. Must be used in conjunction with 'onPressedChange'.",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "onPressedChange",
+      name: "onChange",
       description:
         "Event handler called when the pressed state of the toggle changes.",
       required: false,
-      value: "(pressed: boolean) => void",
+      value: "(selected: boolean) => void",
+    },
+    {
+      name: "iconOnly",
+      description: "Whether the toggle is sized to fit an icon only.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
     },
     {
       name: "disabled",
@@ -179,10 +184,49 @@ The `Toggle` component is a button that can be toggled on and off.
       value: "boolean",
     },
     {
-      name: "iconOnly",
-      description: "Whether the toggle is sized to fit an icon only.",
+      name: "text",
+      description: "The text content of the toggle and its accessibility label.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "The size of the toggle.",
+      required: false,
+      defaultValue: "md",
+      value: "'md' | 'sm' | 'xs'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the toggle.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "prefixIcon",
+      description: "An optional icon to display before the text. When iconOnly is true, this will be the only icon displayed.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "suffixIcon",
+      description: "An optional icon to display after the text.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "defaultValue",
+      description:
+        "The selected state of the toggle when it is initially rendered. Use when you do not need to control its selected state.",
       required: false,
       defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "selected",
+      description:
+        "The controlled selected state of the toggle. Must be used in conjunction with 'onChange'.",
+      required: false,
       value: "boolean",
     },
     {

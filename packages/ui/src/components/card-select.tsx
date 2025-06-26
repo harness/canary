@@ -16,6 +16,7 @@ interface CardSelectRootProps<T> {
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
   orientation?: 'horizontal' | 'vertical'
+  wrap?: boolean
   gap?: 'sm' | 'md' | 'lg'
   children: ReactNode
 }
@@ -53,7 +54,7 @@ function isChecked(value: unknown, current: unknown | unknown[]) {
 const cardSelectVariants = cva('cn-card-select-root', {
   variants: {
     orientation: {
-      vertical: '',
+      vertical: 'cn-card-select-vertical',
       horizontal: 'cn-card-select-horizontal'
     },
     gap: {

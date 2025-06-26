@@ -2590,6 +2590,10 @@
         "$type": "color",
         "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
       },
+      "logo": {
+        "$type": "color",
+        "$value": "radial-gradient(87.5% 87.5% at 50% 50%, {gradient.img.empty-state.logo.from} 0%, {gradient.img.empty-state.logo.to} 100%)"
+      },
       "bubble-t": {
         "bg": {
           "$type": "color",

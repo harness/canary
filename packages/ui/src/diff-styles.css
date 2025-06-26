@@ -1,3 +1,6 @@
+/* IMPORTANT: Do not modify the variable names on the left side (--diff-*) as they are required by the third-party git-diff-view component.
+   The right side variables (--cn-comp-*) are from the design system core.css file. */
+
 :root,
 :host {
   --diff-grey: var(--cn-comp-diff-grey);

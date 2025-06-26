@@ -7,7 +7,9 @@ import {
   Tag,
   Text,
   ViewOnly,
-  ViewOnlyProps
+  ViewOnlyProps,
+  Widgets,
+  Table
 } from '@harnessio/ui/components'
 import { timeAgo } from '@harnessio/ui/utils'
 import { Page } from '@harnessio/ui/views'
@@ -181,9 +183,77 @@ export const ViewOnlyView = () => {
         />
       </Page.Header>
       <Page.Content>
-        {dataMock.map((props, index) => (
-          <ViewOnly key={index} {...props} />
-        ))}
+        <Widgets.Root isTwoColumn>
+          <Widgets.Item title="Connector details">
+            {dataMock.map((props, index) => (
+              <ViewOnly key={index} {...props} />
+            ))}
+          </Widgets.Item>
+
+          <Widgets.Item
+            title="Activity history"
+            moreLink={{
+              to: '/'
+            }}
+          >
+            {dataMock.slice(0, 2).map((props, index) => (
+              <ViewOnly key={index} {...props} />
+            ))}
+          </Widgets.Item>
+
+          <Widgets.Item
+              title="Secrets"
+              moreLink={{
+                to: '/'
+              }}
+              isWidgetTable
+          >
+            <div style={{ width: '1000px', height: '100px', background: 'red' }} />
+            {/*<Table.Root>*/}
+            {/*  <Table.Header>*/}
+            {/*    <Table.Row>*/}
+            {/*      <Table.Head>Name</Table.Head>*/}
+            {/*      <Table.Head>Email</Table.Head>*/}
+            {/*      <Table.Head>Display Name</Table.Head>*/}
+            {/*      <Table.Head>Date added</Table.Head>*/}
+            {/*      <Table.Head>Name</Table.Head>*/}
+            {/*      <Table.Head>Email</Table.Head>*/}
+            {/*      <Table.Head>Display Name</Table.Head>*/}
+            {/*      <Table.Head>Date added</Table.Head>*/}
+            {/*    </Table.Row>*/}
+            {/*  </Table.Header>*/}
+            {/*  <Table.Body>*/}
+            {/*    <Table.Row>*/}
+            {/*      <Table.Cell>John Doe</Table.Cell>*/}
+            {/*      <Table.Cell>john@example.com</Table.Cell>*/}
+            {/*      <Table.Cell>John</Table.Cell>*/}
+            {/*      <Table.Cell>2023-01-01</Table.Cell><Table.Cell>John Doe</Table.Cell>*/}
+            {/*      <Table.Cell>john@example.com</Table.Cell>*/}
+            {/*      <Table.Cell>John</Table.Cell>*/}
+            {/*      <Table.Cell>2023-01-01</Table.Cell>*/}
+            {/*    </Table.Row>*/}
+            {/*    <Table.Row>*/}
+            {/*      <Table.Cell>Jane Smith</Table.Cell>*/}
+            {/*      <Table.Cell>jane@example.com</Table.Cell>*/}
+            {/*      <Table.Cell>Jane</Table.Cell>*/}
+            {/*      <Table.Cell>2023-02-15</Table.Cell><Table.Cell>Jane Smith</Table.Cell>*/}
+            {/*      <Table.Cell>jane@example.com</Table.Cell>*/}
+            {/*      <Table.Cell>Jane</Table.Cell>*/}
+            {/*      <Table.Cell>2023-02-15</Table.Cell>*/}
+            {/*    </Table.Row>*/}
+            {/*    <Table.Row>*/}
+            {/*      <Table.Cell>Bob Johnson</Table.Cell>*/}
+            {/*      <Table.Cell>bob@example.com</Table.Cell>*/}
+            {/*      <Table.Cell>Bob</Table.Cell>*/}
+            {/*      <Table.Cell>2023-03-20</Table.Cell><Table.Cell>Bob Johnson</Table.Cell>*/}
+            {/*      <Table.Cell>bob@example.com</Table.Cell>*/}
+            {/*      <Table.Cell>Bob</Table.Cell>*/}
+            {/*      <Table.Cell>2023-03-20</Table.Cell>*/}
+            {/*    </Table.Row>*/}
+            {/*  </Table.Body>*/}
+            {/*</Table.Root>*/}
+          </Widgets.Item>
+        </Widgets.Root>
       </Page.Content>
     </Page.Root>
   )

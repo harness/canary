@@ -15,8 +15,7 @@ interface CardSelectRootProps<T> {
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
-  orientation?: 'horizontal' | 'vertical'
-  wrap?: boolean
+  layout?: 'horizontal' | 'vertical'
   gap?: 'sm' | 'md' | 'lg'
   children: ReactNode
 }
@@ -53,7 +52,7 @@ function isChecked(value: unknown, current: unknown | unknown[]) {
 
 const cardSelectVariants = cva('cn-card-select-root', {
   variants: {
-    orientation: {
+    layout: {
       vertical: 'cn-card-select-vertical',
       horizontal: 'cn-card-select-horizontal'
     },
@@ -64,14 +63,14 @@ const cardSelectVariants = cva('cn-card-select-root', {
     }
   },
   defaultVariants: {
-    orientation: 'vertical',
+    layout: 'vertical',
     gap: 'md'
   }
 })
 
 function CardSelectRoot<T extends CardSelectType>({
   type,
-  orientation = 'vertical',
+  layout = 'vertical',
   gap = 'md',
   name = `card-select-${Math.random().toString(36).slice(2)}`,
   value,
@@ -115,7 +114,7 @@ function CardSelectRoot<T extends CardSelectType>({
         onValueChange: handleValueChange
       }}
     >
-      <div className={cardSelectVariants({ orientation, gap })} role={type === 'single' ? 'radiogroup' : 'group'}>
+      <div className={cardSelectVariants({ layout, gap })} role={type === 'single' ? 'radiogroup' : 'group'}>
         {children}
       </div>
     </CardSelectContext.Provider>

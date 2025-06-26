@@ -12,7 +12,7 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
   <div className="flex flex-col space-y-8">
-    <CardSelect.Root type="single" orientation="horizontal" onValueChange={console.log}>
+    <CardSelect.Root type="single" layout="horizontal" onValueChange={console.log}>
       <CardSelect.Item value="option-1">
         <CardSelect.Title>Option 1</CardSelect.Title>
       </CardSelect.Item>
@@ -91,7 +91,7 @@ The `CardSelect` supports two selection types:
 </div>`}
 />
 
-### Orientation
+### Layout
 
 Cards can be arranged horizontally or vertically:
 
@@ -100,7 +100,7 @@ Cards can be arranged horizontally or vertically:
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Vertical Layout (Default)</h1>
-      <CardSelect.Root type="single" orientation="vertical">
+      <CardSelect.Root type="single" layout="vertical">
         <CardSelect.Item value="v1">
           <CardSelect.Title>First Card</CardSelect.Title>
           <CardSelect.Description>Cards stacked vertically</CardSelect.Description>
@@ -114,7 +114,7 @@ Cards can be arranged horizontally or vertically:
 
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Horizontal Layout</h1>
-      <CardSelect.Root type="single" orientation="horizontal">
+      <CardSelect.Root type="single" layout="horizontal">
         <CardSelect.Item value="h1">
           <CardSelect.Title>First Card</CardSelect.Title>
           <CardSelect.Description>Cards arranged side by side</CardSelect.Description>
@@ -138,7 +138,7 @@ Control the gap between cards using the `gap` prop:
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Small Gap</h1>
-      <CardSelect.Root type="single" gap="sm" orientation="horizontal">
+      <CardSelect.Root type="single" gap="sm" layout="horizontal">
         <CardSelect.Item value="small-1">
           <CardSelect.Title>Small 1</CardSelect.Title>
         </CardSelect.Item>
@@ -153,7 +153,7 @@ Control the gap between cards using the `gap` prop:
 
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Medium Gap (Default)</h1>
-      <CardSelect.Root type="single" gap="md" orientation="horizontal">
+      <CardSelect.Root type="single" gap="md" layout="horizontal">
         <CardSelect.Item value="medium-1">
           <CardSelect.Title>Medium 1</CardSelect.Title>
         </CardSelect.Item>
@@ -168,7 +168,7 @@ Control the gap between cards using the `gap` prop:
 
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Large Gap</h1>
-      <CardSelect.Root type="single" gap="lg" orientation="horizontal">
+      <CardSelect.Root type="single" gap="lg" layout="horizontal">
         <CardSelect.Item value="large-1">
           <CardSelect.Title>Large 1</CardSelect.Title>
         </CardSelect.Item>
@@ -248,7 +248,7 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
   value={selectedValue}             // [OPTIONAL] For controlled usage
   defaultValue={defaultValue}       // [OPTIONAL] For selecting item initially
   onValueChange={handleChange}      // [OPTIONAL] Selection change handler
-  orientation="horizontal"           // [OPTIONAL] Card layout direction
+  layout="horizontal"               // [OPTIONAL] Card layout: 'horizontal' or 'vertical'
   gap="md"                          // [OPTIONAL] Space between cards
   disabled={false}                  // [OPTIONAL] Disable all selections
 >
@@ -286,7 +286,7 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       defaultValue: "undefined",
     },
     {
-      name: "orientation",
+      name: "layout",
       description: "Layout direction of the cards.",
       required: false,
       value: "'horizontal' | 'vertical'",

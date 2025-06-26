@@ -4,7 +4,6 @@ import {
   InputHTMLAttributes,
   ReactElement,
   ReactNode,
-  UIEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -159,7 +158,6 @@ function SelectInner<T = string>(
   const [options, setOptions] = useState<SelectOption<T>[]>([])
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
   const [searchQuery, setSearchQuery] = useState(searchValue || '')
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   const { t } = useTranslation()
 
@@ -243,7 +241,7 @@ function SelectInner<T = string>(
 
   const isNoItems = !isLoadingOptions && !isLoading && hasNoOptions
   const isWithItems = !isLoadingOptions && !hasNoOptions
-  const showSpinner = [isLoadingOptions, isLoading, isLoadingMore && filteredOptions.length > 0].some(Boolean)
+  const showSpinner = [isLoadingOptions, isLoading].some(Boolean)
 
   const hiddenInputRef = useRef<HTMLInputElement>(null)
 
@@ -264,27 +262,6 @@ function SelectInner<T = string>(
       setSearchQuery('')
     },
     [isControlled, onChange]
-  )
-
-  const debouncedCheckScroll = useRef(
-    debounce((element: HTMLDivElement, onScrollEnd: () => void, setIsLoadingMore: (value: boolean) => void) => {
-      const threshold = 50
-      const isNearBottom = element.scrollHeight - element.scrollTop - element.clientHeight < threshold
-
-      if (isNearBottom) {
-        setIsLoadingMore(true)
-        onScrollEnd()
-        setTimeout(() => setIsLoadingMore(false), 100)
-      }
-    }, 150)
-  ).current
-
-  const handleScroll = useCallback(
-    (event: UIEvent<HTMLDivElement>) => {
-      if (!onScrollEnd || isLoadingMore) return
-      debouncedCheckScroll(event.currentTarget, onScrollEnd, setIsLoadingMore)
-    },
-    [onScrollEnd, isLoadingMore, debouncedCheckScroll]
   )
 
   // Render options recursively
@@ -414,7 +391,7 @@ function SelectInner<T = string>(
             contentClassName
           )}
           align="start"
-          onScroll={handleScroll}
+          scrollAreaProps={{ onScrollBottom: onScrollEnd, rootMargin: { bottom: '50px' } }}
         >
           {(allowSearch || header) && (
             <DropdownMenu.Header>

@@ -54,7 +54,11 @@ export default {
     },
 
     '&-content': {
-      maxHeight: 'var(--cn-dropdown-max-height)'
+      maxHeight: 'var(--cn-dropdown-max-height)',
+
+      '&-inner': {
+        '@apply w-full': ''
+      }
     },
 
     '&-base-item': {

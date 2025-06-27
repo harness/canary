@@ -30,21 +30,6 @@ import { DocsPage } from "@/components/docs-page";
       </CardSelect.Item>
     </CardSelect.Root>
 
-    <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
-      <CardSelect.Item value="grid-1">
-        <CardSelect.Title>Grid Item 1</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="grid-2">
-        <CardSelect.Title>Grid Item 2</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="grid-3">
-        <CardSelect.Title>Grid Item 3</CardSelect.Title>
-      </CardSelect.Item>
-      <CardSelect.Item value="grid-4">
-        <CardSelect.Title>Grid Item 4</CardSelect.Title>
-      </CardSelect.Item>
-    </CardSelect.Root>
-
   </div>`}
 />
 
@@ -109,7 +94,7 @@ The `CardSelect` supports two selection types:
 
 ### Layout
 
-Cards can be arranged horizontally or vertically:
+Cards can be arranged horizontally, vertically, or in a grid:
 
 <DocsPage.ComponentExample
   client:only
@@ -138,6 +123,24 @@ Cards can be arranged horizontally or vertically:
         <CardSelect.Item value="h2">
           <CardSelect.Title>Second Card</CardSelect.Title>
           <CardSelect.Description>In the same row</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Grid Layout</h1>
+      <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
+        <CardSelect.Item value="grid-1">
+          <CardSelect.Title>Grid Item 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="grid-2">
+          <CardSelect.Title>Grid Item 2</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="grid-3">
+          <CardSelect.Title>Grid Item 3</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="grid-4">
+          <CardSelect.Title>Grid Item 4</CardSelect.Title>
         </CardSelect.Item>
       </CardSelect.Root>
     </div>

@@ -24,5 +24,15 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['SignalFX', 'sfx'],
   ['NewRelic', 'new-relic'],
   ['Git', 'git'],
-  ['Splunk', 'splunk']
+  ['Splunk', 'splunk'],
+  ['Prometheus', 'prometheus'],
+  ['Dynatrace', 'dynatrace'],
+  ['Nexus', 'nexus'],
+  ['AppDynamics', 'app-dynamics'],
+  ['ElasticSearch', 'elastic'],
+  ['AzureKeyVault', 'azure'],
+  ['Azure', 'azure'],
+  ['Artifactory', 'artifactory'],
+  ['OciHelmRepo', 'helm'],
+  ['Tas', 'tanzu']
 ])

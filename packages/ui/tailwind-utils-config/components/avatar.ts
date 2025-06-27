@@ -7,7 +7,7 @@ export default {
     position: 'relative',
     height: `var(--cn-avatar-size-md)`,
     width: `var(--cn-avatar-size-md)`,
-    borderRadius: `var(--cn-avatar-radius-md)`,
+    borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
     fontSize: `var(--cn-font-size-0)`,
     '@apply shrink-0': '',

@@ -35,6 +35,9 @@ interface SearchBoxProps extends InputProps {
   children?: ReactNode
 }
 
+/**
+ * @deprecated Use `SearchInput` instead. This component will be removed soon.
+ */
 const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
   (
     {

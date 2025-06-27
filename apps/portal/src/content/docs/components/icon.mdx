@@ -7,7 +7,7 @@ beta: true
 The `IconV2` component allows you to render various icons with customizable properties such as size, color theme, and name. It will soon replace the old `Icon` component.
 
 import { DocsPage } from "../../../components/docs-page";
-import IconGrid from "../../../components/IconGrid.astro";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 <DocsPage.ComponentExample
   client:only
@@ -54,14 +54,6 @@ import { IconV2 } from '@harnessio/ui/components'
 return <IconV2 name="check" size="lg" />
 ```
 
-## Available Icons
-
-The following icons are available:
-
-<div class="bg-cn-background-3 border p-3 max-h-[50vh] overflow-auto rounded">
-  <IconGrid />
-</div>
-
 ## API Reference
 
 The `IconV2` component can be sized using the `size` prop, which applies predefined size classes.
@@ -105,3 +97,18 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
     },
   ]}
 />
+
+## Related pages
+
+<CardGrid>
+  <LinkCard
+    title="All Icons"
+    description="Explore the comprehensive icon library"
+    href="/foundations/icons"
+  />
+  <LinkCard
+    title="Logos"
+    description="Logo component reference"
+    href="/components/logo"
+  />
+</CardGrid>

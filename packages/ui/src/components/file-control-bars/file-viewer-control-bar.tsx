@@ -44,9 +44,9 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   const RightDetails = () => {
     return (
       <Layout.Horizontal gap="xs" align="center">
-        <span className="text-sm text-cn-foreground-2">{`${fileContent?.split('\n').length || 0} lines`}</span>
-        <span className="h-3 border-l border-cn-borders-2" />
-        <span className="mr-5 text-sm text-cn-foreground-2">{fileBytesSize}</span>
+        <span className="text-cn-foreground-2 text-sm">{`${fileContent?.split('\n').length || 0} lines`}</span>
+        <span className="border-cn-borders-2 h-3 border-l" />
+        <span className="text-cn-foreground-2 mr-5 text-sm">{fileBytesSize}</span>
         <FileToolbarActions
           showEdit={refType === BranchSelectorTab.BRANCHES}
           copyContent={fileContent}
@@ -63,7 +63,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
             <DropdownMenu.Item onSelect={handleViewRaw} title="View Raw" />
             <DropdownMenu.Item
               onSelect={handleOpenDeleteDialog}
-              title={<span className="truncate text-sm text-cn-foreground-danger">Delete</span>}
+              title={<span className="text-cn-foreground-danger truncate text-sm">Delete</span>}
             />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
@@ -74,7 +74,14 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
-        <ToggleGroup.Root variant="ghost-secondary" onValueChange={onChangeView} value={view} unselectable size="xs">
+        <ToggleGroup.Root
+          variant="ghost"
+          selectedVariant="secondary"
+          onValueChange={onChangeView}
+          value={view}
+          unselectable
+          size="xs"
+        >
           {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
           <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
           <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>

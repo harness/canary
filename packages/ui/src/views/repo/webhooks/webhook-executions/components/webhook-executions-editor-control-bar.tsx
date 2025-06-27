@@ -11,7 +11,14 @@ export const WebhookExecutionEditorControlBar: FC<FileEditorControlBarProps> = (
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-3">
-        <ToggleGroup.Root variant="ghost-secondary" onValueChange={onChangeView} value={view} unselectable size="xs">
+        <ToggleGroup.Root
+          variant="ghost"
+          selectedVariant="secondary"
+          onValueChange={onChangeView}
+          value={view}
+          unselectable
+          size="xs"
+        >
           <ToggleGroup.Item value="payload" className="text-md">
             Payload
           </ToggleGroup.Item>

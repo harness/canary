@@ -5,9 +5,9 @@ export default {
     justifyContent: 'center',
     overflow: 'hidden',
     position: 'relative',
-    height: `var(--cn-avatar-size-default)`,
-    width: `var(--cn-avatar-size-default)`,
-    borderRadius: `var(--cn-avatar-radius-default)`,
+    height: `var(--cn-avatar-size-md)`,
+    width: `var(--cn-avatar-size-md)`,
+    borderRadius: `var(--cn-avatar-radius-md)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
     fontSize: `var(--cn-font-size-0)`,
     '@apply shrink-0': '',
@@ -17,7 +17,7 @@ export default {
       width: `var(--cn-avatar-size-sm)`,
       fontSize: `var(--cn-font-size-min)`,
       letterSpacing: `var(--cn-tracking-wide)`,
-      fontWeight: `var(--cn-font-weight-default-normal-600)`
+      fontWeight: `var(--cn-font-weight-md-normal-600)`
     },
     '&:where(.cn-avatar-lg)': {
       height: `var(--cn-avatar-size-lg)`,

@@ -49,7 +49,7 @@ const AvatarItem: FC<AvatarItemProps> = ({ evaluations }) => {
           {evaluations &&
             evaluations.map(({ owner }, idx) => {
               if (idx < 2) {
-                return <Avatar key={owner?.id || idx} name={owner?.display_name || ''} size="default" rounded />
+                return <Avatar key={owner?.id || idx} name={owner?.display_name || ''} size="md" rounded />
               }
               if (idx === 2 && evaluations?.length > 2) {
                 // TODO: do popover with all the names

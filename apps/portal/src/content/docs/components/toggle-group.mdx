@@ -129,43 +129,60 @@ The `ToggleGroup.Root` component accepts a `type` prop to define selection behav
 
 ## Variants
 
-The `ToggleGroup.Root` component accepts a `variant` prop to control its appearance in active and inactive states. Supported values are: `outline-primary`, `outline-secondary`, `ghost-primary`, and `ghost-secondary`.
+The `ToggleGroup.Root` component accepts a `variant` prop to control its appearance in active state. Supported values are: `outline`, `ghost`, and `transparent`. `selectedVariant` prop controls the style when the toggle is pressed, with options for `primary` and `secondary`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <Layout.Vertical spacing="large">
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">outline-primary</Text>
-        <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="heading-subsection" align="center">variant / selectedVariant</Text>
+      <Text variant="body-strong" align="center">outline / primary</Text>
+      <ToggleGroup.Root value="2">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">outline-secondary</Text>
-        <ToggleGroup.Root value="2" variant="outline-secondary">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="body-strong" align="center">outline / secondary</Text>
+      <ToggleGroup.Root value="2" variant="outline" selectedVariant="secondary">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">ghost-primary</Text>
-        <ToggleGroup.Root value="2" variant="ghost-primary">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="body-strong" align="center">ghost / primary</Text>
+      <ToggleGroup.Root value="2" variant="ghost">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">ghost-secondary</Text>
-        <ToggleGroup.Root value="2" variant="ghost-secondary">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="body-strong" align="center">ghost / secondary</Text>
+      <ToggleGroup.Root value="2" variant="ghost" selectedVariant="secondary">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
+      </Layout.Vertical>
+      <Layout.Vertical spacing="small">
+      <Text variant="body-strong" align="center">transparent / primary</Text>
+      <ToggleGroup.Root value="2" variant="transparent">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
+      </Layout.Vertical>
+      <Layout.Vertical spacing="small">
+      <Text variant="body-strong" align="center">transparent / secondary</Text>
+      <ToggleGroup.Root value="2" variant="transparent" selectedVariant="secondary">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
       </Layout.Vertical>
     </Layout.Vertical>
 `}
@@ -335,11 +352,17 @@ The `Root` component serves as the main container for all toggle group elements.
     },
     {
       name: "variant",
-      description: "The visual style variant of the buttons.",
+      description: "The visual style variant of the not selected buttons.",
       required: false,
-      value:
-        "'outline-primary' | 'outline-secondary' | 'ghost-primary' | 'ghost-secondary'",
-      defaultValue: "outline-primary",
+      value: "'outline' | 'ghost' | 'transparent'",
+      defaultValue: "outline",
+    },
+    {
+      name: "selectedVariant",
+      description: "The visual style variant of the selected buttons.",
+      required: false,
+      value: "'primary' | 'secondary'",
+      defaultValue: "primary",
     },
     {
       name: "type",

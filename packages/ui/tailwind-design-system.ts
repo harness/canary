@@ -614,6 +614,8 @@ export default {
     'stroke-borders-2',
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },
-    { pattern: /^cn-toggle-transparent-/ }
+    // toggle classes
+    { pattern: /^cn-toggle-transparent-/ },
+    { pattern: /^cn-toggle-group-transparent-/ }
   ]
 } satisfies TailwindConfig

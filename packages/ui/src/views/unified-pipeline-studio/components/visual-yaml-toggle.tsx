@@ -17,7 +17,14 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
   }
 
   return (
-    <ToggleGroup.Root variant="ghost-secondary" onValueChange={onChange} value={view} size="xs" unselectable>
+    <ToggleGroup.Root
+      variant="ghost"
+      selectedVariant="secondary"
+      onValueChange={onChange}
+      value={view}
+      size="xs"
+      unselectable
+    >
       <ToggleGroup.Item disabled={!isYamlValid} value="visual">
         {!isYamlValid && <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />}
         Visual

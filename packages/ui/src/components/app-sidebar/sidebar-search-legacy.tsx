@@ -13,7 +13,9 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
 
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
-  const { collapsed } = useSidebar()
+  const { state } = useSidebar()
+
+  const collapsed = state === 'collapsed'
 
   const openSearchDialog = (e?: FormEvent<HTMLInputElement> | MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault()
@@ -28,7 +30,7 @@ function SidebarSearchLegacy({ logo }: ProjectProps) {
 
   return (
     <div className="flex w-full flex-col place-items-start">
-      <div className="my-5 flex items-center pl-2">{logo}</div>
+      <div className="mb-5 flex items-center pl-2">{logo}</div>
       <div className="relative w-full">
         <Button
           className="pointer-events-none absolute left-0 top-0 -z-10 opacity-0 transition-[opacity,z-index]  delay-0 duration-75 ease-linear group-data-[state=collapsed]:pointer-events-auto group-data-[state=collapsed]:z-10 group-data-[state=collapsed]:opacity-100 group-data-[state=collapsed]:delay-150"

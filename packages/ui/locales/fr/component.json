@@ -15,16 +15,13 @@
     "command-palette": "Palette de commandes",
     "nothing-found": "Rien trouvé",
     "settings": "Paramètres",
-    "appearence": "Appearance",
+    "appearance": "Appearance",
     "language": "Language",
     "logout": "Se déconnecter",
     "more": "Plus",
     "recent": "Récent",
     "user-management": "Gestion des utilisateurs",
-    "sidebarToggle": {
-      "expand": "Développer",
-      "collapse": "Réduire"
-    },
+    "appearence": "Appearance",
     "profile": "Profile",
     "theme": "Thème",
     "customNav": "Personnaliser la navigation",
@@ -132,6 +129,13 @@
   "searchFile": {
     "input": "Rechercher des fichiers...",
     "noFile": "Aucun fichier trouvé."
+  },
+  "sidebar": {
+    "toggle": "Toggle sidebar",
+    "sidebarToggle": {
+      "collapse": "Collapse",
+      "expand": "Expand"
+    }
   },
   "sort": {
     "defaultLabel": "Trier",

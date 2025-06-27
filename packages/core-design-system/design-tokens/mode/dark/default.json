@@ -1558,6 +1558,20 @@
         "text": {
           "$type": "color",
           "$value": "{red.25}"
+        },
+        "button": {
+          "text": {
+            "$type": "color",
+            "$value": "{red.25}"
+          },
+          "text-hover": {
+            "$type": "color",
+            "$value": "{red.50}"
+          },
+          "text-active": {
+            "$type": "color",
+            "$value": "{red.100}"
+          }
         }
       }
     }

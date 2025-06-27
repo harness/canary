@@ -1567,6 +1567,20 @@
         "text": {
           "$type": "color",
           "$value": "{pure.black}"
+        },
+        "button": {
+          "text": {
+            "$type": "color",
+            "$value": "{pure.black}"
+          },
+          "text-hover": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          },
+          "text-active": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          }
         }
       }
     }

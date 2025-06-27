@@ -56,9 +56,9 @@ function createBadgeVariantStyles() {
 
 export default {
   '.cn-badge': {
-    paddingBlock: 'var(--cn-badge-default-py)',
-    paddingInline: 'var(--cn-badge-default-px)',
-    gap: 'var(--cn-badge-default-gap)',
+    paddingBlock: 'var(--cn-badge-md-py)',
+    paddingInline: 'var(--cn-badge-md-px)',
+    gap: 'var(--cn-badge-md-gap)',
     '@apply select-none font-body-single-line-normal truncate': '',
 
     /** Size */
@@ -75,7 +75,7 @@ export default {
     },
 
     '&:where(:not(.cn-badge-status, .cn-badge-ghost))': {
-      height: 'var(--cn-badge-size-default)',
+      height: 'var(--cn-badge-size-md)',
       borderRadius: 'var(--cn-badge-radius)',
       border: 'var(--cn-badge-border) solid var(--cn-set-gray-surface-border)',
 
@@ -97,7 +97,7 @@ export default {
       borderRadius: 'var(--cn-badge-counter-radius)',
       borderColor: 'var(--cn-set-gray-surface-border)',
       backgroundColor: 'var(--cn-set-gray-surface-bg)',
-      height: 'var(--cn-badge-counter-size-default)',
+      height: 'var(--cn-badge-counter-size-sm)',
       paddingBlock: 'var(--cn-badge-counter-py)',
       paddingInline: 'var(--cn-badge-counter-px)',
       '@apply font-caption-single-line-normal': ''
@@ -109,8 +109,8 @@ export default {
       padding: '0',
 
       '> .cn-badge-indicator': {
-        width: 'var(--cn-badge-indicator-size-default)',
-        height: 'var(--cn-badge-indicator-size-default)',
+        width: 'var(--cn-badge-indicator-size-sm)',
+        height: 'var(--cn-badge-indicator-size-sm)',
         backgroundColor: 'var(--cn-set-gray-solid-bg)'
       }
     },

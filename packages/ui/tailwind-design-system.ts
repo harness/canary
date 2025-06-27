@@ -9,6 +9,7 @@ import {
   avatarStyles,
   badgeStyles,
   breadcrumbStyles,
+  buttonGroupStyle,
   buttonLayoutStyles,
   buttonStyles,
   captionStyles,
@@ -36,8 +37,8 @@ import {
   tagStyles,
   textareaStyles,
   toggleGroupStyles,
-  tooltipStyles,
-  buttonGroupStyle
+  toggleStyles,
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -479,6 +480,7 @@ export default {
         tooltipStyles,
         breadcrumbStyles,
         iconsAndLogos,
+        toggleStyles,
         toggleGroupStyles,
         buttonGroupStyle,
 
@@ -609,6 +611,9 @@ export default {
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // Important: used for generating max-width of SandboxLayout.Content
-    { pattern: /max-w-./ }
+    { pattern: /max-w-./ },
+    // toggle classes
+    { pattern: /^cn-toggle-transparent-/ },
+    { pattern: /^cn-toggle-group-transparent-/ }
   ]
 } satisfies TailwindConfig

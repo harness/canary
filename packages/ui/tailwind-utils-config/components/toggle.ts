@@ -2,7 +2,7 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const sizes = ['xs', 'sm', 'md'] as const
 
-function createToggleGroupStyles() {
+function createToggleStyles() {
   const styles: CSSRuleObject = {}
 
   sizes.forEach(size => {
@@ -13,7 +13,7 @@ function createToggleGroupStyles() {
       paddingRight: `var(--cn-btn-px-${value})`,
       paddingTop: `var(--cn-btn-py-${value})`,
       paddingBottom: `var(--cn-btn-py-${value})`,
-      '&[aria-checked="false"]': {
+      '&[aria-pressed="false"]': {
         border: 'var(--cn-btn-border) solid transparent'
       }
     }
@@ -23,14 +23,7 @@ function createToggleGroupStyles() {
 }
 
 export default {
-  '.cn-toggle-group': {
-    gap: 'var(--cn-layout-3xs)',
-    '@apply flex': '',
-
-    '&-vertical': {
-      '@apply flex-col': ''
-    },
-
-    ...createToggleGroupStyles()
+  '.cn-toggle': {
+    ...createToggleStyles()
   }
 }

@@ -72,7 +72,7 @@ export default {
     padding: 'var(--cn-tag-py) var(--cn-tag-px)',
     gap: 'var(--cn-tag-gap)',
     borderWidth: `var(--cn-tag-border)`,
-    borderRadius: `var(--cn-tag-radius-md)`,
+    borderRadius: `var(--cn-tag-radius-default)`,
     maxWidth: `var(--cn-tag-max-width)`,
     height: `var(--cn-tag-size-md)`,
     '@apply w-fit flex items-center transition-colors select-none font-body-single-line-normal': '',

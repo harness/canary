@@ -1,7 +1,7 @@
 export default {
   '.cn-accordion': {
     '--cn-accordion-indicator-mt': '4px',
-    minWidth: 'var(--cn-accordion-defailt-min-width)',
+    minWidth: 'var(--cn-accordion-sm-min-width)',
 
     '&-md': {
       minWidth: 'var(--cn-accordion-md-min-width)',

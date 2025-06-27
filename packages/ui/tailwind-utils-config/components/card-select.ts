@@ -13,7 +13,17 @@ export default {
     },
 
     '&:where(.cn-card-select-horizontal)': {
-      '@apply auto-cols-max grid-flow-col': ''
+      '@apply w-full auto-cols-max grid-flow-col overflow-x-auto': ''
+    },
+
+    '&:where(.cn-card-select-vertical)': {
+      '@apply h-full overflow-y-auto': ''
+    },
+
+    '&:where(.cn-card-select-grid)': {
+      '@apply w-full': '',
+      gridTemplateColumns: 'repeat(var(--cols, 1), minmax(0, 1fr))',
+      gridTemplateRows: 'repeat(var(--rows, 1), minmax(0, 1fr))'
     }
   },
 

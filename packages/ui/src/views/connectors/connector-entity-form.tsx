@@ -47,6 +47,7 @@ const componentsMap: Record<
 
 interface ConnectorEntityFormProps {
   connector: ConnectorEntity
+  isLoading?: boolean
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   onBack?: () => void
@@ -59,6 +60,7 @@ interface ConnectorEntityFormProps {
 export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
   connector,
   apiError = null,
+  isLoading = false,
   onFormSubmit,
   getConnectorDefinition,
   onBack,
@@ -180,7 +182,9 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
                 </ButtonLayout.Secondary>
               )}
               <ButtonLayout.Primary>
-                <Button onClick={() => rootForm.submitForm()}>{isCreate ? 'Submit' : 'Apply changes'}</Button>
+                <Button loading={isLoading} onClick={() => rootForm.submitForm()}>
+                  {isCreate ? 'Submit' : 'Apply changes'}
+                </Button>
               </ButtonLayout.Primary>
             </ButtonLayout.Root>
           </Footer>

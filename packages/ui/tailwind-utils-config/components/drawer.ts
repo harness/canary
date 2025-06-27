@@ -125,12 +125,14 @@ export default {
 
       '&:before': {
         height: 'var(--cn-drawer-fade-height)',
-        background: 'var(--cn-comp-dialog-fade-start)'
+        background: 'var(--cn-comp-dialog-fade-start)',
+        pointerEvents: 'none'
       },
 
       '&:after': {
         height: 'var(--cn-drawer-fade-height)',
-        background: 'var(--cn-comp-dialog-fade-end)'
+        background: 'var(--cn-comp-dialog-fade-end)',
+        pointerEvents: 'none'
       }
     },
 

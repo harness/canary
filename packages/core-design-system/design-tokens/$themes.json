@@ -23857,7 +23857,8 @@
       "components/desktop/base/dialog": "enabled",
       "components/desktop/base/pagination": "enabled",
       "components/desktop/base/progress": "enabled",
-      "components/desktop/base/popover": "enabled"
+      "components/desktop/base/popover": "enabled",
+      "components/desktop/base/toast": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

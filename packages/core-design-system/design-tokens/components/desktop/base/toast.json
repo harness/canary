@@ -4,21 +4,31 @@
       "$type": "borderRadius",
       "$value": "{rounded.3}"
     },
-    "pr": {
-      "$type": "spacing",
-      "$value": "{spacing.7}"
-    },
-    "pl": {
-      "$type": "spacing",
-      "$value": "{spacing.5}"
-    },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.2-half}"
     },
-    "py": {
+    "container": {
       "$type": "spacing",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.4}"
+    },
+    "offset": {
+      "top": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "bottom": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "right": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "left": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      }
     }
   }
 }

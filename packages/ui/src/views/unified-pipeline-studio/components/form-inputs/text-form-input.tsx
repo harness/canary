@@ -1,9 +1,13 @@
+import { useState } from 'react'
+
 import { TextInput } from '@components/index'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
+import InputValueTypeSelection from './common/InputValueTypeSelector'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
+import { getInputValueType, isOnlyFixedValueAllowed } from './utils/input-value-utils'
 
 export interface TextFormInputConfig {
   inputType: 'text'
@@ -23,14 +27,19 @@ function TextFormInputInternal(props: TextFormInputProps): JSX.Element {
     disabled: readonly
   })
 
+  const isOnlyFixed = isOnlyFixedValueAllowed(input.inputConfig?.allowedValueTypes)
+
+  const [inputValueType, setInputValueType] = useState(isOnlyFixed ? 'fixed' : getInputValueType(field.value))
+
   return (
-    <InputWrapper {...props}>
+    <InputWrapper {...props} hideInputValueTypeSelection>
       <TextInput
         label={label}
         caption={description}
         optional={!required}
         placeholder={placeholder}
         error={fieldState?.error?.message}
+        suffix={<InputValueTypeSelection inputValueType={inputValueType} setInputValueType={setInputValueType} />}
         {...field}
       />
     </InputWrapper>

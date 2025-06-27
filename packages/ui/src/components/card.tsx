@@ -7,8 +7,8 @@ const cardVariants = cva('cn-card', {
   variants: {
     size: {
       sm: 'cn-card-sm',
-      md: 'cn-card-default',
-      lg: 'cn-card-md'
+      md: 'cn-card-md',
+      lg: 'cn-card-lg'
     },
     orientation: {
       vertical: 'cn-card-vertical',

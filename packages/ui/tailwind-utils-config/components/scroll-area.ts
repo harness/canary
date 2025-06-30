@@ -1,9 +1,9 @@
 export default {
   '.cn-scroll-area': {
-    '@apply overflow-auto': '',
+    '@apply overflow-auto grid min-w-full': '',
 
     '&-content': {
-      '@apply relative inline-block w-full': ''
+      '@apply relative': ''
     },
 
     '&-marker': {

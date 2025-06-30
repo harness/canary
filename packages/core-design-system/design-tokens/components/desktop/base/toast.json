@@ -6,7 +6,7 @@
     },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.2-half}"
+      "$value": "{spacing.1-half}"
     },
     "container": {
       "$type": "spacing",
@@ -29,6 +29,18 @@
         "$type": "spacing",
         "$value": "{spacing.6}"
       }
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "title-min-height": {
+      "$type": "sizing",
+      "$value": "{size.7}"
+    },
+    "fade-height": {
+      "$type": "sizing",
+      "$value": "{size.20}"
     }
   }
 }

@@ -33,7 +33,7 @@ export const Summary = ({
         </>
       )}
 
-      <Table.Root variant="default">
+      <Table.Root>
         {!hideHeader && (
           <Table.Header>
             <Table.Row>

@@ -84,7 +84,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="compact"
+      size="compact"
     >
       <Table.Header>
         <Table.Row>

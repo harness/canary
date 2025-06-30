@@ -87,7 +87,7 @@ return (
 <DataTable
   columns={columns} // Column definitions
   data={data} // Data to display
-  size="default" // Size variant
+  size="normal" // Size variant
   getRowId={(row) => row.id} // Function to get unique row ID
   enableRowSelection // Enable row selection
   enableExpanding // Enable row expansion
@@ -190,7 +190,8 @@ function MyTable() {
       name: "size",
       description: "Size variant of the table",
       required: false,
-      value: "'default' | 'relaxed' | 'compact'",
+      value: "'normal' | 'relaxed' | 'compact'",
+      defaultValue: "'normal'",
     },
     {
       name: "getRowId",

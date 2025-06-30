@@ -20,12 +20,12 @@ export default {
     },
 
     // Variants
-    '&:where(.cn-table-v2-default)': {
+    '&:where(.cn-table-v2-normal)': {
       '@apply caption-bottom': '',
       '.cn-table-v2-cell': {
-        paddingTop: 'var(--cn-table-cell-py-default)',
-        paddingBottom: 'var(--cn-table-cell-py-default)',
-        minHeight: 'var(--cn-table-cell-min-default)'
+        paddingTop: 'var(--cn-table-cell-py-normal)',
+        paddingBottom: 'var(--cn-table-cell-py-normal)',
+        minHeight: 'var(--cn-table-cell-min-normal)'
       }
     },
 

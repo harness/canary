@@ -59,7 +59,7 @@ export const TableV2Demo: React.FC = () => {
   return (
     <SandboxLayout.Main className="justify-center items-center">
       <SandboxLayout.Content className="max-w-[600px] justify-center items-center">
-        <Table.Root variant="compact">
+        <Table.Root size="compact">
           <Table.Header>
             <Table.Row>
               <Table.Head>Name</Table.Head>

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Button, Checkbox, IconV2, Pagination, PaginationProps, Table } from '@/components'
+import { Button, Checkbox, IconV2, Pagination, PaginationProps, Table, tableVariants } from '@/components'
 import {
   ColumnDef,
   ExpandedState,
@@ -15,11 +15,12 @@ import {
   useReactTable
 } from '@tanstack/react-table'
 import { cn } from '@utils/cn'
+import { type VariantProps } from 'class-variance-authority'
 
 export interface DataTableProps<TData> {
   data: TData[]
   columns: ColumnDef<TData, unknown>[]
-  size?: 'default' | 'relaxed' | 'compact'
+  size?: VariantProps<typeof tableVariants>['size']
   pagination?: PaginationProps
   getRowClassName?: (row: Row<TData>) => string | undefined
   onRowClick?: (data: TData, index: number) => void
@@ -79,7 +80,7 @@ export interface DataTableProps<TData> {
 export function DataTable<TData>({
   data = [],
   columns,
-  size = 'default',
+  size = 'normal',
   pagination,
   getRowClassName,
   onRowClick,
@@ -227,7 +228,7 @@ export function DataTable<TData>({
 
   return (
     <div className={className}>
-      <Table.Root variant={size} disableHighlightOnHover={disableHighlightOnHover}>
+      <Table.Root size={size} disableHighlightOnHover={disableHighlightOnHover}>
         <Table.Header>
           {table.getHeaderGroups().map(headerGroup => (
             <Table.Row key={headerGroup.id}>

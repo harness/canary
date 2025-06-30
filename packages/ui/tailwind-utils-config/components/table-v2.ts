@@ -122,9 +122,9 @@ export default {
       paddingRight: 'var(--cn-table-cell-px)'
     },
 
-    '&:where(.cn-table-v2-default) .cn-table-v2-cell-link': {
-      paddingTop: 'var(--cn-table-cell-py-default)',
-      paddingBottom: 'var(--cn-table-cell-py-default)'
+    '&:where(.cn-table-v2-normal) .cn-table-v2-cell-link': {
+      paddingTop: 'var(--cn-table-cell-py-normal)',
+      paddingBottom: 'var(--cn-table-cell-py-normal)'
     },
     '&:where(.cn-table-v2-relaxed) .cn-table-v2-cell-link': {
       paddingTop: 'var(--cn-table-cell-py-relaxed)',

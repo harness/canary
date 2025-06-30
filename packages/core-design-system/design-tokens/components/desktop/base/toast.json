@@ -52,7 +52,7 @@
     },
     "min-width": {
       "$type": "sizing",
-      "$value": "280px"
+      "$value": "240px"
     }
   }
 }

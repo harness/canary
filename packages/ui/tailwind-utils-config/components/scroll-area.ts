@@ -3,7 +3,7 @@ export default {
     '@apply overflow-auto': '',
 
     '&-content': {
-      '@apply relative inline-block': ''
+      '@apply relative inline-block w-full': ''
     },
 
     '&-marker': {

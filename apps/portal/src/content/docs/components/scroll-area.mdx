@@ -93,7 +93,8 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
   client:only
   code={`
 <div>
-  <ScrollArea className="w-[300px] h-[200px] border" 
+  <ScrollArea className="w-[300px] h-[200px] border"
+    classNameContent="w-auto"
     onScrollBottom={() => console.log('Reached bottom')}
     onScrollTop={() => console.log('Reached top')}
     onScrollLeft={() => console.log('Reached left')}
@@ -123,6 +124,55 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
           <p>Content that exceeds the viewport height and width.</p>
           <p>More content...</p>
           <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+</div>`}
+/>
+
+### Horizontal scroll
+
+For correct work scroll events with horizontal scroll you can use `classNameContent="w-auto"`, basically for class name of the content, to allow it to expand based on its content width. Initially, the content will take the full width of the scroll area, but with `w-auto`, it will adjust to fit its content.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mt-4 mb-1">
+      Correct example:
+    </Text>
+    
+    <ScrollArea className="w-[300px] h-[200px] border"
+      classNameContent="w-auto"
+      onScrollBottom={() => console.log('Reached bottom')}
+      onScrollTop={() => console.log('Reached top')}
+      onScrollLeft={() => console.log('Reached left')}
+      onScrollRight={() => console.log('Reached right')}
+    >
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mt-4 mb-1">
+      Wrong example:
+    </Text>
+    
+    <ScrollArea className="w-[300px] h-[200px] border"
+      onScrollBottom={() => console.log('Reached bottom')}
+      onScrollTop={() => console.log('Reached top')}
+      onScrollLeft={() => console.log('Reached left')}
+      onScrollRight={() => console.log('Reached right')}
+    >
+      <div className="p-4 space-y-4 w-[700px] h-[300px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
       </div>
     </ScrollArea>
   </div>

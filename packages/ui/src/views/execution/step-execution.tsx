@@ -83,9 +83,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
           />
         </Layout.Horizontal>
         <Tabs.Content value={StepExecutionTab.LOG}>
-          <ScrollArea
-            className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}
-          >
+          <ScrollArea className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}>
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
         </Tabs.Content>

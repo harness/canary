@@ -133,11 +133,7 @@ interface BodyProps {
 }
 
 const Body = ({ className, classNameContent, children, ...props }: BodyProps) => (
-  <ScrollArea
-    className={cn('cn-modal-dialog-body', className)}
-    classNameContent={classNameContent}
-    {...props}
-  >
+  <ScrollArea className={cn('cn-modal-dialog-body', className)} classNameContent={classNameContent} {...props}>
     {children}
   </ScrollArea>
 )

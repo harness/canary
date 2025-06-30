@@ -1586,7 +1586,11 @@
           "$type": "color",
           "$value": "{pure.black}"
         },
-        "button": {
+        "fade": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)"
+        },
+        "transparent-btn": {
           "text": {
             "$type": "color",
             "$value": "{pure.black}"
@@ -1599,7 +1603,29 @@
             "$type": "color",
             "$value": "{chrome.850}"
           }
+        },
+        "action-btn": {
+          "text": {
+            "$type": "color",
+            "$value": "{red.25}"
+          },
+          "bg": {
+            "$type": "color",
+            "$value": "{pure.black}"
+          },
+          "bg-hover": {
+            "$type": "color",
+            "$value": "{red.1000}"
+          },
+          "bg-selected": {
+            "$type": "color",
+            "$value": "{red.950}"
+          }
         }
+      },
+      "fade": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)"
       }
     }
   },
@@ -2200,6 +2226,46 @@
             "$type": "color",
             "$value": "{chrome.850}"
           }
+        }
+      }
+    },
+    "toast": {
+      "default": {
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{bg.3}"
+        },
+        "from": {
+          "$type": "color",
+          "$value": "{chrome.25}"
+        }
+      },
+      "danger": {
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.toast.danger.bg}"
+        },
+        "from": {
+          "$type": "color",
+          "$value": "{red.300}"
         }
       }
     },

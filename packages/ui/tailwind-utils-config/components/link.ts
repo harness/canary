@@ -2,7 +2,7 @@ export default {
   '.cn-link': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: 'var(--cn-link-gap-default)',
+    gap: 'var(--cn-link-gap-md)',
     width: 'fit-content',
     '@apply font-link-default': '',
     textDecoration: 'underline transparent',

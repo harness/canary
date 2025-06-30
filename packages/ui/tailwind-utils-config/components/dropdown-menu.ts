@@ -100,8 +100,8 @@ export default {
       },
 
       '&-indicator': {
-        width: 'var(--cn-badge-indicator-size-default)',
-        height: 'var(--cn-badge-indicator-size-default)',
+        width: 'var(--cn-badge-indicator-size-sm)',
+        height: 'var(--cn-badge-indicator-size-sm)',
         borderRadius: 'var(--cn-rounded-full)',
         flexShrink: '0',
 

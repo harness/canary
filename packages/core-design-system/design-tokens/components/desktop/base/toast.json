@@ -45,6 +45,10 @@
     "fade-height": {
       "$type": "sizing",
       "$value": "{size.20}"
+    },
+    "max-width": {
+      "$type": "sizing",
+      "$value": "400px"
     }
   }
 }

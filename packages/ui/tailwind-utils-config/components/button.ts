@@ -80,17 +80,17 @@ export default {
   '.cn-button': {
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
     borderRadius: 'var(--cn-btn-default-radius)',
-    paddingBlock: 'var(--cn-btn-py-default)',
-    paddingInline: 'var(--cn-btn-px-default)',
-    height: 'var(--cn-btn-size-default)',
-    gap: 'var(--cn-btn-gap-default)',
+    paddingBlock: 'var(--cn-btn-py-md)',
+    paddingInline: 'var(--cn-btn-px-md)',
+    height: 'var(--cn-btn-size-md)',
+    gap: 'var(--cn-btn-gap-md)',
     border: 'var(--cn-btn-border) solid var(--cn-set-gray-surface-border)',
     '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
 
     '&:where(.cn-button-split-dropdown)': {
-      height: 'var(--cn-btn-size-default)',
-      width: 'var(--cn-btn-size-default)',
+      height: 'var(--cn-btn-size-md)',
+      width: 'var(--cn-btn-size-md)',
       position: 'relative',
       '@apply rounded-l-none border-l-0': '',
 
@@ -155,8 +155,8 @@ export default {
 
     // Icon Only
     '&:where(.cn-button-icon-only)': {
-      width: 'var(--cn-btn-size-default)',
-      height: 'var(--cn-btn-size-default)',
+      width: 'var(--cn-btn-size-md)',
+      height: 'var(--cn-btn-size-md)',
       padding: '0',
       '& > svg': {
         width: 'var(--cn-icon-size-sm)',

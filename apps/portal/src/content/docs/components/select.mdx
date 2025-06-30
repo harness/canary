@@ -583,7 +583,7 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
         </div>
 
         <div>
-          <Text>Size default:</Text>
+          <Text>Size md:</Text>
           <Select
             options={[
               { label: 'Apple', value: 'apple' },
@@ -594,7 +594,7 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
             value={value}
             onChange={setValue}
             placeholder="Select a fruit"
-            size="default"
+            size="md"
           />
         </div>
       </div>
@@ -687,8 +687,8 @@ The `Select` component is the main component for creating dropdown selections.
       name: "size",
       description: "Size of the select input",
       required: false,
-      value: "'sm' | 'default'",
-      defaultValue: "'default'",
+      value: "'sm' | 'md'",
+      defaultValue: "'md'",
     },
     {
       name: "placeholder",

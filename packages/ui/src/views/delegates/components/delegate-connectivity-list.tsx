@@ -34,10 +34,7 @@ export function DelegateConnectivityList({
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="default"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-96">{t('views:delegates.delegate', 'Delegate')}</Table.Head>

@@ -87,7 +87,7 @@ export default {
       '@apply relative': '',
 
       '&-expanded': {
-        paddingBottom: 'calc(var(--cn-spacing-3) + var(--cn-btn-size-default))'
+        paddingBottom: 'calc(var(--cn-spacing-3) + var(--cn-btn-size-md))'
       }
     },
 

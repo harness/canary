@@ -91,7 +91,7 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root variant="default">
+      <Table.Root>
         <Table.Header>
           <Table.Row>
             <Table.Head className="w-1/2">Name</Table.Head>

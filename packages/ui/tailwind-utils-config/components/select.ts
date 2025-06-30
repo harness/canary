@@ -36,7 +36,7 @@ export default {
     display: 'flex',
     alignItems: 'center',
     borderRadius: 'var(--cn-input-radius)',
-    height: 'var(--cn-input-size-default)',
+    height: 'var(--cn-input-size-md)',
     border: 'var(--cn-input-border) solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-2)',
     color: 'var(--cn-text-1)',
@@ -78,9 +78,8 @@ export default {
 
     '&-trigger': {
       '@apply w-full flex items-center justify-between truncate': '',
-      padding:
-        'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
-      gap: 'var(--cn-input-default-gap)'
+      padding: 'var(--cn-input-md-py) var(--cn-input-md-pr) var(--cn-input-md-py) var(--cn-input-md-pl)',
+      gap: 'var(--cn-input-md-gap)'
     },
 
     '&-suffix': {

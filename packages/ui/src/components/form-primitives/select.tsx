@@ -27,13 +27,13 @@ const selectVariants = cva('cn-select', {
       warning: 'cn-select-warning'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-select-sm'
     }
   },
   defaultVariants: {
     theme: 'default',
-    size: 'default'
+    size: 'md'
   }
 })
 

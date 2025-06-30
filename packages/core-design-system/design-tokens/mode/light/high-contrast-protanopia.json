@@ -1567,19 +1567,29 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.600}"
-        },
-        "hover": {
-          "$type": "color",
-          "$value": "{red.700}"
+          "$value": "{red.300}"
         },
         "border": {
           "$type": "color",
-          "$value": "{border.danger}"
+          "$value": "{red.400}"
         },
         "text": {
           "$type": "color",
-          "$value": "{chrome.25}"
+          "$value": "{pure.black}"
+        },
+        "button": {
+          "text": {
+            "$type": "color",
+            "$value": "{pure.black}"
+          },
+          "text-hover": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          },
+          "text-active": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          }
         }
       }
     }

@@ -14,13 +14,13 @@ export const linkVariants = cva('cn-link', {
       secondary: 'cn-link-secondary'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-link-sm'
     }
   },
   defaultVariants: {
     variant: 'default',
-    size: 'default'
+    size: 'md'
   }
 })
 

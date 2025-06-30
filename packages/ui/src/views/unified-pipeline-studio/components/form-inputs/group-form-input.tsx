@@ -58,7 +58,7 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInput
     <Accordion.Root
       type="single"
       collapsible
-      size="default"
+      size="sm"
       onValueChange={onValueChange}
       value={accordionValue}
       indicatorPosition="right"

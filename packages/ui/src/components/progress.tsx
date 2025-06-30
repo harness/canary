@@ -11,8 +11,8 @@ const progressVariants = cva('cn-progress', {
   variants: {
     size: {
       sm: 'cn-progress-sm',
-      default: '',
-      md: 'cn-progress-md'
+      md: '',
+      lg: 'cn-progress-lg'
     },
     state: {
       default: '',
@@ -23,7 +23,7 @@ const progressVariants = cva('cn-progress', {
     }
   },
   defaultVariants: {
-    size: 'default',
+    size: 'md',
     state: 'default'
   }
 })
@@ -61,7 +61,7 @@ const Progress: FC<ProgressProps> = ({
   id: defaultId,
   variant = 'default',
   state,
-  size = 'default',
+  size = 'md',
   hideIcon = false,
   label,
   description,

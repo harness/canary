@@ -1,6 +1,6 @@
 {
   "card": {
-    "md": {
+    "lg": {
       "px": {
         "$type": "spacing",
         "$value": "{spacing.6}"
@@ -14,7 +14,7 @@
         "$value": "{rounded.4}"
       }
     },
-    "default": {
+    "md": {
       "px": {
         "$type": "spacing",
         "$value": "{spacing.4}"
@@ -58,7 +58,7 @@
     }
   },
   "card-check": {
-    "default": {
+    "md": {
       "pr": {
         "$type": "spacing",
         "$value": "{spacing.11}"

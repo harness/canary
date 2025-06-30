@@ -14,7 +14,7 @@ import { Aside } from "@astrojs/starlight/components";
   code={`
 <Layout.Flex direction="column" gap="lg">
   <div>
-    <h5 className="mb-2">Default variant with tooltip</h5>
+    <h5 className="mb-2">Normal size with tooltip</h5>
     <Table.Root>
       <Table.Header>
         <Table.Row>
@@ -47,8 +47,8 @@ import { Aside } from "@astrojs/starlight/components";
     </Table.Root>
   </div>
   <div>
-    <h5 className="mb-2">Compact variant with hover disabled</h5>
-    <Table.Root variant="compact" disableHighlightOnHover>
+    <h5 className="mb-2">Compact size with hover disabled</h5>
+    <Table.Root size="compact" disableHighlightOnHover>
       <Table.Header>
         <Table.Row>
           <Table.Head>Name</Table.Head>
@@ -80,8 +80,8 @@ import { Aside } from "@astrojs/starlight/components";
     </Table.Root>
   </div>
   <div>
-    <h5 className="mb-2">Relaxed Variant</h5>
-    <Table.Root variant="relaxed">
+    <h5 className="mb-2">Relaxed size</h5>
+    <Table.Root size="relaxed">
       <Table.Header>
         <Table.Row>
           <Table.Head>Name</Table.Head>
@@ -341,7 +341,7 @@ import { Table } from '@harnessio/ui/components'
 //...
 
 return (
-  <Table.Root variant="default">
+  <Table.Root size="normal">
     <Table.Header>
       <Table.Row>
         <Table.Head>Name</Table.Head>
@@ -400,9 +400,9 @@ The root component for the table.
 
 ```typescript jsx
 <Table.Root
-  variant="default"                 // [OPTIONAL] Variant of the table
-  className="custom-class"          // [OPTIONAL] Custom class name
-  tableClassName="custom-table-class" // [OPTIONAL] Custom table class name
+  size="normal"                     // [OPTIONAL] Size of the table
+  className="custom-class"             // [OPTIONAL] Custom class name
+  tableClassName="custom-table-class"  // [OPTIONAL] Custom table class name
   disableHighlightOnHover={false}   // [OPTIONAL] Disable row highlighting on hover (enabled by default)
 >
   {/* Table content */}
@@ -412,10 +412,11 @@ The root component for the table.
 <DocsPage.PropsTable
   props={[
     {
-      name: "variant",
-      description: "Variant of the table",
+      name: "size",
+      description: "Size of the table",
       required: false,
-      value: "'default' | 'relaxed' | 'compact'",
+      value: "'normal' | 'relaxed' | 'compact'",
+      defaultValue: "'normal'",
     },
     {
       name: "className",
@@ -435,6 +436,7 @@ The root component for the table.
         "Disable row highlighting on hover (highlighting is enabled by default)",
       required: false,
       value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />

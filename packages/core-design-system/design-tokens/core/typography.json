@@ -296,7 +296,7 @@
     "0": {
       "none": {
         "$type": "lineHeights",
-        "$value": "0.656rem"
+        "$value": "0.7rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -322,7 +322,7 @@
     "1": {
       "none": {
         "$type": "lineHeights",
-        "$value": "0.781rem"
+        "$value": "0.844rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -374,7 +374,7 @@
     "3": {
       "none": {
         "$type": "lineHeights",
-        "$value": "1.031rem"
+        "$value": "1.156rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -400,7 +400,7 @@
     "4": {
       "none": {
         "$type": "lineHeights",
-        "$value": "1.156rem"
+        "$value": "1.238rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -426,7 +426,7 @@
     "5": {
       "none": {
         "$type": "lineHeights",
-        "$value": "1.281rem"
+        "$value": "1.375rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -452,7 +452,7 @@
     "6": {
       "none": {
         "$type": "lineHeights",
-        "$value": "1.531rem"
+        "$value": "1.75rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -478,7 +478,7 @@
     "7": {
       "none": {
         "$type": "lineHeights",
-        "$value": "1.781rem"
+        "$value": "2rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -504,7 +504,7 @@
     "8": {
       "none": {
         "$type": "lineHeights",
-        "$value": "2.281rem"
+        "$value": "2.531rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -530,7 +530,7 @@
     "9": {
       "none": {
         "$type": "lineHeights",
-        "$value": "3.031rem"
+        "$value": "3.375rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -556,7 +556,7 @@
     "10": {
       "none": {
         "$type": "lineHeights",
-        "$value": "3.781rem"
+        "$value": "4.375rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -582,7 +582,7 @@
     "11": {
       "none": {
         "$type": "lineHeights",
-        "$value": "4.531rem"
+        "$value": "5.156rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -608,7 +608,7 @@
     "12": {
       "none": {
         "$type": "lineHeights",
-        "$value": "6.031rem"
+        "$value": "7rem"
       },
       "tight": {
         "$type": "lineHeights",
@@ -634,7 +634,7 @@
     "13": {
       "none": {
         "$type": "lineHeights",
-        "$value": "8.031rem"
+        "$value": "9.375rem"
       },
       "tight": {
         "$type": "lineHeights",

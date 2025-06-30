@@ -17,16 +17,16 @@ import { Layout } from './layout'
 import { Link, type LinkProps } from './link'
 import { Tooltip, type TooltipProps } from './tooltip'
 
-const tableVariants = cva('cn-table-v2', {
+export const tableVariants = cva('cn-table-v2', {
   variants: {
-    variant: {
-      default: 'cn-table-v2-default',
+    size: {
+      normal: 'cn-table-v2-normal',
       relaxed: 'cn-table-v2-relaxed',
       compact: 'cn-table-v2-compact'
     }
   },
   defaultVariants: {
-    variant: 'default'
+    size: 'normal'
   }
 })
 
@@ -36,11 +36,11 @@ export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, Vari
 }
 
 const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
-  ({ variant, className, tableClassName, disableHighlightOnHover = false, ...props }, ref) => (
+  ({ size, className, tableClassName, disableHighlightOnHover = false, ...props }, ref) => (
     <div
       className={cn(
         'cn-table-v2-container',
-        tableVariants({ variant }),
+        tableVariants({ size }),
         { 'cn-table-v2-highlight-hover': !disableHighlightOnHover },
         className
       )}

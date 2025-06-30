@@ -10,7 +10,7 @@ import { IconV2 } from './icon-v2'
 const avatarVariants = cva('cn-avatar', {
   variants: {
     size: {
-      default: '',
+      md: '',
       sm: 'cn-avatar-sm',
       lg: 'cn-avatar-lg'
     },
@@ -20,7 +20,7 @@ const avatarVariants = cva('cn-avatar', {
     }
   },
   defaultVariants: {
-    size: 'default',
+    size: 'md',
     rounded: false
   }
 })
@@ -33,7 +33,7 @@ export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
 }
 
 const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
-  ({ name, src, size = 'default', rounded = false, className, ...props }, ref) => {
+  ({ name, src, size = 'md', rounded = false, className, ...props }, ref) => {
     const initials = getInitials(name || '')
 
     return (

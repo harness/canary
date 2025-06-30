@@ -66,7 +66,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed" variant="default">
+    <Table.Root tableClassName="table-fixed">
       <Table.Header>
         <Table.Row>
           <Table.Head className={cn('w-1/4', { 'w-4/12': isSmallWidth })}>

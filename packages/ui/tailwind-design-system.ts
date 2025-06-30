@@ -9,6 +9,7 @@ import {
   avatarStyles,
   badgeStyles,
   breadcrumbStyles,
+  buttonGroupStyle,
   buttonLayoutStyles,
   buttonStyles,
   captionStyles,
@@ -36,8 +37,7 @@ import {
   tagStyles,
   textareaStyles,
   toggleGroupStyles,
-  tooltipStyles,
-  buttonGroupStyle
+  tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
@@ -94,6 +94,8 @@ export default {
           success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
           warning: 'lch(from var(--cn-set-yellow-solid-bg) l c h / <alpha-value>)',
           backdrop: 'var(--cn-comp-dialog-backdrop)',
+          'diff-success': 'var(--cn-comp-diff-add-content)',
+          'diff-danger': 'var(--cn-comp-diff-del-content)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',

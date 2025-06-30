@@ -47,7 +47,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           <SkeletonList />
         ) : executions && executions.length > 0 ? (
           <>
-            <Table.Root variant="default" disableHighlightOnHover>
+            <Table.Root disableHighlightOnHover>
               <Table.Header>
                 <Table.Row>
                   <Table.Head>ID</Table.Head>

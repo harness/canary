@@ -6,7 +6,7 @@
         "$value": "{size.8}",
         "$description": "32px"
       },
-      "default": {
+      "md": {
         "$type": "sizing",
         "$value": "{size.9}",
         "$description": "36px\n"
@@ -17,7 +17,7 @@
       "$value": "{rounded.2}",
       "$description": "6px"
     },
-    "default": {
+    "md": {
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"

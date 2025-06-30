@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const sizes = ['sm', 'default', 'md'] as const
+const sizes = ['sm', 'md', 'lg'] as const
 const states = ['processing', 'completed', 'paused', 'failed'] as const
 
 const stateStyleMapper: Record<
@@ -43,7 +43,7 @@ const getBackgroundSize = (size: (typeof sizes)[number]) => {
   if (size === 'sm') {
     return '8px 8px'
   }
-  if (size === 'md') {
+  if (size === 'lg') {
     return '32px 32px'
   }
   return '16px 16px'
@@ -116,8 +116,8 @@ export default {
     },
 
     '&-icon': {
-      width: 'var(--cn-icon-size-md)',
-      height: 'var(--cn-icon-size-md)',
+      width: 'var(--cn-icon-size-lg)',
+      height: 'var(--cn-icon-size-lg)',
       color: 'var(--cn-text-3)'
     },
 
@@ -133,7 +133,7 @@ export default {
 
     '&-root': {
       'border-radius': 'var(--cn-progress-radius, 9999px)',
-      height: 'var(--cn-progress-size-default, 8px)',
+      height: 'var(--cn-progress-size-md, 8px)',
       'background-color': 'var(--cn-comp-slider-track-base)',
       border: 'none',
       '-webkit-appearance': 'none',
@@ -190,7 +190,7 @@ export default {
       'background-size': '16px 16px',
       height: '100%',
       width: '100%',
-      animation: 'cnProgressBar-default 0.8s linear infinite'
+      animation: 'cnProgressBar-md 0.8s linear infinite'
     },
 
     ...createProgressVariantStyles(),
@@ -211,7 +211,7 @@ export default {
         'background-position': '8px 0'
       }
     },
-    '@keyframes cnProgressBar-default': {
+    '@keyframes cnProgressBar-md': {
       '0%': {
         'background-position': '0 0'
       },
@@ -219,7 +219,7 @@ export default {
         'background-position': '16px 0'
       }
     },
-    '@keyframes cnProgressBar-md': {
+    '@keyframes cnProgressBar-lg': {
       '0%': {
         'background-position': '0 0'
       },

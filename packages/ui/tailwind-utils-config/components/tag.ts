@@ -74,7 +74,7 @@ export default {
     borderWidth: `var(--cn-tag-border)`,
     borderRadius: `var(--cn-tag-radius-default)`,
     maxWidth: `var(--cn-tag-max-width)`,
-    height: `var(--cn-tag-size-default)`,
+    height: `var(--cn-tag-size-md)`,
     '@apply w-fit flex items-center transition-colors select-none font-body-single-line-normal': '',
 
     '&:where(.cn-tag-sm)': {

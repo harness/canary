@@ -91,7 +91,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="default" disableHighlightOnHover>
+    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
           <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>

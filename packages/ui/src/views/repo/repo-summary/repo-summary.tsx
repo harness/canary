@@ -180,7 +180,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonLayout>
                   {branchSelectorRenderer}
-                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="default" />
+                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="md" />
                 </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>

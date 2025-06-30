@@ -30,11 +30,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="default"
-      // tableClassName="table-fixed"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-1/3">{t('views:secret.title', 'Name')}</Table.Head>

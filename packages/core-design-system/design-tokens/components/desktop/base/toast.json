@@ -49,6 +49,10 @@
     "max-width": {
       "$type": "sizing",
       "$value": "400px"
+    },
+    "min-width": {
+      "$type": "sizing",
+      "$value": "280px"
     }
   }
 }

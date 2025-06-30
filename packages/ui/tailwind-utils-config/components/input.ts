@@ -32,8 +32,8 @@ export default {
       minWidth: '0',
       maxWidth: '100%',
       borderRadius: 'var(--cn-input-radius)',
-      paddingBlock: 'var(--cn-input-default-py)',
-      paddingInline: 'var(--cn-input-default-pl) var(--cn-input-default-pr)',
+      paddingBlock: 'var(--cn-input-md-py)',
+      paddingInline: 'var(--cn-input-md-pl) var(--cn-input-md-pr)',
       '@apply w-full text-inherit bg-transparent': '',
 
       '&:focus-visible': {
@@ -64,7 +64,7 @@ export default {
     },
     '&-container': {
       color: 'var(--cn-text-1)',
-      height: 'var(--cn-input-size-default)',
+      height: 'var(--cn-input-size-md)',
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
       backgroundColor: 'var(--cn-bg-2)',

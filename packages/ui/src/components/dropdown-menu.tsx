@@ -326,7 +326,7 @@ const DropdownMenuAvatarItem = forwardRef<ElementRef<typeof DropdownMenuPrimitiv
     <DropdownMenuItem
       ref={ref}
       {...props}
-      prefix={<Avatar size={props.description ? 'lg' : 'default'} src={src} rounded={rounded} name={name} />}
+      prefix={<Avatar size={props.description ? 'lg' : 'md'} src={src} rounded={rounded} name={name} />}
     />
   )
 )

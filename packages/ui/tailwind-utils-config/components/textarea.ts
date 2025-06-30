@@ -35,8 +35,7 @@ function createInputThemeStyles() {
 export default {
   '.cn-textarea': {
     borderRadius: 'var(--cn-input-radius)',
-    padding:
-      'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
+    padding: 'var(--cn-input-md-py) var(--cn-input-md-pr) var(--cn-input-md-py) var(--cn-input-md-pl)',
     minHeight: 'var(--cn-input-text-area-min-height)',
     border: 'var(--cn-input-border) solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-2)',

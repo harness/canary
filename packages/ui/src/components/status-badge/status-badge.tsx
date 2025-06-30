@@ -12,7 +12,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
       status: 'cn-badge-status'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-badge-sm'
     },
 
@@ -27,7 +27,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'default',
+    size: 'md',
     theme: 'muted'
   }
 })
@@ -37,7 +37,7 @@ type BadgeBaseProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
 > & {
-  size?: 'default' | 'sm'
+  size?: 'sm' | 'md'
   icon?: keyof typeof IconNameMapV2
 }
 

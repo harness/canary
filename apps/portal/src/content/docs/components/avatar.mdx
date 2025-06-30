@@ -76,7 +76,7 @@ return (
 
 ## Sizes
 
-The `Avatar` component supports three sizes: `sm`, `default`, and `lg`.
+The `Avatar` component supports three sizes: `sm`, `md`, and `lg`.
 
 <DocsPage.ComponentExample
   client:only
@@ -89,7 +89,7 @@ The `Avatar` component supports three sizes: `sm`, `default`, and `lg`.
 
 ## Shapes
 
-The `Avatar` component supports two visual shapes: `default` and `rounded`.
+The `Avatar` component supports two visual shapes: `md` and `rounded`.
 
 <DocsPage.ComponentExample
   client:only
@@ -123,11 +123,10 @@ The `Avatar` component has several props to control its appearance:
     },
     {
       name: "size",
-      description:
-        "The size of the avatar. Can be one of 'default', 'sm', or 'lg'.",
+      description: "The size of the avatar. Can be one of 'sm', 'md', or 'lg'.",
       required: false,
-      value: "'default' | 'sm' | 'lg'",
-      defaultValue: "'default'",
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'md'",
     },
     {
       name: "rounded",

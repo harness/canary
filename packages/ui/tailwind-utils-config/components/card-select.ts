@@ -32,13 +32,13 @@ export default {
     borderWidth: 'var(--cn-card-border)',
     borderStyle: 'solid',
     borderColor: 'var(--cn-border-2)',
-    borderRadius: 'var(--cn-card-default-radius)',
+    borderRadius: 'var(--cn-card-md-radius)',
     backgroundColor: 'var(--cn-bg-2)',
-    paddingTop: 'var(--cn-card-check-default-py)',
-    paddingBottom: 'var(--cn-card-check-default-py)',
-    paddingLeft: 'var(--cn-card-check-default-pl)',
-    paddingRight: 'var(--cn-card-check-default-pr)',
-    gap: 'var(--cn-card-check-default-gap)',
+    paddingTop: 'var(--cn-card-check-md-py)',
+    paddingBottom: 'var(--cn-card-check-md-py)',
+    paddingLeft: 'var(--cn-card-check-md-pl)',
+    paddingRight: 'var(--cn-card-check-md-pr)',
+    gap: 'var(--cn-card-check-md-gap)',
 
     '&:hover:not([data-disabled])': {
       borderColor: 'var(--cn-border-1)'

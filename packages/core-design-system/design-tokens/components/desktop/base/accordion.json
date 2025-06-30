@@ -1,6 +1,6 @@
 {
   "accordion": {
-    "default": {
+    "sm": {
       "py": {
         "$type": "spacing",
         "$value": "{spacing.4}"
@@ -8,6 +8,10 @@
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
+      },
+      "min-width": {
+        "$type": "sizing",
+        "$value": "{size.56}"
       }
     },
     "md": {
@@ -22,12 +26,6 @@
       "min-width": {
         "$type": "sizing",
         "$value": "{size.64}"
-      }
-    },
-    "defailt": {
-      "min-width": {
-        "$type": "sizing",
-        "$value": "{size.56}"
       }
     }
   }

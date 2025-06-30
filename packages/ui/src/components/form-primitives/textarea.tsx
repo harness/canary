@@ -13,13 +13,13 @@ const textareaVariants = cva('cn-textarea', {
       warning: 'cn-textarea-warning'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-textarea-sm'
     }
   },
   defaultVariants: {
     theme: 'default',
-    size: 'default'
+    size: 'md'
   }
 })
 

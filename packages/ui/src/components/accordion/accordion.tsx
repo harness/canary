@@ -8,12 +8,12 @@ import { cva, VariantProps } from 'class-variance-authority'
 const accordionVariants = cva('cn-accordion', {
   variants: {
     size: {
-      default: '',
+      sm: '',
       md: 'cn-accordion-md'
     }
   },
   defaultVariants: {
-    size: 'default'
+    size: 'sm'
   }
 })
 

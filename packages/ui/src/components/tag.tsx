@@ -10,7 +10,7 @@ const tagVariants = cva('cn-tag', {
       secondary: 'cn-tag-secondary'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-tag-sm'
     },
     theme: {
@@ -35,7 +35,7 @@ const tagVariants = cva('cn-tag', {
   },
   defaultVariants: {
     variant: 'outline',
-    size: 'default',
+    size: 'md',
     theme: 'gray'
   }
 })

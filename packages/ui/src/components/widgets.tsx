@@ -1,19 +1,19 @@
-import {Children, createContext, FC, ReactNode, useContext} from 'react'
+import { Children, createContext, FC, ReactNode, useContext } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
-import {Layout, Link, ScrollArea, Text} from '@/components'
+import { Layout, Link, ScrollArea, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 
 interface WidgetsContextProps {
-    isTwoColumn: boolean
+  isTwoColumn: boolean
 }
 
 const WidgetsContext = createContext<WidgetsContextProps>({
-    isTwoColumn: false
+  isTwoColumn: false
 })
 
-export interface WidgetsRootProps extends Partial<WidgetsContextProps>{
+export interface WidgetsRootProps extends Partial<WidgetsContextProps> {
   children: ReactNode
 }
 
@@ -21,9 +21,9 @@ const Root: FC<WidgetsRootProps> = ({ children, isTwoColumn: isTwoColumnProp = f
   const isTwoColumn = isTwoColumnProp && Children.count(children) > 1
 
   return (
-      <WidgetsContext.Provider value={{ isTwoColumn }}>
-          <div className={cn('gap-[var(--cn-spacing-10)]', isTwoColumn ? 'columns-2' : 'flex flex-col')}>{children}</div>
-      </WidgetsContext.Provider>
+    <WidgetsContext.Provider value={{ isTwoColumn }}>
+      <div className={cn('gap-[var(--cn-spacing-10)]', isTwoColumn ? 'columns-2' : 'flex flex-col')}>{children}</div>
+    </WidgetsContext.Provider>
   )
 }
 
@@ -36,13 +36,13 @@ export interface WidgetsItemProps {
 }
 
 const Item: FC<WidgetsItemProps> = ({ children, title, moreLink, isWidgetTable = false, className }) => {
-    const { isTwoColumn } = useContext(WidgetsContext)
+  const { isTwoColumn } = useContext(WidgetsContext)
   const { t } = useTranslation()
 
   return (
-    <Layout.Vertical className={cn('overflow-hidden',
-        { 'break-inside-avoid mt-[var(--cn-spacing-10)] first:mt-0': isTwoColumn }
-    )}>
+    <Layout.Vertical
+      className={cn('overflow-hidden', { 'break-inside-avoid pb-[var(--cn-spacing-10)] last:pb-0': isTwoColumn })}
+    >
       <Layout.Flex justify="between" gap="md" align="start">
         <Text as="h2" variant="heading-subsection" color="foreground-1">
           {title}
@@ -55,14 +55,12 @@ const Item: FC<WidgetsItemProps> = ({ children, title, moreLink, isWidgetTable =
       </Layout.Flex>
       <div
         className={cn(
-            '[contain:inline-size]',
-            { 'border border-cn-borders-3 rounded-3 p-[var(--cn-spacing-5)]': !isWidgetTable },
-            className
+          '[contain:inline-size]',
+          { 'border border-cn-borders-3 rounded-3 p-[var(--cn-spacing-5)]': !isWidgetTable },
+          className
         )}
       >
-        <ScrollArea classNameContent="w-full">
-          {children}
-        </ScrollArea>
+        <ScrollArea classNameContent="w-full">{children}</ScrollArea>
       </div>
     </Layout.Vertical>
   )

@@ -1,15 +1,17 @@
 import {
   IconV2,
   Layout,
+  Link,
   LogoV2,
   StatsPanel,
   StatusBadge,
+  Table,
   Tag,
   Text,
+  Toggle,
   ViewOnly,
   ViewOnlyProps,
-  Widgets,
-  Table, Link
+  Widgets
 } from '@harnessio/ui/components'
 import { timeAgo } from '@harnessio/ui/utils'
 import { Page } from '@harnessio/ui/views'
@@ -202,11 +204,11 @@ export const ViewOnlyView = () => {
           </Widgets.Item>
 
           <Widgets.Item
-              title="Secrets"
-              moreLink={{
-                to: '/'
-              }}
-              isWidgetTable
+            title="Secrets"
+            moreLink={{
+              to: '/'
+            }}
+            isWidgetTable
           >
             <Table.Root>
               <Table.Header>
@@ -221,16 +223,135 @@ export const ViewOnlyView = () => {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell>
-                    <Text color="foreground-1" variant="body-strong">secretfile</Text>
+                    <Layout.Flex direction="row" gap="xs" align="center">
+                      <LogoV2 name="servicenow" />
+                      <Text color="foreground-1" variant="body-strong">
+                        secretfile
+                      </Text>
+                    </Layout.Flex>
                   </Table.Cell>
                   <Table.Cell>Pipeline</Table.Cell>
                   <Table.Cell>
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    {timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}
+                    <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell>
+                    <Toggle iconOnly>
+                      <IconV2 name="pin" />
+                    </Toggle>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Layout.Flex direction="row" gap="xs" align="center">
+                      <LogoV2 name="android" />
+                      <Text color="foreground-1" variant="body-strong">
+                        testsecret
+                      </Text>
+                    </Layout.Flex>
+                  </Table.Cell>
+                  <Table.Cell>Secret</Table.Cell>
+                  <Table.Cell>
+                    <Link to="/">default_project</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Toggle iconOnly>
+                      <IconV2 name="pin" />
+                    </Toggle>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Layout.Flex direction="row" gap="xs" align="center">
+                      <LogoV2 name="argo" />
+                      <Text color="foreground-1" variant="body-strong">
+                        jamiegit
+                      </Text>
+                    </Layout.Flex>
+                  </Table.Cell>
+                  <Table.Cell>Service</Table.Cell>
+                  <Table.Cell>
+                    <Link to="/">default_project</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Toggle iconOnly>
+                      <IconV2 name="pin" />
+                    </Toggle>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Layout.Flex direction="row" gap="xs" align="center">
+                      <LogoV2 name="artifactory" />
+                      <Text color="foreground-1" variant="body-strong">
+                        nofar123
+                      </Text>
+                    </Layout.Flex>
+                  </Table.Cell>
+                  <Table.Cell>Template</Table.Cell>
+                  <Table.Cell>
+                    <Link to="/">default_project</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Toggle iconOnly>
+                      <IconV2 name="pin" />
+                    </Toggle>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Layout.Flex direction="row" gap="xs" align="center">
+                      <LogoV2 name="android" />
+                      <Text color="foreground-1" variant="body-strong">
+                        nofarb
+                      </Text>
+                    </Layout.Flex>
+                  </Table.Cell>
+                  <Table.Cell>Secret</Table.Cell>
+                  <Table.Cell>
+                    <Link to="/">default_project</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Toggle iconOnly>
+                      <IconV2 name="pin" />
+                    </Toggle>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Layout.Flex direction="row" gap="xs" align="center">
+                      <LogoV2 name="servicenow" />
+                      <Text color="foreground-1" variant="body-strong">
+                        githubtoken
+                      </Text>
+                    </Layout.Flex>
+                  </Table.Cell>
+                  <Table.Cell>Pipeline</Table.Cell>
+                  <Table.Cell>
+                    <Link to="/">default_project</Link>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Toggle iconOnly>
+                      <IconV2 name="pin" />
+                    </Toggle>
+                  </Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table.Root>

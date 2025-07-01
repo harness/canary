@@ -157,7 +157,7 @@ export default function MultiSort() {
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content align="start">
+      <DropdownMenu.Content align="start" className="p-2">
         <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
           <SortableContext
             items={sortSelections.map((_, index) => getItemId(index))}

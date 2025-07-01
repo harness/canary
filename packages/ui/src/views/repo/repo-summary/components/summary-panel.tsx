@@ -68,7 +68,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!timestamp?.length && (
           <>
             <Spacer size={2} />
-            <Text as="span">{`Created ${timeAgo(timestamp, { dateStyle: 'medium' })}`}</Text>
+            <Text as="span">Created {timeAgo(timestamp, { dateStyle: 'medium' })}</Text>
           </>
         )}
         <Spacer size={3} />

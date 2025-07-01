@@ -97,11 +97,7 @@ export default {
 
   // Body Component
   '.cn-modal-dialog-body': {
-    '@apply flex-grow h-full overflow-auto px-1': '',
-
-    '&-content': {
-      '@apply w-full': ''
-    }
+    '@apply flex-grow h-full overflow-auto px-1': ''
   },
 
   // Footer Component

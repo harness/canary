@@ -20,7 +20,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   return (
     <div className="px-8">
       {toConnectorsList ? (
-        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()}>
+        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()} className="mb-3">
           Back to Connectors
         </Link>
       ) : null}

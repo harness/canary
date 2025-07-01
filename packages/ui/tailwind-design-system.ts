@@ -37,6 +37,7 @@ import {
   tagStyles,
   textareaStyles,
   toggleGroupStyles,
+  toggleStyles,
   tooltipStyles
 } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
@@ -481,6 +482,7 @@ export default {
         tooltipStyles,
         breadcrumbStyles,
         iconsAndLogos,
+        toggleStyles,
         toggleGroupStyles,
         buttonGroupStyle,
 

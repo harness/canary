@@ -62,6 +62,14 @@
         "$type": "spacing",
         "$value": "{spacing.1}"
       }
+    },
+    "horizontal": {
+      "label": {
+        "max-width": {
+          "$type": "sizing",
+          "$value": "{size.72}"
+        }
+      }
     }
   },
   "input-text-area": {

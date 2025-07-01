@@ -127,12 +127,12 @@ export function ConnectorsList({
             const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
 
             return (
-              <Table.Row className="[&_td]:py-5" key={identifier}>
+              <Table.Row className="[&_td]:py-5" key={identifier} to={connectorDetailUrl}>
                 <Table.Cell className="content-center truncate">
                   <div className="flex items-center gap-2.5">
                     <div className="flex w-full max-w-8 items-center justify-center">
                       {connectorLogo ? (
-                        <LogoV2 name={connectorLogo} size="md" />
+                        <LogoV2 name={connectorLogo} size="lg" />
                       ) : (
                         <IconV2 name="connectors" size="lg" />
                       )}

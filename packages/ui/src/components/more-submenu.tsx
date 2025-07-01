@@ -24,7 +24,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
         <Sheet.Title className="sr-only">More Menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
-            <ScrollArea classNameContent="w-full">
+            <ScrollArea>
               <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group

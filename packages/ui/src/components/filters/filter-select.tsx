@@ -45,7 +45,8 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
             onChange={e => setSearchQuery(e.target.value)}
             rightElement={
               <Button
-                variant="ghost"
+                variant="transparent"
+                size="sm"
                 iconOnly
                 onClick={() => {
                   setSearchQuery('')
@@ -64,9 +65,10 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
         {filteredBySearchOptions.length === 0 && <DropdownMenu.NoOptions>No results</DropdownMenu.NoOptions>}
 
         {onReset && (
-          <DropdownMenu.Footer title={buttonLabel} onClick={onReset}>
-            <button className="w-full text-left font-medium">{buttonLabel}</button>
-          </DropdownMenu.Footer>
+          <>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item title={buttonLabel} onClick={onReset} />
+          </>
         )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

@@ -12,9 +12,9 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
     <ToggleGroup.Root type="multiple" value={['2']}>
-      <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-      <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-      <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      <ToggleGroup.Item value="1" text="Option 1" />
+      <ToggleGroup.Item value="2" text="Option 2" />
+      <ToggleGroup.Item value="3" text="Option 3" />
     </ToggleGroup.Root>
   `}
 />
@@ -36,15 +36,14 @@ return (
 >
     <ToggleGroup.Item
         value="1"
+        text="Option 1"
         tooltipProps={{
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-    >
-        Option 1
-    </ToggleGroup.Item>
-    <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-    <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+    />
+    <ToggleGroup.Item value="2" text="Option 2" />
+    <ToggleGroup.Item value="3" text="Option 3" />
   </ToggleGroup.Root>
 )
 ```
@@ -74,25 +73,25 @@ The `ToggleGroup.Root` component can be used as a controlled or uncontrolled com
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Controlled type</Text>
         <ToggleGroup.Root value="2" onValueChange={() => {}}>
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Uncontrolled with default value</Text>
         <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Fully uncontrolled</Text>
         <ToggleGroup.Root>
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
     </Layout.Vertical>
@@ -110,17 +109,17 @@ The `ToggleGroup.Root` component accepts a `type` prop to define selection behav
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Single type</Text>
         <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Multiple type</Text>
         <ToggleGroup.Root type="multiple" value={[2]}>
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
     </Layout.Vertical>
@@ -129,43 +128,60 @@ The `ToggleGroup.Root` component accepts a `type` prop to define selection behav
 
 ## Variants
 
-The `ToggleGroup.Root` component accepts a `variant` prop to control its appearance in active and inactive states. Supported values are: `outline-primary`, `outline-secondary`, `ghost-primary`, and `ghost-secondary`.
+The `ToggleGroup.Root` component accepts a `variant` prop to control its appearance in active state. Supported values are: `outline`, `ghost`, and `transparent`. `selectedVariant` prop controls the style when the toggle is pressed, with options for `primary` and `secondary`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <Layout.Vertical spacing="large">
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">outline-primary</Text>
-        <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="heading-subsection" align="center">variant / selectedVariant</Text>
+      <Text variant="body-strong" align="center">outline / primary</Text>
+      <ToggleGroup.Root value="2">
+        <ToggleGroup.Item value="1" text="Option 1" />
+        <ToggleGroup.Item value="2" text="Option 2" />
+        <ToggleGroup.Item value="3" text="Option 3" />
+      </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">outline-secondary</Text>
-        <ToggleGroup.Root value="2" variant="outline-secondary">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="body-strong" align="center">outline / secondary</Text>
+      <ToggleGroup.Root value="2" variant="outline" selectedVariant="secondary">
+        <ToggleGroup.Item value="1" text="Option 1" />
+        <ToggleGroup.Item value="2" text="Option 2" />
+        <ToggleGroup.Item value="3" text="Option 3" />
+      </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">ghost-primary</Text>
-        <ToggleGroup.Root value="2" variant="ghost-primary">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="body-strong" align="center">ghost / primary</Text>
+      <ToggleGroup.Root value="2" variant="ghost">
+        <ToggleGroup.Item value="1" text="Option 1" />
+        <ToggleGroup.Item value="2" text="Option 2" />
+        <ToggleGroup.Item value="3" text="Option 3" />
+      </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
-        <Text variant="heading-subsection">ghost-secondary</Text>
-        <ToggleGroup.Root value="2" variant="ghost-secondary">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
-        </ToggleGroup.Root>
+      <Text variant="body-strong" align="center">ghost / secondary</Text>
+      <ToggleGroup.Root value="2" variant="ghost" selectedVariant="secondary">
+        <ToggleGroup.Item value="1" text="Option 1" />
+        <ToggleGroup.Item value="2" text="Option 2" />
+        <ToggleGroup.Item value="3" text="Option 3" />
+      </ToggleGroup.Root>
+      </Layout.Vertical>
+      <Layout.Vertical spacing="small">
+      <Text variant="body-strong" align="center">transparent / primary</Text>
+      <ToggleGroup.Root value="2" variant="transparent">
+        <ToggleGroup.Item value="1" text="Option 1" />
+        <ToggleGroup.Item value="2" text="Option 2" />
+        <ToggleGroup.Item value="3" text="Option 3" />
+      </ToggleGroup.Root>
+      </Layout.Vertical>
+      <Layout.Vertical spacing="small">
+      <Text variant="body-strong" align="center">transparent / secondary</Text>
+      <ToggleGroup.Root value="2" variant="transparent" selectedVariant="secondary">
+        <ToggleGroup.Item value="1" text="Option 1" />
+        <ToggleGroup.Item value="2" text="Option 2" />
+        <ToggleGroup.Item value="3" text="Option 3" />
+      </ToggleGroup.Root>
       </Layout.Vertical>
     </Layout.Vertical>
 `}
@@ -182,25 +198,25 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Medium size (md)</Text>
         <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Small size (sm)</Text>
         <ToggleGroup.Root value="2" size="sm">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Extra Small size (xs)</Text>
         <ToggleGroup.Root value="2" size="xs">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
     </Layout.Vertical>
@@ -218,17 +234,17 @@ The `ToggleGroup.Root` component accepts a `orientation` prop to control the dir
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Horizontal orientation</Text>
         <ToggleGroup.Root value="2">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical spacing="small">
         <Text variant="heading-subsection">Vertical orientation</Text>
         <ToggleGroup.Root value="2" orientation="vertical">
-          <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-          <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-          <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+          <ToggleGroup.Item value="1" text="Option 1" />
+          <ToggleGroup.Item value="2" text="Option 2" />
+          <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
     </Layout.Vertical>
@@ -243,9 +259,9 @@ The `ToggleGroup.Root` component accepts a `unselectable` prop to control whethe
   client:only
   code={`
     <ToggleGroup.Root type="multiple" value={['2']} unselectable>
-      <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
-      <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
-      <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      <ToggleGroup.Item value="1" text="Option 1" />
+      <ToggleGroup.Item value="2" text="Option 2" />
+      <ToggleGroup.Item value="3" text="Option 3" />
     </ToggleGroup.Root>
   `}
 />
@@ -253,20 +269,15 @@ The `ToggleGroup.Root` component accepts a `unselectable` prop to control whethe
 ## Icon only
 
 The `ToggleGroup.Item` component accepts a `iconOnly` prop. When this prop is set, the `ToggleGroup.Item` is styled to fit the dimensions of an icon, making it suitable for icon-only buttons.
+Note that when `iconOnly` is set, the `text` prop will be used for the `area-label`, and the `prefixIcon` prop will be used as the only icon displayed.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <ToggleGroup.Root type="multiple" value={['2']}>
-      <ToggleGroup.Item value="1" iconOnly>
-        <IconV2 name="plus" />
-      </ToggleGroup.Item>
-      <ToggleGroup.Item value="2" iconOnly>
-        <IconV2 name="minus" />
-      </ToggleGroup.Item>
-      <ToggleGroup.Item value="3" iconOnly>
-        <IconV2 name="xmark" />
-      </ToggleGroup.Item>
+      <ToggleGroup.Item value="1" prefixIcon="plus" iconOnly />
+      <ToggleGroup.Item value="2" iconOnly prefixIcon="minus" />
+      <ToggleGroup.Item value="3" iconOnly prefixIcon="xmark" />
     </ToggleGroup.Root>
   `}
 />
@@ -286,9 +297,9 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-      >
-        <IconV2 name="plus" />
-      </ToggleGroup.Item>
+        prefixIcon="plus"
+        text="Plus"
+      />
       <ToggleGroup.Item
         value="2"
         iconOnly
@@ -296,9 +307,9 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-      >
-        <IconV2 name="minus" />
-      </ToggleGroup.Item>
+        prefixIcon="minus"
+        text="Minus"
+      />
       <ToggleGroup.Item
         value="3"
         iconOnly
@@ -306,9 +317,9 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-      >
-        <IconV2 name="xmark" />
-      </ToggleGroup.Item>
+        prefixIcon="xmark"
+        text="Multiply"
+      />
     </ToggleGroup.Root>
   `}
 />
@@ -335,11 +346,17 @@ The `Root` component serves as the main container for all toggle group elements.
     },
     {
       name: "variant",
-      description: "The visual style variant of the buttons.",
+      description: "The visual style variant of the not selected buttons.",
       required: false,
-      value:
-        "'outline-primary' | 'outline-secondary' | 'ghost-primary' | 'ghost-secondary'",
-      defaultValue: "outline-primary",
+      value: "'outline' | 'ghost' | 'transparent'",
+      defaultValue: "outline",
+    },
+    {
+      name: "selectedVariant",
+      description: "The visual style variant of the selected buttons.",
+      required: false,
+      value: "'primary' | 'secondary'",
+      defaultValue: "primary",
     },
     {
       name: "type",
@@ -357,11 +374,11 @@ The `Root` component serves as the main container for all toggle group elements.
       value: "string | string[]",
     },
     {
-      name: "onValueChange",
+      name: "onChange",
       description:
         "Callback that fires when the value of the toggle group changes.",
       required: false,
-      value: "(value: string | string[]) => void",
+      value: "(value: string) => void | (value: string[]) => void",
     },
     {
       name: "disabled",
@@ -403,12 +420,6 @@ The `Item` component is used to define each toggle button within the group.
 <DocsPage.PropsTable
   props={[
     {
-      name: "children",
-      description: "Content to display",
-      required: true,
-      value: "ReactNode",
-    },
-    {
       name: "value",
       description: "Value of the toggle item.",
       required: true,
@@ -420,6 +431,54 @@ The `Item` component is used to define each toggle button within the group.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "tooltipProps",
+      description:
+        "If provided, wraps the ToggleItem in a tooltip with the specified properties.",
+      required: false,
+      defaultValue: "undefined",
+      value: "Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>",
+    },
+    {
+      name: "text",
+      description: "Text content to display inside the toggle item.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "iconOnly",
+      description: "Whether the toggle item is displayed as an icon only.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "prefixIcon",
+      description:
+        "An optional icon to display before the text. When `iconOnly` is true, this will be the only icon displayed.",
+      required: false,
+      value: "IconV2NamesType",
+    },
+    {
+      name: "prefixIconProps",
+      description:
+        "Additional properties to pass to the prefix icon component.",
+      required: false,
+      value: "IconPropsV2",
+    },
+    {
+      name: "suffixIcon",
+      description: "An optional icon to display after the text.",
+      required: false,
+      value: "IconV2NamesType",
+    },
+    {
+      name: "suffixIconProps",
+      description:
+        "Additional properties to pass to the suffix icon component.",
+      required: false,
+      value: "IconPropsV2",
     },
   ]}
 />

@@ -135,14 +135,13 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
 
     const handleClickOutside = useCallback(
       (event: MouseEvent | TouchEvent) => {
-        if (
-          dropdownRef.current &&
-          !dropdownRef.current.contains(event.target as Node) &&
-          inputRef.current &&
-          !inputRef.current.contains(event.target as Node)
-        ) {
+        const path = event.composedPath()
+        const clickedInsideDropdown = dropdownRef.current && path.includes(dropdownRef.current)
+        const clickedInsideInput = inputRef.current && path.includes(inputRef.current)
+
+        if (!clickedInsideDropdown && !clickedInsideInput) {
           setOpen(false)
-          inputRef.current.blur()
+          inputRef.current?.blur()
         }
       },
       [dropdownRef, inputRef]

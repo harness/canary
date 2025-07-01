@@ -17,7 +17,7 @@ export default {
     },
 
     '&:where(.cn-card-select-vertical)': {
-      '@apply h-full overflow-y-auto': ''
+      '@apply auto-rows-max grid-flow-row': ''
     },
 
     '&:where(.cn-card-select-grid)': {

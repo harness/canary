@@ -98,6 +98,7 @@ export const SearchFiles = ({ navigateToFile, filesList, searchInputSize = 'sm' 
         onOpenAutoFocus={event => {
           event.preventDefault()
         }}
+        className="!p-1"
       >
         <Command.Root>
           <Command.List heightClassName="max-h-60">

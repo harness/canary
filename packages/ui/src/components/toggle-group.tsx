@@ -12,7 +12,16 @@ import {
   useState
 } from 'react'
 
-import { Button, ButtonSizes, IconPropsV2, IconV2, toggleVariants, Tooltip, TooltipProps } from '@/components'
+import {
+  Button,
+  ButtonSizes,
+  IconPropsV2,
+  IconV2,
+  IconV2NamesType,
+  toggleVariants,
+  Tooltip,
+  TooltipProps
+} from '@/components'
 import { cn } from '@/utils'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
 import { VariantProps } from 'class-variance-authority'
@@ -55,18 +64,23 @@ export type ToggleGroupItemPropsBase = {
   value: string
   tooltipProps?: ToggleTooltipProps
   disabled?: boolean
-  suffixIcon?: IconPropsV2
+  suffixIcon?: IconV2NamesType
+  suffixIconProps?: IconPropsV2
   text?: string
 }
 
 type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
   iconOnly: true
-  prefixIcon: IconPropsV2
+  prefixIcon: IconV2NamesType
+  prefixIconProps: IconPropsV2
+  suffixIcon: never
+  suffixIconProps: never
 }
 
 type TogglePropsNotIconOnly = ToggleGroupItemPropsBase & {
   iconOnly?: false
-  prefixIcon?: IconPropsV2
+  prefixIcon?: IconV2NamesType
+  prefixIconProps?: IconPropsV2
 }
 
 export type ToggleGroupItemProps = TogglePropsIconOnly | TogglePropsNotIconOnly
@@ -163,56 +177,72 @@ ToggleGroupRoot.displayName = ToggleGroupPrimitive.Root.displayName
 const ToggleGroupItem = forwardRef<
   ElementRef<typeof ToggleGroupPrimitive.Item>,
   ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> & ToggleGroupItemProps
->(({ value, tooltipProps, disabled: itemDisabled, iconOnly, prefixIcon, suffixIcon, text, ...props }, ref) => {
-  const {
-    variant,
-    selectedVariant,
-    size,
-    disabled: groupDisabled = false,
-    selectedValues
-  } = useContext(ToggleGroupContext)
+>(
+  (
+    {
+      value,
+      tooltipProps,
+      disabled: itemDisabled,
+      iconOnly,
+      prefixIcon,
+      prefixIconProps,
+      suffixIcon,
+      suffixIconProps,
+      text,
+      ...props
+    },
+    ref
+  ) => {
+    const {
+      variant,
+      selectedVariant,
+      size,
+      disabled: groupDisabled = false,
+      selectedValues
+    } = useContext(ToggleGroupContext)
 
-  const buttonVariant = useMemo(() => {
-    const isSelected = !!selectedValues.get(value)
+    const buttonVariant = useMemo(() => {
+      const isSelected = !!selectedValues.get(value)
 
-    return isSelected ? selectedVariant : variant
-  }, [variant, selectedVariant, selectedValues])
+      return isSelected ? selectedVariant : variant
+    }, [variant, selectedVariant, selectedValues])
 
-  const finalDisabled = groupDisabled || itemDisabled
+    const finalDisabled = groupDisabled || itemDisabled
 
-  const renderContent = () => {
-    if (iconOnly) {
-      return <IconV2 {...prefixIcon} />
+    const renderContent = () => {
+      if (iconOnly) {
+        return <IconV2 {...prefixIconProps} name={prefixIcon} />
+      }
+
+      return (
+        <>
+          {prefixIcon && <IconV2 {...prefixIconProps} name={prefixIcon} />}
+          {text}
+          {suffixIcon && <IconV2 {...suffixIconProps} name={suffixIcon} />}
+        </>
+      )
     }
 
+    const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
+
     return (
-      <>
-        {prefixIcon && <IconV2 {...prefixIcon} />}
-        {text}
-        {suffixIcon && <IconV2 {...suffixIcon} />}
-      </>
+      <TooltipWrapper tooltipProps={tooltipProps}>
+        <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+          <Button
+            className={toggleVariants({ size, variant, iconOnly })}
+            variant={buttonVariant}
+            size={size}
+            disabled={finalDisabled}
+            iconOnly={iconOnly}
+            {...accessibilityProps}
+          >
+            {renderContent()}
+          </Button>
+        </ToggleGroupPrimitive.Item>
+      </TooltipWrapper>
     )
   }
-
-  const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
-
-  return (
-    <TooltipWrapper tooltipProps={tooltipProps}>
-      <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
-        <Button
-          className={toggleVariants({ size, variant, iconOnly })}
-          variant={buttonVariant}
-          size={size}
-          disabled={finalDisabled}
-          iconOnly={iconOnly}
-          {...accessibilityProps}
-        >
-          {renderContent()}
-        </Button>
-      </ToggleGroupPrimitive.Item>
-    </TooltipWrapper>
-  )
-})
+)
 ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName
 
 export const ToggleGroup = {

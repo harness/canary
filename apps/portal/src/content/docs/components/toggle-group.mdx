@@ -275,9 +275,9 @@ Note that when `iconOnly` is set, the `text` prop will be used for the `area-lab
   client:only
   code={`
     <ToggleGroup.Root type="multiple" value={['2']}>
-      <ToggleGroup.Item value="1" prefixIcon={{ name: 'plus' }} iconOnly />
-      <ToggleGroup.Item value="2" iconOnly prefixIcon={{ name: 'minus' }} />
-      <ToggleGroup.Item value="3" iconOnly prefixIcon={{ name: 'xmark' }} />
+      <ToggleGroup.Item value="1" prefixIcon="plus" iconOnly />
+      <ToggleGroup.Item value="2" iconOnly prefixIcon="minus" />
+      <ToggleGroup.Item value="3" iconOnly prefixIcon="xmark" />
     </ToggleGroup.Root>
   `}
 />
@@ -297,7 +297,7 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-        prefixIcon={{ name: 'plus' }}
+        prefixIcon="plus"
         text="Plus"
       />
       <ToggleGroup.Item
@@ -307,7 +307,7 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-        prefixIcon={{ name: 'minus' }}
+        prefixIcon="minus"
         text="Minus"
       />
       <ToggleGroup.Item
@@ -317,7 +317,7 @@ The `ToggleGroup.Item` component accepts a `tooltipProps` prop. When provided, t
             title: 'Title',
             content: <p>This is a tooltip</p>
         }}
-        prefixIcon={{ name: 'xmark' }}
+        prefixIcon="xmark"
         text="Multiply"
       />
     </ToggleGroup.Root>
@@ -458,11 +458,25 @@ The `Item` component is used to define each toggle button within the group.
       description:
         "An optional icon to display before the text. When `iconOnly` is true, this will be the only icon displayed.",
       required: false,
+      value: "IconV2NamesType",
+    },
+    {
+      name: "prefixIconProps",
+      description:
+        "Additional properties to pass to the prefix icon component.",
+      required: false,
       value: "IconPropsV2",
     },
     {
       name: "suffixIcon",
       description: "An optional icon to display after the text.",
+      required: false,
+      value: "IconV2NamesType",
+    },
+    {
+      name: "suffixIconProps",
+      description:
+        "Additional properties to pass to the suffix icon component.",
       required: false,
       value: "IconPropsV2",
     },

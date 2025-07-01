@@ -16,7 +16,9 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
     setView(value)
   }
 
-  const prefixIcon: IconPropsV2 | undefined = !isYamlValid
+  const prefixIcon = !isYamlValid ? 'xmark-circle-solid' : undefined
+
+  const prefixIconProps: IconPropsV2 | undefined = !isYamlValid
     ? { name: 'xmark-circle-solid', className: 'text-cn-foreground-danger' }
     : undefined
 
@@ -29,7 +31,13 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
       size="xs"
       unselectable
     >
-      <ToggleGroup.Item disabled={!isYamlValid} value="visual" text="Visual" prefixIcon={prefixIcon} />
+      <ToggleGroup.Item
+        disabled={!isYamlValid}
+        value="visual"
+        text="Visual"
+        prefixIcon={prefixIcon}
+        prefixIconProps={prefixIconProps}
+      />
       <ToggleGroup.Item value="yaml" text="YAML" />
     </ToggleGroup.Root>
   )

@@ -115,9 +115,9 @@ The `Toggle` component accepts a `size` prop to control its overall dimensions. 
   client:only
   code={`
     <div className="grid gap-4 justify-items-center">
-      <Toggle text="Toggle" prefixIcon={{ name: 'plus' }} suffixIcon={{ name: 'minus' }} />
-      <Toggle size="sm" text="Toggle" prefixIcon={{ name: 'plus', size: 'sm' }} suffixIcon={{ name: 'minus', size: 'sm' }} />
-      <Toggle size="xs" text="Toggle" prefixIcon={{ name: 'plus', size: 'xs' }} suffixIcon={{ name: 'minus', size: 'xs' }} />
+      <Toggle text="Toggle" prefixIcon="plus" suffixIcon="minus" />
+      <Toggle size="sm" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'sm' }} suffixIconProps={{ size: 'sm' }} />
+      <Toggle size="xs" text="Toggle" prefixIcon="plus" suffixIcon="minus" prefixIconProps={{ size: 'xs' }} suffixIconProps={{ size: 'xs' }} />
     </div>
 `}
 />
@@ -141,7 +141,7 @@ Note that when `iconOnly` is set, the `text` prop will be used for the `area-lab
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Toggle iconOnly prefixIcon={{ name: 'plus' }} text="Add" />
+    <Toggle iconOnly prefixIcon="plus" text="Add" />
 `}
 />
 
@@ -236,11 +236,25 @@ The `Toggle` component is a button that can be toggled on and off.
       description:
         "An optional icon to display before the text. When iconOnly is true, this will be the only icon displayed.",
       required: false,
+      value: "IconV2NamesType",
+    },
+    {
+      name: "prefixIconProps",
+      description:
+        "Additional properties to pass to the prefix icon component.",
+      required: false,
       value: "IconPropsV2",
     },
     {
       name: "suffixIcon",
       description: "An optional icon to display after the text.",
+      required: false,
+      value: "IconV2NamesType",
+    },
+    {
+      name: "suffixIconProps",
+      description:
+        "Additional properties to pass to the suffix icon component.",
       required: false,
       value: "IconPropsV2",
     },

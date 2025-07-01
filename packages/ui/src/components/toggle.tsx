@@ -1,6 +1,6 @@
-import { ElementRef, FC, forwardRef, Fragment, ReactNode, useCallback, useState } from 'react'
+import { ElementRef, FC, forwardRef, ReactNode, useCallback, useState } from 'react'
 
-import { Button, ButtonProps, IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
+import { Button, ButtonProps, IconPropsV2, IconV2, IconV2NamesType, Tooltip, TooltipProps } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -39,7 +39,8 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
   onChange?: (selected: boolean) => void
   text?: string
   size?: VariantProps<typeof toggleVariants>['size']
-  suffixIcon?: IconPropsV2
+  suffixIcon?: IconV2NamesType
+  suffixIconProps?: IconPropsV2
   selected?: boolean
   defaultValue?: boolean
   tooltipProps?: ToggleTooltipProps
@@ -48,12 +49,16 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
 
 type TogglePropsIconOnly = TogglePropsBase & {
   iconOnly: true
-  prefixIcon: IconPropsV2
+  prefixIcon: IconV2NamesType
+  prefixIconProps: IconPropsV2
+  suffixIcon: never
+  suffixIconProps: never
 }
 
 type TogglePropsNotIconOnly = TogglePropsBase & {
   iconOnly?: false
-  prefixIcon?: IconPropsV2
+  prefixIcon?: IconV2NamesType
+  prefixIconProps?: IconPropsV2
 }
 
 export type ToggleProps = TogglePropsIconOnly | TogglePropsNotIconOnly
@@ -73,7 +78,9 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       iconOnly,
       text,
       prefixIcon,
+      prefixIconProps,
       suffixIcon,
+      suffixIconProps,
       onChange,
       tooltipProps,
       defaultValue,
@@ -99,14 +106,14 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
 
     const renderContent = () => {
       if (iconOnly) {
-        return <IconV2 {...prefixIcon} />
+        return <IconV2 {...prefixIconProps} name={prefixIcon} />
       }
 
       return (
         <>
-          {prefixIcon && <IconV2 {...prefixIcon} />}
+          {prefixIcon && <IconV2 {...prefixIconProps} name={prefixIcon} />}
           {text}
-          {suffixIcon && <IconV2 {...suffixIcon} />}
+          {suffixIcon && <IconV2 {...suffixIconProps} name={suffixIcon} />}
         </>
       )
     }

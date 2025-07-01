@@ -180,11 +180,15 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         if (formEntity?.source === 'external') {
           // remove "with" if its a empty object
           const cleanWith = omitBy(stepValue.template?.with, isUndefined)
-          const modules: string[] = get(formDefinition.metadata, 'modules', [])
+          const alias = String(get(formDefinition.metadata, 'alias', ''))
+          /**
+           * "alias" will be used directly as the "templateKey" once TEMPLATE_CI_STEP_IDENTIFIER changes from "template" to "build"
+           */
+          const templateKey = alias === 'deploy' ? alias : TEMPLATE_CI_STEP_IDENTIFIER
 
           stepValue = {
-            ...omit(stepValue, 'template'),
-            [modules.includes('cd') ? 'deploy' : 'template']: {
+            ...omit(stepValue, templateKey),
+            [templateKey]: {
               uses: `${formEntity.data.identifier}@${formEntity.data.version}`,
               ...(isEmpty(cleanWith) ? {} : { with: cleanWith })
             }

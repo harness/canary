@@ -104,7 +104,10 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         setExternalLoading(true)
         getTemplateFormDefinition(step.template.uses)
           .then(templateFormDefinition => {
-            return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+            return setFormDefinition({
+              inputs: addNameInput(templateFormDefinition.inputs, 'name'),
+              metadata: templateFormDefinition.metadata
+            })
           })
           .catch(err => {
             setError(err)
@@ -132,7 +135,10 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
       getTemplateFormDefinition(`${formEntity.data.identifier}@${formEntity.data.version}`)
         .then(templateFormDefinition => {
-          return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+          return setFormDefinition({
+            inputs: addNameInput(templateFormDefinition.inputs, 'name'),
+            metadata: templateFormDefinition.metadata
+          })
         })
         .catch(err => {
           setError(err)
@@ -173,11 +179,11 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         if (formEntity?.source === 'external') {
           // remove "with" if its a empty object
           const cleanWith = omitBy(stepValue.template?.with, isUndefined)
+          const modules: string[] = get(formDefinition.metadata, 'modules', [])
 
-          // add 'uses' for template step
           stepValue = {
             ...omit(stepValue, 'template'),
-            template: {
+            [modules.includes('cd') ? 'deploy' : 'template']: {
               uses: `${formEntity.data.identifier}@${formEntity.data.version}`,
               ...(isEmpty(cleanWith) ? {} : { with: cleanWith })
             }

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Select } from '@/components'
+import { Button, DropdownMenu, IconV2 } from '@/components'
 
 export interface EntityReferenceFilterProps {
   onFilterChange?: (type: string) => void
@@ -24,11 +24,18 @@ export const EntityReferenceFilter: React.FC<EntityReferenceFilterProps> = ({
   )
 
   return (
-    <Select
-      size="sm"
-      value={selectedType}
-      onChange={handleValueChange}
-      options={Object.entries(filterTypes).map(([type, label]) => ({ value: type, label }))}
-    />
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
+        <Button variant="outline" size="sm" className="flex items-center justify-between h-8 w-36 !px-2">
+          <span className="truncate text-cn-foreground-1">{filterTypes[selectedType]}</span>
+          <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down" />
+        </Button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content align="end">
+        {Object.entries(filterTypes).map(([type, label]) => (
+          <DropdownMenu.Item key={type} onClick={() => handleValueChange(type)} title={label} />
+        ))}
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

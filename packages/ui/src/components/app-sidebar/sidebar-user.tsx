@@ -73,3 +73,5 @@ export function User({ user, openThemeDialog, openLanguageDialog, handleLogOut }
     </Sidebar.Menu>
   )
 }
+
+User.displayName = 'SidebarUser'

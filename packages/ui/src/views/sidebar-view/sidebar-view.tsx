@@ -223,3 +223,5 @@ export const SidebarView = ({
     </>
   )
 }
+
+SidebarView.displayName = 'SidebarView'

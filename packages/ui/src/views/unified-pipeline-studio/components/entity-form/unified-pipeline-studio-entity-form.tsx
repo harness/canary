@@ -17,7 +17,7 @@ import {
 } from '@harnessio/forms'
 
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
-import { TEMPLATE_STEP_IDENTIFIER } from '../steps/types'
+import { TEMPLATE_CD_STEP_IDENTIFIER, TEMPLATE_CI_STEP_IDENTIFIER } from '../steps/types'
 
 const componentsMap: Record<
   'true' | 'false',
@@ -99,10 +99,11 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         }
       }
       // process templates step
-      else if (step[TEMPLATE_STEP_IDENTIFIER]) {
+      else if (step[TEMPLATE_CI_STEP_IDENTIFIER] || step[TEMPLATE_CD_STEP_IDENTIFIER]) {
         setDefaultStepValues(step)
         setExternalLoading(true)
-        getTemplateFormDefinition(step.template.uses)
+        const identifier = step[TEMPLATE_CI_STEP_IDENTIFIER]?.uses ?? step[TEMPLATE_CD_STEP_IDENTIFIER]?.uses ?? ''
+        getTemplateFormDefinition(identifier)
           .then(templateFormDefinition => {
             return setFormDefinition({
               inputs: addNameInput(templateFormDefinition.inputs, 'name'),
@@ -235,7 +236,9 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             <Header>
               <Title>
                 {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
-                {formEntity?.data?.identifier ?? defaultStepValues.template?.uses}
+                {formEntity?.data?.identifier ??
+                  defaultStepValues[TEMPLATE_CI_STEP_IDENTIFIER]?.uses ??
+                  defaultStepValues[TEMPLATE_CD_STEP_IDENTIFIER]?.uses}
               </Title>
               <Description>{formEntity?.data.description}</Description>
               {/*<AIButton label="AI Autofill" />*/}

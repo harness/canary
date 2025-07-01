@@ -1,5 +1,5 @@
 import { BlameItem } from '../types/blame'
-import { escapeSingleQuote } from './utils'
+import { escapeSingleQuote, timeAgoFromISOTime } from './utils'
 
 export function getMonacoEditorCss({
   instanceId,
@@ -68,7 +68,7 @@ export function getMonacoEditorCommitCss({
       if (lineNo === blameItem.fromLineNumber) {
         css += `
           .monaco-editor-${instanceId} .view-line .blame-editor-commit-${lineNo}:before {
-            content: '${escapeSingleQuote(blameItem?.commitInfo?.author?.when || '')}';
+            content: '${escapeSingleQuote(timeAgoFromISOTime(blameItem?.commitInfo?.author?.when || ''))}';
             position: absolute;
             left: 10px;
             top: 0px;

@@ -2232,7 +2232,7 @@
         },
         "from": {
           "$type": "color",
-          "$value": "{chrome.900}"
+          "$value": "{bg.3}"
         }
       },
       "danger": {
@@ -2251,7 +2251,7 @@
         },
         "from": {
           "$type": "color",
-          "$value": "{red.700}"
+          "$value": "{comp.toast.danger.bg}"
         }
       }
     },

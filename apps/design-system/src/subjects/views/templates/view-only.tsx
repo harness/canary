@@ -6,6 +6,7 @@ import {
   StatsPanel,
   StatusBadge,
   Table,
+  Tabs,
   Tag,
   Text,
   Toggle,
@@ -185,6 +186,14 @@ export const ViewOnlyView = () => {
         />
       </Page.Header>
       <Page.Content>
+        <Tabs.NavRoot defaultValue="/dashboard">
+          <Tabs.List variant="overlined" className="mb-10">
+            <Tabs.Trigger value="/dashboard">Сonfiguration</Tabs.Trigger>
+            <Tabs.Trigger value="/analytics">References</Tabs.Trigger>
+            <Tabs.Trigger value="/reports">Activity History</Tabs.Trigger>
+          </Tabs.List>
+        </Tabs.NavRoot>
+
         <Widgets.Root isTwoColumn>
           <Widgets.Item title="Connector details">
             {dataMock.map((props, index) => (
@@ -237,7 +246,7 @@ export const ViewOnlyView = () => {
                   <Table.Cell>
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell align="right" width="40">
                     <Toggle iconOnly>
                       <IconV2 name="pin" />
                     </Toggle>
@@ -259,7 +268,7 @@ export const ViewOnlyView = () => {
                   <Table.Cell>
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell align="right" width="40">
                     <Toggle iconOnly>
                       <IconV2 name="pin" />
                     </Toggle>
@@ -281,7 +290,7 @@ export const ViewOnlyView = () => {
                   <Table.Cell>
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell align="right" width="40">
                     <Toggle iconOnly>
                       <IconV2 name="pin" />
                     </Toggle>
@@ -303,7 +312,7 @@ export const ViewOnlyView = () => {
                   <Table.Cell>
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell align="right" width="40">
                     <Toggle iconOnly>
                       <IconV2 name="pin" />
                     </Toggle>
@@ -325,7 +334,7 @@ export const ViewOnlyView = () => {
                   <Table.Cell>
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell align="right" width="40">
                     <Toggle iconOnly>
                       <IconV2 name="pin" />
                     </Toggle>
@@ -347,7 +356,7 @@ export const ViewOnlyView = () => {
                   <Table.Cell>
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell align="right" width="40">
                     <Toggle iconOnly>
                       <IconV2 name="pin" />
                     </Toggle>

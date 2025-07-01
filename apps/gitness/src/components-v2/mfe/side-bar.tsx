@@ -148,7 +148,6 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
           </Sidebar.Group>
           <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
             <User
-              // hideLanguagesOption
               user={currentUser}
               openThemeDialog={() => setOpenThemeDialog(true)}
               openLanguageDialog={() => setOpenLanguageDialog(true)}

@@ -14,17 +14,13 @@ export const WebhookExecutionEditorControlBar: FC<FileEditorControlBarProps> = (
         <ToggleGroup.Root
           variant="ghost"
           selectedVariant="secondary"
-          onValueChange={onChangeView}
+          onChange={onChangeView as (value: string) => void}
           value={view}
           unselectable
           size="xs"
         >
-          <ToggleGroup.Item value="payload" className="text-md">
-            Payload
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="server-response" className="text-md">
-            Server Response
-          </ToggleGroup.Item>
+          <ToggleGroup.Item value="payload" className="text-md" text="Payload" />
+          <ToggleGroup.Item value="server-response" className="text-md" text="Server Response" />
         </ToggleGroup.Root>
       </StackedList.Item>
     </StackedList.Root>

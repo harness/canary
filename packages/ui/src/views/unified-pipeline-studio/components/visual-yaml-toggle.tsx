@@ -1,4 +1,4 @@
-import { IconV2, ToggleGroup } from '@/components'
+import { IconPropsV2, ToggleGroup } from '@/components'
 
 export type VisualYamlValue = 'visual' | 'yaml'
 
@@ -16,20 +16,21 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
     setView(value)
   }
 
+  const prefixIcon: IconPropsV2 | undefined = !isYamlValid
+    ? { name: 'xmark-circle-solid', className: 'text-cn-foreground-danger' }
+    : undefined
+
   return (
     <ToggleGroup.Root
       variant="ghost"
       selectedVariant="secondary"
-      onValueChange={onChange}
+      onChange={onChange as (value: string) => void}
       value={view}
       size="xs"
       unselectable
     >
-      <ToggleGroup.Item disabled={!isYamlValid} value="visual">
-        {!isYamlValid && <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />}
-        Visual
-      </ToggleGroup.Item>
-      <ToggleGroup.Item value="yaml">YAML</ToggleGroup.Item>
+      <ToggleGroup.Item disabled={!isYamlValid} value="visual" text="Visual" prefixIcon={prefixIcon} />
+      <ToggleGroup.Item value="yaml" text="YAML" />
     </ToggleGroup.Root>
   )
 }

@@ -77,15 +77,15 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
         <ToggleGroup.Root
           variant="ghost"
           selectedVariant="secondary"
-          onValueChange={onChangeView}
+          onChange={onChangeView as (value: string) => void}
           value={view}
           unselectable
           size="xs"
         >
-          {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
-          <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
-          <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
-          <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
+          {isMarkdown && <ToggleGroup.Item value={'preview'} text="Preview" />}
+          <ToggleGroup.Item value={'code'} text="Code" />
+          <ToggleGroup.Item value={'blame'} text="Blame" />
+          <ToggleGroup.Item value={'history'} text="History" />
         </ToggleGroup.Root>
         <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>

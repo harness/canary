@@ -1,26 +1,62 @@
 import { ElementRef, FC, forwardRef, Fragment, ReactNode, useCallback, useState } from 'react'
 
-import { Button, ButtonProps, ButtonSizes, IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
+import { Button, ButtonProps, IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
 import { cn } from '@utils/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
 
-type ToggleVariant = 'ghost' | 'outline' | 'transparent'
+export const toggleVariants = cva('cn-toggle', {
+  variants: {
+    size: {
+      md: 'cn-toggle-md',
+      sm: 'cn-toggle-sm',
+      xs: 'cn-toggle-xs'
+    },
+    variant: {
+      outline: '',
+      ghost: '',
+      transparent: 'cn-toggle-transparent'
+    },
+    iconOnly: {
+      true: '',
+      false: 'cn-toggle-text'
+    }
+  },
+  defaultVariants: {
+    size: 'md',
+    variant: 'outline',
+    iconOnly: false
+  }
+})
+
+type ToggleVariant = VariantProps<typeof toggleVariants>['variant']
 type TypeSelectedVariant = 'primary' | 'secondary'
 type ToggleTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
-export interface ToggleProps extends Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> {
+type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & {
   variant?: ToggleVariant
   selectedVariant?: TypeSelectedVariant
   onChange?: (selected: boolean) => void
   text?: string
-  size?: ButtonSizes
-  prefixIcon?: IconPropsV2['name']
-  suffixIcon?: IconPropsV2['name']
+  size?: VariantProps<typeof toggleVariants>['size']
+  suffixIcon?: IconPropsV2
   selected?: boolean
   defaultValue?: boolean
   tooltipProps?: ToggleTooltipProps
   className?: string
 }
+
+type TogglePropsIconOnly = TogglePropsBase & {
+  iconOnly: true
+  prefixIcon: IconPropsV2
+}
+
+type TogglePropsNotIconOnly = TogglePropsBase & {
+  iconOnly?: false
+  prefixIcon?: IconPropsV2
+}
+
+export type ToggleProps = TogglePropsIconOnly | TogglePropsNotIconOnly
 
 const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
   tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
@@ -31,7 +67,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       className,
       variant = 'outline',
       selectedVariant = 'primary',
-      size = 'md',
+      size,
       rounded,
       disabled,
       iconOnly,
@@ -63,14 +99,14 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
 
     const renderContent = () => {
       if (iconOnly) {
-        return prefixIcon ? <IconV2 name={prefixIcon} size={size} /> : null
+        return <IconV2 {...prefixIcon} />
       }
 
       return (
         <>
-          {prefixIcon && <IconV2 name={prefixIcon} size={size} />}
+          {prefixIcon && <IconV2 {...prefixIcon} />}
           {text}
-          {suffixIcon && <IconV2 name={suffixIcon} size={size} />}
+          {suffixIcon && <IconV2 {...suffixIcon} />}
         </>
       )
     }
@@ -79,7 +115,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       <TooltipWrapper tooltipProps={tooltipProps}>
         <TogglePrimitive.Root ref={ref} asChild pressed={selected} onPressedChange={handleChange} disabled={disabled}>
           <Button
-            className={cn(className, { [`cn-toggle-transparent-${size}`]: variant === 'transparent' && !iconOnly })}
+            className={cn(className, toggleVariants({ size, variant, iconOnly }))}
             variant={selected ? selectedVariant : variant}
             disabled={disabled}
             size={size}

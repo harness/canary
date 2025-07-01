@@ -2,18 +2,16 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const sizes = ['xs', 'sm', 'md'] as const
 
-function createToggleStyles() {
+export const createToggleStyles = () => {
   const styles: CSSRuleObject = {}
 
   sizes.forEach(size => {
-    const value = size === 'md' ? 'default' : size
-
-    styles[`&-transparent-${size}`] = {
-      paddingLeft: `var(--cn-btn-px-${value})`,
-      paddingRight: `var(--cn-btn-px-${value})`,
-      paddingTop: `var(--cn-btn-py-${value})`,
-      paddingBottom: `var(--cn-btn-py-${value})`,
-      '&[aria-pressed="false"]': {
+    styles[`&.cn-toggle-${size}.cn-toggle-transparent.cn-toggle-text`] = {
+      paddingLeft: `var(--cn-btn-px-${size})`,
+      paddingRight: `var(--cn-btn-px-${size})`,
+      paddingTop: `var(--cn-btn-py-${size})`,
+      paddingBottom: `var(--cn-btn-py-${size})`,
+      '&[data-state="off"]': {
         border: 'var(--cn-btn-border) solid transparent'
       }
     }
@@ -22,7 +20,7 @@ function createToggleStyles() {
   return styles
 }
 
-export default {
+export const toggleStyles: Record<string, CSSRuleObject> = {
   '.cn-toggle': {
     ...createToggleStyles()
   }

@@ -172,7 +172,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         // TODO:move transform logic outside for "external"
         if (formEntity?.source === 'external') {
           // remove "with" if its a empty object
-          const cleanWith = omitBy(stepValue.template.with, isUndefined)
+          const cleanWith = omitBy(stepValue.template?.with, isUndefined)
 
           // add 'uses' for template step
           stepValue = {

@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, Sidebar, Text } from '@harnessio/ui/components'
+import { Breadcrumb, Sidebar } from '@harnessio/ui/components'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -567,10 +567,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <CreateWebhookContainer />,
                 handle: {
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
-                    <>
+                    <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
                       <span className="ml-1.5">Details</span>
-                    </>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookDetails
                 }
@@ -580,10 +580,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <WebhookExecutionsContainer />,
                 handle: {
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
-                    <>
+                    <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
                       <span className="ml-1.5">Executions</span>
-                    </>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutions
                 }
@@ -593,12 +593,12 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <WebhookExecutionDetailsContainer />,
                 handle: {
                   breadcrumb: ({ webhookId, executionId }: { webhookId: string; executionId: string }) => (
-                    <>
-                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
-                      <Text className="ml-1.5">Executions</Text>
+                    <Breadcrumb.Item>
+                      <span>{webhookId}</span> <Breadcrumb.Separator />
+                      <span className="ml-1.5">Executions</span>
                       <Breadcrumb.Separator className="mx-1.5" />
-                      <Text>{executionId}</Text>
-                    </>
+                      <span>{executionId}</span>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutionDetails
                 }

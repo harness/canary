@@ -32,7 +32,7 @@ export default {
     },
     '&-container': {
       color: 'var(--cn-text-1)',
-      minHeight: 'var(--cn-input-size-default)',
+      minHeight: 'var(--cn-input-size-md)',
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
       backgroundColor: 'var(--cn-bg-2)',

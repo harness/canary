@@ -346,7 +346,7 @@ const SidebarContent = forwardRef<HTMLDivElement, ComponentProps<'div'>>(({ clas
       )}
       {...props}
     >
-      <ScrollArea classNameContent="w-full">{children}</ScrollArea>
+      <ScrollArea>{children}</ScrollArea>
     </div>
   )
 })

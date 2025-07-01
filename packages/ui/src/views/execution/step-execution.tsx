@@ -83,16 +83,13 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
           />
         </Layout.Horizontal>
         <Tabs.Content value={StepExecutionTab.LOG}>
-          <ScrollArea
-            className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}
-            classNameContent="w-full"
-          >
+          <ScrollArea className={cn(isDrawer ? 'h-[calc(100vh-196px)]' : 'h-[calc(100vh-278px)] border-t')}>
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
         </Tabs.Content>
         <Tabs.Content value={StepExecutionTab.INPUT}>
           {/*here is the execution details of input table */}
-          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4" classNameContent="w-full">
+          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
             <KeyValueTable
               className="pt-2"
               tableSpec={inputTable}
@@ -103,7 +100,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
         </Tabs.Content>
         <Tabs.Content value={StepExecutionTab.OUTPUT}>
           {/*here is the execution details of output table */}
-          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4" classNameContent="w-full">
+          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
             <KeyValueTable
               className="pt-2"
               tableSpec={outputTable}

@@ -8,16 +8,18 @@ interface SearchableDropdownProps<T> {
   dropdownAlign?: 'start' | 'end'
   inputPlaceholder?: string
   onChange: (option: T) => void
-  customFooter?: React.ReactNode
+  onReset?: () => void
+  buttonLabel?: string
 }
 
 const SearchableDropdown = <T extends { label: string; value: string }>({
   displayLabel,
   dropdownAlign = 'end',
   onChange,
-  customFooter,
+  onReset,
   options,
-  inputPlaceholder
+  inputPlaceholder,
+  buttonLabel
 }: SearchableDropdownProps<T>) => {
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -60,7 +62,12 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
 
         {filteredBySearchOptions.length === 0 && <DropdownMenu.NoOptions>No results</DropdownMenu.NoOptions>}
 
-        {customFooter && <DropdownMenu.Footer>{customFooter}</DropdownMenu.Footer>}
+        {onReset && (
+          <>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item title={buttonLabel} onClick={onReset} />
+          </>
+        )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

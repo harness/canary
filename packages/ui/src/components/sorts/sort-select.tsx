@@ -29,11 +29,8 @@ const SortSelect = ({ displayLabel, buttonLabel }: SortTriggerProps) => {
       inputPlaceholder="Select..."
       options={filteredSortOptions}
       onChange={onSelectChange}
-      customFooter={
-        <button className="w-full font-medium" onClick={() => updateSortSelections([])}>
-          {buttonLabel}
-        </button>
-      }
+      buttonLabel={buttonLabel}
+      onReset={() => updateSortSelections([])}
     />
   )
 }

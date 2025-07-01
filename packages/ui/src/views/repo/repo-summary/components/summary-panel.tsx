@@ -111,4 +111,6 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   )
 }
 
+SummaryPanel.displayName = 'SummaryPanel'
+
 export default SummaryPanel

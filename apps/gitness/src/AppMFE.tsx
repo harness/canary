@@ -73,7 +73,7 @@ interface AppMFEProps {
   scope: Scope
   renderUrl: string
   on401?: () => void
-  useMFEThemeContext: () => { theme: string }
+  useMFEThemeContext: () => { theme: string; setTheme: (newTheme: string) => void }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
   customHooks: Partial<{
@@ -130,7 +130,7 @@ export default function AppMFE({
   })
 
   // Apply host theme to MFE
-  const { theme } = useMFEThemeContext()
+  const { theme, setTheme: setMFETheme } = useMFEThemeContext()
   const { setTheme } = useThemeStore()
 
   useEffect(() => {
@@ -180,7 +180,8 @@ export default function AppMFE({
                   customUtils,
                   customPromises,
                   routes,
-                  hooks
+                  hooks,
+                  setMFETheme
                 }}
               >
                 <I18nextProvider i18n={i18n}>

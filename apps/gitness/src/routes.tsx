@@ -1167,6 +1167,47 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
           })
         },
         children: repoRoutes
+      },
+      {
+        path: 'profile-settings',
+        element: <ProfileSettingsLayout />,
+        handle: {
+          breadcrumb: () => (
+            <>
+              <span>User</span>
+              <Breadcrumb.Separator className="mx-2.5" />
+              <span>{Page.Settings}</span>
+            </>
+          ),
+          pageTitle: Page.Settings
+        },
+        children: [
+          {
+            index: true,
+            element: <Navigate to="general" replace />,
+            handle: {
+              breadcrumb: () => <span>{Page.General}</span>
+            }
+          },
+          {
+            path: 'general',
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.General}</span>,
+              routeName: RouteConstants.toProfileGeneral,
+              pageTitle: Page.General
+            }
+          },
+          {
+            path: 'keys',
+            element: <SettingsProfileKeysPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.Keys}</span>,
+              routeName: RouteConstants.toProfileKeys,
+              pageTitle: Page.Keys
+            }
+          }
+        ]
       }
     ]
   }

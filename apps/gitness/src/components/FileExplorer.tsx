@@ -238,9 +238,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       value={openFolderPaths}
     >
       {isRootLoading ? (
-        <div>
-          <IconV2 name="loader" className="animate-spin" />
-        </div>
+        <IconV2 name="loader" className="animate-spin" />
       ) : rootError ? (
         <Alert.Root theme="danger">
           <Alert.Title>Error loading root folder</Alert.Title>

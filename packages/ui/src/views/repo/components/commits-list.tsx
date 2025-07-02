@@ -38,7 +38,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
         <NodeGroup.Root className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
           <NodeGroup.Title>{date && <span className="text-cn-foreground-2">Commits on {date}</span>}</NodeGroup.Title>
-          <NodeGroup.Content>
+          <NodeGroup.Content className="overflow-hidden">
             {!!commitData.length && (
               <StackedList.Root>
                 {commitData.map((commit, repo_idx) => {
@@ -53,7 +53,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                       isLast={commitData.length - 1 === repo_idx}
                     >
                       <Link
-                        className="grow"
+                        className="grow overflow-hidden"
                         onClick={e => {
                           e.stopPropagation()
                         }}
@@ -66,10 +66,12 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                               {toCommitDetails ? (
                                 <p>
                                   <Link
-                                    className="text-sm font-medium leading-snug hover:underline"
+                                    className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
                                     to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                                   >
-                                    <span className="truncate">{commit.title}</span>
+                                    <span className="truncate" title={commit.title}>
+                                      {commit.title}
+                                    </span>
                                   </Link>
                                 </p>
                               ) : (

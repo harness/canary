@@ -5,8 +5,8 @@ description: Form component
 
 The form system consists of two main components:
 
-- **FormWrapper** - A container component that wraps form inputs and handles form submission
-- **FormInput** - A set of input components for different data types
+- `FormWrapper` - A container component that wraps form inputs, handles form submission, and sets the input layout orientation to either `vertical` or `horizontal`
+- `FormInput` - A set of input components for different data types
 
 ### Usage
 
@@ -167,7 +167,7 @@ function FormWithZodAndReactHookForm() {
 
   /** 5️⃣ Use FormWrapper with formMethods and onSubmit */
   return (
-    <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} orientation="vertical">
       <FormInput.Text {...register("name")} label="Name" />
       <FormInput.Number {...register("age")} label="Age" />
       <FormInput.Textarea {...register("comment")} label="Comment" />

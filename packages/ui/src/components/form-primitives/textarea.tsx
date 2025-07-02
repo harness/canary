@@ -1,8 +1,7 @@
-import { forwardRef, ReactNode, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, forwardRef, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
 
-import { ControlGroup, FormCaption, Label } from '@/components'
-import { generateAlphaNumericHash, isAnyTypeOf, useMergeRefs } from '@/utils'
-import { cn } from '@utils/cn'
+import { CommonInputsProp, ControlGroup, FormCaption, Label } from '@/components'
+import { cn, generateAlphaNumericHash, isAnyTypeOf, useMergeRefs } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 
 const textareaVariants = cva('cn-textarea', {
@@ -23,15 +22,9 @@ const textareaVariants = cva('cn-textarea', {
   }
 })
 
-export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string
-  labelSuffix?: ReactNode
+export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, CommonInputsProp {
   theme?: VariantProps<typeof textareaVariants>['theme']
   size?: VariantProps<typeof textareaVariants>['size']
-  caption?: string
-  error?: string
-  warning?: string
-  optional?: boolean
   resizable?: boolean
   maxCharacters?: number
 }
@@ -57,11 +50,17 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       resizable = false,
       labelSuffix,
       size,
+      orientation,
+      informerProps,
+      informerContent,
+      wrapperClassName,
       ...props
     },
     ref
   ) => {
     const [counter, setCounter] = useState(0)
+
+    const isHorizontal = orientation === 'horizontal'
 
     const theme = error ? 'danger' : warning ? 'warning' : props.theme
 
@@ -76,7 +75,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       [maxCharacters]
     )
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setCharactersCount(e.target.value)
       onChange?.(e)
     }
@@ -93,42 +92,61 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     ])
 
     return (
-      <ControlGroup>
-        <div className="cn-textarea-label-wrapper">
-          {label && (
-            <Label disabled={disabled} optional={optional} htmlFor={id} suffix={labelSuffix}>
-              {label}
-            </Label>
-          )}
+      <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
+        {(!!label || maxCharacters || (isHorizontal && !!caption)) && (
+          <ControlGroup.LabelWrapper>
+            <div className="cn-textarea-label-wrapper">
+              {!!label && (
+                <Label
+                  disabled={disabled}
+                  optional={optional}
+                  htmlFor={id}
+                  suffix={labelSuffix}
+                  informerProps={informerProps}
+                  informerContent={informerContent}
+                >
+                  {label}
+                </Label>
+              )}
 
-          {maxCharacters && (
+              {!!maxCharacters && !isHorizontal && (
+                <span className={cn('cn-textarea-counter', { 'cn-textarea-counter-disabled': disabled })} role="status">
+                  {counter} / {maxCharacters}
+                </span>
+              )}
+            </div>
+            {isHorizontal && !!caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+          </ControlGroup.LabelWrapper>
+        )}
+
+        <ControlGroup.InputWrapper>
+          {!!maxCharacters && isHorizontal && (
             <span className={cn('cn-textarea-counter', { 'cn-textarea-counter-disabled': disabled })} role="status">
               {counter} / {maxCharacters}
             </span>
           )}
-        </div>
+          <textarea
+            id={id}
+            ref={mergedRef}
+            className={cn(textareaVariants({ theme, size }), { 'cn-textarea-resizable': resizable }, className)}
+            disabled={disabled}
+            onChange={handleChange}
+            {...props}
+          />
 
-        <textarea
-          id={id}
-          ref={mergedRef}
-          className={cn(textareaVariants({ theme, size }), { 'cn-textarea-resizable': resizable }, className)}
-          disabled={disabled}
-          onChange={handleChange}
-          {...props}
-        />
-
-        {error ? (
-          <FormCaption disabled={disabled} theme="danger">
-            {error}
-          </FormCaption>
-        ) : warning ? (
-          <FormCaption disabled={disabled} theme="warning">
-            {warning}
-          </FormCaption>
-        ) : caption ? (
-          <FormCaption disabled={disabled}>{caption}</FormCaption>
-        ) : null}
-      </ControlGroup>
+          {error ? (
+            <FormCaption disabled={disabled} theme="danger">
+              {error}
+            </FormCaption>
+          ) : warning ? (
+            <FormCaption disabled={disabled} theme="warning">
+              {warning}
+            </FormCaption>
+          ) : caption && !isHorizontal ? (
+            <FormCaption disabled={disabled}>{caption}</FormCaption>
+          ) : null}
+        </ControlGroup.InputWrapper>
+      </ControlGroup.Root>
     )
   }
 )

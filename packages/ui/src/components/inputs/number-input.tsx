@@ -1,15 +1,10 @@
 import { forwardRef, KeyboardEvent, useMemo, useRef } from 'react'
 
-import { Button, ControlGroup, FormCaption, IconV2, Label } from '@/components'
+import { Button, CommonInputsProp, ControlGroup, FormCaption, IconV2, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
-export interface NumberInputProps extends Omit<InputProps, 'type'> {
-  wrapperClassName?: string
-  caption?: string
-  error?: string
-  warning?: string
-  optional?: boolean
+export interface NumberInputProps extends CommonInputsProp, Omit<InputProps, 'type'> {
   hideStepper?: boolean
   integerOnly?: boolean
 }
@@ -37,10 +32,19 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       hideStepper = false,
       integerOnly = false,
       suffix,
+      orientation,
+      labelSuffix,
+      informerProps,
+      informerContent,
+      readOnly,
       ...props
     },
     ref
   ) => {
+    const isHorizontal = orientation === 'horizontal'
+
+    const isStepperDisabled = hideStepper || readOnly
+
     // Create a ref for internal focus management
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -64,6 +68,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }
 
     const handleIncrement = () => {
+      if (isStepperDisabled) return
+
       const input = inputRef.current
       if (input) {
         input.stepUp()
@@ -78,6 +84,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }
 
     const handleDecrement = () => {
+      if (isStepperDisabled) return
+
       const input = inputRef.current
       if (input) {
         input.stepDown()
@@ -92,73 +100,88 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }
 
     return (
-      <ControlGroup className={wrapperClassName}>
-        {!!label && (
-          <Label disabled={disabled} optional={optional} htmlFor={id}>
-            {label}
-          </Label>
+      <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
+        {(!!label || (isHorizontal && !!caption)) && (
+          <ControlGroup.LabelWrapper>
+            {!!label && (
+              <Label
+                disabled={disabled}
+                optional={optional}
+                htmlFor={inputId}
+                suffix={labelSuffix}
+                informerProps={informerProps}
+                informerContent={informerContent}
+              >
+                {label}
+              </Label>
+            )}
+            {isHorizontal && !!caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+          </ControlGroup.LabelWrapper>
         )}
-
-        <BaseInput
-          type="number"
-          ref={setRefs}
-          id={inputId}
-          disabled={disabled}
-          inputMode={integerOnly ? 'numeric' : 'decimal'}
-          theme={effectiveTheme}
-          onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-            // Prevent decimal point input when integerOnly is true
-            if (integerOnly && e.key === '.') {
-              e.preventDefault()
-            }
-          }}
-          suffix={
-            <div className="flex">
-              {!hideStepper ? (
-                <div className="flex flex-col">
-                  <Button
-                    tabIndex={-1}
-                    aria-label="Increment value"
-                    variant="ghost"
-                    iconOnly
-                    onClick={handleIncrement}
-                    disabled={disabled}
-                    size="sm"
-                  >
-                    <IconV2 name="nav-arrow-up" size="xs" />
-                  </Button>
-                  <hr />
-                  <Button
-                    tabIndex={-1}
-                    aria-label="Decrement value"
-                    variant="ghost"
-                    iconOnly
-                    onClick={handleDecrement}
-                    disabled={disabled}
-                    size="sm"
-                  >
-                    <IconV2 name="nav-arrow-down" size="xs" />
-                  </Button>
+        <ControlGroup.InputWrapper>
+          <BaseInput
+            type="number"
+            ref={setRefs}
+            id={inputId}
+            disabled={disabled}
+            inputMode={integerOnly ? 'numeric' : 'decimal'}
+            theme={effectiveTheme}
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+              // Prevent decimal point input when integerOnly is true
+              if (integerOnly && e.key === '.') {
+                e.preventDefault()
+              }
+            }}
+            suffix={
+              (!isStepperDisabled || !!suffix) && (
+                <div className="flex">
+                  {!isStepperDisabled ? (
+                    <div className="flex flex-col">
+                      <Button
+                        tabIndex={-1}
+                        aria-label="Increment value"
+                        variant="ghost"
+                        iconOnly
+                        onClick={handleIncrement}
+                        disabled={disabled}
+                        size="sm"
+                      >
+                        <IconV2 name="nav-arrow-up" size="xs" />
+                      </Button>
+                      <hr />
+                      <Button
+                        tabIndex={-1}
+                        aria-label="Decrement value"
+                        variant="ghost"
+                        iconOnly
+                        onClick={handleDecrement}
+                        disabled={disabled}
+                        size="sm"
+                      >
+                        <IconV2 name="nav-arrow-down" size="xs" />
+                      </Button>
+                    </div>
+                  ) : null}
+                  {suffix ? <div className={isStepperDisabled ? '' : 'border-inherit'}>{suffix}</div> : null}
                 </div>
-              ) : null}
-              {suffix ? <div className={hideStepper ? '' : 'border-inherit'}>{suffix}</div> : null}
-            </div>
-          }
-          {...props}
-        />
+              )
+            }
+            {...props}
+          />
 
-        {error ? (
-          <FormCaption disabled={disabled} theme="danger">
-            {error}
-          </FormCaption>
-        ) : warning ? (
-          <FormCaption disabled={disabled} theme="warning">
-            {warning}
-          </FormCaption>
-        ) : caption ? (
-          <FormCaption disabled={disabled}>{caption}</FormCaption>
-        ) : null}
-      </ControlGroup>
+          {error ? (
+            <FormCaption disabled={disabled} theme="danger">
+              {error}
+            </FormCaption>
+          ) : warning ? (
+            <FormCaption disabled={disabled} theme="warning">
+              {warning}
+            </FormCaption>
+          ) : caption && !isHorizontal ? (
+            <FormCaption disabled={disabled}>{caption}</FormCaption>
+          ) : null}
+        </ControlGroup.InputWrapper>
+      </ControlGroup.Root>
     )
   }
 )

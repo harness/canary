@@ -124,7 +124,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <Dialog.Content>
+      <Dialog.Content size="md">
         <Dialog.Header>
           <Dialog.Title>Commit Changes</Dialog.Title>
         </Dialog.Header>

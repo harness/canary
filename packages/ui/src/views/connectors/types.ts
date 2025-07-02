@@ -141,7 +141,29 @@ export enum EntityIntent {
   EDIT = 'edit'
 }
 
+export enum ConnectorCategory {
+  ARTIFACTORY = 'ARTIFACTORY',
+  CLOUD_COST = 'CLOUD_COST',
+  CLOUD_PROVIDER = 'CLOUD_PROVIDER',
+  CODE_REPO = 'CODE_REPO',
+  COMMUNICATION = 'COMMUNICATION',
+  DATABASE = 'DATABASE',
+  DOCUMENTATION = 'DOCUMENTATION',
+  MONITORING = 'MONITORING',
+  SECRET_MANAGER = 'SECRET_MANAGER',
+  TICKETING = 'TICKETING'
+}
+
 export const connectorRefFilters = {
-  success: 'Success',
-  all: 'All connectors'
+  all: 'All connectors',
+  [ConnectorCategory.ARTIFACTORY]: 'Artifact Repository',
+  [ConnectorCategory.CLOUD_COST]: 'Cloud Cost',
+  [ConnectorCategory.CLOUD_PROVIDER]: 'Cloud Provider',
+  [ConnectorCategory.CODE_REPO]: 'Code Repository',
+  [ConnectorCategory.COMMUNICATION]: 'Communication',
+  [ConnectorCategory.DATABASE]: 'Database',
+  [ConnectorCategory.DOCUMENTATION]: 'Documentation',
+  [ConnectorCategory.MONITORING]: 'Monitoring',
+  [ConnectorCategory.SECRET_MANAGER]: 'Secret Manager',
+  [ConnectorCategory.TICKETING]: 'Ticketing'
 }

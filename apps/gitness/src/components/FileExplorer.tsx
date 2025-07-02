@@ -145,11 +145,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     }
 
     if (isLoading) {
-      return (
-        // <div className="flex items-center justify-center w-full">
-        <IconV2 name="loader" className="animate-spin" />
-        // </div>
-      )
+      return <IconV2 name="loader" className="animate-spin" />
     }
 
     if (error) {

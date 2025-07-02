@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, IconV2, type ButtonSizes } from '@/components'
+import { Button, DropdownMenu, IconV2, Text, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
@@ -53,11 +53,11 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
           {!branchPrefix && (
             <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
           )}
-          <span className="text-ellipsis whitespace-nowrap">
+          <Text className="truncate">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
-          </span>
+          </Text>
           <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>

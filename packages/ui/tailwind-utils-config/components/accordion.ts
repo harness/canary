@@ -17,10 +17,6 @@ export default {
     '&-item': {
       borderBottom: '1px solid var(--cn-border-3)',
 
-      '&:last-child': {
-        '@apply border-0': ''
-      },
-
       '&:where([data-disabled]) [class*="cn-accordion"]': {
         color: 'var(--cn-state-disabled-text)'
       }

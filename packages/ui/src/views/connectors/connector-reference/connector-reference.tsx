@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Alert, Button, ButtonLayout, IconV2, LogoV2, StackedList } from '@/components'
 import {
-  ConnectorCategory,
+  ConnectorConfigType,
   ConnectorItem,
   connectorRefFilters,
   DirectionEnum,
@@ -28,7 +28,7 @@ export interface ConnectorReferenceProps {
   // Callbacks
   onSelectEntity: (entity: ConnectorItem) => void
   onScopeChange: (direction: DirectionEnum) => void
-  onFilterChange: (type: ConnectorCategory) => void
+  onFilterChange: (type: Exclude<ConnectorConfigType, 'Terraform'> | 'all') => void
   onCancel?: () => void
   isLoading?: boolean
 

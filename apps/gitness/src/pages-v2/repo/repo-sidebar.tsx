@@ -92,6 +92,9 @@ export const RepoSidebar = () => {
       } else if (selectedGitRefTag) {
         setSelectedBranchTag({ name: gitRefName, sha: '' })
         setSelectedRefType(BranchSelectorTab.TAGS)
+      } else {
+        setSelectedBranchTag({ name: fullGitRef, sha: fullGitRef })
+        setSelectedRefType(BranchSelectorTab.BRANCHES)
       }
     }
   }, [repository?.default_branch, fullGitRef, branchList, tagList, gitRefName, selectedGitRefBranch])

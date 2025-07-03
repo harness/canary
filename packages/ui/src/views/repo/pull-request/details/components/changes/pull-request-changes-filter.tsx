@@ -265,7 +265,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   setJumpToDiff(diff.filePath)
                 }}
                 title={
-                  <>
+                  <div className="flex min-w-0 items-center gap-x-3">
                     <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
                       <IconV2 name="page" className="shrink-0 text-icons-1" />
                       <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
@@ -284,7 +284,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                         <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
                       )}
                     </div>
-                  </>
+                  </div>
                 }
               />
             ))}

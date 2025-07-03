@@ -181,6 +181,7 @@ export default function AppMFE({
                   customPromises,
                   routes,
                   hooks,
+                  mfeTheme: theme,
                   setMFETheme
                 }}
               >

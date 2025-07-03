@@ -47,6 +47,7 @@ interface IMFEContext {
     toProjectSettings: () => string
   }>
   hooks: Hooks
+  mfeTheme?: string
   setMFETheme: (newTheme: string) => void
 }
 
@@ -58,5 +59,6 @@ export const MFEContext = createContext<IMFEContext>({
   customPromises: {},
   routes: {},
   hooks: {},
+  mfeTheme: undefined,
   setMFETheme: noop
 })

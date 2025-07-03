@@ -10,6 +10,9 @@ export default {
       '&:where(.cn-drawer-content-right), &:where(.cn-drawer-content-left)': {
         '@apply inset-y-0': '',
 
+        '&:where(.cn-drawer-content-xs)': {
+          width: 'var(--cn-drawer-xs)'
+        },
         '&:where(.cn-drawer-content-sm)': {
           width: 'var(--cn-drawer-sm)'
         },
@@ -24,6 +27,9 @@ export default {
       '&:where(.cn-drawer-content-top), &:where(.cn-drawer-content-bottom)': {
         '@apply inset-x-0': '',
 
+        '&:where(.cn-drawer-content-xs)': {
+          height: 'var(--cn-drawer-xs)'
+        },
         '&:where(.cn-drawer-content-sm)': {
           height: 'var(--cn-drawer-sm)'
         },
@@ -116,7 +122,10 @@ export default {
 
     '&-body': {
       '@apply size-full': '',
-      padding: 'var(--cn-drawer-container)'
+
+      '&-content': {
+        padding: 'var(--cn-drawer-container)'
+      }
     },
 
     '&-body-wrap': {
@@ -133,6 +142,14 @@ export default {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-end)',
         pointerEvents: 'none'
+      },
+
+      '&:where(.cn-drawer-body-wrap-top)': {
+        '@apply before:hidden': ''
+      },
+
+      '&:where(.cn-drawer-body-wrap-bottom)': {
+        '@apply after:hidden': ''
       }
     },
 

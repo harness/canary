@@ -286,12 +286,36 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
 
 ## Drawer sizes
 
-The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `sm`, `md`, and `lg`.
+The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `xs`, `sm`, `md`, and `lg`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <ButtonLayout orientation="vertical">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'xs' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="xs">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'sm' size</Button>

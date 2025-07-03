@@ -2,11 +2,13 @@ import { FC, HTMLAttributes, ReactNode, RefObject, useCallback, useEffect, useRe
 
 import { cn } from '@utils/cn'
 
+export type IntersectionObserverEntryCallback = (entry: IntersectionObserverEntry) => void
+
 export type ScrollAreaIntersectionProps = {
-  onScrollTop?: () => void
-  onScrollBottom?: () => void
-  onScrollLeft?: () => void
-  onScrollRight?: () => void
+  onScrollTop?: IntersectionObserverEntryCallback
+  onScrollBottom?: IntersectionObserverEntryCallback
+  onScrollLeft?: IntersectionObserverEntryCallback
+  onScrollRight?: IntersectionObserverEntryCallback
 
   rootMargin?: { top?: string; right?: string; bottom?: string; left?: string } | string
   threshold?: number | number[]
@@ -44,7 +46,10 @@ const ScrollArea: FC<ScrollAreaProps> = ({
   const rightMarkerRef = useRef<HTMLDivElement | null>(null)
 
   const createObserver = useCallback(
-    (markerRef: RefObject<HTMLElement>, callback?: () => void): IntersectionObserver | null => {
+    (
+      markerRef: RefObject<HTMLElement>,
+      callback?: (entry: IntersectionObserverEntry) => void
+    ): IntersectionObserver | null => {
       if (!markerRef.current || !callback) return null
 
       if (typeof rootMargin === 'object') {
@@ -54,9 +59,7 @@ const ScrollArea: FC<ScrollAreaProps> = ({
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            callback()
-          }
+          callback(entry)
         },
         {
           root: viewportRef.current,
@@ -74,7 +77,7 @@ const ScrollArea: FC<ScrollAreaProps> = ({
   useEffect(() => {
     const observers: IntersectionObserver[] = []
 
-    const configs: [RefObject<HTMLElement>, (() => void) | undefined][] = [
+    const configs: [RefObject<HTMLElement>, IntersectionObserverEntryCallback | undefined][] = [
       [topMarkerRef, onScrollTop],
       [bottomMarkerRef, onScrollBottom],
       [leftMarkerRef, onScrollLeft],

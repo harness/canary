@@ -7,6 +7,7 @@ import { getModeColorContrastFromFullTheme } from '@harnessio/ui/components'
 import { FullTheme, IThemeStore, ModeType, ThemeProvider as UIThemeProvider } from '@harnessio/ui/context'
 
 import { useIsMFE } from '../hooks/useIsMFE'
+import { useMFEContext } from '../hooks/useMFEContext'
 
 export const useThemeStore = create<IThemeStore>()(
   persist(
@@ -27,6 +28,7 @@ interface ThemeProviderProps {
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
   const { theme, setTheme, isLightTheme } = useThemeStore()
+  const { theme: mfeTheme } = useMFEContext()
   const isMFE = useIsMFE()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -72,6 +74,12 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
       document.head.appendChild(colorSchemeMeta)
     }
   }, [theme, setTheme, systemMode])
+
+  useEffect(() => {
+    if (isMFE) {
+      setTheme(mfeTheme as any)
+    }
+  }, [mfeTheme])
 
   return (
     <UIThemeProvider theme={theme} setTheme={setTheme} isLightTheme={isLightTheme}>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, ButtonLayout, Dialog, IconV2, Text } from '@/components'
+import { Button, ButtonLayout, Dialog, IconV2, Layout, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -129,7 +129,7 @@ export const ManageNavigation = ({
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
           />
-          <Text className="mt-6 inline-block" variant="body-single-line-normal" color="foreground-3">
+          <Text className="mt-6" variant="body-single-line-normal" color="foreground-3">
             Pinned
           </Text>
           {!currentPinnedItems.length ? (
@@ -155,25 +155,30 @@ export const ManageNavigation = ({
                     <DraggableItem id={getItemId(index + permanentlyPinnedItems.length)} tag="li" key={item.title}>
                       {({ attributes, listeners }) => {
                         return (
-                          <>
+                          <Layout.Flex
+                            justify="between"
+                            className="hover:bg-cn-background-3 w-full grow cursor-grab gap-x-2.5 rounded px-3 active:cursor-grabbing"
+                          >
                             <Button
-                              className={'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing'}
-                              variant="ghost"
                               {...attributes}
                               {...listeners}
+                              variant="transparent"
+                              className="w-full justify-start"
                             >
                               <IconV2 className="w-3.5" name="grip-dots" size="xs" />
                               <Text color="inherit">{item.title}</Text>
                             </Button>
                             <Button
-                              className="absolute right-1 top-0.5 z-20"
+                              iconOnly
                               size="sm"
-                              variant="ghost"
-                              onClick={() => removeFromPinnedItems(item)}
+                              variant="transparent"
+                              onClick={() => {
+                                removeFromPinnedItems(item)
+                              }}
                             >
                               <IconV2 className="w-3.5" name="xmark" size="xs" />
                             </Button>
-                          </>
+                          </Layout.Flex>
                         )
                       }}
                     </DraggableItem>

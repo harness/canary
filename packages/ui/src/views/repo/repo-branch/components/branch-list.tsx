@@ -128,9 +128,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
-                    <time className="truncate text-cn-foreground-1">
+                    <span className="truncate text-cn-foreground-1">
                       {timeAgo(branch?.timestamp, { dateStyle: 'medium' })}
-                    </time>
+                    </span>
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}

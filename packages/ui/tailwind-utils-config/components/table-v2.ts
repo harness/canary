@@ -4,7 +4,7 @@ export default {
 
     // Table container
     '&-container': {
-      '@apply relative w-full overflow-hidden border-cn-borders-3': '',
+      '@apply relative w-full overflow-auto border-cn-borders-3': '',
       borderWidth: 'var(--cn-table-border)',
       borderRadius: 'var(--cn-table-radius)',
       borderColor: 'var(--cn-border-3)'

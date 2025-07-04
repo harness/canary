@@ -23,6 +23,7 @@ const textareaVariants = cva('cn-textarea', {
 })
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, BaseInputsProp {
+  label?: string
   theme?: VariantProps<typeof textareaVariants>['theme']
   size?: VariantProps<typeof textareaVariants>['size']
   resizable?: boolean
@@ -109,7 +110,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 </Label>
               )}
 
-              {maxCharacters && (
+              {!!maxCharacters && !isHorizontal && (
                 <span className={cn('cn-textarea-counter', { 'cn-textarea-counter-disabled': disabled })} role="status">
                   {counter} / {maxCharacters}
                 </span>
@@ -120,6 +121,11 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
 
         <ControlGroup.InputWrapper>
+          {!!maxCharacters && isHorizontal && (
+            <span className={cn('cn-textarea-counter', { 'cn-textarea-counter-disabled': disabled })} role="status">
+              {counter} / {maxCharacters}
+            </span>
+          )}
           <textarea
             id={id}
             ref={mergedRef}

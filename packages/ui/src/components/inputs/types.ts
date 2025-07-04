@@ -1,6 +1,8 @@
 import { InputOrientationProp, LabelProps } from '@/components'
 
-export interface BaseInputsProp extends InputOrientationProp, Omit<LabelProps, 'suffix' | 'disabled'> {
+export interface BaseInputsProp
+  extends InputOrientationProp,
+    Pick<LabelProps, 'optional' | 'informerProps' | 'informerContent'> {
   wrapperClassName?: string
   caption?: string
   error?: string

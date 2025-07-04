@@ -10,7 +10,8 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-4 max-w-96 w-full">
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
     <Textarea
       id="1"
       name="default"
@@ -19,42 +20,8 @@ import { DocsPage } from "@/components/docs-page";
       caption="Caption text"
       rows={4}
     />
-    <Textarea
-      id="2"
-      name="resizable"
-      label="Resizable"
-      placeholder="Placeholder"
-      caption="Caption text"
-      defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      optional
-      resizable
-      rows={4}
-    />
-    <Textarea
-      id="3"
-      name="error"
-      label="This component in error state and it has a very long text"
-      placeholder="Placeholder"
-      maxCharacters={100}
-      theme="danger"
-      defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      error="Error message"
-      optional
-      rows={4}
-    />
-    <Textarea
-      id="4"
-      name="disabled"
-      label="Disabled"
-      placeholder="Placeholder"
-      maxCharacters={100}
-      defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      caption="Caption text"
-      optional
-      rows={4}
-      disabled
-    />
-  </div>`}
+  </Layout.Vertical>
+  `}
 />
 
 ## Usage
@@ -74,111 +41,302 @@ return (
 )
 ```
 
-## Sizes
-
-The `Textarea` component supports the following sizes: `sm` and `default`. The default size is `default`.
+## Disable
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-4 max-w-96 w-full">
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <Textarea
+      id="disabled"
+      name="disabled"
+      label="Disabled"
+      disabled
+      placeholder="Placeholder"
+      rows={4}
+    />
+  </Layout.Vertical>
+`}
+/>
+
+## Resizable
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <Textarea
+      id="2"
+      name="resizable"
+      label="Resizable"
+      placeholder="Placeholder"
+      resizable
+      rows={4}
+    />
+  </Layout.Vertical>
+`}
+/>
+
+## Theme
+
+The `Textarea` component accepts a `theme` prop, which defines the visual state of the input: either `warning`, or `danger`.
+
+When an error occurs, set `theme="danger"` and pass the error message to the `error` prop.
+
+For warnings, set `theme="warning"` and provide the warning message via the `warning` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <Textarea
+      id="error"
+      name="error"
+      label="This component in error state"
+      placeholder="Placeholder"
+      theme="danger"
+      error="Error message"
+      optional
+      rows={4}
+    />
+    <Textarea
+      id="warning"
+      name="warning"
+      label="This component in warning state"
+      placeholder="Placeholder"
+      theme="warning"
+      warning="Warning message"
+      optional
+      rows={4}
+    />
+  </Layout.Vertical>
+`}
+/>
+
+## Character Limit
+
+The `Textarea` component supports a `maxCharacters` prop, which defines the maximum number of characters a user can enter.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <Textarea
+      id="max-characters"
+      name="max-characters"
+      label="Character Limit"
+      placeholder="Placeholder"
+      maxCharacters={200}
+      rows={4}
+    />
+  </Layout.Vertical>
+`}
+/>
+
+## Sizes
+
+The `Textarea` component supports the following sizes: `sm` and `md`. The default size is `md`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
     <Textarea
       id="1"
+      name="md"
+      label="Size md"
+      placeholder="Placeholder"
+      rows={4}
+    />
+    <Textarea
+      id="2"
       name="sm"
-      label="Size small:"
+      label="Size sm"
       placeholder="Placeholder"
       rows={4}
       size="sm"
     />
-    
+  </Layout.Vertical>
+`}
+/>
+
+## Orientation
+
+The `Textarea` component accepts an optional `orientation` prop, which defines the layout direction of the textarea and its label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
     <Textarea
-      id="2"
-      name="default"
-      label="Size default:"
+      id="vertical"
+      name="vertical"
+      label="Vertical"
       placeholder="Placeholder"
       rows={4}
+      caption="Caption text"
+      maxCharacters={200}
     />
-  </div>`}
+    <Textarea
+      id="horizontal"
+      name="horizontal"
+      label="Horizontal"
+      placeholder="Placeholder"
+      rows={4}
+      orientation="horizontal"
+      caption="Caption text"
+      maxCharacters={200}
+    />
+  </Layout.Vertical>
+`}
 />
 
 ## API Reference
 
-The `Textarea` can be used either controlled or uncontrolled. When controlled, the
-`Textarea` will use the `value` prop as its value and call the `onChange` callback whenever
-the value changes. When uncontrolled, the `Textarea` will use the `defaultValue` prop as
-its initial value and will call `onChange` when its value changes. The `Textarea` also supports
-all attributes of the `textarea` HTML element.
+The `Textarea` can be used either controlled or uncontrolled.
+
+When controlled, the `Textarea` will use the `value` prop as its value and call the `onChange` callback whenever the value changes.
+
+When uncontrolled, the `Textarea` will use the `defaultValue` prop as its initial value and will call `onChange` when its value changes.
+
+The `Textarea` also supports all attributes of the `textarea` HTML element.
+
+```typescript
+interface InformerProps extends Omit<TooltipProps, "children"> {
+  className?: string;
+  /**
+   * If disabled, the tooltip will not be shown
+   */
+  disabled?: boolean;
+  iconProps?: IconPropsV2;
+}
+```
 
 <DocsPage.PropsTable
   props={[
     {
+      name: "wrapperClassName",
+      description: "Additional CSS classes for the wrapper element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the textarea element",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
       name: "name",
-      description: "Name of the textarea",
+      description: "Name of the textarea.",
       required: false,
       value: "string",
     },
     {
       name: "id",
-      description: "Id of the textarea",
+      description: "Id of the textarea.",
       required: false,
       value: "string",
     },
     {
       name: "value",
-      description: "Value of the textarea",
+      description: "Value of the textarea.",
       required: false,
       value: "string",
     },
     {
       name: "onChange",
-      description: "Callback to call when the value changes",
+      description: "Callback to call when the value changes.",
       required: false,
       value: "(value: string) => void",
     },
     {
       name: "label",
-      description: "Label for the textarea",
+      description: "Label for the textarea.",
       required: false,
       value: "string",
     },
     {
       name: "caption",
-      description: "Caption to describe the textarea",
+      description: "Caption to describe the textarea.",
       required: false,
       value: "string",
     },
     {
       name: "error",
-      description: "Error message to display below",
+      description: "Error message to display below.",
       required: false,
       value: "string",
     },
     {
+      name: "warning",
+      description: "Warning message to display (will use warning theme)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
       name: "optional",
-      description: "Indicate if the textarea is optional",
+      description: "Indicate if the textarea is optional.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "resizable",
-      description: "Indicate if the textarea should be resizable",
+      description: "Indicate if the textarea should be resizable.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "disabled",
-      description: "Indicate if the textarea is disabled",
+      description: "Indicate if the textarea is disabled.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "size",
-      description: "Size of the textarea",
+      description: "Size of the textarea.",
       required: false,
       defaultValue: "'md'",
       value: "'sm' | 'md'",
+    },
+    {
+      name: "maxCharacters",
+      description: "Defines the maximum number of characters a user can enter.",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "informerContent",
+      description: "Content to display in the label informer tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "informerProps",
+      description: "Additional props for configuring the informer tooltip.",
+      required: false,
+      value: "InformerProps",
+    },
+    {
+      name: "labelSuffix",
+      description:
+        "Customized with a suffix element that appears on the right side of the label.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "orientation",
+      description: "Defines the layout direction of the input and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
   ]}
 />

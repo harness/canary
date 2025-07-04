@@ -119,7 +119,7 @@ return (
       <Drawer.Body className="">
         Content of the drawer goes here
 
-        <Drawer.Root nested>
+        <Drawer.Root>
           <Drawer.Trigger asChild>
             <Button>Open Nested Drawer</Button>
           </Drawer.Trigger>
@@ -180,7 +180,7 @@ All parts of the `Drawer` component can be imported and composed as required.
 
 ## Nested drawers
 
-Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`, and adding the `nested` prop to the nested root.
+Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`.
 
 <DocsPage.ComponentExample
   client:only
@@ -199,7 +199,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
         </Drawer.Header>
 
         <Drawer.Body>
-          <Drawer.Root nested>
+          <Drawer.Root>
             <Drawer.Trigger asChild>
               <Button>Open Nested Drawer</Button>
             </Drawer.Trigger>
@@ -210,7 +210,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
               </Drawer.Header>
 
               <Drawer.Body>
-                <Drawer.Root nested>
+                <Drawer.Root>
                   <Drawer.Trigger asChild>
                     <Button>Open Nested Drawer</Button>
                   </Drawer.Trigger>
@@ -572,13 +572,6 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
     {
       name: "handleOnly",
       description: "When true dragging will only be possible by the handle.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "nested",
-      description: "Whether the drawer is nested in another drawer.",
       required: false,
       value: "boolean",
       defaultValue: "false",

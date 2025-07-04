@@ -1,13 +1,12 @@
-import { ComponentProps, useEffect, useRef } from 'react'
+import { ComponentProps, useEffect, useRef, useState } from 'react'
 
 import { usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import styleText from 'vaul/style.css?raw'
 
-import { DrawerContext } from './drawer-context'
+import { DrawerContext, useDrawerContext } from './drawer-context'
 
 export const DrawerRoot = ({
-  nested = false,
   direction = 'right',
   open,
   children,
@@ -17,6 +16,11 @@ export const DrawerRoot = ({
   const triggerRef = useRef<HTMLButtonElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   const { portalContainer } = usePortal()
+
+  // In case if drawer is opened via trigger, to track if any nested drawer is opened
+  const [isTriggerOpen, setIsTriggerOpen] = useState(false)
+  const { isParentOpen } = useDrawerContext()
+  const nested = isParentOpen
 
   useEffect(() => {
     if (!portalContainer || portalContainer.querySelector('#vaul-style')) return
@@ -55,13 +59,16 @@ export const DrawerRoot = ({
 
   const rootProps = {
     direction,
-    onOpenChange,
+    onOpenChange: (open: boolean) => {
+      setIsTriggerOpen(open)
+      onOpenChange?.(open)
+    },
     ...(!nested && { open }),
     ...props
   }
 
   return (
-    <DrawerContext.Provider value={{ direction, nested }}>
+    <DrawerContext.Provider value={{ direction, nested, isParentOpen: isParentOpen || open || isTriggerOpen }}>
       <RootComponent {...rootProps} container={portalContainer as HTMLElement}>
         {nested && FakeTriggers}
         {children}

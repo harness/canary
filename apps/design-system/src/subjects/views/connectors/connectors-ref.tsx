@@ -117,7 +117,7 @@ export const ConnectorsRefPage = ({
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
             />
-            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
+            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected}>
               <Drawer.Content>
                 {!!connectorEntity && (
                   <ConnectorEntityForm

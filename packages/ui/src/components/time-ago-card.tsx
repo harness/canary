@@ -1,6 +1,6 @@
-import { FC, Fragment, useMemo } from 'react'
+import { FC, Fragment, useMemo, useState } from 'react'
 
-import { StatusBadge, Tooltip } from '@/components'
+import { Popover, StatusBadge, Text } from '@/components'
 
 const utcFormatter = new Intl.DateTimeFormat(undefined, {
   day: '2-digit',
@@ -28,7 +28,7 @@ const localTimeFormatter = new Intl.DateTimeFormat(undefined, {
   second: '2-digit'
 })
 
-interface TimeAgoHoverCardProps {
+interface TimeAgoCardProps {
   formattedDate: string
   timeStamp: number
 }
@@ -36,7 +36,9 @@ interface TimeAgoHoverCardProps {
 const getTimeZoneAbbreviation = () =>
   new Date().toLocaleTimeString(undefined, { timeZoneName: 'short' }).split(' ').pop()
 
-export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, timeStamp }) => {
+export const TimeAgoCard: FC<TimeAgoCardProps> = ({ formattedDate, timeStamp }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const content = useMemo(() => {
     const formattedDates = {
       utcDate: utcFormatter.format(timeStamp),
@@ -46,7 +48,7 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
     }
 
     return (
-      <div className="grid min-w-80 grid-cols-[auto_1fr_auto] gap-x-3 gap-y-2 whitespace-nowrap py-2 text-sm">
+      <div className="cn-time-ago-card-content">
         {(['UTC', 'Local'] as const).map(zone => {
           const date = zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate
           const time = zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime
@@ -56,10 +58,18 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
               <StatusBadge variant="secondary" size="sm">
                 {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
               </StatusBadge>
-              <time dateTime={date}>{date}</time>
-              <time dateTime={time} className="ml-auto text-cn-foreground-3">
+              <Text<'time'> variant="body-single-line-normal" as="time" dateTime={date}>
+                {date}
+              </Text>
+              <Text<'time'>
+                variant="body-single-line-normal"
+                as="time"
+                dateTime={time}
+                color="foreground-3"
+                className="ml-auto"
+              >
                 {time}
-              </time>
+              </Text>
             </Fragment>
           )
         })}
@@ -67,9 +77,23 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
     )
   }, [timeStamp])
 
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault()
+    setIsOpen(prev => !prev)
+  }
+
+  const handleClickContent = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
   return (
-    <Tooltip content={content}>
-      <time className="h-auto p-0 data-[state=delayed-open]:text-cn-foreground-1">{formattedDate}</time>
-    </Tooltip>
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick}>
+        <time>{formattedDate}</time>
+      </Popover.Trigger>
+      <Popover.Content onClick={handleClickContent} side="top">
+        {content}
+      </Popover.Content>
+    </Popover.Root>
   )
 }

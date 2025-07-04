@@ -36,6 +36,7 @@ import {
   tabsStyles,
   tagStyles,
   textareaStyles,
+  timeAgoCardStyles,
   toggleGroupStyles,
   toggleStyles,
   tooltipStyles
@@ -482,6 +483,7 @@ export default {
         tooltipStyles,
         breadcrumbStyles,
         iconsAndLogos,
+        timeAgoCardStyles,
         toggleStyles,
         toggleGroupStyles,
         buttonGroupStyle,

@@ -160,7 +160,10 @@ const AppSidebar: FC<{ children: React.ReactNode }> = ({ children }) => {
       </Sidebar.Provider>
       <ThemeDialog
         theme={theme}
-        setTheme={setMFETheme}
+        setTheme={newTheme => {
+          const effectiveTheme = (newTheme ?? '').startsWith('dark') ? 'Dark' : 'Light'
+          setMFETheme(effectiveTheme)
+        }}
         open={openThemeDialog}
         onOpenChange={() => setOpenThemeDialog(false)}
       />

@@ -12,13 +12,13 @@ const defaultOptions: Array<RadioSelectOption<ConnectorSelectionType>> = [
   {
     id: 'new-connector',
     title: 'New Connector',
-    description: 'Create a new connector.',
+    description: 'Create a new connector',
     value: ConnectorSelectionType.NEW
   },
   {
     id: 'existing-connector',
     title: 'Existing Connector',
-    description: 'Use an existing connector.',
+    description: 'Use an existing connector',
     value: ConnectorSelectionType.EXISTING
   }
 ]

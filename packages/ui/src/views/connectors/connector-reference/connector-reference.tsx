@@ -1,7 +1,14 @@
 import { FC } from 'react'
 
 import { Alert, Button, ButtonLayout, IconV2, LogoV2, StackedList } from '@/components'
-import { ConnectorItem, connectorRefFilters, DirectionEnum, EntityReference, EntityRendererProps } from '@/views'
+import {
+  ConnectorConfigType,
+  ConnectorItem,
+  connectorRefFilters,
+  DirectionEnum,
+  EntityReference,
+  EntityRendererProps
+} from '@/views'
 import { cn } from '@utils/cn'
 
 import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
@@ -21,7 +28,7 @@ export interface ConnectorReferenceProps {
   // Callbacks
   onSelectEntity: (entity: ConnectorItem) => void
   onScopeChange: (direction: DirectionEnum) => void
-  onFilterChange: (type: string) => void
+  onFilterChange: (type: Exclude<ConnectorConfigType, 'Terraform'> | 'all') => void
   onCancel?: () => void
   isLoading?: boolean
 

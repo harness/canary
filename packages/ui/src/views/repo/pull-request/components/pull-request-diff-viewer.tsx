@@ -352,7 +352,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="border-cn-borders-2 bg-cn-background-1 flex w-full flex-col border-l p-4">
+        <div className="flex w-full flex-col border-l border-cn-borders-2 bg-cn-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -392,7 +392,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border-cn-borders-2 bg-cn-background-1 border-l">
+        <div className="border-l border-cn-borders-2 bg-cn-background-1">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -421,7 +421,7 @@ const PullRequestDiffViewer = ({
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
-                      <span className="text-cn-foreground-1 font-medium">{parent.payload?.resolver?.display_name}</span>
+                      <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
                       <span className="text-cn-foreground-2">marked this conversation as resolved</span>
                     </div>
                   )
@@ -463,7 +463,7 @@ const PullRequestDiffViewer = ({
                       ]}
                       content={
                         parent?.deleted ? (
-                          <div className="bg-cn-background-1 rounded-md border p-1">
+                          <div className="rounded-md border bg-cn-background-1 p-1">
                             {t('views:pullRequests.deletedComment')}
                           </div>
                         ) : editModes[componentId] ? (
@@ -542,7 +542,7 @@ const PullRequestDiffViewer = ({
                               ]}
                               content={
                                 reply?.deleted ? (
-                                  <div className="bg-cn-background-1 rounded-md border p-1">
+                                  <div className="rounded-md border bg-cn-background-1 p-1">
                                     {t('views:pullRequests.deletedComment')}
                                   </div>
                                 ) : editModes[replyComponentId] ? (
@@ -622,7 +622,7 @@ const PullRequestDiffViewer = ({
           {/* @ts-ignore */}
           <DiffView<Thread[]>
             ref={ref}
-            className="bg-tr text-cn-foreground-3 w-full"
+            className="bg-tr w-full text-cn-foreground-3"
             renderWidgetLine={renderWidgetLine}
             renderExtendLine={renderExtendLine}
             diffFile={diffFileInstance}

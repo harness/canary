@@ -28,6 +28,7 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
+    e.preventDefault()
     setCopied(true)
     onClick?.(e)
   }

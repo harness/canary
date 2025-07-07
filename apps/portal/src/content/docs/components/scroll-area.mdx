@@ -96,6 +96,8 @@ The `ScrollArea` component provides several event handlers to respond to scroll 
 - `onScrollLeft`: Triggered when the scroll area is scrolled to the left.
 - `onScrollRight`: Triggered when the scroll area is scrolled to the right.
 
+It provides an `IntersectionObserverEntry` parameter that contains information about the scroll position and visibility of the target element.
+
 `rootMargin` and `threshold` props can be used to customize the scroll event behavior.
 Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to define how much of the target should be visible before triggering the scroll event.
 
@@ -104,7 +106,7 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
   code={`
 <div>
   <ScrollArea className="w-[300px] h-[200px] border"
-    onScrollBottom={() => console.log('Reached bottom')}
+    onScrollBottom={(entry) => console.log('Reached bottom', entry)}
     onScrollTop={() => console.log('Reached top')}
     onScrollLeft={() => console.log('Reached left')}
     onScrollRight={() => console.log('Reached right')}
@@ -197,28 +199,28 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
       description:
         "Callback function triggered when the scroll area is scrolled to the top.",
       required: false,
-      value: "() => void",
+      value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "onScrollBottom",
       description:
         "Callback function triggered when the scroll area is scrolled to the bottom.",
       required: false,
-      value: "() => void",
+      value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "onScrollLeft",
       description:
         "Callback function triggered when the scroll area is scrolled to the left.",
       required: false,
-      value: "() => void",
+      value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "onScrollRight",
       description:
         "Callback function triggered when the scroll area is scrolled to the right.",
       required: false,
-      value: "() => void",
+      value: "(entry: IntersectionObserverEntry) => void",
     },
     {
       name: "rootMargin",

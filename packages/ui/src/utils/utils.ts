@@ -1,6 +1,6 @@
 import { Children, createElement, isValidElement, ReactElement, ReactNode } from 'react'
 
-import { TimeAgoHoverCard } from '@/components'
+import { TimeAgoCard } from '@/components'
 import { formatDistanceToNow } from 'date-fns'
 
 import { LOCALE } from './TimeUtils'
@@ -68,7 +68,7 @@ export const timeAgo = (
   if (isBeyondCutoffDays) {
     const formattedDate = new Intl.DateTimeFormat(LOCALE, dateTimeFormatOptions).format(timestampDate)
 
-    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestampDate.getTime() })
+    return createElement(TimeAgoCard, { formattedDate, timeStamp: timestampDate.getTime() })
   }
 
   try {
@@ -76,7 +76,7 @@ export const timeAgo = (
       addSuffix: true,
       includeSeconds: true
     })
-    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestampDate.getTime() })
+    return createElement(TimeAgoCard, { formattedDate, timeStamp: timestampDate.getTime() })
   } catch (error) {
     console.error(`Failed to format time ago: ${error}`)
     return 'Unknown time'

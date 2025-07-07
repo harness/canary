@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
-import { DropdownMenu, SearchBox } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { DropdownMenu, SearchInput } from '@/components'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 
 const filterItems = (categories: MenuGroupType[], query: string): MenuGroupType[] => {
@@ -29,22 +28,21 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const {
-    search: searchQuery,
-    handleSearchChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setFilteredItems(filterItems(navbarMenuData, val))
-  })
+  const handleOnSearchChange = useCallback(
+    (searchQuery: string) => {
+      setFilteredItems(filterItems(navbarMenuData, searchQuery))
+    },
+    [navbarMenuData]
+  )
 
   const handleItemClick = (item: NavbarItemType) => {
     addToPinnedItems(item)
-    handleResetSearch()
+    setFilteredItems(filterItems(navbarMenuData, ''))
     setSearchDialogOpen(false)
   }
 
   const handleInputFocus = () => {
-    if (searchQuery === '') {
+    if (inputRef.current?.value === '') {
       setFilteredItems(navbarMenuData)
     }
   }
@@ -54,17 +52,14 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
 
   return (
     <DropdownMenu.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogOpen}>
-      <DropdownMenu.Trigger>
-        <SearchBox.Root
+      <DropdownMenu.Trigger className="w-full">
+        <SearchInput
           className="w-full"
-          inputClassName="h-9 placeholder:text-cn-foreground-3"
+          id="manage-navigation-search"
           ref={inputRef}
           placeholder="Add menu element"
-          value={searchQuery}
-          handleChange={handleSearchChange}
-          hasSearchIcon={false}
           onFocus={handleInputFocus}
-          onClick={() => setSearchDialogOpen(true)}
+          onChange={handleOnSearchChange}
         />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="start" className="w-[--radix-dropdown-menu-trigger-width] max-w-none">

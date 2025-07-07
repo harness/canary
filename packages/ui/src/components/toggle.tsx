@@ -50,9 +50,9 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
 type TogglePropsIconOnly = TogglePropsBase & {
   iconOnly: true
   prefixIcon: IconV2NamesType
-  prefixIconProps: IconPropsV2
-  suffixIcon: never
-  suffixIconProps: never
+  prefixIconProps?: IconPropsV2
+  suffixIcon?: never
+  suffixIconProps?: never
 }
 
 type TogglePropsNotIconOnly = TogglePropsBase & {

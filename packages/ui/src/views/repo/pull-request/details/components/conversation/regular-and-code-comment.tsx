@@ -235,7 +235,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               contentClassName: 'border-0 pb-0 rounded-none',
               icon: avatar,
               content: commentItem?.deleted ? (
-                <div className="bg-cn-background-1 rounded-md border p-1">{t('views:pullRequests.deletedComment')}</div>
+                <div className="rounded-md border bg-cn-background-1 p-1">{t('views:pullRequests.deletedComment')}</div>
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
                   handleUpload={handleUpload}
@@ -291,7 +291,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
-        contentHeader: <span className="text-cn-foreground-1 font-medium">{payload?.code_comment?.path}</span>,
+        contentHeader: <span className="font-medium text-cn-foreground-1">{payload?.code_comment?.path}</span>,
         content: (
           <div className="flex flex-col">
             {!!startingLine && (

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, ButtonLayout, Dialog, IconV2, Text } from '@/components'
+import { Button, ButtonLayout, Dialog, IconV2, Layout, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -129,7 +129,7 @@ export const ManageNavigation = ({
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
           />
-          <Text className="mt-6 inline-block" variant="body-single-line-normal" color="foreground-3">
+          <Text className="mt-6" variant="body-single-line-normal" color="foreground-3">
             Pinned
           </Text>
           {!currentPinnedItems.length ? (
@@ -137,14 +137,23 @@ export const ManageNavigation = ({
               No pinned items
             </Text>
           ) : (
-            <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+            <DndContext
+              onDragEnd={handleDragEnd}
+              collisionDetection={closestCenter}
+              modifiers={[
+                args => ({
+                  ...args.transform,
+                  x: 0 // Prevent horizontal drag
+                })
+              ]}
+            >
               <SortableContext items={currentPinnedItems.map((_, index) => getItemId(index))}>
-                <ul className="-mx-3 mb-1 mt-3.5 flex flex-col gap-y-0.5">
+                <ul className="mb-1 mt-3.5 flex flex-col gap-y-0.5">
                   {permanentlyPinnedItems.map(item => {
                     return (
                       <div
                         key={item.id}
-                        className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-3 opacity-55"
+                        className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-0 opacity-55"
                       >
                         <IconV2 className="w-3.5" name="lock" size="xs" />
                         <Text>{item.title}</Text>
@@ -155,25 +164,30 @@ export const ManageNavigation = ({
                     <DraggableItem id={getItemId(index + permanentlyPinnedItems.length)} tag="li" key={item.title}>
                       {({ attributes, listeners }) => {
                         return (
-                          <>
+                          <Layout.Flex
+                            justify="between"
+                            className="hover:bg-cn-background-3 w-full grow cursor-grab gap-x-2.5 rounded active:cursor-grabbing"
+                          >
                             <Button
-                              className={'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing'}
-                              variant="ghost"
                               {...attributes}
                               {...listeners}
+                              variant="transparent"
+                              className="w-full justify-start"
                             >
                               <IconV2 className="w-3.5" name="grip-dots" size="xs" />
                               <Text color="inherit">{item.title}</Text>
                             </Button>
                             <Button
-                              className="absolute right-1 top-0.5 z-20"
+                              iconOnly
                               size="sm"
-                              variant="ghost"
-                              onClick={() => removeFromPinnedItems(item)}
+                              variant="transparent"
+                              onClick={() => {
+                                removeFromPinnedItems(item)
+                              }}
                             >
                               <IconV2 className="w-3.5" name="xmark" size="xs" />
                             </Button>
-                          </>
+                          </Layout.Flex>
                         )
                       }}
                     </DraggableItem>
@@ -194,17 +208,12 @@ export const ManageNavigation = ({
               </div>
               <ul className="mt-3 flex flex-col gap-y-0.5 pb-5">
                 {currentFilteredRecentItems.map((item, index) => (
-                  <li className="relative flex h-8 items-center" key={`recent-${item.id}-${index}`}>
+                  <li className="relative flex h-8 items-center justify-between" key={`recent-${item.id}-${index}`}>
                     <div className="flex w-full grow items-center gap-x-2.5">
                       <IconV2 className="text-icons-4" name="clock" size="xs" />
                       <Text color="foreground-1">{item.title}</Text>
                     </div>
-                    <Button
-                      className="absolute -right-2 top-0.5 text-icons-4"
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => addToPinnedItems(item)}
-                    >
+                    <Button iconOnly size="sm" variant="transparent" onClick={() => addToPinnedItems(item)}>
                       <IconV2 name="pin" size="xs" />
                     </Button>
                   </li>

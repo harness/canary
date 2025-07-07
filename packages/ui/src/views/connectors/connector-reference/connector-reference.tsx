@@ -77,7 +77,11 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
           )
         }
       >
-        <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
+        <StackedList.Field
+          title={entity.connector.name}
+          description={entity.connector.description}
+          className="truncate overflow-hidden text-nowrap max-w-sm"
+        />
       </StackedList.Item>
     )
   }

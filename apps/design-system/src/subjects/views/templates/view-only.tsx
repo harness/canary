@@ -247,9 +247,7 @@ export const ViewOnlyView = () => {
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle iconOnly>
-                      <IconV2 name="pin" />
-                    </Toggle>
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -269,9 +267,7 @@ export const ViewOnlyView = () => {
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle iconOnly>
-                      <IconV2 name="pin" />
-                    </Toggle>
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -291,9 +287,7 @@ export const ViewOnlyView = () => {
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle iconOnly>
-                      <IconV2 name="pin" />
-                    </Toggle>
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -313,9 +307,7 @@ export const ViewOnlyView = () => {
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle iconOnly>
-                      <IconV2 name="pin" />
-                    </Toggle>
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -335,9 +327,7 @@ export const ViewOnlyView = () => {
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle iconOnly>
-                      <IconV2 name="pin" />
-                    </Toggle>
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -357,9 +347,7 @@ export const ViewOnlyView = () => {
                     <Text wrap="nowrap">{timeAgo('Dec 6, 2024', { dateStyle: 'medium' })}</Text>
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle iconOnly>
-                      <IconV2 name="pin" />
-                    </Toggle>
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>

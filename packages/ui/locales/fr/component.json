@@ -133,6 +133,9 @@
     "input": "Rechercher des fichiers...",
     "noFile": "Aucun fichier trouvé."
   },
+  "widgets": {
+    "viewMore": "View more"
+  },
   "sort": {
     "defaultLabel": "Trier",
     "resetSort": "Reset sort",

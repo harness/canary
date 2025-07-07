@@ -7,15 +7,17 @@ import { AnyFormikValue, IFormDefinition, InputFactory, RootFormProps } from '@h
 import { YamlEditorContextProvider, YamlRevision } from '@harnessio/yaml-editor'
 
 import { VisualYamlValue } from '..'
+import { PipelineInputDefinition } from './types'
 import { collectDefaultValues } from './utils/form-utils'
 import { pipelineInputs2FormInputs, pipelineInputs2JsonSchema } from './utils/inputs-utils'
+import { type InputLayout } from './utils/types'
 import { parseYamlSafe } from './utils/yaml-utils'
 import VisualView from './visual-view'
 import YamlView from './yaml-view'
 
 export interface RunPipelineFormInputsProps {
   view: VisualYamlValue
-  pipelineInputs: Record<string, unknown>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   yamlRevision: YamlRevision
   onYamlRevisionChange: (yamlRevision: YamlRevision) => void
   onValidationChange: (formState: { isValid: boolean; isSubmitted?: boolean }) => void
@@ -29,6 +31,7 @@ export interface RunPipelineFormInputsProps {
     | undefined
   >
   onFormSubmit: (values: AnyFormikValue) => void
+  pipelineInputLayout?: InputLayout
 }
 
 export default function RunPipelineFormInputs(props: RunPipelineFormInputsProps) {
@@ -47,12 +50,20 @@ export default function RunPipelineFormInputs(props: RunPipelineFormInputsProps)
     inputComponentFactory,
     theme,
     rootFormRef,
-    onFormSubmit
+    onFormSubmit,
+    pipelineInputLayout
   } = props
 
   const formDefinition: IFormDefinition = useMemo(() => {
-    return { inputs: pipelineInputs2FormInputs(pipelineInputs, { prefix: 'inputs.' }) }
-  }, [pipelineInputs])
+    return {
+      inputs: pipelineInputs2FormInputs({
+        pipelineInputs,
+        options: { prefix: 'inputs.' },
+        pipelineInputLayout,
+        inputComponentFactory
+      })
+    }
+  }, [pipelineInputs, inputComponentFactory])
 
   const [formValues, setFormValues] = useState<Record<string, unknown> | undefined>()
 

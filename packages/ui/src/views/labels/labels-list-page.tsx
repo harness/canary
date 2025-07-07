@@ -1,14 +1,12 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, ListActions, Option, Pagination, SearchBox, SkeletonList } from '@/components'
-import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
-import { ILabelsStore, SandboxLayout, TranslationStore } from '@/views'
+import { Button, Checkbox, ListActions, Pagination, SearchInput, SkeletonList, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { ILabelsStore, SandboxLayout } from '@/views'
 
 import { LabelsListView, LabelsListViewProps } from './components/labels-list-view'
 
 export interface LabelsListPageProps {
-  useTranslationStore: () => TranslationStore
   useLabelsStore: () => ILabelsStore
   createdIn?: string
   showSpacer?: boolean
@@ -20,7 +18,6 @@ export interface LabelsListPageProps {
 }
 
 export const LabelsListPage: FC<LabelsListPageProps> = ({
-  useTranslationStore,
   useLabelsStore,
   searchQuery,
   setSearchQuery,
@@ -29,10 +26,11 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   labelsListViewProps
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const {
     labels: spaceLabels,
-    totalPages,
+    totalItems,
+    pageSize,
     page,
     setPage,
     isLoading,
@@ -43,28 +41,23 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
     setGetParentScopeLabels
   } = useLabelsStore()
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback((val: string) => setSearchQuery(val.length ? val : null), [setSearchQuery])
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
   const handleResetQueryAndPages = () => {
-    handleResetSearch()
+    handleSearchChange('')
     setPage(1)
   }
 
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={className}>
-        <h1 className="mb-6 text-2xl font-medium text-cn-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
+        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+          {t('views:labelData.title', 'Labels')}
+        </Text>
 
         {isRepository && (
           <div className="mb-[18px]">
@@ -80,11 +73,10 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         {(!!spaceLabels.length || isDirtyList) && (
           <ListActions.Root>
             <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={searchInput}
-                handleChange={handleInputChange}
+              <SearchInput
+                inputContainerClassName="max-w-96"
+                defaultValue={searchQuery || ''}
+                onChange={handleSearchChange}
                 placeholder={t('views:repos.search', 'Search')}
               />
             </ListActions.Left>
@@ -104,7 +96,6 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
               {...labelsListViewProps}
               labels={spaceLabels}
               labelContext={{ space: space_ref, repo: repo_ref }}
-              useTranslationStore={useTranslationStore}
               handleResetQueryAndPages={handleResetQueryAndPages}
               searchQuery={searchQuery}
               values={spaceValues}
@@ -112,7 +103,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           </div>
         )}
 
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

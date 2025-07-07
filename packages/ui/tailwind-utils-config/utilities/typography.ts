@@ -36,11 +36,29 @@ export default {
     '&-caption-soft': {
       font: 'var(--cn-caption-soft)'
     },
-    '&-caption-tight-normal': {
-      font: 'var(--cn-caption-tight-normal)'
+    '&-link-default': {
+      font: 'var(--cn-comp-link-default)'
     },
-    '&-caption-tight-soft': {
-      font: 'var(--cn-caption-tight-soft)'
+    '&-link-sm': {
+      font: 'var(--cn-comp-link-sm)'
+    },
+    '&-body-single-line-strong': {
+      font: 'var(--cn-body-single-line-strong)'
+    },
+    '&-body-single-line-normal': {
+      font: 'var(--cn-body-single-line-normal)'
+    },
+    '&-caption-single-line-normal': {
+      font: 'var(--cn-caption-single-line-normal)'
+    },
+    '&-caption-single-line-soft': {
+      font: 'var(--cn-caption-single-line-soft)'
+    },
+    '&-family-default': {
+      font: 'var(--cn-font-family-default)'
+    },
+    '&-dialog-title': {
+      font: 'var(--cn-comp-dialog-title)'
     }
   }
 }

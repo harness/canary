@@ -1,4 +1,4 @@
-import { Button, Icon, Input } from '@/components'
+import { Button, IconV2, Input } from '@/components'
 
 import { FilterFieldConfig } from '../../../types'
 
@@ -23,8 +23,8 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
         placeholder="Type a value..."
         onChange={handleInputChange}
         rightElement={
-          <Button iconOnly size="sm" variant="ghost" onClick={handleClear}>
-            <Icon className="rotate-45" name="plus" size={12} />
+          <Button iconOnly size="sm" variant="transparent" onClick={handleClear}>
+            <IconV2 name="xmark" size="2xs" />
           </Button>
         }
       />

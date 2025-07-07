@@ -1,89 +1,137 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { Children, forwardRef, HTMLAttributes, ImgHTMLAttributes, isValidElement, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const cardVariants = cva('rounded-lg border bg-cn-background-2 text-cn-foreground-1 shadow', {
+const cardVariants = cva('cn-card', {
   variants: {
-    variant: {
-      default: '',
-      plain: 'border-none bg-transparent shadow-none'
+    size: {
+      sm: 'cn-card-sm',
+      md: 'cn-card-md',
+      lg: 'cn-card-lg'
+    },
+    orientation: {
+      vertical: 'cn-card-vertical',
+      horizontal: 'cn-card-horizontal'
+    },
+    position: {
+      start: 'cn-card-position-start',
+      end: 'cn-card-position-end'
+    },
+    selected: {
+      true: 'cn-card-selected',
+      false: ''
+    },
+    disabled: {
+      true: 'cn-card-disabled',
+      false: ''
     }
   },
   defaultVariants: {
-    variant: 'default'
+    size: 'md',
+    orientation: 'vertical',
+    position: 'start',
+    selected: false,
+    disabled: false
   }
 })
 
 export interface CardRootProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
-  width?: 'auto' | 'full' | 'screen' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | string
+  children: ReactNode
 }
 
-const widthVariants = {
-  auto: 'w-auto',
-  full: 'w-full',
-  screen: 'w-screen',
-  fit: 'w-fit',
-  xs: 'w-24',
-  sm: 'w-48',
-  md: 'w-64',
-  lg: 'w-72',
-  xl: 'w-80',
-  '2xl': 'w-96'
-}
+const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
+  (
+    {
+      className,
+      size = 'md',
+      selected = false,
+      disabled = false,
+      orientation = 'vertical',
+      position = 'start',
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const { imageContent, otherContent } = Children.toArray(children).reduce<{
+      imageContent: ReactNode | null
+      otherContent: ReactNode[]
+    }>(
+      (acc, child) => {
+        if (isValidElement(child) && child.type === CardImage) {
+          if (!acc.imageContent) acc.imageContent = child
+        } else {
+          acc.otherContent.push(child)
+        }
+        return acc
+      },
+      { imageContent: null, otherContent: [] }
+    )
 
-const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(({ variant, className, width = 'auto', ...props }, ref) => {
-  const widthClassName = widthVariants[width as keyof typeof widthVariants] || width
-
-  return <div ref={ref} className={cn(cardVariants({ variant }), widthClassName, className)} {...props} />
-})
-
-CardRoot.displayName = 'CardRoot'
-
-const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className = 'space-y-1.5 p-6', ...props }, ref) => (
-    <div ref={ref} className={cn('flex flex-col', className)} {...props} />
-  )
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          cardVariants({
+            size,
+            orientation,
+            position,
+            selected,
+            disabled
+          }),
+          className
+        )}
+        {...props}
+      >
+        {imageContent}
+        <div className="cn-card-content-wrapper">{otherContent}</div>
+      </div>
+    )
+  }
 )
-CardHeader.displayName = 'CardHeader'
+CardRoot.displayName = 'CardRoot'
 
 interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
-
 const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ className, children, as: Tag = 'h3', ...props }, ref) => (
-    <Tag ref={ref} className={cn('font-medium text-6 leading-snug', className)} {...props}>
+    <Tag ref={ref} className={cn('cn-card-title', className)} {...props}>
       {children}
     </Tag>
   )
 )
 CardTitle.displayName = 'CardTitle'
 
-const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, ...props }, ref) => <p ref={ref} className={cn('text-cn-foreground-3 text-sm', className)} {...props} />
-)
-CardDescription.displayName = 'CardDescription'
-
-const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className = 'p-6', ...props }, ref) => <div ref={ref} className={cn('pt-0', className)} {...props} />
-)
+const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn('cn-card-content', className)} {...props} />
+))
 CardContent.displayName = 'CardContent'
 
-const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className = 'p-6', ...props }, ref) => (
-    <div ref={ref} className={cn('flex items-center pt-0', className)} {...props} />
-  )
-)
-CardFooter.displayName = 'CardFooter'
+interface CardImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+  width?: number | string
+  height?: number | string
+}
+const CardImage = forwardRef<HTMLImageElement, CardImageProps>(({ className, width, height, ...props }, ref) => (
+  <img
+    ref={ref}
+    alt={props.alt}
+    className={cn('cn-card-image', className)}
+    style={{
+      width: typeof width === 'number' ? `${width}px` : width,
+      height: typeof height === 'number' ? `${height}px` : height
+    }}
+    {...props}
+  />
+))
+CardImage.displayName = 'CardImage'
 
 const Card = {
   Root: CardRoot,
-  Header: CardHeader,
-  Footer: CardFooter,
   Title: CardTitle,
-  Description: CardDescription,
-  Content: CardContent
+  Content: CardContent,
+  Image: CardImage
 }
 
 export { Card, cardVariants }

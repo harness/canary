@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
@@ -15,7 +15,6 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
@@ -58,9 +57,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
-  const { t } = useTranslationStore()
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
@@ -73,9 +71,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       path: fullResourcePath
     }
   })
-
-  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -118,6 +113,16 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       gitRef: fullGitRef || ''
     })
   }
+  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || ''), [headers])
+  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || ''), [headers])
+
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
 
   /**
    * Navigate to Edit file route
@@ -181,7 +186,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
               toCommitDetails={({ sha }: { sha: string }) =>
                 routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
               }
-              toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
+              toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
               data={commitData?.commits?.map((item: TypesCommit) => ({
                 sha: item.sha,
                 parent_shas: item.parent_shas,
@@ -191,7 +196,13 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
                 committer: item.committer
               }))}
             />
-            <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+            <Pagination
+              indeterminate
+              hasNext={xNextPage > 0}
+              hasPrevious={xPrevPage > 0}
+              getPrevPageLink={getPrevPageLink}
+              getNextPageLink={getNextPageLink}
+            />
           </div>
         )
       default:
@@ -212,7 +223,11 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
             navigate(
-              routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${selectedBranchTag.name}...${newBranchName}` })
+              routes.toPullRequestCompare({
+                spaceId,
+                repoId,
+                diffRefs: `${selectedBranchTag?.name}...${newBranchName}`
+              })
             )
           }
         }}
@@ -229,6 +244,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         handleDownloadFile={handleDownloadFile}
         handleEditFile={handleEditFile}
         handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
+        refType={selectedRefType}
       />
       {renderFileView()}
     </>

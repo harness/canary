@@ -9,7 +9,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
@@ -31,7 +30,7 @@ export default function ReposListPage() {
   const { toast, dismiss } = useToast()
 
   const [query, setQuery] = useQueryState('query')
-  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const {
     data: { body: repoData, headers } = {},
@@ -65,18 +64,15 @@ export default function ReposListPage() {
   )
 
   useEffect(() => {
-    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+    const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
+    const perPage = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     if (repoData) {
       const transformedRepos = transformRepoList(repoData)
-      setRepositories(transformedRepos, totalPages)
+      setRepositories(transformedRepos, totalItems, perPage)
     } else {
-      setRepositories([], totalPages)
+      setRepositories([], totalItems, perPage)
     }
   }, [repoData, headers, setRepositories])
-
-  // const isRepoImporting: boolean = useMemo(() => {
-  //   return repoData?.some(repository => repository.importing) ?? false
-  // }, [repoData])
 
   useEffect(() => {
     if (importRepoIdentifier && !importToastId) {
@@ -106,15 +102,18 @@ export default function ReposListPage() {
   return (
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
       isLoading={isFetching}
       isError={isError}
       errorMessage={error?.message}
       searchQuery={query}
       setSearchQuery={setQuery}
+      setQueryPage={setQueryPage}
       toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
+      toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
     />
   )
 }
+
+ReposListPage.displayName = 'ReposListPage'

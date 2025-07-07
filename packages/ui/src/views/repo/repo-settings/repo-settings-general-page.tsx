@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef } from 'react'
 
-import { Fieldset, FormSeparator } from '@/components'
-import { useRouterContext } from '@/context'
-import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelectorTab } from '@/views/repo/components'
+import { Fieldset, FormSeparator, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
+import { BranchSelectorContainerProps } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
@@ -25,17 +25,13 @@ interface RepoSettingsGeneralPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-  selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
   useRepoRulesStore: () => IRepoStore
-  useRepoBranchesStore: () => IBranchSelectorStore
-  useTranslationStore: () => TranslationStore
-  searchQuery: string
-  setSearchQuery: (query: string) => void
   rulesSearchQuery: string
   setRulesSearchQuery: (query: string) => void
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
 
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
@@ -48,16 +44,12 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog,
   useRepoRulesStore,
-  useRepoBranchesStore,
-  useTranslationStore,
-  selectBranchOrTag,
-  searchQuery,
-  setSearchQuery,
   rulesSearchQuery,
-  setRulesSearchQuery
+  setRulesSearchQuery,
+  branchSelectorRenderer
 }) => {
   const { location } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const rulesRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -74,7 +66,9 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">{t('views:repos.settings', 'Settings')}</h1>
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
+        {t('views:repos.settings', 'Settings')}
+      </Text>
 
       <Fieldset>
         <RepoSettingsGeneralForm
@@ -84,11 +78,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           isLoadingRepoData={loadingStates.isLoadingRepoData}
           isUpdatingRepoData={loadingStates.isUpdatingRepoData}
           isRepoUpdateSuccess={isRepoUpdateSuccess}
-          useRepoBranchesStore={useRepoBranchesStore}
-          useTranslationStore={useTranslationStore}
-          selectBranchOrTag={selectBranchOrTag}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
+          branchSelectorRenderer={branchSelectorRenderer}
         />
         <FormSeparator />
         <div ref={rulesRef}>
@@ -98,7 +88,6 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
             apiError={apiError}
             handleRuleClick={handleRuleClick}
             openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-            useTranslationStore={useTranslationStore}
             rulesSearchQuery={rulesSearchQuery}
             setRulesSearchQuery={setRulesSearchQuery}
           />
@@ -110,14 +99,9 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
           isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
-          useTranslationStore={useTranslationStore}
         />
         <FormSeparator />
-        <RepoSettingsGeneralDelete
-          apiError={apiError}
-          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-          useTranslationStore={useTranslationStore}
-        />
+        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
       </Fieldset>
     </SandboxLayout.Content>
   )

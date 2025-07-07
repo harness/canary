@@ -5,12 +5,12 @@
         "$type": "sizing",
         "$value": "{size.5}"
       },
-      "default": {
+      "md": {
         "$type": "sizing",
         "$value": "{size.6}"
       }
     },
-    "default": {
+    "md": {
       "gap": {
         "$type": "spacing",
         "$value": "{spacing.1}"
@@ -63,7 +63,7 @@
       "$value": "{spacing.1}"
     },
     "size": {
-      "default": {
+      "sm": {
         "$type": "sizing",
         "$value": "{size.4-half}"
       }
@@ -75,7 +75,7 @@
   },
   "badge-indicator": {
     "size": {
-      "default": {
+      "sm": {
         "$type": "sizing",
         "$value": "{size.2}"
       }

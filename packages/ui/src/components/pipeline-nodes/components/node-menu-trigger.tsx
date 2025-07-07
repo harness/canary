@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { SerialGroupNodeProps } from '../serial-group-node'
 
@@ -22,7 +22,7 @@ export const NodeMenuTrigger: FC<NodeMenuTriggerProps> = ({ onEllipsisClick }) =
       onMouseDown={e => e.stopPropagation()}
       onClick={onEllipsisClick}
     >
-      <Icon className="text-icons-2" name="more-dots-fill" size={12} />
+      <IconV2 className="text-icons-2" name="more-horizontal" size="2xs" />
     </Button>
   )
 }

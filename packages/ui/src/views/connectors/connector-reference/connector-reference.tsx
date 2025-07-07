@@ -1,10 +1,10 @@
-import { Alert, Button, ButtonGroup, Icon, Logo, StackedList } from '@/components'
+import { FC } from 'react'
+
+import { Alert, Button, ButtonLayout, IconV2, LogoV2, StackedList } from '@/components'
+import { ConnectorItem, connectorRefFilters, DirectionEnum, EntityReference, EntityRendererProps } from '@/views'
 import { cn } from '@utils/cn'
-import { EntityReference, EntityRendererProps } from '@views/platform'
-import { DirectionEnum } from '@views/platform/types'
 
 import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
-import { ConnectorItem, connectorRefFilters } from '../types'
 
 export interface ConnectorReferenceProps {
   // Data
@@ -24,10 +24,16 @@ export interface ConnectorReferenceProps {
   onFilterChange: (type: string) => void
   onCancel?: () => void
   isLoading?: boolean
+
+  // Search
+  searchValue?: string
+  handleChangeSearchValue: (val: string) => void
+
+  isDrawer?: boolean
 }
 
 // Component for selecting existing connectors
-export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
+export const ConnectorReference: FC<ConnectorReferenceProps> = ({
   // Data
   connectorsData,
   childFolder,
@@ -44,7 +50,13 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
   onScopeChange,
   onFilterChange,
   onCancel,
-  isLoading
+  isLoading,
+
+  // search
+  searchValue,
+  handleChangeSearchValue,
+
+  isDrawer = false
 }) => {
   // Define available scopes
 
@@ -59,13 +71,19 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={
           connectorLogo ? (
-            <Logo name={connectorLogo} size={14} />
+            <LogoV2 name={connectorLogo} size="sm" />
           ) : (
-            <Icon name="connectors" size={14} className="text-cn-foreground-3" />
+            <IconV2 name="connectors" size="xs" className="text-cn-foreground-3" />
           )
         }
       >
-        <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
+        <div title={entity.connector.name}>
+          <StackedList.Field
+            title={entity.connector.name}
+            description={entity.connector.description}
+            className="truncate overflow-hidden text-nowrap max-w-sm"
+          />
+        </div>
       </StackedList.Item>
     )
   }
@@ -85,21 +103,26 @@ export const ConnectorReference: React.FC<ConnectorReferenceProps> = ({
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
         filterTypes={connectorRefFilters}
         onFilterChange={onFilterChange}
+        searchValue={searchValue}
+        handleChangeSearchValue={handleChangeSearchValue}
       />
-      {apiError ? (
-        <Alert.Container variant="destructive" className="mt-4">
+      {!!apiError && (
+        <Alert.Root theme="danger" className="mt-4">
           <Alert.Description>{apiError}</Alert.Description>
-        </Alert.Container>
-      ) : null}
-
-      <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-        <ButtonGroup className="flex flex-row justify-between">
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button type="submit">Save</Button>
-        </ButtonGroup>
-      </div>
+        </Alert.Root>
+      )}
+      {!isDrawer && (
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button type="submit">Save</Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
+      )}
     </div>
   )
 }

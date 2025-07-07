@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, Sidebar, Text } from '@harnessio/ui/components'
+import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -16,7 +16,6 @@ import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
-import { useTranslationStore } from './i18n/stores/i18n-store'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
@@ -83,7 +82,8 @@ enum Page {
   Keys = 'Keys',
   Home = 'Home',
   Theme = 'Theme',
-  Search = 'Search'
+  Search = 'Search',
+  Tags = 'Tags'
 }
 
 const labelsRoute = {
@@ -206,8 +206,7 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'commits',
             handle: {
-              breadcrumb: () => <span>{Page.Commits}</span>,
-              routeName: RouteConstants.toRepoCommits
+              breadcrumb: () => <span>{Page.Commits}</span>
             },
             children: [
               {
@@ -217,9 +216,24 @@ export const repoRoutes: CustomRouteObject[] = [
                   pageTitle: Page.Commits
                 }
               },
-
               {
-                path: ':commitSHA',
+                path: 'branch/:branchId',
+                element: <RepoCommitsPage />,
+                handle: {
+                  pageTitle: Page.Commits,
+                  routeName: RouteConstants.toRepoBranchCommits
+                }
+              },
+              {
+                path: 'tag/:tagId',
+                element: <RepoCommitsPage />,
+                handle: {
+                  pageTitle: Page.Commits,
+                  routeName: RouteConstants.toRepoTagCommits
+                }
+              },
+              {
+                path: 'commit/:commitSHA',
                 element: <RepoCommitDetailsPage showSidebar={false} />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
@@ -281,7 +295,11 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'tags',
-            element: <RepoTagsListContainer />
+            element: <RepoTagsListContainer />,
+            handle: {
+              breadcrumb: () => <span>{Page.Tags}</span>,
+              routeName: RouteConstants.toRepoTags
+            }
           },
           {
             path: 'pulls',
@@ -431,7 +449,7 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'settings',
-            element: <RepoSettingsLayout useTranslationStore={useTranslationStore} />,
+            element: <RepoSettingsLayout />,
             handle: {
               breadcrumb: () => <span>{Page.Settings}</span>,
               pageTitle: Page.Settings
@@ -538,7 +556,7 @@ export const repoRoutes: CustomRouteObject[] = [
 
           {
             path: 'settings/webhooks/:webhookId',
-            element: <WebhookSettingsLayout useTranslationStore={useTranslationStore} />,
+            element: <WebhookSettingsLayout />,
             children: [
               {
                 index: true,
@@ -549,10 +567,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <CreateWebhookContainer />,
                 handle: {
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
-                    <>
+                    <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
                       <span className="ml-1.5">Details</span>
-                    </>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookDetails
                 }
@@ -562,10 +580,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <WebhookExecutionsContainer />,
                 handle: {
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
-                    <>
+                    <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
                       <span className="ml-1.5">Executions</span>
-                    </>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutions
                 }
@@ -575,12 +593,12 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <WebhookExecutionDetailsContainer />,
                 handle: {
                   breadcrumb: ({ webhookId, executionId }: { webhookId: string; executionId: string }) => (
-                    <>
-                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
-                      <Text className="ml-1.5">Executions</Text>
+                    <Breadcrumb.Item>
+                      <span>{webhookId}</span> <Breadcrumb.Separator />
+                      <span className="ml-1.5">Executions</span>
                       <Breadcrumb.Separator className="mx-1.5" />
-                      <Text>{executionId}</Text>
-                    </>
+                      <span>{executionId}</span>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutionDetails
                 }
@@ -1062,14 +1080,14 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'profile-settings',
-        element: <ProfileSettingsLayout useTranslationStore={useTranslationStore} />,
+        element: <ProfileSettingsLayout />,
         handle: {
           breadcrumb: () => (
-            <>
+            <Layout.Flex direction="row" align="center" gap="xs">
               <span>User</span>
-              <Breadcrumb.Separator className="mx-2.5" />
+              <Breadcrumb.Separator />
               <span>{Page.Settings}</span>
-            </>
+            </Layout.Flex>
           ),
           pageTitle: Page.Settings
         },
@@ -1149,6 +1167,47 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
           })
         },
         children: repoRoutes
+      },
+      {
+        path: 'profile-settings',
+        element: <ProfileSettingsLayout />,
+        handle: {
+          breadcrumb: () => (
+            <>
+              <span>User</span>
+              <Breadcrumb.Separator className="mx-2.5" />
+              <span>{Page.Settings}</span>
+            </>
+          ),
+          pageTitle: Page.Settings
+        },
+        children: [
+          {
+            index: true,
+            element: <Navigate to="general" replace />,
+            handle: {
+              breadcrumb: () => <span>{Page.General}</span>
+            }
+          },
+          {
+            path: 'general',
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.General}</span>,
+              routeName: RouteConstants.toProfileGeneral,
+              pageTitle: Page.General
+            }
+          },
+          {
+            path: 'keys',
+            element: <SettingsProfileKeysPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.Keys}</span>,
+              routeName: RouteConstants.toProfileKeys,
+              pageTitle: Page.Keys
+            }
+          }
+        ]
       }
     ]
   }

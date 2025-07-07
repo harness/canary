@@ -1,4 +1,5 @@
-import { Button, ButtonGroup, CopyButton, Dialog, Input } from '@/components'
+import { Button, ButtonLayout, CopyButton, Dialog, Input } from '@/components'
+import { useTranslation } from '@/context'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { useStates } from '@views/user-management/providers/state-provider'
 
@@ -9,8 +10,8 @@ interface ResetPasswordDialogProps {
 }
 
 export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: ResetPasswordDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user, generatePassword, setGeneratePassword, password } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()
@@ -24,16 +25,16 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
+      <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title className="font-medium">
+          <Dialog.Title>
             {t('views:userManagement.resetPassword.title', 'Are you sure you want to reset password for {name}?', {
               name: user?.display_name || ''
             })}
           </Dialog.Title>
         </Dialog.Header>
 
-        <div className="flex flex-col gap-y-7">
+        <Dialog.Body>
           {generatePassword ? (
             <span>
               {t(
@@ -64,13 +65,13 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
           )}
 
           {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
-        </div>
+        </Dialog.Body>
 
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
-            <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
               {generatePassword ? t('views:userManagement.close', 'Close') : t('views:userManagement.cancel', 'Cancel')}
-            </Button>
+            </Dialog.Close>
             {!generatePassword && (
               <Button type="button" onClick={onSubmit} disabled={isUpdatingUser}>
                 {isUpdatingUser
@@ -78,7 +79,7 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
                   : t('views:userManagement.resetPassword.confirm', 'Confirm')}
               </Button>
             )}
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

@@ -1,5 +1,5 @@
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
@@ -72,11 +72,10 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
           rounded
           className="self-center p-3"
           variant="outline"
-          size="lg"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}
         >
-          <Icon name="plus" size={15} />
+          <IconV2 name="plus" />
         </Button>
       )}
 

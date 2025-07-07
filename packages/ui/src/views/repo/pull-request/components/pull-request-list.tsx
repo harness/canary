@@ -1,8 +1,8 @@
 import { FC, useMemo, useState } from 'react'
 
 import { NoData, StackedList } from '@/components'
-import { useRouterContext } from '@/context'
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType, TranslationStore } from '@/views'
+import { useRouterContext, useTranslation } from '@/context'
+import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '@/views'
 
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'
@@ -19,7 +19,6 @@ export interface PullRequestListProps {
   handleCloseClick?: () => void
   repoId?: string
   spaceId?: string
-  useTranslationStore: () => TranslationStore
 }
 
 export const PullRequestList: FC<PullRequestListProps> = ({
@@ -29,11 +28,10 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   handleOpenClick,
   handleCloseClick,
   spaceId,
-  repoId,
-  useTranslationStore
+  repoId
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
@@ -81,7 +79,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           />
         </StackedList.Item>
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title="No open pull requests yet"
           description={[
             t('views:noData.noOpenPullRequests', 'There are no open pull requests in this project yet.'),
@@ -120,7 +118,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         </StackedList.Item>
 
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title="No closed pull requests yet"
           description={[
             t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),

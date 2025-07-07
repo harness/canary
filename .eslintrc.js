@@ -65,7 +65,7 @@ module.exports = {
     ],
 
     '@typescript-eslint/no-unused-vars': [
-      'warn',
+      'error',
       {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
@@ -77,5 +77,32 @@ module.exports = {
 
     'tailwindcss/no-custom-classname': 'off'
   },
-  ignorePatterns: ['**/dist/**']
+  ignorePatterns: ['**/dist/**'],
+  overrides: [
+    {
+      files: [
+        'packages/ui/**/*.{ts,tsx}',
+        'packages/filters/**/*.{ts,tsx}',
+        'packages/forms/**/*.{ts,tsx}',
+        'packages/pipeline-graph/**/*.{ts,tsx}',
+        'packages/core-design-system/**/*.{ts,tsx}',
+        'packages/yaml-editor/**/*.{ts,tsx}'
+      ],
+      rules: {
+        'no-restricted-imports': 'off',
+        '@typescript-eslint/no-restricted-imports': [
+          'error',
+          {
+            paths: [
+              {
+                name: 'react-router-dom',
+                message: 'Please use only type imports from react-router-dom.',
+                allowTypeImports: true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

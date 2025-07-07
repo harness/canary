@@ -9,7 +9,7 @@ export type UseTheme = (arg: {
   themeConfig?: {
     rootElementSelector?: string
     defaultTheme?: string
-    themes?: ThemeDefinition[]
+    monacoThemes?: ThemeDefinition[]
   }
   theme?: string
   editor: any
@@ -22,7 +22,7 @@ export const useTheme: UseTheme = (props): { theme: string } => {
   const [themeInternal, setThemeInternal] = useState(theme ?? defaultTheme ?? 'vs-dark')
 
   useEffect(() => {
-    themeConfig?.themes?.forEach(themeItem => {
+    themeConfig?.monacoThemes?.forEach(themeItem => {
       monaco.editor.defineTheme(themeItem.themeName, themeItem.themeData)
     })
   }, [monaco])

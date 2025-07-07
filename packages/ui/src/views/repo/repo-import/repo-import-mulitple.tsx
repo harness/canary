@@ -2,14 +2,12 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
-  Checkbox,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
-  Input,
-  Option,
   Select,
   Spacer,
   Text
@@ -101,6 +99,8 @@ const formSchema = z
 
 export type ImportMultipleReposFormFields = z.infer<typeof formSchema>
 
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({ value: option, label: option }))
+
 interface RepoImportMultiplePageProps {
   onFormSubmit: (data: ImportMultipleReposFormFields) => void
   onFormCancel: () => void
@@ -114,14 +114,7 @@ export function RepoImportMultiplePage({
   isLoading,
   apiErrorsValue
 }: RepoImportMultiplePageProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-    reset
-  } = useForm<ImportMultipleReposFormFields>({
+  const formMethods = useForm<ImportMultipleReposFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -130,6 +123,8 @@ export function RepoImportMultiplePage({
       provider: ProviderOptionsEnum.GITHUB
     }
   })
+
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   const providerValue = watch('provider')
 
@@ -153,34 +148,17 @@ export function RepoImportMultiplePage({
     <SandboxLayout.Main>
       <SandboxLayout.Content key={providerValue} className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          Import Repositories
-        </Text>
+        <Text variant="heading-section">Import Repositories</Text>
         <Spacer size={10} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Git provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item key={option} value={option}>
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <Select
+            options={providerOptions}
+            value={providerValue}
+            onChange={value => handleSelectChange('provider', value)}
+            placeholder="Select"
+            label="Git provider"
+          />
 
           {[
             ProviderOptionsEnum.GITHUB_ENTERPRISE,
@@ -190,27 +168,18 @@ export function RepoImportMultiplePage({
             ProviderOptionsEnum.GOGS
           ].includes(watch('provider')) && (
             <Fieldset>
-              <Input
-                id="host"
-                label="Host URL"
-                {...register('hostUrl')}
-                placeholder="Enter the host URL"
-                size="md"
-                error={errors.hostUrl?.message?.toString()}
-              />
+              <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
             </Fieldset>
           )}
 
           {[ProviderOptionsEnum.BITBUCKET, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
             <Fieldset>
               <ControlGroup>
-                <Input
+                <FormInput.Text
                   id="username"
                   label="Username"
                   {...register('username')}
                   placeholder="Enter your Username"
-                  size="md"
-                  error={errors.password?.message?.toString()}
                 />
               </ControlGroup>
             </Fieldset>
@@ -219,7 +188,7 @@ export function RepoImportMultiplePage({
           {/* token */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 type="password"
                 id="password"
                 label={
@@ -233,8 +202,6 @@ export function RepoImportMultiplePage({
                     ? 'Enter your password'
                     : 'Enter your access token'
                 }
-                size="md"
-                error={errors.password?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>
@@ -242,27 +209,18 @@ export function RepoImportMultiplePage({
           <FormSeparator />
 
           {[ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
-                id="group"
-                label="Group"
-                {...register('group')}
-                placeholder="Enter the group name"
-                size="md"
-                error={errors.group?.message?.toString()}
-              />
+            <Fieldset>
+              <FormInput.Text id="group" label="Group" {...register('group')} placeholder="Enter the group name" />
             </Fieldset>
           )}
 
           {watch('provider') === ProviderOptionsEnum.BITBUCKET && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="workspace"
                 label="Workspace"
                 {...register('workspace')}
                 placeholder="Enter the workspace name"
-                size="md"
-                error={errors.workspace?.message?.toString()}
               />
             </Fieldset>
           )}
@@ -276,27 +234,23 @@ export function RepoImportMultiplePage({
             ProviderOptionsEnum.AZURE_DEVOPS
           ].includes(watch('provider')) && (
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="organization"
                 label="Organization"
                 {...register('organization')}
                 placeholder="Enter the organization name"
-                size="md"
-                error={errors.organization?.message?.toString()}
               />
             </Fieldset>
           )}
 
           {/* Project */}
           {[ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="project"
                 label="Project"
                 {...register('project')}
                 placeholder="Enter the project name"
-                size="md"
-                error={errors.project?.message?.toString()}
               />
             </Fieldset>
           )}
@@ -304,14 +258,8 @@ export function RepoImportMultiplePage({
           {/* authorization - pipelines */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Checkbox {...register('repositories')} id="authorization" checked={true} disabled label="Repositories" />
-              <Checkbox
-                {...register('pipelines')}
-                id="pipelines"
-                checked={watch('pipelines')}
-                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
-                label="Pipelines"
-              />
+              <FormInput.Checkbox {...register('repositories')} id="authorization" disabled label="Repositories" />
+              <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Pipelines" />
             </ControlGroup>
           </Fieldset>
 
@@ -319,7 +267,7 @@ export function RepoImportMultiplePage({
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repositories' : 'Importing repositories...'}
@@ -327,7 +275,7 @@ export function RepoImportMultiplePage({
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

@@ -1,4 +1,4 @@
-import { cloneDeep, get, pick, set, unset } from 'lodash-es'
+import { cloneDeep, get, isArray, pick, set, unset } from 'lodash-es'
 
 import { IFormDefinition, IInputDefinition } from '../../types/types'
 
@@ -16,11 +16,17 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
   const retValues = cloneDeep(values)
   transformerItems.forEach(transformItem => {
     if (transformItem.inputTransform) {
-      const rawValue = get(retValues, transformItem.path)
-      const transformedObj = transformItem.inputTransform(rawValue, retValues)
-      if (transformedObj) {
-        set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
-      }
+      const inputTransform = isArray(transformItem.inputTransform)
+        ? transformItem.inputTransform
+        : [transformItem.inputTransform]
+
+      inputTransform.forEach(inTransform => {
+        const rawValue = get(retValues, transformItem.path)
+        const transformedObj = inTransform(rawValue, retValues)
+        if (transformedObj) {
+          set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
+        }
+      })
     }
   })
   return retValues
@@ -31,11 +37,17 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
   const retValues = cloneDeep(values)
   transformerItems.forEach(transformItem => {
     if (transformItem.outputTransform) {
-      const rawValue = get(retValues, transformItem.path)
-      const transformedObj = transformItem.outputTransform(rawValue, retValues)
-      if (transformedObj) {
-        set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
-      }
+      const outputTransform = isArray(transformItem.outputTransform)
+        ? transformItem.outputTransform
+        : [transformItem.outputTransform]
+
+      outputTransform.forEach(outTransform => {
+        const rawValue = get(retValues, transformItem.path)
+        const transformedObj = outTransform(rawValue, retValues)
+        if (transformedObj) {
+          set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
+        }
+      })
     }
   })
   return retValues
@@ -43,7 +55,7 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
 
 function flattenInputsRec(inputs: IInputDefinition[]): IInputDefinition[] {
   const flattenInputs = inputs.reduce<IInputDefinition[]>((acc, input) => {
-    if (input.inputType === 'group' && input.inputs) {
+    if ((input.inputType === 'group' || input.inputType === 'accordion') && input.inputs) {
       return [...acc, input, ...flattenInputsRec(input.inputs)]
     } else {
       return [...acc, input]

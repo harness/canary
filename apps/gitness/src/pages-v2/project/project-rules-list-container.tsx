@@ -11,7 +11,6 @@ import { ErrorTypes, ProjectRulesPage } from '@harnessio/ui/views'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
@@ -37,7 +36,7 @@ export const ProjectRulesListContainer = () => {
   }
 
   const {
-    data: { body: rulesData } = {},
+    data: { body: rulesData, headers } = {},
     isLoading,
     refetch: refetchRulesList
   } = useSpaceRuleListQuery({
@@ -74,10 +73,10 @@ export const ProjectRulesListContainer = () => {
         identifier: rule.identifier,
         state: rule.state ? String(rule.state) : undefined
       }))
-      setRules(formattedRules)
+      setRules(formattedRules, headers)
       setApiError(null)
     }
-  }, [rulesData, setRules])
+  }, [rulesData, setRules, headers])
 
   const handleDeleteRule = (identifier: string) => {
     deleteRule({ rule_identifier: identifier })
@@ -93,7 +92,6 @@ export const ProjectRulesListContainer = () => {
       <ProjectRulesPage
         useProjectRulesStore={useProjectRulesStore}
         isLoading={isLoading}
-        useTranslationStore={useTranslationStore}
         searchQuery={query}
         setSearchQuery={setQuery}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
@@ -105,7 +103,6 @@ export const ProjectRulesListContainer = () => {
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        useTranslationStore={useTranslationStore}
         {...wrapConditionalObjectElement(
           {
             identifier: alertDeleteParams,

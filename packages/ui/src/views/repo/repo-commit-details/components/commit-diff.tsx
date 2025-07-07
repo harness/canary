@@ -1,15 +1,15 @@
-import { ICommitDetailsStore, TranslationStore } from '@/views'
-import { formatNumber } from '@utils/utils'
+import { useTranslation } from '@/context'
+import { formatNumber } from '@/utils'
+import { ICommitDetailsStore } from '@/views'
 
 import { CommitChanges } from './commit-changes'
 
 export interface CommitDiffsViewProps {
   useCommitDetailsStore: () => ICommitDetailsStore
-  useTranslationStore: () => TranslationStore
 }
 
-export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore, useTranslationStore }) => {
-  const { t } = useTranslationStore()
+export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore }) => {
+  const { t } = useTranslation()
   const { diffs, diffStats } = useCommitDetailsStore()
 
   return (
@@ -17,11 +17,11 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
       <p className="mb-3.5 text-2 leading-tight text-cn-foreground-2">
         {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
         <span className="text-cn-foreground-accent">
-          {formatNumber(diffStats?.files_changed || 0)}{' '}
+          {formatNumber(diffStats?.files_changed ?? 0)}{' '}
           {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
         </span>{' '}
-        {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions || 0)}{' '}
-        {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {formatNumber(diffStats?.deletions || 0)}{' '}
+        {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions ?? 0)}{' '}
+        {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {formatNumber(diffStats?.deletions ?? 0)}{' '}
         {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
       </p>
       <CommitChanges
@@ -39,7 +39,6 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
           unchangedPercentage: item.unchangedPercentage,
           isBinary: item.isBinary
         }))}
-        useTranslationStore={useTranslationStore}
         diffMode={2}
       />
     </div>

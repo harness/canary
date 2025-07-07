@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { EditViewTypeValue, FileEditorControlBar, GitCommitDialog, GitCommitFormType } from '@harnessio/ui/components'
-import { CodeModes, PathActionBar } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import { useExitConfirm } from '../hooks/use-exit-confirm'
@@ -47,7 +47,7 @@ export const RepoFileEdit = () => {
         dryRun={noop}
         violation={false}
         bypassable={false}
-        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag?.name || ''}
         setAllStates={noop}
         isSubmitting={false}
       />
@@ -55,13 +55,13 @@ export const RepoFileEdit = () => {
       <PathActionBar
         codeMode={CodeModes.EDIT}
         pathParts={repoFilesStore.pathParts}
-        useTranslationStore={useTranslationStore}
         changeFileName={vel => setFileName(vel)}
         onBlurFileName={noop}
-        gitRefName={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        gitRefName={repoFilesStore.branchSelectorStore.selectedBranchTag?.name || ''}
         fileName={fileName}
         handleOpenCommitDialog={() => toggleOpenCommitDialog(true)}
         handleCancelFileEdit={handleCancelFileEdit}
+        selectedRefType={BranchSelectorTab.BRANCHES}
       />
 
       <FileEditorControlBar view={view} onChangeView={onChangeView} />

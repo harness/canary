@@ -34,7 +34,7 @@ export const useGetRepoLabelAndValuesData = ({
   const [values, setValues] = useState<LabelValuesType>({})
 
   const {
-    data: { body: labels } = {},
+    data: { body: labels, headers } = {},
     isLoading: isLoadingRepoLabels,
     refetch: refetchLabels
   } = useListRepoLabelsQuery(
@@ -75,7 +75,7 @@ export const useGetRepoLabelAndValuesData = ({
                   data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )
-              : listSpaceLabelValues({ space_ref, key: item.key, signal }).then(
+              : listSpaceLabelValues({ space_ref: `${space_ref}/+`, key: item.key, signal }).then(
                   data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )
@@ -119,6 +119,7 @@ export const useGetRepoLabelAndValuesData = ({
     repo_ref,
     labels: labelsData,
     values,
-    refetchLabels
+    refetchLabels,
+    headers
   }
 }

@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
-import { getInitials, timeAgo } from '@/utils'
-import { BranchSelectorListItem, CommitTagType, RepoTagsStore, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
+import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
 
 interface RepoTagsListProps {
-  useTranslationStore: () => TranslationStore
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -17,17 +17,16 @@ interface RepoTagsListProps {
 }
 
 export const RepoTagsList: FC<RepoTagsListProps> = ({
-  useTranslationStore,
   useRepoTagsStore,
   toCommitDetails,
-  isLoading = false,
+  isLoading,
   isDirtyList = false,
   onResetFiltersAndPages,
   onOpenCreateTagDialog,
   onDeleteTag,
   onOpenCreateBranchDialog
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { tags: tagsList } = useRepoTagsStore()
 
   const getTableActions = (tag: CommitTagType) => [
@@ -55,7 +54,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   if (!isLoading && !tagsList?.length) {
     return (
       <NoData
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
         withBorder={isDirtyList}
         title={isDirtyList ? t('views:noData.noResults', 'No search results') : t('views:noData.noTags', 'No tags yet')}
         description={
@@ -87,8 +86,12 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     )
   }
 
+  if (isLoading) {
+    return <SkeletonTable countRows={12} countColumns={5} />
+  }
+
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
+    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
           <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>
@@ -100,53 +103,49 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         </Table.Row>
       </Table.Header>
 
-      {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
-      ) : (
-        <Table.Body hasHighlightOnHover>
-          {tagsList.map(tag => (
-            <Table.Row key={tag.sha}>
-              <Table.Cell>
-                <Text className="block leading-snug" truncate>
-                  {tag.name}
-                </Text>
-              </Table.Cell>
-              <Table.Cell>
-                <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
-                  {tag?.message}
-                </Text>
-              </Table.Cell>
-              <Table.Cell className="!py-2.5">
-                <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
-              </Table.Cell>
-              <Table.Cell>
-                <div className="flex items-center gap-2">
-                  <Avatar.Root size="4.5" className="rounded-full text-white">
-                    <Avatar.Fallback>{getInitials(tag.tagger?.identity.name || '')}</Avatar.Fallback>
-                  </Avatar.Root>
-                  <Text color="tertiary" className="block leading-none" truncate>
-                    {tag.tagger?.identity.name}
-                  </Text>
-                </div>
-              </Table.Cell>
-              <Table.Cell>
-                <Text color="tertiary" className="leading-snug">
-                  {getCreationDate(tag)}
-                </Text>
-              </Table.Cell>
-              <Table.Cell className="w-[46px] !py-2.5 text-right">
-                <MoreActionsTooltip
-                  isInTable
-                  actions={getTableActions(tag).map(action => ({
-                    ...action,
-                    to: action?.to?.replace('${tag.name}', tag.name)
-                  }))}
-                />
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      )}
+      <Table.Body>
+        {tagsList.map(tag => (
+          <Table.Row key={tag.sha}>
+            <Table.Cell>
+              <Text className="block" truncate title={tag.name}>
+                {tag.name}
+              </Text>
+            </Table.Cell>
+            <Table.Cell>
+              <Text color="foreground-3" className="line-clamp-3 break-all">
+                {tag?.message}
+              </Text>
+            </Table.Cell>
+            <Table.Cell className="!py-2.5">
+              <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
+            </Table.Cell>
+            <Table.Cell>
+              <div className="flex items-center gap-2">
+                {tag.tagger?.identity.name ? (
+                  <>
+                    <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
+                    <Text variant="body-single-line-normal" color="foreground-3" className="block" truncate>
+                      {tag.tagger?.identity.name}
+                    </Text>
+                  </>
+                ) : null}
+              </div>
+            </Table.Cell>
+            <Table.Cell>
+              <Text color="foreground-3">{tag.tagger?.when ? getCreationDate(tag) : ''}</Text>
+            </Table.Cell>
+            <Table.Cell className="w-[46px] !py-2.5 text-right">
+              <MoreActionsTooltip
+                isInTable
+                actions={getTableActions(tag).map(action => ({
+                  ...action,
+                  to: action?.to?.replace('${tag.name}', tag.name)
+                }))}
+              />
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table.Root>
   )
 }

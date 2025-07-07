@@ -5,22 +5,23 @@ import {
   Alert,
   Avatar,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
-  Icon,
-  Input,
-  Legend
+  IconV2,
+  Legend,
+  Text
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
-import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout, TranslationStore } from '@/views'
+import { TFunctionWithFallback, useTranslation } from '@/context'
+import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { getInitials } from '@utils/stringUtils'
 import { z } from 'zod'
 
-const makeProfileSchema = (t: TranslationStore['t']) =>
+const makeProfileSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()
@@ -46,7 +47,7 @@ const makeProfileSchema = (t: TranslationStore['t']) =>
       })
   })
 
-const makePasswordSchema = (t: TranslationStore['t']) =>
+const makePasswordSchema = (t: TFunctionWithFallback) =>
   z
     .object({
       newPassword: z
@@ -82,7 +83,6 @@ interface SettingsAccountGeneralPageProps {
   onUpdateUser: (data: Omit<ProfileFields, 'username'>) => void
   onUpdatePassword: (data: PasswordFields) => void
   useProfileSettingsStore: () => IProfileSettingsStore
-  useTranslationStore: () => TranslationStore
 }
 
 const SUCCESS_MESSAGE_DURATION = 2000
@@ -96,20 +96,14 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   passwordUpdateSuccess,
   error,
   onUpdateUser,
-  onUpdatePassword,
-  useTranslationStore
+  onUpdatePassword
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { userData } = useProfileSettingsStore()
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
 
-  const {
-    register: registerProfile,
-    handleSubmit: handleProfileSubmit,
-    reset: resetProfileForm,
-    formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
-  } = useForm<ProfileFields>({
+  const profileFormMethods = useForm<ProfileFields>({
     resolver: zodResolver(makeProfileSchema(t)),
     mode: 'onChange',
     defaultValues: {
@@ -120,11 +114,13 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   })
 
   const {
-    register: registerPassword,
-    reset: resetPasswordForm,
-    handleSubmit: handlePasswordSubmit,
-    formState: { errors: passwordErrors }
-  } = useForm<PasswordFields>({
+    register: registerProfile,
+    handleSubmit: handleProfileSubmit,
+    reset: resetProfileForm,
+    formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
+  } = profileFormMethods
+
+  const passwordFormMethods = useForm<PasswordFields>({
     resolver: zodResolver(makePasswordSchema(t)),
     mode: 'onChange',
     defaultValues: {
@@ -132,6 +128,12 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
       confirmPassword: ''
     }
   })
+
+  const {
+    register: registerPassword,
+    reset: resetPasswordForm,
+    handleSubmit: handlePasswordSubmit
+  } = passwordFormMethods
 
   useEffect(() => {
     if (!userData) return
@@ -172,37 +174,27 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   const renderErrorMessage = (type: ProfileSettingsErrorType, message: string) =>
     error?.type === type && (
-      <Alert.Container variant="destructive">
+      <Alert.Root theme="danger">
         <Alert.Title>{message}</Alert.Title>
-      </Alert.Container>
+      </Alert.Root>
     )
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <h1 className="mb-10 text-6 font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {t('views:profileSettings.accountSettings', 'Account settings')}
-      </h1>
+      </Text>
 
       {isLoadingUser && <SkeletonForm />}
 
       {!isLoadingUser && (
         <>
-          <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
+          <FormWrapper {...profileFormMethods} onSubmit={handleProfileSubmit(onProfileSubmit)}>
             <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
-            {/*
-              FIXME: Avatar size does not work correctly
-              issue – https://github.com/harness/canary/issues/817
-            */}
-            <Avatar.Root size="20" className="shadow-md">
-              <Avatar.Image src="/images/anon.jpg" />
-              <Avatar.Fallback className="text-6 font-medium text-cn-foreground-3">
-                {getInitials(userData?.name || '')}
-              </Avatar.Fallback>
-            </Avatar.Root>
+            <Avatar name={userData?.name} src="/images/anon.jpg" size="lg" rounded />
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="name"
-                size="md"
                 {...registerProfile('name')}
                 placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter your name')}
                 label={t('views:profileSettings.name', 'Name')}
@@ -211,9 +203,8 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
               />
             </Fieldset>
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="username"
-                size="md"
                 {...registerProfile('username')}
                 placeholder={t('views:profileSettings.enterUsernamePlaceholder', 'Enter your username')}
                 disabled
@@ -222,17 +213,14 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                   'views:profileSettings.enterUsernameCaption',
                   'This username will be shown across the platform.'
                 )}
-                error={profileErrors?.username?.message?.toString()}
               />
             </Fieldset>
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="email"
-                size="md"
                 {...registerProfile('email')}
                 placeholder="name@domain.com"
                 label={t('views:profileSettings.accountEmail', 'Account email')}
-                error={profileErrors?.email?.message}
                 disabled={isUpdatingUser}
               />
             </Fieldset>
@@ -240,7 +228,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             {renderErrorMessage(ProfileSettingsErrorType.PROFILE, error?.message || '')}
 
             <ControlGroup type="button">
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {!profileSubmitted ? (
                   <Button
                     type="submit"
@@ -253,16 +241,16 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </FormWrapper>
 
           <FormSeparator className="border-cn-borders-4 my-7" />
 
-          <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
+          <FormWrapper {...passwordFormMethods} onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
             <Legend
               title={t('views:profileSettings.passwordSettingsTitle', 'Password settings')}
               description={t(
@@ -271,26 +259,22 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
               )}
             />
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="newPassword"
                 type="password"
-                size="md"
                 {...registerPassword('newPassword')}
                 placeholder={t('views:profileSettings.enterPasswordPlaceholder', 'Enter a new password')}
                 label={t('views:profileSettings.newPassword', 'New password')}
-                error={passwordErrors?.newPassword?.message}
                 disabled={isUpdatingPassword}
               />
             </Fieldset>
             <Fieldset>
-              <Input
+              <FormInput.Text
                 id="confirmPassword"
                 type="password"
-                size="md"
                 {...registerPassword('confirmPassword')}
                 placeholder={t('views:profileSettings.confirmPasswordPlaceholder', 'Confirm your new password')}
                 label={t('views:profileSettings.confirmPassword', 'Confirm password')}
-                error={passwordErrors?.confirmPassword?.message}
                 disabled={isUpdatingPassword}
               />
             </Fieldset>
@@ -298,7 +282,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             {renderErrorMessage(ProfileSettingsErrorType.PASSWORD, error?.message || '')}
 
             <ControlGroup type="button">
-              <ButtonGroup>
+              <ButtonLayout>
                 {!passwordSubmitted ? (
                   <Button type="submit" disabled={isUpdatingPassword}>
                     {isUpdatingPassword
@@ -308,10 +292,10 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </FormWrapper>
         </>

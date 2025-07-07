@@ -4,7 +4,7 @@ import { Input } from '@components/index'
 
 import { AnyFormikValue, InputProps, useController } from '@harnessio/forms'
 
-import { InputError, InputLabel } from '.'
+import { InputCaption, InputLabel } from '.'
 import { InputValueType, RuntimeInputConfig } from '../types/types'
 import { constructRuntimeInputValue, extractRuntimeInputName, getInputValueType } from '../utils/input-value-utils'
 import InputValueTypeSelection from './InputValueTypeSelector'
@@ -32,7 +32,7 @@ export function InputWrapper({
   const { label, placeholder, required, inputConfig } = input
   const isOnlyFixed = isOnlyFixedValueAllowed(inputConfig?.allowedValueTypes)
 
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: path
   })
 
@@ -76,7 +76,7 @@ export function InputWrapper({
               />
               {'>'}
             </div>
-            <InputError path={path} />
+            <InputCaption error={fieldState?.error?.message} />
           </>
         )
       case 'expression':
@@ -94,7 +94,7 @@ export function InputWrapper({
                 tabIndex={0}
               />
             </div>
-            <InputError path={path} />
+            <InputCaption error={fieldState?.error?.message} />
           </>
         )
     }

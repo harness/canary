@@ -8,7 +8,6 @@ import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { useLabelsStore } from '../stores/labels-store'
 import { useFillLabelStoreWithProjectLabelValuesData } from './hooks/use-fill-label-store-with-project-label-values-data.ts'
 
@@ -54,7 +53,6 @@ export const ProjectLabelsList = () => {
     <>
       <LabelsListPage
         className="mx-auto max-w-[1040px]"
-        useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
         createdIn={space_ref}
         searchQuery={query}
@@ -68,7 +66,6 @@ export const ProjectLabelsList = () => {
         type="label"
         deleteFn={handleDeleteLabel}
         isLoading={isDeletingSpaceLabel}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

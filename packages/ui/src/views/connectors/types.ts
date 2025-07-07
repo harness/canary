@@ -1,5 +1,3 @@
-import { LogoNameMap } from '@components/logo'
-
 import { FieldValues, IFormDefinition, IInputDefinition } from '@harnessio/forms'
 
 import { BaseEntityProps } from '../../views/platform/types'
@@ -21,12 +19,11 @@ export type ConnectorEntity<T = any> = {
   tags?: Record<string, string>
 }
 
-export type AnyConnectorDefinition<T = string> = {
+export type AnyConnectorDefinition<T = ConnectorConfigType> = {
   type: T
   name: string
   category: string
   formDefinition: IFormDefinition<InputConfigType>
-  icon: keyof typeof LogoNameMap
 }
 
 // Base interfaces
@@ -125,6 +122,8 @@ export type ConnectorConfigType =
   | 'MsTeams'
   | 'Slack'
   | 'Confluence'
+  | 'Terraform'
+  | 'AwsKms'
 
 export interface ConnectorItem extends BaseEntityProps {
   connector?: ConnectorFields

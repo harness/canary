@@ -1,4 +1,4 @@
-import { IFormDefinition } from '@harnessio/forms'
+import { AnyFormikValue, IFormDefinition } from '@harnessio/forms'
 import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
 
 import {
@@ -12,11 +12,10 @@ export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {
-    inputType: 'radio',
+    inputType: 'cards',
     path: 'githubType',
     label: 'GitHub Type',
     inputConfig: {
-      inputType: 'radio',
       options: [
         { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud', id: 'cloud', title: 'Cloud' },
         {
@@ -54,6 +53,23 @@ const inputs: IInputConfigWithConfigInterface[] = [
     isVisible: (values: { auth: string }) => {
       return values?.auth === 'UsernameToken'
     }
+  },
+  {
+    inputType: 'group',
+    path: `connection`,
+    label: 'Connection',
+    placeholder: 'Optional',
+    inputs: [
+      {
+        inputType: 'text',
+        path: `delegateSelectors`,
+        label: 'Delegate Selector',
+        required: true,
+        inputConfig: {
+          disableAnyDelegate: (values: AnyFormikValue) => values?.auth === 'UsernameToken'
+        }
+      }
+    ]
   },
   getResourcesContainer(),
   getCloningContainer(),

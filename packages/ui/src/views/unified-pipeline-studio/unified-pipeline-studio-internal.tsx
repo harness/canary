@@ -1,15 +1,18 @@
-import { Button, Checkbox, FileToolbarActions } from '@components/index'
+import { Button, Checkbox, FileToolbarActions, IconV2 } from '@components/index'
 import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
 
-import { UnifiedPipelineRightDrawer } from './components/unified-pipeline-right-drawer'
+import { UnifiedPipelinePipelineConfigDrawer } from './components/unified-pipeline-pipeline-config-drawer'
+import { UnifiedPipelineStageConfigDrawer } from './components/unified-pipeline-stage-config-drawer'
+import { UnifiedPipelineStepDrawer } from './components/unified-pipeline-step-drawer'
 import { UnifiedPipelineStudioFooter } from './components/unified-pipeline-studio-footer'
 import PipelineStudioView from './components/unified-pipeline-studio-internal'
 import PipelineStudioLayout from './components/unified-pipeline-studio-layout'
 import { UnifiedPipelineStudioPanel } from './components/unified-pipeline-studio-panel'
 import { VisualYamlToggle } from './components/visual-yaml-toggle'
 import { useUnifiedPipelineStudioContext } from './context/unified-pipeline-studio-context'
+import { RightDrawer } from './types/right-drawer-types'
 
 export const PipelineStudioInternal = (): JSX.Element => {
   const {
@@ -28,7 +31,9 @@ export const PipelineStudioInternal = (): JSX.Element => {
     lastCommitInfo,
     splitView,
     setSplitView,
-    enableSplitView
+    enableSplitView,
+    setRightDrawer,
+    setEditPipelineIntention
   } = useUnifiedPipelineStudioContext()
 
   return (
@@ -49,6 +54,18 @@ export const PipelineStudioInternal = (): JSX.Element => {
           </PipelineStudioLayout.HeaderLeft>
 
           <PipelineStudioLayout.HeaderRight>
+            <Button
+              size="sm"
+              variant="outline"
+              iconOnly
+              aria-label="Edit pipeline"
+              onClick={() => {
+                setEditPipelineIntention({ path: 'pipeline' })
+                setRightDrawer(RightDrawer.PipelineConfig)
+              }}
+            >
+              <IconV2 name="edit-pencil" />
+            </Button>
             {view === 'yaml' ? (
               <FileToolbarActions
                 onDownloadClick={() => {
@@ -66,9 +83,10 @@ export const PipelineStudioInternal = (): JSX.Element => {
                   onClick={() => onSave(yamlRevision.yaml)}
                   disabled={!isYamlDirty}
                 >
+                  {!saveInProgress && !isYamlDirty && <IconV2 name="check" className="cn-text-success" />}
                   Save
                 </Button>
-                <Button loading={saveInProgress} size="sm" onClick={() => onRun()} disabled={isYamlDirty}>
+                <Button size="sm" onClick={() => onRun()} disabled={isYamlDirty || saveInProgress}>
                   Run
                 </Button>
               </>
@@ -95,7 +113,9 @@ export const PipelineStudioInternal = (): JSX.Element => {
         />
       </PipelineStudioLayout.Root>
 
-      <UnifiedPipelineRightDrawer />
+      <UnifiedPipelineStepDrawer />
+      <UnifiedPipelineStageConfigDrawer />
+      <UnifiedPipelinePipelineConfigDrawer />
     </YamlEditorContextProvider>
   )
 }

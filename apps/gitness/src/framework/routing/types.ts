@@ -10,7 +10,8 @@ export enum RouteConstants {
   toImportMultipleRepos = 'toImportMultipleRepos',
   toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
-  toRepoCommits = 'toRepoCommits',
+  toRepoBranchCommits = 'toRepoBranchCommits',
+  toRepoTagCommits = 'toRepoTagCommits',
   toRepoBranches = 'toRepoBranches',
   toRepoFiles = 'toRepoFiles',
   toRepoWebhooks = 'toRepoWebhooks',
@@ -80,7 +81,8 @@ export enum RouteConstants {
   toRepoWebhookExecutionDetails = 'toRepoWebhookExecutionDetails',
   toRepoWebhookCreate = 'toRepoWebhookCreate',
   toImportProject = 'toImportProject',
-  toRepoFileDetails = 'toRepoFileDetails'
+  toRepoFileDetails = 'toRepoFileDetails',
+  toRepoTags = 'toRepoTags'
 }
 
 export interface RouteEntry {

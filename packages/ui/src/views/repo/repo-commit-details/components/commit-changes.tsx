@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Accordion, Button, CopyButton, Layout, StackedList, StatusBadge } from '@/components'
-import { TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
@@ -23,18 +23,16 @@ interface HeaderProps {
 }
 
 interface LineTitleProps {
-  useTranslationStore: () => TranslationStore
   header: HeaderProps
 }
 
 interface DataProps {
   data: HeaderProps[]
   diffMode: DiffModeEnum
-  useTranslationStore: () => TranslationStore
 }
 
-const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
-  const { t: _t } = useTranslationStore()
+const LineTitle: FC<LineTitleProps> = ({ header }) => {
+  const { t: _t } = useTranslation()
   const { text, numAdditions, numDeletions } = header
   return (
     <div className="flex items-center justify-between gap-3">
@@ -60,11 +58,10 @@ const CommitsAccordion: FC<{
   header: HeaderProps
   data?: string
   diffMode: DiffModeEnum
-  useTranslationStore: () => TranslationStore
   openItems: string[]
   onToggle: () => void
-}> = ({ header, diffMode, useTranslationStore, openItems, onToggle }) => {
-  const { t: _ts } = useTranslationStore()
+}> = ({ header, diffMode, openItems, onToggle }) => {
+  const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
 
   const startingLine = parseStartingLineIfOne(header?.data ?? '')
@@ -85,15 +82,21 @@ const CommitsAccordion: FC<{
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
-          <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="px-4 py-[9px] text-left">
-              <StackedList.Field title={<LineTitle useTranslationStore={useTranslationStore} header={header} />} />
+        <Accordion.Root
+          type="multiple"
+          className="w-full"
+          value={openItems}
+          onValueChange={onToggle}
+          indicatorPosition="left"
+        >
+          <Accordion.Item value={header?.text ?? ''} className="border-none">
+            <Accordion.Trigger className="px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
+              <StackedList.Field title={<LineTitle header={header} />} />
             </Accordion.Trigger>
             <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
+                  <Layout.Vertical align="center" className="w-full py-5">
                     <Button
                       className="text-cn-foreground-accent"
                       variant="link"
@@ -129,7 +132,6 @@ const CommitsAccordion: FC<{
                       addWidget={false}
                       fileName={header.title}
                       lang={header.lang}
-                      useTranslationStore={useTranslationStore}
                     />
                   </>
                 )}
@@ -142,7 +144,7 @@ const CommitsAccordion: FC<{
   )
 }
 
-export const CommitChanges: FC<DataProps> = ({ data, diffMode, useTranslationStore }) => {
+export const CommitChanges: FC<DataProps> = ({ data, diffMode }) => {
   const [openItems, setOpenItems] = useState<string[]>([])
 
   useEffect(() => {
@@ -169,7 +171,6 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode, useTranslationSto
             key={`${item.title}-${index}`}
             header={item}
             diffMode={diffMode}
-            useTranslationStore={useTranslationStore}
             openItems={openItems}
             onToggle={() => toggleOpen(item.text)}
           />

@@ -164,10 +164,15 @@ export default function GitCommitDialog({
     dryRun(CommitToGitRefOption.DIRECTLY)
   }, [])
 
+  const handleClose = () => {
+    setError(undefined)
+    onClose()
+  }
+
   return (
     <GitCommitDialogComp
       isOpen={open}
-      onClose={onClose}
+      onClose={handleClose}
       onFormSubmit={onSubmit}
       commitTitlePlaceHolder={commitTitlePlaceholder}
       error={error}

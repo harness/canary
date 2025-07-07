@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, Card, Input, Text } from '@/components'
+import { Alert, Button, FormInput, FormWrapper, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -32,6 +32,10 @@ const newPasswordSchema = z
 
 export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPasswordPageProps) {
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(newPasswordSchema)
+  })
+
   const {
     register,
     handleSubmit,
@@ -39,9 +43,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
     clearErrors,
     trigger,
     formState: { errors }
-  } = useForm({
-    resolver: zodResolver(newPasswordSchema)
-  })
+  } = formMethods
 
   const onFormSubmit = (data: NewPasswordData) => {
     handleFormSubmit?.(data)
@@ -80,48 +82,44 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Create new password
-          </Card.Title>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          </Text>
+          <Text className="mt-0.5" align="center">
             Your new password must be different from your previously used password.
           </Text>
-        </Card.Header>
+        </div>
         {serverError && (
-          <Alert.Container variant="destructive">
+          <Alert.Root theme="danger">
             <Alert.Title>{serverError}</Alert.Title>
-          </Alert.Container>
+          </Alert.Root>
         )}
-        <Card.Content className="mt-10">
-          <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Input
+        <div className="mt-10 pt-0">
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)}>
+            <FormInput.Text
               id="password"
               type="password"
               label="New password"
-              size="md"
               {...register('password', { onChange: handleInputChange })}
               placeholder="Password (6+ characters)"
-              error={errors.password?.message?.toString()}
             />
-            <Input
+            <FormInput.Text
               wrapperClassName="mt-7"
               id="confirmPassword"
               type="password"
               label="Confirm password"
-              size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
               placeholder="Confirm password"
-              error={errors.confirmPassword?.message?.toString()}
             />
             <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
-          </form>
-        </Card.Content>
-      </Card.Root>
+          </FormWrapper>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

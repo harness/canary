@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react'
 
-import { Button, Drawer, SkeletonList } from '@components/index'
-import { EntityFormLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-layout'
-import { EntityFormSectionLayout } from '@views/unified-pipeline-studio/components/entity-form/entity-form-section-layout'
+import { Button, ButtonLayout, Drawer, SkeletonList } from '@/components'
+import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
-import { VisualYamlToggle, VisualYamlValue } from '..'
+import { PipelineInputDefinition, VisualYamlToggle, VisualYamlValue } from '..'
 import RunPipelineFormInputs from './run-pipeline-from-inputs'
+import { type InputLayout } from './utils/types'
 
 export interface RunPipelineDrawerProps {
   isValid: boolean
@@ -22,10 +22,11 @@ export interface RunPipelineDrawerProps {
   onCancel: () => void
   onClose?: () => void
   onRun: () => void
-  pipelineInputs: Record<string, unknown>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   inputComponentFactory: InputFactory
   theme: 'light' | 'dark'
   error?: { message?: string }
+  pipelineInputLayout?: InputLayout
 }
 
 export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
@@ -43,7 +44,8 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
     yamlRevision,
     inputComponentFactory,
     theme,
-    error
+    error,
+    pipelineInputLayout
   } = props
 
   const rootFormRef = useRef<{
@@ -54,62 +56,55 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
   const [allowDisableRun, setAllowDisableRun] = useState(false)
 
   return (
-    <Drawer.Content
-      //TODO: width
-      style={{ width: '500px' }}
-      className="flex flex-col p-0"
-    >
-      <EntityFormLayout.Root>
-        <EntityFormLayout.Header>
-          <EntityFormLayout.Title>Run Pipeline</EntityFormLayout.Title>
-          <EntityFormLayout.Actions>
-            <VisualYamlToggle
-              isYamlValid={isYamlSyntaxValid}
-              view={view}
-              setView={view => {
-                onViewChange(view)
-                setAllowDisableRun(false)
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Run Pipeline</Drawer.Title>
+        <VisualYamlToggle
+          isYamlValid={isYamlSyntaxValid}
+          view={view}
+          setView={view => {
+            onViewChange(view)
+            setAllowDisableRun(false)
+          }}
+        />
+      </Drawer.Header>
+
+      <Drawer.Body className={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
+        {loading ? (
+          <SkeletonList className="p-5" />
+        ) : (
+          <div className="flex grow flex-col">
+            <RunPipelineFormInputs
+              onValidationChange={formState => {
+                onValidationChange(formState.isValid)
               }}
+              onYamlSyntaxValidationChange={isValid => {
+                setIsYamlSyntaxValid(isValid)
+                onValidationChange(isValid)
+              }}
+              rootFormRef={rootFormRef}
+              onFormSubmit={_values => {
+                // NOTE: latest values are passed with onYamlRevisionChange
+                onRun()
+              }}
+              onYamlRevisionChange={revision => {
+                onYamlRevisionChange(revision)
+              }}
+              view={view}
+              pipelineInputs={pipelineInputs}
+              yamlRevision={yamlRevision}
+              inputComponentFactory={inputComponentFactory}
+              theme={theme}
+              pipelineInputLayout={pipelineInputLayout}
             />
-          </EntityFormLayout.Actions>
-        </EntityFormLayout.Header>
+          </div>
+        )}
+        {!!error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
+      </Drawer.Body>
 
-        <EntityFormSectionLayout.Root>
-          <EntityFormSectionLayout.Form>
-            {loading ? (
-              <SkeletonList className="p-5" />
-            ) : (
-              <div className="flex grow flex-col">
-                <RunPipelineFormInputs
-                  onValidationChange={formState => {
-                    onValidationChange(formState.isValid)
-                  }}
-                  onYamlSyntaxValidationChange={isValid => {
-                    setIsYamlSyntaxValid(isValid)
-                    onValidationChange(isValid)
-                  }}
-                  rootFormRef={rootFormRef}
-                  onFormSubmit={_values => {
-                    // NOTE: latest values are passed with onYamlRevisionChange
-                    onRun()
-                  }}
-                  onYamlRevisionChange={revision => {
-                    onYamlRevisionChange(revision)
-                  }}
-                  view={view}
-                  pipelineInputs={pipelineInputs}
-                  yamlRevision={yamlRevision}
-                  inputComponentFactory={inputComponentFactory}
-                  theme={theme}
-                />
-              </div>
-            )}
-          </EntityFormSectionLayout.Form>
-        </EntityFormSectionLayout.Root>
-
-        <EntityFormLayout.Footer className="flex-col gap-4">
-          {error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
-          <div className="flex gap-4">
+      <Drawer.Footer>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
             <Button
               disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
               loading={isExecutingPipeline}
@@ -124,12 +119,14 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
             >
               Run pipeline
             </Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
             <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
               Cancel
             </Button>
-          </div>
-        </EntityFormLayout.Footer>
-      </EntityFormLayout.Root>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
+      </Drawer.Footer>
     </Drawer.Content>
   )
 }

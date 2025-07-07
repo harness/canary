@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Dialog, FormWrapper, Input, Textarea } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -35,11 +35,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
   onFormSubmit,
   isSubmitting
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<CommitSuggestionsFormFields>({
+  const formMethods = useForm<CommitSuggestionsFormFields>({
     resolver: zodResolver(commitSuggestionsSchema),
     mode: 'onChange',
     defaultValues: {
@@ -48,41 +44,42 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
     }
   })
 
+  const { register, handleSubmit } = formMethods
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-[576px]">
+      <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>Commit Changes</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper onSubmit={handleSubmit(onFormSubmit)}>
-          <ControlGroup className="gap-y-7 pb-4">
-            <Input
-              id="title"
-              label="Commit Message"
-              {...register('title')}
-              placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
-              size="md"
-              error={errors.title?.message?.toString()}
-            />
-            <Textarea
-              id="message"
-              {...register('message')}
-              placeholder="Add an optional extended description"
-              label="Extended description"
-              error={errors.message?.message?.toString()}
-            />
-          </ControlGroup>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)} className="block">
+          <Dialog.Body>
+            <ControlGroup className="mb-7 space-y-7">
+              <FormInput.Text
+                id="title"
+                label="Commit Message"
+                {...register('title')}
+                placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
+              />
+              <FormInput.Textarea
+                id="message"
+                {...register('message')}
+                placeholder="Add an optional extended description"
+                label="Extended description"
+              />
+            </ControlGroup>
+          </Dialog.Body>
 
-          <Dialog.Footer className="-mx-5 -mb-5">
-            <ButtonGroup>
-              <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+          <Dialog.Footer>
+            <ButtonLayout>
+              <Dialog.Close onClick={onClose} disabled={isSubmitting}>
                 Cancel
-              </Button>
+              </Dialog.Close>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
               </Button>
-            </ButtonGroup>
+            </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>
       </Dialog.Content>

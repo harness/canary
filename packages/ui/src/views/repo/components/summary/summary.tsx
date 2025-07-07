@@ -1,6 +1,7 @@
-import { Icon, Spacer, Table, Text } from '@/components'
-import { useRouterContext } from '@/context'
-import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
+import { IconV2, Spacer, Table, Text } from '@/components'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
+import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
 interface RoutingProps {
@@ -9,7 +10,6 @@ interface RoutingProps {
 interface SummaryProps extends RoutingProps {
   latestFile: LatestFileTypes
   files: RepoFile[]
-  useTranslationStore: () => TranslationStore
   hideHeader?: boolean
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toRepoFileDetails?: ({ path }: { path: string }) => string
@@ -18,28 +18,22 @@ interface SummaryProps extends RoutingProps {
 export const Summary = ({
   latestFile,
   files,
-  useTranslationStore,
   hideHeader = false,
   toCommitDetails,
   toRepoFileDetails
 }: SummaryProps) => {
-  const { navigate } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   return (
     <>
       {!hideHeader && (
         <>
-          <FileLastChangeBar
-            toCommitDetails={toCommitDetails}
-            useTranslationStore={useTranslationStore}
-            {...latestFile}
-          />
+          <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />
           <Spacer size={4} />
         </>
       )}
 
-      <Table.Root variant="asStackedList">
+      <Table.Root>
         {!hideHeader && (
           <Table.Header>
             <Table.Row>
@@ -53,18 +47,12 @@ export const Summary = ({
           {hideHeader && (
             <Table.Row>
               <Table.Cell className="!p-0" colSpan={3}>
-                <FileLastChangeBar
-                  onlyTopRounded
-                  withoutBorder
-                  toCommitDetails={toCommitDetails}
-                  useTranslationStore={useTranslationStore}
-                  {...latestFile}
-                />
+                <FileLastChangeBar onlyTopRounded withoutBorder toCommitDetails={toCommitDetails} {...latestFile} />
               </Table.Cell>
             </Table.Row>
           )}
           {files.map(file => (
-            <Table.Row key={file.id} onClick={() => navigate(toRepoFileDetails?.({ path: file.path }) ?? '')}>
+            <Table.Row key={file.id} to={toRepoFileDetails?.({ path: file.path }) ?? ''}>
               <Table.Cell>
                 <div
                   className={`flex cursor-pointer items-center gap-1.5 ${
@@ -77,7 +65,7 @@ export const Summary = ({
                       : ''
                   }`}
                 >
-                  <Icon
+                  <IconV2
                     className={
                       file.status
                         ? file.status === FileStatus.SAFE
@@ -93,26 +81,25 @@ export const Summary = ({
                       file.status
                         ? file.status === FileStatus.SAFE
                           ? file.type === SummaryItemType.File
-                            ? 'file'
+                            ? 'page'
                             : 'folder'
-                          : 'triangle-warning'
+                          : 'warning-triangle'
                         : file.type === SummaryItemType.File
-                          ? 'file'
+                          ? 'page'
                           : 'folder'
                     }
-                    size={16}
                   />
                   <span className="w-44 truncate text-cn-foreground-1">{file.name}</span>
                 </div>
               </Table.Cell>
               <Table.Cell>
-                <Text color="tertiaryBackground" className="line-clamp-1">
+                <Text color="foreground-3" className="line-clamp-1">
                   {file.lastCommitMessage}
                 </Text>
               </Table.Cell>
               <Table.Cell className="text-right">
-                <Text color="tertiaryBackground" wrap="nowrap">
-                  {file.timestamp}
+                <Text color="foreground-3" wrap="nowrap" align="right">
+                  {timeAgo(file.timestamp, { dateStyle: 'medium' })}
                 </Text>
               </Table.Cell>
             </Table.Row>

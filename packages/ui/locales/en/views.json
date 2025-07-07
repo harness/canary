@@ -1,8 +1,7 @@
 {
   "repos": {
-    "create-new-file-no-plus": "Create new file",
+    "create-new-file-no-plus": "Create New File",
     "upload-files": "Upload files",
-    "search": "Search",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
@@ -17,11 +16,14 @@
     "saving": "Saving…",
     "save": "Save",
     "cancel": "Cancel",
+    "search": "Search",
     "general": "General",
     "details": "Details",
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
+    "compareBranchesToSeeChanges": "Compare branches to see your changes.",
+    "afterComparingOpenPullRequest": "After comparing changes, you may open a pull request to contribute your changes upstream.",
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",
@@ -30,6 +32,8 @@
     "findTag": "Find a tag",
     "allCommits": "All commits",
     "noFile": "No files available",
+    "private": "Private",
+    "public": "Public",
     "name": "Name",
     "lastCommit": "Last commit message",
     "date": "Date",
@@ -134,8 +138,6 @@
     "import-repository": "Import repository",
     "import-repositories": "Import repositories",
     "create-repository": "Create repository",
-    "private": "Private",
-    "public": "Public",
     "importing": "Importing…",
     "updated": "Updated",
     "deleteRepo": "Delete Repository",
@@ -193,7 +195,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New tag",
+    "newTag": "New Tag",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
     "urlPlaceholder": "https://example.com/harness",
@@ -223,8 +225,42 @@
     "clone": "Clone",
     "addFile": "Add file"
   },
+  "search": "Search",
+  "connectors": {
+    "connector": "Connector",
+    "viewConnectorDetails": "View Connector Details",
+    "status": "Status",
+    "viewDocumentation": "View Documentation",
+    "activity": "Activity",
+    "time": "Time",
+    "success": "Success",
+    "failure": "Failed",
+    "delete": "Delete",
+    "configuration": "Configuration",
+    "references": "References",
+    "activityHistory": "Activity history",
+    "sort": {
+      "lastModifiedAt": "Last modified",
+      "createdAt": "Created",
+      "name": "Name"
+    },
+    "createNew": "Create new connector",
+    "errorEncountered": "Error Encountered",
+    "viewDetails": "View Details",
+    "id": "Connector ID",
+    "connectivityStatus": "Connectivity status",
+    "updated": "Last updated",
+    "filterOptions": {
+      "statusOption": {
+        "success": "Success",
+        "failure": "Failure",
+        "label": "Status",
+        "favorite": "Favorites"
+      }
+    },
+    "created": "Created"
+  },
   "noData": {
-    "noResults": "No search results",
     "noActivities": "No activities yet",
     "noActivitiesDescription": "There are no activities yet. ",
     "errorApiTitle": "Failed to load {{type}}",
@@ -233,6 +269,7 @@
     "noEntitiesDescription": "There are no entities yet. ",
     "noConnectors": "No connectors yet",
     "noDelegates": "There are no delegates in this project yet.",
+    "noResults": "No search results",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",
@@ -279,35 +316,6 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
-  "search": "Search",
-  "connectors": {
-    "connector": "Connector",
-    "viewConnectorDetails": "View Connector Details",
-    "status": "Status",
-    "viewDocumentation": "View Documentation",
-    "activity": "Activity",
-    "time": "Time",
-    "success": "Success",
-    "failure": "Failed",
-    "delete": "Delete",
-    "configuration": "Configuration",
-    "references": "References",
-    "activityHistory": "Activity history",
-    "createNew": "Create new connector",
-    "errorEncountered": "Error Encountered",
-    "viewDetails": "View Details",
-    "id": "Connector ID",
-    "connectivityStatus": "Connectivity status",
-    "updated": "Last updated",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Success",
-        "failure": "Failure",
-        "label": "Status"
-      }
-    },
-    "created": "Created"
-  },
   "notFound": {
     "button": "Reload page",
     "title": "Something went wrong…",
@@ -319,6 +327,46 @@
     "manager": "Manager",
     "lastActivity": "Last Activity",
     "created": "Created"
+  },
+  "delegates": {
+    "delegate": "Delegate",
+    "heartbeat": "Heartbeat",
+    "selected": "Selected",
+    "anyDelegate": "Any Delegate",
+    "useAnyDelegate": "Use any available delegate",
+    "delegateTags": "Delegate with tags",
+    "useDelegateTags": "Use delegate with following tags",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install delegate",
+    "enterTags": "Enter tags",
+    "testDelegate": "Test Delegate connectivity",
+    "delegateMatches": "Matches: ",
+    "connectDelegates": "Connect "
+  },
+  "createProject": {
+    "backButton": "Back",
+    "validation": {
+      "nameNoEmpty": "The field can’t be blank",
+      "nameMinLength": "The project name should be at least 4 characters"
+    },
+    "title": "Create your new project",
+    "description": "Organize your repositories, pipelines and more.",
+    "form": {
+      "name": "Project name",
+      "namePlaceholder": "Enter your project name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a description (optional)"
+    },
+    "create": {
+      "projectCreation": "Creating project...",
+      "createProject": "Create project"
+    },
+    "or": "or",
+    "importProject": "Import project",
+    "logout": {
+      "question": "Want to use a different account?",
+      "link": "Log out"
+    }
   },
   "execution": {
     "summary": "Summary",
@@ -537,31 +585,6 @@
     "saving": "Saving...",
     "generalTab": "General",
     "keysTab": "Keys and Tokens"
-  },
-  "createProject": {
-    "validation": {
-      "nameNoEmpty": "The field can’t be blank",
-      "nameMinLength": "The project name should be at least 4 characters"
-    },
-    "backButton": "Back",
-    "title": "Create your new project",
-    "description": "Organize your repositories, pipelines and more.",
-    "form": {
-      "name": "Project name",
-      "namePlaceholder": "Enter your project name",
-      "description": "Description",
-      "descriptionPlaceholder": "Enter a description (optional)"
-    },
-    "create": {
-      "projectCreation": "Creating project...",
-      "createProject": "Create project"
-    },
-    "or": "or",
-    "importProject": "Import project",
-    "logout": {
-      "question": "Want to use a different account?",
-      "link": "Log out"
-    }
   },
   "forms": {
     "selectMember": "Select member",

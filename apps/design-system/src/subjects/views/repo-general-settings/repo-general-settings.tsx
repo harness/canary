@@ -1,8 +1,6 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
-import { repoBranchListStore } from '@subjects/stores/repo-branch-store'
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
-import { useTranslationStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ErrorTypes, RepoSettingsGeneralPage } from '@harnessio/ui/views'
@@ -15,8 +13,10 @@ const loadingStates = {
   isRulesLoading: false
 }
 
+// Simple dummy component that satisfies the type requirement
+const DummyComponent = () => null
+
 export const RepoGeneralSettings = () => {
-  const [branchQuery, setBranchQuery] = useState('')
   const [rulesSearchQuery, setRulesSearchQuery] = useState('')
   const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState(false)
   const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState(false)
@@ -32,27 +32,21 @@ export const RepoGeneralSettings = () => {
   const closeRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(false)
   const openRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(true)
 
-  const useRepoBranchesStore = useCallback(() => ({ ...repoBranchListStore }), [])
-
   return (
     <>
       <RepoSettingsGeneralPage
         handleRepoUpdate={() => {}}
-        selectBranchOrTag={() => {}}
         handleUpdateSecuritySettings={() => {}}
         apiError={null}
         loadingStates={loadingStates}
         isRepoUpdateSuccess={false}
         useRepoRulesStore={useRepoRulesStore}
-        useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
         handleRuleClick={() => {}}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-        searchQuery={branchQuery}
-        setSearchQuery={setBranchQuery}
         rulesSearchQuery={rulesSearchQuery}
         setRulesSearchQuery={setRulesSearchQuery}
+        branchSelectorRenderer={DummyComponent}
       />
 
       <DeleteAlertDialog
@@ -63,7 +57,6 @@ export const RepoGeneralSettings = () => {
         type="rule"
         identifier={alertDeleteParams}
         isLoading={false}
-        useTranslationStore={useTranslationStore}
       />
 
       <DeleteAlertDialog
@@ -73,7 +66,6 @@ export const RepoGeneralSettings = () => {
         error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null}
         type="repository"
         isLoading={false}
-        useTranslationStore={useTranslationStore}
         withForm
       />
     </>

@@ -1,5 +1,7 @@
 import { createContext } from 'react'
 
+import { noop } from 'lodash-es'
+
 /**
  * @todo import from '@harness/microfrontends'
  * Currently, unable to do so due to npm access issues.
@@ -45,6 +47,7 @@ interface IMFEContext {
     toProjectSettings: () => string
   }>
   hooks: Hooks
+  setMFETheme: (newTheme: string) => void
 }
 
 export const MFEContext = createContext<IMFEContext>({
@@ -54,5 +57,6 @@ export const MFEContext = createContext<IMFEContext>({
   customUtils: {},
   customPromises: {},
   routes: {},
-  hooks: {}
+  hooks: {},
+  setMFETheme: noop
 })

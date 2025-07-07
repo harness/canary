@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { AlertDialog, Button, Fieldset, Input } from '@/components'
-import { TranslationStore } from '@/views'
+import { AlertDialog, Fieldset, Input, Text } from '@/components'
+import { useTranslation } from '@/context'
 
 const DELETION_KEYWORD = 'DELETE'
 
@@ -13,7 +13,6 @@ export interface DeleteAlertDialogProps {
   type?: string
   isLoading?: boolean
   error?: { type?: string; message: string } | null
-  useTranslationStore: () => TranslationStore
   withForm?: boolean
 }
 
@@ -24,11 +23,10 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   deleteFn,
   type,
   isLoading = false,
-  useTranslationStore,
   error,
   withForm = false
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [verification, setVerification] = useState('')
 
   const handleChangeVerification = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,22 +42,18 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   }
 
   return (
-    <AlertDialog.Root open={open} onOpenChange={onClose}>
-      <AlertDialog.Content onOverlayClick={onClose} onClose={onClose}>
-        <AlertDialog.Header>
-          <AlertDialog.Title>{t('component:deleteDialog.title', 'Are you sure?')}</AlertDialog.Title>
-          <AlertDialog.Description>
-            {type
-              ? t('component:deleteDialog.descriptionWithType', {
-                  defaultValue: `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
-                  type: type
-                })
-              : t(
-                  'component:deleteDialog.description',
-                  `This will permanently remove all data. This action cannot be undone.`
-                )}
-          </AlertDialog.Description>
-        </AlertDialog.Header>
+    <AlertDialog.Root theme="danger" open={open} onOpenChange={onClose} onConfirm={handleDelete} loading={isLoading}>
+      <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
+        {type
+          ? t(
+              'component:deleteDialog.descriptionWithType',
+              `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
+              { type: type }
+            )
+          : t(
+              'component:deleteDialog.description',
+              `This will permanently remove all data. This action cannot be undone.`
+            )}
         {withForm && (
           <Fieldset>
             <Input
@@ -74,16 +68,10 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           </Fieldset>
         )}
 
-        {!!error && error.message && <p className="text-2 text-cn-foreground-danger">{error.message}</p>}
+        {!!error && error.message && <Text color="danger">{error.message}</Text>}
 
-        <AlertDialog.Footer>
-          <Button variant="outline" onClick={onClose} disabled={isLoading}>
-            {t('component:deleteDialog.cancel', 'Cancel')}
-          </Button>
-          <Button variant="secondary" theme="danger" disabled={isDisabled} onClick={handleDelete}>
-            {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
-          </Button>
-        </AlertDialog.Footer>
+        <AlertDialog.Cancel />
+        <AlertDialog.Confirm>Yes, delete {type}</AlertDialog.Confirm>
       </AlertDialog.Content>
     </AlertDialog.Root>
   )

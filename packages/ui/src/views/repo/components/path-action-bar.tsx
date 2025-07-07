@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
-import { useRouterContext } from '@/context'
-import { CodeModes, TranslationStore } from '@/views'
+import { Button, IconV2, PathBreadcrumbs, PathParts } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { BranchSelectorTab, CodeModes } from '@/views'
 
 export interface PathActionBarProps {
   codeMode: CodeModes
@@ -11,11 +11,13 @@ export interface PathActionBarProps {
   onBlurFileName?: () => void
   gitRefName?: string
   fileName?: string
-  useTranslationStore: () => TranslationStore
   pathNewFile?: string
   pathUploadFiles?: string
   handleOpenCommitDialog?: () => void
   handleCancelFileEdit?: () => void
+  parentPath?: string
+  setParentPath?: (value: string) => void
+  selectedRefType: BranchSelectorTab
 }
 
 export const PathActionBar: FC<PathActionBarProps> = ({
@@ -25,14 +27,16 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   onBlurFileName,
   gitRefName,
   fileName,
-  useTranslationStore,
   pathNewFile,
   pathUploadFiles,
   handleOpenCommitDialog,
-  handleCancelFileEdit
+  handleCancelFileEdit,
+  parentPath,
+  setParentPath,
+  selectedRefType
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs
@@ -43,15 +47,20 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         handleOnBlur={onBlurFileName}
         gitRefName={gitRefName}
         fileName={fileName}
+        parentPath={parentPath}
+        setParentPath={setParentPath}
       />
-      {codeMode === CodeModes.VIEW && pathNewFile && pathUploadFiles && (
-        <Button variant="outline">
-          <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
-            <Icon name="plus" size={12} />
-            <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
-          </Link>
-        </Button>
-      )}
+      {codeMode === CodeModes.VIEW &&
+        pathNewFile &&
+        pathUploadFiles &&
+        selectedRefType === BranchSelectorTab.BRANCHES && (
+          <Button variant="outline" asChild>
+            <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
+              <IconV2 name="plus" size="2xs" />
+              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
+            </Link>
+          </Button>
+        )}
       {codeMode !== CodeModes.VIEW && (
         <div className="flex gap-2.5">
           {!!handleCancelFileEdit && (

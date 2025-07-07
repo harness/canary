@@ -4,13 +4,15 @@ import { IExecutionListStore } from '@harnessio/ui/views'
 
 export const useExecutionListStore = create<IExecutionListStore>(set => ({
   executions: null,
-  totalPages: 0,
+  totalItems: 0,
+  pageSize: 0,
   page: 1,
   setPage: page => set({ page }),
-  setExecutionsData: (executions, totalPages) => {
+  setExecutionsData: (executions, { totalItems, pageSize }) => {
     set({
       executions,
-      totalPages
+      totalItems,
+      pageSize
     })
   }
 }))

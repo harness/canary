@@ -6,47 +6,141 @@ beta: true
 
 The `Pagination` component allows navigation through pages of content. It supports displaying a range of page numbers, as well as "Previous" and "Next" buttons.
 
+There are two types of pagination:
+
+- Determinate
+- Indeterminate
+
+The `totalItems` and `pageSize` props are used to determine the total number of items and the number of items per page in the pagination. If `totalItems` and `pageSize` are provided, the component will display the page numbers along with the navigation buttons. If `totalItems` and `pageSize` are not provided, the component will only display the "Next" and "Previous" buttons.
+
 import { DocsPage } from "@/components/docs-page";
+
+### Determinate Pagination (Button)
 
 <DocsPage.ComponentExample
   client:only
   code={`() => {
-    const t = (key, fallback) => fallback || key
     const [currentPage, setCurrentPage] = React.useState(1)
 
     return (
-        <div className="flex flex-col space-y-4">
-            <div>
-                <h5>With Known Total Pages</h5>
-                <Pagination
-                    totalPages={10}
-                    currentPage={currentPage}
-                    goToPage={setCurrentPage}
-                    t={t}
-                />
-            </div>
-
-            <hr />
-
-            <div>
-                <h5>Without Known Total Pages</h5>
-                <Pagination
-                    currentPage={2}
-                    nextPage={3}
-                    previousPage={1}
-                    goToPage={(pageNum) => console.log("Go to page:", pageNum)}
-                    t={t}
-                />
-            </div>
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+            />
         </div>
     )
 
-}
-`} />
+}`} />
+
+### Determinate Pagination with Hidden Page Numbers
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [currentPage, setCurrentPage] = React.useState(1)
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+                hidePageNumbers
+            />
+        </div>
+    )
+
+}`} />
+
+### Determinate Pagination with Links
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [currentPage, setCurrentPage] = React.useState(1)
+    
+    const getPageLink = (page) => {
+        return '?page=' + page
+    }
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                getPageLink={getPageLink}
+            />
+        </div>
+    )
+
+}`} />
+
+### Indeterminate Pagination with Links
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [currentPage, setCurrentPage] = React.useState(1)
+    
+    const getPrevPageLink = () => {
+        return '?page=' + (currentPage - 1)
+    }
+
+    const getNextPageLink = () => {
+        return '?page=' + (currentPage + 1)
+    }
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                indeterminate
+                hasNext={currentPage < 100}
+                hasPrevious={currentPage > 1}
+                getPrevPageLink={getPrevPageLink}
+                getNextPageLink={getNextPageLink}
+            />
+        </div>
+    )
+
+}`} />
+
+### Indeterminate Pagination with Callbacks
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [currentPage, setCurrentPage] = React.useState(1)
+    
+    const onPrevious = () => {
+        alert("Triggered onPrevious callback")
+    }
+
+    const onNext = () => {
+        alert("Triggered onNext callback")
+    }
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                indeterminate
+                hasNext={currentPage < 100}
+                hasPrevious={currentPage > 1}
+                onPrevious={onPrevious}
+                onNext={onNext}
+            />
+        </div>
+    )
+
+}`} />
 
 ## Usage
 
-### With Known Total Pages
+### Determinate Pagination
 
 ```typescript jsx
 import { Pagination } from '@harnessio/ui/components'
@@ -54,19 +148,18 @@ import { Pagination } from '@harnessio/ui/components'
 //...
 
 const [currentPage, setCurrentPage] = useState(1)
-const { t } = useTranslationStore()
 
 return (
   <Pagination
-    totalPages={10}
+    totalItems={100}
+    pageSize={10}
     currentPage={currentPage}
     goToPage={setCurrentPage}
-    t={t}
   />
 )
 ```
 
-### Without Known Total Pages
+### Indeterminate Pagination
 
 ```typescript jsx
 import { Pagination } from '@harnessio/ui/components'
@@ -74,69 +167,27 @@ import { Pagination } from '@harnessio/ui/components'
 //...
 
 const [currentPage, setCurrentPage] = useState(1)
-const { t } = useTranslationStore()
 
 return (
   <Pagination
-    currentPage={currentPage}
-    nextPage={currentPage + 1}
-    previousPage={currentPage - 1}
-    goToPage={setCurrentPage}
-    t={t}
+    indeterminate
+    hasPrevious={currentPage > 1}
+    hasNext={currentPage < 100}
+
+    // if need to use links
+    getPrevPageLink={() => currentPage - 1}
+    getNextPageLink={() => currentPage + 1}
+
+    // if need to use buttons
+    onPrevious={() => setCurrentPage(currentPage - 1)}
+    onNext={() => setCurrentPage(currentPage + 1)}
   />
 )
-```
-
-## API Reference
-
-The `Pagination` component controls the navigation through pages. It displays page numbers, and "Previous" and "Next" buttons.
-
-The component can be used either with a known total number of pages or with just the "Next" and "Previous" buttons. If `totalPages` is provided, it will display the page numbers along with the navigation buttons. If `totalPages` is not provided, it will only display the "Next" and "Previous" buttons based on the `nextPage` and `previousPage` props.
-
-```typescript jsx
-<Pagination
-  currentPage={1}              // current page number
-  goToPage={(pageNum) => {}}   // function to handle page change
-  t={t}                        // translation function
-  totalPages={10}              // [OPTIONAL] total number of pages
-  nextPage={2}                 // [OPTIONAL] next page number
-  previousPage={0}             // [OPTIONAL] previous page number
-  className="custom-class"     // [OPTIONAL] custom class name
-/>
 ```
 
 <DocsPage.PropsTable
   props={[
-    {
-      name: "totalPages",
-      description: "Total number of pages",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "currentPage",
-      description: "Current page number",
-      required: true,
-      value: "number",
-    },
-    {
-      name: "goToPage",
-      description: "Function to handle page change",
-      required: true,
-      value: "(pageNum: number) => void",
-    },
-    {
-      name: "nextPage",
-      description: "Next page number",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "previousPage",
-      description: "Previous page number",
-      required: false,
-      value: "number",
-    },
+    // Base props (common to both modes)
     {
       name: "t",
       description: "Translation function",
@@ -148,6 +199,97 @@ The component can be used either with a known total number of pages or with just
       description: "Custom class name",
       required: false,
       value: "string",
+    },
+    // Determinate pagination mode props
+    {
+      name: "indeterminate",
+      description: "Whether to use indeterminate pagination mode",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "totalItems",
+      description: "Total number of items (used with determinate pagination)",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "pageSize",
+      description:
+        "Number of items per page (used with determinate pagination)",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "currentPage",
+      description: "Current page number (used with determinate pagination)",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "hidePageNumbers",
+      description: "Hide page numbers and only show prev/next buttons",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "goToPage",
+      description:
+        "Function to handle page change (used with determinate pagination)",
+      required: false,
+      value: "(page: number) => void",
+    },
+    {
+      name: "getPageLink",
+      description:
+        "Function to generate page links (used with determinate pagination)",
+      required: false,
+      value: "(page: number) => string",
+    },
+    // Indeterminate pagination mode props
+    {
+      name: "hasPrevious",
+      description:
+        "Whether previous page is available (used with indeterminate pagination)",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "hasNext",
+      description:
+        "Whether next page is available (used with indeterminate pagination)",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onPrevious",
+      description:
+        "Function to handle previous page click (used with indeterminate pagination)",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "onNext",
+      description:
+        "Function to handle next page click (used with indeterminate pagination)",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "getPrevPageLink",
+      description:
+        "Function to generate previous page link (used with indeterminate pagination)",
+      required: false,
+      value: "() => string",
+    },
+    {
+      name: "getNextPageLink",
+      description:
+        "Function to generate next page link (used with indeterminate pagination)",
+      required: false,
+      value: "() => string",
     },
   ]}
 />

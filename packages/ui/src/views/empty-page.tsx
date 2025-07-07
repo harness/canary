@@ -5,7 +5,7 @@ export const EmptyPage = ({ pathName, comingSoon }: { pathName: string; comingSo
   const { navigate } = useRouterContext()
   return (
     <NoData
-      iconName={comingSoon ? 'no-data-cog' : 'no-search-magnifying-glass'}
+      imageName={comingSoon ? 'no-data-cog' : 'no-search-magnifying-glass'}
       title={comingSoon ? 'Coming soon' : `Upgrade to Harness Enterprise to access ${pathName}`}
       description={[]}
       primaryButton={{

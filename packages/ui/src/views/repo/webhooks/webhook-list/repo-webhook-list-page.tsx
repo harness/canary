@@ -1,8 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
-import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
+import { Button, ListActions, SearchInput, SkeletonList, Spacer, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
@@ -10,7 +9,6 @@ import { RepoWebhookListPageProps } from './types'
 
 const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   useWebhookStore,
-  useTranslationStore,
   openDeleteWebhookDialog,
   searchQuery,
   setSearchQuery,
@@ -20,18 +18,19 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   toRepoWebhookCreate
 }) => {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
-  const { webhooks, totalPages, page, setPage, error } = useWebhookStore()
+  const { t } = useTranslation()
+  const { webhooks, totalItems, pageSize, page, setPage, error } = useWebhookStore()
 
-  // const { query, handleSearch } = useCommonFilter()
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback(
+    (val: string) => {
+      setSearchQuery(val.length ? val : null)
+    },
+    [setSearchQuery]
+  )
+
+  const handleResetSearch = () => {
+    setSearchQuery('')
+  }
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -44,7 +43,9 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <h1 className="text-2xl font-medium text-cn-foreground-1">Webhooks</h1>
+      <Text as="h1" variant="heading-section" color="foreground-1">
+        Webhooks
+      </Text>
       <Spacer size={6} />
 
       {error ? (
@@ -55,12 +56,13 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
             <>
               <ListActions.Root>
                 <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    value={searchInput || ''}
-                    handleChange={handleInputChange}
+                  <SearchInput
+                    id="search"
+                    size="sm"
+                    defaultValue={searchQuery || ''}
+                    inputContainerClassName="max-w-96"
                     placeholder={t('views:repos.search', 'Search')}
+                    onChange={handleSearchChange}
                   />
                 </ListActions.Left>
                 <ListActions.Right>
@@ -80,9 +82,9 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               error={error}
               isDirtyList={isDirtyList}
               webhooks={webhooks || []}
-              useTranslationStore={useTranslationStore}
               handleReset={handleResetFiltersQueryAndPages}
-              totalPages={totalPages}
+              totalItems={totalItems}
+              pageSize={pageSize}
               page={page}
               setPage={setPage}
               openDeleteWebhookDialog={openDeleteWebhookDialog}

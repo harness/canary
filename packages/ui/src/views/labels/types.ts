@@ -1,4 +1,3 @@
-import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
 export enum LabelType {
@@ -31,6 +30,7 @@ export const createLabelFormSchema = z.object({
   color: z.nativeEnum(ColorsEnum),
   description: z.string().optional(),
   type: z.nativeEnum(LabelType),
+  isDynamic: z.boolean().optional(),
   values: z.array(
     z.object({
       id: z.number().optional(),
@@ -49,7 +49,6 @@ export interface CreateLabelDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (data: CreateLabelFormFields, identifier?: string) => void
-  useTranslationStore: () => TranslationStore
   isCreatingLabel: boolean
   error: string
   useLabelsStore: () => ILabelsStore
@@ -90,8 +89,10 @@ export interface SetRepoSpaceRefProps {
 
 export interface ILabelsStore {
   labels: ILabelType[]
+
   page: number
-  totalPages: number
+  totalItems: number
+  pageSize: number
 
   values: LabelValuesType
   isLoading: boolean
@@ -101,7 +102,7 @@ export interface ILabelsStore {
   getParentScopeLabels: boolean
 
   setIsLoading: (isLoading: boolean) => void
-  setLabels: (labels: ILabelType[]) => void
+  setLabels: (labels: ILabelType[], paginationData: { totalItems: number; pageSize: number }) => void
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void
   setPage: (page: number) => void

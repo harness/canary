@@ -1,9 +1,244 @@
 ---
 title: Typography
+description: Typography guidelines and styles for consistent text presentation
 ---
 
-import { StatusBadge } from "@harnessio/ui/components";
+import { DocsPage } from "../../../components/docs-page";
+import { Text } from "@harnessio/ui/components";
 
-<StatusBadge theme="info" variant="outline">
-  Coming soon
-</StatusBadge>
+Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.
+
+Our typography system is built around a set of predefined text styles that provide consistent visual hierarchy and readability across the application. The `Text` component is the primary way to implement these typographic styles.
+
+## Text Variants
+
+Our typography system is organized into three main categories: Headings, Body text, and Captions. Each category serves different purposes in the UI hierarchy.
+
+### Heading Variants
+
+Headings establish the information hierarchy and provide structure to content.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-hero:</Text>
+        <Text variant="heading-hero">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-section:</Text>
+        <Text variant="heading-section">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-subsection:</Text>
+        <Text variant="heading-subsection">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-base:</Text>
+        <Text variant="heading-base">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-small:</Text>
+        <Text variant="heading-small">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+</div>`}
+/>
+
+### Body Variants
+
+Body text is used for the main content and supports both regular and strong emphasis.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-normal:</Text>
+        <Text variant="body-normal">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-single-line-normal:</Text>
+        <Text variant="body-single-line-normal">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-strong:</Text>
+        <Text variant="body-strong">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-single-line-strong:</Text>
+        <Text variant="body-single-line-strong">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-code:</Text>
+        <Text variant="body-code" wrap="wrap">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+</div>`}
+/>
+
+### Caption Variants
+
+Captions are used for auxiliary information, labels, and metadata.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-normal:</Text>
+        <Text variant="caption-normal">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-soft:</Text>
+        <Text variant="caption-soft">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-single-line-normal:</Text>
+        <Text variant="caption-single-line-normal">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-single-line-soft:</Text>
+        <Text variant="caption-single-line-soft">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+</div>`}
+/>
+
+## Text Colors
+
+Text colors help establish hierarchy, provide emphasis, and communicate status or meaning. The default color is `foreground-2`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">inherit:</Text>
+        <Text color="inherit">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-1:</Text>
+        <Text color="foreground-1">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-2:</Text>
+        <Text color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-3:</Text>
+        <Text color="foreground-3">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">state-disabled:</Text>
+        <Text color="state-disabled">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">success:</Text>
+        <Text color="success">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">warning:</Text>
+        <Text color="warning">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">danger:</Text>
+        <Text color="danger">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+</div>`}
+/>
+
+## Text Alignment
+
+Text can be aligned to match different design requirements and content layouts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">start:</Text>
+        <Text align="start">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">center:</Text>
+        <Text align="center">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">end:</Text>
+        <Text align="end">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+</div>`}
+/>
+
+## Text Wrapping
+
+Control how text wraps and flows within its container.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">wrap:</Text>
+        <Text wrap="wrap" className="max-w-xs">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">nowrap:</Text>
+        <Text wrap="nowrap" className="block overflow-hidden">Consistency in typography helps users navigate content with ease.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">balance:</Text>
+        <Text wrap="balance" className="max-w-xs">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    </div>
+    <div>
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">pretty:</Text>
+        <Text wrap="pretty" className="max-w-xs">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    </div>
+</div>`}
+/>
+
+## Text Truncation
+
+When space is limited, text can be truncated with an ellipsis.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid gap-4">
+    <div className="max-w-xs">
+        <Text variant="heading-base" color="foreground-1" className="underline mb-1">Truncated text:</Text>
+        <Text truncate>Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    </div>
+</div>`}
+/>
+
+## Implementation
+
+The typography system is primarily implemented through the `Text` component:
+
+```typescript jsx
+import { Text } from '@harnessio/ui/components'
+
+// Basic usage
+<Text>Default text with body-normal variant</Text>
+
+// With variants
+<Text variant="heading-section">Section Heading</Text> // Maps to <h2>
+<Text variant="body-strong">Important text with stronger emphasis</Text>
+
+// With colors
+<Text color="foreground-1">High-contrast text</Text>
+<Text color="success">Success message</Text>
+
+// With custom HTML element
+<Text variant="heading-hero" as="h2">Hero heading as H2</Text> //  <h1> => <h2>
+<Text<'time'> as="time" dateTime="2025-07-07">July 7</Text>
+
+// With truncation
+<Text truncate>This text will be truncated with an ellipsis if it overflows</Text>
+
+// With text wrapping options
+<Text wrap="balance">This text will be balanced for better readability</Text>
+```
+
+## Best Practices
+
+1. **Maintain Hierarchy**: Use the appropriate heading levels to establish clear content hierarchy.
+
+2. **Readability First**: Choose variants and colors that optimize readability. Avoid using low-contrast combinations.
+
+3. **Semantic HTML**: The `Text` component automatically maps variants to semantic HTML elements, but you can override with the `as` prop when needed.
+
+4. **🚨 Consistent Usage**: Use the predefined text variants consistently rather than custom styling to ensure UI consistency.

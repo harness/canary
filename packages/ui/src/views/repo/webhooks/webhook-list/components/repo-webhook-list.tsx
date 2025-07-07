@@ -1,24 +1,14 @@
-import {
-  MoreActionsTooltip,
-  NoData,
-  Pagination,
-  Spacer,
-  StackedList,
-  StatusBadge,
-  Switch,
-  Table,
-  Text
-} from '@/components'
-import { useRouterContext } from '@/context'
-import { TranslationStore, WebhookType } from '@/views'
+import { MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Table, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { WebhookType } from '@/views'
 
 export interface RepoWebhookListProps {
   webhooks: WebhookType[]
   error?: string
-  useTranslationStore: () => TranslationStore
   isDirtyList: boolean
   handleReset: () => void
-  totalPages: number
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (val: number) => void
   openDeleteWebhookDialog: (id: number) => void
@@ -30,10 +20,10 @@ export interface RepoWebhookListProps {
 export function RepoWebhookList({
   webhooks,
   error,
-  useTranslationStore,
   isDirtyList,
   handleReset,
-  totalPages,
+  totalItems,
+  pageSize,
   page,
   setPage,
   openDeleteWebhookDialog,
@@ -41,7 +31,7 @@ export function RepoWebhookList({
   toRepoWebhookDetails,
   toRepoWebhookCreate
 }: RepoWebhookListProps) {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
   const handleNavigate = () => {
@@ -54,9 +44,7 @@ export function RepoWebhookList({
     return (
       <>
         <Spacer size={2} />
-        <Text size={1} className="text-cn-foreground-danger">
-          {error || 'Something went wrong'}
-        </Text>
+        <Text color="danger">{error || 'Something went wrong'}</Text>
       </>
     )
   }
@@ -66,7 +54,7 @@ export function RepoWebhookList({
       <NoData
         withBorder
         textWrapperClassName="max-w-[350px]"
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
         title={
           isDirtyList
             ? t('views:noData.noResults', 'No search results')
@@ -103,20 +91,18 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root variant="asStackedList">
+      <Table.Root>
         <Table.Header>
           <Table.Row>
-            <Table.Head>Name</Table.Head>
-            <Table.Head>Execution</Table.Head>
+            <Table.Head className="w-1/2">Name</Table.Head>
+            <Table.Head className="w-1/2">Execution</Table.Head>
             <Table.Head></Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {webhooks.map(webhook => (
             <Table.Row
-              onClick={() =>
-                navigate(toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`)
-              }
+              to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
               <Table.Cell className="cursor-pointer">
@@ -177,7 +163,7 @@ export function RepoWebhookList({
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
     </>
   )
 }

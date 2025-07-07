@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Drawer, FormSeparator, Separator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
+  CardsFormInput,
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorHeader,
@@ -17,14 +18,13 @@ import {
   ConnectorsPalette,
   DirectionEnum,
   EntityIntent,
-  GroupInput,
-  ListInput,
-  NumberInput,
-  RadialInput,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  GroupFormInput,
+  ListFormInput,
+  NumberFormInput,
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 import mockAccountsData from '../secrets/mock-account-data.json'
@@ -34,16 +34,16 @@ import { Scope, ScopeEnum, scopeHierarchy } from '../secrets/types'
 import mockConnectorsData from './mock-connectors-data.json'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
-inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
+inputComponentFactory.registerComponent(new ListFormInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 
 export const ConnectorsRefPage = ({
   isDrawerOpen,
@@ -67,6 +67,9 @@ export const ConnectorsRefPage = ({
   )
   const [childFolder, setChildFolder] = useState<string | null>(mockProjectsData[0].projectResponse.project.identifier)
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
+
+  const [search, setSearch] = useState('')
+
   // Handlers for existing connectors
   const handleSelectConnector = (connector: ConnectorItem) => {
     setSelectedConnector(connector)
@@ -108,32 +111,25 @@ export const ConnectorsRefPage = ({
       case ConnectorSelectionType.NEW:
         return (
           <div>
-            <Separator />
-            <Spacer size={2.5} />
             {/* Render create connector flow from here */}
             <ConnectorsPalette
-              useTranslationStore={useTranslationStore}
               connectors={harnessConnectors}
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
-              requestClose={() => {
-                setConnectorEntity(null)
-                handleCancel()
-              }}
             />
-            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
+            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
               <Drawer.Content>
-                {connectorEntity ? (
+                {!!connectorEntity && (
                   <ConnectorEntityForm
                     intent={EntityIntent.CREATE}
-                    useTranslationStore={useTranslationStore}
                     connector={connectorEntity}
                     onBack={() => setIsConnectorSelected(false)}
                     // onFormSubmit={handleFormSubmit}
                     getConnectorDefinition={getHarnessConnectorDefinition}
                     inputComponentFactory={inputComponentFactory}
+                    isDrawer
                   />
-                ) : null}
+                )}
               </Drawer.Content>
             </Drawer.Root>
           </div>
@@ -155,12 +151,14 @@ export const ConnectorsRefPage = ({
             selectedEntity={selectedConnector}
             onSelectEntity={handleSelectConnector}
             onScopeChange={handleScopeChange}
-            onCancel={handleCancel}
             isLoading={false}
             apiError="Could not fetch connectors, unauthorized"
             currentFolder={currentFolder}
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             onFilterChange={noop}
+            searchValue={search}
+            handleChangeSearchValue={setSearch}
+            isDrawer
           />
         )
       default:
@@ -169,26 +167,33 @@ export const ConnectorsRefPage = ({
   }
 
   return (
-    <Drawer.Root direction="right" open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+    <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <Drawer.Content>
         <Drawer.Header>
-          <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Connectors</Drawer.Title>
-          <FormSeparator className="w-full" />
-          <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+          <Drawer.Title>Connectors</Drawer.Title>
         </Drawer.Header>
-        <Spacer size={5} />
-        <Text as="div" className="text-cn-foreground-2 my-4">
-          Choose type
-        </Text>
-        <Spacer size={5} />
+        <Drawer.Body>
+          <Text className="mb-4">Choose type</Text>
+          <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
 
-        <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
+          <Spacer size={5} />
+          <FormSeparator />
+          <Spacer size={5} />
 
-        <Spacer size={5} />
-        <FormSeparator />
-        <Spacer size={5} />
-
-        {renderConnectorContent()}
+          {renderConnectorContent()}
+        </Drawer.Body>
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button>Save</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Button type="button" variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
   )

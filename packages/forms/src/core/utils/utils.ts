@@ -6,9 +6,9 @@ export const getDefaultValuesFromFormDefinition = (inputs: IFormDefinition): Any
   const defaultValues: AnyFormikValue = {}
 
   // TODO: this implementation is wrong
-  inputs.inputs.forEach(input => {
+  inputs?.inputs?.forEach(input => {
     // add default for nested (group),
-    if (input.inputType === 'group') {
+    if (input.inputType === 'group' || input.inputType === 'accordion') {
       input?.inputs?.forEach(input => {
         if (typeof get(defaultValues, input.path) === 'undefined') {
           set(defaultValues, input.path, input.default)

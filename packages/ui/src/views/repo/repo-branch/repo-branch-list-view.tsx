@@ -1,8 +1,8 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 import { BranchesList } from './components/branch-list'
@@ -11,20 +11,14 @@ import { RepoBranchListViewProps } from './types'
 export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
-  useTranslationStore,
   setCreateBranchDialogOpen,
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
   ...routingProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
-
-  const { search, handleSearchChange } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery || ''
-  })
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
@@ -34,6 +28,14 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
+
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
 
   return (
     <SandboxLayout.Main>
@@ -45,12 +47,12 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-80"
-                  value={search || ''}
-                  handleChange={handleSearchChange}
+                <SearchInput
+                  size="sm"
+                  defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
+                  inputContainerClassName="max-w-96"
+                  onChange={setSearchQuery}
                 />
               </ListActions.Left>
               <ListActions.Right>
@@ -71,7 +73,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           isLoading={isLoading}
           defaultBranch={defaultBranch}
           branches={branchList}
-          useTranslationStore={useTranslationStore}
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
           handleResetFiltersAndPages={handleResetFiltersAndPages}
           onDeleteBranch={onDeleteBranch}
@@ -79,7 +80,13 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           {...routingProps}
         />
         {!isLoading && (
-          <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+          <Pagination
+            indeterminate
+            hasNext={xNextPage > 0}
+            hasPrevious={xPrevPage > 0}
+            getPrevPageLink={getPrevPageLink}
+            getNextPageLink={getNextPageLink}
+          />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

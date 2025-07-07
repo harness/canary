@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
@@ -49,7 +49,8 @@ const useMemberListStore = () => {
     spaceId: '',
     page: 1,
     setPage: noop,
-    totalPages: 10
+    totalItems: 10,
+    pageSize: 10
   }
 }
 
@@ -70,7 +71,6 @@ export const SpaceSettingsMembers = () => {
     <>
       <ProjectMemberListView
         isLoading={false}
-        useTranslationStore={useTranslationStore}
         useMemberListStore={useMemberListStore}
         usePrincipalListStore={usePrincipalListStore}
         isInvitingMember={false}
@@ -93,7 +93,6 @@ export const SpaceSettingsMembers = () => {
         type="member"
         identifier={deleteMemberId ?? undefined}
         isLoading={false}
-        useTranslationStore={useTranslationStore}
         withForm
       />
     </>

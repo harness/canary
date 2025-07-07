@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon, type ButtonSizes } from '@/components'
-import { BranchData, BranchSelectorListItem, BranchSelectorTab, TranslationStore } from '@/views'
+import { Button, DropdownMenu, IconV2, Text, type ButtonSizes } from '@/components'
+import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
@@ -11,7 +11,6 @@ interface BranchSelectorProps {
   selectedBranchorTag: BranchSelectorListItem
   repoId: string
   spaceId: string
-  useTranslationStore: () => TranslationStore
   branchPrefix?: string
   buttonSize?: ButtonSizes
   selectedBranch?: BranchSelectorListItem
@@ -21,6 +20,8 @@ interface BranchSelectorProps {
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
+  isFilesPage?: boolean
+  setCreateBranchDialogOpen?: (open: boolean) => void
 }
 export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   repoId,
@@ -28,7 +29,6 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   branchList,
   tagList,
   selectedBranchorTag,
-  useTranslationStore,
   branchPrefix,
   buttonSize,
   selectedBranch,
@@ -37,7 +37,9 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   searchQuery = '',
   setSearchQuery,
   dynamicWidth = false,
-  preSelectedTab
+  preSelectedTab,
+  isFilesPage = false,
+  setCreateBranchDialogOpen
 }) => {
   const isTag = selectedBranchorTag
     ? tagList?.some(tag => tag.name === selectedBranchorTag.name && tag.sha === selectedBranchorTag.sha)
@@ -48,13 +50,15 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
       <DropdownMenu.Trigger asChild>
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
         <Button className="justify-start px-3" variant="outline" size={buttonSize}>
-          {!branchPrefix && <Icon className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={14} />}
-          <span className="overflow-x-hidden text-ellipsis whitespace-nowrap">
+          {!branchPrefix && (
+            <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
+          )}
+          <Text className="truncate">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
-          </span>
-          <Icon name="chevron-down" className="chevron-down ml-auto shrink-0" size={12} />
+          </Text>
+          <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown
@@ -65,11 +69,12 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         selectedBranch={selectedBranch || selectedBranchorTag}
         repoId={repoId}
         spaceId={spaceId}
-        useTranslationStore={useTranslationStore}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         dynamicWidth={dynamicWidth}
         preSelectedTab={preSelectedTab}
+        isFilesPage={isFilesPage}
+        setCreateBranchDialogOpen={setCreateBranchDialogOpen}
       />
     </DropdownMenu.Root>
   )

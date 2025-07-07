@@ -11,7 +11,6 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
@@ -37,7 +36,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const { selectedBranchTag } = useRepoBranchesStore()
+  const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const { theme } = useThemeStore()
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -66,13 +65,16 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     }
     return parentPath?.length ? parentPath : fileName
   }, [isNew, parentPath, fileName])
-  const pathParts = [
-    {
-      path: repoId!,
-      parentPath: repoPath
-    },
-    ...splitPathWithParents(pathToSplit, repoPath)
-  ]
+  const pathParts = useMemo(
+    () => [
+      {
+        path: repoId!,
+        parentPath: repoPath
+      },
+      ...splitPathWithParents(pathToSplit, repoPath)
+    ],
+    [pathToSplit, repoId, repoPath]
+  )
   const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
   const commitAction = useMemo(
     () => (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
@@ -173,20 +175,22 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
             navigate(routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${defaultBranch}...${newBranchName}` }))
           }
         }}
-        currentBranch={fullGitRef || selectedBranchTag?.name}
+        currentBranch={fullGitRef || selectedBranchTag?.name || ''}
         isNew={!!isNew}
       />
 
       <PathActionBar
         codeMode={codeMode}
         pathParts={pathParts}
-        useTranslationStore={useTranslationStore}
         changeFileName={vel => setFileName(vel)}
         onBlurFileName={rebuildPaths}
         gitRefName={gitRefName}
         fileName={fileName}
         handleOpenCommitDialog={() => toggleOpenCommitDialog(true)}
         handleCancelFileEdit={handleCancelFileEdit}
+        parentPath={parentPath}
+        setParentPath={setParentPath}
+        selectedRefType={selectedRefType}
       />
 
       <FileEditorControlBar view={view} onChangeView={onChangeView} />

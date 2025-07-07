@@ -1,30 +1,31 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { secretsFormDefinition } from '@utils/secrets/secrets-form-schema'
-import { useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
   CalendarInput,
+  CardsFormInput,
   DirectionEnum,
   EntityIntent,
-  GroupInput,
-  ListInput,
-  NumberInput,
+  GroupFormInput,
+  ListFormInput,
+  NumberFormInput,
   onSubmitSecretProps,
-  RadialInput,
   SecretEntityForm,
+  SecretEntityFormHandle,
   SecretItem,
   SecretReference,
   SecretsHeader,
   SecretType,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 import mockAccountsData from './mock-account-data.json'
@@ -34,16 +35,16 @@ import mockSecretsData from './mock-secrets-data.json'
 import { Scope, ScopeEnum, scopeHierarchy } from './types'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
-inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
+inputComponentFactory.registerComponent(new ListFormInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 inputComponentFactory.registerComponent(new CalendarInput())
 
 export const SecretsPage = ({
@@ -57,6 +58,8 @@ export const SecretsPage = ({
   selectedSecret: SecretItem | null
   setSelectedSecret: (selectedSecret: SecretItem | null) => void
 }) => {
+  const formRef = useRef<SecretEntityFormHandle>(null)
+
   const [selectedType, setSelectedType] = useState<SecretType>(SecretType.NEW)
 
   const [activeScope, setActiveScope] = useState<Scope>(ScopeEnum.ORGANIZATION)
@@ -66,6 +69,8 @@ export const SecretsPage = ({
   const [currentFolder, setCurrentFolder] = useState<string | null>(
     mockOrgData[0].organizationResponse.organization.identifier
   )
+
+  const [search, setSearch] = useState('')
 
   const onSubmit = (data: onSubmitSecretProps) => {
     console.log('Submitted data:', data)
@@ -109,18 +114,22 @@ export const SecretsPage = ({
     setIsDrawerOpen(false)
   }
 
+  const handleSubmitEntityForm = () => {
+    formRef.current?.submitForm()
+  }
+
   const renderSecretContent = () => {
     switch (selectedType) {
       case SecretType.NEW:
         return (
           <SecretEntityForm
-            useTranslationStore={useTranslationStore}
+            ref={formRef}
             inputComponentFactory={inputComponentFactory}
             intent={EntityIntent.CREATE}
             secretsFormDefinition={secretsFormDefinition}
             onFormSubmit={onSubmit}
             onBack={handleCancel}
-            hasHeader={true}
+            isDrawer
           />
         )
       case SecretType.EXISTING:
@@ -143,6 +152,9 @@ export const SecretsPage = ({
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             isLoading={false}
             apiError="Could not fetch secrets, unauthorized"
+            searchValue={search}
+            handleChangeSearchValue={setSearch}
+            isDrawer
           />
         )
       default:
@@ -152,20 +164,31 @@ export const SecretsPage = ({
 
   return (
     <>
-      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="right">
+      <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
         <Drawer.Content>
           <Drawer.Header>
-            <Drawer.Title className="text-cn-foreground-1 mb-2 text-xl">Secret</Drawer.Title>
-            <FormSeparator className="w-full" />
-            <Drawer.Close onClick={() => setIsDrawerOpen(false)} />
+            <Drawer.Title>Secret</Drawer.Title>
           </Drawer.Header>
-          {/* <Spacer size={5} /> */}
-          <Text as="div" className="text-cn-foreground-2 my-4">
-            Choose type
-          </Text>
-          <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
-          <Spacer size={5} />
-          {renderSecretContent()}
+          <Drawer.Body>
+            <Text className="mb-4">Choose type</Text>
+            <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
+            <Spacer size={6} />
+            <FormSeparator className="w-full" />
+            <Spacer size={6} />
+            {renderSecretContent()}
+          </Drawer.Body>
+          <Drawer.Footer>
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
+                <Button onClick={selectedType === SecretType.NEW ? handleSubmitEntityForm : noop}>Save</Button>
+              </ButtonLayout.Primary>
+              <ButtonLayout.Secondary>
+                <Button variant="outline" onClick={handleCancel}>
+                  Back
+                </Button>
+              </ButtonLayout.Secondary>
+            </ButtonLayout.Root>
+          </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>
     </>

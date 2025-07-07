@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { ElementType, useEffect, useState } from 'react'
 
-import { Button } from '@components/button'
-import { Icon } from '@components/icon'
-import { SkeletonList } from '@components/index'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, SkeletonList, Text } from '@/components'
+import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
 import { parse } from 'yaml'
@@ -17,18 +16,44 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 
-import { useUnifiedPipelineStudioContext } from '../../../unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
-import { TEMPLATE_STEP_IDENTIFIER } from '../steps/types'
-import { EntityFormLayout } from './entity-form-layout'
-import { EntityFormSectionLayout } from './entity-form-section-layout'
+import { TEMPLATE_CD_STEP_IDENTIFIER, TEMPLATE_CI_STEP_IDENTIFIER } from '../steps/types'
+
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Header: ElementType
+    Title: ElementType
+    Description: ElementType
+    Body: ElementType
+    Footer: ElementType
+  }
+> = {
+  true: {
+    Header: Drawer.Header,
+    Title: Drawer.Title,
+    Description: Drawer.Description,
+    Body: Drawer.Body,
+    Footer: Drawer.Footer
+  },
+  false: {
+    Header: EntityFormLayout.Header,
+    Title: EntityFormLayout.Title,
+    Description: EntityFormLayout.Description,
+    Body: 'div',
+    Footer: EntityFormLayout.Footer
+  }
+}
 
 interface UnifiedPipelineStudioEntityFormProps {
   requestClose: () => void
+  isDrawer?: boolean
+  isDirtyRef: { current?: boolean }
 }
 
 export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps) => {
-  const { requestClose } = props
+  const { requestClose, isDrawer = false, isDirtyRef } = props
+  const { Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const {
     yamlRevision,
     addStepIntention,
@@ -74,12 +99,16 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         }
       }
       // process templates step
-      else if (step[TEMPLATE_STEP_IDENTIFIER]) {
+      else if (step[TEMPLATE_CI_STEP_IDENTIFIER] || step[TEMPLATE_CD_STEP_IDENTIFIER]) {
         setDefaultStepValues(step)
         setExternalLoading(true)
-        getTemplateFormDefinition(step.template.uses)
+        const identifier = step[TEMPLATE_CI_STEP_IDENTIFIER]?.uses ?? step[TEMPLATE_CD_STEP_IDENTIFIER]?.uses ?? ''
+        getTemplateFormDefinition(identifier)
           .then(templateFormDefinition => {
-            return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+            return setFormDefinition({
+              inputs: addNameInput(templateFormDefinition.inputs, 'name'),
+              metadata: templateFormDefinition.metadata
+            })
           })
           .catch(err => {
             setError(err)
@@ -107,7 +136,10 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
       getTemplateFormDefinition(`${formEntity.data.identifier}@${formEntity.data.version}`)
         .then(templateFormDefinition => {
-          return setFormDefinition({ inputs: addNameInput(templateFormDefinition.inputs, 'name') })
+          return setFormDefinition({
+            inputs: addNameInput(templateFormDefinition.inputs, 'name'),
+            metadata: templateFormDefinition.metadata
+          })
         })
         .catch(err => {
           setError(err)
@@ -121,6 +153,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
   }, [formEntity])
 
   const resolver = useZodValidationResolver(formDefinition ?? { inputs: [] }, {
+    // TODO: remove validationConfig
     validationConfig: {
       requiredMessage: 'Required input',
       requiredMessagePerInput: { ['select']: 'Selection is required' }
@@ -146,12 +179,16 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
         // TODO:move transform logic outside for "external"
         if (formEntity?.source === 'external') {
           // remove "with" if its a empty object
-          const cleanWith = omitBy(stepValue.template.with, isUndefined)
+          const cleanWith = omitBy(stepValue.template?.with, isUndefined)
+          const alias = String(get(formDefinition.metadata, 'alias', ''))
+          /**
+           * "alias" will be used directly as the "templateKey" once TEMPLATE_CI_STEP_IDENTIFIER changes from "template" to "build"
+           */
+          const templateKey = alias === 'deploy' ? alias : TEMPLATE_CI_STEP_IDENTIFIER
 
-          // add 'uses' for template step
           stepValue = {
-            ...omit(stepValue, 'template'),
-            template: {
+            ...omit(stepValue, templateKey),
+            [templateKey]: {
               uses: `${formEntity.data.identifier}@${formEntity.data.version}`,
               ...(isEmpty(cleanWith) ? {} : { with: cleanWith })
             }
@@ -195,59 +232,66 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
       }}
       validateAfterFirstSubmit={true}
     >
-      {rootForm => (
-        <EntityFormLayout.Root>
-          <EntityFormLayout.Header>
-            <EntityFormLayout.Title>
-              {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
-              {formEntity?.data?.identifier ?? defaultStepValues.template?.uses}
-            </EntityFormLayout.Title>
-            <EntityFormLayout.Description>{formEntity?.data.description}</EntityFormLayout.Description>
-            {/* <EntityFormLayout.Actions>
-              <AIButton label="AI Autofill" />
-            </EntityFormLayout.Actions> */}
-          </EntityFormLayout.Header>
-          <EntityFormSectionLayout.Root>
-            {/* <StepFormSection.Header> */}
-            {/* <StepFormSection.Title>General</StepFormSection.Title> */}
-            {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
-            {/* </StepFormSection.Header> */}
-            <EntityFormSectionLayout.Form>
-              {error?.message ? (
-                <p className="text-sm text-cn-foreground-danger">{error.message}</p>
-              ) : loading ? (
-                <SkeletonList className="p-5" />
-              ) : (
-                <>
-                  <RenderForm className="space-y-5 p-5" factory={inputComponentFactory} inputs={formDefinition} />
-                </>
-              )}
-            </EntityFormSectionLayout.Form>
-          </EntityFormSectionLayout.Root>
-          <EntityFormLayout.Footer>
-            <div className="flex gap-x-3">
-              <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
-                Submit
-              </Button>
-              <Button variant="secondary" onClick={requestClose}>
-                Cancel
-              </Button>
-            </div>
-            {editStepIntention && (
-              <Button
-                variant="secondary"
-                iconOnly
-                onClick={() => {
-                  requestYamlModifications.deleteInArray({ path: editStepIntention.path })
-                  requestClose()
-                }}
-              >
-                <Icon name="trash" />
-              </Button>
-            )}
-          </EntityFormLayout.Footer>
-        </EntityFormLayout.Root>
-      )}
+      {rootForm => {
+        isDirtyRef.current = rootForm.formState.isDirty
+
+        return (
+          <>
+            <Header>
+              <Title>
+                {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
+                {formEntity?.data?.identifier ??
+                  defaultStepValues[TEMPLATE_CI_STEP_IDENTIFIER]?.uses ??
+                  defaultStepValues[TEMPLATE_CD_STEP_IDENTIFIER]?.uses}
+              </Title>
+              <Description>{formEntity?.data.description}</Description>
+              {/*<AIButton label="AI Autofill" />*/}
+            </Header>
+            <Body>
+              {/* <StepFormSection.Header> */}
+              {/* <StepFormSection.Title>General</StepFormSection.Title> */}
+              {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
+              {/* </StepFormSection.Header> */}
+              <EntityFormLayout.Form>
+                {error?.message ? (
+                  <Text color="danger">{error.message}</Text>
+                ) : loading ? (
+                  <SkeletonList />
+                ) : (
+                  <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
+                )}
+              </EntityFormLayout.Form>
+            </Body>
+            <Footer>
+              <ButtonLayout.Root>
+                <ButtonLayout.Primary className="flex gap-x-3">
+                  <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
+                    Submit
+                  </Button>
+                  <Button variant="secondary" onClick={requestClose}>
+                    Cancel
+                  </Button>
+                </ButtonLayout.Primary>
+                {!!editStepIntention && (
+                  <ButtonLayout.Secondary>
+                    <Button
+                      variant="secondary"
+                      iconOnly
+                      onClick={() => {
+                        requestYamlModifications.deleteInArray({ path: editStepIntention.path })
+                        requestClose()
+                      }}
+                      aria-label="Remove Step"
+                    >
+                      <IconV2 name="trash" />
+                    </Button>
+                  </ButtonLayout.Secondary>
+                )}
+              </ButtonLayout.Root>
+            </Footer>
+          </>
+        )
+      }}
     </RootForm>
   )
 }

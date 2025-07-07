@@ -7,7 +7,7 @@ export interface AlertDescriptionProps extends PropsWithChildren<React.HTMLAttri
 }
 
 export const AlertDescription = forwardRef<HTMLDivElement, AlertDescriptionProps>(({ className, children }, ref) => (
-  <div ref={ref} className={cn('text-sm [&_p]:leading-relaxed', className)}>
+  <div ref={ref} className={cn('cn-alert-description', className)}>
     {children}
   </div>
 ))

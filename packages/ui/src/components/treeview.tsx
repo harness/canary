@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 
-import { Icon as CanaryIcon, ScrollArea } from '@/components'
+import { IconV2, ScrollArea } from '@/components'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -15,11 +15,11 @@ type ExecutionDetail = {
 const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={20} name="running" className="animate-spin text-icons-warning" />
+      return <IconV2 name="loader" className="animate-spin text-icons-warning" />
     case ExecutionState.SUCCESS:
-      return <CanaryIcon name="success" size={16} className="text-icons-success" />
+      return <IconV2 name="check-circle-solid" className="text-icons-success" />
     case ExecutionState.FAILURE:
-      return <CanaryIcon name="fail" className="text-icons-danger" size={16} />
+      return <IconV2 name="xmark-circle-solid" className="text-icons-danger" />
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.PENDING:
       return (
@@ -30,7 +30,7 @@ const getStatusIcon = (status: ExecutionState): React.ReactElement => {
     case ExecutionState.SKIPPED:
     case ExecutionState.UNKNOWN:
     default:
-      return <CanaryIcon name="circle" size={16} />
+      return <IconV2 name="circle" />
   }
 }
 
@@ -138,7 +138,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
           direction
         }}
       >
-        <ScrollArea className="pt-4" dir={dir as Direction}>
+        <ScrollArea className="pt-4" direction={dir as Direction}>
           <div className={cn('size-full', className)}>
             <AccordionPrimitive.Root
               {...props}
@@ -210,10 +210,10 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           disabled={!isSelectable}
           onClick={() => handleExpand(value)}
         >
-          <CanaryIcon
-            name="chevron-right"
+          <IconV2
+            name="nav-arrow-right"
             className={cn('text-icons-1 mt-1', expendedItems?.includes(value) && 'rotate-90')}
-            size={12}
+            size="2xs"
           />
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">

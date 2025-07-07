@@ -17,7 +17,7 @@ import {
   useListPrincipalsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { Icon } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
@@ -38,7 +38,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
@@ -102,16 +101,16 @@ export const CreatePullRequest = () => {
     [commitRange, targetRef, sourceRef]
   )
 
-  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
+  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => {
     const reader = new FileReader()
     // Set up a function to be called when the load event is triggered
     reader.onload = async function () {
       if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
         const markdown = await uploadImage(reader.result)
         if (blob.type.startsWith('image/')) {
-          setDesc(`![image](${markdown})`) // Set the markdown content
+          setDesc(`${currentComment} \n ![image](${markdown})`) // Set the markdown content
         } else {
-          setMarkdownContent(markdown) // Set the markdown content
+          setMarkdownContent(`${currentComment} \n ${markdown}`) // Set the markdown content
         }
       }
     }
@@ -487,7 +486,6 @@ export const CreatePullRequest = () => {
         isSuccess={createPullRequestMutation.isSuccess}
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
-        useTranslationStore={useTranslationStore}
         prBranchCombinationExists={prBranchCombinationExists}
         diffData={
           diffStats?.files_changed || 0
@@ -539,7 +537,7 @@ export const CreatePullRequest = () => {
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
               selectedBranch={selectedTargetBranch}
             />
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+            <IconV2 name="arrow-long-left" />
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
               selectedBranch={selectedSourceBranch}

@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, Icon, ScrollArea, StackedList } from '@/components'
+import { Breadcrumb, IconV2, ScrollArea, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
 import {
@@ -10,10 +10,12 @@ import {
   EntityRendererProps,
   ParentFolderRendererProps
 } from './types'
+import { defaultEntityComparator } from './utils/utils'
 
 export interface EntityReferenceListProps<T extends BaseEntityProps, S = string, F = string> {
   entities: T[]
-  selectedEntity: T | null
+  selectedEntity?: T | null
+  selectedEntities?: T[]
   parentFolder: S | null
   childFolder: F | null
   currentFolder: string | null
@@ -25,11 +27,14 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
   apiError?: string | null
   showBreadcrumbEllipsis?: boolean
+  enableMultiSelect?: boolean
+  compareFn?: (entity1: T, entity2: T) => boolean
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
   entities,
   selectedEntity,
+  selectedEntities = [],
   parentFolder,
   childFolder,
   currentFolder,
@@ -40,7 +45,9 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   parentFolderRenderer,
   childFolderRenderer,
   apiError,
-  showBreadcrumbEllipsis = false
+  showBreadcrumbEllipsis = false,
+  enableMultiSelect = false,
+  compareFn
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
@@ -54,7 +61,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   <Breadcrumb.Ellipsis className="ml-1 h-0 w-4" />
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
-                  <Icon name="chevron-right" size={6} className="scale-75" />
+                  <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
                 </Breadcrumb.Separator>
               </>
             ) : null}
@@ -69,7 +76,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   </Breadcrumb.Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Separator>
-                  <Icon name="chevron-right" size={6} className="scale-75" />
+                  <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
                 </Breadcrumb.Separator>
               </>
             ) : null}
@@ -105,7 +112,14 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
         {entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              const isSelected = entity.id === selectedEntity?.id
+              // Use either the custom comparator or the default one
+              const compareEntities = compareFn || defaultEntityComparator
+
+              const isSelected = enableMultiSelect
+                ? selectedEntities.some(item => compareEntities(item, entity))
+                : selectedEntity
+                  ? compareEntities(selectedEntity, entity)
+                  : false
 
               return (
                 <Fragment key={entity.id}>
@@ -113,12 +127,14 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                     ? renderEntity({
                         entity,
                         isSelected,
-                        onSelect: () => handleSelectEntity(entity)
+                        onSelect: () => handleSelectEntity(entity),
+                        showCheckbox: enableMultiSelect
                       })
                     : defaultEntityRenderer({
                         entity,
                         isSelected,
-                        onSelect: () => handleSelectEntity(entity)
+                        onSelect: () => handleSelectEntity(entity),
+                        showCheckbox: enableMultiSelect
                       })}
                 </Fragment>
               )
@@ -130,7 +146,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           </StackedList.Item>
         )}
       </ScrollArea>
-      <div className="pointer-events-none absolute inset-x-0 bottom-20 z-10 h-32 bg-gradient-to-t from-cn-background-1 via-cn-background-1/80 to-cn-background-1/0"></div>
     </StackedList.Root>
   )
 }

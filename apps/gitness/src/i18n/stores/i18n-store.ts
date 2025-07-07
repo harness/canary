@@ -1,8 +1,13 @@
+import { TFunction } from 'i18next'
 import { create } from 'zustand'
 
-import { TranslationStore } from '@harnessio/ui/views'
-
 import i18n from '../i18n'
+
+type TranslationStore = {
+  i18n: typeof i18n
+  t: TFunction
+  changeLanguage: (lng: string) => void
+}
 
 export const useTranslationStore = create<TranslationStore>(_set => ({
   i18n,

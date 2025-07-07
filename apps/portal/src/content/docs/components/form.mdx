@@ -1,0 +1,178 @@
+---
+title: Form
+description: Form component
+---
+
+The form system consists of two main components:
+
+- **FormWrapper** - A container component that wraps form inputs and handles form submission
+- **FormInput** - A set of input components for different data types
+
+### Usage
+
+The `FormInput` components generate fields with the correct:
+
+- Labels
+- Input types
+- Validation feedback
+- Accessibility attributes
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExampleWithZodAndForm
+  client:only
+  code={`
+  () => {
+  const [submittedValue, setSubmittedValue] = React.useState<FormValues | null>(null);
+
+const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+const formSchema = z.object({
+name: z.string().trim().min(3, "Input must be at least 3 characters"),
+
+    // 🚨 z.coerce.number() - Must be used for number fields
+    // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
+    age: z.coerce.number().min(1, "Number must be at least 1"),
+
+    comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
+    permission: z.enum(['public', 'private'], {
+      required_error: 'Please select an option.'
+    }).optional(),
+    checkboxField: z.boolean().refine(val => val === true, { message: 'You must check this box' })
+
+});
+
+// Infer the type from the schema
+const FormValues = z.infer<typeof formSchema>;
+
+// Initialize react-hook-form with zod resolver
+const formMethods = useForm<FormValues>({
+resolver: zodResolver(formSchema),
+defaultValues: {
+name: "John doe",
+age: 1,
+comment: "Lorem ipsum",
+permission: "public",
+checkboxField: false
+},
+});
+
+const { register, handleSubmit } = formMethods;
+
+// Handle form submission
+const onSubmit = (data: FormValues) => {
+setSubmittedValue(data);
+};
+
+React.useEffect(() => {
+if(!formMethods.formState.isValid){
+setSubmittedValue(null);
+}
+},[formMethods.formState.isValid]);
+
+return (
+
+<div className="w-[500px]">
+{/* ‼️ It is mandatory to pass all return values from useForm to FormWrapper */}
+<FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+<FormInput.Text
+label="Input Field"
+placeholder="Enter at least 3 characters"
+{...register("name")}
+/>
+
+        <FormInput.Number
+          label="Number Field"
+          placeholder="Enter a number"
+          {...register("age")}
+        />
+
+        <FormInput.Textarea
+          label="Textarea Field"
+          placeholder="Enter a textarea"
+          {...register("comment")}
+        />
+
+        <FormInput.Radio {...register('permission')} label="Permission">
+          <Radio.Item value="public" label="Public" caption="Anyone with the link can access" />
+          <Radio.Item value="private" label="Private" caption="Only you and your team members can access" />
+        </FormInput.Radio>
+
+        <FormInput.Checkbox {...register('checkboxField')} label="Accept terms and conditions" />
+
+        <Button type="submit" disabled={formMethods.formState.isSubmitting}>
+          {formMethods.formState.isSubmitting ? "Submitting..." : "Submit"}
+        </Button>
+
+        <h4>Submitted Values</h4>
+        {formMethods.formState.isValid && submittedValue && (
+          <pre className="mt-4 p-3 bg-cn-background-3 text-cn-foreground-1 rounded whitespace-break-spaces text-sm">
+            {JSON.stringify(submittedValue, null, 2)}
+          </pre>
+        )}
+      </FormWrapper>
+    </div>
+
+);
+}
+`}
+/>
+
+### Form with Zod and React Hook Form
+
+```typescript jsx
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button, FormInput, FormWrapper } from "@harnessio/ui/components";
+
+// ...
+
+/**
+ * 1️⃣ Define the validation schema with zod
+ */
+const formSchema = z.object({
+  /** 💡 As a best practice, use trim() to remove whitespace from the input */
+  name: z.string().trim().min(3, "Input must be at least 3 characters"),
+
+  // 🚨 z.coerce.number() - Must be used for number fields
+  // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
+  age: z.coerce.number().min(1, "Number must be at least 1"),
+  comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
+});
+
+// ...
+
+/** 2️⃣ Infer the type from the schema */
+const FormValuesType = z.infer<typeof formSchema>;
+
+function FormWithZodAndReactHookForm() {
+  /** 3️⃣ Initialize react-hook-form with zod resolver */
+  const formMethods = useForm<FormValuesType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "John doe",
+      age: 1,
+      comment: "Lorem ipsum",
+    },
+  });
+
+  /** 4️⃣ Extract register and handleSubmit from formMethods */
+  const { register, handleSubmit } = formMethods;
+
+  /** 6️⃣ Handle form submission */
+  const onSubmit = (data: FormValuesType) => {
+    // ...
+  };
+
+  /** 5️⃣ Use FormWrapper with formMethods and onSubmit */
+  return (
+    <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+      <FormInput.Text {...register("name")} label="Name" />
+      <FormInput.Number {...register("age")} label="Age" />
+      <FormInput.Textarea {...register("comment")} label="Comment" />
+      <Button type="submit">Submit</Button>
+    </FormWrapper>
+  );
+}
+```

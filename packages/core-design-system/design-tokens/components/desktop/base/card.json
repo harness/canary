@@ -1,20 +1,80 @@
 {
   "card": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.6}"
+    "lg": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.4}"
+      }
     },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.6}"
+    "md": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      }
     },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.6}"
+    "sm": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}"
+      }
     },
-    "radius": {
-      "$type": "borderRadius",
-      "$value": "{rounded.4}"
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "image": {
+      "width": {
+        "$type": "sizing",
+        "$value": "460px"
+      },
+      "height": {
+        "$type": "sizing",
+        "$value": "240px"
+      }
+    }
+  },
+  "card-check": {
+    "md": {
+      "pr": {
+        "$type": "spacing",
+        "$value": "{spacing.11}"
+      },
+      "pl": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.3-half}"
+      }
     }
   }
 }

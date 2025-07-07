@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { StyledLink } from '@harnessio/ui/components'
+import { Link } from '@harnessio/ui/components'
 import { ConnectorInput, ConnectorItem } from '@harnessio/ui/views'
 
 import { ConnectorsRefPage } from './connectors-ref'
@@ -12,7 +12,7 @@ export const ConnectorInputExample = () => {
   return (
     <>
       <ConnectorInput
-        placeholder={<StyledLink to="#">Please select a connector</StyledLink>}
+        placeholder={<Link to="#">Please select a connector</Link>}
         value={selectedConnector}
         onClick={() => {
           setIsDrawerOpen(true)

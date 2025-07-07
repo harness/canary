@@ -32,6 +32,7 @@ import { SkeletonList } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
   LatestCodeOwnerApprovalArrType,
+  PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
   TypesPullReq
 } from '@harnessio/ui/views'
@@ -42,7 +43,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
@@ -63,7 +63,8 @@ import { usePullRequestProviderStore } from './stores/pull-request-provider-stor
 const getMockPullRequestActions = (
   handlePrState: (data: string) => void,
   handleMerge: (data: EnumMergeMethod) => void,
-  pullReqMetadata?: TypesPullReq
+  pullReqMetadata?: TypesPullReq,
+  prPanelData?: PRPanelData
 ) => {
   return [
     ...(pullReqMetadata?.closed
@@ -103,7 +104,8 @@ const getMockPullRequestActions = (
               description: 'All commits from this branch will be combined into one commit in the base branch.',
               action: () => {
                 handleMerge('squash')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('squash')
             },
             {
               id: '1',
@@ -111,7 +113,8 @@ const getMockPullRequestActions = (
               description: 'All commits from this branch will be added to the base branch via a merge commit.',
               action: () => {
                 handleMerge('merge')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('merge')
             },
             {
               id: '2',
@@ -119,7 +122,8 @@ const getMockPullRequestActions = (
               description: 'All commits from this branch will be rebased and added to the base branch.',
               action: () => {
                 handleMerge('rebase')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('rebase')
             },
             {
               id: '3',
@@ -128,7 +132,8 @@ const getMockPullRequestActions = (
                 'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
               action: () => {
                 handleMerge('fast-forward')
-              }
+              },
+              disabled: !prPanelData?.allowedMethods?.includes('fast-forward')
             }
           ])
   ]
@@ -177,6 +182,7 @@ export default function PullRequestConversationPage() {
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
+  const [mergeErrorMessage, setMergeErrorMessage] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
   const [comment, setComment] = useState<string>('')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
@@ -249,11 +255,18 @@ export default function PullRequestConversationPage() {
     data: { body: sourceBranch } = {},
     error: branchError,
     refetch: refetchBranch
-  } = useGetBranchQuery({
-    repo_ref: repoRef,
-    branch_name: pullReqMetadata?.source_branch || '',
-    queryParams: { include_checks: true, include_rules: true }
-  })
+  } = useGetBranchQuery(
+    {
+      repo_ref: repoRef,
+      branch_name: pullReqMetadata?.source_branch || '',
+      queryParams: { include_checks: true, include_rules: true }
+    },
+    {
+      // Don't cache the result to ensure we always get fresh data
+      cacheTime: 0,
+      staleTime: 0
+    }
+  )
 
   const { mutateAsync: deleteBranch } = useDeletePullReqSourceBranchMutation({
     repo_ref: repoRef,
@@ -312,16 +325,21 @@ export default function PullRequestConversationPage() {
       })
   }, [deleteBranch, repoRef, prId, refetchBranch, refetchActivities])
 
+  // useEffect(() => {
+  //   if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+  //     setShowDeleteBranchButton(true)
+  //   }
+  // }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
+
   useEffect(() => {
-    if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+    if (sourceBranch && !branchError && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
       setShowDeleteBranchButton(true)
+      setShowRestoreBranchButton(false)
+      return
     }
-  }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
-  useEffect(() => {
-    if (!branchError) return
-
-    if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
+    if ((branchError || !sourceBranch) && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+      setShowDeleteBranchButton(false)
       setShowRestoreBranchButton(true)
       return
     }
@@ -345,7 +363,7 @@ export default function PullRequestConversationPage() {
 
       setShowRestoreBranchButton(true)
     })
-  }, [branchError])
+  }, [branchError, sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
   const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
 
@@ -530,10 +548,20 @@ export default function PullRequestConversationPage() {
         dry_run: false
         // message: data.commitMessage
       }
-      mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
-        handleRefetchData()
-        setRuleViolationArr(undefined)
-      })
+      mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
+        .then(_res => {
+          handleRefetchData()
+          setRuleViolationArr(undefined)
+          refetchBranch()
+          // if (res.body.branch_deleted) {
+          //   setShowDeleteBranchButton(false)
+          //   setShowRestoreBranchButton(true)
+          // } else {
+          //   setShowDeleteBranchButton(true)
+          //   setShowRestoreBranchButton(false)
+          // }
+        })
+        .catch(error => setMergeErrorMessage(error.message))
       //todo: add catch to show errors
       // .catch(exception => showError(getErrorMessage(exception)))
     },
@@ -679,6 +707,7 @@ export default function PullRequestConversationPage() {
       },
       prPanelData,
       checks: pullReqChecksDecision?.data?.checks,
+      error: mergeErrorMessage,
       // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this
       pullReqMetadata,
       // TODO: add dry merge check into pr context
@@ -691,7 +720,7 @@ export default function PullRequestConversationPage() {
       codeOwnerPendingEntries,
       codeOwnerApprovalEntries,
       latestCodeOwnerApprovalArr,
-      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata),
+      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData),
       checkboxBypass,
       setCheckboxBypass,
       onRestoreBranch,
@@ -707,15 +736,10 @@ export default function PullRequestConversationPage() {
       repoId
     }
   }, [
-    routes,
-    spaceId,
-    repoId,
     handleRebaseBranch,
     handlePrState,
-    handleMerge,
-    changesInfo,
-    pullReqChecksDecision,
     prPanelData,
+    mergeErrorMessage,
     pullReqMetadata,
     approvedEvaluations,
     changeReqEvaluations,
@@ -731,15 +755,12 @@ export default function PullRequestConversationPage() {
     onDeleteBranch,
     showDeleteBranchButton,
     showRestoreBranchButton,
-    errorMsg,
-    suggestionsBatch,
-    onCommitSuggestionsBatch
+    errorMsg
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
     return <SkeletonList />
   }
-
   return (
     <>
       <CommitSuggestionsDialog
@@ -752,7 +773,6 @@ export default function PullRequestConversationPage() {
       <PullRequestConversationView
         rebaseErrorMessage={rebaseErrorMessage}
         filtersProps={filtersData}
-        useTranslationStore={useTranslationStore}
         panelProps={panelProps}
         overviewProps={overviewProps}
         // TODO: create useMemo of commentBoxProps

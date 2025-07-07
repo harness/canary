@@ -18,7 +18,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate, PageResponseHeader } from '../../types'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
@@ -47,6 +46,7 @@ export function RepoBranchesListPage() {
 
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -56,8 +56,10 @@ export function RepoBranchesListPage() {
       limit: 10,
       query: query ?? '',
       order: orderSortDate.DESC,
+      sort: 'date',
       include_commit: true,
-      include_pullreqs: true
+      include_pullreqs: true,
+      include_checks: true
     },
     repo_ref: repoRef
   })
@@ -92,6 +94,7 @@ export function RepoBranchesListPage() {
 
   const handleResetDeleteBranch = () => {
     setDeleteBranchName(null)
+    setIsDeleteDialogOpen(false)
     if (deleteBranchError) {
       resetDeleteBranch()
     }
@@ -99,6 +102,7 @@ export function RepoBranchesListPage() {
 
   const handleSetDeleteBranch = (branchName: string) => {
     setDeleteBranchName(branchName)
+    setIsDeleteDialogOpen(true)
   }
 
   const {
@@ -110,6 +114,7 @@ export function RepoBranchesListPage() {
     { repo_ref: repoRef },
     {
       onSuccess: () => {
+        setIsDeleteDialogOpen(false)
         handleResetDeleteBranch()
         handleInvalidateBranchList()
       }
@@ -173,13 +178,12 @@ export function RepoBranchesListPage() {
         isCreatingBranch={isCreatingBranch}
         onSubmit={onSubmit}
         useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
         isCreateBranchDialogOpen={isCreateBranchDialogOpen}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         searchQuery={query}
         setSearchQuery={setQuery}
         createBranchError={createBranchError?.message}
-        toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
+        // toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
         toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
           routes.toPullRequestCompare({ spaceId, repoId, diffRefs })
         }
@@ -199,14 +203,13 @@ export function RepoBranchesListPage() {
       />
 
       <DeleteAlertDialog
-        open={deleteBranchName !== null}
+        open={isDeleteDialogOpen}
         onClose={handleResetDeleteBranch}
         deleteFn={handleDeleteBranch}
         error={deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}
         type="branch"
         identifier={deleteBranchName ?? undefined}
         isLoading={isDeletingBranch}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

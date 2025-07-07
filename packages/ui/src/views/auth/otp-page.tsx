@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
-import { Alert, Button, Card, InputOTP, Spacer, Text } from '@/components'
+import { Alert, Button, InputOTP, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -87,23 +87,24 @@ export function OTPPage({
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Verify your email
-          </Card.Title>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          </Text>
+          <Text className="mt-0.5" align="center">
             Please enter the verification code we’ve sent to your email{' '}
             <span className="text-cn-foreground-1">{email}</span>
           </Text>
-        </Card.Header>
+        </div>
         {serverError && (
-          <Alert.Container variant="destructive">
+          <Alert.Root theme="danger">
             <Alert.Title>{serverError}</Alert.Title>
-          </Alert.Container>
+          </Alert.Root>
         )}
-        <Card.Content className="mt-10">
+        <div className="mt-10 pt-0">
+          {/* TODO: Design system: Replace with FormWrapper once OTP component is ready*/}
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
               <Controller
@@ -123,9 +124,10 @@ export function OTPPage({
               />
               {(errors.otp || serverError) && (
                 <Text
-                  className="absolute top-full w-full translate-y-2 leading-none tracking-tight text-cn-foreground-danger"
+                  variant="body-single-line-normal"
+                  className="absolute top-full w-full translate-y-2"
+                  color="danger"
                   align="center"
-                  size={1}
                   as="p"
                 >
                   {errors.otp?.message || serverError}
@@ -137,14 +139,14 @@ export function OTPPage({
             </Button>
           </form>
           <Spacer size={4} />
-          <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
+          <Text color="foreground-3" align="center">
             Didn&apos;t receive the code?{' '}
             <Button className="h-5 p-0 leading-none" variant="ghost" onClick={handleResend}>
               Resend
             </Button>
           </Text>
-        </Card.Content>
-      </Card.Root>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

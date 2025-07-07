@@ -9,7 +9,6 @@ import {
 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { BranchSelectorContainer } from './branch-selector-container'
 
 interface CreateBranchDialogProps {
@@ -18,6 +17,8 @@ interface CreateBranchDialogProps {
   onSuccess?: () => void
   preselectedBranchOrTag?: BranchSelectorListItem | null
   preselectedTab?: BranchSelectorTab
+  prefilledName?: string
+  onBranchQueryChange?: (query: string) => void
 }
 
 export const CreateBranchDialog = ({
@@ -25,7 +26,9 @@ export const CreateBranchDialog = ({
   onClose,
   onSuccess,
   preselectedBranchOrTag,
-  preselectedTab
+  preselectedTab,
+  prefilledName,
+  onBranchQueryChange
 }: CreateBranchDialogProps) => {
   const repo_ref = useGetRepoRef()
 
@@ -51,6 +54,7 @@ export const CreateBranchDialog = ({
   )
 
   const handleCreateBranch = async (data: CreateBranchFormFields) => {
+    onBranchQueryChange?.(data.name)
     await createBranch({
       repo_ref,
       body: {
@@ -73,21 +77,21 @@ export const CreateBranchDialog = ({
 
   return (
     <CreateBranchDialogComp
-      useTranslationStore={useTranslationStore}
       open={open}
       onClose={onClose}
       selectedBranchOrTag={selectedBranchOrTag}
       onSubmit={handleCreateBranch}
       isCreatingBranch={isCreatingBranch}
       error={createBranchError?.message}
-      renderProp={() => (
+      prefilledName={prefilledName}
+      renderProp={
         <BranchSelectorContainer
           onSelectBranchorTag={selectBranchOrTag}
           selectedBranch={selectedBranchOrTag}
           preSelectedTab={preselectedTab}
           dynamicWidth
         />
-      )}
+      }
     />
   )
 }

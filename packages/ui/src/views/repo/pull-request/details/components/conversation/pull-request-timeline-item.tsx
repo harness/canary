@@ -1,9 +1,8 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, Button, Card, Icon, Input, MoreActionsTooltip, NodeGroup } from '@/components'
+import { Avatar, Button, IconV2, Input, MoreActionsTooltip, NodeGroup } from '@/components'
 import { HandleUploadType, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 
 interface ItemHeaderProps {
   avatar?: ReactNode
@@ -76,7 +75,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
         {isComment && !isDeleted && (
           <MoreActionsTooltip
             className="w-[200px]"
-            iconName="more-dots-fill"
+            iconName="more-horizontal"
             sideOffset={-8}
             alignOffset={2}
             actions={actions}
@@ -227,7 +226,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               />
               {isResolved && !contentHeader && (
                 <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                  <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
+                  <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
                   {isExpanded ? 'Hide resolved' : 'Show resolved'}
                 </Button>
               )}
@@ -236,7 +235,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
         </NodeGroup.Title>
         {!!content && (
           <NodeGroup.Content className={contentWrapperClassName}>
-            <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
+            <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
               {!!contentHeader && (
                 <div
                   className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cn-background-2', {
@@ -246,7 +245,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   {contentHeader}
                   {isResolved && (
                     <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                      <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
+                      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
                       {isExpanded ? 'Hide resolved' : 'Show resolved'}
                     </Button>
                   )}
@@ -290,11 +289,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     />
                   ) : (
                     <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
-                      {!!currentUser && (
-                        <Avatar.Root>
-                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
-                        </Avatar.Root>
-                      )}
+                      {!!currentUser && <Avatar name={currentUser} rounded />}
                       <Input
                         className="bg-cn-background-2"
                         placeholder="Reply here"
@@ -328,7 +323,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   </div>
                 </>
               )}
-            </Card.Root>
+            </div>
           </NodeGroup.Content>
         )}
         {!isLast && <NodeGroup.Connector />}

@@ -96,6 +96,8 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
     setRightDrawer,
     setEditStepIntention,
     setAddStepIntention,
+    setEditStageIntention,
+    setAddStageIntention,
     selectedPath,
     onSelectedPathChange
   } = useUnifiedPipelineStudioContext()
@@ -116,6 +118,17 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
 
     if (data.yamlEntityType === YamlEntityType.Step) {
       onEditIntention(data)
+    }
+
+    switch (data.yamlEntityType) {
+      case YamlEntityType.Step:
+        setRightDrawer(RightDrawer.Form)
+        setEditStepIntention({ path: data.yamlPath })
+        break
+      case YamlEntityType.Stage:
+        setRightDrawer(RightDrawer.StageConfig)
+        setEditStageIntention({ path: data.yamlPath })
+        break
     }
   }
 
@@ -158,13 +171,18 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
 
     if (yamlEntityTypeToAdd === YamlEntityType.Stage) {
       // NOTE: if we are adding in the array we have to provide path to children array
+      setRightDrawer(RightDrawer.StageConfig)
+
+      // NOTE: if we are adding in the array we have to provide path to children array
       if (position === 'in' && nodeData.yamlChildrenPath) {
-        requestYamlModifications.injectInArray({ path: nodeData.yamlChildrenPath, position, item: { steps: [] } })
+        setAddStageIntention({ path: nodeData.yamlChildrenPath, position })
       } else {
-        requestYamlModifications.injectInArray({ path: nodeData.yamlPath, position, item: { steps: [] } })
+        setAddStageIntention({ path: nodeData.yamlPath, position })
       }
       return
     }
+
+    // TODO: check if last/default action is add step or we need to wrap this code in the condition.
 
     setRightDrawer(RightDrawer.Collection)
 

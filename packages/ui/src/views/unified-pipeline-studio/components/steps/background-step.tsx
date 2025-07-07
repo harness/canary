@@ -1,8 +1,12 @@
 import { IFormDefinition } from '@harnessio/forms'
 
 import { InputConfigType } from '../form-inputs/types'
-import { runStepFormDefinition } from './run-step'
+import { getRunStepFormDefinition } from './run-step-common'
+import { BACKGROUND_STEP_IDENTIFIER } from './types'
 
-export const BACKGROUND_STEP_DESCRIPTION = 'Background step definition.'
+const BACKGROUND_STEP_DESCRIPTION = 'Background step definition.'
 
-export const backgroundStepFormDefinition: IFormDefinition<InputConfigType> = runStepFormDefinition
+const backgroundStepFormDefinition: IFormDefinition<InputConfigType> =
+  getRunStepFormDefinition(BACKGROUND_STEP_IDENTIFIER)
+
+export { BACKGROUND_STEP_IDENTIFIER, BACKGROUND_STEP_DESCRIPTION, backgroundStepFormDefinition }

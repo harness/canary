@@ -9,7 +9,6 @@ import { IPipelineListPageProps } from './types'
 
 const PipelineListPage: FC<IPipelineListPageProps> = ({
   usePipelineListStore,
-  useTranslationStore,
   isLoading,
   isError,
   errorMessage,
@@ -19,8 +18,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   LinkComponent,
   toPipelineDetails
 }) => {
-  const { t } = useTranslationStore()
-  const { pipelines, totalPages, page, setPage } = usePipelineListStore()
+  const { pipelines, totalItems, pageSize, page, setPage } = usePipelineListStore()
 
   const {
     search: searchInput,
@@ -38,9 +36,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
         <SandboxLayout.Main>
           <SandboxLayout.Content>
             <Spacer size={2} />
-            <Text size={1} className="text-cn-foreground-danger">
-              {errorMessage || 'Something went wrong'}
-            </Text>
+            <Text color="danger">{errorMessage || 'Something went wrong'}</Text>
           </SandboxLayout.Content>
         </SandboxLayout.Main>
       </>
@@ -51,7 +47,9 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
       <SandboxLayout.Content>
         {pipelines && pipelines.length > 0 && (
           <>
-            <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Pipelines</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1">
+              Pipelines
+            </Text>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
@@ -75,13 +73,12 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
           LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
           handleResetQuery={handleResetSearch}
-          useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           handleCreatePipeline={handleCreatePipeline}
           toPipelineDetails={toPipelineDetails}
         />
         <Spacer size={8} />
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -29,6 +29,7 @@ export interface PullRequestAction {
   title: string
   description?: string
   action?: () => void
+  disabled?: boolean
 }
 
 export enum CodeCommentState {
@@ -71,6 +72,7 @@ export interface PullReqChecksDecisionData {
 
 export interface PRPanelData {
   conflictingFiles?: string[]
+  allowedMethods?: string[]
   requiresCommentApproval: boolean
   atLeastOneReviewerRule: boolean
   reqCodeOwnerApproval: boolean

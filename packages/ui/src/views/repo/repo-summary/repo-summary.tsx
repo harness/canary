@@ -1,7 +1,7 @@
 import {
   Button,
-  ButtonGroup,
-  Icon,
+  ButtonLayout,
+  IconV2,
   ListActions,
   MarkdownViewer,
   SearchFiles,
@@ -10,10 +10,9 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { useRouterContext } from '@/context'
-import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchInfoBar, Summary } from '@/views/repo/components'
-import { formatDate } from '@utils/utils'
+import { useRouterContext, useTranslation } from '@/context'
+import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout } from '@/views'
+import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
 import SummaryPanel from './components/summary-panel'
@@ -22,6 +21,10 @@ import { RepoEmptyView } from './repo-empty-view'
 interface RoutingProps {
   toRepoFiles: () => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toRepoCommits: () => string
+  toRepoBranches: () => string
+  toRepoTags: () => string
+  toRepoPullRequests: () => string
   navigateToProfileKeys: () => void
 }
 
@@ -64,7 +67,6 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   }
   saveDescription: (description: string) => void
   updateRepoError?: string
-  useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
   currentBranchDivergence: CommitDivergenceType
@@ -74,6 +76,8 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   isRepoEmpty?: boolean
   branchSelectorRenderer: React.ReactElement
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  tokenGenerationError?: string | null
+  refType?: BranchSelectorTab
 }
 
 export function RepoSummaryView({
@@ -93,7 +97,6 @@ export function RepoSummaryView({
   updateRepoError,
   isEditDialogOpen,
   setEditDialogOpen,
-  useTranslationStore,
   currentBranchDivergence,
   handleCreateToken,
   toRepoFiles,
@@ -102,10 +105,13 @@ export function RepoSummaryView({
   renderSidebarComponent,
   isRepoEmpty,
   branchSelectorRenderer,
-  toRepoFileDetails
+  toRepoFileDetails,
+  tokenGenerationError,
+  refType = BranchSelectorTab.BRANCHES,
+  ...props
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (loading) {
     return (
@@ -160,7 +166,7 @@ export function RepoSummaryView({
                   * Current user is the one who made the push
                   * Push was made less than 24h ago
                   * No PR has been created from this branch yet
-                - Format timestamps using timeAgoFromISOTime
+                - Format timestamps using timeAgo()
                 - Remove mock data below
 
                 Example:
@@ -172,33 +178,31 @@ export function RepoSummaryView({
             */}
             <ListActions.Root>
               <ListActions.Left>
-                <ButtonGroup className="gap-2.5">
+                <ButtonLayout>
                   {branchSelectorRenderer}
-                  <SearchFiles
-                    navigateToFile={navigateToFile}
-                    filesList={filesList}
-                    useTranslationStore={useTranslationStore}
-                  />
-                </ButtonGroup>
+                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="md" />
+                </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
-                <ButtonGroup className="gap-2.5">
-                  <Button variant="outline">
-                    <Link
-                      className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
-                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
-                    >
-                      <Icon name="plus" size={12} />
-                      <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
-                    </Link>
-                  </Button>
+                <ButtonLayout>
+                  {refType === BranchSelectorTab.BRANCHES ? (
+                    <Button variant="outline" asChild>
+                      <Link
+                        className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
+                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
+                      >
+                        <IconV2 name="plus" size="2xs" />
+                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
+                      </Link>
+                    </Button>
+                  ) : null}
                   <CloneRepoDialog
-                    sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+                    sshUrl={repository?.git_ssh_url}
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}
                     handleCreateToken={handleCreateToken}
-                    useTranslationStore={useTranslationStore}
+                    tokenGenerationError={tokenGenerationError}
                   />
-                </ButtonGroup>
+                </ButtonLayout>
               </ListActions.Right>
             </ListActions.Root>
             {selectedBranchOrTag?.name !== repository?.default_branch && (
@@ -214,6 +218,7 @@ export function RepoSummaryView({
                     ahead: currentBranchDivergence?.ahead || 0,
                     behind: currentBranchDivergence?.behind || 0
                   }}
+                  refType={refType}
                 />
               </>
             )}
@@ -227,22 +232,19 @@ export function RepoSummaryView({
                 sha: latestCommitInfo?.sha || ''
               }}
               files={files}
-              useTranslationStore={useTranslationStore}
               toRepoFileDetails={toRepoFileDetails}
               hideHeader
             />
             <Spacer size={5} />
             <StackedList.Root onlyTopRounded borderBackground>
               <StackedList.Item className="py-2" isHeader disableHover>
-                <StackedList.Field
-                  title={<Text color="tertiaryBackground">{t('views:repos.readme', 'README.md')}</Text>}
-                />
+                <StackedList.Field title={<Text color="foreground-3">{t('views:repos.readme', 'README.md')}</Text>} />
                 <StackedList.Field
                   right
                   title={
                     <Button variant="outline" iconOnly asChild>
                       <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}>
-                        <Icon name="edit-pen" size={16} className="text-icons-3" />
+                        <IconV2 name="edit-pencil" className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
                       </Link>
                     </Button>
@@ -262,35 +264,38 @@ export function RepoSummaryView({
                   id: '0',
                   name: t('views:repos.commits', 'Commits'),
                   count: default_branch_commit_count,
-                  iconName: 'tube-sign'
+                  iconName: 'git-commit',
+                  to: props.toRepoCommits?.() ?? '#'
                 },
                 {
                   id: '1',
                   name: t('views:repos.branches', 'Branches'),
                   count: branch_count,
-                  iconName: 'branch'
+                  iconName: 'git-branch',
+                  to: props.toRepoBranches?.() ?? '#'
                 },
                 {
                   id: '2',
                   name: t('views:repos.tags', 'Tags'),
                   count: tag_count,
-                  iconName: 'tag'
+                  iconName: 'tag',
+                  to: props.toRepoTags?.() ?? '#'
                 },
                 {
                   id: '3',
                   name: t('views:repos.openPullReq', 'Open pull requests'),
                   count: pull_req_summary?.open_count || 0,
-                  iconName: 'open-pr'
+                  iconName: 'git-pull-request',
+                  to: props.toRepoPullRequests?.() ?? '#'
                 }
               ]}
-              timestamp={formatDate(repository?.created || '')}
+              timestamp={repository?.created ? new Date(repository.created).toISOString() : ''}
               description={repository?.description}
               saveDescription={saveDescription}
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
               is_public={repository?.is_public}
-              useTranslationStore={useTranslationStore}
             />
             {renderSidebarComponent}
           </SandboxLayout.Content>

@@ -2,7 +2,6 @@
   "repos": {
     "create-new-file-no-plus": "Créer un nouveau fichier",
     "upload-files": "Télécharger des fichiers",
-    "search": "Rechercher",
     "summary": "Résumé",
     "files": "Fichiers",
     "pipelines": "Pipelines",
@@ -17,11 +16,14 @@
     "saving": "Enregistrement...",
     "save": "Enregistrer",
     "cancel": "Annuler",
+    "search": "Rechercher",
     "general": "Général",
     "details": "Details",
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
+    "compareBranchesToSeeChanges": "Comparez les branches pour voir vos changements.",
+    "afterComparingOpenPullRequest": "Après avoir comparé les modifications, vous pouvez ouvrir une demande d'extraction pour contribuer à vos modifications en amont.",
     "default": "Par défaut",
     "viewAll": "Voir tous les {{type}}",
     "branchesLowercase": "branches",
@@ -30,6 +32,8 @@
     "findTag": "Trouver une étiquette",
     "allCommits": "Tous les commits",
     "noFile": "Aucun fichier disponible",
+    "private": "Privé",
+    "public": "Public",
     "name": "Nom",
     "lastCommit": "Dernier commit",
     "date": "Date",
@@ -134,8 +138,6 @@
     "import-repository": "Importer un dépôt",
     "import-repositories": "Import repositories",
     "create-repository": "Créer un dépôt",
-    "private": "Privé",
-    "public": "Public",
     "importing": "Importing…",
     "updated": "Mis à jour",
     "deleteRepo": "Supprimer le dépôt",
@@ -187,7 +189,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New tag",
+    "newTag": "New Tag",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
     "urlPlaceholder": "https://example.com/harness",
@@ -215,8 +217,42 @@
     "clone": "Cloner",
     "addFile": "Ajouter un fichier"
   },
+  "search": "Rechercher",
+  "connectors": {
+    "connector": "Connecteur",
+    "viewConnectorDetails": "Voir les détails du connecteur",
+    "status": "Status",
+    "viewDocumentation": "Voir la documentation",
+    "activity": "Activité",
+    "time": "Heure",
+    "success": "Succès",
+    "failure": "Échec",
+    "delete": "Supprimer",
+    "configuration": "Configuration",
+    "references": "Références",
+    "activityHistory": "Historique des activités",
+    "sort": {
+      "lastModifiedAt": "Last modified",
+      "createdAt": "Created",
+      "name": "Name"
+    },
+    "createNew": "Créer un nouveau connecteur",
+    "errorEncountered": "Erreur rencontrée",
+    "viewDetails": "Voir les détails",
+    "id": "ID du connecteur",
+    "connectivityStatus": "État de la connexion",
+    "updated": "Dernière mise à jour",
+    "filterOptions": {
+      "statusOption": {
+        "success": "Succès",
+        "failure": "Échec",
+        "label": "Statut",
+        "favorite": "Favorites"
+      }
+    },
+    "created": "Créé"
+  },
   "noData": {
-    "noResults": "Aucun résultat de recherche",
     "noActivities": "Aucune activité disponible",
     "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
     "errorApiTitle": "Échec du chargement de {{type}}",
@@ -225,6 +261,7 @@
     "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
     "noConnectors": "Aucun connecteur pour le moment",
     "noDelegates": "There are no delegates in this project yet.",
+    "noResults": "Aucun résultat de recherche",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
     "clearSearch": "Effacer la recherche",
@@ -270,35 +307,6 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
-  "search": "Rechercher",
-  "connectors": {
-    "connector": "Connecteur",
-    "viewConnectorDetails": "Voir les détails du connecteur",
-    "status": "Status",
-    "viewDocumentation": "Voir la documentation",
-    "activity": "Activité",
-    "time": "Heure",
-    "success": "Succès",
-    "failure": "Échec",
-    "delete": "Supprimer",
-    "configuration": "Configuration",
-    "references": "Références",
-    "activityHistory": "Historique des activités",
-    "createNew": "Créer un nouveau connecteur",
-    "errorEncountered": "Erreur rencontrée",
-    "viewDetails": "Voir les détails",
-    "id": "ID du connecteur",
-    "connectivityStatus": "État de la connexion",
-    "updated": "Dernière mise à jour",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Succès",
-        "failure": "Échec",
-        "label": "Statut"
-      }
-    },
-    "created": "Créé"
-  },
   "notFound": {
     "button": "Recharger la page",
     "title": "Quelque chose s'est mal passé…",
@@ -310,6 +318,46 @@
     "manager": "Manager",
     "lastActivity": "Last Activity",
     "created": "Created"
+  },
+  "delegates": {
+    "delegate": "Delegate",
+    "heartbeat": "Heartbeat",
+    "selected": "Selected",
+    "anyDelegate": "Any delegate",
+    "useAnyDelegate": "Use any available delegate",
+    "delegateTags": "Delegate with tags",
+    "useDelegateTags": "Use delegate with following tags",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install Delegate",
+    "enterTags": "Enter tags",
+    "testDelegate": "Test Delegate connectivity",
+    "delegateMatches": "Matches:",
+    "connectDelegates": "Connect "
+  },
+  "createProject": {
+    "backButton": "Retour",
+    "validation": {
+      "nameNoEmpty": "Le champ ne peut pas être vide",
+      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
+    },
+    "title": "Créez votre nouveau projet",
+    "description": "Organisez vos dépôts, pipelines et plus encore.",
+    "form": {
+      "name": "Nom du projet",
+      "namePlaceholder": "Entrez le nom de votre projet",
+      "description": "Description",
+      "descriptionPlaceholder": "Entrez une description (facultatif)"
+    },
+    "create": {
+      "projectCreation": "Création du projet...",
+      "createProject": "Créer le projet"
+    },
+    "or": "ou",
+    "importProject": "Importer un projet",
+    "logout": {
+      "question": "Voulez-vous utiliser un autre compte ?",
+      "link": "Se déconnecter"
+    }
   },
   "execution": {
     "summary": "Résumé",
@@ -524,31 +572,6 @@
     "generalTab": "Général",
     "keysTab": "Clés et Jetons",
     "saving": "Enregistrement..."
-  },
-  "createProject": {
-    "validation": {
-      "nameNoEmpty": "Le champ ne peut pas être vide",
-      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
-    },
-    "backButton": "Retour",
-    "title": "Créez votre nouveau projet",
-    "description": "Organisez vos dépôts, pipelines et plus encore.",
-    "form": {
-      "name": "Nom du projet",
-      "namePlaceholder": "Entrez le nom de votre projet",
-      "description": "Description",
-      "descriptionPlaceholder": "Entrez une description (facultatif)"
-    },
-    "create": {
-      "projectCreation": "Création du projet...",
-      "createProject": "Créer le projet"
-    },
-    "or": "ou",
-    "importProject": "Importer un projet",
-    "logout": {
-      "question": "Voulez-vous utiliser un autre compte ?",
-      "link": "Se déconnecter"
-    }
   },
   "forms": {
     "selectMember": "",

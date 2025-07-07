@@ -5,7 +5,6 @@ import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '
 import { BranchData, BranchSelectorListItem, BranchSelectorTab, BranchSelectorV2 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { transformBranchList } from '../pages-v2/repo/transform-utils/branch-transform'
 import { PathParams } from '../RouteDefinitions'
 import { orderSortDate } from '../types'
@@ -16,13 +15,19 @@ interface BranchSelectorContainerProps {
   isBranchOnly?: boolean
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
+  isFilesPage?: boolean
+  setCreateBranchDialogOpen?: (open: boolean) => void
+  onBranchQueryChange?: (query: string) => void
 }
 export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
   selectedBranch,
   onSelectBranchorTag,
   isBranchOnly = false,
   dynamicWidth = false,
-  preSelectedTab
+  preSelectedTab,
+  setCreateBranchDialogOpen,
+  isFilesPage = false,
+  onBranchQueryChange
 }) => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -32,7 +37,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: { body: branches } = {} } = useListBranchesQuery({
+  const { data: { body: branches } = {}, refetch: refetchBranches } = useListBranchesQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -67,10 +72,14 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   }, [branches, repository])
 
   useEffect(() => {
+    refetchBranches()
+  }, [selectedBranch, refetchBranches])
+
+  useEffect(() => {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
     }
-  }, [branches, repository?.default_branch, setBranchList])
+  }, [branches, repository?.default_branch, setBranchList, selectedBranch])
 
   useEffect(() => {
     if (tags) {
@@ -84,9 +93,12 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
     }
   }, [setTagList, tags])
 
+  useEffect(() => {
+    onBranchQueryChange?.(branchTagQuery ?? '')
+  }, [branchTagQuery, onBranchQueryChange])
+
   return (
     <BranchSelectorV2
-      useTranslationStore={useTranslationStore}
       branchList={branchList}
       tagList={tagList}
       selectedBranchorTag={selectedBranch ?? { name: '', sha: '', default: false }}
@@ -98,6 +110,8 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       isBranchOnly={isBranchOnly}
       dynamicWidth={dynamicWidth}
       preSelectedTab={preSelectedTab}
+      isFilesPage={isFilesPage}
+      setCreateBranchDialogOpen={setCreateBranchDialogOpen}
     />
   )
 }

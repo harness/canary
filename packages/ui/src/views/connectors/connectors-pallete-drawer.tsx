@@ -1,27 +1,57 @@
-import { useMemo, useState } from 'react'
+import { ElementType, ReactNode, useMemo, useState } from 'react'
 
-import { TranslationStore } from '@/views'
-import { Button } from '@components/button'
-import { Input } from '@components/input'
-import { Spacer } from '@components/spacer'
-import { StepFormLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-form-layout'
-import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Input } from '@/components'
+import { useTranslation } from '@/context'
 
-import { ConnectorsPaletteLayout } from './components/connectors-pallete-layout'
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
 import { AnyConnectorDefinition, ConnectorEntity } from './types'
 
-interface ConnectorsPaletteProps {
-  connectors: AnyConnectorDefinition[]
-  requestClose: () => void
-  setConnectorEntity: (value: ConnectorEntity | null) => void
-  onSelectConnector: () => void
-  useTranslationStore: () => TranslationStore
+const componentsMap: Record<
+  'true' | 'false',
+  {
+    Header: ElementType
+    Title: ElementType
+    Content: ElementType
+    Body: ElementType
+  }
+> = {
+  true: {
+    Header: Drawer.Header,
+    Title: Drawer.Title,
+    Content: Drawer.Content,
+    Body: Drawer.Body
+  },
+  false: {
+    Header: EntityFormLayout.Header,
+    Title: EntityFormLayout.Title,
+    Content: 'div',
+    Body: 'div'
+  }
 }
 
-export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element => {
-  const { connectors, requestClose, setConnectorEntity, onSelectConnector, useTranslationStore } = props
-  const { t: _t } = useTranslationStore()
+interface ConnectorsPaletteProps {
+  connectors: AnyConnectorDefinition[]
+  requestClose?: () => void
+  setConnectorEntity: (value: ConnectorEntity | null) => void
+  onSelectConnector: () => void
+  title?: string
+  isDrawer?: boolean
+  showCategory?: boolean
+  children?: ReactNode
+}
+
+export const ConnectorsPalette = ({
+  connectors,
+  requestClose,
+  setConnectorEntity,
+  onSelectConnector,
+  title = 'Connector Setup',
+  isDrawer = false,
+  showCategory,
+  children
+}: ConnectorsPaletteProps): JSX.Element => {
+  const { t: _t } = useTranslation()
+  const { Header, Title, Content, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const [query, setQuery] = useState('')
 
@@ -32,20 +62,18 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
   )
 
   return (
-    <ConnectorsPaletteLayout.Root>
-      <ConnectorsPaletteLayout.Header className="!border-none !p-0">
-        <ConnectorsPaletteLayout.Title className="!mt-0">Connector Setup</ConnectorsPaletteLayout.Title>
-        <ConnectorsPaletteLayout.Subtitle className="text-cn-foreground-2">
-          {'Select a Connector'}
-        </ConnectorsPaletteLayout.Subtitle>
+    <Content>
+      <Header>
+        <Title>{title}</Title>
         <Input
+          value={query}
           placeholder={'Search'}
           onChange={value => {
             setQuery(value.target.value)
           }}
         />
-      </ConnectorsPaletteLayout.Header>
-      <StepsPaletteContentLayout.Root className="px-0">
+      </Header>
+      <Body>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
@@ -56,17 +84,21 @@ export const ConnectorsPalette = (props: ConnectorsPaletteProps): JSX.Element =>
             })
             onSelectConnector()
           }}
-          useTranslationStore={useTranslationStore}
+          showCategory={showCategory}
         />
-        <Spacer size={8} />
-      </StepsPaletteContentLayout.Root>
-      <StepFormLayout.Footer className="border-none">
-        <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-          <Button variant="outline" onClick={requestClose}>
-            Cancel
-          </Button>
-        </div>
-      </StepFormLayout.Footer>
-    </ConnectorsPaletteLayout.Root>
+      </Body>
+      {isDrawer && (
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Button variant="outline" onClick={requestClose}>
+                Cancel
+              </Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      )}
+      {children}
+    </Content>
   )
 }

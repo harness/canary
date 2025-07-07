@@ -1,16 +1,18 @@
 import { FC, MouseEvent, RefObject, useCallback, useState } from 'react'
+import { UseFormGetValues } from 'react-hook-form'
 
-import { Button, Icon, SplitButton } from '@/components'
-import { CompareFormFields, TranslationStore } from '@/views'
+import { Button, IconV2, SplitButton } from '@/components'
+import { useTranslation } from '@/context'
+import { CompareFormFields } from '@/views'
 
 interface PullRequestCompareButtonProps {
   isSubmitted: boolean
   isValid: boolean
   isLoading: boolean
   formRef: RefObject<HTMLFormElement>
+  getFormValues: UseFormGetValues<CompareFormFields>
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
-  useTranslationStore: () => TranslationStore
 }
 
 enum PR_TYPE {
@@ -21,34 +23,28 @@ enum PR_TYPE {
 const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isSubmitted,
   isLoading,
-  formRef,
+  getFormValues,
   onFormDraftSubmit,
-  onFormSubmit,
-  useTranslationStore
+  onFormSubmit
 }) => {
   const [prType, setPrType] = useState<PR_TYPE>(PR_TYPE.CREATE)
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const handleButtonClick = useCallback(
     (e: MouseEvent) => {
       e.preventDefault()
-      if (formRef.current) {
-        const formData = new FormData(formRef.current)
-        const data = {
-          title: formData.get('title'),
-          description: formData.get('description')
-        }
-        switch (prType) {
-          case PR_TYPE.DRAFT:
-            onFormDraftSubmit(data as CompareFormFields)
-            break
-          case PR_TYPE.CREATE:
-            onFormSubmit(data as CompareFormFields)
-            break
-        }
+      const data = getFormValues()
+
+      switch (prType) {
+        case PR_TYPE.DRAFT:
+          onFormDraftSubmit(data)
+          break
+        case PR_TYPE.CREATE:
+          onFormSubmit(data)
+          break
       }
     },
-    [formRef, onFormDraftSubmit, onFormSubmit, prType]
+    [getFormValues, onFormDraftSubmit, onFormSubmit, prType]
   )
 
   const handlePrTypeChange = (value: PR_TYPE) => {
@@ -59,7 +55,6 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
     <>
       {!isSubmitted ? (
         <SplitButton<PR_TYPE>
-          id="pr-type"
           handleButtonClick={handleButtonClick}
           loading={isLoading}
           selectedValue={prType}
@@ -91,7 +86,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
           {t(`views:pullRequests.compareChangesCreatedButton`)}&nbsp;&nbsp;
-          <Icon name="tick" size={12} />
+          <IconV2 name="check" size="2xs" />
         </Button>
       )}
     </>

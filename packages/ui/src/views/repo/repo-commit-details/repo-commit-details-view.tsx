@@ -1,10 +1,9 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, StatusBadge, Tag } from '@/components'
-import { useRouterContext } from '@/context'
-import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
-import { getInitials } from '@utils/stringUtils'
-import { timeAgo } from '@utils/utils'
+import { Avatar, Button, CommitCopyActions, StatusBadge, Tag, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
+import { ICommitDetailsStore, SandboxLayout } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -12,41 +11,39 @@ interface RoutingProps {
 }
 export interface RepoCommitDetailsViewProps extends RoutingProps {
   useCommitDetailsStore: () => ICommitDetailsStore
-  useTranslationStore: () => TranslationStore
   showSidebar?: boolean
 }
 
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
-  useTranslationStore,
   showSidebar = true,
   toCommitDetails,
   toCode
 }) => {
   const { Outlet, Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { commitData, isVerified } = useCommitDetailsStore()
 
   return (
     <SandboxLayout.Main className="overflow-visible" fullWidth>
       <SandboxLayout.Content className="px-5 pb-0 pt-7">
-        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
+        <Text className="mt-7" variant="heading-section" color="foreground-1">
           {t('views:commits.commitDetailsTitle', 'Commit')}
-          <span className="ml-1.5 font-normal text-cn-foreground-2">{commitData?.sha?.substring(0, 7)}</span>
-        </span>
+          <Text className="ml-1.5" as="span">
+            {commitData?.sha?.substring(0, 7)}
+          </Text>
+        </Text>
         <div className="mt-4 flex items-center">
           {commitData?.author?.identity?.name && commitData?.author?.when && (
             <>
-              <Avatar.Root>
-                <Avatar.Fallback className="text-0">{getInitials(commitData.author.identity.name)}</Avatar.Fallback>
-              </Avatar.Root>
-              <span className="ml-2 text-2 font-medium leading-none text-cn-foreground-1">
+              <Avatar name={commitData.author.identity.name} rounded />
+              <Text className="ml-2" as="span" variant="body-single-line-strong" color="foreground-1">
                 {commitData.author.identity.name}
-              </span>
-              <span className="ml-1.5 text-2 font-normal leading-none text-cn-foreground-2">
+              </Text>
+              <Text className="ml-1.5" as="span" variant="body-single-line-normal">
                 {t('views:commits.commitDetailsAuthored', 'authored')}{' '}
                 {timeAgo(new Date(commitData.author.when).getTime())}
-              </span>
+              </Text>
               {isVerified && (
                 <>
                   <span className="mx-2.5 h-4 w-px bg-cn-background-3" />
@@ -69,7 +66,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
           </div>
           <div className="flex items-center justify-between px-4 py-3">
             {/* TODO: get branch name from commitData */}
-            <Tag value="main" icon="branch-2" variant="secondary" showIcon />
+            <Tag value="main" icon="git-branch" variant="secondary" showIcon />
             <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
           </div>
         </div>

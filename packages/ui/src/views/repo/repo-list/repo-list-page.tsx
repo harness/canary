@@ -1,8 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, NoData, Pagination, SearchBox, Spacer, SplitButton } from '@/components'
-import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
+import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 import { RepoList } from './repo-list'
@@ -10,31 +9,31 @@ import { RepoListProps } from './types'
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
-  useTranslationStore,
   isLoading,
   isError,
   errorMessage,
   searchQuery,
   setSearchQuery,
+  setQueryPage,
   toCreateRepo,
   toImportRepo,
+  toImportMultipleRepos,
   ...routingProps
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearchQuery(query.length ? query : null)
+      setQueryPage(1)
+    },
+    [setSearchQuery, setQueryPage]
+  )
 
   // State for storing saved filters and sorts
   // null means no saved state exists
-  const { repositories, totalPages, page, setPage } = useRepoStore()
+  const { repositories, totalItems, page, setPage, pageSize } = useRepoStore()
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -44,7 +43,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-error"
+        imageName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'repositories'
         })}
@@ -69,9 +68,11 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const showTopBar = !noData || !!searchQuery?.length || page !== 1
 
   const handleResetFiltersQueryAndPages = () => {
-    handleResetSearch()
+    handleSearch('')
     setPage(1)
   }
+
+  // return null
 
   return (
     <SandboxLayout.Main>
@@ -80,45 +81,44 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-2xl font-medium text-cn-foreground-1">
+              <Text variant="heading-section" as="h1" color="foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
-              </h1>
+              </Text>
             </div>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput || ''}
-                  handleChange={handleInputChange}
+                <SearchInput
+                  inputContainerClassName="max-w-96"
+                  defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
+                  size="sm"
+                  onChange={handleSearch}
                 />
               </ListActions.Left>
               <ListActions.Right>
                 <SplitButton<string>
-                  id="repository"
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toCreateRepo?.() || '')}
                   handleOptionChange={option => {
                     if (option === 'import') {
                       navigate(toImportRepo?.() || '')
                     } else if (option === 'import-multiple') {
-                      navigate('import-multiple')
+                      navigate(toImportMultipleRepos?.() || '')
                     }
                   }}
                   options={[
                     {
                       value: 'import',
-                      label: t('views:repos.import-repository', 'Import repository')
+                      label: t('views:repos.import-repository', 'Import Repository')
                     },
                     {
                       value: 'import-multiple',
-                      label: t('views:repos.import-repositories', 'Import repositories')
+                      label: t('views:repos.import-repositories', 'Import Repositories')
                     }
                   ]}
                 >
-                  {t('views:repos.create-repository', 'Create repository')}
+                  {t('views:repos.create-repository', 'Create Repository')}
                 </SplitButton>
               </ListActions.Right>
             </ListActions.Root>
@@ -129,13 +129,14 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           repos={repositories || []}
           handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
           isDirtyList={isDirtyList}
-          useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
           {...routingProps}
         />
-        {!!repositories?.length && <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />}
+        {!!repositories?.length && (
+          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

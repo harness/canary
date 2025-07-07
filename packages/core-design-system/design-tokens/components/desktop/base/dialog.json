@@ -1,0 +1,40 @@
+{
+  "dialog": {
+    "sm": {
+      "$type": "sizing",
+      "$value": "460"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "560"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "660"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.5}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.3-half}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
+    },
+    "safezone": {
+      "$type": "spacing",
+      "$value": "{spacing.10}"
+    }
+  }
+}

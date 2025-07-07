@@ -1,20 +1,23 @@
 body {
   @apply text-cn-foreground-2 text-base overscroll-none !important;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: auto;
 }
 
 main {
   @apply px-0 py-10 w-full !important;
 }
 
-.sl-container h1 {
+.sl-container :is(h1):not(:where(.not-content *)) {
   @apply text-4xl font-normal text-cn-foreground;
 }
 
-.sl-container h2 {
+.sl-container :is(h2):not(:where(.not-content *)) {
   @apply text-3xl font-normal text-cn-foreground;
 }
 
-.sl-container h3 {
+.sl-container :is(h3):not(:where(.not-content *)) {
   @apply text-2xl font-normal text-cn-foreground;
 }
 
@@ -24,6 +27,22 @@ code {
 
 .content-panel {
   @apply px-0 pb-0 m-0 border-none !important;
+}
+
+/* Line numbers for LiveEditor */
+.line-numbers .prism-code {
+  counter-reset: line-number;
+}
+
+.line-numbers .token-line::before {
+  counter-increment: line-number;
+  content: counter(line-number);
+  display: inline-block;
+  text-align: right;
+  margin-right: 1rem;
+  min-width: 2rem;
+  opacity: 0.3;
+  user-select: none;
 }
 
 /* Global sidebar style overrides */
@@ -112,6 +131,10 @@ ul.top-level summary svg {
 
 .expressive-code .frame {
   box-shadow: none !important;
+}
+
+.expressive-code pre > code {
+  overflow-x: auto !important;
 }
 
 pre.prism-code {

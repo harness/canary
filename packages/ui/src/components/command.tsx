@@ -60,7 +60,7 @@ const CommandList = React.forwardRef<
   }
 >(({ className, children, heightClassName, ...props }, ref) => (
   <CommandPrimitive.List ref={ref} className={cn('flex flex-col', className)} {...props}>
-    <ScrollArea viewportClassName={cn('max-h-[300px]', heightClassName)}>{children}</ScrollArea>
+    <ScrollArea className={cn('max-h-[300px]', heightClassName)}>{children}</ScrollArea>
   </CommandPrimitive.List>
 ))
 

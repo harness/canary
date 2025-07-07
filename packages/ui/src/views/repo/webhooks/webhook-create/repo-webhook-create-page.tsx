@@ -1,8 +1,9 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Fieldset, FormWrapper } from '@/components'
-import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { Button, ButtonLayout, Fieldset, FormWrapper, Text } from '@/components'
+import { useTranslation } from '@/context'
+import { SandboxLayout, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
 
@@ -26,7 +27,6 @@ interface RepoWebhooksCreatePageProps {
   isLoading: boolean
   // preSetWebHookData: CreateWebhookFormFields | null
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
 }
 
 export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
@@ -34,17 +34,11 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   apiError,
   isLoading,
   onFormCancel,
-  useTranslationStore,
   useWebhookStore
 }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<CreateWebhookFormFields>({
+  const { t } = useTranslation()
+
+  const formMethods = useForm<CreateWebhookFormFields>({
     resolver: zodResolver(createWebhookFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -58,9 +52,18 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
       triggers: []
     }
   })
-  const { t } = useTranslationStore()
+
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   const { preSetWebhookData } = useWebhookStore()
+
+  const triggerValue = watch('trigger')
+
+  useEffect(() => {
+    if (triggerValue === TriggerEventsEnum.ALL_EVENTS) {
+      setValue('triggers', [])
+    }
+  }, [triggerValue])
 
   useEffect(() => {
     if (preSetWebhookData) {
@@ -83,7 +86,6 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
     { fieldName: 'tagEvents', events: getTagEvents(t) },
     { fieldName: 'prEvents', events: getPrEvents(t) }
   ]
-  const triggerValue = watch('trigger')
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
     onFormSubmit(data)
@@ -91,37 +93,42 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {preSetWebhookData
           ? t('views:repos.editWebhookTitle', 'Webhook details')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
-      </h1>
-      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+      </Text>
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
-          <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
+          <WebhookToggleField register={register} setValue={setValue} watch={watch} />
         </Fieldset>
         <Fieldset>
-          <WebhookNameField register={register} errors={errors} disabled={false} t={t} />
+          <WebhookNameField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookDescriptionField register={register} errors={errors} t={t} />
+          <WebhookDescriptionField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookPayloadUrlField register={register} errors={errors} t={t} />
+          <WebhookPayloadUrlField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookSecretField register={register} errors={errors} t={t} />
+          <WebhookSecretField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookSSLVerificationField setValue={setValue} watch={watch} t={t} />
+          <WebhookSSLVerificationField register={register} />
         </Fieldset>
         <Fieldset>
-          <WebhookTriggerField setValue={setValue} watch={watch} t={t} />
+          <WebhookTriggerField register={register} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
             <div className="flex justify-between">
               {eventSettingsComponents.map(component => (
                 <div key={component.fieldName} className="flex flex-col">
-                  <WebhookEventSettingsFieldset setValue={setValue} watch={watch} eventList={component.events} t={t} />
+                  <WebhookEventSettingsFieldset
+                    register={register}
+                    setValue={setValue}
+                    watch={watch}
+                    eventList={component.events}
+                  />
                 </div>
               ))}
             </div>
@@ -129,7 +136,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
         </Fieldset>
 
         <Fieldset className="mt-7">
-          <ButtonGroup>
+          <ButtonLayout horizontalAlign="start">
             <Button type="submit" disabled={isLoading}>
               {isLoading
                 ? preSetWebhookData
@@ -142,7 +149,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
             <Button type="button" variant="outline" onClick={onFormCancel}>
               {t('views:repos.cancel', 'Cancel')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Fieldset>
 
         {!!apiError && <span className="text-2 text-cn-foreground-danger">{apiError?.toString()}</span>}

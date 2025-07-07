@@ -1,6 +1,6 @@
 import { useTheme } from '@/context'
 import { cn } from '@/utils'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 export function EndNode() {
   const { isLightTheme } = useTheme()
@@ -12,7 +12,7 @@ export function EndNode() {
         { 'bg-cn-background-1': isLightTheme }
       )}
     >
-      <Icon name="stop" size={14} className="text-icons-4" />
+      <IconV2 name="stop" size="xs" className="text-icons-4" />
     </div>
   )
 }

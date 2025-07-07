@@ -1,6 +1,6 @@
 import { PullRequestType } from '@/views'
 
-import { BranchSelectorTab } from './components/branch-selector/types'
+import { BranchSelectorTab } from './components/branch-selector-v2/types'
 
 export interface BranchSelectorListItem {
   name: string
@@ -110,7 +110,7 @@ export type CommitDivergenceType = {
 
 export interface IBranchSelectorStore {
   // states
-  selectedBranchTag: BranchSelectorListItem
+  selectedBranchTag: BranchSelectorListItem | null
   selectedRefType: BranchSelectorTab
   branchList: BranchData[]
   tagList: BranchSelectorListItem[]

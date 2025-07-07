@@ -16,8 +16,6 @@ import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { sortFilesByType } from '../../utils/common-utils'
 import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
@@ -45,7 +43,6 @@ export const RepoCode = () => {
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
-
   const {
     data: { body: repoDetails } = {},
     refetch: refetchRepoContent,
@@ -116,7 +113,7 @@ export const RepoCode = () => {
                     : SummaryItemType.File,
                   name: getLastPathSegment(item?.path || '') || '',
                   lastCommitMessage: item?.last_commit?.message || '',
-                  timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                  timestamp: item?.last_commit?.author?.when ?? '',
                   user: { name: item?.last_commit?.author?.identity?.name || '' },
                   sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
                   path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${item?.path}`
@@ -140,7 +137,7 @@ export const RepoCode = () => {
         name: author?.identity?.name || ''
       },
       lastCommitMessage: message || '',
-      timestamp: author?.when ? timeAgoFromISOTime(author.when) : '',
+      timestamp: author?.when ?? '',
       sha: sha && sha
     }
   }, [repoDetails?.latest_commit])
@@ -148,25 +145,25 @@ export const RepoCode = () => {
   const pathToNewFile = useMemo(() => {
     if (fullResourcePath && repoDetails) {
       if (repoDetails?.type === 'dir') {
-        return `new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
+        return `new/${fullGitRef || selectedBranchTag?.name}/~/${fullResourcePath}`
       }
 
       const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-      return `new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
+      return `new/${fullGitRef || selectedBranchTag?.name}/~/${parentDirPath}`
     }
 
-    return `new/${fullGitRef || selectedBranchTag.name}/~/`
-  }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
+    return `new/${fullGitRef || selectedBranchTag?.name}/~/`
+  }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag?.name])
 
   useEffect(() => {
-    if (selectedBranchTag.name && repository?.default_branch) {
+    if (selectedBranchTag?.name && repository?.default_branch) {
       calculateDivergence({
         body: {
-          requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
+          requests: [{ from: selectedBranchTag?.name, to: repository?.default_branch }]
         }
       })
     }
-  }, [selectedBranchTag.name, repository?.default_branch, calculateDivergence])
+  }, [selectedBranchTag?.name, repository?.default_branch, calculateDivergence])
 
   useEffect(() => {
     refetchRepoContent()
@@ -199,7 +196,6 @@ export const RepoCode = () => {
       isDir={repoDetails?.type === 'dir'}
       isShowSummary={!!repoEntryPathToFileTypeMap.size}
       latestFile={latestFiles}
-      useTranslationStore={useTranslationStore}
       pathNewFile={pathToNewFile}
       // TODO: add correct path to Upload files page
       pathUploadFiles="/upload-file"

@@ -1,8 +1,6 @@
 import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
 import { BranchData, PullRequestType } from '@harnessio/ui/views'
 
-import { timeAgoFromISOTime } from '../../../pages/pipeline-edit/utils/time-utils'
-
 export const transformBranchList = (
   branches: TypesBranchExtended[],
   defaultBranch?: string,
@@ -14,10 +12,10 @@ export const transformBranchList = (
       id: index,
       name: branch.name || '',
       sha: branch.commit?.sha || '',
-      timestamp: branch.commit?.committer?.when ? timeAgoFromISOTime(branch.commit.committer.when) : '',
+      timestamp: branch.commit?.author?.when ?? '',
       default: branch.name === defaultBranch || branch.is_default || false,
       user: {
-        name: branch.commit?.committer?.identity?.name || '',
+        name: branch.commit?.author?.identity?.name || '',
         avatarUrl: ''
       },
       behindAhead: {

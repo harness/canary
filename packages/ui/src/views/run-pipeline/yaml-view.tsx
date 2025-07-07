@@ -76,21 +76,19 @@ export default function YamlView(props: YamlViewProps) {
   }, [schemaConfig, theme, monacoThemes, yamlRevision])
 
   return (
-    <div className="flex grow flex-col">
-      <Resizable.PanelGroup direction="vertical" className="border-5 grow">
-        <Resizable.Panel order={1} className="flex">
-          {yamlEditor}
-        </Resizable.Panel>
+    <Resizable.PanelGroup direction="vertical" className="border-5 grow">
+      <Resizable.Panel order={1} className="flex">
+        {yamlEditor}
+      </Resizable.Panel>
 
-        {problems.problemsCount.all > 0 && (
-          <>
-            <Resizable.Handle />
-            <Resizable.Panel defaultSize={20} id="panel" minSize={10} maxSize={90} order={2} className="h-full py-2">
-              <UnifiedPipelineStudioProblemsPanel problems={problems.problems} />
-            </Resizable.Panel>
-          </>
-        )}
-      </Resizable.PanelGroup>
-    </div>
+      {problems.problemsCount.all > 0 && (
+        <>
+          <Resizable.Handle />
+          <Resizable.Panel defaultSize={20} id="panel" minSize={10} maxSize={90} order={2} className="h-full py-2">
+            <UnifiedPipelineStudioProblemsPanel problems={problems.problems} />
+          </Resizable.Panel>
+        </>
+      )}
+    </Resizable.PanelGroup>
   )
 }

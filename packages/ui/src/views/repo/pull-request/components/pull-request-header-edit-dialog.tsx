@@ -1,34 +1,59 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 interface PullRequestHeaderEditDialogProps {
   open: boolean
   onClose: () => void
-  onSubmit: (newTitle: string) => Promise<void>
+  onSubmit: (newTitle: string, newDescription: string) => void
   initialTitle: string
+  initialDescription?: string
 }
+
+// Field names as constants to avoid lint warnings with string literals
+const FIELD_TITLE = 'title'
+const FIELD_DESCRIPTION = 'description'
+
+const formSchema = z.object({
+  [FIELD_TITLE]: z.string().min(1, { message: 'Title is required' }),
+  [FIELD_DESCRIPTION]: z.string().optional()
+})
+
+type FormFields = z.infer<typeof formSchema>
 
 export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> = ({
   open,
   onClose,
   onSubmit,
-  initialTitle
+  initialTitle,
+  initialDescription = ''
 }) => {
-  const [title, setTitle] = useState(initialTitle)
-  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const isDisabled = !title || isLoading || title === initialTitle
+  const formMethods = useForm<FormFields>({
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+    defaultValues: { title: initialTitle, description: initialDescription }
+  })
 
-  const handleSubmit = async () => {
-    if (!title) return
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset
+  } = formMethods
+
+  const handleFormSubmit = async (data: FormFields) => {
+    if (!data.title) return
 
     setIsLoading(true)
-    setError('')
 
     try {
-      await onSubmit(title)
+      onSubmit(data.title, data.description || '')
       onClose()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred')
@@ -37,40 +62,64 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
     }
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
+  const isDisabled = isSubmitting || isLoading
+
+  useEffect(() => {
+    reset({
+      title: initialTitle,
+      description: initialDescription
+    })
+  }, [initialTitle, initialDescription, reset])
+
+  const handleDialogClose = () => {
+    reset()
+    onClose()
   }
 
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
+    <Dialog.Root open={open} onOpenChange={handleDialogClose}>
       <Dialog.Content aria-describedby={undefined}>
-        <Dialog.Header>
-          <Dialog.Title>Edit PR title</Dialog.Title>
-        </Dialog.Header>
-        <FormWrapper>
-          <Fieldset>
-            <Input
-              value={title}
-              size="md"
-              placeholder="Enter pull request title"
-              label="Title"
-              onFocus={event => event.target.select()}
-              onChange={handleChange}
-              error={error}
-              autoFocus
-            />
-          </Fieldset>
+        <FormWrapper
+          {...formMethods}
+          onSubmit={handleSubmit(handleFormSubmit)}
+          id="edit-pr-title-form"
+          className="block"
+        >
+          <Dialog.Header>
+            <Dialog.Title>Edit PR title</Dialog.Title>
+          </Dialog.Header>
+
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
+              <FormInput.Text
+                id="title"
+                {...register('title')}
+                placeholder="Enter pull request title"
+                label="Title"
+                onFocus={event => event.target.select()}
+                autoFocus
+              />
+
+              <FormInput.Textarea
+                {...register(FIELD_DESCRIPTION)}
+                placeholder="Enter pull request description"
+                label="Description"
+                rows={5}
+              />
+
+              {error && <p className="text-cn-foreground-danger">{error}</p>}
+            </div>
+          </Dialog.Body>
+
+          <Dialog.Footer>
+            <ButtonLayout>
+              <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
+              <Button type="submit" disabled={isDisabled}>
+                {isLoading ? 'Saving...' : 'Save'}
+              </Button>
+            </ButtonLayout>
+          </Dialog.Footer>
         </FormWrapper>
-
-        <Dialog.Footer>
-          <Button type="button" variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-
-          <Button type="submit" onClick={handleSubmit} disabled={isDisabled}>
-            {isLoading ? 'Saving...' : 'Save'}
-          </Button>
-        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

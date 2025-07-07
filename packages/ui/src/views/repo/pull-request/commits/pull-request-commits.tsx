@@ -1,25 +1,32 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
 import { NoData, Pagination, SkeletonList } from '@/components'
-import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
+import { useTranslation } from '@/context'
+import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TypesCommit } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
 }
 interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
-  useTranslationStore: () => TranslationStore
   usePullRequestCommitsStore: () => IPullRequestCommitsStore
 }
 
 const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
-  useTranslationStore,
   usePullRequestCommitsStore,
   toCommitDetails,
   toCode
 }) => {
-  const { commitsList, xNextPage, xPrevPage, page, setPage, isFetchingCommits } = usePullRequestCommitsStore()
-  const { t } = useTranslationStore()
+  const { commitsList, xNextPage, xPrevPage, isFetchingCommits } = usePullRequestCommitsStore()
+  const { t } = useTranslation()
+
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
 
   if (isFetchingCommits) {
     return <SkeletonList />
@@ -29,7 +36,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
     <SandboxLayout.Content className="pt-0">
       {!commitsList?.length && (
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title={t('views:pullRequests.noCommitsYet')}
           description={[t('views:pullRequests.noCommitDataDescription')]}
         />
@@ -50,9 +57,17 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         />
       )}
 
-      <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination
+        indeterminate
+        hasNext={xNextPage > 0}
+        hasPrevious={xPrevPage > 0}
+        getPrevPageLink={getPrevPageLink}
+        getNextPageLink={getNextPageLink}
+      />
     </SandboxLayout.Content>
   )
 }
+
+PullRequestCommitsView.displayName = 'PullRequestCommitsView'
 
 export { PullRequestCommitsView }

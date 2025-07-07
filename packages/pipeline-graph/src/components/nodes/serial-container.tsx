@@ -6,13 +6,13 @@ import { renderNode } from '../../render/render-node'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, SerialNodeInternalType } from '../../types/nodes-internal'
-import { findAdjustment } from '../../utils/layout-utils'
+import { findAdjustment, getFlexAlign } from '../../utils/layout-utils'
 import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
   const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
-  const { serialContainerConfig, parallelContainerConfig, portComponent } = useContainerNodeContext()
+  const { serialContainerConfig, parallelContainerConfig, portComponent, layout } = useContainerNodeContext()
 
   const myLevel = level + 1
 
@@ -50,16 +50,21 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
     >
       {!node.config?.hideLeftPort &&
         (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
+          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT, layout })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
         ))}
 
       {!node.config?.hideRightPort &&
         (portComponent ? (
-          portComponent({ side: 'right', id: `right-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
+          portComponent({
+            side: 'right',
+            id: `right-port-${node.path}`,
+            adjustment: collapsed ? 0 : ADJUSTMENT,
+            layout
+          })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
         ))}
 
       <div
@@ -95,7 +100,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
             style={{
               display: 'flex',
               flexDirection: 'row',
-              alignItems: 'center',
+              alignItems: getFlexAlign(layout.type),
               columnGap: serialContainerConfig.nodeGap + 'px'
             }}
           >

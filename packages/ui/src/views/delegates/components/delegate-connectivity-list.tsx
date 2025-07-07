@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
-
-import { Icon, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 import { defaultTo } from 'lodash-es'
 
 import { DelegateConnectivityListProps } from '../types'
@@ -13,12 +12,11 @@ const Title = ({ title }: { title: string }): JSX.Element => (
 
 export function DelegateConnectivityList({
   delegates,
-  useTranslationStore,
   isLoading,
   selectedTags,
   isDelegateSelected
 }: DelegateConnectivityListProps): JSX.Element {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -28,7 +26,7 @@ export function DelegateConnectivityList({
     return (
       <NoData
         withBorder
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noDelegates', 'No delegates yet')}
         description={[t('views:noData.noDelegates', 'There are no delegates in this project yet.')]}
       />
@@ -36,16 +34,13 @@ export function DelegateConnectivityList({
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96">Delegate</Table.Head>
-          <Table.Head className="w-44 whitespace-nowrap">Heartbeat</Table.Head>
-          <Table.Head className="w-96">Tags</Table.Head>
-          <Table.Head className="w-44">Selected</Table.Head>
+          <Table.Head className="w-96">{t('views:delegates.delegate', 'Delegate')}</Table.Head>
+          <Table.Head className="w-36 whitespace-nowrap">{t('views:delegates.heartbeat', 'Heartbeat')}</Table.Head>
+          <Table.Head className="w-96">{t('views:repos.tags', 'Tags')}</Table.Head>
+          <Table.Head className="w-24">{t('views:delegates.selected', 'Selected')}</Table.Head>
         </Table.Row>
       </Table.Header>
       {isLoading ? (
@@ -63,33 +58,35 @@ export function DelegateConnectivityList({
             }) => {
               return (
                 <Table.Row key={groupId}>
-                  <Table.Cell className="max-w-80 content-center truncate">
+                  <Table.Cell className="max-w-80 content-center truncate whitespace-nowrap">
                     <div className="flex items-center gap-2.5">
                       <Title title={groupName} />
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="content-center">
+                  <Table.Cell className="content-center truncate whitespace-nowrap">
                     <div className="inline-flex items-center gap-2">
-                      <Icon
-                        name="dot"
-                        size={8}
+                      <IconV2
+                        name="circle"
+                        size="2xs"
                         className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
                       />
                       {lastHeartBeat ? timeAgo(lastHeartBeat) : null}
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="max-w-80 content-center truncate">
+                  <Table.Cell className="max-w-96 whitespace-normal break-words">
                     {groupCustomSelectors.map((selector: string) => (
-                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mr-2">
+                      <StatusBadge variant="secondary" theme="merged" key={selector} className="mb-1 mr-2">
                         {selector}
                       </StatusBadge>
                     ))}
                   </Table.Cell>
-                  <Table.Cell className="min-w-8 text-right">
-                    {isDelegateSelected(
-                      [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
-                      selectedTags || []
-                    ) && <Icon name="tick" size={12} className="text-icons-success" />}
+                  <Table.Cell className="min-w-8 content-center whitespace-nowrap">
+                    <div className="flex items-center justify-center">
+                      {isDelegateSelected(
+                        [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
+                        selectedTags || []
+                      ) && <IconV2 name="check" size="2xs" className="text-icons-success" />}
+                    </div>
                   </Table.Cell>
                 </Table.Row>
               )

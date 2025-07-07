@@ -1941,7 +1941,7 @@ export const repoCommitsStore: RepoCommitsStore = {
             changes: 47
           },
           {
-            path: 'packages/ui/src/styles.css',
+            path: 'packages/ui/src/styles/styles.css',
             status: 'MODIFIED',
             insertions: 35,
             deletions: 0,
@@ -2336,7 +2336,7 @@ export const repoCommitsStore: RepoCommitsStore = {
             changes: 66
           },
           {
-            path: 'packages/ui/src/styles.css',
+            path: 'packages/ui/src/styles/styles.css',
             status: 'MODIFIED',
             insertions: 24,
             deletions: 0,

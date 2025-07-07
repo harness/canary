@@ -44,7 +44,7 @@ export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boo
         dryRun={noop}
         violation={false}
         bypassable={false}
-        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag.name}
+        currentBranch={repoFilesStore.branchSelectorStore.selectedBranchTag?.name || ''}
         setAllStates={noop}
         isSubmitting={false}
       />

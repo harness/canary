@@ -57,8 +57,8 @@ const mockFormOutput = {
   ],
   state: true,
   bypass: [
-    { id: 1, display_name: 'User One' },
-    { id: 2, display_name: 'User Two' }
+    { id: 1, key: 'User One' },
+    { id: 2, key: 'User Two' }
   ],
   default: true,
   repo_owners: true,

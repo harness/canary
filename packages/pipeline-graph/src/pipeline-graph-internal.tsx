@@ -8,7 +8,13 @@ import { clear, CreateSVGPathType, getPortsConnectionPath } from './render/rende
 import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { connectPorts } from './utils/connects-utils'
+import { getFlexAlign } from './utils/layout-utils'
 import { addPaths } from './utils/path-utils'
+
+export interface LayoutConfig {
+  type?: 'center' | 'top'
+  portPosition?: number | 'center'
+}
 
 export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
@@ -22,6 +28,7 @@ export interface PipelineGraphInternalProps {
     parallelNodeOffset?: number
     serialNodeOffset?: number
   }
+  layout?: LayoutConfig
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
@@ -29,7 +36,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
-  const { data, config = {}, customCreateSVGPath, edgesConfig } = props
+  const { data, config = {}, customCreateSVGPath, edgesConfig, layout = { type: 'center' } } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement | null>(null)
@@ -138,7 +145,11 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
             // kep "start node" in place (horizontally) - e.g when delete/add nodes
             if (graphHeight !== graphSizeRef.current.h) {
-              const diffH = (graphSizeRef.current.h - graphHeight) / 2
+              let diffH = 0
+
+              if (layout.type == 'center') {
+                diffH = (graphSizeRef.current.h - graphHeight) / 2
+              }
 
               setCanvasTransform({
                 scale: canvasTransformRef.current.scale,
@@ -180,7 +191,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
         ref={nodesContainerRef}
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: getFlexAlign(layout.type),
           columnGap: `${serialContainerConfig.nodeGap}px`
         }}
       >

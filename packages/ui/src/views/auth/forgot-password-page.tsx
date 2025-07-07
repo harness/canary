@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, Card, Input, Spacer, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -25,8 +24,11 @@ const forgotPasswordSchema = z.object({
 })
 
 export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswordPageProps) {
-  const { Link } = useRouterContext()
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(forgotPasswordSchema)
+  })
+
   const {
     register,
     handleSubmit,
@@ -34,9 +36,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
     clearErrors,
     trigger,
     formState: { errors }
-  } = useForm({
-    resolver: zodResolver(forgotPasswordSchema)
-  })
+  } = formMethods
 
   const handleOnSubmit: SubmitHandler<ForgotPasswordData> = data => {
     // Handle the submission of the forgot password form
@@ -74,46 +74,41 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Forgot password?
-          </Card.Title>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          </Text>
+          <Text className="mt-0.5" align="center">
             Enter your email to receive the verification code.
           </Text>
-        </Card.Header>
+        </div>
         {serverError && (
-          <Alert.Container variant="destructive">
+          <Alert.Root theme="danger">
             <Alert.Title>{serverError}</Alert.Title>
-          </Alert.Container>
+          </Alert.Root>
         )}
-        <Card.Content className="mt-10">
-          <form onSubmit={handleSubmit(handleOnSubmit)}>
-            <Input
+        <div className="mt-10 pt-0">
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(handleOnSubmit)}>
+            <FormInput.Text
               id="email"
               type="email"
               placeholder="Your email"
               label="Email"
-              size="md"
               {...register('email', { onChange: handleInputChange })}
-              error={errors.email?.message?.toString()}
               autoFocus
             />
             <Button className="mt-10 w-full" variant="outline" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Sending...' : 'Send'}
             </Button>
-          </form>
+          </FormWrapper>
           <Spacer size={4} />
-          <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
-            Don’t have an account?{' '}
-            <Link className="text-cn-foreground-1" to="/signup">
-              Sign up
-            </Link>
+          <Text color="foreground-3" align="center">
+            Don’t have an account? <Link to="/signup">Sign up</Link>
           </Text>
-        </Card.Content>
-      </Card.Root>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

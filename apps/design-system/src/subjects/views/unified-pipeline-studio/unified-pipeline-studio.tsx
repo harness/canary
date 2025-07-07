@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { Drawer } from '@harnessio/ui/components'
 import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/ui/views'
@@ -32,7 +32,6 @@ const PipelineStudioViewWrapper = () => {
   return (
     <>
       <UnifiedPipelineStudio
-        useTranslationStore={useTranslationStore}
         useTemplateListStore={useTemplateListStore}
         yamlRevision={yamlRevision}
         onYamlRevisionChange={onYamlRevisionChange}
@@ -50,18 +49,16 @@ const PipelineStudioViewWrapper = () => {
         onRun={() => setRunPipelineOpen(true)}
         enableSplitView={true}
       />
-      <Drawer.Lazy
-        unmountOnClose={true}
+      <Drawer.Root
         open={runPipelineOpen}
         onOpenChange={isOpen => {
           if (!isOpen) {
             setRunPipelineOpen(false)
           }
         }}
-        direction="right"
       >
         <RunPipelineDrawerContent onClose={() => setRunPipelineOpen(false)} />
-      </Drawer.Lazy>
+      </Drawer.Root>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { FC, ReactNode, useMemo } from 'react'
 
 import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
+import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
   CodeModes,
@@ -11,8 +12,7 @@ import {
   PathActionBar,
   RepoFile,
   SandboxLayout,
-  Summary,
-  TranslationStore
+  Summary
 } from '@/views'
 
 interface RepoFilesProps {
@@ -24,7 +24,6 @@ interface RepoFilesProps {
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode
-  useTranslationStore: () => TranslationStore
   pathNewFile: string
   pathUploadFiles: string
   codeMode: CodeModes
@@ -44,7 +43,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   isShowSummary,
   latestFile,
   children,
-  useTranslationStore,
   pathNewFile,
   pathUploadFiles,
   codeMode,
@@ -56,8 +54,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   isLoadingRepoDetails,
   toRepoFileDetails
 }) => {
-  const { selectedBranchTag, repoId, spaceId } = useRepoBranchesStore()
-  const { t } = useTranslationStore()
+  const { selectedBranchTag, repoId, spaceId, selectedRefType } = useRepoBranchesStore()
+  const { t } = useTranslation()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
@@ -75,11 +73,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         <>
           {!isLoadingRepoDetails && (
             <>
-              <FileLastChangeBar
-                toCommitDetails={toCommitDetails}
-                useTranslationStore={useTranslationStore}
-                {...latestFile}
-              />
+              <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />
               <Spacer size={4} />
             </>
           )}
@@ -91,18 +85,19 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     if (isShowSummary && files.length)
       return (
         <>
-          {selectedBranchTag.name !== defaultBranchName && (
+          {selectedBranchTag?.name !== defaultBranchName && (
             <>
               <BranchInfoBar
                 repoId={repoId}
                 spaceId={spaceId}
                 defaultBranchName={defaultBranchName}
                 useRepoBranchesStore={useRepoBranchesStore}
-                selectedBranchTag={selectedBranchTag}
+                selectedBranchTag={selectedBranchTag || { name: '', sha: '' }}
                 currentBranchDivergence={{
                   ahead: currentBranchDivergence.ahead || 0,
                   behind: currentBranchDivergence.behind || 0
                 }}
+                refType={selectedRefType}
               />
               <Spacer size={4} />
             </>
@@ -111,7 +106,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             toCommitDetails={toCommitDetails}
             latestFile={latestFile}
             files={files}
-            useTranslationStore={useTranslationStore}
             toRepoFileDetails={toRepoFileDetails}
           />
         </>
@@ -120,7 +114,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     return (
       <NoData
         withBorder
-        iconName="no-data-folder"
+        imageName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
         primaryButton={{ label: 'Create file' }}
@@ -131,12 +125,11 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     isView,
     children,
     isDir,
-    useTranslationStore,
     latestFile,
     loading,
     isShowSummary,
     files,
-    selectedBranchTag.name,
+    selectedBranchTag?.name,
     defaultBranchName,
     useRepoBranchesStore,
     currentBranchDivergence.ahead,
@@ -154,9 +147,9 @@ export const RepoFiles: FC<RepoFilesProps> = ({
           <PathActionBar
             codeMode={codeMode}
             pathParts={pathParts}
-            useTranslationStore={useTranslationStore}
             pathNewFile={pathNewFile}
             pathUploadFiles={pathUploadFiles}
+            selectedRefType={selectedRefType}
           />
         )}
         {content}

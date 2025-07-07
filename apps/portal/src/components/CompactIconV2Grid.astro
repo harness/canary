@@ -1,0 +1,65 @@
+---
+import {
+  IconV2,
+  IconNameMapV2,
+  Card,
+  Text,
+  CopyButton,
+  Input,
+} from "@harnessio/ui/components";
+
+const allIcons = Object.keys(IconNameMapV2);
+---
+
+<div class="not-content flex flex-col gap-4">
+  <div class="w-full max-w-md">
+    <Input
+      id="icon-search"
+      placeholder="Search icons..."
+      type="text"
+      client:load
+    />
+  </div>
+  <div
+    id="icon-grid"
+    class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2"
+  >
+    {
+      allIcons.map((name) => (
+        <Card.Root
+          className="grid place-items-center icon-card"
+          data-icon-name={name.toLowerCase()}
+          title={name}
+        >
+          <Card.Content className="grid grid-rows-[auto_60px_auto] place-items-center text-center gap-3">
+            <IconV2 size="lg" name={name as keyof typeof IconNameMapV2} />
+            <Text align="center" color="foreground-3">
+              {name}
+            </Text>
+            <CopyButton name={name} client:only />
+          </Card.Content>
+        </Card.Root>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById(
+    "icon-search",
+  ) as HTMLInputElement;
+  const iconCards = document.querySelectorAll(".icon-card");
+
+  searchInput?.addEventListener("input", (e) => {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+
+    iconCards.forEach((card) => {
+      const iconName = card.getAttribute("data-icon-name");
+      if (iconName?.includes(searchTerm)) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+  });
+</script>

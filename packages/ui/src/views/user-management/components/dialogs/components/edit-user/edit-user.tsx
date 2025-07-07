@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { useTranslation } from '@/context'
 import {
   createEditUserSchema,
   type EditUserFields
@@ -17,23 +18,20 @@ interface EditUserDialogProps {
 }
 
 export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDialogProps) {
-  const { useTranslationStore, useAdminListUsersStore } = useUserManagementStore()
-  const { t } = useTranslationStore()
+  const { useAdminListUsersStore } = useUserManagementStore()
+  const { t } = useTranslation()
   const { user } = useAdminListUsersStore()
 
   const { loadingStates, errorStates } = useStates()
   const { isUpdatingUser } = loadingStates
   const { updateUserError } = errorStates
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm<EditUserFields>({
+  const formMethods = useForm<EditUserFields>({
     resolver: zodResolver(createEditUserSchema(t)),
     mode: 'onChange'
   })
+
+  const { register, handleSubmit, reset } = formMethods
 
   useEffect(() => {
     if (user) {
@@ -47,71 +45,67 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
+      <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:userManagement.editUser.title', 'Update user')}</Dialog.Title>
         </Dialog.Header>
 
-        <span
-          dangerouslySetInnerHTML={{
-            __html: t(
-              'views:userManagement.editUser.message',
-              'Update information for <strong>{{name}}</strong> and confirm changes.',
-              {
-                name: user?.display_name
-              }
-            )
-          }}
-        />
+        <Dialog.Body>
+          <span
+            dangerouslySetInnerHTML={{
+              __html: t(
+                'views:userManagement.editUser.message',
+                'Update information for <strong>{{name}}</strong> and confirm changes.',
+                {
+                  name: user?.display_name
+                }
+              )
+            }}
+          />
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(handleUpdateUser)} id="edit-user-form">
+            <Fieldset>
+              <FormInput.Text
+                id="userID"
+                disabled
+                {...register('userID')}
+                className="cursor-not-allowed"
+                label={t('views:userManagement.userId', 'User ID')}
+                caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
+              />
+            </Fieldset>
 
-        <FormWrapper onSubmit={handleSubmit(handleUpdateUser)} id="edit-user-form">
-          <Fieldset>
-            <Input
-              id="userID"
-              size="md"
-              disabled
-              {...register('userID')}
-              className="cursor-not-allowed"
-              label={t('views:userManagement.userId', 'User ID')}
-              caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
-              error={errors.userID?.message?.toString()}
-            />
-          </Fieldset>
+            <Fieldset>
+              <FormInput.Text
+                id="email"
+                type="email"
+                {...register('email')}
+                label={t('views:userManagement.editUser.email', 'Email')}
+              />
+            </Fieldset>
 
-          <Fieldset>
-            <Input
-              id="email"
-              type="email"
-              size="md"
-              {...register('email')}
-              label={t('views:userManagement.editUser.email', 'Email')}
-              error={errors.email?.message?.toString()}
-            />
-          </Fieldset>
+            <Fieldset>
+              <FormInput.Text
+                id="displayName"
+                {...register('displayName')}
+                label={t('views:userManagement.displayName', 'Display name')}
+              />
+            </Fieldset>
 
-          <Fieldset>
-            <Input
-              id="displayName"
-              size="md"
-              {...register('displayName')}
-              label={t('views:userManagement.displayName', 'Display name')}
-              error={errors.displayName?.message?.toString()}
-            />
-          </Fieldset>
+            {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
+          </FormWrapper>
+        </Dialog.Body>
 
-          {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
-        </FormWrapper>
         <Dialog.Footer>
-          <ButtonGroup className="justify-end">
-            <Button type="button" variant="outline" onClick={onClose} disabled={isUpdatingUser}>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
-            </Button>
+            </Dialog.Close>
             <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
               {isUpdatingUser
                 ? t('views:userManagement.editUser.pending', 'Saving...')
                 : t('views:userManagement.editUser.save', 'Save')}
             </Button>
-          </ButtonGroup>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

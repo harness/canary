@@ -13,13 +13,12 @@ import { ICreateUserData, IUpdateUserData, UserManagementPage } from '@harnessio
 
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useAdminListUsersStore } from './stores/admin-list-store'
 
 export const UserManagementPageContainer = () => {
   const queryClient = useQueryClient()
 
-  const { setUsers, setTotalPages, setPage, page, password } = useAdminListUsersStore()
+  const { setUsers, setPaginationFromHeaders, setPage, page, password } = useAdminListUsersStore()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -42,9 +41,9 @@ export const UserManagementPageContainer = () => {
       setUsers(userData)
     }
     if (headers) {
-      setTotalPages(headers)
+      setPaginationFromHeaders(headers)
     }
-  }, [userData, setUsers, setTotalPages, headers])
+  }, [userData, setUsers, setPaginationFromHeaders, headers])
 
   const {
     mutateAsync: updateUser,
@@ -171,7 +170,6 @@ export const UserManagementPageContainer = () => {
     <>
       <UserManagementPage
         useAdminListUsersStore={useAdminListUsersStore}
-        useTranslationStore={useTranslationStore}
         handlers={handlers}
         loadingStates={loadingStates}
         errorStates={errorStates}

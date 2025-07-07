@@ -1,8 +1,5 @@
-import { Button, ButtonGroup, Icon, Spacer, StackedList, Text } from '@/components'
-import { EntityReference, EntityRendererProps } from '@views/platform'
-import { DirectionEnum } from '@views/platform/types'
-
-import { SecretItem, secretsFilterTypes } from '../types'
+import { Button, ButtonLayout, EntityFormLayout, IconV2, Spacer, StackedList } from '@/components'
+import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
   // Data
@@ -22,6 +19,12 @@ export interface SecretReferenceProps {
   onFilterChange?: (filter: string) => void
   onCancel?: () => void
   isLoading?: boolean
+
+  // Search
+  searchValue?: string
+  handleChangeSearchValue: (val: string) => void
+
+  isDrawer?: boolean
 }
 
 // Component for selecting existing secrets
@@ -42,7 +45,13 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   onScopeChange,
   onCancel,
   onFilterChange,
-  isLoading
+  isLoading,
+
+  // search
+  searchValue,
+  handleChangeSearchValue,
+
+  isDrawer = false
 }) => {
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
@@ -52,16 +61,18 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
       <StackedList.Item
         onClick={() => onSelect(entity)}
         className={`h-12 p-3 ${isSelected ? 'bg-cn-background-hover' : ''}`}
-        thumbnail={<Icon name="secrets" size={14} className="ml-2 text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="lock" size="xs" className="ml-2 text-cn-foreground-3" />}
       >
-        <StackedList.Field title={entity.secret.name} />
+        <div title={entity.secret.name}>
+          <StackedList.Field title={entity.secret.name} className="truncate overflow-hidden text-nowrap max-w-sm" />
+        </div>
       </StackedList.Item>
     )
   }
 
   return (
     <div className="flex flex-col">
-      <Text size={4}>Secrets list</Text>
+      <EntityFormLayout.Title>Secrets list</EntityFormLayout.Title>
       <Spacer size={5} />
       <EntityReference<SecretItem>
         entities={secretsData}
@@ -77,16 +88,18 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
         filterTypes={secretsFilterTypes}
         onFilterChange={onFilterChange}
+        searchValue={searchValue}
+        handleChangeSearchValue={handleChangeSearchValue}
       />
 
-      <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
-        <ButtonGroup className="flex flex-row justify-between">
-          <Button type="button" variant="secondary" onClick={onCancel}>
+      {!isDrawer && (
+        <ButtonLayout horizontalAlign="start">
+          <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
           <Button type="submit">Save</Button>
-        </ButtonGroup>
-      </div>
+        </ButtonLayout>
+      )}
     </div>
   )
 }

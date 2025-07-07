@@ -3,15 +3,12 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
-  Checkbox,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
-  Input,
-  Option,
-  Select,
   Spacer,
   Text
 } from '@/components'
@@ -43,6 +40,12 @@ const formSchema = z
 
 export type ImportProjectFormFields = z.infer<typeof formSchema>
 
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({
+  value: option,
+  label: option,
+  disabled: option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
+}))
+
 interface ImportProjectPageProps {
   onFormSubmit: (data: ImportProjectFormFields) => void
   onFormCancel: () => void
@@ -51,13 +54,7 @@ interface ImportProjectPageProps {
 }
 
 export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: ImportProjectPageProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors }
-  } = useForm<ImportProjectFormFields>({
+  const formMethods = useForm<ImportProjectFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -71,16 +68,13 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
     }
   })
 
-  const providerValue = watch('provider')
+  const { register, handleSubmit, setValue, watch } = formMethods
+
   const orgValue = watch('organization')
 
   useEffect(() => {
     setValue('identifier', orgValue)
   }, [orgValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportProjectFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const onSubmit: SubmitHandler<ImportProjectFormFields> = data => {
     onFormSubmit(data)
@@ -94,91 +88,56 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          Import a Project
-        </Text>
+        <Text variant="heading-section">Import a Project</Text>
         <Spacer size={10} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Git provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item
-                          key={option}
-                          value={option}
-                          disabled={
-                            option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
-                          }
-                        >
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Select
+            options={providerOptions}
+            placeholder="Select"
+            label="Git provider"
+            {...register('provider')}
+          />
+
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
-            <Fieldset>
-              <Input
-                id="host"
-                label="Host URL"
-                {...register('hostUrl')}
-                placeholder="Enter the host URL"
-                size="md"
-                error={errors.hostUrl?.message?.toString()}
-              />
-            </Fieldset>
+            <FormInput.Text id="host" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
           )}
 
           {/* token */}
-          <Fieldset>
-            <ControlGroup>
-              <Input
-                type="password"
-                id="password"
-                label="Token"
-                {...register('password')}
-                placeholder="Enter your access token"
-                size="md"
-                error={errors.password?.message?.toString()}
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Text
+            type="password"
+            id="password"
+            label="Token"
+            {...register('password')}
+            placeholder="Enter your access token"
+          />
 
           <FormSeparator />
 
           {/* organization */}
           <Fieldset>
-            <Input
+            <FormInput.Text
               id="organization"
               label="Organization"
               {...register('organization')}
               placeholder="Enter the organization name"
-              size="md"
-              error={errors.organization?.message?.toString()}
             />
           </Fieldset>
 
           {/* authorization - pipelines */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Checkbox {...register('repositories')} id="authorization" checked={true} disabled label="Repositories" />
-              <Checkbox
+              <FormInput.Checkbox
+                {...register('repositories')}
+                id="authorization"
+                checked={true}
+                disabled
+                label="Repositories"
+              />
+              <FormInput.Checkbox
                 {...register('pipelines')}
                 id="pipelines"
-                checked={watch('pipelines')}
-                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
+                // onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
                 label="Import Pipelines"
               />
             </ControlGroup>
@@ -189,13 +148,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* project identifier */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 id="identifier"
                 label="Name"
                 {...register('identifier')}
                 placeholder="Enter repository name"
-                size="md"
-                error={errors.identifier?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>
@@ -203,13 +160,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* description */}
           <Fieldset>
             <ControlGroup>
-              <Input
+              <FormInput.Text
                 id="description"
                 label="Description"
                 {...register('description')}
                 placeholder="Enter a description"
-                size="md"
-                error={errors.description?.message?.toString()}
               />
             </ControlGroup>
           </Fieldset>
@@ -218,14 +173,14 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import project' : 'Importing project...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

@@ -1,135 +1,166 @@
-import { Children, ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, isValidElement } from 'react'
+import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode } from 'react'
 
-import { Button, Icon } from '@/components'
-import { usePortal, useTheme } from '@/context'
+import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
 
-const DialogRoot = DialogPrimitive.Root
+import { Button, ButtonProps } from './button'
+import { IconV2, IconV2NamesType } from './icon-v2'
+import { LogoV2, LogoV2NamesType } from './logo-v2'
+import { ScrollArea } from './scroll-area'
 
-const DialogTrigger = DialogPrimitive.Trigger
-
-const DialogPortal = DialogPrimitive.Portal
-
-interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
-  onClick?: () => void
-}
-
-const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
-  ({ className, onClick, ...props }, ref) => {
-    return (
-      <DialogPrimitive.Overlay
-        ref={ref}
-        className={cn(
-          'fixed inset-0 z-50 dialog-backdrop data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-          className
-        )}
-        {...props}
-        onClick={onClick}
-      />
-    )
+const contentVariants = cva('cn-modal-dialog-content', {
+  variants: {
+    size: {
+      sm: 'cn-modal-dialog-sm',
+      md: 'cn-modal-dialog-md',
+      lg: 'cn-modal-dialog-lg'
+    }
+  },
+  defaultVariants: {
+    size: 'sm'
   }
-)
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+})
 
-interface DialogContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
-  onOverlayClick?: () => void
-  isShowCloseIcon?: boolean
+const headerVariants = cva('cn-modal-dialog-header', {
+  variants: {
+    theme: {
+      default: 'cn-modal-dialog-theme-default',
+      warning: 'cn-modal-dialog-theme-warning',
+      danger: 'cn-modal-dialog-theme-danger'
+    }
+  },
+  defaultVariants: {
+    theme: 'default'
+  }
+})
+
+export type ModalDialogRootProps = Pick<DialogPrimitive.DialogProps, 'open' | 'onOpenChange' | 'children'>
+
+const Root = ({ children, ...props }: ModalDialogRootProps) => {
+  return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
 }
 
-const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
-  ({ className, children, onOverlayClick, isShowCloseIcon = true, ...props }, ref) => {
-    const { portalContainer } = usePortal()
-    const mainContent: React.ReactNode[] = []
-    let footer: React.ReactNode = null
+const Trigger = DialogPrimitive.Trigger
 
-    Children.forEach(children, child => {
-      if (isValidElement(child) && child.type === DialogFooter) {
-        footer = child
-      } else {
-        mainContent.push(child)
-      }
-    })
+interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<typeof contentVariants> {
+  size?: 'sm' | 'md' | 'lg'
+  hideClose?: boolean
+}
+
+const Content = forwardRef<HTMLDivElement, ContentProps>(
+  ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => {
+    const { portalContainer } = usePortal()
 
     return (
-      <DialogPortal container={portalContainer}>
-        <DialogOverlay onClick={onOverlayClick} />
-        <DialogPrimitive.Content
-          ref={ref}
-          className={cn(
-            'bg-cn-background-2 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] shadow-5 fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] flex-col overflow-hidden rounded-4 border duration-200',
-            className
-          )}
-          {...props}
-        >
-          <div
-            className={cn('flex flex-col gap-y-6 overflow-y-auto p-5 max-h-full', {
-              'pb-7': footer
-            })}
-          >
-            {mainContent}
-          </div>
-          {footer}
-          {isShowCloseIcon && (
-            <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
-              <Button size="sm" variant="ghost" iconOnly>
-                <Icon name="close" size={16} />
-                <span className="sr-only">Close</span>
+      <DialogPrimitive.Portal container={portalContainer}>
+        <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
+        <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
+          {!hideClose && (
+            <DialogPrimitive.Close asChild>
+              <Button variant="transparent" className="cn-modal-dialog-close">
+                <IconV2 name="xmark" skipSize />
               </Button>
             </DialogPrimitive.Close>
           )}
+          {children}
         </DialogPrimitive.Content>
-      </DialogPortal>
+      </DialogPrimitive.Portal>
     )
   }
 )
-DialogContent.displayName = DialogPrimitive.Content.displayName
+Content.displayName = 'Dialog.Content'
 
-const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...props} />
+interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
+  icon?: IconV2NamesType
+  logo?: LogoV2NamesType
+  theme?: 'default' | 'warning' | 'danger'
+}
+
+const Header = ({ className, icon, logo, theme = 'default', children, ...props }: HeaderProps) => {
+  if (icon && logo) {
+    console.warn('Dialog.Header: Cannot use both icon and logo props together')
+    return null
+  }
+
+  // Find the title and description from children
+  let title: React.ReactNode = null
+  let description: React.ReactNode = null
+
+  Children.forEach(children, child => {
+    if (isValidElement(child)) {
+      if (child.type === Title) {
+        title = child
+      } else if (child.type === Description) {
+        description = child
+      }
+    }
+  })
+
+  return (
+    <div className={cn(headerVariants({ theme }), className)} {...props}>
+      <div className="cn-modal-dialog-header-title-row">
+        {icon && (
+          <div className="cn-modal-dialog-header-icon">
+            <IconV2 name={icon} size="lg" />
+          </div>
+        )}
+        {logo && (
+          <div className="cn-modal-dialog-header-logo">
+            <LogoV2 name={logo} />
+          </div>
+        )}
+        {title}
+      </div>
+      {description}
+    </div>
+  )
+}
+
+const Title = ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  <DialogPrimitive.Title className={cn('cn-modal-dialog-title', className)} {...props} />
 )
-DialogHeader.displayName = 'DialogHeader'
 
-const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'border-cn-borders-3 relative mt-auto flex h-fit flex-col-reverse gap-x-4 border-t px-5 py-4 sm:flex-row sm:justify-end',
-      'before:from-cn-background-2 before:pointer-events-none before:absolute before:inset-x-0 before:-top-px before:h-3 before:-translate-y-full before:bg-gradient-to-t before:to-transparent',
-      className
-    )}
-    {...props}
-  />
+const Description = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
+  <DialogPrimitive.Description className={cn('cn-modal-dialog-description', className)} {...props} />
 )
-DialogFooter.displayName = 'DialogFooter'
 
-const DialogTitle = forwardRef<
-  ElementRef<typeof DialogPrimitive.Title>,
-  ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
-    ref={ref}
-    className={cn('text-cn-foreground-1 text-xl font-semibold tracking-tight', className)}
-    {...props}
-  />
-))
-DialogTitle.displayName = DialogPrimitive.Title.displayName
+interface BodyProps {
+  className?: string
+  classNameContent?: string
+  children: ReactNode
+}
 
-const DialogDescription = forwardRef<
-  ElementRef<typeof DialogPrimitive.Description>,
-  ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description ref={ref} className={cn('text-cn-foreground-2 text-sm', className)} {...props} />
+const Body = ({ className, classNameContent, children, ...props }: BodyProps) => (
+  <ScrollArea className={cn('cn-modal-dialog-body', className)} classNameContent={classNameContent} {...props}>
+    {children}
+  </ScrollArea>
+)
+
+const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('cn-modal-dialog-footer', className)} {...props} />
+)
+
+const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className, ...props }, ref) => (
+  <DialogPrimitive.Close asChild>
+    <Button variant="secondary" className={className} {...props} ref={ref}>
+      {children}
+    </Button>
+  </DialogPrimitive.Close>
 ))
-DialogDescription.displayName = DialogPrimitive.Description.displayName
+Close.displayName = 'Dialog.Close'
 
 const Dialog = {
-  Root: DialogRoot,
-  Trigger: DialogTrigger,
-  Content: DialogContent,
-  Header: DialogHeader,
-  Footer: DialogFooter,
-  Title: DialogTitle,
-  Description: DialogDescription
+  Root,
+  Trigger,
+  Content,
+  Close,
+  Header,
+  Title,
+  Description,
+  Body,
+  Footer
 }
 
 export { Dialog }

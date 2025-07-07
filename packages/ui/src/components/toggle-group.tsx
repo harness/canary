@@ -1,84 +1,251 @@
-import * as React from 'react'
+import {
+  ComponentPropsWithoutRef,
+  createContext,
+  ElementRef,
+  FC,
+  forwardRef,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 
-import { toggleVariants } from '@/components'
-import { useTheme } from '@/context'
+import {
+  Button,
+  ButtonSizes,
+  IconPropsV2,
+  IconV2,
+  IconV2NamesType,
+  toggleVariants,
+  Tooltip,
+  TooltipProps
+} from '@/components'
+import { cn } from '@/utils'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
-import { cn } from '@utils/cn'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { VariantProps } from 'class-variance-authority'
 
-const toggleGroupVariants = cva('flex items-center justify-center gap-1', {
-  variants: {
-    variant: {
-      default: '',
-      outline: '',
-      compact: 'gap-0 divide-x rounded border'
-    }
-  },
-  defaultVariants: {
-    variant: 'default'
-  }
+type ToggleGroupVariant = VariantProps<typeof toggleVariants>['variant']
+type ToggleGroupSelectedVariant = 'primary' | 'secondary'
+type ToggleTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
+type SelectedValuesProp = Map<string, boolean>
+
+interface ToggleGroupContextValue {
+  variant: ToggleGroupVariant
+  selectedVariant?: ToggleGroupSelectedVariant
+  size: VariantProps<typeof toggleVariants>['size']
+  disabled?: boolean
+  selectedValues: SelectedValuesProp
+}
+
+const ToggleGroupContext = createContext<ToggleGroupContextValue>({
+  variant: 'outline',
+  size: 'md',
+  selectedValues: new Map<string, boolean>()
 })
 
-const ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariants | typeof toggleVariants>>({
-  size: 'default',
-  variant: 'default'
-})
+export interface ToggleGroupProps
+  extends Omit<
+    ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>,
+    'onValueChange' | 'onChange' | 'defaultValue' | 'type' | 'unselectable'
+  > {
+  type?: ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>['type']
+  variant?: ToggleGroupVariant
+  selectedVariant?: ToggleGroupSelectedVariant
+  size?: ButtonSizes
+  disabled?: boolean
+  className?: string
+  unselectable?: boolean
+  onChange?: ((value: string) => void) | ((value: string[]) => void)
+}
 
-type ToggleGroupProps = React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
-  VariantProps<typeof toggleVariants | typeof toggleVariants>
+export type ToggleGroupItemPropsBase = {
+  value: string
+  tooltipProps?: ToggleTooltipProps
+  disabled?: boolean
+  suffixIcon?: IconV2NamesType
+  suffixIconProps?: IconPropsV2
+  text?: string
+}
 
-const ToggleGroupRoot = React.forwardRef<React.ElementRef<typeof ToggleGroupPrimitive.Root>, ToggleGroupProps>(
-  ({ className, variant, size, children, ...props }, ref) => (
-    <ToggleGroupPrimitive.Root
-      ref={ref}
-      className={cn(
-        toggleGroupVariants({
-          variant: variant
-        }),
-        className
-      )}
-      {...props}
-    >
-      <ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>
-    </ToggleGroupPrimitive.Root>
-  )
-)
+type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
+  iconOnly: true
+  prefixIcon: IconV2NamesType
+  prefixIconProps: IconPropsV2
+  suffixIcon: never
+  suffixIconProps: never
+}
 
-ToggleGroupRoot.displayName = ToggleGroupPrimitive.Root.displayName
+type TogglePropsNotIconOnly = ToggleGroupItemPropsBase & {
+  iconOnly?: false
+  prefixIcon?: IconV2NamesType
+  prefixIconProps?: IconPropsV2
+}
 
-type ToggleGroupItemProps = React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> &
-  VariantProps<typeof toggleVariants>
+export type ToggleGroupItemProps = TogglePropsIconOnly | TogglePropsNotIconOnly
 
-const ToggleGroupItem = React.forwardRef<React.ElementRef<typeof ToggleGroupPrimitive.Item>, ToggleGroupItemProps>(
-  ({ className, children, variant, size, ...props }, ref) => {
-    const context = React.useContext(ToggleGroupContext)
-    const { isLightTheme } = useTheme()
+const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
+  tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
+
+const ToggleGroupRoot = forwardRef<ElementRef<typeof ToggleGroupPrimitive.Root>, ToggleGroupProps>(
+  (
+    {
+      children,
+      variant = 'outline',
+      selectedVariant,
+      size = 'md',
+      disabled = false,
+      type = 'single',
+      value,
+      onChange,
+      unselectable = false,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const [internalValue, setInternalValue] = useState<string | string[]>(
+      () => value ?? (type === 'multiple' ? [] : '')
+    )
+
+    useEffect(() => {
+      setInternalValue(value ?? (type === 'multiple' ? [] : ''))
+    }, [value, type])
+
+    const handleValueChange = useCallback(
+      (newValue: string | string[]) => {
+        if (unselectable && !newValue.length) return
+
+        setInternalValue(newValue)
+        onChange?.(newValue as any)
+      },
+      [onChange, unselectable]
+    )
+
+    const selectedValues = useMemo(() => {
+      const map = new Map<string, boolean>()
+      if (Array.isArray(internalValue)) {
+        internalValue.forEach(val => map.set(val, true))
+      } else {
+        map.set(internalValue, true)
+      }
+      return map
+    }, [internalValue])
+
+    const contextValue = useMemo<ToggleGroupContextValue>(
+      () => ({
+        variant,
+        selectedVariant,
+        size,
+        disabled,
+        selectedValues
+      }),
+      [variant, selectedVariant, size, disabled, selectedValues]
+    )
 
     return (
-      <ToggleGroupPrimitive.Item
-        ref={ref}
-        className={cn(
-          toggleVariants({
-            variant: context.variant || variant,
-            size: context.size || size,
-            theme: isLightTheme ? 'light' : 'dark'
-          }),
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </ToggleGroupPrimitive.Item>
+      <ToggleGroupContext.Provider value={contextValue}>
+        <ToggleGroupPrimitive.Root
+          className={cn(
+            'cn-toggle-group',
+            { 'cn-toggle-group-vertical': props?.orientation === 'vertical' },
+            className
+          )}
+          ref={ref}
+          {...(type === 'single'
+            ? {
+                type: 'single',
+                value: internalValue as string
+              }
+            : {
+                type: 'multiple',
+                value: internalValue as string[]
+              })}
+          onValueChange={handleValueChange}
+          disabled={disabled}
+          {...props}
+        >
+          {children}
+        </ToggleGroupPrimitive.Root>
+      </ToggleGroupContext.Provider>
     )
   }
 )
+ToggleGroupRoot.displayName = ToggleGroupPrimitive.Root.displayName
 
+const ToggleGroupItem = forwardRef<
+  ElementRef<typeof ToggleGroupPrimitive.Item>,
+  ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> & ToggleGroupItemProps
+>(
+  (
+    {
+      value,
+      tooltipProps,
+      disabled: itemDisabled,
+      iconOnly,
+      prefixIcon,
+      prefixIconProps,
+      suffixIcon,
+      suffixIconProps,
+      text,
+      ...props
+    },
+    ref
+  ) => {
+    const {
+      variant,
+      selectedVariant,
+      size,
+      disabled: groupDisabled = false,
+      selectedValues
+    } = useContext(ToggleGroupContext)
+
+    const buttonVariant = useMemo(() => {
+      const isSelected = !!selectedValues.get(value)
+
+      return isSelected ? selectedVariant : variant
+    }, [variant, selectedVariant, selectedValues])
+
+    const finalDisabled = groupDisabled || itemDisabled
+
+    const renderContent = () => {
+      if (iconOnly) {
+        return <IconV2 {...prefixIconProps} name={prefixIcon} />
+      }
+
+      return (
+        <>
+          {prefixIcon && <IconV2 {...prefixIconProps} name={prefixIcon} />}
+          {text}
+          {suffixIcon && <IconV2 {...suffixIconProps} name={suffixIcon} />}
+        </>
+      )
+    }
+
+    const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
+
+    return (
+      <TooltipWrapper tooltipProps={tooltipProps}>
+        <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+          <Button
+            className={toggleVariants({ size, variant, iconOnly })}
+            variant={buttonVariant}
+            size={size}
+            disabled={finalDisabled}
+            iconOnly={iconOnly}
+            {...accessibilityProps}
+          >
+            {renderContent()}
+          </Button>
+        </ToggleGroupPrimitive.Item>
+      </TooltipWrapper>
+    )
+  }
+)
 ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName
 
-const ToggleGroup = {
+export const ToggleGroup = {
   Root: ToggleGroupRoot,
   Item: ToggleGroupItem
 }
-
-export { ToggleGroup }
-export type { ToggleGroupProps, ToggleGroupItemProps }

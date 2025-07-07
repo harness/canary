@@ -12,24 +12,18 @@ const Switch = forwardRef<
   Omit<SwitchProps, 'required'> & {
     label?: string
     caption?: string
-    optional?: boolean
+    showOptionalLabel?: boolean
   }
->(({ className, label, caption, optional, ...props }, ref) => {
+>(({ className, label, caption, showOptionalLabel, ...props }, ref) => {
   const switchId = `switch-${Math.random().toString(36).slice(2, 11)}`
   return (
     <div className="cn-switch-wrapper">
-      <SwitchPrimitives.Root
-        id={props.id || switchId}
-        className={cn('cn-switch-root', className)}
-        required={!optional}
-        {...props}
-        ref={ref}
-      >
+      <SwitchPrimitives.Root id={props.id || switchId} className={cn('cn-switch-root', className)} {...props} ref={ref}>
         <SwitchPrimitives.Thumb className="cn-switch-thumb" />
       </SwitchPrimitives.Root>
       {(label || caption) && (
         <div className="cn-switch-label-wrapper">
-          <Label htmlFor={props.id || switchId} optional={optional} className="cn-switch-label">
+          <Label htmlFor={props.id || switchId} optional={showOptionalLabel} className="cn-switch-label">
             {label}
           </Label>
           {/* TODO: Design system: update to Text component once available */}

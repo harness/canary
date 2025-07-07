@@ -4,21 +4,22 @@ import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 
 const buttonVariants = cva('cn-button', {
   variants: {
     variant: {
       primary: '',
       secondary: '',
-      outline: '',
+      outline: 'cn-button-surface',
       ai: 'cn-button-ai',
       ghost: 'cn-button-ghost',
-      link: 'cn-button-link'
+      link: 'cn-button-link',
+      transparent: 'cn-button-transparent'
     },
     size: {
-      default: '',
-      lg: 'cn-button-lg',
+      md: '',
+      xs: 'cn-button-xs',
       sm: 'cn-button-sm'
     },
     rounded: {
@@ -60,43 +61,24 @@ const buttonVariants = cva('cn-button', {
       class: 'cn-button-muted cn-button-soft'
     },
 
-    // Outline
+    // Default Outline
     {
       variant: 'outline',
       theme: 'default',
-      class: 'cn-button-muted cn-button-surface'
-    },
-    {
-      variant: 'outline',
-      theme: 'success',
-      class: 'cn-button-success cn-button-surface'
-    },
-    {
-      variant: 'outline',
-      theme: 'danger',
-      class: 'cn-button-danger cn-button-surface'
+      class: 'cn-button-muted'
     },
 
-    // Ghost
+    // Default Ghost
     {
       variant: 'ghost',
       theme: 'default',
-      class: 'cn-button-ghost cn-button-muted'
-    },
-    {
-      variant: 'ghost',
-      theme: 'success',
-      class: 'cn-button-ghost cn-button-success'
-    },
-    {
-      variant: 'ghost',
-      theme: 'danger',
-      class: 'cn-button-ghost cn-button-danger'
+      class: 'cn-button-muted'
     }
   ],
   defaultVariants: {
     variant: 'primary',
-    size: 'default'
+    size: 'md',
+    theme: 'default'
   }
 })
 
@@ -118,7 +100,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       className,
       variant = 'primary',
-      size = 'default',
+      size = 'md',
       theme = 'default',
       rounded,
       iconOnly,
@@ -126,6 +108,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       loading,
       disabled,
       children,
+      type = 'button',
       ...props
     },
     ref
@@ -134,7 +117,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const _children = loading ? (
       <>
-        {loading && <Icon className="animate-spin" name="spinner" />}
+        {loading && <IconV2 className="animate-spin" name="loader" />}
         {children}
       </>
     ) : (
@@ -146,7 +129,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({
             variant: variant || 'primary',
-            size: size || 'default',
+            size: size || 'md',
             theme: theme || 'default',
             rounded,
             iconOnly,
@@ -155,6 +138,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         disabled={disabled || loading}
+        type={type}
         {...props}
       >
         {_children}

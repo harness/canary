@@ -74,12 +74,12 @@ export default {
     borderWidth: `var(--cn-tag-border)`,
     borderRadius: `var(--cn-tag-radius-default)`,
     maxWidth: `var(--cn-tag-max-width)`,
-    height: `var(--cn-tag-size-default)`,
-    '@apply w-fit flex items-center transition-colors cursor-pointer font-body-tight-normal': '',
+    height: `var(--cn-tag-size-md)`,
+    '@apply w-fit flex items-center transition-colors select-none font-body-single-line-normal': '',
 
     '&:where(.cn-tag-sm)': {
       height: `var(--cn-tag-size-sm)`,
-      '@apply font-caption-tight-normal': ''
+      '@apply font-caption-single-line-normal': ''
     },
 
     '&:where(.cn-tag-rounded)': {
@@ -108,13 +108,15 @@ export default {
       ...createTagVariantStyles('secondary')
     },
 
-    // ICON STYLES
     '.cn-tag-icon': {
-      width: `var(--cn-icon-size-default, 16px)`,
-      height: `var(--cn-icon-size-default, 16px)`
+      minWidth: `var(--cn-icon-size-sm, 16px)`,
+      height: `var(--cn-icon-size-sm, 16px)`
+    },
+    '.cn-tag-text': {
+      '@apply truncate leading-normal align-middle inline-block': ''
     },
     '.cn-tag-reset-icon': {
-      width: `var(--cn-icon-size-xs, 12px)`,
+      minWidth: `var(--cn-icon-size-xs, 12px)`,
       height: `var(--cn-icon-size-xs, 12px)`
     }
   }

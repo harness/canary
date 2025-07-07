@@ -5,7 +5,6 @@ import { useGetPullReqQuery, useUpdatePullReqMutation } from '@harnessio/code-se
 import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
 
@@ -26,10 +25,17 @@ const PullRequestLayout = () => {
     pullreq_number: Number(pullRequestId),
     queryParams: {}
   })
-  const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
-    repo_ref: repoRef,
-    pullreq_number: Number(pullRequestId)
-  })
+  const { mutateAsync: updateTitle } = useUpdatePullReqMutation(
+    {
+      repo_ref: repoRef,
+      pullreq_number: Number(pullRequestId)
+    },
+    {
+      onSuccess: () => {
+        refetchPullReq()
+      }
+    }
+  )
   useEffect(() => {
     if (pullReqData) {
       setPullRequest(pullReqData)
@@ -48,13 +54,12 @@ const PullRequestLayout = () => {
     setPullReqLoading
   ])
 
-  const handleUpdateTitle = async (title: string, description: string) => {
-    await updateTitle({ body: { title, description } })
+  const handleUpdateTitle = (title: string, description: string) => {
+    updateTitle({ body: { title, description } })
   }
 
   return (
     <PullRequestLayoutView
-      useTranslationStore={useTranslationStore}
       usePullRequestStore={usePullRequestStore}
       spaceId={spaceId || ''}
       repoId={repoId}

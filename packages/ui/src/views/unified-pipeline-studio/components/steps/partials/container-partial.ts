@@ -10,7 +10,7 @@ import {
 
 import { IInputConfigWithConfig } from '../types'
 
-export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputConfigWithConfig => ({
+export const getContainerPartial = (stepIdentifier: 'run' | 'run-test' | 'background'): IInputConfigWithConfig => ({
   inputType: 'group',
   path: `${stepIdentifier}.container`,
   label: 'Container',
@@ -34,6 +34,7 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
       inputs: [
         {
           inputType: 'text',
+
           path: `${stepIdentifier}.container.credentials.username`,
           label: 'Username',
           outputTransform: unsetEmptyStringOutputTransformer()
@@ -152,7 +153,8 @@ export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputC
     {
       inputType: 'boolean',
       path: `${stepIdentifier}.container.privileged`,
-      label: 'Privileged'
+      label: 'Privileged',
+      description: 'Description shod be caption'
     },
     {
       inputType: 'text',

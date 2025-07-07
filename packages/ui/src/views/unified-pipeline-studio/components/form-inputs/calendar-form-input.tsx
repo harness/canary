@@ -1,15 +1,15 @@
 import { JSX } from 'react'
 
-import { CalendarInputView, InputError, InputLabel, InputWrapper } from '@/views'
+import { CalendarInputView, InputCaption, InputLabel, InputWrapper } from '@/views'
 
 import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
 
 import { RuntimeInputConfig } from './types/types'
 
-export type CalendarInputType = 'calendar'
+export type CalendarFormInputType = 'calendar'
 
 export interface CalendarInputConfig {
-  inputType: CalendarInputType
+  inputType: 'calendar'
   tooltip?: string
   inputConfig?: {
     /* placeholder for more config */
@@ -20,10 +20,11 @@ type CalendarFormInputProps = InputProps<AnyFormikValue, CalendarInputConfig>
 
 function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
   const { path, input } = props
-  const { label = '', required, description } = input
+  const { label, required, description, readonly } = input
 
-  const { field } = useController({
-    name: path
+  const { field, fieldState } = useController({
+    name: path,
+    disabled: readonly
   })
 
   // Convert ISO date string to timestamp for the form value
@@ -39,15 +40,15 @@ function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
 
   return (
     <InputWrapper {...props}>
-      <InputLabel label={label} description={description} required={required} />
+      <InputLabel label={label} required={required} />
       <CalendarInputView value={field.value} setValue={handleDateChange} />
-      <InputError path={path} />
+      <InputCaption error={fieldState?.error?.message} caption={description} />
     </InputWrapper>
   )
 }
 
 export class CalendarInput extends InputComponent<AnyFormikValue> {
-  public internalType: CalendarInputType = 'calendar'
+  public internalType: CalendarFormInputType = 'calendar'
 
   renderComponent(props: CalendarFormInputProps): JSX.Element {
     return <CalendarFormInputInternal {...props} />

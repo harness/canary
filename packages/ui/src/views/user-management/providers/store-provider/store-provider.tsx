@@ -4,12 +4,6 @@ import { StoreContextType, StoreProviderProps } from '@/views/user-management/pr
 
 export const StoreContext = createContext<StoreContextType | undefined>(undefined)
 
-export const UserManagementStoreProvider = ({
-  children,
-  useAdminListUsersStore,
-  useTranslationStore
-}: StoreProviderProps) => {
-  return (
-    <StoreContext.Provider value={{ useAdminListUsersStore, useTranslationStore }}>{children}</StoreContext.Provider>
-  )
+export const UserManagementStoreProvider = ({ children, useAdminListUsersStore }: StoreProviderProps) => {
+  return <StoreContext.Provider value={{ useAdminListUsersStore }}>{children}</StoreContext.Provider>
 }

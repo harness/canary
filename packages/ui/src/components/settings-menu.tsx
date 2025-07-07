@@ -1,4 +1,4 @@
-import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
+import { IconV2, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
 
@@ -24,7 +24,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
         <Sheet.Title className="sr-only">System Administration menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[364px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
-            <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
+            <ScrollArea>
               <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group
@@ -40,7 +40,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                         {({ isActive }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
-                            icon={item.iconName && <Icon name={item.iconName} size={14} />}
+                            icon={item.iconName && <IconV2 name={item.iconName} size="xs" />}
                             active={isActive}
                             isMainNav
                           />

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Accordion, Icon, Text } from '@/components'
+import { Accordion, IconV2, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -9,27 +9,16 @@ interface FolderItemProps {
   value?: string
   isActive?: boolean
   content?: ReactNode
-  chevronClassName?: string
   link: string
 }
 
-function FolderItem({ children, value = '', isActive, content, chevronClassName, link }: FolderItemProps) {
+function FolderItem({ children, value = '', isActive, content, link }: FolderItemProps) {
   const { Link } = useRouterContext()
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
-        className={cn(
-          `relative w-full p-0 pr-1.5
-          before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
-          {
-            'before:bg-cn-background-hover': isActive
-          }
-        )}
-        leftChevron
-        rotateChevron
-        chevronClassName={
-          chevronClassName || 'text-icons-9 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
-        }
+        className="relative w-full p-0 pr-1.5 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        indicatorProps={{ size: '2xs' }}
       >
         <div
           className={cn(
@@ -42,16 +31,15 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
           )}
         >
           <div className="flex w-full items-center gap-1.5 py-1.5">
-            <Icon
+            <IconV2
               className={cn(
                 'min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
                 { 'text-icons-2': isActive }
               )}
               name="folder"
-              size={16}
             />
             <Link to={link} className="overflow-hidden">
-              <Text className="duration-100 ease-in-out" color="inherit" as="p" size={2} truncate weight="medium">
+              <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" as="p" truncate>
                 {children}
               </Text>
             </Link>
@@ -84,14 +72,13 @@ function FileItem({ children, isActive, link }: FileItemProps) {
         }
       )}
     >
-      <Icon
+      <IconV2
         className={cn('min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2', {
           'text-icons-2': isActive
         })}
-        name="file"
-        size={16}
+        name="page"
       />
-      <Text className="duration-100 ease-in-out" size={2} color="inherit" weight="medium" truncate>
+      <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" truncate>
         {children}
       </Text>
     </div>
@@ -108,7 +95,13 @@ interface RootProps {
 
 function Root({ children, onValueChange, value }: RootProps) {
   return (
-    <Accordion.Root type="multiple" className="w-full" onValueChange={onValueChange} value={value}>
+    <Accordion.Root
+      type="multiple"
+      className="w-full min-w-0"
+      onValueChange={onValueChange}
+      value={value}
+      indicatorPosition="left"
+    >
       {children}
     </Accordion.Root>
   )

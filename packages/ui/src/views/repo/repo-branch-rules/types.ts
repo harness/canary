@@ -1,6 +1,5 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
-import { TFunction } from 'i18next'
 import { z } from 'zod'
 
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
@@ -24,7 +23,7 @@ export enum BranchRulesActionType {
 export type BranchRulesAction =
   | { type: BranchRulesActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
   | { type: BranchRulesActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
-  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; checkName: string }
+  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: string[] }
   | { type: BranchRulesActionType.SET_INITIAL_RULES; payload: Rule[] }
   | { type: BranchRulesActionType.SET_INPUT_VALUE; ruleId: string; value: string }
 
@@ -35,7 +34,6 @@ export interface FieldProps {
   errors?: FieldErrors<RepoBranchSettingsFormFields>
   watch?: UseFormWatch<RepoBranchSettingsFormFields>
   setValue?: UseFormSetValue<RepoBranchSettingsFormFields>
-  t: TFunction
 }
 
 export enum BranchRuleId {
@@ -79,7 +77,7 @@ export const repoBranchSettingsFormSchema = z.object({
   bypass: z.array(
     z.object({
       id: z.number(),
-      display_name: z.string()
+      key: z.string()
     })
   ),
   default: z.boolean().optional(),

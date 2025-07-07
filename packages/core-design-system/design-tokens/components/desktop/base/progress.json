@@ -1,0 +1,28 @@
+{
+  "progress": {
+    "container": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
+    },
+    "size": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.1}"
+      },
+      "md": {
+        "$type": "sizing",
+        "$value": "{size.2}"
+      },
+      "lg": {
+        "$type": "sizing",
+        "$value": "{size.3}"
+      }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.full}"
+    }
+  }
+}

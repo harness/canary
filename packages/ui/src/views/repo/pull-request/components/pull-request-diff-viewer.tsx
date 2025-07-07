@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Avatar, Layout } from '@/components'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -8,14 +10,12 @@ import {
   CreateCommentPullReqRequest,
   HandleUploadType,
   PullRequestCommentBox,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { getInitials } from '@utils/stringUtils'
-import { timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
@@ -60,7 +60,6 @@ interface PullRequestDiffviewerProps {
   handleSaveComment?: (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => void
   deleteComment?: (id: number) => void
   updateComment?: (id: number, comment: string) => void
-  useTranslationStore: () => TranslationStore
   onCopyClick?: (commentId?: number) => void
   suggestionsBatch?: CommitSuggestion[]
   onCommitSuggestion?: (suggestion: CommitSuggestion) => void
@@ -89,7 +88,6 @@ const PullRequestDiffViewer = ({
   handleSaveComment,
   deleteComment,
   updateComment,
-  useTranslationStore,
   onCopyClick,
   suggestionsBatch,
   onCommitSuggestion,
@@ -102,7 +100,7 @@ const PullRequestDiffViewer = ({
   setScrolledToComment,
   collapseDiff
 }: PullRequestDiffviewerProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
   const [, setLoading] = useState(false)
   const highlighter = useDiffHighlighter({ setLoading })
@@ -376,6 +374,10 @@ const PullRequestDiffViewer = ({
               onClose()
               setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
+            lineNumber={lineNumber}
+            sideKey={sideKey}
+            diff={data}
+            lang={lang}
             comment={commentText}
             setComment={value => setNewComments(prev => ({ ...prev, [commentKey]: value }))}
           />
@@ -442,11 +444,7 @@ const PullRequestDiffViewer = ({
                       commentId={parent.id}
                       setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                       onQuoteReply={handleQuoteReply}
-                      icon={
-                        <Avatar.Root>
-                          <Avatar.Fallback>{parentInitials}</Avatar.Fallback>
-                        </Avatar.Root>
-                      }
+                      icon={<Avatar name={parentInitials} rounded />}
                       header={[
                         {
                           name: parent.author,
@@ -482,6 +480,8 @@ const PullRequestDiffViewer = ({
                             onCancelClick={() => {
                               toggleEditMode(componentId, '')
                             }}
+                            diff={data}
+                            lang={lang}
                             comment={editComments[componentId]}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                           />
@@ -523,11 +523,7 @@ const PullRequestDiffViewer = ({
                               titleClassName="!flex max-w-full"
                               setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                               onQuoteReply={handleQuoteReply}
-                              icon={
-                                <Avatar.Root>
-                                  <Avatar.Fallback>{replyInitials}</Avatar.Fallback>
-                                </Avatar.Root>
-                              }
+                              icon={<Avatar name={replyInitials} rounded />}
                               header={[
                                 {
                                   name: reply.author,
@@ -563,6 +559,8 @@ const PullRequestDiffViewer = ({
                                     onCancelClick={() => {
                                       toggleEditMode(replyComponentId, '')
                                     }}
+                                    diff={data}
+                                    lang={lang}
                                     comment={editComments[replyComponentId]}
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))

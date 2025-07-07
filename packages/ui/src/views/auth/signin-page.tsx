@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
+import { Button, FormInput, FormWrapper, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -27,6 +27,10 @@ const signInSchema = z.object({
 
 export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) {
   const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(signInSchema)
+  })
+
   const {
     register,
     handleSubmit,
@@ -34,9 +38,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
     clearErrors,
     formState: { errors },
     trigger
-  } = useForm({
-    resolver: zodResolver(signInSchema)
-  })
+  } = formMethods
 
   const onSubmit = (data: SignInData) => {
     handleSignIn(data)
@@ -75,50 +77,42 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <Card.Header className="items-center">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
+        <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Card.Title className="mt-3 text-center" as="h1">
+          <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Sign in to Harness
-          </Card.Title>
-          <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
+          </Text>
+          <Text className="mt-0.5" align="center">
             Welcome back! Please enter your details.
           </Text>
-        </Card.Header>
-        <Card.Content className="mt-10">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
+        </div>
+        <div className="mt-10 pt-0">
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+            <FormInput.Text
               id="email"
               label="Username/Email"
               placeholder="Your email"
-              size="md"
               {...register('email', { onChange: handleInputChange })}
-              error={errors.email?.message?.toString()}
               autoFocus
             />
-            <Input
-              wrapperClassName="mt-7"
+            <FormInput.Text
               id="password"
               type="password"
               {...register('password', { onChange: handleInputChange })}
               label="Password"
               placeholder="Password"
-              size="md"
-              error={errors.password?.message?.toString()}
             />
             <Button className="mt-10 w-full" rounded type="submit" loading={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
-          </form>
+          </FormWrapper>
           <Spacer size={4} />
-          <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
-            Don’t have an account?{' '}
-            <StyledLink variant="accent" to="/signup">
-              Sign up
-            </StyledLink>
+          <Text color="foreground-3" align="center">
+            Don’t have an account? <Link to="/signup">Sign up</Link>
           </Text>
-        </Card.Content>
-      </Card.Root>
+        </div>
+      </div>
       <Agreements />
     </Floating1ColumnLayout>
   )

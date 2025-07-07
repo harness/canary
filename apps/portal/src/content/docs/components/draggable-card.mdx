@@ -1,0 +1,177 @@
+---
+title: Draggable Card
+description: Draggable card component with drag and drop capabilities
+beta: true
+---
+
+The `Draggable Card` component provides a powerful way to display and interact with cards, featuring drag and drop functionality. Built using dnd-kit, it offers a comprehensive solution for complex drag and drop interactions.
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [cards, setCards] = React.useState([
+     {
+      id: '1',
+      title: 'First Card',
+      description: 'This is the first card. Try reordering it.'
+    },
+    {
+      id: '2',
+      title: 'Second Card',
+      description: 'This is the seconnd card. Drag and drop to reorder.'
+    }
+  ])
+
+return (
+
+<DraggableCardList cards={cards} setCards={setCards} />) } `} />
+
+<Aside type="tip">
+  Try dragging the cards to reorder them. The component handles all the drag and
+  drop interactions for you.
+</Aside>
+
+## Usage
+
+```typescript jsx
+import { DraggableCard, DraggableCardList, CardData } from '@harnessio/ui/components'
+
+// Define your cards
+const [cards, setCards] = useState<CardData[]>([
+  {
+    id: '1',
+    title: 'First Card',
+    description: 'This is the first card description',
+    disabled: false // Optional: disable dragging for this card
+  },
+  {
+    id: '2',
+    title: 'Second Card',
+    description: 'This is the second card description'
+  }
+])
+
+// Use the DraggableCardList to render and manage the cards
+return (
+  <DraggableCardList
+    cards={cards}
+    setCards={setCards}
+  />
+)
+```
+
+### Advanced Example
+
+You can customize the card titles and descriptions with React components:
+
+```typescript jsx
+const [cards, setCards] = useState<CardData[]>([
+  {
+    id: '1',
+    title: (
+      <div className="flex items-center justify-between w-full">
+        <span>Card with Custom Title</span>
+        <IconV2 name="settings" size="sm" />
+      </div>
+    ),
+    description: (
+      <div className="space-y-2">
+        <p>This card has a custom description component</p>
+        <Button>Action Button</Button>
+      </div>
+    )
+  }
+])
+```
+
+## Anatomy
+
+The draggable card system consists of two main components:
+
+```typescript jsx
+// Individual card component
+<DraggableCard
+  id="unique-id"
+  title="Card Title"
+  description="Card Description"
+  disabled={false}
+/>
+
+// List component that manages multiple cards
+<DraggableCardList
+  cards={cardsArray}
+  setCards={setCardsFunction}
+/>
+```
+
+## API Reference
+
+### `DraggableCard`
+
+The individual card component that can be dragged and reordered.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the card",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Title content for the card",
+      required: true,
+      value: "string | ReactNode",
+    },
+    {
+      name: "description",
+      description: "Description content for the card",
+      required: false,
+      value: "string | ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "If true, the card cannot be dragged. Default is false.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### `DraggableCardList`
+
+A container component that manages a list of draggable cards.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "cards",
+      description: "Array of card data objects to render as draggable cards",
+      required: true,
+      value: "CardData[]",
+    },
+    {
+      name: "setCards",
+      description: "Function to update the cards array when reordering occurs",
+      required: true,
+      value: "(newCards: CardData[]) => void",
+    },
+  ]}
+/>
+
+### `CardData` Interface
+
+The interface for the card data objects used by the DraggableCardList component.
+
+```typescript
+interface CardData {
+  id: string;
+  title: string | React.ReactNode;
+  description?: string | React.ReactNode;
+  disabled?: boolean;
+}
+```

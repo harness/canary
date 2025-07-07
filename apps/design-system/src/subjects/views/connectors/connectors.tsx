@@ -1,41 +1,39 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { useTranslationStore } from '@utils/viewUtils'
-import noop from 'lodash-es/noop'
 
 import { InputFactory } from '@harnessio/forms'
 import { Button, Drawer, ListActions, Spacer } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
+  CardsFormInput,
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorsPalette,
   ConnectorTestConnectionDialog,
   EntityIntent,
-  GroupInput,
-  ListInput,
-  NumberInput,
-  RadialInput,
+  GroupFormInput,
+  ListFormInput,
+  NumberFormInput,
   SandboxLayout,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
-inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
+inputComponentFactory.registerComponent(new ListFormInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 
 const ConnectorsListPageContent = (): JSX.Element => {
   const [connectorEntity, setConnectorEntity] = useState<ConnectorEntity | null>(null)
@@ -44,6 +42,12 @@ const ConnectorsListPageContent = (): JSX.Element => {
   const [isConnectorSelected, setIsConnectorSelected] = useState(false)
   const [intent, setIntent] = useState<EntityIntent>(EntityIntent.CREATE)
   const [testConnectionOpen, setTestConnectionOpen] = useState(false)
+
+  const onCloseConnectorDrawer = () => {
+    setIsConnectorDrawerOpen(false)
+    setConnectorEntity(null)
+  }
+
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
@@ -97,58 +101,46 @@ const ConnectorsListPageContent = (): JSX.Element => {
         viewDocClick={() => {
           console.log('')
         }}
-        useTranslationStore={useTranslationStore}
         errorData={{ errors: [{ reason: 'Unexpected Error', message: 'Bad credentials' }] }}
       />
-      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen} direction="right">
-        <Drawer.Content>
-          <ConnectorsPalette
-            useTranslationStore={useTranslationStore}
-            connectors={harnessConnectors}
-            onSelectConnector={() => setIsConnectorSelected(true)}
-            setConnectorEntity={setConnectorEntity}
-            requestClose={() => {
-              setConnectorEntity(null)
-              setIsConnectorDrawerOpen(false)
-            }}
-          />
-          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
+
+      <Drawer.Root open={isConnectorDrawerOpen} onOpenChange={setIsConnectorDrawerOpen}>
+        <ConnectorsPalette
+          connectors={harnessConnectors}
+          onSelectConnector={() => setIsConnectorSelected(true)}
+          setConnectorEntity={setConnectorEntity}
+          requestClose={onCloseConnectorDrawer}
+          isDrawer
+        >
+          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
             <Drawer.Content>
-              {connectorEntity ? (
+              {!!connectorEntity && (
                 <ConnectorEntityForm
-                  useTranslationStore={() =>
-                    ({
-                      t: () => 'dummy',
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      i18n: {} as any,
-                      changeLanguage: noop
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    }) as any
-                  }
                   connector={connectorEntity}
                   onBack={() => setIsConnectorSelected(false)}
                   // onFormSubmit={handleFormSubmit}
                   getConnectorDefinition={getHarnessConnectorDefinition}
                   inputComponentFactory={inputComponentFactory}
                   intent={intent}
+                  isDrawer
                 />
-              ) : null}
+              )}
             </Drawer.Content>
           </Drawer.Root>
-        </Drawer.Content>
+        </ConnectorsPalette>
       </Drawer.Root>
-      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen} direction="right">
+      <Drawer.Root open={isEditConnectorDrawerOpen} onOpenChange={setIsEditConnectorDrawerOpen}>
         <Drawer.Content>
-          {connectorEntity ? (
+          {!!connectorEntity && (
             <ConnectorEntityForm
-              useTranslationStore={useTranslationStore}
               connector={connectorEntity}
-              onBack={() => setIsConnectorSelected(false)}
+              onBack={() => setIsEditConnectorDrawerOpen(false)}
               getConnectorDefinition={getHarnessConnectorDefinition}
               inputComponentFactory={inputComponentFactory}
               intent={intent}
+              isDrawer
             />
-          ) : null}
+          )}
         </Drawer.Content>
       </Drawer.Root>
     </SandboxLayout.Main>

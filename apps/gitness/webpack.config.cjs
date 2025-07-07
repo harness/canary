@@ -154,5 +154,10 @@ module.exports = {
         }
       ]
     })
-  ]
+  ],
+  output: {
+    filename: '[name].[contenthash:6].js',
+    path: __dirname + '/dist',
+    clean: true
+  }
 }

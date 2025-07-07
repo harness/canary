@@ -1,16 +1,14 @@
 import { useMemo, useRef, useState } from 'react'
-import { LinkProps } from 'react-router-dom'
 
-import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, StyledLink, Tag } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Tag, Text } from '@/components'
+import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
   LabelType,
   LabelValuesType,
-  LabelValueType,
-  TranslationStore
+  LabelValueType
 } from '@/views'
 import { debounce } from 'lodash-es'
 
@@ -38,7 +36,6 @@ interface LabelsHeaderProps {
   removeLabel?: (id: number) => void
   searchQuery?: string
   setSearchQuery?: (query: string) => void
-  useTranslationStore: () => TranslationStore
 }
 
 export const LabelsHeader = ({
@@ -49,16 +46,14 @@ export const LabelsHeader = ({
   editLabelsProps,
   removeLabel,
   searchQuery,
-  setSearchQuery,
-  useTranslationStore
+  setSearchQuery
 }: LabelsHeaderProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
 
-  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery
-  })
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery?.(query)
+  }
 
   const labelsListWithValues = useMemo(() => {
     return labelsList.map(label => {
@@ -108,92 +103,73 @@ export const LabelsHeader = ({
   const handleCloseValuesView = useRef(
     debounce(() => {
       setLabelWithValuesToShow(null)
-      handleResetSearch()
+      handleSearchQuery('')
     }, 300)
   ).current
 
   return (
     <article className="flex items-center justify-between">
-      <h5 className="text-2 font-medium text-cn-foreground-1">{t('views:pullRequests.labels')}</h5>
+      <Text as="h5" variant="body-strong" color="foreground-1">
+        {t('views:pullRequests.labels')}
+      </Text>
 
       <DropdownMenu.Root onOpenChange={isOpen => !isOpen && handleCloseValuesView()}>
         <DropdownMenu.Trigger asChild>
           <Button iconOnly variant="ghost" size="sm">
-            <Icon name="vertical-ellipsis" size={12} />
+            <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
-          {labelWithValuesToShow && (
-            <LabelValueSelector
-              useTranslationStore={useTranslationStore}
-              label={labelWithValuesToShow}
-              handleAddOrRemoveLabel={handleAddOrRemoveLabel}
-              onSearchClean={handleCloseValuesView}
-            />
-          )}
+        {labelWithValuesToShow && (
+          <LabelValueSelector
+            label={labelWithValuesToShow}
+            handleAddOrRemoveLabel={handleAddOrRemoveLabel}
+            onSearchClean={handleCloseValuesView}
+          />
+        )}
 
-          {!labelWithValuesToShow && (
-            <>
-              {!!setSearchQuery && (
-                <>
-                  <div className="px-2 py-1.5">
-                    <SearchBox.Root
-                      className="w-full"
-                      placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
-                      value={search}
-                      handleChange={handleSearchChange}
-                      showOnFocus
-                      hasSearchIcon
-                    />
-                  </div>
-                  <DropdownMenu.Separator />
-                </>
-              )}
+        {!labelWithValuesToShow && (
+          <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+            <DropdownMenu.Header>
+              <SearchInput
+                size="sm"
+                autoFocus
+                id="search"
+                defaultValue={searchQuery}
+                placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
+                onChange={handleSearchQuery}
+              />
+            </DropdownMenu.Header>
 
-              {!!labelsListWithValues.length && (
-                <ScrollArea viewportClassName="max-h-[224px]">
-                  {labelsListWithValues?.map((label, idx) => (
-                    <DropdownMenu.Item key={`${label.id}-${idx}`} onSelect={handleOnSelect(label)}>
-                      <div className="relative grid w-full gap-y-1.5 pr-7">
-                        <Tag
-                          variant="secondary"
-                          size="sm"
-                          theme={label.color}
-                          label={label.key}
-                          value={(label.values?.length || '').toString()}
-                        />
+            {labelsListWithValues?.map((label, idx) => (
+              <DropdownMenu.Item
+                key={`${label.id}-${idx}`}
+                onSelect={handleOnSelect(label)}
+                title={
+                  <Tag
+                    variant="secondary"
+                    size="sm"
+                    theme={label.color}
+                    label={label.key}
+                    value={(label.values?.length || '').toString()}
+                  />
+                }
+                description={<Text truncate>{label.description}</Text>}
+                checkmark={label.isSelected}
+              />
+            ))}
 
-                        {!!label?.description && (
-                          <span className="w-full truncate text-cn-foreground-2">{label.description}</span>
-                        )}
+            {!labelsListWithValues.length && (
+              <DropdownMenu.NoOptions>{t('views:pullRequests.noLabels', 'No labels found')}</DropdownMenu.NoOptions>
+            )}
 
-                        {label.isSelected && (
-                          <Icon className="absolute right-0 top-1 text-icons-2" name="tick" size={12} />
-                        )}
-                      </div>
-                    </DropdownMenu.Item>
-                  ))}
-                </ScrollArea>
-              )}
-
-              {!labelsListWithValues.length && (
-                <span className="block px-5 py-4 text-center leading-tight text-cn-foreground-2">
-                  {t('views:pullRequests.noLabels', 'No labels found')}
-                </span>
-              )}
-
-              <DropdownMenu.Separator />
-
-              <div className="p-2">
-                {/* TODO: replace with StyledLink variant when its update is merged (https://github.com/harness/canary/pull/1134) */}
-                <StyledLink className="hover:decoration-foreground-8 text-cn-foreground-1" {...editLabelsProps}>
-                  {t('views:pullRequests.editLabels', 'Edit labels')}
-                </StyledLink>
-              </div>
-            </>
-          )}
-        </DropdownMenu.Content>
+            <DropdownMenu.Footer>
+              <Link variant="secondary" {...editLabelsProps}>
+                {t('views:pullRequests.editLabels', 'Edit labels')}
+              </Link>
+            </DropdownMenu.Footer>
+          </DropdownMenu.Content>
+        )}
       </DropdownMenu.Root>
     </article>
   )

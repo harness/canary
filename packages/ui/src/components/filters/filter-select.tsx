@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, DropdownMenu, Icon, Input, StatusBadge } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Input } from '@/components'
 
 import { FilterOptionConfig } from './types'
 
@@ -32,12 +32,8 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">{displayLabel}</DropdownMenu.Trigger>
-      <DropdownMenu.Content
-        className="min-w-[224px] p-0"
-        align={dropdownAlign}
-        onCloseAutoFocus={e => e.preventDefault()}
-      >
-        <div className="border-cn-borders-4 flex items-center border-b px-3 py-2.5">
+      <DropdownMenu.Content align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
+        <DropdownMenu.Header>
           <Input
             type="text"
             placeholder={inputPlaceholder}
@@ -49,40 +45,30 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
             onChange={e => setSearchQuery(e.target.value)}
             rightElement={
               <Button
-                variant="ghost"
+                variant="transparent"
+                size="sm"
                 iconOnly
                 onClick={() => {
                   setSearchQuery('')
                 }}
               >
-                <Icon className="rotate-45" name="plus" size={12} />
+                <IconV2 name="xmark" size="2xs" />
               </Button>
             }
           />
-        </div>
+        </DropdownMenu.Header>
 
-        <div className="p-1">
-          {filteredBySearchOptions.map(option => (
-            <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)}>
-              {option.label}
-            </DropdownMenu.Item>
-          ))}
+        {filteredBySearchOptions.map(option => (
+          <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)} title={option.label} />
+        ))}
 
-          {filteredBySearchOptions.length === 0 && (
-            <div className="flex items-center justify-center p-4">
-              <span className="text-2 leading-none text-cn-foreground-2">No results</span>
-            </div>
-          )}
-        </div>
+        {filteredBySearchOptions.length === 0 && <DropdownMenu.NoOptions>No results</DropdownMenu.NoOptions>}
 
         {onReset && (
-          <div className="border-cn-borders-4 border-t p-1">
-            <DropdownMenu.Item asChild>
-              <button className="w-full font-medium" onClick={onReset}>
-                {buttonLabel}
-              </button>
-            </DropdownMenu.Item>
-          </div>
+          <>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item title={buttonLabel} onClick={onReset} />
+          </>
         )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
@@ -101,25 +87,18 @@ const FilterSelectLabel = ({
   displayLabel: React.ReactNode
 }) => {
   return (
-    <>
-      {/* TODO: Design system: Update with proper button */}
-      <span className="text-14 flex items-center gap-x-1 text-cn-foreground-2 hover:text-cn-foreground-1">
-        {displayLabel}
-        {selectedFilters > 0 && (
-          <StatusBadge variant="outline" size="sm">
-            {selectedFilters}
-          </StatusBadge>
-        )}
-      </span>
-      <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
-    </>
+    <Button size="sm" variant="transparent">
+      {displayLabel}
+      {selectedFilters > 0 && <CounterBadge>{selectedFilters}</CounterBadge>}
+      <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size="2xs" />
+    </Button>
   )
 }
 
 const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <Button size="sm" variant="ghost" className="gap-x-1.5">
-      <Icon name="plus" size={10} />
+    <Button size="sm" variant="transparent">
+      <IconV2 name="plus" size="2xs" />
       <span>{displayLabel}</span>
     </Button>
   )

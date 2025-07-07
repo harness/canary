@@ -3,34 +3,20 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormWrapper,
-  Icon,
-  Input,
+  IconV2,
   Label,
-  Message,
-  MessageTheme,
-  Option,
-  RadioButton,
-  RadioGroup,
+  Radio,
   SkeletonForm,
-  Text,
-  Textarea
+  Text
 } from '@/components'
-import {
-  AccessLevel,
-  BranchSelectorListItem,
-  ErrorTypes,
-  errorTypes,
-  generalSettingsFormSchema,
-  IBranchSelectorStore,
-  RepoData,
-  RepoUpdateData,
-  TranslationStore
-} from '@/views'
-import { BranchSelector, BranchSelectorTab } from '@/views/repo/components'
+import { useTranslation } from '@/context'
+import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@/views'
+import { BranchSelectorContainerProps } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const RepoSettingsGeneralForm: FC<{
@@ -40,55 +26,43 @@ export const RepoSettingsGeneralForm: FC<{
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
-  selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
-  useRepoBranchesStore: () => IBranchSelectorStore
-  useTranslationStore: () => TranslationStore
-  searchQuery: string
-  setSearchQuery: (query: string) => void
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }> = ({
-  repoData,
   handleRepoUpdate,
   apiError,
   isLoadingRepoData,
   isUpdatingRepoData,
   isRepoUpdateSuccess,
-  selectBranchOrTag,
-  useRepoBranchesStore,
-  useTranslationStore,
-  searchQuery,
-  setSearchQuery
+  branchSelectorRenderer,
+  repoData
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const BranchSelector = branchSelectorRenderer
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    reset,
-    formState: { errors }
-  } = useForm<RepoUpdateData>({
+  const formMethods = useForm<RepoUpdateData>({
     resolver: zodResolver(generalSettingsFormSchema),
     mode: 'onChange',
     defaultValues: {
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: repoData.defaultBranch || '',
+      branch: repoData.defaultBranch,
       access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     }
   })
+
+  const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   useEffect(() => {
     reset({
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: repoData.defaultBranch || '',
+      branch: repoData.defaultBranch,
       access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     })
   }, [repoData, isLoadingRepoData, reset])
 
-  const accessValue = watch('access')
+  const branchValue = watch('branch')
 
   useEffect(() => {
     let timeoutId: number
@@ -106,10 +80,6 @@ export const RepoSettingsGeneralForm: FC<{
     setValue(fieldName, value, { shouldValidate: true })
   }
 
-  const handleAccessChange = (value: AccessLevel) => {
-    setValue('access', value, { shouldValidate: true })
-  }
-
   const onSubmit: SubmitHandler<RepoUpdateData> = data => {
     setIsSubmitted(true)
     handleRepoUpdate(data)
@@ -117,38 +87,29 @@ export const RepoSettingsGeneralForm: FC<{
 
   return (
     <Fieldset>
-      <Text size={13} weight="medium">
-        {t('views:repos.generalSettings', 'General settings')}
-      </Text>
+      <Text variant="heading-subsection">{t('views:repos.generalSettings', 'General settings')}</Text>
       {isLoadingRepoData ? (
         <SkeletonForm />
       ) : (
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
-            <ControlGroup>
-              <Input
-                id="name"
-                {...register('name')}
-                placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
-                disabled
-                label={t('views:repos.name', 'Name')}
-                size="md"
-                autoFocus
-                error={errors.name?.message?.toString()}
-              />
-            </ControlGroup>
+            <FormInput.Text
+              id="name"
+              {...register('name')}
+              placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
+              disabled
+              label={t('views:repos.name', 'Name')}
+            />
+
             {/* DESCRIPTION */}
-            <ControlGroup>
-              <Textarea
-                id="description"
-                {...register('description')}
-                placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
-                label={t('views:repos.description', 'Description')}
-                error={errors.description?.message?.toString()}
-                optional
-              />
-            </ControlGroup>
+            <FormInput.Textarea
+              id="description"
+              {...register('description')}
+              placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
+              label={t('views:repos.description', 'Description')}
+              optional
+            />
           </Fieldset>
 
           {/* BRANCH */}
@@ -156,52 +117,43 @@ export const RepoSettingsGeneralForm: FC<{
             <ControlGroup>
               <Label className="mb-2">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
               <BranchSelector
-                useTranslationStore={useTranslationStore}
-                useRepoBranchesStore={useRepoBranchesStore}
-                onSelectBranch={value => {
+                onSelectBranchorTag={value => {
                   handleSelectChange('branch', value.name)
-                  selectBranchOrTag(value, BranchSelectorTab.BRANCHES)
                 }}
                 isBranchOnly={true}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
+                dynamicWidth={true}
+                selectedBranch={{ name: branchValue, sha: '' }}
               />
             </ControlGroup>
           </Fieldset>
 
           <Fieldset className="mt-4">
-            <ControlGroup>
-              <Label className="mb-6">{t('views:repos.visibility', 'Visibility')}</Label>
-              <RadioGroup value={accessValue} onValueChange={handleAccessChange} id="visibility">
-                <Option
-                  control={<RadioButton value="1" id="access-public" />}
-                  id="access-public"
-                  label={t('views:repos.public', 'Public')}
-                  ariaSelected={accessValue === '1'}
-                  description={t(
-                    'views:repos.publicDescription',
-                    'Anyone with access to the gitness environment can clone this repo.'
-                  )}
-                />
-                <Option
-                  control={<RadioButton value="2" id="access-private" />}
-                  id="access-private"
-                  label={t('views:repos.private', 'Private')}
-                  ariaSelected={accessValue === '2'}
-                  description={t(
-                    'views:repos.privateDescription',
-                    'You can choose who can see and commit to this repository.'
-                  )}
-                />
-              </RadioGroup>
-              {errors.access && <Message theme={MessageTheme.ERROR}>{errors.access.message?.toString()}</Message>}
-            </ControlGroup>
+            <FormInput.Radio label={t('views:repos.visibility', 'Visibility')} id="visibility" {...register('access')}>
+              <Radio.Item
+                id="access-public"
+                value="1"
+                label={t('views:repos.public', 'Public')}
+                caption={t(
+                  'views:repos.publicDescription',
+                  'Anyone with access to the gitness environment can clone this repo.'
+                )}
+              />
+              <Radio.Item
+                id="access-private"
+                value="2"
+                label={t('views:repos.private', 'Private')}
+                caption={t(
+                  'views:repos.privateDescription',
+                  'You can choose who can see and commit to this repository.'
+                )}
+              />
+            </FormInput.Radio>
           </Fieldset>
 
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {!isSubmitted || !isRepoUpdateSuccess ? (
                   <Button type="submit" disabled={isUpdatingRepoData}>
                     {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
@@ -209,18 +161,14 @@ export const RepoSettingsGeneralForm: FC<{
                 ) : (
                   <Button variant="primary" theme="success" type="button" className="pointer-events-none">
                     Saved
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
 
-          {!!apiError && errorTypes.has(apiError.type) && (
-            <Text size={1} className="text-cn-foreground-danger">
-              {apiError.message}
-            </Text>
-          )}
+          {!!apiError && errorTypes.has(apiError.type) && <Text color="danger">{apiError.message}</Text>}
         </FormWrapper>
       )}
     </Fieldset>

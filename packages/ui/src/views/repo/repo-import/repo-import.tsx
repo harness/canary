@@ -3,20 +3,17 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Button,
-  ButtonGroup,
-  Checkbox,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
-  Input,
-  Option,
-  Select,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -98,30 +95,19 @@ const formSchema = z
 
 export type ImportRepoFormFields = z.infer<typeof formSchema>
 
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({ value: option, label: option }))
+
 interface RepoImportPageProps {
   onFormSubmit: (data: ImportRepoFormFields) => void
   onFormCancel: () => void
   isLoading: boolean
   apiErrorsValue?: string
-  useTranslationStore: () => TranslationStore
 }
 
-export function RepoImportPage({
-  onFormSubmit,
-  onFormCancel,
-  isLoading,
-  apiErrorsValue,
-  useTranslationStore
-}: RepoImportPageProps) {
-  const { t } = useTranslationStore()
+export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: RepoImportPageProps) {
+  const { t } = useTranslation()
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors }
-  } = useForm<ImportRepoFormFields>({
+  const formMethods = useForm<ImportRepoFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -131,16 +117,13 @@ export function RepoImportPage({
     }
   })
 
-  const providerValue = watch('provider')
+  const { register, handleSubmit, setValue, watch } = formMethods
+
   const repositoryValue = watch('repository')
 
   useEffect(() => {
     setValue('identifier', repositoryValue)
   }, [repositoryValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportRepoFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const onSubmit: SubmitHandler<ImportRepoFormFields> = data => {
     onFormSubmit(data)
@@ -153,34 +136,11 @@ export function RepoImportPage({
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          {t('views:repos.importRepo', 'Import a repository')}
-        </Text>
+        <Text variant="heading-section">{t('views:repos.importRepo', 'Import a repository')}</Text>
         <Spacer size={10} />
-        <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item key={option} value={option}>
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Select options={providerOptions} placeholder="Select" label="Provider" {...register('provider')} />
 
           {[
             ProviderOptionsEnum.GITHUB_ENTERPRISE,
@@ -189,39 +149,23 @@ export function RepoImportPage({
             ProviderOptionsEnum.GITEA,
             ProviderOptionsEnum.GOGS
           ].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
-                id="host"
-                label="Host URL"
-                {...register('hostUrl')}
-                placeholder="Enter the host URL"
-                size="md"
-                error={errors.hostUrl?.message?.toString()}
-              />
+            <Fieldset>
+              <FormInput.Text id="hostUrl" label="Host URL" {...register('hostUrl')} placeholder="Enter the host URL" />
             </Fieldset>
           )}
           {[ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
-                id="group"
-                label="Group"
-                {...register('group')}
-                placeholder="Enter the group name"
-                size="md"
-                error={errors.group?.message?.toString()}
-              />
+            <Fieldset>
+              <FormInput.Text id="group" label="Group" {...register('group')} placeholder="Enter the group name" />
             </Fieldset>
           )}
 
           {watch('provider') === ProviderOptionsEnum.BITBUCKET && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="workspace"
                 label="Workspace"
                 {...register('workspace')}
                 placeholder="Enter the workspace name"
-                size="md"
-                error={errors.workspace?.message?.toString()}
               />
             </Fieldset>
           )}
@@ -234,114 +178,79 @@ export function RepoImportPage({
             ProviderOptionsEnum.GOGS,
             ProviderOptionsEnum.AZURE_DEVOPS
           ].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="organization"
                 label="Organization"
                 {...register('organization')}
                 placeholder="Enter the organization name"
-                size="md"
-                error={errors.organization?.message?.toString()}
               />
             </Fieldset>
           )}
           {[ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
-            <Fieldset className="mt-4">
-              <Input
+            <Fieldset>
+              <FormInput.Text
                 id="project"
                 label="Project"
                 {...register('project')}
                 placeholder="Enter the project name"
-                size="md"
-                error={errors.project?.message?.toString()}
               />
             </Fieldset>
           )}
           {/* repository */}
-          <Fieldset className="mt-4">
-            <Input
+          <Fieldset>
+            <FormInput.Text
               id="repository"
               label="Repository"
               {...register('repository')}
               placeholder="Enter the repository name"
-              size="md"
-              error={errors.repository?.message?.toString()}
             />
           </Fieldset>
 
           {/* authorization - pipelines */}
-          <Fieldset className="mt-4">
+          <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
-              <Checkbox
-                {...register('authorization')}
-                id="authorization"
-                checked={watch('authorization')}
-                onCheckedChange={(checked: boolean) => setValue('authorization', checked)}
-                label="Requires Authorization"
-              />
-              <Checkbox
-                {...register('pipelines')}
-                id="pipelines"
-                checked={watch('pipelines')}
-                onCheckedChange={(checked: boolean) => setValue('pipelines', checked)}
-                label="Import Pipelines"
-              />
+              <FormInput.Checkbox {...register('authorization')} id="authorization" label="Requires Authorization" />
+              <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Import Pipelines" />
             </ControlGroup>
           </Fieldset>
 
           {/* token */}
           {watch('authorization') && (
-            <Fieldset>
-              <ControlGroup>
-                <Input
-                  type="password"
-                  id="password"
-                  label="Token"
-                  {...register('password')}
-                  placeholder="Enter your access token"
-                  size="md"
-                  error={errors.password?.message?.toString()}
-                />
-              </ControlGroup>
-            </Fieldset>
+            <FormInput.Text
+              type="password"
+              id="password"
+              label="Token"
+              {...register('password')}
+              placeholder="Enter your access token"
+            />
           )}
 
           <FormSeparator />
 
           {/* repo identifier */}
-          <Fieldset className="mt-4">
-            <ControlGroup>
-              <Input
-                id="identifier"
-                label="Name"
-                {...register('identifier')}
-                placeholder="Enter repository name"
-                size="md"
-                error={errors.identifier?.message?.toString()}
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Text
+            id="identifier"
+            label="Name"
+            {...register('identifier')}
+            placeholder="Enter repository name"
+          />
 
           {/* description */}
-          <Fieldset className="mt-4">
-            <ControlGroup>
-              <Textarea
-                id="description"
-                label="Description"
-                {...register('description')}
-                placeholder="Enter a description"
-                error={errors.description?.message?.toString()}
-                optional
-              />
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Textarea
+            id="description"
+            label="Description"
+            {...register('description')}
+            placeholder="Enter a description"
+            optional
+          />
 
           {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
 
           {/* SUBMIT BUTTONS */}
           <Fieldset className="mt-6">
             <ControlGroup>
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repository' : 'Importing repository...'}
@@ -349,7 +258,7 @@ export function RepoImportPage({
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel
                 </Button>
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </Fieldset>
         </FormWrapper>

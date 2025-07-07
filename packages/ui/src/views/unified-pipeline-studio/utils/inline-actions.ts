@@ -13,6 +13,19 @@ export const getInlineActionConfig = (
   actions: InlineAction<InlineActionArgsType>[]
 }[] => [
   {
+    selectors: [{ type: SelectorType.ContainsPath, basePath: 'pipeline', paths: [/^.stages.\d+$/] }],
+    actions: [
+      {
+        title: 'Edit stage',
+        onClick,
+        data: {
+          action: 'edit',
+          entityType: 'stage'
+        }
+      }
+    ]
+  },
+  {
     selectors: [{ type: SelectorType.ContainsPath, basePath: '', paths: [/.steps$/] }],
     actions: [
       {
@@ -112,19 +125,7 @@ export const getInlineActionConfig = (
   //     }
   //   ]
   // },
-  // {
-  //   selectors: [{ type: SelectorType.ContainsPath, basePath: 'pipeline', paths: [/^.stages.\d+$/] }],
-  //   actions: [
-  //     {
-  //       title: 'edit',
-  //       onClick,
-  //       data: {
-  //         action: 'edit',
-  //         entityType: 'stage'
-  //       }
-  //     }
-  //   ]
-  // },
+
   // {
   //   selectors: [{ type: SelectorType.ContainsPath, basePath: 'pipeline', paths: [/.group$/] }],
   //   actions: [

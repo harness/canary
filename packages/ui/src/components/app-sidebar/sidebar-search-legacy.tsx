@@ -1,15 +1,16 @@
 import { FormEvent, MouseEvent, ReactNode, useState } from 'react'
 
-import { Button, Dialog, Icon, SearchBox, Spacer, useSidebar } from '@/components'
+import { Button, Dialog, IconV2, SearchBox, useSidebar } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { TFunction } from 'i18next'
 
 interface ProjectProps {
   logo: ReactNode
-  t: TFunction
 }
 
-function SidebarSearchLegacy({ logo, t }: ProjectProps) {
+function SidebarSearchLegacy({ logo }: ProjectProps) {
+  const { t } = useTranslation()
+
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const { collapsed } = useSidebar()
@@ -36,7 +37,7 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
           tabIndex={collapsed ? 0 : -1}
           onClick={openSearchDialog}
         >
-          <Icon name="search" size={12} />
+          <IconV2 name="search" size="2xs" />
           <span className="sr-only">{t('component:navbar.searchButton', 'Open search dialog')}</span>
         </Button>
 
@@ -57,14 +58,13 @@ function SidebarSearchLegacy({ logo, t }: ProjectProps) {
         />
       </div>
       <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <Dialog.Content className="h-[600px] max-w-[800px]">
+        <Dialog.Content size="lg" className="h-[600px]">
           <Dialog.Header>
             <Dialog.Title>{t('component:navbar.search', 'Search')}</Dialog.Title>
-            <Dialog.Description>
-              <Spacer size={6} />
-              <SearchBox.Root width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
-            </Dialog.Description>
           </Dialog.Header>
+          <Dialog.Body>
+            <SearchBox.Root autoFocus width="full" placeholder={`${t('component:navbar.search', 'Search')}...`} />
+          </Dialog.Body>
         </Dialog.Content>
       </Dialog.Root>
     </div>

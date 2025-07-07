@@ -160,7 +160,9 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
           )
         }
       >
-        <StackedList.Field title={entity.name} className="truncate overflow-hidden text-nowrap max-w-sm" />
+        <div title={entity.name}>
+          <StackedList.Field title={entity.name} className="truncate overflow-hidden text-nowrap max-w-sm" />
+        </div>
       </StackedList.Item>
     )
   }

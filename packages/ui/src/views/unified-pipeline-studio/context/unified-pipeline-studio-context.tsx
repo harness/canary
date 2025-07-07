@@ -256,13 +256,10 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     },
     [setEditStepIntention]
   )
-  // const clearEditStepIntention = useCallback(() => {
-  //   setEditStepIntention(null)
-  //   onSelectedPathChange(undefined)
-  // }, [setEditStepIntention])
 
   const clearAddStepIntention = useCallback(() => {
     setAddStepIntention(null)
+    onSelectedPathChange(undefined)
   }, [setAddStepIntention])
 
   const [addStageIntention, setAddStageIntention] = useState<AddStepIntentionType>(null)
@@ -285,7 +282,6 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   }, [setEditStepIntention])
 
   // TODO: rename to stepFormEntity
-  // const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
 
   const injectInArray = useCallback(
     (injectData: { path: string; position: 'after' | 'before' | 'in' | undefined; item: unknown }) => {

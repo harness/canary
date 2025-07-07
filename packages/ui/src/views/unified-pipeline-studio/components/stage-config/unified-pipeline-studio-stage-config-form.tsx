@@ -53,7 +53,7 @@ interface UnifiedPipelineStudioStageConfigFormProps {
 
 export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudioStageConfigFormProps) => {
   const { requestClose, isDrawer = false, isDirtyRef } = props
-  const { Content, Header, Title, Description, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Content, Header, Title, Description, Footer, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     addStageIntention,
@@ -124,12 +124,11 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
                 Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
               </Description>
             </Header>
-            {/* TODO workaround for scroll area issue */}
-            <div className="cn-drawer-body overflow-scroll">
+            <Body>
               <EntityFormLayout.Form>
                 <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
               </EntityFormLayout.Form>
-            </div>
+            </Body>
             <Footer>
               <ButtonLayout.Root>
                 <ButtonLayout.Primary>

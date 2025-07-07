@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, Button, CommitCopyActions, IconV2, NodeGroup, StackedList } from '@/components'
+import { Avatar, Button, CommitCopyActions, IconV2, Layout, NodeGroup, StackedList, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { formatDate, timeAgo } from '@/utils'
 import { TypesCommit } from '@/views'
@@ -52,64 +52,55 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
-                      <Link
-                        className="grow overflow-hidden"
-                        onClick={e => {
-                          e.stopPropagation()
-                        }}
-                        key={commit?.sha}
-                        to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
-                      >
-                        <StackedList.Field
-                          title={
-                            <div className="flex w-full max-w-full flex-col gap-y-1.5">
-                              {toCommitDetails ? (
-                                <p>
-                                  <Link
-                                    className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
-                                    to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
-                                  >
-                                    <span className="truncate" title={commit.title}>
-                                      {commit.title}
-                                    </span>
-                                  </Link>
-                                </p>
-                              ) : (
-                                <span className="truncate text-sm font-medium leading-snug">{commit.title}</span>
-                              )}
-                              <div className="flex items-center gap-x-1.5">
-                                {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
-                                <span className="text-cn-foreground-3">{authorName || ''}</span>
-                                <span className="text-cn-foreground-2">
-                                  committed on {timeAgo(when, { dateStyle: 'medium' })}
-                                </span>
-                              </div>
+                      <Layout.Horizontal className="w-full truncate">
+                        <Link
+                          className="grow overflow-hidden"
+                          onClick={e => {
+                            e.stopPropagation()
+                          }}
+                          key={commit?.sha}
+                          to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                        >
+                          <div className="flex w-full max-w-full flex-col gap-y-1.5">
+                            {toCommitDetails ? (
+                              <p>
+                                <Link
+                                  className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
+                                  to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                                >
+                                  <Text variant="heading-base" truncate title={commit.title}>
+                                    {commit.title}
+                                  </Text>
+                                </Link>
+                              </p>
+                            ) : (
+                              <span className="truncate text-sm font-medium leading-snug">{commit.title}</span>
+                            )}
+                            <div className="flex items-center gap-x-1.5">
+                              {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
+                              <span className="text-cn-foreground-3">{authorName || ''}</span>
+                              <span className="text-cn-foreground-2">
+                                committed on {timeAgo(when, { dateStyle: 'medium' })}
+                              </span>
                             </div>
-                          }
-                        />
-                      </Link>
-                      {!!commit?.sha && (
-                        <StackedList.Field
-                          title={
-                            <div className="flex items-center gap-2.5">
-                              <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
-                              <Button
-                                title="View repository at this point of history"
-                                variant="ghost"
-                                iconOnly
-                                onClick={() => {
-                                  navigate(toCode?.({ sha: commit?.sha || '' }) || '')
-                                }}
-                              >
-                                <IconV2 name="code-brackets" />
-                              </Button>
-                            </div>
-                          }
-                          right
-                          label
-                          secondary
-                        />
-                      )}
+                          </div>
+                        </Link>
+                        {!!commit?.sha && (
+                          <div className="flex gap-2.5">
+                            <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
+                            <Button
+                              title="View repository at this point of history"
+                              variant="ghost"
+                              iconOnly
+                              onClick={() => {
+                                navigate(toCode?.({ sha: commit?.sha || '' }) || '')
+                              }}
+                            >
+                              <IconV2 name="code-brackets" />
+                            </Button>
+                          </div>
+                        )}
+                      </Layout.Horizontal>
                     </StackedList.Item>
                   )
                 })}

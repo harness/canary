@@ -1083,7 +1083,7 @@ export const routes: CustomRouteObject[] = [
         element: <ProfileSettingsLayout />,
         handle: {
           breadcrumb: () => (
-            <div className="flex items-center">
+            <div className="flex items-center gap-1">
               <span>User</span>
               <Breadcrumb.Separator />
               <span>{Page.Settings}</span>

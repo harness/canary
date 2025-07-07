@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, Sidebar } from '@harnessio/ui/components'
+import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -1083,11 +1083,11 @@ export const routes: CustomRouteObject[] = [
         element: <ProfileSettingsLayout />,
         handle: {
           breadcrumb: () => (
-            <div className="flex items-center gap-1">
+            <Layout.Flex direction="row" align="center" gap="xs">
               <span>User</span>
               <Breadcrumb.Separator />
               <span>{Page.Settings}</span>
-            </div>
+            </Layout.Flex>
           ),
           pageTitle: Page.Settings
         },

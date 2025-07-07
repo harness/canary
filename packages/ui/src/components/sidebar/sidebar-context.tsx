@@ -1,6 +1,5 @@
 import { ComponentProps, createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { TooltipProvider } from '@/components'
 import { cn } from '@utils/cn'
 
 import {
@@ -103,11 +102,9 @@ export const SidebarProvider = forwardRef<
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
-        <div className={cn('cn-sidebar-wrapper', className)} ref={ref} {...props}>
-          {children}
-        </div>
-      </TooltipProvider>
+      <div className={cn('cn-sidebar-wrapper', className)} ref={ref} {...props}>
+        {children}
+      </div>
     </SidebarContext.Provider>
   )
 })

@@ -6,11 +6,11 @@ import { useSidebar } from './sidebar-context'
 import { SidebarItem } from './sidebar-item'
 
 export interface SidebarToggleMenuButtonProps {
-  text?: string
+  title?: string
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const SidebarToggleMenuButton = ({ text, onClick }: SidebarToggleMenuButtonProps) => {
+export const SidebarToggleMenuButton = ({ title, onClick }: SidebarToggleMenuButtonProps) => {
   const { toggleSidebar, state } = useSidebar()
   const { t } = useTranslation()
 
@@ -28,7 +28,7 @@ export const SidebarToggleMenuButton = ({ text, onClick }: SidebarToggleMenuButt
   return (
     <SidebarItem
       onClick={handleClick}
-      title={text ?? t('component:sidebar.sidebarToggle.collapse', 'Collapse')}
+      title={title ?? t('component:sidebar.sidebarToggle.collapse', 'Collapse')}
       icon={collapsed ? 'expand-sidebar' : 'collapse-sidebar'}
       aria-label={
         collapsed

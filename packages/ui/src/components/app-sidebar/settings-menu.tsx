@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Layout, ScrollArea, Sheet, Sidebar } from '@/components'
+import { ScrollArea, Sheet, Sidebar } from '@/components'
 import { MenuGroupType } from '@components/app-sidebar/types'
 
 interface SystemAdminMenuProps {
@@ -24,18 +24,16 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
           {items.map((group, index) => (
             <Fragment key={group.groupId}>
               {index > 0 && <Sidebar.Separator />}
-              <Sidebar.Group key={group.groupId} label={group.title}>
-                <Layout.Grid columns={2}>
-                  {group.items.map(item => (
-                    <Sidebar.Item
-                      key={item.id}
-                      to={item.to}
-                      title={item.title}
-                      description={item.description}
-                      icon={item.iconName}
-                    />
-                  ))}
-                </Layout.Grid>
+              <Sidebar.Group key={group.groupId} label={group.title} className="grid-cols-2 [&>h6]:[grid-column:1/3]">
+                {group.items.map(item => (
+                  <Sidebar.Item
+                    key={item.id}
+                    to={item.to}
+                    title={item.title}
+                    description={item.description}
+                    icon={item.iconName}
+                  />
+                ))}
               </Sidebar.Group>
             </Fragment>
           ))}

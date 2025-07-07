@@ -12,6 +12,7 @@ export default {
 
       '&-desktop': {
         top: '0px',
+        zIndex: '20',
         position: 'sticky',
         '@apply duration-200 transition-[width] ease-linear': ''
       }
@@ -61,15 +62,20 @@ export default {
     },
 
     '&-group': {
+      '--sidebar-group-label-scale': '1',
       display: 'grid',
       gap: 'var(--cn-sidebar-group-gap)',
       padding: 'var(--cn-sidebar-group-py) 0',
 
       '&-label': {
-        opacity: '1',
-        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        padding:
+          'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
+        opacity: 'var(--sidebar-group-label-scale)',
+        maxHeight: 'max(1px, 100% * var(--sidebar-group-label-scale))',
+        transform: 'max(0.6, scale(var(--sidebar-group-label-scale)))',
+        justifySelf: 'start',
         overflow: 'hidden',
-        '@apply duration-150 transition-[max-height,padding,opacity] ease-linear': ''
+        '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
       }
     },
 
@@ -100,6 +106,7 @@ export default {
         minHeight: 'var(--cn-sidebar-sub-item-min)',
         padding: 'var(--cn-sidebar-sub-item-py) var(--cn-sidebar-sub-item-px)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
+        outline: 'none',
 
         '&:hover, &:focus-within': {
           backgroundColor: 'var(--cn-state-hover)'
@@ -135,7 +142,7 @@ export default {
         overflow: 'hidden',
 
         '&:where(:not([data-disabled=true]))': {
-          '&:hover, &:focus-within': {
+          '&:hover, &:focus-within, &:where([data-active=true])': {
             '.cn-sidebar-item-content': {
               backgroundColor: 'var(--cn-state-hover)'
             },
@@ -146,10 +153,6 @@ export default {
 
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
-            },
-
-            '.cn-sidebar-item-content-badge-secondary': {
-              opacity: '0'
             }
           }
         },
@@ -302,10 +305,8 @@ export default {
     },
 
     '&:where([data-state=collapsed])': {
-      '.cn-sidebar-group-label': {
-        opacity: '0',
-        padding: '0',
-        maxHeight: '0'
+      '.cn-sidebar-group': {
+        '--sidebar-group-label-scale': '0'
       },
 
       '.cn-sidebar-item': {

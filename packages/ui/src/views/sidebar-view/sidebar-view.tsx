@@ -39,6 +39,8 @@ export const SidebarView = ({
   handleRemoveRecentMenuItem,
   pinnedMenuItems,
   recentMenuItems,
+  showMoreMenu,
+  showSettingMenu,
   currentUser,
   handleMoreMenu,
   handleSettingsMenu,
@@ -97,6 +99,7 @@ export const SidebarView = ({
               icon="menu-more-horizontal"
               onClick={() => handleMoreMenu()}
               withRightIndicator
+              active={showMoreMenu}
             />
           </Sidebar.Group>
 
@@ -176,6 +179,8 @@ export const SidebarView = ({
               icon="settings"
               badge="new"
               onClick={() => handleSettingsMenu()}
+              tooltip="Settings are not available yet"
+              active={showSettingMenu}
             />
             <Sidebar.Item
               title={t('component:navbar.settings', 'Settings')}

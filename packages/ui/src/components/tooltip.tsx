@@ -13,6 +13,7 @@ export type TooltipProps = {
   content: ReactNode
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
+  open?: boolean
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align'>
 
 export const Tooltip: FC<TooltipProps> = ({
@@ -22,10 +23,11 @@ export const Tooltip: FC<TooltipProps> = ({
   hideArrow = false,
   delay = 500,
   side = 'top',
-  align = 'center'
+  align = 'center',
+  open
 }) => {
   return (
-    <TooltipPrimitive.Root delayDuration={delay}>
+    <TooltipPrimitive.Root delayDuration={delay} open={open}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <TooltipPrimitive.Content className="cn-tooltip" side={side} align={align} sideOffset={4}>
         {!!title && <span className="cn-tooltip-title">{title}</span>}

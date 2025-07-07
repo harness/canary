@@ -1,4 +1,4 @@
-import { Children, cloneElement, ComponentPropsWithoutRef, ReactNode, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useEffect, useState } from 'react'
 
 import {
   Avatar,
@@ -33,6 +33,7 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   title: string
   description?: string
   tooltip?: ReactNode
+  active?: boolean
 }
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
@@ -124,237 +125,248 @@ const isSidebarItemLink = (item: SidebarItemProps): item is SidebarItemLinkProps
 const isBadgeProps = (props?: string | SidebarBadgeProps): props is SidebarBadgeProps =>
   typeof props === 'object' && props !== null && 'content' in props
 
-export const SidebarItem = (({ className, children, ...props }: SidebarItemProps) => {
-  const { state } = useSidebar()
-  const { NavLink } = useRouterContext()
-  const [submenuOpen, setSubmenuOpen] = useState(false)
+export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
+  ({ className, children, ...props }, ref) => {
+    const { state } = useSidebar()
+    const { NavLink } = useRouterContext()
+    const [submenuOpen, setSubmenuOpen] = useState(false)
 
-  const withIcon = itemIsIcon(props)
-  const withLogo = itemIsLogo(props)
-  const withAvatar = itemIsAvatar(props)
-  const isLink = isSidebarItemLink(props)
+    const withIcon = itemIsIcon(props)
+    const withLogo = itemIsLogo(props)
+    const withAvatar = itemIsAvatar(props)
+    const isLink = isSidebarItemLink(props)
 
-  const { title, description, actionMenuItems, dropdownMenuContent, badge, tooltip, withRightIndicator, ...restProps } =
-    props
+    const {
+      title,
+      description,
+      actionMenuItems,
+      dropdownMenuContent,
+      badge,
+      tooltip,
+      withRightIndicator,
+      active,
+      ...restProps
+    } = props
 
-  const withSubmenu = !!children
-  const withDescription = !!description
-  const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
-  const withDropdownMenu = !!dropdownMenuContent
-  const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
+    const withSubmenu = !!children
+    const withDescription = !!description
+    const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
+    const withDropdownMenu = !!dropdownMenuContent
+    const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
 
-  const iconSize = withDescription ? 'lg' : 'sm'
-  const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
-    size: 'sm',
-    theme: 'info',
-    className: cn(
-      'cn-sidebar-item-content-badge',
-      { 'cn-sidebar-item-content-badge-secondary': withActionMenu },
-      isBadgeProps(badge) && badge?.className
-    )
-  }
-
-  useEffect(() => {
-    if (state === 'collapsed' && submenuOpen) {
-      setSubmenuOpen(false)
+    const iconSize = withDescription ? 'lg' : 'sm'
+    const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
+      size: 'sm',
+      theme: 'info',
+      className: cn(
+        'cn-sidebar-item-content-badge',
+        { 'cn-sidebar-item-content-badge-secondary': withActionMenu },
+        isBadgeProps(badge) && badge?.className
+      )
     }
-  }, [state, submenuOpen])
 
-  const Content = () => (
-    <Layout.Grid
-      className={cn('cn-sidebar-item-content', {
-        'cn-sidebar-item-content-w-description': withDescription,
-        'cn-sidebar-item-content-w-r-element': withRightElement,
-        'cn-sidebar-item-content-complete': withDescription && withRightElement
-      })}
-    >
-      {withIcon && props.icon && (
-        <>
-          {withDescription && (
-            <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
-              <IconV2 name={props.icon} size="md" />
-            </div>
-          )}
-          {!withDescription && <IconV2 name={props.icon} size="sm" className="cn-sidebar-item-content-icon" />}
-        </>
-      )}
-      {withLogo && props.logo && <LogoV2 name={props.logo} size={iconSize} className="cn-sidebar-item-content-icon" />}
-      {withAvatar && (
-        <Avatar src={props.src} name={props.avatarFallback} size={iconSize} className="cn-sidebar-item-content-icon" />
-      )}
+    useEffect(() => {
+      if (state === 'collapsed' && submenuOpen) {
+        setSubmenuOpen(false)
+      }
+    }, [state, submenuOpen])
 
-      <Text
-        variant="body-single-line-strong"
-        color={withDescription ? 'foreground-1' : 'foreground-2'}
-        className="cn-sidebar-item-content-title"
-        truncate
+    const renderContent = () => (
+      <Layout.Grid
+        className={cn('cn-sidebar-item-content', {
+          'cn-sidebar-item-content-w-description': withDescription,
+          'cn-sidebar-item-content-w-r-element': withRightElement,
+          'cn-sidebar-item-content-complete': withDescription && withRightElement
+        })}
       >
-        {title}
-      </Text>
-
-      {withDescription && (
-        <Text
-          variant="caption-single-line-soft"
-          color="foreground-3"
-          className="cn-sidebar-item-content-description"
-          truncate
-        >
-          {description}
-        </Text>
-      )}
-
-      {withDropdownMenu && <IconV2 name="up-down" size="xs" className="cn-sidebar-item-content-right-element" />}
-
-      {badge && !isBadgeProps(badge) && (
-        <StatusBadge variant="outline" {...badgeCommonProps}>
-          {badge}
-        </StatusBadge>
-      )}
-      {badge && isBadgeProps(badge) && badge.variant === 'status' && (
-        <StatusBadge
-          variant="status"
-          {...badgeCommonProps}
-          {...omit(badge, ['content', 'variant', 'icon', 'className'])}
-        >
-          {badge.content}
-        </StatusBadge>
-      )}
-      {badge && isBadgeProps(badge) && badge.variant !== 'status' && (
-        <StatusBadge
-          variant={badge.variant || 'outline'}
-          {...badgeCommonProps}
-          {...omit(badge, ['content', 'variant', 'pulse', 'className'])}
-        >
-          {badge.content}
-        </StatusBadge>
-      )}
-
-      {withRightIndicator && <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" />}
-
-      {((withActionMenu && !badge) || withSubmenu) && (
-        <div className="cn-sidebar-item-content-action-item-placeholder" />
-      )}
-    </Layout.Grid>
-  )
-
-  const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
-
-  const ItemTrigger = () => {
-    return (
-      <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled}>
-        {isLink && (
+        {withIcon && props.icon && (
           <>
-            {!itemProps.disabled && (
-              <NavLink
-                className={({ isActive }) =>
-                  cn(
-                    'cn-sidebar-item',
-                    { 'cn-sidebar-item-active': isActive, 'cn-sidebar-item-big': withDescription },
-                    className
-                  )
-                }
-                role="menuitem"
-                {...(itemProps as SidebarItemLinkProps)}
-              >
-                <Content />
-              </NavLink>
-            )}
-            {itemProps.disabled && (
-              <div
-                className={cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)}
-                role="menuitem"
-                aria-disabled={itemProps.disabled}
-              >
-                <Content />
+            {withDescription && (
+              <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
+                <IconV2 name={props.icon} size="md" />
               </div>
             )}
+            {!withDescription && <IconV2 name={props.icon} size="sm" className="cn-sidebar-item-content-icon" />}
           </>
         )}
-
-        {withDropdownMenu && (
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger
-              className={cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)}
-              {...itemProps}
-              role="menuitem"
-            >
-              <Content />
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content side="right" align="end" sideOffset={3}>
-              {dropdownMenuContent}
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
+        {withLogo && props.logo && (
+          <LogoV2 name={props.logo} size={iconSize} className="cn-sidebar-item-content-icon" />
+        )}
+        {withAvatar && (
+          <Avatar
+            src={props.src}
+            name={props.avatarFallback}
+            size={iconSize}
+            className="cn-sidebar-item-content-icon"
+          />
         )}
 
-        {!isLink && !withDropdownMenu && (
-          <button className={cn('cn-sidebar-item', className)} {...itemProps} role="menuitem">
-            <Content />
-          </button>
-        )}
+        <Text
+          variant="body-single-line-strong"
+          color={withDescription ? 'foreground-1' : 'foreground-2'}
+          className="cn-sidebar-item-content-title"
+          truncate
+        >
+          {title}
+        </Text>
 
-        {withActionMenu && (
-          <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="cn-sidebar-item-action-button cn-sidebar-item-action-menu">
-              <IconV2 name="more-vert" size="xs" />
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content side="bottom" align="end" sideOffset={4}>
-              {actionMenuItems?.map((item, index) => <DropdownMenu.Item key={index} {...item} />)}
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
-        )}
-
-        {withSubmenu && (
-          <button className="cn-sidebar-item-action-button" onClick={() => setSubmenuOpen(prev => !prev)}>
-            <IconV2 name={submenuOpen ? 'minus' : 'plus'} size="xs" />
-          </button>
-        )}
-      </div>
-    )
-  }
-
-  const Item = () => {
-    const filteredChildren = filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME])
-    const rowsCount = filteredChildren.length + 1
-
-    if (withSubmenu) {
-      return (
-        <div className="contents">
-          <ItemTrigger />
-          <Layout.Grid
-            className="cn-sidebar-submenu-group"
-            role="group"
-            columns="auto 1fr"
-            data-state={submenuOpen ? 'open' : 'closed'}
-            style={{ maxHeight: submenuOpen ? `${rowsCount * 40}px` : '0px' }}
+        {withDescription && (
+          <Text
+            variant="caption-single-line-soft"
+            color="foreground-3"
+            className="cn-sidebar-item-content-description"
+            truncate
           >
-            <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
-            {Children.map(filteredChildren, child => cloneElement(child, { tabIndex: state === 'collapsed' ? -1 : 0 }))}
-          </Layout.Grid>
+            {description}
+          </Text>
+        )}
+
+        {withDropdownMenu && <IconV2 name="up-down" size="xs" className="cn-sidebar-item-content-right-element" />}
+
+        {badge && !isBadgeProps(badge) && (
+          <StatusBadge variant="outline" {...badgeCommonProps}>
+            {badge}
+          </StatusBadge>
+        )}
+        {badge && isBadgeProps(badge) && badge.variant === 'status' && (
+          <StatusBadge
+            variant="status"
+            {...badgeCommonProps}
+            {...omit(badge, ['content', 'variant', 'icon', 'className'])}
+          >
+            {badge.content}
+          </StatusBadge>
+        )}
+        {badge && isBadgeProps(badge) && badge.variant !== 'status' && (
+          <StatusBadge
+            variant={badge.variant || 'outline'}
+            {...badgeCommonProps}
+            {...omit(badge, ['content', 'variant', 'pulse', 'className'])}
+          >
+            {badge.content}
+          </StatusBadge>
+        )}
+
+        {withRightIndicator && <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" />}
+
+        {((withActionMenu && !badge) || withSubmenu) && (
+          <div className="cn-sidebar-item-content-action-item-placeholder" />
+        )}
+      </Layout.Grid>
+    )
+
+    const renderItemTrigger = (triggerRef: Ref<HTMLButtonElement | HTMLAnchorElement>) => {
+      const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
+      const sidebarItemClassName = cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)
+      const buttonRef = triggerRef as Ref<HTMLButtonElement>
+
+      return (
+        <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled} data-active={active}>
+          {isLink && (
+            <>
+              {!itemProps.disabled && (
+                <NavLink
+                  ref={triggerRef as Ref<HTMLAnchorElement>}
+                  className={({ isActive }) => cn(sidebarItemClassName, { 'cn-sidebar-item-active': isActive })}
+                  {...(itemProps as SidebarItemLinkProps)}
+                  role="menuitem"
+                >
+                  {renderContent()}
+                </NavLink>
+              )}
+              {itemProps.disabled && (
+                <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
+                  {renderContent()}
+                </div>
+              )}
+            </>
+          )}
+
+          {withDropdownMenu && (
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+                {renderContent()}
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content side="right" align="end" sideOffset={3}>
+                {dropdownMenuContent}
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
+          )}
+
+          {!isLink && !withDropdownMenu && (
+            <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+              {renderContent()}
+            </button>
+          )}
+
+          {withActionMenu && (
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger className="cn-sidebar-item-action-button cn-sidebar-item-action-menu">
+                <IconV2 name="more-vert" size="xs" />
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content side="bottom" align="end" sideOffset={4}>
+                {actionMenuItems?.map((item, index) => <DropdownMenu.Item key={index} {...item} />)}
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
+          )}
+
+          {withSubmenu && (
+            <button className="cn-sidebar-item-action-button" onClick={() => setSubmenuOpen(prev => !prev)}>
+              <IconV2 name={submenuOpen ? 'minus' : 'plus'} size="xs" />
+            </button>
+          )}
         </div>
       )
     }
 
-    return <ItemTrigger />
-  }
+    const ItemTriggerWrapped = () => {
+      if (tooltip) {
+        return (
+          <Tooltip side="right" align="center" content={tooltip}>
+            {renderItemTrigger(ref)}
+          </Tooltip>
+        )
+      }
 
-  if (tooltip) {
-    return (
-      <Tooltip side="right" align="center" content={tooltip}>
-        <Item />
-      </Tooltip>
-    )
-  }
+      if (state === 'collapsed') {
+        return (
+          <Tooltip side="right" align="center" content={title}>
+            {renderItemTrigger(ref)}
+          </Tooltip>
+        )
+      }
 
-  if (state === 'collapsed') {
-    return (
-      <Tooltip side="right" align="center" content={title}>
-        <Item />
-      </Tooltip>
-    )
-  }
+      return renderItemTrigger(ref)
+    }
 
-  return <Item />
-}) as SidebarComponent
+    const Item = () => {
+      const filteredChildren = submenuOpen ? filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME]) : []
+      const rowsCount = filteredChildren.length + 1
+
+      if (withSubmenu) {
+        return (
+          <div className="contents">
+            <ItemTriggerWrapped />
+            <Layout.Grid
+              className="cn-sidebar-submenu-group"
+              role="group"
+              columns="auto 1fr"
+              data-state={submenuOpen ? 'open' : 'closed'}
+              style={{ ...(submenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 }) }}
+            >
+              <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
+              {filteredChildren}
+            </Layout.Grid>
+          </div>
+        )
+      }
+
+      return <ItemTriggerWrapped />
+    }
+
+    return <Item />
+  }
+) as SidebarComponent
 SidebarItem.displayName = 'SidebarItem'
 
 export const SidebarMenuSubItem = ({ title, className, ...props }: NavLinkProps & { title: string }) => {

@@ -8,14 +8,12 @@ import { DocsPage } from "@/components/docs-page";
 
 The `Sidebar` component provides a responsive, collapsible navigation interface for application navigation. It supports expanded and collapsed states on desktop, transforms into an off-canvas menu on mobile devices, and includes features like nested submenus, badges, tooltips, and customizable actions.
 
-It is composed of several subcomponents such as `Sidebar.Provider`, `Sidebar.Root`, `SidebarTrigger`, `SidebarContent`, `SidebarHeader`, `Sidebar.Footer`, `SidebarGroup`, `SidebarItem`, `SidebarMenuSubItem`, `SidebarRail`, and more to offer a structured and customizable interface.
+It is composed of several subcomponents such as `Sidebar.Provider`, `Sidebar.Root`, `Sidebar.Trigger`, `Sidebar.Content`, `Sidebar.Header`, `Sidebar.Footer`, `Sidebar.Group`, `Sidebar.Item`, `Sidebar.MenuSubItem`, `Sidebar.Rail`, and more to offer a structured and customizable interface.
 
 <DocsPage.ComponentExample
 client:only
 padding={false}
 code={`() => {
-const [activeItem, setActiveItem] = React.useState('repositories')
-
     return (
       <Sidebar.Provider className="!w-[400px]">
         <Sidebar.Root style={{ '--cn-sidebar-min-height': '500px' }}>
@@ -35,8 +33,6 @@ const [activeItem, setActiveItem] = React.useState('repositories')
               <Sidebar.Item
                 icon="repository"
                 title="Repositories"
-                onClick={() => setActiveItem('repositories')}
-                className={activeItem === 'repositories' ? 'bg-background-3' : ''}
                 actionMenuItems={[
                   { title: 'Rename' },
                   { title: 'Duplicate' },
@@ -46,21 +42,15 @@ const [activeItem, setActiveItem] = React.useState('repositories')
               <Sidebar.Item
                 icon="pipeline"
                 title="Pipelines"
-                onClick={() => setActiveItem('pipelines')}
-                className={activeItem === 'pipelines' ? 'bg-background-3' : ''}
               />
               <Sidebar.Item
                 icon="service-accounts"
                 title="User Management"
                 badge="3"
-                onClick={() => setActiveItem('users')}
-                className={activeItem === 'users' ? 'bg-background-3' : ''}
               />
               <Sidebar.Item
                 icon="folder"
                 title="Projects"
-                onClick={() => setActiveItem('projects')}
-                className={activeItem === 'projects' ? 'bg-background-3' : ''}
               >
                 <Sidebar.MenuSubItem title="Project Alpha" to="/projects/alpha" />
                 <Sidebar.MenuSubItem title="Project Beta" to="/projects/beta" />
@@ -75,8 +65,6 @@ const [activeItem, setActiveItem] = React.useState('repositories')
                 icon="clock"
                 title="Recent Activity"
                 description="View your recent actions"
-                onClick={() => setActiveItem('activity')}
-                className={activeItem === 'activity' ? 'bg-background-3' : ''}
               />
             </Sidebar.Group>
           </Sidebar.Content>
@@ -110,21 +98,7 @@ const [activeItem, setActiveItem] = React.useState('repositories')
 ## Usage
 
 ```typescript jsx
-import {
-  Sidebar.Provider,
-  Sidebar.Root,
-  SidebarTrigger,
-  SidebarContent,
-  SidebarHeader,
-  Sidebar.Footer,
-  SidebarGroup,
-  SidebarItem,
-  SidebarMenuSubItem,
-  SidebarRail,
-  SidebarInset,
-  SidebarSeparator,
-  SidebarToggleMenuButton
-} from '@harnessio/ui/components'
+import { Sidebar } from '@harnessio/ui/components'
 
 // Basic usage with navigation
 const SidebarExample = () => {
@@ -275,7 +249,7 @@ The sidebar supports nested navigation with expandable submenus that work in bot
 
 ### Loading States
 
-Use `SidebarMenuSkeleton` to show loading states while content is being fetched.
+Use `Sidebar.MenuSkeleton` to show loading states while content is being fetched.
 
 <DocsPage.ComponentExample
   client:only
@@ -306,8 +280,8 @@ Use `SidebarMenuSkeleton` to show loading states while content is being fetched.
                   <Sidebar.Item icon="folder" title="Project Gamma" />
                 </>
               )}
-            </SidebarGroup>
-          </SidebarContent>
+            </Sidebar.Group>
+          </Sidebar.Content>
           <Sidebar.Rail />
         </Sidebar.Root>
 
@@ -393,7 +367,7 @@ The main container for the sidebar that handles responsive behavior and animatio
   ]}
 />
 
-### SidebarTrigger
+### Sidebar.Trigger
 
 A button that toggles the sidebar open/closed state. Typically used in the main content header on mobile.
 
@@ -414,7 +388,7 @@ A button that toggles the sidebar open/closed state. Typically used in the main 
   ]}
 />
 
-### SidebarRail
+### Sidebar.Rail
 
 An interactive rail on the edge of the sidebar that allows toggling via click. Only visible on desktop.
 
@@ -429,7 +403,7 @@ An interactive rail on the edge of the sidebar that allows toggling via click. O
   ]}
 />
 
-### SidebarInset
+### Sidebar.Inset
 
 A container for main content that adjusts its padding based on sidebar state.
 
@@ -450,7 +424,7 @@ A container for main content that adjusts its padding based on sidebar state.
   ]}
 />
 
-### SidebarHeader
+### Sidebar.Header
 
 Container for header content like logos or search components.
 
@@ -471,7 +445,7 @@ Container for header content like logos or search components.
   ]}
 />
 
-### SidebarContent
+### Sidebar.Content
 
 Scrollable container for the main navigation items.
 
@@ -507,7 +481,7 @@ Container for footer content like user profiles or settings.
   ]}
 />
 
-### SidebarGroup
+### Sidebar.Group
 
 Groups related navigation items with an optional label.
 
@@ -515,7 +489,7 @@ Groups related navigation items with an optional label.
   props={[
     {
       name: "children",
-      description: "SidebarItem components",
+      description: "Sidebar.Item components",
       required: true,
       value: "ReactNode",
     },
@@ -534,7 +508,7 @@ Groups related navigation items with an optional label.
   ]}
 />
 
-### SidebarItem
+### Sidebar.Item
 
 The main navigation item component with support for various configurations.
 
@@ -611,7 +585,7 @@ The main navigation item component with support for various configurations.
     },
     {
       name: "children",
-      description: "SidebarMenuSubItem components for nested navigation",
+      description: "Sidebar.MenuSubItem components for nested navigation",
       required: false,
       value: "ReactNode",
     },
@@ -642,9 +616,9 @@ The main navigation item component with support for various configurations.
   ]}
 />
 
-### SidebarMenuSubItem
+### Sidebar.MenuSubItem
 
-Sub-navigation items that appear within an expanded SidebarItem.
+Sub-navigation items that appear within an expanded Sidebar.Item.
 
 <DocsPage.PropsTable
   props={[
@@ -669,7 +643,7 @@ Sub-navigation items that appear within an expanded SidebarItem.
   ]}
 />
 
-### SidebarSeparator
+### Sidebar.Separator
 
 A visual separator between groups or items.
 
@@ -691,7 +665,7 @@ A visual separator between groups or items.
   ]}
 />
 
-### SidebarMenuSkeleton
+### Sidebar.MenuSkeleton
 
 Loading skeleton for sidebar items.
 
@@ -713,7 +687,7 @@ Loading skeleton for sidebar items.
   ]}
 />
 
-### SidebarToggleMenuButton
+### Sidebar.ToggleMenuButton
 
 A specialized button for toggling the sidebar collapsed/expanded state.
 

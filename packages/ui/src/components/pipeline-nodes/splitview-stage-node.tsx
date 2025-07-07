@@ -2,7 +2,7 @@ import { cn } from '@utils/cn'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
-import { Icon } from '..'
+import { IconV2 } from '..'
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 import { NodeMenuTrigger } from './components/node-menu-trigger'
@@ -102,7 +102,7 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
             />
           )}
           {/* {icon} */}
-          <Icon name="square-dashed" size={32} />
+          <IconV2 name="square-dashed" size="md" />
           <span className="line-clamp-2 text-2 font-medium leading-snug text-cn-foreground-1">
             {name}
             {!!counter && <span className="font-normal text-cn-foreground-2"> ({counter})</span>}

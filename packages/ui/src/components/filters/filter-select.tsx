@@ -46,7 +46,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
             rightElement={
               <Button
                 variant="transparent"
-                size="sm"
+                size="xs"
                 iconOnly
                 onClick={() => {
                   setSearchQuery('')
@@ -79,7 +79,7 @@ export default FilterSelect
 
 FilterSelect.displayName = 'FilterSelect'
 
-const FilterSelectLabel = ({
+const renderFilterSelectLabel = ({
   selectedFilters,
   displayLabel
 }: {
@@ -95,7 +95,7 @@ const FilterSelectLabel = ({
   )
 }
 
-const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
+const renderFilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
     <Button size="sm" variant="transparent">
       <IconV2 name="plus" size="2xs" />
@@ -104,4 +104,4 @@ const FilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactN
   )
 }
 
-export { FilterSelectLabel, FilterSelectAddIconLabel }
+export { renderFilterSelectLabel, renderFilterSelectAddIconLabel }

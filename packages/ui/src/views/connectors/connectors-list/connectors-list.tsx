@@ -104,7 +104,6 @@ export function ConnectorsList({
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       tableClassName="table-fixed"
-      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>

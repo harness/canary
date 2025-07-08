@@ -135,13 +135,15 @@ export default {
       '&:before': {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-start)',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        borderTopLeftRadius: 'var(--cn-drawer-radius)'
       },
 
       '&:after': {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-end)',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        borderBottomLeftRadius: 'var(--cn-drawer-radius)'
       },
 
       '&:where(.cn-drawer-body-wrap-top)': {

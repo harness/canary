@@ -183,7 +183,6 @@ export function pipelineInput2FormInput(
       }
     },
     inputConfig: {
-      allowedValueTypes: ['fixed', 'runtime', 'expression'],
       ...(inputProps.description ? { tooltip: inputProps.description as string } : {}),
       ...(inputProps?.ui ? inputProps.ui : {}),
       // special handling for select dropdown items
@@ -208,14 +207,14 @@ export function pipelineInput2FormInput(
   }
 }
 
-/** pipeline input ui widget / input type to form input type conversion */
+/** pipeline input ui component / input type to form input type conversion */
 function pipelineInputType2FormInputType(
   type: string,
   uiProps: PipelineInputDefinition['ui'],
   inputComponentFactory: InputFactory
 ): string {
-  return uiProps?.widget
-    ? (inputComponentFactory?.getComponent(uiProps?.widget)?.internalType ?? 'text')
+  return uiProps?.component
+    ? (inputComponentFactory?.getComponent(uiProps?.component)?.internalType ?? 'text')
     : convertTypeToDefaultInputType(type)
 }
 

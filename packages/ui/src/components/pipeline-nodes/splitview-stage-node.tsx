@@ -37,7 +37,6 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
     name,
     executionStatus,
     warningMessage,
-    icon,
     selected,
     isFirst,
     onEllipsisClick,

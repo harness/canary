@@ -30,7 +30,6 @@ export function SplitView_StageContentNode(props: {
     selectionPath,
     showContextMenu,
     onSelectIntention,
-    onAddIntention,
     globalData,
     serialContainerConfig,
     parallelContainerConfig

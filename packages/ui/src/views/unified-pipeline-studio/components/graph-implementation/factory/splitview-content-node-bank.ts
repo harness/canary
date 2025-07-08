@@ -7,7 +7,6 @@ import { ParallelStepGroupContentNode } from '../nodes/parallel-step-group-conte
 import { SerialStageGroupContentNode } from '../nodes/serial-stage-group-content-node'
 import { SerialStepGroupContentNode } from '../nodes/serial-step-group-content-node'
 import { SplitView_StageContentNode } from '../nodes/splitview-step-content-node'
-import { StageContentNode } from '../nodes/stage-content-node'
 import { StartContentNode } from '../nodes/start-content-node'
 import { StepContentNode } from '../nodes/step-content-node'
 import { ContentNodeType } from '../types/content-node-type'

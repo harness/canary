@@ -136,7 +136,7 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   isYamlDirty: false,
   saveInProgress: false,
   selectedPath: undefined,
-  onSelectedPathChange: (props: {
+  onSelectedPathChange: (_props: {
     stages?: string | undefined
     steps?: string | undefined
     onecanvas?: string | undefined
@@ -154,7 +154,7 @@ export const UnifiedPipelineStudioContext = createContext<UnifiedPipelineStudioC
   clearAddStepIntention: () => undefined,
   editStepIntention: null,
   setEditStepIntention: (_editStepIntention: EditStepIntentionType) => undefined,
-  clearEditStepIntention: (graph: 'stages' | 'steps' | 'onecanvas') => undefined,
+  clearEditStepIntention: (_graph: 'stages' | 'steps' | 'onecanvas') => undefined,
   addStageIntention: null,
   setAddStageIntention: (_addStepIntention: AddStepIntentionType) => undefined,
   clearAddStageIntention: () => undefined,
@@ -250,7 +250,7 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   const [formEntity, setFormEntity] = useState<FormEntityType | null>(null)
 
   const clearEditStepIntention = useCallback(
-    graph => {
+    _graph => {
       setEditStepIntention(null)
       //onSelectedPathChange({ ...selectedPath, [graph]: undefined })
     },

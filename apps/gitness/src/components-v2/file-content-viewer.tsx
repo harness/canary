@@ -154,6 +154,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             options={{
               readOnly: true
             }}
+            theme={monacoTheme}
           />
         )
 
@@ -169,6 +170,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             options={{
               readOnly: true
             }}
+            theme={monacoTheme}
           />
         )
 

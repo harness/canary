@@ -136,7 +136,6 @@ const LineTitle: React.FC<LineTitleProps> = ({
           </Button>
           <Link
             to={toRepoFileDetails?.({ path: `code/${pullReqMetadata?.source_branch}/~/${filePath}` }) ?? ''}
-            replace
             className="font-medium leading-tight text-cn-foreground-1"
           >
             {text}

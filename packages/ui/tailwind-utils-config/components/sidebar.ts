@@ -71,7 +71,7 @@ export default {
         padding:
           'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
         opacity: 'var(--sidebar-group-label-scale)',
-        maxHeight: 'max(1px, 100% * var(--sidebar-group-label-scale))',
+        maxHeight: 'calc(44px * var(--sidebar-group-label-scale))',
         transform: 'max(0.6, scale(var(--sidebar-group-label-scale)))',
         justifySelf: 'start',
         overflow: 'hidden',

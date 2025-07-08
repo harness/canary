@@ -1,6 +1,17 @@
 import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, StackedList, Text } from '@/components'
+import {
+  Accordion,
+  Button,
+  Checkbox,
+  CopyButton,
+  CounterBadge,
+  IconV2,
+  Layout,
+  Link,
+  StackedList,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import {
   CommentItem,
@@ -13,6 +24,7 @@ import {
   HandleUploadType,
   InViewDiffRenderer,
   jumpToFile,
+  TypesPullReq,
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -56,6 +68,8 @@ interface LineTitleProps {
   setCollapsed: (val: boolean) => void
   toggleFullDiff: () => void
   useFullDiff?: boolean
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  pullReqMetadata?: TypesPullReq
 }
 
 interface DataProps {
@@ -85,6 +99,8 @@ interface DataProps {
   setScrolledToComment?: (val: boolean) => void
   jumpToDiff?: string
   setJumpToDiff: (filePath: string) => void
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  pullReqMetadata?: TypesPullReq
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({
@@ -96,10 +112,13 @@ const LineTitle: React.FC<LineTitleProps> = ({
   unmarkViewed,
   setCollapsed,
   toggleFullDiff,
-  useFullDiff
+  useFullDiff,
+  toRepoFileDetails,
+  pullReqMetadata
 }) => {
   const { t } = useTranslation()
   const { text, addedLines, deletedLines, filePath, checksumAfter } = header
+  console.log(filePath)
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">
@@ -116,7 +135,13 @@ const LineTitle: React.FC<LineTitleProps> = ({
           >
             <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
-          <span className="font-medium leading-tight text-cn-foreground-1">{text}</span>
+          <Link
+            to={toRepoFileDetails?.({ path: `code/${pullReqMetadata?.source_branch}/~/${filePath}` }) ?? ''}
+            replace
+            className="font-medium leading-tight text-cn-foreground-1"
+          >
+            {text}
+          </Link>
           <CopyButton name={text} className="size-6" color="gray" />
         </div>
 
@@ -179,6 +204,8 @@ const PullRequestAccordion: React.FC<{
   isOpen: boolean
   onToggle: () => void
   setCollapsed: (val: boolean) => void
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  pullReqMetadata?: TypesPullReq
 }> = ({
   header,
   diffMode,
@@ -206,7 +233,9 @@ const PullRequestAccordion: React.FC<{
   openItems,
   isOpen,
   onToggle,
-  setCollapsed
+  setCollapsed,
+  toRepoFileDetails,
+  pullReqMetadata
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -321,6 +350,8 @@ const PullRequestAccordion: React.FC<{
                     setCollapsed={setCollapsed}
                     toggleFullDiff={toggleFullDiff}
                     useFullDiff={useFullDiff}
+                    toRepoFileDetails={toRepoFileDetails}
+                    pullReqMetadata={pullReqMetadata}
                   />
                 }
               />
@@ -418,7 +449,9 @@ function PullRequestChangesInternal({
   scrolledToComment,
   setScrolledToComment,
   jumpToDiff,
-  setJumpToDiff
+  setJumpToDiff,
+  toRepoFileDetails,
+  pullReqMetadata
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
@@ -556,6 +589,8 @@ function PullRequestChangesInternal({
                       isOpen={isOpen(item.text)}
                       onToggle={() => toggleOpen(item.text)}
                       setCollapsed={val => setCollapsed(item.text, val)}
+                      toRepoFileDetails={toRepoFileDetails}
+                      pullReqMetadata={pullReqMetadata}
                     />
                   </InViewDiffRenderer>
                 </div>

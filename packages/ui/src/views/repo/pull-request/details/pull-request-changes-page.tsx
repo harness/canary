@@ -55,6 +55,7 @@ interface RepoPullRequestChangesPageProps {
   setScrolledToComment?: (val: boolean) => void
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
+  toRepoFileDetails?: ({ path }: { path: string }) => string
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   loadingReviewers,
@@ -93,7 +94,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   scrolledToComment,
   setScrolledToComment,
   jumpToDiff,
-  setJumpToDiff
+  setJumpToDiff,
+  toRepoFileDetails
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
 
@@ -163,6 +165,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         setScrolledToComment={setScrolledToComment}
         jumpToDiff={jumpToDiff}
         setJumpToDiff={setJumpToDiff}
+        toRepoFileDetails={toRepoFileDetails}
+        pullReqMetadata={pullReqMetadata}
       />
     )
   }

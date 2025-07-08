@@ -42,7 +42,7 @@ return (
       number timestamp: <TimeAgoCard timestamp={new Date("2022-01-01T00:00:00Z").getTime()} />
     </Text>
   </div>`}
-  />
+/>
 
 ## cutoffDays variants
 
@@ -58,7 +58,7 @@ return (
       less than cutoffDays default ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString()} />
     </Text>
   </div>`}
-  />
+/>
 
 ## Props
 
@@ -68,21 +68,22 @@ return (
       name: "timestamp",
       description: "The timestamp to display in the card.",
       required: false,
-      value: "'string' | 'number' | 'null'"
+      value: "'string' | 'number' | 'null'",
     },
     {
       name: "cutoffDays",
-      description: "The number of days after which the full date will be shown instead of 'time ago'.",
+      description:
+        "The number of days after which the full date will be shown instead of 'time ago'.",
       required: false,
       value: "'number'",
-      defaultValue: "8"
+      defaultValue: "8",
     },
     {
       name: "dateTimeFormatOptions",
       description: "Options for formatting the date and time.",
       required: false,
       value: "'Intl.DateTimeFormatOptions'",
-      defaultValue: "undefined"
-    }
+      defaultValue: "undefined",
+    },
   ]}
 />

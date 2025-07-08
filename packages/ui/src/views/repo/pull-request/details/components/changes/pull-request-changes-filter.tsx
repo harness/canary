@@ -143,48 +143,39 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     }
   }
 
-  /** Click handler to manage multi-selection with Shift + Click */
-  const handleCommitCheck = (
-    event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
-    item: CommitFilterItemProps
-  ): void => {
+  /** Click handler to manage multi-selection of commits */
+  const handleCommitCheck = (item: CommitFilterItemProps, checked: boolean): void => {
     // If user clicked on 'All Commits', reset selection to just the default commit filter
     if (item.value === defaultCommitFilter.value) {
       setSelectedCommits([defaultCommitFilter])
       return
     }
 
-    // Otherwise, remove 'ALL' from the selection
-    setSelectedCommits((prev: CommitFilterItemProps[]) =>
-      prev.filter((sel: CommitFilterItemProps) => sel.value !== defaultCommitFilter.value)
-    )
+    setSelectedCommits((prev: CommitFilterItemProps[]) => {
+      // Remove the 'All' option if it exists in the selection
+      const withoutDefault = prev.filter(sel => sel.value !== defaultCommitFilter.value)
 
-    // If SHIFT is pressed, toggle the clicked commit
-    if (event.shiftKey) {
-      setSelectedCommits((prev: CommitFilterItemProps[]) => {
-        const isInSelection = prev.some((sel: CommitFilterItemProps) => sel.value === item.value)
-        if (isInSelection) {
-          return prev.filter((sel: CommitFilterItemProps) => sel.value !== item.value)
-        } else {
-          return [...prev, item]
-        }
-      })
-    } else {
-      setSelectedCommits([item])
-    }
+      if (checked) {
+        // Add the item to selection
+        return [...withoutDefault, item]
+      } else {
+        // Remove the item from selection, but ensure at least one item remains selected
+        const filtered = withoutDefault.filter(sel => sel.value !== item.value)
+        return filtered.length > 0 ? filtered : withoutDefault
+      }
+    })
   }
 
   function renderCommitDropdownItems(items: CommitFilterItemProps[]): JSX.Element[] {
     return items.map((item, idx) => {
       const isSelected = selectedCommits.some(sel => sel.value === item.value)
 
-      // TODO: we have to give the possibility to choose several values
       return (
         <DropdownMenu.CheckboxItem
           title={item.name}
           checked={isSelected}
           key={idx}
-          onClick={(e: React.MouseEvent<HTMLDivElement>) => handleCommitCheck(e, item)}
+          onCheckedChange={checked => handleCommitCheck(item, checked)}
           className="flex cursor-pointer items-center"
         />
       )

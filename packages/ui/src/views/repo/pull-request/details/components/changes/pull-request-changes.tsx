@@ -118,7 +118,6 @@ const LineTitle: React.FC<LineTitleProps> = ({
 }) => {
   const { t } = useTranslation()
   const { text, addedLines, deletedLines, filePath, checksumAfter } = header
-  console.log(filePath)
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">

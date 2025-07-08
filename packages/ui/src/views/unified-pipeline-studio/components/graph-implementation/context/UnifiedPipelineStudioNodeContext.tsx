@@ -107,29 +107,29 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
   }
 
   const onEditIntention = (nodeData: CommonNodeDataType) => {
-    setRightDrawer(RightDrawer.Form)
-    setEditStepIntention({ path: nodeData.yamlPath })
-    onSelectedPathChange({ ...selectedPath, [graph]: nodeData.yamlPath })
-  }
-
-  const onSelectIntention = (data: CommonNodeDataType) => {
     // TODO: why not data instead of path
-    onSelectedPathChange({ ...selectedPath, [graph]: data.yamlPath })
+    onSelectedPathChange({ ...selectedPath, [graph]: nodeData.yamlPath })
 
-    if (data.yamlEntityType === YamlEntityType.Step) {
-      onEditIntention(data)
+    if (nodeData.yamlEntityType === YamlEntityType.Step) {
+      onEditIntention(nodeData)
     }
 
-    switch (data.yamlEntityType) {
+    switch (nodeData.yamlEntityType) {
       case YamlEntityType.Step:
         setRightDrawer(RightDrawer.Form)
-        setEditStepIntention({ path: data.yamlPath })
+        setEditStepIntention({ path: nodeData.yamlPath })
         break
       case YamlEntityType.Stage:
         setRightDrawer(RightDrawer.StageConfig)
-        setEditStageIntention({ path: data.yamlPath })
+        setEditStageIntention({ path: nodeData.yamlPath })
         break
     }
+  }
+
+  const onSelectIntention = (data: CommonNodeDataType) => {
+    setRightDrawer(RightDrawer.Form)
+    setEditStepIntention({ path: data.yamlPath })
+    onSelectedPathChange({ ...selectedPath, [graph]: data.yamlPath })
   }
 
   const onAddIntention = (

@@ -35,7 +35,7 @@ export function DelegateConnectivityList({
 
   return (
     <Table.Root
-      className={cn('overflow-auto', {
+      className={cn({
         '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]': isLoading
       })}
     >

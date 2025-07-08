@@ -20,7 +20,7 @@ export const StageGroupNodeContextMenu = () => {
     >
       <DropdownMenu.Content
         align="end"
-        className="absolute"
+        className="absolute w-max"
         style={{ left: `${contextMenuData?.position.x}px`, top: `${contextMenuData?.position.y}px` }}
       >
         <DropdownMenu.IconItem

@@ -129,6 +129,7 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
 
     switch (nodeData.yamlEntityType) {
       case YamlEntityType.Step:
+        setRightDrawer(RightDrawer.Form)
         setEditStepIntention({ path: nodeData.yamlPath })
         break
       case YamlEntityType.Stage:

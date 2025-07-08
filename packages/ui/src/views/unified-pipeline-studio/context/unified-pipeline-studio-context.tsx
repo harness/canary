@@ -248,9 +248,9 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
   const [editStepIntention, setEditStepIntention] = useState<EditStepIntentionType>(null)
 
   const clearEditStepIntention = useCallback(
-    _graph => {
+    graph => {
       setEditStepIntention(null)
-      //onSelectedPathChange({ ...selectedPath, [graph]: undefined })
+      onSelectedPathChange({ ...selectedPath, [graph]: undefined })
     },
     [setEditStepIntention]
   )

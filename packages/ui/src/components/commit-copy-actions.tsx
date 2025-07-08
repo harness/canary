@@ -23,7 +23,7 @@ export const CommitCopyActions = ({
 
   return (
     <ButtonGroup
-      size="sm"
+      size="xs"
       buttonsProps={[
         {
           children: sha.substring(0, 6),

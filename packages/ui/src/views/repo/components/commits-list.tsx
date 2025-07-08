@@ -37,7 +37,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
       {entries.map(([date, commitData], node_idx) => (
         <NodeGroup.Root className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
-          <NodeGroup.Title>{date && <span className="text-cn-foreground-2">Commits on {date}</span>}</NodeGroup.Title>
+          <NodeGroup.Title>{date && <span className="text-cn-foreground-4">Commits on {date}</span>}</NodeGroup.Title>
           <NodeGroup.Content className="overflow-hidden">
             {!!commitData.length && (
               <StackedList.Root>
@@ -68,7 +68,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                   className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
                                   to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                                 >
-                                  <Text variant="heading-base" truncate title={commit.title}>
+                                  <Text variant="heading-base" color="foreground-1" truncate title={commit.title}>
                                     {commit.title}
                                   </Text>
                                 </Link>
@@ -79,7 +79,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <div className="flex items-center gap-x-1.5">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
                               <span className="text-cn-foreground-3">{authorName || ''}</span>
-                              <span className="text-cn-foreground-2">
+                              <span className="text-cn-foreground-4">
                                 committed on {timeAgo(when, { dateStyle: 'medium' })}
                               </span>
                             </div>
@@ -90,7 +90,8 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                             <Button
                               title="View repository at this point of history"
-                              variant="ghost"
+                              variant="outline"
+                              size="xs"
                               iconOnly
                               onClick={() => {
                                 navigate(toCode?.({ sha: commit?.sha || '' }) || '')

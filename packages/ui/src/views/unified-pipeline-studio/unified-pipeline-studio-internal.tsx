@@ -42,7 +42,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
         <PipelineStudioLayout.Header isYamlView={view === 'yaml'}>
           <PipelineStudioLayout.HeaderLeft>
             <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
-            {enableSplitView ? (
+            {view === 'visual' && enableSplitView ? (
               <Checkbox
                 checked={splitView}
                 label="Split view"

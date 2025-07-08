@@ -110,10 +110,6 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
     // TODO: why not data instead of path
     onSelectedPathChange({ ...selectedPath, [graph]: nodeData.yamlPath })
 
-    if (nodeData.yamlEntityType === YamlEntityType.Step) {
-      onEditIntention(nodeData)
-    }
-
     switch (nodeData.yamlEntityType) {
       case YamlEntityType.Step:
         setRightDrawer(RightDrawer.Form)
@@ -123,13 +119,24 @@ export const UnifiedPipelineStudioNodeContextProvider: React.FC<
         setRightDrawer(RightDrawer.StageConfig)
         setEditStageIntention({ path: nodeData.yamlPath })
         break
+      default:
+        break
     }
   }
 
-  const onSelectIntention = (data: CommonNodeDataType) => {
-    setRightDrawer(RightDrawer.Form)
-    setEditStepIntention({ path: data.yamlPath })
-    onSelectedPathChange({ ...selectedPath, [graph]: data.yamlPath })
+  const onSelectIntention = (nodeData: CommonNodeDataType) => {
+    onSelectedPathChange({ ...selectedPath, [graph]: nodeData.yamlPath })
+
+    switch (nodeData.yamlEntityType) {
+      case YamlEntityType.Step:
+        setEditStepIntention({ path: nodeData.yamlPath })
+        break
+      case YamlEntityType.Stage:
+        setEditStageIntention({ path: nodeData.yamlPath })
+        break
+      default:
+        break
+    }
   }
 
   const onAddIntention = (

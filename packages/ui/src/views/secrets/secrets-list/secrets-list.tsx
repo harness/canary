@@ -1,11 +1,10 @@
-import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { SecretListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="max-w-full truncate font-medium text-cn-foreground-1">{title}</span>
+  <span className="text-cn-foreground-1 max-w-full truncate font-medium">{title}</span>
 )
 
 export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret }: SecretListProps): JSX.Element {
@@ -54,7 +53,9 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
               <Table.Cell className="w-[350px] content-center truncate">
                 {secret.spec?.secretManagerIdentifier}
               </Table.Cell>
-              <Table.Cell className="content-center">{secret?.updatedAt ? timeAgo(secret.updatedAt) : null}</Table.Cell>
+              <Table.Cell className="content-center">
+                {secret?.updatedAt ? <TimeAgoCard timestamp={secret.updatedAt} /> : null}
+              </Table.Cell>
               <Table.Cell className="content-center text-right">
                 <MoreActionsTooltip
                   isInTable

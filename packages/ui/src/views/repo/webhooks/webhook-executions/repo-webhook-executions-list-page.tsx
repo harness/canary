@@ -1,8 +1,7 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text } from '@/components'
+import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { SandboxLayout, WebhookStore } from '@/views'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
@@ -87,7 +86,9 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                             : 'Invalid'}
                       </StatusBadge>
                     </Table.Cell>
-                    <Table.Cell className="relative text-right">{timeAgo(execution.created ?? Date.now())}</Table.Cell>
+                    <Table.Cell className="relative text-right">
+                      <TimeAgoCard timestamp={execution.created ?? Date.now()} />
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>

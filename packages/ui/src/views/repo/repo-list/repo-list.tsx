@@ -1,6 +1,5 @@
-import { IconV2, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
+import { IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 
 import { RepositoryType } from '../repo.types'
@@ -17,7 +16,7 @@ const Stats = ({ pulls }: { pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
       <IconV2 name="git-pull-request" className="text-icons-7" />
-      <span className="text-2 font-normal text-cn-foreground-1">{pulls || 0}</span>
+      <span className="text-2 text-cn-foreground-1 font-normal">{pulls || 0}</span>
     </span>
   </div>
 )
@@ -109,9 +108,10 @@ export function RepoList({
             {!repo.importing && (
               <StackedList.Field
                 title={
-                  <span>
-                    {t('views:repos.updated', 'Updated')} {timeAgo(repo.timestamp, { dateStyle: 'medium' })}
-                  </span>
+                  <Text as="span">
+                    {t('views:repos.updated', 'Updated')}{' '}
+                    <TimeAgoCard timestamp={repo.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                  </Text>
                 }
                 description={<Stats pulls={repo.pulls} />}
                 right

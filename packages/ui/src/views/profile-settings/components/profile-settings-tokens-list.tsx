@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { TokensList } from '../types'
 
@@ -53,7 +52,9 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                   </span>
                 </Table.Cell>
                 <Table.Cell className="content-center">
-                  <span className="text-cn-foreground-3">{timeAgo(new Date(token.issued_at!).getTime())}</span>
+                  <Text as="span" color="foreground-3">
+                    <TimeAgoCard timestamp={new Date(token.issued_at!).getTime()} />
+                  </Text>
                 </Table.Cell>
                 <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip

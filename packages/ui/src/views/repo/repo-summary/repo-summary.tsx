@@ -166,7 +166,7 @@ export function RepoSummaryView({
                   * Current user is the one who made the push
                   * Push was made less than 24h ago
                   * No PR has been created from this branch yet
-                - Format timestamps using timeAgo()
+                - Format timestamps using <TimeAgoCard />
                 - Remove mock data below
 
                 Example:

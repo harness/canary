@@ -1,6 +1,5 @@
-import { IconV2, Spacer, Table, Text } from '@/components'
+import { IconV2, Spacer, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -99,7 +98,7 @@ export const Summary = ({
               </Table.Cell>
               <Table.Cell className="text-right">
                 <Text color="foreground-3" wrap="nowrap" align="right">
-                  {timeAgo(file.timestamp, { dateStyle: 'medium' })}
+                  <TimeAgoCard timestamp={file.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
                 </Text>
               </Table.Cell>
             </Table.Row>

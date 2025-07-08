@@ -12,10 +12,10 @@ import {
   StatusBadge,
   Table,
   Tag,
-  Text
+  Text,
+  TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
@@ -130,7 +130,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex items-center gap-2">
                     <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
                     <Text as="span" color="foreground-1" truncate>
-                      {timeAgo(branch?.timestamp, { dateStyle: 'medium' })}
+                      <TimeAgoCard timestamp={branch?.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
                     </Text>
                   </div>
                 </Table.Cell>

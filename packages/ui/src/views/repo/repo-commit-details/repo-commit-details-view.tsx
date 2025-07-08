@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, StatusBadge, Tag, Text } from '@/components'
+import { Avatar, Button, CommitCopyActions, StatusBadge, Tag, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { ICommitDetailsStore, SandboxLayout } from '@/views'
 
 interface RoutingProps {
@@ -42,7 +41,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               </Text>
               <Text className="ml-1.5" as="span" variant="body-single-line-normal">
                 {t('views:commits.commitDetailsAuthored', 'authored')}{' '}
-                {timeAgo(new Date(commitData.author.when).getTime())}
+                <TimeAgoCard timestamp={new Date(commitData.author.when).getTime()} />
               </Text>
               {isVerified && (
                 <>

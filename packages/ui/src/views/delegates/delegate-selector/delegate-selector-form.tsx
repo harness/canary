@@ -98,6 +98,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   const [matchedDelegates, setMatchedDelegates] = useState(0)
 
   const { Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const bodyProps = isDrawer ? { scrollAreaProps: { classNameContent: 'min-w-0' } } : {}
 
   const formMethods = useForm<DelegateSelectorFormFields>({
     resolver: zodResolver(delegateSelectorFormSchema),
@@ -156,7 +157,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
 
   return (
     <>
-      <Body>
+      <Body {...bodyProps}>
         <div className="flex">
           {t('views:delegates.noDelegatesInstalled', `Haven't installed a delegate yet?`)}
           {/* TODO: Design system : Update Attachment icon */}

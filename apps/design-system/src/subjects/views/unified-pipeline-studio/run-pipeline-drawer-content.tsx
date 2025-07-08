@@ -51,14 +51,14 @@ const pipelineInputs = {
     type: 'string',
     required: true,
     ui: {
-      widget: 'non-component-factory'
+      component: 'non-component-factory'
     }
   },
   stringCalendarUIcel: {
     type: 'string',
     required: true,
     ui: {
-      widget: 'calendar',
+      component: 'calendar',
       placeholder: 'select a date',
       tooltip: 'todays date will be selected by default',
       visible: "${{stringSelectWithDefaultUI=='kubernetes'}}"
@@ -68,7 +68,7 @@ const pipelineInputs = {
     type: 'boolean',
     required: true,
     ui: {
-      widget: 'boolean',
+      component: 'boolean',
       visible: "${{stringSelectWithDefaultUI=='helm'}}"
     }
   },
@@ -78,7 +78,7 @@ const pipelineInputs = {
     options: ['docker', 'kubernetes', 'helm'],
     default: 'docker',
     ui: {
-      widget: 'select',
+      component: 'select',
       placeholder: 'select a connector type',
       tooltip: 'docker connector will be selected by default'
     }

@@ -14,9 +14,16 @@ It is composed of several subcomponents such as `Sidebar.Provider`, `Sidebar.Roo
 client:only
 padding={false}
 code={`() => {
+    const [loading, setLoading] = React.useState(true)
+
+    React.useEffect(() => {
+      const timer = setTimeout(() => setLoading(false), 2000)
+      return () => clearTimeout(timer)
+    }, [])
+
     return (
-      <Sidebar.Provider className="!w-[400px]">
-        <Sidebar.Root style={{ '--cn-sidebar-min-height': '500px' }}>
+      <Sidebar.Provider className="!w-[600px]">
+        <Sidebar.Root className="border-r border-cn-borders-3" style={{ '--cn-sidebar-min-height': '700px' }}>
           <Sidebar.Header>
             <div className="flex items-center px-2">
               <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
@@ -67,6 +74,22 @@ code={`() => {
                 description="View your recent actions"
               />
             </Sidebar.Group>
+
+            <Sidebar.Group label="Projects">
+              {loading ? (
+                <>
+                  <Sidebar.MenuSkeleton />
+                  <Sidebar.MenuSkeleton />
+                  <Sidebar.MenuSkeleton />
+                </>
+              ) : (
+                <>
+                  <Sidebar.Item icon="folder" title="Project Alpha" />
+                  <Sidebar.Item icon="folder" title="Project Beta" />
+                  <Sidebar.Item icon="folder" title="Project Gamma" />
+                </>
+              )}
+            </Sidebar.Group>
           </Sidebar.Content>
 
           <Sidebar.Footer>
@@ -89,6 +112,13 @@ code={`() => {
 
           <Sidebar.Rail />
         </Sidebar.Root>
+
+        <Sidebar.Inset className="grid content-center justify-items-center gap-2">
+          <Text>{loading ? "Loading..." : "Content loaded!"}</Text>
+          <Button onClick={() => setLoading(!loading)}>
+            {loading ? "Stop Loading" : "Start Loading"}
+          </Button>
+        </Sidebar.Inset>
       </Sidebar.Provider>
     )
 
@@ -199,105 +229,6 @@ The `Sidebar` component is composed of several nested components that work toget
   <Sidebar.Inset />
 </Sidebar.Provider>
 ```
-
-## Features
-
-### Collapsible Sidebar with Submenus
-
-The sidebar supports nested navigation with expandable submenus that work in both expanded and collapsed states.
-
-<DocsPage.ComponentExample
-  client:only
-  padding={false}
-  code={`() => {
-    return (
-      <Sidebar.Provider className="!w-[600px]">
-        <Sidebar.Root style={{ '--cn-sidebar-min-height': '500px' }}>
-          <Sidebar.Content>
-            <Sidebar.Group>
-              <Sidebar.Item
-                icon="folder"
-                title="Projects"
-              >
-                <Sidebar.MenuSubItem title="Frontend App" to="/projects/frontend" />
-                <Sidebar.MenuSubItem title="Backend API" to="/projects/backend" />
-                <Sidebar.MenuSubItem title="Mobile App" to="/projects/mobile" />
-              </Sidebar.Item>
-              <Sidebar.Item
-                icon="git-branch"
-                title="Repositories"
-              >
-                <Sidebar.MenuSubItem title="Main Repository" to="/repos/main" />
-                <Sidebar.MenuSubItem title="Documentation" to="/repos/docs" />
-              </Sidebar.Item>
-            </Sidebar.Group>
-          </Sidebar.Content>
-          <Sidebar.Footer>
-            <Sidebar.ToggleMenuButton />
-          </Sidebar.Footer>
-          <Sidebar.Rail />
-        </Sidebar.Root>
-
-        <Sidebar.Inset className="bg-cn-background-2 !p-4">
-          <Text>Click the toggle button to collapse/expand the sidebar</Text>
-        </Sidebar.Inset>
-      </Sidebar.Provider>
-    )
-
-}`}
-/>
-
-### Loading States
-
-Use `Sidebar.MenuSkeleton` to show loading states while content is being fetched.
-
-<DocsPage.ComponentExample
-  client:only
-  padding={false}
-  code={`() => {
-    const [loading, setLoading] = React.useState(true)
-
-    React.useEffect(() => {
-      const timer = setTimeout(() => setLoading(false), 2000)
-      return () => clearTimeout(timer)
-    }, [])
-
-    return (
-      <Sidebar.Provider className="!w-[600px]">
-        <Sidebar.Root style={{ '--cn-sidebar-min-height': '500px' }}>
-          <Sidebar.Content>
-            <Sidebar.Group label="Projects">
-              {loading ? (
-                <>
-                  <Sidebar.MenuSkeleton />
-                  <Sidebar.MenuSkeleton />
-                  <Sidebar.MenuSkeleton />
-                </>
-              ) : (
-                <>
-                  <Sidebar.Item icon="folder" title="Project Alpha" />
-                  <Sidebar.Item icon="folder" title="Project Beta" />
-                  <Sidebar.Item icon="folder" title="Project Gamma" />
-                </>
-              )}
-            </Sidebar.Group>
-          </Sidebar.Content>
-          <Sidebar.Rail />
-        </Sidebar.Root>
-
-        <Sidebar.Inset className="grid content-center justify-items-center gap-2">
-          <Text>{loading ? "Loading..." : "Content loaded!"}</Text>
-          <Button onClick={() => setLoading(!loading)}>
-            {loading ? "Stop Loading" : "Start Loading"}
-          </Button>
-        </Sidebar.Inset>
-      </Sidebar.Provider>
-    )
-
-}`}
-/>
-
-## API Reference
 
 ### Sidebar.Provider
 

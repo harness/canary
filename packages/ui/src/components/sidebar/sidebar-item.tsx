@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useCallback, useEffect, useState } from 'react'
 
 import {
   Avatar,
@@ -125,12 +125,15 @@ const isSidebarItemLink = (item: SidebarItemProps): item is SidebarItemLinkProps
 const isBadgeProps = (props?: string | SidebarBadgeProps): props is SidebarBadgeProps =>
   typeof props === 'object' && props !== null && 'content' in props
 
-export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
-  ({ className, children, ...props }, ref) => {
+type SidebarItemTriggerProps = SidebarItemProps & {
+  submenuOpen?: boolean
+  toggleSubmenu?: () => void
+}
+
+const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemTriggerProps>(
+  ({ children, ...props }, ref) => {
     const { state } = useSidebar()
     const { NavLink } = useRouterContext()
-    const [submenuOpen, setSubmenuOpen] = useState(false)
-
     const withIcon = itemIsIcon(props)
     const withLogo = itemIsLogo(props)
     const withAvatar = itemIsAvatar(props)
@@ -142,7 +145,9 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       actionMenuItems,
       dropdownMenuContent,
       badge,
-      tooltip,
+      className,
+      submenuOpen,
+      toggleSubmenu,
       withRightIndicator,
       active,
       ...restProps
@@ -165,11 +170,9 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       )
     }
 
-    useEffect(() => {
-      if (state === 'collapsed' && submenuOpen) {
-        setSubmenuOpen(false)
-      }
-    }, [state, submenuOpen])
+    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
+    const sidebarItemClassName = cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)
+    const buttonRef = ref as Ref<HTMLButtonElement>
 
     const renderContent = () => (
       <Layout.Grid
@@ -255,118 +258,128 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       </Layout.Grid>
     )
 
-    const renderItemTrigger = (triggerRef: Ref<HTMLButtonElement | HTMLAnchorElement>) => {
-      const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
-      const sidebarItemClassName = cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)
-      const buttonRef = triggerRef as Ref<HTMLButtonElement>
-
-      return (
-        <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled} data-active={active}>
-          {isLink && (
-            <>
-              {!itemProps.disabled && (
-                <NavLink
-                  ref={triggerRef as Ref<HTMLAnchorElement>}
-                  className={({ isActive }) => cn(sidebarItemClassName, { 'cn-sidebar-item-active': isActive })}
-                  {...(itemProps as SidebarItemLinkProps)}
-                  role="menuitem"
-                >
-                  {renderContent()}
-                </NavLink>
-              )}
-              {itemProps.disabled && (
-                <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
-                  {renderContent()}
-                </div>
-              )}
-            </>
-          )}
-
-          {withDropdownMenu && (
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+    return (
+      <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled} data-active={active}>
+        {isLink && (
+          <>
+            {!itemProps.disabled && (
+              <NavLink
+                ref={ref as Ref<HTMLAnchorElement>}
+                className={({ isActive }) => cn(sidebarItemClassName, { 'cn-sidebar-item-active': isActive })}
+                {...(itemProps as SidebarItemLinkProps)}
+                role="menuitem"
+              >
                 {renderContent()}
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content side="right" align="end" sideOffset={3}>
-                {dropdownMenuContent}
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
-          )}
+              </NavLink>
+            )}
+            {itemProps.disabled && (
+              <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
+                {renderContent()}
+              </div>
+            )}
+          </>
+        )}
 
-          {!isLink && !withDropdownMenu && (
-            <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+        {withDropdownMenu && (
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
               {renderContent()}
-            </button>
-          )}
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content side="right" align="end" sideOffset={3}>
+              {dropdownMenuContent}
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        )}
 
-          {withActionMenu && (
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="cn-sidebar-item-action-button cn-sidebar-item-action-menu">
-                <IconV2 name="more-vert" size="xs" />
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content side="bottom" align="end" sideOffset={4}>
-                {actionMenuItems?.map((item, index) => <DropdownMenu.Item key={index} {...item} />)}
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
-          )}
+        {!isLink && !withDropdownMenu && (
+          <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+            {renderContent()}
+          </button>
+        )}
 
-          {withSubmenu && (
-            <button className="cn-sidebar-item-action-button" onClick={() => setSubmenuOpen(prev => !prev)}>
-              <IconV2 name={submenuOpen ? 'minus' : 'plus'} size="xs" />
-            </button>
-          )}
-        </div>
+        {withActionMenu && (
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger className="cn-sidebar-item-action-button cn-sidebar-item-action-menu">
+              <IconV2 name="more-vert" size="xs" />
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content side="bottom" align="end" sideOffset={4}>
+              {actionMenuItems?.map((item, index) => <DropdownMenu.Item key={index} {...item} />)}
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        )}
+
+        {withSubmenu && (
+          <button className="cn-sidebar-item-action-button" onClick={toggleSubmenu}>
+            <IconV2 name={submenuOpen ? 'minus' : 'plus'} size="xs" />
+          </button>
+        )}
+      </div>
+    )
+  }
+)
+SidebarItemTrigger.displayName = 'SidebarItemTrigger'
+
+export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(({ ...props }, ref) => {
+  const { state } = useSidebar()
+  const [submenuOpen, setSubmenuOpen] = useState(false)
+
+  const { title, tooltip } = props
+
+  const withSubmenu = !!props.children
+
+  const toggleSubmenu = useCallback(() => setSubmenuOpen(prev => !prev), [])
+
+  useEffect(() => {
+    if (state === 'collapsed' && submenuOpen) {
+      setSubmenuOpen(false)
+    }
+  }, [state, submenuOpen])
+
+  const WrappedItemTrigger = () => {
+    if (tooltip) {
+      return (
+        <Tooltip side="right" align="center" content={tooltip}>
+          <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
+        </Tooltip>
       )
     }
 
-    const ItemTriggerWrapped = () => {
-      if (tooltip) {
-        return (
-          <Tooltip side="right" align="center" content={tooltip}>
-            {renderItemTrigger(ref)}
-          </Tooltip>
-        )
-      }
-
-      if (state === 'collapsed') {
-        return (
-          <Tooltip side="right" align="center" content={title}>
-            {renderItemTrigger(ref)}
-          </Tooltip>
-        )
-      }
-
-      return renderItemTrigger(ref)
+    if (state === 'collapsed') {
+      return (
+        <Tooltip side="right" align="center" content={title}>
+          <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
+        </Tooltip>
+      )
     }
 
-    const Item = () => {
-      const filteredChildren = submenuOpen ? filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME]) : []
-      const rowsCount = filteredChildren.length + 1
-
-      if (withSubmenu) {
-        return (
-          <div className="contents">
-            <ItemTriggerWrapped />
-            <Layout.Grid
-              className="cn-sidebar-submenu-group"
-              role="group"
-              columns="auto 1fr"
-              data-state={submenuOpen ? 'open' : 'closed'}
-              style={{ ...(submenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 }) }}
-            >
-              <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
-              {filteredChildren}
-            </Layout.Grid>
-          </div>
-        )
-      }
-
-      return <ItemTriggerWrapped />
-    }
-
-    return <Item />
+    return <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
   }
-) as SidebarComponent
+
+  if (withSubmenu) {
+    const filteredChildren = submenuOpen
+      ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
+      : []
+    const rowsCount = filteredChildren.length + 1
+
+    return (
+      <div className="contents">
+        <WrappedItemTrigger />
+        <Layout.Grid
+          className="cn-sidebar-submenu-group"
+          role="group"
+          columns="auto 1fr"
+          data-state={submenuOpen ? 'open' : 'closed'}
+          style={{ ...(submenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 }) }}
+        >
+          <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
+          {filteredChildren}
+        </Layout.Grid>
+      </div>
+    )
+  }
+
+  return <WrappedItemTrigger />
+}) as SidebarComponent
 SidebarItem.displayName = 'SidebarItem'
 
 export const SidebarMenuSubItem = ({ title, className, ...props }: NavLinkProps & { title: string }) => {

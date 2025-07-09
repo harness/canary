@@ -77,9 +77,14 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                               <span className="truncate text-sm font-medium leading-snug">{commit.title}</span>
                             )}
                             <div className="flex items-center gap-x-1.5">
-                              {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
+                              {authorName && 
+                              <>
+                                <Avatar name={authorName} src={avatarUrl} size="sm" rounded />
+                                <span className="text-cn-foreground-3">{authorName}</span>
+                                </>
+                               }
                               <span className="text-cn-foreground-3">{authorName || ''}</span>
-                              <span className="text-cn-foreground-4">
+                              <Text color="foreground-4">
                                 committed on {timeAgo(when, { dateStyle: 'medium' })}
                               </span>
                             </div>

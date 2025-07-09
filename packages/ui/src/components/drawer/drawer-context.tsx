@@ -4,7 +4,7 @@ import { Drawer as DrawerPrimitive } from 'vaul'
 
 type DrawerRootProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Root>
 
-type DrawerContextType = Pick<DrawerRootProps, 'direction' | 'nested'> & {
+type DrawerContextType = Pick<DrawerRootProps, 'direction' | 'nested' | 'modal'> & {
   isParentOpen?: boolean
 }
 

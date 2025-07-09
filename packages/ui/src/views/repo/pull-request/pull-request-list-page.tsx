@@ -13,8 +13,9 @@ import {
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
-import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
+import { renderFilterSelectLabel } from '@components/filters/filter-select'
+import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
@@ -240,7 +241,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               <ListActions.Right>
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
-                    <FilterSelect<PRListFiltersKeys, LabelsValue>
+                    <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
                       options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
                       onChange={option => {
                         addFilter(option.value)
@@ -249,12 +250,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                       onReset={resetFilters}
                       inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
                       buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={
-                        <FilterSelectLabel
-                          selectedFilters={PR_FILTER_OPTIONS.length - availableFilters.length}
-                          displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                        />
-                      }
+                      displayLabel={renderFilterSelectLabel({
+                        selectedFilters: PR_FILTER_OPTIONS.length - availableFilters.length,
+                        displayLabel: t('component:filter.defaultLabel', 'Filter')
+                      })}
                     />
                   )}
                 </PRListFilterHandler.Dropdown>

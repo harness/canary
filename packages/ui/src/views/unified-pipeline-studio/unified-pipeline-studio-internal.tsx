@@ -1,4 +1,4 @@
-import { Button, FileToolbarActions, IconV2 } from '@components/index'
+import { Button, Checkbox, FileToolbarActions, IconV2 } from '@components/index'
 import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
@@ -29,6 +29,9 @@ export const PipelineStudioInternal = (): JSX.Element => {
     isYamlDirty,
     hideSaveBtn,
     lastCommitInfo,
+    splitView,
+    setSplitView,
+    enableSplitView,
     setRightDrawer,
     setEditPipelineIntention
   } = useUnifiedPipelineStudioContext()
@@ -37,8 +40,20 @@ export const PipelineStudioInternal = (): JSX.Element => {
     <YamlEditorContextProvider>
       <PipelineStudioLayout.Root>
         <PipelineStudioLayout.Header isYamlView={view === 'yaml'}>
-          <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>
+            <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
+            {view === 'visual' && enableSplitView ? (
+              <Checkbox
+                checked={splitView}
+                label="Split view"
+                onCheckedChange={value => {
+                  setSplitView?.(!!value)
+                }}
+              />
+            ) : null}
+          </PipelineStudioLayout.HeaderLeft>
+
+          <PipelineStudioLayout.HeaderRight>
             <Button
               size="sm"
               variant="outline"
@@ -76,7 +91,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
                 </Button>
               </>
             ) : null}
-          </PipelineStudioLayout.HeaderLeft>
+          </PipelineStudioLayout.HeaderRight>
         </PipelineStudioLayout.Header>
 
         <PipelineStudioLayout.Split>

@@ -4,16 +4,16 @@ import { PipelineNodesComponents } from '@/components'
 
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
 
-import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
+import { CanvasControls } from '../graph-implementation/canvas/canvas-controls'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { parallelContainerConfig, serialContainerConfig } from './graph-implementation/config/config'
-import { contentNodeBank } from './graph-implementation/factory/content-node-bank'
+import { parallelContainerConfig, serialContainerConfig } from '../graph-implementation/config/config'
+import { splitView_contentNodeBank } from '../graph-implementation/factory/splitview-content-node-bank'
 
-export const PipelineStudioGraphView = ({ data }: { data: AnyContainerNodeType[] }): React.ReactElement => {
+export const PipelineStudioGraphViewStages = ({ data }: { data: AnyContainerNodeType[] }): React.ReactElement => {
   const nodes = useMemo(() => {
-    return contentNodeBank.getNodesDefinition()
+    return splitView_contentNodeBank.getNodesDefinition()
   }, [])
 
   return (

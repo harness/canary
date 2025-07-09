@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Input } from '@/components'
+import { DropdownMenu, SearchInput } from '@/components'
 
 interface SearchableDropdownProps<T> {
   options: T[]
@@ -10,6 +10,7 @@ interface SearchableDropdownProps<T> {
   onChange: (option: T) => void
   onReset?: () => void
   buttonLabel?: string
+  isSearchable?: boolean
 }
 
 const SearchableDropdown = <T extends { label: string; value: string }>({
@@ -17,6 +18,7 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
   dropdownAlign = 'end',
   onChange,
   onReset,
+  isSearchable = false,
   options,
   inputPlaceholder,
   buttonLabel
@@ -31,30 +33,11 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>{displayLabel}</DropdownMenu.Trigger>
       <DropdownMenu.Content className="min-w-[224px]" align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
-        <DropdownMenu.Header>
-          <Input
-            type="text"
-            placeholder={inputPlaceholder}
-            value={searchQuery}
-            variant="extended"
-            // This is stop focus shift by dropdown,
-            // It will try to focus on first dropdown menu item on keychange
-            onKeyDown={e => e.stopPropagation()}
-            onChange={e => setSearchQuery(e.target.value)}
-            rightElement={
-              <Button
-                variant="transparent"
-                size="sm"
-                iconOnly
-                onClick={() => {
-                  setSearchQuery('')
-                }}
-              >
-                <IconV2 className="rotate-45" name="plus" size="2xs" />
-              </Button>
-            }
-          />
-        </DropdownMenu.Header>
+        {isSearchable && (
+          <DropdownMenu.Header>
+            <SearchInput placeholder={inputPlaceholder} value={searchQuery} onChange={value => setSearchQuery(value)} />
+          </DropdownMenu.Header>
+        )}
 
         {filteredBySearchOptions.map(option => (
           <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)} title={option.label} />

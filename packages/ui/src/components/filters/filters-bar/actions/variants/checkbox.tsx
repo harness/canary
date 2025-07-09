@@ -13,25 +13,19 @@ const MultiSelectFilter = ({ filter, filterOption, onUpdateFilter }: CheckboxFil
 
   return (
     <>
-      {!!filteredOptions.length && (
-        <div className="px-2 py-1">
-          {filteredOptions.map(option => (
-            <DropdownMenu.CheckboxItem
-              title={option.label}
-              checked={filterValue.map(v => v.value).includes(option.value)}
-              onClick={event => {
-                event?.preventDefault()
-                event?.stopPropagation()
-                const newValues = filterValue.map(v => v.value).includes(option.value)
-                  ? filterValue.filter(v => v.value !== option.value)
-                  : [...filterValue, { label: option.label, value: option.value }]
-                onUpdateFilter(newValues)
-              }}
-              key={option.value}
-            />
-          ))}
-        </div>
-      )}
+      {filteredOptions.map(option => (
+        <DropdownMenu.CheckboxItem
+          title={option.label}
+          checked={filterValue.map(v => v.value).includes(option.value)}
+          onCheckedChange={isChecked => {
+            const newValues = !isChecked
+              ? filterValue.filter(v => v.value !== option.value)
+              : [...filterValue, { label: option.label, value: option.value }]
+            onUpdateFilter(newValues)
+          }}
+          key={option.value}
+        />
+      ))}
     </>
   )
 }

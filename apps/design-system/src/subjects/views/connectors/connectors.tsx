@@ -112,7 +112,7 @@ const ConnectorsListPageContent = (): JSX.Element => {
           requestClose={onCloseConnectorDrawer}
           isDrawer
         >
-          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
+          <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected}>
             <Drawer.Content>
               {!!connectorEntity && (
                 <ConnectorEntityForm

@@ -2,9 +2,10 @@ import { ReactNode } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { useTranslation } from '@/context'
-import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
+import { renderFilterSelectAddIconLabel } from '@components/filters/filter-select'
 import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
 import { FilterOptionConfig } from '@components/filters/types'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { cn } from '@utils/cn'
 
 interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknown>> {
@@ -57,7 +58,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
     availableFilters
   }: FilterOptionsRendererProps<Extract<keyof T, string>>) => (
     <>
-      <FilterSelect
+      <SearchableDropdown
         options={filterOptions.filter(option => availableFilters.includes(option.value))}
         dropdownAlign="start"
         onChange={(option: { value: any }) => {
@@ -67,7 +68,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
         onReset={() => resetFilters()}
         inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
         buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-        displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
+        displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
       />
       <Button
         size="sm"
@@ -75,7 +76,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
         onClick={() => resetFilters()}
         className="hover:text-cn-foreground-danger"
       >
-        <IconV2 className="rotate-45" name="plus" size="2xs" />
+        <IconV2 name="xmark" size="2xs" />
         {t('component:filter.reset', 'Reset')}
       </Button>
     </>

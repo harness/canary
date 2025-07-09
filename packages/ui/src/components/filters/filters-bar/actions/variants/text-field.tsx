@@ -17,7 +17,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
   }
 
   return (
-    <div className="px-3 pb-3">
+    <div className="p-3">
       <Input
         value={filter.value || ''}
         placeholder="Type a value..."

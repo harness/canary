@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
-import { cn } from '@/utils'
+import { cn, wrapConditionalObjectElement } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -36,37 +36,59 @@ export type DrawerContentVariantsDirection = VariantProps<typeof drawerContentVa
 export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
   size?: DrawerContentVariantsSize
   hideClose?: boolean
+  startPointShift?: number | string
+  overlayClassName?: string
+  forceWithOverlay?: boolean
 }
 
 export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
-  ({ className, children, size = 'sm', hideClose = false, ...props }, ref) => {
+  (
+    {
+      className,
+      children,
+      size = 'sm',
+      hideClose = false,
+      startPointShift = 0,
+      overlayClassName,
+      forceWithOverlay,
+      ...props
+    },
+    ref
+  ) => {
     const { portalContainer } = usePortal()
     const { direction } = useDrawerContext()
 
+    const drawerCoordinates = startPointShift
+      ? {
+          ...wrapConditionalObjectElement({ top: startPointShift }, direction === 'top'),
+          ...wrapConditionalObjectElement({ right: startPointShift }, direction === 'right'),
+          ...wrapConditionalObjectElement({ bottom: startPointShift }, direction === 'bottom'),
+          ...wrapConditionalObjectElement({ left: startPointShift }, direction === 'left')
+        }
+      : {}
+
     return (
       <DrawerPrimitive.Portal container={portalContainer}>
-        <DrawerOverlay>
-          <DrawerPrimitive.Content
-            ref={ref}
-            className={cn(
-              drawerContentVariants({
-                size,
-                direction: direction as DrawerContentVariantsDirection
-              }),
-              className
-            )}
-            {...props}
-          >
-            {!hideClose && (
-              <DrawerPrimitive.Close asChild>
-                <Button className="cn-drawer-close-button" variant="transparent" iconOnly>
-                  <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
-                </Button>
-              </DrawerPrimitive.Close>
-            )}
-            {children}
-          </DrawerPrimitive.Content>
-        </DrawerOverlay>
+        <DrawerOverlay style={drawerCoordinates} className={overlayClassName} forceWithOverlay={forceWithOverlay} />
+
+        <DrawerPrimitive.Content
+          ref={ref}
+          className={cn(
+            drawerContentVariants({ size, direction: direction as DrawerContentVariantsDirection }),
+            className
+          )}
+          {...props}
+          style={{ ...drawerCoordinates, ...props.style }}
+        >
+          {!hideClose && (
+            <DrawerPrimitive.Close asChild>
+              <Button className="cn-drawer-close-button" variant="transparent" iconOnly>
+                <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
+              </Button>
+            </DrawerPrimitive.Close>
+          )}
+          {children}
+        </DrawerPrimitive.Content>
       </DrawerPrimitive.Portal>
     )
   }

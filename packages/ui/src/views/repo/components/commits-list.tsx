@@ -84,7 +84,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                 </>
                                }
                               <span className="text-cn-foreground-3">{authorName || ''}</span>
-                              <span className="text-cn-foreground-4">
+                              <Text color="foreground-4">
                                 committed on {timeAgo(when, { dateStyle: 'medium' })}
                               </span>
                             </div>

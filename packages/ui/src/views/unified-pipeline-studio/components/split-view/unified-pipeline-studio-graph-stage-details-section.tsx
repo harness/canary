@@ -7,6 +7,7 @@ import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
 import '@harnessio/pipeline-graph/dist/index.css'
 
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
+import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -20,7 +21,7 @@ export const PipelineStudioGraphViewStageDetailsSection = ({
 }: {
   data: AnyContainerNodeType[]
 }): React.ReactElement => {
-  const { selectedPath, yamlRevision } = useUnifiedPipelineStudioContext()
+  const { selectedPath, yamlRevision, setEditStageIntention, setRightDrawer } = useUnifiedPipelineStudioContext()
   const [stage, setStage] = useState<Stage>()
 
   useEffect(() => {
@@ -42,7 +43,13 @@ export const PipelineStudioGraphViewStageDetailsSection = ({
   const infra = get(stage, 'environment.deploy-to', '')
 
   return (
-    <Layout.Flex className="border-t border-cn-borders-2 h-16 justify-between items-center px-4 cursor-pointer">
+    <Layout.Flex
+      className="border-t border-cn-borders-2 h-16 justify-between items-center px-4 cursor-pointer"
+      onClick={() => {
+        setRightDrawer(RightDrawer.StageConfig)
+        setEditStageIntention({ path: selectedPath?.stages || '' })
+      }}
+    >
       <Text variant="heading-subsection">{stage?.name}</Text>
       <Layout.Flex align="center" gap="lg">
         {stage?.steps?.length ? (

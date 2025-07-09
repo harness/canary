@@ -130,15 +130,15 @@
     "input": "Rechercher des fichiers...",
     "noFile": "Aucun fichier trouvé."
   },
-  "widgets": {
-    "viewMore": "View more"
-  },
   "sidebar": {
     "sidebarToggle": {
-      "collapse": "Collapse",
-      "expand": "Expand"
+      "collapse": "Réduire",
+      "expand": "Développer"
     },
-    "toggle": "Toggle sidebar"
+    "toggle": "Basculer la barre latérale"
+  },
+  "widgets": {
+    "viewMore": "View more"
   },
   "sort": {
     "defaultLabel": "Trier",

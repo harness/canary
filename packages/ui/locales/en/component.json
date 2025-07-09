@@ -130,15 +130,15 @@
     "input": "Search files...",
     "noFile": "No file found."
   },
-  "widgets": {
-    "viewMore": "View more"
-  },
   "sidebar": {
     "sidebarToggle": {
       "collapse": "Collapse",
       "expand": "Expand"
     },
     "toggle": "Toggle sidebar"
+  },
+  "widgets": {
+    "viewMore": "View more"
   },
   "sort": {
     "defaultLabel": "Sort",

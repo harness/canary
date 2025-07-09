@@ -1,9 +1,7 @@
 import { IFormDefinition, InputFactory } from '@harnessio/forms'
 
-import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
 import { Yaml2PipelineGraphOptions } from './components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from './components/steps/types'
-import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from './components/visual-yaml-toggle'
 import { lastCommitInfoType, UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio-context'
@@ -45,8 +43,16 @@ export interface UnifiedPipelineStudioProps {
   loadInProgress?: boolean
   inputComponentFactory?: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
+  selectedPath?: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }
+  onSelectedPathChange: (props: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }) => void
   errors: YamlErrorDataType
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
@@ -56,6 +62,7 @@ export interface UnifiedPipelineStudioProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  enableSplitView?: boolean
   stageFormDefinition?: IFormDefinition
   pipelineFormDefinition?: IFormDefinition
 }
@@ -87,6 +94,7 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     hideSaveBtn,
     yamlParserOptions,
     lastCommitInfo,
+    enableSplitView,
     stageFormDefinition,
     pipelineFormDefinition
   } = props
@@ -119,14 +127,15 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       hideSaveBtn={hideSaveBtn}
       yamlParserOptions={yamlParserOptions}
       lastCommitInfo={lastCommitInfo}
+      enableSplitView={enableSplitView}
       stageFormDefinition={stageFormDefinition}
       pipelineFormDefinition={pipelineFormDefinition}
     >
-      <UnifiedPipelineStudioNodeContextProvider>
-        {/* TODO: Loading... */}
-        {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
-        <PipelineStudioNodeContextMenu />
-      </UnifiedPipelineStudioNodeContextProvider>
+      {/* <UnifiedPipelineStudioNodeContextProvider> */}
+      {/* TODO: Loading... */}
+      {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
+      {/* <PipelineStudioNodeContextMenu />
+      </UnifiedPipelineStudioNodeContextProvider> */}
     </UnifiedPipelineStudioProvider>
   )
 }

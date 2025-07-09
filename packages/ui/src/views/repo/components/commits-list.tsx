@@ -61,7 +61,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                           key={commit?.sha}
                           to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                         >
-                          <div className="flex w-full max-w-full flex-col gap-y-1.5">
+                          <Layout.Vertical>
                             {toCommitDetails ? (
                               <p>
                                 <Link
@@ -74,24 +74,19 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                 </Link>
                               </p>
                             ) : (
-                              <span className="truncate text-sm font-medium leading-snug">{commit.title}</span>
+                              <Text variant="heading-base" color="foreground-1" truncate title={commit.title}>
+                                {commit.title}
+                              </Text>
                             )}
                             <div className="flex items-center gap-x-1.5">
-                              {authorName && 
-                              <>
-                                <Avatar name={authorName} src={avatarUrl} size="sm" rounded />
-                                <span className="text-cn-foreground-3">{authorName}</span>
-                                </>
-                               }
-                              <span className="text-cn-foreground-3">{authorName || ''}</span>
-                              <Text color="foreground-4">
-                                committed on {timeAgo(when, { dateStyle: 'medium' })}
-                              </span>
+                              {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
+                              <Text color="foreground-3">{authorName || ''}</Text>
+                              <Text color="foreground-4">committed on {timeAgo(when, { dateStyle: 'medium' })}</Text>
                             </div>
-                          </div>
+                          </Layout.Vertical>
                         </Link>
                         {!!commit?.sha && (
-                          <div className="flex gap-2.5">
+                          <Layout.Horizontal className="gap-2.5">
                             <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                             <Button
                               title="View repository at this point of history"
@@ -104,7 +99,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             >
                               <IconV2 name="code-brackets" />
                             </Button>
-                          </div>
+                          </Layout.Horizontal>
                         )}
                       </Layout.Horizontal>
                     </StackedList.Item>

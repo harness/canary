@@ -82,6 +82,7 @@ export * from './button-group'
 export * from './view-only'
 export * from './stats-panel'
 export * from './widgets'
+export * from './shortcut'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

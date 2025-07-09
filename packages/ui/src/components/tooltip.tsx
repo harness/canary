@@ -29,15 +29,17 @@ export const Tooltip: FC<TooltipProps> = ({
   return (
     <TooltipPrimitive.Root delayDuration={delay} open={open}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Content className="cn-tooltip" side={side} align={align} sideOffset={4}>
-        {!!title && <span className="cn-tooltip-title">{title}</span>}
-        <div>{content}</div>
-        {!hideArrow && (
-          <TooltipPrimitive.Arrow width={20} height={8} asChild>
-            <Illustration className="cn-tooltip-arrow" name="tooltip-arrow" />
-          </TooltipPrimitive.Arrow>
-        )}
-      </TooltipPrimitive.Content>
+      <TooltipPrimitive.Portal>
+        <TooltipPrimitive.Content className="cn-tooltip" side={side} align={align} sideOffset={4}>
+          {!!title && <span className="cn-tooltip-title">{title}</span>}
+          <div>{content}</div>
+          {!hideArrow && (
+            <TooltipPrimitive.Arrow width={20} height={8} asChild>
+              <Illustration className="cn-tooltip-arrow" name="tooltip-arrow" />
+            </TooltipPrimitive.Arrow>
+          )}
+        </TooltipPrimitive.Content>
+      </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
   )
 }

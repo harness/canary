@@ -126,72 +126,16 @@ export const SidebarView = ({
             {!!currentUser?.admin && (
               <Sidebar.Item
                 title={t('component:navbar.user-management', 'User Management')}
-                description="Manage users and roles"
                 icon="user"
                 to="/admin/default-settings"
-              >
-                <Sidebar.MenuSubItem to="/notifications" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-                <Sidebar.MenuSubItem to="/" title="Some long long long long title "></Sidebar.MenuSubItem>
-              </Sidebar.Item>
+              />
             )}
             <Sidebar.Item
               title={t('component:navbar.settings', 'Settings')}
               icon="settings"
-              badge="new"
               onClick={() => handleSettingsMenu()}
-              tooltip="Settings are not available yet"
               active={showSettingMenu}
             />
-            <Sidebar.Item
-              title={t('component:navbar.settings', 'Settings')}
-              icon="settings"
-              onClick={() => handleSettingsMenu()}
-              withRightIndicator
-              disabled
-            />
-            <Sidebar.MenuSkeleton />
-            <Sidebar.MenuSkeleton />
-            <Sidebar.MenuSkeleton hideIcon />
           </Sidebar.Group>
         </Sidebar.Content>
 

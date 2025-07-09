@@ -21,13 +21,8 @@ export const AppSidebarItem = ({
 }: NavbarItemProps) => {
   const { t } = useTranslation()
 
-  const handlePin = () => {
-    handleChangePinnedMenuItem(item, isRecent)
-  }
-
-  const handleRemoveRecent = () => {
-    handleRemoveRecentMenuItem(item)
-  }
+  const handlePin = () => handleChangePinnedMenuItem(item, isRecent)
+  const handleRemoveRecent = () => handleRemoveRecentMenuItem(item)
 
   const actionMenuItems = isRecent
     ? [
@@ -48,8 +43,8 @@ export const AppSidebarItem = ({
       to={item.to || ''}
       icon={item.iconName}
       actionMenuItems={actionMenuItems}
-      end
       disabled={disabled}
+      end
     />
   )
 }

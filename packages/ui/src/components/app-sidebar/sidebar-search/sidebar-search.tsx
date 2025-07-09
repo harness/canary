@@ -1,7 +1,8 @@
 import { FormHTMLAttributes, ReactNode } from 'react'
 
-import { Layout, SearchInput, Text } from '@/components'
+import { Layout, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
+import { Shortcut } from '@components/shortcut'
 
 import { useSearch } from './search-context'
 
@@ -28,15 +29,8 @@ export function SidebarSearch(props: SidebarSearchProps) {
           size="sm"
           placeholder={t('component:navbar.search', 'Search')}
           className="pointer-events-none"
-          inputContainerClassName="[&>.cn-input-prefix]:w-[34px] max-w-full overflow-hidden"
-          suffix={
-            <Text
-              variant="caption-soft"
-              className="text-cn-foreground-2 border-cn-borders-2 mr-1.5 flex h-5 select-none items-center rounded-sm border px-1 opacity-100 transition-opacity group-data-[state=collapsed]:opacity-0"
-            >
-              ⌘K
-            </Text>
-          }
+          inputContainerClassName="border-cn-borders-2 [&>.cn-input-prefix]:w-[34px] max-w-full overflow-hidden"
+          suffix={<Shortcut className="mr-1.5 transition-opacity group-data-[state=collapsed]:opacity-0">⌘K</Shortcut>}
           readOnly
           aria-hidden="true"
           tabIndex={-1}

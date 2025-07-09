@@ -12,7 +12,7 @@ export default {
 
       '&-desktop': {
         top: '0px',
-        zIndex: '20',
+        zIndex: '1',
         position: 'sticky',
         '@apply duration-200 transition-[width] ease-linear': ''
       }

@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
 import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { timeAgo } from '@/utils'
-import { BranchSelectorListItem, CommitTagType, RepoTagsStore, TranslationStore } from '@/views'
+import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
 
 interface RepoTagsListProps {
-  useTranslationStore: () => TranslationStore
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -17,7 +17,6 @@ interface RepoTagsListProps {
 }
 
 export const RepoTagsList: FC<RepoTagsListProps> = ({
-  useTranslationStore,
   useRepoTagsStore,
   toCommitDetails,
   isLoading,
@@ -27,7 +26,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   onDeleteTag,
   onOpenCreateBranchDialog
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { tags: tagsList } = useRepoTagsStore()
 
   const getTableActions = (tag: CommitTagType) => [
@@ -55,7 +54,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   if (!isLoading && !tagsList?.length) {
     return (
       <NoData
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
         withBorder={isDirtyList}
         title={isDirtyList ? t('views:noData.noResults', 'No search results') : t('views:noData.noTags', 'No tags yet')}
         description={
@@ -92,7 +91,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
+    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
           <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>
@@ -104,16 +103,16 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         </Table.Row>
       </Table.Header>
 
-      <Table.Body hasHighlightOnHover>
+      <Table.Body>
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text className="block leading-snug" truncate title={tag.name}>
+              <Text className="block" truncate title={tag.name}>
                 {tag.name}
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
+              <Text color="foreground-3" className="line-clamp-3 break-all">
                 {tag?.message}
               </Text>
             </Table.Cell>
@@ -125,7 +124,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
-                    <Text color="tertiary" className="block leading-none" truncate>
+                    <Text variant="body-single-line-normal" color="foreground-3" className="block" truncate>
                       {tag.tagger?.identity.name}
                     </Text>
                   </>
@@ -133,9 +132,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell>
-              <Text color="tertiary" className="leading-snug">
-                {tag.tagger?.when ? getCreationDate(tag) : ''}
-              </Text>
+              <Text color="foreground-3">{tag.tagger?.when ? getCreationDate(tag) : ''}</Text>
             </Table.Cell>
             <Table.Cell className="w-[46px] !py-2.5 text-right">
               <MoreActionsTooltip

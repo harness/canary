@@ -1,6 +1,6 @@
 import { forwardRef, ReactElement } from 'react'
 
-import { Icon, Text } from '@/components'
+import { Text } from '@/components'
 import { useTheme } from '@/context/theme'
 import { cn } from '@utils/cn'
 
@@ -46,13 +46,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
                   { 'border-sidebar-border-3 bg-sidebar-background-7': isMainNav }
                 )}
               >
-                <Icon
-                  className={cn('absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-cn-foreground-3', {
-                    'text-sidebar-icon-2': isMainNav
-                  })}
-                  name="sub-menu-ellipse"
-                  size={18}
-                />
                 {icon}
               </div>
             ) : (
@@ -61,9 +54,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           </div>
           <div className="col-start-2 flex min-w-0 flex-col items-start">
             <Text
-              size={2}
+              variant="body-strong"
               truncate
-              weight="medium"
               className={cn(
                 'text-cn-foreground-2 group-hover:text-cn-foreground-1 z-10 w-full duration-0 ease-in-out',
                 { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
@@ -75,10 +67,10 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
             </Text>
             {!!description && (
               <Text
-                className={cn('z-10 w-full leading-4 text-cn-foreground-2 duration-0 ease-in-out', {
+                variant="body-single-line-normal"
+                className={cn('z-10 w-full duration-0 ease-in-out', {
                   'text-sidebar-foreground-4': isMainNav
                 })}
-                size={1}
                 truncate
               >
                 {description}
@@ -121,10 +113,11 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           </div>
         )}
         <Text
-          size={2}
-          weight="medium"
+          variant="heading-small"
+          align="left"
+          color="foreground-3"
           className={cn(
-            'text-cn-foreground-3 group-hover:text-cn-foreground-1 relative z-10 text-left duration-100 ease-in-out',
+            'group-hover:text-cn-foreground-1 relative z-10 duration-100 ease-in-out',
             { 'text-sidebar-foreground-2 group-hover:text-sidebar-foreground-1': isMainNav },
             { 'text-cn-foreground-1': active },
             { 'text-sidebar-foreground-1': active && isMainNav }

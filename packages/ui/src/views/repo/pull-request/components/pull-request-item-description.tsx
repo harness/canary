@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
-import { Icon, Tag } from '@/components'
+import { IconV2, Tag } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeAgo } from '@/utils'
 
 interface PullRequestItemDescriptionProps {
   number: number
@@ -29,7 +30,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   return (
     <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-2 text-cn-foreground-2">
       <p>
-        {`#${number}`} opened {timestamp} by{' '}
+        {`#${number}`} opened {timeAgo(timestamp, { dateStyle: 'medium' })} by{' '}
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
       </p>
 
@@ -40,7 +41,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
         <div className="flex items-center gap-0.5">
-          <Icon className="text-icons-1" size={12} name="tasks" />
+          <IconV2 className="text-icons-1" size="2xs" name="tasks" />
           <p>
             {tasks} task{tasks === 1 ? '' : 's'}
           </p>
@@ -51,12 +52,12 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {sourceBranch && (
         <>
           <Link to={`${relativePath}/code/${targetBranch}`}>
-            <Tag variant="secondary" icon="branch-2" value={targetBranch} showIcon />
+            <Tag variant="secondary" icon="git-branch" value={targetBranch} showIcon />
           </Link>
 
           <span>&larr;</span>
           <Link to={`${relativePath}/code/${sourceBranch}`}>
-            <Tag variant="secondary" icon="branch-2" value={sourceBranch} showIcon />
+            <Tag variant="secondary" icon="git-branch" value={sourceBranch} showIcon />
           </Link>
         </>
       )}

@@ -4,6 +4,7 @@ import { listSpaceLabelValues, useListSpaceLabelsQuery } from '@harnessio/code-s
 import { ILabelType, LabelValuesType, LabelValueType } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
+import { PageResponseHeader } from '../../../../types'
 import { useLabelsStore } from '../../stores/labels-store'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,7 +37,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     setIsLoading
   } = useLabelsStore()
 
-  const { data: { body: labels } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
+  const { data: { body: labels, headers } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
     {
       space_ref: `${space_ref}/+`,
       queryParams: { page: queryPage || 1, limit: 10, query: query ?? '' }
@@ -121,8 +122,11 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
   useEffect(() => {
     if (!labels) return
 
-    setLabels(labels as ILabelType[])
-  }, [labels, setLabels])
+    const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
+    const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
+
+    setLabels(labels as ILabelType[], { totalItems, pageSize })
+  }, [labels, setLabels, headers])
 
   /**
    * Set space_ref to store

@@ -1,7 +1,7 @@
 import { ElementType, FC, Fragment, useEffect, useMemo, useState } from 'react'
 
-import { Alert, Button, Drawer, EntityFormLayout } from '@/components'
-import { TranslationStore } from '@/views'
+import { Alert, Button, ButtonLayout, Drawer, EntityFormLayout } from '@/components'
+import { useTranslation } from '@/context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 
 import {
@@ -9,8 +9,11 @@ import {
   getTransformers,
   InputFactory,
   inputTransformValues,
+  outputTransformValues,
+  removeTemporaryFieldsValue,
   RenderForm,
   RootForm,
+  unsetHiddenInputsValues,
   useZodValidationResolver
 } from '@harnessio/forms'
 
@@ -22,7 +25,7 @@ const componentsMap: Record<
     Content: ElementType
     Header: ElementType
     Title: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
@@ -30,24 +33,24 @@ const componentsMap: Record<
     Content: Fragment,
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
     Content: 'div',
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Inner: Fragment,
+    Body: Fragment,
     Footer: EntityFormLayout.Footer
   }
 }
 
 interface ConnectorEntityFormProps {
   connector: ConnectorEntity
+  isLoading?: boolean
   onFormSubmit?: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   onBack?: () => void
-  useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
@@ -57,17 +60,17 @@ interface ConnectorEntityFormProps {
 export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
   connector,
   apiError = null,
+  isLoading = false,
   onFormSubmit,
   getConnectorDefinition,
   onBack,
-  useTranslationStore,
   inputComponentFactory,
   intent,
   isDrawer = false
 }) => {
-  const { t: _t } = useTranslationStore()
+  const { t: _t } = useTranslation()
   const [connectorEditValues, setConnectorEditValues] = useState({})
-  const { Content, Header, Title, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Content, Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
   const isCreate = intent === EntityIntent.CREATE
 
   const onSubmit = (data: onSubmitConnectorProps) => {
@@ -84,7 +87,7 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
     if (connectorDefinition) {
       const formDef = {
         ...connectorDefinition.formDefinition,
-        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'name')
+        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'connectorMeta.name')
       }
 
       formDef.inputs = formDef.inputs.map(input => {
@@ -111,10 +114,12 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
         const connectorValues = inputTransformValues(
           {
             ...connector?.spec,
-            name: connector.name,
-            type: connector.type,
-            ...(connector?.description && { description: connector?.description }),
-            ...(connector?.tags && { tags: connector?.tags })
+            connectorMeta: {
+              name: connector.name,
+              type: connector.type,
+              ...(connector?.description && { description: connector?.description }),
+              ...(connector?.tags && { tags: connector?.tags })
+            }
           },
           transformers
         )
@@ -138,7 +143,15 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
       resolver={resolver}
       mode="onSubmit"
       onSubmit={values => {
-        onSubmit({ values, connector, intent })
+        const definition = getConnectorDefinition(connector.type)
+        const transformers = definition ? getTransformers(definition?.formDefinition) : undefined
+        const transformedValues = transformers?.length ? outputTransformValues(values, transformers) : values
+        let formattedValues = definition
+          ? unsetHiddenInputsValues(definition.formDefinition, transformedValues)
+          : transformedValues
+        formattedValues = removeTemporaryFieldsValue(formattedValues)
+
+        onSubmit({ values: formattedValues, connector, intent })
       }}
       validateAfterFirstSubmit={true}
     >
@@ -149,23 +162,31 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
               <Title>Connect to {connector.name}</Title>
             </Header>
           )}
-          <Inner>
+          <Body>
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
               {apiError && (
-                <Alert.Container variant="destructive">
+                <Alert.Root theme="danger">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
-                </Alert.Container>
+                </Alert.Root>
               )}
             </EntityFormLayout.Form>
-          </Inner>
+          </Body>
           <Footer>
-            {isCreate && (
-              <Button variant="outline" onClick={() => onBack?.()}>
-                Back
-              </Button>
-            )}
-            <Button onClick={() => rootForm.submitForm()}>{isCreate ? 'Submit' : 'Apply changes'}</Button>
+            <ButtonLayout.Root>
+              {isCreate && !!onBack && (
+                <ButtonLayout.Secondary>
+                  <Button variant="outline" onClick={onBack}>
+                    Back
+                  </Button>
+                </ButtonLayout.Secondary>
+              )}
+              <ButtonLayout.Primary>
+                <Button loading={isLoading} onClick={() => rootForm.submitForm()}>
+                  {isCreate ? 'Submit' : 'Apply changes'}
+                </Button>
+              </ButtonLayout.Primary>
+            </ButtonLayout.Root>
           </Footer>
         </Content>
       )}

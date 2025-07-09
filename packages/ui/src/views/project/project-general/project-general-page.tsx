@@ -4,18 +4,19 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import {
   Alert,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
   FormSeparator,
   FormWrapper,
-  Icon,
+  IconV2,
   Legend,
   SkeletonForm,
-  Textarea
+  Text
 } from '@/components'
-import { SandboxLayout, TranslationStore, TypesSpace } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout, TypesSpace } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -27,7 +28,6 @@ interface ProjectSettingsGeneralPageProps {
   isUpdateSuccess: boolean
   updateError: string | null
   setOpenDeleteDialog: () => void
-  useTranslationStore: () => TranslationStore
 }
 
 const projectSettingsSchema = z.object({
@@ -44,10 +44,9 @@ export const ProjectSettingsGeneralPage = ({
   isUpdating,
   isUpdateSuccess,
   updateError,
-  setOpenDeleteDialog,
-  useTranslationStore
+  setOpenDeleteDialog
 }: ProjectSettingsGeneralPageProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const formMethods = useForm<ProjectSettingsGeneralFields>({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onSubmit',
@@ -57,13 +56,7 @@ export const ProjectSettingsGeneralPage = ({
     }
   })
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors }
-  } = formMethods
+  const { register, handleSubmit, reset, setValue } = formMethods
 
   const [submitted, setSubmitted] = useState(false)
 
@@ -109,9 +102,9 @@ export const ProjectSettingsGeneralPage = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
-        <h2 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+        <Text as="h2" variant="heading-section" color="foreground-1" className="mb-10">
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
-        </h2>
+        </Text>
 
         {isLoading && <SkeletonForm />}
 
@@ -120,38 +113,33 @@ export const ProjectSettingsGeneralPage = ({
             <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
               <Fieldset>
                 {/* PROJECT NAME */}
-                <ControlGroup>
-                  <FormInput.Text
-                    id="identifier"
-                    {...register('identifier')}
-                    placeholder={t('views:projectSettings.general.projectNamePlaceholder', 'Enter project name')}
-                    label={t('views:projectSettings.general.projectNameLabel', 'Project name')}
-                    // TODO: backend is not ready to update project name
-                    disabled
-                  />
-                </ControlGroup>
+                <FormInput.Text
+                  id="identifier"
+                  {...register('identifier')}
+                  placeholder={t('views:projectSettings.general.projectNamePlaceholder', 'Enter project name')}
+                  label={t('views:projectSettings.general.projectNameLabel', 'Project name')}
+                  // TODO: backend is not ready to update project name
+                  disabled
+                />
 
                 {/* IDENTIFIER/DESCRIPTION */}
-                <ControlGroup>
-                  <Textarea
-                    id="description"
-                    {...register('description')}
-                    placeholder={t('views:projectSettings.general.projectDescriptionPlaceholder', 'Enter description')}
-                    optional
-                    label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
-                    error={errors?.description?.message?.toString()}
-                  />
-                </ControlGroup>
+                <FormInput.Textarea
+                  id="description"
+                  {...register('description')}
+                  placeholder={t('views:projectSettings.general.projectDescriptionPlaceholder', 'Enter description')}
+                  optional
+                  label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
+                />
 
                 {updateError && (
-                  <Alert.Container variant="destructive">
+                  <Alert.Root theme="danger">
                     <Alert.Title>{updateError}</Alert.Title>
-                  </Alert.Container>
+                  </Alert.Root>
                 )}
 
                 {/*BUTTON CONTROL: SAVE & CANCEL*/}
                 <ControlGroup type="button">
-                  <ButtonGroup spacing="3">
+                  <ButtonLayout horizontalAlign="start">
                     {!submitted ? (
                       <>
                         <Button type="submit">
@@ -166,10 +154,10 @@ export const ProjectSettingsGeneralPage = ({
                     ) : (
                       <Button variant="ghost" type="button" theme="success" className="pointer-events-none">
                         {t('views:projectSettings.general.formSubmitButton.savedState', 'Saved')}&nbsp;&nbsp;
-                        <Icon name="tick" size={14} />
+                        <IconV2 name="check" size="xs" />
                       </Button>
                     )}
-                  </ButtonGroup>
+                  </ButtonLayout>
                 </ControlGroup>
               </Fieldset>
             </FormWrapper>

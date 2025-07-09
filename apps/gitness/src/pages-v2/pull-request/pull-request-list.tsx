@@ -12,7 +12,6 @@ import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters }
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useLabelsStore } from '../project/stores/labels-store'
 import { usePopulateLabelStore } from '../repo/labels/hooks/use-populate-label-store'
@@ -102,7 +101,6 @@ export default function PullRequestListPage() {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
-      useTranslationStore={useTranslationStore}
       onFilterOpen={(filterValues: keyof PRListFilters) => {
         if (filterValues === 'label_by') {
           setPopulateLabelStore(true)

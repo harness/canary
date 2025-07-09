@@ -154,37 +154,28 @@ const PipelineStudioYamlView = (): JSX.Element => {
     }
   }, [yamlRevision])
 
-  const yamlEditor = useMemo(() => {
-    return (
-      <YamlEditor
-        instanceId="pipeline-yaml"
-        onYamlRevisionChange={value => {
-          currentYamlRef.current = value?.yaml
-          onYamlRevisionChange(value ?? { yaml: '', revisionId: 0 })
-        }}
-        yamlRevision={newYamlRef.current}
-        themeConfig={themeConfig}
-        theme={theme}
-        schemaConfig={schemaConfig}
-        inlineActions={inlineActions}
-        // selection={selection}
-        animateOnUpdate={animateOnUpdate}
-        onAnimateEnd={onAnimateEnd}
-      />
-    )
-  }, [themeConfig, theme, schemaConfig, inlineActions, animateOnUpdate, onAnimateEnd])
-
-  return useMemo(() => {
-    //   const selection = highlightInYamlPath
-    //     ? { path: highlightInYamlPath, className: 'bg-cn-background-4', revealInCenter: true }
-    //     : undefined
-
-    return (
+  return useMemo(
+    () => (
       <div className="flex size-full" style={{ paddingTop: `${HEADER_HEIGHT}px` }}>
-        {yamlEditor}
+        <YamlEditor
+          instanceId="pipeline-yaml"
+          onYamlRevisionChange={value => {
+            currentYamlRef.current = value?.yaml
+            onYamlRevisionChange(value ?? { yaml: '', revisionId: 0 })
+          }}
+          yamlRevision={newYamlRef.current}
+          themeConfig={themeConfig}
+          theme={theme}
+          schemaConfig={schemaConfig}
+          inlineActions={inlineActions}
+          // selection={selection}
+          animateOnUpdate={animateOnUpdate}
+          onAnimateEnd={onAnimateEnd}
+        />
       </div>
-    )
-  }, [reRenderYamlEditor, themeConfig, schemaConfig, theme, animateOnUpdate, onAnimateEnd]) // inlineActions, highlightInYamlPath
+    ),
+    [reRenderYamlEditor, themeConfig, schemaConfig, theme, animateOnUpdate, onAnimateEnd]
+  )
 }
 
 export { PipelineStudioYamlView }

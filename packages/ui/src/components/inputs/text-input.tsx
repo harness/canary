@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react'
+import { forwardRef, ReactNode, useMemo } from 'react'
 
 import { ControlGroup, FormCaption, Label } from '@/components'
 
@@ -11,10 +11,11 @@ export interface TextInputProps extends InputProps {
   error?: string
   warning?: string
   optional?: boolean
+  labelSuffix?: ReactNode
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
-  const { label, optional, caption, error, warning, wrapperClassName, ...restProps } = props
+  const { label, labelSuffix, optional, caption, error, warning, wrapperClassName, disabled, ...restProps } = props
 
   // override theme based on error and warning
   const theme = error ? 'danger' : warning ? 'warning' : props.theme
@@ -25,19 +26,23 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   return (
     <ControlGroup className={wrapperClassName}>
       {!!label && (
-        <Label disabled={props.disabled} optional={optional} htmlFor={inputId}>
+        <Label disabled={disabled} optional={optional} htmlFor={inputId} suffix={labelSuffix}>
           {label}
         </Label>
       )}
 
-      <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} />
+      <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} disabled={disabled} />
 
       {error ? (
-        <FormCaption theme="danger">{error}</FormCaption>
+        <FormCaption disabled={disabled} theme="danger">
+          {error}
+        </FormCaption>
       ) : warning ? (
-        <FormCaption theme="warning">{warning}</FormCaption>
+        <FormCaption disabled={disabled} theme="warning">
+          {warning}
+        </FormCaption>
       ) : caption ? (
-        <FormCaption>{caption}</FormCaption>
+        <FormCaption disabled={disabled}>{caption}</FormCaption>
       ) : null}
     </ControlGroup>
   )

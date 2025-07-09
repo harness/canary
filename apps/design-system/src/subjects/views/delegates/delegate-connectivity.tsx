@@ -1,4 +1,3 @@
-import { useTranslationStore } from '@utils/viewUtils'
 import { defaultTo } from 'lodash-es'
 
 import { DelegateConnectivityList, SandboxLayout } from '@harnessio/ui/views'
@@ -18,7 +17,6 @@ const DelegateConnectivityWrapper = (): JSX.Element => (
           groupCustomSelectors: delegate.groupCustomSelectors || [],
           groupImplicitSelectors: [...Object.keys(defaultTo(delegate.groupImplicitSelectors, {}))]
         }))}
-        useTranslationStore={useTranslationStore}
         isLoading={false}
         selectedTags={[]}
         isDelegateSelected={isDelegateSelected}

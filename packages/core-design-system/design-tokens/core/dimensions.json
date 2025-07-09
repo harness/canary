@@ -56,9 +56,17 @@
       "$type": "spacing",
       "$value": "56px"
     },
+    "15": {
+      "$type": "spacing",
+      "$value": "60px"
+    },
     "16": {
       "$type": "spacing",
       "$value": "64px"
+    },
+    "17": {
+      "$type": "spacing",
+      "$value": "68px"
     },
     "20": {
       "$type": "spacing",
@@ -179,6 +187,10 @@
       "$type": "borderRadius",
       "$value": "24px"
     },
+    "px": {
+      "$type": "borderRadius",
+      "$value": "1px"
+    },
     "none": {
       "$type": "borderRadius",
       "$value": "0px",
@@ -247,9 +259,17 @@
       "$type": "sizing",
       "$value": "56px"
     },
+    "15": {
+      "$type": "sizing",
+      "$value": "60px"
+    },
     "16": {
       "$type": "sizing",
       "$value": "64px"
+    },
+    "17": {
+      "$type": "sizing",
+      "$value": "68px"
     },
     "20": {
       "$type": "sizing",
@@ -319,6 +339,14 @@
       "$type": "sizing",
       "$value": "384px"
     },
+    "6-half": {
+      "$type": "sizing",
+      "$value": "26px"
+    },
+    "11-half": {
+      "$type": "sizing",
+      "$value": "46px"
+    },
     "px": {
       "$type": "sizing",
       "$value": "1px"
@@ -377,26 +405,29 @@
     }
   },
   "iconSize": {
-    "xs": {
+    "2xs": {
       "$type": "sizing",
       "$value": "{size.3}"
     },
-    "sm": {
+    "xs": {
       "$type": "sizing",
       "$value": "{size.3-half}"
     },
-    "default": {
+    "sm": {
       "$type": "sizing",
       "$value": "{size.4}"
     },
     "md": {
       "$type": "sizing",
-      "$value": "{size.4-half}"
+      "$value": "{size.5}"
     },
     "lg": {
       "$type": "sizing",
-      "$value": "{size.8}",
-      "$description": "\n"
+      "$value": "{size.8}"
+    },
+    "xl": {
+      "$type": "sizing",
+      "$value": "{size.10}"
     }
   },
   "opacity": {
@@ -439,6 +470,21 @@
     "90": {
       "$type": "opacity",
       "$value": "0.9"
+    }
+  },
+  "logoSize": {
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.5}"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "{size.8}"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "{size.11}",
+      "$description": "\n"
     }
   }
 }

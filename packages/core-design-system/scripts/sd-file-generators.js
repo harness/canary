@@ -18,7 +18,7 @@ export const generateCoreFiles = ({ destination, type, format }) => [
     format,
     filter: lchColorsFilter,
     options: {
-      outputReferences: true,
+      outputReferences: false,
       selector: `:root, :host`
     }
   },

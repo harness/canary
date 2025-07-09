@@ -852,7 +852,7 @@ export const repoFilesStore: RepoFilesStoreType = {
     'packages/ui/src/icons/wrench-icon.svg',
     'packages/ui/src/icons/x-mark.svg',
     'packages/ui/src/index.ts',
-    'packages/ui/src/styles.css',
+    'packages/ui/src/styles/styles.css',
     'packages/ui/src/types/index.ts',
     'packages/ui/src/utils/CanaryOutletFactory.ts',
     'packages/ui/src/utils/cn.ts',

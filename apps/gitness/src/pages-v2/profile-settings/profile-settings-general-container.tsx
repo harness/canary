@@ -9,7 +9,6 @@ import {
 } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext.tsx'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 export const SettingsProfileGeneralPage: FC = () => {
@@ -73,7 +72,6 @@ export const SettingsProfileGeneralPage: FC = () => {
     <>
       <SettingsAccountGeneralPage
         useProfileSettingsStore={useProfileSettingsStore}
-        useTranslationStore={useTranslationStore}
         isLoadingUser={isLoadingUser}
         isUpdatingUser={isUpdatingUser}
         isUpdatingPassword={isUpdatingPassword}

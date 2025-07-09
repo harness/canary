@@ -15,15 +15,17 @@ import { DocsPage } from "@/components/docs-page";
     const [group1Value, setGroup1Value] = React.useState('option1');
     const [group2Value, setGroup2Value] = React.useState('');
     const [group3Value, setGroup3Value] = React.useState('option2');
+    const [group4Value, setGroup4Value] = React.useState('option1');
 
     return (
       <div className="flex flex-col space-y-8">
         {/* Standard usage */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Standard usage</h4>
+
           <Radio.Root
             value={group1Value}
             onValueChange={setGroup1Value}
+            label="Standard usage"
           >
             <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
             <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
@@ -33,23 +35,32 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Optional */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Optional</h4>
+
           <Radio.Root
             value={group2Value}
             onValueChange={setGroup2Value}
+            label="Optional usage"
           >
-            <Radio.Item value="option1" label="Option 1" caption="This field is optional" optional />
+            <Radio.Item value="option1" label="Option 1" caption="This field is optional" showOptionalLabel />
           </Radio.Root>
         </div>
 
         {/* Disabled */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Disabled</h4>
           <Radio.Root
             value={group3Value}
             onValueChange={setGroup3Value}
+            label="Disabled radio"
           >
             <Radio.Item value="option1" label="Option 1" caption="This option is disabled" disabled />
+            <Radio.Item value="option2" label="Option 2" />
+          </Radio.Root>
+        </div>
+
+        {/* Error */}
+        <div className="space-y-2">
+          <Radio.Root label="Error radio" error>
+            <Radio.Item value="option1" label="Option 1" />
             <Radio.Item value="option2" label="Option 2" />
           </Radio.Root>
         </div>
@@ -96,7 +107,7 @@ function Example() {
         value={group2Value}
         onValueChange={setGroup2Value}
       >
-        <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" optional />
+        <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" showOptionalLabel />
       </Radio.Root>
 
       {/* Disabled */}
@@ -128,7 +139,7 @@ The `Radio.Root` provides the necessary context for managing grouped selections.
     value="option1"            // [REQUIRED] The value of the radio button
     label="Option 1"           // [OPTIONAL] Label displayed next to the radio button
     caption="This is option 1" // [OPTIONAL] Caption displayed under the label
-    optional                   // [OPTIONAL] Indicates if the field is optional
+    showOptionalLabel          // [OPTIONAL] Indicates if the field displays an optional label
     disabled                   // [OPTIONAL] Whether the radio button is disabled
     className="custom-class"   // [OPTIONAL] Additional class names for the radio button
   />
@@ -162,8 +173,8 @@ The `Radio.Root` provides the necessary context for managing grouped selections.
       value: "string",
     },
     {
-      name: "optional",
-      description: "Indicates if the field is optional.",
+      name: "showOptionalLabel",
+      description: "Indicates if the field displays an optional label.",
       required: false,
       value: "boolean",
       defaultValue: "false",

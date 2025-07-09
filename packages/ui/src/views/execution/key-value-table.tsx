@@ -18,14 +18,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
         return (
           <ul className="flex flex-row border-b align-middle" key={index}>
             <li className="text-studio-7 w-1/2 py-2.5 pr-2.5" style={{ paddingLeft: `${level + 1}rem` }}>
-              <Text size={2} weight="normal">
-                {item.name}
-              </Text>
+              <Text>{item.name}</Text>
             </li>
             <li className="text-studio-7 w-1/2 py-2.5 pl-1.5 pr-2.5">
-              <Text size={2} weight="normal">
-                {item.value}
-              </Text>
+              <Text>{item.value}</Text>
             </li>
           </ul>
         )
@@ -46,9 +42,7 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
                   paddingLeft: `${level + 1}rem`
                 }}
               >
-                <Text size={2} weight="normal" className={specTitleStyle}>
-                  {item.name}
-                </Text>
+                <Text className={specTitleStyle}>{item.name}</Text>
               </Accordion.Trigger>
               <Accordion.Content className={accordionContentStyle}>
                 {renderListItems(item.value, level + 1)}
@@ -67,14 +61,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
         return (
           <Table.Row key={index} className="border-b">
             <Table.Cell className="w-1/2 py-2.5 pl-5">
-              <Text size={2} weight="normal" className="text-studio-7">
-                {item.name}
-              </Text>
+              <Text className="text-studio-7">{item.name}</Text>
             </Table.Cell>
             <Table.Cell className="w-1/2 py-2.5">
-              <Text size={2} weight="normal" className="text-studio-7">
-                {item.value}
-              </Text>
+              <Text className="text-studio-7">{item.value}</Text>
             </Table.Cell>
           </Table.Row>
         )
@@ -85,9 +75,7 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
               <Accordion.Root type="single" collapsible defaultValue={item.name} indicatorPosition="left">
                 <Accordion.Item value={item.name} className="border-0">
                   <Accordion.Trigger className="px-4">
-                    <Text size={2} weight="normal" className={specTitleStyle}>
-                      {item.name}
-                    </Text>
+                    <Text className={specTitleStyle}>{item.name}</Text>
                   </Accordion.Trigger>
                   <Accordion.Content className={accordionContentStyle}>{renderListItems(item.value)}</Accordion.Content>
                 </Accordion.Item>
@@ -105,12 +93,12 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
       <Table.Header>
         <Table.Row>
           <Table.Head className="py-3">
-            <Text size={2} weight="semibold" className="text-cn-foreground-1">
+            <Text variant="heading-small" color="foreground-1">
               {tableTitleName}
             </Text>
           </Table.Head>
           <Table.Head className="py-3">
-            <Text size={2} weight="semibold" className="text-cn-foreground-1">
+            <Text variant="heading-small" color="foreground-1">
               {tableTitleVal}
             </Text>
           </Table.Head>

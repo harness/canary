@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, CopyButton, Dialog, TextInput } from '@/components'
-import { TranslationStore } from '@/views'
+import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
+import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -12,7 +12,6 @@ interface RoutingProps {
 interface CloneCredentialDialogProps extends Partial<RoutingProps> {
   open: boolean
   onClose: () => void
-  useTranslationStore: () => TranslationStore
   tokenData: {
     identifier: string
     lifetime: string
@@ -31,64 +30,61 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
   open,
   onClose,
   navigateToManageToken,
-  tokenData,
-  useTranslationStore
+  tokenData
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   useForm<TCloneCredentialsDialog>({
     resolver: zodResolver(formSchema),
     defaultValues: tokenData
   })
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-xl">
+      <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</Dialog.Title>
         </Dialog.Header>
-        <div className="flex flex-col gap-y-7">
-          {/* NAME */}
+        <Dialog.Body>
+          <div className="flex flex-col gap-y-7">
+            {/* NAME */}
 
-          <TextInput
-            className="py-px"
-            id="identifier"
-            label={t('views:repos.name')}
-            value={tokenData?.identifier}
-            readOnly
-            suffix={<CopyButton iconSize={14} name={tokenData?.identifier} />}
-          />
+            <TextInput
+              className="truncate py-px"
+              id="identifier"
+              label={t('views:repos.name')}
+              value={tokenData?.identifier}
+              readOnly
+              suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={tokenData?.identifier} />}
+            />
 
-          <TextInput
-            className="py-px"
-            id="lifetime"
-            label={t('views:repos.expiration')}
-            value={tokenData?.lifetime}
-            readOnly
-          />
+            <TextInput
+              className="py-px"
+              id="lifetime"
+              label={t('views:repos.expiration')}
+              value={tokenData?.lifetime}
+              readOnly
+            />
 
-          {/* Expiration Info */}
-          <TextInput
-            className="truncate py-px"
-            id="token"
-            label={t('views:repos.token')}
-            value={tokenData?.token}
-            readOnly
-            suffix={<CopyButton iconSize={14} name={tokenData?.token} />}
-            autoFocus
-          />
+            {/* Expiration Info */}
+            <TextInput
+              className="truncate py-px"
+              id="token"
+              label={t('views:repos.token')}
+              value={tokenData?.token}
+              readOnly
+              suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={tokenData?.token} />}
+              autoFocus
+            />
 
-          <span>{t('views:repos.cloneCredGenerated')}</span>
-        </div>
+            <span>{t('views:repos.cloneCredGenerated')}</span>
+          </div>
+        </Dialog.Body>
         <Dialog.Footer>
-          <ButtonGroup>
-            <>
-              <Button variant="outline" onClick={onClose}>
-                Close
-              </Button>
-              <Button type="button" onClick={() => navigateToManageToken?.()}>
-                {t('views:repos.manageAPIToken')}
-              </Button>
-            </>
-          </ButtonGroup>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose}>Close</Dialog.Close>
+            <Button type="button" onClick={() => navigateToManageToken?.()}>
+              {t('views:repos.manageAPIToken')}
+            </Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

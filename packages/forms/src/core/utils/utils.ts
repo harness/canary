@@ -2,23 +2,28 @@ import { get, set } from 'lodash-es'
 
 import type { AnyFormikValue, IFormDefinition, IInputDefinition } from '../../types/types'
 
-export const getDefaultValuesFromFormDefinition = (inputs: IFormDefinition): AnyFormikValue => {
+export const getDefaultValuesFromFormDefinition = (formDef: IFormDefinition): AnyFormikValue => {
   const defaultValues: AnyFormikValue = {}
 
-  // TODO: this implementation is wrong
-  inputs?.inputs?.forEach(input => {
-    // add default for nested (group),
-    if (input.inputType === 'group') {
-      input?.inputs?.forEach(input => {
-        if (typeof get(defaultValues, input.path) === 'undefined') {
-          set(defaultValues, input.path, input.default)
+  const populateDefaults = (inputs: IInputDefinition[]) => {
+    inputs.forEach(input => {
+      const { path, default: def, inputType, inputs: children } = input
+
+      if ((inputType === 'group' || inputType === 'accordion') && Array.isArray(children)) {
+        // dive into nested group/accordion
+        populateDefaults(children)
+      } else {
+        // leaf field – only set if not already defined
+        if (get(defaultValues, path) === undefined) {
+          set(defaultValues, path, def)
         }
-      })
-    }
-    if (typeof get(defaultValues, input.path) === 'undefined') {
-      set(defaultValues, input.path, input.default)
-    }
-  })
+      }
+    })
+  }
+
+  if (Array.isArray(formDef.inputs)) {
+    populateDefaults(formDef.inputs)
+  }
 
   return defaultValues
 }

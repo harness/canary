@@ -1,8 +1,8 @@
-import { Accordion, Icon, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, IconV2, StackedList, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
+import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
-import { timeDistance } from '@utils/utils'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 
@@ -34,14 +34,14 @@ const PullRequestCheckSection = ({
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <Icon name="pending-clock" className="text-icons-alert" />
+        return <IconV2 name="clock-solid" className="text-icons-alert" />
       case ExecutionState.RUNNING:
-        return <Icon name="comments" className="text-cn-foreground-warning" />
+        return <IconV2 name="message" className="text-cn-foreground-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+        return <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
       default:
-        return <Icon name="success" className="text-cn-foreground-success" />
+        return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     }
   }
 
@@ -63,10 +63,10 @@ const PullRequestCheckSection = ({
             <div key={check.check?.id} className={cn('flex items-center justify-between gap-2 border-t py-2.5')}>
               <div className="flex items-center gap-2">
                 {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                <Text size={1} color="primary" truncate className="max-w-[300px] overflow-hidden">
+                <Text color="foreground-1" truncate className="max-w-[300px] overflow-hidden">
                   {check?.check?.identifier}
                 </Text>
-                <Text size={1} color="tertiaryBackground">
+                <Text color="foreground-3">
                   {check?.check?.status === ExecutionState.SUCCESS
                     ? `Succeeded in ${time}`
                     : check?.check?.status === ExecutionState.FAILURE
@@ -102,18 +102,14 @@ const PullRequestCheckSection = ({
                         }) || ''
                       }
                     >
-                      <Text size={1} color="tertiaryBackground">
-                        Details
-                      </Text>
+                      <Text color="foreground-3">Details</Text>
                     </Link>
                   )}
                 </div>
                 <div className="col-span-1 flex justify-end">
                   {check?.check?.status === ExecutionState.PENDING ? (
                     <StatusBadge variant="outline" size="sm">
-                      <Text size={1} color="tertiaryBackground">
-                        Required
-                      </Text>
+                      <Text color="foreground-3">Required</Text>
                     </StatusBadge>
                   ) : (
                     <div className="min-w-[70px]"></div>

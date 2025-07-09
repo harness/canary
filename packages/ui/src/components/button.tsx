@@ -4,7 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 
 const buttonVariants = cva('cn-button', {
   variants: {
@@ -18,8 +18,8 @@ const buttonVariants = cva('cn-button', {
       transparent: 'cn-button-transparent'
     },
     size: {
-      default: '',
-      lg: 'cn-button-lg',
+      md: '',
+      xs: 'cn-button-xs',
       sm: 'cn-button-sm'
     },
     rounded: {
@@ -77,7 +77,8 @@ const buttonVariants = cva('cn-button', {
   ],
   defaultVariants: {
     variant: 'primary',
-    size: 'default'
+    size: 'md',
+    theme: 'default'
   }
 })
 
@@ -99,7 +100,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       className,
       variant = 'primary',
-      size = 'default',
+      size = 'md',
       theme = 'default',
       rounded,
       iconOnly,
@@ -107,6 +108,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       loading,
       disabled,
       children,
+      type = 'button',
       ...props
     },
     ref
@@ -115,7 +117,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const _children = loading ? (
       <>
-        {loading && <Icon className="animate-spin" name="spinner" />}
+        {loading && <IconV2 className="animate-spin" name="loader" />}
         {children}
       </>
     ) : (
@@ -127,7 +129,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({
             variant: variant || 'primary',
-            size: size || 'default',
+            size: size || 'md',
             theme: theme || 'default',
             rounded,
             iconOnly,
@@ -136,6 +138,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         disabled={disabled || loading}
+        type={type}
         {...props}
       >
         {_children}

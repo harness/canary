@@ -1,11 +1,12 @@
 import { ReactNode } from 'react'
 
-import { Button, Icon } from '@/components'
-import FilterSelect, { FilterSelectAddIconLabel } from '@components/filters/filter-select'
+import { Button, IconV2 } from '@/components'
+import { useTranslation } from '@/context'
+import { renderFilterSelectAddIconLabel } from '@components/filters/filter-select'
 import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
 import { FilterOptionConfig } from '@components/filters/types'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknown>> {
   openedFilter: string | undefined
@@ -22,7 +23,6 @@ interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknow
   renderFilterOptions: (
     filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<Extract<keyof T, string>>) => ReactNode
   ) => ReactNode
-  t: TFunction
 }
 
 interface FilterOptionsRendererProps<T> {
@@ -38,17 +38,17 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   sortSelectionsCnt,
   renderSelectedSort,
   setOpenedFilter,
-  t,
   renderSelectedFilters,
   renderFilterOptions
 }: FiltersBarProps<T, V, CustomValue>) => {
+  const { t } = useTranslation()
+
   const filtersFieldRenderer = (
     props: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
   ) => (
     <FiltersField<Extract<keyof T, string>, V, CustomValue>
       {...props}
       shouldOpenFilter={props.filterOption.value === openedFilter}
-      t={t}
     />
   )
 
@@ -58,19 +58,25 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
     availableFilters
   }: FilterOptionsRendererProps<Extract<keyof T, string>>) => (
     <>
-      <FilterSelect
+      <SearchableDropdown
         options={filterOptions.filter(option => availableFilters.includes(option.value))}
         dropdownAlign="start"
         onChange={(option: { value: any }) => {
           addFilter(option.value)
           setOpenedFilter(option.value)
         }}
+        onReset={() => resetFilters()}
         inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
         buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-        displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
+        displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
       />
-      <Button size="sm" variant="ghost" onClick={resetFilters} className="gap-x-1.5 hover:text-cn-foreground-danger">
-        <Icon className="rotate-45" name="plus" size={12} />
+      <Button
+        size="sm"
+        variant="transparent"
+        onClick={() => resetFilters()}
+        className="hover:text-cn-foreground-danger"
+      >
+        <IconV2 name="xmark" size="2xs" />
         {t('component:filter.reset', 'Reset')}
       </Button>
     </>

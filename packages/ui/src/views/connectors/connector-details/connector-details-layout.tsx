@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { Tabs } from '@components/index'
 
@@ -10,11 +11,10 @@ const ConnectorDetailsLayout = ({
   connectorDetails,
   onTest,
   onDelete,
-  useTranslationStore,
   children,
   toConnectorsList
 }: ConnectorDetailsLayoutProps) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<ConnectorDetailsTabsKeys>(ConnectorDetailsTabsKeys.CONFIGURATION)
 
   const handleTabChange = (tab: string) => {
@@ -28,7 +28,6 @@ const ConnectorDetailsLayout = ({
             connectorDetails={connectorDetails}
             onTest={onTest}
             onDelete={onDelete}
-            useTranslationStore={useTranslationStore}
             toConnectorsList={toConnectorsList}
           />
           <Tabs.Root
@@ -37,7 +36,7 @@ const ConnectorDetailsLayout = ({
             value={activeTab}
             onValueChange={handleTabChange}
           >
-            <Tabs.List className="before:left-1/2 before:w-[calc(100vw-var(--sidebar-width)-6px*2)] before:min-w-[calc(100%+3rem)] before:-translate-x-1/2">
+            <Tabs.List variant="overlined" className="-mx-8 px-8">
               <Tabs.Trigger value={ConnectorDetailsTabsKeys.CONFIGURATION}>
                 {t('views:connectors.configuration', 'Configuration')}
               </Tabs.Trigger>

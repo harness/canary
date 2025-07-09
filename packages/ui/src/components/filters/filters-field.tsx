@@ -1,11 +1,12 @@
+import { useMemo } from 'react'
+
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
-import { TFunction } from 'i18next'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import { default as MulltiSelect } from './filters-bar/actions/variants/checkbox'
+import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -24,7 +25,6 @@ export interface FiltersFieldProps<
 > {
   filterOption: FilterOptionConfig<T, CustomValue>
   removeFilter: () => void
-  t: TFunction
   valueLabel?: string
   shouldOpenFilter: boolean
   onOpenChange?: (open: boolean) => void
@@ -32,11 +32,19 @@ export interface FiltersFieldProps<
   value?: V
 }
 
-const renderFilterValues = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>(
-  filter: FilterField<V>,
-  filterOption: FilterOptionConfig<T, CustomValue>,
+interface FilterFieldProps<T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>> {
+  filter: FilterField<V>
+  filterOption: FilterOptionConfig<T, CustomValue>
   onUpdateFilter: (selectedValues: V) => void
-): JSX.Element | null => {
+}
+
+const FilterFieldInternal = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
+  filter,
+  filterOption,
+  onUpdateFilter
+}: FilterFieldProps<T, V, CustomValue>): JSX.Element | null => {
+  const uniqId = useMemo(() => `filter-${Math.random().toString(36).slice(2, 11)}`, [])
+
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
@@ -61,7 +69,7 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
     case FilterFieldTypes.MultiSelect: {
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
-        <MulltiSelect
+        <MultiSelectFilter
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}
@@ -77,14 +85,16 @@ const renderFilterValues = <T extends string, V extends FilterValueTypes, Custom
     }
     case FilterFieldTypes.Checkbox: {
       const checkboxFilter = filter as FilterField<boolean>
+      const checkboxId = `checkbox-${uniqId}`
       return (
-        <Button variant="secondary" theme="default" className="cursor-pointer" asChild>
-          <Label className="gap-x-3">
-            <Checkbox
-              className="pb-1"
-              checked={checkboxFilter.value}
-              onCheckedChange={value => onUpdateFilter(value as V)}
-            />
+        // TODO Need to remove button once we get the designs for checkbox filter
+        <Button variant="secondary" theme="default" className="gap-x-2.5">
+          <Checkbox
+            id={checkboxId}
+            checked={checkboxFilter.value}
+            onCheckedChange={value => onUpdateFilter(value as V)}
+          />
+          <Label className="grid-cols-none" htmlFor={checkboxId}>
             <span>{filterOption.filterFieldConfig?.label}</span>
           </Label>
         </Button>
@@ -100,7 +110,6 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   removeFilter,
   shouldOpenFilter,
   onOpenChange,
-  t,
   onChange,
   value
 }: FiltersFieldProps<T, V, CustomValue>) => {
@@ -114,20 +123,29 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   }
 
   if (filterOption.type === FilterFieldTypes.Checkbox) {
-    return renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange) ?? null
+    return (
+      <FilterFieldInternal<T, V, CustomValue>
+        filter={activeFilterOption}
+        filterOption={filterOption}
+        onUpdateFilter={onFilterValueChange}
+      />
+    )
   }
 
   return (
     <FilterBoxWrapper
       contentClassName={filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : ''}
       handleRemoveFilter={() => removeFilter()}
-      t={t}
       onOpenChange={onOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
       valueLabel={getFilterLabelValue(filterOption, activeFilterOption)}
     >
-      {renderFilterValues<T, V, CustomValue>(activeFilterOption, filterOption, onFilterValueChange) ?? null}
+      <FilterFieldInternal<T, V, CustomValue>
+        filter={activeFilterOption}
+        filterOption={filterOption}
+        onUpdateFilter={onFilterValueChange}
+      />
     </FilterBoxWrapper>
   )
 }

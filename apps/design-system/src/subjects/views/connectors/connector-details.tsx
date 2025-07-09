@@ -1,26 +1,25 @@
 import { getHarnessConnectorDefinition } from '@utils/connectors/utils'
-import { useTranslationStore } from '@utils/viewUtils'
 import { noop } from 'lodash-es'
 
 import { InputFactory } from '@harnessio/forms'
 import { Tabs } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
+  CardsFormInput,
   ConnectorDetailsActivities,
   ConnectorDetailsConfiguration,
   ConnectorDetailsItem,
   ConnectorDetailsLayout,
   ConnectorDetailsReference,
   ConnectorDetailsTabsKeys,
-  GroupInput,
-  ListInput,
-  NumberInput,
-  RadialInput,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  GroupFormInput,
+  ListFormInput,
+  NumberFormInput,
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 import { mockConnectorActivityList } from './mock-connector-activity-list'
@@ -28,16 +27,16 @@ import mockConnectorDetails from './mock-connector-details.json'
 import { mockConnectorRefList } from './mock-connector-ref-list'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
-inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
+inputComponentFactory.registerComponent(new ListFormInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 
 const ConnectorsDetailsPageWrapper = (): JSX.Element => {
   const connectorDetails = {
@@ -66,7 +65,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       connectorDetails={connectorDetails}
       onTest={noop}
       onDelete={noop}
-      useTranslationStore={useTranslationStore}
       toConnectorsList={() => '/connectors'}
     >
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
@@ -75,7 +73,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           onSave={noop}
           inputComponentFactory={inputComponentFactory}
           getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
-          useTranslationStore={useTranslationStore}
           apiError={''}
         />
       </Tabs.Content>
@@ -86,21 +83,21 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
           entities={mockConnectorRefList}
           searchQuery={''}
           apiConnectorRefError={undefined}
-          useTranslationStore={useTranslationStore}
           isLoading={false}
           setSearchQuery={noop}
           currentPage={1}
-          totalPages={1}
+          totalItems={100}
+          pageSize={10}
           goToPage={noop}
         />
       </Tabs.Content>
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.ACTIVITY}>
         <ConnectorDetailsActivities
-          useTranslationStore={useTranslationStore}
           isLoading={false}
           activities={mockConnectorActivityList}
           currentPage={1}
-          totalPages={1}
+          totalItems={100}
+          pageSize={10}
           goToPage={noop}
         />
       </Tabs.Content>

@@ -1,26 +1,68 @@
 {
-  "cellHeight": {
-    "single": {
-      "$type": "sizing",
-      "$value": "{size.12}"
+  "table": {
+    "cell": {
+      "min": {
+        "normal": {
+          "$type": "sizing",
+          "$value": "{size.11-half}"
+        },
+        "compact": {
+          "$type": "sizing",
+          "$value": "{size.10}"
+        },
+        "relaxed": {
+          "$type": "sizing",
+          "$value": "{size.15}"
+        }
+      },
+      "py": {
+        "normal": {
+          "$type": "spacing",
+          "$value": "{spacing.3}"
+        },
+        "compact": {
+          "$type": "spacing",
+          "$value": "{spacing.2-half}"
+        },
+        "relaxed": {
+          "$type": "spacing",
+          "$value": "{spacing.5}"
+        }
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
     },
-    "double": {
-      "$type": "sizing",
-      "$value": "{size.16}"
-    }
-  },
-  "cell": {
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.4}"
+    "header": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "min": {
+        "$type": "sizing",
+        "$value": "{size.11-half}"
+      }
     },
-    "py": {
-      "$type": "spacing",
-      "$value": "{spacing.3}"
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
     },
-    "gap": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
     }
   }
 }

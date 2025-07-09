@@ -3,7 +3,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Button,
-  Icon,
+  IconV2,
   ListActions,
   MoreActionsTooltip,
   NoData,
@@ -13,18 +13,17 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { useRouterContext } from '@/context'
-import { ErrorTypes, RuleDataType, TranslationStore } from '@/views'
-import { TFunction } from 'i18next'
+import { useRouterContext, useTranslation } from '@/context'
+import { ErrorTypes, RuleDataType } from '@/views'
 
 interface DescriptionProps {
   targetPatternsCount: number
   rulesAppliedCount: number
   bypassAllowed: boolean
-  t: TFunction
 }
 
-const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed, t }) => {
+const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
+  const { t } = useTranslation()
   return (
     <div className="flex items-center gap-1.5 pl-6 text-sm">
       {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
@@ -34,12 +33,12 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
-            <Icon className="text-icons-success" name="tick" size={12} />
+            <IconV2 className="text-icons-success" name="check" size="2xs" />
             <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
           </>
         ) : (
           <>
-            <Icon className="text-icons-danger" name="x-mark" size={12} />
+            <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
             <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
           </>
         )}
@@ -53,7 +52,6 @@ export interface RepoSettingsGeneralRulesProps {
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   rulesSearchQuery?: string
   setRulesSearchQuery?: (query: string) => void
@@ -65,14 +63,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   apiError,
   handleRuleClick,
   openRulesAlertDeleteDialog,
-  useTranslationStore,
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
   projectScope = false
 }) => {
   const { Link, NavLink } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   const handleSearchChange = useCallback(
     (val: string) => {
@@ -93,9 +90,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     <>
       {!projectScope ? (
         <>
-          <Text size={13} weight="medium" className="mb-2.5" as="div">
-            {t('views:repos.rules', 'Rules')}
-          </Text>
+          <Text className="mb-2.5">{t('views:repos.rules', 'Rules')}</Text>
 
           <div className="flex flex-row">
             <span className="max-w-[440px]">
@@ -154,9 +149,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                         title={
                           <div className="flex items-center gap-2">
                             {rule.state === 'active' ? (
-                              <Icon className="text-icons-success" name="tick-circle" />
+                              <IconV2 className="text-icons-success" name="check-circle" />
                             ) : (
-                              <Icon className="text-icons-9" name="cancel-grey" />
+                              <IconV2 className="text-icons-9" name="minus-circle" />
                             )}
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                           </div>
@@ -166,7 +161,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             targetPatternsCount={rule.targetPatternsCount ?? 0}
                             rulesAppliedCount={rule.rulesAppliedCount ?? 0}
                             bypassAllowed={rule.bypassAllowed ?? false}
-                            t={t}
                           />
                         }
                       />
@@ -221,9 +215,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <>
               <Spacer size={2} />
-              <Text size={1} className="text-cn-foreground-danger">
-                {apiError.message}
-              </Text>
+              <Text color="danger">{apiError.message}</Text>
             </>
           )}
         </>

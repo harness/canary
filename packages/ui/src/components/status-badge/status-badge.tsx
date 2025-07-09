@@ -1,3 +1,4 @@
+import { IconNameMapV2, IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -11,7 +12,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
       status: 'cn-badge-status'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-badge-sm'
     },
 
@@ -26,7 +27,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'default',
+    size: 'md',
     theme: 'muted'
   }
 })
@@ -36,7 +37,8 @@ type BadgeBaseProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
 > & {
-  size?: 'default' | 'sm'
+  size?: 'sm' | 'md'
+  icon?: keyof typeof IconNameMapV2
 }
 
 // Status theme props (variant is required)
@@ -44,6 +46,7 @@ type StatusBadgeStatusVariantProps = BadgeBaseProps & {
   theme?: VariantProps<typeof statusBadgeVariants>['theme']
   variant: 'status'
   pulse?: boolean
+  icon?: never
 }
 
 // Other theme props (variant is required)
@@ -56,7 +59,7 @@ type StatusBadgeOtherThemeProps = BadgeBaseProps & {
 // Combined props using discriminated union
 export type StatusBadgeProps = StatusBadgeOtherThemeProps | StatusBadgeStatusVariantProps
 
-function StatusBadge({ className, variant, size, pulse, theme = 'muted', children, ...props }: StatusBadgeProps) {
+function StatusBadge({ className, variant, size, pulse, theme = 'muted', children, icon, ...props }: StatusBadgeProps) {
   const isStatusVariant = variant === 'status'
 
   return (
@@ -74,6 +77,7 @@ function StatusBadge({ className, variant, size, pulse, theme = 'muted', childre
       {isStatusVariant && (
         <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
       )}
+      {icon && <IconV2 skipSize className="cn-badge-icon" name={icon} />}
       {children}
     </div>
   )

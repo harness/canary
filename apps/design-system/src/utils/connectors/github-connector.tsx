@@ -12,11 +12,10 @@ export const GITHUB_CONNECTOR_CATEOGRY = 'Code Repository'
 
 const inputs: IInputConfigWithConfigInterface[] = [
   {
-    inputType: 'radio',
+    inputType: 'cards',
     path: 'githubType',
     label: 'GitHub Type',
     inputConfig: {
-      inputType: 'radio',
       options: [
         { label: 'Cloud', value: 'Cloud', description: 'Connect to Github Cloud', id: 'cloud', title: 'Cloud' },
         {

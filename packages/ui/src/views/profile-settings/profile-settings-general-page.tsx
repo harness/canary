@@ -5,21 +5,23 @@ import {
   Alert,
   Avatar,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
   FormSeparator,
   FormWrapper,
-  Icon,
-  Legend
+  IconV2,
+  Legend,
+  Text
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
-import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout, TranslationStore } from '@/views'
+import { TFunctionWithFallback, useTranslation } from '@/context'
+import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const makeProfileSchema = (t: TranslationStore['t']) =>
+const makeProfileSchema = (t: TFunctionWithFallback) =>
   z.object({
     name: z
       .string()
@@ -45,7 +47,7 @@ const makeProfileSchema = (t: TranslationStore['t']) =>
       })
   })
 
-const makePasswordSchema = (t: TranslationStore['t']) =>
+const makePasswordSchema = (t: TFunctionWithFallback) =>
   z
     .object({
       newPassword: z
@@ -81,7 +83,6 @@ interface SettingsAccountGeneralPageProps {
   onUpdateUser: (data: Omit<ProfileFields, 'username'>) => void
   onUpdatePassword: (data: PasswordFields) => void
   useProfileSettingsStore: () => IProfileSettingsStore
-  useTranslationStore: () => TranslationStore
 }
 
 const SUCCESS_MESSAGE_DURATION = 2000
@@ -95,10 +96,9 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
   passwordUpdateSuccess,
   error,
   onUpdateUser,
-  onUpdatePassword,
-  useTranslationStore
+  onUpdatePassword
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { userData } = useProfileSettingsStore()
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
@@ -174,16 +174,16 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   const renderErrorMessage = (type: ProfileSettingsErrorType, message: string) =>
     error?.type === type && (
-      <Alert.Container variant="destructive">
+      <Alert.Root theme="danger">
         <Alert.Title>{message}</Alert.Title>
-      </Alert.Container>
+      </Alert.Root>
     )
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <h1 className="mb-10 text-6 font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {t('views:profileSettings.accountSettings', 'Account settings')}
-      </h1>
+      </Text>
 
       {isLoadingUser && <SkeletonForm />}
 
@@ -228,7 +228,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             {renderErrorMessage(ProfileSettingsErrorType.PROFILE, error?.message || '')}
 
             <ControlGroup type="button">
-              <ButtonGroup>
+              <ButtonLayout horizontalAlign="start">
                 {!profileSubmitted ? (
                   <Button
                     type="submit"
@@ -241,10 +241,10 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </FormWrapper>
 
@@ -282,7 +282,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             {renderErrorMessage(ProfileSettingsErrorType.PASSWORD, error?.message || '')}
 
             <ControlGroup type="button">
-              <ButtonGroup>
+              <ButtonLayout>
                 {!passwordSubmitted ? (
                   <Button type="submit" disabled={isUpdatingPassword}>
                     {isUpdatingPassword
@@ -292,10 +292,10 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
-              </ButtonGroup>
+              </ButtonLayout>
             </ControlGroup>
           </FormWrapper>
         </>

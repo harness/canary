@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Command } from '@components/command'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { debounce } from 'lodash-es'
 
 export interface ComboBoxOptions {
@@ -54,7 +54,7 @@ export default function ComboBox({
           }}
         >
           <div className="mx-2 flex size-4 items-center">
-            {value === selectedFilterValue && <Icon name="tick" size={12} className="text-cn-foreground-1" />}
+            {value === selectedFilterValue && <IconV2 name="check" size="2xs" className="text-cn-foreground-1" />}
           </div>
           {label}
         </Command.Item>

@@ -13,22 +13,19 @@ export const harnessConnectors: AnyConnectorDefinition[] = [
     type: 'Github',
     name: GITHUB_CONNECTOR_IDENTIFIER,
     category: GITHUB_CONNECTOR_CATEOGRY,
-    formDefinition: githubConnectorFormDefinition,
-    icon: 'github'
+    formDefinition: githubConnectorFormDefinition
   },
   {
     type: 'Terraform',
     name: TERRAFORM_CONNECTOR_IDENTIFIER,
     category: TERRAFORM_CONNECTOR_CATEGORY,
-    formDefinition: terraformConnectorFormDefinition,
-    icon: 'terraform'
+    formDefinition: terraformConnectorFormDefinition
   },
   {
     type: 'AwsKms',
     name: AWS_KMS_CONNECTOR_IDENTIFIER,
     category: AWS_KMS_CONNECTOR_CATEGORY,
-    formDefinition: awsKmsConnectorFormDefinition,
-    icon: 'awskms'
+    formDefinition: awsKmsConnectorFormDefinition
   }
 ]
 export interface ConnectorDefinitionOptions {

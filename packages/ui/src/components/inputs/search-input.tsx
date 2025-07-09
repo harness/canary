@@ -1,6 +1,6 @@
 import { ChangeEvent, forwardRef, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 import { debounce as debounceFn } from 'lodash-es'
 
@@ -60,7 +60,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         onChange={handleInputChange}
         prefix={
           <div className="grid w-8 place-items-center border-r-0">
-            <Icon name="search" size={12} />
+            <IconV2 name="search" size="sm" />
           </div>
         }
         placeholder={placeholder}

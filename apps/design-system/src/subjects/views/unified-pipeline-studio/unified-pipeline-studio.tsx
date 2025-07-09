@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { Drawer } from '@harnessio/ui/components'
 import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/ui/views'
@@ -12,9 +12,13 @@ import { useTemplateListStore } from './template-list.store'
 
 const PipelineStudioViewWrapper = () => {
   const [yamlRevision, onYamlRevisionChange] = useState<YamlRevision>({ yaml: pipeline1 })
-  const [selectedPath, onSelectedPathChange] = useState<string | undefined>()
+  const [selectedPath, onSelectedPathChange] = useState<{
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }>({})
 
-  const [panelOpen, onPanelOpenChange] = useState<boolean>(true)
+  const [panelOpen, onPanelOpenChange] = useState<boolean>(false)
   const [errors, onErrorsChange] = useState<UnifiedPipelineStudioProps['errors']>({
     isYamlValid: true,
     problems: [],
@@ -28,7 +32,6 @@ const PipelineStudioViewWrapper = () => {
   return (
     <>
       <UnifiedPipelineStudio
-        useTranslationStore={useTranslationStore}
         useTemplateListStore={useTemplateListStore}
         yamlRevision={yamlRevision}
         onYamlRevisionChange={onYamlRevisionChange}
@@ -44,19 +47,18 @@ const PipelineStudioViewWrapper = () => {
         setView={setView}
         view={view}
         onRun={() => setRunPipelineOpen(true)}
+        enableSplitView={true}
       />
-      <Drawer.Lazy
-        unmountOnClose={true}
+      <Drawer.Root
         open={runPipelineOpen}
         onOpenChange={isOpen => {
           if (!isOpen) {
             setRunPipelineOpen(false)
           }
         }}
-        direction="right"
       >
         <RunPipelineDrawerContent onClose={() => setRunPipelineOpen(false)} />
-      </Drawer.Lazy>
+      </Drawer.Root>
     </>
   )
 }

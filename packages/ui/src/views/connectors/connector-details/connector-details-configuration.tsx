@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
-import { Layout } from '@/components'
+import { Layout, Text } from '@/components'
+import { useTranslation } from '@/context'
 
 import { ConnectorEntityForm } from '../connector-entity-form'
 import { EntityIntent } from '../types'
@@ -11,19 +12,17 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
   onSave,
   inputComponentFactory,
   getConnectorDefinition,
-  useTranslationStore,
   apiError
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   return (
-    <Layout.Vertical gap="space-y-8">
-      <h1 className="text-5 font-medium leading-snug tracking-tight text-cn-foreground-1">
+    <Layout.Vertical gap="xl">
+      <Text as="h1" variant="heading-subsection" color="foreground-1">
         {t('views:common.details', 'Details')}
-      </h1>
+      </Text>
       <ConnectorEntityForm
         connector={connectorDetails}
         intent={EntityIntent.EDIT}
-        useTranslationStore={useTranslationStore}
         onFormSubmit={onSave}
         inputComponentFactory={inputComponentFactory}
         getConnectorDefinition={getConnectorDefinition}

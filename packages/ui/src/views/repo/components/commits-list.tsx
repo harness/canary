@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
+import { Avatar, Button, CommitCopyActions, IconV2, NodeGroup, StackedList } from '@/components'
 import { useRouterContext } from '@/context'
-import { formatDate } from '@/utils/utils'
+import { formatDate, timeAgo } from '@/utils'
 import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
@@ -44,6 +44,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                 {commitData.map((commit, repo_idx) => {
                   const authorName = commit.author?.identity?.name
                   const avatarUrl = commit.author?.identity?.avatarUrl
+                  const when = commit.committer?.when ?? ''
 
                   return (
                     <StackedList.Item
@@ -77,7 +78,9 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                               <div className="flex items-center gap-x-1.5">
                                 {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
                                 <span className="text-cn-foreground-3">{authorName || ''}</span>
-                                <span className="text-cn-foreground-2">committed on {date}</span>
+                                <span className="text-cn-foreground-2">
+                                  committed on {timeAgo(when, { dateStyle: 'medium' })}
+                                </span>
                               </div>
                             </div>
                           }
@@ -96,7 +99,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                   navigate(toCode?.({ sha: commit?.sha || '' }) || '')
                                 }}
                               >
-                                <Icon name="code-brackets" />
+                                <IconV2 name="code-brackets" />
                               </Button>
                             </div>
                           }

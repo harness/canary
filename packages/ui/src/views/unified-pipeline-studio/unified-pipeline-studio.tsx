@@ -1,10 +1,7 @@
 import { IFormDefinition, InputFactory } from '@harnessio/forms'
 
-import { TranslationStore } from '..'
-import { UnifiedPipelineStudioNodeContextProvider } from './components/graph-implementation/context/UnifiedPipelineStudioNodeContext'
 import { Yaml2PipelineGraphOptions } from './components/graph-implementation/utils/yaml-to-pipeline-graph'
 import { AnyStepDefinition } from './components/steps/types'
-import { PipelineStudioNodeContextMenu } from './components/unified-pipeline-studio-node-context-menu'
 import { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'
 import { VisualYamlValue } from './components/visual-yaml-toggle'
 import { lastCommitInfoType, UnifiedPipelineStudioProvider } from './context/unified-pipeline-studio-context'
@@ -21,17 +18,18 @@ export interface ITemplateListStore {
   templates: ITemplateListItem[] | null
   templatesError?: Error
   setTemplatesData: (data: ITemplateListItem[] | null, totalPages: number) => void
-  totalPages: number
   page: number
-  xNextPage: number
-  xPrevPage: number
-  setPage: (page: number, query: string) => void
+  setPage: (page: number) => void
+  totalItems: number
+  pageSize: number
+  searchQuery: string
+  setSearchQuery: (query: string) => void
   getTemplateFormDefinition: (identifierWithVersion: string) => Promise<IFormDefinition>
+  isLoading: boolean
 }
 
 export interface UnifiedPipelineStudioProps {
   useTemplateListStore: () => ITemplateListStore
-  useTranslationStore: () => TranslationStore
   view: VisualYamlValue
   setView: (view: VisualYamlValue) => void
   yamlRevision: YamlRevision
@@ -45,8 +43,16 @@ export interface UnifiedPipelineStudioProps {
   loadInProgress?: boolean
   inputComponentFactory?: InputFactory
   stepsDefinitions?: AnyStepDefinition[]
-  selectedPath?: string
-  onSelectedPathChange: (path: string) => void
+  selectedPath?: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }
+  onSelectedPathChange: (props: {
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }) => void
   errors: YamlErrorDataType
   onErrorsChange?: (errors: YamlErrorDataType) => void
   panelOpen: boolean
@@ -56,14 +62,15 @@ export interface UnifiedPipelineStudioProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
+  enableSplitView?: boolean
   stageFormDefinition?: IFormDefinition
+  pipelineFormDefinition?: IFormDefinition
 }
 
 export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.Element => {
   const {
     view,
     setView,
-    useTranslationStore,
     useTemplateListStore,
     yamlRevision,
     onYamlRevisionChange,
@@ -87,7 +94,9 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     hideSaveBtn,
     yamlParserOptions,
     lastCommitInfo,
-    stageFormDefinition
+    enableSplitView,
+    stageFormDefinition,
+    pipelineFormDefinition
   } = props
 
   return (
@@ -106,7 +115,6 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       onErrorsChange={onErrorsChange}
       panelOpen={panelOpen}
       onPanelOpenChange={onPanelOpenChange}
-      useTranslationStore={useTranslationStore}
       useTemplateListStore={useTemplateListStore}
       view={view}
       setView={setView}
@@ -119,13 +127,15 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       hideSaveBtn={hideSaveBtn}
       yamlParserOptions={yamlParserOptions}
       lastCommitInfo={lastCommitInfo}
+      enableSplitView={enableSplitView}
       stageFormDefinition={stageFormDefinition}
+      pipelineFormDefinition={pipelineFormDefinition}
     >
-      <UnifiedPipelineStudioNodeContextProvider>
-        {/* TODO: Loading... */}
-        {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
-        <PipelineStudioNodeContextMenu />
-      </UnifiedPipelineStudioNodeContextProvider>
+      {/* <UnifiedPipelineStudioNodeContextProvider> */}
+      {/* TODO: Loading... */}
+      {loadInProgress ? 'Loading...' : <PipelineStudioInternal />}
+      {/* <PipelineStudioNodeContextMenu />
+      </UnifiedPipelineStudioNodeContextProvider> */}
     </UnifiedPipelineStudioProvider>
   )
 }

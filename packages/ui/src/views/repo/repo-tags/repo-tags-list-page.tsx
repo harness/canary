@@ -1,6 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
@@ -8,7 +9,6 @@ import { cn } from '@utils/cn'
 import { RepoTagsList } from './components/repo-tags-list'
 
 export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
-  useTranslationStore,
   isLoading,
   openCreateBranchDialog,
   openCreateTagDialog,
@@ -18,7 +18,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   useRepoTagsStore,
   toCommitDetails
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
 
   const { search, handleSearchChange } = useDebounceSearch({
@@ -35,6 +35,14 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
+  const getPrevPageLink = useCallback(() => {
+    return `?page=${xPrevPage}`
+  }, [xPrevPage])
+
+  const getNextPageLink = useCallback(() => {
+    return `?page=${xNextPage}`
+  }, [xNextPage])
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content
@@ -46,7 +54,9 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         {!isLoading && (!!tagsList.length || isDirtyList) && (
           <>
             <Spacer size={2} />
-            <h1 className="text-2xl font-medium text-cn-foreground-1">{t('views:repos.tags', 'Tags')}</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1">
+              {t('views:repos.tags', 'Tags')}
+            </Text>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
@@ -60,7 +70,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Button onClick={openCreateTagDialog}>{t('views:repos.newTag', 'New tag')}</Button>
+                <Button onClick={openCreateTagDialog}>{t('views:repos.newTag', 'New Tag')}</Button>
               </ListActions.Right>
             </ListActions.Root>
 
@@ -70,7 +80,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
         <RepoTagsList
           onDeleteTag={onDeleteTag}
-          useTranslationStore={useTranslationStore}
           useRepoTagsStore={useRepoTagsStore}
           toCommitDetails={toCommitDetails}
           onOpenCreateBranchDialog={openCreateBranchDialog}
@@ -83,7 +92,13 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         <Spacer size={5} />
 
         {!isLoading && (
-          <Pagination currentPage={page} nextPage={xNextPage} previousPage={xPrevPage} goToPage={setPage} t={t} />
+          <Pagination
+            indeterminate
+            hasNext={xNextPage > 0}
+            hasPrevious={xPrevPage > 0}
+            getNextPageLink={getNextPageLink}
+            getPrevPageLink={getPrevPageLink}
+          />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

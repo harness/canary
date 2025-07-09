@@ -5,16 +5,17 @@ import {
   Accordion,
   Alert,
   Button,
-  ButtonGroup,
+  ButtonLayout,
   ControlGroup,
   Fieldset,
   FormInput,
   FormWrapper,
   Input,
   Spacer,
-  Textarea
+  Text
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -54,7 +55,6 @@ interface CreateSecretProps {
   prefilledFormData?: SecretDataType
   onFormSubmit: (data: CreateSecretFormFields) => void
   onFormCancel: () => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   apiError: string | null
   connectorInput: React.ReactElement
@@ -63,13 +63,12 @@ interface CreateSecretProps {
 export function CreateSecretPage({
   onFormSubmit,
   onFormCancel,
-  useTranslationStore,
   isLoading = false,
   apiError = null,
   prefilledFormData,
   connectorInput
 }: CreateSecretProps) {
-  const { t: _t } = useTranslationStore()
+  const { t: _t } = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const formMethods = useForm<CreateSecretFormFields>({
@@ -177,9 +176,9 @@ export function CreateSecretPage({
           )}
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
             <div>
-              <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-cn-foreground-2">
+              <Text<'label'> as="label" htmlFor="secret-file-input" className="mb-2.5 block" variant="body-strong">
                 Secret File
-              </label>
+              </Text>
               <div
                 className="rounded-md border-2 border-dashed border-cn-borders-2 p-4"
                 onDragOver={handleDragOver}
@@ -188,9 +187,7 @@ export function CreateSecretPage({
                 <div className="flex flex-col items-center justify-center">
                   {!selectedFile ? (
                     <>
-                      <p className="mb-2 text-sm text-cn-foreground-2">
-                        Drag and drop your file here or click to browse
-                      </p>
+                      <Text className="mb-2">Drag and drop your file here or click to browse</Text>
                       <Button type="button" variant="outline" onClick={openFileInput}>
                         Browse Files
                       </Button>
@@ -198,9 +195,9 @@ export function CreateSecretPage({
                   ) : (
                     <div className="flex w-full flex-col">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-cn-foreground-2">
+                        <Text as="span">
                           Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
-                        </span>
+                        </Text>
                         <div className="flex gap-2">
                           <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
                             Change
@@ -215,7 +212,9 @@ export function CreateSecretPage({
                 </div>
               </div>
               {errors.file && (
-                <div className="mt-1 text-sm text-cn-foreground-danger">{errors.file.message?.toString()}</div>
+                <Text color="danger" className="mt-1">
+                  {errors.file.message?.toString()}
+                </Text>
               )}
             </div>
           )}
@@ -225,12 +224,11 @@ export function CreateSecretPage({
               <Accordion.Content>
                 <Fieldset className="rounded-md border p-4">
                   {/* DESCRIPTION */}
-                  <Textarea
+                  <FormInput.Textarea
                     id="description"
                     {...register('description')}
                     placeholder="Enter a description of this secret"
                     label="Description"
-                    error={errors.description?.message?.toString()}
                     optional
                   />
                   {/* TAGS */}
@@ -249,21 +247,25 @@ export function CreateSecretPage({
         </Fieldset>
 
         {apiError && (
-          <Alert.Container variant="destructive" className="mb-8">
+          <Alert.Root theme="danger" className="mb-8">
             <Alert.Description>{apiError?.toString()}</Alert.Description>
-          </Alert.Container>
+          </Alert.Root>
         )}
 
         <div className="absolute inset-x-0 bottom-0 bg-cn-background-2 p-4 shadow-md">
           <ControlGroup>
-            <ButtonGroup className="flex flex-row justify-between">
-              <Button type="button" variant="secondary" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading ? 'Save' : 'Saving...'}
-              </Button>
-            </ButtonGroup>
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
+                <Button type="submit" disabled={isLoading}>
+                  {!isLoading ? 'Save' : 'Saving...'}
+                </Button>
+              </ButtonLayout.Primary>
+              <ButtonLayout.Secondary>
+                <Button type="button" variant="secondary" onClick={handleCancel}>
+                  Cancel
+                </Button>
+              </ButtonLayout.Secondary>
+            </ButtonLayout.Root>
           </ControlGroup>
         </div>
 

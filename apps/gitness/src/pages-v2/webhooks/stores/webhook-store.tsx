@@ -7,21 +7,19 @@ import { PageResponseHeader } from '../../../types'
 
 export const useWebhookStore = create<WebhookStore>(set => ({
   webhooks: null,
-  totalPages: 0,
+  totalItems: 0,
+  pageSize: 10,
   error: undefined,
   preSetWebhookData: null,
   setError: error => set({ error }),
   page: 1,
   webhookExecutionPage: 1,
-  totalWebhookExecutionPages: 0,
   setPage: page => set({ page }),
   webhookLoading: false,
   executions: null,
   executionId: null,
   setWebhookLoading: (webhookLoading: boolean) => set({ webhookLoading }),
   setWebhookExecutionPage: page => set({ webhookExecutionPage: page }),
-  setTotalWebhookExecutionPages: headers =>
-    set({ totalWebhookExecutionPages: parseInt(headers.get(PageResponseHeader.xTotalPages) || '0') }),
   setWebhooks: data => {
     const transformedWebhooks = data.map(webhook => ({
       id: webhook.id || 0,
@@ -49,8 +47,11 @@ export const useWebhookStore = create<WebhookStore>(set => ({
         : [...(state.executions ?? []), updatedExecution]
     }))
   },
-
-  setTotalPages: headers => set({ totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0') }),
+  setPaginationFromHeaders: (headers: Headers | undefined) =>
+    set({
+      totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) || '0'),
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
+    }),
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => set({ preSetWebhookData: data }),
   setExecutionId: (id: number | null) => set({ executionId: id })
 }))

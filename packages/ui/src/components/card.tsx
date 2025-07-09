@@ -7,8 +7,8 @@ const cardVariants = cva('cn-card', {
   variants: {
     size: {
       sm: 'cn-card-sm',
-      default: 'cn-card-default',
-      md: 'cn-card-md'
+      md: 'cn-card-md',
+      lg: 'cn-card-lg'
     },
     orientation: {
       vertical: 'cn-card-vertical',
@@ -28,7 +28,7 @@ const cardVariants = cva('cn-card', {
     }
   },
   defaultVariants: {
-    size: 'default',
+    size: 'md',
     orientation: 'vertical',
     position: 'start',
     selected: false,
@@ -37,7 +37,6 @@ const cardVariants = cva('cn-card', {
 })
 
 export interface CardRootProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
-  size?: 'sm' | 'default' | 'md'
   children: ReactNode
 }
 
@@ -45,7 +44,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
   (
     {
       className,
-      size = 'default',
+      size = 'md',
       selected = false,
       disabled = false,
       orientation = 'vertical',

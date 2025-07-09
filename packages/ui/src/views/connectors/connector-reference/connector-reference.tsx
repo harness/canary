@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Button, ButtonGroup, Icon, Logo, StackedList } from '@/components'
+import { Alert, Button, ButtonLayout, IconV2, LogoV2, StackedList } from '@/components'
 import { ConnectorItem, connectorRefFilters, DirectionEnum, EntityReference, EntityRendererProps } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -71,13 +71,19 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={
           connectorLogo ? (
-            <Logo name={connectorLogo} size={14} />
+            <LogoV2 name={connectorLogo} size="sm" />
           ) : (
-            <Icon name="connectors" size={14} className="text-cn-foreground-3" />
+            <IconV2 name="connectors" size="xs" className="text-cn-foreground-3" />
           )
         }
       >
-        <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
+        <div title={entity.connector.name}>
+          <StackedList.Field
+            title={entity.connector.name}
+            description={entity.connector.description}
+            className="truncate overflow-hidden text-nowrap max-w-sm"
+          />
+        </div>
       </StackedList.Item>
     )
   }
@@ -101,17 +107,21 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         handleChangeSearchValue={handleChangeSearchValue}
       />
       {!!apiError && (
-        <Alert.Container variant="destructive" className="mt-4">
+        <Alert.Root theme="danger" className="mt-4">
           <Alert.Description>{apiError}</Alert.Description>
-        </Alert.Container>
+        </Alert.Root>
       )}
       {!isDrawer && (
-        <ButtonGroup>
-          <Button type="button" variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button type="submit">Save</Button>
-        </ButtonGroup>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button type="submit">Save</Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button type="button" variant="outline" onClick={onCancel}>
+              Cancel
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       )}
     </div>
   )

@@ -21,6 +21,7 @@ import { getNameBasedOnStep } from './step-name-utils'
 export interface Yaml2PipelineGraphOptions {
   getStepIcon?: (step: Record<string, any>) => JSX.Element
   getName?: (entityType: YamlEntityType, data: Record<string, any>, idx: number) => string
+  onlyStages?: boolean
 }
 
 export const yamlString2Nodes = (yaml: string, options: Yaml2PipelineGraphOptions = {}) => {
@@ -141,13 +142,13 @@ const processStages = (
           yamlEntityType: YamlEntityType.Stage,
           name
         } satisfies StageContentNodeDataType,
-        children: processSteps(stage.steps, childrenPath, options)
+        children: options.onlyStages ? [] : processSteps(stage.steps, childrenPath, options)
       } satisfies SerialContainerNodeType
     }
   })
 }
 
-const processSteps = (
+export const processSteps = (
   steps: any[],
   currentPath: string,
   options: Yaml2PipelineGraphOptions

@@ -1,13 +1,14 @@
 import { useState } from 'react'
 
 import { getHarnessConnectorDefinition, harnessConnectors } from '@utils/connectors/utils'
-import { noop, useTranslationStore } from '@utils/viewUtils'
+import { noop } from '@utils/viewUtils'
 
 import { InputFactory } from '@harnessio/forms'
-import { Button, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, FormSeparator, Spacer, Text } from '@harnessio/ui/components'
 import {
-  ArrayInput,
-  BooleanInput,
+  ArrayFormInput,
+  BooleanFormInput,
+  CardsFormInput,
   ConnectorEntity,
   ConnectorEntityForm,
   ConnectorHeader,
@@ -17,14 +18,13 @@ import {
   ConnectorsPalette,
   DirectionEnum,
   EntityIntent,
-  GroupInput,
-  ListInput,
-  NumberInput,
-  RadialInput,
-  SelectInput,
-  SeparatorInput,
-  TextAreaInput,
-  TextInput
+  GroupFormInput,
+  ListFormInput,
+  NumberFormInput,
+  SelectFormInput,
+  SeparatorFormInput,
+  TextareaFormInput,
+  TextFormInput
 } from '@harnessio/ui/views'
 
 import mockAccountsData from '../secrets/mock-account-data.json'
@@ -34,16 +34,16 @@ import { Scope, ScopeEnum, scopeHierarchy } from '../secrets/types'
 import mockConnectorsData from './mock-connectors-data.json'
 
 const inputComponentFactory = new InputFactory()
-inputComponentFactory.registerComponent(new TextInput())
-inputComponentFactory.registerComponent(new BooleanInput())
-inputComponentFactory.registerComponent(new NumberInput())
-inputComponentFactory.registerComponent(new ArrayInput())
-inputComponentFactory.registerComponent(new ListInput())
-inputComponentFactory.registerComponent(new TextAreaInput())
-inputComponentFactory.registerComponent(new GroupInput())
-inputComponentFactory.registerComponent(new SelectInput())
-inputComponentFactory.registerComponent(new SeparatorInput())
-inputComponentFactory.registerComponent(new RadialInput())
+inputComponentFactory.registerComponent(new TextFormInput())
+inputComponentFactory.registerComponent(new BooleanFormInput())
+inputComponentFactory.registerComponent(new NumberFormInput())
+inputComponentFactory.registerComponent(new ArrayFormInput())
+inputComponentFactory.registerComponent(new ListFormInput())
+inputComponentFactory.registerComponent(new TextareaFormInput())
+inputComponentFactory.registerComponent(new GroupFormInput())
+inputComponentFactory.registerComponent(new SelectFormInput())
+inputComponentFactory.registerComponent(new SeparatorFormInput())
+inputComponentFactory.registerComponent(new CardsFormInput())
 
 export const ConnectorsRefPage = ({
   isDrawerOpen,
@@ -113,17 +113,15 @@ export const ConnectorsRefPage = ({
           <div>
             {/* Render create connector flow from here */}
             <ConnectorsPalette
-              useTranslationStore={useTranslationStore}
               connectors={harnessConnectors}
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
             />
-            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} direction="right" nested>
-              <Drawer.Content nested>
+            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected}>
+              <Drawer.Content>
                 {!!connectorEntity && (
                   <ConnectorEntityForm
                     intent={EntityIntent.CREATE}
-                    useTranslationStore={useTranslationStore}
                     connector={connectorEntity}
                     onBack={() => setIsConnectorSelected(false)}
                     // onFormSubmit={handleFormSubmit}
@@ -169,16 +167,13 @@ export const ConnectorsRefPage = ({
   }
 
   return (
-    <Drawer.Root direction="right" open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+    <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <Drawer.Content>
         <Drawer.Header>
           <Drawer.Title>Connectors</Drawer.Title>
-          <Drawer.Close onClick={() => setIsDrawerOpen(false)} srOnly />
         </Drawer.Header>
-        <Drawer.Inner>
-          <Text as="div" className="text-cn-foreground-2 mb-4">
-            Choose type
-          </Text>
+        <Drawer.Body>
+          <Text className="mb-4">Choose type</Text>
           <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
 
           <Spacer size={5} />
@@ -186,12 +181,18 @@ export const ConnectorsRefPage = ({
           <Spacer size={5} />
 
           {renderConnectorContent()}
-        </Drawer.Inner>
+        </Drawer.Body>
         <Drawer.Footer>
-          <Button type="button" variant="outline" onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button>Save</Button>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button>Save</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Button type="button" variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>

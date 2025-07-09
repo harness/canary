@@ -1,84 +1,23 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import { PipelineNodesComponents } from '@/components'
-import { parse } from 'yaml'
 
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
 
 import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
-import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { parallelContainerConfig, serialContainerConfig } from './graph-implementation/config/config'
 import { contentNodeBank } from './graph-implementation/factory/content-node-bank'
-import { AddNodeDataType } from './graph-implementation/nodes/add-content-node'
-import { ContentNodeType } from './graph-implementation/types/content-node-type'
-import { YamlEntityType } from './graph-implementation/types/yaml-entity-type'
 
-const startNode = {
-  type: ContentNodeType.Start,
-  config: {
-    width: 40,
-    height: 40,
-    hideDeleteButton: true,
-    hideBeforeAdd: true,
-    hideLeftPort: true
-  },
-  data: {}
-} satisfies AnyContainerNodeType
-
-const endNode = {
-  type: ContentNodeType.End,
-  config: {
-    width: 40,
-    height: 40,
-    hideDeleteButton: true,
-    hideAfterAdd: true,
-    hideRightPort: true
-  },
-  data: {}
-} satisfies AnyContainerNodeType
-
-export const PipelineStudioGraphView = (): React.ReactElement => {
-  const { yamlRevision, yamlParserOptions } = useUnifiedPipelineStudioContext()
-
-  const [data, setData] = useState<AnyContainerNodeType[]>([])
-
-  useEffect(() => {
-    return () => {
-      setData([])
-    }
-  }, [])
-
-  useEffect(() => {
-    const yamlJson = parse(yamlRevision.yaml)
-    const newData = yaml2Nodes(yamlJson, yamlParserOptions)
-
-    if (newData.length === 0) {
-      newData.push({
-        type: ContentNodeType.Add,
-        data: {
-          yamlChildrenPath: 'pipeline.stages',
-          name: '',
-          yamlEntityType: YamlEntityType.SerialStageGroup,
-          yamlPath: ''
-        } satisfies AddNodeDataType
-      })
-    }
-
-    newData.unshift(startNode)
-    newData.push(endNode)
-    setData(newData)
-  }, [yamlRevision])
-
+export const PipelineStudioGraphView = ({ data }: { data: AnyContainerNodeType[] }): React.ReactElement => {
   const nodes = useMemo(() => {
     return contentNodeBank.getNodesDefinition()
   }, [])
 
   return (
-    <div className="relative flex grow bg-graph-bg-gradient bg-graph-bg-size">
+    <div className="relative flex h-full grow bg-graph-bg-gradient bg-graph-bg-size">
       <CanvasProvider>
         <PipelineGraph
           customCreateSVGPath={props => {

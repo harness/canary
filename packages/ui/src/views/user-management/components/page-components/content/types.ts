@@ -1,5 +1,6 @@
 export interface ContentProps {
-  totalPages: number
+  totalItems: number
+  pageSize: number
   currentPage: number
   setPage: (page: number) => void
 }

@@ -1,6 +1,4 @@
-import { Icon, ToggleGroup } from '@/components'
-import { useTheme } from '@/context'
-import { cn } from '@utils/cn'
+import { IconPropsV2, ToggleGroup } from '@/components'
 
 export type VisualYamlValue = 'visual' | 'yaml'
 
@@ -12,36 +10,35 @@ interface VisualYamlToggleProps {
 }
 
 export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
-  const { view, setView, isYamlValid, className } = props
-  const { isLightTheme } = useTheme()
+  const { view, setView, isYamlValid } = props
+
+  const onChange = (value: VisualYamlValue) => {
+    setView(value)
+  }
+
+  const prefixIcon = !isYamlValid ? 'xmark-circle-solid' : undefined
+
+  const prefixIconProps: IconPropsV2 | undefined = !isYamlValid
+    ? { name: 'xmark-circle-solid', className: 'text-cn-foreground-danger' }
+    : undefined
+
   return (
     <ToggleGroup.Root
-      className={cn(
-        'h-8 rounded-md border px-1 bg-cn-background-3 inline-flex',
-        isLightTheme ? 'border-cn-borders-5' : 'border-cn-borders-2',
-        className
-      )}
-      onValueChange={value => {
-        if (value) {
-          setView(value as VisualYamlValue)
-        }
-      }}
+      variant="ghost"
+      selectedVariant="secondary"
+      onChange={onChange as (value: string) => void}
       value={view}
-      type="single"
-      unselectable="on"
+      size="xs"
+      unselectable
     >
       <ToggleGroup.Item
         disabled={!isYamlValid}
         value="visual"
-        className="rounded text-2 disabled:opacity-100"
-        size="xs"
-      >
-        {!isYamlValid && <Icon name="fail-legacy" className="mr-1 text-cn-foreground-danger" />}
-        Visual
-      </ToggleGroup.Item>
-      <ToggleGroup.Item value="yaml" className="rounded text-2" size="xs">
-        YAML
-      </ToggleGroup.Item>
+        text="Visual"
+        prefixIcon={prefixIcon}
+        prefixIconProps={prefixIconProps}
+      />
+      <ToggleGroup.Item value="yaml" text="YAML" />
     </ToggleGroup.Root>
   )
 }

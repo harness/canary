@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon } from '@/components'
+import { IconV2 } from '@/components'
 import { PullRequestType } from '@/views'
 import { cn } from '@utils/cn'
 import { LabelsList } from '@views/repo/pull-request/components/labels'
@@ -18,8 +18,8 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex w-full max-w-[calc(100%-82px)] items-center justify-start gap-1.5">
-        <Icon
-          size={14}
+        <IconV2
+          size="xs"
           className={cn({
             'text-icons-success': state === 'open' && !isDraft,
             'text-icons-1': state === 'open' && isDraft,
@@ -36,7 +36,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
 
       {!!comments && (
         <div className="ml-auto flex items-center gap-1">
-          <Icon className="text-icons-7" size={16} name="comments" />
+          <IconV2 className="text-icons-7" name="message" />
           <span className="text-1 leading-none text-cn-foreground-1">{comments}</span>
         </div>
       )}

@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react'
 
-import { Button, Drawer, SkeletonList } from '@/components'
+import { Button, ButtonLayout, Drawer, SkeletonList } from '@/components'
 import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
-import { VisualYamlToggle, VisualYamlValue } from '..'
+import { PipelineInputDefinition, VisualYamlToggle, VisualYamlValue } from '..'
 import RunPipelineFormInputs from './run-pipeline-from-inputs'
+import { type InputLayout } from './utils/types'
 
 export interface RunPipelineDrawerProps {
   isValid: boolean
@@ -21,10 +22,11 @@ export interface RunPipelineDrawerProps {
   onCancel: () => void
   onClose?: () => void
   onRun: () => void
-  pipelineInputs: Record<string, unknown>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   inputComponentFactory: InputFactory
   theme: 'light' | 'dark'
   error?: { message?: string }
+  pipelineInputLayout?: InputLayout
 }
 
 export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
@@ -42,7 +44,8 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
     yamlRevision,
     inputComponentFactory,
     theme,
-    error
+    error,
+    pipelineInputLayout
   } = props
 
   const rootFormRef = useRef<{
@@ -53,14 +56,10 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
   const [allowDisableRun, setAllowDisableRun] = useState(false)
 
   return (
-    <Drawer.Content
-      //TODO: width
-      style={{ width: '500px' }}
-    >
+    <Drawer.Content>
       <Drawer.Header>
         <Drawer.Title>Run Pipeline</Drawer.Title>
         <VisualYamlToggle
-          className="self-start"
           isYamlValid={isYamlSyntaxValid}
           view={view}
           setView={view => {
@@ -70,7 +69,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
         />
       </Drawer.Header>
 
-      <Drawer.Inner viewportClassName={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
+      <Drawer.Body className={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
         {loading ? (
           <SkeletonList className="p-5" />
         ) : (
@@ -96,30 +95,37 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
               yamlRevision={yamlRevision}
               inputComponentFactory={inputComponentFactory}
               theme={theme}
+              pipelineInputLayout={pipelineInputLayout}
             />
           </div>
         )}
         {!!error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
-      </Drawer.Inner>
+      </Drawer.Body>
 
       <Drawer.Footer>
-        <Button
-          disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
-          loading={isExecutingPipeline}
-          onClick={() => {
-            if (view === 'visual') {
-              setAllowDisableRun(true)
-              rootFormRef.current?.submitForm()
-            } else {
-              onRun()
-            }
-          }}
-        >
-          Run pipeline
-        </Button>
-        <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
-          Cancel
-        </Button>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button
+              disabled={(allowDisableRun && !isValid) || !isYamlSyntaxValid}
+              loading={isExecutingPipeline}
+              onClick={() => {
+                if (view === 'visual') {
+                  setAllowDisableRun(true)
+                  rootFormRef.current?.submitForm()
+                } else {
+                  onRun()
+                }
+              }}
+            >
+              Run pipeline
+            </Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button onClick={onCancel} variant="secondary" disabled={isExecutingPipeline}>
+              Cancel
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       </Drawer.Footer>
     </Drawer.Content>
   )

@@ -1,4 +1,10 @@
 {
+  "alert": {
+    "close": "Close alert",
+    "contentRegion": "Alert content",
+    "showLess": "Show less",
+    "showMore": "Show more"
+  },
   "navbar": {
     "pin": "Pin",
     "remove": "Remove",
@@ -80,6 +86,9 @@
     "inputLabel": "To confirm, type",
     "cancel": "Cancel"
   },
+  "dropdownMenu": {
+    "noOptions": "No options available"
+  },
   "filter": {
     "delete": "Delete Filter",
     "inputPlaceholder": "Filter by...",
@@ -111,6 +120,11 @@
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
   },
+  "select": {
+    "placeholder": "Select an option",
+    "noResults": "No results found",
+    "noOptions": "No options available"
+  },
   "pagination": {
     "previous": "Previous",
     "next": "Next"
@@ -118,6 +132,9 @@
   "searchFile": {
     "input": "Search files...",
     "noFile": "No file found."
+  },
+  "widgets": {
+    "viewMore": "View more"
   },
   "sort": {
     "defaultLabel": "Sort",

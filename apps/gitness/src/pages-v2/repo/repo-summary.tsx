@@ -34,8 +34,6 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
@@ -247,7 +245,7 @@ export default function RepoSummaryPage() {
                 type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
                 name: item?.path || '',
                 lastCommitMessage: item?.last_commit?.message || '',
-                timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                timestamp: item?.last_commit?.author?.when ?? '',
                 user: { name: item?.last_commit?.author?.identity?.name || '' },
                 sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
                 path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
@@ -281,7 +279,7 @@ export default function RepoSummaryPage() {
     return {
       userName: author?.identity?.name || '',
       message: message || '',
-      timestamp: author?.when ? timeAgoFromISOTime(author.when) : '',
+      timestamp: author?.when ?? '',
       sha: sha ? getTrimmedSha(sha) : null
     }
   }, [repoDetails?.latest_commit])
@@ -320,7 +318,6 @@ export default function RepoSummaryPage() {
         updateRepoError={updateError}
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}
-        useTranslationStore={useTranslationStore}
         currentBranchDivergence={currBranchDivergence}
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
@@ -337,7 +334,7 @@ export default function RepoSummaryPage() {
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
-        toRepoCommits={() => routes.toRepoCommits({ spaceId, repoId, branchId: selectedBranchOrTag?.name })}
+        toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: selectedBranchOrTag?.name })}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}
@@ -348,7 +345,6 @@ export default function RepoSummaryPage() {
           onClose={() => setSuccessTokenDialog(false)}
           navigateToManageToken={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
           tokenData={createdTokenData}
-          useTranslationStore={useTranslationStore}
         />
       )}
     </>

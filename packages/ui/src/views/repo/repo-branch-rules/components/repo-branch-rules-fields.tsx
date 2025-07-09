@@ -1,57 +1,59 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 import {
-  Avatar,
   Button,
   Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
-  Icon,
+  IconV2,
   Input,
   Label,
   Message,
   MessageTheme,
   MultiSelect,
-  MultiSelectOptionType,
+  MultiSelectOption,
   SplitButton,
   StackedList,
-  Switch,
-  Textarea
+  Switch
 } from '@/components'
+import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
-export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root className="overflow-hidden" borderBackground>
-    <StackedList.Item
-      className="!rounded px-5 py-3"
-      disableHover
-      isHeader
-      isLast
-      actions={
-        <Switch
-          {...register!('state')}
-          checked={watch!('state')}
-          onCheckedChange={() => setValue!('state', !watch!('state'))}
+export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
+  const { t } = useTranslation()
+  return (
+    <StackedList.Root className="overflow-hidden" borderBackground>
+      <StackedList.Item
+        className="!rounded px-5 py-3"
+        disableHover
+        isHeader
+        isLast
+        actions={
+          <Switch
+            {...register!('state')}
+            checked={watch!('state')}
+            onCheckedChange={() => setValue!('state', !watch!('state'))}
+          />
+        }
+      >
+        <StackedList.Field
+          title={t('views:repos.enableRule', 'Enable the rule')}
+          description={t(
+            'views:repos.enableRuleDescription',
+            'By enabling the toggle, the branch rule will be enforced.'
+          )}
         />
-      }
-    >
-      <StackedList.Field
-        title={t('views:repos.enableRule', 'Enable the rule')}
-        description={t(
-          'views:repos.enableRuleDescription',
-          'By enabling the toggle, the branch rule will be enforced.'
-        )}
-      />
-    </StackedList.Item>
-  </StackedList.Root>
-)
+      </StackedList.Item>
+    </StackedList.Root>
+  )
+}
 
-export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({ register, disabled, t }) => (
-  <ControlGroup>
+export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({ register, disabled }) => {
+  const { t } = useTranslation()
+  return (
     <FormInput.Text
       id="name"
       label={t('views:repos.name', 'Name')}
@@ -60,22 +62,24 @@ export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }>
       autoFocus
       disabled={disabled}
     />
-  </ControlGroup>
-)
+  )
+}
 
-export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register, errors, t }) => (
-  <ControlGroup>
-    <Textarea
+export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register }) => {
+  const { t } = useTranslation()
+  return (
+    <FormInput.Textarea
       label={t('views:repos.description', 'Description')}
       id="description"
       {...register!('description')}
       placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
-      error={errors?.description?.message?.toString()}
     />
-  </ControlGroup>
-)
+  )
+}
 
-export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors, t }) => {
+export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors }) => {
+  const { t } = useTranslation()
+
   const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
 
   const patterns = watch!('patterns') || []
@@ -111,7 +115,6 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           />
           <SplitButton<PatternsButtonType>
             buttonClassName="px-0 w-full"
-            id="patterns-type"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
@@ -141,16 +144,16 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                 onClick={() => handleRemovePattern(pattern.pattern)}
               >
                 <span className="flex items-center gap-1">
-                  <Icon
+                  <IconV2
                     className={cn('text-icons-success', {
                       'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
                     })}
-                    name="circle-plus"
-                    size={10}
+                    name="plus-circle"
+                    size="2xs"
                   />
                   {pattern.pattern}
                 </span>
-                <Icon className="rotate-45" name="plus" size={10} />
+                <IconV2 name="xmark" size="2xs" />
               </Button>
             ))}
           </div>
@@ -158,11 +161,9 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
       </ControlGroup>
 
       <ControlGroup>
-        <Checkbox
+        <FormInput.Checkbox
           id="default-branch"
           {...register!('default')}
-          checked={watch!('default')}
-          onCheckedChange={() => setValue!('default', !watch!('default'))}
           label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
         />
 
@@ -172,14 +173,14 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
   )
 }
 
-const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
-  return (
-    <>
-      <Avatar name={option.display_name} src={option.avatar_url} rounded />
-      <span className="font-medium">{option.display_name}</span>
-    </>
-  )
-}
+// const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
+//   return (
+//     <>
+//       <Avatar name={option.display_name} src={option.avatar_url} rounded />
+//       <span className="font-medium">{option.display_name}</span>
+//     </>
+//   )
+// }
 
 export const BranchSettingsRuleBypassListField: FC<
   FieldProps & {
@@ -187,39 +188,14 @@ export const BranchSettingsRuleBypassListField: FC<
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
   }
-> = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
-  const selectedBypassUsers = watch!('bypass').map(user => ({
-    ...user,
-    label: user.display_name
-  }))
+> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+  const { t } = useTranslation()
 
-  const handleCheckboxChange = useCallback(
-    (option: MultiSelectOptionType<Partial<PrincipalType>>) => {
-      const selectedIds = selectedBypassUsers.map(it => it.id)
-
-      setValue!(
-        'bypass',
-        selectedIds.includes(Number(option.id))
-          ? selectedBypassUsers.filter(item => item.id !== option.id)
-          : [
-              ...selectedBypassUsers,
-              {
-                id: option.id,
-                display_name: option.label
-              }
-            ],
-        { shouldValidate: true }
-      )
-    },
-    [selectedBypassUsers, setValue]
-  )
-
-  const multiSelectOptions: MultiSelectOptionType<PrincipalType>[] = useMemo(() => {
+  const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
-        ...option,
         id: option.id!,
-        label: option.display_name
+        key: option.display_name
       })) || []
     )
   }, [bypassOptions])
@@ -227,27 +203,21 @@ export const BranchSettingsRuleBypassListField: FC<
   return (
     <Fieldset className="gap-y-4">
       <ControlGroup>
-        <Label className="mb-2" htmlFor="bypassValue">
-          {t('views:repos.bypassList', 'Bypass list')}
-        </Label>
-
-        <MultiSelect<PrincipalType>
-          selectedItems={selectedBypassUsers}
-          t={t}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
-          handleChange={handleCheckboxChange}
+        <FormInput.MultiSelect
+          label={t('views:repos.bypassList', 'Bypass list')}
+          name="bypass"
           options={multiSelectOptions}
-          searchValue={principalsSearchQuery}
-          handleChangeSearchValue={setPrincipalsSearchQuery}
-          customOptionElem={BranchSettingsRuleBypassListOption}
+          placeholder={t('views:repos.selectUsers', 'Select users')}
+          searchQuery={principalsSearchQuery}
+          setSearchQuery={setPrincipalsSearchQuery}
+          disallowCreation
+          error={errors?.bypass?.message?.toString()}
         />
       </ControlGroup>
 
       <ControlGroup>
-        <Checkbox
+        <FormInput.Checkbox
           {...register!('repo_owners')}
-          checked={watch!('repo_owners')}
-          onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
           id="edit-permissons"
           label={t(
             'views:repos.editPermissionsCheckboxDescription',
@@ -266,18 +236,17 @@ export const BranchSettingsRuleListField: FC<{
   recentStatusChecks?: string[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (ruleId: string, check: string) => void
+  handleSelectChangeForRule: (ruleId: string, checks: string[]) => void
   handleInputChange: (ruleId: string, value: string) => void
-  t: TFunction
 }> = ({
   rules,
   recentStatusChecks,
   handleCheckboxChange,
   handleSubmenuChange,
   handleSelectChangeForRule,
-  handleInputChange,
-  t
+  handleInputChange
 }) => {
+  const { t } = useTranslation()
   const branchRules = getBranchRules(t)
 
   return (
@@ -313,14 +282,18 @@ export const BranchSettingsRuleListField: FC<{
               )}
 
               {!!rule?.hasSelect && isChecked && (
-                <MultiSelect
-                  className="pl-[26px]"
-                  selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
-                  t={t}
-                  placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                  handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
-                  options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}
-                />
+                <div className="pl-[26px]">
+                  <MultiSelect
+                    value={rules[index].selectOptions.map(option => ({ id: option, key: option }))}
+                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                    onChange={options => {
+                      const selectedKeys = options.map(option => option.key)
+                      handleSelectChangeForRule(rule.id, selectedKeys)
+                    }}
+                    options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
+                    disallowCreation
+                  />
+                </div>
               )}
 
               {!!rule?.hasInput && isChecked && (

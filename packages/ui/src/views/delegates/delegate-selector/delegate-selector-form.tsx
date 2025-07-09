@@ -1,21 +1,22 @@
-import { ElementType, FC, useCallback, useEffect, useState } from 'react'
+import { ElementType, FC, useEffect, useMemo, useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
   Alert,
   Button,
+  ButtonLayout,
   Drawer,
   EntityFormLayout,
   Fieldset,
+  FormInput,
   FormSeparator,
   FormWrapper,
   Link,
-  MultiSelect,
-  MultiSelectOptionType,
   Spacer,
   Text
 } from '@/components'
-import { DelegateConnectivityList, DelegateItem, TranslationStore } from '@/views'
+import { useTranslation } from '@/context'
+import { DelegateConnectivityList, DelegateItem } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RadioSelect, RadioSelectOption } from '@views/components/RadioSelect'
 import { z } from 'zod'
@@ -24,15 +25,15 @@ const componentsMap: Record<
   'true' | 'false',
   {
     Footer: ElementType
-    Inner: ElementType
+    Body: ElementType
   }
 > = {
   true: {
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
-    Inner: 'div',
+    Body: 'div',
     Footer: EntityFormLayout.Footer
   }
 }
@@ -48,7 +49,7 @@ const delegateSelectorFormSchema = z
     tags: z.array(
       z.object({
         id: z.string(),
-        label: z.string()
+        key: z.string()
       })
     )
   })
@@ -67,7 +68,6 @@ export type DelegateSelectorFormFields = z.infer<typeof delegateSelectorFormSche
 export interface DelegateSelectorFormProps {
   delegates: DelegateItem[]
   tagsList: string[]
-  useTranslationStore: () => TranslationStore
   onFormSubmit: (data: DelegateSelectorFormFields) => void
   onBack: () => void
   apiError?: string
@@ -82,7 +82,6 @@ export interface DelegateSelectorFormProps {
 export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   delegates,
   tagsList,
-  useTranslationStore,
   onFormSubmit,
   onBack,
   apiError = null,
@@ -93,18 +92,20 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   disableAnyDelegate,
   isDrawer = false
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
+
   const [searchTag, setSearchTag] = useState('')
   const [matchedDelegates, setMatchedDelegates] = useState(0)
 
-  const { Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const bodyProps = isDrawer ? { scrollAreaProps: { classNameContent: 'min-w-0' } } : {}
 
   const formMethods = useForm<DelegateSelectorFormFields>({
     resolver: zodResolver(delegateSelectorFormSchema),
     mode: 'onChange',
     defaultValues: {
       type: preSelectedTags?.length || disableAnyDelegate ? DelegateSelectionTypes.TAGS : DelegateSelectionTypes.ANY,
-      tags: preSelectedTags?.length ? preSelectedTags.map(tag => ({ id: tag, label: tag })) : []
+      tags: preSelectedTags?.length ? preSelectedTags?.map(tag => ({ id: tag, key: tag })) : []
     }
   })
 
@@ -118,7 +119,6 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   } = formMethods
 
   const onSubmit: SubmitHandler<DelegateSelectorFormFields> = data => {
-    console.log('onSubmit')
     onFormSubmit(data)
     reset()
   }
@@ -130,7 +130,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
     setMatchedDelegates(
       getMatchedDelegatesCount(
         delegates,
-        selectedTags.map(tag => tag.id)
+        selectedTags?.map(tag => tag.id)
       )
     )
   }, [getMatchedDelegatesCount, delegates, selectedTags])
@@ -138,47 +138,31 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   const options: Array<RadioSelectOption<DelegateSelectionTypes>> = [
     {
       id: 'any',
-      title: 'Any delegate',
-      description: 'Use any available delegate',
+      title: t('views:delegates.anyDelegate', 'Any delegate'),
+      description: t('views:delegates.useAnyDelegate', 'Use any available delegate'),
       value: DelegateSelectionTypes.ANY,
       disabled: disableAnyDelegate
     },
     {
       id: 'tags',
-      title: 'Delegate with tags',
-      description: 'Use delegate with following tags',
+      title: t('views:delegates.delegateTags', 'Delegate with tags'),
+      description: t('views:delegates.useDelegateTags', 'Use delegate with following tags'),
       value: DelegateSelectionTypes.TAGS
     }
   ]
 
-  const handleTagChange = useCallback(
-    (option: MultiSelectOptionType) => {
-      const selectedTagIds = selectedTags.map(tag => tag.id)
-
-      setValue!(
-        'tags',
-        selectedTagIds.includes(option.id as string)
-          ? selectedTags.filter(tag => tag.id !== option.id)
-          : [
-              ...selectedTags,
-              {
-                id: option.id as string,
-                label: option.label
-              }
-            ],
-        { shouldValidate: true }
-      )
-    },
-    [selectedTags, setValue]
-  )
+  const filteredTags = useMemo(() => {
+    return tagsList?.filter(tag => tag?.toLowerCase().includes(searchTag?.toLowerCase()))
+  }, [searchTag, tagsList])
 
   return (
     <>
-      <Inner>
+      <Body {...bodyProps}>
         <div className="flex">
-          Haven&apos;t installed a delegate yet?
-          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="attachment-link">
-            Install delegate
+          {t('views:delegates.noDelegatesInstalled', `Haven't installed a delegate yet?`)}
+          {/* TODO: Design system : Update Attachment icon */}
+          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="supply-chain">
+            {t('views:delegates.installDelegate', 'Install Delegate')}
           </Link>
         </div>
         <Spacer size={5} />
@@ -194,9 +178,9 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
           </Fieldset>
 
           {apiError && (
-            <Alert.Container variant="destructive" className="mb-8">
+            <Alert.Root theme="danger" className="mb-8">
               <Alert.Description>{apiError?.toString()}</Alert.Description>
-            </Alert.Container>
+            </Alert.Root>
           )}
           <FormSeparator />
 
@@ -204,43 +188,53 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
             <>
               <Fieldset className="py-2">
                 {/* TAGS */}
-                <MultiSelect
-                  {...register('tags')}
-                  selectedItems={selectedTags}
-                  t={t}
-                  label="Tags"
-                  placeholder="Enter tags"
-                  handleChange={handleTagChange}
-                  options={tagsList.map(tag => {
-                    return { id: tag, label: tag }
+                <FormInput.MultiSelect
+                  label={t('views:repos.tags', 'Tags')}
+                  name="tags"
+                  placeholder={t('views:delegates.enterTags', 'Enter tags')}
+                  defaultValue={selectedTags}
+                  options={filteredTags?.map(tag => {
+                    return { id: tag, key: tag }
                   })}
-                  searchValue={searchTag}
-                  handleChangeSearchValue={setSearchTag}
+                  searchQuery={searchTag}
+                  setSearchQuery={setSearchTag}
                   error={errors.tags?.message?.toString()}
                 />
               </Fieldset>
-              <Text size={4}>Test Delegate connectivity</Text>
-              <p>Matches: {matchedDelegates}</p>
+              <Text variant="heading-base">{t('views:delegates.testDelegate', 'Test Delegate connectivity')}</Text>
+              <p>
+                {t('views:delegates.delegateMatches', 'Matches: ')}
+                {matchedDelegates}
+              </p>
               <DelegateConnectivityList
                 delegates={delegates}
-                useTranslationStore={useTranslationStore}
                 isLoading={isLoading}
-                selectedTags={selectedTags.map(tag => tag.id)}
+                selectedTags={selectedTags?.map(tag => tag.id)}
                 isDelegateSelected={isDelegateSelected}
               />
             </>
           )}
         </FormWrapper>
-      </Inner>
+      </Body>
       <Footer>
-        <Button variant="outline" onClick={onBack}>
-          Back
-        </Button>
-        <Button onClick={handleSubmit(onSubmit)}>
-          Connect&nbsp;
-          {delegateType === DelegateSelectionTypes.TAGS ? matchedDelegates : 'any'}&nbsp;
-          {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
-        </Button>
+        <ButtonLayout.Root>
+          <ButtonLayout.Primary>
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              disabled={delegateType === DelegateSelectionTypes.TAGS && selectedTags.length === 0}
+            >
+              {t('views:delegates.connectDelegates', 'Connect ')}
+              {delegateType === DelegateSelectionTypes.TAGS ? (matchedDelegates > 0 ? matchedDelegates : '') : 'any'}
+              &nbsp;
+              {delegateType === DelegateSelectionTypes.TAGS && matchedDelegates > 1 ? 'delegates' : 'delegate'}
+            </Button>
+          </ButtonLayout.Primary>
+          <ButtonLayout.Secondary>
+            <Button variant="outline" onClick={onBack}>
+              {t('views:createProject.backButton', 'Back')}
+            </Button>
+          </ButtonLayout.Secondary>
+        </ButtonLayout.Root>
       </Footer>
     </>
   )

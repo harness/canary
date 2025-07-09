@@ -1,4 +1,3 @@
-import { TranslationStore } from '@views/repo'
 import { CreateWebhookFormFields } from '@views/repo/webhooks/webhook-create/types'
 
 export interface WebhookType {
@@ -28,17 +27,15 @@ export interface WebhookExecutionType {
 
 export interface WebhookStore {
   webhooks: WebhookType[] | null
-  // onDelete: (id: number) => void
-  totalWebhookExecutionPages: number
+  totalItems: number
+  pageSize: number
   executionId: number | null
   webhookExecutionPage: number
   preSetWebhookData: CreateWebhookFormFields | null
   executions: WebhookExecutionType[] | null
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => void
-  setTotalWebhookExecutionPages: (headers: Headers) => void
   error: string | undefined
   setError: (error?: string) => void
-  totalPages: number
   webhookLoading: boolean
   setWebhookLoading: (webhookLoading: boolean) => void
   setWebhookExecutionPage: (page: number) => void
@@ -46,7 +43,7 @@ export interface WebhookStore {
   page: number
   setPage: (page: number) => void
   setWebhooks: (data: ListRepoWebhooksOkResponse) => void
-  setTotalPages: (headers: Headers | undefined) => void
+  setPaginationFromHeaders: (headers: Headers | undefined) => void
   setExecutionId: (id: number | null) => void
   updateExecution: (updatedExecution: WebhookExecutionType) => void
 }
@@ -96,7 +93,6 @@ export type EnumWebhookTrigger =
 
 export interface RepoWebhookListPageProps {
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
   openDeleteWebhookDialog: (id: number) => void
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void

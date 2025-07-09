@@ -1,21 +1,50 @@
-import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  ClipboardEvent,
+  DragEvent,
+  Fragment,
+  KeyboardEvent,
+  SyntheticEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
-import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
+import { isEmpty, isUndefined } from 'lodash-es'
+
+interface TextSelection {
+  start: number
+  end: number
+}
+
+interface StringSelection {
+  beforeSelection: string
+  selection: string
+  afterSelection: string
+  previousLine: string
+  textSelectionStart: number
+  textSelectionEnd: number
+}
 
 interface ToolbarItem {
-  icon: IconProps['name']
+  icon: IconV2NamesType
   action: ToolbarAction
   title?: string
   size?: number
-  onClick?: () => void
 }
 
 export interface PullRequestCommentBoxProps {
   className?: string
   onSaveComment: (comment: string) => void
   comment: string
+  lang?: string
+  diff?: string
+  lineNumber?: number
+  sideKey?: 'oldFile' | 'newFile'
   setComment: (comment: string) => void
   currentUser?: string
   onBoldClick?: () => void
@@ -41,6 +70,10 @@ export const PullRequestCommentBox = ({
   currentUser,
   inReplyMode = false,
   onCancelClick,
+  diff = '',
+  lang = '',
+  sideKey,
+  lineNumber,
   comment,
   setComment,
   isEditMode,
@@ -49,7 +82,9 @@ export const PullRequestCommentBox = ({
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
   const handleSaveComment = () => {
@@ -114,24 +149,180 @@ export const PullRequestCommentBox = ({
     handlePaste(event, handleUploadCallback)
   }
 
-  // TODO: add the remaining required logic for the toolbar
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
+      textAreaRef.current.focus()
+    }
+  }, [comment, textSelection])
+
+  const parseComment = (comment: string, textSelection: TextSelection, injectedPreString: string): StringSelection => {
+    const isStartOfLineSelected = textSelection.start === 0 || comment.substring(0, textSelection.start).endsWith('\n')
+    const isEndOfLineSelected =
+      textSelection.end === comment.length || comment.substring(textSelection.end).startsWith('\n')
+
+    const injectNewline = !isStartOfLineSelected && isEndOfLineSelected && injectedPreString.includes('\n')
+    const injectedNewline = injectNewline ? '\n' : ''
+
+    const beforeSelection = comment.substring(0, textSelection.start) + injectedNewline
+    const selection = comment.substring(textSelection.start, textSelection.end)
+    const afterSelection = comment.substring(textSelection.end)
+
+    const beforeSelectionParts = beforeSelection.split('\n')
+    const previousLine = beforeSelectionParts.at(beforeSelectionParts.length - 2) ?? ''
+
+    const newTextSelectionStart = textSelection.start + injectedPreString.length + injectedNewline.length
+    const newTextSelectionEnd =
+      newTextSelectionStart + (textSelection.end - textSelection.start) + injectedNewline.length
+
+    return {
+      beforeSelection: beforeSelection,
+      selection: selection,
+      afterSelection: afterSelection,
+      previousLine: previousLine,
+      textSelectionStart: newTextSelectionStart,
+      textSelectionEnd: newTextSelectionEnd
+    }
+  }
+
+  const parseAndSetComment = (
+    comment: string,
+    textSelection: TextSelection,
+    injectedPreString: string,
+    injectedPostString: string = '',
+    injectedString: string = ''
+  ) => {
+    const parsedComment = parseComment(comment, textSelection, injectedPreString)
+
+    setCommentAndTextSelection(
+      `${parsedComment.beforeSelection}${injectedPreString}${injectedString}${parsedComment.selection}${injectedPostString}${parsedComment.afterSelection}`,
+      { start: parsedComment.textSelectionStart, end: parsedComment.textSelectionEnd }
+    )
+  }
+
+  const parseDiff = (diff: string = '', sideKey?: 'oldFile' | 'newFile', lineNumber?: number): string => {
+    if (isUndefined(sideKey) || isUndefined(lineNumber)) {
+      return ''
+    }
+
+    const diffLines = diff.split('\n')
+
+    const sideChangedLineToken = sideKey === 'newFile' ? '+' : '-'
+    const otherSideChangedLineToken = sideKey === 'newFile' ? '-' : '+'
+
+    const sideDiffLines = diffLines.filter(diffLine => !diffLine.startsWith(otherSideChangedLineToken))
+
+    const found = sideDiffLines.reduce((previousValue, currentValue, currentIndex): string => {
+      if (isEmpty(previousValue) && currentValue.startsWith('@@')) {
+        const sectionInfoParts = currentValue.split(' ')
+
+        const fileLineNumber = +(
+          sectionInfoParts
+            .find(part => part.startsWith(sideChangedLineToken))
+            ?.split(',')
+            .at(0)
+            ?.substring(1) ?? ''
+        )
+        const fileLineOffset = lineNumber - fileLineNumber + 1
+
+        const sideDiffLine = sideDiffLines.at(currentIndex + fileLineOffset) ?? ''
+
+        const modifiedSideDiffLine = sideDiffLine.startsWith(sideChangedLineToken)
+          ? ` ${sideDiffLine.substring(1)}`
+          : sideDiffLine
+
+        return modifiedSideDiffLine
+      }
+
+      return previousValue
+    }, '')
+
+    return found
+  }
+
   const toolbar: ToolbarItem[] = useMemo(() => {
     const initial: ToolbarItem[] = []
+    // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
       { icon: 'suggestion', action: ToolbarAction.SUGGESTION },
       { icon: 'header', action: ToolbarAction.HEADER },
       { icon: 'bold', action: ToolbarAction.BOLD },
-      { icon: 'italicize', action: ToolbarAction.ITALIC },
-      { icon: 'attachment', action: ToolbarAction.UPLOAD, onClick: handleFileSelect },
+      { icon: 'italic', action: ToolbarAction.ITALIC },
+      { icon: 'attachment', action: ToolbarAction.UPLOAD },
       { icon: 'list', action: ToolbarAction.UNORDER_LIST },
-      { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
+      { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
   }, [])
 
+  const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
+    switch (type) {
+      case ToolbarAction.SUGGESTION:
+        parseAndSetComment(comment, textSelection, '```suggestion\n', '\n```', parseDiff(diff, sideKey, lineNumber))
+        break
+      case ToolbarAction.HEADER:
+        parseAndSetComment(comment, textSelection, '# ')
+        break
+      case ToolbarAction.BOLD:
+        parseAndSetComment(comment, textSelection, '**', '**')
+        break
+      case ToolbarAction.ITALIC:
+        parseAndSetComment(comment, textSelection, '*', '*')
+        break
+      case ToolbarAction.UPLOAD:
+        handleFileSelect()
+        break
+      case ToolbarAction.UNORDER_LIST:
+        parseAndSetComment(comment, textSelection, '- ')
+        break
+      case ToolbarAction.CHECK_LIST:
+        parseAndSetComment(comment, textSelection, '- [ ] ')
+        break
+      case ToolbarAction.CODE_BLOCK:
+        parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```')
+        break
+    }
+  }
+
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
+  }
+
+  const setCommentAndTextSelection = (comment: string, textSelection: TextSelection) => {
+    setTextSelection(textSelection)
+    setComment(comment)
+  }
+
+  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setCommentAndTextSelection(e.target.value, { start: e.target.selectionStart, end: e.target.selectionEnd })
+  }
+
+  const onCommentSelect = (e: SyntheticEvent<HTMLTextAreaElement>) => {
+    const target = e.target as EventTarget & HTMLTextAreaElement
+
+    setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
+  }
+
+  const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.code === 'Enter') {
+      const parsedComment = parseComment(comment, textSelection, '')
+
+      if (isListString(parsedComment.previousLine)) {
+        setTimeout(() => handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection), 0)
+      }
+      if (isListSelectString(parsedComment.previousLine)) {
+        setTimeout(() => handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection), 0)
+      }
+    }
+  }
+
+  const isListString = (line: string): boolean => {
+    return line.startsWith('- ')
+  }
+
+  const isListSelectString = (line: string): boolean => {
+    return line.startsWith('- [ ] ')
   }
 
   return (
@@ -144,13 +335,9 @@ export const PullRequestCommentBox = ({
         })}
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.WRITE}>
-              Write
-            </Tabs.Trigger>
-            <Tabs.Trigger className="data-[state=active]:bg-cn-background-2" value={TABS_KEYS.PREVIEW}>
-              Preview
-            </Tabs.Trigger>
+          <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+            <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+            <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
           </Tabs.List>
 
           <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
@@ -163,11 +350,14 @@ export const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
+                ref={textAreaRef}
+                className="min-h-36 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
-                onChange={e => setComment(e.target.value)}
+                onChange={e => onCommentChange(e)}
+                onSelect={e => onCommentSelect(e)}
+                onKeyUpCapture={e => onKeyUp(e)}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {
                     handlePasteForUpload(e)
@@ -184,8 +374,13 @@ export const PullRequestCommentBox = ({
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button size="sm" variant="ghost" iconOnly onClick={item?.onClick}>
-                        <Icon className="text-icons-9" name={item.icon} />
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        iconOnly
+                        onClick={() => handleActionClick(item.action, comment, textSelection)}
+                      >
+                        <IconV2 className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>
@@ -208,9 +403,9 @@ export const PullRequestCommentBox = ({
         <div className="mt-4 flex items-center justify-between">
           {activeTab === TABS_KEYS.WRITE && (
             <div>
-              <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+              <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button size="sm" variant="ghost" onClick={handleFileSelect}>
-                <Icon size={16} name="attachment-image" />
+                <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
             </div>

@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
-import { timeAgo } from '@/utils/utils'
-import { TranslationStore } from '@/views'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 
 import { TokensList } from '../types'
 
@@ -10,21 +10,15 @@ interface ProfileTokensListProps {
   tokens: TokensList[]
   isLoading?: boolean
   openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
-  useTranslationStore: () => TranslationStore
 }
 
-export const ProfileTokensList: FC<ProfileTokensListProps> = ({
-  tokens,
-  isLoading,
-  openAlertDeleteDialog,
-  useTranslationStore
-}) => {
-  const { t } = useTranslationStore()
+export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoading, openAlertDeleteDialog }) => {
+  const { t } = useTranslation()
 
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -47,7 +41,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({
                 </Table.Cell>
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-x-1.5">
-                    <Icon name="dot" size={8} className="text-cn-foreground-success" />
+                    <IconV2 name="circle" size="2xs" className="text-cn-foreground-success" />
                     <span className="text-cn-foreground-3">{t('views:profileSettings.active', 'Active')}</span>
                   </div>
                 </Table.Cell>

@@ -1,34 +1,58 @@
 {
   "toast": {
-    "textwrapper": {
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
-      },
-      "subgap": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
-      }
-    },
-    "borderRadius": {
+    "radius": {
       "$type": "borderRadius",
       "$value": "{rounded.3}"
     },
-    "pr": {
-      "$type": "spacing",
-      "$value": "{spacing.7}"
-    },
-    "pl": {
-      "$type": "spacing",
-      "$value": "{spacing.5}"
-    },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.1-half}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.4}"
     },
     "py": {
       "$type": "spacing",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.3-half}"
+    },
+    "offset": {
+      "top": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "bottom": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "right": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      },
+      "left": {
+        "$type": "spacing",
+        "$value": "{spacing.6}"
+      }
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    },
+    "title-min-height": {
+      "$type": "sizing",
+      "$value": "{size.7}"
+    },
+    "fade-height": {
+      "$type": "sizing",
+      "$value": "{size.20}"
+    },
+    "max-width": {
+      "$type": "sizing",
+      "$value": "400px"
+    },
+    "min-width": {
+      "$type": "sizing",
+      "$value": "240px"
     }
   }
 }

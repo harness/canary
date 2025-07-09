@@ -1,6 +1,5 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
-import { TFunction } from 'i18next'
 import { z } from 'zod'
 
 import { createWebhookFormSchema } from './components/create-webhooks-form-schema'
@@ -24,11 +23,10 @@ export enum WebhookTriggerEnum {
 export type CreateWebhookFormFields = z.infer<typeof createWebhookFormSchema>
 
 export interface WebhookFormFieldProps {
-  register?: UseFormRegister<CreateWebhookFormFields>
+  register: UseFormRegister<CreateWebhookFormFields>
   errors?: FieldErrors<CreateWebhookFormFields>
   watch?: UseFormWatch<CreateWebhookFormFields>
   setValue?: UseFormSetValue<CreateWebhookFormFields>
-  t: TFunction
 }
 export enum SSLVerificationEnum {
   ENABLE = '1',

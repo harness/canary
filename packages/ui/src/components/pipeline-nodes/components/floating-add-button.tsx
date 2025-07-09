@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react'
 
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
@@ -70,7 +70,7 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
           onClick(e)
         }}
       >
-        <Icon className="text-icons-3" name="bold-plus" size={10} />
+        <IconV2 className="text-icons-3" name="plus" size="2xs" />
       </Button>
     </div>
   )

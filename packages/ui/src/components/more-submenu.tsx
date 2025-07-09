@@ -1,4 +1,4 @@
-import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
+import { IconV2, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { useRouterContext } from '@/context'
 import { MenuGroupType } from '@components/app-sidebar/types'
 
@@ -24,7 +24,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
         <Sheet.Title className="sr-only">More Menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
-            <ScrollArea scrollThumbClassName="bg-sidebar-background-8">
+            <ScrollArea>
               <Spacer size={10} />
               {items.map((group, group_idx) => (
                 <NavbarSkeleton.Group
@@ -40,7 +40,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
                         <NavbarSkeleton.Item
                           text={item.title || ''}
                           description={item.description || ''}
-                          icon={item.iconName && <Icon name={item.iconName} size={18} />}
+                          icon={item.iconName && <IconV2 name={item.iconName} size="md" />}
                           active={isActive}
                           submenuItem
                           isMainNav

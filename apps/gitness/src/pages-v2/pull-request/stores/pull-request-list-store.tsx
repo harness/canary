@@ -3,13 +3,13 @@ import { create } from 'zustand'
 import { ListPullReqOkResponse } from '@harnessio/code-service-client'
 import { ColorsEnum, PullRequestType } from '@harnessio/ui/views'
 
-import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
 
 interface PullRequestListStore {
   pullRequests: PullRequestType[] | null
   labelsQuery: string
-  totalPages: number
+  totalItems: number
+  pageSize: number
   openPullReqs: number
   closedPullReqs: number
   page: number
@@ -21,7 +21,8 @@ interface PullRequestListStore {
 
 export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   pullRequests: null,
-  totalPages: 0,
+  totalItems: 0,
+  pageSize: 10,
   page: 1,
   openPullReqs: 0,
   closedPullReqs: 0,
@@ -42,7 +43,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       sourceBranch: item?.source_branch,
       targetBranch: item?.target_branch,
       // TODO: fix 2 hours ago in timestamp
-      timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
+      timestamp: item?.created ? new Date(item.created).toISOString() : '',
       comments: item?.stats?.conversations,
       state: item?.state,
       updated: item?.updated ? item?.updated : 0,
@@ -56,7 +57,8 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
 
     set({
       pullRequests: transformedPullRequests,
-      totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+      totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) || '0'),
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     })
   },
   setOpenClosePullRequests: data => {

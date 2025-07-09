@@ -27,11 +27,12 @@ export function FormWrapper<T extends FieldValues>({
   formRef,
   formState,
   control,
+  onSubmit,
   ...props
 }: FormWrapperProps<T>) {
   return (
     <FormProvider {...props} formState={formState} control={control}>
-      <form className={cn('flex flex-col gap-y-7', className)} ref={formRef} {...props}>
+      <form className={cn('cn-form', className)} ref={formRef} onSubmit={onSubmit} noValidate>
         {children}
       </form>
     </FormProvider>

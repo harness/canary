@@ -11,7 +11,6 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
@@ -183,7 +182,6 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
       <PathActionBar
         codeMode={codeMode}
         pathParts={pathParts}
-        useTranslationStore={useTranslationStore}
         changeFileName={vel => setFileName(vel)}
         onBlurFileName={rebuildPaths}
         gitRefName={gitRefName}

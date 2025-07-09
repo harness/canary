@@ -1,6 +1,6 @@
-import { ComponentProps, HTMLAttributes, ReactNode } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
 
-import { ButtonGroup } from '@/components'
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
 const EntityFormLayout = {
@@ -13,15 +13,19 @@ const EntityFormLayout = {
   },
 
   Description: function Description({ children }: { children: ReactNode }) {
-    return <div className="text-sm text-cn-foreground-3">{children}</div>
+    return (
+      <Text as="div" color="foreground-3">
+        {children}
+      </Text>
+    )
   },
 
   Form: function Form({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     return <div className={cn('flex flex-col max-w-xl space-y-7', className)} {...props} />
   },
 
-  Footer: function Footer({ className, ...props }: ComponentProps<typeof ButtonGroup>) {
-    return <ButtonGroup className={cn('pt-10', className)} {...props} />
+  Footer: function Footer({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+    return <div className={cn('flex flex-col max-w-xl gap-3 pt-10', className)} {...props} />
   }
 }
 

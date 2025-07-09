@@ -1,7 +1,8 @@
 import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
 
-import { Alert, Button, ButtonGroup } from '@/components'
-import { EntityIntent, InputConfigType, TranslationStore } from '@/views'
+import { Alert, Button, ButtonLayout } from '@/components'
+import { useTranslation } from '@/context'
+import { EntityIntent, InputConfigType } from '@/views'
 
 import {
   getDefaultValuesFromFormDefinition,
@@ -22,7 +23,6 @@ interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
   secretsFormDefinition?: IFormDefinition<InputConfigType>
   onBack?: () => void
-  useTranslationStore: () => TranslationStore
   inputComponentFactory: InputFactory
   apiError?: string | null
   intent: EntityIntent
@@ -31,19 +31,10 @@ interface SecretEntityFormProps {
 
 export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityFormProps>(
   (
-    {
-      apiError = null,
-      onFormSubmit,
-      secretsFormDefinition,
-      onBack,
-      useTranslationStore,
-      inputComponentFactory,
-      intent,
-      isDrawer = false
-    },
+    { apiError = null, onFormSubmit, secretsFormDefinition, onBack, inputComponentFactory, intent, isDrawer = false },
     ref
   ) => {
-    const { t: _t } = useTranslationStore()
+    const { t: _t } = useTranslation()
     const formRef = useRef<SecretEntityFormHandle | null>(null)
 
     useImperativeHandle(ref, () => ({
@@ -82,17 +73,17 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
                 inputs={secretsFormDefinition ?? { inputs: [] }}
               />
               {apiError && (
-                <Alert.Container variant="destructive" className="my-8">
+                <Alert.Root theme="danger" className="my-8">
                   <Alert.Description>{apiError.toString()}</Alert.Description>
-                </Alert.Container>
+                </Alert.Root>
               )}
               {!isDrawer && (
-                <ButtonGroup>
+                <ButtonLayout horizontalAlign="start">
                   <Button variant="outline" onClick={() => onBack?.()}>
                     Back
                   </Button>
                   <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-                </ButtonGroup>
+                </ButtonLayout>
               )}
             </>
           )

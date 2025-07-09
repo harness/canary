@@ -5,17 +5,19 @@ import { RepositoryType, RepoStore } from '@harnessio/ui/views'
 export const useRepoStore = create<RepoStore>(set => ({
   repositories: null,
   importRepoIdentifier: null,
-  totalPages: 0,
+  totalItems: 0,
+  pageSize: 0,
   isRepoStillImporting: false,
   page: 1,
   importToastId: null,
   setImportToastId: (id: string | null) => set({ importToastId: id }),
   setPage: page => set({ page }),
 
-  setRepositories: (data: RepositoryType[], totalPages: number) => {
+  setRepositories: (data: RepositoryType[], totalItems: number, pageSize: number) => {
     set({
       repositories: data,
-      totalPages: totalPages
+      totalItems: totalItems,
+      pageSize: pageSize
     })
   },
   addRepository: (repo: RepositoryType) => {

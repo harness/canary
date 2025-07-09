@@ -1,10 +1,10 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
 import { Button, ListActions, Spacer, StatusBadge, Text } from '@/components'
-import { ModeType, useTheme } from '@/context'
-import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { ModeType, useTheme, useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
+import { SandboxLayout, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
-import { timeAgo } from '@utils/utils'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -13,18 +13,16 @@ import { WebhookExecutionEditorControlBar } from './components/webhook-execution
 
 interface RepoWebhookExecutionDetailsPageProps {
   useWebhookStore: () => WebhookStore
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleRetriggerExecution: () => void
 }
 
 export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPageProps> = ({
   useWebhookStore,
-  useTranslationStore,
   isLoading,
   handleRetriggerExecution
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { executionId, executions } = useWebhookStore()
   const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
   const [view, setView] = useState('payload')
@@ -89,7 +87,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
       <SandboxLayout.Content className="pl-0">
         <ListActions.Root>
           <ListActions.Left>
-            <Text size={6} className="text-cn-foreground-1" weight="medium">
+            <Text variant="heading-section" color="foreground-1">
               #{executionId}
             </Text>
             <StatusBadge
@@ -119,17 +117,17 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
         <Spacer size={6} />
         <div className="flex items-center gap-10">
           <div className="flex gap-1">
-            <Text color="foreground-5">Triggered Event:</Text>
+            <Text color="foreground-3">Triggered Event:</Text>
             <Text> {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}</Text>
           </div>
           <div className="flex items-center gap-1">
-            <Text color="foreground-5" className="flex items-center">
+            <Text color="foreground-3" className="flex items-center">
               At:
             </Text>
             <Text>{timeAgo(execution?.created)}</Text>
           </div>
           <div className="flex gap-1">
-            <Text color="foreground-5">Duration:</Text>
+            <Text color="foreground-3">Duration:</Text>
             <Text>{formatDuration(execution?.duration ?? 0, 'ns')}</Text>
           </div>
         </div>

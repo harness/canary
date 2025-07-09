@@ -1,10 +1,10 @@
 import { forwardRef, KeyboardEvent, useMemo, useRef } from 'react'
 
-import { Button, ControlGroup, FormCaption, Icon, Label } from '@/components'
+import { Button, ControlGroup, FormCaption, IconV2, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
-export interface NumberInputProps extends Omit<InputProps, 'type' | 'suffix'> {
+export interface NumberInputProps extends Omit<InputProps, 'type'> {
   wrapperClassName?: string
   caption?: string
   error?: string
@@ -12,12 +12,6 @@ export interface NumberInputProps extends Omit<InputProps, 'type' | 'suffix'> {
   optional?: boolean
   hideStepper?: boolean
   integerOnly?: boolean
-}
-
-function focusAtEnd(element: HTMLInputElement | null): void {
-  if (element) {
-    element.setSelectionRange(element.value.length, element.value.length)
-  }
 }
 
 /**
@@ -42,6 +36,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       theme,
       hideStepper = false,
       integerOnly = false,
+      suffix,
       ...props
     },
     ref
@@ -69,13 +64,31 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }
 
     const handleIncrement = () => {
-      inputRef.current?.stepUp()
-      focusAtEnd(inputRef.current)
+      const input = inputRef.current
+      if (input) {
+        input.stepUp()
+        input.focus()
+        /**
+         * input.stepUp() will change the value of the input field, but it does not automatically trigger the onchange event callback.
+         * React Hook Form wasn't detecting these changes because no onChange event was being triggered
+         */
+        const event = new Event('input', { bubbles: true })
+        input.dispatchEvent(event)
+      }
     }
 
     const handleDecrement = () => {
-      inputRef.current?.stepDown()
-      focusAtEnd(inputRef.current)
+      const input = inputRef.current
+      if (input) {
+        input.stepDown()
+        input.focus()
+        /**
+         * input.stepDown() will change the value of the input field, but it does not automatically trigger the onchange event callback.
+         * React Hook Form wasn't detecting these changes because no onChange event was being triggered
+         */
+        const event = new Event('input', { bubbles: true })
+        input.dispatchEvent(event)
+      }
     }
 
     return (
@@ -100,43 +113,50 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             }
           }}
           suffix={
-            hideStepper ? null : (
-              <div className="flex flex-col">
-                <Button
-                  tabIndex={-1}
-                  aria-label="Increment value"
-                  variant="ghost"
-                  iconOnly
-                  onClick={handleIncrement}
-                  disabled={disabled}
-                  size="sm"
-                >
-                  <Icon name="chevron-up" size={14} />
-                </Button>
-                <hr />
-                <Button
-                  tabIndex={-1}
-                  aria-label="Decrement value"
-                  variant="ghost"
-                  iconOnly
-                  onClick={handleDecrement}
-                  disabled={disabled}
-                  size="sm"
-                >
-                  <Icon name="chevron-down" size={14} />
-                </Button>
-              </div>
-            )
+            <div className="flex">
+              {!hideStepper ? (
+                <div className="flex flex-col">
+                  <Button
+                    tabIndex={-1}
+                    aria-label="Increment value"
+                    variant="ghost"
+                    iconOnly
+                    onClick={handleIncrement}
+                    disabled={disabled}
+                    size="sm"
+                  >
+                    <IconV2 name="nav-arrow-up" size="xs" />
+                  </Button>
+                  <hr />
+                  <Button
+                    tabIndex={-1}
+                    aria-label="Decrement value"
+                    variant="ghost"
+                    iconOnly
+                    onClick={handleDecrement}
+                    disabled={disabled}
+                    size="sm"
+                  >
+                    <IconV2 name="nav-arrow-down" size="xs" />
+                  </Button>
+                </div>
+              ) : null}
+              {suffix ? <div className={hideStepper ? '' : 'border-inherit'}>{suffix}</div> : null}
+            </div>
           }
           {...props}
         />
 
         {error ? (
-          <FormCaption theme="danger">{error}</FormCaption>
+          <FormCaption disabled={disabled} theme="danger">
+            {error}
+          </FormCaption>
         ) : warning ? (
-          <FormCaption theme="warning">{warning}</FormCaption>
+          <FormCaption disabled={disabled} theme="warning">
+            {warning}
+          </FormCaption>
         ) : caption ? (
-          <FormCaption>{caption}</FormCaption>
+          <FormCaption disabled={disabled}>{caption}</FormCaption>
         ) : null}
       </ControlGroup>
     )

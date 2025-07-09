@@ -5,7 +5,6 @@ import { useGetPullReqQuery, useUpdatePullReqMutation } from '@harnessio/code-se
 import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
 
@@ -61,7 +60,6 @@ const PullRequestLayout = () => {
 
   return (
     <PullRequestLayoutView
-      useTranslationStore={useTranslationStore}
       usePullRequestStore={usePullRequestStore}
       spaceId={spaceId || ''}
       repoId={repoId}

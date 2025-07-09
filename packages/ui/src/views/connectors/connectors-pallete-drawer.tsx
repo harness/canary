@@ -1,7 +1,7 @@
-import { ElementType, useMemo, useState } from 'react'
+import { ElementType, ReactNode, useMemo, useState } from 'react'
 
-import { Button, Drawer, EntityFormLayout, Input } from '@/components'
-import { TranslationStore } from '@/views'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, Input } from '@/components'
+import { useTranslation } from '@/context'
 
 import { ConnectorsPaletteSection } from './components/ConnectorsPalleteSection'
 import { AnyConnectorDefinition, ConnectorEntity } from './types'
@@ -11,24 +11,21 @@ const componentsMap: Record<
   {
     Header: ElementType
     Title: ElementType
-    Description: ElementType
     Content: ElementType
-    Inner: ElementType
+    Body: ElementType
   }
 > = {
   true: {
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Description: Drawer.Description,
     Content: Drawer.Content,
-    Inner: Drawer.Inner
+    Body: Drawer.Body
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Description: EntityFormLayout.Description,
     Content: 'div',
-    Inner: 'div'
+    Body: 'div'
   }
 }
 
@@ -37,10 +34,10 @@ interface ConnectorsPaletteProps {
   requestClose?: () => void
   setConnectorEntity: (value: ConnectorEntity | null) => void
   onSelectConnector: () => void
-  useTranslationStore: () => TranslationStore
   title?: string
-  subtitle?: string
   isDrawer?: boolean
+  showCategory?: boolean
+  children?: ReactNode
 }
 
 export const ConnectorsPalette = ({
@@ -48,13 +45,13 @@ export const ConnectorsPalette = ({
   requestClose,
   setConnectorEntity,
   onSelectConnector,
-  useTranslationStore,
   title = 'Connector Setup',
-  subtitle = 'Select a Connector',
-  isDrawer = false
+  isDrawer = false,
+  showCategory,
+  children
 }: ConnectorsPaletteProps): JSX.Element => {
-  const { t: _t } = useTranslationStore()
-  const { Header, Title, Description, Content, Inner } = componentsMap[isDrawer ? 'true' : 'false']
+  const { t: _t } = useTranslation()
+  const { Header, Title, Content, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const [query, setQuery] = useState('')
 
@@ -68,15 +65,15 @@ export const ConnectorsPalette = ({
     <Content>
       <Header>
         <Title>{title}</Title>
-        <Description>{subtitle}</Description>
         <Input
+          value={query}
           placeholder={'Search'}
           onChange={value => {
             setQuery(value.target.value)
           }}
         />
       </Header>
-      <Inner>
+      <Body>
         <ConnectorsPaletteSection
           connectors={connectorsFiltered}
           onSelect={connector => {
@@ -87,16 +84,21 @@ export const ConnectorsPalette = ({
             })
             onSelectConnector()
           }}
-          useTranslationStore={useTranslationStore}
+          showCategory={showCategory}
         />
-      </Inner>
+      </Body>
       {isDrawer && (
         <Drawer.Footer>
-          <Button variant="outline" onClick={requestClose}>
-            Cancel
-          </Button>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Button variant="outline" onClick={requestClose}>
+                Cancel
+              </Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       )}
+      {children}
     </Content>
   )
 }

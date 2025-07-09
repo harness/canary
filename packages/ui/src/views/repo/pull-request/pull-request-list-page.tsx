@@ -1,10 +1,21 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchInput, SkeletonList, Spacer, StackedList } from '@/components'
-import { useRouterContext } from '@/context'
+import {
+  Button,
+  ListActions,
+  NoData,
+  Pagination,
+  SearchInput,
+  SkeletonList,
+  Spacer,
+  StackedList,
+  Text
+} from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
-import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
+import { renderFilterSelectLabel } from '@components/filters/filter-select'
+import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
@@ -28,7 +39,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
-  useTranslationStore,
   principalData,
   defaultSelectedAuthor,
   isPrincipalsLoading,
@@ -37,10 +47,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   setSearchQuery
 }) => {
   const { Link, useSearchParams } = useRouterContext()
-  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
+  const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
 
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
@@ -133,7 +143,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       return selectedFiltersCnt > 0 || searchQuery ? (
         <StackedList.Root className="grow place-content-center">
           <NoData
-            iconName="no-search-magnifying-glass"
+            imageName="no-search-magnifying-glass"
             title={t('views:noData.noResults', 'No search results')}
             description={[
               t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -153,7 +163,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         </StackedList.Root>
       ) : (
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title="No pull requests yet"
           description={[
             t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
@@ -169,7 +179,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     return (
       <PullRequestListContent
-        useTranslationStore={useTranslationStore}
         repoId={repoId}
         spaceId={spaceId}
         pullRequests={pullRequests}
@@ -215,7 +224,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <h1 className="mb-6 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Pull Requests</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+              Pull Requests
+            </Text>
 
             <ListActions.Root>
               <ListActions.Left>
@@ -230,7 +241,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               <ListActions.Right>
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
-                    <FilterSelect<PRListFiltersKeys, LabelsValue>
+                    <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
                       options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
                       onChange={option => {
                         addFilter(option.value)
@@ -239,12 +250,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                       onReset={resetFilters}
                       inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
                       buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={
-                        <FilterSelectLabel
-                          selectedFilters={PR_FILTER_OPTIONS.length - availableFilters.length}
-                          displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                        />
-                      }
+                      displayLabel={renderFilterSelectLabel({
+                        selectedFilters: PR_FILTER_OPTIONS.length - availableFilters.length,
+                        displayLabel: t('component:filter.defaultLabel', 'Filter')
+                      })}
                     />
                   )}
                 </PRListFilterHandler.Dropdown>
@@ -294,13 +303,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               setOpenedFilter={setOpenedFilter}
               selectedFiltersCnt={selectedFiltersCnt}
               filterOptions={PR_FILTER_OPTIONS}
-              t={t}
             />
             <Spacer size={5} />
           </PRListFilterHandler>
         )}
         {renderListContent()}
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

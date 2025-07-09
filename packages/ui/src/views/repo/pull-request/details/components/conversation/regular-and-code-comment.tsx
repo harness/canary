@@ -1,17 +1,17 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, Icon, Layout } from '@/components'
+import { Avatar, IconV2, Layout } from '@/components'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import {
   CommentItem,
   isCodeComment,
   PullRequestCommentBox,
   PullRequestOverviewProps,
   removeLastPlus,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { timeAgo } from '@utils/utils'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { PRCommentViewProps } from '@views/repo/pull-request/details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem, {
@@ -129,7 +129,6 @@ export interface PullRequestRegularAndCodeCommentProps
   commentItems: CommentItem<TypesPullReqActivity>[]
   parentItem?: CommentItem<TypesPullReqActivity>
   isLast: boolean
-  useTranslationStore: () => TranslationStore
   componentViewBase: FC<{
     commentItem: PRCommentViewProps['commentItem']
     parentItem?: CommentItem<TypesPullReqActivity>
@@ -146,11 +145,10 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   handleSaveComment,
   onCopyClick,
   handleDeleteComment,
-  useTranslationStore,
   handleUpdateComment,
   componentViewBase: ComponentViewBase
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
 
   const [hideReplyHeres, setHideReplyHeres] = useState<Record<string, boolean>>({})
@@ -289,7 +287,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       }
       customProps={{
         isResolved: !!payload?.resolved,
-        icon: <Icon name="pr-review" size={12} />,
+        icon: <IconV2 name="eye" size="2xs" />,
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
@@ -312,7 +310,6 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               mode={DiffModeEnum.Unified}
               wrap={wrap}
               addWidget={false}
-              useTranslationStore={useTranslationStore}
             />
 
             {renderContentItemsBlock()}
@@ -332,7 +329,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       customProps={{
         titleClassName: '!flex max-w-full',
         isResolved: !!payload?.resolved,
-        icon: <Icon name="pr-comment" size={12} />,
+        icon: <IconV2 name="pr-comment" size="2xs" />,
         isLast,
         handleSaveComment,
         content: renderContentItemsBlock()

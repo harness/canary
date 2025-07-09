@@ -9,7 +9,6 @@ import {
   isSystemComment,
   orderSortDate,
   PRCommentFilterType,
-  TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { PullRequestRegularAndCodeComment } from '@views/repo/pull-request/details/components/conversation/regular-and-code-comment'
@@ -45,7 +44,6 @@ export interface PullRequestOverviewProps
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }
   handleUpdateComment: (id: number, comment: string) => void
-  useTranslationStore: () => TranslationStore
   handleDeleteComment: (id: number) => void
   pullReqMetadata?: TypesPullReq
   activityFilter: { label: string; value: string }
@@ -64,7 +62,6 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   currentUser,
   handleDeleteComment,
   handleUpdateComment,
-  useTranslationStore,
   onCopyClick,
   handleUpload,
   suggestionsBatch,
@@ -196,7 +193,6 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
               handleSaveComment={handleSaveComment}
               onCopyClick={onCopyClick}
               handleDeleteComment={handleDeleteComment}
-              useTranslationStore={useTranslationStore}
               handleUpdateComment={handleUpdateComment}
               componentViewBase={PRCommentViewBase}
             />

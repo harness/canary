@@ -12,9 +12,10 @@ import {
   StatusBadge,
   Text
 } from '@/components'
-import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TranslationStore, TypesDiffStats } from '@/views'
+import { useTranslation } from '@/context'
+import { formatNumber } from '@/utils'
+import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { formatNumber } from '@utils/utils'
 import { chunk } from 'lodash-es'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
@@ -38,14 +39,9 @@ interface LineTitleProps {
 const LineTitle: FC<LineTitleProps> = ({ text }) => (
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
-      <p className="font-medium">{text}</p>
+      <Text variant="body-strong">{text}</Text>
       <CopyButton name={text} />
     </div>
-    {/* <div className="inline-flex items-center gap-x-6">
-      <div className="flex items-center gap-2">
-        <Icon name="ellipsis" size={12} />
-      </div>
-    </div> */}
   </div>
 )
 
@@ -54,7 +50,6 @@ interface PullRequestAccordionProps {
   data?: string
   diffMode: DiffModeEnum
   currentUser?: string
-  useTranslationStore: () => TranslationStore
   openItems: string[]
   onToggle: () => void
   setCollapsed: (val: boolean) => void
@@ -64,12 +59,11 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   header,
   diffMode,
   currentUser,
-  useTranslationStore,
   openItems,
   onToggle,
   setCollapsed
 }) => {
-  const { t: _ts } = useTranslationStore()
+  const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [showHiddenDiff, setShowHiddenDiff] = useState(false)
   const startingLine = useMemo(
@@ -106,7 +100,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
             <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
+                  <Layout.Vertical align="center" className="w-full py-5">
                     <Button variant="link" size="sm" aria-label="show diff" onClick={() => setShowHiddenDiff(true)}>
                       {_ts('views:pullRequests.showDiff')}
                     </Button>
@@ -142,7 +136,6 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                       removedLines={header?.removedLines}
                       deleted={header?.isDeleted}
                       unchangedPercentage={header?.unchangedPercentage}
-                      useTranslationStore={useTranslationStore}
                       collapseDiff={() => setCollapsed(true)}
                     />
                   </>
@@ -160,7 +153,6 @@ interface PullRequestCompareDiffListProps {
   diffStats: TypesDiffStats
   diffData: HeaderProps[]
   currentUser?: string
-  useTranslationStore: () => TranslationStore
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
 }
@@ -169,11 +161,10 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   diffStats,
   diffData,
   currentUser,
-  useTranslationStore,
   jumpToDiff,
   setJumpToDiff
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -234,36 +225,36 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
               {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
               {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </p>
-            <DropdownMenu.Content align="end">
-              <div className="max-h-[360px] overflow-y-auto px-1">
-                {diffData?.map(diff => (
-                  <DropdownMenu.Item
-                    key={diff.filePath}
-                    onClick={() => {
-                      if (diff.filePath) {
-                        setJumpToDiff(diff.filePath)
-                      }
-                    }}
-                    className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
-                  >
-                    <Text size={1} className="flex-1 overflow-hidden truncate text-cn-foreground-1">
-                      {diff.filePath}
-                    </Text>
-                    <div className="ml-4 flex items-center space-x-2">
-                      {diff.addedLines != null && diff.addedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="success">
-                          +{diff.addedLines}
-                        </StatusBadge>
-                      )}
-                      {diff.removedLines != null && diff.removedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="danger">
-                          -{diff.removedLines}
-                        </StatusBadge>
-                      )}
-                    </div>
-                  </DropdownMenu.Item>
-                ))}
-              </div>
+            <DropdownMenu.Content className="max-h-[360px]" align="end">
+              {diffData?.map(diff => (
+                <DropdownMenu.Item
+                  key={diff.filePath}
+                  onClick={() => {
+                    if (diff.filePath) {
+                      setJumpToDiff(diff.filePath)
+                    }
+                  }}
+                  title={
+                    <>
+                      <Text color="foreground-1" truncate>
+                        {diff.filePath}
+                      </Text>
+                      <div className="ml-4 flex items-center space-x-2">
+                        {diff.addedLines != null && diff.addedLines > 0 && (
+                          <StatusBadge variant="outline" size="sm" theme="success">
+                            +{diff.addedLines}
+                          </StatusBadge>
+                        )}
+                        {diff.removedLines != null && diff.removedLines > 0 && (
+                          <StatusBadge variant="outline" size="sm" theme="danger">
+                            -{diff.removedLines}
+                          </StatusBadge>
+                        )}
+                      </div>
+                    </>
+                  }
+                />
+              ))}
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </ListActions.Left>
@@ -302,7 +293,6 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       currentUser={currentUser}
                       data={item?.data}
                       diffMode={diffMode}
-                      useTranslationStore={useTranslationStore}
                       openItems={openItems}
                       onToggle={() => toggleOpen(item.text)}
                       setCollapsed={val => setCollapsed(item.text, val)}

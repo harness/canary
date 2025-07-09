@@ -1,7 +1,6 @@
 import { ComponentType, JSXElementConstructor, ReactElement, ReactNode } from 'react'
 
 import { CiStatus, PipelineExecutionStatus } from '@/views'
-import { TranslationStore } from '@views/repo'
 import { TLinkComponent } from '@views/types/link-types'
 
 export type IExecutionType = string | ReactElement<unknown, string | JSXElementConstructor<unknown>>
@@ -20,15 +19,15 @@ export interface IExecution {
 
 export interface IExecutionListStore {
   executions: IExecution[] | null
-  setExecutionsData: (data: IExecution[] | null, totalPages: number) => void
-  totalPages: number
+  setExecutionsData: (data: IExecution[] | null, paginationData: { totalItems: number; pageSize: number }) => void
+  totalItems: number
+  pageSize: number
   page: number
   setPage: (page: number) => void
 }
 
 export interface IExecutionListPageProps {
   useExecutionListStore: () => IExecutionListStore
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   isError: boolean
   errorMessage?: string
@@ -43,7 +42,6 @@ export interface IExecutionListProps {
   LinkComponent: ComponentType<{ to: string; children: ReactNode }>
   query?: string
   handleResetQuery: () => void
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleExecutePipeline: () => void
 }

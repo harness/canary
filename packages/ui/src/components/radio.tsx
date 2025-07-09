@@ -1,13 +1,30 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactElement } from 'react'
 
-import { Label } from '@/components'
+import { ControlGroup, FormCaption, Label } from '@/components'
 import { cn } from '@/utils/cn'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
+import { cva } from 'class-variance-authority'
+
+const radioRootVariants = cva('cn-radio-root', {
+  variants: {
+    error: {
+      true: 'cn-radio-error'
+    }
+  },
+  defaultVariants: {
+    error: false
+  }
+})
 
 interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
   label?: string | ReactElement
   caption?: string | ReactElement
   showOptionalLabel?: boolean
+}
+
+export interface RadioProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> {
+  label?: string
+  error?: boolean
 }
 
 /**
@@ -21,22 +38,21 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<R
     const radioId = props.id || `radio-${Math.random().toString(36).slice(2, 11)}`
 
     return (
-      <div className={cn('cn-radio-wrapper', className)}>
-        <RadioGroupPrimitive.Item ref={ref} id={radioId} className={cn('cn-radio-root')} {...props}>
-          <RadioGroupPrimitive.Indicator className="cn-radio-indicator" />
+      <div className={cn('cn-radio-item-wrapper', className)}>
+        <RadioGroupPrimitive.Item ref={ref} id={radioId} className="cn-radio-item" {...props}>
+          <RadioGroupPrimitive.Indicator className="cn-radio-item-indicator" />
         </RadioGroupPrimitive.Item>
 
         {(label || caption) && (
-          <div className="cn-radio-label-wrapper">
+          <div className="cn-radio-item-label-wrapper">
             <Label
               htmlFor={radioId}
               optional={showOptionalLabel}
-              className={`cn-radio-label ${props.disabled ? 'disabled' : ''}`}
+              className={`cn-radio-item-label ${props.disabled ? 'disabled' : ''}`}
             >
               {label}
             </Label>
-            <div className={`cn-radio-caption ${props.disabled ? 'disabled' : ''}`}>{caption || ''}</div>
-            {/* Need to add Link component here once merged */}
+            <FormCaption disabled={props.disabled}>{caption}</FormCaption>
           </div>
         )}
       </div>
@@ -53,12 +69,16 @@ RadioItem.displayName = RadioGroupPrimitive.Item.displayName
  *   <Radio.Item value="option1" name="group" label="Option 1" />
  * </Radio.Root>
  */
-const RadioRoot = forwardRef<
-  ElementRef<typeof RadioGroupPrimitive.Root>,
-  ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return <RadioGroupPrimitive.Root className={cn('grid gap-5', className)} {...props} ref={ref} />
-})
+const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioProps>(
+  ({ className, label, error, ...props }, ref) => {
+    return (
+      <ControlGroup className={cn('cn-radio-control')}>
+        {label && <Label>{label}</Label>}
+        <RadioGroupPrimitive.Root className={cn(radioRootVariants({ error }), className)} {...props} ref={ref} />
+      </ControlGroup>
+    )
+  }
+)
 RadioRoot.displayName = RadioGroupPrimitive.Root.displayName
 
 export const Radio = {

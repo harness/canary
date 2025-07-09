@@ -1,6 +1,6 @@
-import { Icon, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
-import { useRouterContext } from '@/context'
-import { timeAgo } from '@utils/utils'
+import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 
 import { SecretListProps } from './types'
 
@@ -8,15 +8,8 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="max-w-full truncate font-medium text-cn-foreground-1">{title}</span>
 )
 
-export function SecretList({
-  secrets,
-  useTranslationStore,
-  isLoading,
-  toSecretDetails,
-  onDeleteSecret
-}: SecretListProps): JSX.Element {
-  const { navigate } = useRouterContext()
-  const { t } = useTranslationStore()
+export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret }: SecretListProps): JSX.Element {
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -26,7 +19,7 @@ export function SecretList({
     return (
       <NoData
         withBorder
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noSecrets', 'No secrets yet')}
         description={[
           t('views:noData.noSecrets', 'There are no secrets in this project yet.'),
@@ -37,16 +30,12 @@ export function SecretList({
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
-      tableClassName="table-fixed"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-[361px]">{t('views:secret.title', 'Name')}</Table.Head>
-          <Table.Head className="w-[350px]">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
-          <Table.Head className="w-60">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
+          <Table.Head className="w-1/3">{t('views:secret.title', 'Name')}</Table.Head>
+          <Table.Head className="w-1/3">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
+          <Table.Head className="w-1/3">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
           <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>
@@ -55,24 +44,18 @@ export function SecretList({
       ) : (
         <Table.Body>
           {secrets.map(secret => (
-            <Table.Row
-              key={secret.identifier}
-              className="cursor-pointer"
-              onClick={() => navigate(`${toSecretDetails?.(secret)}`)}
-            >
+            <Table.Row key={secret.identifier} className="cursor-pointer" to={toSecretDetails?.(secret)}>
               <Table.Cell className="w-[361px] content-center truncate">
-                <div className="flex items-center gap-2.5 !py-2.5">
-                  <Icon name="ssh-key" size={24} />
+                <div className="flex items-center gap-2.5">
+                  <IconV2 name="ssh-key" size="md" />
                   <Title title={secret.identifier} />
                 </div>
               </Table.Cell>
-              <Table.Cell className="w-[350px] content-center truncate !py-2.5">
+              <Table.Cell className="w-[350px] content-center truncate">
                 {secret.spec?.secretManagerIdentifier}
               </Table.Cell>
-              <Table.Cell className="content-center !py-2.5">
-                {secret?.updatedAt ? timeAgo(secret.updatedAt) : null}
-              </Table.Cell>
-              <Table.Cell className="content-center !py-2.5 text-right">
+              <Table.Cell className="content-center">{secret?.updatedAt ? timeAgo(secret.updatedAt) : null}</Table.Cell>
+              <Table.Cell className="content-center text-right">
                 <MoreActionsTooltip
                   isInTable
                   actions={[

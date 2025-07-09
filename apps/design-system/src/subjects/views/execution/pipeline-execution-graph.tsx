@@ -10,7 +10,7 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, IconV2, PipelineNodes } from '@harnessio/ui/components'
 
 // *****************************************************
 // 1. Import CSS
@@ -76,9 +76,9 @@ export function StepNodeComponent({
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root>
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="bg-cn-background-1 border-cn-borders-2 size-full max-w-2xl rounded-none border-l p-0 ">
+      <Drawer.Content size="md">
         <Drawer.Header className="p-0">
           <ExecutionHeader
             commitName="8fbru3ix"
@@ -91,7 +91,7 @@ export function StepNodeComponent({
             pipelineName="npm_build"
           />
         </Drawer.Header>
-        <Drawer.Inner viewportClassName="p-0">
+        <Drawer.Body className="p-0">
           <ExecutionInfo
             isDrawer
             useLogsStore={() => ({ logs })}
@@ -99,7 +99,7 @@ export function StepNodeComponent({
             onDownload={() => {}}
             onEdit={() => {}}
           />
-        </Drawer.Inner>
+        </Drawer.Body>
       </Drawer.Content>
     </Drawer.Root>
   )
@@ -131,23 +131,31 @@ export function ApprovalStepNodeComponent({
   }
 
   return (
-    <Drawer.Root direction="right">
+    <Drawer.Root>
       <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
-      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
-        <div className="flex flex-col gap-4">
-          <Drawer.Header>
-            <Drawer.Title>Approval</Drawer.Title>
-            <Drawer.Description>Approve/Reject step execution</Drawer.Description>
-          </Drawer.Header>
-          <div className="flex justify-center gap-2">
-            <Button type="submit">Approve</Button>
-            <Button variant="secondary">Cancel</Button>
-          </div>
-        </div>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Approval</Drawer.Title>
+          <Drawer.Description>Approve/Reject step execution</Drawer.Description>
+        </Drawer.Header>
+        <Drawer.Body>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button type="submit">Approve</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Button variant="secondary">Cancel</Button>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Body>
         <Drawer.Footer>
-          <Drawer.Close>
-            <Button variant="outline">Close</Button>
-          </Drawer.Close>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Close</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
         </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
@@ -265,7 +273,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />,
       logs: logs
     } satisfies StepNodeDataType,
     config: {
@@ -277,7 +285,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.approval,
     data: {
       name: 'Approval 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
     } satisfies StepNodeDataType,
     config: {
       width: 120,
@@ -298,7 +306,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -309,7 +317,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -332,7 +340,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -343,7 +351,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,

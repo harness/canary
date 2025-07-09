@@ -1,31 +1,31 @@
 {
   "btn": {
     "size": {
-      "sm": {
+      "xs": {
         "$type": "sizing",
         "$value": "{size.7}"
       },
-      "default": {
+      "sm": {
         "$type": "sizing",
         "$value": "{size.8}"
       },
-      "lg": {
+      "md": {
         "$type": "sizing",
         "$value": "{size.9}"
       }
     },
     "gap": {
-      "sm": {
+      "xs": {
         "$type": "spacing",
         "$value": "{spacing.1}"
       },
-      "default": {
+      "sm": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       },
-      "lg": {
+      "md": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "$value": "{spacing.2}"
       }
     },
     "default": {
@@ -45,29 +45,29 @@
       "$value": "{borderWidth.1}"
     },
     "px": {
-      "sm": {
+      "xs": {
         "$type": "spacing",
         "$value": "{spacing.3}"
       },
-      "default": {
+      "sm": {
         "$type": "spacing",
         "$value": "{spacing.4}"
       },
-      "lg": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.5}"
       }
     },
     "py": {
-      "sm": {
+      "xs": {
         "$type": "spacing",
         "$value": "{spacing.1}"
       },
-      "default": {
+      "sm": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       },
-      "lg": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.2}"
       }
@@ -79,7 +79,7 @@
         "$type": "spacing",
         "$value": "{spacing.1}"
       },
-      "default": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.1}"
       }

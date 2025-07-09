@@ -5,9 +5,9 @@ import { getInitials } from '@harnessio/ui/utils'
 import { BlameEditor, BlameEditorProps, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
+import { useThemeStore } from '../framework/context/ThemeContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface GitBlameProps {
@@ -38,7 +38,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
 
         const authorInfo = {
           identity: { ...commit?.author?.identity },
-          when: timeAgoFromISOTime(commit?.author?.when || ''),
+          when: commit?.author?.when ?? '',
           initials: getInitials(commit?.author?.identity?.name || commit?.author?.identity?.email || '')
         }
 
@@ -61,6 +61,9 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
     }
   }, [gitBlame])
 
+  const { theme } = useThemeStore()
+  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
+
   return !isFetching && blameBlocks.length ? (
     <BlameEditor
       code={codeContent}
@@ -69,6 +72,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
       lineNumbersPosition="center"
       blameData={blameBlocks}
       height={height ? height : undefined}
+      theme={monacoTheme}
     />
   ) : (
     <></>

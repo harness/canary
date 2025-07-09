@@ -34,6 +34,7 @@ export const usePullRequestCommitsStore = create<PullRequestCommitsStore>(set =>
   setPaginationFromHeaders: (headers?: Headers) => {
     const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
     const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+
     set({ xNextPage, xPrevPage })
   }
 }))

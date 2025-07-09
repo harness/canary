@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, EntityFormLayout, Icon, Spacer, StackedList } from '@/components'
+import { Button, ButtonLayout, EntityFormLayout, IconV2, Spacer, StackedList } from '@/components'
 import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
@@ -61,9 +61,11 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
       <StackedList.Item
         onClick={() => onSelect(entity)}
         className={`h-12 p-3 ${isSelected ? 'bg-cn-background-hover' : ''}`}
-        thumbnail={<Icon name="secrets" size={14} className="ml-2 text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="lock" size="xs" className="ml-2 text-cn-foreground-3" />}
       >
-        <StackedList.Field title={entity.secret.name} />
+        <div title={entity.secret.name}>
+          <StackedList.Field title={entity.secret.name} className="truncate overflow-hidden text-nowrap max-w-sm" />
+        </div>
       </StackedList.Item>
     )
   }
@@ -91,12 +93,12 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
       />
 
       {!isDrawer && (
-        <ButtonGroup className="flex flex-row justify-between">
+        <ButtonLayout horizontalAlign="start">
           <Button variant="outline" onClick={onCancel}>
             Cancel
           </Button>
           <Button type="submit">Save</Button>
-        </ButtonGroup>
+        </ButtonLayout>
       )}
     </div>
   )

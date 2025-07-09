@@ -2,10 +2,10 @@ import { FC } from 'react'
 
 import {
   Button,
-  ButtonGroup,
   DropdownMenu,
   FileToolbarActions,
-  Icon,
+  IconV2,
+  Layout,
   StackedList,
   ToggleGroup,
   ViewTypeValue
@@ -43,10 +43,10 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
 
   const RightDetails = () => {
     return (
-      <ButtonGroup verticalAlign="center" spacing="2">
-        <span className="text-sm text-cn-foreground-2">{`${fileContent?.split('\n').length || 0} lines`}</span>
-        <span className="h-3 border-l border-cn-borders-2" />
-        <span className="mr-5 text-sm text-cn-foreground-2">{fileBytesSize}</span>
+      <Layout.Horizontal gap="xs" align="center">
+        <span className="text-cn-foreground-2 text-sm">{`${fileContent?.split('\n').length || 0} lines`}</span>
+        <span className="border-cn-borders-2 h-3 border-l" />
+        <span className="text-cn-foreground-2 mr-5 text-sm">{fileBytesSize}</span>
         <FileToolbarActions
           showEdit={refType === BranchSelectorTab.BRANCHES}
           copyContent={fileContent}
@@ -56,19 +56,18 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="-mr-2" asChild>
             <Button variant="ghost" iconOnly>
-              <Icon name="more-dots-fill" size={16} />
+              <IconV2 name="more-horizontal" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end">
-            <DropdownMenu.Item onSelect={handleViewRaw}>
-              <span className="truncate text-sm">View Raw</span>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item onSelect={handleOpenDeleteDialog}>
-              <span className="truncate text-sm text-cn-foreground-danger">Delete</span>
-            </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={handleViewRaw} title="View Raw" />
+            <DropdownMenu.Item
+              onSelect={handleOpenDeleteDialog}
+              title={<span className="text-cn-foreground-danger truncate text-sm">Delete</span>}
+            />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-      </ButtonGroup>
+      </Layout.Horizontal>
     )
   }
 
@@ -76,17 +75,17 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
         <ToggleGroup.Root
-          className="gap-0"
-          onValueChange={onChangeView}
+          variant="ghost"
+          selectedVariant="secondary"
+          onChange={onChangeView as (value: string) => void}
           value={view}
-          type="single"
-          unselectable={'on'}
+          unselectable
           size="xs"
         >
-          {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
-          <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
-          <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
-          <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
+          {isMarkdown && <ToggleGroup.Item value={'preview'} text="Preview" />}
+          <ToggleGroup.Item value={'code'} text="Code" />
+          <ToggleGroup.Item value={'blame'} text="Blame" />
+          <ToggleGroup.Item value={'history'} text="History" />
         </ToggleGroup.Root>
         <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>

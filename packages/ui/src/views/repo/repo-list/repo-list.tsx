@@ -1,49 +1,50 @@
-import { Icon, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
-import { useRouterContext } from '@/context'
+import { IconV2, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
-import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
-import { RoutingProps, TranslationStore } from './types'
+import { RoutingProps } from './types'
 
 export interface PageProps extends Partial<RoutingProps> {
   repos: RepositoryType[]
   handleResetFiltersQueryAndPages: () => void
   isDirtyList: boolean
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
 }
 
 const Stats = ({ pulls }: { pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
-      <Icon size={16} name="pull" className="text-icons-7" />
+      <IconV2 name="git-pull-request" className="text-icons-7" />
       <span className="text-2 font-normal text-cn-foreground-1">{pulls || 0}</span>
     </span>
   </div>
 )
 
-const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
-  <div className="inline-flex items-center gap-2.5">
-    <span className="max-w-full truncate font-medium">{title}</span>
-    <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
-      {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-    </StatusBadge>
-  </div>
-)
+const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => {
+  const { t } = useTranslation()
+  return (
+    <div className="inline-flex items-center gap-2.5">
+      <span className="max-w-full truncate font-medium">{title}</span>
+      <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
+        {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
+      </StatusBadge>
+    </div>
+  )
+}
 
 export function RepoList({
   repos,
   handleResetFiltersQueryAndPages,
   isDirtyList,
-  useTranslationStore,
   isLoading,
   toRepository,
   toCreateRepo,
   toImportRepo
 }: PageProps) {
   const { Link } = useRouterContext()
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
 
   if (isLoading) {
     return <SkeletonList />
@@ -53,7 +54,7 @@ export function RepoList({
     return isDirtyList ? (
       <NoData
         withBorder
-        iconName="no-search-magnifying-glass"
+        imageName="no-search-magnifying-glass"
         title={t('views:noData.noResults', 'No search results')}
         description={[
           t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -67,7 +68,7 @@ export function RepoList({
     ) : (
       <NoData
         withBorder
-        iconName="no-repository"
+        imageName="no-repository"
         title={t('views:noData.noRepos', 'No repositories yet')}
         description={[
           t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
@@ -102,12 +103,16 @@ export function RepoList({
                   <span className="max-w-full truncate">{repo.description}</span>
                 )
               }
-              title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
+              title={<Title title={repo.name} isPrivate={repo.private} />}
               className="flex max-w-[80%] gap-1.5 text-wrap"
             />
             {!repo.importing && (
               <StackedList.Field
-                title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
+                title={
+                  <span>
+                    {t('views:repos.updated', 'Updated')} {timeAgo(repo.timestamp, { dateStyle: 'medium' })}
+                  </span>
+                }
                 description={<Stats pulls={repo.pulls} />}
                 right
                 label

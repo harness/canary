@@ -6,7 +6,9 @@ import {
   useFindRepositoryQuery,
   useGetBranchQuery,
   useGetContentQuery,
-  useListPathsQuery
+  useListBranchesQuery,
+  useListPathsQuery,
+  useListTagsQuery
 } from '@harnessio/code-service-client'
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
@@ -16,10 +18,10 @@ import Explorer from '../../components/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -31,6 +33,9 @@ export const RepoSidebar = () => {
     tagList,
     selectedBranchTag,
     selectedRefType,
+    setTagList,
+    setBranchList,
+    setDefaultBranch,
     setSelectedBranchTag,
     setSelectedRefType,
     setSpaceIdAndRepoId
@@ -59,7 +64,6 @@ export const RepoSidebar = () => {
       enabled: !!fullGitRef
     }
   )
-
   useEffect(() => {
     if (selectedGitRefBranch) {
       setSelectedBranchTag({
@@ -84,8 +88,13 @@ export const RepoSidebar = () => {
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
       if (selectedGitRefBranch) {
         setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
+        setSelectedRefType(BranchSelectorTab.BRANCHES)
       } else if (selectedGitRefTag) {
-        setSelectedBranchTag(selectedGitRefTag)
+        setSelectedBranchTag({ name: gitRefName, sha: '' })
+        setSelectedRefType(BranchSelectorTab.TAGS)
+      } else {
+        setSelectedBranchTag({ name: fullGitRef, sha: fullGitRef })
+        setSelectedRefType(BranchSelectorTab.BRANCHES)
       }
     }
   }, [repository?.default_branch, fullGitRef, branchList, tagList, gitRefName, selectedGitRefBranch])
@@ -108,6 +117,45 @@ export const RepoSidebar = () => {
     repo_ref: repoRef,
     queryParams: { git_ref: normalizeGitRef(fullGitRef || selectedBranchTag?.name) }
   })
+
+  const { data: { body: branches } = {} } = useListBranchesQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      limit: 50
+    }
+  })
+
+  const { data: { body: tags } = {} } = useListTagsQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      limit: 50
+    }
+  })
+
+  useEffect(() => {
+    if (tags) {
+      setTagList(
+        tags.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: false
+        }))
+      )
+    }
+  }, [tags])
+
+  useEffect(() => {
+    if (branches) {
+      setBranchList(transformBranchList(branches, repository?.default_branch))
+    }
+    if (repository?.default_branch) {
+      setDefaultBranch(repository?.default_branch)
+    }
+  }, [branches, repository?.default_branch])
 
   const filesList = filesData?.body?.files || []
 
@@ -167,7 +215,6 @@ export const RepoSidebar = () => {
       <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
         {!repository?.is_empty && (
           <RepoSidebarView
-            useTranslationStore={useTranslationStore}
             navigateToNewFile={navigateToNewFile}
             navigateToFile={navigateToFile}
             filesList={filesList}

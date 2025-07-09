@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonGroup, Drawer, EntityFormLayout, Icon } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -23,7 +23,7 @@ const componentsMap: Record<
     Header: ElementType
     Title: ElementType
     Description: ElementType
-    Inner: ElementType
+    Body: ElementType
     Footer: ElementType
   }
 > = {
@@ -32,7 +32,7 @@ const componentsMap: Record<
     Header: Drawer.Header,
     Title: Drawer.Title,
     Description: Drawer.Description,
-    Inner: Drawer.Inner,
+    Body: Drawer.Body,
     Footer: Drawer.Footer
   },
   false: {
@@ -40,7 +40,7 @@ const componentsMap: Record<
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
-    Inner: Fragment,
+    Body: Fragment,
     Footer: EntityFormLayout.Footer
   }
 }
@@ -48,11 +48,12 @@ const componentsMap: Record<
 interface UnifiedPipelineStudioStageConfigFormProps {
   requestClose: () => void
   isDrawer?: boolean
+  isDirtyRef: { current?: boolean }
 }
 
 export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudioStageConfigFormProps) => {
-  const { requestClose, isDrawer = false } = props
-  const { Content, Header, Title, Description, Inner, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { requestClose, isDrawer = false, isDirtyRef } = props
+  const { Content, Header, Title, Description, Footer, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     addStageIntention,
@@ -79,6 +80,11 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
   }, [editStageIntention, yamlRevision])
 
   const resolver = useZodValidationResolver(stageFormDefinition ?? { inputs: [] })
+
+  // NOTE: prevent rendering "Edit" form before values are provided
+  if (editStageIntention && !defaultStageValues) {
+    return <></>
+  }
 
   return (
     <RootForm
@@ -107,45 +113,50 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
       }}
       validateAfterFirstSubmit={true}
     >
-      {rootForm => (
-        <Content>
-          <Header>
-            <Title>{editStageIntention ? 'Edit' : 'Add'} Stage</Title>
-            <Description>
-              Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
-            </Description>
-            <ButtonGroup>
-              <Button variant={'ai'}> AI Autofill</Button>
-              <Button variant={'outline'}> Use Template</Button>
-            </ButtonGroup>
-          </Header>
-          <Inner>
-            <EntityFormLayout.Form>
-              <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
-            </EntityFormLayout.Form>
-          </Inner>
-          <Footer>
-            <ButtonGroup>
-              <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              <Button variant="secondary" onClick={requestClose}>
-                Cancel
-              </Button>
-            </ButtonGroup>
-            {editStageIntention && (
-              <Button
-                variant="secondary"
-                iconOnly
-                onClick={() => {
-                  requestYamlModifications.deleteInArray({ path: editStageIntention.path })
-                  requestClose()
-                }}
-              >
-                <Icon name="trash" />
-              </Button>
-            )}
-          </Footer>
-        </Content>
-      )}
+      {rootForm => {
+        isDirtyRef.current = rootForm.formState.isDirty
+
+        return (
+          <Content>
+            <Header>
+              <Title>{editStageIntention ? 'Edit' : 'Add'} Stage</Title>
+              <Description>
+                Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
+              </Description>
+            </Header>
+            <Body>
+              <EntityFormLayout.Form>
+                <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
+              </EntityFormLayout.Form>
+            </Body>
+            <Footer>
+              <ButtonLayout.Root>
+                <ButtonLayout.Primary>
+                  <Button variant="secondary" onClick={requestClose}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+                </ButtonLayout.Primary>
+                {!!editStageIntention && (
+                  <ButtonLayout.Secondary>
+                    <Button
+                      variant="secondary"
+                      iconOnly
+                      onClick={() => {
+                        requestYamlModifications.deleteInArray({ path: editStageIntention.path })
+                        requestClose()
+                      }}
+                      aria-label="Remove Stage"
+                    >
+                      <IconV2 name="trash" />
+                    </Button>
+                  </ButtonLayout.Secondary>
+                )}
+              </ButtonLayout.Root>
+            </Footer>
+          </Content>
+        )
+      }}
     </RootForm>
   )
 }

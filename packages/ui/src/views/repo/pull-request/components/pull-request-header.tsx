@@ -1,12 +1,10 @@
 import { useCallback, useState } from 'react'
 
-import { Button, Icon, Separator, StatusBadge, Tag } from '@/components'
+import { Button, IconV2, Separator, StatusBadge, Tag } from '@/components'
 import { useRouterContext } from '@/context'
-import { TranslationStore } from '@/views'
+import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
 
-import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
@@ -28,7 +26,6 @@ interface PullRequestTitleProps {
     description?: string
   }
   updateTitle: (title: string, description: string) => void
-  useTranslationStore: () => TranslationStore
 }
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
@@ -48,8 +45,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     repoId,
     description
   },
-  updateTitle,
-  useTranslationStore
+  updateTitle
 }) => {
   const { Link } = useRouterContext()
   const [isEditing, setIsEditing] = useState(false)
@@ -84,7 +80,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               setIsEditing(true)
             }}
           >
-            <Icon name="edit-pen" size={16} className="text-icons-1 group-hover:text-icons-3" />
+            <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
           </Button>
           <Separator orientation="vertical" className="mx-1 h-4 bg-cn-background-0" />
           <Button variant="link" onClick={() => setIsEditing(true)}>
@@ -93,8 +89,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <StatusBadge variant="outline" theme={stateObject.theme}>
-            <Icon name={stateObject.icon as IconType} size={13} />
+          <StatusBadge icon={stateObject.icon} variant="outline" theme={stateObject.theme}>
             {stateObject.text}
           </StatusBadge>
 
@@ -106,11 +101,11 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             </span>
             <span>into</span>
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
-              <Tag variant="secondary" icon="branch-2" size="sm" value={target_branch || ''} showIcon />
+              <Tag variant="secondary" icon="git-branch" size="sm" value={target_branch || ''} showIcon />
             </Link>
             <span>from</span>
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}>
-              <Tag variant="secondary" icon="branch-2" size="sm" value={source_branch || ''} showIcon />
+              <Tag variant="secondary" icon="git-branch" size="sm" value={source_branch || ''} showIcon />
             </Link>
             <span className="mx-1.5 h-4 w-px bg-cn-background-3" />
             <span className="text-cn-foreground-2">{formattedTime}</span>
@@ -124,7 +119,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         onSubmit={handleSubmit}
         initialTitle={title || ''}
         initialDescription={description || ''}
-        useTranslationStore={useTranslationStore}
       />
     </>
   )

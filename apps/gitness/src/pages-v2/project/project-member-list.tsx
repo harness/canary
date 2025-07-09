@@ -18,8 +18,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { orderSortDate } from '../../types'
+import { orderSortDate, PageResponseHeader } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
 
@@ -49,7 +48,7 @@ export function ProjectMemberListPage() {
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
 
-  const { isLoading, data: { body: membersData } = {} } = useMembershipListQuery({
+  const { isLoading, data: { body: membersData, headers } = {} } = useMembershipListQuery({
     space_ref: spaceURL ?? '',
     queryParams: {
       page: queryPage,
@@ -138,9 +137,11 @@ export function ProjectMemberListPage() {
 
   useEffect(() => {
     if (membersData) {
-      setMemberList(membersData)
+      const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) ?? '0')
+      const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) ?? '10')
+      setMemberList(membersData, { totalItems, pageSize })
     }
-  }, [membersData, setMemberList])
+  }, [membersData, setMemberList, headers])
 
   useEffect(() => {
     if (principalData) {
@@ -178,7 +179,6 @@ export function ProjectMemberListPage() {
     <>
       <ProjectMemberListView
         isLoading={isLoading}
-        useTranslationStore={useTranslationStore}
         useMemberListStore={useMemberListStore}
         usePrincipalListStore={usePrincipalListStore}
         isInvitingMember={isInvitingMember}
@@ -202,7 +202,6 @@ export function ProjectMemberListPage() {
         type="member"
         identifier={deleteMemberId ?? undefined}
         isLoading={isDeletingMember}
-        useTranslationStore={useTranslationStore}
         withForm
       />
     </>

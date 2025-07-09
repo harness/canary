@@ -31,8 +31,8 @@ import {
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG } from '../../pages/pull-request/utils'
@@ -69,6 +69,7 @@ export default function PullRequestChanges() {
     setPullReqStats,
     dryMerge
   } = usePullRequestProviderStore()
+  const { spaceId, repoId, pullRequestId } = useParams<PathParams>()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
   const [commitRange, setCommitRange] = useState<string[]>()
@@ -79,11 +80,11 @@ export default function PullRequestChanges() {
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
-  const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId')
   const [scrolledToComment, setScrolledToComment] = useState(false)
   const [jumpToDiff, setJumpToDiff] = useState('')
+  const isMfe = useIsMFE()
 
   const {
     data: { body: reviewers } = {},
@@ -428,7 +429,6 @@ export default function PullRequestChanges() {
       <PullRequestChangesPage
         handleUpload={handleUpload}
         usePullRequestProviderStore={usePullRequestProviderStore}
-        useTranslationStore={useTranslationStore}
         setDiffMode={setDiffMode}
         loadingReviewers={loadingReviewers}
         diffMode={diffMode}
@@ -464,6 +464,9 @@ export default function PullRequestChanges() {
         setScrolledToComment={setScrolledToComment}
         jumpToDiff={jumpToDiff}
         setJumpToDiff={setJumpToDiff}
+        toRepoFileDetails={({ path }: { path: string }) =>
+          isMfe ? `${window.apiUrl || ''}/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
+        }
       />
     </>
   )

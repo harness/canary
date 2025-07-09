@@ -31,7 +31,8 @@ export const pullRequestListStore: PullRequestListStore = {
       ]
     }
   ],
-  totalPages: 1,
+  totalItems: 10,
+  pageSize: 10,
   page: 1,
   openPullReqs: 1,
   closedPullReqs: 0,

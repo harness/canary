@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Checkbox, ControlGroup, Fieldset, Message, MessageTheme, SkeletonForm, Spacer, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TranslationStore } from '@views/repo/repo-list/types'
 import { z } from 'zod'
 
 import { ErrorTypes } from '../types'
@@ -20,7 +20,6 @@ interface RepoSettingsSecurityFormProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
-  useTranslationStore: () => TranslationStore
 }
 
 export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
@@ -28,10 +27,9 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   handleUpdateSecuritySettings,
   apiError,
   isUpdatingSecuritySettings,
-  isLoadingSecuritySettings,
-  useTranslationStore
+  isLoadingSecuritySettings
 }) => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const {
     handleSubmit,
     setValue,
@@ -66,9 +64,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
 
   return (
     <Fieldset className="gap-y-6">
-      <Text size={13} weight="medium">
-        {t('views:repos.security', 'Security')}
-      </Text>
+      <Text variant="heading-subsection">{t('views:repos.security', 'Security')}</Text>
       {isLoadingSecuritySettings ? (
         <SkeletonForm linesCount={2} />
       ) : (
@@ -94,9 +90,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
       {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
         <>
           <Spacer size={2} />
-          <Text size={1} className="text-cn-foreground-danger">
-            {apiError.message}
-          </Text>
+          <Text color="danger">{apiError.message}</Text>
         </>
       )}
     </Fieldset>

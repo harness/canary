@@ -1,4 +1,3 @@
-import { TranslationStore } from '@/views'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { InputFactory } from '@harnessio/forms'
@@ -62,7 +61,6 @@ export interface ConnectorActivityItem {
 
 export interface ConnectorReferenceListProps {
   entities: ConnectorReferenceList
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
   toEntity: (entity: string) => void
   toScope: (scope: string) => void
@@ -95,7 +93,6 @@ export interface ConnectorDetailsLayoutProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
-  useTranslationStore: () => TranslationStore
   children: React.ReactNode
   toConnectorsList?: () => string
 }
@@ -104,9 +101,9 @@ export interface ConnectorDetailsReferenceProps {
   searchQuery: string
   setSearchQuery: (query?: string) => void
   apiConnectorRefError?: string
-  useTranslationStore: () => TranslationStore
   currentPage: number
-  totalPages: number
+  totalItems: number
+  pageSize: number
   goToPage: (page: number) => void
   isLoading: boolean
   entities: ConnectorReferenceList
@@ -119,7 +116,6 @@ export interface ConnectorDetailsHeaderProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
-  useTranslationStore: () => TranslationStore
   toConnectorsList?: () => string
 }
 
@@ -131,7 +127,6 @@ export enum ConnectorDetailsTabsKeys {
 
 export interface ConnectorDetailsConfigurationProps {
   connectorDetails: ConnectorDetailsItem
-  useTranslationStore: () => TranslationStore
   onSave: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
@@ -140,15 +135,14 @@ export interface ConnectorDetailsConfigurationProps {
 
 export interface ConnectorDetailsActivitiesListProps {
   activities: ConnectorActivityList
-  useTranslationStore: () => TranslationStore
   isLoading: boolean
 }
 
 export interface ConnectorDetailsActivityProps {
   apiConnectorActivityError?: string
-  useTranslationStore: () => TranslationStore
   currentPage: number
-  totalPages: number
+  totalItems: number
+  pageSize: number
   goToPage: (page: number) => void
   isLoading: boolean
   activities: ConnectorActivityList

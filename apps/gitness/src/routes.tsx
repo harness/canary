@@ -201,7 +201,13 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <span>{Page.Summary}</span>,
               routeName: RouteConstants.toRepoSummary,
               pageTitle: Page.Summary
-            }
+            },
+            children: [
+              {
+                path: '*',
+                element: <RepoSummaryPage />
+              }
+            ]
           },
           {
             path: 'commits',

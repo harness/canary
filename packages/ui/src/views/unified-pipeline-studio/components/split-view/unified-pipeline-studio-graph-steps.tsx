@@ -27,11 +27,7 @@ export const PipelineStudioGraphViewSteps = ({ data }: { data: AnyContainerNodeT
       const yamlJson = parse(yamlRevision.yaml)
       const stage = get(yamlJson, selectedPath.stages)
 
-      console.log(stage, 'stage')
-
       const newData = processSteps(stage.steps, selectedPath.stages + '.steps', yamlParserOptions ?? {})
-
-      console.log(newData, 'newData')
 
       newData.unshift(startNode)
       newData.push(endNode)
@@ -41,9 +37,6 @@ export const PipelineStudioGraphViewSteps = ({ data }: { data: AnyContainerNodeT
       setStepsData([])
     }
   }, [selectedPath?.stages, yamlRevision])
-
-  console.log(selectedPath)
-  console.log(data)
 
   const nodes = useMemo(() => {
     return contentNodeBank.getNodesDefinition()

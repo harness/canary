@@ -17,7 +17,7 @@ import { parallelContainerConfig, serialContainerConfig } from '../graph-impleme
 import { contentNodeBank } from '../graph-implementation/factory/content-node-bank'
 import { endNode, startNode } from '../graph-implementation/utils/start-end-nodes'
 
-export const PipelineStudioGraphViewSteps = ({ data }: { data: AnyContainerNodeType[] }): React.ReactElement => {
+export const PipelineStudioGraphViewSteps = ({ data: _data }: { data: AnyContainerNodeType[] }): React.ReactElement => {
   const { selectedPath, yamlRevision, yamlParserOptions } = useUnifiedPipelineStudioContext()
 
   const [stepsData, setStepsData] = useState<AnyContainerNodeType[]>([])

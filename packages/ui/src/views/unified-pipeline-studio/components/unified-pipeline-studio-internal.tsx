@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { Layout } from '@components/layout'
 import { parse } from 'yaml'
 
 import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
@@ -11,6 +12,7 @@ import { ContentNodeType } from './graph-implementation/types/content-node-type'
 import { YamlEntityType } from './graph-implementation/types/yaml-entity-type'
 import { endNode, startNode } from './graph-implementation/utils/start-end-nodes'
 import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
+import { PipelineStudioGraphViewStageDetailsSection } from './split-view/unified-pipeline-studio-graph-stage-details-section'
 import { PipelineStudioGraphViewStages } from './split-view/unified-pipeline-studio-graph-stages'
 import { PipelineStudioGraphViewSteps } from './split-view/unified-pipeline-studio-graph-steps'
 import { PipelineStudioGraphView } from './unified-pipeline-studio-graph-view'
@@ -19,7 +21,7 @@ import { PipelineStudioNodeContextMenu } from './unified-pipeline-studio-node-co
 import { PipelineStudioYamlView } from './unified-pipeline-studio-yaml-view'
 
 export default function PipelineStudioView() {
-  const { view, splitView, yamlRevision, yamlParserOptions } = useUnifiedPipelineStudioContext()
+  const { view, splitView, yamlRevision, yamlParserOptions, selectedPath } = useUnifiedPipelineStudioContext()
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
 
@@ -56,8 +58,11 @@ export default function PipelineStudioView() {
         <PipelineStudioLayout.Split>
           <PipelineStudioLayout.SplitMain>
             <UnifiedPipelineStudioNodeContextProvider graph="stages">
-              <PipelineStudioGraphViewStages data={data} />
-              <PipelineStudioNodeContextMenu />
+              <Layout.Flex direction="column" className="w-full">
+                <PipelineStudioGraphViewStages data={data} />
+                <PipelineStudioNodeContextMenu />
+                {selectedPath?.stages ? <PipelineStudioGraphViewStageDetailsSection data={data} /> : null}
+              </Layout.Flex>
             </UnifiedPipelineStudioNodeContextProvider>
           </PipelineStudioLayout.SplitMain>
           <PipelineStudioLayout.SplitPanel open={true} defaultSize={50}>

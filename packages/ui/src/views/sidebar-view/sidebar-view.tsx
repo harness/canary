@@ -1,21 +1,23 @@
-import { useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import {
   AppSidebarItem,
   AppSidebarUser,
+  Drawer,
   HarnessLogo,
   LanguageCode,
   LanguageDialog,
   LanguageInterface,
   languages,
   Layout,
+  MenuGroupType,
   NavbarItemType,
   SearchProvider,
   Sidebar,
   SidebarSearch,
   ThemeDialog
 } from '@/components'
-import { useTheme, useTranslation } from '@/context'
+import { useRouterContext, useTheme, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 
 interface SidebarProps {
@@ -33,6 +35,8 @@ interface SidebarProps {
   hasToggle?: boolean
   changeLanguage: (language: string) => void
   lang: string
+  settingsMenu: MenuGroupType[]
+  moreMenu: MenuGroupType[]
 }
 
 export const SidebarView = ({
@@ -42,7 +46,9 @@ export const SidebarView = ({
   recentMenuItems,
   showMoreMenu,
   showSettingMenu,
+  settingsMenu = [],
   currentUser,
+  moreMenu = [],
   handleMoreMenu,
   handleSettingsMenu,
   handleCustomNav,
@@ -53,6 +59,7 @@ export const SidebarView = ({
 }: SidebarProps) => {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
+  const { location } = useRouterContext()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
@@ -75,9 +82,14 @@ export const SidebarView = ({
     handleSettingsMenu(false)
   }
 
+  useEffect(() => {
+    handleMoreMenu(false)
+    handleSettingsMenu(false)
+  }, [location.pathname, handleMoreMenu, handleSettingsMenu])
+
   return (
     <>
-      <Sidebar.Root>
+      <Sidebar.Root className="!z-30">
         <Sidebar.Header>
           <SearchProvider>
             <Layout.Grid gapY="md">
@@ -98,13 +110,45 @@ export const SidebarView = ({
               />
             ))}
 
-            <Sidebar.Item
-              title={t('component:navbar.more', 'More')}
-              icon="menu-more-horizontal"
-              onClick={() => handleMoreMenu()}
-              withRightIndicator
-              active={showMoreMenu}
-            />
+            <Drawer.Root direction="left" noBodyStyles open={showMoreMenu} onOpenChange={handleMoreMenu} modal={false}>
+              <Drawer.Trigger asChild>
+                <Sidebar.Item
+                  title={t('component:navbar.more', 'More')}
+                  icon="menu-more-horizontal"
+                  withRightIndicator
+                  active={showMoreMenu}
+                />
+              </Drawer.Trigger>
+
+              <Drawer.Content
+                startPointShift="var(--cn-sidebar-width)"
+                size="xs"
+                className="z-20"
+                overlayClassName="z-20"
+                forceWithOverlay
+              >
+                <Drawer.Title className="sr-only">More menu</Drawer.Title>
+                <Drawer.Description className="sr-only">More menu</Drawer.Description>
+                <Drawer.Body>
+                  {moreMenu.map((group, index) => (
+                    <Fragment key={group.groupId}>
+                      {index > 0 && <Sidebar.Separator />}
+                      <Sidebar.Group key={group.groupId} label={group.title}>
+                        {group.items.map(item => (
+                          <Sidebar.Item
+                            key={item.id}
+                            to={item.to}
+                            title={item.title}
+                            description={item.description}
+                            icon={item.iconName}
+                          />
+                        ))}
+                      </Sidebar.Group>
+                    </Fragment>
+                  ))}
+                </Drawer.Body>
+              </Drawer.Content>
+            </Drawer.Root>
           </Sidebar.Group>
 
           <Sidebar.Separator />
@@ -134,12 +178,56 @@ export const SidebarView = ({
                 to="/admin/default-settings"
               />
             )}
-            <Sidebar.Item
-              title={t('component:navbar.settings', 'Settings')}
-              icon="settings"
-              onClick={() => handleSettingsMenu()}
-              active={showSettingMenu}
-            />
+
+            <Drawer.Root
+              direction="left"
+              noBodyStyles
+              open={showSettingMenu}
+              onOpenChange={handleSettingsMenu}
+              modal={false}
+            >
+              <Drawer.Trigger asChild>
+                <Sidebar.Item
+                  title={t('component:navbar.settings', 'Settings')}
+                  icon="settings"
+                  active={showSettingMenu}
+                  withRightIndicator
+                />
+              </Drawer.Trigger>
+
+              <Drawer.Content
+                startPointShift="var(--cn-sidebar-width)"
+                size="xs"
+                className="z-20"
+                overlayClassName="z-20"
+                forceWithOverlay
+              >
+                <Drawer.Title className="sr-only">Settings menu</Drawer.Title>
+                <Drawer.Description className="sr-only">Settings menu</Drawer.Description>
+                <Drawer.Body>
+                  {settingsMenu.map((group, index) => (
+                    <Fragment key={group.groupId}>
+                      {index > 0 && <Sidebar.Separator />}
+                      <Sidebar.Group
+                        key={group.groupId}
+                        label={group.title}
+                        className="grid-cols-2 [&>h6]:[grid-column:1/3]"
+                      >
+                        {group.items.map(item => (
+                          <Sidebar.Item
+                            key={item.id}
+                            to={item.to}
+                            title={item.title}
+                            description={item.description}
+                            icon={item.iconName}
+                          />
+                        ))}
+                      </Sidebar.Group>
+                    </Fragment>
+                  ))}
+                </Drawer.Body>
+              </Drawer.Content>
+            </Drawer.Root>
           </Sidebar.Group>
         </Sidebar.Content>
 

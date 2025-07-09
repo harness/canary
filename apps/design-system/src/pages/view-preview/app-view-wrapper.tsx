@@ -3,7 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop } from '@utils/viewUtils'
 
-import { MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
+import { NavbarItemType, Sidebar } from '@harnessio/ui/components'
 import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
@@ -74,14 +74,14 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     setPinnedMenu(current => (pin ? [...current, item] : current.filter(pinnedItem => pinnedItem !== item)))
   }, [])
 
-  const onToggleMoreMenu = useCallback(() => {
+  const onToggleMoreMenu = useCallback((state?: boolean) => {
     setShowSettingsMenu(false)
-    setShowMoreMenu(current => !current)
+    setShowMoreMenu(current => state ?? !current)
   }, [])
 
-  const onToggleSettingsMenu = useCallback(() => {
+  const onToggleSettingsMenu = useCallback((state?: boolean) => {
     setShowMoreMenu(false)
-    setShowSettingsMenu(current => !current)
+    setShowSettingsMenu(current => state ?? !current)
   }, [])
 
   return (
@@ -104,18 +104,14 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               handleRemoveRecentMenuItem={noop}
               changeLanguage={noop}
               lang="en"
+              moreMenu={moreMenu}
+              settingsMenu={settingsMenu}
             />
             <Sidebar.Inset>
               {breadcrumbs}
               <MainContentLayout className={childrenWrapperClassName} withBreadcrumbs>
                 <Outlet />
               </MainContentLayout>
-              <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
-              <SettingsMenu
-                showSettingMenu={showSettingsMenu}
-                handleSettingsMenu={onToggleSettingsMenu}
-                items={settingsMenu}
-              />
             </Sidebar.Inset>
           </Sidebar.Provider>
         }

@@ -39,7 +39,7 @@
   }
 
   body {
-    @apply bg-cn-background-0 text-cn-foreground-2 overscroll-y-none text-sm font-normal -tracking-[0.02em];
+    @apply bg-cn-background-0 text-cn-foreground-2 !pointer-events-auto overscroll-y-none text-sm font-normal -tracking-[0.02em];
   }
 }
 

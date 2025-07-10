@@ -324,10 +324,10 @@ export const PullRequestCommentBox = ({
       const parsedComment = parseComment(comment, textSelection, '')
 
       if (isListString(parsedComment.previousLine)) {
-        setTimeout(() => handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection), 0)
+        handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection)
       }
       if (isListSelectString(parsedComment.previousLine)) {
-        setTimeout(() => handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection), 0)
+        handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
       }
     }
   }

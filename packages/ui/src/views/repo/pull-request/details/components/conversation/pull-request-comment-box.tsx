@@ -151,6 +151,19 @@ export const PullRequestCommentBox = ({
 
   useEffect(() => {
     if (textAreaRef.current) {
+      textAreaRef.current.addEventListener('select', onCommentSelect)
+    }
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      if (textAreaRef.current) {
+        textAreaRef.current.removeEventListener('select', onCommentSelect)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (textAreaRef.current) {
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
       textAreaRef.current.focus()
     }
@@ -298,10 +311,12 @@ export const PullRequestCommentBox = ({
     setCommentAndTextSelection(e.target.value, { start: e.target.selectionStart, end: e.target.selectionEnd })
   }
 
-  const onCommentSelect = (e: SyntheticEvent<HTMLTextAreaElement>) => {
-    const target = e.target as EventTarget & HTMLTextAreaElement
+  const onCommentSelect = () => {
+    if (textAreaRef.current) {
+      const target = textAreaRef.current
 
-    setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
+      setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
+    }
   }
 
   const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -351,12 +366,11 @@ export const PullRequestCommentBox = ({
             >
               <Textarea
                 ref={textAreaRef}
-                className="min-h-36 bg-cn-background-2 p-3 pb-10 text-cn-foreground-1"
+                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
                 onChange={e => onCommentChange(e)}
-                onSelect={e => onCommentSelect(e)}
                 onKeyUpCapture={e => onKeyUp(e)}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {
@@ -366,10 +380,10 @@ export const PullRequestCommentBox = ({
                 resizable
               />
               {isDragging && (
-                <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
               )}
 
-              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-cn-background-2 pb-2 pt-1">
+              <div className="bg-cn-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -382,7 +396,7 @@ export const PullRequestCommentBox = ({
                       >
                         <IconV2 className="text-icons-9" name={item.icon} />
                       </Button>
-                      {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
+                      {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
                     </Fragment>
                   )
                 })}

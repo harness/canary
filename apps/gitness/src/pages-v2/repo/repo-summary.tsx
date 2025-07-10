@@ -60,6 +60,9 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
+  const effectiveGitRef = fullGitRef || repository?.default_branch || ''
+  const effectiveGitRefName = gitRefName || repository?.default_branch || ''
+
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
@@ -139,7 +142,7 @@ export default function RepoSummaryPage() {
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef || '') }
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(effectiveGitRef) }
   })
 
   const decodedReadmeContent = useMemo(() => {
@@ -149,7 +152,7 @@ export default function RepoSummaryPage() {
   const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(effectiveGitRef) }
   })
 
   const { mutate: createToken } = useCreateTokenMutation(
@@ -226,7 +229,7 @@ export default function RepoSummaryPage() {
     setLoading(true)
 
     pathDetails({
-      queryParams: { git_ref: normalizeGitRef(fullGitRef || '') },
+      queryParams: { git_ref: normalizeGitRef(effectiveGitRef) },
       body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
       repo_ref: repoRef
     })
@@ -242,7 +245,7 @@ export default function RepoSummaryPage() {
                 timestamp: item?.last_commit?.author?.when ?? '',
                 user: { name: item?.last_commit?.author?.identity?.name || '' },
                 sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${item?.path}`
+                path: `${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${item?.path}`
               }))
             )
           )
@@ -263,9 +266,9 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${filePath}`)
     },
-    [fullGitRef, navigate, repoId, spaceId]
+    [effectiveGitRef, navigate, repoId, spaceId]
   )
 
   const latestCommitInfo = useMemo(() => {
@@ -295,7 +298,7 @@ export default function RepoSummaryPage() {
       <RepoSummaryView
         repoId={repoId ?? ''}
         spaceId={spaceId ?? ''}
-        selectedBranchOrTag={{ name: gitRefName || '', sha: repoDetails?.latest_commit?.sha || '' }}
+        selectedBranchOrTag={{ name: effectiveGitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
         loading={isLoading}
         filesList={filesList}
@@ -322,13 +325,13 @@ export default function RepoSummaryPage() {
         branchSelectorRenderer={
           <BranchSelectorContainer
             onSelectBranchorTag={selectBranchOrTag}
-            selectedBranch={{ name: gitRefName || '', sha: repoDetails?.latest_commit?.sha || '' }}
+            selectedBranch={{ name: effectiveGitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
             preSelectedTab={preSelectedTab}
           />
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
-        toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: gitRefName || '' })}
+        toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: effectiveGitRefName })}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}

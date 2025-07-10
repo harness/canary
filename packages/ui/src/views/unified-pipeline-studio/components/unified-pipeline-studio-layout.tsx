@@ -43,6 +43,13 @@ const PipelineStudioLayout = {
       </Resizable.Panel>
     )
   },
+  SplitDivider: ({ children }: { children: ReactNode }) => {
+    return (
+      <div style={{ height: 80, minHeight: 80 }} className="border-t border-cn-borders-2 px-4 flex items-center">
+        {children}
+      </div>
+    )
+  },
   SplitPanel: ({ children, open, defaultSize }: { children: ReactElement; open?: boolean; defaultSize?: number }) => {
     return open ? (
       <>

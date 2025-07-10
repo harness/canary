@@ -58,13 +58,17 @@ export default function PipelineStudioView() {
         <PipelineStudioLayout.Split>
           <PipelineStudioLayout.SplitMain>
             <UnifiedPipelineStudioNodeContextProvider graph="stages">
-              <Layout.Flex direction="column" className="w-full">
-                <PipelineStudioGraphViewStages data={data} />
-                <PipelineStudioNodeContextMenu />
-                {selectedPath?.stages ? <PipelineStudioGraphViewStageDetailsSection data={data} /> : null}
-              </Layout.Flex>
+              <PipelineStudioGraphViewStages data={data} />
+              <PipelineStudioNodeContextMenu />
             </UnifiedPipelineStudioNodeContextProvider>
           </PipelineStudioLayout.SplitMain>
+          {selectedPath?.stages ? (
+            <PipelineStudioLayout.SplitDivider>
+              <PipelineStudioGraphViewStageDetailsSection data={data} />
+            </PipelineStudioLayout.SplitDivider>
+          ) : (
+            <></>
+          )}
           <PipelineStudioLayout.SplitPanel open={true} defaultSize={50}>
             <UnifiedPipelineStudioNodeContextProvider graph="steps">
               <PipelineStudioGraphViewSteps data={data} />

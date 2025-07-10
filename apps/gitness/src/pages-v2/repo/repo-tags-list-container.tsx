@@ -57,7 +57,8 @@ export const RepoTagsListContainer = () => {
     queryParams: {
       query: query ?? '',
       page: queryPage,
-      limit: 10
+      limit: 10,
+      include_commit: true
     }
   })
 

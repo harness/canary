@@ -107,7 +107,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text className="block" truncate title={tag.name}>
+              <Text color="foreground-1" className="block" truncate title={tag.name}>
                 {tag.name}
               </Text>
             </Table.Cell>
@@ -117,7 +117,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </Text>
             </Table.Cell>
             <Table.Cell className="!py-2.5">
-              <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
+              <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
             <Table.Cell>
               <div className="flex items-center gap-2">

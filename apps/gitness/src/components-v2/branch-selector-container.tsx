@@ -73,7 +73,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
 
   useEffect(() => {
     refetchBranches()
-  }, [selectedBranch, refetchBranches])
+  }, [refetchBranches])
 
   useEffect(() => {
     if (branches) {

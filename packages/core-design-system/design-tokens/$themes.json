@@ -440,6 +440,40 @@
       "tracking.wide": "34601988c203609e80fad6e8391458c47385e386",
       "tracking.wider": "14e61a1989be947ad3fe6136353654d98871dc90",
       "tracking.widest": "0b2e216ff832f9bf7b96e8f222ea8f38b04a6a27",
+      "fontWeight.default.normal.100": "5b09487638f3ccf3a4a7712ca2283b4818a41f28",
+      "fontWeight.default.normal.200": "fc6532ae463eb44ec62b89697d1770070585dcb2",
+      "fontWeight.default.normal.300": "2a00b61d9e090f7d69fff8c59d50f1f2f31e9c6f",
+      "fontWeight.default.normal.400": "a9fb4a40a31f7264e888c758f0c41e821ca64ed5",
+      "fontWeight.default.normal.500": "f1c8211b31501f08aebfa03feb5cb23e64d84383",
+      "fontWeight.default.normal.600": "9f72ba08a4eef21b705744ff948adb815552f31c",
+      "fontWeight.default.normal.700": "65f437db2221dd868421efc11be47197919f4d7d",
+      "fontWeight.default.normal.800": "4cd4610b5bc9c9399265e2052ea540b0a611f893",
+      "fontWeight.default.normal.900": "61db8dba465a957b970ce724962ed5d7ba53dbe4",
+      "fontWeight.default.italic.100": "49b3a69eb9896949fb6949a77227395c89db4993",
+      "fontWeight.default.italic.200": "808f6f0d72e6bfcb83b90a8cb3863b1a46d311ce",
+      "fontWeight.default.italic.300": "9cfefc39c3766d91382ca3fa060312da79adce54",
+      "fontWeight.default.italic.400": "c61147ebfaa86b2db0689e4fb43e8dc3f64b6111",
+      "fontWeight.default.italic.500": "9f47c20a77a2dbf36bcd4a3a1a7dd482c421fd20",
+      "fontWeight.default.italic.600": "41778d3acc38b2010cce4a0aadb90b714d91d533",
+      "fontWeight.default.italic.700": "43351d6b32a5db2bf412a96b802d552427beaa1f",
+      "fontWeight.default.italic.800": "eda335db87b371f9915196f9446948a792541dbd",
+      "fontWeight.default.italic.900": "ba03f1879f7c8fd9b9ff8bf07868b20a0d898245",
+      "fontWeight.mono.normal.100": "08b6a758e55b545792206fb57555c8d4b487f8f7",
+      "fontWeight.mono.normal.200": "96e84293221cdf7f88111b1cd55331de92078b22",
+      "fontWeight.mono.normal.300": "603909a040a23ba2e5ba9c706fa810420de0994c",
+      "fontWeight.mono.normal.400": "36794dc06d68b3dad63d9498d9e293d412bf8ca2",
+      "fontWeight.mono.normal.500": "641ef4178f648003d0b5c9c0469baa1dce6bcff5",
+      "fontWeight.mono.normal.700": "4cf0b1b2ea34b1df18999bade9c2af3a0ef6b0d2",
+      "fontWeight.mono.normal.800": "dc12775dcfa08d98fbb5296e62b582108707ef32",
+      "fontWeight.mono.italic.100": "63c01eccb265182f72e2a3142c59a6b696809700",
+      "fontWeight.mono.italic.200": "90ea2bf0e5904f16625f98a8ea62f78a8974380d",
+      "fontWeight.mono.italic.300": "33dbd3e167f4bd43a1d4adb5ad310d609d31a10d",
+      "fontWeight.mono.italic.400": "ecc3db60b0207b50c7fcce4e292625738d8d6537",
+      "fontWeight.mono.italic.500": "521eb13936369a6dc2340374df7abb5e657fefde",
+      "fontWeight.mono.italic.700": "f57d23d3402767dd602e9363428d91bc7cd42423",
+      "fontWeight.mono.italic.800": "f4a0edc9d3e9422dc5f7b8a16c7e0612ae476088",
+      "fontFamily.default": "1e95627ed050d7022c04d9c054649d2660d7a1b3",
+      "fontFamily.mono": "6e2cde7653fb49cb103b1bece4149cf46bb60c98",
       "fontSize.0": "2fdbc7bd30ffd310af3294f2e1c9278f7bbd9708",
       "fontSize.1": "9b079ccd31a0d3ba8e47e486c3e91684be715cf3",
       "fontSize.2": "c60eea6bcf5ccdc456aacedbed9caeb54234e882",
@@ -1759,6 +1793,7 @@
       "gradient.sidebar.icon.bg.to": "e0d7d96eab5cd41b092a7c6c65b652f59f3ae6f5",
       "gradient.sidebar.icon.item.from": "24de92ff7f9230c6c396fe9c23619d97c5243053",
       "gradient.sidebar.icon.item.to": "f90e94e06a27fa09036d474dc661a87e944a14d0",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50",
       "gradient.toast.default.to": "923eecb681effccf046d0652d006c9fee70dbf92",
       "gradient.toast.default.from": "791624d963a4748cf6c81cc49e59c29815196dd3",
       "gradient.toast.danger.to": "35acf5901451a81f02d7ee77472f1ab03a48ffe4",
@@ -2775,7 +2810,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -3735,7 +3771,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -4693,7 +4730,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -5653,7 +5691,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -6613,7 +6652,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -7573,7 +7613,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -8533,7 +8574,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -9493,7 +9535,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -10453,7 +10496,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -11413,7 +11457,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -12373,7 +12418,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -13333,7 +13379,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -14292,7 +14339,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -15251,7 +15299,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -16210,7 +16259,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -17169,7 +17219,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -18128,7 +18179,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -19087,7 +19139,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -20070,7 +20123,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -21029,7 +21083,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -21988,7 +22043,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -22947,7 +23003,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -23906,7 +23963,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "gradient.sidebar.fade-end": "8ebe5381716e7b0b8f335bb4aa87266b59c94c50"
     },
     "group": "mode"
   },
@@ -24136,6 +24194,7 @@
       "input.sm.pl": "651a82d7a39e1319cb8691f03b1b8fa53b40d0a7",
       "input.sm.pr": "c1f06237383a0b6a1ca69c2ea52fa80113e28af8",
       "input.sm.py": "f1488c04b607e804dad95002dca3dc45f0bc51ae",
+      "input.horizontal.label.max-width": "8af8672685649554ce9702558277b6519041c4c2",
       "input-text-area.min-height": "9e253424e3247c4bb2f547a4783ca3a612c77421",
       "dropdown.item.gap": "9f632d99a8238aa4c06cdc6c550dc83e408976da",
       "dropdown.item.py": "bc31b3a15bb0b6c9a3c6a39de97d40ebd160efd0",
@@ -24224,7 +24283,7 @@
       "toast.gap": "7899f0b956c4d1ab09153858f47ee42dd8cf613d",
       "toast.px": "6d42d6bfbcac84edbacaa03a9dcd87b929cdff95",
       "toast.py": "caf06245ed390ae403fd7f36a730af2cc957d60b",
-      "toast.offset.top": "100aaec488bcb2a0a261a5b8fe0e4546a183b062",
+      "toast.offset.top": "654d830755a4f8fd927ef6f31fd5c7a14f8d8aea",
       "toast.offset.bottom": "db6c121dfd3cd9b56585a4495eb04962880a0e8b",
       "toast.offset.right": "3829cf42e4c691f8f737b388da1015cbb0fb9544",
       "toast.offset.left": "2b8971f59ddb85debbe10e95aa4172dd0a864c75",
@@ -24255,7 +24314,8 @@
       "sidebar.sub-group.py": "ae35147baa4489a0afdbfb4c4be2e82d215ee722",
       "sidebar.sub-group.px": "5006092a42bb07d1e40ae23b2baec1ee97f03ffd",
       "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352",
-      "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6"
+      "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6",
+      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d"
     },
     "group": "breakpoint"
   }

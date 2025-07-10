@@ -1408,6 +1408,14 @@
       }
     },
     "sidebar": {
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade-end} 0%, {bg.0} 100%)"
+      },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade-end} 100%)"
+      },
       "logo": {
         "text": {
           "$type": "color",
@@ -2213,6 +2221,19 @@
             "$value": "{chrome.400}"
           }
         }
+      },
+      "fade-end": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.0}"
       }
     },
     "toast": {

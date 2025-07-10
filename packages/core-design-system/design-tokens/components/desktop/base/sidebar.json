@@ -105,6 +105,10 @@
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       }
+    },
+    "fade-height": {
+      "$type": "sizing",
+      "$value": "{size.15}"
     }
   }
 }

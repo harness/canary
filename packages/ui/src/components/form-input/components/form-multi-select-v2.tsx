@@ -37,6 +37,7 @@ const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((pr
         return (
           <MultiSelect
             {...props}
+            error={props?.error || fieldState?.error?.message}
             ref={setFieldRef}
             value={field.value}
             onChange={(options: MultiSelectOption[]) => {

@@ -33,7 +33,7 @@ export const RepoSidebar = ({
               <div className="px-5">
                 <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
               </div>
-              <ScrollArea className="px-5 pr-3.5 grid-cols-[100%]">
+              <ScrollArea className="grid-cols-[100%] px-5 pr-3.5">
                 {children}
                 <Spacer size={10} />
               </ScrollArea>

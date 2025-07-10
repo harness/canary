@@ -26,7 +26,7 @@ export const EntityReferenceFilter: React.FC<EntityReferenceFilterProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button variant="outline" size="sm" className="flex items-center justify-between h-8 w-36 !px-2">
+        <Button variant="outline" size="sm" className="flex h-8 w-36 items-center justify-between !px-2">
           <span className="truncate text-cn-foreground-1">{filterTypes[selectedType]}</span>
           <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down" />
         </Button>

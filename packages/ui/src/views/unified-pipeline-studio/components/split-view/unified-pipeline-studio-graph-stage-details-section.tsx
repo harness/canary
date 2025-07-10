@@ -44,7 +44,7 @@ export const PipelineStudioGraphViewStageDetailsSection = ({
 
   return (
     <Layout.Flex
-      className="border-t border-cn-borders-2 h-16 justify-between items-center px-4 cursor-pointer"
+      className="h-16 cursor-pointer items-center justify-between border-t border-cn-borders-2 px-4"
       onClick={() => {
         setRightDrawer(RightDrawer.StageConfig)
         setEditStageIntention({ path: selectedPath?.stages || '' })

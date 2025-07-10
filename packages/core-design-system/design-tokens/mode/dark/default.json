@@ -1419,11 +1419,11 @@
       },
       "fade-start": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.sidebar.fade-end} 0%, {bg.0} 100%)"
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {bg.0} 100%)"
       },
       "fade-end": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade-end} 100%)"
+        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade} 100%)"
       }
     },
     "scrollbar": {
@@ -2200,7 +2200,7 @@
           }
         }
       },
-      "fade-end": {
+      "fade": {
         "$extensions": {
           "studio.tokens": {
             "modify": {

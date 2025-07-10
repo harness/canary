@@ -168,6 +168,16 @@
   display: block;
 }
 
+.diff-tailwindcss-wrapper {
+  .diff-line-new-num {
+    @apply border-l;
+  }
+
+  .diff-line-extend-old-placeholder {
+    @apply border-cn-borders-2 border-r;
+  }
+}
+
 .diff-tailwindcss-wrapper .invisible {
   visibility: hidden;
 }

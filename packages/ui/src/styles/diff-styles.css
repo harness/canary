@@ -25,5 +25,6 @@
     --diff-add-widget-color--: var(--cn-comp-diff-add-widget-color);
     --diff-empty-content--: var(--cn-comp-diff-empty-content);
     --diff-hunk-content-color--: var(--cn-comp-diff-hunk-content-color);
+    --diff-border--: var(--cn-border-2);
   }
 }

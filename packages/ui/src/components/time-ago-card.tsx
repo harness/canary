@@ -4,13 +4,26 @@ import { Popover, StatusBadge, Text, TextProps } from '@/components'
 import { LOCALE } from '@utils/TimeUtils'
 import { formatDistanceToNow } from 'date-fns'
 
-const getTimeZoneAbbreviation = () =>
-  new Date().toLocaleTimeString(undefined, { timeZoneName: 'short' }).split(' ').pop()
+const getTimeZoneAbbreviation = () => {
+  try {
+    return new Date().toLocaleTimeString(undefined, { timeZoneName: 'short' }).split(' ').pop() || 'Local'
+  } catch {
+    return 'Local'
+  }
+}
 
 type FullTimeFormatters = {
   date: string
   time: string
   label?: string
+}
+
+const safeFormat = (formatter: Intl.DateTimeFormat, time: Date, fallback = 'Invalid') => {
+  try {
+    return formatter.format(time)
+  } catch {
+    return fallback
+  }
 }
 
 const getFormatters = (locale?: string | string[]) => ({
@@ -52,12 +65,13 @@ export const useFormattedTime = (
   }
 ) => {
   const time = new Date(timestamp ?? 0)
+  const isValidTime = !isNaN(time.getTime())
   const now = new Date()
   const diff = now.getTime() - time.getTime()
   const isBeyondCutoff = diff > cutoffDays * 24 * 60 * 60 * 1000
 
   const formattedShort = () => {
-    if (timestamp === null || timestamp === undefined) return 'Unknown time'
+    if (!isValidTime) return 'Unknown time'
 
     return isBeyondCutoff
       ? new Intl.DateTimeFormat(LOCALE, dateTimeFormatOptions).format(time)
@@ -66,18 +80,20 @@ export const useFormattedTime = (
 
   const formatters = getFormatters(LOCALE)
 
-  const formattedFull: FullTimeFormatters[] = [
-    {
-      date: formatters.utcDate.format(time),
-      time: formatters.utcTime.format(time),
-      label: 'UTC'
-    },
-    {
-      date: formatters.localDate.format(time),
-      time: formatters.localTime.format(time),
-      label: getTimeZoneAbbreviation()
-    }
-  ]
+  const formattedFull: FullTimeFormatters[] = isValidTime
+    ? [
+        {
+          date: safeFormat(formatters.utcDate, time),
+          time: safeFormat(formatters.utcTime, time),
+          label: 'UTC'
+        },
+        {
+          date: safeFormat(formatters.localDate, time),
+          time: safeFormat(formatters.localTime, time),
+          label: getTimeZoneAbbreviation()
+        }
+      ]
+    : []
 
   return {
     formattedShort: formattedShort(),

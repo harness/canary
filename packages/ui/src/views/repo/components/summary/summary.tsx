@@ -98,7 +98,7 @@ export const Summary = ({
               </Table.Cell>
               <Table.Cell className="text-right">
                 <TimeAgoCard
-                  timestamp={file.timestamp}
+                  timestamp={file?.timestamp}
                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
                   textProps={{ color: 'foreground-3', wrap: 'nowrap', align: 'right' }}
                 />

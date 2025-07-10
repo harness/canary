@@ -123,7 +123,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
             <Text color="foreground-3" className="flex items-center">
               At:
             </Text>
-            <Text>{<TimeAgoCard timestamp={execution?.created} />}</Text>
+            <TimeAgoCard timestamp={execution?.created} />
           </div>
           <div className="flex gap-1">
             <Text color="foreground-3">Duration:</Text>

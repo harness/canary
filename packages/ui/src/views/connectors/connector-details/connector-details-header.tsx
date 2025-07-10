@@ -46,33 +46,25 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {createdAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Created</span>
-              <Text as="span" color="foreground-1">
-                <TimeAgoCard timestamp={createdAt} />
-              </Text>
+              <TimeAgoCard timestamp={createdAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastModifiedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last updated</span>
-              <Text as="span" color="foreground-1">
-                <TimeAgoCard timestamp={lastModifiedAt} />
-              </Text>
+              <TimeAgoCard timestamp={lastModifiedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastTestedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last status check</span>
-              <Text as="span" color="foreground-1">
-                <TimeAgoCard timestamp={lastTestedAt} />
-              </Text>
+              <TimeAgoCard timestamp={lastTestedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastConnectedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last successful check</span>
-              <Text as="span" color="foreground-1">
-                <TimeAgoCard timestamp={lastConnectedAt} />
-              </Text>
+              <TimeAgoCard timestamp={lastConnectedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {status ? (

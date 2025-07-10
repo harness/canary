@@ -24,9 +24,11 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
     <div className="flex items-center gap-2">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
       <span className="h-3 border-l border-cn-borders-2" />
-      <Text as="span" color="foreground-3">
-        <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-      </Text>
+      <TimeAgoCard
+        timestamp={timestamp}
+        dateTimeFormatOptions={{ dateStyle: 'medium' }}
+        textProps={{ color: 'foreground-3' }}
+      />
     </div>
   )
 }

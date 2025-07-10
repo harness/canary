@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, Table, Text, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { TokensList } from '../types'
@@ -52,9 +52,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                   </span>
                 </Table.Cell>
                 <Table.Cell className="content-center">
-                  <Text as="span" color="foreground-3">
-                    <TimeAgoCard timestamp={new Date(token.issued_at!).getTime()} />
-                  </Text>
+                  <TimeAgoCard timestamp={new Date(token.issued_at!).getTime()} textProps={{ color: 'foreground-3' }} />
                 </Table.Cell>
                 <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip

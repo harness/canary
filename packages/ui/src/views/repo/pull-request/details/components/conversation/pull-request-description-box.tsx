@@ -62,7 +62,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
             <span className="flex gap-x-1">
               created pull request
               <span className="text-cn-foreground-1">{prNum}</span>
-              <TimeAgoCard timestamp={createdAt || 0} />
+              <TimeAgoCard timestamp={createdAt} />
             </span>
           )
         }

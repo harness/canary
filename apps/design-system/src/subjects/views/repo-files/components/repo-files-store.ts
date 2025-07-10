@@ -1517,7 +1517,7 @@ export const repoFilesStore: RepoFilesStoreType = {
       type: 0,
       name: 'apps',
       lastCommitMessage: 'fix: branch/gitRef normalization from routes (#505)',
-      timestamp: '3 hours ago',
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
       user: {
         name: 'Shaurya Kalia'
       },
@@ -1555,7 +1555,7 @@ export const repoFilesStore: RepoFilesStoreType = {
       type: 0,
       name: 'packages',
       lastCommitMessage: 'fix: branch/gitRef normalization from routes (#505)',
-      timestamp: '3 hours ago',
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
       user: {
         name: 'Shaurya Kalia'
       },
@@ -1592,7 +1592,7 @@ export const repoFilesStore: RepoFilesStoreType = {
       name: 'Shaurya Kalia'
     },
     lastCommitMessage: 'fix: branch/gitRef normalization from routes (#505)',
-    timestamp: '3 hours ago',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
     sha: 'ec92d11'
   },
   repository: {

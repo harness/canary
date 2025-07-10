@@ -449,7 +449,7 @@ const PullRequestDiffViewer = ({
                           name: parent.author,
                           description: (
                             <Layout.Horizontal className="text-cn-foreground-2">
-                              <TimeAgoCard timestamp={parent?.created as number} />
+                              <TimeAgoCard timestamp={parent?.created} />
                               {parent?.deleted ? (
                                 <>
                                   <span>&nbsp;|&nbsp;</span>
@@ -528,7 +528,7 @@ const PullRequestDiffViewer = ({
                                   name: reply.author,
                                   description: (
                                     <Layout.Horizontal className="text-cn-foreground-2">
-                                      <TimeAgoCard timestamp={reply?.created as number} />
+                                      <TimeAgoCard timestamp={reply?.created} />
                                       {reply?.deleted ? (
                                         <>
                                           <span>&nbsp;|&nbsp;</span>

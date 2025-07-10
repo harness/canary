@@ -53,12 +53,6 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     }
   ]
 
-  const getCreationDate = (tag: CommitTagType) => {
-    const date = new Date(tag.tagger?.when ?? 0)
-
-    return <TimeAgoCard timestamp={date.getTime()} />
-  }
-
   if (!isLoading && !tagsList?.length) {
     return (
       <NoData
@@ -140,7 +134,13 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell>
-              <Text color="foreground-3">{tag.tagger?.when ? getCreationDate(tag) : ''}</Text>
+              {tag.tagger?.when ? (
+                <TimeAgoCard
+                  timestamp={new Date(tag.tagger?.when).getTime()}
+                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                  textProps={{ color: 'foreground-3' }}
+                />
+              ) : null}
             </Table.Cell>
             <Table.Cell className="w-[46px] !py-2.5 text-right">
               <MoreActionsTooltip

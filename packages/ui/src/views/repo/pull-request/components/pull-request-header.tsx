@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Separator, StatusBadge, Tag, Text, TimeAgoCard } from '@/components'
+import { Button, IconV2, Separator, StatusBadge, Tag, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -104,9 +104,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               <Tag variant="secondary" icon="git-branch" size="sm" value={source_branch || ''} showIcon />
             </Link>
             <span className="mx-1.5 h-4 w-px bg-cn-background-3" />
-            <Text as="span" color="foreground-2">
-              <TimeAgoCard timestamp={created || 0} />
-            </Text>
+            <TimeAgoCard timestamp={created} />
           </div>
         </div>
       </div>

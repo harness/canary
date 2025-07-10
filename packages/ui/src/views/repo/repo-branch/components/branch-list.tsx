@@ -12,7 +12,6 @@ import {
   StatusBadge,
   Table,
   Tag,
-  Text,
   TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -129,9 +128,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
-                    <Text as="span" color="foreground-1" truncate>
-                      <TimeAgoCard timestamp={branch?.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp={branch?.timestamp}
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ color: 'foreground-1', truncate: true }}
+                    />
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}

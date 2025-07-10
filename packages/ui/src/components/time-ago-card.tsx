@@ -1,11 +1,17 @@
-import { FC, Fragment, useMemo, useState } from 'react'
+import { FC, forwardRef, Fragment, memo, Ref, useState } from 'react'
 
-import { Popover, StatusBadge, Text } from '@/components'
+import { Popover, StatusBadge, Text, TextProps } from '@/components'
 import { LOCALE } from '@utils/TimeUtils'
 import { formatDistanceToNow } from 'date-fns'
 
 const getTimeZoneAbbreviation = () =>
   new Date().toLocaleTimeString(undefined, { timeZoneName: 'short' }).split(' ').pop()
+
+type FullTimeFormatters = {
+  date: string
+  time: string
+  label?: string
+}
 
 const getFormatters = (locale?: string | string[]) => ({
   utcDate: new Intl.DateTimeFormat(locale, {
@@ -45,67 +51,63 @@ export const useFormattedTime = (
     hour12: true
   }
 ) => {
-  const time = useMemo(() => new Date(timestamp ?? 0), [timestamp])
-  const now = useMemo(() => new Date(), [])
+  const time = new Date(timestamp ?? 0)
+  const now = new Date()
   const diff = now.getTime() - time.getTime()
   const isBeyondCutoff = diff > cutoffDays * 24 * 60 * 60 * 1000
 
-  const formattedShort = useMemo(() => {
+  const formattedShort = () => {
     if (timestamp === null || timestamp === undefined) return 'Unknown time'
 
     return isBeyondCutoff
       ? new Intl.DateTimeFormat(LOCALE, dateTimeFormatOptions).format(time)
       : formatDistanceToNow(time, { addSuffix: true, includeSeconds: true })
-  }, [timestamp, isBeyondCutoff, dateTimeFormatOptions, time])
+  }
 
   const formatters = getFormatters(LOCALE)
 
-  const formattedFull = {
-    utcDate: formatters.utcDate.format(time),
-    utcTime: formatters.utcTime.format(time),
-    localDate: formatters.localDate.format(time),
-    localTime: formatters.localTime.format(time)
-  }
+  const formattedFull: FullTimeFormatters[] = [
+    {
+      date: formatters.utcDate.format(time),
+      time: formatters.utcTime.format(time),
+      label: 'UTC'
+    },
+    {
+      date: formatters.localDate.format(time),
+      time: formatters.localTime.format(time),
+      label: getTimeZoneAbbreviation()
+    }
+  ]
 
   return {
-    formattedShort,
+    formattedShort: formattedShort(),
     formattedFull,
     time
   }
 }
 
-export const TimeAgoContent: FC<{
-  utcDate: string
-  utcTime: string
-  localDate: string
-  localTime: string
-}> = ({ utcDate, utcTime, localDate, localTime }) => {
+export const TimeAgoContent: FC<{ formattedFullArray: FullTimeFormatters[] }> = ({ formattedFullArray }) => {
   return (
     <div className="cn-time-ago-card-content">
-      {(['UTC', 'Local'] as const).map(zone => {
-        const date = zone === 'UTC' ? utcDate : localDate
-        const time = zone === 'UTC' ? utcTime : localTime
-
-        return (
-          <Fragment key={zone}>
-            <StatusBadge variant="secondary" size="sm">
-              {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
-            </StatusBadge>
-            <Text<'time'> variant="body-single-line-normal" as="time" dateTime={date}>
-              {date}
-            </Text>
-            <Text<'time'>
-              variant="body-single-line-normal"
-              as="time"
-              dateTime={time}
-              color="foreground-3"
-              className="ml-auto"
-            >
-              {time}
-            </Text>
-          </Fragment>
-        )
-      })}
+      {formattedFullArray.map(({ date, time, label }) => (
+        <Fragment key={label}>
+          <StatusBadge variant="secondary" size="sm">
+            {label}
+          </StatusBadge>
+          <Text<'time'> variant="body-single-line-normal" as="time" dateTime={date}>
+            {date}
+          </Text>
+          <Text<'time'>
+            variant="body-single-line-normal"
+            as="time"
+            dateTime={time}
+            color="foreground-3"
+            className="ml-auto"
+          >
+            {time}
+          </Text>
+        </Fragment>
+      ))}
     </div>
   )
 }
@@ -114,38 +116,48 @@ interface TimeAgoCardProps {
   timestamp?: string | number | null
   dateTimeFormatOptions?: Intl.DateTimeFormatOptions
   cutoffDays?: number
+  textProps?: TextProps<'time' | 'span'> & {
+    ref?: Ref<HTMLSpanElement | HTMLTimeElement>
+  }
 }
 
-export const TimeAgoCard: FC<TimeAgoCardProps> = ({ timestamp, cutoffDays = 8, dateTimeFormatOptions }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const { formattedShort, formattedFull } = useFormattedTime(timestamp, cutoffDays, dateTimeFormatOptions)
+export const TimeAgoCard = memo(
+  forwardRef<HTMLButtonElement, TimeAgoCardProps>(
+    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, textProps }, ref) => {
+      const [isOpen, setIsOpen] = useState(false)
+      const { formattedShort, formattedFull } = useFormattedTime(timestamp, cutoffDays, dateTimeFormatOptions)
 
-  if (timestamp === null || timestamp === undefined) {
-    return <>Unknown time</>
-  }
+      if (timestamp === null || timestamp === undefined) {
+        return (
+          <Text as="span" {...textProps}>
+            Unknown time
+          </Text>
+        )
+      }
 
-  const handleClick = (event: React.MouseEvent) => {
-    event.preventDefault()
-    setIsOpen(prev => !prev)
-  }
+      const handleClick = (event: React.MouseEvent) => {
+        event.preventDefault()
+        setIsOpen(prev => !prev)
+      }
 
-  const handleClickContent = (event: React.MouseEvent) => {
-    event.stopPropagation()
-  }
+      const handleClickContent = (event: React.MouseEvent) => {
+        event.stopPropagation()
+      }
 
-  return (
-    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick}>
-        <time>{formattedShort}</time>
-      </Popover.Trigger>
-      <Popover.Content onClick={handleClickContent} side="top">
-        <TimeAgoContent
-          utcDate={formattedFull.utcDate}
-          utcTime={formattedFull.utcTime}
-          localDate={formattedFull.localDate}
-          localTime={formattedFull.localTime}
-        />
-      </Popover.Content>
-    </Popover.Root>
+      return (
+        <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+          <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick} ref={ref}>
+            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
+              {formattedShort}
+            </Text>
+          </Popover.Trigger>
+          <Popover.Content onClick={handleClickContent} side="top">
+            <TimeAgoContent formattedFullArray={formattedFull} />
+          </Popover.Content>
+        </Popover.Root>
+      )
+    }
   )
-}
+)
+
+TimeAgoCard.displayName = 'TimeAgoCard'

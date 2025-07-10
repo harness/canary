@@ -259,7 +259,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               avatar: undefined,
               description: (
                 <Layout.Horizontal className="text-cn-foreground-2">
-                  <TimeAgoCard timestamp={commentItem?.created ? Number(commentItem.created) : undefined} />
+                  <TimeAgoCard timestamp={commentItem.created} />
                   {!!commentItem?.deleted && (
                     <>
                       <span>&nbsp;|&nbsp;</span>

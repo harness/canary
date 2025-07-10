@@ -66,7 +66,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.target_branch}
             </StatusBadge>
-            <TimeAgoCard timestamp={props?.pullReqMetadata?.merged || 0} />
+            <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
           {props.showDeleteBranchButton ? (
             <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>

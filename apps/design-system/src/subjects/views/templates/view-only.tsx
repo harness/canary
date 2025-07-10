@@ -250,9 +250,11 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Text wrap="nowrap">
-                      <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp="Dec 6, 2024"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ wrap: 'nowrap' }}
+                    />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly />
@@ -272,9 +274,11 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Text wrap="nowrap">
-                      <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp="Dec 6, 2024"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ wrap: 'nowrap' }}
+                    />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly />
@@ -294,9 +298,11 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Text wrap="nowrap">
-                      <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp="Dec 6, 2024"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ wrap: 'nowrap' }}
+                    />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly />
@@ -316,9 +322,11 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Text wrap="nowrap">
-                      <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp="Dec 6, 2024"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ wrap: 'nowrap' }}
+                    />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly />
@@ -338,9 +346,11 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Text wrap="nowrap">
-                      <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp="Dec 6, 2024"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ wrap: 'nowrap' }}
+                    />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly />
@@ -360,9 +370,11 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <Text wrap="nowrap">
-                      <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                    </Text>
+                    <TimeAgoCard
+                      timestamp="Dec 6, 2024"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ wrap: 'nowrap' }}
+                    />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly />

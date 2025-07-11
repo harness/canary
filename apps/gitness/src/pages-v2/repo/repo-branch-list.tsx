@@ -64,15 +64,6 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  // const { data: { body: searchBranches } = {} } = useListBranchesQuery({
-  //   queryParams: {
-  //     query: createBranchSearchQuery,
-  //     limit: 10,
-  //     order: orderSortDate.DESC
-  //   },
-  //   repo_ref: repoRef
-  // })
-
   const {
     isLoading: isLoadingDivergence,
     data: { body: _branchDivergence = [] } = {},
@@ -192,7 +183,6 @@ export function RepoBranchesListPage() {
         }
         toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
         onDeleteBranch={handleSetDeleteBranch}
-        // searchBranches={searchBranches || []}
         setCreateBranchSearchQuery={setCreateBranchSearchQuery}
       />
 

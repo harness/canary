@@ -25,7 +25,6 @@ export function RepoBranchesView() {
       toBranchRules={() => ''}
       toPullRequestCompare={() => ''}
       onDeleteBranch={noop}
-      searchBranches={[]}
       setCreateBranchSearchQuery={noop}
     />
   )

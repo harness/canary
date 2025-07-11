@@ -1,9 +1,8 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, SearchInput, Spacer, Text } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 import { RepoTagsList } from './components/repo-tags-list'
@@ -24,10 +23,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   console.log('xNextPage', xNextPage)
   console.log('xPrevPage', xPrevPage)
 
-  // const { search, handleSearchChange } = useDebounceSearch({
-  //   handleChangeSearchValue: setSearchQuery,
-  //   searchValue: searchQuery || ''
-  // })
+
 
   const handleSearchChange = useCallback(
     (value: string) => {

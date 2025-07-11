@@ -2,10 +2,13 @@ import { useParams } from 'react-router-dom'
 
 import { CodeModes } from '@harnessio/ui/views'
 
-import { REFS_TAGS_PREFIX } from '../utils/git-utils'
+import { REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
 
 const useCodePathDetails = () => {
-  const subCodePath = useParams()['*'] || ''
+  const params = useParams()
+  const subCodePath = params['*'] || ''
+  const { branchId, tagId } = params
+  console.log('subCodePath', subCodePath)
 
   // Determine codeMode and restPath
   const [codeMode, restPath] = (() => {
@@ -17,9 +20,21 @@ const useCodePathDetails = () => {
   // Split the restPath into gitRef and resourcePath
   const [rawSubGitRef = '', rawResourcePath = ''] = restPath.split('~')
 
+  let effectiveGitRef = ''
+
+  if (rawSubGitRef) {
+    effectiveGitRef = rawSubGitRef
+  } else if (branchId) {
+    effectiveGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
+  } else if (tagId) {
+    effectiveGitRef = `${REFS_TAGS_PREFIX}${tagId}`
+  }
+
   // Normalize values
-  const fullGitRef = rawSubGitRef.endsWith('/') ? rawSubGitRef.slice(0, -1) : rawSubGitRef
-  const gitRefName = fullGitRef.startsWith(REFS_TAGS_PREFIX) ? fullGitRef.split(REFS_TAGS_PREFIX)[1] : fullGitRef
+  const fullGitRef = effectiveGitRef.endsWith('/') ? effectiveGitRef.slice(0, -1) : effectiveGitRef
+  const gitRefName = fullGitRef.startsWith(REFS_TAGS_PREFIX)
+    ? fullGitRef.split(REFS_TAGS_PREFIX)[1]
+    : fullGitRef.split(REFS_BRANCH_PREFIX)[1]
   const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
 
   return { codeMode, fullGitRef, gitRefName, fullResourcePath }

@@ -110,7 +110,7 @@ type SidebarItemLinkProps = SidebarItemExtendedProps & NavLinkProps
 
 export type SidebarItemProps = SidebarItemButtonProps | SidebarItemLinkProps
 
-export interface SidebarComponent {
+export interface SidebarItemComponent {
   (props: SidebarItemButtonProps): JSX.Element
   (props: SidebarItemLinkProps): JSX.Element
   displayName?: string
@@ -379,7 +379,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
   }
 
   return <WrappedItemTrigger />
-}) as SidebarComponent
+}) as SidebarItemComponent
 SidebarItem.displayName = 'SidebarItem'
 
 export const SidebarMenuSubItem = ({ title, className, ...props }: NavLinkProps & { title: string }) => {

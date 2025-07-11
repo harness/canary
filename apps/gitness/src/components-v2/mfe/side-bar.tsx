@@ -9,6 +9,7 @@ import {
   LanguageDialog,
   LanguageInterface,
   languages,
+  Layout,
   SearchProvider,
   Sidebar,
   SidebarSearch,
@@ -52,7 +53,10 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
         <Sidebar.Root>
           <Sidebar.Header>
             <SearchProvider>
-              <SidebarSearch logo={<HarnessLogo />} />
+              <Layout.Grid gapY="md">
+                <HarnessLogo />
+                <SidebarSearch />
+              </Layout.Grid>
             </SearchProvider>
           </Sidebar.Header>
 
@@ -95,8 +99,8 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
             <Sidebar.Separator />
             <AppSidebarUser
               user={currentUser}
-              openThemeDialog={noop}
-              openLanguageDialog={noop}
+              openThemeDialog={() => setOpenThemeDialog(true)}
+              openLanguageDialog={() => setOpenLanguageDialog(true)}
               handleLogOut={forceLogout || noop}
             />
           </Sidebar.Footer>

@@ -8,6 +8,7 @@ import {
   LanguageDialog,
   LanguageInterface,
   languages,
+  Layout,
   NavbarItemType,
   SearchProvider,
   Sidebar,
@@ -79,7 +80,10 @@ export const SidebarView = ({
       <Sidebar.Root>
         <Sidebar.Header>
           <SearchProvider>
-            <SidebarSearch logo={<HarnessLogo />} />
+            <Layout.Grid gapY="md">
+              <HarnessLogo />
+              <SidebarSearch />
+            </Layout.Grid>
           </SearchProvider>
         </Sidebar.Header>
         <Sidebar.Content>

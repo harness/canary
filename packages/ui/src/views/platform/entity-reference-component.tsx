@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Button, Checkbox, IconPropsV2, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
+import { Checkbox, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
@@ -43,9 +43,6 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   // Search
   searchValue?: string
   handleChangeSearchValue: (val: string) => void
-
-  // Icons for default entity renderer
-  icon?: IconPropsV2['name']
 
   // Custom entity comparison
   compareFn?: (entity1: T, entity2: T) => boolean
@@ -90,9 +87,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Custom renderers
   renderEntity,
   isLoading = false,
-
-  // Icons for default entity renderer
-  icon,
 
   // Error
   apiError,
@@ -140,28 +134,13 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         onClick={() => onSelect?.(entity)}
         className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
-        thumbnail={
-          showCheckbox ? (
-            <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} />
-          ) : (
-            <IconV2 name={icon ?? 'page'} className="text-cn-foreground-3" />
-          )
-        }
-        actions={
-          !showCheckbox && (
-            <Button
-              size="sm"
-              onClick={() => {
-                onSelect?.(entity)
-              }}
-            >
-              Select
-            </Button>
-          )
-        }
+        thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}
       >
         <div title={entity.name}>
-          <StackedList.Field title={entity.name} className="truncate overflow-hidden text-nowrap max-w-sm" />
+          <StackedList.Field
+            title={entity.name}
+            className="truncate overflow-hidden text-nowrap max-w-sm text-cn-foreground-2"
+          />
         </div>
       </StackedList.Item>
     )

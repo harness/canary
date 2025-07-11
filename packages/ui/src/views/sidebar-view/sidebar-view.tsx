@@ -1,23 +1,21 @@
 import { useState } from 'react'
 
 import {
+  AppSidebarItem,
+  AppSidebarUser,
   HarnessLogo,
-  IconV2,
   LanguageCode,
   LanguageDialog,
   LanguageInterface,
   languages,
+  Layout,
   NavbarItemType,
   SearchProvider,
   Sidebar,
-  SidebarItem,
   SidebarSearch,
-  SidebarSearchLegacy,
-  ThemeDialog,
-  User,
-  useSidebar
+  ThemeDialog
 } from '@/components'
-import { useRouterContext, useTheme, useTranslation } from '@/context'
+import { useTheme, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 
 interface SidebarProps {
@@ -32,7 +30,6 @@ interface SidebarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  showNewSearch?: boolean
   hasToggle?: boolean
   changeLanguage: (language: string) => void
   lang: string
@@ -43,20 +40,19 @@ export const SidebarView = ({
   handleRemoveRecentMenuItem,
   pinnedMenuItems,
   recentMenuItems,
+  showMoreMenu,
+  showSettingMenu,
   currentUser,
   handleMoreMenu,
   handleSettingsMenu,
   handleCustomNav,
   handleLogOut,
   hasToggle = true,
-  showNewSearch,
   changeLanguage,
   lang
 }: SidebarProps) => {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
-  const { navigate } = useRouterContext()
-  const { collapsed, toggleSidebar } = useSidebar()
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
@@ -75,128 +71,82 @@ export const SidebarView = ({
   }
 
   const handleToggleSidebar = () => {
-    toggleSidebar()
     handleMoreMenu(false)
     handleSettingsMenu(false)
   }
 
   return (
     <>
-      <Sidebar.Root className="h-svh">
-        <Sidebar.Header className="pb-3">
-          {showNewSearch ? (
-            <SearchProvider>
-              <SidebarSearch
-                className="pb-3 pt-1.5"
-                logo={
-                  <div className="my-5 flex items-center pl-2">
-                    <HarnessLogo />
-                  </div>
-                }
-              />
-            </SearchProvider>
-          ) : (
-            <SidebarSearchLegacy logo={<HarnessLogo />} />
-          )}
+      <Sidebar.Root>
+        <Sidebar.Header>
+          <SearchProvider>
+            <Layout.Grid gapY="md">
+              <HarnessLogo />
+              <SidebarSearch />
+            </Layout.Grid>
+          </SearchProvider>
         </Sidebar.Header>
         <Sidebar.Content>
           <Sidebar.Group>
-            <Sidebar.GroupContent>
-              <Sidebar.Menu>
-                {pinnedMenuItems.map((item, index) => (
-                  <SidebarItem
-                    item={item}
-                    key={index}
-                    handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-                    handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-                    handleCustomNav={handleCustomNav}
-                  />
-                ))}
+            {pinnedMenuItems.map(item => (
+              <AppSidebarItem
+                item={item}
+                key={item.id}
+                handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+                handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+                handleCustomNav={handleCustomNav}
+              />
+            ))}
 
-                <Sidebar.MenuItem>
-                  <Sidebar.MenuButton onClick={() => handleMoreMenu()}>
-                    <Sidebar.MenuItemText
-                      className="pl-0"
-                      text={t('component:navbar.more', 'More')}
-                      icon={<IconV2 name="menu-more-horizontal" />}
-                    />
-                  </Sidebar.MenuButton>
-                </Sidebar.MenuItem>
-              </Sidebar.Menu>
-            </Sidebar.GroupContent>
+            <Sidebar.Item
+              title={t('component:navbar.more', 'More')}
+              icon="menu-more-horizontal"
+              onClick={() => handleMoreMenu()}
+              withRightIndicator
+              active={showMoreMenu}
+            />
           </Sidebar.Group>
 
+          <Sidebar.Separator />
+
           {!!recentMenuItems.length && (
-            <Sidebar.Group title={t('component:navbar.recent', 'Recent')} className="border-t pt-2.5">
-              <Sidebar.GroupLabel>{t('component:navbar.recent', 'Recent')}</Sidebar.GroupLabel>
-              <Sidebar.GroupContent>
-                <Sidebar.Menu>
-                  {recentMenuItems.map(item => (
-                    <SidebarItem
-                      isRecent
-                      key={item.id}
-                      item={item}
-                      handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-                      handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-                      handleCustomNav={handleCustomNav}
-                    />
-                  ))}
-                </Sidebar.Menu>
-              </Sidebar.GroupContent>
+            <Sidebar.Group label={t('component:navbar.recent', 'Recent')}>
+              {recentMenuItems.map(item => (
+                <AppSidebarItem
+                  isRecent
+                  key={item.id}
+                  item={item}
+                  handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+                  handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+                  handleCustomNav={handleCustomNav}
+                />
+              ))}
             </Sidebar.Group>
           )}
 
-          <Sidebar.Group className="border-t">
-            <Sidebar.GroupContent>
-              <Sidebar.Menu>
-                {!!currentUser?.admin && (
-                  <Sidebar.MenuItem>
-                    <Sidebar.MenuButton onClick={() => navigate('/admin/default-settings')}>
-                      <Sidebar.MenuItemText
-                        className="pl-0"
-                        text={t('component:navbar.user-management', 'User Management')}
-                        icon={<IconV2 name="user" />}
-                      />
-                    </Sidebar.MenuButton>
-                  </Sidebar.MenuItem>
-                )}
-                <Sidebar.MenuItem>
-                  <Sidebar.MenuButton onClick={() => handleSettingsMenu()}>
-                    <Sidebar.MenuItemText
-                      className="pl-0"
-                      text={t('component:navbar.settings', 'Settings')}
-                      icon={<IconV2 name="settings" size="xs" />}
-                    />
-                  </Sidebar.MenuButton>
-                </Sidebar.MenuItem>
-              </Sidebar.Menu>
-            </Sidebar.GroupContent>
+          <Sidebar.Separator />
+
+          <Sidebar.Group>
+            {!!currentUser?.admin && (
+              <Sidebar.Item
+                title={t('component:navbar.user-management', 'User Management')}
+                icon="user"
+                to="/admin/default-settings"
+              />
+            )}
+            <Sidebar.Item
+              title={t('component:navbar.settings', 'Settings')}
+              icon="settings"
+              onClick={() => handleSettingsMenu()}
+              active={showSettingMenu}
+            />
           </Sidebar.Group>
         </Sidebar.Content>
 
-        {hasToggle && (
-          <Sidebar.Group>
-            <Sidebar.Menu>
-              <Sidebar.MenuItem>
-                <Sidebar.MenuButton onClick={handleToggleSidebar}>
-                  <Sidebar.MenuItemText
-                    className="pl-0"
-                    aria-label={
-                      collapsed
-                        ? t('component:navbar.sidebarToggle.expand', 'Expand')
-                        : t('component:navbar.sidebarToggle.collapse', 'Collapse')
-                    }
-                    text={t('component:navbar.sidebarToggle.collapse', 'Collapse')}
-                    icon={<IconV2 name={collapsed ? 'expand-sidebar' : 'collapse-sidebar'} size="xs" />}
-                  />
-                </Sidebar.MenuButton>
-              </Sidebar.MenuItem>
-            </Sidebar.Menu>
-          </Sidebar.Group>
-        )}
-
-        <Sidebar.Footer className="border-t border-sidebar-border-1 px-1.5 transition-[padding] duration-150 ease-linear group-data-[state=collapsed]:px-2">
-          <User
+        <Sidebar.Footer>
+          {hasToggle && <Sidebar.ToggleMenuButton onClick={handleToggleSidebar} />}
+          <Sidebar.Separator />
+          <AppSidebarUser
             user={currentUser}
             openThemeDialog={() => setOpenThemeDialog(true)}
             openLanguageDialog={() => setOpenLanguageDialog(true)}
@@ -205,6 +155,7 @@ export const SidebarView = ({
         </Sidebar.Footer>
         <Sidebar.Rail />
       </Sidebar.Root>
+
       <ThemeDialog
         theme={theme}
         setTheme={setTheme}

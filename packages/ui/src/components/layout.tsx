@@ -130,7 +130,10 @@ const Flex = forwardRef<HTMLDivElement, FlexProps & HTMLAttributes<HTMLDivElemen
 Flex.displayName = 'LayoutFlex'
 
 const Grid = forwardRef<HTMLDivElement, GridProps & HTMLAttributes<HTMLDivElement>>(
-  ({ children, className, columns, rows, flow, align, justify, gap, gapX, gapY, as: Comp = 'div', ...props }, ref) => {
+  (
+    { children, className, columns, rows, flow, align, justify, gap, gapX, gapY, as: Comp = 'div', style, ...props },
+    ref
+  ) => {
     return (
       <Comp
         ref={ref}
@@ -140,6 +143,7 @@ const Grid = forwardRef<HTMLDivElement, GridProps & HTMLAttributes<HTMLDivElemen
         // 2. Dynamic values (like user-provided columns/rows) can't be properly handled by Tailwind
         // 3. This approach ensures consistent rendering regardless of what values are passed at runtime
         style={{
+          ...style,
           gridTemplateColumns: typeof columns === 'number' ? `repeat(${columns}, minmax(0, 1fr))` : columns,
           gridTemplateRows: typeof rows === 'number' ? `repeat(${rows}, minmax(0, auto))` : rows,
           gridAutoFlow: flow

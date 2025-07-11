@@ -14,7 +14,7 @@ const RootViewWrapper: FC<PropsWithChildren<Omit<AppViewWrapperProps, 'breadcrum
       asChild={asChild}
       childrenWrapperClassName={childrenWrapperClassName}
       breadcrumbs={
-        <Topbar.Root className="bg-sidebar-background-1 sticky top-0 z-20">
+        <Topbar.Root className="bg-cn-background-0 sticky top-0 z-20">
           <Topbar.Left>
             <Breadcrumb.Root className="select-none">
               <Breadcrumb.List>

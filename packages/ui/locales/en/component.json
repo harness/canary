@@ -10,21 +10,18 @@
     "remove": "Remove",
     "reorder": "Reorder",
     "unpin": "Unpin",
-    "searchButton": "Open search dialog",
-    "search": "Search",
     "command-palette": "Command Palette",
     "nothing-found": "Nothing found",
+    "search": "Search",
     "settings": "Settings",
-    "appearence": "Appearance",
+    "appearance": "Appearance",
     "language": "Language",
     "logout": "Log out",
     "more": "More",
     "recent": "Recent",
     "user-management": "User Management",
-    "sidebarToggle": {
-      "expand": "Expand",
-      "collapse": "Collapse"
-    },
+    "searchButton": "Open search dialog",
+    "appearence": "Appearance",
     "profile": "Profile",
     "theme": "Theme",
     "customNav": "Customize navigation",
@@ -132,6 +129,13 @@
   "searchFile": {
     "input": "Search files...",
     "noFile": "No file found."
+  },
+  "sidebar": {
+    "sidebarToggle": {
+      "collapse": "Collapse",
+      "expand": "Expand"
+    },
+    "toggle": "Toggle sidebar"
   },
   "widgets": {
     "viewMore": "View more"

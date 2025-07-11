@@ -138,7 +138,7 @@ export const RepoSidebar = () => {
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
         setSelectedRefType(type)
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchTagName.name}`)
+        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}`)
       } else if (type === BranchSelectorTab.TAGS) {
         setSelectedRefType(type)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)

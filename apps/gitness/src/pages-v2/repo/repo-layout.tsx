@@ -37,8 +37,10 @@ const RepoLayout = () => {
               navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${effectiveGitRef}`)
             } else if (tab === 'commits') {
               isRefATag(effectiveGitRef)
-                ? navigate(routes.toRepoTagCommits({ spaceId, repoId, tagId: effectiveGitRefName }))
-                : navigate(routes.toRepoBranchCommits({ spaceId, repoId, branchId: effectiveGitRefName }))
+                ? navigate(routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(effectiveGitRefName) }))
+                : navigate(
+                    routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(effectiveGitRefName) })
+                  )
             }
           }}
         />

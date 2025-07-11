@@ -43,7 +43,6 @@
     "components/desktop/base/dialog",
     "components/desktop/base/input",
     "components/desktop/base/dropdown",
-    "components/desktop/base/diff",
     "components/desktop/base/table",
     "components/desktop/base/tabs",
     "components/desktop/base/pagination",

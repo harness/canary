@@ -24151,7 +24151,6 @@
       "components/desktop/base/card": "enabled",
       "components/desktop/base/tooltip": "enabled",
       "components/desktop/base/table": "enabled",
-      "components/desktop/base/diff": "enabled",
       "components/desktop/base/avatar": "enabled",
       "components/desktop/base/tabs": "enabled",
       "components/desktop/base/sidebar": "enabled",

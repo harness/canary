@@ -344,8 +344,8 @@ export default function RepoSummaryPage() {
         tokenGenerationError={tokenGenerationError}
         toRepoCommits={() => {
           return isRefATag(effectiveGitRef)
-            ? routes.toRepoTagCommits({ spaceId, repoId, tagId: effectiveGitRefName })
-            : routes.toRepoBranchCommits({ spaceId, repoId, branchId: effectiveGitRefName })
+            ? routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(effectiveGitRefName) })
+            : routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(effectiveGitRefName) })
         }}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}

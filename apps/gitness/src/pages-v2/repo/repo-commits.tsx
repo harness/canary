@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { useFindRepositoryQuery, useListCommitsQuery } from '@harnessio/code-service-client'
+import { useListCommitsQuery } from '@harnessio/code-service-client'
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
@@ -19,18 +19,8 @@ export default function RepoCommitsPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const { gitRefName, fullGitRef } = useCodePathDetails()
 
-  console.log('fullGitRef', fullGitRef)
-  console.log('gitRefName', gitRefName)
-
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
-  const effectiveGitRefName = gitRefName || repository?.default_branch || ''
-
-  // const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(
-  //   gitRefName ? { name: gitRefName, sha: '' } : null
-  // )
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
-    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+    fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
   )
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -40,7 +30,7 @@ export default function RepoCommitsPage() {
     repo_ref: repoRef,
     queryParams: {
       page: queryPage,
-      git_ref: normalizeGitRef(effectiveGitRef),
+      git_ref: normalizeGitRef(fullGitRef),
       include_stats: true
     }
   })
@@ -53,21 +43,6 @@ export default function RepoCommitsPage() {
     [setSearchParams]
   )
 
-  // const selectBranchOrTag = useCallback(
-  //   (branchTagName: BranchSelectorListItem) => {
-  //     setPage(1)
-  //     setSelectedBranchOrTag(branchTagName)
-  //   },
-  //   [setPage]
-  // )
-
-  // useEffect(() => {
-  //   if (selectedBranchOrTag?.name) {
-  //     const encodedBranchOrTagId = encodeURIComponent(selectedBranchOrTag.name)
-  //     navigate(`${routes.toRepoCommits({ spaceId, repoId })}/${encodedBranchOrTagId}`)
-  //   }
-  // }, [selectedBranchOrTag, navigate, routes, spaceId, repoId])
-
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       const newRef =
@@ -76,8 +51,10 @@ export default function RepoCommitsPage() {
           : `${REFS_BRANCH_PREFIX + branchTagName.name}`
       setPreSelectedTab(type)
       isRefATag(newRef)
-        ? navigate(`${routes.toRepoTagCommits({ spaceId, repoId, tagId: branchTagName.name })}`)
-        : navigate(`${routes.toRepoBranchCommits({ spaceId, repoId, branchId: branchTagName.name })}`)
+        ? navigate(`${routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(branchTagName.name) })}`)
+        : navigate(
+            `${routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(branchTagName.name) })}`
+          )
     },
     [navigate, repoId, spaceId, routes]
   )
@@ -95,7 +72,7 @@ export default function RepoCommitsPage() {
       renderProp={() => (
         <BranchSelectorContainer
           onSelectBranchorTag={selectBranchOrTag}
-          selectedBranch={{ name: effectiveGitRefName, sha: '' }}
+          selectedBranch={{ name: gitRefName, sha: '' }}
           preSelectedTab={preSelectedTab}
         />
       )}

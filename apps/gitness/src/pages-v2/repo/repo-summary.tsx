@@ -68,9 +68,6 @@ export default function RepoSummaryPage() {
   const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
 
-  console.log('effectiveGitRef', effectiveGitRef)
-  console.log('effectiveGitRefName', effectiveGitRefName)
-
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }

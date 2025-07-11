@@ -8,7 +8,6 @@ const useCodePathDetails = () => {
   const params = useParams()
   const subCodePath = params['*'] || ''
   const { branchId, tagId } = params
-  console.log('subCodePath', subCodePath)
 
   // Determine codeMode and restPath
   const [codeMode, restPath] = (() => {

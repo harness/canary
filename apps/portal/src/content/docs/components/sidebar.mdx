@@ -23,7 +23,7 @@ code={`() => {
 
     return (
       <Sidebar.Provider className="!w-[600px]">
-        <Sidebar.Root className="border-r border-cn-borders-3" style={{ '--cn-sidebar-min-height': '700px' }}>
+        <Sidebar.Root style={{ '--cn-sidebar-min-height': '700px' }}>
           <Sidebar.Header>
             <div className="flex items-center px-2">
               <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
@@ -62,6 +62,10 @@ code={`() => {
                 <Sidebar.MenuSubItem title="Project Alpha" to="/projects/alpha" />
                 <Sidebar.MenuSubItem title="Project Beta" to="/projects/beta" />
                 <Sidebar.MenuSubItem title="Project Gamma" to="/projects/gamma" />
+                <Sidebar.MenuSubItem title="Project Delta" to="/projects/delta" />
+                <Sidebar.MenuSubItem title="Project Epsilon" to="/projects/epsilon" />
+                <Sidebar.MenuSubItem title="Project Zeta" to="/projects/zeta" />
+                <Sidebar.MenuSubItem title="Project Eta" to="/projects/eta" />
               </Sidebar.Item>
             </Sidebar.Group>
 
@@ -95,6 +99,8 @@ code={`() => {
           </Sidebar.Content>
 
           <Sidebar.Footer>
+          <Sidebar.ToggleMenuButton />
+          <Sidebar.Separator />
             <Sidebar.Item
               src="/avatar.png"
               avatarFallback="JD"
@@ -109,13 +115,13 @@ code={`() => {
                 </>
               }
             />
-            <Sidebar.ToggleMenuButton />
+
           </Sidebar.Footer>
 
           <Sidebar.Rail />
         </Sidebar.Root>
 
-        <Sidebar.Inset className="grid content-center justify-items-center gap-2">
+        <Sidebar.Inset className="grid content-center justify-items-center gap-2 border-l border-cn-borders-3">
           <Text>{loading ? "Loading..." : "Content loaded!"}</Text>
           <Button onClick={() => setLoading(!loading)}>
             {loading ? "Stop Loading" : "Start Loading"}

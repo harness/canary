@@ -190,7 +190,7 @@ export default {
       },
 
       '&-content': {
-        rowGap: 'var(--cn-spacing-1-half)',
+        rowGap: 'var(--cn-spacing-1)',
         columnGap: 'var(--cn-sidebar-item-gap)',
         justifyItems: 'start',
         alignItems: 'center',
@@ -223,6 +223,7 @@ export default {
 
         '&-icon': {
           gridArea: 'icon',
+          color: 'var(--cn-text-3)',
 
           '&-w-border': {
             width: 'var(--cn-icon-size-lg)',

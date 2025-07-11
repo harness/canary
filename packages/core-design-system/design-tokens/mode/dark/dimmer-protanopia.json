@@ -1425,6 +1425,14 @@
           "$type": "color",
           "$value": "linear-gradient(180deg, {gradient.sidebar.icon.item.from} 0%, {gradient.sidebar.icon.item.to} 100%)"
         }
+      },
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {bg.0} 100%)"
+      },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade} 100%)"
       }
     },
     "scrollbar": {
@@ -2209,6 +2217,19 @@
             "$value": "{chrome.400}"
           }
         }
+      },
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.0}"
       }
     },
     "toast": {

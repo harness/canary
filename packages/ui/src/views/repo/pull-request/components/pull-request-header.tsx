@@ -84,7 +84,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </Button>
           <Separator orientation="vertical" className="mx-1 h-4 bg-cn-background-0" />
           <Button variant="link" onClick={() => setIsEditing(true)}>
-            Add a description
+            {description ? 'Edit description' : 'Add a description'}
           </Button>
         </div>
 

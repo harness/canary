@@ -16,13 +16,15 @@ import { isEmpty } from 'lodash-es'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 const getStatusIcon = (status: string) => {
+  console.log(status)
+
   switch (status) {
     case 'pending':
       return <IconV2 name="clock-solid" className="text-icons-alert" />
     case 'warning':
-      return <IconV2 name="warning-triangle" className="text-cn-foreground-3" />
+      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />
     case 'error':
-      return <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
+      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
     default:
       return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
   }
@@ -223,12 +225,14 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           if (!viewBtn) e.preventDefault()
         }}
       >
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
-          description={<LineDescription text={changesInfo.content} />}
-        />
-        <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
+            description={<LineDescription text={changesInfo.content} />}
+          />
+          <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        </Layout.Flex>
       </Accordion.Trigger>
 
       <Accordion.Content>
@@ -281,10 +285,10 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="ml-6 flex items-center justify-between">
               <div className="flex items-center gap-x-2">
                 <IconV2
-                  name="warning-triangle"
+                  name="warning-triangle-solid"
                   className={cn({
-                    'text-icons-danger': reqNoChangeReq,
-                    'text-icons-alert': !reqNoChangeReq
+                    'text-cn-foreground-danger': reqNoChangeReq,
+                    'text-cn-foreground-warning': !reqNoChangeReq
                   })}
                 />
                 <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
@@ -355,5 +359,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
     </Accordion.Item>
   )
 }
+
+PullRequestChangesSection.displayName = 'PullRequestChangesSection'
 
 export default PullRequestChangesSection

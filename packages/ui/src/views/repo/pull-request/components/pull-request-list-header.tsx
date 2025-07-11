@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2 } from '@/components'
+import { IconV2, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PULL_REQUEST_LIST_HEADER_FILTER_STATES } from '../pull-request.types'
@@ -29,39 +29,35 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
        */}
       <button onClick={onOpenClick} className="flex items-center gap-1.5">
         <IconV2
-          className={cn({ 'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN })}
+          className={cn({
+            'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN,
+            'text-cn-foreground-4': headerFilter !== PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
+          })}
           size="xs"
           name="git-pull-request"
         />
-        <p
-          className={cn(
-            'text-2 leading-tight',
-            headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
-              ? 'text-cn-foreground-2 font-medium'
-              : 'text-cn-foreground-2'
-          )}
+        <Text
+          color={headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN ? 'foreground-1' : 'foreground-4'}
+          className={cn({ 'font-medium': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN })}
         >
           {openPRs} Open
-        </p>
+        </Text>
       </button>
       <button onClick={onCloseClick} className="flex items-center gap-1.5">
         <IconV2
           className={cn({
-            'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
+            'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED,
+            'text-cn-foreground-4': headerFilter !== PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
           })}
           size="xs"
           name="check"
         />
-        <p
-          className={cn(
-            'text-2 leading-tight',
-            headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
-              ? 'text-cn-foreground-2 font-medium'
-              : 'text-cn-foreground-2'
-          )}
+        <Text
+          color={headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED ? 'foreground-1' : 'foreground-4'}
+          className={cn({ 'font-medium': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED })}
         >
           {closedPRs} Closed
-        </p>
+        </Text>
       </button>
     </div>
   )

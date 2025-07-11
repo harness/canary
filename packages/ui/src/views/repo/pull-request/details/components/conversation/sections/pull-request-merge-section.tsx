@@ -40,6 +40,8 @@ const StepInfo: FC<StepInfoProps> = item => {
   )
 }
 
+StepInfo.displayName = 'StepInfo'
+
 const ACCORDION_VALUE = 'item-4'
 
 interface PullRequestMergeSectionProps {
@@ -103,64 +105,66 @@ const PullRequestMergeSection = ({
       <Accordion.Trigger
         className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': mergeable || unchecked })}
       >
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={
-            <LineTitle
-              textClassName={isConflicted ? 'text-cn-foreground-danger' : ''}
-              text={
-                unchecked
-                  ? 'Merge check in progress...'
-                  : !mergeable
-                    ? 'Conflicts found in this branch'
-                    : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
-              }
-              icon={
-                unchecked ? (
-                  <IconV2 name="clock" className="text-icons-alert" />
-                ) : (
-                  <IconV2
-                    className={mergeable ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
-                    name={mergeable ? 'check-circle-solid' : 'warning-triangle'}
-                  />
-                )
-              }
-            />
-          }
-          description={
-            <>
-              {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
-              {isConflicted && (
-                <Layout.Vertical className="ml-6">
-                  <Text>
-                    Use the&nbsp;
-                    <Button variant="link" onClick={handleCommandLineClick} asChild>
-                      <span
-                        role="button"
-                        tabIndex={0}
-                        aria-label="Open command line"
-                        onKeyDown={e => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.stopPropagation()
-                            handleCommandLineClick()
-                          }
-                        }}
-                      >
-                        command line
-                      </span>
-                    </Button>
-                    &nbsp;to resolve conflicts
-                  </Text>
-                </Layout.Vertical>
-              )}
-            </>
-          }
-        />
-        <PanelAccordionShowButton
-          isShowButton={isConflicted}
-          value={ACCORDION_VALUE}
-          accordionValues={accordionValues}
-        />
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={
+              <LineTitle
+                textClassName={isConflicted ? 'text-cn-foreground-danger' : ''}
+                text={
+                  unchecked
+                    ? 'Merge check in progress...'
+                    : !mergeable
+                      ? 'Conflicts found in this branch'
+                      : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
+                }
+                icon={
+                  unchecked ? (
+                    <IconV2 name="clock" className="text-icons-alert" />
+                  ) : (
+                    <IconV2
+                      className={mergeable ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                      name={mergeable ? 'check-circle-solid' : 'warning-triangle-solid'}
+                    />
+                  )
+                }
+              />
+            }
+            description={
+              <>
+                {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
+                {isConflicted && (
+                  <Layout.Vertical className="ml-6">
+                    <Text>
+                      Use the&nbsp;
+                      <Button variant="link" onClick={handleCommandLineClick} asChild>
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Open command line"
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.stopPropagation()
+                              handleCommandLineClick()
+                            }
+                          }}
+                        >
+                          command line
+                        </span>
+                      </Button>
+                      &nbsp;to resolve conflicts
+                    </Text>
+                  </Layout.Vertical>
+                )}
+              </>
+            }
+          />
+          <PanelAccordionShowButton
+            isShowButton={isConflicted}
+            value={ACCORDION_VALUE}
+            accordionValues={accordionValues}
+          />
+        </Layout.Flex>
       </Accordion.Trigger>
       {isConflicted && (
         <Accordion.Content className="ml-6">
@@ -203,5 +207,7 @@ const PullRequestMergeSection = ({
     </Accordion.Item>
   )
 }
+
+PullRequestMergeSection.displayName = 'PullRequestMergeSection'
 
 export default PullRequestMergeSection

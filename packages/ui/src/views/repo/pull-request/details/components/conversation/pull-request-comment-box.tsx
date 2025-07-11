@@ -164,7 +164,6 @@ export const PullRequestCommentBox = ({
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
-      textAreaRef.current.focus()
     }
   }, [comment, textSelection])
 

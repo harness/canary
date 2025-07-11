@@ -23,7 +23,7 @@ import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import type { PRListFilters, PullRequestPageProps } from './pull-request.types'
+import { PRListFilters, PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestPageProps } from './pull-request.types'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -53,6 +53,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
+
+  const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
+    PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
+  )
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
@@ -184,6 +188,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         pullRequests={pullRequests}
         closedPRs={closedPullReqs}
         openPRs={openPullReqs}
+        headerFilter={headerFilter}
+        setHeaderFilter={setHeaderFilter}
       />
     )
   }

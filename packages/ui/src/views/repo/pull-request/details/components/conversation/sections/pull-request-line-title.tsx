@@ -26,7 +26,9 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {
 export const LineDescription = ({ ...props }: LineDescriptionProps) => {
   return (
     <div className="ml-6 inline-flex items-center gap-2">
-      <Text variant="body-single-line-normal">{props.text}</Text>
+      <Text variant="body-single-line-normal" className="text-cn-foreground-4">
+        {props.text}
+      </Text>
     </div>
   )
 }

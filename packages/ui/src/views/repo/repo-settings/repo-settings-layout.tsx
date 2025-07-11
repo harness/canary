@@ -17,7 +17,7 @@ const getNavItems = (t: TFunctionWithFallback) => [
   // },
   {
     groupId: 2,
-    title: t('views:repos.codeAutomation', 'Code and automation'),
+    title: t('views:code', 'Code'),
     items: [
       // { id: 0, text: 'Branches', to: 'branches' },
       // { id: 1, text: 'Tags', to: 'tags' },

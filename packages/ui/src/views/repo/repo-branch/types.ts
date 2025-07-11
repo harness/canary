@@ -63,13 +63,13 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
   onDeleteBranch: (branchName: string) => void
-  searchBranches: Branch[]
+  // searchBranches: Branch[]
   setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>
 }
 
-interface Branch {
-  name?: string
-}
+// interface Branch {
+//   name?: string
+// }
 
 export interface CreateBranchDialogProps {
   open: boolean

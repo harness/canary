@@ -698,7 +698,8 @@ export default function PullRequestConversationPage() {
       changesInfo: {
         header: changesInfo.title,
         content: changesInfo.statusMessage,
-        status: changesInfo.statusIcon
+        status: changesInfo.statusIcon,
+        statusColor: changesInfo.statusColor
       },
       checksInfo: {
         header: pullReqChecksDecision.checkInfo.title,

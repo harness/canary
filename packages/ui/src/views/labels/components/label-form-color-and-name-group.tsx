@@ -28,7 +28,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
     label: (
       <div className="flex max-w-full items-center gap-x-1.5">
         <div className={`bg-label-foreground-${color} size-2 min-h-2 min-w-2 rounded-full`} />
-        <span className="truncate text-cn-foreground-3">{color}</span>
+        <span className="truncate text-cn-foreground-1">{color}</span>
       </div>
     ),
     value: color

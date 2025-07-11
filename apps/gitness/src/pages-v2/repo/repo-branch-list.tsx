@@ -54,7 +54,7 @@ export function RepoBranchesListPage() {
     queryParams: {
       page: queryPage,
       limit: 10,
-      query: query ?? '',
+      query: (createBranchSearchQuery || query) ?? '',
       order: orderSortDate.DESC,
       sort: 'date',
       include_commit: true,
@@ -64,14 +64,14 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  const { data: { body: searchBranches } = {} } = useListBranchesQuery({
-    queryParams: {
-      query: createBranchSearchQuery,
-      limit: 10,
-      order: orderSortDate.DESC
-    },
-    repo_ref: repoRef
-  })
+  // const { data: { body: searchBranches } = {} } = useListBranchesQuery({
+  //   queryParams: {
+  //     query: createBranchSearchQuery,
+  //     limit: 10,
+  //     order: orderSortDate.DESC
+  //   },
+  //   repo_ref: repoRef
+  // })
 
   const {
     isLoading: isLoadingDivergence,
@@ -192,7 +192,7 @@ export function RepoBranchesListPage() {
         }
         toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
         onDeleteBranch={handleSetDeleteBranch}
-        searchBranches={searchBranches || []}
+        // searchBranches={searchBranches || []}
         setCreateBranchSearchQuery={setCreateBranchSearchQuery}
       />
 

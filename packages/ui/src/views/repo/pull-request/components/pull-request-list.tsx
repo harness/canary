@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 
 import { NoData, StackedList } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -19,6 +19,8 @@ export interface PullRequestListProps {
   handleCloseClick?: () => void
   repoId?: string
   spaceId?: string
+  headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
+  setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
 }
 
 export const PullRequestList: FC<PullRequestListProps> = ({
@@ -28,14 +30,12 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   handleOpenClick,
   handleCloseClick,
   spaceId,
-  repoId
+  repoId,
+  headerFilter,
+  setHeaderFilter
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
-
-  const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
-    PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
-  )
 
   const filteredData = useMemo<PullRequestType[]>(() => {
     if (!pullRequests) return []
@@ -151,7 +151,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         />
       </StackedList.Item>
       {filteredData.map((pullRequest, pullRequest_idx) => (
-        <Link key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
+        <Link key={pullRequest.number?.toString() || ''} to={pullRequest.number?.toString() || ''}>
           <StackedList.Item className="px-4 py-3" isLast={filteredData.length - 1 === pullRequest_idx}>
             {!!pullRequest.number && (
               <StackedList.Field

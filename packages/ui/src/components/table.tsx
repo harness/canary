@@ -78,7 +78,8 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
   if (props.to || props.linkProps) {
     rowChildren = Children.map(rowChildren, child => {
       if (isValidElement(child)) {
-        if (child.props.to || child.props.linkProps) {
+        // Don't add link props if the cell already has its own link props or if disableLink is true
+        if (child.props.to || child.props.linkProps || child.props.disableLink) {
           return child
         }
         return cloneElement(child, {
@@ -160,11 +161,12 @@ TableHead.displayName = 'TableHead'
 interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   to?: string
   linkProps?: Omit<LinkProps, 'to'>
+  disableLink?: boolean
 }
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, to, linkProps, children, ...props }, ref) => {
-    const shouldRenderLink = to || linkProps
+  ({ className, to, linkProps, children, disableLink = false, ...props }, ref) => {
+    const shouldRenderLink = !disableLink && (to || linkProps)
 
     if (shouldRenderLink) {
       return (

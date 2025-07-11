@@ -1,6 +1,15 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactElement } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  createContext,
+  ElementRef,
+  forwardRef,
+  ReactElement,
+  useContext,
+  useMemo
+} from 'react'
 
-import { ControlGroup, FormCaption, Label } from '@/components'
+import { CommonInputsProp, ControlGroup, FormCaption, Label } from '@/components'
+import { generateAlphaNumericHash } from '@/utils'
 import { cn } from '@/utils/cn'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { cva } from 'class-variance-authority'
@@ -19,13 +28,19 @@ const radioRootVariants = cva('cn-radio-root', {
 interface RadioItemProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
   label?: string | ReactElement
   caption?: string | ReactElement
-  showOptionalLabel?: boolean
 }
 
-export interface RadioProps extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> {
-  label?: string
+export interface RadioProps
+  extends ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>,
+    Omit<CommonInputsProp, 'warning' | 'error'> {
   error?: boolean
 }
+
+type RadioContextType = Pick<RadioProps, 'optional' | 'disabled'>
+
+const RadioContext = createContext<RadioContextType>({
+  optional: false
+})
 
 /**
  * A styled radio button input component
@@ -34,8 +49,12 @@ export interface RadioProps extends ComponentPropsWithoutRef<typeof RadioGroupPr
  * <Radio.Item value="option1" name="group" label="Option 1" caption="This is option 1" />
  */
 const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<RadioItemProps, 'required'>>(
-  ({ className, label, caption, showOptionalLabel, ...props }, ref) => {
-    const radioId = props.id || `radio-${Math.random().toString(36).slice(2, 11)}`
+  ({ className, label, caption, ...props }, ref) => {
+    const { optional, disabled: disabledRoot } = useContext(RadioContext)
+
+    const isDisabled = props?.disabled || disabledRoot
+
+    const radioId = useMemo(() => props?.id || `radio-${generateAlphaNumericHash(10)}`, [props?.id])
 
     return (
       <div className={cn('cn-radio-item-wrapper', className)}>
@@ -45,14 +64,10 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupPrimitive.Item>, Omit<R
 
         {(label || caption) && (
           <div className="cn-radio-item-label-wrapper">
-            <Label
-              htmlFor={radioId}
-              optional={showOptionalLabel}
-              className={`cn-radio-item-label ${props.disabled ? 'disabled' : ''}`}
-            >
+            <Label htmlFor={radioId} optional={optional} disabled={isDisabled}>
               {label}
             </Label>
-            <FormCaption disabled={props.disabled}>{caption}</FormCaption>
+            <FormCaption disabled={isDisabled}>{caption}</FormCaption>
           </div>
         )}
       </div>
@@ -70,12 +85,48 @@ RadioItem.displayName = RadioGroupPrimitive.Item.displayName
  * </Radio.Root>
  */
 const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioProps>(
-  ({ className, label, error, ...props }, ref) => {
+  (
+    {
+      className,
+      label,
+      error,
+      wrapperClassName,
+      orientation,
+      informerProps,
+      informerContent,
+      caption,
+      optional,
+      labelSuffix,
+      ...props
+    },
+    ref
+  ) => {
+    // If there is no label for the group, the optionality indicator is shown on the radio item label.
+    const optionalValue = !label && optional
+
     return (
-      <ControlGroup className={cn('cn-radio-control')}>
-        {label && <Label>{label}</Label>}
-        <RadioGroupPrimitive.Root className={cn(radioRootVariants({ error }), className)} {...props} ref={ref} />
-      </ControlGroup>
+      <RadioContext.Provider value={{ optional: optionalValue, disabled: props?.disabled }}>
+        <ControlGroup.Root className={cn('cn-radio-control', wrapperClassName)} orientation={orientation}>
+          {(!!label || !!caption) && (
+            <ControlGroup.LabelWrapper>
+              {!!label && (
+                <Label
+                  optional={optional}
+                  suffix={labelSuffix}
+                  informerProps={informerProps}
+                  informerContent={informerContent}
+                >
+                  {label}
+                </Label>
+              )}
+              {!!caption && <FormCaption>{caption}</FormCaption>}
+            </ControlGroup.LabelWrapper>
+          )}
+          <ControlGroup.InputWrapper>
+            <RadioGroupPrimitive.Root className={cn(radioRootVariants({ error }), className)} {...props} ref={ref} />
+          </ControlGroup.InputWrapper>
+        </ControlGroup.Root>
+      </RadioContext.Provider>
     )
   }
 )

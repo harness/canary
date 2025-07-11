@@ -1,15 +1,10 @@
 import { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 
-import { FormCaption, Label, MultiSelect, MultiSelectOption, MultiSelectRef } from '@/components'
+import { MultiSelect, MultiSelectOption, MultiSelectProps, MultiSelectRef } from '@/components'
 
-interface FormMultiSelectPropsType
-  extends Omit<React.ComponentPropsWithoutRef<typeof MultiSelect>, 'value' | 'onChange'> {
+interface FormMultiSelectPropsType extends Omit<MultiSelectProps, 'value' | 'onChange'> {
   name: string
-  label?: string
-  caption?: string
-  error?: string
-  warning?: string
 }
 
 const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((props, ref) => {
@@ -28,41 +23,30 @@ const FormMultiSelect = forwardRef<MultiSelectRef, FormMultiSelectPropsType>((pr
       'FormMultiSelectV2 must be used within a FormProvider context through FormWrapper. Use the standalone MultiSelectV2 component if form integration is not required.'
     )
   }
-  return (
-    <>
-      {props.label ? <Label className="mb-2">{props.label}</Label> : null}
-      <Controller
-        name={props.name}
-        control={formContext.control}
-        render={({ field, fieldState }) => {
-          const setFieldRef = (element: MultiSelectRef | null) => {
-            setRefs(element)
-            field.ref = setRefs
-          }
 
-          return (
-            <>
-              <MultiSelect
-                {...props}
-                ref={setFieldRef}
-                value={field.value}
-                onChange={(options: MultiSelectOption[]) => {
-                  field.onChange(options)
-                }}
-                theme={fieldState.error || props.error ? 'danger' : props.warning ? 'warning' : undefined}
-              />
-              {fieldState.error || props.error ? (
-                <FormCaption theme="danger">{props.error}</FormCaption>
-              ) : props.warning ? (
-                <FormCaption theme="warning">{props.warning}</FormCaption>
-              ) : props.caption ? (
-                <FormCaption>{props.caption}</FormCaption>
-              ) : null}
-            </>
-          )
-        }}
-      />
-    </>
+  return (
+    <Controller
+      name={props.name}
+      control={formContext.control}
+      render={({ field, fieldState }) => {
+        const setFieldRef = (element: MultiSelectRef | null) => {
+          setRefs(element)
+          field.ref = setRefs
+        }
+
+        return (
+          <MultiSelect
+            {...props}
+            error={props?.error || fieldState?.error?.message}
+            ref={setFieldRef}
+            value={field.value}
+            onChange={(options: MultiSelectOption[]) => {
+              field.onChange(options)
+            }}
+          />
+        )
+      }}
+    />
   )
 })
 

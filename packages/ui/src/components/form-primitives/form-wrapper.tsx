@@ -1,13 +1,21 @@
-import { FormHTMLAttributes, ReactNode } from 'react'
+import { createContext, FormHTMLAttributes, ReactNode } from 'react'
 import { FieldValues, FormProvider, UseFormReturn } from 'react-hook-form'
 
+import { InputOrientationProp } from '@/components'
 import { cn } from '@utils/cn'
 
-interface FormWrapperProps<T extends FieldValues> extends FormHTMLAttributes<HTMLFormElement>, UseFormReturn<T> {
+interface FormWrapperProps<T extends FieldValues>
+  extends FormHTMLAttributes<HTMLFormElement>,
+    UseFormReturn<T>,
+    InputOrientationProp {
   className?: string
   formRef?: React.Ref<HTMLFormElement>
   children?: ReactNode
 }
+
+export const FormWrapperContext = createContext<InputOrientationProp>({
+  orientation: 'vertical'
+})
 
 /**
  * A wrapper component that provides consistent spacing and layout for HTML form elements.
@@ -28,13 +36,16 @@ export function FormWrapper<T extends FieldValues>({
   formState,
   control,
   onSubmit,
+  orientation = 'vertical',
   ...props
 }: FormWrapperProps<T>) {
   return (
     <FormProvider {...props} formState={formState} control={control}>
-      <form className={cn('cn-form', className)} ref={formRef} onSubmit={onSubmit} noValidate>
-        {children}
-      </form>
+      <FormWrapperContext.Provider value={{ orientation }}>
+        <form className={cn('cn-form', className)} ref={formRef} onSubmit={onSubmit} noValidate>
+          {children}
+        </form>
+      </FormWrapperContext.Provider>
     </FormProvider>
   )
 }

@@ -1,5 +1,7 @@
-import { ComponentProps, ComponentType, forwardRef, ForwardRefExoticComponent } from 'react'
+import { ComponentProps, ComponentType, forwardRef, ForwardRefExoticComponent, useContext } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
+
+import { FormWrapperContext } from '@/components'
 
 type ControllerProps = ComponentProps<typeof Controller>
 type ControllerRenderPropsParamsType = Parameters<NonNullable<ControllerProps['render']>>[0]
@@ -16,6 +18,8 @@ export function withForm<T>(
 ) {
   const WithForm = forwardRef<ComponentType<typeof FormPrimitiveComponent>, T & WithFormProps>((props, ref) => {
     const formContext = useFormContext()
+    const { orientation } = useContext(FormWrapperContext)
+
     if (!formContext) {
       throw new Error(
         `Form-${FormPrimitiveComponent.displayName} must be used within a FormProvider context through FormWrapper. Use the standalone ${FormPrimitiveComponent.displayName} component if form integration is not required.`
@@ -28,6 +32,7 @@ export function withForm<T>(
         control={formContext.control}
         render={({ field, fieldState, formState }) => (
           <FormPrimitiveComponent
+            orientation={orientation}
             {...props}
             {...field}
             error={fieldState.error?.message || props.error}

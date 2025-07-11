@@ -1,5 +1,9 @@
 export default {
-  ':where(.cn-radio-root, .cn-radio-control)': {
+  ':where(.cn-radio-control)': {
+    gap: 'var(--cn-layout-sm) var(--cn-input-wrapper-gap)'
+  },
+
+  ':where(.cn-radio-root)': {
     '@apply grid': '',
     gap: 'var(--cn-layout-sm)'
   },
@@ -46,20 +50,22 @@ export default {
       '&:where(:not([disabled])):hover': {
         backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
         borderColor: 'var(--cn-comp-selection-selected-border-hover)'
-      }
-    },
+      },
 
-    '&:where([data-state=checked][disabled]), &:has([data-state=checked][disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-bg-selected)',
-      borderColor: 'var(--cn-state-disabled-border-selected)'
+      '&:where([disabled])': {
+        backgroundColor: 'var(--cn-state-disabled-bg-selected)',
+        borderColor: 'var(--cn-state-disabled-border-selected)'
+      }
     }
   },
 
   '.cn-radio-error:not(:has(.cn-radio-item[data-state=checked])) .cn-radio-item': {
-    borderColor: 'var(--cn-border-danger)',
-    boxShadow: `var(--cn-ring-danger)`,
-    '&:where(:hover)': {
-      boxShadow: `var(--cn-ring-danger-hover)`
+    '&:where(:not([disabled]))' : {
+      borderColor: 'var(--cn-border-danger)',
+      boxShadow: `var(--cn-ring-danger)`,
+      '&:where(:hover)': {
+        boxShadow: `var(--cn-ring-danger-hover)`
+      }
     }
   },
 
@@ -76,14 +82,5 @@ export default {
     '&:where([data-state=checked][disabled])': {
       backgroundColor: 'var(--cn-state-disabled-text-selected)'
     }
-  },
-
-  '.cn-radio-item-label': {
-    font: 'var(--cn-body-strong) !important',
-    color: 'var(--cn-text-1) !important',
-    '&:where(.disabled)': {
-      color: 'var(--cn-state-disabled-text) !important'
-    },
-    '@apply truncate': ''
   }
 }

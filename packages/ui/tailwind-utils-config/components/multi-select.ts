@@ -44,7 +44,7 @@ export default {
         outline: 'none'
       },
 
-      '&:where(:hover):not(:has(input[disabled])):not(.cn-multi-select-danger)': {
+      '&:where(:hover):not(:has(input[disabled]))': {
         borderColor: 'var(--cn-border-1)'
       },
 

@@ -11,11 +11,18 @@ import {
   useState
 } from 'react'
 
-import { ControlGroup, FormCaption, IconV2, Label, SearchInput } from '@/components'
+import {
+  CommonInputsProp,
+  ControlGroup,
+  DropdownMenu,
+  FormCaption,
+  IconV2,
+  Label,
+  SearchInput,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import { cn, generateAlphaNumericHash } from '@/utils'
-import { DropdownMenu } from '@components/dropdown-menu'
-import { Text } from '@components/text'
 import { cva, VariantProps } from 'class-variance-authority'
 import debounce from 'lodash-es/debounce'
 
@@ -60,20 +67,16 @@ type SelectItemType =
   | ReactElement<typeof DropdownMenu.IndicatorItem>
 
 interface SelectProps<T = string>
-  extends Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'placeholder'> {
+  extends CommonInputsProp,
+    Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'placeholder'> {
   options: SelectOption<T>[] | (() => Promise<SelectOption<T>[]>)
   value?: T
   defaultValue?: T
   onChange?: (value: T) => void
   onScrollEnd?: () => void
   isLoading?: boolean
-  label?: string
   theme?: VariantProps<typeof selectVariants>['theme']
   size?: VariantProps<typeof selectVariants>['size']
-  caption?: string
-  error?: string
-  warning?: string
-  optional?: boolean
   allowSearch?: boolean
   onSearch?: (query: string) => void
   searchValue?: string
@@ -84,7 +87,6 @@ interface SelectProps<T = string>
   contentClassName?: string
   suffix?: ReactNode
   triggerClassName?: string
-  rootClassName?: string
 }
 
 // Helper function to check option types
@@ -146,8 +148,12 @@ function SelectInner<T = string>(
     contentClassName,
     suffix,
     triggerClassName,
-    rootClassName,
+    wrapperClassName,
     size,
+    orientation,
+    informerProps,
+    informerContent,
+    labelSuffix,
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -160,6 +166,8 @@ function SelectInner<T = string>(
   const [searchQuery, setSearchQuery] = useState(searchValue || '')
 
   const { t } = useTranslation()
+
+  const isHorizontal = orientation === 'horizontal'
 
   const isControlled = value !== undefined
   const selectedValue = isControlled ? value : internalValue
@@ -329,115 +337,129 @@ function SelectInner<T = string>(
   }, [searchQuery])
 
   return (
-    <ControlGroup className={rootClassName}>
-      {label && (
-        <Label disabled={disabled} optional={optional} htmlFor={id}>
-          {label}
-        </Label>
+    <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
+      {(!!label || (isHorizontal && !!caption)) && (
+        <ControlGroup.LabelWrapper>
+          {!!label && (
+            <Label
+              disabled={disabled}
+              optional={optional}
+              htmlFor={id}
+              suffix={labelSuffix}
+              informerProps={informerProps}
+              informerContent={informerContent}
+            >
+              {label}
+            </Label>
+          )}
+          {isHorizontal && !!caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+        </ControlGroup.LabelWrapper>
       )}
 
-      {/* Hidden input for form integration */}
-      <input
-        ref={hiddenInputRef}
-        type="hidden"
-        className="sr-only"
-        name={name}
-        value={String(selectedValue || '')}
-        onChange={e => onChange?.(e.target.value as T)}
-      />
+      <ControlGroup.InputWrapper>
+        {/* Hidden input for form integration */}
+        <input
+          ref={hiddenInputRef}
+          type="hidden"
+          className="sr-only"
+          name={name}
+          value={String(selectedValue || '')}
+          onChange={e => onChange?.(e.target.value as T)}
+        />
 
-      <DropdownMenu.Root
-        open={isOpen}
-        onOpenChange={open => {
-          setIsOpen(open)
-          if (!open) setSearchQuery('')
-        }}
-      >
-        <DropdownMenu.Trigger
-          id={id}
-          ref={ref}
-          disabled={disabled}
-          className={cn(selectVariants({ theme, size }), triggerClassName)}
+        <DropdownMenu.Root
+          open={isOpen}
+          onOpenChange={open => {
+            setIsOpen(open)
+            if (!open) setSearchQuery('')
+          }}
         >
-          <div className="cn-select-trigger">
-            <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
-              {selectedOption ? selectedOption.label : placeholder}
-            </Text>
-            <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
-          </div>
-          {suffix ? (
-            <div
-              className="cn-select-suffix"
-              // Don't trigger dropdown menu when suffix is clicked
-              onPointerDown={e => {
-                e.stopPropagation()
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.stopPropagation()
-                }
-              }}
-              role="none"
-            >
-              {suffix}
+          <DropdownMenu.Trigger
+            id={id}
+            ref={ref}
+            disabled={disabled}
+            className={cn(selectVariants({ theme, size }), triggerClassName)}
+          >
+            <div className="cn-select-trigger">
+              <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
+                {selectedOption ? selectedOption.label : placeholder}
+              </Text>
+              <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
             </div>
-          ) : null}
-        </DropdownMenu.Trigger>
+            {suffix ? (
+              <div
+                className="cn-select-suffix"
+                // Don't trigger dropdown menu when suffix is clicked
+                onPointerDown={e => {
+                  e.stopPropagation()
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.stopPropagation()
+                  }
+                }}
+                role="none"
+              >
+                {suffix}
+              </div>
+            ) : null}
+          </DropdownMenu.Trigger>
 
-        <DropdownMenu.Content
-          className={cn(
-            'cn-select-content',
-            { 'max-w-none w-[--radix-dropdown-menu-trigger-width]': contentWidth === 'triggerWidth' },
-            contentClassName
-          )}
-          align="start"
-          scrollAreaProps={{ onScrollBottom: onScrollEnd, rootMargin: { bottom: '50px' } }}
-        >
-          {(allowSearch || header) && (
-            <DropdownMenu.Header>
-              {allowSearch && (
-                <SearchInput
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={setSearchQuery}
-                  debounce={false}
-                  autoFocus
-                  onKeyDown={e => e.stopPropagation()}
-                />
-              )}
+          <DropdownMenu.Content
+            className={cn(
+              'cn-select-content',
+              { 'max-w-none w-[--radix-dropdown-menu-trigger-width]': contentWidth === 'triggerWidth' },
+              contentClassName
+            )}
+            align="start"
+            scrollAreaProps={{ onScrollBottom: onScrollEnd, rootMargin: { bottom: '50px' } }}
+          >
+            {(allowSearch || header) && (
+              <DropdownMenu.Header>
+                {allowSearch && (
+                  <SearchInput
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    debounce={false}
+                    autoFocus
+                    onKeyDown={e => e.stopPropagation()}
+                  />
+                )}
 
-              {header}
-            </DropdownMenu.Header>
-          )}
+                {header}
+              </DropdownMenu.Header>
+            )}
 
-          {isNoItems && (
-            <DropdownMenu.NoOptions>
-              {searchQuery
-                ? t('component:select.noResults', 'No results found')
-                : t('component:select.noOptions', 'No options available')}
-            </DropdownMenu.NoOptions>
-          )}
+            {isNoItems && (
+              <DropdownMenu.NoOptions>
+                {searchQuery
+                  ? t('component:select.noResults', 'No results found')
+                  : t('component:select.noOptions', 'No options available')}
+              </DropdownMenu.NoOptions>
+            )}
 
-          {isWithItems && renderOptions(filteredOptions)}
+            {isWithItems && renderOptions(filteredOptions)}
 
-          {showSpinner && <DropdownMenu.Spinner />}
+            {showSpinner && <DropdownMenu.Spinner />}
 
-          {footer && <DropdownMenu.Footer>{footer}</DropdownMenu.Footer>}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
+            {footer && <DropdownMenu.Footer>{footer}</DropdownMenu.Footer>}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
 
-      {error ? (
-        <FormCaption disabled={disabled} theme="danger">
-          {error}
-        </FormCaption>
-      ) : warning ? (
-        <FormCaption disabled={disabled} theme="warning">
-          {warning}
-        </FormCaption>
-      ) : caption ? (
-        <FormCaption disabled={disabled}>{caption}</FormCaption>
-      ) : null}
-    </ControlGroup>
+        {error ? (
+          <FormCaption disabled={disabled} theme="danger">
+            {error}
+          </FormCaption>
+        ) : warning ? (
+          <FormCaption disabled={disabled} theme="warning">
+            {warning}
+          </FormCaption>
+        ) : caption && !isHorizontal ? (
+          <FormCaption disabled={disabled}>{caption}</FormCaption>
+        ) : null}
+      </ControlGroup.InputWrapper>
+    </ControlGroup.Root>
   )
 }
 

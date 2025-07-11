@@ -3,8 +3,8 @@ title: Radio
 description: Radio button component documentation
 ---
 
-The `Radio.Item` component provides a customizable, accessible radio button input.  
-It must always be used inside a `Radio.Root` to function correctly.  
+The `Radio.Item` component provides a customizable, accessible radio button input.
+It must always be used inside a `Radio.Root` to function correctly.
 The `Radio.Root` component provides the necessary context for managing grouped selections.
 
 import { DocsPage } from "@/components/docs-page";
@@ -13,58 +13,20 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`() => {
     const [group1Value, setGroup1Value] = React.useState('option1');
-    const [group2Value, setGroup2Value] = React.useState('');
-    const [group3Value, setGroup3Value] = React.useState('option2');
-    const [group4Value, setGroup4Value] = React.useState('option1');
 
     return (
-      <div className="flex flex-col space-y-8">
-        {/* Standard usage */}
-        <div className="space-y-2">
-
-          <Radio.Root
+      <Layout.Vertical spacing="large" className="min-w-[400px]">
+        <Radio.Root
             value={group1Value}
             onValueChange={setGroup1Value}
             label="Standard usage"
+            caption="Caption text"
           >
-            <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
-            <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
-            <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
-          </Radio.Root>
-        </div>
-
-        {/* Optional */}
-        <div className="space-y-2">
-
-          <Radio.Root
-            value={group2Value}
-            onValueChange={setGroup2Value}
-            label="Optional usage"
-          >
-            <Radio.Item value="option1" label="Option 1" caption="This field is optional" showOptionalLabel />
-          </Radio.Root>
-        </div>
-
-        {/* Disabled */}
-        <div className="space-y-2">
-          <Radio.Root
-            value={group3Value}
-            onValueChange={setGroup3Value}
-            label="Disabled radio"
-          >
-            <Radio.Item value="option1" label="Option 1" caption="This option is disabled" disabled />
-            <Radio.Item value="option2" label="Option 2" />
-          </Radio.Root>
-        </div>
-
-        {/* Error */}
-        <div className="space-y-2">
-          <Radio.Root label="Error radio" error>
-            <Radio.Item value="option1" label="Option 1" />
-            <Radio.Item value="option2" label="Option 2" />
-          </Radio.Root>
-        </div>
-      </div>
+          <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
+          <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
+          <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
+        </Radio.Root>
+      </Layout.Vertical>
     );
 
 }`}
@@ -77,74 +39,274 @@ import { Radio } from "@harnessio/ui/components";
 
 function Example() {
   const [group1Value, setGroup1Value] = React.useState("option1");
-  const [group2Value, setGroup2Value] = React.useState("option1");
-  const [group2Value, setGroup2Value] = React.useState("option3");
-  const [group3Value, setGroup3Value] = React.useState("option1");
 
   return (
-    <div className="flex flex-col space-y-8">
-      {/* Standard usage */}
-      <Radio.Root
+    <Radio.Root
+        label="Label text"
+        caption="Caption text"
         value={group1Value}
         onValueChange={setGroup1Value}
       >
         <Radio.Item name="group1" value="option1" label="Option 1" caption="This is option 1" />
         <Radio.Item name="group1" value="option2" label="Option 2" caption="This is option 2" />
       </Radio.Root>
-
-      {/* RadioGroup Example */}
-      <Radio.Root
-        value={group2Value}
-        onValueChange={setGroup2Value}
-      >
-        <Radio.Item name="group2" value="option1" label="Option 1" caption="This is option 1" />
-        <Radio.Item name="group2" value="option2" label="Option 2" caption="This is option 2" />
-        <Radio.Item name="group2" value="option3" label="Option 3" caption="This is option 3" />
-      </Radio.Root>
-
-      {/* Optional */}
-      <Radio.Root
-        value={group2Value}
-        onValueChange={setGroup2Value}
-      >
-        <Radio.Item name="group3" value="option3" label="Option 3" caption="This field is optional" showOptionalLabel />
-      </Radio.Root>
-
-      {/* Disabled */}
-      <Radio.Root
-        value={group3Value}
-        onValueChange={setGroup3Value}
-      >
-        <Radio.Item name="group4" value="option1" label="Option 1" caption="This option is disabled" disabled />
-        <Radio.Item name="group4" value="option2" label="Option 2" />
-      </Radio.Root>
-    </div>
   );
 }
 ```
 
+## Optional
+
+The radio group can be marked as optional via the `optional` prop on `Radio.Root`.
+
+If the `Radio.Root` has a label, the optional indicator will appear next to the label.
+
+If there's no label, the optional indicator will be shown next to each individual radio item.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [group1Value, setGroup1Value] = React.useState('option1');
+
+      return (
+        <Layout.Vertical spacing="large" className="min-w-[400px]">
+            <Radio.Root
+              value={group1Value}
+              onValueChange={setGroup1Value}
+              label="Optional usage with group label"
+              optional
+            >
+              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
+          </Radio.Root>
+          <Separator />
+          <Radio.Root
+              value={group1Value}
+              onValueChange={setGroup1Value}
+              optional
+            >
+              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
+          </Radio.Root>
+        </Layout.Vertical>
+      );
+
+}`}
+/>
+
+## Disabled
+
+The radio group can be marked as disabled via the `disabled` prop on `Radio.Root`, which disables all radio items within the group.
+
+Alternatively, the `disabled` prop can be passed to individual `Radio.Item` to disable them selectively.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [group1Value, setGroup1Value] = React.useState('option1');
+
+      return (
+        <Layout.Vertical spacing="large" className="min-w-[400px]">
+            <Radio.Root
+              value={group1Value}
+              onValueChange={setGroup1Value}
+              label="Disable all radio items"
+              disabled
+            >
+              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
+              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
+          </Radio.Root>
+          <Separator />
+          <Radio.Root
+              value={group1Value}
+              onValueChange={setGroup1Value}
+              label="Disable items selectively"
+            >
+              <Radio.Item value="option1" label="Option 1" caption="Caption text" disabled />
+              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
+          </Radio.Root>
+        </Layout.Vertical>
+      );
+
+}`}
+/>
+
+## Error state
+
+The radio group can be marked as error via the `error` prop on `Radio.Root`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [group1Value, setGroup1Value] = React.useState('');
+
+      return (
+        <Layout.Vertical spacing="large" className="min-w-[400px]">
+            <Radio.Root
+              value={group1Value}
+              onValueChange={setGroup1Value}
+              label="Error radio"
+              error
+            >
+              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
+              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
+          </Radio.Root>
+        </Layout.Vertical>
+      );
+
+}`}
+/>
+
+## Orientation
+
+The `Radio.Root` component accepts an optional `orientation` prop, which defines the layout direction of the radio and its group label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [group1Value, setGroup1Value] = React.useState('option1');
+
+        return (
+          <Layout.Vertical spacing="large" className="min-w-[400px]">
+            <Radio.Root
+                value={group1Value}
+                onValueChange={setGroup1Value}
+                label="Vertical"
+                caption="Caption text"
+              >
+              <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
+              <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
+              <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
+            </Radio.Root>
+            <Separator />
+            <Radio.Root
+                value={group1Value}
+                onValueChange={setGroup1Value}
+                label="Horizontal"
+                caption="Caption text"
+                orientation="horizontal"
+              >
+              <Radio.Item value="option1" label="Option 1" caption="This is option 1" />
+              <Radio.Item value="option2" label="Option 2" caption="This is option 2" />
+              <Radio.Item value="option3" label="Option 3" caption="This is option 3" />
+            </Radio.Root>
+          </Layout.Vertical>
+        );
+
+}`}
+/>
+
 ## API Reference
 
-The `Radio.Item` component must always be used inside a `Radio.Root` to function correctly.  
+The `Radio.Item` component must always be used inside a `Radio.Root` to function correctly.
 The `Radio.Root` provides the necessary context for managing grouped selections.
 
-```typescript jsx
-<Radio.Root
-  value="option1"              // [OPTIONAL] The currently selected value
-  onValueChange={handleChange} // [OPTIONAL] Callback called when the selected value changes
-  className="custom-class"     // [OPTIONAL] Additional class names for the group
->
-  <Radio.Item
-    name="group1"              // [OPTIONAL] Name of the radio button group
-    value="option1"            // [REQUIRED] The value of the radio button
-    label="Option 1"           // [OPTIONAL] Label displayed next to the radio button
-    caption="This is option 1" // [OPTIONAL] Caption displayed under the label
-    showOptionalLabel          // [OPTIONAL] Indicates if the field displays an optional label
-    disabled                   // [OPTIONAL] Whether the radio button is disabled
-    className="custom-class"   // [OPTIONAL] Additional class names for the radio button
-  />
-</Radio.Root>
+### `Root`
+
+```typescript
+interface InformerProps extends Omit<TooltipProps, "children"> {
+  className?: string;
+  /**
+   * If disabled, the tooltip will not be shown
+   */
+  disabled?: boolean;
+  iconProps?: IconPropsV2;
+}
 ```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the radio button group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description:
+        "The controlled value of the radio item to check. Should be used in conjunction with onValueChange.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Label for the radio group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Caption for the radio group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description:
+        "When true, prevents the user from interacting with all radio items.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the radio group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description:
+        "Additional class names to apply to the radio group wrapper.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "error",
+      description:
+        "Displays the error state of radio items only when no item is selected.",
+      required: false,
+      defaultValue: "",
+      value: "boolean",
+    },
+    {
+      name: "optional",
+      description:
+        "Determines whether to display an 'optional' tag next to the group label, or next to each radio item label if no group label is provided.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "informerContent",
+      description:
+        "Content to display in the radio group label informer tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "informerProps",
+      description: "Additional props for configuring the informer tooltip.",
+      required: false,
+      value: "InformerProps",
+    },
+    {
+      name: "labelSuffix",
+      description:
+        "Customized with a suffix element that appears on the right side of the label.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "orientation",
+      description:
+        "Defines the layout direction of the radio items and its group label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
+    },
+  ]}
+/>
+
+### `Item`
 
 <DocsPage.PropsTable
   props={[
@@ -173,13 +335,6 @@ The `Radio.Root` provides the necessary context for managing grouped selections.
       value: "string",
     },
     {
-      name: "showOptionalLabel",
-      description: "Indicates if the field displays an optional label.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
       name: "disabled",
       description: "Indicates whether the radio button is disabled.",
       required: false,
@@ -188,24 +343,6 @@ The `Radio.Root` provides the necessary context for managing grouped selections.
     {
       name: "className",
       description: "Additional class names to apply to the radio button.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "value (Radio.Root)",
-      description: "The currently selected value in the radio group.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "onValueChange",
-      description: "Callback called when the selected value changes.",
-      required: false,
-      value: "(value: string) => void",
-    },
-    {
-      name: "className (Radio.Root)",
-      description: "Additional class names to apply to the radio group.",
       required: false,
       value: "string",
     },

@@ -1,21 +1,30 @@
-import { forwardRef, ReactNode, useMemo } from 'react'
+import { forwardRef, useMemo } from 'react'
 
-import { ControlGroup, FormCaption, Label } from '@/components'
+import { CommonInputsProp, ControlGroup, FormCaption, Label } from '@/components'
 
 import { BaseInput, InputProps } from './base-input'
 
-export interface TextInputProps extends InputProps {
+export interface TextInputProps extends CommonInputsProp, InputProps {
   type?: Exclude<HTMLInputElement['type'], 'number' | 'search' | 'hidden' | 'radio' | 'checkbox' | 'button'>
-  wrapperClassName?: string
-  caption?: string
-  error?: string
-  warning?: string
-  optional?: boolean
-  labelSuffix?: ReactNode
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
-  const { label, labelSuffix, optional, caption, error, warning, wrapperClassName, disabled, ...restProps } = props
+  const {
+    label,
+    labelSuffix,
+    optional,
+    caption,
+    error,
+    warning,
+    wrapperClassName,
+    disabled,
+    orientation,
+    informerProps,
+    informerContent,
+    ...restProps
+  } = props
+
+  const isHorizontal = orientation === 'horizontal'
 
   // override theme based on error and warning
   const theme = error ? 'danger' : warning ? 'warning' : props.theme
@@ -24,27 +33,41 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   const inputId = useMemo(() => props.id || `input-${Math.random().toString(36).substring(2, 9)}`, [props.id])
 
   return (
-    <ControlGroup className={wrapperClassName}>
-      {!!label && (
-        <Label disabled={disabled} optional={optional} htmlFor={inputId} suffix={labelSuffix}>
-          {label}
-        </Label>
+    <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
+      {(!!label || (isHorizontal && !!caption)) && (
+        <ControlGroup.LabelWrapper>
+          {!!label && (
+            <Label
+              disabled={disabled}
+              optional={optional}
+              htmlFor={inputId}
+              suffix={labelSuffix}
+              informerProps={informerProps}
+              informerContent={informerContent}
+            >
+              {label}
+            </Label>
+          )}
+          {isHorizontal && !!caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+        </ControlGroup.LabelWrapper>
       )}
 
-      <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} disabled={disabled} />
+      <ControlGroup.InputWrapper>
+        <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} disabled={disabled} />
 
-      {error ? (
-        <FormCaption disabled={disabled} theme="danger">
-          {error}
-        </FormCaption>
-      ) : warning ? (
-        <FormCaption disabled={disabled} theme="warning">
-          {warning}
-        </FormCaption>
-      ) : caption ? (
-        <FormCaption disabled={disabled}>{caption}</FormCaption>
-      ) : null}
-    </ControlGroup>
+        {error ? (
+          <FormCaption disabled={disabled} theme="danger">
+            {error}
+          </FormCaption>
+        ) : warning ? (
+          <FormCaption disabled={disabled} theme="warning">
+            {warning}
+          </FormCaption>
+        ) : caption && !isHorizontal ? (
+          <FormCaption disabled={disabled}>{caption}</FormCaption>
+        ) : null}
+      </ControlGroup.InputWrapper>
+    </ControlGroup.Root>
   )
 })
 

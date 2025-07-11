@@ -83,7 +83,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
+        "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
@@ -95,7 +95,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
+        "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },

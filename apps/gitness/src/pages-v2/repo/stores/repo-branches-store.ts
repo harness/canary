@@ -10,26 +10,18 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   tagList: [{ name: '', sha: '' }],
   branchList: [],
   selectedRefType: BranchSelectorTab.BRANCHES,
-  selectedBranchTag: null,
   xNextPage: 0,
   xPrevPage: 0,
   page: 1,
+  selectedBranchTag: null,
 
   // Actions
-  setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => set({ selectedBranchTag }),
   setSelectedRefType: (selectedRefType: BranchSelectorTab) => set({ selectedRefType }),
   setTagList: (tagList: BranchSelectorListItem[]) => set({ tagList }),
   setSpaceIdAndRepoId: (spaceId: string, repoId: string) => set({ spaceId, repoId }),
-  setBranchList: (branches: BranchData[]) =>
-    set({
-      branchList: branches
-    }),
-  setDefaultBranch: (branchName: string) =>
-    set({
-      defaultBranch: branchName
-    }),
+  setBranchList: (branches: BranchData[]) => set({ branchList: branches }),
   setPage: page => set({ page }),
-  setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => {
-    set({ xNextPage, xPrevPage })
-  }
+  setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => set({ xNextPage, xPrevPage }),
+  setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => set({ selectedBranchTag }),
+  setDefaultBranch: (branch: string) => set({ defaultBranch: branch })
 }))

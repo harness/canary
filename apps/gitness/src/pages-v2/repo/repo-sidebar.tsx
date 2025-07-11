@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -19,8 +19,7 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { PathParams } from '../../RouteDefinitions'
-import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-import { useRepoBranchesStore } from './stores/repo-branches-store'
+import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
@@ -28,18 +27,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
  */
 export const RepoSidebar = () => {
   const routes = useRoutes()
-  const {
-    branchList,
-    tagList,
-    selectedBranchTag,
-    selectedRefType,
-    setTagList,
-    setBranchList,
-    setDefaultBranch,
-    setSelectedBranchTag,
-    setSelectedRefType,
-    setSpaceIdAndRepoId
-  } = useRepoBranchesStore()
+  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -48,75 +36,21 @@ export const RepoSidebar = () => {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
 
-  useEffect(() => {
-    setSpaceIdAndRepoId(spaceId || '', repoId || '')
-  }, [spaceId, repoId])
-
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+
+  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const effectiveGitRefName = gitRefName || repository?.default_branch || ''
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
     {
       repo_ref: repoRef,
-      branch_name: fullGitRef,
+      branch_name: effectiveGitRef,
       queryParams: {}
     },
     {
-      enabled: !!fullGitRef
+      enabled: !!effectiveGitRef
     }
   )
-  useEffect(() => {
-    if (selectedGitRefBranch) {
-      setSelectedBranchTag({
-        name: selectedGitRefBranch.name ?? '',
-        sha: selectedGitRefBranch.sha ?? ''
-      })
-    }
-  }, [selectedGitRefBranch, fullGitRef])
-
-  useEffect(() => {
-    if (!repository?.default_branch || !branchList.length) {
-      return
-    }
-    if (!fullGitRef) {
-      const defaultBranch = branchList.find(branch => branch.default)
-      setSelectedBranchTag({
-        name: defaultBranch?.name || repository?.default_branch || '',
-        sha: defaultBranch?.sha || '',
-        default: true
-      })
-    } else {
-      const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
-      if (selectedGitRefBranch) {
-        setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
-        setSelectedRefType(BranchSelectorTab.BRANCHES)
-      } else if (selectedGitRefTag) {
-        setSelectedBranchTag({ name: gitRefName, sha: '' })
-        setSelectedRefType(BranchSelectorTab.TAGS)
-      } else {
-        setSelectedBranchTag({ name: fullGitRef, sha: fullGitRef })
-        setSelectedRefType(BranchSelectorTab.BRANCHES)
-      }
-    }
-  }, [repository?.default_branch, fullGitRef, branchList, tagList, gitRefName, selectedGitRefBranch])
-
-  useEffect(() => {
-    setSelectedBranchTag({ name: repository?.default_branch || '', sha: '' })
-    setSelectedRefType(BranchSelectorTab.BRANCHES)
-  }, [setSelectedBranchTag, setSelectedRefType, repository?.default_branch])
-
-  const { data: repoDetails } = useGetContentQuery({
-    path: '',
-    repo_ref: repoRef,
-    queryParams: {
-      include_commit: true,
-      git_ref: normalizeGitRef(fullGitRef || selectedBranchTag?.name)
-    }
-  })
-
-  const { data: filesData } = useListPathsQuery({
-    repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(fullGitRef || selectedBranchTag?.name) }
-  })
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -136,42 +70,81 @@ export const RepoSidebar = () => {
     }
   })
 
-  useEffect(() => {
-    if (tags) {
-      setTagList(
-        tags.map(item => ({
-          name: item?.name || '',
-          sha: item?.sha || '',
-          default: false
-        }))
-      )
-    }
-  }, [tags])
+  const transformedBranchList = useMemo(
+    () => (branches ? transformBranchList(branches, repository?.default_branch) : []),
+    [branches, repository?.default_branch]
+  )
+
+  const transformedTags = useMemo(
+    () =>
+      tags?.map((tag: { name?: string; sha?: string }) => ({
+        name: tag?.name || '',
+        sha: tag?.sha || '',
+        default: false
+      })) || [],
+    [tags]
+  )
 
   useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, repository?.default_branch))
+    if (!repository?.default_branch || !transformedBranchList.length) {
+      return
     }
-    if (repository?.default_branch) {
-      setDefaultBranch(repository?.default_branch)
+    if (!effectiveGitRef) {
+      const defaultBranch = transformedBranchList.find(branch => branch.name === repository.default_branch)
+      const defaultBranchName = defaultBranch?.name || repository?.default_branch
+      if (defaultBranchName) {
+        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${defaultBranchName}`)
+      }
+    } else {
+      const selectedGitRefTag = transformedTags.find(tag => tag.name === effectiveGitRefName)
+      if (selectedGitRefBranch) {
+        setSelectedRefType(BranchSelectorTab.BRANCHES)
+      } else if (selectedGitRefTag) {
+        setSelectedRefType(BranchSelectorTab.TAGS)
+      } else {
+        setSelectedRefType(BranchSelectorTab.BRANCHES)
+      }
     }
-  }, [branches, repository?.default_branch])
+  }, [
+    repository?.default_branch,
+    effectiveGitRef,
+    transformedBranchList,
+    transformedTags,
+    effectiveGitRefName,
+    selectedGitRefBranch
+  ])
+
+  useEffect(() => {
+    setSelectedRefType(BranchSelectorTab.BRANCHES)
+  }, [setSelectedRefType, repository?.default_branch])
+
+  const { data: repoDetails } = useGetContentQuery({
+    path: '',
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: true,
+      git_ref: normalizeGitRef(effectiveGitRef)
+    }
+  })
+
+  const { data: filesData } = useListPathsQuery({
+    repo_ref: repoRef,
+    queryParams: { git_ref: normalizeGitRef(effectiveGitRef) }
+  })
 
   const filesList = filesData?.body?.files || []
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
-        setSelectedBranchTag(branchTagName)
         setSelectedRefType(type)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchTagName.name}`)
       } else if (type === BranchSelectorTab.TAGS) {
-        setSelectedBranchTag(branchTagName)
         setSelectedRefType(type)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)
       }
     },
-    [navigate, repoId, spaceId, branchList, tagList]
+    [navigate, repoId, spaceId]
   )
 
   const navigateToNewFile = useCallback(() => {
@@ -181,30 +154,26 @@ export const RepoSidebar = () => {
         repo_ref: repoRef,
         queryParams: {
           include_commit: true,
-          git_ref: normalizeGitRef(fullGitRef || selectedBranchTag?.name)
+          git_ref: normalizeGitRef(effectiveGitRef)
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(
-            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag?.name}/~/${fullResourcePath}`
-          )
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${effectiveGitRef}/~/${fullResourcePath}`)
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(
-            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag?.name}/~/${parentDirPath}`
-          )
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${effectiveGitRef}/~/${parentDirPath}`)
         }
       })
     } else {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag?.name}/~/`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${effectiveGitRef}/~/`)
     }
-  }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag?.name])
+  }, [fullResourcePath, effectiveGitRef, navigate, repoId, repoRef])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranchTag?.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${filePath}`)
     },
-    [fullGitRef, selectedBranchTag?.name, navigate, repoId]
+    [effectiveGitRef, navigate, repoId]
   )
 
   // TODO: repoId and spaceId must be defined
@@ -221,7 +190,7 @@ export const RepoSidebar = () => {
             branchSelectorRenderer={
               <BranchSelectorContainer
                 onSelectBranchorTag={selectBranchOrTag}
-                selectedBranch={selectedBranchTag}
+                selectedBranch={{ name: effectiveGitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
                 preSelectedTab={selectedRefType}
                 isFilesPage
                 setCreateBranchDialogOpen={setCreateBranchDialogOpen}
@@ -230,7 +199,7 @@ export const RepoSidebar = () => {
             }
           >
             {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag?.name} />
+              <Explorer repoDetails={repoDetails?.body} selectedBranch={effectiveGitRef} />
             )}
           </RepoSidebarView>
         )}
@@ -243,10 +212,10 @@ export const RepoSidebar = () => {
         onSuccess={() => {
           setCreateBranchDialogOpen(false)
           navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchQueryForNewBranch}`)
-          setSelectedBranchTag({ name: branchQueryForNewBranch, sha: '', default: false })
+          // Branch creation handled by URL navigation
         }}
         onBranchQueryChange={setBranchQueryForNewBranch}
-        preselectedBranchOrTag={selectedBranchTag}
+        preselectedBranchOrTag={effectiveGitRef ? { name: effectiveGitRefName, sha: '' } : null}
         preselectedTab={selectedRefType}
         prefilledName={branchQueryForNewBranch}
       />

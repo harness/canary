@@ -37,9 +37,14 @@ import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
-import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-
-// import { useRepoBranchesStore } from './stores/repo-branches-store'
+import {
+  decodeGitContent,
+  getTrimmedSha,
+  isRefATag,
+  normalizeGitRef,
+  REFS_BRANCH_PREFIX,
+  REFS_TAGS_PREFIX
+} from '../../utils/git-utils'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -60,8 +65,11 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || repository?.default_branch || ''
+  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
+
+  console.log('effectiveGitRef', effectiveGitRef)
+  console.log('effectiveGitRefName', effectiveGitRefName)
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -122,7 +130,10 @@ export default function RepoSummaryPage() {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      const newRef = type === BranchSelectorTab.TAGS ? `${REFS_TAGS_PREFIX + branchTagName.name}` : branchTagName.name
+      const newRef =
+        type === BranchSelectorTab.TAGS
+          ? `${REFS_TAGS_PREFIX + branchTagName.name}`
+          : `${REFS_BRANCH_PREFIX + branchTagName.name}`
       setPreSelectedTab(type)
       navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${newRef}`)
     },
@@ -331,7 +342,11 @@ export default function RepoSummaryPage() {
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
-        toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: effectiveGitRefName })}
+        toRepoCommits={() => {
+          return isRefATag(effectiveGitRef)
+            ? routes.toRepoTagCommits({ spaceId, repoId, tagId: effectiveGitRefName })
+            : routes.toRepoBranchCommits({ spaceId, repoId, branchId: effectiveGitRefName })
+        }}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}

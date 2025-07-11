@@ -17,13 +17,13 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 interface RepoSubheaderProps {
   className?: string
   showPipelinesTab?: boolean
-  onTabClick?: (tab: 'summary' | 'code') => void
+  onTabClick?: (tab: 'summary' | 'code' | 'commits') => void
 }
 
 export const RepoSubheader = ({ showPipelinesTab = true, className, onTabClick }: RepoSubheaderProps) => {
   const { t } = useTranslation()
 
-  const handleTabClick = (value: 'summary' | 'code') => {
+  const handleTabClick = (value: 'summary' | 'code' | 'commits') => {
     if (onTabClick) {
       onTabClick(value)
     }
@@ -52,7 +52,15 @@ export const RepoSubheader = ({ showPipelinesTab = true, className, onTabClick }
             {t('views:repos.files', 'Files')}
           </Tabs.Trigger>
           {showPipelinesTab && <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>}
-          <Tabs.Trigger value="commits">{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
+          <Tabs.Trigger
+            value="commits"
+            onClick={e => {
+              e.preventDefault()
+              handleTabClick('commits')
+            }}
+          >
+            {t('views:repos.commits', 'Commits')}
+          </Tabs.Trigger>
           <Tabs.Trigger value="tags">{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
           <Tabs.Trigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
           <Tabs.Trigger value="branches">{t('views:repos.branches', 'Branches')}</Tabs.Trigger>

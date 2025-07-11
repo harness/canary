@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { Layout } from '@components/layout'
 import { parse } from 'yaml'
 
 import { AnyContainerNodeType } from '@harnessio/pipeline-graph'

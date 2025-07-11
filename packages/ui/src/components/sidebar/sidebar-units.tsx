@@ -9,7 +9,7 @@ import {
   useMemo
 } from 'react'
 
-import { Button, IconV2, ScrollArea, Separator, Sheet, Text } from '@/components'
+import { Button, IconV2, ScrollArea, Separator, Sheet, Text, useScrollArea } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -108,11 +108,29 @@ export const SidebarSeparator = forwardRef<ElementRef<typeof Separator>, Compone
 )
 SidebarSeparator.displayName = 'SidebarSeparator'
 
-export const SidebarContent = ({ children, ...props }: ComponentProps<typeof ScrollArea>) => (
-  <ScrollArea {...props} className="cn-sidebar-content" classNameContent="w-full" role="menu">
-    {children}
-  </ScrollArea>
-)
+export const SidebarContent = (props: ComponentProps<typeof ScrollArea>) => {
+  const { isTop, isBottom, onScrollTop, onScrollBottom } = useScrollArea(props)
+  const { className } = props
+
+  return (
+    <div
+      className={cn(
+        'cn-sidebar-content-wrapper',
+        { 'cn-sidebar-content-wrapper-top': isTop, 'cn-sidebar-content-wrapper-bottom': isBottom },
+        className
+      )}
+    >
+      <ScrollArea
+        {...props}
+        onScrollTop={onScrollTop}
+        onScrollBottom={onScrollBottom}
+        className="cn-sidebar-content"
+        // classNameContent="w-full"
+        role="menu"
+      />
+    </div>
+  )
+}
 
 export interface SidebarGroupProps extends ComponentPropsWithoutRef<'div'> {
   label?: string

@@ -47,7 +47,33 @@ export default {
 
     '&-content': {
       height: '100%',
-      padding: '0 var(--cn-sidebar-container-px)'
+      padding: '0 var(--cn-sidebar-container-px)',
+
+      '&-wrapper': {
+        '@apply flex-1 overflow-hidden relative before:absolute before:inset-x-0 before:top-0 before:z-10 after:z-10 after:absolute after:inset-x-0 after:bottom-0':
+          '',
+
+        '&:before, &:after': {
+          height: '60px',
+          pointerEvents: 'none'
+        },
+
+        '&:before': {
+          backgroundImage: 'var(--cn-comp-sidebar-fade-start)'
+        },
+
+        '&:after': {
+          backgroundImage: 'var(--cn-comp-sidebar-fade-end)'
+        },
+
+        '&:where(.cn-sidebar-content-wrapper-top)': {
+          '@apply before:hidden': ''
+        },
+
+        '&:where(.cn-sidebar-content-wrapper-bottom)': {
+          '@apply after:hidden': ''
+        }
+      }
     },
 
     '&-footer': {
@@ -237,7 +263,7 @@ export default {
 
         '&-action-item-placeholder': {
           gridArea: 'elem',
-          width: '16px',
+          width: '20px',
           height: '16px'
         },
 
@@ -251,13 +277,13 @@ export default {
       '&-action-button': {
         position: 'absolute',
         zIndex: '1',
-        top: 'calc(50% - var(--cn-size-4)/2)',
-        right: 'var(--cn-sidebar-item-px)',
+        top: 'calc(50% - var(--cn-size-7)/2)',
+        right: '3px',
         display: 'grid',
         placeContent: 'center',
         color: 'var(--cn-text-2)',
-        width: 'var(--cn-size-4)',
-        height: 'var(--cn-size-4)',
+        width: 'var(--cn-size-7)',
+        height: 'var(--cn-size-7)',
         borderRadius: 'var(--cn-rounded-2)',
         opacity: '1',
         overflow: 'hidden',

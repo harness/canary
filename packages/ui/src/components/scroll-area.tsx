@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
+import { FC, HTMLAttributes, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
 import { cn } from '@utils/cn'
 
@@ -110,4 +110,52 @@ const ScrollArea: FC<ScrollAreaProps> = ({
 
 ScrollArea.displayName = 'ScrollArea'
 
-export { ScrollArea }
+const useScrollArea = (props?: ScrollAreaProps) => {
+  const [isTop, setIsTop] = useState(true)
+  const [isBottom, setIsBottom] = useState(false)
+
+  const onScrollTop = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && !isTop) {
+        setIsTop(true)
+      }
+
+      if (!entry.isIntersecting) {
+        setIsTop(false)
+      }
+
+      if (props?.onScrollTop) {
+        props.onScrollTop(entry)
+      }
+    },
+    [isTop, props]
+  )
+
+  const onScrollBottom = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && !isBottom) {
+        setIsBottom(true)
+      }
+
+      if (!entry.isIntersecting) {
+        setIsBottom(false)
+      }
+
+      if (props?.onScrollBottom) {
+        props.onScrollBottom(entry)
+      }
+    },
+    [isBottom, props]
+  )
+
+  // add onScrollLeft and onScrollRight if needed
+
+  return {
+    isTop,
+    isBottom,
+    onScrollTop,
+    onScrollBottom
+  }
+}
+
+export { ScrollArea, useScrollArea }

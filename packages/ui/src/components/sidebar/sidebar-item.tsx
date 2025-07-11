@@ -159,7 +159,6 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withDropdownMenu = !!dropdownMenuContent
     const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
 
-    const iconSize = withDescription ? 'lg' : 'sm'
     const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
       size: 'sm',
       theme: 'info',
@@ -193,13 +192,13 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           </>
         )}
         {withLogo && props.logo && (
-          <LogoV2 name={props.logo} size={iconSize} className="cn-sidebar-item-content-icon" />
+          <LogoV2 name={props.logo} size={withDescription ? 'md' : 'sm'} className="cn-sidebar-item-content-icon" />
         )}
         {withAvatar && (
           <Avatar
             src={props.src}
             name={props.avatarFallback}
-            size={iconSize}
+            size={withDescription ? 'lg' : 'sm'}
             className="cn-sidebar-item-content-icon"
           />
         )}

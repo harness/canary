@@ -6,7 +6,6 @@ import {
   SIDEBAR_COLLAPSED_WIDTH,
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
-  SIDEBAR_KEYBOARD_SHORTCUT,
   SIDEBAR_WIDTH
 } from './sidebar-constants'
 import { useIsMobile } from './use-is-mobile'
@@ -64,18 +63,20 @@ export const SidebarProvider = forwardRef<
     return isMobile ? setOpenMobile(open => !open) : setOpen(open => !open)
   }, [isMobile, setOpen, setOpenMobile])
 
+  // Discussed with @praneshg239, decided to discuss it with the team before implementing.
+  // https://github.com/harness/canary/pull/1799#discussion_r2200474044
   // Adds a keyboard shortcut to toggle the sidebar.
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault()
-        toggleSidebar()
-      }
-    }
+  // useEffect(() => {
+  //   const handleKeyDown = (event: KeyboardEvent) => {
+  //     if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
+  //       event.preventDefault()
+  //       toggleSidebar()
+  //     }
+  //   }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [toggleSidebar])
+  //   window.addEventListener('keydown', handleKeyDown)
+  //   return () => window.removeEventListener('keydown', handleKeyDown)
+  // }, [toggleSidebar])
 
   // We add a state so that we can do data-state="expanded" or "collapsed".
   // This makes it easier to style the sidebar with Tailwind classes.

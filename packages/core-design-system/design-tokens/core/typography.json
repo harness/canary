@@ -296,15 +296,15 @@
     "0": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{fontSize.0}*1.2"
+        "$value": "{fontSize.0}*{lineHeight.multiplier.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{fontSize.0}*1.3"
+        "$value": "{fontSize.0}*{lineHeight.multiplier.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{fontSize.0}*1.4"
+        "$value": "{fontSize.0}*{lineHeight.multiplier.snug}"
       },
       "normal": {
         "$type": "lineHeights",

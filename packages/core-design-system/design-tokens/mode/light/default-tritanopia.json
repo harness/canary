@@ -1903,7 +1903,7 @@
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "2",
+          "spread": "0.8",
           "color": "{bg.1}",
           "type": "dropShadow"
         },
@@ -1911,7 +1911,7 @@
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "4",
+          "spread": "2",
           "color": "{border.accent}",
           "type": "dropShadow"
         }

@@ -69,7 +69,7 @@ export const DrawerRoot = ({
 
   return (
     <DrawerContext.Provider value={{ direction, nested, isParentOpen: isParentOpen || open || isTriggerOpen }}>
-      <RootComponent {...rootProps} container={portalContainer as HTMLElement}>
+      <RootComponent handleOnly {...rootProps} container={portalContainer as HTMLElement}>
         {nested && FakeTriggers}
         {children}
       </RootComponent>

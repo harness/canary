@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, ReactNode, useContext } from 'react'
 
+import { Card } from '@components/card'
 import { IconPropsV2, IconV2 } from '@components/icon-v2'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
@@ -10,42 +11,82 @@ const accordionVariants = cva('cn-accordion', {
     size: {
       sm: '',
       md: 'cn-accordion-md'
+    },
+    variant: {
+      default: '',
+      card: ''
     }
   },
   defaultVariants: {
-    size: 'sm'
+    size: 'sm',
+    variant: 'default'
   }
 })
 
-const AccordionContext = createContext<{ indicatorPosition?: 'right' | 'left' }>({ indicatorPosition: 'right' })
+interface AccordionContextType {
+  indicatorPosition: 'left' | 'right'
+  variant: 'default' | 'card'
+  cardSize?: VariantProps<typeof Card.Root>['size']
+}
+const AccordionContext = createContext<AccordionContextType>({
+  indicatorPosition: 'right',
+  variant: 'default',
+  cardSize: 'md'
+})
 
 type AccordionRootProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> &
   VariantProps<typeof accordionVariants> & {
     onValueChange?: (value: string | string[]) => void
     indicatorPosition?: 'right' | 'left'
+    variant?: 'default' | 'card'
+    cardSize?: VariantProps<typeof Card.Root>['size']
   }
 const AccordionRoot = forwardRef<ElementRef<typeof AccordionPrimitive.Root>, AccordionRootProps>(
-  ({ onValueChange, className, size, children, indicatorPosition, ...props }, ref) => (
-    <AccordionPrimitive.Root
-      ref={ref}
-      {...props}
-      className={cn(accordionVariants({ size }), className)}
-      onValueChange={onValueChange}
-    >
-      <AccordionContext.Provider value={{ indicatorPosition: indicatorPosition ?? 'right' }}>
-        {children}
-      </AccordionContext.Provider>
-    </AccordionPrimitive.Root>
-  )
+  (
+    {
+      size,
+      variant = 'default',
+      className,
+      onValueChange,
+      indicatorPosition = 'right',
+      children,
+      cardSize = 'md',
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <AccordionPrimitive.Root
+        ref={ref}
+        {...props}
+        className={cn(accordionVariants({ size }), className)}
+        onValueChange={onValueChange}
+      >
+        <AccordionContext.Provider value={{ indicatorPosition, variant, cardSize }}>
+          {children}
+        </AccordionContext.Provider>
+      </AccordionPrimitive.Root>
+    )
+  }
 )
 AccordionRoot.displayName = 'AccordionRoot'
 
 type AccordionItemProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
-
 const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, AccordionItemProps>(
-  ({ className, ...props }, ref) => (
-    <AccordionPrimitive.Item ref={ref} className={cn('cn-accordion-item', className)} {...props} />
-  )
+  ({ className, ...props }, ref) => {
+    const { variant, cardSize } = useContext(AccordionContext)
+
+    if (variant === 'card') {
+      return (
+        <Card.Root size={cardSize} className="w-full mb-2">
+          <AccordionPrimitive.Item ref={ref} className="w-full" {...props} />
+        </Card.Root>
+      )
+    }
+
+    // fallback: plain accordion-item
+    return <AccordionPrimitive.Item ref={ref} className={cn('cn-accordion-item', className)} {...props} />
+  }
 )
 AccordionItem.displayName = 'AccordionItem'
 

@@ -63,6 +63,24 @@ import { DocsPage } from "@/components/docs-page";
 
     <hr className="border-dashed" />
 
+        <div>
+        <h5>Card Variant</h5>
+        <Accordion.Root type="single" collapsible indicatorPosition="left" variant="card" cardSize="sm">
+            <Accordion.Item value="item1">
+                <Accordion.Trigger suffix="3 items" prefix={<IconV2 name="info-circle" size="md" />}>
+                  Item 1
+                </Accordion.Trigger>
+                <Accordion.Content>
+                    <p>This is the content of item 1</p>
+                    <p>This is the content of item 1</p>
+                    <p>This is the content of item 1</p>
+                </Accordion.Content>
+            </Accordion.Item>
+        </Accordion.Root>
+    </div>
+
+    <hr className="border-dashed" />
+
     <div>
         <h5>Multiple (size md)</h5>
         <Accordion.Root type="multiple" defaultValue={["item1", "item3"]} size="md">

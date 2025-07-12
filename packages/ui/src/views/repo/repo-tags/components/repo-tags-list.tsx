@@ -112,7 +112,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Text color="foreground-3" className="line-clamp-3 break-all">
+              <Text color="foreground-3" className="line-clamp-3">
                 {tag?.message}
               </Text>
             </Table.Cell>

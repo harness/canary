@@ -1,4 +1,4 @@
-import { Accordion, IconV2, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, IconV2, Layout, StackedList, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
@@ -48,12 +48,14 @@ const PullRequestCheckSection = ({
   return !isEmpty(checkData) ? (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger className="py-3">
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
-          description={<LineDescription text={checksInfo.content} />}
-        />
-        <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
+            description={<LineDescription text={checksInfo.content} />}
+          />
+          <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        </Layout.Flex>
       </Accordion.Trigger>
       <Accordion.Content className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
         {checkData.map(check => {
@@ -172,5 +174,7 @@ const PullRequestCheckSection = ({
     </Accordion.Item>
   ) : null
 }
+
+PullRequestCheckSection.displayName = 'PullRequestCheckSection'
 
 export default PullRequestCheckSection

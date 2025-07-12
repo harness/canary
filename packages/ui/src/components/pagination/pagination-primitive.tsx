@@ -85,6 +85,7 @@ const PaginationPrimitiveLink = ({
       data-disabled={disabled}
       aria-disabled={disabled}
       aria-current={isActive ? 'page' : undefined}
+      onClick={disabled ? e => e.preventDefault() : undefined}
       {...props}
     >
       {children}

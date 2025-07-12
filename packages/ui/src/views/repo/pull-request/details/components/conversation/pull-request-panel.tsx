@@ -475,4 +475,6 @@ const PullRequestPanel = ({
   )
 }
 
+PullRequestPanel.displayName = 'PullRequestPanel'
+
 export { PullRequestPanel }

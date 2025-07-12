@@ -160,7 +160,6 @@
     "security": "Sécurité",
     "secretScanning": "Analyse des secrets",
     "secretScanningDescription": "Empêcher les commits contenant des secrets comme les mots de passe ou jetons API.",
-    "codeAutomation": "Automatisation du code",
     "webhooks": "Webhooks",
     "labels": "Labels",
     "cloneRepo": "Cloner le dépôt",
@@ -614,6 +613,7 @@
     "edit": "Edit rule",
     "delete": "Delete rule"
   },
+  "code": "Code",
   "createTagDialog": {
     "validation": {
       "message": "Description is required"

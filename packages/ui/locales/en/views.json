@@ -160,7 +160,6 @@
     "security": "Security",
     "secretScanning": "Secret scanning",
     "secretScanningDescription": "Block commits containing secrets like passwords, API keys and tokens.",
-    "codeAutomation": "Code and automation",
     "webhooks": "Webhooks",
     "labels": "Labels",
     "cloneRepo": "Clone repository",
@@ -629,6 +628,7 @@
     "exclude": "Exclude",
     "include": "Include"
   },
+  "code": "Code",
   "createTagDialog": {
     "validation": {
       "message": "Description is required"

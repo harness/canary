@@ -34,7 +34,7 @@ const useMemberListStore = () => {
         role: 'space_owner',
         email: 'test@test.com',
         avatarUrl: '',
-        timestamp: '2 hours ago',
+        timestamp: 'Aug 30, 2023',
         uid: 'test1'
       },
       {

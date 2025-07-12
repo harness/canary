@@ -1,8 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Button, ListActions, Spacer, StatusBadge, Text } from '@/components'
+import { Button, ListActions, Spacer, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { ModeType, useTheme, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { SandboxLayout, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
 
@@ -124,7 +123,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
             <Text color="foreground-3" className="flex items-center">
               At:
             </Text>
-            <Text>{timeAgo(execution?.created)}</Text>
+            <TimeAgoCard timestamp={execution?.created} />
           </div>
           <div className="flex gap-1">
             <Text color="foreground-3">Duration:</Text>

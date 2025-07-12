@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Avatar, Button, DropdownMenu, IconV2, MarkdownViewer, Text } from '@/components'
-import { timeAgo } from '@/utils'
+import { Avatar, Button, DropdownMenu, IconV2, MarkdownViewer, Text, TimeAgoCard } from '@/components'
 import { HandleUploadType } from '@/views'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
@@ -28,10 +27,8 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   title,
   handleUpload
 }) => {
-  // Format the parsed date as relative time from now
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
-  const formattedTime = timeAgo(createdAt || 0)
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
@@ -65,7 +62,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
             <span className="flex gap-x-1">
               created pull request
               <span className="text-cn-foreground-1">{prNum}</span>
-              {formattedTime}
+              <TimeAgoCard timestamp={createdAt} />
             </span>
           )
         }

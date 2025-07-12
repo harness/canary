@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Layout } from '@/components'
+import { Avatar, Layout, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -450,7 +449,7 @@ const PullRequestDiffViewer = ({
                           name: parent.author,
                           description: (
                             <Layout.Horizontal className="text-cn-foreground-2">
-                              <span>{timeAgo(parent?.created as number)}</span>
+                              <TimeAgoCard timestamp={parent?.created} />
                               {parent?.deleted ? (
                                 <>
                                   <span>&nbsp;|&nbsp;</span>
@@ -529,7 +528,7 @@ const PullRequestDiffViewer = ({
                                   name: reply.author,
                                   description: (
                                     <Layout.Horizontal className="text-cn-foreground-2">
-                                      <span>{timeAgo(reply?.created as number)}</span>
+                                      <TimeAgoCard timestamp={reply?.created} />
                                       {reply?.deleted ? (
                                         <>
                                           <span>&nbsp;|&nbsp;</span>

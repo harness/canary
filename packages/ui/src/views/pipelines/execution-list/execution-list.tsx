@@ -1,6 +1,6 @@
-import { IconV2, NoData, SkeletonList, StackedList } from '@/components'
+import { IconV2, NoData, SkeletonList, StackedList, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo, timeDistance } from '@/utils'
+import { timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
 
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
@@ -102,7 +102,7 @@ export const ExecutionList = ({
             />
             <StackedList.Field
               title={`${timeDistance(execution.finished, execution.started)}`}
-              description={`${timeAgo(execution.started)}`}
+              description={<TimeAgoCard timestamp={execution.started} />}
               right
               label
               secondary

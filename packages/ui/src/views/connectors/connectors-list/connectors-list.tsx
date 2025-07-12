@@ -10,10 +10,10 @@ import {
   SkeletonTable,
   Table,
   Text,
+  TimeAgoCard,
   Tooltip
 } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
@@ -150,7 +150,9 @@ export function ConnectorsList({
                     />
                   ) : null}
                 </Table.Cell>
-                <Table.Cell className="content-center">{lastModifiedAt ? timeAgo(lastModifiedAt) : null}</Table.Cell>
+                <Table.Cell className="content-center">
+                  {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
+                </Table.Cell>
                 <Table.Cell className="content-center !p-1.5">
                   <Button
                     size="sm"

@@ -42,7 +42,6 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       reviewRequired: !item?.is_draft,
       sourceBranch: item?.source_branch,
       targetBranch: item?.target_branch,
-      // TODO: fix 2 hours ago in timestamp
       timestamp: item?.created ? new Date(item.created).toISOString() : '',
       comments: item?.stats?.conversations,
       state: item?.state,

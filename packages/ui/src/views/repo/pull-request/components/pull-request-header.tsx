@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Separator, StatusBadge, Tag } from '@/components'
+import { Button, IconV2, Separator, StatusBadge, Tag, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
-import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 
 import { getPrState } from '../utils'
@@ -49,9 +48,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 }) => {
   const { Link } = useRouterContext()
   const [isEditing, setIsEditing] = useState(false)
-
-  // Format the parsed date as relative time from now
-  const formattedTime = timeAgo(created || 0)
 
   const stateObject = getPrState(is_draft, merged, state)
 
@@ -108,7 +104,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               <Tag variant="secondary" icon="git-branch" size="sm" value={source_branch || ''} showIcon />
             </Link>
             <span className="mx-1.5 h-4 w-px bg-cn-background-3" />
-            <span className="text-cn-foreground-2">{formattedTime}</span>
+            <TimeAgoCard timestamp={created} />
           </div>
         </div>
       </div>

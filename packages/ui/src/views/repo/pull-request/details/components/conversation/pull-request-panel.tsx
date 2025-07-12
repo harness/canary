@@ -13,10 +13,10 @@ import {
   StackedList,
   StatusBadge,
   Text,
+  TimeAgoCard,
   type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
-import { timeAgo } from '@/utils'
 import {
   EnumCheckStatus,
   extractInfoFromRuleViolationArr,
@@ -54,9 +54,6 @@ interface HeaderProps {
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
   if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
-    // Format the parsed date as relative time from now
-    const formattedTime = timeAgo(props?.pullReqMetadata?.merged || 0)
-
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
@@ -69,7 +66,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.target_branch}
             </StatusBadge>
-            <span>{formattedTime}</span>
+            <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
           {props.showDeleteBranchButton ? (
             <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>

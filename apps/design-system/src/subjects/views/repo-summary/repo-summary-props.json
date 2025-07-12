@@ -1378,7 +1378,7 @@
       "type": 0,
       "name": "apps",
       "lastCommitMessage": "fix: branch/gitRef normalization from routes (#505)",
-      "timestamp": "3 hours ago",
+      "timestamp": "Nov 14, 2024",
       "user": {
         "name": "Shaurya Kalia"
       },
@@ -1414,7 +1414,7 @@
       "type": 0,
       "name": "packages",
       "lastCommitMessage": "fix: branch/gitRef normalization from routes (#505)",
-      "timestamp": "3 hours ago",
+      "timestamp": "Nov 14, 2024",
       "user": {
         "name": "Shaurya Kalia"
       },
@@ -1460,7 +1460,7 @@
   "latestCommitInfo": {
     "userName": "Shaurya Kalia",
     "message": "fix: branch/gitRef normalization from routes (#505)",
-    "timestamp": "3 hours ago",
+    "timestamp": "Nov 14, 2024",
     "sha": "ec92d11"
   },
   "isEditingDescription": false,

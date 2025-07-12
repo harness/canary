@@ -1,6 +1,5 @@
-import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/index'
 
@@ -72,8 +71,13 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
                 <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="my-2 block max-w-80 content-center items-center truncate p-2.5 font-medium text-cn-foreground-3">
-                  {activityTime ? timeAgo(activityTime) : null}
+                <Table.Cell className="my-2 block max-w-80 content-center items-center p-2.5">
+                  {activityTime ? (
+                    <TimeAgoCard
+                      timestamp={activityTime}
+                      textProps={{ variant: 'body-strong', color: 'foreground-3', truncate: true }}
+                    />
+                  ) : null}
                 </Table.Cell>
 
                 <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">

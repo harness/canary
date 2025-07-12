@@ -1,8 +1,18 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, Button, CommitCopyActions, IconV2, Layout, NodeGroup, StackedList, Text } from '@/components'
+import {
+  Avatar,
+  Button,
+  CommitCopyActions,
+  IconV2,
+  Layout,
+  NodeGroup,
+  StackedList,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useRouterContext } from '@/context'
-import { formatDate, timeAgo } from '@/utils'
+import { formatDate } from '@/utils'
 import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
@@ -81,7 +91,14 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <div className="flex items-center gap-x-1.5">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
                               <Text color="foreground-3">{authorName || ''}</Text>
-                              <Text color="foreground-4">committed on {timeAgo(when, { dateStyle: 'medium' })}</Text>
+                              <Text color="foreground-4">
+                                committed on{' '}
+                                <TimeAgoCard
+                                  timestamp={when}
+                                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                                  textProps={{ color: 'foreground-4' }}
+                                />
+                              </Text>
                             </div>
                           </Layout.Vertical>
                         </Link>

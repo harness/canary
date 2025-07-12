@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { KeysList } from '../types'
 
@@ -48,7 +47,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
                   </div>
                 </Table.Cell>
                 <Table.Cell className="h-1 content-center">
-                  <span className="text-cn-foreground-1">{timeAgo(new Date(key.created!).getTime())}</span>
+                  <TimeAgoCard timestamp={new Date(key.created!).getTime()} textProps={{ color: 'foreground-1' }} />
                 </Table.Cell>
                 <Table.Cell className="h-1 content-center">
                   {/* TODO: pass the data to KeysList item about last used date */}

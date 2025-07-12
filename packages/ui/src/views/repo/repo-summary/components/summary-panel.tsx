@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconPropsV2, IconV2, Spacer, Tag, Text } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconPropsV2, IconV2, Spacer, Tag, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -68,7 +67,9 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!timestamp?.length && (
           <>
             <Spacer size={2} />
-            <Text as="span">Created {timeAgo(timestamp, { dateStyle: 'medium' })}</Text>
+            <Text as="span">
+              Created <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+            </Text>
           </>
         )}
         <Spacer size={3} />

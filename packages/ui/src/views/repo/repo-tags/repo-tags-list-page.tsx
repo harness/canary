@@ -20,11 +20,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   const { t } = useTranslation()
   const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
 
-  console.log('xNextPage', xNextPage)
-  console.log('xPrevPage', xPrevPage)
-
-
-
   const handleSearchChange = useCallback(
     (value: string) => {
       setPage(1)

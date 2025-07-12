@@ -34,11 +34,17 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
-import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-
-// import { useRepoBranchesStore } from './stores/repo-branches-store'
+import {
+  decodeGitContent,
+  getTrimmedSha,
+  isRefATag,
+  normalizeGitRef,
+  REFS_BRANCH_PREFIX,
+  REFS_TAGS_PREFIX
+} from '../../utils/git-utils'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -47,10 +53,9 @@ export default function RepoSummaryPage() {
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
   const { spaceId, repoId } = useParams<PathParams>()
-  const [gitRef, setGitRef] = useState<string>('')
+  const { fullGitRef, gitRefName } = useCodePathDetails()
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [tokenGenerationError, setTokenGenerationError] = useState<string | null>(null)
 
@@ -59,6 +64,9 @@ export default function RepoSummaryPage() {
   const { customHooks, customUtils } = useMFEContext()
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
+
+  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const effectiveGitRefName = gitRefName || repository?.default_branch || ''
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -119,33 +127,30 @@ export default function RepoSummaryPage() {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        setGitRef(branchTagName.name)
-        setSelectedBranchOrTag(branchTagName)
-        setPreSelectedTab(BranchSelectorTab.BRANCHES)
-      } else if (type === BranchSelectorTab.TAGS) {
-        setGitRef(`${REFS_TAGS_PREFIX + branchTagName.name}`)
-        setSelectedBranchOrTag(branchTagName)
-        setPreSelectedTab(BranchSelectorTab.TAGS)
-      }
+      const newRef =
+        type === BranchSelectorTab.TAGS
+          ? `${REFS_TAGS_PREFIX + branchTagName.name}`
+          : `${REFS_BRANCH_PREFIX + branchTagName.name}`
+      setPreSelectedTab(type)
+      navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${newRef}`)
     },
-    [navigate, repoId, spaceId]
+    [navigate, repoId, spaceId, routes]
   )
 
   useEffect(() => {
-    if (selectedBranchOrTag?.name) {
+    if (gitRefName) {
       calculateDivergence({
         body: {
-          requests: [{ from: selectedBranchOrTag.name, to: repository?.default_branch }]
+          requests: [{ from: gitRefName, to: repository?.default_branch }]
         }
       })
     }
-  }, [calculateDivergence, repository?.default_branch, selectedBranchOrTag?.name])
+  }, [calculateDivergence, repository?.default_branch, gitRefName])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(effectiveGitRef) }
   })
 
   const decodedReadmeContent = useMemo(() => {
@@ -155,7 +160,7 @@ export default function RepoSummaryPage() {
   const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(effectiveGitRef) }
   })
 
   const { mutate: createToken } = useCreateTokenMutation(
@@ -232,7 +237,7 @@ export default function RepoSummaryPage() {
     setLoading(true)
 
     pathDetails({
-      queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) },
+      queryParams: { git_ref: normalizeGitRef(effectiveGitRef) },
       body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
       repo_ref: repoRef
     })
@@ -248,7 +253,7 @@ export default function RepoSummaryPage() {
                 timestamp: item?.last_commit?.author?.when ?? '',
                 user: { name: item?.last_commit?.author?.identity?.name || '' },
                 sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
+                path: `${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${item?.path}`
               }))
             )
           )
@@ -258,20 +263,20 @@ export default function RepoSummaryPage() {
       .finally(() => {
         setLoading(false)
       })
-  }, [repoEntryPathToFileTypeMap, selectedBranchOrTag?.name, repoRef, gitRef])
+  }, [repoEntryPathToFileTypeMap, repoRef, fullGitRef])
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchOrTag?.name) }
+    queryParams: { git_ref: normalizeGitRef(fullGitRef || '') }
   })
 
   const filesList = filesData?.body?.files || []
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchOrTag?.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${filePath}`)
     },
-    [gitRef, selectedBranchOrTag, navigate, repoId, spaceId]
+    [effectiveGitRef, navigate, repoId, spaceId]
   )
 
   const latestCommitInfo = useMemo(() => {
@@ -301,7 +306,7 @@ export default function RepoSummaryPage() {
       <RepoSummaryView
         repoId={repoId ?? ''}
         spaceId={spaceId ?? ''}
-        selectedBranchOrTag={selectedBranchOrTag}
+        selectedBranchOrTag={{ name: effectiveGitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
         loading={isLoading}
         filesList={filesList}
@@ -312,7 +317,7 @@ export default function RepoSummaryPage() {
         files={files}
         decodedReadmeContent={decodedReadmeContent}
         summaryDetails={summaryDetails}
-        gitRef={gitRef}
+        gitRef={fullGitRef}
         latestCommitInfo={latestCommitInfo}
         saveDescription={saveDescription}
         updateRepoError={updateError}
@@ -328,13 +333,17 @@ export default function RepoSummaryPage() {
         branchSelectorRenderer={
           <BranchSelectorContainer
             onSelectBranchorTag={selectBranchOrTag}
-            selectedBranch={selectedBranchOrTag}
+            selectedBranch={{ name: effectiveGitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
             preSelectedTab={preSelectedTab}
           />
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
-        toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: selectedBranchOrTag?.name })}
+        toRepoCommits={() => {
+          return isRefATag(effectiveGitRef)
+            ? routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(effectiveGitRefName) })
+            : routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(effectiveGitRefName) })
+        }}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}

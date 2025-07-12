@@ -12,6 +12,7 @@ import { useCommitDetailsStore } from './stores/commit-details-store'
 export default function RepoCommitDetailsPage({ showSidebar = true }: { showSidebar?: boolean }) {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
+  console.log('commitSHA', commitSHA)
   const { setCommitData } = useCommitDetailsStore()
   const routes = useRoutes()
   const { repoId, spaceId } = useParams<PathParams>()

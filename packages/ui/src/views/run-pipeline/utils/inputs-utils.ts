@@ -162,35 +162,39 @@ export function pipelineInput2FormInput(
   options: { prefix?: string },
   inputComponentFactory: InputFactory
 ): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
-  const inputType = pipelineInputType2FormInputType(inputProps.type, inputProps?.ui, inputComponentFactory)
+  const inputType = pipelineInputType2FormInputType(inputProps.type, inputProps.ui, inputComponentFactory)
+
+  // base inputConfig
+  const baseConfig: Record<string, any> = {
+    ...(inputProps.ui ? inputProps.ui : {}),
+    options: inputProps.options
+  }
+
+  // special handling for each inputTypes
+  const { inputType: transformedType, inputConfig } = transformInputConfig(inputType, inputProps, baseConfig)
 
   return {
-    inputType,
-    path: options.prefix + name,
+    inputType: transformedType,
+    path: (options.prefix || '') + name,
     label: typeof inputProps.label === 'string' ? inputProps.label : name,
     default: inputProps.default,
-    required: inputProps.required as boolean,
+    required: Boolean(inputProps.required),
     placeholder: inputProps.ui?.placeholder || '',
-    isVisible: function (values) {
+    description: inputProps.description,
+    isVisible: function (values: any) {
       try {
         if (typeof inputProps.ui?.visible === 'string') {
-          const unwrapped = getCorrectParserWithString(inputProps.ui?.visible)
+          const unwrapped = getCorrectParserWithString(inputProps.ui.visible)
           return unwrapped.kind === PARSERTYPES.CEL ? (evaluate(unwrapped.inner, values?.inputs) as boolean) : true
-        } else return true
+        }
+        return true
       } catch (e) {
         console.error(`Error evaluating isVisible for input ${name}`, e)
-        return false // or return true, depending on your requirements
+        return false
       }
     },
-    inputConfig: {
-      ...(inputProps.description ? { tooltip: inputProps.description as string } : {}),
-      ...(inputProps?.ui ? inputProps.ui : {}),
-      // special handling for select dropdown items
-      ...(inputType === 'select'
-        ? { options: inputProps?.options?.map(option => ({ label: option, value: option })) }
-        : {})
-    },
-    outputTransform: inputType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
+    inputConfig,
+    outputTransform: transformedType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'
       ? {
           validation: {
@@ -198,13 +202,43 @@ export function pipelineInput2FormInput(
               .any()
               .optional()
               .refine(
-                value => new RegExp(inputProps.pattern as string).test(value ?? ''),
+                (value: any) => new RegExp(inputProps.pattern as string).test(value ?? ''),
                 `Value does not match ${inputProps.pattern} pattern`
               )
           }
         }
       : {})
   }
+}
+
+export function transformInputConfig(
+  originalType: string,
+  inputProps: PipelineInputDefinition,
+  baseConfig: Record<string, any>
+): { inputType: string; inputConfig: Record<string, any> } {
+  let inputType = originalType
+  const sourceOptions = inputProps.options ?? inputProps.enum ?? inputProps.items
+
+  // use source options if ui.options is not defined
+  if (Array.isArray(sourceOptions) && sourceOptions.length > 0 && !baseConfig.ui?.options?.length) {
+    if (inputType === 'text' || inputType == 'select') {
+      // convert text to select when options are provided
+      inputType = 'select'
+      baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
+    } else if (inputType == 'multiselect') {
+      baseConfig.options = sourceOptions.map(option => ({ id: option, key: option }))
+    } else if (inputType == 'cards' || inputType == 'choice') {
+      // convert choice to cards with options
+      inputType = 'cards'
+      baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
+    }
+  }
+
+  if (inputType === 'connector') {
+    baseConfig.connectorTypes = inputProps.oneof
+  }
+
+  return { inputType, inputConfig: baseConfig }
 }
 
 /** pipeline input ui component / input type to form input type conversion */
@@ -223,6 +257,10 @@ function convertTypeToDefaultInputType(type: string): string {
   switch (type) {
     case 'string':
       return 'text'
+    case 'choice':
+      return 'cards'
+    case 'secret':
+      return 'secret-select'
     default:
       return type
   }

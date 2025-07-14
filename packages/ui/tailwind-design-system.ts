@@ -3,46 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import {
-  accordionStyles,
-  alertStyles,
-  avatarStyles,
-  badgeStyles,
-  breadcrumbStyles,
-  buttonGroupStyle,
-  buttonLayoutStyles,
-  buttonStyles,
-  captionStyles,
-  cardSelectStyles,
-  cardStyles,
-  checkboxStyles,
-  dialogStyles,
-  drawerStyles,
-  dropdownStyles,
-  formSharedStyles,
-  iconsAndLogos,
-  inputStyles,
-  labelStyles,
-  linkStyles,
-  multiSelectStyles,
-  paginationStyles,
-  popoverStyles,
-  progressStyles,
-  radioStyles,
-  scrollAreaStyles,
-  selectStyles,
-  shortcutStyle,
-  sidebarStyles,
-  switchStyles,
-  tableV2Styles,
-  tabsStyles,
-  tagStyles,
-  textareaStyles,
-  timeAgoCardStyles,
-  toggleGroupStyles,
-  toggleStyles,
-  tooltipStyles
-} from './tailwind-utils-config/components'
+import { ComponentStyles } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -428,48 +389,7 @@ export default {
       addUtilities(typographyStyles)
     }),
     plugin(({ addComponents }) => {
-      addComponents([
-        accordionStyles,
-        alertStyles,
-        badgeStyles,
-        buttonStyles,
-        dropdownStyles,
-        switchStyles,
-        labelStyles,
-        tagStyles,
-        linkStyles,
-        avatarStyles,
-        cardStyles,
-        cardSelectStyles,
-        paginationStyles,
-        progressStyles,
-        drawerStyles,
-        buttonLayoutStyles,
-        tabsStyles,
-        dialogStyles,
-        scrollAreaStyles,
-        popoverStyles,
-        tooltipStyles,
-        sidebarStyles,
-        breadcrumbStyles,
-        iconsAndLogos,
-        timeAgoCardStyles,
-        shortcutStyle,
-        toggleStyles,
-        toggleGroupStyles,
-        buttonGroupStyle,
-
-        // Form styles
-        selectStyles,
-        formSharedStyles,
-        checkboxStyles,
-        radioStyles,
-        textareaStyles,
-        inputStyles,
-        captionStyles,
-        multiSelectStyles,
-        tableV2Styles
-      ])
+      addComponents(ComponentStyles)
     }),
     tailwindcssAnimate,
     typography,

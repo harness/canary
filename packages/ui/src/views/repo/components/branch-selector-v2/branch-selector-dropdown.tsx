@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Link, SearchInput, StatusBadge, Tabs } from '@/components'
+import { Button, DropdownMenu, Link, ScrollArea, SearchInput, StatusBadge, Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 
@@ -105,30 +105,33 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         </DropdownMenu.Slot>
       )}
 
-      {!!filteredItems.length &&
-        filteredItems.map(item => {
-          const isSelected = selectedBranch ? item.name === selectedBranch.name : false
-          const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
+      {!!filteredItems.length && (
+        <ScrollArea className="max-h-44">
+          {filteredItems.map(item => {
+            const isSelected = selectedBranch ? item.name === selectedBranch.name : false
+            const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
 
-          return (
-            <DropdownMenu.Item
-              onClick={() => onSelectBranch?.(item, activeTab)}
-              key={item.name}
-              title={
-                <div className="flex w-full items-center justify-between gap-x-2">
-                  {item.name}
+            return (
+              <DropdownMenu.Item
+                onClick={() => onSelectBranch?.(item, activeTab)}
+                key={item.name}
+                title={
+                  <div className="flex w-full items-center justify-between gap-x-2">
+                    {item.name}
 
-                  {isDefault && (
-                    <StatusBadge variant="outline" theme="muted" size="sm">
-                      {t('views:repos.default', 'Default')}
-                    </StatusBadge>
-                  )}
-                </div>
-              }
-              checkmark={isSelected}
-            />
-          )
-        })}
+                    {isDefault && (
+                      <StatusBadge variant="outline" theme="muted" size="sm">
+                        {t('views:repos.default', 'Default')}
+                      </StatusBadge>
+                    )}
+                  </div>
+                }
+                checkmark={isSelected}
+              />
+            )
+          })}
+        </ScrollArea>
+      )}
 
       <DropdownMenu.Footer>
         <Link to={viewAllUrl} variant="secondary" className="w-full">

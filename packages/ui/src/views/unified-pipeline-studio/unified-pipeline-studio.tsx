@@ -62,7 +62,6 @@ export interface UnifiedPipelineStudioProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
-  enableSplitView?: boolean
   stageFormDefinition?: IFormDefinition
   pipelineFormDefinition?: IFormDefinition
 }
@@ -94,7 +93,6 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
     hideSaveBtn,
     yamlParserOptions,
     lastCommitInfo,
-    enableSplitView,
     stageFormDefinition,
     pipelineFormDefinition
   } = props
@@ -127,7 +125,6 @@ export const UnifiedPipelineStudio = (props: UnifiedPipelineStudioProps): JSX.El
       hideSaveBtn={hideSaveBtn}
       yamlParserOptions={yamlParserOptions}
       lastCommitInfo={lastCommitInfo}
-      enableSplitView={enableSplitView}
       stageFormDefinition={stageFormDefinition}
       pipelineFormDefinition={pipelineFormDefinition}
     >

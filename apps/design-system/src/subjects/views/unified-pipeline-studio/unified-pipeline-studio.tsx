@@ -47,7 +47,6 @@ const PipelineStudioViewWrapper = () => {
         setView={setView}
         view={view}
         onRun={() => setRunPipelineOpen(true)}
-        enableSplitView={true}
       />
       <Drawer.Root
         open={runPipelineOpen}

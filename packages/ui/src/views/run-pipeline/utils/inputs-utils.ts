@@ -227,7 +227,7 @@ export function transformInputConfig(
       baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
     } else if (inputType == 'multiselect') {
       baseConfig.options = sourceOptions.map(option => ({ id: option, key: option }))
-    } else if (inputType == 'cards' || inputType === 'choice') {
+    } else if (inputType == 'cards' || inputType == 'choice') {
       // convert choice to cards with options
       inputType = 'cards'
       baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
@@ -257,6 +257,10 @@ function convertTypeToDefaultInputType(type: string): string {
   switch (type) {
     case 'string':
       return 'text'
+    case 'choice':
+      return 'cards'
+    case 'secret':
+      return 'secret-select'
     default:
       return type
   }

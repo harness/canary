@@ -52,7 +52,9 @@ export const RepoSubheader = ({ showPipelinesTab = true, className, onTabClick }
           >
             {t('views:repos.files', 'Files')}
           </Tabs.Trigger>
-          {showPipelinesTab && <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>}
+          {showPipelinesTab && (
+            <Tabs.Trigger value={RepoTabsKeys.PIPELINES}>{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>
+          )}
           <Tabs.Trigger
             value={RepoTabsKeys.COMMITS}
             onClick={e => {

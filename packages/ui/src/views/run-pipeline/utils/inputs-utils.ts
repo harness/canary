@@ -227,7 +227,7 @@ export function transformInputConfig(
       baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
     } else if (inputType == 'multiselect') {
       baseConfig.options = sourceOptions.map(option => ({ id: option, key: option }))
-    } else if (inputType == 'cards') {
+    } else if (inputType == 'cards' || inputType === 'choice') {
       baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
     }
   }

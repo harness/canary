@@ -52,7 +52,7 @@ export interface PipelineInput {
    */
   label?: string
 
-  oneOf?: any[]
+  oneof?: any[]
 }
 
 export interface PipelineInputDefinition extends PipelineInput {

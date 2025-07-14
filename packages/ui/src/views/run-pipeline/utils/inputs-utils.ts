@@ -233,8 +233,9 @@ export function transformInputConfig(
   }
 
   if (inputType === 'connector') {
-    baseConfig.connectorTypes = inputProps.oneOf
+    baseConfig.connectorTypes = inputProps.oneof
   }
+
   return { inputType, inputConfig: baseConfig }
 }
 

@@ -13,7 +13,7 @@ export const UnifiedPipelineStepDrawer = () => {
 
   const isDirtyRef = useRef<boolean>()
 
-  const { show } = useExitConfirm()
+  useExitConfirm()
 
   const handleClose = () => {
     setRightDrawer(RightDrawer.None)
@@ -44,15 +44,20 @@ export const UnifiedPipelineStepDrawer = () => {
         open={rightDrawer === RightDrawer.Form}
         onOpenChange={open => {
           if (!open) {
-            if (isDirtyRef.current) {
-              show({
-                onConfirm: () => {
-                  handleClose()
-                }
-              })
-            } else {
-              handleClose()
-            }
+            /**
+             * @todo: This currently triggers even when closing the drawer without any unsaved changes. Needs a proper fix.
+             */
+            // if (isDirtyRef.current) {
+            //   show({
+            //     onConfirm: () => {
+            //       handleClose()
+            //     }
+            //   })
+            // }
+            // else
+            // {
+            handleClose()
+            // }
           }
         }}
       >

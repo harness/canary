@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery } from '@harnessio/code-service-client'
-import { RepoSubheader } from '@harnessio/ui/components'
+import { RepoSubheader, RepoTabsKeys } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -30,12 +30,12 @@ const RepoLayout = () => {
       <SubHeaderWrapper>
         <RepoSubheader
           showPipelinesTab={!isMFE}
-          onTabClick={(tab: 'summary' | 'code' | 'commits') => {
-            if (tab === 'code') {
+          onTabClick={(tab: RepoTabsKeys) => {
+            if (tab === RepoTabsKeys.CODE) {
               navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}`)
-            } else if (tab === 'summary') {
+            } else if (tab === RepoTabsKeys.SUMMARY) {
               navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${effectiveGitRef}`)
-            } else if (tab === 'commits') {
+            } else if (tab === RepoTabsKeys.COMMITS) {
               isRefATag(effectiveGitRef)
                 ? navigate(routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(effectiveGitRefName) }))
                 : navigate(

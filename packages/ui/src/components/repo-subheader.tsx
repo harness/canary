@@ -7,6 +7,7 @@ export enum RepoTabsKeys {
   CODE = 'code',
   PIPELINES = 'pipelines',
   COMMITS = 'commits',
+  TAGS = 'tags',
   PULLS = 'pulls',
   BRANCHES = 'branches',
   SETTINGS = 'settings'
@@ -17,13 +18,13 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 interface RepoSubheaderProps {
   className?: string
   showPipelinesTab?: boolean
-  onTabClick?: (tab: 'summary' | 'code' | 'commits') => void
+  onTabClick?: (tab: RepoTabsKeys) => void
 }
 
 export const RepoSubheader = ({ showPipelinesTab = true, className, onTabClick }: RepoSubheaderProps) => {
   const { t } = useTranslation()
 
-  const handleTabClick = (value: 'summary' | 'code' | 'commits') => {
+  const handleTabClick = (value: RepoTabsKeys) => {
     if (onTabClick) {
       onTabClick(value)
     }
@@ -34,37 +35,37 @@ export const RepoSubheader = ({ showPipelinesTab = true, className, onTabClick }
       <Tabs.NavRoot>
         <Tabs.List className="border-b border-cn-borders-3 px-6">
           <Tabs.Trigger
-            value="summary"
+            value={RepoTabsKeys.SUMMARY}
             onClick={e => {
               e.preventDefault()
-              handleTabClick('summary')
+              handleTabClick(RepoTabsKeys.SUMMARY)
             }}
           >
             {t('views:repos.summary', 'Summary')}
           </Tabs.Trigger>
           <Tabs.Trigger
-            value="code"
+            value={RepoTabsKeys.CODE}
             onClick={e => {
               e.preventDefault()
-              handleTabClick('code')
+              handleTabClick(RepoTabsKeys.CODE)
             }}
           >
             {t('views:repos.files', 'Files')}
           </Tabs.Trigger>
           {showPipelinesTab && <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>}
           <Tabs.Trigger
-            value="commits"
+            value={RepoTabsKeys.COMMITS}
             onClick={e => {
               e.preventDefault()
-              handleTabClick('commits')
+              handleTabClick(RepoTabsKeys.COMMITS)
             }}
           >
             {t('views:repos.commits', 'Commits')}
           </Tabs.Trigger>
-          <Tabs.Trigger value="tags">{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
-          <Tabs.Trigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
-          <Tabs.Trigger value="branches">{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
-          <Tabs.Trigger value="settings">{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.PULLS}>{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.BRANCHES}>{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.SETTINGS}>{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
         </Tabs.List>
       </Tabs.NavRoot>
     </SandboxLayout.SubHeader>

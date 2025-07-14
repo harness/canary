@@ -191,7 +191,7 @@ interface TabsTriggerComponent {
 }
 
 const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTriggerProps>((props, ref) => {
-  const { className, children, value, icon, logo, counter, ...restProps } = props
+  const { className, children, value, icon, logo, counter, onClick, ...restProps } = props
   const { variant, activeClassName } = useContext(TabsListContext)
   const { type, activeTabValue, onValueChange } = useContext(TabsContext)
   const { NavLink } = useRouterContext()
@@ -211,8 +211,9 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   if (type === 'tabsnav') {
     const { linkProps, ..._restProps } = restProps as TabsTriggerLinkProps
 
-    const handleClick = () => {
+    const handleClick = (e: any) => {
       onValueChange?.(value)
+      onClick?.(e)
     }
 
     return (

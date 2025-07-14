@@ -1,6 +1,5 @@
-import { IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table } from '@/components'
+import { IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { defaultTo } from 'lodash-es'
 
@@ -74,7 +73,7 @@ export function DelegateConnectivityList({
                         size="2xs"
                         className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
                       />
-                      {lastHeartBeat ? timeAgo(lastHeartBeat) : null}
+                      {lastHeartBeat ? <TimeAgoCard timestamp={lastHeartBeat} /> : null}
                     </div>
                   </Table.Cell>
                   <Table.Cell className="max-w-96 whitespace-normal break-words">

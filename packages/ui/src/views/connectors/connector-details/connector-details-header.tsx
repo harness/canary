@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Layout, Link, LogoV2, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { Button, IconV2, Layout, Link, LogoV2, MoreActionsTooltip, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
 import { ConnectorDetailsHeaderProps } from './types'
@@ -47,25 +46,25 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {createdAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Created</span>
-              <span className="text-cn-foreground-1">{timeAgo(createdAt)}</span>
+              <TimeAgoCard timestamp={createdAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastModifiedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last updated</span>
-              <span className="text-cn-foreground-1">{timeAgo(lastModifiedAt)}</span>
+              <TimeAgoCard timestamp={lastModifiedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastTestedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last status check</span>
-              <span className="text-cn-foreground-1">{timeAgo(lastTestedAt)}</span>
+              <TimeAgoCard timestamp={lastTestedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastConnectedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last successful check</span>
-              <span className="text-cn-foreground-1">{timeAgo(lastConnectedAt)}</span>
+              <TimeAgoCard timestamp={lastConnectedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {status ? (

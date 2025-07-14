@@ -1,6 +1,5 @@
-import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
 
@@ -75,7 +74,9 @@ const ConnectorDetailsReferenceList = ({
                   {scope}
                 </Table.Cell>
 
-                <Table.Cell onClick={() => toEntity?.(identifier)}>{createdAt ? timeAgo(createdAt) : null}</Table.Cell>
+                <Table.Cell onClick={() => toEntity?.(identifier)}>
+                  {createdAt ? <TimeAgoCard timestamp={createdAt} /> : null}
+                </Table.Cell>
               </Table.Row>
             )
           })}

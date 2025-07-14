@@ -1,8 +1,7 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, IconV2, Layout } from '@/components'
+import { Avatar, IconV2, Layout, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import {
   CommentItem,
   isCodeComment,
@@ -260,7 +259,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               avatar: undefined,
               description: (
                 <Layout.Horizontal className="text-cn-foreground-2">
-                  <span>{timeAgo(commentItem?.created ? Number(commentItem.created) : undefined)}</span>
+                  <TimeAgoCard timestamp={commentItem.created} />
                   {!!commentItem?.deleted && (
                     <>
                       <span>&nbsp;|&nbsp;</span>
@@ -281,7 +280,11 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       customHeaderData={
         payload?.created
           ? {
-              description: <div className="flex gap-x-1"> reviewed {timeAgo(payload?.created)}</div>
+              description: (
+                <div className="flex gap-x-1">
+                  reviewed <TimeAgoCard timestamp={payload?.created} />
+                </div>
+              )
             }
           : {}
       }
@@ -322,7 +325,11 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       customHeaderData={
         payload?.created
           ? {
-              description: <div className="flex gap-x-1"> commented {timeAgo(payload?.created)}</div>
+              description: (
+                <div className="flex gap-x-1">
+                  commented <TimeAgoCard timestamp={payload?.created} />
+                </div>
+              )
             }
           : {}
       }

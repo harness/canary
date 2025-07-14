@@ -1,8 +1,16 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
+import {
+  Avatar,
+  CommitCopyActions,
+  MoreActionsTooltip,
+  NoData,
+  SkeletonTable,
+  Table,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
 
 interface RepoTagsListProps {
@@ -44,12 +52,6 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
       onClick: () => onDeleteTag(tag.name)
     }
   ]
-
-  const getCreationDate = (tag: CommitTagType) => {
-    const date = new Date(tag.tagger?.when ?? 0)
-
-    return timeAgo(date.getTime())
-  }
 
   if (!isLoading && !tagsList?.length) {
     return (
@@ -132,7 +134,13 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell>
-              <Text color="foreground-3">{tag.tagger?.when ? getCreationDate(tag) : ''}</Text>
+              {tag.tagger?.when ? (
+                <TimeAgoCard
+                  timestamp={new Date(tag.tagger?.when).getTime()}
+                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                  textProps={{ color: 'foreground-3' }}
+                />
+              ) : null}
             </Table.Cell>
             <Table.Cell className="w-[46px] !py-2.5 text-right">
               <MoreActionsTooltip

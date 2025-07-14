@@ -7,6 +7,7 @@ import tsConfigPaths from 'vite-tsconfig-paths'
 
 const external = [
   'react',
+  'react-dom',
   'react-hook-form',
   'react-router-dom',
   'react-router',

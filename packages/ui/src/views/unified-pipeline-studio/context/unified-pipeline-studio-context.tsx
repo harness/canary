@@ -240,7 +240,10 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     ...rest
   } = props
 
-  const [splitView, setSplitView] = useState<boolean>(!!enableSplitView)
+  /**
+   * onecanavs view by default
+   */
+  const [splitView, setSplitView] = useState<boolean>(false)
 
   const [rightDrawer, setRightDrawer] = useState<RightDrawer>(RightDrawer.None)
 

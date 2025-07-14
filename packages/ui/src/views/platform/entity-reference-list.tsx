@@ -112,11 +112,12 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
               // Use either the custom comparator or the default one
               const compareEntities = compareFn || defaultEntityComparator
 
-              const isSelected = enableMultiSelect
-                ? selectedEntities.some(item => compareEntities(item, entity))
-                : selectedEntity
-                  ? compareEntities(selectedEntity, entity)
-                  : false
+              const isSelected =
+                selectedEntities.length > 0
+                  ? selectedEntities.some(item => compareEntities(item, entity))
+                  : selectedEntity
+                    ? compareEntities(selectedEntity, entity)
+                    : false
 
               return (
                 <Fragment key={entity.id}>

@@ -31,7 +31,6 @@ export const PipelineStudioInternal = (): JSX.Element => {
     lastCommitInfo,
     splitView,
     setSplitView,
-    enableSplitView,
     setRightDrawer,
     setEditPipelineIntention
   } = useUnifiedPipelineStudioContext()
@@ -42,7 +41,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
         <PipelineStudioLayout.Header isYamlView={view === 'yaml'}>
           <PipelineStudioLayout.HeaderLeft>
             <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
-            {view === 'visual' && enableSplitView ? (
+            {view === 'visual' ? (
               <Checkbox
                 checked={splitView}
                 label="Split view"

@@ -51,6 +51,8 @@ export interface PipelineInput {
    * Label defines the input label.
    */
   label?: string
+
+  oneOf?: any[]
 }
 
 export interface PipelineInputDefinition extends PipelineInput {

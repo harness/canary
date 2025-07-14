@@ -13,7 +13,7 @@ export const UnifiedPipelineStepDrawer = () => {
 
   const isDirtyRef = useRef<boolean>()
 
-  const { show } = useExitConfirm()
+  useExitConfirm()
 
   const handleClose = () => {
     setRightDrawer(RightDrawer.None)

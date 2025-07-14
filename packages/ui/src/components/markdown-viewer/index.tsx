@@ -6,6 +6,7 @@ import rehypeExternalLinks from 'rehype-external-links'
 import { getCodeString, RehypeRewriteOptions } from 'rehype-rewrite'
 import rehypeSanitize from 'rehype-sanitize'
 import rehypeVideo from 'rehype-video'
+import remarkBreaks from 'remark-breaks'
 
 import './style.css'
 
@@ -178,6 +179,7 @@ export function MarkdownViewer({
             markdownClassName
           )}
           rehypeRewrite={rehypeRewrite}
+          remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
             rehypeSanitize,
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/ }],

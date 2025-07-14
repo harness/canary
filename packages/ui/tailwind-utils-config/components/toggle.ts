@@ -2,7 +2,7 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const sizes = ['xs', 'sm', 'md'] as const
 
-export const createToggleStyles = () => {
+const createToggleStyles = () => {
   const styles: CSSRuleObject = {}
 
   sizes.forEach(size => {
@@ -20,7 +20,7 @@ export const createToggleStyles = () => {
   return styles
 }
 
-export const toggleStyles: Record<string, CSSRuleObject> = {
+export default {
   '.cn-toggle': {
     ...createToggleStyles()
   }

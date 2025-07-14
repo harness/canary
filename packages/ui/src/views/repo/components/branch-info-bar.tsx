@@ -2,14 +2,13 @@ import { FC } from 'react'
 
 import { Button, DropdownMenu, IconV2, StatusBadge, Link as StyledLink } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@/views'
+import { BranchSelectorListItem, BranchSelectorTab } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
   repoId: string
   spaceId: string
   selectedBranchTag?: BranchSelectorListItem
-  useRepoBranchesStore?: () => IBranchSelectorStore
   currentBranchDivergence: {
     ahead: number
     behind: number
@@ -21,7 +20,6 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
   repoId,
   spaceId,
-  useRepoBranchesStore,
   selectedBranchTag,
   currentBranchDivergence,
   refType = BranchSelectorTab.BRANCHES
@@ -31,11 +29,6 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
   const hasAhead = !!ahead
-  // Get selectedBranchTag from store if useRepoBranchesStore is provided
-  const selectedBranchTagFromStore = useRepoBranchesStore?.()?.selectedBranchTag
-
-  // Use the explicitly passed selectedBranchTag if available, otherwise use the one from store
-  const activeBranchTag = selectedBranchTag ?? selectedBranchTagFromStore
 
   return (
     <div className="flex h-11 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1.5">
@@ -107,7 +100,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             <DropdownMenu.Slot className="mt-4 flex flex-col gap-y-2.5">
               <Button className="w-full" variant="outline" asChild>
                 <Link
-                  to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${activeBranchTag?.name}`}
+                  to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
                 >
                   Compare
                 </Link>

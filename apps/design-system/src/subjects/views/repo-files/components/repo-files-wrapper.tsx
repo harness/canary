@@ -35,6 +35,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
     }),
     []
   )
+  const { selectedBranchTag, selectedRefType, spaceId, repoId } = useRepoBranchesStore()
 
   /**
    * Render File content view or Edit file view
@@ -63,7 +64,10 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       pathNewFile=""
       pathUploadFiles=""
       codeMode={codeMode}
-      useRepoBranchesStore={useRepoBranchesStore}
+      selectedBranchTag={selectedBranchTag}
+      repoId={repoId}
+      spaceId={spaceId}
+      selectedRefType={selectedRefType}
       defaultBranchName={repoFilesStore.repository.default_branch}
       currentBranchDivergence={{ behind: 0, ahead: 0 }}
       isLoadingRepoDetails={false}

@@ -27,7 +27,6 @@ import { transformBranchList } from './transform-utils/branch-transform'
  */
 export const RepoSidebar = () => {
   const routes = useRoutes()
-  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -40,6 +39,10 @@ export const RepoSidebar = () => {
 
   const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
+
+  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
+    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+  )
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
     {
@@ -113,10 +116,6 @@ export const RepoSidebar = () => {
     effectiveGitRefName,
     selectedGitRefBranch
   ])
-
-  useEffect(() => {
-    setSelectedRefType(BranchSelectorTab.BRANCHES)
-  }, [setSelectedRefType, repository?.default_branch])
 
   const { data: repoDetails } = useGetContentQuery({
     path: '',
@@ -212,7 +211,6 @@ export const RepoSidebar = () => {
         onSuccess={() => {
           setCreateBranchDialogOpen(false)
           navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchQueryForNewBranch}`)
-          // Branch creation handled by URL navigation
         }}
         onBranchQueryChange={setBranchQueryForNewBranch}
         preselectedBranchOrTag={effectiveGitRef ? { name: effectiveGitRefName, sha: '' } : null}

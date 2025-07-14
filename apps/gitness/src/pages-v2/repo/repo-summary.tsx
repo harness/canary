@@ -56,7 +56,6 @@ export default function RepoSummaryPage() {
   const { fullGitRef, gitRefName } = useCodePathDetails()
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [tokenGenerationError, setTokenGenerationError] = useState<string | null>(null)
 
   const { currentUser } = useAppContext()
@@ -67,6 +66,10 @@ export default function RepoSummaryPage() {
 
   const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
+
+  const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
+    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+  )
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,

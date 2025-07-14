@@ -10,7 +10,14 @@ import {
   useFindRepositoryQuery,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { CodeModes, CommitDivergenceType, RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
+import {
+  BranchSelectorTab,
+  CodeModes,
+  CommitDivergenceType,
+  RepoFile,
+  RepoFiles,
+  SummaryItemType
+} from '@harnessio/ui/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'
@@ -19,9 +26,14 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
-import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
+import {
+  FILE_SEPERATOR,
+  getTrimmedSha,
+  normalizeGitRef,
+  REFS_BRANCH_PREFIX,
+  REFS_TAGS_PREFIX
+} from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
-import { useRepoBranchesStore } from './stores/repo-branches-store'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -29,7 +41,7 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
-  const { codeMode, fullGitRef, fullResourcePath } = useCodePathDetails()
+  const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const routes = useRoutes()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
@@ -57,6 +69,17 @@ export const RepoCode = () => {
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
     useCalculateCommitDivergenceMutation({ repo_ref: repoRef })
+
+  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+
+  const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
+    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+  )
+  useEffect(() => {
+    setSelectedRefType(
+      effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+    )
+  }, [effectiveGitRef])
 
   useEffect(() => {
     if (branchDivergence.length) {
@@ -193,7 +216,10 @@ export const RepoCode = () => {
       pathNewFile={pathToNewFile}
       pathUploadFiles="/upload-file"
       codeMode={codeMode}
-      useRepoBranchesStore={useRepoBranchesStore}
+      selectedBranchTag={{ name: gitRefName, sha: '' }}
+      repoId={repoId}
+      spaceId={spaceId!}
+      selectedRefType={selectedRefType}
       defaultBranchName={repository?.default_branch}
       currentBranchDivergence={currBranchDivergence}
       isLoadingRepoDetails={isLoadingRepoDetails}

@@ -122,7 +122,6 @@ export interface UnifiedPipelineStudioContextProps {
   yamlParserOptions?: Yaml2PipelineGraphOptions
   splitView?: boolean
   setSplitView?: (splitView: boolean) => void
-  enableSplitView?: boolean
   stageFormDefinition?: IFormDefinition
   pipelineFormDefinition?: IFormDefinition
 }
@@ -222,7 +221,6 @@ export interface UnifiedPipelineStudioProviderProps {
   hideSaveBtn?: boolean
   yamlParserOptions?: Yaml2PipelineGraphOptions
   lastCommitInfo?: lastCommitInfoType
-  enableSplitView?: boolean
   stageFormDefinition?: IFormDefinition
   pipelineFormDefinition?: IFormDefinition
 }
@@ -235,13 +233,12 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
     inputComponentFactory: inputComponentFactoryFromProps,
     onSelectedPathChange: onSelectedPathChangeFromProps,
     lastCommitInfo,
-    enableSplitView,
     selectedPath,
     ...rest
   } = props
 
   /**
-   * onecanavs view by default
+   * onecanvas view by default
    */
   const [splitView, setSplitView] = useState<boolean>(false)
 
@@ -368,7 +365,6 @@ export const UnifiedPipelineStudioProvider: React.FC<UnifiedPipelineStudioProvid
         lastCommitInfo,
         splitView,
         setSplitView,
-        enableSplitView,
         selectedPath
       }}
     >

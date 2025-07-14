@@ -21,7 +21,7 @@ const RepoLayout = () => {
 
   const { data: { body: repoData } = {}, isLoading: isLoadingRepoData } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || repoData?.default_branch || ''
+  const prefixedGitRef = fullGitRef || repoData?.default_branch || ''
   const effectiveGitRefName = gitRefName || repoData?.default_branch || ''
 
   return (
@@ -32,11 +32,11 @@ const RepoLayout = () => {
           showPipelinesTab={!isMFE}
           onTabClick={(tab: RepoTabsKeys) => {
             if (tab === RepoTabsKeys.CODE) {
-              navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}`)
+              navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${prefixedGitRef}`)
             } else if (tab === RepoTabsKeys.SUMMARY) {
-              navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${effectiveGitRef}`)
+              navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${prefixedGitRef}`)
             } else if (tab === RepoTabsKeys.COMMITS) {
-              isRefATag(effectiveGitRef)
+              isRefATag(prefixedGitRef)
                 ? navigate(routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(effectiveGitRefName) }))
                 : navigate(
                     routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(effectiveGitRefName) })

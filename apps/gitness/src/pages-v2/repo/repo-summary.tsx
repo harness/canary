@@ -64,11 +64,11 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const prefixedGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
 
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
-    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+    prefixedGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
   )
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
@@ -153,7 +153,7 @@ export default function RepoSummaryPage() {
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(effectiveGitRef) }
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(prefixedGitRef) }
   })
 
   const decodedReadmeContent = useMemo(() => {
@@ -163,7 +163,7 @@ export default function RepoSummaryPage() {
   const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(effectiveGitRef) }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(prefixedGitRef) }
   })
 
   const { mutate: createToken } = useCreateTokenMutation(
@@ -240,7 +240,7 @@ export default function RepoSummaryPage() {
     setLoading(true)
 
     pathDetails({
-      queryParams: { git_ref: normalizeGitRef(effectiveGitRef) },
+      queryParams: { git_ref: normalizeGitRef(prefixedGitRef) },
       body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
       repo_ref: repoRef
     })
@@ -256,7 +256,7 @@ export default function RepoSummaryPage() {
                 timestamp: item?.last_commit?.author?.when ?? '',
                 user: { name: item?.last_commit?.author?.identity?.name || '' },
                 sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                path: `${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${item?.path}`
+                path: `${routes.toRepoFiles({ spaceId, repoId })}/${prefixedGitRef}/~/${item?.path}`
               }))
             )
           )
@@ -277,9 +277,9 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${prefixedGitRef}/~/${filePath}`)
     },
-    [effectiveGitRef, navigate, repoId, spaceId]
+    [prefixedGitRef, navigate, repoId, spaceId]
   )
 
   const latestCommitInfo = useMemo(() => {
@@ -343,7 +343,7 @@ export default function RepoSummaryPage() {
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
         toRepoCommits={() => {
-          return isRefATag(effectiveGitRef)
+          return isRefATag(prefixedGitRef)
             ? routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(effectiveGitRefName) })
             : routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(effectiveGitRefName) })
         }}

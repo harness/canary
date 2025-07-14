@@ -37,21 +37,21 @@ export const RepoSidebar = () => {
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const prefixedGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
 
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
-    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+    prefixedGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
   )
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
     {
       repo_ref: repoRef,
-      branch_name: effectiveGitRef,
+      branch_name: prefixedGitRef,
       queryParams: {}
     },
     {
-      enabled: !!effectiveGitRef
+      enabled: !!prefixedGitRef
     }
   )
 
@@ -92,7 +92,7 @@ export const RepoSidebar = () => {
     if (!repository?.default_branch || !transformedBranchList.length) {
       return
     }
-    if (!effectiveGitRef) {
+    if (!prefixedGitRef) {
       const defaultBranch = transformedBranchList.find(branch => branch.name === repository.default_branch)
       const defaultBranchName = defaultBranch?.name || repository?.default_branch
       if (defaultBranchName) {
@@ -110,7 +110,7 @@ export const RepoSidebar = () => {
     }
   }, [
     repository?.default_branch,
-    effectiveGitRef,
+    prefixedGitRef,
     transformedBranchList,
     transformedTags,
     effectiveGitRefName,
@@ -122,13 +122,13 @@ export const RepoSidebar = () => {
     repo_ref: repoRef,
     queryParams: {
       include_commit: true,
-      git_ref: normalizeGitRef(effectiveGitRef)
+      git_ref: normalizeGitRef(prefixedGitRef)
     }
   })
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(effectiveGitRef) }
+    queryParams: { git_ref: normalizeGitRef(prefixedGitRef) }
   })
 
   const filesList = filesData?.body?.files || []
@@ -153,26 +153,26 @@ export const RepoSidebar = () => {
         repo_ref: repoRef,
         queryParams: {
           include_commit: true,
-          git_ref: normalizeGitRef(effectiveGitRef)
+          git_ref: normalizeGitRef(prefixedGitRef)
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${effectiveGitRef}/~/${fullResourcePath}`)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${prefixedGitRef}/~/${fullResourcePath}`)
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${effectiveGitRef}/~/${parentDirPath}`)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${prefixedGitRef}/~/${parentDirPath}`)
         }
       })
     } else {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${effectiveGitRef}/~/`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${prefixedGitRef}/~/`)
     }
-  }, [fullResourcePath, effectiveGitRef, navigate, repoId, repoRef])
+  }, [fullResourcePath, prefixedGitRef, navigate, repoId, repoRef])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${prefixedGitRef}/~/${filePath}`)
     },
-    [effectiveGitRef, navigate, repoId]
+    [prefixedGitRef, navigate, repoId]
   )
 
   // TODO: repoId and spaceId must be defined
@@ -198,7 +198,7 @@ export const RepoSidebar = () => {
             }
           >
             {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={effectiveGitRef} />
+              <Explorer repoDetails={repoDetails?.body} selectedBranch={prefixedGitRef} />
             )}
           </RepoSidebarView>
         )}
@@ -213,7 +213,7 @@ export const RepoSidebar = () => {
           navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchQueryForNewBranch}`)
         }}
         onBranchQueryChange={setBranchQueryForNewBranch}
-        preselectedBranchOrTag={effectiveGitRef ? { name: effectiveGitRefName, sha: '' } : null}
+        preselectedBranchOrTag={prefixedGitRef ? { name: effectiveGitRefName, sha: '' } : null}
         preselectedTab={selectedRefType}
         prefilledName={branchQueryForNewBranch}
       />

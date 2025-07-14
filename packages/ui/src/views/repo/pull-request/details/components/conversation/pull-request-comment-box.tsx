@@ -4,7 +4,6 @@ import {
   DragEvent,
   Fragment,
   KeyboardEvent,
-  MouseEvent,
   useEffect,
   useMemo,
   useRef,
@@ -347,7 +346,7 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onMouseUp = (e: MouseEvent<HTMLTextAreaElement>) => {
+  const onMouseUp = () => {
     if (textAreaRef.current) {
       const target = textAreaRef.current
 
@@ -360,14 +359,15 @@ export const PullRequestCommentBox = ({
       case 'ArrowUp':
       case 'ArrowDown':
       case 'ArrowLeft':
-      case 'ArrowRight':
+      case 'ArrowRight': {
         if (textAreaRef.current) {
           const target = textAreaRef.current
 
           setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
         }
         break
-      case 'Enter':
+      }
+      case 'Enter': {
         const parsedComment = parseComment(comment, textSelection, '')
 
         if (isListString(parsedComment.previousLine)) {
@@ -377,6 +377,7 @@ export const PullRequestCommentBox = ({
           handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
         }
         break
+      }
     }
   }
 
@@ -420,7 +421,7 @@ export const PullRequestCommentBox = ({
                 value={comment}
                 onChange={e => onCommentChange(e)}
                 onKeyUp={e => onKeyUp(e)}
-                onMouseUp={e => onMouseUp(e)}
+                onMouseUp={() => onMouseUp()}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {
                     handlePasteForUpload(e)

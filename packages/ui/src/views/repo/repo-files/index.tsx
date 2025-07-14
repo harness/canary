@@ -61,7 +61,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   spaceId,
   selectedRefType
 }) => {
-  // const { selectedBranchTag, repoId, spaceId, selectedRefType } = useRepoBranchesStore()
   const { t } = useTranslation()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])

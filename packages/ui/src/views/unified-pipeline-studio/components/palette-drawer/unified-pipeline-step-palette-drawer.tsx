@@ -5,6 +5,7 @@ import {
   ButtonLayout,
   Drawer,
   EntityFormLayout,
+  Layout,
   Pagination,
   SearchInput,
   SkeletonList,
@@ -98,64 +99,66 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
         />
       </Header>
       <Body>
-        <StepPaletteSection
-          title="Group"
-          steps={harnessStepGroupsFiltered}
-          onSelect={step => {
-            setFormEntity({
-              source: 'embedded',
-              type: 'step',
-              data: {
-                identifier: step.identifier,
-                description: step.description
-              }
-            })
-            setRightDrawer(RightDrawer.Form)
-          }}
-        />
-        <StepPaletteSection
-          title="Steps"
-          steps={harnessStepsFiltered}
-          onSelect={step => {
-            setFormEntity({
-              source: 'embedded',
-              type: 'step',
-              data: {
-                identifier: step.identifier,
-                description: step.description
-              }
-            })
-            setRightDrawer(RightDrawer.Form)
-          }}
-        />
-        {templatesError ? (
-          <Text color="danger">{templatesError.message}</Text>
-        ) : isFetchingTemplates ? (
-          <SkeletonList />
-        ) : (
-          <>
-            <StepPaletteSection
-              ref={templatesSectionRef}
-              title="Templates"
-              steps={templates ?? []}
-              onSelect={step => {
-                setFormEntity({
-                  source: 'external',
-                  type: 'step',
-                  data: {
-                    identifier: step.identifier,
-                    version: step.version,
-                    description: step.description
-                  }
-                })
-                setRightDrawer(RightDrawer.Form)
-              }}
-            />
-            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page + 1} goToPage={goToPage} />
-          </>
-        )}
+        <Layout.Flex direction="column" gap="sm">
+          <StepPaletteSection
+            title="Group"
+            steps={harnessStepGroupsFiltered}
+            onSelect={step => {
+              setFormEntity({
+                source: 'embedded',
+                type: 'step',
+                data: {
+                  identifier: step.identifier,
+                  description: step.description
+                }
+              })
+              setRightDrawer(RightDrawer.Form)
+            }}
+          />
+          <StepPaletteSection
+            title="Steps"
+            steps={harnessStepsFiltered}
+            onSelect={step => {
+              setFormEntity({
+                source: 'embedded',
+                type: 'step',
+                data: {
+                  identifier: step.identifier,
+                  description: step.description
+                }
+              })
+              setRightDrawer(RightDrawer.Form)
+            }}
+          />
+          {templatesError ? (
+            <Text color="danger">{templatesError.message}</Text>
+          ) : isFetchingTemplates ? (
+            <SkeletonList />
+          ) : (
+            <>
+              <StepPaletteSection
+                ref={templatesSectionRef}
+                title="Templates"
+                steps={templates ?? []}
+                onSelect={step => {
+                  setFormEntity({
+                    source: 'external',
+                    type: 'step',
+                    data: {
+                      identifier: step.identifier,
+                      version: step.version,
+                      description: step.description
+                    }
+                  })
+                  setRightDrawer(RightDrawer.Form)
+                }}
+              />
+              <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page + 1} goToPage={goToPage} />
+            </>
+          )}
 
-        <Spacer size={8} />
+          <Spacer size={8} />
+        </Layout.Flex>
       </Body>
       <Footer>
         <ButtonLayout.Root>

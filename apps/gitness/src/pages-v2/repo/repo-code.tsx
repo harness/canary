@@ -17,12 +17,11 @@ import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
+import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
 import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
-import { PathParams } from '../../RouteDefinitions'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
-
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -183,9 +182,7 @@ export const RepoCode = () => {
 
   return (
     <RepoFiles
-      toCommitDetails={({ sha }: { sha: string }) =>
-        routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
-      }
+      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       pathParts={pathParts}
       loading={loading}
       files={files}
@@ -197,7 +194,6 @@ export const RepoCode = () => {
       pathUploadFiles="/upload-file"
       codeMode={codeMode}
       useRepoBranchesStore={useRepoBranchesStore}
-
       defaultBranchName={repository?.default_branch}
       currentBranchDivergence={currBranchDivergence}
       isLoadingRepoDetails={isLoadingRepoDetails}

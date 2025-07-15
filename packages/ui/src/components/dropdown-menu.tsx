@@ -402,20 +402,22 @@ const DropdownMenuSeparator = forwardRef<
 ))
 DropdownMenuSeparator.displayName = displayNames.separator
 
-const DropdownMenuHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-header', className)} {...props} />
+const DropdownMenuHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => <div className={cn('cn-dropdown-menu-header', className)} ref={ref} {...props} />
 )
 DropdownMenuHeader.displayName = displayNames.header
 
-const DropdownMenuFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-footer', className)} {...props} />
+const DropdownMenuFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => <div className={cn('cn-dropdown-menu-footer', className)} ref={ref} {...props} />
 )
 DropdownMenuFooter.displayName = displayNames.footer
 
-const DropdownMenuSpinner = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-spinner', className)} {...props}>
-    <IconV2 className="animate-spin" name="loader" />
-  </div>
+const DropdownMenuSpinner = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div className={cn('cn-dropdown-menu-spinner', className)} ref={ref} {...props}>
+      <IconV2 className="animate-spin" name="loader" />
+    </div>
+  )
 )
 DropdownMenuSpinner.displayName = displayNames.spinner
 

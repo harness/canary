@@ -1,3 +1,5 @@
+import { forwardRef, Ref } from 'react'
+
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -54,9 +56,12 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   enableHover?: boolean
   actionIcon?: IconV2NamesType
   onActionClick?: () => void
+  resetRef?: Ref<HTMLButtonElement>
+  leftRef?: Ref<HTMLDivElement>
+  rightRef?: Ref<HTMLDivElement>
 }
 
-function Tag({
+const Tag = forwardRef<HTMLDivElement, TagProps>(({
   variant,
   size,
   theme,
@@ -70,8 +75,11 @@ function Tag({
   title,
   actionIcon,
   onActionClick,
+  resetRef,
+  leftRef,
+  rightRef,
   ...props
-}: TagProps) {
+}, ref) => {
   if (label && value) {
     return (
       <TagSplit
@@ -87,7 +95,10 @@ function Tag({
           value,
           disabled,
           enableHover: Boolean(props.onClick),
-          onClick: props.onClick
+          onClick: props.onClick,
+          leftRef,
+          rightRef,
+          resetRef,
         }}
       />
     )
@@ -95,6 +106,7 @@ function Tag({
 
   return (
     <div
+      ref={ref}
       tabIndex={-1}
       className={cn(
         tagVariants({ variant, size, theme, rounded }),
@@ -127,6 +139,7 @@ function Tag({
             e.preventDefault()
             onActionClick?.()
           }}
+          ref={resetRef}
         >
           <IconV2
             skipSize
@@ -137,7 +150,8 @@ function Tag({
       )}
     </div>
   )
-}
+})
+Tag.displayName = 'Tag'
 
 function TagSplit({
   variant,
@@ -151,7 +165,10 @@ function TagSplit({
   label = '',
   disabled = false,
   enableHover = false,
-  onClick
+  onClick,
+  onReset,
+  leftRef,
+  rightRef
 }: TagProps) {
   const sharedProps = { variant, size, theme, rounded, icon, disabled, onClick }
 
@@ -163,11 +180,13 @@ function TagSplit({
       })}
     >
       {/* LEFT TAG - should never have a Reset Icon */}
-      <Tag {...sharedProps} icon={icon} value={label} className="cn-tag-split-left" />
+      <Tag {...sharedProps} ref={leftRef} icon={icon} value={label} className="cn-tag-split-left" />
 
       {/* RIGHT TAG - should never have a tag Icon */}
       <Tag
         {...sharedProps}
+        ref={rightRef}
+        onReset={onReset}
         icon={icon}
         actionIcon={actionIcon}
         onActionClick={onActionClick}

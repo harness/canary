@@ -31,7 +31,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const hasAhead = !!ahead
 
   return (
-    <div className="flex h-11 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1.5">
+    <div className="flex items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 pl-4 pr-1 py-1">
       <div className="flex items-center gap-x-1.5">
         <span className="text-2 leading-tight text-cn-foreground-1">
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}

@@ -211,7 +211,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   if (type === 'tabsnav') {
     const { linkProps, ..._restProps } = restProps as TabsTriggerLinkProps
 
-    const handleClick = (e: any) => {
+    const handleClick = () => {
       onValueChange?.(value)
     }
 

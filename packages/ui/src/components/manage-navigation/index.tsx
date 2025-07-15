@@ -166,7 +166,7 @@ export const ManageNavigation = ({
                         return (
                           <Layout.Flex
                             justify="between"
-                            className="hover:bg-cn-background-3 w-full grow cursor-grab gap-x-2.5 rounded active:cursor-grabbing"
+                            className="w-full grow cursor-grab gap-x-2.5 rounded hover:bg-cn-background-3 active:cursor-grabbing"
                           >
                             <Button
                               {...attributes}

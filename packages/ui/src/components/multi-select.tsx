@@ -1,10 +1,36 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  KeyboardEvent,
+  Ref,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
-import { Command, SkeletonList, Tag } from '@/components'
+import { Command, CommonInputsProp, ControlGroup, FormCaption, Label, SkeletonList, Tag } from '@/components'
+import { generateAlphaNumericHash } from '@/utils'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
+import { cva, VariantProps } from 'class-variance-authority'
 import { Command as CommandPrimitive } from 'cmdk'
 import { noop } from 'lodash-es'
+
+const multiSelectVariants = cva('cn-multi-select-container', {
+  variants: {
+    theme: {
+      default: '',
+      danger: 'cn-multi-select-danger',
+      warning: 'cn-multi-select-warning'
+    }
+  },
+  defaultVariants: {
+    theme: 'default'
+  }
+})
 
 export interface MultiSelectOption {
   id: string | number
@@ -56,7 +82,7 @@ const createOptionFromInput = (inputValue: string): MultiSelectOption => {
   }
 }
 
-interface MultiSelectProps {
+export interface MultiSelectProps extends CommonInputsProp {
   value?: MultiSelectOption[]
   defaultValue?: MultiSelectOption[]
   options?: MultiSelectOption[]
@@ -68,11 +94,11 @@ interface MultiSelectProps {
   className?: string
   disallowCreation?: boolean
   isLoading?: boolean
-  theme?: string
+  theme?: VariantProps<typeof multiSelectVariants>['theme']
   /** Props of `Command` */
-  commandProps?: React.ComponentPropsWithoutRef<typeof Command.Root>
+  commandProps?: ComponentPropsWithoutRef<typeof Command.Root>
   /** Props of `CommandInput` */
-  inputProps?: Omit<React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, 'value' | 'placeholder' | 'disabled'>
+  inputProps?: Omit<ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, 'value' | 'placeholder' | 'disabled'>
 }
 
 export interface MultiSelectRef {
@@ -98,9 +124,19 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       isLoading = false,
       commandProps,
       inputProps,
-      theme
+      theme: themeProp,
+      label,
+      error,
+      warning,
+      caption,
+      optional,
+      wrapperClassName,
+      orientation,
+      informerProps,
+      informerContent,
+      labelSuffix
     }: MultiSelectProps,
-    ref: React.Ref<MultiSelectRef>
+    ref: Ref<MultiSelectRef>
   ) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const [open, setOpen] = useState(false)
@@ -116,6 +152,10 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
     })
 
     const isControlled = !!value
+    const isHorizontal = orientation === 'horizontal'
+    const theme = error ? 'danger' : warning ? 'warning' : themeProp
+
+    const id = useMemo(() => inputProps?.id || `multi-select-${generateAlphaNumericHash(10)}`, [inputProps?.id])
 
     // Helper function to get the current selected options based on controlled/uncontrolled state
     const getSelectedOptions = useCallback(() => {
@@ -158,7 +198,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
     )
 
     const handleKeyDown = useCallback(
-      (e: React.KeyboardEvent<HTMLDivElement>) => {
+      (e: KeyboardEvent<HTMLDivElement>) => {
         const input = inputRef.current
         if (input) {
           if (e.key === 'Delete' || e.key === 'Backspace') {
@@ -223,136 +263,168 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
 
       if (!setSearchQuery && inputValue) {
         const lowerCaseInput = inputValue.toLowerCase()
-        filteredOptions = filteredOptions?.filter(option => {
-          const keyMatch = option.key.toLowerCase().includes(lowerCaseInput)
-          return keyMatch
-        })
+        filteredOptions = filteredOptions?.filter(option => option.key.toLowerCase().includes(lowerCaseInput))
       }
 
       setAvailableOptions(filteredOptions || null)
     }, [options, getSelectedOptions, inputValue, searchQuery, open, setSearchQuery])
+
     return (
-      <div className="cn-multi-select-outer-container">
-        <Command.Root
-          ref={dropdownRef}
-          {...commandProps}
-          onKeyDown={e => {
-            handleKeyDown(e)
-            commandProps?.onKeyDown?.(e)
-          }}
-          shouldFilter={false}
-          className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
-        >
-          <div
-            className={cn('cn-multi-select-container', `cn-multi-select-${theme}`, className)}
-            onClick={() => {
-              if (disabled) return
-              inputRef?.current?.focus()
-            }}
-            onKeyDown={noop}
-            role="textbox"
-            tabIndex={disabled ? -1 : 0}
-            aria-label={placeholder}
-          >
-            <div className="cn-multi-select-tag-wrapper">
-              {getSelectedOptions().map(option => {
-                return (
-                  <Tag
-                    id={String(option.id)}
-                    key={option.id}
-                    variant="secondary"
-                    size="sm"
-                    theme={option?.theme}
-                    label={option.key}
-                    value={option?.value || ''}
-                    showReset={!disabled}
-                    onReset={() => handleUnselect(option)}
-                    disabled={disabled}
-                  />
-                )
-              })}
-              <CommandPrimitive.Input
-                {...inputProps}
-                ref={inputRef}
-                value={setSearchQuery ? search : inputValue}
+      <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
+        {(!!label || (isHorizontal && !!caption)) && (
+          <ControlGroup.LabelWrapper>
+            {!!label && (
+              <Label
                 disabled={disabled}
-                onValueChange={value => {
-                  setInputValue(value)
-                  inputProps?.onValueChange?.(value)
-                  setSearchQuery?.(value)
-                }}
-                onBlur={event => {
-                  if (!onScrollbar) {
-                    setOpen(false)
-                  }
-                  inputProps?.onBlur?.(event)
-                }}
-                onFocus={event => {
-                  setOpen(true)
-                  inputProps?.onFocus?.(event)
-                }}
-                placeholder={disabled ? '' : placeholder}
-                className={cn('cn-multi-select-input', inputProps?.className)}
-              />
-            </div>
-          </div>
-          <div className="relative">
-            {open && availableOptions && (
-              <Command.List
-                className="cn-multi-select-dropdown"
-                onMouseLeave={() => {
-                  setOnScrollbar(false)
-                }}
-                onMouseEnter={() => {
-                  setOnScrollbar(true)
-                }}
-                onMouseUp={() => {
+                optional={optional}
+                htmlFor={id}
+                suffix={labelSuffix}
+                informerProps={informerProps}
+                informerContent={informerContent}
+              >
+                {label}
+              </Label>
+            )}
+            {isHorizontal && !!caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+          </ControlGroup.LabelWrapper>
+        )}
+        <ControlGroup.InputWrapper>
+          <div className="cn-multi-select-outer-container">
+            <Command.Root
+              ref={dropdownRef}
+              {...commandProps}
+              onKeyDown={e => {
+                handleKeyDown(e)
+                commandProps?.onKeyDown?.(e)
+              }}
+              shouldFilter={false}
+              className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
+            >
+              <div
+                className={cn(multiSelectVariants({ theme }), className)}
+                onClick={() => {
+                  if (disabled) return
                   inputRef?.current?.focus()
                 }}
+                onKeyDown={noop}
+                role="textbox"
+                tabIndex={disabled ? -1 : 0}
+                aria-label={placeholder}
               >
-                {isLoading ? (
-                  <SkeletonList />
-                ) : availableOptions?.length === 0 ? (
-                  disallowCreation ? (
-                    <Command.Item value="-" disabled>
-                      No results found
-                    </Command.Item>
-                  ) : (
-                    <Command.Item value="-" disabled>
-                      Press Enter to create
-                    </Command.Item>
-                  )
-                ) : (
-                  <Command.Group>
-                    {availableOptions?.map(option => {
-                      return (
-                        <Command.Item
-                          key={option.id}
-                          value={String(option.id)}
-                          disabled={option.disable}
-                          onSelect={() => {
-                            setInputValue('')
-                            setSearchQuery?.('')
-                            const newSelectedValues = [...getSelectedOptions(), option]
-                            if (isControlled) {
-                              onChange?.(newSelectedValues)
-                            } else {
-                              onChange?.(newSelectedValues)
-                              setSelected(newSelectedValues)
-                            }
-                          }}
-                        >
-                          {option.key}
+                <div className="cn-multi-select-tag-wrapper">
+                  {getSelectedOptions().map(option => {
+                    return (
+                      <Tag
+                        id={String(option.id)}
+                        key={option.id}
+                        variant="secondary"
+                        size="sm"
+                        theme={option?.theme}
+                        label={option.key}
+                        value={option?.value || ''}
+                        showReset={!disabled}
+                        onReset={() => handleUnselect(option)}
+                        disabled={disabled}
+                      />
+                    )
+                  })}
+                  <CommandPrimitive.Input
+                    {...inputProps}
+                    ref={inputRef}
+                    value={setSearchQuery ? search : inputValue}
+                    disabled={disabled}
+                    onValueChange={value => {
+                      setInputValue(value)
+                      inputProps?.onValueChange?.(value)
+                      setSearchQuery?.(value)
+                    }}
+                    onBlur={event => {
+                      if (!onScrollbar) {
+                        setOpen(false)
+                      }
+                      inputProps?.onBlur?.(event)
+                    }}
+                    onFocus={event => {
+                      setOpen(true)
+                      inputProps?.onFocus?.(event)
+                    }}
+                    placeholder={disabled ? '' : placeholder}
+                    className={cn('cn-multi-select-input', inputProps?.className)}
+                    asChild
+                  >
+                    <input id={id} />
+                  </CommandPrimitive.Input>
+                </div>
+              </div>
+              <div className="relative">
+                {open && availableOptions && (
+                  <Command.List
+                    className="cn-multi-select-dropdown"
+                    onMouseLeave={() => {
+                      setOnScrollbar(false)
+                    }}
+                    onMouseEnter={() => {
+                      setOnScrollbar(true)
+                    }}
+                    onMouseUp={() => {
+                      inputRef?.current?.focus()
+                    }}
+                  >
+                    {isLoading ? (
+                      <SkeletonList />
+                    ) : availableOptions?.length === 0 ? (
+                      disallowCreation ? (
+                        <Command.Item value="-" disabled>
+                          No results found
+                        </Command.Item>
+                      ) : (
+                        <Command.Item value="-" disabled>
+                          Press Enter to create
                         </Command.Item>
                       )
-                    })}
-                  </Command.Group>
+                    ) : (
+                      <Command.Group>
+                        {availableOptions?.map(option => (
+                          <Command.Item
+                            key={option.id}
+                            value={String(option.id)}
+                            disabled={option.disable}
+                            onSelect={() => {
+                              setInputValue('')
+                              setSearchQuery?.('')
+                              const newSelectedValues = [...getSelectedOptions(), option]
+                              if (isControlled) {
+                                onChange?.(newSelectedValues)
+                              } else {
+                                onChange?.(newSelectedValues)
+                                setSelected(newSelectedValues)
+                              }
+                            }}
+                          >
+                            {option.key}
+                          </Command.Item>
+                        ))}
+                      </Command.Group>
+                    )}
+                  </Command.List>
                 )}
-              </Command.List>
-            )}
+              </div>
+            </Command.Root>
           </div>
-        </Command.Root>
-      </div>
+
+          {error ? (
+            <FormCaption disabled={disabled} theme="danger">
+              {error}
+            </FormCaption>
+          ) : warning ? (
+            <FormCaption disabled={disabled} theme="warning">
+              {warning}
+            </FormCaption>
+          ) : caption && !isHorizontal ? (
+            <FormCaption disabled={disabled}>{caption}</FormCaption>
+          ) : null}
+        </ControlGroup.InputWrapper>
+      </ControlGroup.Root>
     )
   }
 )

@@ -22,13 +22,7 @@ const useCodePathDetails = () => {
   let effectiveGitRef = ''
 
   if (rawSubGitRef) {
-    // Use the rawSubGitRef as it is in the VIEW mode, and for EDIT/NEW modes, ensure it starts with the correct prefix
-    effectiveGitRef =
-      codeMode === CodeModes.VIEW
-        ? rawSubGitRef
-        : rawSubGitRef.startsWith(REFS_TAGS_PREFIX) || rawSubGitRef.startsWith(REFS_BRANCH_PREFIX)
-          ? rawSubGitRef
-          : `${REFS_BRANCH_PREFIX}${rawSubGitRef}`
+    effectiveGitRef = rawSubGitRef
   } else if (branchId) {
     effectiveGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
   } else if (tagId) {
@@ -47,7 +41,9 @@ const useCodePathDetails = () => {
     gitRefName = effectiveGitRef
   }
 
-  const isCommitSHA = !(fullGitRef?.startsWith(REFS_BRANCH_PREFIX) || fullGitRef?.startsWith(REFS_TAGS_PREFIX))
+  const isCommitSHA = fullGitRef
+    ? !(fullGitRef?.startsWith(REFS_BRANCH_PREFIX) || fullGitRef?.startsWith(REFS_TAGS_PREFIX))
+    : false
 
   return { codeMode, fullGitRef, gitRefName, fullResourcePath, isCommitSHA }
 }

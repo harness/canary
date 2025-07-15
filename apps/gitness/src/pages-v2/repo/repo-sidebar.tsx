@@ -37,8 +37,15 @@ export const RepoSidebar = () => {
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const defaultPrefixedBranch = repository?.default_branch ? `${REFS_BRANCH_PREFIX}${repository?.default_branch}` : ''
+  const effectiveGitRef = fullGitRef || defaultPrefixedBranch || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
+
+  useEffect(() => {
+    if (!fullGitRef && defaultPrefixedBranch && effectiveGitRef) {
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${effectiveGitRef}`)
+    }
+  }, [fullGitRef, effectiveGitRef, defaultPrefixedBranch])
 
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
     effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES

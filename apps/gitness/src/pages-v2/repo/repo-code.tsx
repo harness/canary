@@ -70,7 +70,8 @@ export const RepoCode = () => {
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
     useCalculateCommitDivergenceMutation({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const defaultPrefixedBranch = repository?.default_branch ? `${REFS_BRANCH_PREFIX}${repository?.default_branch}` : ''
+  const effectiveGitRef = fullGitRef || defaultPrefixedBranch || ''
 
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
     effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES

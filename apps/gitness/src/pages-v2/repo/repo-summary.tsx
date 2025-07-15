@@ -64,8 +64,15 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const defaultPrefixedBranch = repository?.default_branch ? `${REFS_BRANCH_PREFIX}${repository?.default_branch}` : ''
+  const effectiveGitRef = fullGitRef || defaultPrefixedBranch || ''
   const effectiveGitRefName = gitRefName || repository?.default_branch || ''
+
+  useEffect(() => {
+    if (!fullGitRef && defaultPrefixedBranch && effectiveGitRef) {
+      navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${effectiveGitRef}`)
+    }
+  }, [fullGitRef, effectiveGitRef, defaultPrefixedBranch])
 
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES

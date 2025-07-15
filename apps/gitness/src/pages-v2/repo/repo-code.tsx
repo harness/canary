@@ -70,16 +70,16 @@ export const RepoCode = () => {
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
     useCalculateCommitDivergenceMutation({ repo_ref: repoRef })
 
-  const prefixedGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
+  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repository?.default_branch}` || ''
 
   const [selectedRefType, setSelectedRefType] = useState<BranchSelectorTab>(
-    prefixedGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+    effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
   )
   useEffect(() => {
     setSelectedRefType(
-      prefixedGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
+      effectiveGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
     )
-  }, [prefixedGitRef])
+  }, [effectiveGitRef])
 
   useEffect(() => {
     if (branchDivergence.length) {

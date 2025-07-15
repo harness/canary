@@ -19,21 +19,21 @@ const useCodePathDetails = () => {
   // Split the restPath into gitRef and resourcePath
   const [rawSubGitRef = '', rawResourcePath = ''] = restPath.split('~')
 
-  let prefixedGitRef = ''
+  let effectiveGitRef = ''
 
   if (rawSubGitRef) {
-    prefixedGitRef =
+    effectiveGitRef =
       rawSubGitRef.startsWith(REFS_TAGS_PREFIX) || rawSubGitRef.startsWith(REFS_BRANCH_PREFIX)
         ? rawSubGitRef
         : `${REFS_BRANCH_PREFIX}${rawSubGitRef}`
   } else if (branchId) {
-    prefixedGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
+    effectiveGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
   } else if (tagId) {
-    prefixedGitRef = `${REFS_TAGS_PREFIX}${tagId}`
+    effectiveGitRef = `${REFS_TAGS_PREFIX}${tagId}`
   }
 
   // Normalize values
-  const fullGitRef = prefixedGitRef.endsWith('/') ? prefixedGitRef.slice(0, -1) : prefixedGitRef
+  const fullGitRef = effectiveGitRef.endsWith('/') ? effectiveGitRef.slice(0, -1) : effectiveGitRef
   const gitRefName = fullGitRef.startsWith(REFS_TAGS_PREFIX)
     ? fullGitRef.split(REFS_TAGS_PREFIX)[1]
     : fullGitRef.split(REFS_BRANCH_PREFIX)[1]

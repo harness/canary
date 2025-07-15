@@ -7,7 +7,7 @@ import { REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
 const useCodePathDetails = () => {
   const params = useParams()
   const subCodePath = params['*'] || ''
-  const { branchId, tagId } = params
+  const { branchId, tagId, commitSHA } = params
 
   // Determine codeMode and restPath
   const [codeMode, restPath] = (() => {
@@ -27,6 +27,8 @@ const useCodePathDetails = () => {
     effectiveGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
   } else if (tagId) {
     effectiveGitRef = `${REFS_TAGS_PREFIX}${tagId}`
+  } else if (commitSHA) {
+    effectiveGitRef = commitSHA
   }
 
   // Normalize values

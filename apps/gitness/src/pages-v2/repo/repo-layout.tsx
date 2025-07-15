@@ -22,7 +22,8 @@ const RepoLayout = () => {
 
   const { data: { body: repoData } = {}, isLoading: isLoadingRepoData } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const effectiveGitRef = fullGitRef || `${REFS_BRANCH_PREFIX}${repoData?.default_branch}` || ''
+  const defaultPrefixedBranch = repoData?.default_branch ? `${REFS_BRANCH_PREFIX}${repoData?.default_branch}` : ''
+  const effectiveGitRef = fullGitRef || defaultPrefixedBranch || ''
   const effectiveGitRefName = gitRefName || repoData?.default_branch || ''
 
   const getCommitsPath = () => {

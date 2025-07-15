@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { forwardRef, useMemo } from 'react'
 
 import { cn } from '@/utils/cn'
 import { Text } from '@components/text'
@@ -58,110 +58,115 @@ interface IndeterminateProgressProps extends CommonProgressProps {
 
 type ProgressProps = DeterminateProgressProps | IndeterminateProgressProps
 
-const Progress: FC<ProgressProps> = ({
-  id: defaultId,
-  variant = 'default',
-  state,
-  size = 'md',
-  hideIcon = false,
-  label,
-  description,
-  subtitle,
-  hidePercentage = false,
-  value = 0,
-  className,
-  hideContainer = false
-}) => {
-  const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
+const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
+  (
+    {
+      id: defaultId,
+      variant = 'default',
+      state,
+      size = 'md',
+      hideIcon = false,
+      label,
+      description,
+      subtitle,
+      hidePercentage = false,
+      value = 0,
+      className,
+      hideContainer = false
+    },
+    ref
+  ) => {
+    const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
 
-  const id = useMemo(() => defaultId || `progress-${generateAlphaNumericHash(10)}`, [defaultId])
+    const id = useMemo(() => defaultId || `progress-${generateAlphaNumericHash(10)}`, [defaultId])
 
-  const getIcon = () => {
-    if (hideIcon || variant === 'indeterminate') return null
-    const iconName: IconV2NamesType = getIconName(state)
-    return <IconV2 className="cn-progress-icon" name={iconName} skipSize />
-  }
+    const getIcon = () => {
+      if (hideIcon || variant === 'indeterminate') return null
+      const iconName: IconV2NamesType = getIconName(state)
+      return <IconV2 className="cn-progress-icon" name={iconName} skipSize />
+    }
 
-  const getProgress = () => {
-    if (variant === 'indeterminate') {
+    const getProgress = () => {
+      if (variant === 'indeterminate') {
+        return (
+          <>
+            <progress ref={ref} className="cn-progress-root" id={id} />
+            <div className="cn-progress-overlay-box">
+              <div className="cn-progress-overlay">
+                <div className="cn-progress-indeterminate-fake" />
+              </div>
+            </div>
+          </>
+        )
+      }
+
       return (
         <>
-          <progress className="cn-progress-root" id={id} />
-          <div className="cn-progress-overlay-box">
-            <div className="cn-progress-overlay">
-              <div className="cn-progress-indeterminate-fake" />
+          <progress
+            className="cn-progress-root"
+            id={id}
+            value={percentageValue}
+            max={hideContainer ? percentageValue : 100}
+          />
+
+          {state === 'processing' && (
+            <div className="cn-progress-overlay-box">
+              <div className="cn-progress-overlay">
+                <div
+                  className="cn-progress-processing-fake"
+                  style={{ transform: `translateX(-${100 - percentageValue}%)` }}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </>
       )
     }
 
     return (
-      <>
-        <progress
-          className="cn-progress-root"
-          id={id}
-          value={percentageValue}
-          max={hideContainer ? percentageValue : 100}
-        />
-
-        {state === 'processing' && (
-          <div className="cn-progress-overlay-box">
-            <div className="cn-progress-overlay">
-              <div
-                className="cn-progress-processing-fake"
-                style={{ transform: `translateX(-${100 - percentageValue}%)` }}
-              />
+      <div className={cn(progressVariants({ size, state }), className)}>
+        {(label || !hidePercentage || !hideIcon) && (
+          <label className="cn-progress-header" htmlFor={id}>
+            <div className="cn-progress-header-left">
+              {label && (
+                <Text variant="body-strong" color="foreground-1" truncate>
+                  {label}
+                </Text>
+              )}
             </div>
+            <div className="cn-progress-header-right">
+              {!hidePercentage && variant === 'default' && (
+                <Text variant="body-strong" color="foreground-1">
+                  {percentageValue}%
+                </Text>
+              )}
+              {getIcon()}
+            </div>
+          </label>
+        )}
+
+        <div className="cn-progress-container">{getProgress()}</div>
+
+        {(description || subtitle) && (
+          <div className="cn-progress-footer">
+            <div className="cn-progress-description-wrap">
+              {description && (
+                <Text className="cn-progress-description" variant="body-strong" color="foreground-3" truncate>
+                  {description}
+                </Text>
+              )}
+            </div>
+            {subtitle && (
+              <Text className="cn-progress-subtitle" align="right" variant="body-normal" color="foreground-3" truncate>
+                {subtitle}
+              </Text>
+            )}
           </div>
         )}
-      </>
+      </div>
     )
   }
-
-  return (
-    <div className={cn(progressVariants({ size, state }), className)}>
-      {(label || !hidePercentage || !hideIcon) && (
-        <label className="cn-progress-header" htmlFor={id}>
-          <div className="cn-progress-header-left">
-            {label && (
-              <Text variant="body-strong" color="foreground-1" truncate>
-                {label}
-              </Text>
-            )}
-          </div>
-          <div className="cn-progress-header-right">
-            {!hidePercentage && variant === 'default' && (
-              <Text variant="body-strong" color="foreground-1">
-                {percentageValue}%
-              </Text>
-            )}
-            {getIcon()}
-          </div>
-        </label>
-      )}
-
-      <div className="cn-progress-container">{getProgress()}</div>
-
-      {(description || subtitle) && (
-        <div className="cn-progress-footer">
-          <div className="cn-progress-description-wrap">
-            {description && (
-              <Text className="cn-progress-description" variant="body-strong" color="foreground-3" truncate>
-                {description}
-              </Text>
-            )}
-          </div>
-          {subtitle && (
-            <Text className="cn-progress-subtitle" align="right" variant="body-normal" color="foreground-3" truncate>
-              {subtitle}
-            </Text>
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
+)
 
 Progress.displayName = 'Progress'
 

@@ -1,4 +1,4 @@
-import { FC, SVGProps } from 'react'
+import { FC, Ref, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -27,6 +27,7 @@ interface BaseIconPropsV2 extends SVGProps<SVGSVGElement> {
   size?: VariantProps<typeof iconVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
+  ref?: Ref<SVGSVGElement>
 }
 
 interface IconDefaultPropsV2 extends BaseIconPropsV2 {

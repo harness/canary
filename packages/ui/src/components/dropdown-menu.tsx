@@ -430,7 +430,11 @@ const DropdownMenuNoOptions = ({ className, children, ...props }: Omit<TextProps
 }
 DropdownMenuNoOptions.displayName = displayNames.noOptions
 
-const DropdownMenuSlot = (props: HTMLAttributes<HTMLDivElement>) => <div {...props} />
+const DropdownMenuSlot = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>((props, ref) => (
+  <div ref={ref} {...props}>
+    {props.children}
+  </div>
+))
 DropdownMenuSlot.displayName = displayNames.slot
 
 const DropdownMenu = {

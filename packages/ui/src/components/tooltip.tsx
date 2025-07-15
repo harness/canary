@@ -1,4 +1,4 @@
-import { ComponentProps, FC, ReactNode } from 'react'
+import { ComponentProps, FC, ReactNode, Ref } from 'react'
 
 import { usePortal } from '@/context'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
@@ -15,6 +15,7 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
+  contentRef?: Ref<HTMLDivElement>
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align'>
 
 export const Tooltip: FC<TooltipProps> = ({
@@ -25,14 +26,15 @@ export const Tooltip: FC<TooltipProps> = ({
   delay = 500,
   side = 'top',
   align = 'center',
-  open
+  open,
+  contentRef
 }) => {
   const { portalContainer } = usePortal()
   return (
     <TooltipPrimitive.Root delayDuration={delay} open={open}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <TooltipPrimitive.Portal container={portalContainer}>
-        <TooltipPrimitive.Content className="cn-tooltip" side={side} align={align} sideOffset={4}>
+        <TooltipPrimitive.Content ref={contentRef} className="cn-tooltip" side={side} align={align} sideOffset={4}>
           {!!title && <span className="cn-tooltip-title">{title}</span>}
           <div>{content}</div>
           {!hideArrow && (

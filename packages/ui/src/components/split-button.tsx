@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react'
+import { ForwardedRef, forwardRef, MouseEvent, ReactNode } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -27,6 +27,7 @@ interface SplitButtonBaseProps<T extends string> {
   disableDropdown?: boolean
   children: ReactNode
   dropdownContentClassName?: string
+  triggerRef?: ForwardedRef<HTMLButtonElement>
 }
 
 // For solid variant with primary theme
@@ -53,25 +54,30 @@ export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | Spli
  * - variant=solid with theme=primary (default)
  * - variant=surface with theme=success|danger|muted
  */
-export const SplitButton = <T extends string>({
-  handleButtonClick,
-  loading = false,
-  selectedValue,
-  options,
-  handleOptionChange,
-  className,
-  buttonClassName,
-  theme = 'default',
-  variant = 'primary',
-  disabled = false,
-  disableDropdown = false,
-  disableButton = false,
-  children,
-  dropdownContentClassName
-}: SplitButtonProps<T>) => {
+const SplitButtonBase = <T extends string>(
+  {
+    handleButtonClick,
+    loading = false,
+    selectedValue,
+    options,
+    handleOptionChange,
+    className,
+    buttonClassName,
+    theme = 'default',
+    variant = 'primary',
+    disabled = false,
+    disableDropdown = false,
+    disableButton = false,
+    children,
+    dropdownContentClassName,
+    triggerRef
+  }: SplitButtonProps<T>,
+  ref: ForwardedRef<HTMLButtonElement>
+) => {
   return (
     <div className={cn('flex', className)}>
       <Button
+        ref={ref}
         className={cn('rounded-r-none border-r-0', buttonClassName)}
         theme={theme}
         variant={variant}
@@ -86,6 +92,7 @@ export const SplitButton = <T extends string>({
         <DropdownMenu.Trigger
           className={cn(buttonVariants({ theme, variant }), 'cn-button-split-dropdown')}
           disabled={disabled || loading || disableDropdown}
+          ref={triggerRef}
         >
           <IconV2 name="nav-arrow-down" />
         </DropdownMenu.Trigger>
@@ -122,4 +129,6 @@ export const SplitButton = <T extends string>({
   )
 }
 
-SplitButton.displayName = 'SplitButton'
+export const SplitButton = forwardRef(SplitButtonBase) as <T extends string>(
+  props: SplitButtonProps<T> & { ref?: ForwardedRef<HTMLButtonElement> }
+) => ReturnType<typeof SplitButtonBase>

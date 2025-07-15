@@ -668,7 +668,7 @@
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "1.4"
+        "$value": "1.43"
       },
       "normal": {
         "$type": "lineHeights",

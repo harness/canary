@@ -18,9 +18,9 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 interface RepoSubheaderProps {
   className?: string
   showPipelinesTab?: boolean
-  summaryPath: string
-  filesPath: string
-  commitsPath: string
+  summaryPath?: string
+  filesPath?: string
+  commitsPath?: string
 }
 
 export const RepoSubheader = ({
@@ -36,12 +36,12 @@ export const RepoSubheader = ({
     <SandboxLayout.SubHeader className={className}>
       <Tabs.NavRoot>
         <Tabs.List className="border-b border-cn-borders-3 px-6">
-          <Tabs.Trigger value={summaryPath}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
-          <Tabs.Trigger value={filesPath}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
+          <Tabs.Trigger value={summaryPath || RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
+          <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
           {showPipelinesTab && (
             <Tabs.Trigger value={RepoTabsKeys.PIPELINES}>{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>
           )}
-          <Tabs.Trigger value={commitsPath}>{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
+          <Tabs.Trigger value={commitsPath || RepoTabsKeys.COMMITS}>{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.PULLS}>{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.BRANCHES}>{t('views:repos.branches', 'Branches')}</Tabs.Trigger>

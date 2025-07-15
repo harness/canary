@@ -1566,11 +1566,11 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.300}"
+          "$value": "{red.150}"
         },
         "border": {
           "$type": "color",
-          "$value": "{red.400}"
+          "$value": "{red.300}"
         },
         "text": {
           "$type": "color",

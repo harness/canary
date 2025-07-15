@@ -1,4 +1,4 @@
-import { FC, SVGProps } from 'react'
+import { FC, Ref, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -23,6 +23,7 @@ interface BaseLogoPropsV2 extends SVGProps<SVGSVGElement> {
   size?: VariantProps<typeof logoVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
+  ref?: Ref<SVGSVGElement>
 }
 
 interface LogoDefaultPropsV2 extends BaseLogoPropsV2 {

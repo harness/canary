@@ -1,4 +1,4 @@
-import { FC, SVGProps } from 'react'
+import { FC, Ref, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -28,9 +28,10 @@ export interface IconPropsV2 extends SVGProps<SVGSVGElement> {
   size?: VariantProps<typeof iconVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
+  ref?: Ref<SVGSVGElement>
 }
 
-const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false }) => {
+const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false, ref }) => {
   const Component = IconNameMapV2[name]
 
   if (!Component) {
@@ -40,7 +41,7 @@ const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = fals
 
   const sizeClasses = skipSize ? '' : iconVariants({ size })
 
-  return <Component className={cn(sizeClasses, className)} />
+  return <Component ref={ref} className={cn(sizeClasses, className)} />
 }
 
 export { IconV2 }

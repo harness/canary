@@ -1,4 +1,4 @@
-import { HTMLAttributes, PropsWithChildren, ReactNode } from 'react'
+import { forwardRef, HTMLAttributes, PropsWithChildren, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -36,13 +36,13 @@ const ButtonLayoutRoot = ({
 }
 ButtonLayoutRoot.displayName = 'ButtonLayoutRoot'
 
-const ButtonLayoutPrimary = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-button-layout-primary', className)} {...props} />
+const ButtonLayoutPrimary = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cn('cn-button-layout-primary', className)} {...props} />
 )
 ButtonLayoutPrimary.displayName = 'ButtonLayoutPrimary'
 
-const ButtonLayoutSecondary = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-button-layout-secondary', className)} {...props} />
+const ButtonLayoutSecondary = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => <div ref={ref} className={cn('cn-button-layout-secondary', className)} {...props} />
 )
 ButtonLayoutSecondary.displayName = 'ButtonLayoutSecondary'
 

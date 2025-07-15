@@ -22,7 +22,10 @@ const useCodePathDetails = () => {
   let prefixedGitRef = ''
 
   if (rawSubGitRef) {
-    prefixedGitRef = rawSubGitRef
+    prefixedGitRef =
+      rawSubGitRef.startsWith(REFS_TAGS_PREFIX) || rawSubGitRef.startsWith(REFS_BRANCH_PREFIX)
+        ? rawSubGitRef
+        : `${REFS_BRANCH_PREFIX}${rawSubGitRef}`
   } else if (branchId) {
     prefixedGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
   } else if (tagId) {

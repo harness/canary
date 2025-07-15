@@ -12,7 +12,7 @@ The `Select` component provides a dropdown interface for selecting a single valu
   client:only
   code={`() => {
     const [value, setValue] = React.useState('banana');
-    
+
     return (
       <Select
         options={[
@@ -26,7 +26,8 @@ The `Select` component provides a dropdown interface for selecting a single valu
         placeholder="Select a fruit"
       />
     );
-  }`}
+
+}`}
 />
 
 ## Usage
@@ -58,7 +59,7 @@ The `Select` component can be customized with a suffix element that appears on t
   client:only
   code={`() => {
     const [value, setValue] = React.useState();
-    
+
     return (
       <div className="grid gap-4">
         <Select
@@ -82,7 +83,8 @@ The `Select` component can be customized with a suffix element that appears on t
         />
       </div>
     );
-  }`}
+
+}`}
 />
 
 ## Form Integration
@@ -95,7 +97,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
     const [country, setCountry] = React.useState()
     const [priority, setPriority] = React.useState()
     const [environment, setEnvironment] = React.useState('dev')
-    
+
     return (
       <div className="grid gap-4">
         <Select
@@ -112,7 +114,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           optional
           contentWidth='triggerWidth'
         />
-        
+
         <Select
           label="Priority Level"
           options={[
@@ -126,7 +128,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
           error="Please select a priority level"
           contentWidth='triggerWidth'
         />
-        
+
         <Select
           label="Environment"
           options={[
@@ -141,7 +143,8 @@ The `Select` component integrates seamlessly with form elements like labels, cap
         />
       </div>
     )
-  }`}
+
+}`}
 />
 
 ## Search Functionality
@@ -259,7 +262,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
   code={`() => {
     const [value, setValue] = React.useState()
     const [asyncValue, setAsyncValue] = React.useState()
-    
+
     // Simulate API call
     const fetchOptions = async () => {
       await new Promise(resolve => setTimeout(resolve, 2000))
@@ -270,7 +273,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
         { label: 'Option from API 4', value: 'api4' },
       ]
     }
-    
+
     return (
       <div className="grid gap-4">
         <Select
@@ -280,7 +283,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
           onChange={setValue}
           placeholder="Loading options..."
         />
-        
+
         <Select
           label="With default value"
           options={async () => {
@@ -296,7 +299,8 @@ Options can be loaded asynchronously by passing a function that returns a Promis
         />
       </div>
     )
-  }`}
+
+}`}
 />
 
 ## Disabled States
@@ -308,7 +312,7 @@ Both the entire select and individual options can be disabled.
   code={`() => {
     const [value1, setValue1] = React.useState()
     const [value2, setValue2] = React.useState('available')
-    
+
     return (
       <div className="grid gap-4">
         <Select
@@ -321,7 +325,7 @@ Both the entire select and individual options can be disabled.
           disabled
           placeholder="This select is disabled"
         />
-        
+
         <Select
           label="With disabled options"
           options={[
@@ -336,7 +340,8 @@ Both the entire select and individual options can be disabled.
         />
       </div>
     )
-  }`}
+
+}`}
 />
 
 ## Loading States
@@ -354,7 +359,7 @@ The Select component provides clear loading indicators for different scenarios.
           isLoading={true}
           placeholder="Loading options..."
         />
-        
+
         <Select
           label="Loading more items"
           options={[
@@ -368,7 +373,8 @@ The Select component provides clear loading indicators for different scenarios.
         />
       </div>
     )
-  }`}
+
+}`}
 />
 
 ## Complex Option Labels
@@ -379,38 +385,38 @@ Options can have ReactNode labels for rich content display.
   client:only
   code={`() => {
     const [value, setValue] = React.useState()
-    
+
     const options = [
-      { 
+      {
         label: (
           <div className="flex items-center gap-2">
             <IconV2 name="git-branch" />
             <span className="font-medium">main</span>
             <span className="text-xs text-cn-foreground-3">default</span>
           </div>
-        ), 
-        value: 'main' 
+        ),
+        value: 'main'
       },
-      { 
+      {
         label: (
           <div className="flex items-center gap-2">
             <IconV2 name="git-branch" />
             <span>feature/new-select</span>
           </div>
-        ), 
-        value: 'feature/new-select' 
+        ),
+        value: 'feature/new-select'
       },
-      { 
+      {
         label: (
           <div className="flex items-center gap-2">
             <IconV2 name="git-branch" />
             <span>hotfix/critical-bug</span>
           </div>
-        ), 
-        value: 'hotfix/critical-bug' 
+        ),
+        value: 'hotfix/critical-bug'
       },
     ]
-    
+
     return (
       <Select
         label="Select branch"
@@ -420,7 +426,8 @@ Options can have ReactNode labels for rich content display.
         placeholder="Choose a branch"
       />
     )
-  }`}
+
+}`}
 />
 
 ## Custom Option Renderer
@@ -516,7 +523,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
   code={`() => {
     const [value1, setValue1] = React.useState('banana');
     const [value2, setValue2] = React.useState('banana');
-    
+
     return (
       <div className="grid gap-4">
         <Select
@@ -563,7 +570,7 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
   client:only
   code={`() => {
     const [value, setValue] = React.useState('banana');
-    
+
     return (
       <div className="grid gap-4">
         <div>
@@ -597,6 +604,53 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
             size="md"
           />
         </div>
+      </div>
+    );
+
+}`}
+/>
+
+## Orientation
+
+The `Select` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('banana');
+
+    return (
+      <Layout.Vertical spacing="large" className="min-w-[400px]">
+        <Select
+          label="Vertical"
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="sm"
+            caption="Caption text"
+          />
+          <Select
+            label="Horizontal"
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="sm"
+            caption="Caption text"
+            orientation="horizontal"
+          />
       </div>
     );
 
@@ -646,32 +700,32 @@ The `Select` component is the main component for creating dropdown selections.
     },
     {
       name: "value",
-      description: "Currently selected value (controlled mode)",
+      description: "Currently selected value (controlled mode).",
       required: false,
       value: "T",
     },
     {
       name: "defaultValue",
-      description: "Default selected value (uncontrolled mode)",
+      description: "Default selected value (uncontrolled mode).",
       required: false,
       value: "T",
     },
     {
       name: "onChange",
-      description: "Callback fired when selection changes",
+      description: "Callback fired when selection changes.",
       required: false,
       value: "(value: T) => void",
     },
     {
       name: "onSelectedChange",
       description:
-        "Callback fired when the selected option changes (useful for controlled components)",
+        "Callback fired when the selected option changes (useful for controlled components).",
       required: false,
       value: "(event: ChangeEvent<HTMLInputElement>) => void",
     },
     {
       name: "disabled",
-      description: "Disable the entire select",
+      description: "Disable the entire select.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -679,125 +733,125 @@ The `Select` component is the main component for creating dropdown selections.
     {
       name: "onScrollEnd",
       description:
-        "Callback fired when user scrolls near the bottom of options list",
+        "Callback fired when user scrolls near the bottom of options list.",
       required: false,
       value: "() => void",
     },
     {
       name: "size",
-      description: "Size of the select input",
+      description: "Size of the select input.",
       required: false,
       value: "'sm' | 'md'",
       defaultValue: "'md'",
     },
     {
       name: "placeholder",
-      description: "Placeholder text when no option is selected",
+      description: "Placeholder text when no option is selected.",
       required: false,
       value: "string",
       defaultValue: "'Select an option'",
     },
     {
       name: "isLoading",
-      description: "Show loading indicator",
+      description: "Show loading indicator.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "id",
-      description: "HTML id attribute for the select trigger",
+      description: "HTML id attribute for the select trigger.",
       required: false,
       value: "string",
       defaultValue: "Auto-generated",
     },
     {
       name: "name",
-      description: "HTML name attribute for form submission",
+      description: "HTML name attribute for form submission.",
       required: false,
       value: "string",
     },
     {
       name: "label",
-      description: "Label text displayed above the select",
+      description: "Label text displayed above the select.",
       required: false,
       value: "string",
     },
     {
       name: "suffix",
       description:
-        "Custom element to display on the right side of the select input",
+        "Custom element to display on the right side of the select input.",
       required: false,
       value: "ReactNode",
     },
     {
       name: "theme",
-      description: "Visual theme variant",
+      description: "Visual theme variant.",
       required: false,
       value: "'default' | 'danger' | 'warning'",
       defaultValue: "'default'",
     },
     {
       name: "caption",
-      description: "Helper text displayed below the select",
+      description: "Helper text displayed below the select.",
       required: false,
       value: "string",
     },
     {
       name: "error",
-      description: "Error message (sets theme to 'danger')",
+      description: "Error message (sets theme to 'danger').",
       required: false,
       value: "string",
     },
     {
       name: "warning",
-      description: "Warning message (sets theme to 'warning')",
+      description: "Warning message (sets theme to 'warning').",
       required: false,
       value: "string",
     },
     {
       name: "optional",
-      description: "Shows '(optional)' next to the label",
+      description: "Shows '(optional)' next to the label.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "allowSearch",
-      description: "Enable client-side search filtering",
+      description: "Enable client-side search filtering.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
       name: "onSearch",
-      description: "Custom search filter function",
+      description: "Custom search filter function.",
       required: false,
       value: "(query: string) => SelectOption<T>[]",
       defaultValue: "Filters by label containing query",
     },
     {
       name: "searchValue",
-      description: "Controlled search input value",
+      description: "Controlled search input value.",
       required: false,
       value: "string",
     },
     {
       name: "optionRenderer",
       description:
-        "Function to render custom SelectItemType for each value option",
+        "Function to render custom SelectItemType for each value option.",
       required: false,
       value: "(option: ValueOption<T>) => SelectItemType",
     },
     {
       name: "header",
-      description: "Custom header content for the dropdown",
+      description: "Custom header content for the dropdown.",
       required: false,
       value: "ReactNode",
     },
     {
       name: "footer",
-      description: "Custom footer content for the dropdown",
+      description: "Custom footer content for the dropdown.",
       required: false,
       value: "ReactNode",
     },
@@ -811,23 +865,30 @@ The `Select` component is the main component for creating dropdown selections.
     },
     {
       name: "rootClassName",
-      description: "Custom class name for the root container",
+      description: "Custom class name for the root container.",
       required: false,
       value: "string",
     },
     {
       name: "triggerClassName",
-      description: "Custom class name for the trigger button",
+      description: "Custom class name for the trigger button.",
       required: false,
       value: "string",
     },
     {
       name: "contentClassName",
       description:
-        "Custom class name for the dropdown content container. This can be used to apply custom styles to the dropdown content, such as setting a custom maximum width",
+        "Custom class name for the dropdown content container. This can be used to apply custom styles to the dropdown content, such as setting a custom maximum width.",
       required: false,
       value: "string",
       defaultValue: "''",
+    },
+    {
+      name: "orientation",
+      description: "Defines the layout direction of the select and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
   ]}
 />
@@ -861,19 +922,19 @@ type SelectOption<T = string> =
   props={[
     {
       name: "label",
-      description: "Display text or custom ReactNode for the option",
+      description: "Display text or custom ReactNode for the option.",
       required: true,
       value: "string | ReactNode",
     },
     {
       name: "value",
-      description: "Value that will be passed to onChange when selected",
+      description: "Value that will be passed to onChange when selected.",
       required: true,
       value: "T",
     },
     {
       name: "disabled",
-      description: "Disable this specific option",
+      description: "Disable this specific option.",
       required: false,
       value: "boolean",
       defaultValue: "false",

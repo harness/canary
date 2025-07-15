@@ -11,32 +11,10 @@ import { DocsPage } from "../../../components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-  <TooltipProvider>
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-4">
-          <h5>Standard usage</h5>
-          <Label htmlFor="name">Name</Label>
-          <input id="name" type="text" />
-      </div>
-
-      <hr />
-
-      <div className="flex flex-col gap-4">
-          <h5>With optional indicator</h5>
-          <Label htmlFor="email" optional>Email</Label>
-          <input id="email" type="email" />
-      </div>
-
-      <hr />
-
-      <div className="flex flex-col gap-4">
-          <h5>With informer</h5>
-          <Label htmlFor="2" informerContent="Content here">Description</Label>
-          <input id="2" type="text" />
-      </div>
+      <Label htmlFor="name">Name</Label>
+      <input id="name" type="text" />
     </div>
-
-  </TooltipProvider>
 `}
 />
 
@@ -55,44 +33,117 @@ return (
 )
 ```
 
+## Optional
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex flex-col gap-4">
+      <Label htmlFor="email" optional>Email</Label>
+      <input id="email" type="email" />
+    </div>
+  `}
+/>
+
+## With informer
+
+The `Label` component supports displaying a tooltip with additional information.
+Use the `informerContent` prop to provide the tooltip content, and pass additional configuration via the `informerProps` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex flex-col gap-4">
+      <Label
+        htmlFor="2"
+        informerContent="Content here"
+      >
+        Description
+      </Label>
+      <input id="2" type="text" />
+    </div>
+  `}
+/>
+
+## Suffix
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex flex-col gap-4">
+      <Label
+        htmlFor="2"
+        informerContent="Content here"
+        suffix={
+          <Button size="xs" iconOnly>
+            <IconV2 name="plus" skipSize />
+          </Button>
+        }
+      >
+        Description
+      </Label>
+      <input id="2" type="text" />
+    </div>
+  `}
+/>
+
 ## API Reference
 
-The `Label` component provides a styled label for form elements with customizable options.
-
-```typescript jsx
-<Label
-  htmlFor="inputId" // [OPTIONAL] ID of the form control this label is associated with
-  optional          // [OPTIONAL] Indicate if the associated form field is optional
->
-  Label Text
-</Label>
+```typescript
+interface InformerProps extends Omit<TooltipProps, "children"> {
+  className?: string;
+  /**
+   * If disabled, the tooltip will not be shown
+   */
+  disabled?: boolean;
+  iconProps?: IconPropsV2;
+}
 ```
 
 <DocsPage.PropsTable
   props={[
     {
       name: "htmlFor",
-      description: "The id of the form control this label is associated with",
+      description: "The id of the form control this label is associated with.",
       required: false,
       value: "string",
     },
     {
       name: "optional",
-      description: "Indicates if the associated form field is optional",
+      description: "Indicates if the associated form field is optional.",
       defaultValue: "false",
       required: false,
       value: "boolean",
     },
     {
       name: "className",
-      description: "Additional CSS classes to apply to the label",
+      description: "Additional CSS classes to apply to the label.",
       required: false,
       value: "string",
     },
     {
       name: "children",
-      description: "The content of the label",
+      description: "The content of the label.",
       required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "informerContent",
+      description: "Content to display in the informer tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "informerProps",
+      description: "Additional props for configuring the informer tooltip.",
+      required: false,
+      value: "InformerProps",
+    },
+    {
+      name: "suffix",
+      description:
+        "Customized with a suffix element that appears on the right side of the label.",
+      required: false,
       value: "ReactNode",
     },
   ]}

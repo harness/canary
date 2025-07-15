@@ -1,3 +1,5 @@
+import { forwardRef, Ref } from 'react'
+
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -52,59 +54,86 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   label?: string
   value: string
   disabled?: boolean
+  resetRef?: Ref<HTMLButtonElement>
+  leftRef?: Ref<HTMLDivElement>
+  rightRef?: Ref<HTMLDivElement>
 }
 
-function Tag({
-  variant,
-  size,
-  theme,
-  rounded,
-  icon,
-  onReset,
-  label,
-  value,
-  className,
-  showReset = false,
-  showIcon = false,
-  disabled = false,
-  ...props
-}: TagProps) {
-  if (label && value) {
+const Tag = forwardRef<HTMLDivElement, TagProps>(
+  (
+    {
+      variant,
+      size,
+      theme,
+      rounded,
+      icon,
+      onReset,
+      label,
+      value,
+      className,
+      showReset = false,
+      showIcon = false,
+      disabled = false,
+      resetRef,
+      leftRef,
+      rightRef,
+      ...props
+    },
+    ref
+  ) => {
+    if (label && value) {
+      return (
+        <TagSplit
+          {...{
+            variant,
+            size,
+            theme,
+            rounded,
+            icon,
+            showIcon,
+            showReset,
+            onReset,
+            label: label,
+            value,
+            disabled,
+            leftRef,
+            rightRef
+          }}
+        />
+      )
+    }
+
     return (
-      <TagSplit
-        {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value, disabled }}
-      />
+      <div
+        ref={ref}
+        tabIndex={-1}
+        className={cn(
+          tagVariants({ variant, size, theme, rounded }),
+          { 'text-cn-foreground-disabled cursor-not-allowed': disabled },
+          className
+        )}
+        {...props}
+      >
+        {showIcon && (
+          <IconV2
+            skipSize
+            name={icon || 'label'}
+            className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
+          />
+        )}
+        <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={value || label}>
+          {value || label}
+        </span>
+        {showReset && !disabled && (
+          <button onClick={onReset} ref={resetRef}>
+            <IconV2 skipSize name="xmark" className="cn-tag-reset-icon" />
+          </button>
+        )}
+      </div>
     )
   }
-
-  return (
-    <div
-      tabIndex={-1}
-      className={cn(
-        tagVariants({ variant, size, theme, rounded }),
-        { 'text-cn-foreground-disabled cursor-not-allowed': disabled },
-        className
-      )}
-      {...props}
-    >
-      {showIcon && (
-        <IconV2
-          skipSize
-          name={icon || 'label'}
-          className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
-        />
-      )}
-      <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={value || label}>
-        {value || label}
-      </span>
-      {showReset && !disabled && (
-        <button onClick={onReset}>
-          <IconV2 skipSize name="xmark" className="cn-tag-reset-icon" />
-        </button>
-      )}
-    </div>
-  )
-}
+)
+Tag.displayName = 'Tag'
 
 function TagSplit({
   variant,
@@ -117,17 +146,26 @@ function TagSplit({
   value,
   label = '',
   onReset,
-  disabled = false
+  disabled = false,
+  leftRef,
+  rightRef
 }: TagProps) {
   const sharedProps = { variant, size, theme, rounded, icon, disabled }
 
   return (
     <div className={cn('cn-tag-split flex w-fit items-center justify-center', { 'cursor-not-allowed': disabled })}>
       {/* LEFT TAG - should never have a Reset Icon */}
-      <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />
+      <Tag {...sharedProps} ref={leftRef} showIcon={showIcon} value={label} className="cn-tag-split-left" />
 
       {/* RIGHT TAG - should never have a tag Icon */}
-      <Tag {...sharedProps} showReset={showReset} onReset={onReset} value={value} className="cn-tag-split-right" />
+      <Tag
+        {...sharedProps}
+        ref={rightRef}
+        showReset={showReset}
+        onReset={onReset}
+        value={value}
+        className="cn-tag-split-right"
+      />
     </div>
   )
 }

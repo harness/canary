@@ -22,10 +22,13 @@ const useCodePathDetails = () => {
   let effectiveGitRef = ''
 
   if (rawSubGitRef) {
+    // Use the rawSubGitRef as it is in the VIEW mode, and for EDIT/NEW modes, ensure it starts with the correct prefix
     effectiveGitRef =
-      rawSubGitRef.startsWith(REFS_TAGS_PREFIX) || rawSubGitRef.startsWith(REFS_BRANCH_PREFIX)
+      codeMode === CodeModes.VIEW
         ? rawSubGitRef
-        : `${REFS_BRANCH_PREFIX}${rawSubGitRef}`
+        : rawSubGitRef.startsWith(REFS_TAGS_PREFIX) || rawSubGitRef.startsWith(REFS_BRANCH_PREFIX)
+          ? rawSubGitRef
+          : `${REFS_BRANCH_PREFIX}${rawSubGitRef}`
   } else if (branchId) {
     effectiveGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
   } else if (tagId) {
@@ -34,12 +37,19 @@ const useCodePathDetails = () => {
 
   // Normalize values
   const fullGitRef = effectiveGitRef.endsWith('/') ? effectiveGitRef.slice(0, -1) : effectiveGitRef
-  const gitRefName = fullGitRef.startsWith(REFS_TAGS_PREFIX)
+  let gitRefName = fullGitRef.startsWith(REFS_TAGS_PREFIX)
     ? fullGitRef.split(REFS_TAGS_PREFIX)[1]
     : fullGitRef.split(REFS_BRANCH_PREFIX)[1]
   const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
 
-  return { codeMode, fullGitRef, gitRefName, fullResourcePath }
+  // If the effectiveGitRef is not a branch or a tag and instead a commit SHA, use it as the gitRefName
+  if (!(effectiveGitRef.startsWith(REFS_BRANCH_PREFIX) || effectiveGitRef.startsWith(REFS_TAGS_PREFIX))) {
+    gitRefName = effectiveGitRef
+  }
+
+  const isCommitSHA = !(fullGitRef?.startsWith(REFS_BRANCH_PREFIX) || fullGitRef?.startsWith(REFS_TAGS_PREFIX))
+
+  return { codeMode, fullGitRef, gitRefName, fullResourcePath, isCommitSHA }
 }
 
 export default useCodePathDetails

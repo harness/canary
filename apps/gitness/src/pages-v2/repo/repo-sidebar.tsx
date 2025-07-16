@@ -3,7 +3,6 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
   getContent,
-  useFindRepositoryQuery,
   useGetBranchQuery,
   useGetContentQuery,
   useListBranchesQuery,

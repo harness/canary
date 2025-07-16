@@ -103,6 +103,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
       return (
         <>
           <progress
+            ref={ref}
             className="cn-progress-root"
             id={id}
             value={percentageValue}

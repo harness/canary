@@ -7,7 +7,6 @@ import { MainContentLayout } from '@harnessio/ui/views'
 import { useRepoImportEvents } from '../../framework/hooks/useRepoImportEvent'
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
-import { AppSidebar } from './side-bar'
 
 export const AppShellMFE = memo(() => {
   useRepoImportEvents()
@@ -15,13 +14,11 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      {/* <AppSidebar> */}
       <Breadcrumbs breadcrumbs={breadcrumbs} breadcrumbClassName="ml-6" />
       <MainContentLayout className="text-cn-foreground-2" withBreadcrumbs={breadcrumbs.length > 0}>
         <Outlet />
       </MainContentLayout>
       <Toaster />
-      {/* </AppSidebar> */}
     </>
   )
 })

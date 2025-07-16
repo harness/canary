@@ -1,4 +1,4 @@
-import { FC, Ref, SVGProps } from 'react'
+import { forwardRef, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -24,16 +24,15 @@ export interface LogoPropsV2 extends SVGProps<SVGSVGElement> {
   size?: VariantProps<typeof logoVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
-  ref?: Ref<SVGSVGElement>
 }
 
-const LogoV2: FC<LogoPropsV2> = ({ name, size, className, skipSize = false, ref }) => {
+const LogoV2 = forwardRef<SVGSVGElement, LogoPropsV2>(({ name, size, className, skipSize = false }, ref) => {
   const Component = LogoNameMapV2[name]
 
   const sizeClasses = skipSize ? '' : logoVariants({ size })
 
   return <Component className={cn(sizeClasses, className)} ref={ref} />
-}
+})
 
 export { LogoV2 }
 

@@ -115,6 +115,10 @@ ul.top-level summary svg {
 
 /* Search override */
 
+button[aria-label="Search"] {
+  @apply hidden;
+}
+
 [aria-label="Search"] {
   @apply bg-cn-background-3 border border-cn-borders-3 rounded-md h-[36px] !important;
 }

@@ -62,7 +62,7 @@ export default defineConfig({
         PageFrame: "./src/components/layout/PageFrame.astro",
         TwoColumnContent: "./src/components/layout/TwoColumnContent.astro",
         PageTitle: "./src/components/layout/PageTitle.astro",
-        ThemeSelect: "./src/components/layout/ThemeSelect.astro",
+        ThemeSelect: "./src/components/layout/theme-selector/ThemeSelector.astro",
       },
       expressiveCode: {
         themes: ["github-light", "github-dark"],

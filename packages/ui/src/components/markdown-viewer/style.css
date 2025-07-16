@@ -80,7 +80,7 @@
       --color-border-default: #eaeaea;
       --color-border-muted: #eaeaea;
 
-      --color-prettylights-syntax-comment: #666666;
+      --color-prettylights-syntax-comment: #10a567;
       --color-prettylights-syntax-constant: #e88501;
       --color-prettylights-syntax-entity: #386ac3;
       --color-prettylights-syntax-storage-modifier-import: #386ac3;
@@ -105,7 +105,7 @@
       --color-prettylights-syntax-markup-changed-text: #ffdfb6;
       --color-prettylights-syntax-markup-changed-bg: #5a1e02;
       --color-prettylights-syntax-meta-diff-range: #3e999f;
-      --color-prettylights-syntax-brackethighlighter-angle: #666666;
+      --color-prettylights-syntax-brackethighlighter-angle: #10a567;
       --color-prettylights-syntax-constant-other-reference-link: #386ac3;
 
       --color-neutral-muted: rgba(110, 118, 129, 0.4);

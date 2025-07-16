@@ -1,4 +1,4 @@
-import { FC, Ref, SVGProps } from 'react'
+import { forwardRef, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -27,7 +27,6 @@ interface BaseIconPropsV2 extends SVGProps<SVGSVGElement> {
   size?: VariantProps<typeof iconVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
-  ref?: Ref<SVGSVGElement>
 }
 
 interface IconDefaultPropsV2 extends BaseIconPropsV2 {
@@ -42,24 +41,26 @@ interface IconFallbackPropsV2 extends BaseIconPropsV2 {
 
 export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
 
-const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false, fallback }) => {
-  const Component = name ? IconNameMapV2[name] : undefined
-  const sizeClasses = skipSize ? '' : iconVariants({ size })
+const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
+  ({ name, size = 'sm', className, skipSize = false, fallback, ...props }, ref) => {
+    const Component = name ? IconNameMapV2[name] : undefined
+    const sizeClasses = skipSize ? '' : iconVariants({ size })
 
-  if (!Component && fallback) {
-    console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
-    const FallbackComponent = IconNameMapV2[fallback]
+    if (!Component && fallback) {
+      console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
+      const FallbackComponent = IconNameMapV2[fallback]
 
-    return <FallbackComponent className={cn(sizeClasses, className)} />
+      return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} {...props} />
+    }
+
+    if (!Component) {
+      console.warn(`Icon "${name}" not found in IconNameMapV2.`)
+      return null
+    }
+
+    return <Component className={cn(sizeClasses, className)} ref={ref} {...props} />
   }
-
-  if (!Component) {
-    console.warn(`Icon "${name}" not found in IconNameMapV2.`)
-    return null
-  }
-
-  return <Component className={cn(sizeClasses, className)} />
-}
+)
 
 export { IconV2 }
 

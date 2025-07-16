@@ -1,4 +1,4 @@
-import { ComponentProps, FC, ReactNode, Ref } from 'react'
+import { ComponentProps, forwardRef, ReactNode } from 'react'
 
 import { usePortal } from '@/context'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
@@ -15,38 +15,30 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
-  contentRef?: Ref<HTMLDivElement>
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align'>
 
-export const Tooltip: FC<TooltipProps> = ({
-  children,
-  title,
-  content,
-  hideArrow = false,
-  delay = 500,
-  side = 'top',
-  align = 'center',
-  open,
-  contentRef
-}) => {
-  const { portalContainer } = usePortal()
-  return (
-    <TooltipPrimitive.Root delayDuration={delay} open={open}>
-      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Portal container={portalContainer}>
-        <TooltipPrimitive.Content ref={contentRef} className="cn-tooltip" side={side} align={align} sideOffset={4}>
-          {!!title && <span className="cn-tooltip-title">{title}</span>}
-          <div>{content}</div>
-          {!hideArrow && (
-            <TooltipPrimitive.Arrow width={20} height={8} asChild>
-              <Illustration className="cn-tooltip-arrow" name="tooltip-arrow" />
-            </TooltipPrimitive.Arrow>
-          )}
-        </TooltipPrimitive.Content>
-      </TooltipPrimitive.Portal>
-    </TooltipPrimitive.Root>
-  )
-}
+export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
+  ({ children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open }, ref) => {
+    const { portalContainer } = usePortal()
+    return (
+      <TooltipPrimitive.Root delayDuration={delay} open={open}>
+        <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+        <TooltipPrimitive.Portal container={portalContainer}>
+          <TooltipPrimitive.Content ref={ref} className="cn-tooltip" side={side} align={align} sideOffset={4}>
+            {!!title && <span className="cn-tooltip-title">{title}</span>}
+            <div>{content}</div>
+            {!hideArrow && (
+              <TooltipPrimitive.Arrow width={20} height={8} asChild>
+                <Illustration className="cn-tooltip-arrow" name="tooltip-arrow" />
+              </TooltipPrimitive.Arrow>
+            )}
+          </TooltipPrimitive.Content>
+        </TooltipPrimitive.Portal>
+      </TooltipPrimitive.Root>
+    )
+  }
+)
+Tooltip.displayName = 'Tooltip'
 
 export const TooltipProvider = (props: ComponentProps<typeof TooltipPrimitive.Provider>) => (
   <TooltipPrimitive.Provider skipDelayDuration={0} {...props} />

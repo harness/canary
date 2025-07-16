@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, MouseEvent, ReactNode } from 'react'
+import { ForwardedRef, forwardRef, MouseEvent, ReactNode, useImperativeHandle, useRef } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -27,7 +27,6 @@ interface SplitButtonBaseProps<T extends string> {
   disableDropdown?: boolean
   children: ReactNode
   dropdownContentClassName?: string
-  triggerRef?: ForwardedRef<HTMLButtonElement>
 }
 
 // For solid variant with primary theme
@@ -44,6 +43,11 @@ interface SplitButtonSurfaceProps<T extends string> extends SplitButtonBaseProps
 
 // Combined discriminated union
 export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | SplitButtonSurfaceProps<T>
+type SplitButtonRef = {
+  trigger: HTMLButtonElement | null
+  button: HTMLButtonElement | null
+  parent: HTMLDivElement | null
+}
 
 /**
  * Button with options
@@ -69,15 +73,32 @@ const SplitButtonBase = <T extends string>(
     disableDropdown = false,
     disableButton = false,
     children,
-    dropdownContentClassName,
-    triggerRef
+    dropdownContentClassName
   }: SplitButtonProps<T>,
-  ref: ForwardedRef<HTMLButtonElement>
+  ref: ForwardedRef<SplitButtonRef>
 ) => {
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const parentRef = useRef<HTMLDivElement>(null)
+
+  useImperativeHandle(ref, () => {
+    return {
+      get trigger() {
+        return triggerRef.current
+      },
+      get button() {
+        return buttonRef.current
+      },
+      get parent() {
+        return parentRef.current
+      }
+    }
+  })
+
   return (
-    <div className={cn('flex', className)}>
+    <div className={cn('flex', className)} ref={parentRef}>
       <Button
-        ref={ref}
+        ref={buttonRef}
         className={cn('rounded-r-none border-r-0', buttonClassName)}
         theme={theme}
         variant={variant}

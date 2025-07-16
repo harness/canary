@@ -100,7 +100,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
 
       return (
         <>
-          <progress className="cn-progress-root" id={id} value={percentageValue} max={100} />
+          <progress ref={ref} className="cn-progress-root" id={id} value={percentageValue} max={100} />
 
           {state === 'processing' && (
             <div className="cn-progress-overlay-box">

@@ -98,7 +98,7 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   const [matchedDelegates, setMatchedDelegates] = useState(0)
 
   const { Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
-  const bodyProps = isDrawer ? { scrollAreaProps: { classNameContent: 'min-w-0' } } : {}
+  const bodyProps = isDrawer ? { classNameContent: 'min-w-0' } : {}
 
   const formMethods = useForm<DelegateSelectorFormFields>({
     resolver: zodResolver(delegateSelectorFormSchema),

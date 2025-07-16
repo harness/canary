@@ -1,0 +1,68 @@
+name: Bump UI Package Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump-type:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  bump-ui-version:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Generate branch name
+        id: branch
+        run: |
+          BRANCH_NAME="bump-ui-${{ github.event.inputs.bump-type }}-$(date +%s)"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create new branch
+        run: |
+          git checkout -b ${{ steps.branch.outputs.branch_name }}
+
+      - name: Bump version of package/ui
+        working-directory: package/ui
+        run: |
+          npm version ${{ github.event.inputs.bump-type }} --no-git-tag-version
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package/ui/package.json package/ui/package-lock.json || true
+          git commit -m "chore(ui): bump ${{ github.event.inputs.bump-type }} version"
+          git push origin ${{ steps.branch.outputs.branch_name }}
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.branch.outputs.branch_name }}
+          base: main
+          title: 'chore(ui): bump ${{ github.event.inputs.bump-type }} version'
+          body: |
+            This PR bumps the `${{ github.event.inputs.bump-type }}` version of `package/ui`.
+          draft: false

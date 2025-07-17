@@ -48,22 +48,22 @@ export const RepoSubheader = ({
     <SandboxLayout.SubHeader className={className}>
       <Tabs.NavRoot value={currentPath}>
         <Tabs.List className="border-b border-cn-borders-3 px-6">
-          <Tabs.Trigger value={summaryPath ?? RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
-          <Tabs.Trigger value={filesPath ?? RepoTabsKeys.CODE}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
+          <Tabs.Trigger value={summaryPath || RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
+          <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
           {showPipelinesTab && (
-            <Tabs.Trigger value={pipelinesPath ?? RepoTabsKeys.PIPELINES}>
+            <Tabs.Trigger value={pipelinesPath || RepoTabsKeys.PIPELINES}>
               {t('views:repos.pipelines', 'Pipelines')}
             </Tabs.Trigger>
           )}
-          <Tabs.Trigger value={commitsPath ?? RepoTabsKeys.COMMITS}>{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
-          <Tabs.Trigger value={tagsPath ?? RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
-          <Tabs.Trigger value={pullsPath ?? RepoTabsKeys.PULLS}>
+          <Tabs.Trigger value={commitsPath || RepoTabsKeys.COMMITS}>{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
+          <Tabs.Trigger value={tagsPath || RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
+          <Tabs.Trigger value={pullsPath || RepoTabsKeys.PULLS}>
             {t('views:repos.pull-requests', 'Pull Requests')}
           </Tabs.Trigger>
-          <Tabs.Trigger value={branchesPath ?? RepoTabsKeys.BRANCHES}>
+          <Tabs.Trigger value={branchesPath || RepoTabsKeys.BRANCHES}>
             {t('views:repos.branches', 'Branches')}
           </Tabs.Trigger>
-          <Tabs.Trigger value={settingsPath ?? RepoTabsKeys.SETTINGS}>
+          <Tabs.Trigger value={settingsPath || RepoTabsKeys.SETTINGS}>
             {t('views:repos.settings', 'Settings')}
           </Tabs.Trigger>
         </Tabs.List>

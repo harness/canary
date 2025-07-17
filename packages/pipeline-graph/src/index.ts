@@ -11,3 +11,5 @@ export { type CollapseButtonProps } from './components/components/collapse'
 
 // TODO: temporary exposed to use collapse()
 export * from './context/graph-provider'
+
+export * from './context/multi-canvas-provider'

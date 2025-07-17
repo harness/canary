@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useRef } from 'react'
 
 import { calculateTransform } from '../components/canvas/canvas-utils'
+import { useMultiCanvasContext } from './multi-canvas-provider'
 
 interface CanvasConfig {
   minScale: number
@@ -30,7 +31,7 @@ interface CanvasContextProps {
 
 const CanvasContext = createContext<CanvasContextProps>({
   canvasTransformRef: { current: { scale: 1, translateX: 0, translateY: 0 } },
-  setTargetEl: (el: HTMLElement) => undefined,
+  setTargetEl: (_el: HTMLElement) => undefined,
   setCanvasTransform: (_canvasTransform: CanvasTransform) => undefined,
   fit: () => undefined,
   reset: () => undefined,
@@ -40,16 +41,19 @@ const CanvasContext = createContext<CanvasContextProps>({
 })
 
 export interface CanvasProviderProps {
+  id?: string
   config?: Partial<CanvasConfig>
   children: React.ReactNode
 }
 
-export const CanvasProvider = ({ children, config: configFromProps }: CanvasProviderProps) => {
+export const CanvasProvider = ({ children, config: configFromProps, id = '' }: CanvasProviderProps) => {
   const config = { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 20, ...configFromProps }
 
   const canvasTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
   const targetElRef = useRef<HTMLElement>()
   const initialTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
+
+  const { getCanvasTransformRef, setCanvasTransformRef } = useMultiCanvasContext()
 
   const setCanvasTransform = useCallback(
     (transform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }) => {
@@ -66,9 +70,17 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
           translateX: transform.translateX,
           translateY: transform.translateY
         }
+
+        // set canvas transform from global state
+        const currTransform = getCanvasTransformRef(id)?.current
+        if (currTransform) {
+          canvasTransformRef.current = { ...currTransform }
+        }
       }
+
+      setCanvasTransformRef(id, canvasTransformRef)
     },
-    []
+    [id, getCanvasTransformRef, setCanvasTransformRef]
   )
 
   const setTargetEl = useCallback((targetEl: HTMLElement) => {
@@ -93,8 +105,8 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
     const centerX = parentElRect.left + parentElRect.width / 2
     const centerY = parentElRect.top + parentElRect.height / 2
 
-    let originX = centerX - targetElRect.left
-    let originY = centerY - targetElRect.top
+    const originX = centerX - targetElRect.left
+    const originY = centerY - targetElRect.top
 
     const newTransform = calculateTransform({
       scaleDiff,

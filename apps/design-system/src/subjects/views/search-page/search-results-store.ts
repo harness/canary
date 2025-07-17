@@ -15,46 +15,120 @@ export interface SearchResultsStore {
 export const searchResultsStore: SearchResultsStore = {
   results: [
     {
-      id: '1',
-      title: 'Deployment Pipeline Configuration',
-      description: 'Configuration for CI/CD pipeline with automated testing and deployment',
-      type: 'Document',
-      url: '/documents/deployment-pipeline'
+      file_name: 'user-service.ts',
+      repo_path: 'packages/api/services',
+      repo_branch: 'main',
+      language: 'typescript',
+      matches: [
+        {
+          line_num: 42,
+          before: 'export const userService = {',
+          after: '};',
+          segments: [
+            {
+              pre: '  ',
+              match: 'searchUsers',
+              post: ': async (query: string) => {'
+            }
+          ]
+        },
+        {
+          line_num: 124,
+          before: 'const searchUsersByName = async (name: string) => {',
+          after: '  return results;',
+          segments: [
+            {
+              pre: '  const results = await db.users.find({ name: { $regex: ',
+              match: 'searchPattern',
+              post: ', $options: "i" } });'
+            }
+          ]
+        }
+      ]
     },
     {
-      id: '2',
-      title: 'User Authentication Service',
-      description: 'Microservice handling user authentication and authorization',
-      type: 'Service',
-      url: '/services/auth'
+      file_name: 'SearchComponent.tsx',
+      repo_path: 'packages/ui/components/search',
+      repo_branch: 'feature/search-improvements',
+      language: 'tsx',
+      matches: [
+        {
+          line_num: 15,
+          before: 'interface SearchProps {',
+          after: '}',
+          segments: [
+            {
+              pre: '  ',
+              match: 'onSearch',
+              post: ': (query: string) => void;'
+            }
+          ]
+        },
+        {
+          line_num: 57,
+          before: 'const handleSearch = useCallback(() => {',
+          after: '}, [searchTerm, onSearch]);',
+          segments: [
+            {
+              pre: '  ',
+              match: 'onSearch',
+              post: '(searchTerm);'
+            }
+          ]
+        }
+      ]
     },
     {
-      id: '3',
-      title: 'Dashboard Analytics Component',
-      description: 'React component for displaying analytics data in the dashboard',
-      type: 'Component',
-      url: '/components/analytics'
+      file_name: 'search-api.test.js',
+      repo_path: 'tests/api',
+      repo_branch: 'main',
+      language: 'javascript',
+      matches: [
+        {
+          line_num: 32,
+          before: 'describe("Search API", () => {',
+          after: '  });',
+          segments: [
+            {
+              pre: '  it("should return results when ',
+              match: 'search',
+              post: 'ing by valid term", async () => {'
+            }
+          ]
+        }
+      ]
     },
     {
-      id: '4',
-      title: 'Database Migration Scripts',
-      description: 'SQL scripts for database schema migrations',
-      type: 'Script',
-      url: '/scripts/db-migrations'
-    },
-    {
-      id: '5',
-      title: 'Infrastructure as Code Templates',
-      description: 'Terraform templates for provisioning cloud infrastructure',
-      type: 'Infrastructure',
-      url: '/infrastructure/templates'
-    },
-    {
-      id: '6',
-      title: 'API Documentation',
-      description: 'OpenAPI documentation for REST endpoints',
-      type: 'Documentation',
-      url: '/docs/api'
+      file_name: 'SearchService.java',
+      repo_path: 'src/main/java/com/harness/services',
+      repo_branch: 'main',
+      language: 'java',
+      matches: [
+        {
+          line_num: 45,
+          before: '@Service',
+          after: '}',
+          segments: [
+            {
+              pre: 'public class ',
+              match: 'SearchService',
+              post: ' implements ISearchService {'
+            }
+          ]
+        },
+        {
+          line_num: 78,
+          before: '  @Override',
+          after: '  }',
+          segments: [
+            {
+              pre: '  public List<SearchResult> ',
+              match: 'search',
+              post: '(String query, SearchOptions options) {'
+            }
+          ]
+        }
+      ]
     }
   ],
   page: 1,

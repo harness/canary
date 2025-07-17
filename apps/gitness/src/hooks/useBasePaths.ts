@@ -4,8 +4,7 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { PathParams } from '../RouteDefinitions'
 
 // TODO: Remove this hook
-// This hook should not be needed once we are able to achieve gitRef persistence
-// using uncontrolled Tabs rather than using controlled Tabs approach
+// This hook should not be needed once the routes.to functions support catchAll
 export function useBasePaths() {
   const { spaceId, repoId } = useParams<PathParams>()
   const routes = useRoutes()

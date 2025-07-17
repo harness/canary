@@ -13,7 +13,6 @@ import { Button, IconV2, ScrollArea, Separator, Sheet, Text, useScrollArea } fro
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
-import { SIDEBAR_WIDTH } from './sidebar-constants'
 import { useSidebar } from './sidebar-context'
 
 export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { side?: 'left' | 'right' }>(
@@ -23,13 +22,7 @@ export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { 
     if (isMobile) {
       return (
         <Sheet.Root open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <Sheet.Content
-            data-mobile="true"
-            className="cn-sidebar"
-            style={{ '--cn-sidebar-width': SIDEBAR_WIDTH } as CSSProperties}
-            side={side}
-            hideCloseButton
-          >
+          <Sheet.Content data-mobile="true" className="cn-sidebar" side={side} hideCloseButton modal={false}>
             {children}
           </Sheet.Content>
         </Sheet.Root>

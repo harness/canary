@@ -6,7 +6,7 @@ export default {
       display: 'flex',
       flexDirection: 'column',
       height: 'var(--cn-sidebar-min-height)',
-      width: 'var(--cn-sidebar-width)',
+      width: 'var(--cn-sidebar-container-full-width)',
       backgroundColor: 'var(--cn-bg-0)',
       padding: 'var(--cn-sidebar-container-py) 0',
 
@@ -331,7 +331,20 @@ export default {
       }
     },
 
+    '&-drawer-content, &-drawer-overlay': {
+      borderLeftWidth: '1px',
+      left: 'var(--cn-sidebar-container-full-width) !important',
+
+      '&-collapsed': {
+        left: 'var(--cn-size-14) !important'
+      }
+    },
+
     '&:where([data-state=collapsed])': {
+      '&.cn-sidebar': {
+        width: 'var(--cn-size-14)'
+      },
+
       '.cn-sidebar-group': {
         '--sidebar-group-label-scale': '0'
       },

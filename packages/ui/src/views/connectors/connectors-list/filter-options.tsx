@@ -35,11 +35,6 @@ export const getConnectorListFilterOptions = (
       }
     },
     {
-      label: t('views:connectors.filterOptions.statusOption.label', 'Text'),
-      value: 'text',
-      type: FilterFieldTypes.Text
-    },
-    {
       label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,

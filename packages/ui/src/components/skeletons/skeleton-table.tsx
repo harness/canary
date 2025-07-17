@@ -14,16 +14,18 @@ interface SkeletonTableProps {
 
 export const SkeletonTable = ({ className, countRows = 12, countColumns = 5 }: SkeletonTableProps) => {
   return (
-    <Table.Body className={cn('relative h-full w-full', className)}>
-      {Array.from({ length: countRows }).map((_, index) => (
-        <Table.Row key={`row-${index}`}>
-          {Array.from({ length: countColumns }).map((_, columnIndex) => (
-            <Table.Cell className="h-12 flex-1 content-center" key={`cell-${index}-${columnIndex}`}>
-              <Skeleton className="h-2.5" style={{ width: getRandomPercentageWidth(30, 80) }} />
-            </Table.Cell>
-          ))}
-        </Table.Row>
-      ))}
-    </Table.Body>
+    <Table.Root>
+      <Table.Body className={cn('relative h-full w-full', className)}>
+        {Array.from({ length: countRows }).map((_, index) => (
+          <Table.Row key={`row-${index}`}>
+            {Array.from({ length: countColumns }).map((_, columnIndex) => (
+              <Table.Cell className="h-12 flex-1 content-center" key={`cell-${index}-${columnIndex}`}>
+                <Skeleton className="h-2.5" style={{ width: getRandomPercentageWidth(30, 80) }} />
+              </Table.Cell>
+            ))}
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table.Root>
   )
 }

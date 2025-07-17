@@ -21,7 +21,7 @@ const RepoLayout = () => {
     setCurrentPath(path)
     setTabPath(path)
   }
-  const { isLoading, fullGitRef, gitRefName, gitRefPath, isCommitSHA, repository } = useGitRef()
+  const { isLoading, fullGitRef, gitRefName, gitRefPath, isCommitSHA, repoData } = useGitRef()
 
   // Base paths
   const baseSummaryPath = routes.toRepoSummary({ spaceId, repoId })
@@ -97,7 +97,7 @@ const RepoLayout = () => {
 
   return (
     <>
-      <RepoHeader name={repository?.identifier ?? ''} isPublic={!!repository?.is_public} isLoading={isLoading} />
+      <RepoHeader name={repoData?.identifier ?? ''} isPublic={!!repoData?.is_public} isLoading={isLoading} />
       <SubHeaderWrapper>
         <RepoSubheader
           showPipelinesTab={!isMFE}

@@ -65,7 +65,7 @@ export default function RepoSummaryPage() {
     gitRefName,
     rawFullGitRef,
     rawGitRefName,
-    repository,
+    repoData,
     refetchRepo,
     preSelectedTab,
     setPreSelectedTab
@@ -144,11 +144,11 @@ export default function RepoSummaryPage() {
     if (rawGitRefName) {
       calculateDivergence({
         body: {
-          requests: [{ from: rawGitRefName, to: repository?.default_branch }]
+          requests: [{ from: rawGitRefName, to: repoData?.default_branch }]
         }
       })
     }
-  }, [calculateDivergence, repository?.default_branch, rawGitRefName])
+  }, [calculateDivergence, repoData?.default_branch, rawGitRefName])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
@@ -314,7 +314,7 @@ export default function RepoSummaryPage() {
         loading={isLoading}
         filesList={filesList}
         navigateToFile={navigateToFile}
-        repository={repository}
+        repository={repoData}
         handleCreateToken={handleCreateToken}
         repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
         files={files}
@@ -331,7 +331,7 @@ export default function RepoSummaryPage() {
         setSearchQuery={setBranchTagQuery}
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
-        isRepoEmpty={repository?.is_empty}
+        isRepoEmpty={repoData?.is_empty}
         refType={preSelectedTab}
         branchSelectorRenderer={
           <BranchSelectorContainer

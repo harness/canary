@@ -37,7 +37,7 @@ export const RepoCode = () => {
   const routes = useRoutes()
   const {
     fullGitRef,
-    repository,
+    repoData,
     codeMode,
     rawFullGitRef,
     rawGitRefName,
@@ -166,15 +166,15 @@ export const RepoCode = () => {
   }, [rawFullGitRef, fullResourcePath, repoDetails])
 
   useEffect(() => {
-    if (rawFullGitRef && repository?.default_branch) {
+    if (rawFullGitRef && repoData?.default_branch) {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: rawFullGitRef, to: repository?.default_branch }]
+          requests: [{ from: rawFullGitRef, to: repoData?.default_branch }]
         }
       })
     }
-  }, [rawFullGitRef, repository?.default_branch, calculateDivergence])
+  }, [rawFullGitRef, repoData?.default_branch, calculateDivergence])
 
   useEffect(() => {
     refetchRepoContent()
@@ -189,11 +189,11 @@ export const RepoCode = () => {
     }
 
     if (codeMode !== CodeModes.VIEW) {
-      return <FileEditor repoDetails={repoDetails} defaultBranch={repository?.default_branch || ''} />
+      return <FileEditor repoDetails={repoDetails} defaultBranch={repoData?.default_branch || ''} />
     }
 
     return <></>
-  }, [codeMode, repoDetails, repository?.default_branch])
+  }, [codeMode, repoDetails, repoData?.default_branch])
 
   if (!repoId) return <></>
 
@@ -203,7 +203,7 @@ export const RepoCode = () => {
       pathParts={pathParts}
       loading={loading}
       files={files}
-      isRepoEmpty={repository?.is_empty}
+      isRepoEmpty={repoData?.is_empty}
       isDir={repoDetails?.type === 'dir'}
       isShowSummary={!!repoEntryPathToFileTypeMap.size}
       latestFile={latestFiles}
@@ -214,7 +214,7 @@ export const RepoCode = () => {
       repoId={repoId}
       spaceId={spaceId!}
       selectedRefType={preSelectedTab}
-      defaultBranchName={repository?.default_branch}
+      defaultBranchName={repoData?.default_branch}
       currentBranchDivergence={currBranchDivergence}
       isLoadingRepoDetails={isLoadingRepoDetails}
       toRepoFileDetails={({ path }: { path: string }) => `../${path}`}

@@ -33,7 +33,7 @@ export const RepoSidebar = () => {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
 
-  const { fullGitRef, gitRefName, repository, fullResourcePath, preSelectedTab, setPreSelectedTab } = useGitRef()
+  const { fullGitRef, gitRefName, repoData, fullResourcePath, preSelectedTab, setPreSelectedTab } = useGitRef()
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
     {
@@ -65,8 +65,8 @@ export const RepoSidebar = () => {
   })
 
   const transformedBranchList = useMemo(
-    () => (branches ? transformBranchList(branches, repository?.default_branch) : []),
-    [branches, repository?.default_branch]
+    () => (branches ? transformBranchList(branches, repoData?.default_branch) : []),
+    [branches, repoData?.default_branch]
   )
 
   const transformedTags = useMemo(
@@ -80,12 +80,12 @@ export const RepoSidebar = () => {
   )
 
   useEffect(() => {
-    if (!repository?.default_branch || !transformedBranchList.length) {
+    if (!repoData?.default_branch || !transformedBranchList.length) {
       return
     }
     if (!fullGitRef) {
-      const defaultBranch = transformedBranchList.find(branch => branch.name === repository.default_branch)
-      const defaultBranchName = defaultBranch?.name || repository?.default_branch
+      const defaultBranch = transformedBranchList.find(branch => branch.name === repoData.default_branch)
+      const defaultBranchName = defaultBranch?.name || repoData?.default_branch
       if (defaultBranchName) {
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${defaultBranchName}`)
       }
@@ -99,7 +99,7 @@ export const RepoSidebar = () => {
         setPreSelectedTab(BranchSelectorTab.BRANCHES)
       }
     }
-  }, [repository?.default_branch, fullGitRef, transformedBranchList, transformedTags, gitRefName, selectedGitRefBranch])
+  }, [repoData?.default_branch, fullGitRef, transformedBranchList, transformedTags, gitRefName, selectedGitRefBranch])
 
   const { data: repoDetails } = useGetContentQuery({
     path: '',
@@ -165,7 +165,7 @@ export const RepoSidebar = () => {
   return (
     <>
       <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
-        {!repository?.is_empty && (
+        {!repoData?.is_empty && (
           <RepoSidebarView
             navigateToNewFile={navigateToNewFile}
             navigateToFile={navigateToFile}

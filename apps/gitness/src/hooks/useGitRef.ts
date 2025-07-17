@@ -18,13 +18,13 @@ export function useGitRef() {
   const repoRef = useGetRepoRef()
 
   const {
-    data: { body: repository } = {},
+    data: { body: repoData } = {},
     isLoading,
     refetch: refetchRepo
   } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const prefixedDefaultBranch = repository?.default_branch ? `${REFS_BRANCH_PREFIX}${repository?.default_branch}` : ''
+  const prefixedDefaultBranch = repoData?.default_branch ? `${REFS_BRANCH_PREFIX}${repoData?.default_branch}` : ''
   const fullGitRef = rawFullGitRef || prefixedDefaultBranch || ''
-  const gitRefName = rawGitRefName || repository?.default_branch || ''
+  const gitRefName = rawGitRefName || repoData?.default_branch || ''
   const gitRefPath = fullGitRef ? `/${isCommitSHA ? gitRefName : fullGitRef}` : ''
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
@@ -36,9 +36,9 @@ export function useGitRef() {
     gitRefName,
     gitRefPath,
     isCommitSHA,
-    repository,
     rawFullGitRef,
     rawGitRefName,
+    repoData,
     refetchRepo,
     fullResourcePath,
     codeMode,

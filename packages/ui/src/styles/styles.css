@@ -290,16 +290,18 @@
 }
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\],
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
-  transform: translate(var(--cn-tw-translate-x), var(--cn-tw-translate-y)) rotate(var(--cn-tw-rotate))
-    skewX(var(--cn-tw-skew-x)) skewY(var(--cn-tw-skew-y)) scaleX(var(--cn-tw-scale-x)) scaleY(var(--cn-tw-scale-y));
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
+    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
+    scaleY(var(--cn-tw-scale-y, 1));
 }
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
   --cn-tw-translate-x: 50%;
 }
 .diff-tailwindcss-wrapper .translate-y-\[-50\%\] {
   --cn-tw-translate-y: -50%;
-  transform: translate(var(--cn-tw-translate-x), var(--cn-tw-translate-y)) rotate(var(--cn-tw-rotate))
-    skewX(var(--cn-tw-skew-x)) skewY(var(--cn-tw-skew-y)) scaleX(var(--cn-tw-scale-x)) scaleY(var(--cn-tw-scale-y));
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
+    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
+    scaleY(var(--cn-tw-scale-y, 1));
 }
 .diff-tailwindcss-wrapper .cursor-pointer {
   cursor: pointer;

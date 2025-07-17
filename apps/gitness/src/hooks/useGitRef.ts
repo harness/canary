@@ -9,8 +9,8 @@ import useCodePathDetails from './useCodePathDetails'
 
 export function useGitRef() {
   const {
-    fullGitRef: rawFullGitRef,
-    gitRefName: rawGitRefName,
+    fullGitRef: fullGitRefWoDefault,
+    gitRefName: gitRefNameWoDefault,
     isCommitSHA,
     fullResourcePath,
     codeMode
@@ -23,8 +23,8 @@ export function useGitRef() {
     refetch: refetchRepo
   } = useFindRepositoryQuery({ repo_ref: repoRef })
   const prefixedDefaultBranch = repoData?.default_branch ? `${REFS_BRANCH_PREFIX}${repoData?.default_branch}` : ''
-  const fullGitRef = rawFullGitRef || prefixedDefaultBranch || ''
-  const gitRefName = rawGitRefName || repoData?.default_branch || ''
+  const fullGitRef = fullGitRefWoDefault || prefixedDefaultBranch || ''
+  const gitRefName = gitRefNameWoDefault || repoData?.default_branch || ''
   const gitRefPath = fullGitRef ? `/${isCommitSHA ? gitRefName : fullGitRef}` : ''
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
@@ -36,7 +36,7 @@ export function useGitRef() {
     gitRefName,
     gitRefPath,
     isCommitSHA,
-    rawFullGitRef,
+    fullGitRefWoDefault,
     repoData,
     refetchRepo,
     fullResourcePath,

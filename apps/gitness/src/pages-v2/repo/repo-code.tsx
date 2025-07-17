@@ -39,7 +39,7 @@ export const RepoCode = () => {
     fullGitRef,
     repoData,
     codeMode,
-    rawFullGitRef,
+    fullGitRefWoDefault,
     gitRefName,
     fullResourcePath,
     preSelectedTab,
@@ -166,15 +166,15 @@ export const RepoCode = () => {
   }, [fullGitRef, fullResourcePath, repoDetails])
 
   useEffect(() => {
-    if (rawFullGitRef && repoData?.default_branch) {
+    if (fullGitRefWoDefault && repoData?.default_branch) {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: rawFullGitRef, to: repoData?.default_branch }]
+          requests: [{ from: fullGitRefWoDefault, to: repoData?.default_branch }]
         }
       })
     }
-  }, [rawFullGitRef, repoData?.default_branch, calculateDivergence])
+  }, [fullGitRefWoDefault, repoData?.default_branch, calculateDivergence])
 
   useEffect(() => {
     refetchRepoContent()

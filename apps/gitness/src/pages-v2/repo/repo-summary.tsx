@@ -60,7 +60,7 @@ export default function RepoSummaryPage() {
   const isMFE = useIsMFE()
   const { customHooks, customUtils } = useMFEContext()
 
-  const { fullGitRef, gitRefName, rawFullGitRef, repoData, refetchRepo, preSelectedTab, setPreSelectedTab } =
+  const { fullGitRef, gitRefName, fullGitRefWoDefault, repoData, refetchRepo, preSelectedTab, setPreSelectedTab } =
     useGitRef()
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
@@ -133,15 +133,15 @@ export default function RepoSummaryPage() {
   )
 
   useEffect(() => {
-    if (rawFullGitRef && repoData?.default_branch) {
+    if (fullGitRefWoDefault && repoData?.default_branch) {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: rawFullGitRef, to: repoData?.default_branch }]
+          requests: [{ from: fullGitRefWoDefault, to: repoData?.default_branch }]
         }
       })
     }
-  }, [rawFullGitRef, repoData?.default_branch, calculateDivergence])
+  }, [fullGitRefWoDefault, repoData?.default_branch, calculateDivergence])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',

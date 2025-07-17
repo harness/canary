@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { EditViewTypeValue, FileEditorControlBar } from '@harnessio/ui/components'
+import { EditViewTypeValue, FileEditorControlBar, MarkdownViewer } from '@harnessio/ui/components'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -13,7 +13,14 @@ import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
-import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
+import {
+  decodeGitContent,
+  FILE_SEPERATOR,
+  filenameToLanguage,
+  getIsMarkdown,
+  GitCommitAction,
+  PLAIN_TEXT
+} from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
 
 export interface FileEditorProps {
@@ -157,6 +164,54 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
+  const renderFileView = () => {
+    switch (view) {
+      case 'preview':
+        // For Markdown 'preview'
+        if (getIsMarkdown(language)) {
+          return (
+            <MarkdownViewer
+              source={originalFileContent}
+              withBorderWrapper
+              borderWrapperClassName="max-h-screen overflow-auto"
+            />
+          )
+        }
+        // For other file types, render code diff editor
+        return (
+          <CodeDiffEditor
+            height="100%"
+            language={language}
+            original={originalFileContent}
+            modified={contentRevision.code}
+            themeConfig={themeConfig}
+            theme={monacoTheme}
+            options={{
+              readOnly: true
+            }}
+          />
+        )
+
+      case 'edit':
+        return (
+          <CodeEditor
+            height="100%"
+            language={language}
+            codeRevision={contentRevision}
+            onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
+            themeConfig={themeConfig}
+            theme={monacoTheme}
+            options={{
+              readOnly: false
+            }}
+          />
+        )
+
+      default:
+        return null
+    }
+  }
+
   return (
     <>
       <GitCommitDialog
@@ -195,31 +250,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
       <FileEditorControlBar view={view} onChangeView={onChangeView} />
 
-      {view === 'edit' ? (
-        <CodeEditor
-          height="100%"
-          language={language}
-          codeRevision={contentRevision}
-          onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
-            readOnly: false
-          }}
-        />
-      ) : (
-        <CodeDiffEditor
-          height="100%"
-          language={language}
-          original={originalFileContent}
-          modified={contentRevision.code}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
-            readOnly: true
-          }}
-        />
-      )}
+      {renderFileView()}
     </>
   )
 }

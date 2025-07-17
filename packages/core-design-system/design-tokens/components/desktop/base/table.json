@@ -77,6 +77,20 @@
         "$type": "spacing",
         "$value": "{spacing.4-half}"
       }
+    },
+    "collapsed-rows": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.4-half}"
+      }
     }
   }
 }

@@ -41,7 +41,10 @@ export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive
 }
 
 export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
-  ({ className, children, size = 'sm', hideClose = false, overlayClassName, forceWithOverlay, ...props }, ref) => {
+  (
+    { className, children, size = 'sm', hideClose = false, overlayClassName, forceWithOverlay = false, ...props },
+    ref
+  ) => {
     const { portalContainer } = usePortal()
     const { direction } = useDrawerContext()
 

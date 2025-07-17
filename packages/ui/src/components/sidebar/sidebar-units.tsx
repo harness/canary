@@ -22,7 +22,13 @@ export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { 
     if (isMobile) {
       return (
         <Sheet.Root open={openMobile} onOpenChange={setOpenMobile} {...props}>
-          <Sheet.Content data-mobile="true" className="cn-sidebar" side={side} hideCloseButton modal={false}>
+          <Sheet.Content
+            data-mobile="true"
+            className="cn-sidebar !pointer-events-auto"
+            side={side}
+            hideCloseButton
+            modal={false}
+          >
             {children}
           </Sheet.Content>
         </Sheet.Root>
@@ -63,22 +69,32 @@ export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, ComponentPro
 )
 SidebarTrigger.displayName = 'SidebarTrigger'
 
-export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(({ className, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar()
-  const { t } = useTranslation()
+export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(
+  ({ className, onClick, ...props }, ref) => {
+    const { toggleSidebar } = useSidebar()
+    const { t } = useTranslation()
 
-  return (
-    <button
-      ref={ref}
-      aria-label={t('component:sidebar.toggle', 'Toggle sidebar')}
-      tabIndex={-1}
-      onClick={toggleSidebar}
-      title={t('component:sidebar.toggle', 'Toggle sidebar')}
-      className={cn('cn-sidebar-rail', className)}
-      {...props}
-    />
-  )
-})
+    const onClickHandler = useCallback(
+      (event: MouseEvent<HTMLButtonElement>) => {
+        onClick?.(event)
+        toggleSidebar()
+      },
+      [toggleSidebar, onClick]
+    )
+
+    return (
+      <button
+        ref={ref}
+        aria-label={t('component:sidebar.toggle', 'Toggle sidebar')}
+        tabIndex={-1}
+        onClick={onClickHandler}
+        title={t('component:sidebar.toggle', 'Toggle sidebar')}
+        className={cn('cn-sidebar-rail', className)}
+        {...props}
+      />
+    )
+  }
+)
 SidebarRail.displayName = 'SidebarRail'
 
 export const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ className, ...props }, ref) => {
@@ -118,7 +134,6 @@ export const SidebarContent = (props: ComponentProps<typeof ScrollArea>) => {
         onScrollTop={onScrollTop}
         onScrollBottom={onScrollBottom}
         className="cn-sidebar-content"
-        // classNameContent="w-full"
         role="menu"
       />
     </div>

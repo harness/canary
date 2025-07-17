@@ -175,7 +175,6 @@ export const PullRequestCommentBox = ({
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
-      textAreaRef.current.focus()
     }
   }, [comment, textSelection])
 
@@ -327,6 +326,9 @@ export const PullRequestCommentBox = ({
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Capture, '```' + lang + '\n', '\n```')
         break
     }
+
+    // Return cursor to proper place to continue typing based on where action above set selection index
+    textAreaRef.current && textAreaRef.current.focus()
   }
 
   const setCommentAndTextSelection = (comment: string, textSelection: TextSelection) => {

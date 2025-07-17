@@ -29,3 +29,5 @@ export const decodeURIComponentIfValid = (path: string) => {
     return path
   }
 }
+
+export const removeTrailingSlash = (path: string) => path?.replace(/\/$/, '')

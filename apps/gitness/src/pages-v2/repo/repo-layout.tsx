@@ -56,7 +56,8 @@ const RepoLayout = () => {
   const [branchesPath, setBranchesPath, matchBranches] = useTabPath(baseBranchesPath)
   const [settingsPath, setSettingsPath, matchSettings] = useTabPath(baseSettingsPath)
 
-  const resetTabPathsWithoutGitRef = () => {
+  const resetTabPaths = () => {
+    // Only reset the paths without gitRef
     !matchPipelines ? setPipelinesPath(basePipelinesPath) : null
     !matchTags ? setTagsPath(baseTagsPath) : null
     !matchPulls ? setPullsPath(basePullsPath) : null
@@ -68,7 +69,6 @@ const RepoLayout = () => {
   useEffect(() => {
     // Paths with GitRef
     // Set all available paths with gitRef inside the match condition
-    // This ensures proper gitRef context is maintained even when switching from tabs without gitRef
     if (matchSummary) {
       setPath(matchSummary.pathname, setSummaryPath)
       setFilesPath(filesGitPath)
@@ -91,7 +91,8 @@ const RepoLayout = () => {
     if (matchPulls) setPath(matchPulls.pathname, setPullsPath)
     if (matchBranches) setPath(matchBranches.pathname, setBranchesPath)
     if (matchSettings) setPath(matchSettings.pathname, setSettingsPath)
-    resetTabPathsWithoutGitRef() // If not reset, the last visited subPath of tabs will be used
+
+    resetTabPaths() // If not reset, the last visited subPath of tabs will be used
   }, [location.pathname])
 
   return (

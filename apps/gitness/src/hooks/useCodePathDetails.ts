@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { CodeModes } from '@harnessio/ui/views'
 
 import { REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
+import { removeTrailingSlash } from '../utils/path-utils'
 
 const useCodePathDetails = () => {
   const params = useParams()
@@ -31,8 +32,10 @@ const useCodePathDetails = () => {
     effectiveGitRef = commitSHA
   }
 
+  effectiveGitRef = removeTrailingSlash(effectiveGitRef)
+
   // Normalize values
-  const fullGitRef = effectiveGitRef.endsWith('/') ? effectiveGitRef.slice(0, -1) : effectiveGitRef
+  const fullGitRef = effectiveGitRef
   let gitRefName = fullGitRef.startsWith(REFS_TAGS_PREFIX)
     ? fullGitRef.split(REFS_TAGS_PREFIX)[1]
     : fullGitRef.split(REFS_BRANCH_PREFIX)[1]

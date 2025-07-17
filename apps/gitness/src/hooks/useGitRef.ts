@@ -37,7 +37,6 @@ export function useGitRef() {
     gitRefPath,
     isCommitSHA,
     repository,
-    prefixedDefaultBranch,
     rawFullGitRef,
     rawGitRefName,
     refetchRepo,

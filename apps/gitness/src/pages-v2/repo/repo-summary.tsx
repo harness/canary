@@ -63,7 +63,6 @@ export default function RepoSummaryPage() {
   const {
     fullGitRef,
     gitRefName,
-    prefixedDefaultBranch,
     rawFullGitRef,
     rawGitRefName,
     repository,
@@ -71,12 +70,6 @@ export default function RepoSummaryPage() {
     preSelectedTab,
     setPreSelectedTab
   } = useGitRef()
-
-  useEffect(() => {
-    if (!rawFullGitRef && prefixedDefaultBranch && fullGitRef) {
-      navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${fullGitRef}`)
-    }
-  }, [rawFullGitRef, fullGitRef, prefixedDefaultBranch])
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,

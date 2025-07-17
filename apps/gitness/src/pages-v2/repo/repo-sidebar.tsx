@@ -33,22 +33,7 @@ export const RepoSidebar = () => {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
 
-  const {
-    fullGitRef,
-    gitRefName,
-    prefixedDefaultBranch,
-    repository,
-    rawFullGitRef,
-    fullResourcePath,
-    preSelectedTab,
-    setPreSelectedTab
-  } = useGitRef()
-
-  useEffect(() => {
-    if (!rawFullGitRef && prefixedDefaultBranch && fullGitRef) {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`)
-    }
-  }, [rawFullGitRef, fullGitRef, prefixedDefaultBranch])
+  const { fullGitRef, gitRefName, repository, fullResourcePath, preSelectedTab, setPreSelectedTab } = useGitRef()
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
     {

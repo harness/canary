@@ -56,39 +56,51 @@ mobile-starlight-toc {
 }
 
 ul.top-level {
-  @apply flex flex-col w-full justify-start;
-}
+  @apply flex flex-col w-full justify-start px-3 mt-14;
 
-ul.top-level ul {
-  @apply border-b border-cn-borders-3 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
-}
+  & > li {
+    @apply border-b pb-3 mb-3;
 
-ul.top-level li {
-  @apply font-normal text-cn-foreground-2 text-sm border-none p-0 m-0;
-}
+    &:last-child {
+      @apply border-0 pb-14 mb-0;
+    }
 
-ul.top-level li a {
-  @apply py-1 px-2 m-0 text-cn-foreground-3 hover:text-cn-foreground-1;
-}
+    details {
+      li {
+        @apply border-none p-0 m-0 mb-2;
 
-ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-cn-background-1 rounded-md text-cn-foreground-1;
-}
+        &:last-child {
+          @apply mb-0;
+        }
 
-ul.top-level li details summary {
-  @apply flex items-center mt-6 !important;
-}
+        a {
+          @apply px-3 py-1.5 font-body-normal text-cn-foreground-1;
 
-ul.top-level li details summary .group-label {
-  @apply p-0 px-3;
-}
+          &[aria-current="page"] {
+          }
+        }
+      }
 
-ul.top-level summary .group-label span {
-  @apply font-normal text-sm text-cn-foreground-disabled;
-}
+      summary {
+        @apply flex items-center px-3 py-1.5 gap-x-3 mb-2.5;
 
-ul.top-level summary svg {
-  @apply font-normal text-cn-foreground-disabled text-lg;
+        .group-label span {
+          @apply font-body-normal text-cn-foreground-3 transition-colors;
+        }
+
+        svg {
+          @apply text-cn-foreground-3 transition-colors;
+        }
+
+        &:hover {
+          .group-label span,
+          svg {
+            @apply text-cn-foreground-1;
+          }
+        }
+      }
+    }
+  }
 }
 
 /* Right-hand page sidebar overrides */

@@ -45,6 +45,7 @@ export const DiffModeOptions = [
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
+  toPullRequestConversation?: ({ PullRequestId }: { PullRequestId: number }) => string
 }
 export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   onFormSubmit: (data: CompareFormFields) => void
@@ -128,7 +129,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   addLabel,
   removeLabel,
   editLabelsProps,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  toPullRequestConversation
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
 
@@ -303,7 +305,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Text>{prBranchCombinationExists.description}</Text>
               </div>
             </div>
-            <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>
+            {/* <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}> */}
+            <Button
+              onClick={() =>
+                navigate(toPullRequestConversation?.({ PullRequestId: prBranchCombinationExists.number }) ?? '')
+              }
+            >
               {t('views:pullRequests.compareChangesViewPRLink', 'View pull request')}
             </Button>
           </Layout.Horizontal>

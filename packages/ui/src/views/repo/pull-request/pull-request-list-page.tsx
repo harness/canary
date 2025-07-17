@@ -253,7 +253,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                         addFilter(option.value)
                         setOpenedFilter(option.value)
                       }}
-                      onReset={resetFilters}
+                      onReset={() => resetFilters()}
                       inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
                       buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
                       displayLabel={renderFilterSelectLabel({

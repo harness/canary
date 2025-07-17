@@ -60,16 +60,8 @@ export default function RepoSummaryPage() {
   const isMFE = useIsMFE()
   const { customHooks, customUtils } = useMFEContext()
 
-  const {
-    fullGitRef,
-    gitRefName,
-    rawFullGitRef,
-    rawGitRefName,
-    repoData,
-    refetchRepo,
-    preSelectedTab,
-    setPreSelectedTab
-  } = useGitRef()
+  const { fullGitRef, gitRefName, rawFullGitRef, repoData, refetchRepo, preSelectedTab, setPreSelectedTab } =
+    useGitRef()
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -141,14 +133,15 @@ export default function RepoSummaryPage() {
   )
 
   useEffect(() => {
-    if (rawGitRefName) {
+    if (rawFullGitRef && repoData?.default_branch) {
       calculateDivergence({
+        repo_ref: repoRef,
         body: {
-          requests: [{ from: rawGitRefName, to: repoData?.default_branch }]
+          requests: [{ from: rawFullGitRef, to: repoData?.default_branch }]
         }
       })
     }
-  }, [calculateDivergence, repoData?.default_branch, rawGitRefName])
+  }, [rawFullGitRef, repoData?.default_branch, calculateDivergence])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
@@ -266,11 +259,11 @@ export default function RepoSummaryPage() {
       .finally(() => {
         setLoading(false)
       })
-  }, [repoEntryPathToFileTypeMap, repoRef, rawFullGitRef])
+  }, [repoEntryPathToFileTypeMap, repoRef, fullGitRef])
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(rawFullGitRef || '') }
+    queryParams: { git_ref: normalizeGitRef(fullGitRef || '') }
   })
 
   const filesList = filesData?.body?.files || []
@@ -320,7 +313,7 @@ export default function RepoSummaryPage() {
         files={files}
         decodedReadmeContent={decodedReadmeContent}
         summaryDetails={summaryDetails}
-        gitRef={rawFullGitRef}
+        gitRef={fullGitRef}
         latestCommitInfo={latestCommitInfo}
         saveDescription={saveDescription}
         updateRepoError={updateError}

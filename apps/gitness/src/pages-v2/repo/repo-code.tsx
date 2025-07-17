@@ -40,12 +40,12 @@ export const RepoCode = () => {
     repoData,
     codeMode,
     rawFullGitRef,
-    rawGitRefName,
+    gitRefName,
     fullResourcePath,
     preSelectedTab,
     setPreSelectedTab
   } = useGitRef()
-  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${rawFullGitRef}`
+  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [
@@ -65,7 +65,7 @@ export const RepoCode = () => {
   } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(rawFullGitRef || '') }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
   })
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
@@ -108,7 +108,7 @@ export const RepoCode = () => {
     if (repoEntryPathToFileTypeMap.size > 0) {
       setLoading(true)
       pathDetails({
-        queryParams: { git_ref: normalizeGitRef(rawFullGitRef || '') },
+        queryParams: { git_ref: normalizeGitRef(fullGitRef || '') },
         body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
         repo_ref: repoRef
       })
@@ -126,7 +126,7 @@ export const RepoCode = () => {
                   timestamp: item?.last_commit?.author?.when ?? '',
                   user: { name: item?.last_commit?.author?.identity?.name || '' },
                   sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                  path: `${routes.toRepoFiles({ spaceId, repoId })}/${rawFullGitRef || ''}/~/${item?.path}`
+                  path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || ''}/~/${item?.path}`
                 }))
               )
             )
@@ -137,7 +137,7 @@ export const RepoCode = () => {
           setLoading(false)
         })
     }
-  }, [repoEntryPathToFileTypeMap.size, repoRef, rawFullGitRef])
+  }, [repoEntryPathToFileTypeMap.size, repoRef, fullGitRef])
 
   const latestFiles = useMemo(() => {
     const { author, message, sha } = repoDetails?.latest_commit || {}
@@ -155,15 +155,15 @@ export const RepoCode = () => {
   const pathToNewFile = useMemo(() => {
     if (fullResourcePath && repoDetails) {
       if (repoDetails?.type === 'dir') {
-        return `new/${rawFullGitRef}/~/${fullResourcePath}`
+        return `new/${fullGitRef}/~/${fullResourcePath}`
       }
 
       const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-      return `new/${rawFullGitRef}/~/${parentDirPath}`
+      return `new/${fullGitRef}/~/${parentDirPath}`
     }
 
-    return `new/${rawFullGitRef}/~/`
-  }, [rawFullGitRef, fullResourcePath, repoDetails])
+    return `new/${fullGitRef}/~/`
+  }, [fullGitRef, fullResourcePath, repoDetails])
 
   useEffect(() => {
     if (rawFullGitRef && repoData?.default_branch) {
@@ -210,7 +210,7 @@ export const RepoCode = () => {
       pathNewFile={pathToNewFile}
       pathUploadFiles="/upload-file"
       codeMode={codeMode}
-      selectedBranchTag={{ name: rawGitRefName, sha: '' }}
+      selectedBranchTag={{ name: gitRefName, sha: '' }}
       repoId={repoId}
       spaceId={spaceId!}
       selectedRefType={preSelectedTab}

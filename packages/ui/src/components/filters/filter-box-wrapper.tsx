@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 import { useTranslation } from '@/context'
 import { Button } from '@components/button'
@@ -13,6 +13,8 @@ interface FiltersProps {
   defaultOpen: boolean
   filterLabel: string
   onOpenChange?: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (open: boolean) => void
   valueLabel?: ReactNode
   contentClassName?: string
   children?: ReactNode
@@ -23,13 +25,13 @@ const FilterBoxWrapper = ({
   defaultOpen,
   children,
   filterLabel,
+  isOpen,
+  setIsOpen,
   valueLabel,
   onOpenChange,
   contentClassName
 }: FiltersProps) => {
   const { t } = useTranslation()
-
-  const [isOpen, setIsOpen] = useState(defaultOpen)
 
   useEffect(() => {
     // If the filter-box is open by default
@@ -42,6 +44,7 @@ const FilterBoxWrapper = ({
   return (
     <DropdownMenu.Root
       open={isOpen}
+      defaultOpen={defaultOpen}
       onOpenChange={open => {
         setIsOpen(open)
         onOpenChange?.(open)

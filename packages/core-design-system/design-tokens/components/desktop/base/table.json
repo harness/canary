@@ -49,11 +49,11 @@
       },
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.1}"
       },
       "min": {
         "$type": "sizing",
-        "$value": "{size.11-half}"
+        "$value": "{size.11}"
       }
     },
     "border": {
@@ -63,6 +63,34 @@
     "radius": {
       "$type": "borderRadius",
       "$value": "{rounded.3}"
+    },
+    "category": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.4-half}"
+      }
+    },
+    "collapsed-rows": {
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.4-half}"
+      }
     }
   }
 }

@@ -10,9 +10,15 @@ export interface BreadcrumbsProps {
   breadcrumbs: UIMatch<unknown, CustomHandle>[]
   withMobileSidebarToggle?: boolean
   isMobile?: boolean
+  breadcrumbClassName?: string
 }
 
-export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMobile = false }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({
+  breadcrumbs,
+  withMobileSidebarToggle = false,
+  isMobile = false,
+  breadcrumbClassName
+}: BreadcrumbsProps) => {
   const { Link } = useRouterContext()
 
   if (!breadcrumbs.length) return null
@@ -26,7 +32,7 @@ export const Breadcrumbs = ({ breadcrumbs, withMobileSidebarToggle = false, isMo
             <Separator orientation="vertical" className="ml-1 mr-2 h-4 bg-cn-background-0" />
           </>
         )}
-        <Breadcrumb.Root>
+        <Breadcrumb.Root className={breadcrumbClassName}>
           <Breadcrumb.List>
             {breadcrumbs.map((match, index) => {
               const { breadcrumb, asLink = true } = match.handle ?? {}

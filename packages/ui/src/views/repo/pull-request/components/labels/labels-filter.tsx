@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Input } from '@components/input'
+import { SearchInput } from '@components/inputs'
 import { ILabelType, LabelType, LabelValueType } from '@views/labels'
 import { LabelMarker } from '@views/labels/components/label-marker'
 
@@ -40,7 +40,11 @@ export function LabelsFilter({
 
   return (
     <>
-      <Input wrapperClassName="mx-3 mb-3" placeholder="Search..." onChange={e => onInputChange(e.target.value)} />
+      <SearchInput
+        inputContainerClassName="w-auto mx-1.5 mt-2 mb-2.5"
+        onChange={value => onInputChange(value)}
+        placeholder="Search..."
+      />
       {!isLabelsLoading &&
         labelOptions.map(option =>
           option.type === LabelType.DYNAMIC ? (

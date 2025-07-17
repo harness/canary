@@ -153,7 +153,7 @@ export function ConnectorsList({
                 <Table.Cell className="content-center">
                   {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
                 </Table.Cell>
-                <Table.Cell className="content-center !p-1.5">
+                <Table.Cell className="content-center !p-1.5" disableLink>
                   <Button
                     size="sm"
                     iconOnly
@@ -167,7 +167,7 @@ export function ConnectorsList({
                     )}
                   </Button>
                 </Table.Cell>
-                <Table.Cell className="content-center !p-0">
+                <Table.Cell className="content-center !p-0" disableLink>
                   <MoreActionsTooltip
                     actions={[
                       {

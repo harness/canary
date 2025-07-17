@@ -305,7 +305,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Text>{prBranchCombinationExists.description}</Text>
               </div>
             </div>
-            {/* <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}> */}
             <Button
               onClick={() =>
                 navigate(toPullRequestConversation?.({ PullRequestId: prBranchCombinationExists.number }) ?? '')

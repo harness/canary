@@ -48,6 +48,7 @@ import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoTagsList } from '@subjects/views/repo-tags/repo-tags-list'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+import { SearchPagePreview } from '@subjects/views/search-page/search-page-preview'
 import { SecretInputExample } from '@subjects/views/secrets/secret-input'
 import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
 import { SecretsMultiSelectPage } from '@subjects/views/secrets/secrets-multi-select'
@@ -95,6 +96,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   repository: {
     label: 'Repository',
     items: {
+      'repo-search': {
+        label: 'Search',
+        element: (
+          <RootViewWrapper>
+            <SearchPagePreview />
+          </RootViewWrapper>
+        )
+      },
       'repo-create': {
         label: 'Create Repository',
         element: (

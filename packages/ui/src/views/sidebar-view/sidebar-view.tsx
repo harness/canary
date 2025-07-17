@@ -97,7 +97,8 @@ export const SidebarView = ({
     size: 'xs',
     className: cn('cn-sidebar-drawer-content z-20', { 'cn-sidebar-drawer-content-collapsed': collapsed }),
     overlayClassName: cn('cn-sidebar-drawer-overlay z-20', { 'cn-sidebar-drawer-overlay-collapsed': collapsed }),
-    forceWithOverlay: true
+    forceWithOverlay: true,
+    onCloseAutoFocus: e => e.preventDefault()
   }
 
   return (
@@ -123,7 +124,7 @@ export const SidebarView = ({
               />
             ))}
 
-            <Drawer.Root direction="left" noBodyStyles open={showMoreMenu} onOpenChange={handleMoreMenu} modal={false}>
+            <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={handleMoreMenu} modal={false}>
               <Drawer.Trigger asChild>
                 <Sidebar.Item
                   title={t('component:navbar.more', 'More')}
@@ -186,13 +187,7 @@ export const SidebarView = ({
               />
             )}
 
-            <Drawer.Root
-              direction="left"
-              noBodyStyles
-              open={showSettingMenu}
-              onOpenChange={handleSettingsMenu}
-              modal={false}
-            >
+            <Drawer.Root direction="left" open={showSettingMenu} onOpenChange={handleSettingsMenu} modal={false}>
               <Drawer.Trigger asChild>
                 <Sidebar.Item
                   title={t('component:navbar.settings', 'Settings')}
@@ -242,7 +237,7 @@ export const SidebarView = ({
             handleLogOut={handleLogOut}
           />
         </Sidebar.Footer>
-        <Sidebar.Rail />
+        <Sidebar.Rail onClick={handleToggleSidebar} />
       </Sidebar.Root>
 
       <ThemeDialog

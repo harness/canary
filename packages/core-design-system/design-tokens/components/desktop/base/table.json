@@ -53,7 +53,7 @@
       },
       "min": {
         "$type": "sizing",
-        "$value": "{size.11-half}"
+        "$value": "{size.11}"
       }
     },
     "border": {

@@ -1,9 +1,15 @@
 import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { evaluate } from 'cel-js'
-import { cloneDeep, forOwn } from 'lodash-es'
+import { cloneDeep, forOwn, get, isNull } from 'lodash-es'
 import * as z from 'zod'
 
-import { IInputDefinition, InputFactory, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
+import {
+  IInputDefinition,
+  IInputTransformerFunc,
+  InputFactory,
+  IOutputTransformerFunc,
+  unsetEmptyStringOutputTransformer
+} from '@harnessio/forms'
 
 import { PipelineInputDefinition } from '../types'
 import { type InputLayout } from './types'
@@ -194,7 +200,13 @@ export function pipelineInput2FormInput(
       }
     },
     inputConfig,
-    outputTransform: transformedType === 'text' ? unsetEmptyStringOutputTransformer() : undefined,
+    outputTransform:
+      transformedType === 'text'
+        ? unsetEmptyStringOutputTransformer()
+        : transformedType === 'key-value-pairs'
+          ? KeyValuePairsOutputTransformer()
+          : undefined,
+    inputTransform: transformedType === 'key-value-pairs' ? KeyValuePairsInputTransformer() : undefined,
     ...(typeof inputProps.pattern === 'string'
       ? {
           validation: {
@@ -221,16 +233,12 @@ export function transformInputConfig(
 
   // use source options if ui.options is not defined
   if (Array.isArray(sourceOptions) && sourceOptions.length > 0 && !baseConfig.ui?.options?.length) {
-    if (inputType === 'text' || inputType == 'select') {
-      // convert text to select when options are provided
+    if (inputType === 'text' || inputType == 'select' || inputType == 'choice') {
+      // convert text/choice to select when options are provided
       inputType = 'select'
       baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
     } else if (inputType == 'multiselect') {
       baseConfig.options = sourceOptions.map(option => ({ id: option, key: option }))
-    } else if (inputType == 'cards' || inputType == 'choice') {
-      // convert choice to cards with options
-      inputType = 'cards'
-      baseConfig.options = sourceOptions.map(option => ({ label: option, value: option }))
     }
   }
 
@@ -257,8 +265,6 @@ function convertTypeToDefaultInputType(type: string): string {
   switch (type) {
     case 'string':
       return 'text'
-    case 'choice':
-      return 'cards'
     case 'secret':
       return 'secret-select'
     default:
@@ -287,4 +293,41 @@ export function pipelineInputs2JsonSchema(pipelineInputs: Record<string, any>): 
   }
 
   return schema
+}
+
+function toKeyValueStrings<K extends string | number, V extends string | number>(
+  items: Array<{ key: K; value: V }>
+): string[] {
+  return items.map(({ key, value }) => `${key}:${value}`)
+}
+
+function fromKeyValueStrings(entries: string[]): Array<{ key: string; value: string }> {
+  return entries.map(entry => {
+    const idx = entry.indexOf(':')
+    if (idx === -1) {
+      // no ":" found → key only
+      return { key: entry, value: '' }
+    }
+    const key = entry.slice(0, idx)
+    const value = entry.slice(idx + 1)
+    return { key, value }
+  })
+}
+
+export function KeyValuePairsOutputTransformer(path?: string): IOutputTransformerFunc {
+  return function (inputValue: any, values: Record<string, any>) {
+    const value = path ? get(values, path) : inputValue
+
+    if (typeof value === 'undefined') return undefined
+
+    if (isNull(value)) return { value: undefined, path }
+
+    return { value: toKeyValueStrings(value), path }
+  }
+}
+
+export function KeyValuePairsInputTransformer(): IInputTransformerFunc {
+  return function (value: string[]) {
+    return { value: fromKeyValueStrings(value) }
+  }
 }

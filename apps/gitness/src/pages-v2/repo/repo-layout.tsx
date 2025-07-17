@@ -6,6 +6,7 @@ import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { useBasePaths } from '../../hooks/useBasePaths'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useTabPath } from '../../hooks/useTabPath'
 import { PathParams } from '../../RouteDefinitions'
@@ -23,15 +24,16 @@ const RepoLayout = () => {
   }
   const { isLoading, fullGitRef, gitRefName, gitRefPath, isCommitSHA, repoData } = useGitRef()
 
-  // Base paths
-  const baseSummaryPath = routes.toRepoSummary({ spaceId, repoId })
-  const baseFilesPath = routes.toRepoFiles({ spaceId, repoId })
-  const baseCommitsPath = routes.toRepoCommits({ spaceId, repoId })
-  const basePipelinesPath = routes.toRepoPipelines({ spaceId, repoId })
-  const baseTagsPath = routes.toRepoTags({ spaceId, repoId })
-  const basePullsPath = routes.toPullRequests({ spaceId, repoId })
-  const baseBranchesPath = routes.toRepoBranches({ spaceId, repoId })
-  const baseSettingsPath = routes.toRepoGeneralSettings({ spaceId, repoId })
+  const {
+    baseSummaryPath,
+    baseFilesPath,
+    baseCommitsPath,
+    basePipelinesPath,
+    baseTagsPath,
+    basePullsPath,
+    baseBranchesPath,
+    baseSettingsPath
+  } = useBasePaths()
 
   // GitRef paths
   const getSummaryGitPath = () => `${baseSummaryPath}${gitRefPath}`

@@ -470,6 +470,9 @@ export const CreatePullRequest = () => {
         handleUpload={handleUpload}
         toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+        toPullRequestConversation={({ pullRequestId }: { pullRequestId: number }) =>
+          routes.toPullRequestConversation({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
+        }
         currentUser={currentUser?.display_name}
         setSearchCommitQuery={setQuery}
         searchCommitQuery={query}

@@ -22,25 +22,18 @@ type MainContentLayoutProps = PropsWithChildren<{
   useSidebar?: UseSidebarSignature
   withBreadcrumbs?: boolean
   className?: string
-  enableInset?: boolean
 }>
 
-export function MainContentLayout({
-  children,
-  useSidebar,
-  className,
-  withBreadcrumbs,
-  enableInset = false
-}: MainContentLayoutProps) {
+export function MainContentLayout({ children, useSidebar, className, withBreadcrumbs }: MainContentLayoutProps) {
   const sidebarData = useSidebar?.()
   const isMobile = sidebarData?.isMobile
 
   return (
     <div
       className={cn(
-        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
+        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] mr-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
         {
-          'mx-[var(--cn-inset-layout-indent)]': isMobile || enableInset,
+          'ml-[var(--cn-inset-layout-indent)]': isMobile,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs
         },

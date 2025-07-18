@@ -1,7 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom'
 
-import { RepoSubheader } from '@harnessio/ui/components'
-import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
+import { RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
@@ -22,6 +21,7 @@ const RepoLayout = () => {
       <SubHeaderWrapper>
         <RepoSubheader
           showPipelinesTab={!isMFE}
+          showSearchTab={isMFE}
           summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': gitRefPath })}
           filesPath={routes.toRepoFiles({ spaceId, repoId, '*': gitRefPath })}
           commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}

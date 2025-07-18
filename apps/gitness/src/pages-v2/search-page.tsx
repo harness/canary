@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/react-query'
 
 import { SearchPageView, SearchResultItem } from '@harnessio/ui/views'
 
-import { useIsMFE } from '../framework/hooks/useIsMFE'
 import { useMFEContext } from '../framework/hooks/useMFEContext'
 import { useAPIPath } from '../hooks/useAPIPath'
 
@@ -25,16 +24,18 @@ export default function SearchPage() {
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
   const getApiPath = useAPIPath()
   const { scope } = useMFEContext()
-  const isMfe = useIsMFE()
-  const { spaceId } = useParams()
+  const { repoId } = useParams()
+
+  const scopeRef = [scope.accountId, scope.orgIdentifier, scope.projectIdentifier].filter(Boolean).join('/')
+  const repoRef = `${scopeRef}/${repoId}`
 
   const { mutate, isLoading } = useMutation<TData, TError, TVariables>({
     mutationFn: ({ query }) =>
       fetch(getApiPath('/api/v1/search'), {
         method: 'POST',
         body: JSON.stringify({
-          repo_paths: [],
-          space_paths: [[scope.accountId, scope.orgIdentifier, scope.projectIdentifier].join('/')],
+          repo_paths: repoId ? [repoRef] : [],
+          space_paths: repoId ? [] : [scopeRef],
           query: `( ${query} ) case:no`,
           max_result_count: 50,
           recursive: false,
@@ -81,9 +82,7 @@ export default function SearchPage() {
         }
       }}
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
-        isMfe
-          ? `${window.apiUrl || ''}/repos/${repoPath}/code/${branch}/~/${filePath}`
-          : `/${spaceId}/repos/${repoPath}/code/${branch}/~/${filePath}`
+        `${window.apiUrl || ''}/repos/${repoPath}/code/${branch}/~/${filePath}`
       }
     />
   )

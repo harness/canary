@@ -16,6 +16,7 @@ export enum RouteConstants {
   toRepoCommits = 'toRepoCommits',
   toRepoBranches = 'toRepoBranches',
   toRepoFiles = 'toRepoFiles',
+  toRepoSearch = 'toRepoSearch',
   toRepoWebhooks = 'toRepoWebhooks',
   toPullRequests = 'toPullRequests',
   toPullRequest = 'toPullRequest',

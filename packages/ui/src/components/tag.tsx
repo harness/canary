@@ -1,4 +1,4 @@
-import { forwardRef, Ref, useImperativeHandle, useRef } from 'react'
+import { forwardRef } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -56,18 +56,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   disabled?: boolean
 }
 
-type TagRef = {
-  reset: () => void
-  readonly right: HTMLDivElement | null
-}
-
-type TagSplitRef = {
-  reset: () => void
-  readonly left: HTMLDivElement | null
-  readonly right: HTMLDivElement | null
-}
-
-const Tag = forwardRef<TagRef | TagSplitRef | HTMLDivElement, TagProps>(
+const Tag = forwardRef<HTMLDivElement, TagProps>(
   (
     {
       variant,
@@ -86,23 +75,10 @@ const Tag = forwardRef<TagRef | TagSplitRef | HTMLDivElement, TagProps>(
     },
     ref
   ) => {
-    const resetRef = useRef<HTMLButtonElement>(null)
-    const rightRef = useRef<HTMLDivElement>(null)
-
-    useImperativeHandle(ref, () => ({
-      reset: () => {
-        if (resetRef.current) {
-          resetRef.current.click()
-        }
-      },
-      get right() {
-        return rightRef.current
-      }
-    }))
-
     if (label && value) {
       return (
         <TagSplit
+          ref={ref}
           {...{
             variant,
             size,
@@ -114,8 +90,7 @@ const Tag = forwardRef<TagRef | TagSplitRef | HTMLDivElement, TagProps>(
             onReset,
             label: label,
             value,
-            disabled,
-            ref: ref as Ref<TagSplitRef>
+            disabled
           }}
         />
       )
@@ -123,7 +98,7 @@ const Tag = forwardRef<TagRef | TagSplitRef | HTMLDivElement, TagProps>(
 
     return (
       <div
-        ref={rightRef}
+        ref={ref}
         tabIndex={-1}
         className={cn(
           tagVariants({ variant, size, theme, rounded }),
@@ -143,7 +118,7 @@ const Tag = forwardRef<TagRef | TagSplitRef | HTMLDivElement, TagProps>(
           {value || label}
         </span>
         {showReset && !disabled && (
-          <button onClick={onReset} ref={resetRef}>
+          <button onClick={onReset}>
             <IconV2 skipSize name="xmark" className="cn-tag-reset-icon" />
           </button>
         )}
@@ -153,42 +128,20 @@ const Tag = forwardRef<TagRef | TagSplitRef | HTMLDivElement, TagProps>(
 )
 Tag.displayName = 'Tag'
 
-const TagSplit = forwardRef<TagSplitRef, TagProps>(
+const TagSplit = forwardRef<HTMLDivElement, TagProps>(
   ({ variant, size, theme, rounded, icon, showIcon, showReset, value, label = '', onReset, disabled = false }, ref) => {
     const sharedProps = { variant, size, theme, rounded, icon, disabled }
 
-    const resetRef = useRef<HTMLButtonElement>(null)
-    const leftRef = useRef<HTMLDivElement>(null)
-    const rightRef = useRef<HTMLDivElement>(null)
-
-    useImperativeHandle(ref, () => ({
-      reset: () => {
-        if (resetRef.current) {
-          resetRef.current.click()
-        }
-      },
-      get left() {
-        return leftRef.current
-      },
-      get right() {
-        return rightRef.current
-      }
-    }))
-
     return (
-      <div className={cn('cn-tag-split flex w-fit items-center justify-center', { 'cursor-not-allowed': disabled })}>
+      <div
+        className={cn('cn-tag-split flex w-fit items-center justify-center', { 'cursor-not-allowed': disabled })}
+        ref={ref}
+      >
         {/* LEFT TAG - should never have a Reset Icon */}
-        <Tag {...sharedProps} ref={leftRef} showIcon={showIcon} value={label} className="cn-tag-split-left" />
+        <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />
 
         {/* RIGHT TAG - should never have a tag Icon */}
-        <Tag
-          {...sharedProps}
-          ref={ref}
-          showReset={showReset}
-          onReset={onReset}
-          value={value}
-          className="cn-tag-split-right"
-        />
+        <Tag {...sharedProps} showReset={showReset} onReset={onReset} value={value} className="cn-tag-split-right" />
       </div>
     )
   }

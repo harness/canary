@@ -215,10 +215,10 @@ export default {
           8: 'hsl(var(--canary-icon-08))',
           9: 'hsl(var(--canary-icon-09))',
           10: 'hsl(var(--canary-icon-10))',
+          success: 'var(--cn-text-success)',
           danger: 'hsl(var(--canary-icon-danger))',
           warning: 'hsl(var(--canary-icon-warning))',
           alert: 'hsl(var(--canary-icon-alert))',
-          success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',
           merged: 'hsl(var(--canary-icon-merged))',
           risk: 'hsl(var(--canary-icon-risk))'

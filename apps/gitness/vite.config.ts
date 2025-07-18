@@ -11,7 +11,7 @@ export default defineConfig({
   ],
   server: {
     host: process.env.UI_HOST || '127.0.0.1',
-    port: Number(process.env.UI_DEV_SERVER_PORT) || 5138,
+    port: Number(process.env.UI_DEV_SERVER_PORT) || 5137,
     proxy: {
       '/api/v1': {
         /* https://stackoverflow.com/questions/70694187/vite-server-is-running-but-not-working-on-localhost */

@@ -305,7 +305,7 @@ export const repoRoutes: CustomRouteObject[] = [
             path: 'pulls',
             handle: {
               breadcrumb: () => <span>{Page.Pull_Requests}</span>,
-              routeName: RouteConstants.toPullRequests
+              routeName: RouteConstants.toRepoPullRequests
             },
             children: [
               {
@@ -674,6 +674,22 @@ export const repoRoutes: CustomRouteObject[] = [
       },
       labelsRoute,
       rulesRoute
+    ]
+  },
+  {
+    path: 'pulls',
+    handle: {
+      breadcrumb: () => <span>{Page.Pull_Requests}</span>,
+      routeName: RouteConstants.toProjectPullRequests
+    },
+    children: [
+      {
+        index: true,
+        element: <PullRequestListPage />,
+        handle: {
+          pageTitle: Page.Pull_Requests
+        }
+      }
     ]
   }
 ]

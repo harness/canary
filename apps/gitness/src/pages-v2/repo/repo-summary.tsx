@@ -337,7 +337,7 @@ export default function RepoSummaryPage() {
         toRepoCommits={() => routes.toRepoBranchCommits({ spaceId, repoId, branchId: selectedBranchOrTag?.name })}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
-        toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}
+        toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

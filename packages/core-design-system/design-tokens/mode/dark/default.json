@@ -1455,7 +1455,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.2}",
+          "$value": "{chrome.800}",
           "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
         },
         "border-hover": {

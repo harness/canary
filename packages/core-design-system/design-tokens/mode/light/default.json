@@ -1317,7 +1317,7 @@
     "link": {
       "text": {
         "$type": "color",
-        "$value": "{blue.600}",
+        "$value": "{blue.700}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
       "text-hover": {

@@ -1,23 +1,31 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 
-import { useFindRepositoryQuery } from '@harnessio/code-service-client'
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { useGitRef } from '../../hooks/useGitRef'
+import { useRepoCommits } from '../../hooks/useRepoCommits'
+import { PathParams } from '../../RouteDefinitions'
 
 const RepoLayout = () => {
   const isMFE = useIsMFE()
-  const repoRef = useGetRepoRef()
-
-  const { data: { body: repoData } = {}, isLoading: isLoadingRepoData } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const routes = useRoutes()
+  const { spaceId, repoId } = useParams<PathParams>()
+  const { toRepoCommits } = useRepoCommits()
+  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef } = useGitRef()
 
   return (
     <>
-      <RepoHeader name={repoData?.identifier ?? ''} isPublic={!!repoData?.is_public} isLoading={isLoadingRepoData} />
+      <RepoHeader name={repoData?.identifier ?? ''} isPublic={!!repoData?.is_public} isLoading={isLoading} />
       <SubHeaderWrapper>
-        <RepoSubheader showPipelinesTab={!isMFE} />
+        <RepoSubheader
+          showPipelinesTab={!isMFE}
+          summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': gitRefPath })}
+          filesPath={routes.toRepoFiles({ spaceId, repoId, '*': gitRefPath })}
+          commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}
+        />
       </SubHeaderWrapper>
       <Outlet />
     </>

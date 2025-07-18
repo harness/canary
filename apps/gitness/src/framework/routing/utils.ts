@@ -11,11 +11,14 @@ import { CustomRouteObject, RouteConstants, RouteEntry, RouteFunctionMap } from 
 export const generateRouteNameToPathFunctions = (routeEntries: RouteEntry[]): RouteFunctionMap => {
   return routeEntries.reduce<RouteFunctionMap>((map, { name, path }) => {
     map[name] = (params?: Params<string>) => {
+      // if splat param is provided, append splat param to path
+      const pathWithSplat = params?.['*'] ? `${path}/${params?.['*']}` : path
+
       return (
         /* Ensures generated routes are absolute in nature */
         '/' +
         /* Replace each parameter in the path with the corresponding value from params */
-        path.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params?.[key] || `:${key}`)
+        pathWithSplat.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params?.[key] || `:${key}`)
       )
     }
     return map

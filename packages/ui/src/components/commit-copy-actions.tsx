@@ -28,7 +28,8 @@ export const CommitCopyActions = ({
         {
           children: sha.substring(0, 6),
           onClick: handleNavigation,
-          onKeyDown: handleKeyDown
+          onKeyDown: handleKeyDown,
+          className: 'font-mono'
         },
         {
           ...(copyButtonProps as ButtonGroupButtonProps),

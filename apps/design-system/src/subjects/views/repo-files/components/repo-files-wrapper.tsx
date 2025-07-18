@@ -1,8 +1,6 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
-import { noop } from '@utils/viewUtils'
-
-import { BranchSelectorTab, CodeModes, IBranchSelectorStore, RepoFiles } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, RepoFiles } from '@harnessio/ui/views'
 
 import { RepoFileContentViewer } from './repo-file-content-viewer'
 import { RepoFileEdit } from './repo-file-edit'
@@ -15,26 +13,10 @@ interface RepoFilesWrapperProps {
 }
 
 export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, isMarkdown = false }) => {
-  const useRepoBranchesStore = useCallback(
-    (): IBranchSelectorStore => ({
-      ...repoFilesStore.branchSelectorStore,
-      selectedRefType: BranchSelectorTab.BRANCHES,
-      setSelectedBranchTag: noop,
-      setSelectedRefType: noop,
-      xNextPage: 0,
-      xPrevPage: 0,
-      page: 1,
-      setPage: noop,
-      defaultBranch: '',
-      branchList: [],
-      setTagList: noop,
-      setSpaceIdAndRepoId: noop,
-      setBranchList: noop,
-      setDefaultBranch: noop,
-      setPaginationFromHeaders: noop
-    }),
-    []
-  )
+  const selectedBranchTag = { name: 'main', sha: '1d0e5a9461b340ebb3d7e092a2d35ff6d0d5c952', default: true }
+  const selectedRefType = 'branches' as BranchSelectorTab
+  const spaceId = 'canary'
+  const repoId = 'canary'
 
   /**
    * Render File content view or Edit file view
@@ -63,7 +45,10 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       pathNewFile=""
       pathUploadFiles=""
       codeMode={codeMode}
-      useRepoBranchesStore={useRepoBranchesStore}
+      selectedBranchTag={selectedBranchTag}
+      repoId={repoId}
+      spaceId={spaceId}
+      selectedRefType={selectedRefType}
       defaultBranchName={repoFilesStore.repository.default_branch}
       currentBranchDivergence={{ behind: 0, ahead: 0 }}
       isLoadingRepoDetails={false}

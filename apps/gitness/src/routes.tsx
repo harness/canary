@@ -201,12 +201,19 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <span>{Page.Summary}</span>,
               routeName: RouteConstants.toRepoSummary,
               pageTitle: Page.Summary
-            }
+            },
+            children: [
+              {
+                path: '*',
+                element: <RepoSummaryPage />
+              }
+            ]
           },
           {
             path: 'commits',
             handle: {
-              breadcrumb: () => <span>{Page.Commits}</span>
+              breadcrumb: () => <span>{Page.Commits}</span>,
+              routeName: RouteConstants.toRepoCommits
             },
             children: [
               {
@@ -394,7 +401,8 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'pipelines',
             handle: {
-              breadcrumb: () => <span>{Page.Pipelines}</span>
+              breadcrumb: () => <span>{Page.Pipelines}</span>,
+              routeName: RouteConstants.toRepoPipelines
             },
             children: [
               {

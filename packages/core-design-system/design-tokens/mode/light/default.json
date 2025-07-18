@@ -1938,7 +1938,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.soft.bg}",
+        "color": "{set.brand.surface.bg}",
         "type": "dropShadow"
       }
     },

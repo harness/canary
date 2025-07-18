@@ -56,7 +56,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{blue.600}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
@@ -71,7 +71,7 @@
     },
     "accent": {
       "$type": "color",
-      "$value": "{set.brand.solid.bg}",
+      "$value": "{blue.700}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -198,17 +198,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.100}",
           "$description": "Background color for primary subtle brand items with strong emphasis."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.300}",
+          "$value": "{blue.150}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.400}",
+          "$value": "{blue.200}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },
@@ -1938,7 +1938,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.gray.soft.bg}",
+        "color": "{set.brand.soft.bg}",
         "type": "dropShadow"
       }
     },

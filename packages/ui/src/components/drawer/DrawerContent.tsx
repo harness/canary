@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
-import { cn, wrapConditionalObjectElement } from '@/utils'
+import { cn } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -36,40 +36,18 @@ export type DrawerContentVariantsDirection = VariantProps<typeof drawerContentVa
 export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
   size?: DrawerContentVariantsSize
   hideClose?: boolean
-  startPointShift?: number | string
   overlayClassName?: string
   forceWithOverlay?: boolean
 }
 
 export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
-  (
-    {
-      className,
-      children,
-      size = 'sm',
-      hideClose = false,
-      startPointShift = 0,
-      overlayClassName,
-      forceWithOverlay,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, children, size = 'sm', hideClose = false, overlayClassName, forceWithOverlay, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const { direction } = useDrawerContext()
 
-    const drawerCoordinates = startPointShift
-      ? {
-          ...wrapConditionalObjectElement({ top: startPointShift }, direction === 'top'),
-          ...wrapConditionalObjectElement({ right: startPointShift }, direction === 'right'),
-          ...wrapConditionalObjectElement({ bottom: startPointShift }, direction === 'bottom'),
-          ...wrapConditionalObjectElement({ left: startPointShift }, direction === 'left')
-        }
-      : {}
-
     return (
       <DrawerPrimitive.Portal container={portalContainer}>
-        <DrawerOverlay style={drawerCoordinates} className={overlayClassName} forceWithOverlay={forceWithOverlay} />
+        <DrawerOverlay className={overlayClassName} forceWithOverlay={forceWithOverlay} />
 
         <DrawerPrimitive.Content
           ref={ref}
@@ -78,7 +56,6 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
             className
           )}
           {...props}
-          style={{ ...drawerCoordinates, ...props.style }}
         >
           {!hideClose && (
             <DrawerPrimitive.Close asChild>

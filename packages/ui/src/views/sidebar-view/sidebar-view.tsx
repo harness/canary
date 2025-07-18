@@ -1,9 +1,10 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 
 import {
   AppSidebarItem,
   AppSidebarUser,
   Drawer,
+  DrawerContentProps,
   HarnessLogo,
   LanguageCode,
   LanguageDialog,
@@ -15,10 +16,12 @@ import {
   SearchProvider,
   Sidebar,
   SidebarSearch,
-  ThemeDialog
+  ThemeDialog,
+  useSidebar
 } from '@/components'
 import { useRouterContext, useTheme, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
+import { cn } from '@utils/index'
 
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]
@@ -60,6 +63,9 @@ export const SidebarView = ({
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
   const { location } = useRouterContext()
+  const { state } = useSidebar()
+
+  const collapsed = useMemo(() => state === 'collapsed', [state])
 
   const [openThemeDialog, setOpenThemeDialog] = useState(false)
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
@@ -86,6 +92,13 @@ export const SidebarView = ({
     handleMoreMenu(false)
     handleSettingsMenu(false)
   }, [location.pathname, handleMoreMenu, handleSettingsMenu])
+
+  const drawerContentCommonProps: DrawerContentProps = {
+    size: 'xs',
+    className: cn('cn-sidebar-drawer-content z-20', { 'cn-sidebar-drawer-content-collapsed': collapsed }),
+    overlayClassName: cn('cn-sidebar-drawer-overlay z-20', { 'cn-sidebar-drawer-overlay-collapsed': collapsed }),
+    forceWithOverlay: true
+  }
 
   return (
     <>
@@ -120,13 +133,7 @@ export const SidebarView = ({
                 />
               </Drawer.Trigger>
 
-              <Drawer.Content
-                startPointShift="var(--cn-sidebar-width)"
-                size="xs"
-                className="z-20"
-                overlayClassName="z-20"
-                forceWithOverlay
-              >
+              <Drawer.Content {...drawerContentCommonProps}>
                 <Drawer.Title className="sr-only">More menu</Drawer.Title>
                 <Drawer.Description className="sr-only">More menu</Drawer.Description>
                 <Drawer.Body>
@@ -195,13 +202,7 @@ export const SidebarView = ({
                 />
               </Drawer.Trigger>
 
-              <Drawer.Content
-                startPointShift="var(--cn-sidebar-width)"
-                size="xs"
-                className="z-20"
-                overlayClassName="z-20"
-                forceWithOverlay
-              >
+              <Drawer.Content {...drawerContentCommonProps}>
                 <Drawer.Title className="sr-only">Settings menu</Drawer.Title>
                 <Drawer.Description className="sr-only">Settings menu</Drawer.Description>
                 <Drawer.Body>

@@ -1,13 +1,8 @@
-import { ComponentProps, createContext, forwardRef, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { ComponentProps, createContext, forwardRef, useCallback, useContext, useMemo, useState } from 'react'
 
 import { cn } from '@utils/cn'
 
-import {
-  SIDEBAR_COLLAPSED_WIDTH,
-  SIDEBAR_COOKIE_MAX_AGE,
-  SIDEBAR_COOKIE_NAME,
-  SIDEBAR_WIDTH
-} from './sidebar-constants'
+import { SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME } from './sidebar-constants'
 import { useIsMobile } from './use-is-mobile'
 
 type SidebarContextType = {
@@ -86,20 +81,6 @@ export const SidebarProvider = forwardRef<
     () => ({ state, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar }),
     [state, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
   )
-
-  useEffect(() => {
-    if (isMobile) return
-
-    if (open) {
-      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_WIDTH)
-    } else {
-      document.body.style.setProperty('--cn-sidebar-width', SIDEBAR_COLLAPSED_WIDTH)
-    }
-
-    return () => {
-      document.body.style.removeProperty('--cn-sidebar-width')
-    }
-  }, [open, isMobile])
 
   return (
     <SidebarContext.Provider value={contextValue}>

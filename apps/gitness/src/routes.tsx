@@ -54,6 +54,7 @@ import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
+import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
@@ -662,7 +663,7 @@ export const repoRoutes: CustomRouteObject[] = [
   },
   {
     path: 'search',
-    element: <EmptyPage pathName="Search" comingSoon={true} />,
+    element: <SearchPage />,
     handle: {
       breadcrumb: () => <span>{Page.Search}</span>,
       pageTitle: Page.Search

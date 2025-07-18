@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Params, useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -41,40 +41,45 @@ export default function PullRequestListPage() {
 
   const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query]
 
-  const { data: pullRequestData, isFetching: fetchingPullReqData } = useQuery<
-    { data: TypesPullReqRepo[]; headers: Headers },
-    unknown,
-    { pullRequestData: TypesPullReq[]; headers: Headers }
-  >(
+  const queryParams: Params<string> = {
+    accountIdentifier: accountId,
+    orgIdentifier: orgIdentifier,
+    projectIdentifier: projectIdentifier,
+    limit: '10',
+    exclude_description: 'true',
+    page: String(page),
+    sort: 'merged',
+    order: 'desc',
+    query: query ?? '',
+    include_subspaces: 'true'
+  }
+
+  const fetchPullRequests = async (): Promise<{
+    data: TypesPullReqRepo[]
+    headers: Headers
+  }> => {
+    const apiPath = getApiPath('/api/v1/pullreq')
+    const url = new URL(apiPath, window.location.origin)
+
+    Object.entries(queryParams).forEach(([key, value]) => {
+      url.searchParams.set(key, String(value))
+    })
+
+    const response = await fetch(url.toString())
+    if (!response.ok) throw new Error('Network response was not ok')
+
+    const data = await response.json()
+    return { data, headers: response.headers }
+  }
+
+  const { data: pullRequestData, isFetching: fetchingPullReqData } = useQuery({
     queryKey,
-    async () => {
-      const apiPath = getApiPath('/api/v1/pullreq') // includes routingId
-      const url = new URL(apiPath, window.location.origin)
-
-      url.searchParams.set('accountIdentifier', accountId)
-      url.searchParams.set('orgIdentifier', orgIdentifier)
-      url.searchParams.set('projectIdentifier', projectIdentifier)
-      url.searchParams.set('limit', '10')
-      url.searchParams.set('exclude_description', 'true')
-      url.searchParams.set('page', String(page))
-      url.searchParams.set('sort', 'merged')
-      url.searchParams.set('order', 'desc')
-      url.searchParams.set('query', query ?? '')
-      url.searchParams.set('include_subspaces', 'true')
-
-      const response = await fetch(url.toString())
-
-      if (!response.ok) throw new Error('Network response was not ok')
-      const data = await response.json()
-      return { data, headers: response.headers }
-    },
-    {
-      select: ({ data, headers }) => ({
-        pullRequestData: data.map(item => item.pull_request).filter((pr): pr is TypesPullReq => pr !== undefined),
-        headers
-      })
-    }
-  )
+    queryFn: fetchPullRequests,
+    select: ({ data, headers }) => ({
+      pullRequestData: data.map(item => item.pull_request).filter((pr): pr is TypesPullReq => pr !== undefined),
+      headers
+    })
+  })
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {

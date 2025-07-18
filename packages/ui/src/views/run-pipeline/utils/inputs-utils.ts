@@ -295,23 +295,21 @@ export function pipelineInputs2JsonSchema(pipelineInputs: Record<string, any>): 
   return schema
 }
 
-function toKeyValueStrings<K extends string | number, V extends string | number>(
-  items: Array<{ key: K; value: V }>
-): string[] {
-  return items.map(({ key, value }) => `${key}:${value}`)
+function toKeyValueMap<K extends string | number, V>(items: Array<{ key: K; value: V }>): Record<K, V> {
+  return items.reduce(
+    (acc, { key, value }) => {
+      acc[key] = value
+      return acc
+    },
+    {} as Record<K, V>
+  )
 }
 
-function fromKeyValueStrings(entries: string[]): Array<{ key: string; value: string }> {
-  return entries.map(entry => {
-    const idx = entry.indexOf(':')
-    if (idx === -1) {
-      // no ":" found → key only
-      return { key: entry, value: '' }
-    }
-    const key = entry.slice(0, idx)
-    const value = entry.slice(idx + 1)
-    return { key, value }
-  })
+function fromKeyValueMap<K extends string | number, V>(map: Record<K, V>): Array<{ key: K; value: V }> {
+  return (Object.entries(map) as [K, V][]).map(([key, value]) => ({
+    key,
+    value
+  }))
 }
 
 export function KeyValuePairsOutputTransformer(path?: string): IOutputTransformerFunc {
@@ -322,12 +320,12 @@ export function KeyValuePairsOutputTransformer(path?: string): IOutputTransforme
 
     if (isNull(value)) return { value: undefined, path }
 
-    return { value: toKeyValueStrings(value), path }
+    return { value: toKeyValueMap(value), path }
   }
 }
 
 export function KeyValuePairsInputTransformer(): IInputTransformerFunc {
-  return function (value: string[]) {
-    return { value: fromKeyValueStrings(value) }
+  return function (value: Record<string, string>) {
+    return { value: fromKeyValueMap(value) }
   }
 }

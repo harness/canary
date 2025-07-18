@@ -21,6 +21,7 @@ type TError = unknown
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [regex, setRegex] = useState(false)
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
   const getApiPath = useAPIPath()
   const { scope } = useMFEContext()
@@ -37,7 +38,7 @@ export default function SearchPage() {
           query: `( ${query} ) case:no`,
           max_result_count: 50,
           recursive: false,
-          enable_regex: false
+          enable_regex: regex
         })
       }).then(res => res.json()),
     onSuccess: data => {
@@ -60,13 +61,15 @@ export default function SearchPage() {
     if (searchQuery.trim() !== '') {
       mutate({ query: searchQuery })
     }
-  }, [searchQuery, mutate])
+  }, [searchQuery, mutate, regex])
 
   return (
     <SearchPageView
       isLoading={isLoading}
       searchQuery={searchQuery}
       setSearchQuery={q => q && setSearchQuery(q)}
+      regex={regex}
+      setRegex={setRegex}
       useSearchResultsStore={() => {
         return {
           results: searchResults,

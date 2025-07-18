@@ -5,7 +5,7 @@
     "selectedTokenSets": {
       "core/typography": "source",
       "core/dimensions": "source",
-      "core/colors_hex": "enabled"
+      "core/colors_lch": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -671,7 +671,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "mode/dark/default": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -2535,7 +2535,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -3496,7 +3496,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:0",
@@ -4456,7 +4456,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:1",
@@ -5417,7 +5417,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/default-protanopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:2",
@@ -6378,7 +6378,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-protanopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:3",
@@ -7339,7 +7339,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-protanopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:4",
@@ -8300,7 +8300,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/default-deuteranopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:5",
@@ -9261,7 +9261,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-deuteranopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:6",
@@ -10222,7 +10222,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-deuteranopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:7",
@@ -11183,7 +11183,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/default-tritanopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:8",
@@ -12144,7 +12144,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/dimmer-tritanopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:9",
@@ -13105,7 +13105,7 @@
     },
     "selectedTokenSets": {
       "mode/dark/high-contrast-tritanopia": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:10",
@@ -14065,7 +14065,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:11",
@@ -15025,7 +15025,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:12",
@@ -15985,7 +15985,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default-protanopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:13",
@@ -16945,7 +16945,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer-protanopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:14",
@@ -17905,7 +17905,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-protanopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:15",
@@ -18865,7 +18865,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default-deuteranopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:16",
@@ -19849,7 +19849,7 @@
     },
     "selectedTokenSets": {
       "mode/light/dimmer-deuteranopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:17",
@@ -20809,7 +20809,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-deuteranopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:18",
@@ -21769,7 +21769,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default-tritanopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:19",
@@ -23689,7 +23689,7 @@
     },
     "selectedTokenSets": {
       "mode/light/high-contrast-tritanopia": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1389:21",

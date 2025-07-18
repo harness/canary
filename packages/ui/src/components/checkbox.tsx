@@ -31,42 +31,28 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
   ({ className, label, caption, error, showOptionalLabel, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
-    // Extract the onCheckedChange handler from props
-    const { onCheckedChange } = props
+    const { onCheckedChange, ...checkboxProps } = props
 
-    // Create a handler for label/wrapper clicks
-    const handleWrapperClick = (e: React.MouseEvent) => {
-      e.stopPropagation()
-
-      // Don't do anything if disabled
-      if (props.disabled) return
-
-      // Get current checked state
-      const currentChecked = props.checked !== undefined ? props.checked : false
-
-      // Toggle the state
-      const newChecked = currentChecked === true ? false : true
-
-      // Call the onCheckedChange handler if provided
-      if (onCheckedChange) {
-        onCheckedChange(newChecked)
-      }
+    const handleOnCheckedChange = (checked: CheckboxPrimitive.CheckedState) => {
+      onCheckedChange?.(checked)
     }
 
     return (
       <div
         className={cn('cn-checkbox-wrapper', className, props.disabled ? 'cursor-not-allowed' : 'cursor-pointer')}
-        onClick={handleWrapperClick}
+        onClick={e => {
+          e.stopPropagation()
+          if (!props.disabled && onCheckedChange && props?.checked !== undefined) {
+            handleOnCheckedChange(!props.checked)
+          }
+        }}
       >
         <CheckboxPrimitive.Root
           id={checkboxId}
           ref={ref}
           className={checkboxVariants({ error })}
-          // Pass all props except onClick which we don't want to override
-          {...props}
-          // Stop propagation to prevent double-triggering with the wrapper click
-          // onClick={e => e.stopPropagation()}
-          onCheckedChange={onCheckedChange}
+          onCheckedChange={checked => handleOnCheckedChange(checked)}
+          {...checkboxProps}
         >
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (

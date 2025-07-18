@@ -61,8 +61,16 @@ export default function RepoSummaryPage() {
   const { customHooks, customUtils } = useMFEContext()
 
   const { toRepoCommits } = useRepoCommits()
-  const { fullGitRef, gitRefName, fullGitRefWoDefault, repoData, refetchRepo, preSelectedTab, setPreSelectedTab } =
-    useGitRef()
+  const {
+    fullGitRef,
+    gitRefName,
+    fullGitRefWoDefault,
+    repoData,
+    refetchRepo,
+    preSelectedTab,
+    setPreSelectedTab,
+    prefixedDefaultBranch
+  } = useGitRef()
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -75,6 +83,13 @@ export default function RepoSummaryPage() {
     useCalculateCommitDivergenceMutation({
       repo_ref: repoRef
     })
+
+  // Navigate to default branch if no branch is selected
+  useEffect(() => {
+    if (!fullGitRefWoDefault && prefixedDefaultBranch && fullGitRef) {
+      navigate(routes.toRepoSummary({ spaceId, repoId, '*': fullGitRef }))
+    }
+  }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef])
 
   useEffect(() => {
     if (branchDivergence.length) {

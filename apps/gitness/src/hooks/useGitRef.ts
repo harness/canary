@@ -40,6 +40,7 @@ export function useGitRef() {
     fullResourcePath,
     codeMode,
     preSelectedTab,
-    setPreSelectedTab
+    setPreSelectedTab,
+    prefixedDefaultBranch
   }
 }

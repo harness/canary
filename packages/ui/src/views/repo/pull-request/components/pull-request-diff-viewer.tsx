@@ -351,7 +351,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col border-l border-cn-borders-2 bg-cn-background-1 p-4">
+        <div className="flex w-full flex-col bg-cn-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode

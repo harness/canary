@@ -22,6 +22,7 @@ export interface SearchPageViewProps {
   onItemClick?: (item: SearchResultItem) => void
   filters?: Record<string, string | number | boolean>
   setFilters?: (filters: Record<string, string | number | boolean>) => void
+  toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
 }
 
 export const SearchPageView: FC<SearchPageViewProps> = ({
@@ -31,7 +32,8 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   useSearchResultsStore,
   onItemClick,
   filters,
-  setFilters
+  setFilters,
+  toRepoFileDetails
 }) => {
   const { t } = useTranslation()
   const { results, page, xNextPage, xPrevPage, setPage } = useSearchResultsStore()
@@ -71,21 +73,12 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         })}
       >
         <Spacer size={2} />
-        <Text
-          {...{
-            as: "h1",
-            variant: "heading-section",
-            color: "foreground-1"
-          }}
-        >
-          {t('views:search.title', 'Search')}
-        </Text>
+        <Text variant="heading-section">{t('views:search.title', 'Search')}</Text>
         <Spacer size={6} />
-        
+
         <ListActions.Root>
           <ListActions.Left>
             <SearchInput
-              inputContainerClassName={cn("max-w-80")}
               defaultValue={searchQuery || ''}
               onChange={handleSearchChange}
               placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
@@ -105,6 +98,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           onResetFiltersAndPages={handleResetFiltersAndPages}
           onItemClick={onItemClick}
           useSearchResultsStore={useSearchResultsStore}
+          toRepoFileDetails={toRepoFileDetails}
         />
 
         <Spacer size={5} />

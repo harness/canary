@@ -3,7 +3,7 @@ export default {
     minWidth: 'var(--cn-tooltip-min)',
     maxWidth: 'var(--cn-tooltip-max)',
     borderRadius: 'var(--cn-tooltip-radius)',
-    border: 'var(--cn-tooltip-border) solid var(--cn-border-2)',
+    border: 'var(--cn-tooltip-border) solid var(--cn-border-3)',
     background: 'var(--cn-bg-3)',
     padding: 'var(--cn-tooltip-py) var(--cn-tooltip-px)',
     color: 'var(--cn-text-1)',
@@ -17,6 +17,7 @@ export default {
 
     '&-arrow': {
       color: 'var(--cn-bg-3)',
+      border: 'var(--cn-tooltip-border) solid var(--cn-border-3)',
       '@apply w-5 h-2': ''
     }
   }

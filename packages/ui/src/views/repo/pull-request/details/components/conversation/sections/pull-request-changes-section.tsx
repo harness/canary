@@ -16,8 +16,6 @@ import { isEmpty } from 'lodash-es'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 const getStatusIcon = (status: string) => {
-  console.log(status)
-
   switch (status) {
     case 'pending':
       return <IconV2 name="clock-solid" className="text-icons-alert" />
@@ -250,7 +248,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="circle" className="fill-transparent text-icons-7" />
+                  <IconV2 name="circle" className="text-icons-7 fill-transparent" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
                   </span>
@@ -271,7 +269,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="circle" className="fill-transparent text-icons-7" />
+                  <IconV2 name="circle" className="text-icons-7 fill-transparent" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>
@@ -327,7 +325,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 <StackedList.Item
                   isHeader
                   disableHover
-                  className="cursor-default !bg-transparent px-0 text-cn-foreground-3"
+                  className="text-cn-foreground-3 cursor-default !bg-transparent px-0"
                 >
                   <StackedList.Field title={<HeaderItem header="Code" />} />
                   <StackedList.Field title={<HeaderItem header="Owners" />} />

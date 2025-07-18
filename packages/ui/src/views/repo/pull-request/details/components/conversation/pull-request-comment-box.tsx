@@ -446,7 +446,7 @@ export const PullRequestCommentBox = ({
                         iconOnly
                         onClick={() => handleActionClick(item.action, comment, textSelection)}
                       >
-                        <IconV2 className="text-icons-9" name={item.icon} />
+                        <IconV2 name={item.icon} />
                       </Button>
                       {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
                     </Fragment>

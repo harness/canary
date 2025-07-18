@@ -171,7 +171,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         if (getIsMarkdown(language)) {
           return (
             <MarkdownViewer
-              source={originalFileContent}
+              source={contentRevision.code}
               withBorderWrapper
               borderWrapperClassName="max-h-screen overflow-auto"
             />

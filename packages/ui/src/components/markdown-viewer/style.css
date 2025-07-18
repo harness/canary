@@ -258,4 +258,8 @@
       @apply before:bg-cn-background-softgray relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;
     }
   }
+
+  scrollbar-color: initial !important;
+  scrollbar-width: initial !important;
+  /* scrollbar-gutter: unset !important; */
 }

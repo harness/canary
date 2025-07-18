@@ -131,10 +131,14 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),
             t('views:noData.createNewPullRequest', 'Create a new pull request.')
           ]}
-          primaryButton={{
-            label: 'Create pull request',
-            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-          }}
+          primaryButton={
+            repoId
+              ? {
+                  label: 'Create pull request',
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
+              : undefined
+          }
         />
       </StackedList.Root>
     )

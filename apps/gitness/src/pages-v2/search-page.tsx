@@ -66,7 +66,7 @@ export default function SearchPage() {
     <SearchPageView
       isLoading={isLoading}
       searchQuery={searchQuery}
-      setSearchQuery={q => setSearchQuery(q)}
+      setSearchQuery={q => q && setSearchQuery(q)}
       useSearchResultsStore={() => {
         return {
           results: searchResults,
@@ -77,9 +77,6 @@ export default function SearchPage() {
           setPaginationFromHeaders: () => {}
         }
       }}
-      onItemClick={() => {}}
-      filters={{}}
-      setFilters={() => {}}
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
         isMfe
           ? `${window.apiUrl || ''}/repos/${repoPath}/code/${branch}/~/${filePath}`

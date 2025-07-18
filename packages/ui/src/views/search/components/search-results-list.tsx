@@ -1,16 +1,16 @@
 import { FC } from 'react'
 
-import { Button, Card, Layout, Link, Spacer, Tag, Text } from '@/components'
+import { Button, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 interface SearchResultsListProps {
   isLoading: boolean
   isDirtyList: boolean
-  onResetFiltersAndPages: () => void
   useSearchResultsStore: () => {
     results: SearchResultItem[]
   }
+  clearSearch: () => void
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
 }
 
@@ -34,19 +34,15 @@ export interface SearchResultItem {
 export const SearchResultsList: FC<SearchResultsListProps> = ({
   isLoading,
   isDirtyList,
-  onResetFiltersAndPages,
   useSearchResultsStore,
-  toRepoFileDetails
+  toRepoFileDetails,
+  clearSearch
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
 
   if (isLoading) {
-    return (
-      <div className={cn('flex items-center justify-center h-48')}>
-        <div className={cn('size-8 animate-spin rounded-full border-4 border-border-1 border-t-transparent')} />
-      </div>
-    )
+    return <SkeletonList />
   }
 
   if (!results.length) {
@@ -64,9 +60,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             : t('views:search.enterSearchTerms', 'Enter search terms to find relevant results')}
         </Text>
         <Spacer size={4} />
-        {isDirtyList && (
-          <Button onClick={onResetFiltersAndPages}>{t('views:search.clearSearch', 'Clear search')}</Button>
-        )}
+        {isDirtyList && <Button onClick={clearSearch}>{t('views:search.clearSearch', 'Clear search')}</Button>}
       </div>
     )
   }
@@ -85,13 +79,12 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
               </Link>
             </Layout.Horizontal>
 
-            <Layout.Vertical gap="sm">
-              {item.matches &&
-                item.matches.length > 1 &&
-                item.matches.slice(0, 3).map((match, matchIndex) => (
+            {item.matches && item.matches.length > 1 && (
+              <Layout.Vertical gap="sm">
+                {item.matches.slice(0, 3).map((match, matchIndex) => (
                   <div key={`match-${matchIndex}`}>
                     <Text variant="body-normal">Line {match.line_num}</Text>
-                    <pre className={cn('bg-cn-background-1 p-2 mt-1 overflow-x-auto rounded')}>
+                    <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
                       <code>
                         {match.before}
                         {match.segments?.map((segment, segIndex) => (
@@ -106,8 +99,9 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                     </pre>
                   </div>
                 ))}
-            </Layout.Vertical>
-            {item.matches?.length > 3 && <Text variant="body-normal">+{item.matches.length - 3} more</Text>}
+                {item.matches?.length > 3 && <Text variant="body-normal">+{item.matches.length - 3} more</Text>}
+              </Layout.Vertical>
+            )}
           </Layout.Vertical>
         </Card.Root>
       ))}

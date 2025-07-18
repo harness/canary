@@ -6,7 +6,6 @@ import { searchResultsStore } from './search-results-store'
 
 export const SearchPagePreview = () => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
-  const [filters, setFilters] = useState<Record<string, string | number | boolean>>({})
 
   const useSearchResultsStore = useCallback(() => searchResultsStore, [])
 
@@ -16,8 +15,6 @@ export const SearchPagePreview = () => {
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
       useSearchResultsStore={useSearchResultsStore}
-      filters={filters}
-      setFilters={setFilters}
       toRepoFileDetails={() => '#'}
     />
   )

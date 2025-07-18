@@ -19,9 +19,6 @@ export interface SearchPageViewProps {
     xPrevPage: number
     setPage: (page: number) => void
   }
-  onItemClick?: (item: SearchResultItem) => void
-  filters?: Record<string, string | number | boolean>
-  setFilters?: (filters: Record<string, string | number | boolean>) => void
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
 }
 
@@ -30,9 +27,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   searchQuery,
   setSearchQuery,
   useSearchResultsStore,
-  onItemClick,
-  filters,
-  setFilters,
   toRepoFileDetails
 }) => {
   const { t } = useTranslation()
@@ -46,15 +40,9 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
     [setPage, setSearchQuery]
   )
 
-  const handleResetFiltersAndPages = useCallback(() => {
-    setPage(1)
-    setSearchQuery('')
-    setFilters && setFilters({})
-  }, [setPage, setSearchQuery, setFilters])
-
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!searchQuery || (filters && Object.keys(filters).length > 0)
-  }, [page, searchQuery, filters])
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
   const getPrevPageLink = useCallback(() => {
     return `?page=${xPrevPage}`
@@ -85,9 +73,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
               autoFocus
             />
           </ListActions.Left>
-          <ListActions.Right>
-            <div>{/* Optional filters or actions can be added here */}</div>
-          </ListActions.Right>
         </ListActions.Root>
 
         <Spacer size={4.5} />
@@ -95,10 +80,12 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         <SearchResultsList
           isLoading={isLoading}
           isDirtyList={isDirtyList}
-          onResetFiltersAndPages={handleResetFiltersAndPages}
-          onItemClick={onItemClick}
           useSearchResultsStore={useSearchResultsStore}
           toRepoFileDetails={toRepoFileDetails}
+          clearSearch={() => {
+            setSearchQuery('')
+            setPage(1)
+          }}
         />
 
         <Spacer size={5} />

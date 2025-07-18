@@ -84,11 +84,14 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           sortConfig={{
             sortOptions: [
-              { label: t('views:connectors.sort.lastModifiedAt', 'Last modified'), value: 'lastModifiedAt' },
-              { label: t('views:connectors.sort.createdAt', 'Created'), value: 'createdAt' },
-              { label: t('views:connectors.sort.name', 'Name'), value: 'name' }
+              { label: 'Last modified', value: 'lastModifiedAt,DESC' },
+              { label: 'Oldest', value: 'createdAt,ASC' },
+              { label: 'Newest', value: 'createdAt,DESC' },
+              { label: 'Name (A - Z, 0 - 9)', value: 'name,ASC' },
+              { label: 'Name (Z - A, 9 - 0)', value: 'name,DESC' }
             ],
-            onSortChange
+            onSortChange,
+            defaultSort: 'lastModifiedAt,DESC'
           }}
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}

@@ -98,7 +98,14 @@ export const SidebarView = ({
     className: cn('cn-sidebar-drawer-content z-20', { 'cn-sidebar-drawer-content-collapsed': collapsed }),
     overlayClassName: cn('cn-sidebar-drawer-overlay z-20', { 'cn-sidebar-drawer-overlay-collapsed': collapsed }),
     forceWithOverlay: true,
-    onCloseAutoFocus: e => e.preventDefault()
+    onCloseAutoFocus: e => e.preventDefault(),
+    // Focus the first link in the drawer when it opens
+    onOpenAutoFocus: e => {
+      const target = e.target instanceof HTMLElement && e.target?.querySelector('.cn-sidebar-item-wrapper a')
+      if (target instanceof HTMLElement) {
+        target.focus()
+      }
+    }
   }
 
   return (

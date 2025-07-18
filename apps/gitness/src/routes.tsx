@@ -29,13 +29,14 @@ import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { ProjectRulesCreateOrUpdateContainer } from './pages-v2/project/project-rules-create-container'
 import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
+import ProjectPullRequestListPage from './pages-v2/project/pull-requests/pull-request-list'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import PullRequestConversationPage from './pages-v2/pull-request/pull-request-conversation'
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
-import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import RepoPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoLabelFormContainer } from './pages-v2/repo/labels/label-form-container'
 import { RepoLabelsList } from './pages-v2/repo/labels/labels-list-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
@@ -317,7 +318,7 @@ export const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <PullRequestListPage />,
+                element: <RepoPullRequestListPage />,
                 handle: {
                   pageTitle: Page.Pull_Requests
                 }
@@ -693,7 +694,7 @@ export const repoRoutes: CustomRouteObject[] = [
     children: [
       {
         index: true,
-        element: <PullRequestListPage />,
+        element: <ProjectPullRequestListPage />,
         handle: {
           pageTitle: Page.Pull_Requests
         }

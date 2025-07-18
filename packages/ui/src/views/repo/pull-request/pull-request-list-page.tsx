@@ -170,13 +170,17 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           imageName="no-data-folder"
           title="No pull requests yet"
           description={[
-            t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
+            t('views:noData.noPullRequests', `There are no pull requests in this ${repoId ? 'repo' : 'project'} yet.`),
             t('views:noData.createNewPullRequest', 'Create a new pull request.')
           ]}
-          primaryButton={{
-            label: 'Create pull request',
-            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-          }}
+          primaryButton={
+            repoId
+              ? {
+                  label: 'Create pull request',
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
+              : undefined
+          }
         />
       )
     }

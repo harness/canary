@@ -82,13 +82,20 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           imageName="no-data-folder"
           title="No open pull requests yet"
           description={[
-            t('views:noData.noOpenPullRequests', 'There are no open pull requests in this project yet.'),
+            t(
+              'views:noData.noOpenPullRequests',
+              `There are no open pull requests in this ${repoId ? 'repo' : 'project'} yet.`
+            ),
             t('views:noData.createNewPullRequest', 'Create a new pull request.')
           ]}
-          primaryButton={{
-            label: 'Create pull request',
-            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-          }}
+          primaryButton={
+            repoId
+              ? {
+                  label: 'Create pull request',
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
+              : undefined
+          }
         />
       </StackedList.Root>
     )

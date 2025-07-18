@@ -107,19 +107,8 @@ const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: T
   )
 }
 
-const TabsNavRoot = ({ children, onValueChange, value, defaultValue }: TabsProps) => {
-  const { activeTabValue, handleValueChange } = useManageActiveTabValue({
-    type: 'tabsnav',
-    value,
-    defaultValue,
-    onValueChange
-  })
-
-  return (
-    <TabsContext.Provider value={{ type: 'tabsnav', activeTabValue, onValueChange: handleValueChange }}>
-      {children}
-    </TabsContext.Provider>
-  )
+const TabsNavRoot = ({ children }: TabsProps) => {
+  return <TabsContext.Provider value={{ type: 'tabsnav' }}>{children}</TabsContext.Provider>
 }
 
 const TabsListContext = createContext<VariantProps<typeof tabsListVariants> & { activeClassName?: string }>({
@@ -221,11 +210,9 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
         to={value}
         onClick={handleClick}
         className={({ isActive }) => {
-          const isLinkActive = activeTabValue !== undefined ? activeTabValue === value : isActive
-
           return cn(
             tabsTriggerVariants({ variant }),
-            { 'cn-tabs-trigger-active': isLinkActive, [activeClassName ?? '']: isLinkActive },
+            { 'cn-tabs-trigger-active': isActive, [activeClassName ?? '']: isActive },
             className
           )
         }}

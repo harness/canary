@@ -8,9 +8,10 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
+import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { isRefATag, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 
 export default function RepoCommitsPage() {
   const routes = useRoutes()
@@ -18,6 +19,7 @@ export default function RepoCommitsPage() {
   const navigate = useNavigate()
   const { spaceId, repoId } = useParams<PathParams>()
   const { gitRefName, fullGitRef } = useCodePathDetails()
+  const { toRepoCommits } = useRepoCommits()
 
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
@@ -50,19 +52,15 @@ export default function RepoCommitsPage() {
           ? `${REFS_TAGS_PREFIX + branchTagName.name}`
           : `${REFS_BRANCH_PREFIX + branchTagName.name}`
       setPreSelectedTab(type)
-      isRefATag(newRef)
-        ? navigate(`${routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(branchTagName.name) })}`)
-        : navigate(
-            `${routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(branchTagName.name) })}`
-          )
+      navigate(toRepoCommits({ spaceId, repoId, fullGitRef: newRef, gitRefName: branchTagName.name }))
     },
-    [navigate, repoId, spaceId, routes]
+    [navigate, repoId, spaceId, toRepoCommits]
   )
 
   return (
     <RepoCommitsView
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-      toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+      toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, '*': sha })}
       commitsList={commitData?.commits}
       isFetchingCommits={isFetchingCommits}
       page={queryPage}

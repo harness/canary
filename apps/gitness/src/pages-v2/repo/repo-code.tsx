@@ -45,7 +45,7 @@ export const RepoCode = () => {
     preSelectedTab,
     setPreSelectedTab
   } = useGitRef()
-  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
+  const repoPath = routes.toRepoFiles({ spaceId, repoId, '*': fullGitRef })
 
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [
@@ -126,7 +126,7 @@ export const RepoCode = () => {
                   timestamp: item?.last_commit?.author?.when ?? '',
                   user: { name: item?.last_commit?.author?.identity?.name || '' },
                   sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                  path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || ''}/~/${item?.path}`
+                  path: routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef || ''}/~/${item?.path}` })
                 }))
               )
             )

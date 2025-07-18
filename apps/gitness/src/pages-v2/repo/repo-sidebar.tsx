@@ -87,7 +87,7 @@ export const RepoSidebar = () => {
       const defaultBranch = transformedBranchList.find(branch => branch.name === repoData.default_branch)
       const defaultBranchName = defaultBranch?.name || repoData?.default_branch
       if (defaultBranchName) {
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${defaultBranchName}`)
+        navigate(routes.toRepoFiles({ spaceId, repoId, '*': defaultBranchName }))
       }
     } else {
       const selectedGitRefTag = transformedTags.find(tag => tag.name === gitRefName)
@@ -141,20 +141,20 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef}/~/${fullResourcePath}`)
+          navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/${fullResourcePath}` }))
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef}/~/${parentDirPath}`)
+          navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/${parentDirPath}` }))
         }
       })
     } else {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef}/~/`)
+      navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/` }))
     }
   }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${filePath}`)
+      navigate(routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef}/~/${filePath}` }))
     },
     [fullGitRef, navigate, repoId]
   )
@@ -194,7 +194,7 @@ export const RepoSidebar = () => {
         onClose={() => setCreateBranchDialogOpen(false)}
         onSuccess={() => {
           setCreateBranchDialogOpen(false)
-          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchQueryForNewBranch}`)
+          navigate(routes.toRepoFiles({ spaceId, repoId, '*': branchQueryForNewBranch }))
         }}
         onBranchQueryChange={setBranchQueryForNewBranch}
         preselectedBranchOrTag={fullGitRef ? { name: gitRefName, sha: '' } : null}

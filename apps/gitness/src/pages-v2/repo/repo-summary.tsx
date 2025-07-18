@@ -34,12 +34,12 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useGitRef } from '../../hooks/useGitRef'
+import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { PathParams } from '../../RouteDefinitions'
 import { sortFilesByType } from '../../utils/common-utils'
 import {
   decodeGitContent,
   getTrimmedSha,
-  isRefATag,
   normalizeGitRef,
   REFS_BRANCH_PREFIX,
   REFS_TAGS_PREFIX
@@ -60,6 +60,7 @@ export default function RepoSummaryPage() {
   const isMFE = useIsMFE()
   const { customHooks, customUtils } = useMFEContext()
 
+  const { toRepoCommits } = useRepoCommits()
   const { fullGitRef, gitRefName, fullGitRefWoDefault, repoData, refetchRepo, preSelectedTab, setPreSelectedTab } =
     useGitRef()
 
@@ -127,7 +128,7 @@ export default function RepoSummaryPage() {
           ? `${REFS_TAGS_PREFIX + branchTagName.name}`
           : `${REFS_BRANCH_PREFIX + branchTagName.name}`
       setPreSelectedTab(type)
-      navigate(`${routes.toRepoSummary({ spaceId, repoId })}/${newRef}`)
+      navigate(routes.toRepoSummary({ spaceId, repoId, '*': newRef }))
     },
     [navigate, repoId, spaceId, routes]
   )
@@ -249,7 +250,7 @@ export default function RepoSummaryPage() {
                 timestamp: item?.last_commit?.author?.when ?? '',
                 user: { name: item?.last_commit?.author?.identity?.name || '' },
                 sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                path: `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${item?.path}`
+                path: routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef}/~/${item?.path}` })
               }))
             )
           )
@@ -270,7 +271,7 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${filePath}`)
+      navigate(routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef}/~/${filePath}` }))
     },
     [fullGitRef, navigate, repoId, spaceId]
   )
@@ -335,11 +336,7 @@ export default function RepoSummaryPage() {
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
         tokenGenerationError={tokenGenerationError}
-        toRepoCommits={() => {
-          return isRefATag(fullGitRef)
-            ? routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(gitRefName) })
-            : routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(gitRefName) })
-        }}
+        toRepoCommits={() => toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}

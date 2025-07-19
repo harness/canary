@@ -223,6 +223,7 @@ export interface PRListLabelType {
   color: ColorsEnum
   key: string
   value?: string
+  id?: number
 }
 
 export interface PullRequestPageProps {
@@ -241,6 +242,7 @@ export interface PullRequestPageProps {
   isLoading?: boolean
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
+  onLabelClick?: (labelId: number) => void
 }
 
 export type PRListFilters = {

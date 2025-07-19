@@ -1332,6 +1332,12 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
+    "input": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.3}"
+      }
+    },
     "link": {
       "text": {
         "$type": "color",

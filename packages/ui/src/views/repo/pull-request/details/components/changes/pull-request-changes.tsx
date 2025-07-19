@@ -152,16 +152,14 @@ const LineTitle: React.FC<LineTitleProps> = ({
         {showViewed ? (
           <Checkbox
             checked={viewed}
-            onClick={e => {
-              e.stopPropagation()
-              if (viewed) {
-                setViewed(false)
-                setCollapsed(false)
-                unmarkViewed(filePath)
-              } else {
-                setViewed(true)
+            onCheckedChange={checked => {
+              setViewed(checked === true)
+              if (checked) {
                 setCollapsed(true)
                 markViewed(filePath, checksumAfter ?? 'unknown')
+              } else {
+                setCollapsed(false)
+                unmarkViewed(filePath)
               }
             }}
             label={t('views:pullRequests.markViewed')}

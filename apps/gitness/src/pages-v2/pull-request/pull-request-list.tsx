@@ -75,7 +75,7 @@ export default function PullRequestListPage() {
     setFilterValues(prevFilters => {
       // Get current label IDs or empty array
       const currentLabelIds = prevFilters.label_id || []
-      
+
       // Toggle the label: remove if exists, add if doesn't exist
       let newLabelIds: number[]
       if (currentLabelIds.includes(labelId)) {
@@ -83,20 +83,18 @@ export default function PullRequestListPage() {
       } else {
         newLabelIds = [...currentLabelIds, labelId]
       }
-      
-      // Update URL parameters for bookmarking/sharing
+
       const newParams = new URLSearchParams(searchParams)
-      
-      // Convert the label IDs to URL format and update
+
       if (newLabelIds.length > 0) {
         const labelByValue = newLabelIds.map(id => `${id}:true`).join(';')
         newParams.set('label_by', labelByValue)
       } else {
         newParams.delete('label_by')
       }
-      
+
       setSearchParams(newParams)
-      
+
       return {
         ...prevFilters,
         label_id: newLabelIds

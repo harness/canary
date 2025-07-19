@@ -653,6 +653,21 @@ Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`
       required: true,
       value: "ReactNode",
     },
+    {
+      name: "overlayClassName",
+      description: "Class to apply to the overlay.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "forceWithOverlay",
+      description:
+        "When true, the drawer will always render an overlay even if the modal prop is false.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
   ]}
 />
 

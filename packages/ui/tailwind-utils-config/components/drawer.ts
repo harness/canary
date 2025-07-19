@@ -56,6 +56,10 @@ export default {
 
       '&:where(.cn-drawer-content-bottom)': {
         '@apply border-b-0 rounded-b-none bottom-0': ''
+      },
+
+      '&[data-vaul-drawer]:not([data-vaul-custom-container=true])::after': {
+        display: 'none'
       }
     },
 

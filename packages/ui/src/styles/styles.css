@@ -171,6 +171,9 @@
 }
 
 .diff-tailwindcss-wrapper {
+  .diff-line-widget-new-content,
+  .diff-line-widget-new-placeholder,
+  .diff-line-new-placeholder,
   .diff-line-new-num {
     @apply border-l;
   }

@@ -22,6 +22,7 @@ const RepoLayout = () => {
       <SubHeaderWrapper>
         <RepoSubheader
           showPipelinesTab={!isMFE}
+          showSearchTab={isMFE}
           summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': gitRefPath })}
           filesPath={routes.toRepoFiles({ spaceId, repoId, '*': gitRefPath })}
           commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}

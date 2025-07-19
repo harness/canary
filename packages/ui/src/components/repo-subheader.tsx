@@ -10,7 +10,8 @@ export enum RepoTabsKeys {
   TAGS = 'tags',
   PULLS = 'pulls',
   BRANCHES = 'branches',
-  SETTINGS = 'settings'
+  SETTINGS = 'settings',
+  SEARCH = 'search'
 }
 
 export const repoTabsKeysArr = Object.values(RepoTabsKeys)
@@ -18,6 +19,7 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 interface RepoSubheaderProps {
   className?: string
   showPipelinesTab?: boolean
+  showSearchTab?: boolean
   summaryPath?: string
   filesPath?: string
   commitsPath?: string
@@ -25,6 +27,7 @@ interface RepoSubheaderProps {
 
 export const RepoSubheader = ({
   showPipelinesTab = true,
+  showSearchTab = false,
   className,
   summaryPath,
   filesPath,
@@ -45,6 +48,9 @@ export const RepoSubheader = ({
           <Tabs.Trigger value={RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.PULLS}>{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.BRANCHES}>{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
+          {showSearchTab && (
+            <Tabs.Trigger value={RepoTabsKeys.SEARCH}>{t('views:repos.search', 'Search')}</Tabs.Trigger>
+          )}
           <Tabs.Trigger value={RepoTabsKeys.SETTINGS}>{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
         </Tabs.List>
       </Tabs.NavRoot>

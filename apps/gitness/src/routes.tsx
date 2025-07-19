@@ -310,6 +310,14 @@ export const repoRoutes: CustomRouteObject[] = [
             }
           },
           {
+            path: 'search',
+            element: <SearchPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.Search}</span>,
+              routeName: RouteConstants.toRepoSearch
+            }
+          },
+          {
             path: 'pulls',
             handle: {
               breadcrumb: () => <span>{Page.Pull_Requests}</span>,

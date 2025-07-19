@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { ListActions, Pagination, SearchInput, Spacer, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -12,6 +12,8 @@ export interface SearchPageViewProps {
   isLoading: boolean
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+  regex: boolean
+  setRegex: (selected: boolean) => void
   useSearchResultsStore: () => {
     results: SearchResultItem[]
     page: number
@@ -26,6 +28,8 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   isLoading,
   searchQuery,
   setSearchQuery,
+  regex,
+  setRegex,
   useSearchResultsStore,
   toRepoFileDetails
 }) => {
@@ -73,6 +77,15 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
               autoFocus
             />
           </ListActions.Left>
+          <ListActions.Right>
+            <Toggle
+              defaultValue={regex}
+              onChange={setRegex}
+              iconOnly
+              prefixIcon="system-restart"
+              tooltipProps={{ content: 'Enable Regex' }}
+            />
+          </ListActions.Right>
         </ListActions.Root>
 
         <Spacer size={4.5} />

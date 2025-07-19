@@ -25,16 +25,18 @@ const isRelativeLink = (href: string) =>
 
 interface MarkdownViewerWrapperProps {
   children: ReactNode
+  className?: string
 }
 
-const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children }) => {
-  return <div className="rounded-b-md border-x border-b p-6">{children}</div>
+const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children, className }) => {
+  return <div className={`rounded-b-md border-x border-b p-6 ${className}`}>{children}</div>
 }
 
 interface MarkdownViewerProps {
   source: string
   maxHeight?: string | number
   withBorderWrapper?: boolean
+  borderWrapperClassName?: string
   // TODO: add ai stuff at a later point for code suggestions
   suggestionBlock?: SuggestionBlock
   suggestionCheckSum?: string
@@ -47,6 +49,7 @@ export function MarkdownViewer({
   source,
   maxHeight,
   withBorderWrapper = false,
+  borderWrapperClassName,
   suggestionBlock,
   suggestionCheckSum,
   isSuggestion,
@@ -157,7 +160,7 @@ export function MarkdownViewer({
   }, [interceptClickEventOnViewerContainer])
 
   return (
-    <Wrapper>
+    <Wrapper {...(withBorderWrapper ? { className: borderWrapperClassName } : {})}>
       <div ref={ref} style={styles}>
         {isSuggestion && (
           <div className="rounded-t-md border-x border-t border-cn-borders-2 bg-cn-background-2 px-4 py-3">

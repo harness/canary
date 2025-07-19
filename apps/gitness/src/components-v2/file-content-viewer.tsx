@@ -23,12 +23,11 @@ import {
   FILE_SEPERATOR,
   filenameToLanguage,
   formatBytes,
+  getIsMarkdown,
   GitCommitAction,
   normalizeGitRef,
   REFS_TAGS_PREFIX
 } from '../utils/git-utils'
-
-const getIsMarkdown = (language?: string) => language === 'markdown'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
   return getIsMarkdown(language) ? 'preview' : 'code'

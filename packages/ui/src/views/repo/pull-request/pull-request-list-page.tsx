@@ -219,8 +219,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       {}
     )
 
-    console.log('filterValues', filterValues, _filterValues)
-
     onFilterChange?.(_filterValues)
   }
 

@@ -113,7 +113,6 @@ export function RepoWebhookList({
                     e.stopPropagation()
                     handleEnableWebhook(webhook.id, !webhook.enabled)
                   }}
-                  // onCheckedChange={() => handleEnableWebhook(webhook.id, !webhook.enabled)}
                   label={webhook.display_name}
                   caption={
                     webhook?.triggers?.length

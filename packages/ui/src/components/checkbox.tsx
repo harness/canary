@@ -31,29 +31,9 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
   ({ className, label, caption, error, showOptionalLabel, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
-    const { onCheckedChange, ...checkboxProps } = props
-
-    const handleOnCheckedChange = (checked: CheckboxPrimitive.CheckedState) => {
-      onCheckedChange?.(checked)
-    }
-
     return (
-      <div
-        className={cn('cn-checkbox-wrapper', className, props.disabled ? 'cursor-not-allowed' : 'cursor-pointer')}
-        onClick={e => {
-          e.stopPropagation()
-          if (!props.disabled && onCheckedChange && props?.checked !== undefined) {
-            handleOnCheckedChange(!props.checked)
-          }
-        }}
-      >
-        <CheckboxPrimitive.Root
-          id={checkboxId}
-          ref={ref}
-          className={checkboxVariants({ error })}
-          onCheckedChange={checked => handleOnCheckedChange(checked)}
-          {...checkboxProps}
-        >
+      <div className={cn('cn-checkbox-wrapper', className)}>
+        <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={checkboxVariants({ error })} {...props}>
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (
               <IconV2 name="minus" className="cn-checkbox-icon" skipSize />

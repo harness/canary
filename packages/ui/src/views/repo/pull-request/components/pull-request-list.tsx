@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 
 import { NoData, StackedList } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { PRListFilters, PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '@/views'
+import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '@/views'
 
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'

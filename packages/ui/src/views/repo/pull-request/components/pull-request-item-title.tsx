@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
 import { IconV2 } from '@/components'
-import { PRListFilters, PullRequestType } from '@/views'
+import { PullRequestType } from '@/views'
 import { cn } from '@utils/cn'
-import { LabelsList, LabelsValue } from '@views/repo/pull-request/components/labels'
+import { LabelsList } from '@views/repo/pull-request/components/labels'
 
 import { getPrState } from '../utils'
 

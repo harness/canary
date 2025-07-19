@@ -28,7 +28,7 @@ export default function PullRequestListPage() {
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
   const mfeContext = useMFEContext()
@@ -69,6 +69,19 @@ export default function PullRequestListPage() {
       enabled: principalsSearchQuery !== undefined
     }
   )
+
+  const onLabelClick = (labelId: number) => {
+    // Update filter values with the label ID for API call
+    setFilterValues(prevFilters => ({
+      ...prevFilters,
+      label_id: [labelId]
+    }))
+
+    // Update URL parameters for bookmarking/sharing
+    const newParams = new URLSearchParams(searchParams)
+    newParams.set('label_by', `${labelId}:true`)
+    setSearchParams(newParams)
+  }
 
   useEffect(() => {
     if (pullRequestData) {
@@ -137,6 +150,7 @@ export default function PullRequestListPage() {
       }}
       searchQuery={query}
       setSearchQuery={setQuery}
+      onLabelClick={onLabelClick}
     />
   )
 }

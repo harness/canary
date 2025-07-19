@@ -1,8 +1,8 @@
-import { HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 
 import { cn } from '@/utils'
 
-export const DrawerTagline = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => (
-  <span className={cn('cn-drawer-tagline', className)} {...props} />
+export const DrawerTagline = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(
+  ({ className, ...props }, ref) => <span className={cn('cn-drawer-tagline', className)} {...props} ref={ref} />
 )
 DrawerTagline.displayName = 'DrawerTagline'

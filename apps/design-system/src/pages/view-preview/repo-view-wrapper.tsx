@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
-import { RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/ui/views'
+import { RepoSubheader } from '@harnessio/ui/components'
+import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 

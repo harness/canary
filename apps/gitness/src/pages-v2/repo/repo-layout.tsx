@@ -1,6 +1,7 @@
 import { Outlet, useParams } from 'react-router-dom'
 
-import { RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/ui/views'
+import { RepoSubheader } from '@harnessio/ui/components'
+import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'

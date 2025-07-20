@@ -144,14 +144,15 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
       mode="onSubmit"
       onSubmit={values => {
         const definition = getConnectorDefinition(connector.type)
-        const transformers = definition ? getTransformers(definition?.formDefinition) : undefined
-        const transformedValues = transformers?.length ? outputTransformValues(values, transformers) : values
-        let formattedValues = definition
-          ? unsetHiddenInputsValues(definition.formDefinition, transformedValues)
-          : transformedValues
-        formattedValues = removeTemporaryFieldsValue(formattedValues)
+        const transformers = definition?.formDefinition ? getTransformers(definition.formDefinition) : []
+        const formattedValues = removeTemporaryFieldsValue(
+          definition?.formDefinition ? unsetHiddenInputsValues(definition.formDefinition, values) : values
+        )
+        const transformedValues = transformers.length
+          ? outputTransformValues(formattedValues, transformers)
+          : formattedValues
 
-        onSubmit({ values: formattedValues, connector, intent })
+        onSubmit({ values: transformedValues, connector, intent })
       }}
       validateAfterFirstSubmit={true}
     >

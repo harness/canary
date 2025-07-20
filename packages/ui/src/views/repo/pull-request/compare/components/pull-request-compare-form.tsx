@@ -102,76 +102,71 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
-        <div className="gap-y-3">
-          <FormInput.Text
-            id="title"
-            {...register('title')}
-            autoFocus
-            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
-            label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
-          />
+        <FormInput.Text
+          id="title"
+          {...register('title')}
+          autoFocus
+          placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
+          label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
+        />
 
-          <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
-            <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-              <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
-                <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
-                <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
-              </Tabs.List>
+        <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
+          <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
+            <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+              <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+              <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
+            </Tabs.List>
 
-              <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
-                <div
-                  className="relative"
-                  onDrop={handleDrop}
-                  onDragOver={e => e.preventDefault()}
-                  onDragEnter={handleDragEnter}
-                  onDragLeave={handleDragLeave}
-                  ref={dropZoneRef}
-                >
-                  <FormInput.Textarea
-                    id="description"
-                    {...register('description')}
-                    value={desc}
-                    onChange={e => {
-                      setDesc(e.target.value)
-                    }}
-                    placeholder={t(
-                      'views:pullRequests.compareChangesFormDescriptionPlaceholder',
-                      'Add Pull Request description here.'
-                    )}
-                    onPaste={e => {
-                      if (e.clipboardData.files.length > 0) {
-                        handlePasteForUpload(e)
-                      }
-                    }}
-                    label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
-                  />
-                  {isDragging && (
-                    <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+            <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
+              <div
+                className="relative"
+                onDrop={handleDrop}
+                onDragOver={e => e.preventDefault()}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                ref={dropZoneRef}
+              >
+                <FormInput.Textarea
+                  id="description"
+                  {...register('description')}
+                  defaultValue={desc}
+                  placeholder={t(
+                    'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+                    'Add Pull Request description here.'
                   )}
-                </div>
-              </Tabs.Content>
-              <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
-                <div className="min-h-24">
-                  {desc ? (
-                    <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
-                  ) : (
-                    <span>Nothing to preview</span>
-                  )}
-                </div>
-              </Tabs.Content>
-            </Tabs.Root>
+                  onPaste={e => {
+                    if (e.clipboardData.files.length > 0) {
+                      handlePasteForUpload(e)
+                    }
+                  }}
+                  label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
+                />
+                {isDragging && (
+                  <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+                )}
+              </div>
+            </Tabs.Content>
+            <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
+              <div className="min-h-24">
+                {desc ? (
+                  <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
+                ) : (
+                  <span>Nothing to preview</span>
+                )}
+              </div>
+            </Tabs.Content>
+          </Tabs.Root>
 
-            <div className="mt-4 flex items-center justify-between">
-              {activeTab === TABS_KEYS.WRITE && (
-                <div>
-                  <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-                  <Button variant="ghost" onClick={e => handleFileSelect(e)}>
-                    <IconV2 name="attachment-image" />
-                    <span>Drag & drop, select, or paste to attach files</span>
-                  </Button>
-                </div>
-              )}
-            </div>
+          <div className="mt-4 flex items-center justify-between">
+            {activeTab === TABS_KEYS.WRITE && (
+              <div>
+                <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+                <Button variant="ghost" onClick={e => handleFileSelect(e)}>
+                  <IconV2 name="attachment-image" />
+                  <span>Drag & drop, select, or paste to attach files</span>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 

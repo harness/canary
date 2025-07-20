@@ -6,11 +6,11 @@
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1.1"
+      "$value": "1.2"
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.2"
     },
     "md": {
       "$type": "borderWidth",

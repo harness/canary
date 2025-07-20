@@ -108,8 +108,11 @@ export function RepoWebhookList({
               <Table.Cell className="cursor-pointer">
                 <Switch
                   checked={webhook.enabled}
-                  onClick={e => e.stopPropagation()}
-                  onCheckedChange={() => handleEnableWebhook(webhook.id, !webhook.enabled)}
+                  onClick={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleEnableWebhook(webhook.id, !webhook.enabled)
+                  }}
                   label={webhook.display_name}
                   caption={
                     webhook?.triggers?.length

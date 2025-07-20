@@ -151,8 +151,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const {
     reset,
     getValues,
-    formState: { isValid }
+    formState: { isValid },
+    watch
   } = formMethods
+
+  const descriptionValue = watch('description')
+
+  useEffect(() => {
+    setDesc(descriptionValue ?? '')
+  }, [descriptionValue, setDesc])
 
   useEffect(() => {
     if (commitData && commitData.length > 0) {

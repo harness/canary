@@ -10,9 +10,10 @@ interface LabelsListProps {
   labels: LabelListLabel[]
   className?: string
   showReset?: boolean
+  onClick?: (label: LabelListLabel) => void
 }
 
-export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset }) => {
+export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, onClick }) => {
   if (!labels.length) {
     return <span className="text-2 font-medium text-cn-foreground-3">No labels</span>
   }
@@ -29,6 +30,11 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset }
           theme={label.color}
           onReset={label.onDelete}
           showReset={showReset}
+          onClick={e => {
+            e.stopPropagation()
+            e.preventDefault()
+            onClick?.(label)
+          }}
         />
       ))}
     </div>

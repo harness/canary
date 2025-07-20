@@ -54,6 +54,7 @@ import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
+import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
@@ -201,12 +202,19 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <span>{Page.Summary}</span>,
               routeName: RouteConstants.toRepoSummary,
               pageTitle: Page.Summary
-            }
+            },
+            children: [
+              {
+                path: '*',
+                element: <RepoSummaryPage />
+              }
+            ]
           },
           {
             path: 'commits',
             handle: {
-              breadcrumb: () => <span>{Page.Commits}</span>
+              breadcrumb: () => <span>{Page.Commits}</span>,
+              routeName: RouteConstants.toRepoCommits
             },
             children: [
               {
@@ -302,6 +310,14 @@ export const repoRoutes: CustomRouteObject[] = [
             }
           },
           {
+            path: 'search',
+            element: <SearchPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.Search}</span>,
+              routeName: RouteConstants.toRepoSearch
+            }
+          },
+          {
             path: 'pulls',
             handle: {
               breadcrumb: () => <span>{Page.Pull_Requests}</span>,
@@ -394,7 +410,8 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'pipelines',
             handle: {
-              breadcrumb: () => <span>{Page.Pipelines}</span>
+              breadcrumb: () => <span>{Page.Pipelines}</span>,
+              routeName: RouteConstants.toRepoPipelines
             },
             children: [
               {
@@ -654,7 +671,7 @@ export const repoRoutes: CustomRouteObject[] = [
   },
   {
     path: 'search',
-    element: <EmptyPage pathName="Search" comingSoon={true} />,
+    element: <SearchPage />,
     handle: {
       breadcrumb: () => <span>{Page.Search}</span>,
       pageTitle: Page.Search

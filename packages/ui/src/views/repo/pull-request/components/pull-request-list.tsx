@@ -21,6 +21,7 @@ export interface PullRequestListProps {
   spaceId?: string
   headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
   setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
+  onLabelClick?: (labelId: number) => void
 }
 
 export const PullRequestList: FC<PullRequestListProps> = ({
@@ -32,7 +33,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   spaceId,
   repoId,
   headerFilter,
-  setHeaderFilter
+  setHeaderFilter,
+  onLabelClick
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -156,7 +158,9 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             {!!pullRequest.number && (
               <StackedList.Field
                 className="max-w-full gap-1.5"
-                title={pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} />}
+                title={
+                  pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} onLabelClick={onLabelClick} />
+                }
                 description={
                   pullRequest.author &&
                   typeof pullRequest.author === 'string' && (

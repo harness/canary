@@ -4,10 +4,11 @@ import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
+  BranchSelectorListItem,
+  BranchSelectorTab,
   CodeModes,
   CommitDivergenceType,
   FileLastChangeBar,
-  IBranchSelectorStore,
   LatestFileTypes,
   PathActionBar,
   RepoFile,
@@ -27,12 +28,15 @@ interface RepoFilesProps {
   pathNewFile: string
   pathUploadFiles: string
   codeMode: CodeModes
-  useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
   currentBranchDivergence: CommitDivergenceType
   toCommitDetails?: ({ sha }: { sha: string }) => string
   isLoadingRepoDetails: boolean
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  selectedBranchTag: BranchSelectorListItem | null
+  repoId: string
+  spaceId: string
+  selectedRefType: BranchSelectorTab
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -46,15 +50,17 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   pathNewFile,
   pathUploadFiles,
   codeMode,
-  useRepoBranchesStore,
   defaultBranchName,
   currentBranchDivergence,
   isRepoEmpty,
   toCommitDetails,
   isLoadingRepoDetails,
-  toRepoFileDetails
+  toRepoFileDetails,
+  selectedBranchTag,
+  repoId,
+  spaceId,
+  selectedRefType
 }) => {
-  const { selectedBranchTag, repoId, spaceId, selectedRefType } = useRepoBranchesStore()
   const { t } = useTranslation()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
@@ -91,7 +97,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                 repoId={repoId}
                 spaceId={spaceId}
                 defaultBranchName={defaultBranchName}
-                useRepoBranchesStore={useRepoBranchesStore}
                 selectedBranchTag={selectedBranchTag || { name: '', sha: '' }}
                 currentBranchDivergence={{
                   ahead: currentBranchDivergence.ahead || 0,
@@ -131,7 +136,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     files,
     selectedBranchTag?.name,
     defaultBranchName,
-    useRepoBranchesStore,
     currentBranchDivergence.ahead,
     currentBranchDivergence.behind,
     isLoadingRepoDetails,

@@ -20,13 +20,20 @@ interface TextSelection {
   end: number
 }
 
+enum TextSelectionBehavior {
+  Capture = 'capture',
+  Split = 'split',
+  Parse = 'parse'
+}
+
 interface StringSelection {
   beforeSelection: string
   selection: string
+  selectionLines: string[]
+  selectionStart: number
+  selectionEnd: number
   afterSelection: string
   previousLine: string
-  textSelectionStart: number
-  textSelectionEnd: number
 }
 
 interface ToolbarItem {
@@ -85,6 +92,10 @@ export const PullRequestCommentBox = ({
   const [isDragging, setIsDragging] = useState(false)
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const dropZoneRef = useRef<HTMLDivElement>(null)
+
+  const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
+    setActiveTab(tab)
+  }
 
   const handleSaveComment = () => {
     if (comment.trim()) {
@@ -179,6 +190,8 @@ export const PullRequestCommentBox = ({
     const selection = comment.substring(textSelection.start, textSelection.end)
     const afterSelection = comment.substring(textSelection.end)
 
+    const selectionLines = selection.split('\n')
+
     const beforeSelectionParts = beforeSelection.split('\n')
     const previousLine = beforeSelectionParts.at(beforeSelectionParts.length - 2) ?? ''
 
@@ -189,26 +202,45 @@ export const PullRequestCommentBox = ({
     return {
       beforeSelection: beforeSelection,
       selection: selection,
+      selectionLines: selectionLines,
       afterSelection: afterSelection,
       previousLine: previousLine,
-      textSelectionStart: newTextSelectionStart,
-      textSelectionEnd: newTextSelectionEnd
+      selectionStart: newTextSelectionStart,
+      selectionEnd: newTextSelectionEnd
     }
   }
 
   const parseAndSetComment = (
     comment: string,
     textSelection: TextSelection,
+    textSelectionBehavrior: TextSelectionBehavior,
     injectedPreString: string,
-    injectedPostString: string = '',
-    injectedString: string = ''
+    injectedPostString: string = ''
   ) => {
     const parsedComment = parseComment(comment, textSelection, injectedPreString)
 
-    setCommentAndTextSelection(
-      `${parsedComment.beforeSelection}${injectedPreString}${injectedString}${parsedComment.selection}${injectedPostString}${parsedComment.afterSelection}`,
-      { start: parsedComment.textSelectionStart, end: parsedComment.textSelectionEnd }
-    )
+    let injectedString = ''
+
+    switch (textSelectionBehavrior) {
+      case TextSelectionBehavior.Capture:
+        injectedString = `${injectedPreString}${parsedComment.selection}${injectedPostString}`
+        break
+      case TextSelectionBehavior.Split:
+        injectedString = parsedComment.selectionLines.reduce((prev, selectionLine, currentIndex, array) => {
+          return `${prev}${injectedPreString}${selectionLine}${injectedPostString}${currentIndex < array.length - 1 ? '\n' : ''}`
+        }, '')
+        break
+      case TextSelectionBehavior.Parse:
+        injectedString = isEmpty(parsedComment.selection)
+          ? `${injectedPreString}${parseDiff(diff, sideKey, lineNumber)}${injectedPostString}`
+          : `${injectedPreString}${parsedComment.selection}${injectedPostString}`
+        break
+    }
+
+    setCommentAndTextSelection(`${parsedComment.beforeSelection}${injectedString}${parsedComment.afterSelection}`, {
+      start: parsedComment.selectionStart,
+      end: parsedComment.selectionEnd
+    })
   }
 
   const parseDiff = (diff: string = '', sideKey?: 'oldFile' | 'newFile', lineNumber?: number): string => {
@@ -270,34 +302,33 @@ export const PullRequestCommentBox = ({
   const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
     switch (type) {
       case ToolbarAction.SUGGESTION:
-        parseAndSetComment(comment, textSelection, '```suggestion\n', '\n```', parseDiff(diff, sideKey, lineNumber))
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Parse, '```suggestion\n', '\n```')
         break
       case ToolbarAction.HEADER:
-        parseAndSetComment(comment, textSelection, '# ')
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Capture, '# ')
         break
       case ToolbarAction.BOLD:
-        parseAndSetComment(comment, textSelection, '**', '**')
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Capture, '**', '**')
         break
       case ToolbarAction.ITALIC:
-        parseAndSetComment(comment, textSelection, '*', '*')
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Capture, '*', '*')
         break
       case ToolbarAction.UPLOAD:
         handleFileSelect()
         break
       case ToolbarAction.UNORDER_LIST:
-        parseAndSetComment(comment, textSelection, '- ')
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Split, '- ')
         break
       case ToolbarAction.CHECK_LIST:
-        parseAndSetComment(comment, textSelection, '- [ ] ')
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Split, '- [ ] ')
         break
       case ToolbarAction.CODE_BLOCK:
-        parseAndSetComment(comment, textSelection, '```' + lang + '\n', '\n```')
+        parseAndSetComment(comment, textSelection, TextSelectionBehavior.Capture, '```' + lang + '\n', '\n```')
         break
     }
-  }
 
-  const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
-    setActiveTab(tab)
+    // Return cursor to proper place to continue typing based on where action above set selection index
+    textAreaRef.current && textAreaRef.current.focus()
   }
 
   const setCommentAndTextSelection = (comment: string, textSelection: TextSelection) => {
@@ -317,15 +348,37 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.code === 'Enter') {
-      const parsedComment = parseComment(comment, textSelection, '')
+  const onMouseUp = () => {
+    if (textAreaRef.current) {
+      const target = textAreaRef.current
 
-      if (isListString(parsedComment.previousLine)) {
-        handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection)
+      setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
+    }
+  }
+
+  const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    switch (e.code) {
+      case 'ArrowUp':
+      case 'ArrowDown':
+      case 'ArrowLeft':
+      case 'ArrowRight': {
+        if (textAreaRef.current) {
+          const target = textAreaRef.current
+
+          setTextSelection({ start: target.selectionStart, end: target.selectionEnd })
+        }
+        break
       }
-      if (isListSelectString(parsedComment.previousLine)) {
-        handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
+      case 'Enter': {
+        const parsedComment = parseComment(comment, textSelection, '')
+
+        if (isListString(parsedComment.previousLine)) {
+          handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection)
+        }
+        if (isListSelectString(parsedComment.previousLine)) {
+          handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
+        }
+        break
       }
     }
   }
@@ -369,7 +422,8 @@ export const PullRequestCommentBox = ({
                 placeholder="Add your comment here"
                 value={comment}
                 onChange={e => onCommentChange(e)}
-                onKeyUpCapture={e => onKeyUp(e)}
+                onKeyUp={e => onKeyUp(e)}
+                onMouseUp={() => onMouseUp()}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {
                     handlePasteForUpload(e)

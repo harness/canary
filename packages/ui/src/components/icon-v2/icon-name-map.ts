@@ -105,6 +105,8 @@ import CloudXmark from './icons/cloud-xmark.svg'
 import Cloud from './icons/cloud.svg'
 import CodeBracketsSquare from './icons/code-brackets-square.svg'
 import CodeBrackets from './icons/code-brackets.svg'
+import CodeDown from './icons/code-down.svg'
+import CodeUp from './icons/code-up.svg'
 import Code from './icons/code.svg'
 import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
@@ -363,6 +365,7 @@ import RefreshCircleSolid from './icons/refresh-circle-solid.svg'
 import RefreshCircle from './icons/refresh-circle.svg'
 import RefreshDouble from './icons/refresh-double.svg'
 import Refresh from './icons/refresh.svg'
+import Regex from './icons/regex.svg'
 import ReloadWindow from './icons/reload-window.svg'
 import ReminderHandGesture from './icons/reminder-hand-gesture.svg'
 import ReplyToMessage from './icons/reply-to-message.svg'
@@ -576,6 +579,8 @@ export const IconNameMapV2 = {
   cloud: Cloud,
   'code-brackets-square': CodeBracketsSquare,
   'code-brackets': CodeBrackets,
+  'code-down': CodeDown,
+  'code-up': CodeUp,
   code: Code,
   'collapse-code': CollapseCode,
   'collapse-sidebar': CollapseSidebar,
@@ -834,6 +839,7 @@ export const IconNameMapV2 = {
   'refresh-circle': RefreshCircle,
   'refresh-double': RefreshDouble,
   refresh: Refresh,
+  regex: Regex,
   'reload-window': ReloadWindow,
   'reminder-hand-gesture': ReminderHandGesture,
   'reply-to-message': ReplyToMessage,

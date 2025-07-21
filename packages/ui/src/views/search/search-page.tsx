@@ -82,7 +82,10 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
               defaultValue={regex}
               onChange={setRegex}
               iconOnly
-              prefixIcon="system-restart"
+              prefixIcon="regex"
+              prefixIconProps={{
+                size: 'md'
+              }}
               tooltipProps={{ content: 'Enable Regex' }}
             />
           </ListActions.Right>

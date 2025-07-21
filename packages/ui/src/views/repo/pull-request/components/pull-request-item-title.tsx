@@ -1,18 +1,18 @@
 import { FC } from 'react'
 
-import { IconV2 } from '@/components'
-import { PullRequestType } from '@/views'
+import { IconV2, Layout, Tag } from '@/components'
+import { PullRequest } from '@/views'
 import { cn } from '@utils/cn'
 import { LabelsList } from '@views/repo/pull-request/components/labels'
 
 import { getPrState } from '../utils'
 
 interface PullRequestItemTitleProps {
-  pullRequest: PullRequestType
+  pullRequest: PullRequest
 }
 
 export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullRequest }) => {
-  const { name, labels, state, is_draft: isDraft, comments, merged } = pullRequest
+  const { name, labels, state, is_draft: isDraft, comments, merged, repoId } = pullRequest
   const isSuccess = !!merged
 
   return (
@@ -29,7 +29,14 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
           name={getPrState(isDraft, merged, state).icon}
         />
 
-        <p className="ml-0.5 mr-1 truncate text-3 font-medium leading-snug">{name}</p>
+        {repoId ? (
+          <Layout.Flex gap="xs" align="center">
+            <Tag value={repoId} />
+            <p className="mr-1 truncate text-3 font-medium leading-snug">{name}</p>
+          </Layout.Flex>
+        ) : (
+          <p className="ml-0.5 mr-1 truncate text-3 font-medium leading-snug">{name}</p>
+        )}
 
         {!!labels.length && <LabelsList labels={labels} className="max-h-5 w-[max(400px,60%)] overflow-hidden" />}
       </div>

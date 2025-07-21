@@ -254,7 +254,8 @@ export const BranchSettingsRuleListField: FC<{
       <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
       <Fieldset className="gap-y-5">
         {branchRules.map((rule, index) => {
-          const isChecked = rules[index]?.checked ?? false
+          const matchingRule = rules.find(r => r.id === rule.id)
+          const { checked: isChecked = false, disabled: isDisabled = false } = matchingRule || {}
 
           return (
             <Fieldset key={rule.id} className="gap-y-4">
@@ -262,6 +263,7 @@ export const BranchSettingsRuleListField: FC<{
                 id={rule.id}
                 checked={isChecked}
                 onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
               />

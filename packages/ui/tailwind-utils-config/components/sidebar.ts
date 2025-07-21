@@ -342,7 +342,7 @@ export default {
 
     '&:where([data-state=collapsed])': {
       '&.cn-sidebar': {
-        width: 'min-content'
+        width: 'var(--cn-size-14)'
       },
 
       '.cn-sidebar-group': {

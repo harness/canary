@@ -502,11 +502,19 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   },
                   {
-                    path: 'create',
+                    path: 'create/branch',
                     element: <RepoBranchSettingsRulesPageContainer />,
                     handle: {
                       breadcrumb: () => <span>Create a rule</span>,
                       routeName: RouteConstants.toRepoBranchRuleCreate
+                    }
+                  },
+                  {
+                    path: 'create/tag',
+                    element: <RepoBranchSettingsRulesPageContainer />,
+                    handle: {
+                      breadcrumb: () => <span>Create a tag</span>,
+                      routeName: RouteConstants.toRepoTagRuleCreate
                     }
                   },
                   {

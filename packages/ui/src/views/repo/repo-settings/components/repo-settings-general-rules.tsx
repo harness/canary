@@ -12,6 +12,7 @@ import {
   SkeletonList,
   Spacer,
   StackedList
+  SplitButton,
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType } from '@/views'
@@ -104,9 +105,26 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
+                {/* <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
                   <Button variant="primary">{t('views:repos.newRule', 'New branch rule')}</Button>
-                </NavLink>
+                </NavLink> */}
+                <SplitButton<string>
+                  dropdownContentClassName="mt-0 min-w-[170px]"
+                  handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
+                  handleOptionChange={option => {
+                    if (option === 'tag-rule') {
+                      navigate(toImportRepo?.() || '')
+                    }
+                  }}
+                  options={[
+                    {
+                      value: 'tag-rule',
+                      label: t('views:repos.newTagRule', 'New tag rule')
+                    }
+                  ]}
+                >
+                  {t('views:repos.create-repository', 'Create Repository')}
+                </SplitButton>
               </ListActions.Right>
             </ListActions.Root>
 

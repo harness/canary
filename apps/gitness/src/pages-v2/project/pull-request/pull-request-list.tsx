@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Params, useParams, useSearchParams } from 'react-router-dom'
+
+import { useQuery } from '@tanstack/react-query'
 
 import {
   ListPullReqQueryQueryParams,
+  TypesPullReqRepo,
   useGetPrincipalQuery,
-  useListPrincipalsQuery,
-  useListPullReqQuery
+  useListPrincipalsQuery
 } from '@harnessio/code-service-client'
 import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
-import { PathParams } from '../../RouteDefinitions'
-import { useLabelsStore } from '../project/stores/labels-store'
-import { usePopulateLabelStore } from '../repo/labels/hooks/use-populate-label-store'
-import { buildPRFilters } from './pull-request-utils'
-import { usePullRequestListStore } from './stores/pull-request-list-store'
+import { useMFEContext } from '../../../framework/hooks/useMFEContext'
+import { parseAsInteger, useQueryState } from '../../../framework/hooks/useQueryState'
+import { useAPIPath } from '../../../hooks/useAPIPath'
+import { PathParams } from '../../../RouteDefinitions'
+import { buildPRFilters } from '../../pull-request/pull-request-utils'
+import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
+import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
+import { useLabelsStore } from '../stores/labels-store'
 
 export default function PullRequestListPage() {
-  const repoRef = useGetRepoRef() ?? ''
   const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } = usePullRequestListStore()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { spaceId } = useParams<PathParams>()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
@@ -29,22 +30,63 @@ export default function PullRequestListPage() {
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
   const mfeContext = useMFEContext()
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
+  const getApiPath = useAPIPath()
 
-  const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
-    {
-      queryParams: { page, query: query ?? '', ...filterValues },
-      repo_ref: repoRef,
-      stringifyQueryParamsOptions: {
-        arrayFormat: 'repeat'
-      }
-    },
-    { retry: false }
-  )
+  const { accountId = '', orgIdentifier = '', projectIdentifier = '' } = mfeContext?.scope || {}
+
+  const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query]
+
+  const queryParams: Params<string> = {
+    accountIdentifier: accountId,
+    orgIdentifier: orgIdentifier,
+    projectIdentifier: projectIdentifier,
+    limit: '10',
+    exclude_description: 'true',
+    page: String(page),
+    sort: 'merged',
+    order: 'desc',
+    query: query ?? '',
+    include_subspaces: 'true'
+  }
+
+  /**
+   *
+   * Currently, this api is not present in openapi spec, so we are using fetch directly.
+   * @todo replace with react query hook once present.
+   */
+  const fetchPullRequests = async (): Promise<{
+    data: TypesPullReqRepo[]
+    headers: Headers
+  }> => {
+    const apiPath = getApiPath('/api/v1/pullreq')
+    const url = new URL(apiPath, window.location.origin)
+
+    Object.entries(queryParams).forEach(([key, value]) => {
+      url.searchParams.set(key, String(value))
+    })
+
+    const response = await fetch(url.toString())
+    if (!response.ok) throw new Error('Network response was not ok')
+
+    const data = await response.json()
+    return { data, headers: response.headers }
+  }
+
+  const { data: pullRequestData, isFetching: fetchingPullReqData } = useQuery({
+    queryKey,
+    queryFn: fetchPullRequests,
+    select: ({ data, headers }) => ({
+      pullRequestData: data.flatMap(item =>
+        item.pull_request ? [{ ...item.pull_request, repoId: item.repository?.identifier }] : []
+      ),
+      headers
+    })
+  })
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
@@ -71,45 +113,12 @@ export default function PullRequestListPage() {
     }
   )
 
-  const onLabelClick = (labelId: number) => {
-    // Update filter values with the label ID for API call
-    setFilterValues(prevFilters => {
-      // Get current label IDs or empty array
-      const currentLabelIds = prevFilters.label_id || []
-
-      // Toggle the label: remove if exists, add if doesn't exist
-      let newLabelIds: number[]
-      if (currentLabelIds.includes(labelId)) {
-        newLabelIds = currentLabelIds.filter(id => id !== labelId)
-      } else {
-        newLabelIds = [...currentLabelIds, labelId]
-      }
-
-      const newParams = new URLSearchParams(searchParams)
-
-      if (newLabelIds.length > 0) {
-        const labelByValue = newLabelIds.map(id => `${id}:true`).join(';')
-        newParams.set('label_by', labelByValue)
-      } else {
-        newParams.delete('label_by')
-      }
-
-      setSearchParams(newParams)
-
-      return {
-        ...prevFilters,
-        label_id: newLabelIds
-      }
-    })
-  }
-
   useEffect(() => {
     if (pullRequestData) {
-      const validPullRequests = Array.isArray(pullRequestData) ? pullRequestData.filter(pr => pr !== null) : []
-      setPullRequests(validPullRequests, headers)
-      setOpenClosePullRequests(validPullRequests)
+      setPullRequests(pullRequestData.pullRequestData, pullRequestData.headers)
+      setOpenClosePullRequests(pullRequestData.pullRequestData)
     }
-  }, [pullRequestData, headers, setPullRequests])
+  }, [pullRequestData, setPullRequests, setOpenClosePullRequests])
 
   useEffect(() => {
     setQueryPage(page)
@@ -124,7 +133,6 @@ export default function PullRequestListPage() {
 
   return (
     <SandboxPullRequestListPage
-      repoId={repoId}
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}
@@ -143,8 +151,7 @@ export default function PullRequestListPage() {
       onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
       searchQuery={query}
       setSearchQuery={setQuery}
-      onLabelClick={onLabelClick}
-      toPullRequest={({ prNumber }) => prNumber.toString()}
+      toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}
     />
   )
 }

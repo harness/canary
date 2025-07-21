@@ -3,6 +3,7 @@ import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 
 import { PullReqReviewDecision, TypeCheckData } from '../../../pages/pull-request/types/types'
 import {
+  buildPRFilters,
   capitalizeFirstLetter,
   changedFileId,
   checkIfOutdatedSha,
@@ -290,5 +291,54 @@ describe('extractInfoFromRuleViolationArr', () => {
         }
       ]
     })
+  })
+})
+describe('buildPRFilters', () => {
+  it('should convert Date values for created_gt and created_lt to timestamps', () => {
+    const dateGt = new Date('2023-01-01T00:00:00Z')
+    const dateLt = new Date('2023-01-02T00:00:00Z')
+    const filterData = {
+      created_gt: dateGt,
+      created_lt: dateLt
+    }
+    const result = buildPRFilters(filterData as any)
+    expect(result.created_gt).toBe(dateGt.getTime().toString())
+    expect(result.created_lt).toBe(dateLt.getTime().toString())
+  })
+
+  it('should extract value from created_by object', () => {
+    const filterData = {
+      created_by: { value: 'user123' }
+    }
+    const result = buildPRFilters(filterData as any)
+    expect(result.created_by).toBe('user123')
+  })
+
+  it('should handle label_by with labelId and valueId', () => {
+    const filterData = {
+      label_by: {
+        '101': true,
+        '102': false,
+        '103': '201',
+        '104': '202'
+      }
+    }
+    const result = buildPRFilters(filterData as any)
+    expect(result.label_id).toEqual([101])
+    expect(result.value_id).toEqual([201, 202])
+  })
+
+  it('should ignore keys not handled', () => {
+    const filterData = {
+      foo: 'bar',
+      baz: 123
+    }
+    const result = buildPRFilters(filterData as any)
+    expect(result).toEqual({})
+  })
+
+  it('should handle empty filterData', () => {
+    const result = buildPRFilters({} as any)
+    expect(result).toEqual({})
   })
 })

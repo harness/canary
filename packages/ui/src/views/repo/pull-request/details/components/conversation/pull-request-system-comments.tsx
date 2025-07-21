@@ -23,6 +23,33 @@ const labelActivityToTitleDict: Record<LabelActivity, string> = {
   unassign: 'removed'
 }
 
+const formatListWithAndFragment = (names: string[]): React.ReactNode => {
+  switch (names?.length) {
+    case 0:
+      return null
+    case 1:
+      return <strong>{names[0]}</strong>
+    case 2:
+      return (
+        <>
+          <strong>{names[0]}</strong> and <strong>{names[1]}</strong>
+        </>
+      )
+    default:
+      return (
+        <>
+          {names.slice(0, -1).map((name, index) => (
+            <>
+              <strong>{name}</strong>
+              {index < names.length - 2 ? ', ' : ''}
+            </>
+          ))}{' '}
+          and <strong>{names[names.length - 1]}</strong>
+        </>
+      )
+  }
+}
+
 interface SystemCommentProps extends TypesPullReq {
   commentItems: CommentItem<TypesPullReqActivity>[]
   repoMetadataPath?: string
@@ -41,6 +68,20 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   const { navigate } = useRouterContext()
 
   const payloadMain = useMemo(() => commentItems[0]?.payload, [commentItems])
+
+  const displayNameList = useMemo(() => {
+    const checkList = payloadMain?.metadata?.mentions?.ids ?? []
+    const uniqueList = [...new Set(checkList)]
+    const mentionsMap = payloadMain?.mentions ?? {}
+    return uniqueList.map(id => mentionsMap[id]?.display_name ?? '')
+  }, [payloadMain?.metadata?.mentions?.ids, payloadMain?.mentions])
+
+  const principalNameList = useMemo(() => {
+    const checkList = (payloadMain?.payload as any)?.principal_ids ?? []
+    const uniqueList = [...new Set(checkList)]
+    const mentionsMap = payloadMain?.mentions ?? {}
+    return uniqueList.map(id => mentionsMap[id as number]?.display_name ?? '')
+  }, [(payloadMain?.payload as any)?.principal_ids, payloadMain?.mentions])
 
   const {
     header,
@@ -214,16 +255,28 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       }
 
       case CommentType.REVIEW_ADD: {
-        const mentionId = metadata?.mentions?.ids?.[0] ?? 0
-        const mentionDisplayName = mentions?.[mentionId]?.display_name ?? ''
+        const activityMentions = formatListWithAndFragment(displayNameList)
+        const principalMentions = formatListWithAndFragment(principalNameList)
 
         return {
           header: {
             description: (
               <span className="text-sm text-cn-foreground-3">
                 {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED && 'self-requested a review'}
-                {reviewer_type === ReviewerAddActivity.ASSIGNED && `assigned ${mentionDisplayName} as a reviewer`}
-                {reviewer_type === ReviewerAddActivity.REQUESTED && `requested a review from ${mentionDisplayName}`}
+                {reviewer_type === ReviewerAddActivity.ASSIGNED && <>assigned {activityMentions} as a reviewer</>}
+                {reviewer_type === ReviewerAddActivity.REQUESTED && <>requested a review from {activityMentions}</>}
+                {reviewer_type === ReviewerAddActivity.CODEOWNERS && (
+                  <>
+                    requested a review from {principalMentions} as{' '}
+                    {principalNameList?.length > 1 ? 'code owners' : 'code owner'}
+                  </>
+                )}
+                {reviewer_type === ReviewerAddActivity.DEFAULT && (
+                  <>
+                    requested a review from {principalMentions} as{' '}
+                    {principalNameList?.length > 1 ? 'default reviewers' : 'default reviewer'}
+                  </>
+                )}
               </span>
             )
           },

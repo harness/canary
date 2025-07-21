@@ -95,3 +95,4 @@ export * from './language-selector'
 
 export * from './inputs'
 export * from './form-input'
+export * from './favorite'

@@ -1,4 +1,4 @@
-import { Skeleton, StatusBadge, Text } from '@/components'
+import { Favorite, Layout, Skeleton, StatusBadge, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 
@@ -7,29 +7,31 @@ interface RepoHeaderProps {
   isPublic: boolean
   isLoading?: boolean
   className?: string
+  isFavorite?: boolean
 }
 
-export const RepoHeader = ({ name, isPublic, isLoading, className }: RepoHeaderProps) => {
+export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite }: RepoHeaderProps) => {
   const { t } = useTranslation()
 
   return (
     <div className={cn('grid grid-cols-[auto,1fr] items-center gap-2 px-6 pb-2 pt-7', className)}>
-      {isLoading && (
+      {isLoading ? (
         <>
           <Skeleton className="h-[var(--cn-line-height-7-tight)] w-28 bg-cn-background-0" />
           <Skeleton className="h-6 w-14 bg-cn-background-0" />
         </>
-      )}
-
-      {!isLoading && (
-        <>
-          <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
-            {name}
-          </Text>
-          <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} className="min-w-fit rounded-full">
-            {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-          </StatusBadge>
-        </>
+      ) : (
+        <Layout.Flex gap="xs" justify="start" align="center">
+          <>
+            <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
+              {name}
+            </Text>
+            <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} className="min-w-fit rounded-full">
+              {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
+            </StatusBadge>
+          </>
+          <Favorite isFavorite={isFavorite} />
+        </Layout.Flex>
       )}
     </div>
   )

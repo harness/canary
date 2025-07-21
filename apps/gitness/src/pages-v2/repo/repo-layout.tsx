@@ -1,5 +1,7 @@
 import { Outlet, useParams } from 'react-router-dom'
 
+import { get } from 'lodash-es'
+
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
@@ -18,7 +20,12 @@ const RepoLayout = () => {
 
   return (
     <>
-      <RepoHeader name={repoData?.identifier ?? ''} isPublic={!!repoData?.is_public} isLoading={isLoading} />
+      <RepoHeader
+        name={repoData?.identifier ?? ''}
+        isPublic={!!repoData?.is_public}
+        isLoading={isLoading}
+        isFavorite={get(repoData, 'is_favorite', false)}
+      />
       <SubHeaderWrapper>
         <RepoSubheader
           showPipelinesTab={!isMFE}

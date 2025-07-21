@@ -45,6 +45,39 @@ const inputs: IInputConfigWithConfig[] = [
       runtime: true,
       expression: true
     }
+  },
+  {
+    inputType: InputType.checkbox,
+    path: 'input5',
+    label: 'Hide group input 1'
+  },
+  {
+    inputType: InputType.checkbox,
+    path: 'input6',
+    label: 'Hide group input 2'
+  },
+  {
+    inputType: InputType.group,
+    path: '',
+    label: 'Group 1',
+    inputs: [
+      {
+        inputType: InputType.text,
+        required: true,
+        path: 'group1.textInput1',
+        default: 'DEF',
+        isVisible: values => {
+          return !values.input5
+        }
+      },
+      {
+        inputType: InputType.text,
+        path: 'group1.textInput2',
+        isVisible: values => {
+          return !values.input6
+        }
+      }
+    ]
   }
 ]
 

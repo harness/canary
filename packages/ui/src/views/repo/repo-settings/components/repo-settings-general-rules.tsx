@@ -11,8 +11,7 @@ import {
   SearchInput,
   SkeletonList,
   Spacer,
-  StackedList,
-  Text
+  StackedList
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType } from '@/views'
@@ -70,7 +69,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   setRulesSearchQuery,
   toRepoBranchRuleCreate
 }) => {
-  const { Link, NavLink, navigate } = useRouterContext()
+  const { Link, NavLink } = useRouterContext()
   const { t } = useTranslation()
 
   const handleSearchChange = useCallback(

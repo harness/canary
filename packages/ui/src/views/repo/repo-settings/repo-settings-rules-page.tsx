@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
-import { NavLink } from 'react-router-dom'
 
-import { Button, Spacer, Text } from '@/components'
+import { Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
@@ -33,10 +32,6 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
 }) => {
   const { rules } = useRepoRulesStore()
   const { t } = useTranslation()
-
-  const isShowRulesContent = useMemo(() => {
-    return !!rules?.length || !!rulesSearchQuery?.length
-  }, [rulesSearchQuery, rules])
 
   return (
     <SandboxLayout.Content className="px-0">

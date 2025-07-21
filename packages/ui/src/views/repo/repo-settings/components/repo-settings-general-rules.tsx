@@ -3,7 +3,6 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Alert,
-  Button,
   IconV2,
   ListActions,
   MoreActionsTooltip,
@@ -11,8 +10,8 @@ import {
   SearchInput,
   SkeletonList,
   Spacer,
-  StackedList
   SplitButton,
+  StackedList
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType } from '@/views'
@@ -58,6 +57,7 @@ export interface RepoSettingsGeneralRulesProps {
   setRulesSearchQuery?: (query: string) => void
   projectScope?: boolean
   toRepoBranchRuleCreate?: () => string
+  toRepoTagRuleCreate?: () => string
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -68,9 +68,10 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
-  toRepoBranchRuleCreate
+  toRepoBranchRuleCreate,
+  toRepoTagRuleCreate
 }) => {
-  const { Link, NavLink } = useRouterContext()
+  const { navigate, Link } = useRouterContext()
   const { t } = useTranslation()
 
   const handleSearchChange = useCallback(
@@ -113,7 +114,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
                   handleOptionChange={option => {
                     if (option === 'tag-rule') {
-                      navigate(toImportRepo?.() || '')
+                      navigate(toRepoTagRuleCreate?.() || '')
                     }
                   }}
                   options={[

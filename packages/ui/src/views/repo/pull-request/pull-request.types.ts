@@ -266,6 +266,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   spaceId?: string
   headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
   setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
+  onLabelClick?: (labelId: number) => void
 }
 
 export type PRListFilters = {

@@ -82,7 +82,7 @@ export default function SearchPage() {
         }
       }}
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
-        `${window.apiUrl || ''}/repos/${repoPath}/code/${branch}/~/${filePath}`
+        `/repos/${repoPath}/code/refs/heads/${branch}/~/${filePath}`
       }
     />
   )

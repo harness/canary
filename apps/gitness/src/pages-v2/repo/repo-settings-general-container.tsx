@@ -7,8 +7,6 @@ import {
   DeleteRepositoryErrorResponse,
   FindRepositoryErrorResponse,
   FindSecuritySettingsErrorResponse,
-  RepoRuleDeleteErrorResponse,
-  RepoRuleListErrorResponse,
   UpdateDefaultBranchErrorResponse,
   UpdatePublicAccessErrorResponse,
   UpdateRepositoryErrorResponse,
@@ -16,8 +14,6 @@ import {
   useDeleteRepositoryMutation,
   useFindRepositoryQuery,
   useFindSecuritySettingsQuery,
-  useRepoRuleDeleteMutation,
-  useRepoRuleListQuery,
   useUpdateDefaultBranchMutation,
   useUpdatePublicAccessMutation,
   useUpdateRepositoryMutation,
@@ -29,7 +25,6 @@ import { AccessLevel, ErrorTypes, RepoSettingsGeneralPage, RepoUpdateData, Secur
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoRulesStore } from './stores/repo-settings-store'
@@ -37,11 +32,10 @@ import { useRepoRulesStore } from './stores/repo-settings-store'
 export const RepoSettingsGeneralPageContainer = () => {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
-  const repoName = useGetRepoId()
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()
-  const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
+  const { setRepoData, setSecurityScanning } = useRepoRulesStore()
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
 
@@ -205,11 +199,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         loadingStates={loadingStates}
         isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
         useRepoRulesStore={useRepoRulesStore}
-        // handleRuleClick={handleRuleClick}
-        // openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-        // rulesSearchQuery={rulesSearchQuery}
-        // setRulesSearchQuery={setRulesSearchQuery}
         branchSelectorRenderer={BranchSelectorContainer}
       />
 

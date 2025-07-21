@@ -1,13 +1,12 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC } from 'react'
 
 import { Fieldset, FormSeparator, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
-import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 import { RepoSettingsSecurityForm, RepoSettingsSecurityFormFields } from './components/repo-settings-general-security'
 import { ErrorTypes, IRepoStore, RepoUpdateData } from './types'
 
@@ -24,12 +23,8 @@ interface RepoSettingsGeneralPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-  // handleRuleClick: (identifier: string) => void
-  // openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
   useRepoRulesStore: () => IRepoStore
-  // rulesSearchQuery: string
-  // setRulesSearchQuery: (query: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
 
@@ -39,29 +34,13 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
-  // handleRuleClick,
-  // openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog,
   useRepoRulesStore,
-  // rulesSearchQuery,
-  // setRulesSearchQuery,
   branchSelectorRenderer
 }) => {
-  const { location } = useRouterContext()
   const { t } = useTranslation()
-  // const rulesRef = useRef<HTMLDivElement | null>(null)
 
-  // useEffect(() => {
-  //   if (location.pathname.endsWith('/rules')) {
-  //     rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
-  //   }
-
-  //   if (location.pathname.endsWith('/general')) {
-  //     window.scrollTo({ top: 0, behavior: 'smooth' })
-  //   }
-  // }, [location.pathname])
-
-  const { repoData, securityScanning, rules } = useRepoRulesStore()
+  const { repoData, securityScanning } = useRepoRulesStore()
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">

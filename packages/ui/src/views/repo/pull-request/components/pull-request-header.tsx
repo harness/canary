@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Separator, StatusBadge, Tag, TimeAgoCard } from '@/components'
+import { Button, IconV2, StatusBadge, Tag, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 

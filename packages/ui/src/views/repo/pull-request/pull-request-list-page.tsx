@@ -271,9 +271,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     />
                   )}
                 </PRListFilterHandler.Dropdown>
-                <Button asChild>
-                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
-                </Button>
+                {/**
+                 * Creating a pull request is permitted only when inside a repository.
+                 */}
+                {repoId ? (
+                  <Button asChild>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                  </Button>
+                ) : null}
               </ListActions.Right>
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>

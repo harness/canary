@@ -1,4 +1,4 @@
-import { IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
+import { Favorite, IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -21,7 +21,7 @@ const Stats = ({ pulls }: { pulls: number }) => (
   </div>
 )
 
-const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => {
+const Title = ({ title, isPrivate, isFavorite }: { title: string; isPrivate: boolean; isFavorite?: boolean }) => {
   const { t } = useTranslation()
   return (
     <div className="inline-flex items-center gap-2.5">
@@ -29,6 +29,7 @@ const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => {
       <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
         {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
       </StatusBadge>
+      <Favorite isFavorite={isFavorite} />
     </div>
   )
 }
@@ -102,7 +103,7 @@ export function RepoList({
                   <span className="max-w-full truncate">{repo.description}</span>
                 )
               }
-              title={<Title title={repo.name} isPrivate={repo.private} />}
+              title={<Title title={repo.name} isPrivate={repo.private} isFavorite={repo.favorite} />}
               className="flex max-w-[80%] gap-1.5 text-wrap"
             />
             {!repo.importing && (

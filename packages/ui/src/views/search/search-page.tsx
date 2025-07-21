@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, Pagination, SearchInput, Spacer, Text, Toggle } from '@/components'
+import { Pagination, SearchInput, Spacer, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -68,16 +68,11 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         <Text variant="heading-section">{t('views:search.title', 'Search')}</Text>
         <Spacer size={6} />
 
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchInput
-              defaultValue={searchQuery || ''}
-              onChange={handleSearchChange}
-              placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
-              autoFocus
-            />
-          </ListActions.Left>
-          <ListActions.Right>
+        <SearchInput
+          defaultValue={searchQuery || ''}
+          onChange={handleSearchChange}
+          placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
+          suffix={
             <Toggle
               defaultValue={regex}
               onChange={setRegex}
@@ -88,8 +83,9 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
               }}
               tooltipProps={{ content: 'Enable Regex' }}
             />
-          </ListActions.Right>
-        </ListActions.Root>
+          }
+          autoFocus
+        />
 
         <Spacer size={4.5} />
 

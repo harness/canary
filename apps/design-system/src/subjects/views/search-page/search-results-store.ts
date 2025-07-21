@@ -24,7 +24,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 42,
           before: 'export const userService = {',
           after: '};',
-          segments: [
+          fragments: [
             {
               pre: '  ',
               match: 'searchUsers',
@@ -36,7 +36,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 124,
           before: 'const searchUsersByName = async (name: string) => {',
           after: '  return results;',
-          segments: [
+          fragments: [
             {
               pre: '  const results = await db.users.find({ name: { $regex: ',
               match: 'searchPattern',
@@ -56,7 +56,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 15,
           before: 'interface SearchProps {',
           after: '}',
-          segments: [
+          fragments: [
             {
               pre: '  ',
               match: 'onSearch',
@@ -68,7 +68,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 57,
           before: 'const handleSearch = useCallback(() => {',
           after: '}, [searchTerm, onSearch]);',
-          segments: [
+          fragments: [
             {
               pre: '  ',
               match: 'onSearch',
@@ -88,7 +88,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 32,
           before: 'describe("Search API", () => {',
           after: '  });',
-          segments: [
+          fragments: [
             {
               pre: '  it("should return results when ',
               match: 'search',
@@ -108,7 +108,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 45,
           before: '@Service',
           after: '}',
-          segments: [
+          fragments: [
             {
               pre: 'public class ',
               match: 'SearchService',
@@ -120,7 +120,7 @@ export const searchResultsStore: SearchResultsStore = {
           line_num: 78,
           before: '  @Override',
           after: '  }',
-          segments: [
+          fragments: [
             {
               pre: '  public List<SearchResult> ',
               match: 'search',

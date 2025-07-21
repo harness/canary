@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import { Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'

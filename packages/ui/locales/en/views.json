@@ -309,7 +309,6 @@
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
-    "noPullRequests": "There are no pull requests in this project yet.",
     "createConnector": "Create new connector.",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "noSecretsProject": "There are no secrets in this project yet.",

@@ -99,8 +99,8 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
     }, [createObserver, onScrollTop, onScrollBottom, onScrollLeft, onScrollRight])
 
     return (
-      <div className={cn('cn-scroll-area', className)} dir={direction} ref={viewportRef} {...rest}>
-        <div className={cn('cn-scroll-area-content', classNameContent)} ref={ref}>
+      <div className={cn('cn-scroll-area', className)} dir={direction} ref={viewportRef}>
+        <div className={cn('cn-scroll-area-content', classNameContent)} ref={ref} {...rest}>
           {children}
 
           {onScrollTop && <div className="cn-scroll-area-marker cn-scroll-area-marker-top" ref={topMarkerRef} />}

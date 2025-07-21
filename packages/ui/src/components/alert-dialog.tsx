@@ -77,7 +77,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...
   })
 
   return (
-    <Dialog.Content onOpenAutoFocus={event => event.preventDefault()} ref={ref}>
+    <Dialog.Content onOpenAutoFocus={event => event.preventDefault()} ref={ref} {...props}>
       <Dialog.Header
         icon={
           context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
@@ -87,7 +87,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...
         <Dialog.Title>{title}</Dialog.Title>
       </Dialog.Header>
 
-      <Dialog.Body {...props}>{otherChildren}</Dialog.Body>
+      <Dialog.Body>{otherChildren}</Dialog.Body>
 
       <Dialog.Footer>
         <ButtonLayout>
@@ -105,8 +105,8 @@ const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ childr
   if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
 
   return (
-    <Dialog.Close ref={ref} asChild>
-      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} {...props}>
+    <Dialog.Close asChild>
+      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} ref={ref} {...props}>
         {children}
       </Button>
     </Dialog.Close>
@@ -114,22 +114,24 @@ const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ childr
 })
 Cancel.displayName = 'AlertDialog.Cancel'
 
-const Confirm = forwardRef<HTMLButtonElement, { children?: ReactNode, disabled?: boolean }>(({ children = 'Confirm', ...props }, ref) => {
-  const context = useContext(AlertDialogContext)
-  if (!context) throw new Error('AlertDialog.Confirm must be used within AlertDialog.Root')
+const Confirm = forwardRef<HTMLButtonElement, { children?: ReactNode; disabled?: boolean }>(
+  ({ children = 'Confirm', ...props }, ref) => {
+    const context = useContext(AlertDialogContext)
+    if (!context) throw new Error('AlertDialog.Confirm must be used within AlertDialog.Root')
 
-  return (
-    <Button
-      ref={ref}
-      theme={context.theme === 'danger' ? 'danger' : undefined}
-      loading={context.loading}
-      onClick={context.onConfirm}
-      {...props}
-    >
-      {context.loading ? 'Loading...' : children}
-    </Button>
-  )
-})
+    return (
+      <Button
+        ref={ref}
+        theme={context.theme === 'danger' ? 'danger' : undefined}
+        loading={context.loading}
+        onClick={context.onConfirm}
+        {...props}
+      >
+        {context.loading ? 'Loading...' : children}
+      </Button>
+    )
+  }
+)
 Confirm.displayName = 'AlertDialog.Confirm'
 
 export const AlertDialog = {

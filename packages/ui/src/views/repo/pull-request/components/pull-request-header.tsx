@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Separator, StatusBadge, Tag, TimeAgoCard } from '@/components'
+import { Button, IconV2, StatusBadge, Tag, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -77,10 +77,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             }}
           >
             <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
-          </Button>
-          <Separator orientation="vertical" className="mx-1 h-4 bg-cn-background-0" />
-          <Button variant="link" onClick={() => setIsEditing(true)}>
-            {description ? 'Edit description' : 'Add a description'}
           </Button>
         </div>
 

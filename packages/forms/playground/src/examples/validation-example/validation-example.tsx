@@ -1,3 +1,4 @@
+import React from 'react'
 import { RenderForm, RootForm, useZodValidationResolver } from '../../../../src'
 import inputComponentFactory from '../../implementation/factory/factory'
 import { formDefinition } from './form-definition'

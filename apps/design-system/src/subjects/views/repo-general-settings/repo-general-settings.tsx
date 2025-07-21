@@ -17,17 +17,12 @@ const loadingStates = {
 const DummyComponent = () => null
 
 export const RepoGeneralSettings = () => {
-  const [rulesSearchQuery, setRulesSearchQuery] = useState('')
   const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState(false)
   const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState(false)
-  const [alertDeleteParams, setAlertDeleteParams] = useState('')
+  const [alertDeleteParams] = useState('')
   const [apiError, _setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
 
   const closeRulesAlertDeleteDialog = () => setIsRulesAlertDeleteDialogOpen(false)
-  const openRulesAlertDeleteDialog = (identifier: string) => {
-    setAlertDeleteParams(identifier)
-    setIsRulesAlertDeleteDialogOpen(true)
-  }
 
   const closeRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(false)
   const openRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(true)

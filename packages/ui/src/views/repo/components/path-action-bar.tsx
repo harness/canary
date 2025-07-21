@@ -37,6 +37,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
+
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs

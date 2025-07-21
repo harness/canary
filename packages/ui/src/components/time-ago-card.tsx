@@ -139,13 +139,13 @@ interface TimeAgoCardProps {
 
 export const TimeAgoCard = memo(
   forwardRef<HTMLButtonElement, TimeAgoCardProps>(
-    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, textProps }, ref) => {
+    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, textProps, ...props }, ref) => {
       const [isOpen, setIsOpen] = useState(false)
       const { formattedShort, formattedFull } = useFormattedTime(timestamp, cutoffDays, dateTimeFormatOptions)
 
       if (timestamp === null || timestamp === undefined) {
         return (
-          <Text as="span" {...textProps}>
+          <Text as="span" {...textProps} {...props}>
             Unknown time
           </Text>
         )
@@ -163,7 +163,7 @@ export const TimeAgoCard = memo(
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
           <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick} ref={ref}>
-            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
+            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>} {...props}>
               {formattedShort}
             </Text>
           </Popover.Trigger>

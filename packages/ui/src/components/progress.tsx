@@ -70,7 +70,8 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
       subtitle,
       hidePercentage = false,
       value = 0,
-      className
+      className,
+      ...props
     },
     ref
   ) => {
@@ -88,7 +89,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
       if (variant === 'indeterminate') {
         return (
           <>
-            <progress ref={ref} className="cn-progress-root" id={id} />
+            <progress ref={ref} className="cn-progress-root" id={id} {...props} />
             <div className="cn-progress-overlay-box">
               <div className="cn-progress-overlay">
                 <div className="cn-progress-indeterminate-fake" />
@@ -100,7 +101,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
 
       return (
         <>
-          <progress ref={ref} className="cn-progress-root" id={id} value={percentageValue} max={100} />
+          <progress ref={ref} className="cn-progress-root" id={id} value={percentageValue} max={100} {...props} />
 
           {state === 'processing' && (
             <div className="cn-progress-overlay-box">

@@ -81,8 +81,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
 
             {item.matches && item.matches.length > 1 && (
               <Layout.Vertical gap="sm">
-                {item.matches.slice(0, 3).map((match, matchIndex) => (
-                  <div key={`match-${matchIndex}`}>
+                {item.matches.slice(0, 3).map(match => (
+                  <div key={`${match.before}-${match.fragments.join('')}-${match.after}`}>
                     <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
                       <code className="monospace">
                         {match.before.trim().length > 0 && (
@@ -95,7 +95,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                         {match.fragments?.map((segment, segIndex) => (
                           <span key={`seg-${segIndex}`}>
                             {segment.pre}
-                            <span className={cn('bg-cn-foreground-accent')}>{segment.match}</span>
+                            <mark>{segment.match}</mark>
                             {segment.post}
                           </span>
                         ))}

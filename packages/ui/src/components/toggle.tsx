@@ -125,7 +125,14 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
 
     return (
       <TooltipWrapper tooltipProps={tooltipProps}>
-        <TogglePrimitive.Root ref={ref} {...props} asChild pressed={selected} onPressedChange={handleChange} disabled={disabled}>
+        <TogglePrimitive.Root
+          ref={ref}
+          {...props}
+          asChild
+          pressed={selected}
+          onPressedChange={handleChange}
+          disabled={disabled}
+        >
           <Button
             className={cn(className, toggleVariants({ size, variant, iconOnly }))}
             variant={selected ? selectedVariant : variant}

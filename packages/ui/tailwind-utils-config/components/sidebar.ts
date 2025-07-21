@@ -6,7 +6,7 @@ export default {
       display: 'flex',
       flexDirection: 'column',
       height: 'var(--cn-sidebar-min-height)',
-      width: 'var(--cn-sidebar-width)',
+      width: 'var(--cn-sidebar-container-full-width)',
       backgroundColor: 'var(--cn-bg-0)',
       padding: 'var(--cn-sidebar-container-py) 0',
 
@@ -117,11 +117,11 @@ export default {
         columnGap: 'var(--cn-sidebar-sub-group-gap-container)',
         overflow: 'hidden',
 
-        '&:where([data-state="open"])': {
+        '&[data-state="open"]': {
           '@apply animate-accordion-down': ''
         },
 
-        '&:where([data-state="closed"])': {
+        '&[data-state="closed"]': {
           '@apply animate-accordion-up': ''
         }
       },
@@ -167,8 +167,8 @@ export default {
         maxWidth: '100%',
         overflow: 'hidden',
 
-        '&:where(:not([data-disabled=true]))': {
-          '&:hover, &:focus-within, &:where([data-active=true])': {
+        '&:not([data-disabled=true])': {
+          '&:hover, &:focus-within, &[data-active=true]': {
             '.cn-sidebar-item-content': {
               backgroundColor: 'var(--cn-state-hover)'
             },
@@ -183,7 +183,7 @@ export default {
           }
         },
 
-        '&:where([data-disabled=true])': {
+        '&[data-disabled=true]': {
           opacity: 'var(--cn-disabled-opacity)',
           cursor: 'not-allowed'
         }
@@ -300,7 +300,7 @@ export default {
         opacity: '0',
         '@apply transition-opacity duration-200 ease-linear': '',
 
-        '&:where([data-state="open"])': {
+        '&[data-state="open"]': {
           color: 'var(--cn-text-1)',
           opacity: '1'
         }
@@ -331,7 +331,20 @@ export default {
       }
     },
 
-    '&:where([data-state=collapsed])': {
+    '&-drawer-content, &-drawer-overlay': {
+      borderLeftWidth: '1px',
+      left: 'var(--cn-sidebar-container-full-width) !important',
+
+      '&-collapsed': {
+        left: 'var(--cn-size-14) !important'
+      }
+    },
+
+    '&[data-state=collapsed]': {
+      '&.cn-sidebar': {
+        width: 'var(--cn-size-14)'
+      },
+
       '.cn-sidebar-group': {
         '--sidebar-group-label-scale': '0'
       },

@@ -76,6 +76,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             t('views:noData.createNewPullRequest', 'Create a new pull request.')
           ]}
           primaryButton={
+            /** Hide the "Create pull request" button when viewing project-level pull requests (i.e., when repoId is not provided) */
             repoId
               ? {
                   label: 'Create pull request',

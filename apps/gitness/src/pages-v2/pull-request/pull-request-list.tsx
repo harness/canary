@@ -15,6 +15,7 @@ import { parseAsInteger, useQueryState } from '../../framework/hooks/useQuerySta
 import { PathParams } from '../../RouteDefinitions'
 import { useLabelsStore } from '../project/stores/labels-store'
 import { usePopulateLabelStore } from '../repo/labels/hooks/use-populate-label-store'
+import { buildPRFilters } from './pull-request-utils'
 import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
@@ -139,39 +140,11 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={(filterData: PRListFilters) => {
-        setFilterValues(
-          Object.entries(filterData).reduce<
-            Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
-          >((acc, [key, value]) => {
-            if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-              acc[key] = value.getTime().toString()
-            }
-            if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-              acc[key] = value.value
-            }
-            if (key === 'label_by') {
-              const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-              const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-                if (value === true) {
-                  labelAcc.labelId.push(labelKey)
-                } else if (value) {
-                  labelAcc.valueId.push(value)
-                }
-                return labelAcc
-              }, defaultLabel)
-
-              acc['label_id'] = labelId.map(Number)
-              acc['value_id'] = valueId.map(Number)
-            }
-            return acc
-          }, {})
-        )
-      }}
+      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
       searchQuery={query}
       setSearchQuery={setQuery}
       onLabelClick={onLabelClick}
-      toPullRequest={({ prNumber }: { prNumber: number; repoId?: string }) => prNumber.toString()}
+      toPullRequest={({ prNumber }) => prNumber.toString()}
     />
   )
 }

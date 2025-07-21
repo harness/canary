@@ -15,6 +15,7 @@ import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
+import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
 import { useLabelsStore } from '../stores/labels-store'
@@ -142,40 +143,10 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={(filterData: PRListFilters) => {
-        setFilterValues(
-          Object.entries(filterData).reduce<
-            Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
-          >((acc, [key, value]) => {
-            if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-              acc[key] = value.getTime().toString()
-            }
-            if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-              acc[key] = value.value
-            }
-            if (key === 'label_by') {
-              const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-              const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-                if (value === true) {
-                  labelAcc.labelId.push(labelKey)
-                } else if (value) {
-                  labelAcc.valueId.push(value)
-                }
-                return labelAcc
-              }, defaultLabel)
-
-              acc['label_id'] = labelId.map(Number)
-              acc['value_id'] = valueId.map(Number)
-            }
-            return acc
-          }, {})
-        )
-      }}
+      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
       searchQuery={query}
       setSearchQuery={setQuery}
-      toPullRequest={({ prNumber, repoId }: { prNumber: number; repoId?: string }) =>
-        `/repos/${repoId}/pulls/${prNumber}`
-      }
+      toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}
     />
   )
 }

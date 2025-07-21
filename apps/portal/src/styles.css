@@ -47,10 +47,6 @@ code {
 
 /* Global sidebar style overrides */
 
-.sidebar {
-  @apply p-0;
-}
-
 mobile-starlight-toc {
   display: none;
 }
@@ -59,7 +55,7 @@ ul.top-level {
   @apply flex flex-col w-full justify-start px-3 mt-14;
 
   & > li {
-    @apply border-b pb-3 mb-3;
+    @apply border-b pb-3 mb-3 mt-0;
 
     &:last-child {
       @apply border-0 pb-14 mb-0;
@@ -74,9 +70,10 @@ ul.top-level {
         }
 
         a {
-          @apply px-3 py-1.5 font-body-normal text-cn-foreground-1;
+          @apply px-3 py-1.5 !font-body-normal !text-cn-foreground-1;
 
-          &[aria-current="page"] {
+          &:hover, &[aria-current="page"] {
+            @apply bg-cn-background-hover;
           }
         }
       }
@@ -106,7 +103,11 @@ ul.top-level {
 /* Right-hand page sidebar overrides */
 
 .right-sidebar-panel {
-  @apply px-3 pl-0 py-6 pt-16;
+  @apply p-0 pt-14 w-full;
+
+  .sl-container {
+    @apply w-full;
+  }
 }
 
 .right-sidebar-panel h2 {

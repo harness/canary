@@ -23,7 +23,7 @@ export interface SearchResultItem {
     line_num: number
     before: string
     after: string
-    segments: Array<{
+    fragments: Array<{
       pre: string
       match: string
       post: string
@@ -70,8 +70,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
       {results.map(item => (
         <Card.Root key={`${item.repo_path}/${item.file_name}`} tabIndex={0}>
           <Layout.Vertical gap="sm">
-            <Layout.Horizontal gap="sm">
-              <Tag value={item.repo_path} icon="repository" />
+            <Layout.Horizontal gap="xs">
+              <Tag value={item.repo_path} icon="repository" showIcon={true} size={'sm'} />
               <Link
                 to={toRepoFileDetails({ repoPath: item.repo_path, filePath: item.file_name, branch: item.repo_branch })}
               >
@@ -83,18 +83,28 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
               <Layout.Vertical gap="sm">
                 {item.matches.slice(0, 3).map((match, matchIndex) => (
                   <div key={`match-${matchIndex}`}>
-                    <Text variant="body-normal">Line {match.line_num}</Text>
                     <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
-                      <code>
-                        {match.before}
-                        {match.segments?.map((segment, segIndex) => (
+                      <code className="monospace">
+                        {match.before.trim().length > 0 && (
+                          <>
+                            {match.line_num - 1} {match.before}
+                            <br />
+                          </>
+                        )}
+                        {match.line_num}{' '}
+                        {match.fragments?.map((segment, segIndex) => (
                           <span key={`seg-${segIndex}`}>
                             {segment.pre}
-                            <span className={cn('bg-yellow-100/30')}>{segment.match}</span>
+                            <span className={cn('bg-cn-foreground-accent')}>{segment.match}</span>
                             {segment.post}
                           </span>
                         ))}
-                        {match.after}
+                        {match.after.trim().length > 0 && (
+                          <>
+                            <br />
+                            {match.line_num + 1} {match.after}
+                          </>
+                        )}
                       </code>
                     </pre>
                   </div>

@@ -98,6 +98,7 @@ export const RepoSettingsRulesListContainer = () => {
         setRulesSearchQuery={setRulesSearchQuery}
         isRulesLoading={isRulesLoading}
         apiError={apiError}
+        toRepoBranchRuleCreate={() => routes.toRepoBranchRuleCreate({ spaceId, repoId: repoName })}
       />
 
       <DeleteAlertDialog

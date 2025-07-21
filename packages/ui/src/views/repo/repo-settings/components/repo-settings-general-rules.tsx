@@ -57,6 +57,7 @@ export interface RepoSettingsGeneralRulesProps {
   rulesSearchQuery?: string
   setRulesSearchQuery?: (query: string) => void
   projectScope?: boolean
+  toRepoBranchRuleCreate?: () => string
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -67,9 +68,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
-  projectScope = false
+  toRepoBranchRuleCreate
 }) => {
-  const { Link, NavLink } = useRouterContext()
+  const { Link, NavLink, navigate } = useRouterContext()
   const { t } = useTranslation()
 
   const handleSearchChange = useCallback(
@@ -89,7 +90,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   return (
     <>
-      {isShowRulesContent && (
+      {isShowRulesContent ? (
         <>
           <>
             <ListActions.Root>
@@ -104,7 +105,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <NavLink to="../rules/create">
+                <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
                   <Button variant="primary">{t('views:repos.newRule', 'New branch rule')}</Button>
                 </NavLink>
               </ListActions.Right>
@@ -191,12 +192,31 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               }}
             />
           )}
+
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
             <Alert.Root>
               <Alert.Title>{apiError.message}</Alert.Title>
             </Alert.Root>
           )}
         </>
+      ) : (
+        <NoData
+          withBorder
+          className="min-h-0 py-10"
+          textWrapperClassName="max-w-[350px]"
+          imageName={'no-data-cog'}
+          title={t('views:noData.noRules', 'No rules yet')}
+          description={[
+            t(
+              'views:noData.noRulesDescription',
+              'There are no rules in this project. Click on the button below to start adding rules.'
+            )
+          ]}
+          primaryButton={{
+            label: t('views:repos.createRuleButton', 'Create rule'),
+            to: toRepoBranchRuleCreate?.() ?? ''
+          }}
+        />
       )}
     </>
   )

@@ -82,7 +82,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
-        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
+        navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName }))
       }
     }
   )
@@ -106,7 +106,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
-        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
+        navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName }))
       }
     }
   )

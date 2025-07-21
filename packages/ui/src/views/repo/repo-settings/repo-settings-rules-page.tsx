@@ -17,6 +17,7 @@ interface RepoSettingsRulesPageProps {
   isRulesLoading: boolean
   apiError: { type: ErrorTypes; message: string } | null
   projectScope?: boolean
+  toRepoBranchRuleCreate: () => string
 }
 
 export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
@@ -27,7 +28,8 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   setRulesSearchQuery,
   isRulesLoading,
   apiError,
-  projectScope = false
+  projectScope = false,
+  toRepoBranchRuleCreate
 }) => {
   const { rules } = useRepoRulesStore()
   const { t } = useTranslation()
@@ -43,17 +45,10 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
       </Text>
       {!projectScope ? (
         <>
-          <div className="flex flex-row">
-            {t(
-              'views:repos.rulesDescription',
-              'Define standards and automate workflows to ensure better collaboration and control in your repository.'
-            )}
-            {!isRulesLoading && !isShowRulesContent && (
-              <NavLink className="ml-auto" to="../rules/create">
-                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
-              </NavLink>
-            )}
-          </div>
+          {t(
+            'views:repos.rulesDescription',
+            'Define standards and automate workflows to ensure better collaboration and control in your repository.'
+          )}
         </>
       ) : null}
       <Spacer size={6} />
@@ -67,6 +62,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
         rulesSearchQuery={rulesSearchQuery}
         setRulesSearchQuery={setRulesSearchQuery}
         projectScope={projectScope}
+        toRepoBranchRuleCreate={toRepoBranchRuleCreate}
       />
     </SandboxLayout.Content>
   )

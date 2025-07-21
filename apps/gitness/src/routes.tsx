@@ -505,7 +505,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create',
                     element: <RepoBranchSettingsRulesPageContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a rule</span>
+                      breadcrumb: () => <span>Create a rule</span>,
+                      routeName: RouteConstants.toRepoBranchRuleCreate
                     }
                   },
                   {

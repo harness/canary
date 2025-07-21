@@ -225,7 +225,11 @@ export interface PRListLabelType {
   value?: string
 }
 
-export interface PullRequestPageProps {
+export interface PRRoutingProps {
+  toPullRequest: (prNumber: number) => string
+}
+
+export interface PullRequestPageProps extends Partial<PRRoutingProps> {
   usePullRequestListStore: () => PullRequestListStore
   useLabelsStore: () => ILabelsStore
   onFilterOpen?: (filter: keyof PRListFilters) => void

@@ -22,7 +22,7 @@ import { useLabelsStore } from '../stores/labels-store'
 
 export default function PullRequestListPage() {
   const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } = usePullRequestListStore()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { spaceId } = useParams<PathParams>()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
@@ -126,7 +126,6 @@ export default function PullRequestListPage() {
 
   return (
     <SandboxPullRequestListPage
-      repoId={repoId}
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}
@@ -173,6 +172,7 @@ export default function PullRequestListPage() {
       }}
       searchQuery={query}
       setSearchQuery={setQuery}
+      toPullRequest={(prNumber: number) => `/repos/uuid/pulls/${prNumber}`}
     />
   )
 }

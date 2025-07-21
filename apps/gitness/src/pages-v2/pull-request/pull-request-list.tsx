@@ -137,6 +137,7 @@ export default function PullRequestListPage() {
       }}
       searchQuery={query}
       setSearchQuery={setQuery}
+      toPullRequest={(prNumber: number) => prNumber.toString()}
     />
   )
 }

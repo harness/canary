@@ -56,7 +56,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{blue.600}",
+      "$value": "{chrome.800}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
@@ -69,9 +69,9 @@
       "$value": "{chrome.900}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "accent": {
+    "brand": {
       "$type": "color",
-      "$value": "{blue.400}",
+      "$value": "{blue.600}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -1314,10 +1314,16 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
+    "input": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.2}"
+      }
+    },
     "link": {
       "text": {
         "$type": "color",
-        "$value": "{blue.400}",
+        "$value": "{blue.300}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
       "text-hover": {
@@ -1455,12 +1461,12 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.2}",
+          "$value": "{border.1}",
           "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{border.accent}"
+          "$value": "{border.brand}"
         }
       },
       "selected": {
@@ -1894,7 +1900,7 @@
           "y": "0",
           "blur": "0",
           "spread": "2",
-          "color": "{border.accent}",
+          "color": "{border.brand}",
           "type": "dropShadow"
         }
       ],

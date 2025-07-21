@@ -35,17 +35,17 @@ export default {
       minHeight: 'var(--cn-input-size-md)',
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
-      backgroundColor: 'var(--cn-bg-2)',
+      backgroundColor: 'var(--cn-comp-input-bg)',
       '@apply w-full font-body-normal transition-[color,box-shadow,border-color] px-3 py-2': '',
 
       '&:where(:focus-within):not(.cn-multi-select-danger)': {
-        borderColor: 'var(--cn-border-1)',
+        borderColor: 'var(--cn-border-brand)',
         boxShadow: 'var(--cn-ring-selected)',
         outline: 'none'
       },
 
       '&:where(:hover):not(:has(input[disabled]))': {
-        borderColor: 'var(--cn-border-1)'
+        borderColor: 'var(--cn-border-brand)'
       },
 
       ...createMultiSelectThemeStyles()
@@ -70,7 +70,7 @@ export default {
     },
 
     '&-dropdown': {
-      backgroundColor: 'var(--cn-bg-2)',
+      backgroundColor: 'var(--cn-bg-3)',
       borderColor: 'var(--cn-border-2)',
       '@apply border rounded-md shadow-md mt-1 overflow-hidden animate-in absolute top-1 z-[55] w-full outline-none':
         '',

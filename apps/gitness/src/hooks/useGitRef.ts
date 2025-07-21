@@ -16,7 +16,7 @@ export function useGitRef() {
   } = useCodePathDetails()
   const repoRef = useGetRepoRef()
 
-  const prefixWriteMode = (gitRefPath: string) =>
+  const prefixCodeMode = (gitRefPath: string) =>
     codeMode !== CodeModes.VIEW ? `${codeMode}/${gitRefPath}` : gitRefPath
 
   const {
@@ -27,7 +27,7 @@ export function useGitRef() {
   const prefixedDefaultBranch = repoData?.default_branch ? `${REFS_BRANCH_PREFIX}${repoData?.default_branch}` : ''
   const fullGitRef = fullGitRefWoDefault || prefixedDefaultBranch || ''
   const gitRefName = gitRefNameWoDefault || repoData?.default_branch || ''
-  const gitRefPath = fullGitRef ? prefixWriteMode(`${isRefACommitSHA(fullGitRef) ? gitRefName : fullGitRef}`) : ''
+  const gitRefPath = fullGitRef ? prefixCodeMode(`${isRefACommitSHA(fullGitRef) ? gitRefName : fullGitRef}`) : ''
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
   )

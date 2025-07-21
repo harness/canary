@@ -73,8 +73,6 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
   const { Link } = useRouterContext()
   const length = items.length
 
-  console.log('pathparts from path breadcrumbs', items)
-
   const renderInput = () => {
     const { changeFileName, gitRefName, fileName, handleOnBlur, parentPath, setParentPath } = props
 

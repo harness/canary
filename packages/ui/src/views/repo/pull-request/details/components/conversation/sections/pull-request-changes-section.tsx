@@ -16,8 +16,6 @@ import { isEmpty } from 'lodash-es'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 const getStatusIcon = (status: string) => {
-  console.log(status)
-
   switch (status) {
     case 'pending':
       return <IconV2 name="clock-solid" className="text-icons-alert" />

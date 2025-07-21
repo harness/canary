@@ -112,7 +112,7 @@ export default {
       '@apply font-body-normal': '',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
-        borderColor: 'var(--cn-border-accent)',
+        borderColor: 'var(--cn-border-brand)',
         color: 'var(--cn-text-1)'
       },
 

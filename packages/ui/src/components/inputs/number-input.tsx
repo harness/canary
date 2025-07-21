@@ -124,6 +124,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             ref={setRefs}
             id={inputId}
             disabled={disabled}
+            readOnly={readOnly}
             inputMode={integerOnly ? 'numeric' : 'decimal'}
             theme={effectiveTheme}
             onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {

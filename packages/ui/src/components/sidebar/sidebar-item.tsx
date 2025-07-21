@@ -5,7 +5,6 @@ import {
   AvatarProps,
   DropdownMenu,
   DropdownMenuItemProps,
-  IconNameMapV2,
   IconPropsV2,
   IconV2,
   Layout,
@@ -174,8 +173,6 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
     const sidebarItemClassName = cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)
     const buttonRef = ref as Ref<HTMLButtonElement>
-    const iconName: IconPropsV2['name'] =
-      withIcon && IconNameMapV2[props.icon ?? 'stop'] ? (props.icon as IconPropsV2['name']) : 'stop'
 
     const renderContent = () => (
       <Layout.Grid
@@ -185,25 +182,19 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           'cn-sidebar-item-content-complete': withDescription && withRightElement
         })}
       >
-        {(withIcon || withFallback) && (
-          <>
-            {withDescription && (
-              <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
-                {withIcon && <IconV2 name={iconName} size="md" />}
-                {withFallback && <IconV2 name="stop" size="md" />}
-              </div>
-            )}
-            {!withDescription && (
-              <>
-                {withIcon && <IconV2 name={iconName} size="sm" className="cn-sidebar-item-content-icon" />}
-                {withFallback && <IconV2 name="stop" size="sm" className="cn-sidebar-item-content-icon" />}
-              </>
-            )}
-          </>
-        )}
+        {(withIcon || withFallback) &&
+          (withDescription ? (
+            <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
+              <IconV2 name={props.icon} size="md" fallback="stop" />
+            </div>
+          ) : (
+            <IconV2 name={props.icon} size="sm" fallback="stop" className="cn-sidebar-item-content-icon" />
+          ))}
+
         {withLogo && props.logo && (
           <LogoV2 name={props.logo} size={withDescription ? 'md' : 'sm'} className="cn-sidebar-item-content-icon" />
         )}
+
         {withAvatar && (
           <Avatar
             src={props.src}

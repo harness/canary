@@ -78,7 +78,7 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 
     if (variant === 'card') {
       return (
-        <Card.Root size={cardSize} className="w-full mb-2">
+        <Card.Root size={cardSize} className="mb-2 w-full">
           <AccordionPrimitive.Item ref={ref} className="w-full" {...props} />
         </Card.Root>
       )
@@ -93,7 +93,7 @@ AccordionItem.displayName = 'AccordionItem'
 type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   prefix?: ReactNode
   suffix?: ReactNode
-  indicatorProps?: Omit<IconPropsV2, 'name'>
+  indicatorProps?: Omit<IconPropsV2, 'name' | 'fallback'>
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(

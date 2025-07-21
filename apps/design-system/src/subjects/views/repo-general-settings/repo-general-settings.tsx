@@ -41,11 +41,7 @@ export const RepoGeneralSettings = () => {
         loadingStates={loadingStates}
         isRepoUpdateSuccess={false}
         useRepoRulesStore={useRepoRulesStore}
-        handleRuleClick={() => {}}
-        openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-        rulesSearchQuery={rulesSearchQuery}
-        setRulesSearchQuery={setRulesSearchQuery}
         branchSelectorRenderer={DummyComponent}
       />
 

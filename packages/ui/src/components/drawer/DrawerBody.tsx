@@ -15,9 +15,9 @@ export const DrawerBody = forwardRef<HTMLDivElement, ScrollAreaProps & { scrollA
           { 'cn-drawer-body-wrap-top': isTop, 'cn-drawer-body-wrap-bottom': isBottom },
           className
         )}
-        ref={ref}
       >
         <ScrollArea
+          ref={ref}
           {...restProps}
           onScrollTop={onScrollTop}
           onScrollBottom={onScrollBottom}

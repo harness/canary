@@ -77,7 +77,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...
   })
 
   return (
-    <Dialog.Content ref={ref}>
+    <Dialog.Content ref={ref} {...props}>
       <Dialog.Header
         icon={
           context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
@@ -87,7 +87,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...
         <Dialog.Title>{title}</Dialog.Title>
       </Dialog.Header>
 
-      <Dialog.Body {...props}>{otherChildren}</Dialog.Body>
+      <Dialog.Body>{otherChildren}</Dialog.Body>
 
       <Dialog.Footer>
         {cancelEl ?? <Cancel />}
@@ -103,8 +103,8 @@ const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ childr
   if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
 
   return (
-    <Dialog.Close ref={ref} asChild>
-      <Button variant="secondary" loading={context.loading} onClick={context.onCancel} {...props}>
+    <Dialog.Close asChild>
+      <Button variant="secondary" loading={context.loading} onClick={context.onCancel} ref={ref} {...props}>
         {children}
       </Button>
     </Dialog.Close>

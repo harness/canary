@@ -2,27 +2,11 @@ import { FC, useMemo } from 'react'
 
 import { NoData, StackedList } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '@/views'
+import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequest, PullRequestListProps } from '@/views'
 
-import { PRRoutingProps } from '../pull-request.types'
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'
 import { PullRequestListHeader } from './pull-request-list-header'
-
-export interface PullRequestListProps extends Partial<PRRoutingProps> {
-  pullRequests?: PullRequestType[]
-  handleResetFilters?: () => void
-  hasActiveFilters?: boolean
-  query?: string
-  openPRs?: number
-  handleOpenClick?: () => void
-  closedPRs?: number
-  handleCloseClick?: () => void
-  repoId?: string
-  spaceId?: string
-  headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
-  setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
-}
 
 export const PullRequestList: FC<PullRequestListProps> = ({
   pullRequests,
@@ -39,7 +23,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   const { Link } = useRouterContext()
   const { t } = useTranslation()
 
-  const filteredData = useMemo<PullRequestType[]>(() => {
+  const filteredData = useMemo<PullRequest[]>(() => {
     if (!pullRequests) return []
 
     return pullRequests.filter(pr => {
@@ -163,38 +147,42 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           }
         />
       </StackedList.Item>
-      {filteredData.map((pullRequest, pullRequest_idx) => {
-        console.log(pullRequest, toPullRequest?.(pullRequest?.number || 0))
-        return (
-          <Link
-            key={pullRequest.number?.toString() || ''}
-            to={pullRequest?.number ? toPullRequest?.(pullRequest.number) || '' : ''}
-          >
-            <StackedList.Item className="px-4 py-3" isLast={filteredData.length - 1 === pullRequest_idx}>
-              {!!pullRequest.number && (
-                <StackedList.Field
-                  className="max-w-full gap-1.5"
-                  title={pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} />}
-                  description={
-                    pullRequest.author &&
-                    typeof pullRequest.author === 'string' && (
-                      <PullRequestItemDescription
-                        number={pullRequest.number}
-                        author={pullRequest.author}
-                        reviewRequired={pullRequest.reviewRequired}
-                        tasks={pullRequest.tasks}
-                        sourceBranch={pullRequest.sourceBranch || ''}
-                        timestamp={pullRequest.timestamp}
-                        targetBranch={pullRequest.targetBranch || ''}
-                      />
-                    )
-                  }
-                />
-              )}
-            </StackedList.Item>
-          </Link>
-        )
-      })}
+      {filteredData.map((pullRequest, pullRequest_idx) => (
+        <Link
+          key={pullRequest.number?.toString() || ''}
+          to={
+            pullRequest?.number
+              ? (toPullRequest?.({
+                  prNumber: pullRequest.number,
+                  repoId: pullRequest?.repoId
+                }) ?? '')
+              : ''
+          }
+        >
+          <StackedList.Item className="px-4 py-3" isLast={filteredData.length - 1 === pullRequest_idx}>
+            {!!pullRequest.number && (
+              <StackedList.Field
+                className="max-w-full gap-1.5"
+                title={pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} />}
+                description={
+                  pullRequest.author &&
+                  typeof pullRequest.author === 'string' && (
+                    <PullRequestItemDescription
+                      number={pullRequest.number}
+                      author={pullRequest.author}
+                      reviewRequired={pullRequest.reviewRequired}
+                      tasks={pullRequest.tasks}
+                      sourceBranch={pullRequest.sourceBranch || ''}
+                      timestamp={pullRequest.timestamp}
+                      targetBranch={pullRequest.targetBranch || ''}
+                    />
+                  )
+                }
+              />
+            )}
+          </StackedList.Item>
+        </Link>
+      ))}
     </StackedList.Root>
   )
 }

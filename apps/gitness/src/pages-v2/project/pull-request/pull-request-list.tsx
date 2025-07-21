@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query'
 
 import {
   ListPullReqQueryQueryParams,
-  TypesPullReq,
   TypesPullReqRepo,
   useGetPrincipalQuery,
   useListPrincipalsQuery
@@ -76,7 +75,9 @@ export default function PullRequestListPage() {
     queryKey,
     queryFn: fetchPullRequests,
     select: ({ data, headers }) => ({
-      pullRequestData: data.map(item => item.pull_request).filter((pr): pr is TypesPullReq => pr !== undefined),
+      pullRequestData: data.flatMap(item =>
+        item.pull_request ? [{ ...item.pull_request, repoId: item.repository?.identifier }] : []
+      ),
       headers
     })
   })
@@ -172,7 +173,9 @@ export default function PullRequestListPage() {
       }}
       searchQuery={query}
       setSearchQuery={setQuery}
-      toPullRequest={(prNumber: number) => `/repos/uuid/pulls/${prNumber}`}
+      toPullRequest={({ prNumber, repoId }: { prNumber: number; repoId?: string }) =>
+        `/repos/${repoId}/pulls/${prNumber}`
+      }
     />
   )
 }

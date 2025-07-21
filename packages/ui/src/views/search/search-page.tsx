@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, Pagination, SearchInput, Spacer, Text, Toggle } from '@/components'
+import { Pagination, SearchInput, Spacer, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'

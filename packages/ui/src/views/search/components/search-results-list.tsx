@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import { Button, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -40,6 +40,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
 
   if (isLoading) {
     return <SkeletonList />
@@ -81,35 +82,53 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
 
             {item.matches && item.matches.length > 1 && (
               <Layout.Vertical gap="sm">
-                {item.matches.slice(0, 3).map(match => (
-                  <div key={`${match.before}-${match.fragments.join('')}-${match.after}`}>
-                    <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
-                      <code className="monospace">
-                        {match.before.trim().length > 0 && (
-                          <>
-                            {match.line_num - 1} {match.before}
-                            <br />
-                          </>
-                        )}
-                        {match.line_num}{' '}
-                        {match.fragments?.map((segment, segIndex) => (
-                          <span key={`seg-${segIndex}`}>
-                            {segment.pre}
-                            <mark>{segment.match}</mark>
-                            {segment.post}
-                          </span>
-                        ))}
-                        {match.after.trim().length > 0 && (
-                          <>
-                            <br />
-                            {match.line_num + 1} {match.after}
-                          </>
-                        )}
-                      </code>
-                    </pre>
-                  </div>
-                ))}
-                {item.matches?.length > 3 && <Text variant="body-normal">+{item.matches.length - 3} more</Text>}
+                {item.matches
+                  .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : 3)
+                  .map(match => (
+                    <div key={`${match.before}-${match.fragments.join('')}-${match.after}`}>
+                      <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
+                        <code className="monospace">
+                          {match.before.trim().length > 0 && (
+                            <>
+                              {match.line_num - 1} {match.before}
+                              <br />
+                            </>
+                          )}
+                          {match.line_num}{' '}
+                          {match.fragments?.map((segment, segIndex) => (
+                            <span key={`seg-${segIndex}`}>
+                              {segment.pre}
+                              <mark>{segment.match}</mark>
+                              {segment.post}
+                            </span>
+                          ))}
+                          {match.after.trim().length > 0 && (
+                            <>
+                              <br />
+                              {match.line_num + 1} {match.after}
+                            </>
+                          )}
+                        </code>
+                      </pre>
+                    </div>
+                  ))}
+                {item.matches?.length > 3 && (
+                  <Text
+                    variant="body-normal"
+                    className="text-cn-primary cursor-pointer hover:underline"
+                    onClick={() => {
+                      const key = `${item.repo_path}/${item.file_name}`
+                      setExpandedItems(prev => ({
+                        ...prev,
+                        [key]: !prev[key]
+                      }))
+                    }}
+                  >
+                    {expandedItems[`${item.repo_path}/${item.file_name}`]
+                      ? t('views:search.showLess', '- Show Less')
+                      : t('views:search.showMore', `+${item.matches.length - 3} more`)}
+                  </Text>
+                )}
               </Layout.Vertical>
             )}
           </Layout.Vertical>

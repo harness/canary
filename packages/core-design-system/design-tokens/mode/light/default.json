@@ -69,7 +69,7 @@
       "$value": "{chrome.100}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "accent": {
+    "brand": {
       "$type": "color",
       "$value": "{blue.600}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
@@ -1475,7 +1475,7 @@
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{border.accent}"
+          "$value": "{border.brand}"
         }
       },
       "selected": {
@@ -1909,7 +1909,7 @@
           "y": "0",
           "blur": "0",
           "spread": "2",
-          "color": "{border.accent}",
+          "color": "{border.brand}",
           "type": "dropShadow"
         }
       ],

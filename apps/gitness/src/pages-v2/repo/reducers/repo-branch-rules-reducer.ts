@@ -4,7 +4,7 @@ import { handleRuleInterdependencies } from '../transform-utils/handle_rule_inte
 
 export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction): Rule[] => {
   switch (action.type) {
-    case BranchRulesActionType.TOGGLE_RULE:
+    case BranchRulesActionType.TOGGLE_RULE: {
       const updatedState = state.map(rule => {
         if (rule.id === action.ruleId) {
           const updatedRule = { ...rule, checked: action.checked }
@@ -18,6 +18,7 @@ export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction):
       })
 
       return handleRuleInterdependencies(action.ruleId, updatedState)
+    }
 
     case BranchRulesActionType.TOGGLE_SUBMENU:
       return state.map(rule => {

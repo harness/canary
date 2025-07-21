@@ -54,6 +54,11 @@ export default function PullRequestListPage() {
     include_subspaces: 'true'
   }
 
+  /**
+   *
+   * Currently, this api is not present in openapi spec, so we are using fetch directly.
+   * @todo replace with react query hook once present.
+   */
   const fetchPullRequests = async (): Promise<{
     data: TypesPullReqRepo[]
     headers: Headers

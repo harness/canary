@@ -28,7 +28,7 @@ export default function PullRequestListPage() {
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
   const mfeContext = useMFEContext()
@@ -69,6 +69,38 @@ export default function PullRequestListPage() {
       enabled: principalsSearchQuery !== undefined
     }
   )
+
+  const onLabelClick = (labelId: number) => {
+    // Update filter values with the label ID for API call
+    setFilterValues(prevFilters => {
+      // Get current label IDs or empty array
+      const currentLabelIds = prevFilters.label_id || []
+
+      // Toggle the label: remove if exists, add if doesn't exist
+      let newLabelIds: number[]
+      if (currentLabelIds.includes(labelId)) {
+        newLabelIds = currentLabelIds.filter(id => id !== labelId)
+      } else {
+        newLabelIds = [...currentLabelIds, labelId]
+      }
+
+      const newParams = new URLSearchParams(searchParams)
+
+      if (newLabelIds.length > 0) {
+        const labelByValue = newLabelIds.map(id => `${id}:true`).join(';')
+        newParams.set('label_by', labelByValue)
+      } else {
+        newParams.delete('label_by')
+      }
+
+      setSearchParams(newParams)
+
+      return {
+        ...prevFilters,
+        label_id: newLabelIds
+      }
+    })
+  }
 
   useEffect(() => {
     if (pullRequestData) {
@@ -137,6 +169,7 @@ export default function PullRequestListPage() {
       }}
       searchQuery={query}
       setSearchQuery={setQuery}
+      onLabelClick={onLabelClick}
       toPullRequest={(prNumber: number) => prNumber.toString()}
     />
   )

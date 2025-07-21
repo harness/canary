@@ -40,7 +40,7 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
   text?: string
   size?: VariantProps<typeof toggleVariants>['size']
   suffixIcon?: IconV2NamesType
-  suffixIconProps?: IconPropsV2
+  suffixIconProps?: Omit<IconPropsV2, 'name'>
   selected?: boolean
   defaultValue?: boolean
   tooltipProps?: ToggleTooltipProps
@@ -50,7 +50,7 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
 type TogglePropsIconOnly = TogglePropsBase & {
   iconOnly: true
   prefixIcon: IconV2NamesType
-  prefixIconProps?: IconPropsV2
+  prefixIconProps?: Omit<IconPropsV2, 'name'>
   suffixIcon?: never
   suffixIconProps?: never
 }
@@ -58,7 +58,7 @@ type TogglePropsIconOnly = TogglePropsBase & {
 type TogglePropsNotIconOnly = TogglePropsBase & {
   iconOnly?: false
   prefixIcon?: IconV2NamesType
-  prefixIconProps?: IconPropsV2
+  prefixIconProps?: Omit<IconPropsV2, 'name'>
 }
 
 export type ToggleProps = TogglePropsIconOnly | TogglePropsNotIconOnly

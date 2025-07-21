@@ -227,6 +227,7 @@ export interface PRListLabelType {
   color: ColorsEnum
   key: string
   value?: string
+  id?: number
 }
 
 interface RoutingProps {
@@ -249,6 +250,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   isLoading?: boolean
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
+  onLabelClick?: (labelId: number) => void
 }
 
 export interface PullRequestListProps extends Partial<RoutingProps> {

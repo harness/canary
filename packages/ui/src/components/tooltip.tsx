@@ -1,5 +1,6 @@
 import { ComponentProps, FC, ReactNode } from 'react'
 
+import { usePortal } from '@/context'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { Illustration } from './illustration'
@@ -26,10 +27,11 @@ export const Tooltip: FC<TooltipProps> = ({
   align = 'center',
   open
 }) => {
+  const { portalContainer } = usePortal()
   return (
     <TooltipPrimitive.Root delayDuration={delay} open={open}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Portal container={portalContainer}>
         <TooltipPrimitive.Content className="cn-tooltip" side={side} align={align} sideOffset={4}>
           {!!title && <span className="cn-tooltip-title">{title}</span>}
           <div>{content}</div>

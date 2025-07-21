@@ -9,9 +9,10 @@ import { getPrState } from '../utils'
 
 interface PullRequestItemTitleProps {
   pullRequest: PullRequest
+  onLabelClick?: (labelId: number) => void
 }
 
-export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullRequest }) => {
+export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullRequest, onLabelClick }) => {
   const { name, labels, state, is_draft: isDraft, comments, merged, repoId } = pullRequest
   const isSuccess = !!merged
 
@@ -38,7 +39,13 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
           <p className="ml-0.5 mr-1 truncate text-3 font-medium leading-snug">{name}</p>
         )}
 
-        {!!labels.length && <LabelsList labels={labels} className="max-h-5 w-[max(400px,60%)] overflow-hidden" />}
+        {!!labels.length && (
+          <LabelsList
+            labels={labels}
+            className="max-h-5 w-[max(400px,60%)] overflow-hidden"
+            onClick={label => onLabelClick?.(label.id || 0)}
+          />
+        )}
       </div>
 
       {!!comments && (

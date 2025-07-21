@@ -45,6 +45,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   isLoading,
   searchQuery,
   setSearchQuery,
+  onLabelClick,
   toPullRequest
 }) => {
   const { Link, useSearchParams } = useRouterContext()
@@ -196,6 +197,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         headerFilter={headerFilter}
         setHeaderFilter={setHeaderFilter}
         toPullRequest={toPullRequest}
+        onLabelClick={onLabelClick}
       />
     )
   }

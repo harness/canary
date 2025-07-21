@@ -171,10 +171,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         <NoData
           imageName="no-data-folder"
           title="No pull requests yet"
-          description={[
-            t('views:noData.noPullRequests', `There are no pull requests in this ${repoId ? 'repo' : 'project'} yet.`),
-            t('views:noData.createNewPullRequest', 'Create a new pull request.')
-          ]}
+          description={
+            repoId
+              ? [
+                  t('views:noData.noPullRequestsInRepo', `There are no pull requests in this repo yet.`),
+                  t('views:noData.createNewPullRequest', 'Create a new pull request.')
+                ]
+              : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
+          }
           primaryButton={
             repoId
               ? {

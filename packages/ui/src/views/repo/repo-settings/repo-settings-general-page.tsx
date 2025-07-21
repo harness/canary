@@ -16,7 +16,6 @@ interface ILoadingStates {
   isUpdatingRepoData: boolean
   isLoadingSecuritySettings: boolean
   isUpdatingSecuritySettings: boolean
-  isRulesLoading: boolean
 }
 
 interface RepoSettingsGeneralPageProps {
@@ -25,12 +24,12 @@ interface RepoSettingsGeneralPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-  handleRuleClick: (identifier: string) => void
-  openRulesAlertDeleteDialog: (identifier: string) => void
+  // handleRuleClick: (identifier: string) => void
+  // openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
   useRepoRulesStore: () => IRepoStore
-  rulesSearchQuery: string
-  setRulesSearchQuery: (query: string) => void
+  // rulesSearchQuery: string
+  // setRulesSearchQuery: (query: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
 
@@ -40,27 +39,27 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
-  handleRuleClick,
-  openRulesAlertDeleteDialog,
+  // handleRuleClick,
+  // openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog,
   useRepoRulesStore,
-  rulesSearchQuery,
-  setRulesSearchQuery,
+  // rulesSearchQuery,
+  // setRulesSearchQuery,
   branchSelectorRenderer
 }) => {
   const { location } = useRouterContext()
   const { t } = useTranslation()
-  const rulesRef = useRef<HTMLDivElement | null>(null)
+  // const rulesRef = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
-    if (location.pathname.endsWith('/rules')) {
-      rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
-    }
+  // useEffect(() => {
+  //   if (location.pathname.endsWith('/rules')) {
+  //     rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
+  //   }
 
-    if (location.pathname.endsWith('/general')) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }, [location.pathname])
+  //   if (location.pathname.endsWith('/general')) {
+  //     window.scrollTo({ top: 0, behavior: 'smooth' })
+  //   }
+  // }, [location.pathname])
 
   const { repoData, securityScanning, rules } = useRepoRulesStore()
 
@@ -80,18 +79,6 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           isRepoUpdateSuccess={isRepoUpdateSuccess}
           branchSelectorRenderer={branchSelectorRenderer}
         />
-        <FormSeparator />
-        <div ref={rulesRef}>
-          <RepoSettingsGeneralRules
-            isLoading={loadingStates.isRulesLoading}
-            rules={rules}
-            apiError={apiError}
-            handleRuleClick={handleRuleClick}
-            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-            rulesSearchQuery={rulesSearchQuery}
-            setRulesSearchQuery={setRulesSearchQuery}
-          />
-        </div>
         <FormSeparator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}

@@ -42,21 +42,12 @@ export const RepoSettingsGeneralPageContainer = () => {
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()
   const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
-  const [rulesSearchQuery, setRulesSearchQuery] = useState('')
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
-  const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
   const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
-  const [alertDeleteParams, setAlertDeleteParams] = useState('')
 
   const closeAlertDeleteDialog = () => {
-    isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
     isRepoAlertDeleteDialogOpen && setRepoIsAlertDeleteDialogOpen(false)
   }
-  const openRulesAlertDeleteDialog = (identifier: string) => {
-    setAlertDeleteParams(identifier)
-    setRuleIsAlertDeleteDialogOpen(true)
-  }
-
   const openRepoAlertDeleteDialog = () => setRepoIsAlertDeleteDialogOpen(true)
 
   const { data: { body: repoData } = {}, isLoading: isLoadingRepoData } = useFindRepositoryQuery(
@@ -65,20 +56,6 @@ export const RepoSettingsGeneralPageContainer = () => {
       onError: (error: FindRepositoryErrorResponse) => {
         const message = error.message || 'Error fetching repo'
         setApiError({ type: ErrorTypes.FETCH_REPO, message })
-      }
-    }
-  )
-
-  const {
-    data: { body: rulesData } = {},
-    refetch: refetchRulesList,
-    isLoading: isRulesLoading
-  } = useRepoRuleListQuery(
-    { repo_ref: repoRef, queryParams: { query: rulesSearchQuery } },
-    {
-      onError: (error: RepoRuleListErrorResponse) => {
-        const message = error.message || 'Error fetching rules'
-        setApiError({ type: ErrorTypes.FETCH_RULES, message })
       }
     }
   )
@@ -99,24 +76,6 @@ export const RepoSettingsGeneralPageContainer = () => {
 
         const message = error.message || 'Error updating repository description'
         setApiError({ type: ErrorTypes.DESCRIPTION_UPDATE, message })
-      }
-    }
-  )
-
-  const { mutate: deleteRule, isLoading: isDeletingRule } = useRepoRuleDeleteMutation(
-    { repo_ref: repoRef },
-    {
-      onSuccess: () => {
-        refetchRulesList()
-        setRepoIsAlertDeleteDialogOpen(false)
-        setApiError(null)
-      },
-      onError: (error: RepoRuleDeleteErrorResponse) => {
-        // Invalidate queries to refetch data from server
-        queryClient.invalidateQueries(['ruleList', repoRef])
-
-        const message = error.message || 'Error deleting rule'
-        setApiError({ type: ErrorTypes.DELETE_RULE, message })
       }
     }
   )
@@ -226,32 +185,15 @@ export const RepoSettingsGeneralPageContainer = () => {
     setApiError(null)
   }, [repoData?.default_branch, repoData, setRepoData])
 
-  useEffect(() => {
-    if (rulesData) {
-      setRules(rulesData)
-      setApiError(null)
-    }
-  }, [rulesData, setRules])
-
   const handleUpdateSecuritySettings = (data: SecurityScanning) => {
     updateSecuritySettings({ body: { secret_scanning_enabled: data.secretScanning } })
-  }
-
-  const handleRuleClick = (identifier: string) => {
-    navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
-  }
-
-  const handleDeleteRule = (identifier: string) => {
-    deleteRule({ rule_identifier: identifier })
-    navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
   const loadingStates = {
     isLoadingRepoData: isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
     isLoadingSecuritySettings,
-    isUpdatingSecuritySettings,
-    isRulesLoading
+    isUpdatingSecuritySettings
   }
 
   return (
@@ -263,27 +205,17 @@ export const RepoSettingsGeneralPageContainer = () => {
         loadingStates={loadingStates}
         isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
         useRepoRulesStore={useRepoRulesStore}
-        handleRuleClick={handleRuleClick}
-        openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+        // handleRuleClick={handleRuleClick}
+        // openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-        rulesSearchQuery={rulesSearchQuery}
-        setRulesSearchQuery={setRulesSearchQuery}
+        // rulesSearchQuery={rulesSearchQuery}
+        // setRulesSearchQuery={setRulesSearchQuery}
         branchSelectorRenderer={BranchSelectorContainer}
       />
 
       <DeleteAlertDialog
-        open={isRuleAlertDeleteDialogOpen || isRepoAlertDeleteDialogOpen}
+        open={isRepoAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        {...wrapConditionalObjectElement(
-          {
-            identifier: alertDeleteParams,
-            deleteFn: handleDeleteRule,
-            isLoading: isDeletingRule,
-            error: apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null,
-            type: 'rule'
-          },
-          isRuleAlertDeleteDialogOpen
-        )}
         {...wrapConditionalObjectElement(
           {
             identifier: repoRef,

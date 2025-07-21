@@ -2,6 +2,7 @@ import { FC, useCallback, useMemo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
+  Alert,
   Button,
   IconV2,
   ListActions,
@@ -88,28 +89,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   return (
     <>
-      {!projectScope ? (
-        <>
-          <Text className="mb-2.5">{t('views:repos.rules', 'Rules')}</Text>
-
-          <div className="flex flex-row">
-            <span className="max-w-[440px]">
-              {t(
-                'views:repos.rulesDescription',
-                'Define standards and automate workflows to ensure better collaboration and control in your repository.'
-              )}
-            </span>
-            {!isLoading && !isShowRulesContent && (
-              <NavLink className="ml-auto" to="../rules/create">
-                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
-              </NavLink>
-            )}
-          </div>
-        </>
-      ) : null}
       {isShowRulesContent && (
         <>
-          <Spacer size={7} />
           <>
             <ListActions.Root>
               <ListActions.Left>
@@ -117,16 +98,14 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   id="search"
                   size="sm"
                   defaultValue={rulesSearchQuery}
-                  inputContainerClassName={projectScope ? 'max-w-96' : 'max-w-xs'}
+                  inputContainerClassName={'max-w-96'}
                   placeholder={t('views:repos.search', 'Search')}
                   onChange={handleSearchChange}
                 />
               </ListActions.Left>
               <ListActions.Right>
                 <NavLink to="../rules/create">
-                  <Button variant={projectScope ? 'primary' : 'outline'}>
-                    {t('views:repos.newRule', 'New branch rule')}
-                  </Button>
+                  <Button variant="primary">{t('views:repos.newRule', 'New branch rule')}</Button>
                 </NavLink>
               </ListActions.Right>
             </ListActions.Root>
@@ -213,10 +192,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             />
           )}
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
-            <>
-              <Spacer size={2} />
-              <Text color="danger">{apiError.message}</Text>
-            </>
+            <Alert.Root>
+              <Alert.Title>{apiError.message}</Alert.Title>
+            </Alert.Root>
           )}
         </>
       )}

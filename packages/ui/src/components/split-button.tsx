@@ -71,12 +71,13 @@ const SplitButtonBase = <T extends string>(
     disableButton = false,
     children,
     dropdownContentClassName,
-    size = 'md'
+    size = 'md',
+    ...props
   }: SplitButtonProps<T>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   return (
-    <div className={cn('flex', className)} ref={ref}>
+    <div className={cn('flex', className)} ref={ref} {...props}>
       <Button
         className={cn('rounded-r-none border-r-0', buttonClassName)}
         theme={theme}

@@ -156,7 +156,8 @@ export const TimeAgoCard = memo(
         afterCutoffPrefix,
         textProps,
         triggerClassName,
-        contentClassName
+        contentClassName,
+        ...props
       },
       ref
     ) => {
@@ -169,7 +170,7 @@ export const TimeAgoCard = memo(
 
       if (timestamp === null || timestamp === undefined) {
         return (
-          <Text as="span" {...textProps}>
+          <Text as="span" {...textProps} {...props}>
             Unknown time
           </Text>
         )
@@ -190,7 +191,7 @@ export const TimeAgoCard = memo(
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
           <Popover.Trigger className={cn('cn-time-ago-card-trigger', triggerClassName)} onClick={handleClick} ref={ref}>
-            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
+            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>} {...props}>
               {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
           </Popover.Trigger>

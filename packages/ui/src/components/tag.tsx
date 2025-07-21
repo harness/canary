@@ -88,7 +88,8 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
             onReset,
             label: label,
             value,
-            disabled
+            disabled,
+            ...props
           }}
         />
       )
@@ -127,13 +128,35 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
 Tag.displayName = 'Tag'
 
 const TagSplit = forwardRef<HTMLDivElement, TagProps>(
-  ({ variant, size, theme, rounded, icon, showIcon, showReset, value, label = '', onReset, disabled = false }, ref) => {
+  (
+    {
+      variant,
+      size,
+      theme,
+      rounded,
+      icon,
+      showIcon,
+      showReset,
+      value,
+      label = '',
+      onReset,
+      disabled = false,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     const sharedProps = { variant, size, theme, rounded, icon, disabled }
 
     return (
       <div
-        className={cn('cn-tag-split flex w-fit items-center justify-center', { 'cursor-not-allowed': disabled })}
+        className={cn(
+          'cn-tag-split flex w-fit items-center justify-center',
+          { 'cursor-not-allowed': disabled },
+          className
+        )}
         ref={ref}
+        {...props}
       >
         {/* LEFT TAG - should never have a Reset Icon */}
         <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />

@@ -84,7 +84,8 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       onChange,
       tooltipProps,
       defaultValue,
-      selected: selectedProp
+      selected: selectedProp,
+      ...props
     },
     ref
   ) => {
@@ -140,6 +141,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
             rounded={rounded}
             iconOnly={iconOnly}
             {...accessibilityProps}
+            {...props}
           >
             {renderContent()}
           </Button>

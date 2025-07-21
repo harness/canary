@@ -53,7 +53,7 @@ interface ContentProps {
   children?: ReactNode
 }
 
-const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children }, ref) => {
+const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...props }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Content must be used within AlertDialog.Root')
 
@@ -87,7 +87,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children }, r
         <Dialog.Title>{title}</Dialog.Title>
       </Dialog.Header>
 
-      <Dialog.Body>{otherChildren}</Dialog.Body>
+      <Dialog.Body {...props}>{otherChildren}</Dialog.Body>
 
       <Dialog.Footer>
         <ButtonLayout>

@@ -15,7 +15,7 @@ export interface IllustrationProps extends SVGProps<SVGSVGElement> {
 }
 
 const Illustration = forwardRef<SVGSVGElement, IllustrationProps>(
-  ({ name, size = 112, height, width, className, themeDependent = false }, ref) => {
+  ({ name, size = 112, height, width, className, themeDependent = false, ...props }, ref) => {
     const { isLightTheme } = useTheme()
 
     const isLightIconAvailable = !!IllustrationsNameMap[`${name}-light` as keyof typeof IllustrationsNameMap]
@@ -38,7 +38,7 @@ const Illustration = forwardRef<SVGSVGElement, IllustrationProps>(
       style: { minWidth: `${width || size}px`, minHeight: `${height || size}px` }
     }
 
-    return <Component ref={ref} className={cn({ invert: shouldInvert }, className)} {...sizeProps} />
+    return <Component ref={ref} className={cn({ invert: shouldInvert }, className)} {...sizeProps} {...props} />
   }
 )
 Illustration.displayName = 'Illustration'

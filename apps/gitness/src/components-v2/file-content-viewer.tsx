@@ -133,7 +133,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const renderFileView = () => {
     switch (view) {
       case 'preview':
-        // For Markdown 'preview'
         if (getIsMarkdown(language)) {
           return (
             <div className="pb-11">
@@ -141,7 +140,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             </div>
           )
         }
-        // If a non-markdown file somehow has 'preview', we could fallback to 'code'
+
         return (
           <CodeEditor
             className="overflow-hidden rounded-b-md border-x border-b"

@@ -48,7 +48,6 @@ export const RepoFileEdit = () => {
   const renderFileView = () => {
     switch (view) {
       case 'preview':
-        // For Markdown 'preview'
         if (getIsMarkdown(language)) {
           return (
             <MarkdownViewer
@@ -58,7 +57,7 @@ export const RepoFileEdit = () => {
             />
           )
         }
-        // For other file types, render code diff editor
+
         return (
           <CodeDiffEditor
             language={language}

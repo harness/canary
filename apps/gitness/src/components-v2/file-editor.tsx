@@ -167,7 +167,6 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const renderFileView = () => {
     switch (view) {
       case 'preview':
-        // For Markdown 'preview'
         if (getIsMarkdown(language)) {
           return (
             <MarkdownViewer
@@ -177,7 +176,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
             />
           )
         }
-        // For other file types, render code diff editor
+
         return (
           <CodeDiffEditor
             height="100%"

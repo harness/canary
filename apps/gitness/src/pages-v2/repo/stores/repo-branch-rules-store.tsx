@@ -11,6 +11,7 @@ const branchRules = getBranchRules(getT(i18n.t).t)
 const initialState: Rule[] = branchRules.map(rule => ({
   id: rule.id,
   checked: false,
+  disabled: false,
   submenu: [],
   selectOptions: [],
   input: ''

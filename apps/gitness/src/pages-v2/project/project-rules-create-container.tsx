@@ -139,6 +139,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
           payload: branchRules.map(rule => ({
             id: rule.id,
             checked: false,
+            disabled: false,
             submenu: [],
             selectOptions: [],
             input: ''
@@ -152,6 +153,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
         payload: presetRuleData.rules.map(rule => ({
           id: rule.id,
           checked: rule.checked || false,
+          disabled: rule.disabled || false,
           submenu: (rule.submenu || []) as MergeStrategy[],
           selectOptions: rule.selectOptions || [],
           input: rule.input || ''

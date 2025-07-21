@@ -1,9 +1,11 @@
 import { BranchRulesAction, BranchRulesActionType, MergeStrategy, Rule } from '@harnessio/ui/views'
 
+import { handleRuleInterdependencies } from '../transform-utils/handle_rule_interdependencies'
+
 export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction): Rule[] => {
   switch (action.type) {
-    case BranchRulesActionType.TOGGLE_RULE:
-      return state.map(rule => {
+    case BranchRulesActionType.TOGGLE_RULE: {
+      const updatedState = state.map(rule => {
         if (rule.id === action.ruleId) {
           const updatedRule = { ...rule, checked: action.checked }
           if (!action.checked) {
@@ -14,6 +16,9 @@ export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction):
         }
         return rule
       })
+
+      return handleRuleInterdependencies(action.ruleId, updatedState)
+    }
 
     case BranchRulesActionType.TOGGLE_SUBMENU:
       return state.map(rule => {

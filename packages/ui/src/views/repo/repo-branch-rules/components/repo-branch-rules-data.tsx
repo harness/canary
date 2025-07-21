@@ -16,6 +16,63 @@ export interface BranchRuleType {
 
 export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
   {
+    id: BranchRuleId.BLOCK_BRANCH_CREATION,
+    label: t('views:repos.BlockBranchCreation', 'Block branch creation'),
+    description: t(
+      'views:repos.BlockBranchCreationDescription',
+      'Only allow users with bypass permission to create matching branches'
+    )
+  },
+  {
+    id: BranchRuleId.BLOCK_BRANCH_DELETION,
+    label: t('views:repos.BlockBranchDeletion', 'Block branch deletion'),
+    description: t(
+      'views:repos.BlockBranchDeletionDescription',
+      'Only allow users with bypass permission to delete matching branches'
+    )
+  },
+  {
+    id: BranchRuleId.BLOCK_BRANCH_UPDATE,
+    label: t('views:repos.BlockBranchUpdate', 'Block branch update'),
+    description: t(
+      'views:repos.BlockBranchUpdateDescription',
+      'Only allow users with bypass permission to update matching branches'
+    )
+  },
+  {
+    id: BranchRuleId.BLOCK_FORCE_PUSH,
+    label: t('views:repos.BlockForcePush', 'Block force push'),
+    description: t(
+      'views:repos.BlockForcePushDescription',
+      'Only allow users with bypass permission to force push to matching branches'
+    )
+  },
+  {
+    id: BranchRuleId.REQUIRE_PULL_REQUEST,
+    label: t('views:repos.RequirePullRequest', 'Require pull request'),
+    description: t(
+      'views:repos.RequirePullRequestDescription',
+      'Do not allow any changes to matching branches without a pull request'
+    )
+  },
+  {
+    id: BranchRuleId.REQUIRE_CODE_REVIEW,
+    label: t('views:repos.RequireCodeReview', 'Require a minimum number of reviewers'),
+    description: t(
+      'views:repos.RequireCodeReviewDescription',
+      'Require approval on pull requests from a minimum number of reviewers'
+    ),
+    hasInput: true
+  },
+  {
+    id: BranchRuleId.REQUIRE_CODE_OWNERS,
+    label: t('views:repos.RequireCodeOwners', 'Require review from code owners'),
+    description: t(
+      'views:repos.RequireCodeOwnersDescription',
+      'Require approval on pull requests from one reviewer for each Code Owner rule'
+    )
+  },
+  {
     id: BranchRuleId.REQUIRE_LATEST_COMMIT,
     label: t('views:repos.RequestApprovalRule', 'Request approval of new changes'),
     description: t(
@@ -67,47 +124,6 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
     description: t(
       'views:repos.AutoDeleteBranchDescription',
       'Automatically delete the source branch of a pull request after it is merged'
-    )
-  },
-  {
-    id: BranchRuleId.BLOCK_BRANCH_CREATION,
-    label: t('views:repos.BlockBranchCreation', 'Block branch creation'),
-    description: t(
-      'views:repos.BlockBranchCreationDescription',
-      'Only allow users with bypass permission to create matching branches'
-    )
-  },
-  {
-    id: BranchRuleId.BLOCK_BRANCH_DELETION,
-    label: t('views:repos.BlockBranchDeletion', 'Block branch deletion'),
-    description: t(
-      'views:repos.BlockBranchDeletionDescription',
-      'Only allow users with bypass permission to delete matching branches'
-    )
-  },
-  {
-    id: BranchRuleId.REQUIRE_PULL_REQUEST,
-    label: t('views:repos.RequirePullRequest', 'Require pull request'),
-    description: t(
-      'views:repos.RequirePullRequestDescription',
-      'Do not allow any changes to matching branches without a pull request'
-    )
-  },
-  {
-    id: BranchRuleId.REQUIRE_CODE_REVIEW,
-    label: t('views:repos.RequireCodeReview', 'Require a minimum number of reviewers'),
-    description: t(
-      'views:repos.RequireCodeReviewDescription',
-      'Require approval on pull requests from a minimum number of reviewers'
-    ),
-    hasInput: true
-  },
-  {
-    id: BranchRuleId.REQUIRE_CODE_OWNERS,
-    label: t('views:repos.RequireCodeOwners', 'Require review from code owners'),
-    description: t(
-      'views:repos.RequireCodeOwnersDescription',
-      'Require approval on pull requests from one reviewer for each Code Owner rule'
     )
   }
 ]

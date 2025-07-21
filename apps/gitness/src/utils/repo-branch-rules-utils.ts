@@ -14,17 +14,19 @@ import {
 } from '@harnessio/ui/views'
 
 const ruleIds = [
+  BranchRuleId.BLOCK_BRANCH_CREATION,
+  BranchRuleId.BLOCK_BRANCH_DELETION,
+  BranchRuleId.BLOCK_BRANCH_UPDATE,
+  BranchRuleId.BLOCK_FORCE_PUSH,
+  BranchRuleId.REQUIRE_PULL_REQUEST,
+  BranchRuleId.REQUIRE_CODE_REVIEW,
+  BranchRuleId.REQUIRE_CODE_OWNERS,
   BranchRuleId.REQUIRE_LATEST_COMMIT,
   BranchRuleId.REQUIRE_NO_CHANGE_REQUEST,
   BranchRuleId.COMMENTS,
   BranchRuleId.STATUS_CHECKS,
   BranchRuleId.MERGE,
-  BranchRuleId.DELETE_BRANCH,
-  BranchRuleId.BLOCK_BRANCH_CREATION,
-  BranchRuleId.BLOCK_BRANCH_DELETION,
-  BranchRuleId.REQUIRE_PULL_REQUEST,
-  BranchRuleId.REQUIRE_CODE_REVIEW,
-  BranchRuleId.REQUIRE_CODE_OWNERS
+  BranchRuleId.DELETE_BRANCH
 ]
 
 // Util to transform API response into expected-form format for branch-rules-edit
@@ -34,12 +36,37 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
 
   for (const rule of ruleIds) {
     let checked = false
+    let disabled = false
     let submenu: MergeStrategy[] = []
     let selectOptions: string[] = []
     let input: string = ''
     const definition = data?.definition as OpenapiRuleDefinition
 
     switch (rule) {
+      case BranchRuleId.BLOCK_BRANCH_CREATION:
+        checked = definition?.lifecycle?.create_forbidden || false
+        break
+      case BranchRuleId.BLOCK_BRANCH_DELETION:
+        checked = definition?.lifecycle?.delete_forbidden || false
+        break
+      case BranchRuleId.BLOCK_BRANCH_UPDATE:
+        checked = (definition?.lifecycle?.update_forbidden && definition?.pullreq?.merge?.block) || false
+        break
+      case BranchRuleId.BLOCK_FORCE_PUSH:
+        checked = definition?.lifecycle?.update_force_forbidden || definition?.lifecycle?.update_forbidden || false
+        disabled = definition?.lifecycle?.update_forbidden || false
+        break
+      case BranchRuleId.REQUIRE_PULL_REQUEST:
+        checked = (definition?.lifecycle?.update_forbidden && !definition?.pullreq?.merge?.block) || false
+        disabled = (definition?.lifecycle?.update_forbidden && definition?.pullreq?.merge?.block) || false
+        break
+      case BranchRuleId.REQUIRE_CODE_REVIEW:
+        checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
+        input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
+        break
+      case BranchRuleId.REQUIRE_CODE_OWNERS:
+        checked = definition?.pullreq?.approvals?.require_code_owners || false
+        break
       case BranchRuleId.REQUIRE_LATEST_COMMIT:
         checked = definition?.pullreq?.approvals?.require_latest_commit || false
         break
@@ -60,22 +87,7 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
       case BranchRuleId.DELETE_BRANCH:
         checked = definition?.pullreq?.merge?.delete_branch || false
         break
-      case BranchRuleId.BLOCK_BRANCH_CREATION:
-        checked = definition?.lifecycle?.create_forbidden || false
-        break
-      case BranchRuleId.BLOCK_BRANCH_DELETION:
-        checked = definition?.lifecycle?.delete_forbidden || false
-        break
-      case BranchRuleId.REQUIRE_PULL_REQUEST:
-        checked = definition?.lifecycle?.update_forbidden || false
-        break
-      case BranchRuleId.REQUIRE_CODE_REVIEW:
-        checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
-        input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
-        break
-      case BranchRuleId.REQUIRE_CODE_OWNERS:
-        checked = definition?.pullreq?.approvals?.require_code_owners || false
-        break
+
       default:
         continue
     }
@@ -83,6 +95,7 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
     rules.push({
       id: rule,
       checked,
+      disabled,
       submenu,
       selectOptions,
       input
@@ -168,7 +181,14 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
       lifecycle: {
         create_forbidden: rulesMap[BranchRuleId.BLOCK_BRANCH_CREATION]?.checked || false,
         delete_forbidden: rulesMap[BranchRuleId.BLOCK_BRANCH_DELETION]?.checked || false,
-        update_forbidden: rulesMap[BranchRuleId.REQUIRE_PULL_REQUEST]?.checked || false
+        update_forbidden:
+          rulesMap[BranchRuleId.REQUIRE_PULL_REQUEST]?.checked ||
+          rulesMap[BranchRuleId.BLOCK_BRANCH_UPDATE]?.checked ||
+          false,
+        update_force_forbidden:
+          rulesMap[BranchRuleId.BLOCK_FORCE_PUSH]?.checked &&
+          !rulesMap[BranchRuleId.REQUIRE_PULL_REQUEST]?.checked &&
+          !rulesMap[BranchRuleId.BLOCK_BRANCH_UPDATE]?.checked
       },
       pullreq: {
         approvals: {
@@ -184,7 +204,8 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
         },
         merge: {
           strategies_allowed: rulesMap[BranchRuleId.MERGE]?.submenu || [],
-          delete_branch: rulesMap[BranchRuleId.DELETE_BRANCH]?.checked || false
+          delete_branch: rulesMap[BranchRuleId.DELETE_BRANCH]?.checked || false,
+          block: rulesMap[BranchRuleId.BLOCK_BRANCH_UPDATE]?.checked || false
         },
         status_checks: {
           require_identifiers: rulesMap[BranchRuleId.STATUS_CHECKS]?.selectOptions || []
@@ -199,7 +220,7 @@ export const getTotalRulesApplied = (obj: OpenapiRule) => {
   const transformRules = transformDataFromApi(obj)['rules']
 
   for (const rule of transformRules) {
-    if (rule.checked === true) {
+    if (rule.checked === true && rule.disabled === false) {
       totalRules++
     }
   }

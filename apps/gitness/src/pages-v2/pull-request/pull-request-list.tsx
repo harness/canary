@@ -104,8 +104,9 @@ export default function PullRequestListPage() {
 
   useEffect(() => {
     if (pullRequestData) {
-      setPullRequests(pullRequestData, headers)
-      setOpenClosePullRequests(pullRequestData)
+      const validPullRequests = Array.isArray(pullRequestData) ? pullRequestData.filter(pr => pr !== null) : []
+      setPullRequests(validPullRequests, headers)
+      setOpenClosePullRequests(validPullRequests)
     }
   }, [pullRequestData, headers, setPullRequests])
 
@@ -170,7 +171,7 @@ export default function PullRequestListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       onLabelClick={onLabelClick}
-      toPullRequest={(prNumber: number) => prNumber.toString()}
+      toPullRequest={({ prNumber }: { prNumber: number; repoId?: string }) => prNumber.toString()}
     />
   )
 }

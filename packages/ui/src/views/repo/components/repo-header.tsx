@@ -23,15 +23,15 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite, o
         </>
       ) : (
         <Layout.Flex gap="xs" justify="start" align="center">
-          <>
-            <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
-              {name}
-            </Text>
+          <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
+            {name}
+          </Text>
+          <Layout.Flex justify="start" align="center">
             <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} className="min-w-fit rounded-full">
               {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
             </StatusBadge>
-          </>
-          <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
+            <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
+          </Layout.Flex>
         </Layout.Flex>
       )}
     </div>

@@ -1,4 +1,14 @@
-import { Favorite, IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
+import {
+  Favorite,
+  IconV2,
+  Layout,
+  NoData,
+  SkeletonList,
+  StackedList,
+  StatusBadge,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -36,16 +46,18 @@ const Title = ({
 }) => {
   const { t } = useTranslation()
   return (
-    <div className="inline-flex items-center gap-2.5">
+    <Layout.Flex gap="xs" align="center">
       <span className="max-w-full truncate font-medium">{title}</span>
-      <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
-        {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-      </StatusBadge>
-      <Favorite
-        isFavorite={isFavorite}
-        onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite: !isFavorite })}
-      />
-    </div>
+      <Layout.Flex align="center">
+        <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
+          {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
+        </StatusBadge>
+        <Favorite
+          isFavorite={isFavorite}
+          onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite: !isFavorite })}
+        />
+      </Layout.Flex>
+    </Layout.Flex>
   )
 }
 

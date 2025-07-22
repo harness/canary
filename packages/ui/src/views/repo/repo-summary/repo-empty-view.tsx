@@ -7,6 +7,7 @@ import {
   Fieldset,
   FormSeparator,
   Input,
+  Link,
   MarkdownViewer,
   NoData,
   Spacer,
@@ -94,20 +95,9 @@ git push -u origin main
             )}
             <Text className="mt-2">
               You can also manage your git credential{' '}
-              <span
-                role="button"
-                tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
-                onClick={() => navigateToProfileKeys?.()}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    e.stopPropagation()
-                  }
-                }}
-              >
-                here
-              </span>
+              <Link to={''} tabIndex={0} onClick={() => navigateToProfileKeys?.()}>
+                here.
+              </Link>
             </Text>
           </ControlGroup>
 
@@ -119,20 +109,9 @@ git push -u origin main
             <MarkdownViewer source={getExistingRepoMarkdown()} />
             <p>
               You might need to{' '}
-              <span
-                role="button"
-                tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
-                onClick={() => navigateToProfileKeys?.()}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    e.stopPropagation()
-                  }
-                }}
-              >
+              <Link to={''} tabIndex={0} onClick={() => navigateToProfileKeys?.()}>
                 create an API token
-              </span>
+              </Link>{' '}
               In order to pull from or push into this repository.
             </p>
           </ControlGroup>

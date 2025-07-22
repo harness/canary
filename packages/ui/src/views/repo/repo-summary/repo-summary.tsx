@@ -180,7 +180,12 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonLayout>
                   {branchSelectorRenderer}
-                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="md" />
+                  <SearchFiles
+                    navigateToFile={navigateToFile}
+                    filesList={filesList}
+                    searchInputSize="md"
+                    inputContainerClassName="w-80"
+                  />
                 </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
@@ -295,7 +300,6 @@ export function RepoSummaryView({
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
-              is_public={repository?.is_public}
             />
             {renderSidebarComponent}
           </SandboxLayout.Content>

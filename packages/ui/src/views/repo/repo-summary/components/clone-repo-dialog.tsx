@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Alert, Button, CopyButton, DropdownMenu, IconV2, Tabs, TextInput } from '@/components'
+import { Alert, Button, CopyButton, DropdownMenu, IconV2, Tabs, Text, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
@@ -29,21 +29,23 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button className="items-center gap-x-2 pl-5 pr-2.5">
+        <Button>
+          <IconV2 name="copy" size="sm" />
           {t('views:repos.cloneRepo', 'Clone repository')}
-          <IconV2 name="nav-arrow-down" size="2xs" className="text-cn-foreground-primary" />
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-[328px]" align="end">
+      <DropdownMenu.Content className="w-[360px]" align="end">
         <DropdownMenu.Header>
-          <span className="inline-block text-2 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+          <Text variant="body-single-line-strong" color="foreground-1" className="p-1">
+            {t('views:repos.cloneRepo', 'Clone repository')}
+          </Text>
 
           <Tabs.Root
-            className="mb-[-11px] mt-4"
+            className="mb-[-11px] mt-3"
             value={currentTab}
             onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
           >
-            <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
+            <Tabs.List className="-mx-3 px-4" activeClassName="bg-cn-background-3" variant="overlined">
               <Tabs.Trigger value={CloneRepoTabs.HTTPS} onClick={() => setCurrentTab(CloneRepoTabs.HTTPS)}>
                 {t('views:repos.cloneHttps', 'HTTPS')}
               </Tabs.Trigger>
@@ -58,31 +60,23 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           </Tabs.Root>
         </DropdownMenu.Header>
 
-        <DropdownMenu.Slot className="p-4">
-          <div className="mb-2.5 flex items-center">
-            <span className="inline-block leading-none text-cn-foreground-2">
-              {t('views:repos.gitCloneUrl', 'Git clone URL')}
-            </span>
-          </div>
+        <DropdownMenu.Slot className="p-3">
           {currentTab === 'https' ? (
             <>
               <TextInput
                 className="truncate"
+                label={t('views:repos.gitCloneUrl', 'Git clone URL')}
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
                 suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={httpsUrl} />}
               />
-              <div className="mt-4 flex items-center">
-                <span className="leading-snug text-cn-foreground-2">
-                  {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
-                </span>
-              </div>
-              <div className="mt-4 flex items-center">
-                <Button onClick={handleCreateToken} className="w-full px-2">
-                  {t('views:repos.cloneCredential', 'Generate Clone Credential')}
-                </Button>
-              </div>
+              <Text className="mt-4" color="foreground-3">
+                {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
+              </Text>
+              <Button onClick={handleCreateToken} className="mt-4 w-full">
+                {t('views:repos.cloneCredential', 'Generate Clone Credential')}
+              </Button>
               {tokenGenerationError && (
                 <Alert.Root theme="danger" className="mt-2">
                   <Alert.Description>{tokenGenerationError}</Alert.Description>
@@ -90,7 +84,14 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               )}
             </>
           ) : (
-            <TextInput id="sshUrl" readOnly value={sshUrl} suffix={<CopyButton name={sshUrl || ''} />} />
+            <TextInput
+              className="truncate"
+              id="sshUrl"
+              label={t('views:repos.gitCloneUrl', 'Git clone URL')}
+              readOnly
+              value={sshUrl}
+              suffix={<CopyButton name={sshUrl || ''} buttonVariant="transparent" iconSize="xs" />}
+            />
           )}
         </DropdownMenu.Slot>
       </DropdownMenu.Content>

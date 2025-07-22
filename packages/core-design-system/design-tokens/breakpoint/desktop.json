@@ -14,9 +14,15 @@
     }
   },
   "container": {
-    "spacing": {
+    "spacing-px": {
       "$type": "number",
-      "$value": "{spacing.8}"
+      "$value": "{spacing.8}",
+      "$description": "Horizontal spacing for the page container."
+    },
+    "spacing-py": {
+      "$type": "number",
+      "$value": "{spacing.7}",
+      "$description": "Vertical spacing for the page container."
     }
   },
   "heading": {

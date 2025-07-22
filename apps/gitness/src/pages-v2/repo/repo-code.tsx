@@ -203,6 +203,7 @@ export const RepoCode = () => {
       pathParts={pathParts}
       loading={loading}
       files={files}
+      fullResourcePath={fullResourcePath}
       isRepoEmpty={repoData?.is_empty}
       isDir={repoDetails?.type === 'dir'}
       isShowSummary={!!repoEntryPathToFileTypeMap.size}

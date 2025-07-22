@@ -152,7 +152,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             decision === 'approved' ? (
               <IconV2 name="check-circle-solid" size="md" className="text-cn-foreground-success" />
             ) : (
-              <IconV2 name="warning-triangle" size="md" className="text-cn-foreground-danger" />
+              <IconV2 name="warning-triangle-solid" size="md" className="text-cn-foreground-danger" />
             )
         }
 

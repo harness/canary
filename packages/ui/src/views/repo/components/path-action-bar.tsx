@@ -18,6 +18,7 @@ export interface PathActionBarProps {
   parentPath?: string
   setParentPath?: (value: string) => void
   selectedRefType: BranchSelectorTab
+  fullResourcePath?: string
 }
 
 export const PathActionBar: FC<PathActionBarProps> = ({
@@ -33,7 +34,8 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   handleCancelFileEdit,
   parentPath,
   setParentPath,
-  selectedRefType
+  selectedRefType,
+  fullResourcePath
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -50,6 +52,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         fileName={fileName}
         parentPath={parentPath}
         setParentPath={setParentPath}
+        fullResourcePath={fullResourcePath}
       />
       {codeMode === CodeModes.VIEW &&
         pathNewFile &&
@@ -75,3 +78,4 @@ export const PathActionBar: FC<PathActionBarProps> = ({
     </div>
   )
 }
+PathActionBar.displayName = 'PathActionBar'

@@ -18,7 +18,7 @@ import { LineDescription, LineTitle } from './pull-request-line-title'
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'pending':
-      return <IconV2 name="clock-solid" className="text-icons-alert" />
+      return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
     case 'warning':
       return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />
     case 'error':
@@ -175,7 +175,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           latestCodeOwnerApprovalArr?.length < minReqLatestApproval
         ) {
           return {
-            icon: <IconV2 name="clock-solid" className="text-icons-alert" />,
+            icon: <IconV2 name="clock-solid" className="text-cn-foreground-warning" />,
             text: 'Latest changes are pending approval from required reviewers'
           }
         }
@@ -300,10 +300,10 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
                 <div className="flex items-center gap-x-2">
                   <IconV2
-                    name="warning-triangle"
+                    name="warning-triangle-solid"
                     className={cn({
-                      'text-icons-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
-                      'text-icons-alert': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
+                      'text-cn-foreground-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
+                      'text-cn-foreground-warning': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
                     })}
                   />
                   <span className="text-2 text-cn-foreground-1">

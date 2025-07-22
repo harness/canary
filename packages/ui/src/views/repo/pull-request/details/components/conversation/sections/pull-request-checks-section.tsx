@@ -34,12 +34,12 @@ const PullRequestCheckSection = ({
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <IconV2 name="clock-solid" className="text-icons-alert" />
+        return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
       case ExecutionState.RUNNING:
         return <IconV2 name="message" className="text-cn-foreground-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
+        return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
       default:
         return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     }

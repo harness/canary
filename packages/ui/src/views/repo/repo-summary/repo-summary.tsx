@@ -178,13 +178,13 @@ export function RepoSummaryView({
             */}
             <ListActions.Root>
               <ListActions.Left>
-                <ButtonLayout>
+                <ButtonLayout className="w-full" horizontalAlign="start">
                   {branchSelectorRenderer}
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}
                     searchInputSize="md"
-                    inputContainerClassName="w-80"
+                    inputContainerClassName="max-w-80 min-w-40 w-full"
                   />
                 </ButtonLayout>
               </ListActions.Left>

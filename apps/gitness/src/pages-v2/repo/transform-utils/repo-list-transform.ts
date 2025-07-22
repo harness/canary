@@ -12,6 +12,7 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     pulls: repo.num_pulls || 0,
     timestamp: repo.updated ? new Date(repo.updated).toISOString() : '',
     createdAt: repo.created || 0,
-    importing: !!repo.importing
+    importing: !!repo.importing,
+    favorite: repo.is_favorite
   }))
 }

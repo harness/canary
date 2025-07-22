@@ -28,7 +28,7 @@ const Title = ({
   isFavorite,
   onFavoriteToggle
 }: {
-  repoId: string
+  repoId: number
   title: string
   isPrivate: boolean
   isFavorite?: boolean
@@ -121,7 +121,7 @@ export function RepoList({
               }
               title={
                 <Title
-                  repoId={repo.identifier}
+                  repoId={repo.id}
                   title={repo.name}
                   isPrivate={repo.private}
                   isFavorite={repo.favorite}

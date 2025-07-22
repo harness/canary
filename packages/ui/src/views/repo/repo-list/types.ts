@@ -24,7 +24,7 @@ export interface RoutingProps {
 }
 
 export interface FavoriteProps {
-  onFavoriteToggle: ({ repoId, isFavorite }: { repoId: string; isFavorite: boolean }) => void
+  onFavoriteToggle: ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => void
 }
 
 /**

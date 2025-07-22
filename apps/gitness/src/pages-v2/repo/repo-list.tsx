@@ -52,7 +52,7 @@ export default function ReposListPage() {
       retry: 5
     }
   )
-  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
+  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || '25')
 
   const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
     {},
@@ -68,12 +68,11 @@ export default function ReposListPage() {
 
   useEffect(() => {
     const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
-    const perPage = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     if (repoData) {
       const transformedRepos = transformRepoList(repoData)
-      setRepositories(transformedRepos, totalItems, perPage)
+      setRepositories(transformedRepos, totalItems, PAGE_SIZE)
     } else {
-      setRepositories([], totalItems, perPage)
+      setRepositories([], totalItems, PAGE_SIZE)
     }
   }, [repoData, headers, setRepositories])
 

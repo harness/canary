@@ -1,5 +1,3 @@
-import { get } from 'lodash-es'
-
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
 import { RepositoryType } from '@harnessio/ui/views'
 
@@ -15,6 +13,6 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     timestamp: repo.updated ? new Date(repo.updated).toISOString() : '',
     createdAt: repo.created || 0,
     importing: !!repo.importing,
-    favorite: get(repo, 'is_favorite', false)
+    favorite: repo.is_favorite
   }))
 }

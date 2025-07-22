@@ -1,3 +1,5 @@
+import { cloneElement } from 'react'
+
 import {
   Button,
   ButtonLayout,
@@ -176,10 +178,10 @@ export function RepoSummaryView({
                   </>
                 )}
             */}
-            <ListActions.Root>
+            <ListActions.Root className="flex-wrap gap-y-2">
               <ListActions.Left>
-                <ButtonLayout className="w-full" horizontalAlign="start">
-                  {branchSelectorRenderer}
+                <ButtonLayout className="w-full " horizontalAlign="start">
+                  {cloneElement(branchSelectorRenderer, { className: 'w-full max-w-fit' })}
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}

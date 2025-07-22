@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 // TODO: remove this maybe , look into our own pluralize function: https://github.com/harness/canary/pull/582
 import pluralize from 'pluralize'
 
-import { TypesPullReq, TypesRepository, useChecksPullReqQuery } from '@harnessio/code-service-client'
+import { TypesPullReq, TypesRepositoryCore, useChecksPullReqQuery } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/ui/views'
 
 import { determineStatusMessage, generateStatusSummary } from '../../../pages/pull-request/utils'
@@ -21,7 +21,7 @@ export function usePRChecksDecision({
   repoMetadata,
   pullReqMetadata
 }: {
-  repoMetadata: TypesRepository | undefined
+  repoMetadata: TypesRepositoryCore | undefined
   pullReqMetadata: TypesPullReq | undefined
 }) {
   const {

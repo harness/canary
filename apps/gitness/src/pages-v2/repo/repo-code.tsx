@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
-  GitPathDetails,
   OpenapiContentInfo,
   OpenapiGetContentOutput,
   pathDetails,
+  TypesPathDetails,
   useCalculateCommitDivergenceMutation,
   useGetContentQuery
 } from '@harnessio/code-service-client'
@@ -116,7 +116,7 @@ export const RepoCode = () => {
           if (response?.details && response.details.length > 0) {
             setFiles(
               sortFilesByType(
-                response.details.map((item: GitPathDetails) => ({
+                response.details.map((item: TypesPathDetails) => ({
                   id: item?.path || '',
                   type: item?.path
                     ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))

@@ -68,7 +68,7 @@ export interface OpenapiWebhookType {
   version?: number
 }
 
-export declare type EnumWebhookParent = 'repo' | 'space'
+export declare type EnumWebhookParent = 'repo' | 'space' | 'registry'
 
 export declare type EnumWebhookExecutionResult = 'fatal_error' | 'retriable_error' | 'success' | null
 
@@ -90,6 +90,9 @@ export type EnumWebhookTrigger =
   | 'tag_created'
   | 'tag_deleted'
   | 'tag_updated'
+  | 'artifact_created'
+  | 'artifact_deleted'
+  | 'pullreq_target_branch_changed'
 
 export interface RepoWebhookListPageProps {
   useWebhookStore: () => WebhookStore

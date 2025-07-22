@@ -1,4 +1,4 @@
-import { CSSProperties, FC, Fragment, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { CopyButton, ImageCarousel } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -15,6 +15,8 @@ import { cn } from '@utils/cn'
 
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
 
+export const getIsMarkdown = (language?: string) => language === 'markdown'
+
 // TODO: add ai stuff at a later point for code suggestions
 // import type { SuggestionBlock } from 'components/SuggestionBlock/SuggestionBlock'
 // import { CodeSuggestionBlock } from './CodeSuggestionBlock'
@@ -23,20 +25,11 @@ const isHeadingElement = (tagName: string) => /^h(1|2|3|4|5|6)/.test(tagName)
 const isRelativeLink = (href: string) =>
   href && !href.startsWith('/') && !href.startsWith('#') && !/^https?:|mailto:|tel:|data:|javascript:|sms:/.test(href)
 
-interface MarkdownViewerWrapperProps {
-  children: ReactNode
-  className?: string
-}
-
-const MarkdownViewerWrapper: FC<MarkdownViewerWrapperProps> = ({ children, className }) => {
-  return <div className={cn('rounded-b-md border-x border-b p-6', className)}>{children}</div>
-}
-
-type MarkdownViewerPropsBase = {
+type MarkdownViewerProps = {
   source: string
   maxHeight?: string | number
-  withBorderWrapper?: boolean
-  borderWrapperClassName?: string
+  withBorder?: boolean
+  className?: string
   // TODO: add ai stuff at a later point for code suggestions
   suggestionBlock?: SuggestionBlock
   suggestionCheckSum?: string
@@ -45,23 +38,11 @@ type MarkdownViewerPropsBase = {
   showLineNumbers?: boolean // New prop to control line number display
 }
 
-type MarkdownViewerPropsWithWrapper = MarkdownViewerPropsBase & {
-  withBorderWrapper: true
-  borderWrapperClassName?: string
-}
-
-type MarkdownViewerPropsWithoutWrapper = MarkdownViewerPropsBase & {
-  withBorderWrapper?: false
-  borderWrapperClassName?: never
-}
-
-type MarkdownViewerProps = MarkdownViewerPropsWithWrapper | MarkdownViewerPropsWithoutWrapper
-
 export function MarkdownViewer({
   source,
   maxHeight,
-  withBorderWrapper = false,
-  borderWrapperClassName,
+  withBorder = false,
+  className,
   suggestionBlock,
   suggestionCheckSum,
   isSuggestion,
@@ -76,7 +57,6 @@ export function MarkdownViewer({
   const [initialSlide, setInitialSlide] = useState<number>(0)
 
   const styles: CSSProperties = maxHeight ? { maxHeight } : {}
-  const Wrapper = withBorderWrapper ? MarkdownViewerWrapper : Fragment
 
   const rewriteRelativeLinks = useCallback(
     (href: string) => {
@@ -172,7 +152,7 @@ export function MarkdownViewer({
   }, [interceptClickEventOnViewerContainer])
 
   return (
-    <Wrapper className={borderWrapperClassName}>
+    <div className={cn({ 'rounded-b-md border-x border-b p-6': withBorder }, className)}>
       <div ref={ref} style={styles}>
         {isSuggestion && (
           <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
@@ -278,6 +258,6 @@ export function MarkdownViewer({
           initialSlide={initialSlide}
         />
       </div>
-    </Wrapper>
+    </div>
   )
 }

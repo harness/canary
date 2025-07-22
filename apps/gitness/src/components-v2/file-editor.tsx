@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { EditViewTypeValue, FileEditorControlBar, MarkdownViewer } from '@harnessio/ui/components'
+import { EditViewTypeValue, FileEditorControlBar, getIsMarkdown, MarkdownViewer } from '@harnessio/ui/components'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -13,14 +13,7 @@ import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
-import {
-  decodeGitContent,
-  FILE_SEPERATOR,
-  filenameToLanguage,
-  getIsMarkdown,
-  GitCommitAction,
-  PLAIN_TEXT
-} from '../utils/git-utils'
+import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
 
 export interface FileEditorProps {
@@ -168,13 +161,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     switch (view) {
       case 'preview':
         if (getIsMarkdown(language)) {
-          return (
-            <MarkdownViewer
-              source={contentRevision.code}
-              withBorderWrapper
-              borderWrapperClassName="max-h-screen overflow-auto"
-            />
-          )
+          return <MarkdownViewer source={contentRevision.code} withBorder className="max-h-screen overflow-auto" />
         }
 
         return (

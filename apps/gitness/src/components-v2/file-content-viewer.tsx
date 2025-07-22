@@ -2,7 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
-import { FileViewerControlBar, MarkdownViewer, Pagination, SkeletonList, ViewTypeValue } from '@harnessio/ui/components'
+import {
+  FileViewerControlBar,
+  getIsMarkdown,
+  MarkdownViewer,
+  Pagination,
+  SkeletonList,
+  ViewTypeValue
+} from '@harnessio/ui/components'
 import { BranchSelectorTab, CommitsList, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -23,7 +30,6 @@ import {
   FILE_SEPERATOR,
   filenameToLanguage,
   formatBytes,
-  getIsMarkdown,
   GitCommitAction,
   normalizeGitRef,
   REFS_TAGS_PREFIX
@@ -136,7 +142,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         if (getIsMarkdown(language)) {
           return (
             <div className="pb-11">
-              <MarkdownViewer source={fileContent} withBorderWrapper />
+              <MarkdownViewer source={fileContent} withBorder />
             </div>
           )
         }

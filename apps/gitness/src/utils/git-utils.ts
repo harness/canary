@@ -193,5 +193,3 @@ const TRIMMED_SHA_LIMIT = 7
 export const getTrimmedSha = (sha: string): string => {
   return sha.slice(0, TRIMMED_SHA_LIMIT)
 }
-
-export const getIsMarkdown = (language?: string) => language === 'markdown'

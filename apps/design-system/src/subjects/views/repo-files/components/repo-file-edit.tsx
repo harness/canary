@@ -5,6 +5,7 @@ import { noop } from '@utils/viewUtils'
 import {
   EditViewTypeValue,
   FileEditorControlBar,
+  getIsMarkdown,
   GitCommitDialog,
   GitCommitFormType,
   MarkdownViewer
@@ -14,8 +15,6 @@ import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import { useExitConfirm } from '../hooks/use-exit-confirm'
 import { repoFilesStore } from './repo-files-store'
-
-export const getIsMarkdown = (language?: string) => language === 'markdown'
 
 export const RepoFileEdit = () => {
   const [view, setView] = useState<EditViewTypeValue>('edit')
@@ -50,11 +49,7 @@ export const RepoFileEdit = () => {
       case 'preview':
         if (getIsMarkdown(language)) {
           return (
-            <MarkdownViewer
-              source={repoFilesStore.mdFileContent}
-              withBorderWrapper
-              borderWrapperClassName="max-h-screen overflow-auto"
-            />
+            <MarkdownViewer source={repoFilesStore.mdFileContent} withBorder className="max-h-screen overflow-auto" />
           )
         }
 

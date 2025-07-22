@@ -1,12 +1,11 @@
 import { Favorite, IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
-import { noop } from 'lodash-es'
 
 import { RepositoryType } from '../repo.types'
-import { RoutingProps } from './types'
+import { FavoriteProps, RoutingProps } from './types'
 
-export interface PageProps extends Partial<RoutingProps> {
+export interface PageProps extends Partial<RoutingProps>, FavoriteProps {
   repos: RepositoryType[]
   handleResetFiltersQueryAndPages: () => void
   isDirtyList: boolean
@@ -22,7 +21,19 @@ const Stats = ({ pulls }: { pulls: number }) => (
   </div>
 )
 
-const Title = ({ title, isPrivate, isFavorite }: { title: string; isPrivate: boolean; isFavorite?: boolean }) => {
+const Title = ({
+  repoId,
+  title,
+  isPrivate,
+  isFavorite,
+  onFavoriteToggle
+}: {
+  repoId: string
+  title: string
+  isPrivate: boolean
+  isFavorite?: boolean
+  onFavoriteToggle: PageProps['onFavoriteToggle']
+}) => {
   const { t } = useTranslation()
   return (
     <div className="inline-flex items-center gap-2.5">
@@ -30,7 +41,10 @@ const Title = ({ title, isPrivate, isFavorite }: { title: string; isPrivate: boo
       <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
         {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
       </StatusBadge>
-      <Favorite isFavorite={isFavorite} onFavoriteToggle={noop} />
+      <Favorite
+        isFavorite={isFavorite}
+        onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite: !isFavorite })}
+      />
     </div>
   )
 }
@@ -42,7 +56,8 @@ export function RepoList({
   isLoading,
   toRepository,
   toCreateRepo,
-  toImportRepo
+  toImportRepo,
+  onFavoriteToggle
 }: PageProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -104,7 +119,15 @@ export function RepoList({
                   <span className="max-w-full truncate">{repo.description}</span>
                 )
               }
-              title={<Title title={repo.name} isPrivate={repo.private} isFavorite={repo.favorite} />}
+              title={
+                <Title
+                  repoId={repo.identifier}
+                  title={repo.name}
+                  isPrivate={repo.private}
+                  isFavorite={repo.favorite}
+                  onFavoriteToggle={onFavoriteToggle}
+                />
+              }
               className="flex max-w-[80%] gap-1.5 text-wrap"
             />
             {!repo.importing && (

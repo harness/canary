@@ -1,7 +1,6 @@
 import { Favorite, Layout, Skeleton, StatusBadge, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { noop } from 'lodash-es'
 
 interface RepoHeaderProps {
   name: string
@@ -9,9 +8,10 @@ interface RepoHeaderProps {
   isLoading?: boolean
   className?: string
   isFavorite?: boolean
+  onFavoriteToggle: (isFavorite: boolean) => void
 }
 
-export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite }: RepoHeaderProps) => {
+export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite, onFavoriteToggle }: RepoHeaderProps) => {
   const { t } = useTranslation()
 
   return (
@@ -31,7 +31,7 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite }:
               {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
             </StatusBadge>
           </>
-          <Favorite isFavorite={isFavorite} onFavoriteToggle={noop} />
+          <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
         </Layout.Flex>
       )}
     </div>

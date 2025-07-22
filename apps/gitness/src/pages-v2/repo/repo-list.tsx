@@ -99,6 +99,10 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
+  const onFavoriteToggle = ({ repoId, isFavorite }: { repoId: string; isFavorite: boolean }) => {
+    console.log(`Toggle favorite for repo ${repoId}: ${isFavorite}`)
+  }
+
   return (
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
@@ -112,6 +116,7 @@ export default function ReposListPage() {
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      onFavoriteToggle={onFavoriteToggle}
     />
   )
 }

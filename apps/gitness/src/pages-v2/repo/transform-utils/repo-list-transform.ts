@@ -5,6 +5,7 @@ import { RepositoryType } from '@harnessio/ui/views'
 
 export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryType[] => {
   return repoList.map(repo => ({
+    identifier: repo.identifier || '',
     id: repo.id || 0,
     name: repo.identifier || '',
     description: repo.description || '',

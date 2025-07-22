@@ -23,10 +23,14 @@ export interface RoutingProps {
   toImportMultipleRepos: () => string
 }
 
+export interface FavoriteProps {
+  onFavoriteToggle: ({ repoId, isFavorite }: { repoId: string; isFavorite: boolean }) => void
+}
+
 /**
  * RoutingProps made optional for usage in apps/design-system
  */
-export interface RepoListProps extends Partial<RoutingProps> {
+export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
   useRepoStore: () => RepoStore
   isLoading: boolean
   isError: boolean

@@ -18,6 +18,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toCreateRepo,
   toImportRepo,
   toImportMultipleRepos,
+  onFavoriteToggle,
   ...routingProps
 }) => {
   const { t } = useTranslation()
@@ -132,6 +133,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
+          onFavoriteToggle={onFavoriteToggle}
           {...routingProps}
         />
         {!!repositories?.length && (

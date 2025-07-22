@@ -18,6 +18,10 @@ const RepoLayout = () => {
   const { toRepoCommits } = useRepoCommits()
   const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef } = useGitRef()
 
+  const onFavoriteToggle = (isFavorite: boolean) => {
+    console.log(isFavorite)
+  }
+
   return (
     <>
       <RepoHeader
@@ -25,6 +29,7 @@ const RepoLayout = () => {
         isPublic={!!repoData?.is_public}
         isLoading={isLoading}
         isFavorite={get(repoData, 'is_favorite', false)}
+        onFavoriteToggle={onFavoriteToggle}
       />
       <SubHeaderWrapper>
         <RepoSubheader

@@ -14,7 +14,7 @@
     },
     "container": {
       "$type": "number",
-      "$value": "{spacing.9}"
+      "$value": "{spacing.8}"
     }
   },
   "heading": {

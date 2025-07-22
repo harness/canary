@@ -12,6 +12,7 @@ import {
   useCreateTokenMutation,
   useGetContentQuery,
   useListPathsQuery,
+  usePrCandidatesQuery,
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
@@ -83,6 +84,8 @@ export default function RepoSummaryPage() {
     useCalculateCommitDivergenceMutation({
       repo_ref: repoRef
     })
+
+  const { data: { body: prCandidateBranches } = {} } = usePrCandidatesQuery({ repo_ref: repoRef, queryParams: {} })
 
   // Navigate to default branch if no branch is selected
   useEffect(() => {
@@ -323,6 +326,7 @@ export default function RepoSummaryPage() {
         loading={isLoading}
         filesList={filesList}
         navigateToFile={navigateToFile}
+        prCandidateBranches={prCandidateBranches}
         repository={repoData}
         handleCreateToken={handleCreateToken}
         repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}

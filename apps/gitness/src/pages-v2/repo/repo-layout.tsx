@@ -1,7 +1,5 @@
 import { Outlet, useParams } from 'react-router-dom'
 
-import { set } from 'lodash-es'
-
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 

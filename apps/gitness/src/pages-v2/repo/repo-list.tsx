@@ -1,7 +1,13 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
+import {
+  createFavorite,
+  deleteFavorite,
+  useDeleteFavoriteMutation,
+  useDeleteRepositoryMutation,
+  useListReposQuery
+} from '@harnessio/code-service-client'
 import { Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -11,7 +17,6 @@ import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { useFavoriteRepository } from './hooks/useRepoMutation'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
@@ -101,22 +106,40 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
-  const { createFavorite, deleteFavorite } = useFavoriteRepository({
-    onSuccess: data => {
-      const updated =
-        repositories?.map(repo => (repo.id === data.resource_id ? { ...repo, favorite: true } : repo)) ?? []
-      setRepositories(updated, updated.length, PAGE_SIZE)
-    },
-    onMutate: variables => {
-      const updated =
-        repositories?.map(repo => (repo.id === variables.resource_id ? { ...repo, favorite: false } : repo)) ?? []
-      setRepositories(updated, updated.length, PAGE_SIZE)
-    }
-  })
-
   const onFavoriteToggle = ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
-    const mutation = isFavorite ? createFavorite : deleteFavorite
-    mutation({ resource_id: repoId })
+    if (isFavorite) {
+      createFavorite({
+        body: {
+          resource_id: repoId,
+          resource_type: 'REPOSITORY'
+        }
+      })
+        .then(() => {
+          const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: true } : repo)) ?? []
+          setRepositories(updated, updated.length, PAGE_SIZE)
+        })
+        .catch(_error => {
+          /**
+           * @TODO Add error handling
+           */
+        })
+    } else {
+      deleteFavorite({
+        body: {
+          resource_id: repoId,
+          resource_type: 'REPOSITORY'
+        }
+      })
+        .then(() => {
+          const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: false } : repo)) ?? []
+          setRepositories(updated, updated.length, PAGE_SIZE)
+        })
+        .catch(_error => {
+          /**
+           * @TODO Add error handling
+           */
+        })
+    }
   }
 
   return (

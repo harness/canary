@@ -1,5 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom'
 
+import { createFavorite, deleteFavorite } from '@harnessio/code-service-client'
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
@@ -8,32 +9,46 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { PathParams } from '../../RouteDefinitions'
-import { useFavoriteRepository } from './hooks/useRepoMutation'
 
 const RepoLayout = () => {
   const isMFE = useIsMFE()
   const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
   const { toRepoCommits } = useRepoCommits()
-  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef } = useGitRef()
-
-  const { createFavorite, deleteFavorite } = useFavoriteRepository({
-    onSuccess: () => {
-      if (repoData) {
-        repoData.is_favorite = true
-      }
-    },
-    onMutate: () => {
-      if (repoData) {
-        repoData.is_favorite = false
-      }
-    }
-  })
+  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo } = useGitRef()
 
   const onFavoriteToggle = (isFavorite: boolean) => {
-    const mutation = isFavorite ? createFavorite : deleteFavorite
-    if (!repoData?.id) return
-    mutation({ resource_id: repoData.id })
+    if (isFavorite) {
+      createFavorite({
+        body: {
+          resource_id: repoData?.id,
+          resource_type: 'REPOSITORY'
+        }
+      })
+        .then(() => {
+          refetchRepo()
+        })
+        .catch(_error => {
+          /**
+           * @TODO Add error handling
+           */
+        })
+    } else {
+      deleteFavorite({
+        body: {
+          resource_id: repoData?.id,
+          resource_type: 'REPOSITORY'
+        }
+      })
+        .then(() => {
+          refetchRepo()
+        })
+        .catch(_error => {
+          /**
+           * @TODO Add error handling
+           */
+        })
+    }
   }
 
   return (

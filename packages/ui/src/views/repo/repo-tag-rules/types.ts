@@ -61,6 +61,7 @@ export const repoTagSettingsFormSchema = z.object({
     })
   ),
   state: z.boolean(),
+  repo_owners: z.boolean().optional(),
   rules: z.array(
     z.object({
       id: z.string(),

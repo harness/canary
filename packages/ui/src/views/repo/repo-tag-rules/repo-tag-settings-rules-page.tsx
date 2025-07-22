@@ -61,6 +61,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
       description: '',
       pattern: '',
       state: true,
+      repo_owners: false,
       patterns: [],
       bypass: [],
       rules: []
@@ -91,6 +92,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
         description: presetRuleData?.description || '',
         pattern: '',
         state: presetRuleData?.state && true,
+        repo_owners: presetRuleData?.repo_owners || false,
         patterns: presetRuleData?.patterns || [],
         bypass: presetRuleData?.bypass || [],
         rules: []
@@ -154,7 +156,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
                     ? t('views:repos.updatingRule', 'Updating rule...')
                     : t('views:repos.creatingRuleButton', 'Creating rule...')}
               </Button>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" asChild>
                 <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
               </Button>
             </ButtonLayout>

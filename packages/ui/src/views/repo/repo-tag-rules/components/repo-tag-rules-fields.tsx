@@ -167,8 +167,9 @@ export const TagSettingsRuleBypassListField: FC<
     bypassOptions: PrincipalType[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
+    register: any
   }
-> = ({ bypassOptions, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+> = ({ bypassOptions, errors, setPrincipalsSearchQuery, principalsSearchQuery, register }) => {
   const { t } = useTranslation()
 
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
@@ -192,6 +193,17 @@ export const TagSettingsRuleBypassListField: FC<
           setSearchQuery={setPrincipalsSearchQuery}
           disallowCreation
           error={errors?.bypass?.message?.toString()}
+        />
+      </ControlGroup>
+
+      <ControlGroup>
+        <FormInput.Checkbox
+          {...register!('repo_owners')}
+          id="edit-permissons"
+          label={t(
+            'views:repos.editPermissionsCheckboxDescription',
+            'Allow users with edit permission on the repository to bypass'
+          )}
         />
       </ControlGroup>
     </Fieldset>

@@ -176,7 +176,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
                     ? t('views:repos.updatingRule', 'Updating rule...')
                     : t('views:repos.creatingRuleButton', 'Creating rule...')}
               </Button>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" asChild>
                 <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
               </Button>
             </ButtonLayout>

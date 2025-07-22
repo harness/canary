@@ -31,7 +31,7 @@ export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): Repo
     definition: {
       bypass: {
         user_ids: formOutput.bypass.map(it => it.id),
-        repo_owners: true
+        repo_owners: formOutput.repo_owners || false
       },
       lifecycle: {
         create_forbidden: rulesMap[TagRuleId.BLOCK_TAG_CREATION].checked,

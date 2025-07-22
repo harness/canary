@@ -105,12 +105,12 @@ export default function ReposListPage() {
   const { createFavorite, deleteFavorite } = useFavoriteRepository({
     onSuccess: data => {
       const updated =
-        repositories?.map(repo => (repo.id === data.resource_id ? { ...repo, is_favorite: true } : repo)) ?? []
+        repositories?.map(repo => (repo.id === data.resource_id ? { ...repo, favorite: true } : repo)) ?? []
       setRepositories(updated, updated.length, PAGE_SIZE)
     },
     onMutate: variables => {
       const updated =
-        repositories?.map(repo => (repo.id === variables.resource_id ? { ...repo, is_favorite: false } : repo)) ?? []
+        repositories?.map(repo => (repo.id === variables.resource_id ? { ...repo, favorite: false } : repo)) ?? []
       setRepositories(updated, updated.length, PAGE_SIZE)
     }
   })

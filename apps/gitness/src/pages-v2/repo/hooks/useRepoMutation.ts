@@ -25,21 +25,38 @@ interface UseFavoriteRepositoryProps {
 export function useFavoriteRepository({ onSuccess, onMutate }: UseFavoriteRepositoryProps) {
   const getApiPath = useAPIPath()
   const { mutate: createFavorite } = useMutation<TData, TError, TVariables>({
-    mutationFn: ({ resource_id }) =>
-      fetch(getApiPath(FAVORITE_ENDPOINT), {
+    mutationFn: async ({ resource_id }) => {
+      const res = await fetch(getApiPath(FAVORITE_ENDPOINT), {
         method: 'POST',
         body: JSON.stringify({ resource_id, resource_type: RESOURCE_TYPE })
-      }).then(res => res.json()),
-    onSuccess: data => onSuccess?.(data)
+      })
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        throw { message: errorData.message || 'Failed to favorite repository' }
+      }
+      return res.json()
+    },
+    onSuccess: data => onSuccess?.(data),
+    onError: (_error: TError) => {
+      /**
+       * @TODO: Add error handling here
+       */
+    }
   })
 
   const { mutate: deleteFavorite } = useMutation<unknown, TError, TVariables>({
-    mutationFn: ({ resource_id }) =>
-      fetch(getApiPath(FAVORITE_ENDPOINT), {
+    mutationFn: async ({ resource_id }) => {
+      await fetch(getApiPath(FAVORITE_ENDPOINT), {
         method: 'DELETE',
         body: JSON.stringify({ resource_id, resource_type: RESOURCE_TYPE })
-      }).then(res => res.json()),
-    onMutate: variables => onMutate?.(variables)
+      }).catch(() => ({}))
+    },
+    onMutate: variables => onMutate?.(variables),
+    onError: (_error: TError) => {
+      /**
+       * @TODO: Add error handling here
+       */
+    }
   })
 
   return { createFavorite, deleteFavorite }

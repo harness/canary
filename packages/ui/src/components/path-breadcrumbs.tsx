@@ -71,13 +71,9 @@ export interface PathBreadcrumbsInputProps {
 export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
 
 export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...props }: PathBreadcrumbsProps) => {
-  const { Link, useParams } = useRouterContext()
+  const { Link } = useRouterContext()
 
   const length = items.length
-
-  const params = useParams()
-
-  console.log('params', params)
 
   const renderInput = () => {
     const { changeFileName, gitRefName, fileName, handleOnBlur, parentPath, setParentPath } = props
@@ -100,52 +96,50 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...pro
   }
 
   return (
-    <>
-      <Breadcrumb.Root>
-        <Breadcrumb.List>
-          {items.map(({ parentPath, path }, idx) => {
-            const isLast = length === idx + 1
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        {items.map(({ parentPath, path }, idx) => {
+          const isLast = length === idx + 1
 
-            if (isLast) {
-              return (
-                <Breadcrumb.Item key={idx}>
-                  {isEdit && length === 1 ? (
-                    <>
-                      <Breadcrumb.Page>{path}</Breadcrumb.Page>
-                      <Breadcrumb.Separator />
-                      {renderInput()}
-                    </>
-                  ) : isEdit ? (
-                    renderInput()
-                  ) : (
-                    <Breadcrumb.Page>{path}</Breadcrumb.Page>
-                  )}
-                </Breadcrumb.Item>
-              )
-            }
-
+          if (isLast) {
             return (
-              <Fragment key={idx}>
-                <Breadcrumb.Item>
-                  <Breadcrumb.Link asChild>
-                    <Link to={parentPath}>{path}</Link>
-                  </Breadcrumb.Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Separator />
-              </Fragment>
+              <Breadcrumb.Item key={idx}>
+                {isEdit && length === 1 ? (
+                  <>
+                    <Breadcrumb.Page>{path}</Breadcrumb.Page>
+                    <Breadcrumb.Separator />
+                    {renderInput()}
+                  </>
+                ) : isEdit ? (
+                  renderInput()
+                ) : (
+                  <Breadcrumb.Page>{path}</Breadcrumb.Page>
+                )}
+              </Breadcrumb.Item>
             )
-          })}
+          }
 
-          {isNew && (
-            <>
-              {!!items.length && <Breadcrumb.Separator />}
-              <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>
-            </>
-          )}
-        </Breadcrumb.List>
-        <Breadcrumb.Copy name={fullResourcePath ?? ''} />
-      </Breadcrumb.Root>
-    </>
+          return (
+            <Fragment key={idx}>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link asChild>
+                  <Link to={parentPath}>{path}</Link>
+                </Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+            </Fragment>
+          )
+        })}
+
+        {isNew && (
+          <>
+            {!!items.length && <Breadcrumb.Separator />}
+            <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>
+          </>
+        )}
+      </Breadcrumb.List>
+      <Breadcrumb.Copy name={fullResourcePath ?? ''} />
+    </Breadcrumb.Root>
   )
 }
 

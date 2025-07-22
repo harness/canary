@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Button, DropdownMenu, IconV2, StatusBadge, Link as StyledLink } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { BranchSelectorListItem, BranchSelectorTab } from '@/views'
+import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
@@ -38,14 +38,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           {hasAhead && (
             <>
               <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
-                {ahead} commits ahead of
+                {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
             <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
-              {behind} commits behind
+              {behind} {easyPluralize(behind, 'commit', 'commits')} behind
             </StyledLink>
           )}
           {!hasAhead && !hasBehind && 'up to date with'}
@@ -79,7 +79,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               </div>
               <div>
                 <span className="text-2 leading-snug text-cn-foreground-1">
-                  This branch is {ahead} commits ahead of{' '}
+                  This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
                 </span>
                 <StatusBadge className="mt-1" variant="secondary" theme="muted" size="sm">
                   <IconV2 name="git-branch" size="xs" />
@@ -112,3 +112,5 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
     </div>
   )
 }
+
+BranchInfoBar.displayName = 'BranchInfoBar'

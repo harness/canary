@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import pluralize from 'pluralize'
 
-import { TypesPullReq, TypesRepository, useChecksPullReqQuery } from '@harnessio/code-service-client'
+import { TypesPullReq, TypesRepositoryCore, useChecksPullReqQuery } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/ui/views'
 
 import { determineStatusMessage, generateStatusSummary } from '../utils'
@@ -20,7 +20,7 @@ export function usePRChecksDecision({
   repoMetadata,
   pullReqMetadata
 }: {
-  repoMetadata: TypesRepository | undefined
+  repoMetadata: TypesRepositoryCore | undefined
   pullReqMetadata: TypesPullReq | undefined
 }) {
   const {

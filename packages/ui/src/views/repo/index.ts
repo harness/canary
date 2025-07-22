@@ -37,6 +37,7 @@ export * from '@views/repo/repo-tags/types'
 // repo settings
 export * from '@views/repo/repo-settings/repo-settings-layout'
 export * from '@views/repo/repo-settings/repo-settings-general-page'
+export * from '@views/repo/repo-settings/repo-settings-rules-page'
 export * from '@views/repo/repo-settings/types'
 
 // repo import

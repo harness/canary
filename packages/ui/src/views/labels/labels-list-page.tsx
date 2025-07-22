@@ -91,16 +91,14 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         {isLoading && <SkeletonList className="mb-8 mt-5" />}
 
         {!isLoading && (
-          <div className="mb-8 mt-5">
-            <LabelsListView
-              {...labelsListViewProps}
-              labels={spaceLabels}
-              labelContext={{ space: space_ref, repo: repo_ref }}
-              handleResetQueryAndPages={handleResetQueryAndPages}
-              searchQuery={searchQuery}
-              values={spaceValues}
-            />
-          </div>
+          <LabelsListView
+            {...labelsListViewProps}
+            labels={spaceLabels}
+            labelContext={{ space: space_ref, repo: repo_ref }}
+            handleResetQueryAndPages={handleResetQueryAndPages}
+            searchQuery={searchQuery}
+            values={spaceValues}
+          />
         )}
 
         <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />

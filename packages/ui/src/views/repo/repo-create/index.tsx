@@ -113,9 +113,11 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
+      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-1">
         <Spacer size={5} />
-        <Text variant="heading-section">{t('views:repos.createNewRepo', 'Create a new repository')}</Text>
+        <Text className="text-cn-foreground-1" variant="heading-section">
+          {t('views:repos.createNewRepo', 'Create a new repository')}
+        </Text>
         <Spacer size={2.5} />
         <Text className="max-w-[476px]">
           {t(

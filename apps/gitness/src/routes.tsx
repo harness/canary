@@ -52,6 +52,7 @@ import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
+import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-rules-list-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
@@ -495,7 +496,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 children: [
                   {
                     index: true,
-                    element: <RepoSettingsGeneralPageContainer />,
+                    element: <RepoSettingsRulesListContainer />,
                     handle: {
                       pageTitle: Page.Branch_Rules
                     }
@@ -504,7 +505,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create',
                     element: <RepoBranchSettingsRulesPageContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a rule</span>
+                      breadcrumb: () => <span>Create a rule</span>,
+                      routeName: RouteConstants.toRepoBranchRuleCreate
                     }
                   },
                   {

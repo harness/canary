@@ -70,10 +70,10 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'ml-3 text-icons-alert'
+                            ? 'ml-3 text-cn-foreground-warning'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'ml-3 text-icons-warning'
-                              : 'ml-3 text-icons-danger'
+                              ? 'ml-3 text-cn-foreground-warning'
+                              : 'ml-3 text-cn-foreground-danger'
                         : 'text-icons-9'
                     }
                     name={
@@ -82,7 +82,7 @@ export const Summary = ({
                           ? file.type === SummaryItemType.File
                             ? 'page'
                             : 'folder'
-                          : 'warning-triangle'
+                          : 'warning-triangle-solid'
                         : file.type === SummaryItemType.File
                           ? 'page'
                           : 'folder'

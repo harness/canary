@@ -120,7 +120,7 @@ const PullRequestMergeSection = ({
                 }
                 icon={
                   unchecked ? (
-                    <IconV2 name="clock" className="text-icons-alert" />
+                    <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
                   ) : (
                     <IconV2
                       className={mergeable ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}

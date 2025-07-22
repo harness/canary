@@ -17,7 +17,7 @@ export function WebhookSettingsLayout() {
   const { t } = useTranslation()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={100} sidebarViewportClassName="pt-7">
+    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={116} sidebarViewportClassName="pt-7">
       <Outlet />
     </ContentLayoutWithSidebar>
   )

@@ -38,7 +38,7 @@ export const RepoSubheader = ({
   return (
     <SandboxLayout.SubHeader className={className}>
       <Tabs.NavRoot>
-        <Tabs.List className="border-b border-cn-borders-3 px-6">
+        <Tabs.List className="px-6">
           <Tabs.Trigger value={summaryPath || RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
           <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
           {showPipelinesTab && (

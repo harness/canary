@@ -12,24 +12,23 @@ import { SkeletonForm } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
-  BranchRulesActionType,
-  getBranchRules,
-  MergeStrategy,
+  getTagRules,
   NotFoundPage,
-  RepoBranchSettingsFormFields,
-  RepoBranchSettingsRulesPage
+  RepoTagSettingsFormFields,
+  RepoTagSettingsRulesPage,
+  TagRulesActionType
 } from '@harnessio/ui/views'
 
-import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { PathParams } from '../../RouteDefinitions'
-import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
-import { useBranchRulesStore } from './stores/repo-branch-rules-store'
-import { useRepoRulesStore } from './stores/repo-settings-store'
+import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'
+import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../../framework/hooks/useMFEContext'
+import { PathParams } from '../../../RouteDefinitions'
+import { transformFormOutput } from '../../../utils/repo-tag-rules-utils'
+import { useRepoRulesStore } from '../stores/repo-settings-store'
+import { useTagRulesStore } from '../stores/repo-tags-rules-store'
 
-export const RepoBranchSettingsRulesPageContainer = () => {
+export const RepoTagSettingsRulesPageContainer = () => {
   const { t } = useTranslation()
   const routes = useRoutes()
   const navigate = useNavigate()
@@ -40,14 +39,14 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
-  const { dispatch, resetRules } = useBranchRulesStore()
+  const { dispatch, resetRules } = useTagRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
     scope: { accountId }
   } = useMFEContext()
 
-  const branchRules = useMemo(() => {
-    return getBranchRules(t)
+  const tagRules = useMemo(() => {
+    return getTagRules(t)
   }, [t])
 
   /**
@@ -111,7 +110,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   )
 
-  const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
+  const handleRuleUpdate = (data: RepoTagSettingsFormFields) => {
     const formattedData = transformFormOutput(data)
 
     if (identifier) {
@@ -128,51 +127,33 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   }
 
   const handleCheckboxChange = (ruleId: string, checked: boolean) => {
-    dispatch({ type: BranchRulesActionType.TOGGLE_RULE, ruleId, checked })
-  }
-
-  const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
-    dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
-  }
-
-  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string[]) => {
-    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
-  }
-
-  const handleInputChange = (ruleId: string, value: string) => {
-    dispatch({ type: BranchRulesActionType.SET_INPUT_VALUE, ruleId, value })
+    dispatch({ type: TagRulesActionType.TOGGLE_RULE, ruleId, checked })
   }
 
   const handleInitialRules = useCallback(
-    (presetRuleData: RepoBranchSettingsFormFields | null) => {
+    (presetRuleData: RepoTagSettingsFormFields | null) => {
       if (!presetRuleData) {
         dispatch({
-          type: BranchRulesActionType.SET_INITIAL_RULES,
-          payload: branchRules.map(rule => ({
+          type: TagRulesActionType.SET_INITIAL_RULES,
+          payload: tagRules.map(rule => ({
             id: rule.id,
             checked: false,
-            disabled: false,
-            submenu: [],
-            selectOptions: [],
-            input: ''
+            disabled: false
           }))
         })
         return
       }
 
       dispatch({
-        type: BranchRulesActionType.SET_INITIAL_RULES,
+        type: TagRulesActionType.SET_INITIAL_RULES,
         payload: presetRuleData.rules.map(rule => ({
           id: rule.id,
           checked: rule.checked || false,
-          disabled: rule.disabled || false,
-          submenu: (rule.submenu || []) as MergeStrategy[],
-          selectOptions: rule.selectOptions || [],
-          input: rule.input || ''
+          disabled: rule.disabled || false
         }))
       })
     },
-    [branchRules, dispatch]
+    [tagRules, dispatch]
   )
 
   useEffect(() => {
@@ -209,16 +190,13 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   }
 
   return (
-    <RepoBranchSettingsRulesPage
+    <RepoTagSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
       apiErrors={errors}
       isLoading={addingRule || updatingRule}
       useRepoRulesStore={useRepoRulesStore}
-      useBranchRulesStore={useBranchRulesStore}
+      useTagRulesStore={useTagRulesStore}
       handleCheckboxChange={handleCheckboxChange}
-      handleSubmenuChange={handleSubmenuChange}
-      handleSelectChangeForRule={handleSelectChangeForRule}
-      handleInputChange={handleInputChange}
       handleInitialRules={handleInitialRules}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}

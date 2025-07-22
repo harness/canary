@@ -27,7 +27,7 @@ const extractTagRules = (data: RepoRuleGetOkResponse): TagRule[] => {
         checked = definition?.lifecycle?.delete_forbidden || false
         break
       case TagRuleId.BLOCK_TAG_UPDATE:
-        checked = (definition?.lifecycle?.update_forbidden && definition?.pullreq?.merge?.block) || false
+        checked = (definition?.lifecycle?.update_force_forbidden && definition?.pullreq?.merge?.block) || false
         break
       default:
         continue

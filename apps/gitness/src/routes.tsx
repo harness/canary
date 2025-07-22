@@ -40,7 +40,6 @@ import RepoPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoLabelFormContainer } from './pages-v2/repo/labels/label-form-container'
 import { RepoLabelsList } from './pages-v2/repo/labels/labels-list-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
-import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitDetailsPage from './pages-v2/repo/repo-commit-details'
 import { CommitDiffContainer } from './pages-v2/repo/repo-commit-details-diff'
@@ -55,8 +54,10 @@ import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-
 import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-rules-list-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
-import { RepoTagSettingsRulesPageContainer } from './pages-v2/repo/repo-tag-rules-container'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
+import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/rules/repo-branch-rules-container'
+import { RepoTagSettingsRulesPageContainer } from './pages-v2/repo/rules/repo-tag-rules-container'
+import RepoRulesContainer from './pages-v2/repo/rules/repo-rules-container'
 import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
@@ -520,7 +521,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   },
                   {
                     path: ':identifier',
-                    element: <RepoBranchSettingsRulesPageContainer />,
+                    element: <RepoRulesContainer />,
                     handle: {
                       breadcrumb: ({ identifier }: { identifier: string }) => <span>{identifier}</span>,
                       routeName: RouteConstants.toRepoBranchRule

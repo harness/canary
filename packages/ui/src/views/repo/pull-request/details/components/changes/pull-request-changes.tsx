@@ -140,7 +140,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
           >
             {text}
           </Link>
-          <CopyButton name={text} className="size-6" color="gray" />
+          <CopyButton name={text} size="xs" color="gray" />
         </div>
 
         <div className="flex items-center gap-x-1">

@@ -71,7 +71,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
-                suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={httpsUrl} />}
+                suffix={<CopyButton name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
                 <span className="leading-snug text-cn-foreground-2">

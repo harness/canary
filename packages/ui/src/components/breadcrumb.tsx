@@ -1,9 +1,10 @@
-import { ComponentProps, ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
+import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { CopyButton } from './copy-button'
 import { IconV2 } from './icon-v2'
 
 const breadcrumbVariants = cva('cn-breadcrumb', {
@@ -86,12 +87,20 @@ const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) =>
 )
 BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'
 
+type BreadcrumbCopyProps = ComponentPropsWithRef<typeof CopyButton>
+
+const BreadcrumbCopy = ({ className, ...props }: BreadcrumbCopyProps) => (
+  <CopyButton size="xs" iconSize="xs" className={cn('cn-breadcrumb-copy', className)} {...props} />
+)
+BreadcrumbCopy.displayName = 'BreadcrumbCopy'
+
 const Breadcrumb = {
   Root: BreadcrumbRoot,
   List: BreadcrumbList,
   Item: BreadcrumbItem,
   Link: BreadcrumbLink,
   Page: BreadcrumbPage,
+  Copy: BreadcrumbCopy,
   Separator: BreadcrumbSeparator,
   Ellipsis: BreadcrumbEllipsis
 }

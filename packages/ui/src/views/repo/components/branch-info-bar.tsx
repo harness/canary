@@ -112,3 +112,5 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
     </div>
   )
 }
+
+BranchInfoBar.displayName = 'BranchInfoBar'

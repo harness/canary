@@ -37,6 +37,7 @@ interface RepoFilesProps {
   repoId: string
   spaceId: string
   selectedRefType: BranchSelectorTab
+  fullResourcePath?: string
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -59,7 +60,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   selectedBranchTag,
   repoId,
   spaceId,
-  selectedRefType
+  selectedRefType,
+  fullResourcePath
 }) => {
   const { t } = useTranslation()
 
@@ -154,6 +156,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             pathNewFile={pathNewFile}
             pathUploadFiles={pathUploadFiles}
             selectedRefType={selectedRefType}
+            fullResourcePath={fullResourcePath}
           />
         )}
         {content}
@@ -161,3 +164,5 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     </SandboxLayout.Main>
   )
 }
+
+RepoFiles.displayName = 'RepoFiles'

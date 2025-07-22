@@ -36,6 +36,10 @@ export default {
     gap: 'var(--cn-spacing-1)'
   },
 
+  '.cn-breadcrumb-copy': {
+    marginLeft: 'var(--cn-spacing-1)'
+  },
+
   '.cn-breadcrumb-item': {
     '@apply inline-flex items-center': '',
     '&:hover': {

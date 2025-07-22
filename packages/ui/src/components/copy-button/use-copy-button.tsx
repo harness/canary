@@ -4,6 +4,7 @@ import { ButtonProps, IconPropsV2, IconV2 } from '@/components'
 import { cva, VariantProps } from 'class-variance-authority'
 import copy from 'clipboard-copy'
 
+// TODO: Design system: Update colors
 const copyIconVariants = cva('transition-colors duration-200', {
   variants: {
     color: {

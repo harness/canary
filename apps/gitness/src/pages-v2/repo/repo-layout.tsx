@@ -1,6 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom'
 
-import { get } from 'lodash-es'
+import { set } from 'lodash-es'
 
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
@@ -10,6 +10,7 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { PathParams } from '../../RouteDefinitions'
+import { useFavoriteRepository } from './hooks/useRepoMutation'
 
 const RepoLayout = () => {
   const isMFE = useIsMFE()
@@ -18,8 +19,23 @@ const RepoLayout = () => {
   const { toRepoCommits } = useRepoCommits()
   const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef } = useGitRef()
 
+  const { createFavorite, deleteFavorite } = useFavoriteRepository({
+    onSuccess: () => {
+      if (repoData) {
+        repoData.is_favorite = true
+      }
+    },
+    onMutate: () => {
+      if (repoData) {
+        repoData.is_favorite = false
+      }
+    }
+  })
+
   const onFavoriteToggle = (isFavorite: boolean) => {
-    console.log(isFavorite)
+    const mutation = isFavorite ? createFavorite : deleteFavorite
+    if (!repoData?.id) return
+    mutation({ resource_id: repoData.id })
   }
 
   return (
@@ -28,7 +44,7 @@ const RepoLayout = () => {
         name={repoData?.identifier ?? ''}
         isPublic={!!repoData?.is_public}
         isLoading={isLoading}
-        isFavorite={get(repoData, 'is_favorite', false)}
+        isFavorite={repoData?.is_favorite}
         onFavoriteToggle={onFavoriteToggle}
       />
       <SubHeaderWrapper>

@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
+import { IProjectRulesStore, IRepoStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -15,8 +15,6 @@ import {
   TagSettingsRuleToggleField
 } from './components/repo-tag-rules-fields'
 import { ITagRulesStore, RepoTagSettingsFormFields, repoTagSettingsFormSchema } from './types'
-
-// import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
 
 type TagSettingsErrors = {
   principals: string | null
@@ -118,7 +116,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
     <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
       <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {presetRuleData
-          ? t('views:repos.updateRule', 'Update rule')
+          ? t('views:repos.updateTagRule', 'Update tag rule')
           : t('views:repos.CreateTagRule', 'Create a tag rule')}
       </Text>
 

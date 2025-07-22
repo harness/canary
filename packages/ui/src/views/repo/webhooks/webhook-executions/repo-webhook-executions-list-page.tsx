@@ -31,7 +31,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   return (
     <SandboxLayout.Main className="mx-0">
       <SandboxLayout.Content className="pl-0">
-        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-4">
+        <Text as="h1" variant="heading-section" className="mb-4">
           Order Status Update Webhook
         </Text>
         <Text>
@@ -39,7 +39,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           real-time tracking.
         </Text>
         <FormSeparator className="my-6" />
-        <Text as="h2" variant="heading-subsection" color="foreground-1" className="mb-4">
+        <Text as="h2" variant="heading-subsection" className="mb-4">
           Executions
         </Text>
         {isLoading ? (

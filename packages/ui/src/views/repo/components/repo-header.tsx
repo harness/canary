@@ -23,7 +23,7 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite, o
         </>
       ) : (
         <Layout.Flex gap="xs" justify="start" align="center">
-          <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
+          <Text className="truncate" variant="heading-hero" as="h2">
             {name}
           </Text>
           <Layout.Flex justify="start" align="center">

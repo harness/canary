@@ -25,7 +25,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
       ) : null}
       <Layout.Horizontal gap="xs" align="center">
         {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size="lg" />}
-        <Text as="h1" variant="heading-section" color="foreground-1">
+        <Text as="h1" variant="heading-section">
           {connectorDetails.name}
         </Text>
       </Layout.Horizontal>

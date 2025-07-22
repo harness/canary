@@ -181,7 +181,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
+      <Text as="h1" variant="heading-section" className="mb-10">
         {t('views:profileSettings.accountSettings', 'Account settings')}
       </Text>
 

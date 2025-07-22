@@ -43,7 +43,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <Text as="h1" variant="heading-section" color="foreground-1">
+      <Text as="h1" variant="heading-section">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </Text>
       <Spacer size={10} />

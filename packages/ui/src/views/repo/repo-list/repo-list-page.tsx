@@ -82,7 +82,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <Text variant="heading-section" as="h1" color="foreground-1">
+              <Text variant="heading-section" as="h1">
                 {t('views:repos.repositories', 'Repositories')}
               </Text>
             </div>

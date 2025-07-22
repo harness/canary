@@ -47,7 +47,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
       <SandboxLayout.Content>
         {pipelines && pipelines.length > 0 && (
           <>
-            <Text as="h1" variant="heading-section" color="foreground-1">
+            <Text as="h1" variant="heading-section">
               Pipelines
             </Text>
             <Spacer size={6} />

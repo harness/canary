@@ -58,107 +58,107 @@ The default variant is `body-normal`, which renders as a `<p>` element. Other va
 <DocsPage.ComponentExample
   client:only
   code={`<div className="grid gap-4">
-    <Text as="h3" variant="heading-section" color="foreground-1">Heading variants:</Text>
+    <Text as="h3" variant="heading-section">Heading variants:</Text>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-hero:</Text>
+        <Text variant="heading-base" color="foreground-2" className="underline mb-1">heading-hero:</Text>
         <Text variant="heading-hero">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-section:</Text>
+        <Text variant="heading-base" color="foreground-2" className="underline mb-1">heading-section:</Text>
         <Text variant="heading-section">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-subsection:</Text>
+        <Text variant="heading-base" color="foreground-2" className="underline mb-1">heading-subsection:</Text>
         <Text variant="heading-subsection">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-base:</Text>
+        <Text variant="heading-base" color="foreground-2" className="underline mb-1">heading-base:</Text>
         <Text variant="heading-base">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">heading-small:</Text>
+        <Text variant="heading-base" color="foreground-2" className="underline mb-1">heading-small:</Text>
         <Text variant="heading-small">dummyText</Text>
     </div>
 
     <hr />
 
-    <Text as="h3" variant="heading-section" color="foreground-1">Body variants:</Text>
+    <Text as="h3" variant="heading-section">Body variants:</Text>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-normal:</Text>
+        <Text variant="heading-base" className="underline mb-1">body-normal:</Text>
         <Text variant="body-normal">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-single-line-normal:</Text>
+        <Text variant="heading-base" className="underline mb-1">body-single-line-normal:</Text>
         <Text variant="body-single-line-normal">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-strong:</Text>
+        <Text variant="heading-base" className="underline mb-1">body-strong:</Text>
         <Text variant="body-strong">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-single-line-strong:</Text>
+        <Text variant="heading-base" className="underline mb-1">body-single-line-strong:</Text>
         <Text variant="body-single-line-strong">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">body-code:</Text>
+        <Text variant="heading-base" className="underline mb-1">body-code:</Text>
         <Text variant="body-code" wrap="wrap">dummyText</Text>
     </div>
 
     <hr />
 
-    <Text as="h3" variant="heading-section" color="foreground-1">Caption variants</Text>
+    <Text as="h3" variant="heading-section">Caption variants</Text>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-normal:</Text>
+        <Text variant="heading-base" className="underline mb-1">caption-normal:</Text>
         <Text variant="caption-normal">dummyText</Text>
 
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-soft:</Text>
+        <Text variant="heading-base" className="underline mb-1">caption-soft:</Text>
         <Text variant="caption-soft">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-single-line-normal:</Text>
+        <Text variant="heading-base" className="underline mb-1">caption-single-line-normal:</Text>
         <Text variant="caption-single-line-normal">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">caption-single-line-soft:</Text>
+        <Text variant="heading-base" className="underline mb-1">caption-single-line-soft:</Text>
         <Text variant="caption-single-line-soft">dummyText</Text>
     </div>
 
     <hr />
 
-    {/* <Text as="h3" variant="heading-section" color="foreground-1">Colors</Text>
+    {/* <Text as="h3" variant="heading-section">Colors</Text>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">inherit:</Text>
+        <Text variant="heading-base" className="underline mb-1">inherit:</Text>
         <Text color="inherit">dummyText</Text>
 
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-1:</Text>
+        <Text variant="heading-base" className="underline mb-1">foreground-1:</Text>
         <Text color="foreground-1">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-2:</Text>
+        <Text variant="heading-base" className="underline mb-1">foreground-2:</Text>
         <Text color="foreground-2">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-3:</Text>
+        <Text variant="heading-base" className="underline mb-1">foreground-3:</Text>
         <Text color="foreground-3">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">state-disabled:</Text>
+        <Text variant="heading-base" className="underline mb-1">state-disabled:</Text>
         <Text color="state-disabled">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">success:</Text>
+        <Text variant="heading-base" className="underline mb-1">success:</Text>
         <Text color="success">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">warning:</Text>
+        <Text variant="heading-base" className="underline mb-1">warning:</Text>
         <Text color="warning">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">danger:</Text>
+        <Text variant="heading-base" className="underline mb-1">danger:</Text>
         <Text color="danger">dummyText</Text>
     </div> */}
 
@@ -173,35 +173,35 @@ The `Text` component supports various color options to enhance visibility and co
   client:only
   code={`<div className="grid gap-4">
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">inherit:</Text>
+        <Text variant="heading-base" className="underline mb-1">inherit:</Text>
         <Text color="inherit">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-1:</Text>
+        <Text variant="heading-base" className="underline mb-1">foreground-1:</Text>
         <Text color="foreground-1">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-2:</Text>
+        <Text variant="heading-base" className="underline mb-1">foreground-2:</Text>
         <Text color="foreground-2">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">foreground-3:</Text>
+        <Text variant="heading-base" className="underline mb-1">foreground-3:</Text>
         <Text color="foreground-3">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">state-disabled:</Text>
+        <Text variant="heading-base" className="underline mb-1">state-disabled:</Text>
         <Text color="state-disabled">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">success:</Text>
+        <Text variant="heading-base" className="underline mb-1">success:</Text>
         <Text color="success">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">warning:</Text>
+        <Text variant="heading-base" className="underline mb-1">warning:</Text>
         <Text color="warning">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">danger:</Text>
+        <Text variant="heading-base" className="underline mb-1">danger:</Text>
         <Text color="danger">dummyText</Text>
     </div>
 
@@ -214,19 +214,19 @@ The `Text` component supports various color options to enhance visibility and co
   client:only
   code={`<div className="grid gap-4">
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
+        <Text variant="heading-base" className="underline mb-1">default:</Text>
         <Text>dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">left:</Text>
+        <Text variant="heading-base" className="underline mb-1">left:</Text>
         <Text align="left">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">center:</Text>
+        <Text variant="heading-base" className="underline mb-1">center:</Text>
         <Text align="center">dummyText</Text>
     </div>
     <div>
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">right:</Text>
+        <Text variant="heading-base" className="underline mb-1">right:</Text>
         <Text align="right">dummyText</Text>
     </div>
 </div>`.replaceAll(
@@ -241,19 +241,19 @@ The `Text` component supports various color options to enhance visibility and co
   client:only
   code={`<div className="grid gap-4">
     <div className="max-w-[400px]">
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">wrap:</Text>
+        <Text variant="heading-base" className="underline mb-1">wrap:</Text>
         <Text wrap="wrap">dummyText</Text>
     </div>
     <div className="max-w-[400px]">
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">nowrap:</Text>
+        <Text variant="heading-base" className="underline mb-1">nowrap:</Text>
         <Text wrap="nowrap">dummyText</Text>
     </div>
     <div className="max-w-[400px]">
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">pretty:</Text>
+        <Text variant="heading-base" className="underline mb-1">pretty:</Text>
         <Text wrap="pretty">dummyText</Text>
     </div>
     <div className="max-w-[400px]">
-        <Text variant="heading-base" color="foreground-1" className="underline mb-1">balance:</Text>
+        <Text variant="heading-base" className="underline mb-1">balance:</Text>
         <Text wrap="balance">dummyText</Text>
     </div>
 </div>`.replaceAll(

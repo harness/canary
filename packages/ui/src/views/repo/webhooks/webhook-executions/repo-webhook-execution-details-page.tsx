@@ -86,9 +86,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
       <SandboxLayout.Content className="pl-0">
         <ListActions.Root>
           <ListActions.Left>
-            <Text variant="heading-section" color="foreground-1">
-              #{executionId}
-            </Text>
+            <Text variant="heading-section">#{executionId}</Text>
             <StatusBadge
               variant="status"
               theme={

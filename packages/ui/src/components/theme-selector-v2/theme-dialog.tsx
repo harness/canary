@@ -72,9 +72,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         <Dialog.Body>
           <div className="mt-1 flex flex-col gap-y-5">
             <div className="flex flex-col">
-              <Text variant="heading-base" color="foreground-1">
-                Mode
-              </Text>
+              <Text variant="heading-base">Mode</Text>
               <Text className="mt-1.5" color="foreground-3">
                 Choose Dark mode for low light or Light mode for bright spaces.
               </Text>
@@ -129,9 +127,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 {/* Contrast */}
                 <div className="grid grid-cols-[246px_1fr] gap-x-8">
                   <div>
-                    <Text variant="heading-base" color="foreground-1">
-                      Contrast
-                    </Text>
+                    <Text variant="heading-base">Contrast</Text>
                     <Text className="mt-1.5" color="foreground-3">
                       High contrast improves readability, Dimmer mode reduces glare.
                     </Text>
@@ -150,9 +146,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 {/* Color Adjustment */}
                 <div className="grid grid-cols-[246px_1fr] gap-x-8">
                   <div>
-                    <Text variant="heading-base" color="foreground-1">
-                      Color adjustment
-                    </Text>
+                    <Text variant="heading-base">Color adjustment</Text>
                     <Text className="mt-1.5" color="foreground-3">
                       Adjust colors for different types of color blindness.
                     </Text>
@@ -174,9 +168,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     <Separator className="h-px bg-cn-background-2" />
                     <div className="grid grid-cols-[246px_1fr] gap-x-8">
                       <div>
-                        <Text variant="heading-base" color="foreground-1">
-                          Accent color
-                        </Text>
+                        <Text variant="heading-base">Accent color</Text>
                         <Text className="mt-1.5" color="foreground-3">
                           Select your application accent color.
                         </Text>
@@ -213,9 +205,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     <Separator className="h-px bg-cn-background-2" />
                     <div className="grid grid-cols-[246px_1fr] gap-x-8">
                       <div>
-                        <Text variant="heading-base" color="foreground-1">
-                          Gray color
-                        </Text>
+                        <Text variant="heading-base">Gray color</Text>
                         <Text className="mt-1.5" color="foreground-3">
                           Select your application gray color.
                         </Text>

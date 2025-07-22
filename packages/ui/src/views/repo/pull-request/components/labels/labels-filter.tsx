@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { SearchInput } from '@components/inputs'
-import { ILabelType, LabelType, LabelValueType } from '@views/labels'
+import { ILabelType, LabelValueType } from '@views/labels'
 import { LabelMarker } from '@views/labels/components/label-marker'
 
 export type LabelsValue = Record<string, true | string>
@@ -47,7 +47,7 @@ export function LabelsFilter({
       />
       {!isLabelsLoading &&
         labelOptions.map(option =>
-          option.type === LabelType.DYNAMIC ? (
+          option.value_count > 0 ? (
             <DropdownMenu.CheckboxItem
               key={option.id}
               title={<LabelMarker color={option.color} label={option.key} value={String(option.value_count)} />}
@@ -130,7 +130,7 @@ export interface FilterLabelRendererProps {
 }
 
 export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions }: FilterLabelRendererProps) {
-  const labelValuesArr = Object.entries(selectedValue ?? {})
+  const labelValuesArr = Object.entries(selectedValue ?? {}).filter(([_, value]) => value)
   const [firstKey, firstValue] = labelValuesArr[0] || []
   if (!firstValue) return ''
 

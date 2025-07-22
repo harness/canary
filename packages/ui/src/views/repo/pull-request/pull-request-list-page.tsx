@@ -9,7 +9,8 @@ import {
   SkeletonList,
   Spacer,
   StackedList,
-  Text
+  Text,
+  ToggleGroup
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
@@ -25,7 +26,12 @@ import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import { PRListFilters, PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestPageProps } from './pull-request.types'
+import {
+  PRFilterGroupTogglerOptions,
+  PRListFilters,
+  PULL_REQUEST_LIST_HEADER_FILTER_STATES,
+  PullRequestPageProps
+} from './pull-request.types'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -57,7 +63,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     usePullRequestListStore()
 
   const { t } = useTranslation()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [activeFilterGrp, setActiveFilterGrp] = useState<PRFilterGroupTogglerOptions>(PRFilterGroupTogglerOptions.All)
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
@@ -104,11 +111,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     },
     isPrincipalsLoading: isPrincipalsLoading,
     customFilterOptions: [labelsFilterConfig],
-    principalData:
-      computedPrincipalData?.map(userInfo => ({
-        label: userInfo?.display_name || '',
-        value: String(userInfo?.id)
-      })) ?? []
+    principalData: computedPrincipalData.map(userInfo => ({
+      label: userInfo?.display_name || '',
+      value: String(userInfo?.id)
+    }))
   })
 
   const handleInputChange = useCallback(
@@ -131,6 +137,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const noData = !(pullRequests && pullRequests.length > 0)
+  const createdByFilter = searchParams.get('created_by')
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
@@ -138,9 +145,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   useEffect(() => {
     setisAllFilterDataPresent(
-      searchParams.get('created_by') && !defaultSelectedAuthorError ? !!defaultSelectedAuthor : true
+      createdByFilter && !defaultSelectedAuthorError
+        ? !!defaultSelectedAuthor || computedPrincipalData.length > 0
+        : true
     )
-  }, [defaultSelectedAuthor, defaultSelectedAuthorError])
+  }, [defaultSelectedAuthor, defaultSelectedAuthorError, computedPrincipalData, createdByFilter])
 
   const showTopBar = !noData || selectedFiltersCnt > 0 || !!searchQuery?.length
 
@@ -210,6 +219,28 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     )
   }
 
+  const onFilterGroupChange = (filterGroup: string) => {
+    if (filterGroup === PRFilterGroupTogglerOptions.All) {
+      setSearchParams(prev => {
+        prev.delete('created_by')
+        return prev
+      })
+    }
+
+    if (filterGroup === PRFilterGroupTogglerOptions.Created) {
+      setSearchParams(prev => {
+        if (prev.has('created_by')) {
+          prev.delete('created_by')
+        }
+        // Update with proper userId
+        // prev.append('created_by', '3335')
+        return prev
+      })
+    }
+
+    setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
+  }
+
   const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {
     if (filterValues === 'created_by' && isOpen) {
       // Reset search query so that new principal data set would be fetched
@@ -270,6 +301,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
+                <ToggleGroup.Root type="single" value={activeFilterGrp} onChange={onFilterGroupChange} unselectable>
+                  <ToggleGroup.Item value={PRFilterGroupTogglerOptions.All} text="All" />
+                  <ToggleGroup.Item value={PRFilterGroupTogglerOptions.Created} text="Created" />
+                  <ToggleGroup.Item value={PRFilterGroupTogglerOptions.ReviewRequested} text="Review Requested" />
+                </ToggleGroup.Root>
+
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
                     <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
@@ -326,15 +363,17 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   </PRListFilterHandler.Content>
                 )
               }
-              renderFilterOptions={filterOptionsRenderer => (
-                <PRListFilterHandler.Dropdown>
-                  {(addFilter, availableFilters, resetFilters) => (
-                    <div className="flex items-center gap-x-4">
-                      {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
-                    </div>
-                  )}
-                </PRListFilterHandler.Dropdown>
-              )}
+              renderFilterOptions={filterOptionsRenderer =>
+                isAllFilterDataPresent && (
+                  <PRListFilterHandler.Dropdown>
+                    {(addFilter, availableFilters, resetFilters) => (
+                      <div className="flex items-center gap-x-4">
+                        {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
+                      </div>
+                    )}
+                  </PRListFilterHandler.Dropdown>
+                )
+              }
               openedFilter={openedFilter}
               setOpenedFilter={setOpenedFilter}
               selectedFiltersCnt={selectedFiltersCnt}

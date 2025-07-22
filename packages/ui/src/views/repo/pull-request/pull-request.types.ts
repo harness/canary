@@ -278,4 +278,10 @@ export type PRListFilters = {
   label_by?: LabelsValue
 }
 
+export enum PRFilterGroupTogglerOptions {
+  All = 'All',
+  Created = 'Created',
+  ReviewRequested = 'ReviewRequested'
+}
+
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void

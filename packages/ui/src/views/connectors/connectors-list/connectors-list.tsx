@@ -155,14 +155,10 @@ export function ConnectorsList({
                   {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
                 </Table.Cell>
                 <Table.Cell className="content-center !p-1.5" disableLink>
-                  <Button
-                    size="sm"
-                    iconOnly
-                    variant="ghost"
-                    onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
-                  >
-                    <Favorite isFavorite={isFavorite} />
-                  </Button>
+                  <Favorite
+                    isFavorite={isFavorite}
+                    onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
+                  />
                 </Table.Cell>
                 <Table.Cell className="content-center !p-0" disableLink>
                   <MoreActionsTooltip

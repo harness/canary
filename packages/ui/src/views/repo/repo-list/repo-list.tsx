@@ -1,6 +1,7 @@
 import { Favorite, IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
+import { noop } from 'lodash-es'
 
 import { RepositoryType } from '../repo.types'
 import { RoutingProps } from './types'
@@ -29,7 +30,7 @@ const Title = ({ title, isPrivate, isFavorite }: { title: string; isPrivate: boo
       <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
         {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
       </StatusBadge>
-      <Favorite isFavorite={isFavorite} />
+      <Favorite isFavorite={isFavorite} onFavoriteToggle={noop} />
     </div>
   )
 }

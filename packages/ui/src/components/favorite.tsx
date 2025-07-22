@@ -1,15 +1,28 @@
+import { Button } from './button'
 import { IconV2 } from './icon-v2'
 
 interface FavoriteIconProps {
   isFavorite?: boolean
+  onFavoriteToggle: (isFavorite: boolean) => void
 }
 
-const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite }) => {
-  return isFavorite ? (
-    <IconV2 name="star-solid" size="md" className="text-label-background-yellow" />
-  ) : (
-    <IconV2 name="star" size="md" className="text-icons-6" />
-  )
-}
+const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle }) => (
+  <Button
+    size="sm"
+    iconOnly
+    variant="ghost"
+    onClick={e => {
+      e.preventDefault()
+      e.stopPropagation()
+      onFavoriteToggle(!isFavorite)
+    }}
+  >
+    <IconV2
+      name={isFavorite ? 'star-solid' : 'star'}
+      size="md"
+      className={isFavorite ? 'text-label-background-yellow' : 'text-icons-6'}
+    />
+  </Button>
+)
 
 export { Favorite }

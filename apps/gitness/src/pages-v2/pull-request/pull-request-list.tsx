@@ -48,11 +48,11 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: { page, accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
-    { enabled: !!defaultAuthorId, staleTime: Infinity }
+    { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
   )
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(

@@ -75,7 +75,7 @@ export default function ComboBox({
         autoFocus
         onChange={value => debouncedSearch?.(value)}
       />
-      <Command.List>{renderContent()}</Command.List>
+      <Command.List heightClassName="max-h-[280px]">{renderContent()}</Command.List>
     </Command.Root>
   )
 }

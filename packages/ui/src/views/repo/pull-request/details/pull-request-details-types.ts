@@ -168,7 +168,7 @@ export interface TypesPrincipalInfo {
   updated?: number
 }
 
-export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned'
+export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned' | 'default' | 'code_owners'
 
 export declare type ReviewerListPullReqOkResponse = TypesPullReqReviewer[]
 export interface TypesPullReqReviewer {
@@ -232,6 +232,7 @@ export type EnumPullReqActivityType =
   | 'reviewer-add'
   | 'label-modify'
   | 'branch-restore'
+  | 'target-branch-change'
 
 export enum ReviewerAddActivity {
   REQUESTED = 'requested',
@@ -274,7 +275,7 @@ export interface TypesCheckPayload {
 }
 
 export type EnumCheckPayloadKind = '' | 'markdown' | 'pipeline' | 'raw'
-export type EnumCheckStatus = 'error' | 'failure' | 'pending' | 'running' | 'success' | 'blocked'
+export type EnumCheckStatus = 'error' | 'failure' | 'pending' | 'running' | 'success' | 'blocked' | 'failure_ignored'
 
 export interface TypesViolation {
   code?: string

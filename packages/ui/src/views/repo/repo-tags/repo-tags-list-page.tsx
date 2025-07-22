@@ -1,9 +1,8 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 import { RepoTagsList } from './components/repo-tags-list'
@@ -21,10 +20,13 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   const { t } = useTranslation()
   const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
 
-  const { search, handleSearchChange } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setPage(1)
+      setSearchQuery(value)
+    },
+    [setPage, setSearchQuery]
+  )
 
   const handleResetFiltersAndPages = useCallback(() => {
     setPage(1)
@@ -47,22 +49,23 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     <SandboxLayout.Main>
       <SandboxLayout.Content
         className={cn({
-          'max-w-[1000px] mx-auto': isLoading || tagsList.length || searchQuery,
+          'mx-auto': isLoading || tagsList.length || searchQuery,
           'h-full': !isLoading && !tagsList.length && !searchQuery
         })}
       >
         {!isLoading && (!!tagsList.length || isDirtyList) && (
           <>
             <Spacer size={2} />
-            <h1 className="text-cn-foreground-1 text-2xl font-medium">{t('views:repos.tags', 'Tags')}</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1">
+              {t('views:repos.tags', 'Tags')}
+            </Text>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-80"
-                  value={search || ''}
-                  handleChange={handleSearchChange}
+                <SearchInput
+                  inputContainerClassName="max-w-80"
+                  defaultValue={searchQuery || ''}
+                  onChange={handleSearchChange}
                   placeholder={t('views:repos.search', 'Search')}
                   autoFocus
                 />

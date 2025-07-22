@@ -1,8 +1,8 @@
-import { LogoName } from '@components/logo'
+import { LogoNameMapV2 } from '@components/logo-v2'
 
 import { ConnectorConfigType } from '../types'
 
-export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = new Map([
+export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof LogoNameMapV2> = new Map([
   ['Github', 'github'],
   ['Gitlab', 'gitlab'],
   ['Bitbucket', 'bitbucket'],
@@ -10,15 +10,29 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, LogoName> = ne
   ['K8sCluster', 'kubernetes'],
   ['DockerRegistry', 'docker'],
   ['Aws', 'aws'],
-  ['AwsSecretManager', 'awsSecretsManager'],
-  ['Gcp', 'gcp'],
-  ['GcpSecretManager', 'gcpSecretManager'],
-  ['GcpKms', 'gcpSecretManager'],
-  ['AwsKms', 'awskms'],
+  ['AwsSecretManager', 'aws'],
+  ['Gcp', 'google'],
+  ['GcpSecretManager', 'google'],
+  ['GcpKms', 'google'],
+  ['AwsKms', 'aws'],
   ['TerraformCloud', 'terraform'],
-  ['Vault', 'hashiCorpVault'],
+  ['Vault', 'hashicorp'],
   ['HttpHelmRepo', 'helm'],
   ['Rancher', 'rancher'],
-  ['Datadog', 'datadog'],
-  ['OciHelmRepo', 'helm']
+  ['Datadog', 'data-dog'],
+  ['ServiceNow', 'servicenow'],
+  ['SignalFX', 'sfx'],
+  ['NewRelic', 'new-relic'],
+  ['Git', 'git'],
+  ['Splunk', 'splunk'],
+  ['Prometheus', 'prometheus'],
+  ['Dynatrace', 'dynatrace'],
+  ['Nexus', 'nexus'],
+  ['AppDynamics', 'app-dynamics'],
+  ['ElasticSearch', 'elastic'],
+  ['AzureKeyVault', 'azure'],
+  ['Azure', 'azure'],
+  ['Artifactory', 'artifactory'],
+  ['OciHelmRepo', 'helm'],
+  ['Tas', 'tanzu']
 ])

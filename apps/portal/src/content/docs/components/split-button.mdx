@@ -131,7 +131,7 @@ import { Aside } from "@astrojs/starlight/components";
   </div>
 </div>
 
-{/* Disabled State */}
+{/* Disabled States */}
 
   <div>
     <h5 className="text-lg font-semibold mb-3">Disabled State</h5>
@@ -139,7 +139,7 @@ import { Aside } from "@astrojs/starlight/components";
       <SplitButton
         id="disabled-state"
         handleButtonClick={() => {}}
-        disabled={true}
+        disabled
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
@@ -147,6 +147,30 @@ import { Aside } from "@astrojs/starlight/components";
         handleOptionChange={() => {}}
       >
         Disabled
+      </SplitButton>
+      <SplitButton
+        id="disabled-state"
+        handleButtonClick={() => {}}
+        disableButton
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Disabled (Button)
+      </SplitButton>
+      <SplitButton
+        id="disabled-state"
+        handleButtonClick={() => {}}
+        disableDropdown
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Disabled (Dropdown)
       </SplitButton>
     </div>
   </div>
@@ -250,6 +274,20 @@ return (
     {
       name: "disabled",
       description: "Disables the button and dropdown.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disableButton",
+      description: "Disables the button while dropdown is enabled.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disableDropdown",
+      description: "Disables the dropdown while button is enabled.",
       required: false,
       value: "boolean",
       defaultValue: "false",

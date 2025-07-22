@@ -6,16 +6,17 @@ import {
   Button,
   Checkbox,
   CounterBadge,
-  Icon,
+  IconV2,
   Layout,
   MoreActionsTooltip,
   SplitButton,
   StackedList,
   StatusBadge,
+  Text,
+  TimeAgoCard,
   type ButtonThemes
 } from '@/components'
 import { useRouterContext } from '@/context'
-import { timeAgo } from '@/utils'
 import {
   EnumCheckStatus,
   extractInfoFromRuleViolationArr,
@@ -53,22 +54,19 @@ interface HeaderProps {
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
   if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
-    // Format the parsed date as relative time from now
-    const formattedTime = timeAgo(props?.pullReqMetadata?.merged || 0)
-
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
-            <StatusBadge icon="branch" variant="secondary" theme="muted" size="sm">
+            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.source_branch}
             </StatusBadge>
             <span>into</span>
-            <StatusBadge icon="branch" variant="secondary" theme="muted" size="sm">
+            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.target_branch}
             </StatusBadge>
-            <span>{formattedTime}</span>
+            <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
           {props.showDeleteBranchButton ? (
             <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
@@ -91,7 +89,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="text-cn-foreground-1 font-medium">
+      <Text variant="body-strong" as="h2" color="foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -103,7 +101,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
                 : props.ruleViolation
                   ? 'Cannot merge pull request'
                   : `Pull request can be merged`}
-      </h2>
+      </Text>
     </div>
   )
 }
@@ -332,7 +330,6 @@ const PullRequestPanel = ({
 
                   {actions && !pullReqMetadata?.closed ? (
                     <SplitButton
-                      id="pr-type"
                       theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                       disabled={buttonState.disabled}
                       variant="outline"
@@ -362,7 +359,7 @@ const PullRequestPanel = ({
                   {isShowMoreTooltip && (
                     <MoreActionsTooltip
                       className="!ml-2"
-                      iconName="more-dots-fill"
+                      iconName="more-horizontal"
                       sideOffset={-8}
                       alignOffset={2}
                       actions={[
@@ -448,7 +445,7 @@ const PullRequestPanel = ({
                     className="flex items-center gap-x-1.5"
                     to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
                   >
-                    <Icon name="branch" size={12} className="text-icons-9" />
+                    <IconV2 name="git-branch" size="2xs" className="text-icons-9" />
                     {pullReqMetadata?.source_branch}
                   </Link>
                 </StatusBadge>
@@ -474,5 +471,7 @@ const PullRequestPanel = ({
     </>
   )
 }
+
+PullRequestPanel.displayName = 'PullRequestPanel'
 
 export { PullRequestPanel }

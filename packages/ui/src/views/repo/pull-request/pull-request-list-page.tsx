@@ -1,10 +1,21 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchInput, SkeletonList, Spacer, StackedList } from '@/components'
+import {
+  Button,
+  ListActions,
+  NoData,
+  Pagination,
+  SearchInput,
+  SkeletonList,
+  Spacer,
+  StackedList,
+  Text
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
-import { CustomFilterOptionConfig, FilterFieldTypes } from '@components/filters/types'
+import { renderFilterSelectLabel } from '@components/filters/filter-select'
+import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
@@ -12,7 +23,7 @@ import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import type { PRListFilters, PullRequestPageProps } from './pull-request.types'
+import { PRListFilters, PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestPageProps } from './pull-request.types'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -33,7 +44,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   isPrincipalsLoading,
   isLoading,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  onLabelClick,
+  toPullRequest
 }) => {
   const { Link, useSearchParams } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
@@ -42,6 +55,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
+
+  const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
+    PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
+  )
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
@@ -132,7 +149,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       return selectedFiltersCnt > 0 || searchQuery ? (
         <StackedList.Root className="grow place-content-center">
           <NoData
-            iconName="no-search-magnifying-glass"
+            imageName="no-search-magnifying-glass"
             title={t('views:noData.noResults', 'No search results')}
             description={[
               t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -152,16 +169,24 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         </StackedList.Root>
       ) : (
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title="No pull requests yet"
-          description={[
-            t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
-            t('views:noData.createNewPullRequest', 'Create a new pull request.')
-          ]}
-          primaryButton={{
-            label: 'Create pull request',
-            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-          }}
+          description={
+            repoId
+              ? [
+                  t('views:noData.noPullRequestsInRepo', `There are no pull requests in this repo yet.`),
+                  t('views:noData.createNewPullRequest', 'Create a new pull request.')
+                ]
+              : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
+          }
+          primaryButton={
+            repoId
+              ? {
+                  label: 'Create pull request',
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
+              : undefined
+          }
         />
       )
     }
@@ -173,6 +198,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         pullRequests={pullRequests}
         closedPRs={closedPullReqs}
         openPRs={openPullReqs}
+        headerFilter={headerFilter}
+        setHeaderFilter={setHeaderFilter}
+        toPullRequest={toPullRequest}
+        onLabelClick={onLabelClick}
       />
     )
   }
@@ -213,7 +242,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <h1 className="mb-6 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Pull Requests</h1>
+            <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+              Pull Requests
+            </Text>
 
             <ListActions.Root>
               <ListActions.Left>
@@ -228,27 +259,30 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               <ListActions.Right>
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
-                    <FilterSelect<PRListFiltersKeys, LabelsValue>
+                    <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
                       options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
                       onChange={option => {
                         addFilter(option.value)
                         setOpenedFilter(option.value)
                       }}
-                      onReset={resetFilters}
+                      onReset={() => resetFilters()}
                       inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
                       buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={
-                        <FilterSelectLabel
-                          selectedFilters={PR_FILTER_OPTIONS.length - availableFilters.length}
-                          displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                        />
-                      }
+                      displayLabel={renderFilterSelectLabel({
+                        selectedFilters: PR_FILTER_OPTIONS.length - availableFilters.length,
+                        displayLabel: t('component:filter.defaultLabel', 'Filter')
+                      })}
                     />
                   )}
                 </PRListFilterHandler.Dropdown>
-                <Button asChild>
-                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
-                </Button>
+                {/**
+                 * Creating a pull request is permitted only when inside a repository.
+                 */}
+                {repoId ? (
+                  <Button asChild>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                  </Button>
+                ) : null}
               </ListActions.Right>
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>

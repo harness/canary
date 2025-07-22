@@ -46,9 +46,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
-        <Text size={5} weight={'medium'}>
-          Commits
-        </Text>
+        <Text variant="heading-section">Commits</Text>
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
           <BranchSelectorContainer />
@@ -64,7 +62,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
               <NoData
                 withBorder
                 textWrapperClassName="max-w-[350px]"
-                iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
+                imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
                 title={
                   isDirtyList
                     ? t('views:noData.noCommitsHistory', 'No commits history')

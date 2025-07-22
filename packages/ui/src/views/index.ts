@@ -12,6 +12,7 @@ export * from './layouts/main-content-layout'
 
 // components
 export * from './components/RadioSelect'
+export * from './components/page'
 
 // Account
 export * from './account'
@@ -76,3 +77,9 @@ export * from './sidebar-view/sidebar-view'
 
 // delegates
 export * from './delegates'
+
+// search
+export * from './search'
+
+// common
+export * from './common/context/ExitConfirmContext'

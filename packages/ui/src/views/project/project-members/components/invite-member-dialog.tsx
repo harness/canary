@@ -1,17 +1,7 @@
-import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Avatar,
-  Button,
-  ButtonLayout,
-  ControlGroup,
-  Fieldset,
-  FormWrapper,
-  ModalDialog,
-  Select
-} from '@/components'
+import { Alert, Button, ButtonLayout, Dialog, DropdownMenu, FormWrapper, Select, SelectValueOption } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
@@ -24,27 +14,6 @@ export const inviteMemberFormSchema = z.object({
   role: z.string().min(1, { message: 'Role is required' })
 })
 
-interface PrincipalOptionProps {
-  principal: PrincipalType
-  isShortView?: boolean
-}
-
-const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ principal, isShortView = false }, ref) => {
-  return (
-    <div ref={ref} className={`flex w-full ${isShortView ? 'gap-x-2' : 'gap-x-2.5 pl-1'} cursor-pointer items-center`}>
-      <Avatar name={principal.display_name} src={principal.avatar_url} size={isShortView ? 'sm' : 'default'} rounded />
-      <span className="flex flex-col overflow-hidden leading-tight">
-        <span className={`truncate ${isShortView ? 'text-cn-foreground-1' : 'text-cn-foreground-1'}`}>
-          {principal.display_name}
-        </span>
-        {!isShortView && <span className="truncate text-1 text-cn-foreground-2">{principal.email}</span>}
-      </span>
-    </div>
-  )
-})
-
-PrincipalOption.displayName = 'PrincipalOption'
-
 export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   open,
   onClose,
@@ -56,20 +25,15 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   principalsSearchQuery
 }) => {
   const { t } = useTranslation()
-  /**
-   * Since the select component works only with strings,
-   * we need to construct the full data model based on the selected item.
-   */
-  const [invitedMemberFullModel, setInvitedMemberFullModel] = useState<PrincipalType | null>(null)
 
-  const roleOptions = useMemo(() => getRolesData(t), [t])
+  const roleOptions = useMemo(() => getRolesData(t).map(option => ({ label: option.label, value: option.uid })), [t])
 
   const formMethods = useForm<InviteMemberFormFields>({
     resolver: zodResolver(inviteMemberFormSchema),
     mode: 'onChange',
     defaultValues: {
       member: '',
-      role: roleOptions[3].uid
+      role: roleOptions[3].value
     }
   })
 
@@ -77,12 +41,24 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
     handleSubmit,
     setValue,
     watch,
-    reset,
     formState: { errors, isValid }
   } = formMethods
 
   const invitedMember = watch('member')
   const memberRole = watch('role')
+
+  const principalDataToIdMap = useMemo(
+    () =>
+      principals.reduce(
+        (acc, principal) => ({ ...acc, [principal.uid]: principal }),
+        {} as Record<string, PrincipalType>
+      ),
+    [principals]
+  )
+  const memberOptions: SelectValueOption[] = useMemo(
+    () => principals.map(principal => ({ label: principal.display_name, value: principal.uid })),
+    [principals]
+  )
 
   const handleSelectChange = (fieldName: keyof InviteMemberFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -92,89 +68,52 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
     const data = principals.find(principal => principal.uid === value)
     if (!data) return
 
-    setInvitedMemberFullModel(data)
     setValue('member' as keyof InviteMemberFormFields, value, { shouldValidate: true })
   }
 
-  const selectedRoleFullModel = useMemo(() => {
-    return roleOptions.find(it => it.uid === memberRole)
-  }, [roleOptions, memberRole])
-
-  /**
-   * Reset form data and state on dialog close
-   */
-  useEffect(() => {
-    if (!open) {
-      reset()
-      setInvitedMemberFullModel(null)
-    }
-  }, [open, reset])
-
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:projectSettings.newMember', 'New member')}</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:projectSettings.newMember', 'New member')}</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-            <Fieldset>
-              <ControlGroup>
-                <Select.Root
-                  name="member"
-                  value={invitedMember}
-                  onValueChange={handleMemberChange}
-                  placeholder={t('views:forms.selectMember', 'Select member')}
-                  label={t('views:projectSettings.member', 'Member')}
-                  error={errors.member?.message?.toString()}
-                  selectValueChildren={
-                    !!invitedMemberFullModel && <PrincipalOption isShortView principal={invitedMemberFullModel} />
-                  }
-                >
-                  <Select.Content
-                    withSearch
-                    searchProps={{
-                      placeholder: t('views:repos.search', 'Search'),
-                      handleChangeSearchValue: setPrincipalsSearchQuery,
-                      searchValue: principalsSearchQuery
-                    }}
-                  >
-                    {principals.map(principal => (
-                      <Select.Item key={principal.uid} value={principal.uid} isItemTextAsChild>
-                        <PrincipalOption principal={principal} />
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
-              </ControlGroup>
-              <ControlGroup>
-                <Select.Root
-                  name="role"
-                  value={memberRole}
-                  onValueChange={value => handleSelectChange('role', value)}
-                  placeholder={t('views:forms.selectRole', 'Select role')}
-                  label={t('views:projectSettings.role', 'Role')}
-                  error={errors.role?.message?.toString()}
-                  selectValueChildren={
-                    !!selectedRoleFullModel && (
-                      <span className="text-cn-foreground-1">{selectedRoleFullModel.label}</span>
-                    )
-                  }
-                >
-                  <Select.Content>
-                    {roleOptions.map(option => (
-                      <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
-                        <div className="flex cursor-pointer flex-col gap-y-1.5">
-                          <span className="leading-none text-cn-foreground-1">{option.label}</span>
-                          <span className="leading-tight text-cn-foreground-2">{option.description}</span>
-                        </div>
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
-              </ControlGroup>
-            </Fieldset>
+            <Select
+              options={memberOptions}
+              value={invitedMember}
+              placeholder={t('views:forms.selectMember', 'Select member')}
+              label={t('views:projectSettings.member', 'Member')}
+              error={errors.member?.message?.toString()}
+              onSearch={setPrincipalsSearchQuery}
+              searchValue={principalsSearchQuery}
+              optionRenderer={option => (
+                <DropdownMenu.AvatarItem
+                  title={option.label}
+                  onSelect={() => handleMemberChange(option.value)}
+                  name={principalDataToIdMap[option.value].display_name}
+                  description={principalDataToIdMap[option.value].email}
+                  src={principalDataToIdMap[option.value].avatar_url}
+                />
+              )}
+              allowSearch
+            />
+
+            <Select
+              options={roleOptions}
+              value={memberRole}
+              placeholder={t('views:forms.selectRole', 'Select role')}
+              label={t('views:projectSettings.role', 'Role')}
+              error={errors.role?.message?.toString()}
+              optionRenderer={option => (
+                <DropdownMenu.Item
+                  title={option.label}
+                  onSelect={() => handleSelectChange('role', option.value)}
+                  description={getRolesData(t).find(role => role.uid === option.value)?.description}
+                />
+              )}
+            />
 
             {!!error && (
               <Alert.Root theme="danger" className="!mt-0">
@@ -184,19 +123,19 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
               </Alert.Root>
             )}
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={onClose} loading={isInvitingMember}>
+            <Dialog.Close onClick={onClose} loading={isInvitingMember}>
               {t('views:repos.cancel', 'Cancel')}
-            </ModalDialog.Close>
+            </Dialog.Close>
             <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
               {t('views:projectSettings.addMember', 'Add member to this project')}
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

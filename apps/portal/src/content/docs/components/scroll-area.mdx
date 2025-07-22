@@ -1,0 +1,244 @@
+---
+title: Scroll Area
+description: Scroll area component
+beta: true
+---
+
+The `ScrollArea` component offers a flexible, customizable container with scrollbars for overflowing content. Use it to display content that exceeds the visible area, supporting both horizontal and vertical scrolling.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <ScrollArea className="w-[300px] h-[200px] border">
+    <div className="p-4 space-y-4 w-[700px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ScrollArea } from '@harnessio/ui/components';
+
+//...
+
+return (
+  <ScrollArea className="w-[300px] h-[200px] border">
+    <div className="p-4 space-y-4 w-[700px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
+);
+```
+
+### Directions
+
+The `ScrollArea` component supports the `direction` prop to set the text direction. It accepts values like `ltr` (left-to-right) and `rtl` (right-to-left). The default value is `ltr`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div className="grid gap-4">
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mb-1">ltr:</Text>
+    <ScrollArea className="w-[300px] h-[200px] border">
+      <div className="p-4 space-y-4 w-[700px]">
+        <p>Content that exceeds the viewport height and width.</p>
+        <p>More content...</p>
+        <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+
+<div>
+  <Text variant="heading-base" color="foreground-1" className="mb-1">
+    rtl:
+  </Text>
+  <ScrollArea
+    direction="rtl"
+    className="w-[300px] h-[200px] border"
+  >
+    <div dir="rtl" className="p-4 space-y-4 w-[700px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
+</div>
+</div>`}
+/>
+
+### Scroll Events
+
+The `ScrollArea` component provides several event handlers to respond to scroll actions:
+
+- `onScrollTop`: Triggered when the scroll area is scrolled to the top.
+- `onScrollBottom`: Triggered when the scroll area is scrolled to the bottom.
+- `onScrollLeft`: Triggered when the scroll area is scrolled to the left.
+- `onScrollRight`: Triggered when the scroll area is scrolled to the right.
+
+It provides an `IntersectionObserverEntry` parameter that contains information about the scroll position and visibility of the target element.
+
+`rootMargin` and `threshold` props can be used to customize the scroll event behavior.
+Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to define how much of the target should be visible before triggering the scroll event.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <ScrollArea className="w-[300px] h-[200px] border"
+    onScrollBottom={(entry) => console.log('Reached bottom', entry)}
+    onScrollTop={() => console.log('Reached top')}
+    onScrollLeft={() => console.log('Reached left')}
+    onScrollRight={() => console.log('Reached right')}
+  >
+    <div className="p-4 space-y-4 w-[700px]">
+      <p>Content that exceeds the viewport height and width.</p>
+      <p>More content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+      <p>Even more content...</p>
+    </div>
+  </ScrollArea>
+
+  <div>
+    <Text variant="heading-base" color="foreground-1" className="mt-4 mb-1">
+      Scroll Events with margin:
+    </Text>
+    
+    <ScrollArea className="w-[300px] h-[200px] border" 
+      onScrollBottom={() => console.log('Reached bottom')}
+      onScrollTop={() => console.log('Reached top')}
+      onScrollLeft={() => console.log('Reached left')}
+      onScrollRight={() => console.log('Reached right')}
+      rootMargin={{ top: '20px', right: '50px', bottom: '50px', left: '50px' }}
+    >
+      <div className="relative px-[50px] pt-[20px] pb-[50px] space-y-4 w-[700px]">
+        <div className="absolute top-[20px] right-[50px] bottom-[50px] left-[50px] outline-2 outline-offset-2 outline-dashed outline-primary-5"/>
+          <p>Content that exceeds the viewport height and width.</p>
+          <p>More content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+          <p>Even more content...</p>
+      </div>
+    </ScrollArea>
+  </div>
+</div>`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  componentName="ScrollArea"
+  props={[
+    {
+      name: "children",
+      description: "Content of the scroll area.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "direction",
+      description:
+        "Sets the text direction for the scroll area. Defaults to 'ltr'.",
+      required: false,
+      defaultValue: "'ltr'",
+      value: "'ltr' | 'rtl'",
+    },
+    {
+      name: "className",
+      description:
+        "Additional class names to apply to the scroll area container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "classNameContent",
+      description:
+        "Additional class names to apply to the scroll area content.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onScrollTop",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the top.",
+      required: false,
+      value: "(entry: IntersectionObserverEntry) => void",
+    },
+    {
+      name: "onScrollBottom",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the bottom.",
+      required: false,
+      value: "(entry: IntersectionObserverEntry) => void",
+    },
+    {
+      name: "onScrollLeft",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the left.",
+      required: false,
+      value: "(entry: IntersectionObserverEntry) => void",
+    },
+    {
+      name: "onScrollRight",
+      description:
+        "Callback function triggered when the scroll area is scrolled to the right.",
+      required: false,
+      value: "(entry: IntersectionObserverEntry) => void",
+    },
+    {
+      name: "rootMargin",
+      description:
+        "Margin around the scroll area to trigger scroll events. Defaults to '0px'.",
+      required: false,
+      defaultValue: "'0px'",
+      value:
+        "string | { top?: string; right?: string; bottom?: string; left?: string; }",
+    },
+    {
+      name: "threshold",
+      description:
+        "Threshold for triggering scroll events. A value between 0 and 1, where 0 means the event is triggered immediately and 1 means it is triggered when the scroll area is fully scrolled.",
+      required: false,
+      defaultValue: "0.1",
+      value: "number | number[]",
+    },
+  ]}
+/>
+```

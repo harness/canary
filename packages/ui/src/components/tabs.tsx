@@ -1,137 +1,267 @@
-import * as React from 'react'
+import {
+  ComponentPropsWithoutRef,
+  createContext,
+  ElementRef,
+  forwardRef,
+  ReactNode,
+  Ref,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 
+import { CounterBadge } from '@/components/counter-badge'
+import { IconPropsV2, IconV2 } from '@/components/icon-v2'
+import { LogoPropsV2, LogoV2 } from '@/components/logo-v2'
+import { NavLinkProps, useRouterContext } from '@/context'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tabsListVariants = cva('inline-flex items-center text-cn-foreground-2', {
+const tabsListVariants = cva('cn-tabs-list', {
   variants: {
     variant: {
-      pills: 'h-9 justify-center rounded-lg bg-cn-background-softgray p-1',
-      underline: 'h-11 justify-center gap-4',
-      tabs: 'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-borders-3'
-    },
-    fontSize: {
-      xs: 'text-1',
-      sm: 'text-2'
+      underlined: 'cn-tabs-list-underlined',
+      overlined: 'cn-tabs-list-overlined',
+      ghost: 'cn-tabs-list-ghost',
+      outlined: 'cn-tabs-list-outlined'
     }
   },
   defaultVariants: {
-    variant: 'tabs',
-    fontSize: 'sm'
+    variant: 'underlined'
   }
 })
 
-const tabsTriggerVariants = cva(
-  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-cn-foreground-1',
-  {
-    variants: {
-      variant: {
-        pills: 'rounded-md data-[state=active]:bg-cn-background data-[state=active]:shadow',
-        underline:
-          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-cn-borders-1',
-        tabs: 'h-9 rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-foreground-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'
-      }
-    },
-    defaultVariants: {
-      variant: 'tabs'
+const tabsTriggerVariants = cva('cn-tabs-trigger', {
+  variants: {
+    variant: {
+      underlined: 'cn-tabs-trigger-underlined',
+      overlined: 'cn-tabs-trigger-overlined',
+      ghost: 'cn-tabs-trigger-ghost',
+      outlined: 'cn-tabs-trigger-outlined'
     }
+  },
+  defaultVariants: {
+    variant: 'underlined'
   }
-)
-
-const tabsContentVariants = cva(
-  'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-borders-accent focus-visible:ring-offset-2',
-  {
-    variants: {
-      variant: {
-        pills: '',
-        underline: '',
-        tabs: ''
-      }
-    },
-    defaultVariants: {
-      variant: 'tabs'
-    }
-  }
-)
-
-const TabsContext = React.createContext<VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants>>({
-  variant: 'tabs'
 })
 
-interface TabsRootProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
-    VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants> {}
+type TabsContextType = {
+  type: 'tabs' | 'tabsnav'
+  activeTabValue?: string
+  onValueChange?: (value: string) => void
+}
 
-const TabsRoot = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsRootProps>(
-  ({ children, variant, ...props }, ref) => (
-    <TabsPrimitive.Root ref={ref} {...props}>
-      <TabsContext.Provider value={{ variant }}>{children}</TabsContext.Provider>
-    </TabsPrimitive.Root>
+const TabsContext = createContext<TabsContextType>({ type: 'tabs' })
+
+interface TabsProps {
+  children: ReactNode
+  onValueChange?: (value: string) => void
+  value?: string
+  defaultValue?: string
+  className?: string
+}
+
+const useManageActiveTabValue = ({
+  type,
+  value,
+  defaultValue,
+  onValueChange
+}: Partial<TabsProps> & { type: TabsContextType['type'] }) => {
+  const [activeTabValue, setActiveTabValue] = useState<string | undefined>(value ?? defaultValue)
+
+  const handleValueChange = (newValue: string) => {
+    onValueChange?.(newValue)
+    if (type === 'tabsnav' && value !== undefined) return
+    setActiveTabValue(newValue)
+  }
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setActiveTabValue(value)
+    }
+  }, [value])
+
+  return { activeTabValue, handleValueChange }
+}
+
+const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: TabsProps) => {
+  const { activeTabValue, handleValueChange } = useManageActiveTabValue({
+    type: 'tabs',
+    value,
+    defaultValue,
+    onValueChange
+  })
+
+  return (
+    <TabsContext.Provider value={{ type: 'tabs', activeTabValue, onValueChange: handleValueChange }}>
+      <TabsPrimitive.Root
+        className={className}
+        onValueChange={handleValueChange}
+        value={value}
+        defaultValue={defaultValue}
+      >
+        {children}
+      </TabsPrimitive.Root>
+    </TabsContext.Provider>
   )
-)
-TabsRoot.displayName = 'TabsRoot'
+}
+
+const TabsNavRoot = ({ children }: TabsProps) => {
+  return <TabsContext.Provider value={{ type: 'tabsnav' }}>{children}</TabsContext.Provider>
+}
+
+const TabsListContext = createContext<VariantProps<typeof tabsListVariants> & { activeClassName?: string }>({
+  variant: 'underlined'
+})
 
 interface TabsListProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
-    VariantProps<typeof tabsListVariants> {}
+  extends ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
+    VariantProps<typeof tabsListVariants> {
+  activeClassName?: string
+}
 
-const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
-  ({ className, variant, fontSize, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
+  ({ className, children, variant, activeClassName, ...props }, ref) => {
+    const { type } = useContext(TabsContext)
 
     return (
-      <TabsPrimitive.List
-        ref={ref}
-        className={cn(tabsListVariants({ variant: context.variant ?? variant, fontSize, className }))}
-        {...props}
-      />
+      <TabsListContext.Provider value={{ activeClassName, variant }}>
+        {type === 'tabs' && (
+          <TabsPrimitive.List ref={ref} className={cn(tabsListVariants({ variant }), className)} {...props}>
+            {children}
+          </TabsPrimitive.List>
+        )}
+
+        {type === 'tabsnav' && (
+          <nav ref={ref} className={cn(tabsListVariants({ variant }), className)} {...props}>
+            {children}
+          </nav>
+        )}
+      </TabsListContext.Provider>
     )
   }
 )
 TabsList.displayName = TabsPrimitive.List.displayName
 
-export interface TabsTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>,
-    VariantProps<typeof tabsTriggerVariants> {}
+interface TabsTriggerBaseProps {
+  value: string
+  children?: ReactNode
+  className?: string
+  counter?: number | null
+}
 
-const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
-  ({ className, variant, children, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+interface TabsTriggerBasePropsWithIcon extends TabsTriggerBaseProps {
+  icon?: IconPropsV2['name']
+  logo?: never
+}
+
+interface TabsTriggerBasePropsWithLogo extends TabsTriggerBaseProps {
+  icon?: never
+  logo?: LogoPropsV2['name']
+}
+
+type TabsTriggerExtendedProps = TabsTriggerBasePropsWithIcon | TabsTriggerBasePropsWithLogo
+
+type TabsTriggerButtonProps = TabsTriggerExtendedProps &
+  Omit<ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>, keyof TabsTriggerExtendedProps>
+
+type TabsTriggerLinkProps = TabsTriggerExtendedProps &
+  Omit<ComponentPropsWithoutRef<'a'>, keyof TabsTriggerExtendedProps | 'href'> & {
+    linkProps?: Omit<NavLinkProps, 'to'>
+  }
+
+export type TabsTriggerProps = TabsTriggerButtonProps | TabsTriggerLinkProps
+
+interface TabsTriggerComponent {
+  (props: TabsTriggerButtonProps & { ref?: Ref<HTMLButtonElement> }): JSX.Element
+  (props: TabsTriggerLinkProps): JSX.Element
+  displayName?: string
+}
+
+const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTriggerProps>((props, ref) => {
+  const { className, children, value, icon, logo, counter, ...restProps } = props
+  const { variant, activeClassName } = useContext(TabsListContext)
+  const { type, activeTabValue, onValueChange } = useContext(TabsContext)
+  const { NavLink } = useRouterContext()
+
+  const iconSize = variant === 'ghost' || variant === 'outlined' ? 'sm' : 'xs'
+  const logoSize: LogoPropsV2['size'] = variant === 'ghost' || variant === 'outlined' ? 'md' : 'sm'
+
+  const TabTriggerContent = () => (
+    <>
+      {!!icon && <IconV2 size={iconSize} name={icon} />}
+      {!!logo && <LogoV2 size={logoSize} name={logo} />}
+      {children}
+      {Number.isInteger(counter) && <CounterBadge>{counter}</CounterBadge>}
+    </>
+  )
+
+  if (type === 'tabsnav') {
+    const { linkProps, ..._restProps } = restProps as TabsTriggerLinkProps
+
+    const handleClick = () => {
+      onValueChange?.(value)
+    }
+
     return (
-      <TabsPrimitive.Trigger
-        ref={ref}
-        className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
-        {...props}
+      <NavLink
+        role="tab"
+        to={value}
+        onClick={handleClick}
+        className={({ isActive }) => {
+          return cn(
+            tabsTriggerVariants({ variant }),
+            { 'cn-tabs-trigger-active': isActive, [activeClassName ?? '']: isActive },
+            className
+          )
+        }}
+        {...(linkProps as Omit<NavLinkProps, 'to' | 'className'>)}
+        {...(_restProps as Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'className'>)}
       >
-        {children}
-      </TabsPrimitive.Trigger>
+        <TabTriggerContent />
+      </NavLink>
     )
   }
-)
+
+  const isTabActive = activeTabValue === value
+
+  return (
+    <TabsPrimitive.Trigger
+      ref={ref as Ref<HTMLButtonElement>}
+      value={value}
+      className={cn(
+        tabsTriggerVariants({ variant }),
+        { 'cn-tabs-trigger-active': isTabActive, [activeClassName ?? '']: isTabActive },
+        className
+      )}
+      {...(restProps as Omit<ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>, 'value'>)}
+    >
+      <TabTriggerContent />
+    </TabsPrimitive.Trigger>
+  )
+}) as TabsTriggerComponent
+
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
-interface TabsContentProps
-  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>,
-    VariantProps<typeof tabsContentVariants> {}
+interface TabsContentProps extends ComponentPropsWithoutRef<typeof TabsPrimitive.Content> {}
 
-const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Content>, TabsContentProps>(
-  ({ className, variant, ...props }, ref) => {
-    const context = React.useContext(TabsContext)
+const TabsContent = forwardRef<ElementRef<typeof TabsPrimitive.Content>, TabsContentProps>(
+  ({ className, ...props }, ref) => {
+    const { type } = useContext(TabsContext)
 
-    return (
-      <TabsPrimitive.Content
-        ref={ref}
-        className={cn(tabsContentVariants({ variant: context.variant ?? variant, className }))}
-        {...props}
-      />
-    )
+    if (type === 'tabsnav') {
+      return <div ref={ref} className={cn('cn-tabs-content', className)} {...props} />
+    }
+
+    return <TabsPrimitive.Content ref={ref} className={cn('cn-tabs-content', className)} {...props} />
   }
 )
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
 const Tabs = {
   Root: TabsRoot,
+  NavRoot: TabsNavRoot,
   List: TabsList,
   Trigger: TabsTrigger,
   Content: TabsContent

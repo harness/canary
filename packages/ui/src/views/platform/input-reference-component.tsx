@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, Icon, IconProps, Label } from '@/components'
+import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'flex h-9 min-h-9 cursor-pointer items-center justify-between rounded bg-cn-background-2 px-3 py-2 text-cn-foreground-1 transition-colors',
+  'flex h-9 min-h-9 cursor-pointer items-center rounded bg-cn-background-2 text-cn-foreground-1 transition-colors',
   {
     variants: {
       state: {
@@ -63,7 +63,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * Icon to display at the start of the input
    */
-  icon?: IconProps['name']
+  icon?: IconPropsV2['name']
 
   /**
    * Label text to display above the input
@@ -79,6 +79,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
    * Whether the field is optional
    */
   optional?: boolean
+
+  /**
+   * Suffix element to display at the end of the input
+   */
+  suffix?: ReactNode
 }
 
 /**
@@ -99,6 +104,7 @@ export const InputReference = <T,>({
   caption,
   optional = false,
   renderValue,
+  suffix,
   ...props
 }: InputReferenceProps<T>) => {
   // Determine what to display: rendered value if value exists, otherwise placeholder
@@ -142,18 +148,37 @@ export const InputReference = <T,>({
         }}
         {...props}
       >
-        {icon && <Icon className="mr-2.5" name={icon} />}
-        <div className="flex-1 truncate">{displayContent}</div>
-        {hasValue && !disabled && (
-          <div className="ml-3 flex items-center">
-            <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly>
-              <Icon name="edit-pen" />
-            </Button>
-            <Button onClick={handleClear} size="sm" variant="ghost" iconOnly>
-              <Icon name="cross" className="text-cn-foreground-danger" />
-            </Button>
+        <div className="flex w-full items-center justify-between px-3 py-2">
+          {icon && <IconV2 className="mr-2.5" name={icon} />}
+          <div className="flex-1 truncate">{displayContent}</div>
+          {hasValue && !disabled && (
+            <div className="ml-3 flex items-center">
+              <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly>
+                <IconV2 name="edit-pencil" />
+              </Button>
+              <Button onClick={handleClear} size="sm" variant="ghost" iconOnly>
+                <IconV2 name="xmark" className="text-cn-foreground-danger" />
+              </Button>
+            </div>
+          )}
+        </div>
+        {suffix ? (
+          <div
+            className="aspect-1 flex h-full items-center justify-center rounded-l-none border-l border-inherit"
+            // Don't trigger onClick of the parent div when suffix is clicked
+            onPointerDown={e => {
+              e.stopPropagation()
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.stopPropagation()
+              }
+            }}
+            role="none"
+          >
+            {suffix}
           </div>
-        )}
+        ) : null}
       </div>
       {caption && <Caption className="mt-1.5">{caption}</Caption>}
     </ControlGroup>

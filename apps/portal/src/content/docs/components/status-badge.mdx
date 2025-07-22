@@ -169,7 +169,7 @@ The `StatusBadge` component supports different visual variants, including `prima
 
 ## Sizes
 
-The `StatusBadge` component comes in two sizes: `default` and `sm`.
+The `StatusBadge` component comes in two sizes: `sm` and `md`.
 
 <DocsPage.ComponentExample
   client:only
@@ -186,8 +186,8 @@ The `StatusBadge` component supports an optional `icon` prop to display an icon 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-wrap items-end gap-3">
-    <StatusBadge icon="tick" variant="ghost" theme="success">Saved</StatusBadge>
-    <StatusBadge icon="cross" theme="danger">Failed</StatusBadge>
+    <StatusBadge icon="check" variant="ghost" theme="success">Saved</StatusBadge>
+    <StatusBadge icon="xmark" theme="danger">Failed</StatusBadge>
     <StatusBadge icon="info-circle" variant="outline" theme="info">Info</StatusBadge>
 </div>`}
 />
@@ -230,8 +230,8 @@ The `StatusBadge` component has several props to control its appearance:
       name: "size",
       description: "Size of the badge",
       required: false,
-      value: "'default' | 'sm'",
-      defaultValue: "'default'",
+      value: "'sm' | 'md'",
+      defaultValue: "'md'",
     },
     {
       name: "icon",

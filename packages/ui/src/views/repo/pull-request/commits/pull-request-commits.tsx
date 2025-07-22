@@ -36,7 +36,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
     <SandboxLayout.Content className="pt-0">
       {!commitsList?.length && (
         <NoData
-          iconName="no-data-folder"
+          imageName="no-data-folder"
           title={t('views:pullRequests.noCommitsYet')}
           description={[t('views:pullRequests.noCommitDataDescription')]}
         />

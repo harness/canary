@@ -1,12 +1,24 @@
+import { useRef } from 'react'
+
 import { Drawer } from '@/components'
+import { useExitConfirm } from '@/views'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'
 import { UnifiedPipelineStudioEntityForm } from './entity-form/unified-pipeline-studio-entity-form'
-import { UnifiedPipelineStudioStepPalette } from './palette-drawer/uinfied-pipeline-step-palette-drawer'
+import { UnifiedPipelineStudioStepPalette } from './palette-drawer/unified-pipeline-step-palette-drawer'
 
 export const UnifiedPipelineStepDrawer = () => {
   const { rightDrawer, setRightDrawer, clearRightDrawerData } = useUnifiedPipelineStudioContext()
+
+  const isDirtyRef = useRef<boolean>()
+
+  useExitConfirm()
+
+  const handleClose = () => {
+    setRightDrawer(RightDrawer.None)
+    clearRightDrawerData()
+  }
 
   return (
     <>
@@ -14,16 +26,14 @@ export const UnifiedPipelineStepDrawer = () => {
         open={rightDrawer === RightDrawer.Collection}
         onOpenChange={open => {
           if (!open) {
-            setRightDrawer(RightDrawer.None)
-            clearRightDrawerData()
+            handleClose()
           }
         }}
       >
         <Drawer.Content>
           <UnifiedPipelineStudioStepPalette
             requestClose={() => {
-              setRightDrawer(RightDrawer.None)
-              clearRightDrawerData()
+              handleClose()
             }}
             isDrawer
           />
@@ -34,16 +44,28 @@ export const UnifiedPipelineStepDrawer = () => {
         open={rightDrawer === RightDrawer.Form}
         onOpenChange={open => {
           if (!open) {
-            setRightDrawer(RightDrawer.None)
-            clearRightDrawerData()
+            /**
+             * @todo: This currently triggers even when closing the drawer without any unsaved changes. Needs a proper fix.
+             */
+            // if (isDirtyRef.current) {
+            //   show({
+            //     onConfirm: () => {
+            //       handleClose()
+            //     }
+            //   })
+            // }
+            // else
+            // {
+            handleClose()
+            // }
           }
         }}
       >
         <Drawer.Content>
           <UnifiedPipelineStudioEntityForm
+            isDirtyRef={isDirtyRef}
             requestClose={() => {
-              setRightDrawer(RightDrawer.None)
-              clearRightDrawerData()
+              handleClose()
             }}
             isDrawer
           />

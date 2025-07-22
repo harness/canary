@@ -1,7 +1,6 @@
 import { FC } from 'react'
 
-import { Button, CopyButton, Icon, Layout } from '@/components'
-import { cn } from '@utils/cn'
+import { ButtonGroup, ButtonGroupButtonProps, IconV2, useCopyButton } from '@/components'
 
 export interface FileToolbarActionsProps {
   onDownloadClick: () => void
@@ -16,31 +15,31 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   copyContent,
   showEdit = false
 }) => {
+  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: copyContent })
   return (
-    <Layout.Horizontal>
-      <CopyButton className="rounded-r-none" name={copyContent} />
-      {showEdit && (
-        <Button
-          className={cn('border-y rounded-none')}
-          size="sm"
-          variant="outline"
-          iconOnly
-          aria-label="Edit"
-          onClick={onEditClick}
-        >
-          <Icon name="edit-pen" size={16} className="text-icons-3" />
-        </Button>
-      )}
-      <Button
-        className={cn('rounded-l-none', showEdit ? 'border' : 'border-l-0 border-y border-r')}
-        size="sm"
-        iconOnly
-        variant="outline"
-        aria-label="Download"
-        onClick={onDownloadClick}
-      >
-        <Icon name="download" size={16} className="text-icons-3" />
-      </Button>
-    </Layout.Horizontal>
+    <ButtonGroup
+      size="sm"
+      iconOnly
+      buttonsProps={[
+        {
+          ...(copyButtonProps as ButtonGroupButtonProps),
+          children: CopyIcon
+        },
+        ...(showEdit
+          ? [
+              {
+                children: <IconV2 name="edit-pencil" className="text-icons-3" />,
+                'aria-label': 'Edit',
+                onClick: onEditClick
+              }
+            ]
+          : []),
+        {
+          children: <IconV2 name="download" className="text-icons-3" />,
+          'aria-label': 'Download',
+          onClick: onDownloadClick
+        }
+      ]}
+    />
   )
 }

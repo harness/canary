@@ -1,8 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Button, ListActions, Spacer, StatusBadge, Text } from '@/components'
+import { Button, ListActions, Spacer, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { ModeType, useTheme, useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { SandboxLayout, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
 
@@ -87,7 +86,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
       <SandboxLayout.Content className="pl-0">
         <ListActions.Root>
           <ListActions.Left>
-            <Text size={6} className="text-cn-foreground-1" weight="medium">
+            <Text variant="heading-section" color="foreground-1">
               #{executionId}
             </Text>
             <StatusBadge
@@ -117,17 +116,17 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
         <Spacer size={6} />
         <div className="flex items-center gap-10">
           <div className="flex gap-1">
-            <Text color="foreground-5">Triggered Event:</Text>
+            <Text color="foreground-3">Triggered Event:</Text>
             <Text> {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}</Text>
           </div>
           <div className="flex items-center gap-1">
-            <Text color="foreground-5" className="flex items-center">
+            <Text color="foreground-3" className="flex items-center">
               At:
             </Text>
-            <Text>{timeAgo(execution?.created)}</Text>
+            <TimeAgoCard timestamp={execution?.created} />
           </div>
           <div className="flex gap-1">
-            <Text color="foreground-5">Duration:</Text>
+            <Text color="foreground-3">Duration:</Text>
             <Text>{formatDuration(execution?.duration ?? 0, 'ns')}</Text>
           </div>
         </div>

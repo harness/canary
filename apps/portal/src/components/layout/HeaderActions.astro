@@ -1,17 +1,8 @@
 ---
-import { Button, ButtonLayout, Icon } from "@harnessio/ui/components";
+import { ButtonLayout } from "@harnessio/ui/components";
 import ThemeSelect from "./ThemeSelect.astro";
 ---
 
 <ButtonLayout>
   <ThemeSelect />
-  <Button
-    variant="ghost"
-    className="text-cn-foreground-1 p-0 hover:bg-transparent hover:text-cn-foreground-primary"
-  >
-    Blog
-  </Button>
-  <Button variant="ghost" iconOnly>
-    <Icon name="environment" size={16} />
-  </Button>
 </ButtonLayout>

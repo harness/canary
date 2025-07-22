@@ -14,6 +14,7 @@ import {
   CommitTagType,
   CreateTagDialog,
   CreateTagFormFields,
+  orderSortDate,
   RepoTagsListView
 } from '@harnessio/ui/views'
 
@@ -57,7 +58,10 @@ export const RepoTagsListContainer = () => {
     queryParams: {
       query: query ?? '',
       page: queryPage,
-      limit: 10
+      limit: 10,
+      include_commit: true,
+      sort: 'date',
+      order: orderSortDate.DESC
     }
   })
 

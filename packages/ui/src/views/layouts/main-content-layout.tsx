@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { SidebarContext } from '@/components'
+import { UseSidebarSignature } from '@/components'
 import { cn } from '@/utils'
 
 /**
@@ -11,7 +11,7 @@ const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-[var(--cn-inset-layout-indent)] overflow-hidden">
     <div
       className={cn(
-        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_hsl(var(--canary-sidebar-background-01))]',
+        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_hsl(var(--cn-bg-0))]',
         className
       )}
     />
@@ -19,21 +19,28 @@ const HalfArch = ({ className }: { className?: string }) => (
 )
 
 type MainContentLayoutProps = PropsWithChildren<{
-  useSidebar?: () => SidebarContext
+  useSidebar?: UseSidebarSignature
   withBreadcrumbs?: boolean
   className?: string
+  enableInset?: boolean
 }>
 
-export function MainContentLayout({ children, useSidebar, className, withBreadcrumbs }: MainContentLayoutProps) {
+export function MainContentLayout({
+  children,
+  useSidebar,
+  className,
+  withBreadcrumbs,
+  enableInset = false
+}: MainContentLayoutProps) {
   const sidebarData = useSidebar?.()
   const isMobile = sidebarData?.isMobile
 
   return (
     <div
       className={cn(
-        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] mr-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
+        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
         {
-          'ml-[var(--cn-inset-layout-indent)]': isMobile,
+          'mx-[var(--cn-inset-layout-indent)]': isMobile || enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs
         },

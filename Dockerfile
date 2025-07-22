@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM us-west1-docker.pkg.dev/gar-setup/docker/node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 # install pnpm
@@ -16,7 +16,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 # build all the packages and apps except portal and design-system
 RUN pnpm --filter \!portal --filter \!design-system run build
 
-FROM alpine:3.21 AS final
+FROM us-west1-docker.pkg.dev/gar-setup/docker/alpine:3.21 AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist
 WORKDIR /canary-dist
 

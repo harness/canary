@@ -1,7 +1,7 @@
 import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, Fieldset, FormInput, FormWrapper, Icon, MarkdownViewer, Tabs } from '@/components'
+import { Button, FormInput, FormWrapper, IconV2, MarkdownViewer, Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { handleFileDrop, handlePaste, HandleUploadType } from '@/views'
 import { cn } from '@utils/cn'
@@ -102,82 +102,73 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset className="gap-y-3">
-          <FormInput.Text
-            id="title"
-            {...register('title')}
-            autoFocus
-            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
-            label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
-          />
+        <FormInput.Text
+          id="title"
+          {...register('title')}
+          autoFocus
+          placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
+          label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
+        />
 
-          <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
-            <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-              <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-                <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.WRITE}>
-                  Write
-                </Tabs.Trigger>
-                <Tabs.Trigger className="data-[state=active]:bg-cn-background-1" value={TABS_KEYS.PREVIEW}>
-                  Preview
-                </Tabs.Trigger>
-              </Tabs.List>
+        <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
+          <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
+            <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+              <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+              <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
+            </Tabs.List>
 
-              <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
-                <div
-                  className="relative"
-                  onDrop={handleDrop}
-                  onDragOver={e => e.preventDefault()}
-                  onDragEnter={handleDragEnter}
-                  onDragLeave={handleDragLeave}
-                  ref={dropZoneRef}
-                >
-                  <FormInput.Textarea
-                    id="description"
-                    {...register('description')}
-                    value={desc}
-                    onChange={e => {
-                      setDesc(e.target.value)
-                    }}
-                    placeholder={t(
-                      'views:pullRequests.compareChangesFormDescriptionPlaceholder',
-                      'Add Pull Request description here.'
-                    )}
-                    onPaste={e => {
-                      if (e.clipboardData.files.length > 0) {
-                        handlePasteForUpload(e)
-                      }
-                    }}
-                    label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
-                  />
-                  {isDragging && (
-                    <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+            <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
+              <div
+                className="relative"
+                onDrop={handleDrop}
+                onDragOver={e => e.preventDefault()}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                ref={dropZoneRef}
+              >
+                <FormInput.Textarea
+                  id="description"
+                  {...register('description')}
+                  defaultValue={desc}
+                  placeholder={t(
+                    'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+                    'Add Pull Request description here.'
                   )}
-                </div>
-              </Tabs.Content>
-              <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
-                <div className="min-h-24">
-                  {desc ? (
-                    <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
-                  ) : (
-                    <span>Nothing to preview</span>
-                  )}
-                </div>
-              </Tabs.Content>
-            </Tabs.Root>
+                  onPaste={e => {
+                    if (e.clipboardData.files.length > 0) {
+                      handlePasteForUpload(e)
+                    }
+                  }}
+                  label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
+                />
+                {isDragging && (
+                  <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
+                )}
+              </div>
+            </Tabs.Content>
+            <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
+              <div className="min-h-24">
+                {desc ? (
+                  <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
+                ) : (
+                  <span>Nothing to preview</span>
+                )}
+              </div>
+            </Tabs.Content>
+          </Tabs.Root>
 
-            <div className="mt-4 flex items-center justify-between">
-              {activeTab === TABS_KEYS.WRITE && (
-                <div>
-                  <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-                  <Button variant="ghost" onClick={e => handleFileSelect(e)}>
-                    <Icon size={16} name="attachment-image" />
-                    <span>Drag & drop, select, or paste to attach files</span>
-                  </Button>
-                </div>
-              )}
-            </div>
+          <div className="mt-4 flex items-center justify-between">
+            {activeTab === TABS_KEYS.WRITE && (
+              <div>
+                <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+                <Button variant="ghost" onClick={e => handleFileSelect(e)}>
+                  <IconV2 name="attachment-image" />
+                  <span>Drag & drop, select, or paste to attach files</span>
+                </Button>
+              </div>
+            )}
           </div>
-        </Fieldset>
+        </div>
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
           <span className="text-1 text-cn-foreground-danger">{apiError?.toString()}</span>

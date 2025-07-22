@@ -4,16 +4,24 @@ export const pipeline1 = `pipeline:
         stages:
             - parallel:
                 stages:
-                - steps:
+                - name: CI Stage
+                  steps:
                     - run: go build
-                    - run: go test
-                - steps:
+                    - run: go test     
+                - name: CD Stage
+                  steps:
                     - run: npm test
+                  environment: 
+                    id: prod
+                    deploy-to: dev-cluster
+                  service: nginx
             - group:
                 stages:
-                - steps:
+                - name: Custom Stage 1
+                  steps:
                     - run: go build
-                - steps:
+                - name: Custom Stage 2
+                  steps:
                     - run: npm run
                     - run: npm test  
 `

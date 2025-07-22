@@ -1,4 +1,4 @@
-import { Icon, Logo } from '@/components'
+import { IconV2, LogoV2, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
@@ -30,7 +30,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                 }}
               >
                 <StepsPaletteItemLayout.Left className="flex items-center">
-                  {logoName ? <Logo name={logoName} size={32} /> : <Icon name="connectors" size={30} />}
+                  {logoName ? <LogoV2 name={logoName} /> : <IconV2 name="connectors" size="lg" />}
                 </StepsPaletteItemLayout.Left>
                 <StepsPaletteItemLayout.Right>
                   <StepsPaletteItemLayout.Header>
@@ -45,14 +45,14 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                   )}
                 </StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.RightItem>
-                  <Icon name="chevron-right" size={12} />
+                  <IconV2 name="nav-arrow-right" size="2xs" />
                 </StepsPaletteItemLayout.RightItem>
               </StepsPaletteItemLayout.Root>
             </StepsPaletteContentLayout.SectionItem>
           )
         })
       ) : (
-        <p className="text-cn-foreground-3">There is no connector for provided query.</p>
+        <Text color="foreground-3">There is no connector for provided query.</Text>
       )}
     </StepsPaletteContentLayout.Section>
   )

@@ -19,7 +19,7 @@ import { DocsPage } from "@/components/docs-page";
       </Drawer.Trigger>
 
       <Drawer.Content>
-        <Drawer.Header icon="repositories">
+        <Drawer.Header icon="repository">
           <Drawer.Tagline>tagline</Drawer.Tagline>
           <Drawer.Title>Title</Drawer.Title>
           <Drawer.Description>
@@ -110,7 +110,7 @@ return (
     </Drawer.Trigger>
 
     <Drawer.Content size="md" hideClose>
-      <Drawer.Header icon="info">
+      <Drawer.Header icon="info-circle-solid">
         <Drawer.Tagline>Section</Drawer.Tagline>
         <Drawer.Title>Title of the drawer</Drawer.Title>
         <Drawer.Description>Description of the drawer</Drawer.Description>
@@ -119,7 +119,7 @@ return (
       <Drawer.Body className="">
         Content of the drawer goes here
 
-        <Drawer.Root nested>
+        <Drawer.Root>
           <Drawer.Trigger asChild>
             <Button>Open Nested Drawer</Button>
           </Drawer.Trigger>
@@ -180,7 +180,7 @@ All parts of the `Drawer` component can be imported and composed as required.
 
 ## Nested drawers
 
-Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`, and adding the `nested` prop to the nested root.
+Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`.
 
 <DocsPage.ComponentExample
   client:only
@@ -199,7 +199,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
         </Drawer.Header>
 
         <Drawer.Body>
-          <Drawer.Root nested>
+          <Drawer.Root>
             <Drawer.Trigger asChild>
               <Button>Open Nested Drawer</Button>
             </Drawer.Trigger>
@@ -210,7 +210,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
               </Drawer.Header>
 
               <Drawer.Body>
-                <Drawer.Root nested>
+                <Drawer.Root>
                   <Drawer.Trigger asChild>
                     <Button>Open Nested Drawer</Button>
                   </Drawer.Trigger>
@@ -286,12 +286,36 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
 
 ## Drawer sizes
 
-The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `sm`, `md`, and `lg`.
+The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `xs`, `sm`, `md`, and `lg`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <ButtonLayout orientation="vertical">
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer with 'xs' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="xs">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
     <Drawer.Root>
       <Drawer.Trigger asChild>
         <Button>Open Drawer with 'sm' size</Button>
@@ -553,13 +577,6 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
       defaultValue: "false",
     },
     {
-      name: "nested",
-      description: "Whether the drawer is nested in another drawer.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
       name: "repositionInputs",
       description:
         "When true will reposition inputs rather than scroll then into view if the keyboard is in the way. Setting it to false will fall back to the default browser behavior.",
@@ -635,6 +652,21 @@ Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`
       description: "Drawer.Header, Drawer.Body and Drawer.Footer components.",
       required: true,
       value: "ReactNode",
+    },
+    {
+      name: "overlayClassName",
+      description: "Class to apply to the overlay.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "forceWithOverlay",
+      description:
+        "When true, the drawer will always render an overlay even if the modal prop is false.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
   ]}
 />
@@ -727,6 +759,13 @@ A scrollable wrapper for all content that doesn’t belong to the [`Drawer.Heade
     {
       name: "className",
       description: "Class to apply to the viewport of the scrollable area.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "scrollAreaClassName",
+      description: "Class to apply to the scrollable area.",
       required: false,
       value: "string",
       defaultValue: "undefined",

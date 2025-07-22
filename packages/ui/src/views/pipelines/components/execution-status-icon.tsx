@@ -1,4 +1,4 @@
-import { Icon as CanaryIcon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 import { PipelineExecutionStatus } from '../common/execution-types'
 
@@ -11,17 +11,17 @@ export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props =>
   switch (status) {
     case PipelineExecutionStatus.WAITING_ON_DEPENDENCIES:
     case PipelineExecutionStatus.PENDING:
-      return <CanaryIcon size={16} name="pending-clock" />
+      return <IconV2 name="clock-solid" />
     case PipelineExecutionStatus.KILLED:
     case PipelineExecutionStatus.FAILURE:
     case PipelineExecutionStatus.ERROR:
-      return <CanaryIcon size={16} name="fail-legacy" />
+      return <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />
     case PipelineExecutionStatus.SUCCESS:
-      return <CanaryIcon size={16} name="success" className="text-cn-foreground-success" />
+      return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     case PipelineExecutionStatus.RUNNING:
-      return <CanaryIcon size={20} name="running" className="animate-spin text-cn-foreground-warning" />
+      return <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
     case PipelineExecutionStatus.SKIPPED:
     default:
-      return <CanaryIcon size={16} name="pending-clock" className="opacity-50" />
+      return <IconV2 name="clock-solid" className="opacity-50" />
   }
 }

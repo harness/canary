@@ -1,4 +1,4 @@
-import { Icon as CanaryIcon } from '@/components'
+import { IconV2 } from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { BadgeProps, ExecutionStatusProps } from './types'
@@ -17,7 +17,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-0.5">
-            <CanaryIcon size={16} name="pending-clock" />
+            <IconV2 name="clock-solid" />
             <span className="text-cn-foreground-disabled">Pending</span>
           </div>
           {duration ? <span className="text-cn-foreground-disabled">{duration}</span> : null}
@@ -32,7 +32,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1.5">
-            <CanaryIcon size={16} name="running" className="animate-spin text-cn-foreground-warning" />
+            <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
             <span className="text-studio-3">Running</span>
           </div>
           {duration && <span className="text-studio-3">{duration}</span>}
@@ -49,7 +49,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1.5">
-            <CanaryIcon size={16} name="fail-legacy" />
+            <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />
             <span className="text-[#ED5E5E]">Failed</span>
           </div>
           {duration && <span className="text-[#ED5E5E]">{duration}</span>}
@@ -64,7 +64,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1.5 text-cn-foreground-success">
-            <CanaryIcon size={16} name="success" />
+            <IconV2 name="check-circle-solid" />
             <span>Success</span>
           </div>
           {duration && <span className="text-cn-foreground-success">{duration}</span>}
@@ -81,15 +81,15 @@ const Icon: React.FC<ExecutionStatusProps> = props => {
   switch (status.toLowerCase()) {
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.PENDING:
-      return <CanaryIcon size={16} name="pending-clock" />
+      return <IconV2 name="clock-solid" />
     case ExecutionState.KILLED:
     case ExecutionState.FAILURE:
     case ExecutionState.ERROR:
-      return <CanaryIcon size={16} name="fail-legacy" />
+      return <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />
     case ExecutionState.SUCCESS:
-      return <CanaryIcon size={16} name="success" className="text-cn-foreground-success" />
+      return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={20} name="running" className="animate-spin text-cn-foreground-warning" />
+      return <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
     case ExecutionState.SKIPPED:
     default:
       return <></>

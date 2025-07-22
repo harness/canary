@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, ModalDialog, Textarea } from '@/components'
+import { Button, ButtonLayout, Dialog, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -26,12 +26,12 @@ export const EditRepoDetails = ({
     setNewDesc(description)
   }, [description])
   return (
-    <ModalDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title className="mb-4">Repository Description</ModalDialog.Title>
-        </ModalDialog.Header>
-        <ModalDialog.Body>
+    <Dialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title className="mb-4">Repository Description</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
           <Textarea
             label="Description"
             className="h-24 text-cn-foreground-1"
@@ -43,16 +43,16 @@ export const EditRepoDetails = ({
             placeholder="Enter repository description here"
             error={updateRepoError?.length ? updateRepoError : undefined}
           />
-        </ModalDialog.Body>
-        <ModalDialog.Footer>
+        </Dialog.Body>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={handleClose}>Cancel</ModalDialog.Close>
+            <Dialog.Close onClick={handleClose}>Cancel</Dialog.Close>
             <Button type="button" onClick={() => onSave(newDesc)}>
               Save
             </Button>
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

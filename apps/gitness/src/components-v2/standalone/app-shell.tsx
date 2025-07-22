@@ -70,7 +70,7 @@ export const AppShell: FC = () => {
     <>
       <AppSideBar>
         <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} withMobileSidebarToggle />
-        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
+        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0} enableInset>
           <Outlet />
         </MainContentLayout>
       </AppSideBar>

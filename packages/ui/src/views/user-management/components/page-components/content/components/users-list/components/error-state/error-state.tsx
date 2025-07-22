@@ -11,7 +11,7 @@ export const ErrorState = () => {
   return (
     <NoData
       textWrapperClassName="max-w-[350px]"
-      iconName="no-data-error"
+      imageName="no-data-error"
       title={t('views:noData.errorApiTitle', 'Failed to load', { type: 'users' })}
       description={[
         fetchUsersError ||

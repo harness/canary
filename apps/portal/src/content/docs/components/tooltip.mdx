@@ -10,253 +10,204 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tooltip.Provider>
-    <Tooltip.Root>
-        <Tooltip.Trigger><Button theme="default">New Connector</Button></Tooltip.Trigger>
-        <Tooltip.Content>
-            <Text>Hello World!</Text>
-						<Tooltip.Arrow />
-        </Tooltip.Content>
+  code={`<TooltipProvider>
+    <Tooltip
+        title="Full-Stack Development"
+        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+    >
+        <Button>Trigger</Button>
     </Tooltip.Root>
-</Tooltip.Provider>`}
+</TooltipProvider>`}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Tooltip } from '@harnessio/ui/components'
+import { Tooltip, TooltipProvider } from '@harnessio/ui/components'
 
 // ...
 
 return (
-  <Tooltip.Provider> {/* typically wrapped around the entire app */}
+  <TooltipProvider> {/* typically wrapped around the entire app */}
     {/* ... */}
-    <Tooltip.Root>
-      <Tooltip.Trigger>Hover me</Tooltip.Trigger>
-      <Tooltip.Content>
-        <p>This is a tooltip</p>
-      </Tooltip.Content>
-    </Tooltip.Root>
-  </Tooltip.Provider>
+    <Tooltip
+        title="Title"
+        content={<p>This is a tooltip</p>}
+    >
+      <span>Hover me</span>
+    </Tooltip>
+  </TooltipProvider>
 )
 ```
 
-## Anatomy
+## Tooltip with no arrow
 
-All parts of the `Tooltip` component can be imported and composed as required.
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <Tooltip title="Title" content={<p>This is a tooltip</p>} hideArrow>
+        <Button>trigger</Button>
+      </Tooltip>
+    </TooltipProvider>
+  `}
+/>
 
-```typescript jsx
-<Tooltip.Provider>
-  <Tooltip.Root>
-    <Tooltip.Trigger />
-    <Tooltip.Content>
-      <Tooltip.Arrow />
-    </Tooltip.Content>
-  </Tooltip.Root>
-</Tooltip.Provider>
-```
+## Sides
+
+The `Tooltip` component can be displayed to any side of the trigger element. If there isn't any room to display the tooltip on the preferred side, the tooltip will instead be displayed on the opposite side. Using the `side` prop, the `Tooltip` component supports `top`, `bottom`, `left` and `right` sides.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <ButtonLayout orientation="vertical">
+        <Tooltip
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Top side</Button>
+        </Tooltip>
+
+        <Tooltip
+          side="bottom"
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Bottom side</Button>
+        </Tooltip>
+
+        <Tooltip
+          side="right"
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Right side</Button>
+        </Tooltip>
+
+        <Tooltip
+          side="left"
+          title="Full-Stack Development"
+          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+        >
+          <Button>Left side</Button>
+        </Tooltip>
+      </ButtonLayout>
+    </TooltipProvider>
+
+`}
+/>
+
+## Alignment
+
+The `Tooltip` component can be aligned relative to the anchor or trigger element using the `align` prop. It supports `start`, `center`, and `end` values. This controls how the tooltip is positioned along the side it appears on.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <ButtonLayout orientation="vertical">
+      <Tooltip
+        title="Full-Stack Development"
+        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+      >
+        <Button>Center align</Button>
+      </Tooltip>
+      <Tooltip
+        align="start"
+        title="Full-Stack Development"
+        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+      >
+        <Button>Start align</Button>
+      </Tooltip>
+      <Tooltip
+        align="end"
+        title="Full-Stack Development"
+        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+      >
+        <Button>End align</Button>
+      </Tooltip>
+      </ButtonLayout>
+    </TooltipProvider>
+  `}
+/>
 
 ## API Reference
 
-### `Provider`
+### `TooltipProvider`
 
 The provider component that manages tooltips. Typically wrapped around the entire app.
 
-```typescript jsx
-<Tooltip.Provider
-  delayDuration={700}     // [OPTIONAL] delay from when the mouse enters until the tooltip opens
-  skipDelayDuration={300} // [OPTIONAL] how much time a user has to enter another trigger without incurring a delay again
-  disableHoverableContent // [OPTIONAL] immediately close the tooltip when the mouse leaves the trigger
->
-  {/* ... */}
-</Tooltip.Provider>
-```
-
 <DocsPage.PropsTable
   props={[
     {
-      name: "delayDuration",
-      value: "number",
-      defaultValue: "700",
-      description:
-        "The duration from when the mouse enters the trigger until the tooltip opens.",
-    },
-    {
-      name: "skipDelayDuration",
-      value: "number",
-      defaultValue: "300",
-      description:
-        "How much time a user has to enter another trigger without incurring a delay again.",
-    },
-    {
-      name: "disableHoverableContent",
-      value: "boolean",
-      defaultValue: "false",
-      description:
-        "Immediately close the tooltip when the mouse leaves the trigger.",
+      name: "children",
+      description: "Typically wraps the entire app.",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />
 
-### `Root`
-
-The `Root` component of a tooltip can be used in both controlled and uncontrolled modes. In uncontrolled mode, you can
-use the `defaultOpen` prop to specify the initial open state of the tooltip. In controlled mode, you can manage the open
-state externally by using the `open` and `onOpenChange` props. The `open` prop allows you to control the open state
-directly, while the `onOpenChange` prop is an event handler called whenever the open state changes.
-
-```typescript jsx
-<Tooltip.Root
-  defaultOpen             // [OPTIONAL] initial open state
-  open                    // [OPTIONAL] controlled open state
-  onOpenChange={onChange} // [OPTIONAL] event handler called when the open state changes
-  delayDuration={700}     // [OPTIONAL] override default delay duration
-  disableHoverableContent // [OPTIONAL] override default setting for disabling hoverable content
->
-  {/* ... */}
-</Tooltip.Root>
-```
+### `Tooltip`
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "defaultOpen",
-      value: "boolean",
-      defaultValue: "false",
-      description:
-        "The open state of the tooltip when it is initially rendered.",
+      name: "content",
+      description: "Content to display in the tooltip.",
+      required: true,
+      value: "ReactNode",
     },
     {
-      name: "open",
-      value: "boolean",
-      description: "The controlled open state of the tooltip.",
-    },
-    {
-      name: "onOpenChange",
-      value: "(open: boolean) => void",
-      description:
-        "Event handler called when the open state of the tooltip changes.",
-    },
-    {
-      name: "delayDuration",
-      value: "number",
-      description: "Override the default delay duration for this tooltip.",
-    },
-    {
-      name: "disableHoverableContent",
-      value: "boolean",
-      description:
-        "Override the default setting for disabling hoverable content for this tooltip.",
-    },
-  ]}
-/>
-
-### `Trigger`
-
-The button that toggles the tooltip. This component is based on the native `button` element and supports all of its props.
-
-```typescript jsx
-<Tooltip.Trigger
-  asChild           // [OPTIONAL] render the trigger as the child
-  className="class" // [OPTIONAL] additional CSS classes
->
-  <button>Hover over me</button>
-</Tooltip.Trigger>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "asChild",
-      description: "Render the trigger as the child",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "className",
-      description: "Additional CSS classes to apply to the trigger",
+      name: "title",
+      description: "String to use as the title of the tooltip.",
       required: false,
       value: "string",
+      defaultValue: "undefined",
     },
-  ]}
-/>
-
-### `Content`
-
-The component that pops out when the tooltip is open.
-
-```typescript jsx
-<Tooltip.Content
-  side="top"               // [OPTIONAL] preferred side
-  sideOffset={5}           // [OPTIONAL] distance from the trigger
-  align="center"           // [OPTIONAL] preferred alignment
-  alignOffset={-4}         // [OPTIONAL] offset from the alignment
-  avoidCollisions          // [OPTIONAL] avoid collisions
-  collisionBoundary={[el]} // [OPTIONAL] boundary to use for collision detection
-  collisionPadding={4}     // [OPTIONAL] padding to apply to the collision detection
-  sticky="partial"         // [OPTIONAL] sticky behavior
-  className="class"        // [OPTIONAL] additional CSS classes
->
-  {/* Tooltip content */}
-</Tooltip.Content>
-```
-
-<DocsPage.PropsTable
-  props={[
     {
       name: "side",
-      value: "'top' | 'right' | 'bottom' | 'left'",
-      defaultValue: "'top'",
-      description: "The preferred side of the trigger to render against.",
-    },
-    {
-      name: "sideOffset",
-      value: "number",
-      defaultValue: "5",
-      description: "The distance in pixels from the trigger.",
+      description: "Side of the element to display the tooltip.",
+      required: false,
+      value: "'right' | 'left' | 'top' | 'bottom'",
+      defaultValue: "top",
     },
     {
       name: "align",
+      description: "Where on the 'side' to align the tooltip.",
+      required: false,
       value: "'start' | 'center' | 'end'",
-      defaultValue: "'center'",
-      description: "The preferred alignment against the trigger.",
+      defaultValue: "center",
     },
     {
-      name: "alignOffset",
-      value: "number",
-      defaultValue: "-4",
-      description:
-        'An offset in pixels from the "start" or "end" alignment options.',
-    },
-    {
-      name: "avoidCollisions",
+      name: "hideArrow",
+      description: "Pass or set to true to not display the arrow.",
+      required: false,
       value: "boolean",
-      defaultValue: "true",
+      defaultValue: "false",
+    },
+    {
+      name: "open",
       description:
-        "When true, overrides the side and align preferences to prevent collisions with boundary edges.",
+        "Controls whether the tooltip is open or not. Useful for controlled components or debugging.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
-      name: "collisionBoundary",
-      value: "Element | null | Array<Element | null>",
-      description: "The element used as the collision boundary.",
-    },
-    {
-      name: "collisionPadding",
+      name: "delay",
+      description:
+        "Delay in ms between hovering/focusing the item and showing the tooltip.",
+      required: false,
       value: "number",
-      defaultValue: "4",
-      description: "The padding in pixels to apply to the collision boundary.",
+      defaultValue: "500",
     },
     {
-      name: "sticky",
-      value: "'partial' | 'always'",
-      defaultValue: "'partial'",
-      description:
-        "When 'partial', keeps the content in the boundary as long as the trigger is partially in the boundary. When 'always', keeps the content in the boundary regardless.",
-    },
-    {
-      name: "className",
-      value: "string",
-      description: "Additional CSS classes to apply to the content.",
+      name: "children",
+      description: "Element to wrap the tooltip around.",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />

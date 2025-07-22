@@ -1,4 +1,4 @@
-import { Accordion, Icon, StackedList, Text } from '@/components'
+import { Accordion, IconV2, StackedList, Text } from '@/components'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
@@ -19,9 +19,9 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
               textClassName={isSuccess ? '' : 'text-cn-foreground-danger'}
               text={commentsInfo.header}
               icon={
-                <Icon
+                <IconV2
                   className={isSuccess ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
-                  name={isSuccess ? 'success' : 'triangle-warning'}
+                  name={isSuccess ? 'check-circle-solid' : 'warning-triangle'}
                 />
               }
             />
@@ -29,7 +29,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
           description={!!commentsInfo?.content && <LineDescription text={commentsInfo.content} />}
         />
         {commentsInfo.status === 'failed' && !!handleAction && (
-          <Text className="pr-2" onClick={() => handleAction()} size={1}>
+          <Text className="pr-2" onClick={() => handleAction()}>
             View
           </Text>
         )}

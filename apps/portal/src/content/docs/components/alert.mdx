@@ -10,56 +10,58 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="space-y-4">
+  code={`<div className="w-[422px] space-y-4">
   <Alert.Root theme="info">
     <Alert.Title>Alert Title</Alert.Title>
     <Alert.Description>This is an alert description.</Alert.Description>
   </Alert.Root>
-  <Alert.Root theme="danger" dismissible>
-    <Alert.Description>We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again.</Alert.Description>
-  </Alert.Root>
-  <Alert.Root theme="warning" dismissible>
-    <Alert.Title>Warning Alert</Alert.Title>
-    <Alert.Description>This is a warning alert description.</Alert.Description>
-  </Alert.Root>
-  <Alert.Root dismissible>
-    <Alert.Title>Dismissible Alert</Alert.Title>
-  </Alert.Root>
-  <Alert.Root>
-    <Alert.Title>Link Alert</Alert.Title>
-    <Alert.Link to="/abc">Learn more</Alert.Link>
-  </Alert.Root>
-  <Alert.Root>
-    <Alert.Title theme="warning">Link Alert as child</Alert.Title>
-    <Alert.Link to="/abc" asChild><Button>Learn more</Button></Alert.Link>
-  </Alert.Root>
-  <Alert.Root theme="danger">
-    <Alert.Title>Crowded Alert not expandable</Alert.Title>
-    <Alert.Description>LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Unde molestiae hic, iste nostrum, quia eaque amet autem optio rem earum nihil rerum illo! Possimus</Alert.Description>
-  </Alert.Root>
-  <Alert.Root expandable>
-    <Alert.Title>Crowded Alert</Alert.Title>
-    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
-    <Alert.Link to="/abc">Learn more</Alert.Link>
-  </Alert.Root>
+
+<Alert.Root dismissible>
+  <Alert.Description>
+    This alert is closable because it includes the reset property.
+  </Alert.Description>
+</Alert.Root>
+
+<Alert.Root>
+  <Alert.Description>
+    Repositories are cloned using tokens by default. You can optionall provide
+    an ssh key to override this behavior and clone using git+ssh.
+  </Alert.Description>
+  <Alert.Link to="/abc">Learn more</Alert.Link>
+</Alert.Root>
+
+<Alert.Root theme="danger">
+  <Alert.Description>
+    Repositories are cloned using tokens by default. You can optionall provide
+    an ssh key to override this behavior and clone using git+ssh.
+  </Alert.Description>
+  <Alert.Link to="/abc">Learn more</Alert.Link>
+</Alert.Root>
+<Alert.Root theme="warning">
+  <Alert.Description>
+    Repositories are cloned using tokens by default. You can optionall provide
+    an ssh key to override this behavior and clone using git+ssh.
+  </Alert.Description>
+  <Alert.Link to="/abc">Learn more</Alert.Link>
+</Alert.Root>
+
+<Alert.Root theme="danger" expandable>
+  <Alert.Description>
+    We couldn’t complete your request because it violates an Open Policy Agent
+    (OPA) rule set by your organization. Please review the applicable policies
+    or contact your administrator for clarification, then try creating the
+    feature flag again. We couldn’t complete your request because it violates an
+    Open Policy Agent (OPA) rule set by your organization. Please review the
+    applicable policies or contact your administrator for clarification, then
+    try creating the feature flag again.
+  </Alert.Description>
+</Alert.Root>
+
   <Alert.Root theme="danger" expandable>
-    <Alert.Title>Crowded Alert</Alert.Title>
-    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
-  </Alert.Root>
-  <Alert.Root theme="warning" expandable>
-    <Alert.Title>Crowded Alert</Alert.Title>
-    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
-  </Alert.Root>
-  <Alert.Root expandable>
-    <Alert.Title>Expandable but not crowded</Alert.Title>
-    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</Alert.Description>
-  </Alert.Root>
-  <Alert.Root theme="danger" expandable>
-    <Alert.Title>Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title Crowded title</Alert.Title>
-    <Alert.Description>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
-  </Alert.Root>
-  <Alert.Root theme="warning" expandable>
-    <Alert.Description>Without Title Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat magnam suscipit fugit officiis dignissimos iusto similique deleniti. Quod odio amet quisquam, blanditiis necessitatibus aliquam cumque beatae debitis sunt nemo perspiciatis a saepe enim voluptas? Incidunt vel officiis quam, corrupti ea aliquid nobis! Soluta accusantium ex, alias quod velit explicabo modi exercitationem eaque incidunt fuga, nihil fugiat voluptatum doloribus repudiandae atque.</Alert.Description>
+    <Alert.Title>Alert Title</Alert.Title>
+    <Alert.Description>
+      We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again. We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again.
+    </Alert.Description>
   </Alert.Root>
 </div>`}
 />

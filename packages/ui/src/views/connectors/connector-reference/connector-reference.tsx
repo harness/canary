@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Button, ButtonLayout, Icon, Logo, StackedList } from '@/components'
+import { Alert, Button, ButtonLayout, IconV2, LogoV2, StackedList } from '@/components'
 import { ConnectorItem, connectorRefFilters, DirectionEnum, EntityReference, EntityRendererProps } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -71,13 +71,19 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={
           connectorLogo ? (
-            <Logo name={connectorLogo} size={14} />
+            <LogoV2 name={connectorLogo} size="sm" />
           ) : (
-            <Icon name="connectors" size={14} className="text-cn-foreground-3" />
+            <IconV2 name="connectors" size="xs" className="text-cn-foreground-3" />
           )
         }
       >
-        <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
+        <div title={entity.connector.name}>
+          <StackedList.Field
+            title={entity.connector.name}
+            description={entity.connector.description}
+            className="max-w-sm overflow-hidden truncate text-nowrap"
+          />
+        </div>
       </StackedList.Item>
     )
   }

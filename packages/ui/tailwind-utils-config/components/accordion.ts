@@ -1,12 +1,12 @@
 export default {
   '.cn-accordion': {
     '--cn-accordion-indicator-mt': '4px',
-    minWidth: 'var(--cn-accordion-defailt-min-width)',
+    minWidth: 'var(--cn-accordion-sm-min-width)',
 
     '&-md': {
       minWidth: 'var(--cn-accordion-md-min-width)',
-      '--cn-accordion-default-gap': 'var(--cn-accordion-md-gap)',
-      '--cn-accordion-default-py': 'var(--cn-accordion-md-py)',
+      '--cn-accordion-sm-gap': 'var(--cn-accordion-md-gap)',
+      '--cn-accordion-sm-py': 'var(--cn-accordion-md-py)',
       '--cn-accordion-indicator-mt': '2px',
 
       '.cn-accordion-trigger-text': {
@@ -19,26 +19,26 @@ export default {
 
       '&:where([data-disabled]) [class*="cn-accordion"]': {
         color: 'var(--cn-state-disabled-text)'
-      },
-
-      '&:where([data-state="open"])': {
-        '.cn-accordion-trigger-indicator': {
-          '@apply rotate-180': ''
-        }
       }
     },
 
     '&-trigger': {
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--cn-accordion-default-gap)',
+      gap: 'var(--cn-accordion-sm-gap)',
       width: '100%',
-      padding: 'var(--cn-accordion-default-py) 0',
+      padding: 'var(--cn-accordion-sm-py) 0',
       color: 'var(--cn-text-2)',
 
       '&:hover:not([data-disabled])': {
         '.cn-accordion-trigger-indicator': {
           color: 'var(--cn-text-1)'
+        }
+      },
+
+      '&:where([data-state="open"])': {
+        '.cn-accordion-trigger-indicator': {
+          '@apply rotate-180': ''
         }
       },
 
@@ -64,7 +64,7 @@ export default {
     },
 
     '&-content': {
-      paddingBottom: 'var(--cn-accordion-default-py)',
+      paddingBottom: 'var(--cn-accordion-sm-py)',
       color: 'var(--cn-text-2)',
       '@apply font-body-normal': '',
 

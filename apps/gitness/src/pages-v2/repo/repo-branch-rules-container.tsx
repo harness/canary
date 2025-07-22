@@ -82,7 +82,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
-        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
+        navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName }))
       }
     }
   )
@@ -106,7 +106,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
-        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
+        navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName }))
       }
     }
   )
@@ -135,8 +135,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, checkName: string) => {
-    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, checkName })
+  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string[]) => {
+    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
   }
 
   const handleInputChange = (ruleId: string, value: string) => {
@@ -151,6 +151,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
           payload: branchRules.map(rule => ({
             id: rule.id,
             checked: false,
+            disabled: false,
             submenu: [],
             selectOptions: [],
             input: ''
@@ -164,6 +165,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
         payload: presetRuleData.rules.map(rule => ({
           id: rule.id,
           checked: rule.checked || false,
+          disabled: rule.disabled || false,
           submenu: (rule.submenu || []) as MergeStrategy[],
           selectOptions: rule.selectOptions || [],
           input: rule.input || ''

@@ -1,7 +1,7 @@
 import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
 
 export const useRootViewWrapperStore = () => {
-  const moreMenu = [
+  const moreMenu: MenuGroupType[] = [
     {
       groupId: 0,
       title: 'Devops',
@@ -9,49 +9,49 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 0,
-          iconName: 'repositories-gradient',
+          iconName: 'repository',
           title: 'Repositories',
           description: 'Integrated & familiar git experience.',
           to: '/iatopilskii/repos'
         },
         {
           id: 1,
-          iconName: 'pipelines-gradient',
+          iconName: 'pipeline',
           title: 'Pipelines',
           description: 'Up to 4X faster than other solutions.',
           to: '/pipelines'
         },
         {
           id: 2,
-          iconName: 'execution-gradient',
+          iconName: 'executions',
           title: 'Executions',
           description: 'Optimize feature rollout velocity.',
           to: '/:spaceId/repos/:repoId/pipelines/:pipelineId/executions'
         },
         {
           id: 3,
-          iconName: 'database-gradient',
+          iconName: 'database',
           title: 'Databases',
           description: 'Manage all your infrastructure.',
           to: '/databases'
         },
         {
           id: 4,
-          iconName: 'artifacts-gradient',
+          iconName: 'artifact',
           title: 'Artifacts',
           description: 'Validate service resilience.',
           to: '/artifacts'
         },
         {
           id: 5,
-          iconName: 'infrastructure-gradient',
+          iconName: 'infrastructure',
           title: 'Infrastructure',
           description: 'Manage all your infrastructure.',
           to: '/infrastructure-as-code'
         },
         {
           id: 6,
-          iconName: 'flag-gradient',
+          iconName: 'featured-flags',
           title: 'Feature Flags',
           description: 'Optimize feature rollout velocity.',
           to: '/feature-flags'
@@ -65,21 +65,21 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 7,
-          iconName: 'dev-portal-gradient',
+          iconName: 'dev-portal',
           title: 'Developer Portal',
           description: 'Built for developers, onboard in minutes.',
           to: '/developer/portal'
         },
         {
           id: 8,
-          iconName: 'dev-envs-gradient',
+          iconName: 'developer-environments',
           title: 'Developer Environments',
           description: 'Integrated & familiar git experience.',
           to: '/developer/environments'
         },
         {
           id: 9,
-          iconName: 'dev-insights-gradient',
+          iconName: 'developer-insights',
           title: 'Developer Insights',
           description: 'Actionable insights on SDLC.',
           to: '/developer/insights'
@@ -93,14 +93,14 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 10,
-          iconName: 'security-tests-gradient',
+          iconName: 'security-test',
           title: 'Security Tests',
           description: 'Shift left security testing.',
           to: '/security-tests'
         },
         {
           id: 11,
-          iconName: 'supply-chain-gradient',
+          iconName: 'supply-chain',
           title: 'Supply Chain',
           description: 'Artifact integrity and governance.',
           to: '/supply-chain'
@@ -114,7 +114,7 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 12,
-          iconName: 'cloud-costs-gradient',
+          iconName: 'cloud-costs',
           title: 'Cloud Costs',
           description: 'Intelligent cost management.',
           to: '/cloud-costs'
@@ -128,14 +128,14 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 13,
-          iconName: 'incidents-gradient',
+          iconName: 'warning-triangle',
           title: 'Incidents',
           description: 'Shift left security testing.',
           to: '/incidents'
         },
         {
           id: 14,
-          iconName: 'chaos-engineering-gradient',
+          iconName: 'chaos-engineering',
           title: 'Chaos Engineering',
           description: 'Validate service resilience.',
           to: '/chaos'
@@ -149,16 +149,16 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 15,
-          iconName: 'dashboards-gradient',
+          iconName: 'dashboard',
           title: 'Dashboard',
           description: 'Intelligent cost management.',
           to: '/cloud-costs'
         }
       ]
     }
-  ] as MenuGroupType[]
+  ]
 
-  const settingsMenu = [
+  const settingsMenu: MenuGroupType[] = [
     {
       groupId: 6,
       title: 'General',
@@ -166,13 +166,13 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 16,
-          iconName: 'settings-2',
+          iconName: 'settings',
           title: 'Settings',
           to: '/iatopilskii/settings/general'
         },
         {
           id: 17,
-          iconName: 'notification',
+          iconName: 'bell',
           title: 'Notifications',
           to: '/notifications'
         }
@@ -185,13 +185,13 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 18,
-          iconName: 'wrench',
+          iconName: 'services',
           title: 'Services',
           to: '/service-reliability'
         },
         {
           id: 19,
-          iconName: 'environment',
+          iconName: 'environments',
           title: 'Environments',
           to: '/environments'
         },
@@ -203,7 +203,7 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 21,
-          iconName: 'hierarchy',
+          iconName: 'delegates',
           title: 'Delegeates',
           to: '/file-store'
         },
@@ -215,25 +215,25 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 23,
-          iconName: 'file-icon',
+          iconName: 'page',
           title: 'File Store',
           to: '/delegates'
         },
         {
           id: 24,
-          iconName: 'sidebar-icon',
+          iconName: 'sidebar',
           title: 'Templates',
           to: '/templates'
         },
         {
           id: 25,
-          iconName: 'variable',
+          iconName: 'variables',
           title: 'Variables',
           to: '/variables'
         },
         {
           id: 26,
-          iconName: 'clock-icon',
+          iconName: 'clock',
           title: 'SLO Downtime',
           to: '/slo-downtime'
         },
@@ -251,13 +251,13 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 29,
-          iconName: 'stack',
+          iconName: 'overrides',
           title: 'Overrides',
           to: '/overrides'
         },
         {
           id: 30,
-          iconName: 'bookmark-icon',
+          iconName: 'bookmark',
           title: 'Certificates',
           to: '/certificates'
         },
@@ -282,25 +282,25 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 33,
-          iconName: 'users',
+          iconName: 'group-1',
           title: 'User Groups',
           to: '/admin/user-groups'
         },
         {
           id: 34,
-          iconName: 'account-icon',
+          iconName: 'service-accounts',
           title: 'Service Accounts',
           to: '/admin/service-accounts'
         },
         {
           id: 35,
-          iconName: 'folder-icon',
+          iconName: 'folder',
           title: 'Resource Groups',
           to: '/admin/resource-groups'
         },
         {
           id: 36,
-          iconName: 'briefcase',
+          iconName: 'roles',
           title: 'Roles',
           to: '/admin/roles'
         }
@@ -319,7 +319,7 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 38,
-          iconName: 'snow',
+          iconName: 'snowflake',
           title: 'Freeze Windows',
           to: '/freeze-windows'
         }
@@ -332,13 +332,13 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 39,
-          iconName: 'ticket',
+          iconName: 'externaltickets',
           title: 'External Tickets',
           to: '/external-tickets'
         }
       ]
     }
-  ] as MenuGroupType[]
+  ]
 
   return { moreMenu, settingsMenu }
 }

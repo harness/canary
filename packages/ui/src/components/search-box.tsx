@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, ReactNode, useCallback, useEffect, type ChangeEventHandler } from 'react'
 
-import { Icon, Input, InputProps } from '@/components'
+import { IconV2, Input, InputProps } from '@/components'
 import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
 
@@ -35,6 +35,9 @@ interface SearchBoxProps extends InputProps {
   children?: ReactNode
 }
 
+/**
+ * @deprecated Use `SearchInput` instead. This component will be removed soon.
+ */
 const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
   (
     {
@@ -106,25 +109,20 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
         {hasSearchIcon && (
           <div
             className={cn(
-              'absolute left-px top-px z-10 rounded text-icons-1 h-[calc(100%-2px)] w-7 flex items-center justify-center',
-              { 'text-sidebar-foreground-4 bg-cn-background-0': restInputProps?.theme === 'sidebar' }
+              'absolute left-px top-px z-10 rounded text-icons-1 h-[calc(100%-2px)] w-7 flex items-center justify-center'
             )}
           >
-            <Icon name="search" size={12} className="ml-0.5" />
+            <IconV2 name="search" className="ml-0.5" />
           </div>
         )}
 
         {hasShortcut && !!shortcutLetter && (
           <div
             className={cn(
-              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-cn-background-3 px-1 text-cn-foreground-2 duration-100 ease-in-out',
-              {
-                'border-sidebar-border-5 bg-cn-background-0 text-sidebar-foreground-3':
-                  restInputProps?.theme === 'sidebar'
-              }
+              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-cn-background-3 px-1 text-cn-foreground-2 duration-100 ease-in-out'
             )}
           >
-            <Icon name="apple-shortcut" size={12} />
+            <IconV2 name="apple-shortcut" size="2xs" />
 
             <span className="text-inherit">{shortcutLetter}</span>
           </div>

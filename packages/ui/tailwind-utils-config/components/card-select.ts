@@ -13,7 +13,17 @@ export default {
     },
 
     '&:where(.cn-card-select-horizontal)': {
-      '@apply auto-cols-max grid-flow-col': ''
+      '@apply w-full auto-cols-max grid-flow-col overflow-x-auto': ''
+    },
+
+    '&:where(.cn-card-select-vertical)': {
+      '@apply auto-rows-max grid-flow-row': ''
+    },
+
+    '&:where(.cn-card-select-grid)': {
+      '@apply w-full': '',
+      gridTemplateColumns: 'repeat(var(--cols, 1), minmax(0, 1fr))',
+      gridTemplateRows: 'repeat(var(--rows, 1), minmax(0, 1fr))'
     }
   },
 
@@ -22,13 +32,13 @@ export default {
     borderWidth: 'var(--cn-card-border)',
     borderStyle: 'solid',
     borderColor: 'var(--cn-border-2)',
-    borderRadius: 'var(--cn-card-default-radius)',
+    borderRadius: 'var(--cn-card-md-radius)',
     backgroundColor: 'var(--cn-bg-2)',
-    paddingTop: 'var(--cn-card-check-default-py)',
-    paddingBottom: 'var(--cn-card-check-default-py)',
-    paddingLeft: 'var(--cn-card-check-default-pl)',
-    paddingRight: 'var(--cn-card-check-default-pr)',
-    gap: 'var(--cn-card-check-default-gap)',
+    paddingTop: 'var(--cn-card-check-md-py)',
+    paddingBottom: 'var(--cn-card-check-md-py)',
+    paddingLeft: 'var(--cn-card-check-md-pl)',
+    paddingRight: 'var(--cn-card-check-md-pr)',
+    gap: 'var(--cn-card-check-md-gap)',
 
     '&:hover:not([data-disabled])': {
       borderColor: 'var(--cn-border-1)'
@@ -41,7 +51,7 @@ export default {
 
     '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-accent)',
-      backgroundColor: 'var(--cn-comp-card-gradient)'
+      backgroundImage: 'var(--cn-comp-card-gradient)'
     },
 
     '.cn-card-select-content': {

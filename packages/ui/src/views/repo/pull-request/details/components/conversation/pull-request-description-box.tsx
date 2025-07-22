@@ -1,7 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Avatar, Button, DropdownMenu, Icon, MarkdownViewer, Text } from '@/components'
-import { timeAgo } from '@/utils'
+import { Avatar, Button, DropdownMenu, IconV2, MarkdownViewer, Text, TimeAgoCard } from '@/components'
 import { HandleUploadType } from '@/views'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
@@ -28,36 +27,31 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   title,
   handleUpload
 }) => {
-  // Format the parsed date as relative time from now
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
-  const formattedTime = timeAgo(createdAt || 0)
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-            <Icon name="vertical-ellipsis" size={12} />
+            <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-[200px]" align="end">
-          <DropdownMenu.Group>
-            <DropdownMenu.Item
-              onClick={e => {
-                setEdit(true)
-                e.stopPropagation()
-              }}
-            >
-              Edit
-            </DropdownMenu.Item>
-          </DropdownMenu.Group>
+        <DropdownMenu.Content align="end">
+          <DropdownMenu.Item
+            title="Edit"
+            onClick={e => {
+              setEdit(true)
+              e.stopPropagation()
+            }}
+          />
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     )
   }
   return (
     <PullRequestTimelineItem
-      icon={<Icon name="pr-open" size={12} />}
+      icon={<IconV2 name="git-pull-request" size="2xs" />}
       isLast={isLast}
       header={[
         {
@@ -68,7 +62,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
             <span className="flex gap-x-1">
               created pull request
               <span className="text-cn-foreground-1">{prNum}</span>
-              {formattedTime}
+              <TimeAgoCard timestamp={createdAt} />
             </span>
           )
         }
@@ -95,9 +89,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 setComment={setComment}
               />
             ) : (
-              <Text size={2} color="primary">
-                {description && <MarkdownViewer source={description} />}
-              </Text>
+              <Text color="foreground-1">{description && <MarkdownViewer source={description} />}</Text>
             )}
             {!edit && <div className="float-right">{moreTooltip()}</div>}
           </div>

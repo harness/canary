@@ -1,10 +1,9 @@
 import { FC } from 'react'
 
-import { Button, Layout, Link, MoreActionsTooltip, StatusBadge, Text } from '@/components'
+import { Button, IconV2, Layout, Link, LogoV2, MoreActionsTooltip, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
-import { Logo, LogoName } from '@components/logo'
 
+import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
 import { ConnectorDetailsHeaderProps } from './types'
 
 const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
@@ -13,27 +12,27 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   onDelete,
   toConnectorsList
 }) => {
-  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status } = connectorDetails
+  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status, type } = connectorDetails
   const { t } = useTranslation()
+  const logoName = ConnectorTypeToLogoNameMap.get(type)
+
   return (
     <div className="px-8">
       {toConnectorsList ? (
-        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()}>
+        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()} className="mb-3">
           Back to Connectors
         </Link>
       ) : null}
       <Layout.Horizontal gap="xs" align="center">
-        <Logo name={connectorDetails.type.toLowerCase() as LogoName} />
-        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">{connectorDetails.name}</h1>
-      </Layout.Horizontal>
-      {connectorDetails.description ? (
-        <Text as="div" weight="medium" className="mt-3 text-2 text-cn-foreground-2">
-          {connectorDetails.description}
+        {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size="lg" />}
+        <Text as="h1" variant="heading-section" color="foreground-1">
+          {connectorDetails.name}
         </Text>
-      ) : null}
+      </Layout.Horizontal>
+      {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}
       {connectorDetails.tags ? (
         <Layout.Horizontal gap="xs" className="mt-5">
-          <Text className="text-cn-foreground-4">Labels:</Text>
+          <Text>Labels:</Text>
           {Object.entries(connectorDetails.tags || {}).map(([key, value]) => (
             <StatusBadge key={`${key}-${value}`} variant="outline" theme="merged" size="sm">
               {key}
@@ -47,25 +46,25 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {createdAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Created</span>
-              <span className="text-cn-foreground-1">{timeAgo(createdAt)}</span>
+              <TimeAgoCard timestamp={createdAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastModifiedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last updated</span>
-              <span className="text-cn-foreground-1">{timeAgo(lastModifiedAt)}</span>
+              <TimeAgoCard timestamp={lastModifiedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastTestedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last status check</span>
-              <span className="text-cn-foreground-1">{timeAgo(lastTestedAt)}</span>
+              <TimeAgoCard timestamp={lastTestedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastConnectedAt ? (
             <div className="flex flex-col gap-1.5">
               <span className="leading-tight text-cn-foreground-3">Last successful check</span>
-              <span className="text-cn-foreground-1">{timeAgo(lastConnectedAt)}</span>
+              <TimeAgoCard timestamp={lastConnectedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {status ? (
@@ -77,7 +76,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1" color="secondary">
+                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
                   {status.toLowerCase() === 'success'
                     ? t('views:connectors.success', 'Success')
                     : t('views:connectors.failure', 'Failed')}

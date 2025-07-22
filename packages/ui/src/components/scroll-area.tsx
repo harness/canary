@@ -1,107 +1,161 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef, useState } from 'react'
+import { FC, HTMLAttributes, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
-import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
 
-export type ScrollAreaProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
-  viewportClassName?: string
-  scrollThumbClassName?: string
-  orientation?: 'vertical' | 'horizontal' | 'both'
-  scrollBarProps?: ScrollBarProps & {
-    vertical?: ScrollBarProps
-    horizontal?: ScrollBarProps
-  }
+export type IntersectionObserverEntryCallback = (entry: IntersectionObserverEntry) => void
+
+export type ScrollAreaIntersectionProps = {
+  onScrollTop?: IntersectionObserverEntryCallback
+  onScrollBottom?: IntersectionObserverEntryCallback
+  onScrollLeft?: IntersectionObserverEntryCallback
+  onScrollRight?: IntersectionObserverEntryCallback
+
+  rootMargin?: { top?: string; right?: string; bottom?: string; left?: string } | string
+  threshold?: number | number[]
 }
 
-const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, ScrollAreaProps>(
-  (
-    {
-      className,
-      children,
-      viewportClassName,
-      scrollThumbClassName,
-      orientation = 'vertical',
-      scrollBarProps,
-      ...props
-    },
-    ref
-  ) => {
-    const [isScrolling, setIsScrolling] = useState(false)
-    const timeoutRef = useRef<number | null>(null)
+export type ScrollAreaProps = {
+  children: ReactNode
+  direction?: 'ltr' | 'rtl'
+  className?: string
+  classNameContent?: string
+} & ScrollAreaIntersectionProps &
+  HTMLAttributes<HTMLDivElement>
 
-    const isVertical = orientation === 'vertical' || orientation === 'both'
-    const isHorizontal = orientation === 'horizontal' || orientation === 'both'
+const ScrollArea: FC<ScrollAreaProps> = ({
+  children,
+  onScrollTop,
+  onScrollBottom,
+  onScrollLeft,
+  onScrollRight,
 
-    const handleScroll = () => {
-      setIsScrolling(true)
+  rootMargin = '0px',
+  threshold = 0.1,
 
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+  direction,
+  className,
+  classNameContent,
+
+  ...rest
+}) => {
+  const viewportRef = useRef<HTMLDivElement | null>(null)
+
+  const topMarkerRef = useRef<HTMLDivElement | null>(null)
+  const bottomMarkerRef = useRef<HTMLDivElement | null>(null)
+  const leftMarkerRef = useRef<HTMLDivElement | null>(null)
+  const rightMarkerRef = useRef<HTMLDivElement | null>(null)
+
+  const createObserver = useCallback(
+    (
+      markerRef: RefObject<HTMLElement>,
+      callback?: (entry: IntersectionObserverEntry) => void
+    ): IntersectionObserver | null => {
+      if (!markerRef.current || !callback) return null
+
+      if (typeof rootMargin === 'object') {
+        const { top, right, bottom, left } = rootMargin
+        rootMargin = `${top || '0px'} ${right || '0px'} ${bottom || '0px'} ${left || '0px'}`
       }
 
-      timeoutRef.current = window.setTimeout(() => {
-        setIsScrolling(false)
-        timeoutRef.current = null
-      }, 1000)
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          callback(entry)
+        },
+        {
+          root: viewportRef.current,
+          rootMargin,
+          threshold
+        }
+      )
+
+      observer.observe(markerRef.current)
+      return observer
+    },
+    [rootMargin, threshold]
+  )
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = []
+
+    const configs: [RefObject<HTMLElement>, IntersectionObserverEntryCallback | undefined][] = [
+      [topMarkerRef, onScrollTop],
+      [bottomMarkerRef, onScrollBottom],
+      [leftMarkerRef, onScrollLeft],
+      [rightMarkerRef, onScrollRight]
+    ]
+
+    for (const [ref, cb] of configs) {
+      const obs = createObserver(ref, cb)
+      if (obs) observers.push(obs)
     }
 
-    const getScrollBarProps = (orientation: 'vertical' | 'horizontal') => ({
-      orientation,
-      ...scrollBarProps,
-      ...scrollBarProps?.[orientation],
-      className: cn(
-        { 'opacity-100': isScrolling },
-        scrollBarProps?.className,
-        scrollBarProps?.[orientation]?.className
-      ),
-      scrollThumbClassName: cn(
-        scrollThumbClassName,
-        scrollBarProps?.scrollThumbClassName,
-        scrollBarProps?.[orientation]?.scrollThumbClassName
-      )
-    })
+    return () => {
+      observers.forEach(o => o.disconnect())
+    }
+  }, [createObserver, onScrollTop, onScrollBottom, onScrollLeft, onScrollRight])
 
-    return (
-      <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden flex-1', className)} {...props}>
-        <ScrollAreaPrimitive.Viewport
-          className={cn('size-full rounded-[inherit] [&>div]:!flex [&>div]:flex-col', viewportClassName)}
-          onScroll={handleScroll}
-        >
-          {children}
-        </ScrollAreaPrimitive.Viewport>
+  return (
+    <div className={cn('cn-scroll-area', className)} dir={direction} ref={viewportRef} {...rest}>
+      <div className={cn('cn-scroll-area-content', classNameContent)}>
+        {children}
 
-        {isVertical && <ScrollBar {...getScrollBarProps('vertical')} />}
-        {isHorizontal && <ScrollBar {...getScrollBarProps('horizontal')} />}
-        <ScrollAreaPrimitive.Corner />
-      </ScrollAreaPrimitive.Root>
-    )
-  }
-)
-ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
-
-type ScrollBarProps = ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
-  scrollThumbClassName?: string
+        {onScrollTop && <div className="cn-scroll-area-marker cn-scroll-area-marker-top" ref={topMarkerRef} />}
+        {onScrollBottom && <div className="cn-scroll-area-marker cn-scroll-area-marker-bottom" ref={bottomMarkerRef} />}
+        {onScrollLeft && <div className="cn-scroll-area-marker cn-scroll-area-marker-left" ref={leftMarkerRef} />}
+        {onScrollRight && <div className="cn-scroll-area-marker cn-scroll-area-marker-right" ref={rightMarkerRef} />}
+      </div>
+    </div>
+  )
 }
 
-const ScrollBar = forwardRef<ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>, ScrollBarProps>(
-  ({ className, orientation = 'vertical', scrollThumbClassName, ...props }, ref) => (
-    <ScrollAreaPrimitive.ScrollAreaScrollbar
-      ref={ref}
-      orientation={orientation}
-      className={cn(
-        'group absolute z-10 flex p-1 touch-none select-none opacity-0 hover:opacity-100 transition-opacity',
-        orientation === 'vertical' && 'right-0 top-0 h-full w-3.5 border-l border-l-transparent ',
-        orientation === 'horizontal' && 'bottom-0 left-0 h-3.5 flex-col border-t border-t-transparent',
-        className
-      )}
-      {...props}
-    >
-      <ScrollAreaPrimitive.ScrollAreaThumb
-        className={cn('relative flex-1 rounded-full cn-scroll-area-thumb', scrollThumbClassName)}
-      />
-    </ScrollAreaPrimitive.ScrollAreaScrollbar>
-  )
-)
-ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
+ScrollArea.displayName = 'ScrollArea'
 
-export { ScrollArea, ScrollBar }
+const useScrollArea = (props?: ScrollAreaProps) => {
+  const [isTop, setIsTop] = useState(true)
+  const [isBottom, setIsBottom] = useState(false)
+
+  const onScrollTop = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && !isTop) {
+        setIsTop(true)
+      }
+
+      if (!entry.isIntersecting) {
+        setIsTop(false)
+      }
+
+      if (props?.onScrollTop) {
+        props.onScrollTop(entry)
+      }
+    },
+    [isTop, props]
+  )
+
+  const onScrollBottom = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && !isBottom) {
+        setIsBottom(true)
+      }
+
+      if (!entry.isIntersecting) {
+        setIsBottom(false)
+      }
+
+      if (props?.onScrollBottom) {
+        props.onScrollBottom(entry)
+      }
+    },
+    [isBottom, props]
+  )
+
+  // add onScrollLeft and onScrollRight if needed
+
+  return {
+    isTop,
+    isBottom,
+    onScrollTop,
+    onScrollBottom
+  }
+}
+
+export { ScrollArea, useScrollArea }

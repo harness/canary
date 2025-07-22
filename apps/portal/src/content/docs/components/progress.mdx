@@ -1,0 +1,245 @@
+---
+title: Progress
+description: Progress component
+beta: true
+---
+
+The `Progress` component provides a flexible UI element for displaying progress indicators.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px]">
+    <Progress value={0.75} state="processing" />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Progress } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Progress value={0.75} state="processing" />
+)
+```
+
+### Variants
+
+The `Progress` component supports the `variant` prop to indicate the type of progress being displayed. It accepts `default` and `indeterminate` values. This defines whether the progress is measurable or ongoing without a known completion percentage.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
+      <Progress
+        value={0.75}
+        state="processing"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">indeterminate:</Text>
+      <Progress
+        variant="indeterminate"
+      />
+    </div>
+
+</div>`}
+/>
+
+### States
+
+The `Progress` component supports the `state` prop to reflect the current status of the operation. It accepts `completed`, `paused`, `failed`, `processing`, and `default` values. This controls the visual feedback based on the progress state.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">completed:</Text>
+      <Progress 
+        value={1}
+        subtitle="Completed"
+        label="Analytics_Report_March.csv"
+        state="completed"
+      />
+    </div>
+    
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">paused:</Text>
+      <Progress 
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="Paused"
+        state="paused"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">failed:</Text>
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="Failed"
+        description="Upload process failed due to connection issues."
+        state="failed"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">processing:</Text>
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="5 min left"
+        state="processing"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">default:</Text>
+      <Progress
+        value={0.5}
+        label="Analytics_Report_March.csv"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+
+</div>`}
+/>
+
+### Sizes
+
+The `Progress` component supports the `size` prop to adjust the height of the progress bar. It accepts `sm`, `md`, and `lg` values. This allows customization of the component’s visual size to fit different UI contexts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">small:</Text>
+      <Progress
+        size="sm"
+        value={0.5}
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">medium:</Text>
+      <Progress
+        size="md"
+        value={0.5}
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" color="foreground-1" className="underline mb-1">large:</Text>
+      <Progress
+        size="lg"
+        value={0.5}
+        label="Title"
+        subtitle="Subtitle"
+        description="This is a description text"
+      />
+    </div>
+
+    <Progress size="sm" value={0.75} state="processing"  />
+    <Progress size="md" value={0.75} state="processing" />
+    <Progress size="lg" value={0.75} state="processing" />
+
+  </div>`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description:
+        "Type of progress. Use 'default' for determinate progress or 'indeterminate' for loading state.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'indeterminate'",
+    },
+    {
+      name: "value",
+      description:
+        "Progress value from 0 to 1. Required when variant is 'default'.",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "state",
+      description:
+        "Visual state of the progress. Affects styling and optional icon.",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'processing' | 'completed' | 'paused' | 'failed'",
+    },
+    {
+      name: "size",
+      description: "Size of the progress component.",
+      required: false,
+      defaultValue: "'md'",
+      value: "'sm' | 'md' | 'lg'",
+    },
+    {
+      name: "label",
+      description: "Primary label displayed above the progress bar.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Additional description shown below the progress bar.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "subtitle",
+      description: "Secondary subtitle shown below the description.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "hidePercentage",
+      description: "If true, hides the progress percentage next to the label.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "hideIcon",
+      description: "If true, hides the status icon depending on the state.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "id",
+      description:
+        "Custom ID for the progress element. Auto-generated if not provided.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the root container.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

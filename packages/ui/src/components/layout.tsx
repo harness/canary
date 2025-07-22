@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode } from 'react'
+import { ElementType, forwardRef, HTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -56,9 +56,9 @@ const flexVariants = cva('flex', {
 const spacingVariants = cva('', {
   variants: {
     spacing: {
-      small: 'var(--cn-spacing-2)',
-      medium: 'var(--cn-spacing-4)',
-      large: 'var(--cn-spacing-6)'
+      small: 'gap-[var(--cn-spacing-2)]',
+      medium: 'gap-[var(--cn-spacing-4)]',
+      large: 'gap-[var(--cn-spacing-6)]'
     }
   },
   defaultVariants: {
@@ -109,7 +109,7 @@ interface LayoutProps {
   gap?: GapSize
   gapX?: GapSize
   gapY?: GapSize
-  as?: React.ElementType
+  as?: ElementType
 }
 
 interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}
@@ -120,86 +120,74 @@ interface GridProps extends LayoutProps, VariantProps<typeof gridVariants> {
   flow?: 'row' | 'column' | 'dense' | 'row dense' | 'column dense'
 }
 
-const Flex = ({
-  children,
-  className,
-  direction,
-  align,
-  justify,
-  gap,
-  gapX,
-  gapY,
-  wrap,
-  as: Comp = 'div',
-  ...props
-}: FlexProps & HTMLAttributes<HTMLDivElement>) => {
-  return (
-    <Comp
-      className={cn(flexVariants({ direction, align, justify, wrap }), gapVariants({ gap, gapX, gapY }), className)}
-      {...props}
-    >
-      {children}
-    </Comp>
-  )
-}
+const Flex = forwardRef<HTMLDivElement, FlexProps & HTMLAttributes<HTMLDivElement>>(
+  ({ children, className, direction, align, justify, gap, gapX, gapY, wrap, as: Comp = 'div', ...props }, ref) => {
+    return (
+      <Comp
+        ref={ref}
+        className={cn(flexVariants({ direction, align, justify, wrap }), gapVariants({ gap, gapX, gapY }), className)}
+        {...props}
+      >
+        {children}
+      </Comp>
+    )
+  }
+)
+Flex.displayName = 'LayoutFlex'
 
-const Grid = ({
-  children,
-  className,
-  columns,
-  rows,
-  flow,
-  align,
-  justify,
-  gap,
-  gapX,
-  gapY,
-  as: Comp = 'div',
-  ...props
-}: GridProps & HTMLAttributes<HTMLDivElement>) => {
-  return (
-    <Comp
-      className={cn(gridVariants({ align, justify }), gapVariants({ gap, gapX, gapY }), className)}
-      // We need to use inline styles here instead of Tailwind classes because:
-      // 1. Tailwind's compiler processes classes at build time and drops runtime references
-      // 2. Dynamic values (like user-provided columns/rows) can't be properly handled by Tailwind
-      // 3. This approach ensures consistent rendering regardless of what values are passed at runtime
-      style={{
-        gridTemplateColumns: typeof columns === 'number' ? `repeat(${columns}, minmax(0, 1fr))` : columns,
-        gridTemplateRows: typeof rows === 'number' ? `repeat(${rows}, minmax(0, auto))` : rows,
-        gridAutoFlow: flow
-      }}
-      {...props}
-    >
-      {children}
-    </Comp>
-  )
-}
+const Grid = forwardRef<HTMLDivElement, GridProps & HTMLAttributes<HTMLDivElement>>(
+  (
+    { children, className, columns, rows, flow, align, justify, gap, gapX, gapY, as: Comp = 'div', style, ...props },
+    ref
+  ) => {
+    return (
+      <Comp
+        ref={ref}
+        className={cn(gridVariants({ align, justify }), gapVariants({ gap, gapX, gapY }), className)}
+        // We need to use inline styles here instead of Tailwind classes because:
+        // 1. Tailwind's compiler processes classes at build time and drops runtime references
+        // 2. Dynamic values (like user-provided columns/rows) can't be properly handled by Tailwind
+        // 3. This approach ensures consistent rendering regardless of what values are passed at runtime
+        style={{
+          ...style,
+          gridTemplateColumns: typeof columns === 'number' ? `repeat(${columns}, minmax(0, 1fr))` : columns,
+          gridTemplateRows: typeof rows === 'number' ? `repeat(${rows}, minmax(0, auto))` : rows,
+          gridAutoFlow: flow
+        }}
+        {...props}
+      >
+        {children}
+      </Comp>
+    )
+  }
+)
+Grid.displayName = 'LayoutGrid'
 
 interface HorizontalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
 
-const Horizontal: FC<HorizontalProps & HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  className,
-  spacing,
-  ...props
-}) => {
-  return (
-    <Flex direction="row" className={cn(spacingVariants({ spacing }), className)} {...props}>
-      {children}
-    </Flex>
-  )
-}
+const Horizontal = forwardRef<HTMLDivElement, HorizontalProps & HTMLAttributes<HTMLDivElement>>(
+  ({ children, className, spacing, ...props }, ref) => {
+    return (
+      <Flex ref={ref} direction="row" className={cn(spacingVariants({ spacing }), className)} {...props}>
+        {children}
+      </Flex>
+    )
+  }
+)
+Horizontal.displayName = 'LayoutHorizontal'
 
 interface VerticalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
 
-const Vertical: FC<VerticalProps & HTMLAttributes<HTMLDivElement>> = ({ children, className, spacing, ...props }) => {
-  return (
-    <Flex direction="column" className={cn(spacingVariants({ spacing }), className)} {...props}>
-      {children}
-    </Flex>
-  )
-}
+const Vertical = forwardRef<HTMLDivElement, VerticalProps & HTMLAttributes<HTMLDivElement>>(
+  ({ children, className, spacing, ...props }, ref) => {
+    return (
+      <Flex ref={ref} direction="column" className={cn(spacingVariants({ spacing }), className)} {...props}>
+        {children}
+      </Flex>
+    )
+  }
+)
+Vertical.displayName = 'LayoutVertical'
 
 export const Layout = {
   Grid,

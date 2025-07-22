@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react'
 
-import { Alert, MultiSelect, SkeletonList } from '@/components'
+import { Alert, MultiSelect, MultiSelectOption, SkeletonList } from '@/components'
 
 export interface GcpRegionsMultiSelectProps {
   value?: string | string[]
   onChange: (value: string[]) => void
   placeholder?: string
-  regionsOptions: Array<{ id: string; label: string }>
+  regionsOptions: Array<{ id: string; key: string; label: string }>
   isLoading?: boolean
   error?: string
 }
 
 export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.ReactElement {
   const { value, onChange, placeholder = 'Select regions', regionsOptions, isLoading, error } = props
-  const [selectedItems, setSelectedItems] = useState<Array<{ id: string; label: string }>>([])
+  const [selectedItems, setSelectedItems] = useState<MultiSelectOption[]>([])
 
   useEffect(() => {
     if (value) {
       const regions = Array.isArray(value) ? value : [value]
       const items = regions.map(region => ({
         id: region,
+        key: region,
         label: region
       }))
       setSelectedItems(items)
@@ -28,18 +29,9 @@ export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.
     }
   }, [value])
 
-  const handleChange = (item: { id: string; label: string }) => {
-    let newSelectedItems: Array<{ id: string; label: string }>
-    const isSelected = selectedItems.some(selected => selected.id === item.id)
-
-    if (isSelected) {
-      newSelectedItems = selectedItems.filter(selected => selected.id !== item.id)
-    } else {
-      newSelectedItems = [...selectedItems, item]
-    }
-
-    setSelectedItems(newSelectedItems)
-    const regionIds = newSelectedItems.map(selected => selected.id)
+  const handleChange = (items: MultiSelectOption[]) => {
+    setSelectedItems(items)
+    const regionIds = items.map(selected => selected.id.toString())
     onChange(regionIds)
   }
 
@@ -52,12 +44,7 @@ export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.
           <Alert.Description>{error?.toString() || 'Failed to fetch regions'}</Alert.Description>
         </Alert.Root>
       ) : (
-        <MultiSelect
-          selectedItems={selectedItems}
-          options={regionsOptions}
-          handleChange={handleChange}
-          placeholder={placeholder}
-        />
+        <MultiSelect value={selectedItems} options={regionsOptions} onChange={handleChange} placeholder={placeholder} />
       )}
     </>
   )

@@ -1,7 +1,7 @@
 import {
   Button,
   ButtonLayout,
-  Icon,
+  IconV2,
   ListActions,
   MarkdownViewer,
   SearchFiles,
@@ -11,7 +11,6 @@ import {
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { formatDate } from '@/utils'
 import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout } from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 
@@ -141,7 +140,7 @@ export function RepoSummaryView({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 256px">
-        <SandboxLayout.Column className="w-full">
+        <SandboxLayout.Column className="w-full min-w-0">
           <SandboxLayout.Content className="pl-6">
             {/*
               TODO: Implement proper recent push detection logic:
@@ -167,7 +166,7 @@ export function RepoSummaryView({
                   * Current user is the one who made the push
                   * Push was made less than 24h ago
                   * No PR has been created from this branch yet
-                - Format timestamps using timeAgoFromISOTime
+                - Format timestamps using <TimeAgoCard />
                 - Remove mock data below
 
                 Example:
@@ -181,7 +180,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonLayout>
                   {branchSelectorRenderer}
-                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
+                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="md" />
                 </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
@@ -192,8 +191,8 @@ export function RepoSummaryView({
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
-                        <Icon name="plus" size={12} />
-                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
+                        <IconV2 name="plus" size="2xs" />
+                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
                       </Link>
                     </Button>
                   ) : null}
@@ -239,15 +238,13 @@ export function RepoSummaryView({
             <Spacer size={5} />
             <StackedList.Root onlyTopRounded borderBackground>
               <StackedList.Item className="py-2" isHeader disableHover>
-                <StackedList.Field
-                  title={<Text color="tertiaryBackground">{t('views:repos.readme', 'README.md')}</Text>}
-                />
+                <StackedList.Field title={<Text color="foreground-3">{t('views:repos.readme', 'README.md')}</Text>} />
                 <StackedList.Field
                   right
                   title={
                     <Button variant="outline" iconOnly asChild>
                       <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}>
-                        <Icon name="edit-pen" size={16} className="text-icons-3" />
+                        <IconV2 name="edit-pencil" className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
                       </Link>
                     </Button>
@@ -267,14 +264,14 @@ export function RepoSummaryView({
                   id: '0',
                   name: t('views:repos.commits', 'Commits'),
                   count: default_branch_commit_count,
-                  iconName: 'tube-sign',
+                  iconName: 'git-commit',
                   to: props.toRepoCommits?.() ?? '#'
                 },
                 {
                   id: '1',
                   name: t('views:repos.branches', 'Branches'),
                   count: branch_count,
-                  iconName: 'branch',
+                  iconName: 'git-branch',
                   to: props.toRepoBranches?.() ?? '#'
                 },
                 {
@@ -288,11 +285,11 @@ export function RepoSummaryView({
                   id: '3',
                   name: t('views:repos.openPullReq', 'Open pull requests'),
                   count: pull_req_summary?.open_count || 0,
-                  iconName: 'open-pr',
+                  iconName: 'git-pull-request',
                   to: props.toRepoPullRequests?.() ?? '#'
                 }
               ]}
-              timestamp={formatDate(repository?.created || '')}
+              timestamp={repository?.created ? new Date(repository.created).toISOString() : ''}
               description={repository?.description}
               saveDescription={saveDescription}
               updateRepoError={updateRepoError}

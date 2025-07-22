@@ -1,8 +1,16 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, MoreActionsTooltip, NoData, SkeletonTable, Table, Text } from '@/components'
+import {
+  Avatar,
+  CommitCopyActions,
+  MoreActionsTooltip,
+  NoData,
+  SkeletonTable,
+  Table,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
 
 interface RepoTagsListProps {
@@ -45,16 +53,10 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     }
   ]
 
-  const getCreationDate = (tag: CommitTagType) => {
-    const date = new Date(tag.tagger?.when ?? 0)
-
-    return timeAgo(date.getTime())
-  }
-
   if (!isLoading && !tagsList?.length) {
     return (
       <NoData
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-tags'}
         withBorder={isDirtyList}
         title={isDirtyList ? t('views:noData.noResults', 'No search results') : t('views:noData.noTags', 'No tags yet')}
         description={
@@ -91,7 +93,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" variant="asStackedList">
+    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
           <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>
@@ -103,28 +105,28 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         </Table.Row>
       </Table.Header>
 
-      <Table.Body hasHighlightOnHover>
+      <Table.Body>
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text className="block leading-snug" truncate title={tag.name}>
+              <Text color="foreground-1" className="block" truncate title={tag.name}>
                 {tag.name}
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Text color="tertiary" className="line-clamp-3 break-all leading-snug">
+              <Text color="foreground-3" className="line-clamp-3">
                 {tag?.message}
               </Text>
             </Table.Cell>
             <Table.Cell className="!py-2.5">
-              <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
+              <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
             <Table.Cell>
               <div className="flex items-center gap-2">
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
-                    <Text color="tertiary" className="block leading-none" truncate>
+                    <Text variant="body-single-line-normal" color="foreground-3" className="block" truncate>
                       {tag.tagger?.identity.name}
                     </Text>
                   </>
@@ -132,9 +134,13 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell>
-              <Text color="tertiary" className="leading-snug">
-                {tag.tagger?.when ? getCreationDate(tag) : ''}
-              </Text>
+              {tag.tagger?.when ? (
+                <TimeAgoCard
+                  timestamp={new Date(tag.tagger?.when).getTime()}
+                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                  textProps={{ color: 'foreground-3' }}
+                />
+              ) : null}
             </Table.Cell>
             <Table.Cell className="w-[46px] !py-2.5 text-right">
               <MoreActionsTooltip

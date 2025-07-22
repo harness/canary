@@ -3,32 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import {
-  accordionStyles,
-  alertStyles,
-  avatarStyles,
-  badgeStyles,
-  buttonLayoutStyles,
-  buttonStyles,
-  captionStyles,
-  cardSelectStyles,
-  cardStyles,
-  checkboxStyles,
-  dialogStyles,
-  drawerStyles,
-  formSharedStyles,
-  inputStyles,
-  labelStyles,
-  linkStyles,
-  modalDialogStyles,
-  multiSelectV2Styles,
-  paginationStyles,
-  radioStyles,
-  scrollAreaStyles,
-  switchStyles,
-  tagStyles,
-  textareaStyles
-} from './tailwind-utils-config/components'
+import { ComponentStyles } from './tailwind-utils-config/components'
 import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
@@ -58,11 +33,16 @@ export default {
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-text-accent)',
+          disabled: 'var(--cn-state-disabled-text)',
+          multitype: {
+            codebrackets: 'var(--cn-set-blue-surface-text)',
+            code: 'var(--cn-set-purple-surface-text)',
+            variables: 'var(--cn-set-orange-surface-text)'
+          },
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
           primary: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
-          disabled: 'var(--cn-state-disabled-text)',
           4: 'var(--cn-text-3)',
           5: 'var(--cn-text-3)',
           8: 'var(--cn-text-3)',
@@ -79,6 +59,8 @@ export default {
           success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
           warning: 'lch(from var(--cn-set-yellow-solid-bg) l c h / <alpha-value>)',
           backdrop: 'var(--cn-comp-dialog-backdrop)',
+          'diff-success': 'var(--cn-comp-diff-add-content)',
+          'diff-danger': 'var(--cn-comp-diff-del-content)',
 
           // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
@@ -233,10 +215,10 @@ export default {
           8: 'hsl(var(--canary-icon-08))',
           9: 'hsl(var(--canary-icon-09))',
           10: 'hsl(var(--canary-icon-10))',
+          success: 'var(--cn-text-success)',
           danger: 'hsl(var(--canary-icon-danger))',
           warning: 'hsl(var(--canary-icon-warning))',
           alert: 'hsl(var(--canary-icon-alert))',
-          success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',
           merged: 'hsl(var(--canary-icon-merged))',
           risk: 'hsl(var(--canary-icon-risk))'
@@ -272,39 +254,6 @@ export default {
             brown: 'var(--canary-label-background-brown-01)',
             mint: 'var(--canary-label-background-mint-01)',
             lime: 'var(--canary-label-background-lime-01)'
-          }
-        },
-        sidebar: {
-          background: {
-            1: 'hsl(var(--canary-sidebar-background-01))',
-            2: 'var(--canary-sidebar-background-02)',
-            3: 'var(--canary-sidebar-background-03)',
-            4: 'hsl(var(--canary-sidebar-background-04))',
-            5: 'hsl(var(--canary-sidebar-background-05))',
-            6: 'var(--canary-sidebar-background-06)',
-            7: 'hsl(var(--canary-sidebar-background-07))',
-            8: 'hsl(var(--canary-sidebar-background-08))'
-          },
-          border: {
-            1: 'var(--cn-border-3)',
-            2: 'hsla(var(--canary-sidebar-border-02))',
-            3: 'hsl(var(--canary-sidebar-border-03))',
-            4: 'hsl(var(--canary-sidebar-border-04))',
-            5: 'hsl(var(--canary-sidebar-border-05))'
-          },
-          foreground: {
-            1: 'hsl(var(--canary-sidebar-foreground-01))',
-            2: 'hsl(var(--canary-sidebar-foreground-02))',
-            3: 'hsl(var(--canary-sidebar-foreground-03))',
-            4: 'hsl(var(--canary-sidebar-foreground-04))',
-            5: 'hsl(var(--canary-sidebar-foreground-05))',
-            6: 'hsl(var(--canary-sidebar-foreground-06))',
-            accent: 'hsl(var(--canary-sidebar-foreground-accent))'
-          },
-          icon: {
-            1: 'hsl(var(--canary-sidebar-icon-01))',
-            2: 'hsl(var(--canary-sidebar-icon-02))',
-            3: 'hsl(var(--canary-sidebar-icon-03))'
           }
         },
         topbar: {
@@ -440,47 +389,12 @@ export default {
       addUtilities(typographyStyles)
     }),
     plugin(({ addComponents }) => {
-      addComponents([
-        accordionStyles,
-        alertStyles,
-        badgeStyles,
-        buttonStyles,
-        dialogStyles,
-        switchStyles,
-        labelStyles,
-        tagStyles,
-        linkStyles,
-        avatarStyles,
-        cardStyles,
-        cardSelectStyles,
-        paginationStyles,
-        drawerStyles,
-        buttonLayoutStyles,
-        modalDialogStyles,
-        scrollAreaStyles,
-
-        // Form styles
-        formSharedStyles,
-        checkboxStyles,
-        radioStyles,
-        textareaStyles,
-        inputStyles,
-        captionStyles,
-        multiSelectV2Styles
-      ])
+      addComponents(ComponentStyles)
     }),
     tailwindcssAnimate,
     typography,
     function ({ addUtilities }: PluginAPI) {
-      addUtilities({
-        '.tabnav-active': {
-          boxShadow:
-            'inset 0 1px 0 0 var(--cn-border-3), inset 1px 0 0 0 var(--cn-border-3), inset -1px 0 0 0 var(--cn-border-3)'
-        },
-        '.tabnav-inactive': {
-          boxShadow: 'inset 0 -1px 0 0 var(--cn-border-3)'
-        }
-      })
+      addUtilities({})
     },
     function ({ addComponents, theme, e }: PluginAPI) {
       const hoverClasses: Record<string, Record<string, string>> = {}
@@ -558,11 +472,6 @@ export default {
     { pattern: /^bg-label-background-/ },
     { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
     { pattern: /^text-label-foreground-/ },
-    // sidebar classes
-    { pattern: /^bg-sidebar-background-/ },
-    { pattern: /^text-sidebar-foreground-/ },
-    { pattern: /^border-sidebar-border-/ },
-    { pattern: /^text-sidebar-icon-/ },
     // topbar classes
     { pattern: /^bg-topbar-background-/ },
     { pattern: /^text-topbar-foreground-/ },
@@ -580,11 +489,6 @@ export default {
     // label classes
     { pattern: /^hover:bg-label-background-/ },
     { pattern: /^hover:text-label-foreground-/ },
-    // sidebar classes
-    { pattern: /^hover:bg-sidebar-background-/ },
-    { pattern: /^hover:text-sidebar-foreground-/ },
-    { pattern: /^hover:border-sidebar-border-/ },
-    { pattern: /^hover:text-sidebar-icon-/ },
     // topbar classes
     { pattern: /^hover:bg-topbar-background-/ },
     { pattern: /^hover:text-topbar-foreground-/ },

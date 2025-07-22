@@ -4,11 +4,12 @@ import { get, isEmpty } from 'lodash-es'
 
 import {
   EnumPullReqReviewDecision,
+  ListPullReqQueryQueryParams,
   TypesCodeOwnerEvaluationEntry,
   TypesRuleViolations,
   TypesViolation
 } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/ui/views'
+import { ExecutionState, PRListFilters } from '@harnessio/ui/views'
 
 import { PullReqReviewDecision, TypeCheckData } from '../../pages/pull-request/types/types'
 import { extractInfoForCodeOwnerContentProps } from '../../types'
@@ -496,3 +497,31 @@ export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViola
     violationArr
   }
 }
+
+export const buildPRFilters = (filterData: PRListFilters) =>
+  Object.entries(filterData).reduce<Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>>(
+    (acc, [key, value]) => {
+      if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
+        acc[key] = value.getTime().toString()
+      }
+      if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
+        acc[key] = value.value
+      }
+      if (key === 'label_by') {
+        const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
+        const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
+          if (value === true) {
+            labelAcc.labelId.push(labelKey)
+          } else if (value) {
+            labelAcc.valueId.push(value)
+          }
+          return labelAcc
+        }, defaultLabel)
+
+        acc['label_id'] = labelId.map(Number)
+        acc['value_id'] = valueId.map(Number)
+      }
+      return acc
+    },
+    {}
+  )

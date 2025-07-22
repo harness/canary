@@ -1,86 +1,31 @@
 ---
 title: Select
-description: Select component
-beta: true
+description: Select component for choosing a single option from a list
 ---
 
-The `Select` component provides a way to create dropdown selections with various sub-components for customization.
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
-import { DocsPage } from "../../../components/docs-page";
+The `Select` component provides a dropdown interface for selecting a single value from a list of options. It supports both controlled and uncontrolled modes, async loading states, search functionality, and integrates seamlessly with form validation.
 
 <DocsPage.ComponentExample
   client:only
   code={`() => {
-    const [color, setColor] = React.useState()
-    const [randomItem, setRandomItem] = React.useState()
-    const [searchRandomItems, setSearchRandomItems] = React.useState('')
-
-    const allRandomItems = React.useMemo(
-      () => [...new Array(300)].map((_, index) => ({value: index+1, label: \`Item \${index+1}\`})),
-      []
-    )
-
-    const filteredRandomItems = React.useMemo(
-      () => searchRandomItems.trim() ? allRandomItems.filter(item => item.label.toLowerCase().includes(searchRandomItems.toLowerCase())) : allRandomItems,
-    )
+    const [value, setValue] = React.useState('banana');
 
     return (
-        <div className="flex flex-col gap-8">
-            <div>
-                <h5>With group</h5>
-                <Select.Root
-                    name="color"
-                    placeholder="Select..."
-                    label="Color theme"
-                    value={color}
-                    onValueChange={setColor}
-                >
-                    <Select.Content defaultValue={color}>
-                        <Select.Item value="standard">Standard</Select.Item>
-                        <Select.Item value="accessible">Accessible</Select.Item>
-                        <Select.Item value="vivid">Vivid</Select.Item>
-
-                        <Select.Separator />
-
-                        <Select.Group>
-                            <Select.Label>Custom label</Select.Label>
-                            <Select.Item value="custom">Custom</Select.Item>
-                        </Select.Group>
-                    </Select.Content>
-                </Select.Root>
-            </div>
-
-            <hr />
-
-            <div>
-                <h5>With search</h5>
-                <Select.Root
-                    name="random"
-                    placeholder="Select..."
-                    label="Random item"
-                    value={randomItem}
-                    onValueChange={setRandomItem}
-                >
-                    <Select.Content
-                        withSearch
-                        searchProps={{
-                            searchValue: searchRandomItems,
-                            handleChangeSearchValue: setSearchRandomItems
-                        }}
-                    >
-                        {filteredRandomItems.map(item => (
-                            <Select.Item
-                                key={item.value}
-                                value={item.value}
-                            >
-                                {item.label}
-                            </Select.Item>
-                        ))}
-                    </Select.Content>
-                </Select.Root>
-            </div>
-        </div>
-    )
+      <Select
+        options={[
+          { label: 'Apple', value: 'apple' },
+          { label: 'Banana', value: 'banana' },
+          { label: 'Orange', value: 'orange' },
+          { label: 'Strawberry', value: 'strawberry' },
+        ]}
+        value={value}
+        onChange={setValue}
+        placeholder="Select a fruit"
+      />
+    );
 
 }`}
 />
@@ -88,221 +33,908 @@ import { DocsPage } from "../../../components/docs-page";
 ## Usage
 
 ```typescript jsx
-import { Select } from '@harnessio/ui/components'
+import { Select } from "@harnessio/ui/components";
 
 //...
 
-const [color, setColor] = useState()
-
 return (
-  <Select.Root
-    name="color"
-    placeholder="Select..."
-    label="Color theme"
-    value={color}
-    onValueChange={setColor}
-  >
-    <Select.Content>
-      <Select.Item value="standard">Standard</Select.Item>
-      <Select.Item value="accessible">Accessible</Select.Item>
-      <Select.Item value="vivid">Vivid</Select.Item>
-
-      <Select.Separator />
-
-      <Select.Group>
-        <Select.Label>Custom label</Select.Label>
-        <Select.Item value="custom">Custom</Select.Item>
-      </Select.Group>
-    </Select.Content>
-  </Select.Root>
+  <Select
+    options={[
+      { label: "One", value: "one" },
+      { label: "Two", value: "two" },
+      { label: "Three", value: "three" },
+      { label: "Four", value: "four", disabled: true },
+    ]}
+    defaultValue="three"
+    onChange={(value) => console.log(value)}
+  />
 )
 ```
 
-## Anatomy
+## Suffix Example
 
-All parts of the `Select` component can be imported and composed as required.
+The `Select` component can be customized with a suffix element that appears on the right side of the input.
 
-```typescript jsx
-<Select.Root>
-  <Select.Content>
-    <Select.Item />
-    <Select.Separator />
-    <Select.Group>
-      <Select.Label />
-      <Select.Item />
-    </Select.Group>
-  </Select.Content>
-</Select.Root>
-```
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState();
+
+    return (
+      <div className="grid gap-4">
+        <Select
+          options={[
+            { label: 'Option 1', value: '1' },
+            { label: 'Option 2', value: '2' },
+            { label: 'Option 3', value: '3' },
+          ]}
+          value={value}
+          onChange={setValue}
+          suffix={<Button
+            onClick={() => alert('Suffix clicked.')}
+            variant="ghost"
+            size="sm"
+            iconOnly
+            className="size-full"
+          >
+            <IconV2 name="git-fork" size="xs" />
+          </Button>}
+          placeholder="With custom suffix"
+        />
+      </div>
+    );
+
+}`}
+/>
+
+## Form Integration
+
+The `Select` component integrates seamlessly with form elements like labels, captions, and validation messages.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [country, setCountry] = React.useState()
+    const [priority, setPriority] = React.useState()
+    const [environment, setEnvironment] = React.useState('dev')
+
+    return (
+      <div className="grid gap-4">
+        <Select
+          label="Choose your country"
+          options={[
+            { label: 'United States', value: 'us' },
+            { label: 'United Kingdom', value: 'uk' },
+            { label: 'Canada', value: 'ca' },
+            { label: 'Australia', value: 'au' },
+          ]}
+          value={country}
+          onChange={setCountry}
+          caption="Select your country of residence"
+          optional
+          contentWidth='triggerWidth'
+        />
+
+        <Select
+          label="Priority Level"
+          options={[
+            { label: 'Low', value: 'low' },
+            { label: 'Medium', value: 'medium' },
+            { label: 'High', value: 'high' },
+            { label: 'Critical', value: 'critical' },
+          ]}
+          value={priority}
+          onChange={setPriority}
+          error="Please select a priority level"
+          contentWidth='triggerWidth'
+        />
+
+        <Select
+          label="Environment"
+          options={[
+            { label: 'Development', value: 'dev' },
+            { label: 'Staging', value: 'staging' },
+            { label: 'Production', value: 'prod' },
+          ]}
+          value={environment}
+          onChange={setEnvironment}
+          warning="Changing this will affect all deployments"
+          contentWidth='triggerWidth'
+        />
+      </div>
+    )
+
+}`}
+/>
+
+## Search Functionality
+
+Enable client-side search filtering to help users find options quickly in large or structured lists.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState()
+    const [customSearchValue, setCustomSearchValue] = React.useState()
+
+    const groupedOptions = [
+      {
+        label: 'Fruits',
+        options: [
+          { label: 'Apple', value: 'apple' },
+          { label: 'Apricot', value: 'apricot' },
+          { label: 'Avocado', value: 'avocado' },
+          { label: 'Banana', value: 'banana' },
+          { label: 'Blackberry', value: 'blackberry' },
+          '-',
+          { label: 'Blueberry', value: 'blueberry' },
+          { label: 'Cherry', value: 'cherry' },
+          { label: 'Grape', value: 'grape' },
+          { label: 'Kiwi', value: 'kiwi' },
+          { label: 'Mango', value: 'mango' },
+          '-',
+          { label: 'Orange', value: 'orange' },
+          { label: 'Peach', value: 'peach' },
+          { label: 'Pear', value: 'pear' },
+          { label: 'Pineapple', value: 'pineapple' },
+          { label: 'Plum', value: 'plum' },
+          '-',
+          { label: 'Raspberry', value: 'raspberry' },
+          { label: 'Strawberry', value: 'strawberry' },
+          { label: 'Watermelon', value: 'watermelon' },
+        ]
+      },
+      '-',
+      {
+        label: 'Vegetables',
+        options: [
+          { label: 'Artichoke', value: 'artichoke' },
+          { label: 'Asparagus', value: 'asparagus' },
+          { label: 'Broccoli', value: 'broccoli' },
+          { label: 'Carrot', value: 'carrot' },
+          { label: 'Cauliflower', value: 'cauliflower' },
+          '-',
+          { label: 'Celery', value: 'celery' },
+          { label: 'Corn', value: 'corn' },
+          { label: 'Cucumber', value: 'cucumber' },
+          { label: 'Eggplant', value: 'eggplant' },
+          { label: 'Lettuce', value: 'lettuce' },
+          '-',
+          { label: 'Mushroom', value: 'mushroom' },
+          { label: 'Onion', value: 'onion' },
+          { label: 'Pea', value: 'pea' },
+          { label: 'Potato', value: 'potato' },
+          '-',
+          { label: 'Spinach', value: 'spinach' },
+          { label: 'Tomato', value: 'tomato' },
+          { label: 'Zucchini', value: 'zucchini' },
+        ]
+      }
+    ]
+
+    const users = [
+      { label: 'John Doe', value: 'john', email: 'john@example.com' },
+      { label: 'Jane Smith', value: 'jane', email: 'jane@example.com' },
+      { label: 'Bob Johnson', value: 'bob', email: 'bob@example.com' },
+      { label: 'Alice Brown', value: 'alice', email: 'alice@example.com' },
+      { label: 'Charlie White', value: 'charlie', email: 'charlie@example.com' },
+      { label: 'Eve Black', value: 'eve', email: 'eve@example.com' },
+    ]
+
+    return (
+      <div className="grid gap-4">
+        <Select
+          options={groupedOptions}
+          value={value}
+          onChange={setValue}
+          allowSearch
+          placeholder="Search items..."
+          label="Grouped and searchable"
+        />
+
+        <Select
+          options={users}
+          value={customSearchValue}
+          onChange={setCustomSearchValue}
+          allowSearch
+          onSearch={(query) => {
+            return users.filter(user =>
+              user.label.toLowerCase().includes(query.toLowerCase()) ||
+              user.email.toLowerCase().includes(query.toLowerCase())
+            )
+          }}
+          placeholder="Search by name or email"
+          label="Custom search function"
+          caption="Try searching for '@example.com'"
+        />
+      </div>
+    )
+
+}`}
+/>
+
+## Async Loading
+
+Options can be loaded asynchronously by passing a function that returns a Promise.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState()
+    const [asyncValue, setAsyncValue] = React.useState()
+
+    // Simulate API call
+    const fetchOptions = async () => {
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      return [
+        { label: 'Option from API 1', value: 'api1' },
+        { label: 'Option from API 2', value: 'api2' },
+        { label: 'Option from API 3', value: 'api3' },
+        { label: 'Option from API 4', value: 'api4' },
+      ]
+    }
+
+    return (
+      <div className="grid gap-4">
+        <Select
+          label="Async options"
+          options={fetchOptions}
+          value={value}
+          onChange={setValue}
+          placeholder="Loading options..."
+        />
+
+        <Select
+          label="With default value"
+          options={async () => {
+            await new Promise(resolve => setTimeout(resolve, 1500))
+            return [
+              { label: 'Async Option A', value: 'a' },
+              { label: 'Async Option B', value: 'b' },
+              { label: 'Async Option C', value: 'c' },
+            ]
+          }}
+          defaultValue="b"
+          caption="Options are loaded asynchronously"
+        />
+      </div>
+    )
+
+}`}
+/>
+
+## Disabled States
+
+Both the entire select and individual options can be disabled.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value1, setValue1] = React.useState()
+    const [value2, setValue2] = React.useState('available')
+
+    return (
+      <div className="grid gap-4">
+        <Select
+          label="Disabled select"
+          options={[
+            { label: 'Option 1', value: '1' },
+            { label: 'Option 2', value: '2' },
+            { label: 'Option 3', value: '3' },
+          ]}
+          disabled
+          placeholder="This select is disabled"
+        />
+
+        <Select
+          label="With disabled options"
+          options={[
+            { label: 'Available', value: 'available' },
+            { label: 'Unavailable', value: 'unavailable', disabled: true },
+            { label: 'Coming Soon', value: 'coming-soon', disabled: true },
+            { label: 'Beta', value: 'beta' },
+          ]}
+          value={value2}
+          onChange={setValue2}
+          caption="Some options are disabled"
+        />
+      </div>
+    )
+
+}`}
+/>
+
+## Loading States
+
+The Select component provides clear loading indicators for different scenarios.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    return (
+      <div className="grid gap-4">
+        <Select
+          label="Initial loading"
+          options={[]}
+          isLoading={true}
+          placeholder="Loading options..."
+        />
+
+        <Select
+          label="Loading more items"
+          options={[
+            { label: 'Item 1', value: '1' },
+            { label: 'Item 2', value: '2' },
+            { label: 'Item 3', value: '3' },
+          ]}
+          isLoading={true}
+          placeholder="Select an item"
+          caption="Scroll to see loading indicator"
+        />
+      </div>
+    )
+
+}`}
+/>
+
+## Complex Option Labels
+
+Options can have ReactNode labels for rich content display.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState()
+
+    const options = [
+      {
+        label: (
+          <div className="flex items-center gap-2">
+            <IconV2 name="git-branch" />
+            <span className="font-medium">main</span>
+            <span className="text-xs text-cn-foreground-3">default</span>
+          </div>
+        ),
+        value: 'main'
+      },
+      {
+        label: (
+          <div className="flex items-center gap-2">
+            <IconV2 name="git-branch" />
+            <span>feature/new-select</span>
+          </div>
+        ),
+        value: 'feature/new-select'
+      },
+      {
+        label: (
+          <div className="flex items-center gap-2">
+            <IconV2 name="git-branch" />
+            <span>hotfix/critical-bug</span>
+          </div>
+        ),
+        value: 'hotfix/critical-bug'
+      },
+    ]
+
+    return (
+      <Select
+        label="Select branch"
+        options={options}
+        value={value}
+        onChange={setValue}
+        placeholder="Choose a branch"
+      />
+    )
+
+}`}
+/>
+
+## Custom Option Renderer
+
+Customize how individual options are rendered using the `optionRenderer` prop. This allows advanced layouts or UI elements for each option.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState();
+
+    const users = [
+      {
+        value: 'alice',
+        label: 'Alice Brown',
+        email: 'alice@example.com',
+        avatar: '/avatar.png'
+      },
+      {
+        value: 'bob',
+        label: 'Bob Johnson',
+        email: 'bob@example.com',
+        avatar: '/avatar.png'
+      }
+    ];
+
+    return (
+      <Select
+        label="Invite a user"
+        value={value}
+        onChange={setValue}
+        options={users}
+        optionRenderer={(option) => (
+          <DropdownMenu.AvatarItem
+            key={option.value}
+            title={option.label}
+            onSelect={() => setValue(option.value)}
+            name={option.label}
+            description={users.find(u => u.value === option.value)?.email}
+            src={users.find(u => u.value === option.value)?.avatar}
+          />
+        )}
+        placeholder="Select a user"
+        allowSearch
+      />
+    );
+
+}`}
+/>
+
+## Grouped Options and Separators
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState()
+
+    return (
+      <Select
+        label="Grouped options"
+        options={[
+          {
+            label: 'Fruits',
+            options: [
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              '-',
+              { label: 'Orange', value: 'orange' },
+            ]
+          },
+          '-',
+          {
+            label: 'Vegetables',
+            options: [
+              { label: 'Carrot', value: 'carrot' },
+              { label: 'Lettuce', value: 'lettuce' },
+            ]
+          }
+        ]}
+        value={value}
+        onChange={setValue}
+        placeholder="Select an item"
+      />
+    )
+
+}`}
+/>
+
+## Header and Footer
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value1, setValue1] = React.useState('banana');
+    const [value2, setValue2] = React.useState('banana');
+
+    return (
+      <div className="grid gap-4">
+        <Select
+          label="Without search"
+          options={[
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+            { label: 'Strawberry', value: 'strawberry' },
+          ]}
+          value={value1}
+          onChange={setValue1}
+          placeholder="Select a fruit"
+          header={<Text>Select a fruit</Text>}
+          footer={<Text>Footer content here</Text>}
+        />
+
+        <Select
+          label="With search"
+          options={[
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+            { label: 'Strawberry', value: 'strawberry' },
+          ]}
+          value={value2}
+          onChange={setValue2}
+          placeholder="Select a fruit"
+          allowSearch
+          header={<Text className="mt-2">Select a fruit</Text>}
+          footer={<Text>Footer content here</Text>}
+        />
+      </div>
+    );
+
+}`}
+/>
+
+## Sizes
+
+The `Select` component supports two sizes: `default` and `sm`. The default size is suitable for most use cases, while the `sm` size is useful for compact layouts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('banana');
+
+    return (
+      <div className="grid gap-4">
+        <div>
+          <Text>Size sm:</Text>
+          <Select
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="sm"
+          />
+        </div>
+
+        <div>
+          <Text>Size md:</Text>
+          <Select
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="md"
+          />
+        </div>
+      </div>
+    );
+
+}`}
+/>
+
+## Orientation
+
+The `Select` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('banana');
+
+    return (
+      <Layout.Vertical spacing="large" className="min-w-[400px]">
+        <Select
+          label="Vertical"
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="sm"
+            caption="Caption text"
+          />
+          <Select
+            label="Horizontal"
+            options={[
+              { label: 'Apple', value: 'apple' },
+              { label: 'Banana', value: 'banana' },
+              { label: 'Orange', value: 'orange' },
+              { label: 'Strawberry', value: 'strawberry' },
+            ]}
+            value={value}
+            onChange={setValue}
+            placeholder="Select a fruit"
+            size="sm"
+            caption="Caption text"
+            orientation="horizontal"
+          />
+      </div>
+    );
+
+}`}
+/>
 
 ## API Reference
 
-### `Root`
+### `Select`
 
-The `Root` component for the Select can be either controlled or uncontrolled. A controlled Select component takes a `value`
-and an `onValueChange` handler as props, and will only update the value when the user makes a selection. An uncontrolled
-Select component will update the value whenever a user makes a selection, and will not re-render when the value is
-changed from outside the component.
+The `Select` component is the main component for creating dropdown selections.
 
 ```typescript jsx
-<Select.Root
-  name="color"                        // [OPTIONAL] Name of the select
-  label="Color theme"                 // [OPTIONAL] Label text
-  placeholder="Select a color theme"  // [OPTIONAL] Placeholder text
-  value={color}                       // [OPTIONAL] Current value
-  onValueChange={setColor}            // [OPTIONAL] Value change handler
->
-  {/* Select content */}
-</Select.Root>
+<Select
+  options={options}         // Array of options or async function
+  value={value}             // [OPTIONAL] controlled value
+  defaultValue              // [OPTIONAL] default value for uncontrolled mode
+  onChange={onChange}       // [OPTIONAL] change handler
+  disabled                  // [OPTIONAL] disable the select
+  onScrollEnd={onScroll}    // [OPTIONAL] infinite scroll callback
+  placeholder="Select..."   // [OPTIONAL] placeholder text
+  isLoading                 // [OPTIONAL] loading state
+  allowSearch               // [OPTIONAL] enable search
+  onSearch={customSearch}   // [OPTIONAL] custom search function
+  optionRenderer={renderer} // [OPTIONAL] custom option renderer
+
+  // Form integration props
+  id="my-select"            // [OPTIONAL] HTML id
+  label="Label"             // [OPTIONAL] form label
+  error="Error message"     // [OPTIONAL] error message
+  warning="Warning"         // [OPTIONAL] warning message
+  caption="Help text"       // [OPTIONAL] caption text
+  optional                  // [OPTIONAL] mark as optional
+  theme="default"           // [OPTIONAL] theme variant
+  className="custom-class"  // [OPTIONAL] custom className
+/>
 ```
 
 <DocsPage.PropsTable
   props={[
     {
+      name: "options",
+      description:
+        "Flat or grouped array of selectable items, including optional separators. Can be async.",
+      required: true,
+      value: "SelectOption<T>[] | () => Promise<SelectOption<T>[]>",
+    },
+    {
+      name: "value",
+      description: "Currently selected value (controlled mode).",
+      required: false,
+      value: "T",
+    },
+    {
+      name: "defaultValue",
+      description: "Default selected value (uncontrolled mode).",
+      required: false,
+      value: "T",
+    },
+    {
+      name: "onChange",
+      description: "Callback fired when selection changes.",
+      required: false,
+      value: "(value: T) => void",
+    },
+    {
+      name: "onSelectedChange",
+      description:
+        "Callback fired when the selected option changes (useful for controlled components).",
+      required: false,
+      value: "(event: ChangeEvent<HTMLInputElement>) => void",
+    },
+    {
+      name: "disabled",
+      description: "Disable the entire select.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onScrollEnd",
+      description:
+        "Callback fired when user scrolls near the bottom of options list.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "size",
+      description: "Size of the select input.",
+      required: false,
+      value: "'sm' | 'md'",
+      defaultValue: "'md'",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text when no option is selected.",
+      required: false,
+      value: "string",
+      defaultValue: "'Select an option'",
+    },
+    {
+      name: "isLoading",
+      description: "Show loading indicator.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "id",
+      description: "HTML id attribute for the select trigger.",
+      required: false,
+      value: "string",
+      defaultValue: "Auto-generated",
+    },
+    {
       name: "name",
-      description: "Name of the select",
+      description: "HTML name attribute for form submission.",
       required: false,
       value: "string",
     },
     {
       name: "label",
-      description: "Label text",
+      description: "Label text displayed above the select.",
       required: false,
       value: "string",
     },
     {
-      name: "placeholder",
-      description: "Placeholder text",
+      name: "suffix",
+      description:
+        "Custom element to display on the right side of the select input.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "theme",
+      description: "Visual theme variant.",
+      required: false,
+      value: "'default' | 'danger' | 'warning'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "caption",
+      description: "Helper text displayed below the select.",
       required: false,
       value: "string",
     },
     {
-      name: "value",
-      description: "Current value of the select",
+      name: "error",
+      description: "Error message (sets theme to 'danger').",
       required: false,
       value: "string",
     },
     {
-      name: "onValueChange",
-      description: "Handler called when the value changes",
-      required: false,
-      value: "(value: string) => void",
-    },
-  ]}
-/>
-
-### `Content`
-
-The content of the select dropdown. This is a required element. The `defaultValue` prop sets the default value of the
-select. The `withSearch` prop enables search support in the dropdown. This is optional and can be used to search the
-available options. The `searchProps` prop is used to pass additional props to the search input when `withSearch` is
-true. This can be used to customize the search input, such as changing the placeholder text.
-
-```typescript jsx
-<Select.Content
-  defaultValue={color}                 // [OPTIONAL] Default value
-  className="custom-class"             // [OPTIONAL] Custom class name
-  position="popper"                    // [OPTIONAL] Position of the content, either 'item-aligned' or 'popper'
-  withSearch                           // [OPTIONAL] Enable search
-  searchProps={{                       // [OPTIONAL] Search props
-    placeholder: 'Search...',          // [OPTIONAL] Placeholder text
-    searchValue: search,               // [OPTIONAL] Current search value
-    handleChangeSearchValue: setSearch // [OPTIONAL] Search value change handler
-  }}
->
-  {/* SelectItem components */}
-</Select.Content>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "defaultValue",
-      description: "Default value for the select",
+      name: "warning",
+      description: "Warning message (sets theme to 'warning').",
       required: false,
       value: "string",
     },
     {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "position",
-      description: "Position of the content",
-      required: false,
-      value: "'item-aligned' | 'popper'",
-      defaultValue: "popper",
-    },
-    {
-      name: "withSearch",
-      description: "Enable search",
+      name: "optional",
+      description: "Shows '(optional)' next to the label.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
-      name: "searchProps",
-      description: "Props for the search",
+      name: "allowSearch",
+      description: "Enable client-side search filtering.",
       required: false,
-      value:
-        "{ placeholder?: string, searchValue: string, handleChangeSearchValue: (searchValue: string) => void }",
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onSearch",
+      description: "Custom search filter function.",
+      required: false,
+      value: "(query: string) => SelectOption<T>[]",
+      defaultValue: "Filters by label containing query",
+    },
+    {
+      name: "searchValue",
+      description: "Controlled search input value.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optionRenderer",
+      description:
+        "Function to render custom SelectItemType for each value option.",
+      required: false,
+      value: "(option: ValueOption<T>) => SelectItemType",
+    },
+    {
+      name: "header",
+      description: "Custom header content for the dropdown.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "footer",
+      description: "Custom footer content for the dropdown.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "contentWidth",
+      description:
+        "Width of the dropdown content. Can be 'triggerWidth' or 'auto'. If 'auto', it will take the full width of the parent container.",
+      required: false,
+      value: "'triggerWidth' | 'auto'",
+      defaultValue: "'auto'",
+    },
+    {
+      name: "rootClassName",
+      description: "Custom class name for the root container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "triggerClassName",
+      description: "Custom class name for the trigger button.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "contentClassName",
+      description:
+        "Custom class name for the dropdown content container. This can be used to apply custom styles to the dropdown content, such as setting a custom maximum width.",
+      required: false,
+      value: "string",
+      defaultValue: "''",
+    },
+    {
+      name: "orientation",
+      description: "Defines the layout direction of the select and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
   ]}
 />
 
-### `Item`
+### `SelectOption`
 
-The `Item` component is used to create an individual item in the select dropdown. Each item requires a `value` prop
-which is the value of the item. If the value is not suitable for typeahead search, you can use the `textValue` prop to
-provide a searchable text string for typeahead search. For example, if the value is JSON-encoded object, `textValue` can
-be used to provide a searchable label for the object.
+The `SelectOption` interface defines the shape of each option in the select dropdown.
 
-```typescript jsx
-<Select.Item
-  value="value"     // Value of the item
-  textValue="text"  // [OPTIONAL] Text value of the item to be used for when value suitable for typeahead search
-  disabled          // [OPTIONAL] Disable the item
-  asChild           // [OPTIONAL] Render the item as a child
-  isItemTextAsChild // [OPTIONAL] Render the item text as a child
->
-  Name
-</Select.Item>
+```typescript
+type SelectOption<T = string> =
+  | {
+      label: string | ReactNode;
+      value: T;
+      disabled?: boolean;
+    }
+  | {
+      label: string;
+      options: Array<
+        | {
+            label: string | ReactNode;
+            value: T;
+            disabled?: boolean;
+          }
+        | "-"
+      >;
+    }
+  | "-";
 ```
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "value",
-      description: "Value of the item",
+      name: "label",
+      description: "Display text or custom ReactNode for the option.",
       required: true,
-      value: "string",
+      value: "string | ReactNode",
     },
     {
-      name: "textValue",
-      description:
-        "Text value of the item to be used for search when value is not suitable for typeahead search",
-      required: false,
-      value: "string",
+      name: "value",
+      description: "Value that will be passed to onChange when selected.",
+      required: true,
+      value: "T",
     },
     {
       name: "disabled",
-      description: "Disable the item",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "asChild",
-      description: "Render the item as a child",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "isItemTextAsChild",
-      description: "Render the item text as a child",
+      description: "Disable this specific option.",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -310,70 +942,28 @@ be used to provide a searchable label for the object.
   ]}
 />
 
-### `Separator`
+<Aside title="Note">
+  Only unique props are documented here. Common input props like `label`,
+  `placeholder`, `caption`, `error` etc. follow the same patterns as other form
+  components.
+</Aside>
 
-The `Separator` component is used to create a separator in the select dropdown.
+## Behavior
 
-```typescript jsx
-<Select.Separator
-  className="custom-class" // [OPTIONAL] Custom class name
-/>
-```
+- When `options` is a promise-returning function, the component shows a loading spinner while fetching
+- The dropdown shows a loading spinner at the bottom when `isLoading` is true and there are existing options (for infinite scroll)
+- Search input appears at the top of the dropdown when `allowSearch` is true
+- The default search implementation filters options by checking if the label contains the query (case-insensitive)
+- Search query is cleared when the dropdown closes or an option is selected
+- Form validation states (`error`, `warning`) automatically set the appropriate theme
+- The component supports generic types for option values, not limited to strings
+- If optionRenderer is provided, it overrides the default option rendering logic. This can be used to inject custom components such as avatars, icons, or descriptions for each option.
 
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
+## Accessibility
 
-### `Group`
-
-The `Group` component is used to create a group of items in the select dropdown.
-
-```typescript jsx
-<Select.Group
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  <Select.Label>Custom label</Select.Label>
-  <Select.Item value="custom">Custom</Select.Item>
-</Select.Group>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### `Label`
-
-The `Label` component is used to create a label for a group of items in the select dropdown.
-
-```typescript jsx
-<Select.Label
-  className="custom-class" // [OPTIONAL] Custom class name
->
-  Custom label
-</Select.Label>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
+- The Select component uses semantic HTML with proper ARIA attributes
+- Keyboard navigation is fully supported (Arrow keys, Enter, Escape)
+- Screen readers announce the selected value and available options
+- The trigger button is properly labeled when used with the `label` prop
+- Focus management follows WCAG guidelines
+- Search input receives focus automatically when the dropdown opens with search enabled

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Icon } from '@components/icon'
-import { Accordion, FormCaption, Layout } from '@components/index'
+import { Accordion, FormCaption, IconV2, Layout } from '@components/index'
 import { get } from 'lodash-es'
 
 import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
@@ -59,7 +58,7 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInput
     <Accordion.Root
       type="single"
       collapsible
-      size="default"
+      size="sm"
       onValueChange={onValueChange}
       value={accordionValue}
       indicatorPosition="right"
@@ -70,7 +69,7 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInput
             <InputLabel label={label} required={required} className="mb-0" />
             <FormCaption>{description}</FormCaption>
             {allowShowWarning && groupError ? (
-              <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+              <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
             ) : null}
           </Layout.Horizontal>
         </Accordion.Trigger>

@@ -28,7 +28,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
       <NoData
         withBorder
         textWrapperClassName="max-w-[350px]"
-        iconName="no-search-magnifying-glass"
+        imageName="no-search-magnifying-glass"
         title={t('views:noData.noResults', 'No search results')}
         description={[
           t(

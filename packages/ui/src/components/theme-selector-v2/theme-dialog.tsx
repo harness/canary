@@ -1,12 +1,30 @@
 import { FC, useEffect, useState } from 'react'
 
-import { getModeColorContrastFromFullTheme, Icon, ModalDialog, Select, Separator } from '@/components'
+import {
+  Dialog,
+  getModeColorContrastFromFullTheme,
+  IconV2,
+  Select,
+  SelectValueOption,
+  Separator,
+  Text
+} from '@/components'
 import { ColorType, ContrastType, ModeType } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
 
 import { AccentColor, GrayColor, ThemeDialogProps } from './types'
+
+const contrastOptions: SelectValueOption<ContrastType>[] = Object.entries(ContrastType).map(([key, value]) => ({
+  label: key,
+  value
+}))
+
+const colorOptions: SelectValueOption<ColorType>[] = Object.entries(ColorType).map(([key, value]) => ({
+  label: key,
+  value
+}))
 
 const ThemeDialog: FC<ThemeDialogProps> = ({
   theme,
@@ -45,19 +63,21 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   const isAccessibilityThemeEnabled = showAccessibilityThemeOptions
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
-      {!!children && <ModalDialog.Trigger asChild>{children}</ModalDialog.Trigger>}
-      <ModalDialog.Content size="md">
-        <ModalDialog.Header>
-          <ModalDialog.Title>Appearance settings</ModalDialog.Title>
-        </ModalDialog.Header>
-        <ModalDialog.Body>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
+      <Dialog.Content size="md">
+        <Dialog.Header>
+          <Dialog.Title>Appearance settings</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
           <div className="mt-1 flex flex-col gap-y-5">
             <div className="flex flex-col">
-              <span className="text-3 font-medium text-cn-foreground-1">Mode</span>
-              <p className="mt-1.5 text-2 leading-snug text-cn-foreground-3">
+              <Text variant="heading-base" color="foreground-1">
+                Mode
+              </Text>
+              <Text className="mt-1.5" color="foreground-3">
                 Choose Dark mode for low light or Light mode for bright spaces.
-              </p>
+              </Text>
               <div className="mt-[18px] grid grid-cols-2 gap-4">
                 {Object.entries(ModeType).map(([key, value]) => {
                   if (!showSystemMode && value === ModeType.System) return null
@@ -81,11 +101,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                           )}
                         />
                         {mode === value && (
-                          <Icon
-                            className="absolute bottom-2 left-2 text-cn-foreground-1"
-                            name="checkbox-circle"
-                            size={16}
-                          />
+                          <IconV2 className="absolute bottom-2 left-2 text-cn-foreground-1" name="check-circle-solid" />
                         )}
                         <div
                           className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
@@ -113,27 +129,20 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 {/* Contrast */}
                 <div className="grid grid-cols-[246px_1fr] gap-x-8">
                   <div>
-                    <span className="text-3 font-medium text-cn-foreground-1">Contrast</span>
-                    <p className="mt-1.5 text-2 leading-snug text-cn-foreground-3">
+                    <Text variant="heading-base" color="foreground-1">
+                      Contrast
+                    </Text>
+                    <Text className="mt-1.5" color="foreground-3">
                       High contrast improves readability, Dimmer mode reduces glare.
-                    </p>
+                    </Text>
                   </div>
-                  <Select.Root
-                    name="contrast"
+
+                  <Select
                     value={contrast}
-                    onValueChange={(value: ContrastType) => {
-                      setTheme(`${mode}-${colorAdjustment}-${value}`)
-                    }}
+                    options={contrastOptions}
+                    onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
                     placeholder="Select"
-                  >
-                    <Select.Content>
-                      {Object.entries(ContrastType).map(([key, value]) => (
-                        <Select.Item key={value} value={value}>
-                          {key}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
+                  />
                 </div>
 
                 <Separator className="h-px bg-cn-background-2" />
@@ -141,27 +150,20 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 {/* Color Adjustment */}
                 <div className="grid grid-cols-[246px_1fr] gap-x-8">
                   <div>
-                    <span className="text-3 font-medium text-cn-foreground-1">Color adjustment</span>
-                    <p className="mt-1.5 text-2 leading-snug text-cn-foreground-3">
+                    <Text variant="heading-base" color="foreground-1">
+                      Color adjustment
+                    </Text>
+                    <Text className="mt-1.5" color="foreground-3">
                       Adjust colors for different types of color blindness.
-                    </p>
+                    </Text>
                   </div>
-                  <Select.Root
-                    name="color-adjustment"
+
+                  <Select
                     value={colorAdjustment}
-                    onValueChange={(value: ColorType) => {
-                      setTheme(`${mode}-${value}-${contrast}`)
-                    }}
+                    options={colorOptions}
+                    onChange={(value: ColorType) => setTheme(`${mode}-${value}-${contrast}`)}
                     placeholder="Select"
-                  >
-                    <Select.Content>
-                      {Object.entries(ColorType).map(([key, value]) => (
-                        <Select.Item key={value} value={value}>
-                          {key}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
+                  />
                 </div>
 
                 <Separator className="h-px bg-cn-background-2" />
@@ -172,10 +174,12 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     <Separator className="h-px bg-cn-background-2" />
                     <div className="grid grid-cols-[246px_1fr] gap-x-8">
                       <div>
-                        <span className="text-3 font-medium text-cn-foreground-1">Accent color</span>
-                        <p className="mt-1.5 text-2 leading-snug text-cn-foreground-3">
+                        <Text variant="heading-base" color="foreground-1">
+                          Accent color
+                        </Text>
+                        <Text className="mt-1.5" color="foreground-3">
                           Select your application accent color.
-                        </p>
+                        </Text>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {Object.values(AccentColor).map(item => (
@@ -209,10 +213,12 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     <Separator className="h-px bg-cn-background-2" />
                     <div className="grid grid-cols-[246px_1fr] gap-x-8">
                       <div>
-                        <span className="text-3 font-medium text-cn-foreground-1">Gray color</span>
-                        <p className="mt-1.5 text-2 leading-snug text-cn-foreground-3">
+                        <Text variant="heading-base" color="foreground-1">
+                          Gray color
+                        </Text>
+                        <Text className="mt-1.5" color="foreground-3">
                           Select your application gray color.
-                        </p>
+                        </Text>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {Object.values(GrayColor).map(item => (
@@ -236,9 +242,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               </>
             )}
           </div>
-        </ModalDialog.Body>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Body>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 

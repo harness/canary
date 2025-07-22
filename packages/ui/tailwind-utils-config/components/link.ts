@@ -2,7 +2,7 @@ export default {
   '.cn-link': {
     display: 'inline-flex',
     alignItems: 'center',
-    gap: 'var(--cn-link-gap-default)',
+    gap: 'var(--cn-link-gap-md)',
     width: 'fit-content',
     '@apply font-link-default': '',
     textDecoration: 'underline transparent',
@@ -10,10 +10,6 @@ export default {
     transitionProperty: 'color, text-decoration-color',
     transitionDuration: '0.15s',
     transitionTimingFunction: 'ease-in-out',
-
-    '&:focus-visible': {
-      outline: 'none'
-    },
 
     '&:where(.cn-link-default)': {
       color: 'var(--cn-comp-link-text)'
@@ -46,11 +42,6 @@ export default {
       '&:hover, &:focus': {
         cursor: 'not-allowed'
       }
-    },
-
-    '> .cn-link-icon': {
-      width: '12px',
-      height: '12px'
     }
   }
 }

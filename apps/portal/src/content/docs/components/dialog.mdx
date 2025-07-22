@@ -1,0 +1,637 @@
+---
+title: Dialog
+description: A dialog overlay that appears above the page content
+beta: true
+---
+
+The `Dialog` component provides an accessible and customizable dialog overlay for displaying important content or requesting user input. It supports different sizes, themes, and can include an icon or logo in the header.
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button>Open Dialog</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Generate Clone Credential</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
+          <div className="flex flex-col gap-y-7">
+            <TextInput
+              className="py-px truncate"
+              id="identifier"
+              label="Name"
+              value="code_token_yuiq6"
+              readOnly
+              suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name="code_token_yuiq6" />}
+            />
+
+            <TextInput
+              className="py-px"
+              id="lifetime"
+              label="Expiration"
+              value="1 year"
+              readOnly
+            />
+
+            <TextInput
+              className="truncate py-px"
+              id="token"
+              label="Token"
+              value="bGciOiJSUzI1NiIsImtpZCI6IjZCQ0Q.yMzYyRTdFODQyODcyNTlCREYyMzY3RjUxM0I.2IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2OTc0NjY2Mzk1OTIsImV4cCI6MTY5NzQ2NzI0MDAwMCwiaXNzIjoiaHR0cHM6Ly9hcHAuaGFybmVzcy5pbyJ9"
+              readOnly
+              suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name="bGciOiJSUzI1NiIsImtpZCI6IjZCQ0QyMzYyRTdFODQyODcyNTlCREYyMzY3RjUxM0I6IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2OTc0NjY2Mzk1OTIsImV4cCI6MTY5NzQ2NzI0MDAwMCwiaXNzIjoiaHR0cHM6Ly9hcHAuaGFybmVzcy5pbyJ9" />}
+            />
+
+            <span>Token generated</span>
+          </div>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close>Close</Dialog.Close>
+            <Button type="button">
+              Manage API Token
+            </Button>
+          </ButtonLayout>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>`}
+
+/>
+
+## Usage
+
+```typescript jsx
+import { Dialog } from "@harnessio/ui/components";
+
+// ...
+
+return (
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Open Dialog</Button>
+    </Dialog.Trigger>
+
+    <Dialog.Content size="md">
+      <Dialog.Header icon="plus-circle">
+        <Dialog.Title>Dialog Title</Dialog.Title>
+        <Dialog.Description>Optional description text</Dialog.Description>
+      </Dialog.Header>
+
+      <Dialog.Body>
+        Dialog content goes here
+      </Dialog.Body>
+
+      <Dialog.Footer>
+        <Dialog.Close>Cancel</Dialog.Close>
+        <Button variant="primary">Confirm</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+)
+```
+
+### Sizes
+
+The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-4">
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Small (Default)</h3>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button>Small Dialog</Button>
+      </Dialog.Trigger>
+      <Dialog.Content size="sm">
+        <Dialog.Header>
+          <Dialog.Title>Small Dialog</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Description>Compact size for simple dialogs</Dialog.Description>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
+
+<div className="space-y-2">
+  <h3 className="text-lg font-semibold">Medium</h3>
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Medium Dialog</Button>
+    </Dialog.Trigger>
+    <Dialog.Content size="md">
+      <Dialog.Header>
+        <Dialog.Title>Medium Dialog</Dialog.Title>
+      </Dialog.Header>
+      <Dialog.Description>Standard size for most use cases</Dialog.Description>
+      <Dialog.Footer>
+        <Dialog.Close>Close</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>
+
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Large</h3>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button>Large Dialog</Button>
+      </Dialog.Trigger>
+      <Dialog.Content size="lg">
+        <Dialog.Header>
+          <Dialog.Title>Large Dialog</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Description>Maximum width for complex content</Dialog.Description>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
+</div>`}
+/>
+
+### Themes
+
+Headers can have themes `default`, `warning` and `danger` with matching icons:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-4">
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Default Theme</h3>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button>Default</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header icon="info-circle">
+          <Dialog.Title>Information</Dialog.Title>
+          <Dialog.Description>Default theme with info icon</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
+  
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Warning Theme</h3>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button>Warning</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header icon="warning-triangle" theme="warning">
+          <Dialog.Title>Warning</Dialog.Title>
+          <Dialog.Description>
+            Warning theme with caution icon
+          </Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close>Cancel</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
+  
+  <div className="space-y-2">
+    <h3 className="text-lg font-semibold">Danger Theme</h3>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <Button>Danger</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header icon="trash" theme="danger">
+          <Dialog.Title>Delete Item</Dialog.Title>
+          <Dialog.Description>Danger theme for destructive actions</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
+          <Dialog.Close>Cancel</Dialog.Close>
+          <Button variant="primary" theme="danger">Delete</Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  </div>
+</div>`}
+/>
+
+### With Logo/Icon
+
+Headers can display a logo or an icon:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-4">
+    <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>With Logo</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+      <Dialog.Header logo="jira">
+        <Dialog.Title>Connect to Jira</Dialog.Title>
+        <Dialog.Description>Set up your Jira integration</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Footer>
+        <Dialog.Close>Cancel</Dialog.Close>
+        <Button variant="primary">Connect</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>With Icon</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+      <Dialog.Header icon="git-branch">
+        <Dialog.Title>Create Branch</Dialog.Title>
+        <Dialog.Description>Create a new Git branch from main</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Footer>
+        <Dialog.Close>Cancel</Dialog.Close>
+        <Button variant="primary">Create Branch</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>`}
+/>
+
+### Hidden Close Button
+
+You can hide the close button in the top-right corner using the `hideClose` prop:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-4">
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Open Dialog</Button>
+    </Dialog.Trigger>
+    <Dialog.Content hideClose>
+      <Dialog.Header>
+        <Dialog.Title>Hidden Close Button</Dialog.Title>
+        <Dialog.Description>This dialog has no close button in the top-right corner</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Footer>
+        <Dialog.Close>Close</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>`}
+/>
+
+### Scrollable Content
+
+The Body component automatically handles scrolling for long content:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-4">
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Default</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+      <Dialog.Header icon="plus-circle">
+        <Dialog.Title>Long Content</Dialog.Title>
+        <Dialog.Description>Dialog with scrollable content</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Body>
+        <div className="space-y-4">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i}>
+              <h3 className="font-body-strong">Section {i + 1}</h3>
+              <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            </div>
+          ))}
+        </div>
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close>Close</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Fixed Height</Button>
+    </Dialog.Trigger>
+    <Dialog.Content className="h-1/2">
+      <Dialog.Header icon="plus-circle">
+        <Dialog.Title>Long Content</Dialog.Title>
+        <Dialog.Description>Dialog with scrollable content</Dialog.Description>
+      </Dialog.Header>
+      <Dialog.Body>
+        <div className="space-y-4">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i}>
+              <h3 className="font-body-strong">Section {i + 1}</h3>
+              <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+            </div>
+          ))}
+        </div>
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Dialog.Close>Close</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>`}
+/>
+
+## `Anatomy`
+
+All parts of the `Dialog` component can be imported and composed as required.
+
+```tsx
+<Dialog.Root>
+  <Dialog.Trigger />
+  <Dialog.Content>
+    <Dialog.Header>
+      <Dialog.Title />
+      <Dialog.Description />
+    </Dialog.Header>
+    <Dialog.Body />
+    <Dialog.Footer>
+      <Dialog.Close />
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+## API Reference
+
+### `Root`
+
+Controls the open/close behavior of the modal.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "open",
+      description: "Controls the open state of the dialog",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description: "Callback when open state changes",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
+      name: "children",
+      description: "Modal content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Content`
+
+The main content container of the dialog.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Controls the width of the dialog",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'sm'",
+    },
+    {
+      name: "hideClose",
+      description: "Hides the close button in the top-right corner",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Dialog sections",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Header`
+
+The header section of the dialog, containing the title and optional description.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "icon",
+      description: "Icon to display in the header (cannot be used with logo)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "logo",
+      description: "Logo to display in the header (cannot be used with icon)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "theme",
+      description: "Theme for the header section",
+      required: false,
+      value: "'default' | 'warning' | 'danger'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Header sections",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Title`
+
+The title text component for the dialog header.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Description`
+
+Optional description text below the title.
+
+<Aside>
+  The `Description` component serves two purposes: it provides visible
+  descriptive text and is also used for accessibility, describing the modal to
+  screen readers. If you omit it, you should use the `aria-describedby`
+  attribute instead, pointing to the ID of element(s) that describe the dialog's
+  purpose.
+</Aside>
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Body`
+
+Main scrollable content area of the dialog.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Body content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Body content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Footer`
+
+Footer section for actions (e.g., buttons).
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Footer content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Footer content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Close`
+
+Can be used inside `Footer` or as a standalone button to close the modal.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Button label",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

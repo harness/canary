@@ -3,9 +3,9 @@
     "size": {
       "sm": {
         "$type": "sizing",
-        "$value": "{size.4-half}"
+        "$value": "{size.5}"
       },
-      "default": {
+      "md": {
         "$type": "sizing",
         "$value": "{size.6}"
       },

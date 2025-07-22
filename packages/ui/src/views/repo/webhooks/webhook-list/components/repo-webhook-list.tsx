@@ -44,9 +44,7 @@ export function RepoWebhookList({
     return (
       <>
         <Spacer size={2} />
-        <Text size={1} className="text-cn-foreground-danger">
-          {error || 'Something went wrong'}
-        </Text>
+        <Text color="danger">{error || 'Something went wrong'}</Text>
       </>
     )
   }
@@ -56,7 +54,7 @@ export function RepoWebhookList({
       <NoData
         withBorder
         textWrapperClassName="max-w-[350px]"
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
         title={
           isDirtyList
             ? t('views:noData.noResults', 'No search results')
@@ -93,27 +91,28 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root variant="asStackedList">
+      <Table.Root>
         <Table.Header>
           <Table.Row>
-            <Table.Head>Name</Table.Head>
-            <Table.Head>Execution</Table.Head>
+            <Table.Head className="w-1/2">Name</Table.Head>
+            <Table.Head className="w-1/2">Execution</Table.Head>
             <Table.Head></Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {webhooks.map(webhook => (
             <Table.Row
-              onClick={() =>
-                navigate(toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`)
-              }
+              to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
               <Table.Cell className="cursor-pointer">
                 <Switch
                   checked={webhook.enabled}
-                  onClick={e => e.stopPropagation()}
-                  onCheckedChange={() => handleEnableWebhook(webhook.id, !webhook.enabled)}
+                  onClick={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleEnableWebhook(webhook.id, !webhook.enabled)
+                  }}
                   label={webhook.display_name}
                   caption={
                     webhook?.triggers?.length

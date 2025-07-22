@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import { Text } from '@components/text'
+
 import { SerialGroupNodeProps } from '../serial-group-node'
 
 export interface NodeTitleProps extends Pick<SerialGroupNodeProps, 'name' | 'onHeaderClick'> {
@@ -16,7 +18,7 @@ export const NodeTitle: FC<NodeTitleProps> = ({ name, onHeaderClick, counter }) 
         className="mx-9 cursor-pointer truncate pt-1 text-2 font-medium leading-snug text-cn-foreground-3"
         onClick={onHeaderClick}
       >
-        {name} <span className="font-normal text-cn-foreground-2">({counter})</span>
+        {name} <Text as="span">({counter})</Text>
       </div>
     </div>
   )

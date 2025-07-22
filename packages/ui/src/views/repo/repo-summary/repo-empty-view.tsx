@@ -58,13 +58,11 @@ git push -u origin main
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[850px]">
-        <Text size={5} weight={'medium'}>
-          Repository
-        </Text>
+        <Text variant="heading-section">Repository</Text>
         <Spacer size={6} />
         <NoData
           withBorder
-          iconName="no-repository"
+          imageName="no-repository"
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{
@@ -76,17 +74,17 @@ git push -u origin main
         <Spacer size={6} />
 
         <Fieldset>
-          <Text size={4} weight="medium">
-            Please Generate Git Credentials if it’s your first time cloning the repository
+          <Text variant="heading-subsection">
+            Please Generate Git Cradentials if it’s your first time cloning the repository
           </Text>
-          <Text size={3}>Git clone URL</Text>
+          <Text variant="heading-base">Git clone URL</Text>
           <Input label="HTTP" value={httpUrl} readOnly rightElement={<CopyButton name={httpUrl} />} />
           <Input label="SSH" value={sshUrl} readOnly rightElement={<CopyButton name={sshUrl} />} />
           <ControlGroup>
             <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
             </ButtonLayout>
-            <p className="mt-2">
+            <Text className="mt-2">
               You can also manage your git credential{' '}
               <span
                 role="button"
@@ -102,17 +100,13 @@ git push -u origin main
               >
                 here
               </span>
-            </p>
+            </Text>
           </ControlGroup>
 
           <FormSeparator />
-          <Text size={4} weight="medium">
-            Then push some content into it
-          </Text>
+          <Text variant="heading-subsection">Then push some content into it</Text>
           <MarkdownViewer source={getInitialCommitMarkdown()} />
-          <Text size={4} weight="medium">
-            Or you can push an existing repository
-          </Text>
+          <Text variant="heading-subsection">Or you can push an existing repository</Text>
           <ControlGroup>
             <MarkdownViewer source={getExistingRepoMarkdown()} />
             <p>

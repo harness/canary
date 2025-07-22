@@ -1,5 +1,5 @@
 import { useTheme } from '@/context'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 export function StartNode() {
@@ -12,7 +12,7 @@ export function StartNode() {
         isLightTheme ? 'bg-cn-background-1' : 'bg-cn-background-3'
       )}
     >
-      <Icon size={18} name="play" className="text-icons-4" />
+      <IconV2 size="md" name="play" className="text-icons-4" />
     </div>
   )
 }

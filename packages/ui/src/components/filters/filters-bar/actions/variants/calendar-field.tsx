@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Input, Calendar as UICalendar } from '@/components'
+import { SearchInput, Calendar as UICalendar } from '@/components'
 import { cn } from '@utils/cn'
 import { format, isValid, parse } from 'date-fns'
 
@@ -118,17 +118,17 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <Input
-        type="text"
-        className={cn(
+    <div className="flex flex-col">
+      <SearchInput
+        inputContainerClassName={cn(
           {
             'border-cn-borders-danger focus:border-cn-borders-danger': singleState.input.isError
           },
-          'w-auto mx-3'
+          'w-auto mx-1.5 mt-2 mb-2.5'
         )}
+        debounce={false}
         value={singleState.input.value}
-        onChange={e => handleDateInput(e.target.value)}
+        onChange={value => handleDateInput(value)}
         onBlur={e => handleDateConfirm(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="DD/MM/YYYY"

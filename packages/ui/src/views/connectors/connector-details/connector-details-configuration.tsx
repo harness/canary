@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Layout } from '@/components'
+import { Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
 
 import { ConnectorEntityForm } from '../connector-entity-form'
@@ -17,9 +17,9 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
   const { t } = useTranslation()
   return (
     <Layout.Vertical gap="xl">
-      <h1 className="text-5 font-medium leading-snug tracking-tight text-cn-foreground-1">
+      <Text as="h1" variant="heading-subsection" color="foreground-1">
         {t('views:common.details', 'Details')}
-      </h1>
+      </Text>
       <ConnectorEntityForm
         connector={connectorDetails}
         intent={EntityIntent.EDIT}

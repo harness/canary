@@ -42,7 +42,7 @@ const InputPathBreadcrumbItem = ({
         autoFocus={!!isNew}
       />
       <span>in</span>
-      <Tag value={gitRefName} icon="branch-2" showIcon />
+      <Tag value={gitRefName} icon="git-branch" showIcon />
     </div>
   )
 }
@@ -65,12 +65,14 @@ export interface PathBreadcrumbsInputProps {
   handleOnBlur: () => void
   parentPath?: string
   setParentPath?: (value: string) => void
+  fullResourcePath?: string
 }
 
 export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
 
-export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcrumbsProps) => {
+export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...props }: PathBreadcrumbsProps) => {
   const { Link } = useRouterContext()
+
   const length = items.length
 
   const renderInput = () => {
@@ -136,6 +138,9 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
           </>
         )}
       </Breadcrumb.List>
+      <Breadcrumb.Copy name={fullResourcePath ?? ''} />
     </Breadcrumb.Root>
   )
 }
+
+PathBreadcrumbs.displayName = 'PathBreadcrumbs'

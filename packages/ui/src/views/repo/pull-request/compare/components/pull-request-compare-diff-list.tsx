@@ -39,14 +39,9 @@ interface LineTitleProps {
 const LineTitle: FC<LineTitleProps> = ({ text }) => (
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
-      <p className="font-medium">{text}</p>
+      <Text variant="body-strong">{text}</Text>
       <CopyButton name={text} />
     </div>
-    {/* <div className="inline-flex items-center gap-x-6">
-      <div className="flex items-center gap-2">
-        <Icon name="ellipsis" size={12} />
-      </div>
-    </div> */}
   </div>
 )
 
@@ -230,36 +225,36 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
               {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
               {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </p>
-            <DropdownMenu.Content align="end">
-              <div className="max-h-[360px] overflow-y-auto px-1">
-                {diffData?.map(diff => (
-                  <DropdownMenu.Item
-                    key={diff.filePath}
-                    onClick={() => {
-                      if (diff.filePath) {
-                        setJumpToDiff(diff.filePath)
-                      }
-                    }}
-                    className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
-                  >
-                    <Text size={1} className="flex-1 overflow-hidden truncate text-cn-foreground-1">
-                      {diff.filePath}
-                    </Text>
-                    <div className="ml-4 flex items-center space-x-2">
-                      {diff.addedLines != null && diff.addedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="success">
-                          +{diff.addedLines}
-                        </StatusBadge>
-                      )}
-                      {diff.removedLines != null && diff.removedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="danger">
-                          -{diff.removedLines}
-                        </StatusBadge>
-                      )}
-                    </div>
-                  </DropdownMenu.Item>
-                ))}
-              </div>
+            <DropdownMenu.Content className="max-h-[360px]" align="end">
+              {diffData?.map(diff => (
+                <DropdownMenu.Item
+                  key={diff.filePath}
+                  onClick={() => {
+                    if (diff.filePath) {
+                      setJumpToDiff(diff.filePath)
+                    }
+                  }}
+                  title={
+                    <>
+                      <Text color="foreground-1" truncate>
+                        {diff.filePath}
+                      </Text>
+                      <div className="ml-4 flex items-center space-x-2">
+                        {diff.addedLines != null && diff.addedLines > 0 && (
+                          <StatusBadge variant="outline" size="sm" theme="success">
+                            +{diff.addedLines}
+                          </StatusBadge>
+                        )}
+                        {diff.removedLines != null && diff.removedLines > 0 && (
+                          <StatusBadge variant="outline" size="sm" theme="danger">
+                            -{diff.removedLines}
+                          </StatusBadge>
+                        )}
+                      </div>
+                    </>
+                  }
+                />
+              ))}
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </ListActions.Left>

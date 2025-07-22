@@ -46,7 +46,7 @@ describe('transformBranchList', () => {
         id: 0,
         name: 'main',
         sha: 'abc123',
-        timestamp: 'yesterday', // Adjust this according to your expectations
+        timestamp: '2025-01-02T00:00:00Z', // Adjust this according to your expectations
         default: true,
         user: { name: 'John Doe', avatarUrl: '' },
         behindAhead: { behind: 3, ahead: 5, default: true },
@@ -56,7 +56,7 @@ describe('transformBranchList', () => {
         id: 1,
         name: 'feature',
         sha: 'def456',
-        timestamp: 'yesterday', // Adjust this according to your expectations
+        timestamp: '2025-01-02T00:00:00Z', // Adjust this according to your expectations
         default: false,
         user: { name: 'Jane Smith', avatarUrl: '' },
         behindAhead: { behind: 1, ahead: 2, default: false },

@@ -4,74 +4,51 @@ description: Logo component
 beta: true
 ---
 
-The `Logo` component renders brand icons from the `simple-icons` package.
-
 import { DocsPage } from "../../../components/docs-page";
-import { Logo, LogoNameMap, Table } from "@harnessio/ui/components";
+import { LogoV2, LogoNameMapV2 } from "@harnessio/ui/components";
+import CompactLogoV2Grid from "../../../components/CompactLogoV2Grid.astro";
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid place-items-center">
-    <Logo name="kubernetes" size={48} />
-</div>`}
-/>
+The `LogoV2` component contains logos of various brands and can be used as icons. It follows the brand guidelines to choose colors.
 
 ## Usage
 
 ```typescript jsx
-import {  Logo } from '@harnessio/ui/components'
-
-//...
-
-return <Logo name="kubernetes" size={48} />
+<LogoV2 name="node-js" size="lg" />
 ```
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LogoV2 name="harness" size="lg" />`}
+/>
+
+## Sizes
+
+The `LogoV2` component can be sized using the `size` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
+    <LogoV2 name="harness" size="sm" />
+    <LogoV2 name="harness" size="md" />
+    <LogoV2 name="harness" size="lg" />
+  </Layout.Flex>
+  `}
+/>
 
 ## Available Logos
 
 The following logos are available:
 
-<Table.Root
-  variant="asStackedList"
-  className="not-content overflow-auto max-h-[50vh]"
->
-  <Table.Header className="sticky top-[-1px]">
-    <Table.Row>
-      <Table.Head>Logo name</Table.Head>
-      <Table.Head className="text-center">Original colors</Table.Head>
-      <Table.Head className="text-center">Custom color</Table.Head>
-    </Table.Row>
-  </Table.Header>
-  <Table.Body>
-    {Object.keys(LogoNameMap).map((name) => {
-      return (
-        <Table.Row>
-          <Table.Cell className="font-mono">{name}</Table.Cell>
-          <Table.Cell className="text-center">
-            <Logo size={32} name={name} className="inline-block" />
-          </Table.Cell>
-          <Table.Cell className="text-center text-cn-foreground">
-            <Logo
-              size={32}
-              name={name}
-              original={false}
-              className="inline-block"
-            />
-          </Table.Cell>
-        </Table.Row>
-      );
-    })}
-  </Table.Body>
-</Table.Root>
+<CompactLogoV2Grid />
 
 ## API Reference
 
 ```typescript jsx
-<Logo
+<LogoV2
   name="logo-name"     // name of the logo
-  size={24}            // [OPTIONAL] size of the logo in pixels
+  size="lg"       // [OPTIONAL] size variant of the logo
   className="my-class" // [OPTIONAL] custom class name
-  original             // [OPTIONAL] if false, the logo will use the current text color,
-                       // otherwise will use its brand-specific color
 />
 ```
 
@@ -85,10 +62,10 @@ The following logos are available:
     },
     {
       name: "size",
-      description: "Size of the logo in pixels",
+      description: "Size variant of the logo",
       required: false,
-      value: "number",
-      defaultValue: "24",
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
     },
     {
       name: "className",

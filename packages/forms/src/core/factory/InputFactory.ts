@@ -41,4 +41,13 @@ export class InputFactory {
     }
     return
   }
+
+  /**
+   * List all registered input components
+   *
+   * @returns Array of registered input components
+   */
+  listRegisteredComponents(): string[] {
+    return Array.from(this.componentBank.keys())
+  }
 }

@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, ButtonSizes, DropdownMenu, Icon, Text } from '@/components'
+import { Button, ButtonSizes, DropdownMenu, IconV2, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitSelectorListItem } from '@/views'
 
@@ -54,7 +54,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
           <Text className="w-full text-cn-foreground-1" truncate align="left">
             {commitTitle}
           </Text>
-          <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
+          <IconV2 className="chevron-down text-icons-2" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <CommitSelectorDropdown

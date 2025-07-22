@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 
-import { Select } from '@components/select'
+import { Select } from '@components/form-primitives'
 
 import { InputComponent, InputProps, useController, useFormContext, type AnyFormikValue } from '@harnessio/forms'
 
@@ -26,8 +26,7 @@ type SelectFormInputProps = InputProps<AnyFormikValue, SelectFormInputConfig>
 
 function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
   const { path, input } = props
-  const { label, required, description, inputConfig, readonly, placeholder } = input
-
+  const { label, description, inputConfig, readonly, placeholder } = input
   const methods = useFormContext()
   const values = methods.watch()
 
@@ -39,6 +38,11 @@ function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
     name: path
   })
 
+  const inputConfigOptions = useMemo(
+    () => inputConfig?.options.map(option => ({ label: option.label, value: option.value })) ?? [],
+    [inputConfig?.options]
+  )
+
   useEffect(() => {
     if (disabled) {
       field.onChange(inputConfig?.disabledValue ?? '')
@@ -47,28 +51,18 @@ function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
 
   return (
     <InputWrapper {...props}>
-      <Select.Root
+      <Select
         label={label}
+        options={inputConfigOptions}
         caption={description}
-        required={required}
         disabled={disabled}
         value={field.value}
         placeholder={placeholder}
         error={fieldState?.error?.message}
-        onValueChange={value => {
+        onChange={value => {
           field.onChange(value)
         }}
-      >
-        <Select.Content>
-          {inputConfig?.options.map(item => {
-            return (
-              <Select.Item key={item.value} value={item.value}>
-                {item.label}
-              </Select.Item>
-            )
-          })}
-        </Select.Content>
-      </Select.Root>
+      />
     </InputWrapper>
   )
 }

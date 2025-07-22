@@ -1,9 +1,6 @@
 import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
-import { Button, Icon, Input } from '@/components'
-import { useTheme } from '@/context'
-import ChatAvatarIconLightTheme from '@/icons/chat-avatar-light-theme.svg'
-import ChatAvatarIcon from '@/icons/chat-avatar.svg'
+import { Button, IconV2, Illustration, Input } from '@/components'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
@@ -15,7 +12,7 @@ const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
     <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
       <p className="text-16 font-medium text-cn-foreground-1">Harness AI</p>
       <Button size="sm" iconOnly variant="ghost" onClick={onClose}>
-        <Icon name="close" size={16} />
+        <IconV2 name="xmark" />
         <span className="sr-only">Close</span>
       </Button>
     </div>
@@ -41,8 +38,6 @@ interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
 }
 
 const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
-  const { isLightTheme } = useTheme()
-
   return (
     <div
       className={cn('flex gap-x-3 content-center items-start', {
@@ -50,9 +45,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
       })}
     >
       {!self && (
-        <div className="mt-0.5">
-          {avatar ? avatar : isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />}
-        </div>
+        <div className="mt-0.5">{avatar ? avatar : <Illustration size={16} name="chat-avatar" themeDependent />}</div>
       )}
       <div
         className={cn('flex flex-col gap-3', {
@@ -91,11 +84,9 @@ interface TypingProps {
 }
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
-  const { isLightTheme } = useTheme()
-
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
-      {avatar || (isLightTheme ? <ChatAvatarIconLightTheme /> : <ChatAvatarIcon />)}
+      {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
       <span className="size-2.5 rounded-full bg-cn-background-3" aria-hidden />
     </div>
   )
@@ -168,7 +159,7 @@ const InputField: FC<InputFieldProps> = ({
   onSend = () => {},
   placeholder = 'Type a message...',
   disabled = false,
-  sendIcon = <Icon name="arrow" size={12} />
+  sendIcon = <IconV2 name="arrow-up" size="2xs" />
 }) => {
   return (
     <div className="relative">

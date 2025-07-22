@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Icon } from '@components/icon'
-import { Accordion } from '@components/index'
+import { Accordion, IconV2 } from '@components/index'
 import { get } from 'lodash-es'
 
 import {
@@ -72,7 +71,7 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
         setAccordionValue(typeof value === 'string' ? [value] : value)
       }}
       value={accordionValue}
-      indicatorPosition="right"
+      indicatorPosition="left"
     >
       {inputs.map((childInput, idx) => {
         const accId = getAccordionId(childInput)
@@ -85,9 +84,13 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
             {childInput.label && (
               <Accordion.Trigger>
                 <Layout.Horizontal className="items-center">
-                  <InputLabel label={childInput.label} required={childInput.required} className="mb-0" />
+                  <InputLabel
+                    label={childInput.label}
+                    required={childInput.required}
+                    className="mb-0 flex grow cursor-[inherit] justify-between"
+                  />
                   {allowShowWarning && errorPerGroup[idx] ? (
-                    <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+                    <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
                   ) : null}
                 </Layout.Horizontal>
               </Accordion.Trigger>

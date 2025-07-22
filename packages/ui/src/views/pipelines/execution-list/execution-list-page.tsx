@@ -37,9 +37,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
         <SandboxLayout.Main>
           <SandboxLayout.Content>
             <Spacer size={2} />
-            <Text size={1} className="text-cn-foreground-danger">
-              {errorMessage || 'Something went wrong'}
-            </Text>
+            <Text color="danger">{errorMessage || 'Something went wrong'}</Text>
           </SandboxLayout.Content>
         </SandboxLayout.Main>
       </>
@@ -48,7 +46,9 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Executions</h1>
+        <Text as="h1" variant="heading-section" color="foreground-1">
+          Executions
+        </Text>
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>

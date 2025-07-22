@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { TokensList } from '../types'
 
@@ -18,7 +17,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -41,7 +40,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                 </Table.Cell>
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-x-1.5">
-                    <Icon name="dot" size={8} className="text-cn-foreground-success" />
+                    <IconV2 name="circle" size="2xs" className="text-cn-foreground-success" />
                     <span className="text-cn-foreground-3">{t('views:profileSettings.active', 'Active')}</span>
                   </div>
                 </Table.Cell>
@@ -53,7 +52,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                   </span>
                 </Table.Cell>
                 <Table.Cell className="content-center">
-                  <span className="text-cn-foreground-3">{timeAgo(new Date(token.issued_at!).getTime())}</span>
+                  <TimeAgoCard timestamp={new Date(token.issued_at!).getTime()} textProps={{ color: 'foreground-3' }} />
                 </Table.Cell>
                 <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip

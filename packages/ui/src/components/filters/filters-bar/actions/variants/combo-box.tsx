@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 
 import { Command } from '@components/command'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
+import { SearchInput } from '@components/index'
 import { debounce } from 'lodash-es'
 
 export interface ComboBoxOptions {
@@ -17,7 +18,6 @@ interface ComboBoxProps {
   isLoading?: boolean
   placeholder?: string
   noResultsMessage: ReactNode
-  loadingMessage?: ReactNode
 }
 
 export default function ComboBox({
@@ -27,7 +27,6 @@ export default function ComboBox({
   filterValue,
   placeholder,
   isLoading,
-  loadingMessage,
   noResultsMessage
 }: ComboBoxProps) {
   const selectedFilterValue = filterValue?.value
@@ -35,7 +34,13 @@ export default function ComboBox({
 
   const renderContent = () => {
     if (isLoading) {
-      return <Command.Loading className="px-2 py-4 text-sm text-cn-foreground-3">{loadingMessage}</Command.Loading>
+      return (
+        <Command.Loading className="px-2 py-4 text-sm text-cn-foreground-3">
+          <div className="flex place-content-center space-x-2">
+            <IconV2 className="animate-spin" name="loader" />
+          </div>
+        </Command.Loading>
+      )
     }
 
     if (options.length === 0) {
@@ -53,8 +58,8 @@ export default function ComboBox({
             onUpdateFilter(currentValue === selectedFilterValue ? undefined : option)
           }}
         >
-          <div className="mx-2 flex size-4 items-center">
-            {value === selectedFilterValue && <Icon name="tick" size={12} className="text-cn-foreground-1" />}
+          <div className="mx-2.5 flex size-4 items-center">
+            {value === selectedFilterValue && <IconV2 name="check" />}
           </div>
           {label}
         </Command.Item>
@@ -64,11 +69,11 @@ export default function ComboBox({
 
   return (
     <Command.Root shouldFilter={false}>
-      <Command.Input
+      <SearchInput
+        inputContainerClassName="mx-2 mt-2 mb-2.5 w-auto"
         placeholder={placeholder}
-        className="h-9"
         autoFocus
-        onInput={e => debouncedSearch?.(e.currentTarget.value)}
+        onChange={value => debouncedSearch?.(value)}
       />
       <Command.List>{renderContent()}</Command.List>
     </Command.Root>

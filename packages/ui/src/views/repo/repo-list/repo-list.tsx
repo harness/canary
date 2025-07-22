@@ -1,4 +1,4 @@
-import { Icon, NoData, SkeletonList, StackedList, StatusBadge } from '@/components'
+import { IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -15,8 +15,8 @@ export interface PageProps extends Partial<RoutingProps> {
 const Stats = ({ pulls }: { pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
-      <Icon size={16} name="pull" className="text-icons-7" />
-      <span className="text-2 font-normal text-cn-foreground-1">{pulls || 0}</span>
+      <IconV2 name="git-pull-request" className="text-icons-7" />
+      <span className="text-2 text-cn-foreground-1 font-normal">{pulls || 0}</span>
     </span>
   </div>
 )
@@ -53,7 +53,7 @@ export function RepoList({
     return isDirtyList ? (
       <NoData
         withBorder
-        iconName="no-search-magnifying-glass"
+        imageName="no-search-magnifying-glass"
         title={t('views:noData.noResults', 'No search results')}
         description={[
           t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -67,7 +67,7 @@ export function RepoList({
     ) : (
       <NoData
         withBorder
-        iconName="no-repository"
+        imageName="no-repository"
         title={t('views:noData.noRepos', 'No repositories yet')}
         description={[
           t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
@@ -107,7 +107,12 @@ export function RepoList({
             />
             {!repo.importing && (
               <StackedList.Field
-                title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
+                title={
+                  <Text as="span">
+                    {t('views:repos.updated', 'Updated')}{' '}
+                    <TimeAgoCard timestamp={repo.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                  </Text>
+                }
                 description={<Stats pulls={repo.pulls} />}
                 right
                 label

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -15,17 +15,22 @@ import {
   MessageTheme,
   Radio,
   Select,
+  SelectValueOption,
   Spacer,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { isEmpty } from 'lodash-es'
 import { z } from 'zod'
 
 // Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide a name' }),
+  name: z
+    .string()
+    .min(1, { message: 'Please provide a name' })
+    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
   description: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),
@@ -50,8 +55,8 @@ export function RepoCreatePage({
   onFormCancel,
   isLoading,
   isSuccess,
-  gitIgnoreOptions,
-  licenseOptions,
+  gitIgnoreOptions: _gitIgnoreOptions,
+  licenseOptions: _licenseOptions,
   apiError
 }: RepoCreatePageProps) {
   const { t } = useTranslation()
@@ -82,6 +87,16 @@ export function RepoCreatePage({
   const licenseValue = watch('license')
   const readmeValue = watch('readme')
 
+  const gitIgnoreOptions: SelectValueOption[] = useMemo(
+    () => _gitIgnoreOptions?.map(option => ({ value: option, label: option })) ?? [],
+    [_gitIgnoreOptions]
+  )
+
+  const licenseOptions: SelectValueOption[] = useMemo(
+    () => _licenseOptions?.map(option => ({ value: option.value ?? '', label: option.label })) ?? [],
+    [_licenseOptions]
+  )
+
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
@@ -98,13 +113,13 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
+      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-1">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
+        <Text className="text-cn-foreground-1" variant="heading-section">
           {t('views:repos.createNewRepo', 'Create a new repository')}
         </Text>
         <Spacer size={2.5} />
-        <Text className="max-w-[476px] text-cn-foreground-2" size={2} as="p">
+        <Text className="max-w-[476px]">
           {t(
             'views:repos.repoContains',
             'A repository contains all project files, including the revision history. Already have a project repository elsewhere?'
@@ -135,50 +150,26 @@ export function RepoCreatePage({
           </Fieldset>
 
           {/* GITIGNORE */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="gitignore"
-                value={gitignoreValue}
-                onValueChange={value => handleSelectChange('gitignore', value)}
-                placeholder="Select"
-                label="Add a .gitignore"
-                error={errors.gitignore?.message?.toString()}
-                caption="Choose which files not to track from a list of templates."
-              >
-                <Select.Content>
-                  {!!gitIgnoreOptions &&
-                    gitIgnoreOptions.map(option => (
-                      <Select.Item key={option} value={option}>
-                        {option}
-                      </Select.Item>
-                    ))}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
+          <Select
+            value={gitignoreValue}
+            options={gitIgnoreOptions}
+            onChange={value => handleSelectChange('gitignore', value)}
+            placeholder="Select"
+            label="Add a .gitignore"
+            error={errors.gitignore?.message?.toString()}
+            caption="Choose which files not to track from a list of templates."
+          />
 
-            {/* LICENSE */}
-            <ControlGroup>
-              <Select.Root
-                name="license"
-                value={licenseValue}
-                onValueChange={value => handleSelectChange('license', value)}
-                placeholder="Select"
-                label="Choose a license"
-                error={errors.license?.message?.toString()}
-                caption="A license tells others what they can and can't do with your code."
-              >
-                <Select.Content>
-                  {licenseOptions &&
-                    licenseOptions?.map(option => (
-                      <Select.Item key={option.value} value={option.value ?? ''}>
-                        {option.label}
-                      </Select.Item>
-                    ))}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          {/* LICENSE */}
+          <Select
+            value={licenseValue}
+            options={licenseOptions}
+            onChange={value => handleSelectChange('license', value)}
+            placeholder="Select"
+            label="Choose a license"
+            error={errors.license?.message?.toString()}
+            caption="A license tells others what they can and can't do with your code."
+          />
 
           {/* ACCESS */}
           <Fieldset className="mt-4">
@@ -201,9 +192,7 @@ export function RepoCreatePage({
           {/* README */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Text className="leading-none text-cn-foreground-2" size={2}>
-                Initialize this repository with
-              </Text>
+              <Text variant="body-single-line-normal">Initialize this repository with</Text>
               <div className="mt-6">
                 <Checkbox
                   id="readme"
@@ -229,7 +218,7 @@ export function RepoCreatePage({
             <ControlGroup>
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
-                <Button type="submit" disabled={isLoading}>
+                <Button type="submit" disabled={isLoading || !isEmpty(errors)}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={onFormCancel}>

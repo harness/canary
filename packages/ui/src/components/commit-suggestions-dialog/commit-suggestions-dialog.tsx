@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -47,15 +47,15 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
   const { register, handleSubmit } = formMethods
 
   return (
-    <ModalDialog.Root open={isOpen} onOpenChange={onClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Commit Changes</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)} className="block">
-          <ModalDialog.Body>
-            <ControlGroup className="space-y-7 mb-7">
+          <Dialog.Body>
+            <ControlGroup className="mb-7 space-y-7">
               <FormInput.Text
                 id="title"
                 label="Commit Message"
@@ -69,20 +69,20 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
                 label="Extended description"
               />
             </ControlGroup>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close onClick={onClose} disabled={isSubmitting}>
+              <Dialog.Close onClick={onClose} disabled={isSubmitting}>
                 Cancel
-              </ModalDialog.Close>
+              </Dialog.Close>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
               </Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

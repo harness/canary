@@ -4,14 +4,15 @@ import {
   Avatar,
   Button,
   CopyButton,
-  Icon,
-  IconProps,
+  IconPropsV2,
+  IconV2,
   MoreActionsTooltip,
   NoData,
   SkeletonTable,
   StatusBadge,
   Table,
-  Tag
+  Tag,
+  TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
@@ -34,13 +35,13 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslation()
-  const { Link, navigate } = useRouterContext()
+  const { Link } = useRouterContext()
 
   if (!branches?.length && !isLoading) {
     return (
       <NoData
         className="m-auto"
-        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
+        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
         withBorder={isDirtyList}
         title={
           isDirtyList
@@ -83,7 +84,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      size="compact"
     >
       <Table.Header>
         <Table.Row>
@@ -109,11 +110,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
             const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
             return (
-              <Table.Row
-                key={branch.id}
-                className="cursor-pointer"
-                onClick={() => navigate(`${toCode?.({ branchName: branch.name })}`)}
-              >
+              <Table.Row key={branch.id} className="cursor-pointer" to={toCode?.({ branchName: branch.name })}>
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
@@ -131,7 +128,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell className="content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
-                    <time className="truncate text-cn-foreground-1">{branch?.timestamp}</time>
+                    <TimeAgoCard
+                      timestamp={branch?.timestamp}
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                      textProps={{ color: 'foreground-1', truncate: true }}
+                    />
                   </div>
                 </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
@@ -141,18 +142,18 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       {checkState === 'running' ? (
                         <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
                       ) : (
-                        <Icon
+                        <IconV2
                           className={cn('mr-1.5', {
                             'text-icons-success': checkState === 'success',
                             'text-icons-danger': checkState === 'failure'
                           })}
                           name={
                             cn({
-                              tick: checkState === 'success',
-                              cross: checkState === 'failure'
-                            }) as IconProps['name']
+                              check: checkState === 'success',
+                              xmark: checkState === 'failure'
+                            }) as IconPropsV2['name']
                           }
-                          size={12}
+                          size="2xs"
                         />
                       )}
                       <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
@@ -182,7 +183,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                         onClick={e => e.stopPropagation()}
                       >
-                        <Icon
+                        <IconV2
                           name={
                             getPrState(
                               branch.pullRequests[0].is_draft,
@@ -190,7 +191,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                               branch.pullRequests[0].state
                             ).icon
                           }
-                          size={14}
+                          size="xs"
                           className={cn({
                             'text-icons-success':
                               branch.pullRequests[0].state === 'open' && !branch.pullRequests[0].is_draft,
@@ -206,7 +207,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 </Table.Cell>
                 <Table.Cell className="text-right">
                   <MoreActionsTooltip
-                    isInTable
+                    // isInTable
                     actions={[
                       // Don't show New Pull Request option for default branch
                       ...(!branch?.behindAhead?.default

@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Button } from './button'
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 
 const SheetRoot = SheetPrimitive.Root
 
@@ -52,7 +52,7 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('fixed z-50 gap-4 bg-cn-background p-6 shadow-lg transition ease-in-out', {
+const sheetVariants = cva('bg-cn-background fixed z-50 gap-4 p-6 shadow-lg transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',
@@ -94,7 +94,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
     const { portalContainer } = usePortal()
 
     const content = (
-      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side, className }))} {...props}>
         {children}
         {!hideCloseButton && (
           <SheetPrimitive.Close
@@ -102,7 +102,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
             asChild
           >
             <Button className={closeClassName} variant="ghost" size="sm" iconOnly>
-              <Icon name="close" size={16} />
+              <IconV2 name="xmark" />
               <span className="sr-only">Close</span>
             </Button>
           </SheetPrimitive.Close>

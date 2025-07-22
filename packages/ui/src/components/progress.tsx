@@ -1,95 +1,161 @@
-import * as React from 'react'
+import { FC, useMemo } from 'react'
 
 import { cn } from '@/utils/cn'
-import * as ProgressPrimitive from '@radix-ui/react-progress'
+import { Text } from '@components/text'
+import { generateAlphaNumericHash } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const progressVariants = cva('', {
+import { IconV2, type IconV2NamesType } from './icon-v2'
+
+const progressVariants = cva('cn-progress', {
   variants: {
-    variant: {
-      default: 'relative w-full overflow-hidden bg-cn-background-accent/20',
-      divergence: 'relative w-full overflow-hidden bg-transparent'
-    },
     size: {
-      default: 'h-2',
-      sm: 'h-[3px]'
+      sm: 'cn-progress-sm',
+      md: '',
+      lg: 'cn-progress-lg'
     },
-    rounded: {
-      default: 'rounded-full',
-      sm: 'rounded-[1px]',
-      md: 'rounded-[2px]'
-    },
-    rotated: {
+    state: {
       default: '',
-      '180deg': 'rotate-180'
-    }
-  },
-  compoundVariants: [
-    {
-      variant: 'divergence',
-      rounded: 'default',
-      size: 'default',
-      className: 'h-[3px] rounded-none'
-    }
-  ],
-  defaultVariants: {
-    variant: 'default',
-    size: 'default',
-    rounded: 'default',
-    rotated: 'default'
-  }
-})
-
-const indicatorVariants = cva('', {
-  variants: {
-    color: {
-      default: 'bg-cn-background-accent',
-      accent: 'bg-cn-background-accent'
-    },
-    indicatorRounded: {
-      default: '',
-      'left-sm': 'rounded-l-[1px]',
-      'right-sm': 'rounded-r-[1px]'
-    },
-    indicatorColor: {
-      default: '',
-      'dark-gray': 'bg-cn-background-12',
-      'light-gray': 'bg-cn-background-13'
+      processing: 'cn-progress-processing',
+      completed: 'cn-progress-completed',
+      paused: 'cn-progress-paused',
+      failed: 'cn-progress-failed'
     }
   },
   defaultVariants: {
-    color: 'default',
-    indicatorRounded: 'default'
+    size: 'md',
+    state: 'default'
   }
 })
 
-type ProgressVariants = VariantProps<typeof progressVariants>
-type IndicatorVariants = VariantProps<typeof indicatorVariants>
+const getIconName = (state: VariantProps<typeof progressVariants>['state']): IconV2NamesType => {
+  if (state === 'completed') return 'check-circle'
+  if (state === 'paused') return 'pause'
+  if (state === 'failed') return 'xmark-circle'
+  return 'clock'
+}
 
-type ProgressProps = React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> &
-  ProgressVariants &
-  IndicatorVariants & {
-    value?: number
+interface CommonProgressProps extends VariantProps<typeof progressVariants> {
+  id?: string
+  label?: string
+  description?: string
+  subtitle?: string
+  className?: string
+}
+interface DeterminateProgressProps extends CommonProgressProps {
+  value: number
+  hidePercentage?: boolean
+  hideIcon?: boolean
+  variant?: 'default'
+}
+interface IndeterminateProgressProps extends CommonProgressProps {
+  value?: never
+  hidePercentage?: never
+  hideIcon?: never
+  variant: 'indeterminate'
+}
+
+type ProgressProps = DeterminateProgressProps | IndeterminateProgressProps
+
+const Progress: FC<ProgressProps> = ({
+  id: defaultId,
+  variant = 'default',
+  state,
+  size = 'md',
+  hideIcon = false,
+  label,
+  description,
+  subtitle,
+  hidePercentage = false,
+  value = 0,
+  className
+}) => {
+  const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
+
+  const id = useMemo(() => defaultId || `progress-${generateAlphaNumericHash(10)}`, [defaultId])
+
+  const getIcon = () => {
+    if (hideIcon || variant === 'indeterminate') return null
+    const iconName: IconV2NamesType = getIconName(state)
+    return <IconV2 className="cn-progress-icon" name={iconName} skipSize />
   }
 
-const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
-  ({ className, value, variant, size, rounded, color, indicatorRounded, indicatorColor, rotated, ...props }, ref) => (
-    <ProgressPrimitive.Root
-      ref={ref}
-      className={cn(progressVariants({ variant, size, rounded, rotated }), className)}
-      {...props}
-    >
-      <ProgressPrimitive.Indicator
-        className={cn(
-          'h-full w-full flex-1 transition-all',
-          indicatorVariants({ color, indicatorRounded, indicatorColor })
+  const getProgress = () => {
+    if (variant === 'indeterminate') {
+      return (
+        <>
+          <progress className="cn-progress-root" id={id} />
+          <div className="cn-progress-overlay-box">
+            <div className="cn-progress-overlay">
+              <div className="cn-progress-indeterminate-fake" />
+            </div>
+          </div>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <progress className="cn-progress-root" id={id} value={percentageValue} max={100} />
+
+        {state === 'processing' && (
+          <div className="cn-progress-overlay-box">
+            <div className="cn-progress-overlay">
+              <div
+                className="cn-progress-processing-fake"
+                style={{ transform: `translateX(-${100 - percentageValue}%)` }}
+              />
+            </div>
+          </div>
         )}
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-      />
-    </ProgressPrimitive.Root>
-  )
-)
+      </>
+    )
+  }
 
-Progress.displayName = ProgressPrimitive.Root.displayName
+  return (
+    <div className={cn(progressVariants({ size, state }), className)}>
+      {(label || !hidePercentage || !hideIcon) && (
+        <label className="cn-progress-header" htmlFor={id}>
+          <div className="cn-progress-header-left">
+            {label && (
+              <Text variant="body-strong" color="foreground-1" truncate>
+                {label}
+              </Text>
+            )}
+          </div>
+          <div className="cn-progress-header-right">
+            {!hidePercentage && variant === 'default' && (
+              <Text variant="body-strong" color="foreground-1">
+                {percentageValue}%
+              </Text>
+            )}
+            {getIcon()}
+          </div>
+        </label>
+      )}
+
+      <div className="cn-progress-container">{getProgress()}</div>
+
+      {(description || subtitle) && (
+        <div className="cn-progress-footer">
+          <div className="cn-progress-description-wrap">
+            {description && (
+              <Text className="cn-progress-description" variant="body-strong" color="foreground-3" truncate>
+                {description}
+              </Text>
+            )}
+          </div>
+          {subtitle && (
+            <Text className="cn-progress-subtitle" align="right" variant="body-normal" color="foreground-3" truncate>
+              {subtitle}
+            </Text>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+Progress.displayName = 'Progress'
 
 export { Progress }

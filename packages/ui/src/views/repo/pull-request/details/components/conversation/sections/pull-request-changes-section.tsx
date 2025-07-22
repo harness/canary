@@ -1,6 +1,6 @@
 import { useMemo, type FC } from 'react'
 
-import { Accordion, Avatar, Icon, Layout, StackedList, StatusBadge } from '@/components'
+import { Accordion, Avatar, IconV2, Layout, StackedList, StatusBadge } from '@/components'
 import {
   easyPluralize,
   TypesCodeOwnerEvaluation,
@@ -18,13 +18,13 @@ import { LineDescription, LineTitle } from './pull-request-line-title'
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'pending':
-      return <Icon name="pending-clock" className="text-icons-alert" />
+      return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
     case 'warning':
-      return <Icon name="triangle-warning" className="text-cn-foreground-3" />
+      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />
     case 'error':
-      return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
     default:
-      return <Icon name="success" className="text-cn-foreground-success" />
+      return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
   }
 }
 
@@ -49,7 +49,7 @@ const AvatarItem: FC<AvatarItemProps> = ({ evaluations }) => {
           {evaluations &&
             evaluations.map(({ owner }, idx) => {
               if (idx < 2) {
-                return <Avatar key={owner?.id || idx} name={owner?.display_name || ''} size="default" rounded />
+                return <Avatar key={owner?.id || idx} name={owner?.display_name || ''} size="md" rounded />
               }
               if (idx === 2 && evaluations?.length > 2) {
                 // TODO: do popover with all the names
@@ -134,35 +134,35 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
     const getData = () => {
       if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval) {
         return {
-          icon: <Icon name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
           text: 'Waiting on code owner reviews of latest changes'
         }
       }
 
       if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval) {
         return {
-          icon: <Icon name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
           text: 'Changes are pending approval from code owners'
         }
       }
 
       if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length) {
         return {
-          icon: <Icon name="circle" className="text-cn-foreground-3" />,
+          icon: <IconV2 name="circle" className="text-cn-foreground-3" />,
           text: 'Some changes were approved by code owners'
         }
       }
 
       if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval) {
         return {
-          icon: <Icon name="success" className="text-cn-foreground-success" />,
+          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
           text: 'Latest changes were approved by code owners'
         }
       }
 
       if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval) {
         return {
-          icon: <Icon name="success" className="text-cn-foreground-success" />,
+          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
           text: 'Changes were approved by code owners'
         }
       }
@@ -175,19 +175,19 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           latestCodeOwnerApprovalArr?.length < minReqLatestApproval
         ) {
           return {
-            icon: <Icon name="pending-clock" className="text-icons-alert" />,
+            icon: <IconV2 name="clock-solid" className="text-cn-foreground-warning" />,
             text: 'Latest changes are pending approval from required reviewers'
           }
         }
 
         return {
-          icon: <Icon name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
           text: 'Changes were approved by code owners'
         }
       }
 
       return {
-        icon: <Icon name="circle" className="text-cn-foreground-warning" />,
+        icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
         text: 'No codeowner reviews'
       }
     }
@@ -223,12 +223,14 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           if (!viewBtn) e.preventDefault()
         }}
       >
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
-          description={<LineDescription text={changesInfo.content} />}
-        />
-        <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
+            description={<LineDescription text={changesInfo.content} />}
+          />
+          <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        </Layout.Flex>
       </Accordion.Trigger>
 
       <Accordion.Content>
@@ -239,14 +241,14 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="ml-6 flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="success" className="text-cn-foreground-success" />
+                  <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
                   <span className="text-2 text-cn-foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </span>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="circle" className="fill-transparent text-icons-7" />
+                  <IconV2 name="circle" className="text-icons-7 fill-transparent" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
                   </span>
@@ -262,12 +264,12 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="success" className="text-cn-foreground-success" />
+                  <IconV2 name="clock-solid" className="text-cn-foreground-success" />
                   <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="circle" className="fill-transparent text-icons-7" />
+                  <IconV2 name="circle" className="text-icons-7 fill-transparent" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>
@@ -280,11 +282,11 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           {!isEmpty(changeReqEvaluations) && (
             <div className="ml-6 flex items-center justify-between">
               <div className="flex items-center gap-x-2">
-                <Icon
-                  name="triangle-warning"
+                <IconV2
+                  name="warning-triangle-solid"
                   className={cn({
-                    'text-icons-danger': reqNoChangeReq,
-                    'text-icons-alert': !reqNoChangeReq
+                    'text-cn-foreground-danger': reqNoChangeReq,
+                    'text-cn-foreground-warning': !reqNoChangeReq
                   })}
                 />
                 <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
@@ -297,11 +299,11 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="ml-6 flex items-center justify-between">
               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon
-                    name="triangle-warning"
+                  <IconV2
+                    name="warning-triangle-solid"
                     className={cn({
-                      'text-icons-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
-                      'text-icons-alert': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
+                      'text-cn-foreground-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
+                      'text-cn-foreground-warning': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
                     })}
                   />
                   <span className="text-2 text-cn-foreground-1">
@@ -323,7 +325,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 <StackedList.Item
                   isHeader
                   disableHover
-                  className="cursor-default !bg-transparent px-0 text-cn-foreground-3"
+                  className="text-cn-foreground-3 cursor-default !bg-transparent px-0"
                 >
                   <StackedList.Field title={<HeaderItem header="Code" />} />
                   <StackedList.Field title={<HeaderItem header="Owners" />} />
@@ -355,5 +357,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
     </Accordion.Item>
   )
 }
+
+PullRequestChangesSection.displayName = 'PullRequestChangesSection'
 
 export default PullRequestChangesSection

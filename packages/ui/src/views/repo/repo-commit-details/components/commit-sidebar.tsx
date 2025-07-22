@@ -14,11 +14,11 @@ export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSi
     <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
-          <div className="flex w-full flex-col gap-3 pt-5">
+          <div className="flex size-full flex-col gap-3 pt-5">
             <div className="px-5">
               <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
             </div>
-            <ScrollArea viewportClassName="px-5 pr-3.5">
+            <ScrollArea className="grid-cols-[100%] px-5 pr-3.5">
               {children}
               <Spacer size={10} />
             </ScrollArea>

@@ -8,7 +8,7 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  Icon,
+  IconV2,
   Label,
   Radio,
   SkeletonForm,
@@ -87,9 +87,7 @@ export const RepoSettingsGeneralForm: FC<{
 
   return (
     <Fieldset>
-      <Text size={13} weight="medium">
-        {t('views:repos.generalSettings', 'General settings')}
-      </Text>
+      <Text variant="heading-subsection">{t('views:repos.generalSettings', 'General settings')}</Text>
       {isLoadingRepoData ? (
         <SkeletonForm />
       ) : (
@@ -163,18 +161,14 @@ export const RepoSettingsGeneralForm: FC<{
                 ) : (
                   <Button variant="primary" theme="success" type="button" className="pointer-events-none">
                     Saved
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
               </ButtonLayout>
             </ControlGroup>
           </Fieldset>
 
-          {!!apiError && errorTypes.has(apiError.type) && (
-            <Text size={1} className="text-cn-foreground-danger">
-              {apiError.message}
-            </Text>
-          )}
+          {!!apiError && errorTypes.has(apiError.type) && <Text color="danger">{apiError.message}</Text>}
         </FormWrapper>
       )}
     </Fieldset>

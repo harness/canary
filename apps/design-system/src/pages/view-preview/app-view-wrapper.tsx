@@ -3,7 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop } from '@utils/viewUtils'
 
-import { MoreSubmenu, NavbarItemType, SettingsMenu, Sidebar } from '@harnessio/ui/components'
+import { NavbarItemType, Sidebar } from '@harnessio/ui/components'
 import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
@@ -25,7 +25,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
   const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([
     {
       id: 0,
-      iconName: 'repositories-gradient',
+      iconName: 'repository',
       title: 'Repositories',
       description: 'Integrated & familiar git experience.',
       to: '/pixel/repos',
@@ -33,7 +33,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 1,
-      iconName: 'pipelines-gradient',
+      iconName: 'pipeline',
       title: 'Pipelines',
       description: 'Up to 4X faster than other solutions.',
       to: '/pipelines',
@@ -41,14 +41,14 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 3,
-      iconName: 'database-gradient',
+      iconName: 'database',
       title: 'Databases',
       description: 'Manage all your infrastructure.',
       to: '/databases'
     },
     {
       id: 7,
-      iconName: 'dev-portal-gradient',
+      iconName: 'dev-portal',
       title: 'Developer Portal',
       description: 'Built for developers, onboard in minutes.',
       to: '/developer/portal'
@@ -61,7 +61,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 9,
-      iconName: 'dev-insights-gradient',
+      iconName: 'developer-insights',
       title: 'Developer Insights',
       description: 'Actionable insights on SDLC.',
       to: '/developer/insights'
@@ -74,14 +74,14 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     setPinnedMenu(current => (pin ? [...current, item] : current.filter(pinnedItem => pinnedItem !== item)))
   }, [])
 
-  const onToggleMoreMenu = useCallback(() => {
+  const onToggleMoreMenu = useCallback((state?: boolean) => {
     setShowSettingsMenu(false)
-    setShowMoreMenu(current => !current)
+    setShowMoreMenu(current => state ?? !current)
   }, [])
 
-  const onToggleSettingsMenu = useCallback(() => {
+  const onToggleSettingsMenu = useCallback((state?: boolean) => {
     setShowMoreMenu(false)
-    setShowSettingsMenu(current => !current)
+    setShowSettingsMenu(current => state ?? !current)
   }, [])
 
   return (
@@ -104,18 +104,14 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               handleRemoveRecentMenuItem={noop}
               changeLanguage={noop}
               lang="en"
+              moreMenu={moreMenu}
+              settingsMenu={settingsMenu}
             />
             <Sidebar.Inset>
               {breadcrumbs}
               <MainContentLayout className={childrenWrapperClassName} withBreadcrumbs>
                 <Outlet />
               </MainContentLayout>
-              <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
-              <SettingsMenu
-                showSettingMenu={showSettingsMenu}
-                handleSettingsMenu={onToggleSettingsMenu}
-                items={settingsMenu}
-              />
             </Sidebar.Inset>
           </Sidebar.Provider>
         }

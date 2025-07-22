@@ -1,4 +1,4 @@
-import { Avatar, Icon, Text } from '@/components'
+import { Avatar, IconV2, Text } from '@/components'
 import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
 
 const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
@@ -6,13 +6,13 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
   const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
     switch (decision) {
       case PullReqReviewDecision.outdated:
-        return <Icon name="comments" className="text-cn-foreground-warning" />
+        return <IconV2 name="message" className="text-cn-foreground-warning" />
       case PullReqReviewDecision.approved:
-        return <Icon name="success" className="text-cn-foreground-success" />
+        return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
       case PullReqReviewDecision.changeReq:
-        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+        return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
       case PullReqReviewDecision.pending:
-        return <Icon name="pending-clock" className="text-icons-alert" />
+        return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
       default:
         return null
     }
@@ -21,7 +21,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
     <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
       <div className="flex items-center space-x-2 overflow-hidden">
         <Avatar name={reviewer?.display_name} rounded />
-        <Text className="text-2 text-cn-foreground-1 truncate font-medium" title={reviewer?.display_name}>
+        <Text className="truncate text-2 font-medium text-cn-foreground-1" title={reviewer?.display_name}>
           {reviewer?.display_name}
         </Text>
       </div>

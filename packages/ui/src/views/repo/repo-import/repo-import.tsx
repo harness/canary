@@ -9,7 +9,6 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Select,
   Spacer,
   Text
 } from '@/components'
@@ -96,6 +95,8 @@ const formSchema = z
 
 export type ImportRepoFormFields = z.infer<typeof formSchema>
 
+const providerOptions = Object.values(ProviderOptionsEnum).map(option => ({ value: option, label: option }))
+
 interface RepoImportPageProps {
   onFormSubmit: (data: ImportRepoFormFields) => void
   onFormCancel: () => void
@@ -118,16 +119,11 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
 
   const { register, handleSubmit, setValue, watch } = formMethods
 
-  const providerValue = watch('provider')
   const repositoryValue = watch('repository')
 
   useEffect(() => {
     setValue('identifier', repositoryValue)
   }, [repositoryValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportRepoFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
-  }
 
   const onSubmit: SubmitHandler<ImportRepoFormFields> = data => {
     onFormSubmit(data)
@@ -140,34 +136,11 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
         <Spacer size={5} />
-        <Text className="tracking-tight" size={5} weight="medium">
-          {t('views:repos.importRepo', 'Import a repository')}
-        </Text>
+        <Text variant="heading-section">{t('views:repos.importRepo', 'Import a repository')}</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
-          <Fieldset>
-            <ControlGroup>
-              <Select.Root
-                name="provider"
-                value={providerValue}
-                onValueChange={value => handleSelectChange('provider', value)}
-                placeholder="Select"
-                label="Provider"
-              >
-                <Select.Content>
-                  {ProviderOptionsEnum &&
-                    Object.values(ProviderOptionsEnum)?.map(option => {
-                      return (
-                        <Select.Item key={option} value={option}>
-                          {option}
-                        </Select.Item>
-                      )
-                    })}
-                </Select.Content>
-              </Select.Root>
-            </ControlGroup>
-          </Fieldset>
+          <FormInput.Select options={providerOptions} placeholder="Select" label="Provider" {...register('provider')} />
 
           {[
             ProviderOptionsEnum.GITHUB_ENTERPRISE,

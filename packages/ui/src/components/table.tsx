@@ -1,114 +1,199 @@
-import { forwardRef, HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from 'react'
+import {
+  Children,
+  cloneElement,
+  forwardRef,
+  HTMLAttributes,
+  isValidElement,
+  ReactNode,
+  TdHTMLAttributes,
+  ThHTMLAttributes
+} from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tableVariants = cva('w-full text-sm', {
+import { IconV2 } from './icon-v2'
+import { Layout } from './layout'
+import { Link, type LinkProps } from './link'
+import { Tooltip, type TooltipProps } from './tooltip'
+
+export const tableVariants = cva('cn-table-v2', {
   variants: {
-    variant: {
-      default: 'caption-bottom',
-      asStackedList:
-        'rounded-md border [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-cn-background-2'
+    size: {
+      normal: 'cn-table-v2-normal',
+      relaxed: 'cn-table-v2-relaxed',
+      compact: 'cn-table-v2-compact'
     }
   },
   defaultVariants: {
-    variant: 'default'
+    size: 'normal'
   }
 })
 
-export interface TableRootProps extends HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
-  disableXScroll?: boolean
+export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
   tableClassName?: string
+  disableHighlightOnHover?: boolean
 }
 
-const TableRoot = forwardRef<HTMLTableElement, TableRootProps>(
-  ({ variant, disableXScroll, className, tableClassName, ...props }, ref) => (
-    <div className={cn('relative w-full overflow-auto', tableVariants({ variant }), className)}>
-      <table
-        ref={ref}
-        className={cn('w-full overflow-x-auto', { 'min-w-auto overflow-x-hidden': disableXScroll }, tableClassName)}
-        {...props}
-      />
+const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
+  ({ size, className, tableClassName, disableHighlightOnHover = false, ...props }, ref) => (
+    <div
+      className={cn(
+        'cn-table-v2-container',
+        tableVariants({ size }),
+        { 'cn-table-v2-highlight-hover': !disableHighlightOnHover },
+        className
+      )}
+    >
+      <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
     </div>
   )
 )
 TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props} />
+  ({ className, ...props }, ref) => <thead ref={ref} className={cn('cn-table-v2-header', className)} {...props} />
 )
 TableHeader.displayName = 'TableHeader'
 
-const TableBody = forwardRef<
-  HTMLTableSectionElement,
-  HTMLAttributes<HTMLTableSectionElement> & { hasHighlightOnHover?: boolean }
->(({ className, hasHighlightOnHover, ...props }, ref) => (
-  <tbody
-    ref={ref}
-    className={cn(
-      '[&_tr:last-child]:border-0',
-      { '[&>tr:hover]:bg-cn-background-hover': hasHighlightOnHover },
-      className
-    )}
-    {...props}
-  />
-))
+const TableBody = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
+  ({ className, ...props }, ref) => <tbody ref={ref} className={cn('cn-table-v2-body', className)} {...props} />
+)
 TableBody.displayName = 'TableBody'
 
 const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => (
-    <tfoot
-      ref={ref}
-      className={cn('bg-cn-background-softgray/50 border-t font-medium [&>tr]:last:border-b-0', className)}
-      {...props}
-    />
-  )
+  ({ className, ...props }, ref) => <tfoot ref={ref} className={cn('cn-table-v2-footer', className)} {...props} />
 )
 TableFooter.displayName = 'TableFooter'
 
-const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElement>>(
-  ({ className, ...props }, ref) => (
-    <tr
-      ref={ref}
-      className={cn('data-[state=selected]:bg-cn-background-2 border-b transition-colors', className)}
-      {...props}
-    />
+interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
+  children?: ReactNode
+  selected?: boolean
+  to?: string
+  linkProps?: Omit<LinkProps, 'to'>
+}
+
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
+  let rowChildren = props.children
+  if (props.to || props.linkProps) {
+    rowChildren = Children.map(rowChildren, child => {
+      if (isValidElement(child)) {
+        // Don't add link props if the cell already has its own link props or if disableLink is true
+        if (child.props.to || child.props.linkProps || child.props.disableLink) {
+          return child
+        }
+        return cloneElement(child, {
+          to: props.to,
+          linkProps: props.linkProps
+        } as any)
+      }
+      return child
+    })
+  }
+
+  return (
+    <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props}>
+      {rowChildren}
+    </tr>
   )
-)
+})
 TableRow.displayName = 'TableRow'
 
-const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
-    <th
-      ref={ref}
-      className={cn(
-        'text-cn-foreground-4 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-        className
-      )}
-      {...props}
-    />
-  )
+export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
+  /**
+   * Sort direction
+   */
+  sortDirection?: 'asc' | 'desc' | false
+  /**
+   * Whether the column is sortable
+   */
+  sortable?: boolean
+  /**
+   * Props for the tooltip component
+   */
+  tooltipProps?: Omit<TooltipProps, 'children'>
+}
+
+const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
+  ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
+    const childrenWithTooltip = tooltipProps?.content ? (
+      <Tooltip {...tooltipProps}>
+        <span className="underline decoration-dashed">{children}</span>
+      </Tooltip>
+    ) : (
+      children
+    )
+
+    const contentElement = (
+      // <div className="flex items-center gap-1">
+      <Layout.Flex direction="row" gap="xs" align="center">
+        {childrenWithTooltip}
+        {sortable && (
+          <span className="ml-1">
+            {sortDirection === 'asc' && <IconV2 name="arrow-up" size="2xs" />}
+            {sortDirection === 'desc' && <IconV2 name="arrow-down" size="2xs" />}
+            {!sortDirection && <IconV2 name="up-down" />}
+          </span>
+        )}
+      </Layout.Flex>
+      // </div>
+    )
+
+    return (
+      <th
+        ref={ref}
+        className={cn(
+          'cn-table-v2-head',
+          {
+            'cn-table-v2-head-sortable': sortable
+          },
+          className
+        )}
+        {...props}
+      >
+        {contentElement}
+      </th>
+    )
+  }
 )
 TableHead.displayName = 'TableHead'
 
-const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLTableCellElement>>(
-  ({ className, ...props }, ref) => (
-    <td
-      ref={ref}
-      className={cn(
-        'px-2 py-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
-        className
-      )}
-      {...props}
-    />
-  )
+interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
+  to?: string
+  linkProps?: Omit<LinkProps, 'to'>
+  disableLink?: boolean
+}
+
+const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
+  ({ className, to, linkProps, children, disableLink = false, ...props }, ref) => {
+    const shouldRenderLink = !disableLink && (to || linkProps)
+
+    if (shouldRenderLink) {
+      return (
+        <td ref={ref} className={cn('cn-table-v2-cell !p-0', className)} {...props}>
+          <Link
+            to={to || ''}
+            variant="secondary"
+            className={cn('cn-table-v2-cell-link', linkProps?.className)}
+            {...(linkProps || {})}
+          >
+            {children}
+          </Link>
+        </td>
+      )
+    }
+
+    return (
+      <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+        {children}
+      </td>
+    )
+  }
 )
 TableCell.displayName = 'TableCell'
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTableCaptionElement>>(
-  ({ className, ...props }, ref) => (
-    <caption ref={ref} className={cn('text-cn-foreground-3 mt-4 text-sm', className)} {...props} />
-  )
+  ({ className, ...props }, ref) => <caption ref={ref} className={cn('cn-table-v2-caption', className)} {...props} />
 )
 TableCaption.displayName = 'TableCaption'
 

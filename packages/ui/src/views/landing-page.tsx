@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, DropdownMenu, Icon } from '@/components'
+import { Button, ButtonLayout, DropdownMenu, IconV2, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -32,38 +32,37 @@ export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, 
   return (
     <SandboxLayout.Main className="min-h-[inherit]">
       <section className="grid min-h-[inherit] place-content-center place-items-center gap-2.5">
-        <h2 className="text-2xl font-medium text-cn-foreground-1">
+        <Text as="h2" variant="heading-section" color="foreground-1">
           {t('views:landingPage.selectProject', 'Select a project to get started')}
-        </h2>
+        </Text>
 
-        <p className="text-center text-sm font-normal text-cn-foreground-3">
+        <Text color="foreground-3" align="center">
           {t(
             'views:landingPage.description',
             'Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.'
           )}
-        </p>
+        </Text>
 
         <ButtonLayout>
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button>
                 <span>{t('views:landingPage.projectSelector', 'Select Project')}</span>
-                <Icon name="chevron-down" size={15} className="chevron-down" />
+                <IconV2 name="nav-arrow-down" className="chevron-down" />
               </Button>
             </DropdownMenu.Trigger>
 
             <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
-              {!!spaces?.length &&
-                spaces.map(space => (
-                  <Link key={space.id} to={getProjectPath(space?.path)}>
-                    <DropdownMenu.Item>{space.identifier}</DropdownMenu.Item>
-                  </Link>
-                ))}
+              {spaces?.map(space => (
+                <Link key={space.id} to={getProjectPath(space?.path)}>
+                  <DropdownMenu.Item title={space.identifier} />
+                </Link>
+              ))}
 
               {!spaces?.length && (
-                <DropdownMenu.Item disabled>
+                <DropdownMenu.NoOptions>
                   {t('views:landingPage.noProjects', 'No projects available')}
-                </DropdownMenu.Item>
+                </DropdownMenu.NoOptions>
               )}
             </DropdownMenu.Content>
           </DropdownMenu.Root>

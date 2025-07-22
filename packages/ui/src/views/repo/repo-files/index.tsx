@@ -4,10 +4,11 @@ import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
+  BranchSelectorListItem,
+  BranchSelectorTab,
   CodeModes,
   CommitDivergenceType,
   FileLastChangeBar,
-  IBranchSelectorStore,
   LatestFileTypes,
   PathActionBar,
   RepoFile,
@@ -27,12 +28,16 @@ interface RepoFilesProps {
   pathNewFile: string
   pathUploadFiles: string
   codeMode: CodeModes
-  useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
   currentBranchDivergence: CommitDivergenceType
   toCommitDetails?: ({ sha }: { sha: string }) => string
   isLoadingRepoDetails: boolean
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  selectedBranchTag: BranchSelectorListItem | null
+  repoId: string
+  spaceId: string
+  selectedRefType: BranchSelectorTab
+  fullResourcePath?: string
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -46,15 +51,18 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   pathNewFile,
   pathUploadFiles,
   codeMode,
-  useRepoBranchesStore,
   defaultBranchName,
   currentBranchDivergence,
   isRepoEmpty,
   toCommitDetails,
   isLoadingRepoDetails,
-  toRepoFileDetails
+  toRepoFileDetails,
+  selectedBranchTag,
+  repoId,
+  spaceId,
+  selectedRefType,
+  fullResourcePath
 }) => {
-  const { selectedBranchTag, repoId, spaceId, selectedRefType } = useRepoBranchesStore()
   const { t } = useTranslation()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
@@ -91,7 +99,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                 repoId={repoId}
                 spaceId={spaceId}
                 defaultBranchName={defaultBranchName}
-                useRepoBranchesStore={useRepoBranchesStore}
                 selectedBranchTag={selectedBranchTag || { name: '', sha: '' }}
                 currentBranchDivergence={{
                   ahead: currentBranchDivergence.ahead || 0,
@@ -114,7 +121,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     return (
       <NoData
         withBorder
-        iconName="no-data-folder"
+        imageName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
         primaryButton={{ label: 'Create file' }}
@@ -131,7 +138,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     files,
     selectedBranchTag?.name,
     defaultBranchName,
-    useRepoBranchesStore,
     currentBranchDivergence.ahead,
     currentBranchDivergence.behind,
     isLoadingRepoDetails,
@@ -150,6 +156,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             pathNewFile={pathNewFile}
             pathUploadFiles={pathUploadFiles}
             selectedRefType={selectedRefType}
+            fullResourcePath={fullResourcePath}
           />
         )}
         {content}
@@ -157,3 +164,5 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     </SandboxLayout.Main>
   )
 }
+
+RepoFiles.displayName = 'RepoFiles'

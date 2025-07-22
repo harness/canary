@@ -117,7 +117,7 @@ export const ConnectorsRefPage = ({
               onSelectConnector={() => setIsConnectorSelected(true)}
               setConnectorEntity={setConnectorEntity}
             />
-            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected} nested>
+            <Drawer.Root open={isConnectorSelected} onOpenChange={setIsConnectorSelected}>
               <Drawer.Content>
                 {!!connectorEntity && (
                   <ConnectorEntityForm
@@ -173,9 +173,7 @@ export const ConnectorsRefPage = ({
           <Drawer.Title>Connectors</Drawer.Title>
         </Drawer.Header>
         <Drawer.Body>
-          <Text as="div" className="text-cn-foreground-2 mb-4">
-            Choose type
-          </Text>
+          <Text className="mb-4">Choose type</Text>
           <ConnectorHeader onChange={setSelectedType} selectedType={selectedType} />
 
           <Spacer size={5} />

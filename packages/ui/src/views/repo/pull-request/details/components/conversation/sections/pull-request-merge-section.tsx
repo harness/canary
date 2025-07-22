@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useState } from 'react'
 
-import { Accordion, Button, CopyButton, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Button, CopyButton, IconV2, Layout, StackedList, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -18,9 +18,11 @@ const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
       <Layout.Horizontal gap="3xs">
-        <h3 className="flex-none text-2 font-medium text-cn-foreground-1">{item.step}</h3>
+        <Text as="h3" variant="body-strong" color="foreground-1" className="flex-none">
+          {item.step}
+        </Text>
         <Layout.Vertical className="w-[90%] max-w-full">
-          <p className="text-2 text-cn-foreground-2">{item.description}</p>
+          <Text>{item.description}</Text>
           <div
             className={cn('text-2 text-cn-foreground-2', {
               'border border-cn-borders-2 rounded-md px-2 py-1 !my-2': item.code,
@@ -28,7 +30,7 @@ const StepInfo: FC<StepInfoProps> = item => {
             })}
           >
             <Layout.Horizontal align="center" justify="between">
-              <p>{item.code ? item.code : item.comment}</p>
+              <Text>{item.code ? item.code : item.comment}</Text>
               {!!item.code && <CopyButton name={item.code} />}
             </Layout.Horizontal>
           </div>
@@ -37,6 +39,8 @@ const StepInfo: FC<StepInfoProps> = item => {
     </li>
   )
 }
+
+StepInfo.displayName = 'StepInfo'
 
 const ACCORDION_VALUE = 'item-4'
 
@@ -101,71 +105,75 @@ const PullRequestMergeSection = ({
       <Accordion.Trigger
         className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': mergeable || unchecked })}
       >
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={
-            <LineTitle
-              textClassName={isConflicted ? 'text-cn-foreground-danger' : ''}
-              text={
-                unchecked
-                  ? 'Merge check in progress...'
-                  : !mergeable
-                    ? 'Conflicts found in this branch'
-                    : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
-              }
-              icon={
-                unchecked ? (
-                  <Icon name="clock" className="text-icons-alert" />
-                ) : (
-                  <Icon
-                    className={mergeable ? 'text-icons-success' : 'text-icons-danger'}
-                    name={mergeable ? 'success' : 'triangle-warning'}
-                  />
-                )
-              }
-            />
-          }
-          description={
-            <>
-              {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
-              {isConflicted && (
-                <Layout.Vertical className="ml-6">
-                  <p className="text-14 text-cn-foreground-4 font-normal">
-                    Use the&nbsp;
-                    <Button variant="link" onClick={handleCommandLineClick} asChild>
-                      <span
-                        role="button"
-                        tabIndex={0}
-                        aria-label="Open command line"
-                        onKeyDown={e => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.stopPropagation()
-                            handleCommandLineClick()
-                          }
-                        }}
-                      >
-                        command line
-                      </span>
-                    </Button>
-                    &nbsp;to resolve conflicts
-                  </p>
-                </Layout.Vertical>
-              )}
-            </>
-          }
-        />
-        <PanelAccordionShowButton
-          isShowButton={isConflicted}
-          value={ACCORDION_VALUE}
-          accordionValues={accordionValues}
-        />
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={
+              <LineTitle
+                textClassName={isConflicted ? 'text-cn-foreground-danger' : ''}
+                text={
+                  unchecked
+                    ? 'Merge check in progress...'
+                    : !mergeable
+                      ? 'Conflicts found in this branch'
+                      : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
+                }
+                icon={
+                  unchecked ? (
+                    <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
+                  ) : (
+                    <IconV2
+                      className={mergeable ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                      name={mergeable ? 'check-circle-solid' : 'warning-triangle-solid'}
+                    />
+                  )
+                }
+              />
+            }
+            description={
+              <>
+                {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
+                {isConflicted && (
+                  <Layout.Vertical className="ml-6">
+                    <Text>
+                      Use the&nbsp;
+                      <Button variant="link" onClick={handleCommandLineClick} asChild>
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          aria-label="Open command line"
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.stopPropagation()
+                              handleCommandLineClick()
+                            }
+                          }}
+                        >
+                          command line
+                        </span>
+                      </Button>
+                      &nbsp;to resolve conflicts
+                    </Text>
+                  </Layout.Vertical>
+                )}
+              </>
+            }
+          />
+          <PanelAccordionShowButton
+            isShowButton={isConflicted}
+            value={ACCORDION_VALUE}
+            accordionValues={accordionValues}
+          />
+        </Layout.Flex>
       </Accordion.Trigger>
       {isConflicted && (
         <Accordion.Content className="ml-6">
           <>
             {showCommandLineInfo && (
               <div className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2">
-                <h3 className="text-2 text-cn-foreground-1">Resolve conflicts via command line</h3>
+                <Text as="h3" color="foreground-1">
+                  Resolve conflicts via command line
+                </Text>
                 <p className="pb-4 pt-1 text-2 text-cn-foreground-2">
                   If the conflicts on this branch are too complex to resolve in the web editor, you can check it out via
                   command line to resolve the conflicts
@@ -177,16 +185,18 @@ const PullRequestMergeSection = ({
                 </ol>
               </div>
             )}
-            <span className="text-2 text-cn-foreground-2">
-              Conflicting files <span className="text-cn-foreground-2">{conflictingFiles?.length || 0}</span>
-            </span>
+            <Text as="span">
+              Conflicting files <Text as="span">{conflictingFiles?.length || 0}</Text>
+            </Text>
 
             {!isEmpty(conflictingFiles) && (
               <div className="mt-1">
                 {conflictingFiles?.map(file => (
                   <div className="flex items-center gap-x-2 py-1.5" key={file}>
-                    <Icon className="text-icons-1" size={16} name="file" />
-                    <span className="text-2 text-cn-foreground-1">{file}</span>
+                    <IconV2 className="text-icons-1" name="page" />
+                    <Text as="span" color="foreground-1">
+                      {file}
+                    </Text>
                   </div>
                 ))}
               </div>
@@ -197,5 +207,7 @@ const PullRequestMergeSection = ({
     </Accordion.Item>
   )
 }
+
+PullRequestMergeSection.displayName = 'PullRequestMergeSection'
 
 export default PullRequestMergeSection

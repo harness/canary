@@ -11,74 +11,10 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-  <div className="flex flex-col gap-12 min-w-[400px]">
-  {/* Input Examples */}
-  <div className="font-bold w-full mb-2">Input Examples:</div>
-  <TextInput placeholder="Enter the value" />
-  <TextInput disabled placeholder="Username" label="Disabled Input" />
-  <TextInput 
-    label="Success Input" 
-    id="someinput" 
-    value="input with value" 
-    placeholder="Enter the value" 
-    theme="success" 
-  />
-  <TextInput 
-    theme="danger" 
-    label="Input with Error" 
-    error="This field is required" 
-  />
-  <TextInput 
-    theme="warning" 
-    label="Input with Warning" 
-    warning="Please double-check this field" 
-  />
-  <TextInput 
-    size="sm" 
-    label="Small Input" 
-    placeholder="Enter the small value" 
-  />
-  
-  <hr />
-
-{/* Search Input Examples */}
-
-<div className="font-bold w-full mb-2">Search Input Examples:</div>
-<SearchInput />
-<SearchInput disabled />
-
-<hr />
-
-{/* Suffix and Prefix Examples */}
-
-<div className="font-bold w-full mb-2">Suffix and Prefix Examples:</div>
-
-<TextInput prefix="https://" suffix=".com" />
-<TextInput size="sm" prefix="https://" suffix=".com" />
-<TextInput disabled size="sm" prefix="https://" suffix=".com" />
-<TextInput prefix="PAT:" value="ghp_1234567890abcdef" readOnly />
-
-<TextInput
-  suffix={
-    <Button variant="outline" iconOnly>
-      <Icon name="chevron-right" size={14} />
-    </Button>
-  }
-/>
-<TextInput
-  prefix={
-    <Button variant="outline" iconOnly>
-      <Icon name="minus" size={14} />
-    </Button>
-  }
-  suffix={
-    <Button variant="outline" iconOnly>
-      <Icon name="plus" size={14} />
-    </Button>
-  }
-/>
-
-</div>`}
+    <Layout.Vertical spacing="large" className="min-w-[400px]">
+      <TextInput label="Text input label" placeholder="Enter the value" />
+    </Layout.Vertical>
+`}
 />
 
 ## Usage
@@ -99,55 +35,214 @@ return (
 )
 ```
 
+## Disable
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput disabled placeholder="Username" label="Disabled Input" />
+  </Layout.Vertical>`}
+/>
+
+## Read only
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput label="Text input label" placeholder="Enter the value" value="Value" readOnly />
+  </Layout.Vertical>`}
+/>
+
+## Optional
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput label="Text input label" placeholder="Enter the value" value="Value" optional />
+  </Layout.Vertical>`}
+/>
+
+## Theme
+
+The `TextInput` component accepts a `theme` prop, which defines the visual state of the input: either `success`, `warning`, or `danger`.
+
+When an error occurs, set `theme="danger"` and pass the error message to the `error` prop.
+
+For warnings, set `theme="warning"` and provide the warning message via the `warning` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput
+      label="Success Input"
+      id="someinput"
+      placeholder="Enter the value"
+      theme="success"
+      caption="Caption text"
+    />
+    <TextInput
+      label="Input with Error"
+      error="This field is required"
+      theme="danger"
+      caption="Caption text"
+    />
+    <TextInput
+      label="Input with Warning"
+      warning="Please double-check this field"
+      theme="warning"
+      caption="Caption text"
+    />
+  </Layout.Vertical>`}
+/>
+
+## Size
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput
+      label="Medium Input"
+      placeholder="Enter the value"
+    />
+    <TextInput
+      size="sm"
+      label="Small Input"
+      placeholder="Enter the value"
+    />
+  </Layout.Vertical>`}
+/>
+
+The `TextInput` component accepts a `size` prop, which defines the overall size of the input field.
+Available options are `md` (medium) and `sm` (small)
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput
+      label="Medium Input"
+      placeholder="Enter the value"
+    />
+    <TextInput
+      size="sm"
+      label="Small Input"
+      placeholder="Enter the value"
+    />
+  </Layout.Vertical>`}
+/>
+
+## Prefix & suffix
+
+The `TextInput` component supports `prefix` and `suffix` props, which allow adding content before or after the input field.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Layout.Vertical spacing="large" className="min-w-[400px]">
+      <TextInput prefix="https://" suffix=".com" />
+
+      <TextInput
+        suffix={
+          <Button variant="outline" iconOnly>
+            <IconV2 name="nav-arrow-right" size="xs" />
+          </Button>
+        }
+      />
+    </Layout.Vertical>
+
+`}
+/>
+
+## Orientation
+
+The `TextInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <TextInput
+      label="Vertical orientation"
+      error="This field is required"
+      theme="danger"
+      caption="Caption text"
+    />
+    <TextInput
+      label="Horizontal orientation"
+      error="This field is required"
+      theme="danger"
+      caption="Caption text"
+      orientation="horizontal"
+    />
+  </Layout.Vertical>`}
+/>
+
 ## API Reference
+
+```typescript
+interface InformerProps extends Omit<TooltipProps, "children"> {
+  className?: string;
+  /**
+   * If disabled, the tooltip will not be shown
+   */
+  disabled?: boolean;
+  iconProps?: IconPropsV2;
+}
+```
 
 <DocsPage.PropsTable
   props={[
     {
       name: "type",
-      description: "HTML input type, excludes 'number' and 'search'",
+      description: "HTML input type, excludes 'number' and 'search'.",
       required: false,
       defaultValue: "text",
       value: "string",
     },
     {
       name: "wrapperClassName",
-      description: "Additional CSS classes for the wrapper element",
+      description: "Additional CSS classes for the wrapper element.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "label",
-      description: "Label text for the input field",
+      description: "Label text for the input field.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "caption",
-      description: "Helper text displayed below the input",
+      description: "Helper text displayed below the input.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "error",
-      description: "Error message to display (will use danger theme and icon)",
+      description: "Error message to display (will use danger theme and icon).",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "warning",
-      description: "Warning message to display (will use warning theme)",
+      description: "Warning message to display (will use warning theme).",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "optional",
-      description: "Whether to display an 'optional' tag beside the label",
+      description: "Whether to display an 'optional' tag beside the label.",
       required: false,
       defaultValue: "false",
       value: "boolean",
@@ -155,28 +250,28 @@ return (
     {
       name: "id",
       description:
-        "Unique identifier for the input element (auto-generated if not provided)",
+        "Unique identifier for the input element (auto-generated if not provided).",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "disabled",
-      description: "Whether the input is disabled",
+      description: "Whether the input is disabled.",
       required: false,
       defaultValue: "false",
       value: "boolean",
     },
     {
       name: "className",
-      description: "Additional CSS classes for the input element",
+      description: "Additional CSS classes for the input element.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "inputContainerClassName",
-      description: "Additional CSS classes for the input container",
+      description: "Additional CSS classes for the input container.",
       required: false,
       defaultValue: "",
       value: "string",
@@ -184,66 +279,92 @@ return (
     {
       name: "theme",
       description:
-        "Theme styling for the input and caption (automatically set to danger for errors, warning for warnings)",
+        "Theme styling for the input and caption (automatically set to danger for errors, warning for warnings).",
       required: false,
       defaultValue: "'default'",
       value: "'default' | 'success' | 'danger' | 'warning'",
     },
     {
       name: "size",
-      description: "Size of the input field",
+      description: "Size of the input field.",
       required: false,
-      defaultValue: "'default'",
-      value: "'default' | 'sm'",
+      defaultValue: "'md'",
+      value: "'md' | 'sm'",
     },
     {
       name: "prefix",
-      description: "Content to display before the input field",
+      description: "Content to display before the input field.",
       required: false,
       defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "suffix",
-      description: "Content to display after the input field",
+      description: "Content to display after the input field.",
       required: false,
       defaultValue: "",
       value: "ReactNode",
     },
     {
       name: "value",
-      description: "Controlled value for the input",
+      description: "Controlled value for the input.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "defaultValue",
-      description: "Default value for uncontrolled input",
+      description: "Default value for uncontrolled input.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "onChange",
-      description: "Callback when value changes",
+      description: "Callback when value changes.",
       required: false,
       defaultValue: "",
       value: "React.ChangeEventHandler<HTMLInputElement>",
     },
     {
       name: "placeholder",
-      description: "Placeholder text for the input field",
+      description: "Placeholder text for the input field.",
       required: false,
       defaultValue: "",
       value: "string",
     },
     {
       name: "readOnly",
-      description: "Whether the input is read-only",
+      description: "Whether the input is read-only.",
       required: false,
       defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "informerContent",
+      description: "Content to display in the label informer tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "informerProps",
+      description: "Additional props for configuring the informer tooltip.",
+      required: false,
+      value: "InformerProps",
+    },
+    {
+      name: "labelSuffix",
+      description:
+        "Customized with a suffix element that appears on the right side of the label.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "orientation",
+      description: "Defines the layout direction of the input and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
   ]}
 />

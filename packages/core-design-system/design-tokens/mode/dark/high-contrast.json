@@ -1,5 +1,10 @@
 {
   "bg": {
+    "0": {
+      "$type": "color",
+      "$value": "{chrome.950}",
+      "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
+    },
     "1": {
       "$type": "color",
       "$value": "{chrome.1000}",
@@ -73,7 +78,7 @@
       "$value": "{chrome.800}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "accent": {
+    "brand": {
       "$type": "color",
       "$value": "{set.brand.solid.bg}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
@@ -1099,7 +1104,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.25",
               "space": "lch"
             }
           }
@@ -1113,6 +1118,12 @@
       "gradient": {
         "$type": "color",
         "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
+      }
+    },
+    "chat": {
+      "ai-icon": {
+        "$type": "color",
+        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
       }
     },
     "dialog": {
@@ -1312,6 +1323,12 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
+    "input": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.2}"
+      }
+    },
     "link": {
       "text": {
         "$type": "color",
@@ -1413,6 +1430,24 @@
           "$value": "{cyan.300}",
           "$description": "Icon color for Logo in sidebar navigation."
         }
+      },
+      "icon-asset": {
+        "bg": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.sidebar.icon.bg.from} 0%, {gradient.sidebar.icon.bg.to} 80%)"
+        },
+        "item": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.sidebar.icon.item.from} 0%, {gradient.sidebar.icon.item.to} 100%)"
+        }
+      },
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {bg.0} 100%)"
+      },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade} 100%)"
       }
     },
     "scrollbar": {
@@ -1449,7 +1484,7 @@
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{border.accent}"
+          "$value": "{border.brand}"
         }
       },
       "selected": {
@@ -1546,20 +1581,56 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.600}"
-        },
-        "hover": {
-          "$type": "color",
-          "$value": "{red.700}"
+          "$value": "{red.800}"
         },
         "border": {
           "$type": "color",
-          "$value": "{red.300}"
+          "$value": "{red.600}"
         },
         "text": {
           "$type": "color",
-          "$value": "{chrome.25}"
+          "$value": "{red.25}"
+        },
+        "fade": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)"
+        },
+        "transparent-btn": {
+          "text": {
+            "$type": "color",
+            "$value": "{red.25}"
+          },
+          "text-hover": {
+            "$type": "color",
+            "$value": "{red.50}"
+          },
+          "text-active": {
+            "$type": "color",
+            "$value": "{red.100}"
+          }
+        },
+        "action-btn": {
+          "text": {
+            "$type": "color",
+            "$value": "{pure.black}"
+          },
+          "bg": {
+            "$type": "color",
+            "$value": "{red.25}"
+          },
+          "bg-hover": {
+            "$type": "color",
+            "$value": "{red.50}"
+          },
+          "bg-selected": {
+            "$type": "color",
+            "$value": "{red.100}"
+          }
         }
+      },
+      "fade": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)"
       }
     }
   },
@@ -1838,7 +1909,7 @@
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "2",
+          "spread": "0.8",
           "color": "{bg.1}",
           "type": "dropShadow"
         },
@@ -1846,8 +1917,8 @@
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "4",
-          "color": "{border.accent}",
+          "spread": "2",
+          "color": "{border.brand}",
           "type": "dropShadow"
         }
       ],
@@ -1948,6 +2019,20 @@
       "gradient-stop-4": {
         "$type": "color",
         "$value": "{cyan.200}"
+      }
+    },
+    "ai-chat": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{cyan.150}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{indigo.300}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{violet.300}"
       }
     },
     "alert": {
@@ -2124,34 +2209,549 @@
         "$type": "color",
         "$value": "{bg.2}"
       }
-    }
-  },
-  "iconStrokeWidth": {
-    "xs": {
-      "$type": "borderWidth",
-      "$value": "1.2"
     },
-    "sm": {
-      "$type": "borderWidth",
-      "$value": "1"
+    "sidebar": {
+      "icon": {
+        "bg": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.950}"
+          }
+        },
+        "item": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          }
+        }
+      },
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.0}"
+      }
     },
-    "default": {
-      "$type": "borderWidth",
-      "$value": "1"
+    "toast": {
+      "default": {
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{bg.3}"
+        },
+        "from": {
+          "$type": "color",
+          "$value": "{bg.3}"
+        }
+      },
+      "danger": {
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.toast.danger.bg}"
+        },
+        "from": {
+          "$type": "color",
+          "$value": "{comp.toast.danger.bg}"
+        }
+      }
     },
-    "md": {
-      "$type": "borderWidth",
-      "$value": "1.2"
+    "img": {
+      "empty-state": {
+        "bg": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{chrome.600}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{chrome.800}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.850}"
+          },
+          "stop-4": {
+            "$type": "color",
+            "$value": "{chrome.900}"
+          },
+          "stop-5": {
+            "$type": "color",
+            "$value": "{chrome.950}"
+          },
+          "stop-6": {
+            "$type": "color",
+            "$value": "{chrome.1000}"
+          }
+        },
+        "border": {
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.1",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.01",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{pure.white}"
+          }
+        },
+        "icon": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{chrome.100}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{chrome.200}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          }
+        },
+        "lines": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.900}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{pure.black}"
+          }
+        },
+        "logo": {
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          }
+        },
+        "bubble-t": {
+          "bg": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.850}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.950}"
+            }
+          },
+          "icon": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.800}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.300}"
+            }
+          }
+        },
+        "bubble-b": {
+          "bg": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.950}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.850}"
+            }
+          },
+          "icon": {
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.300}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.800}"
+            }
+          }
+        }
+      }
     },
-    "lg": {
-      "$type": "borderWidth",
-      "$value": "2"
+    "flow": {
+      "onboard": {
+        "img-color-bubble": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.6",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{chrome.850}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.6",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{chrome.850}"
+            }
+          }
+        },
+        "ellipse-t-1": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.06",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.06",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
+          }
+        },
+        "ellipse-t-2": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.08",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.08",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
+          }
+        },
+        "ellipse-b": {
+          "default": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.08",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
+          },
+          "danger": {
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.08",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
+          }
+        }
+      }
     }
   },
   "disabled": {
     "opacity": {
       "$type": "opacity",
       "$value": "{opacity.50}"
+    }
+  },
+  "img": {
+    "empty-state": {
+      "bg": {
+        "$type": "color",
+        "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)"
+      },
+      "lines": {
+        "$type": "color",
+        "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+      },
+      "logo": {
+        "$type": "color",
+        "$value": "radial-gradient(87.5% 87.5% at 50% 50%, {gradient.img.empty-state.logo.from} 0%, {gradient.img.empty-state.logo.to} 100%)"
+      },
+      "bubble-t": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-t.bg.from} 11%, {gradient.img.empty-state.bubble-t.bg.to} 71%)"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-t.icon.from} 8%, {gradient.img.empty-state.bubble-t.icon.to} 92%)"
+        }
+      },
+      "bubble-b": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-b.bg.from} 11%, {gradient.img.empty-state.bubble-b.bg.to} 71%)"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-b.icon.from} 8%, {gradient.img.empty-state.bubble-b.icon.to} 92%)"
+        }
+      }
+    }
+  },
+  "flow": {
+    "onboard": {
+      "img-color-bubble": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.default.from} 0%, {gradient.flow.onboard.img-color-bubble.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.danger.from} 0%, {gradient.flow.onboard.img-color-bubble.danger.to} 100%)"
+        }
+      },
+      "ellipse-t-1": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.default.from} 26%, {gradient.flow.onboard.ellipse-t-1.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.danger.from} 26%, {gradient.flow.onboard.ellipse-t-1.danger.to} 100%)"
+        }
+      },
+      "ellipse-t-2": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.default.from} 26%, {gradient.flow.onboard.ellipse-t-2.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.danger.from} 26%, {gradient.flow.onboard.ellipse-t-2.danger.to} 100%)"
+        }
+      },
+      "ellipse-b": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.default.from} 26%, {gradient.flow.onboard.ellipse-b.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
+        }
+      }
     }
   }
 }

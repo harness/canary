@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Chat, ChatDiffViewer, Icon } from '@/components'
+import { Button, Chat, ChatDiffViewer, IconV2 } from '@/components'
 
 const diffData =
   'diff --git a/packages/ui/src/shared-style-variables.css b/packages/ui/src/shared-style-variables.css\n' +
@@ -31,7 +31,7 @@ export const ChatPreviewWrapper: FC = () => {
           <Chat.Message
             actions={
               <Button variant="secondary" size="sm">
-                <Icon name="repo-icon" size={12} />
+                <IconV2 name="repository" size="2xs" />
                 main
               </Button>
             }

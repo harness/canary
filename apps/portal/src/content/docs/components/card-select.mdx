@@ -1,10 +1,10 @@
 ---
 title: CardSelect
-description: A card-based selection interface for single and multiple selections
+description: A card-based selection interface for single and multiple selections with flexible layouts
 beta: true
 ---
 
-The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes, making it suitable for forms, settings, and decision workflows.
+The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes with flexible layouts (horizontal, vertical, or grid), making it suitable for forms, settings, and decision workflows.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -12,7 +12,7 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
   <div className="flex flex-col space-y-8">
-    <CardSelect.Root type="single" orientation="horizontal" onValueChange={console.log}>
+    <CardSelect.Root type="single" layout="horizontal" onValueChange={console.log}>
       <CardSelect.Item value="option-1">
         <CardSelect.Title>Option 1</CardSelect.Title>
       </CardSelect.Item>
@@ -29,6 +29,7 @@ import { DocsPage } from "@/components/docs-page";
         <CardSelect.Title>Option B</CardSelect.Title>
       </CardSelect.Item>
     </CardSelect.Root>
+
   </div>`}
 />
 
@@ -41,7 +42,7 @@ import { CardSelect } from "@harnessio/ui/components";
 
 return (
   <CardSelect.Root type="single">
-    <CardSelect.Item value="option-1" icon="branch">
+    <CardSelect.Item value="option-1" icon="git-branch">
       <CardSelect.Title>Option 1</CardSelect.Title>
       <CardSelect.Description>With an icon</CardSelect.Description>
     </CardSelect.Item>
@@ -78,11 +79,11 @@ The `CardSelect` supports two selection types:
   <div className="flex flex-col space-y-2">
     <h1 className="text-lg font-semibold">Multiple Selection</h1>
     <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
-      <CardSelect.Item value="multi-1" icon="pr-draft">
+      <CardSelect.Item value="multi-1" icon="git-pull-request-draft">
         <CardSelect.Title>Option A</CardSelect.Title>
         <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
       </CardSelect.Item>
-      <CardSelect.Item value="multi-2" icon="merged">
+      <CardSelect.Item value="multi-2" icon="git-merge">
         <CardSelect.Title>Option B</CardSelect.Title>
         <CardSelect.Description>Behaves like a checkbox</CardSelect.Description>
       </CardSelect.Item>
@@ -91,16 +92,16 @@ The `CardSelect` supports two selection types:
 </div>`}
 />
 
-### Orientation
+### Layout
 
-Cards can be arranged horizontally or vertically:
+Cards can be arranged horizontally, vertically, or in a grid:
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Vertical Layout (Default)</h1>
-      <CardSelect.Root type="single" orientation="vertical">
+      <CardSelect.Root type="single" layout="vertical">
         <CardSelect.Item value="v1">
           <CardSelect.Title>First Card</CardSelect.Title>
           <CardSelect.Description>Cards stacked vertically</CardSelect.Description>
@@ -114,7 +115,7 @@ Cards can be arranged horizontally or vertically:
 
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Horizontal Layout</h1>
-      <CardSelect.Root type="single" orientation="horizontal">
+      <CardSelect.Root type="single" layout="horizontal">
         <CardSelect.Item value="h1">
           <CardSelect.Title>First Card</CardSelect.Title>
           <CardSelect.Description>Cards arranged side by side</CardSelect.Description>
@@ -122,6 +123,24 @@ Cards can be arranged horizontally or vertically:
         <CardSelect.Item value="h2">
           <CardSelect.Title>Second Card</CardSelect.Title>
           <CardSelect.Description>In the same row</CardSelect.Description>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">Grid Layout</h1>
+      <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
+        <CardSelect.Item value="grid-1">
+          <CardSelect.Title>Grid Item 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="grid-2">
+          <CardSelect.Title>Grid Item 2</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="grid-3">
+          <CardSelect.Title>Grid Item 3</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="grid-4">
+          <CardSelect.Title>Grid Item 4</CardSelect.Title>
         </CardSelect.Item>
       </CardSelect.Root>
     </div>
@@ -138,7 +157,7 @@ Control the gap between cards using the `gap` prop:
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Small Gap</h1>
-      <CardSelect.Root type="single" gap="sm" orientation="horizontal">
+      <CardSelect.Root type="single" gap="sm" layout="horizontal">
         <CardSelect.Item value="small-1">
           <CardSelect.Title>Small 1</CardSelect.Title>
         </CardSelect.Item>
@@ -153,7 +172,7 @@ Control the gap between cards using the `gap` prop:
 
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Medium Gap (Default)</h1>
-      <CardSelect.Root type="single" gap="md" orientation="horizontal">
+      <CardSelect.Root type="single" gap="md" layout="horizontal">
         <CardSelect.Item value="medium-1">
           <CardSelect.Title>Medium 1</CardSelect.Title>
         </CardSelect.Item>
@@ -168,7 +187,7 @@ Control the gap between cards using the `gap` prop:
 
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Large Gap</h1>
-      <CardSelect.Root type="single" gap="lg" orientation="horizontal">
+      <CardSelect.Root type="single" gap="lg" layout="horizontal">
         <CardSelect.Item value="large-1">
           <CardSelect.Title>Large 1</CardSelect.Title>
         </CardSelect.Item>
@@ -192,7 +211,7 @@ Cards can display either an icon or a logo:
   client:only
   code={`<div className="flex flex-col space-y-4">
     <CardSelect.Root type="single">
-      <CardSelect.Item value="icon" icon="branch">
+      <CardSelect.Item value="icon" icon="git-branch">
         <CardSelect.Title>With Icon</CardSelect.Title>
       </CardSelect.Item>
       <CardSelect.Item value="logo" logo="kubernetes">
@@ -212,10 +231,10 @@ Cards can be disabled either individually or as a group:
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Individual Cards Disabled</h1>
       <CardSelect.Root type="single">
-        <CardSelect.Item value="enabled" icon="branch">
+        <CardSelect.Item value="enabled" icon="git-branch">
           <CardSelect.Title>Enabled Card</CardSelect.Title>
         </CardSelect.Item>
-        <CardSelect.Item value="disabled" icon="branch" disabled>
+        <CardSelect.Item value="disabled" icon="git-branch" disabled>
           <CardSelect.Title>Disabled Card</CardSelect.Title>
         </CardSelect.Item>
       </CardSelect.Root>
@@ -224,10 +243,10 @@ Cards can be disabled either individually or as a group:
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Entire Group Disabled</h1>
       <CardSelect.Root type="single" disabled>
-        <CardSelect.Item value="one" icon="branch">
+        <CardSelect.Item value="one" icon="git-branch">
           <CardSelect.Title>First Option</CardSelect.Title>
         </CardSelect.Item>
-        <CardSelect.Item value="two" icon="branch">
+        <CardSelect.Item value="two" icon="git-branch">
           <CardSelect.Title>Second Option</CardSelect.Title>
         </CardSelect.Item>
       </CardSelect.Root>
@@ -248,7 +267,7 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
   value={selectedValue}             // [OPTIONAL] For controlled usage
   defaultValue={defaultValue}       // [OPTIONAL] For selecting item initially
   onValueChange={handleChange}      // [OPTIONAL] Selection change handler
-  orientation="horizontal"           // [OPTIONAL] Card layout direction
+  layout="horizontal"               // [OPTIONAL] Card layout: 'horizontal', 'vertical', or 'grid'
   gap="md"                          // [OPTIONAL] Space between cards
   disabled={false}                  // [OPTIONAL] Disable all selections
 >
@@ -286,10 +305,10 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       defaultValue: "undefined",
     },
     {
-      name: "orientation",
-      description: "Layout direction of the cards.",
+      name: "layout",
+      description: "Layout of the cards.",
       required: false,
-      value: "'horizontal' | 'vertical'",
+      value: "'horizontal' | 'vertical' | 'grid'",
       defaultValue: "'vertical'",
     },
     {
@@ -298,6 +317,20 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       required: false,
       value: "'sm' | 'md' | 'lg'",
       defaultValue: "'md'",
+    },
+    {
+      name: "rows",
+      description: "Number of rows for grid layout.",
+      required: false,
+      value: "number",
+      defaultValue: "undefined",
+    },
+    {
+      name: "cols",
+      description: "Number of columns for grid layout.",
+      required: false,
+      value: "number",
+      defaultValue: "undefined",
     },
     {
       name: "disabled",
@@ -316,7 +349,7 @@ Represents an individual selectable card option.
 ```typescript jsx
 <CardSelect.Item
   value="unique-id"               // Required: Unique identifier
-  icon="branch"                  // [OPTIONAL] Icon to display
+  icon="git-branch"                  // [OPTIONAL] Icon to display
   logo="gitlab"                  // [OPTIONAL] Logo instead of icon
   disabled={false}               // [OPTIONAL] Disable this item
 >

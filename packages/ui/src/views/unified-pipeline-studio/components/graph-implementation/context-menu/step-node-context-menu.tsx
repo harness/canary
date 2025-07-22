@@ -1,5 +1,4 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 
@@ -23,50 +22,40 @@ export const StepNodeContextMenu = (): (() => React.ReactNode)[] | null | any =>
         className="absolute"
         style={{ left: `${contextMenuData?.position.x}px`, top: `${contextMenuData?.position.y}px` }}
       >
-        <DropdownMenu.Item
+        <DropdownMenu.IconItem
+          icon="edit-pencil"
+          title="Edit"
           key="edit"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onEditIntention(contextMenuData.nodeData)
           }}
-        >
-          <Icon name="edit-pen" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Edit</Text>
-        </DropdownMenu.Item>
+        />
         <DropdownMenu.Separator />
-        <DropdownMenu.Item
+        <DropdownMenu.IconItem
+          icon="plus"
+          title="Add before"
           key="add-before"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before')
           }}
-        >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add before</Text>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
+        />
+        <DropdownMenu.IconItem
+          icon="plus"
+          title="Add after"
           key="add-after"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after') // TODO what to add
           }}
-        >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add after</Text>
-        </DropdownMenu.Item>
+        />
         <DropdownMenu.Separator />
-        {/* <RevealDropdownMenuItem /> */}
-        {/* <DropdownMenu.Separator /> */}
-        <DropdownMenu.Item
+        <DropdownMenu.IconItem
+          icon="trash"
+          title="Delete"
           key="delete"
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onDeleteIntention(contextMenuData.nodeData)
           }}
-        >
-          <Icon name="trash" size={12} className="text-cn-foreground-1" />
-          <Text wrap="nowrap">Delete</Text>
-        </DropdownMenu.Item>
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

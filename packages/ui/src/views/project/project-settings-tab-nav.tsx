@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { TabNav } from '@/components'
+import { Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -13,16 +13,18 @@ export const ProjectSettingsTabNav: FC<ProjectSettingsTabNavProps> = ({ isMFE })
 
   return (
     <SandboxLayout.SubHeader>
-      <TabNav.Root>
-        {!isMFE ? (
-          <>
-            <TabNav.Item to="general">{t('views:projectSettings.tabs.general', 'General')}</TabNav.Item>
-            <TabNav.Item to="members">{t('views:projectSettings.tabs.members', 'Members')}</TabNav.Item>
-          </>
-        ) : null}
-        <TabNav.Item to="labels">{t('views:projectSettings.tabs.labels', 'Labels')}</TabNav.Item>
-        <TabNav.Item to="rules">{t('views:projectSettings.tabs.rules', 'Rules')}</TabNav.Item>
-      </TabNav.Root>
+      <Tabs.NavRoot>
+        <Tabs.List className="border-b border-cn-borders-3 px-6">
+          {!isMFE ? (
+            <>
+              <Tabs.Trigger value="general">{t('views:projectSettings.tabs.general', 'General')}</Tabs.Trigger>
+              <Tabs.Trigger value="members">{t('views:projectSettings.tabs.members', 'Members')}</Tabs.Trigger>
+            </>
+          ) : null}
+          <Tabs.Trigger value="labels">{t('views:projectSettings.tabs.labels', 'Labels')}</Tabs.Trigger>
+          <Tabs.Trigger value="rules">{t('views:projectSettings.tabs.rules', 'Rules')}</Tabs.Trigger>
+        </Tabs.List>
+      </Tabs.NavRoot>
     </SandboxLayout.SubHeader>
   )
 }

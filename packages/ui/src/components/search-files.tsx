@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useState } from 'react'
 
-import { Command, Popover, SearchInput, Text } from '@/components'
+import { Command, Popover, SearchInput, SearchInputProps, Text } from '@/components'
 import { useTranslation } from '@/context'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
@@ -37,9 +37,10 @@ interface FilteredFile {
 interface SearchFilesProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
+  searchInputSize?: SearchInputProps['size']
 }
 
-export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => {
+export const SearchFiles = ({ navigateToFile, filesList, searchInputSize = 'sm' }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const { t } = useTranslation()
@@ -86,17 +87,18 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
         <div>
           <SearchInput
             placeholder={t('component:searchFile.input', 'Search files...')}
-            size="sm"
+            size={searchInputSize}
             onChange={handleInputChange}
           />
         </div>
       </Popover.Anchor>
       <Popover.Content
-        className="w-[300px] p-0"
         align="start"
+        hideArrow
         onOpenAutoFocus={event => {
           event.preventDefault()
         }}
+        className="!p-1"
       >
         <Command.Root>
           <Command.List heightClassName="max-h-60">

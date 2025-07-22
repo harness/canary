@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Button, NoData, Pagination, Spacer } from '@/components'
+import { Button, NoData, Pagination, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
@@ -53,7 +53,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-error"
+        imageName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'connectors'
         })}
@@ -77,7 +77,9 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Connectors</h1>
+        <Text as="h1" variant="heading-section" color="foreground-1">
+          Connectors
+        </Text>
         <Spacer size={7} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           sortConfig={{

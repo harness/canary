@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 
 import { KeysList } from '../types'
 
@@ -18,7 +17,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
   return (
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
+      disableHighlightOnHover
     >
       <Table.Header>
         <Table.Row>
@@ -38,7 +37,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
               <Table.Row key={key.identifier}>
                 <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
-                    <Icon name="ssh-key" size={32} className="rounded-md bg-cn-background-8 text-cn-foreground-2" />
+                    <IconV2 name="ssh-key" size="lg" className="rounded-md bg-cn-background-8 text-cn-foreground-2" />
                     <div className="flex flex-col">
                       <span className="block w-[200px] truncate font-medium text-cn-foreground-1">
                         {key.identifier}
@@ -48,7 +47,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
                   </div>
                 </Table.Cell>
                 <Table.Cell className="h-1 content-center">
-                  <span className="text-cn-foreground-1">{timeAgo(new Date(key.created!).getTime())}</span>
+                  <TimeAgoCard timestamp={new Date(key.created!).getTime()} textProps={{ color: 'foreground-1' }} />
                 </Table.Cell>
                 <Table.Cell className="h-1 content-center">
                   {/* TODO: pass the data to KeysList item about last used date */}

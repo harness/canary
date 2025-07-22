@@ -2,16 +2,16 @@ import { FC, useCallback, useMemo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
+  Alert,
   Button,
-  Icon,
+  IconV2,
   ListActions,
   MoreActionsTooltip,
   NoData,
   SearchInput,
   SkeletonList,
   Spacer,
-  StackedList,
-  Text
+  StackedList
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType } from '@/views'
@@ -33,12 +33,12 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
-            <Icon className="text-icons-success" name="tick" size={12} />
+            <IconV2 className="text-icons-success" name="check" size="2xs" />
             <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
           </>
         ) : (
           <>
-            <Icon className="text-icons-danger" name="x-mark" size={12} />
+            <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
             <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
           </>
         )}
@@ -56,6 +56,7 @@ export interface RepoSettingsGeneralRulesProps {
   rulesSearchQuery?: string
   setRulesSearchQuery?: (query: string) => void
   projectScope?: boolean
+  toRepoBranchRuleCreate?: () => string
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -66,7 +67,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
-  projectScope = false
+  toRepoBranchRuleCreate
 }) => {
   const { Link, NavLink } = useRouterContext()
   const { t } = useTranslation()
@@ -88,30 +89,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   return (
     <>
-      {!projectScope ? (
+      {isShowRulesContent ? (
         <>
-          <Text size={13} weight="medium" className="mb-2.5" as="div">
-            {t('views:repos.rules', 'Rules')}
-          </Text>
-
-          <div className="flex flex-row">
-            <span className="max-w-[440px]">
-              {t(
-                'views:repos.rulesDescription',
-                'Define standards and automate workflows to ensure better collaboration and control in your repository.'
-              )}
-            </span>
-            {!isLoading && !isShowRulesContent && (
-              <NavLink className="ml-auto" to="../rules/create">
-                <Button variant="outline">{t('views:repos.createRuleButton', 'Create rule')}</Button>
-              </NavLink>
-            )}
-          </div>
-        </>
-      ) : null}
-      {isShowRulesContent && (
-        <>
-          <Spacer size={7} />
           <>
             <ListActions.Root>
               <ListActions.Left>
@@ -119,16 +98,14 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   id="search"
                   size="sm"
                   defaultValue={rulesSearchQuery}
-                  inputContainerClassName={projectScope ? 'max-w-96' : 'max-w-xs'}
+                  inputContainerClassName={'max-w-96'}
                   placeholder={t('views:repos.search', 'Search')}
                   onChange={handleSearchChange}
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <NavLink to="../rules/create">
-                  <Button variant={projectScope ? 'primary' : 'outline'}>
-                    {t('views:repos.newRule', 'New branch rule')}
-                  </Button>
+                <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
+                  <Button variant="primary">{t('views:repos.newRule', 'New branch rule')}</Button>
                 </NavLink>
               </ListActions.Right>
             </ListActions.Root>
@@ -151,9 +128,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                         title={
                           <div className="flex items-center gap-2">
                             {rule.state === 'active' ? (
-                              <Icon className="text-icons-success" name="tick-circle" />
+                              <IconV2 className="text-icons-success" name="check-circle" />
                             ) : (
-                              <Icon className="text-icons-9" name="cancel-grey" />
+                              <IconV2 className="text-icons-9" name="minus-circle" />
                             )}
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                           </div>
@@ -214,15 +191,31 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               }}
             />
           )}
+
           {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
-            <>
-              <Spacer size={2} />
-              <Text size={1} className="text-cn-foreground-danger">
-                {apiError.message}
-              </Text>
-            </>
+            <Alert.Root>
+              <Alert.Title>{apiError.message}</Alert.Title>
+            </Alert.Root>
           )}
         </>
+      ) : (
+        <NoData
+          withBorder
+          className="min-h-0 py-10"
+          textWrapperClassName="max-w-[350px]"
+          imageName={'no-data-cog'}
+          title={t('views:noData.noRules', 'No rules yet')}
+          description={[
+            t(
+              'views:noData.noRulesDescription',
+              'There are no rules in this project. Click on the button below to start adding rules.'
+            )
+          ]}
+          primaryButton={{
+            label: t('views:repos.createRuleButton', 'Create rule'),
+            to: toRepoBranchRuleCreate?.() ?? ''
+          }}
+        />
       )}
     </>
   )

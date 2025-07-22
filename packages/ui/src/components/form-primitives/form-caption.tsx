@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
@@ -43,11 +43,11 @@ export const FormCaption = ({
    * cross-circle - danger
    * triangle-warning - warning
    */
-  const effectiveIconName = theme === 'danger' ? 'cross-circle' : 'warning-triangle-outline'
+  const effectiveIconName = theme === 'danger' ? 'xmark-circle' : 'warning-triangle'
 
   return (
     <p className={cn(formCaptionVariants({ theme }), { 'cn-caption-disabled': disabled }, className)}>
-      {canShowIcon && <Icon name={effectiveIconName} size={14} />}
+      {canShowIcon && <IconV2 name={effectiveIconName} size="md" />}
       <span>{children}</span>
     </p>
   )

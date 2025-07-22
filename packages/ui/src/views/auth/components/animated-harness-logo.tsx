@@ -1,4 +1,4 @@
-import { Icon } from '@/components'
+import { IconV2 } from '@/components'
 import { cn } from '@utils/cn'
 
 interface AnimatedHarnessLogoProps {
@@ -54,7 +54,11 @@ export function AnimatedHarnessLogo({ theme }: AnimatedHarnessLogoProps) {
           <span className="absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-xl bg-gradient-to-r from-[#F9F9FA] via-transparent via-60% to-transparent opacity-50 blur-sm" />
         </div>
       </div>
-      <Icon className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" name="harness" size={36} />
+      <IconV2
+        className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+        name="harness-plugins"
+        size="lg"
+      />
     </div>
   )
 }

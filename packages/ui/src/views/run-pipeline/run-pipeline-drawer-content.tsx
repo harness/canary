@@ -6,8 +6,9 @@ import { cn } from '@/utils'
 import { InputFactory } from '@harnessio/forms'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
-import { VisualYamlToggle, VisualYamlValue } from '..'
+import { PipelineInputDefinition, VisualYamlToggle, VisualYamlValue } from '..'
 import RunPipelineFormInputs from './run-pipeline-from-inputs'
+import { type InputLayout } from './utils/types'
 
 export interface RunPipelineDrawerProps {
   isValid: boolean
@@ -21,10 +22,11 @@ export interface RunPipelineDrawerProps {
   onCancel: () => void
   onClose?: () => void
   onRun: () => void
-  pipelineInputs: Record<string, unknown>
+  pipelineInputs: Record<string, PipelineInputDefinition>
   inputComponentFactory: InputFactory
   theme: 'light' | 'dark'
   error?: { message?: string }
+  pipelineInputLayout?: InputLayout
 }
 
 export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
@@ -42,7 +44,8 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
     yamlRevision,
     inputComponentFactory,
     theme,
-    error
+    error,
+    pipelineInputLayout
   } = props
 
   const rootFormRef = useRef<{
@@ -57,7 +60,6 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
       <Drawer.Header>
         <Drawer.Title>Run Pipeline</Drawer.Title>
         <VisualYamlToggle
-          className="self-start"
           isYamlValid={isYamlSyntaxValid}
           view={view}
           setView={view => {
@@ -93,6 +95,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
               yamlRevision={yamlRevision}
               inputComponentFactory={inputComponentFactory}
               theme={theme}
+              pipelineInputLayout={pipelineInputLayout}
             />
           </div>
         )}

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, NoData, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
@@ -36,7 +36,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-error"
+        imageName="no-data-error"
         title={t('views:noData.errorApiTitle', 'Failed to load', {
           type: 'secrets'
         })}
@@ -60,7 +60,9 @@ const SecretListPage: FC<SecretListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
-        <h1 className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">Secrets</h1>
+        <Text as="h1" variant="heading-section" color="foreground-1">
+          Secrets
+        </Text>
         <Spacer size={6} />
         <ListActions.Root className="mb-1">
           <ListActions.Left>

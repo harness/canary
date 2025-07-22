@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -77,20 +77,20 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={handleDialogClose}>
-      <ModalDialog.Content aria-describedby={undefined}>
+    <Dialog.Root open={open} onOpenChange={handleDialogClose}>
+      <Dialog.Content aria-describedby={undefined}>
         <FormWrapper
           {...formMethods}
           onSubmit={handleSubmit(handleFormSubmit)}
           id="edit-pr-title-form"
           className="block"
         >
-          <ModalDialog.Header>
-            <ModalDialog.Title>Edit PR title</ModalDialog.Title>
-          </ModalDialog.Header>
+          <Dialog.Header>
+            <Dialog.Title>Edit PR title</Dialog.Title>
+          </Dialog.Header>
 
-          <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
               <FormInput.Text
                 id="title"
                 {...register('title')}
@@ -109,19 +109,18 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
 
               {error && <p className="text-cn-foreground-danger">{error}</p>}
             </div>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close onClick={handleDialogClose}>Cancel</ModalDialog.Close>
-
+              <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
               <Button type="submit" disabled={isDisabled}>
                 {isLoading ? 'Saving...' : 'Save'}
               </Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

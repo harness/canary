@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, DropdownMenu, Icon, Input } from '@/components'
+import { DropdownMenu, SearchInput } from '@/components'
 
 interface SearchableDropdownProps<T> {
   options: T[]
@@ -8,16 +8,20 @@ interface SearchableDropdownProps<T> {
   dropdownAlign?: 'start' | 'end'
   inputPlaceholder?: string
   onChange: (option: T) => void
-  customFooter?: React.ReactNode
+  onReset?: () => void
+  buttonLabel?: string
+  isSearchable?: boolean
 }
 
 const SearchableDropdown = <T extends { label: string; value: string }>({
   displayLabel,
   dropdownAlign = 'end',
   onChange,
-  customFooter,
+  onReset,
+  isSearchable = false,
   options,
-  inputPlaceholder
+  inputPlaceholder,
+  buttonLabel
 }: SearchableDropdownProps<T>) => {
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -28,54 +32,24 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>{displayLabel}</DropdownMenu.Trigger>
-      <DropdownMenu.Content
-        className="min-w-[224px] p-0"
-        align={dropdownAlign}
-        onCloseAutoFocus={e => e.preventDefault()}
-      >
-        <div className="border-cn-borders-4 flex items-center border-b px-3 py-2.5">
-          <Input
-            type="text"
-            placeholder={inputPlaceholder}
-            value={searchQuery}
-            variant="extended"
-            // This is stop focus shift by dropdown,
-            // It will try to focus on first dropdown menu item on keychange
-            onKeyDown={e => e.stopPropagation()}
-            onChange={e => setSearchQuery(e.target.value)}
-            rightElement={
-              <Button
-                variant="transparent"
-                size="sm"
-                iconOnly
-                onClick={() => {
-                  setSearchQuery('')
-                }}
-              >
-                <Icon className="rotate-45" name="plus" size={12} />
-              </Button>
-            }
-          />
-        </div>
+      <DropdownMenu.Content className="min-w-[224px]" align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
+        {isSearchable && (
+          <DropdownMenu.Header>
+            <SearchInput placeholder={inputPlaceholder} value={searchQuery} onChange={value => setSearchQuery(value)} />
+          </DropdownMenu.Header>
+        )}
 
-        <div className="p-1">
-          {filteredBySearchOptions.map(option => (
-            <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)}>
-              {option.label}
-            </DropdownMenu.Item>
-          ))}
+        {filteredBySearchOptions.map(option => (
+          <DropdownMenu.Item key={option.value as string} onSelect={() => onChange(option)} title={option.label} />
+        ))}
 
-          {filteredBySearchOptions.length === 0 && (
-            <div className="flex items-center justify-center p-4">
-              <span className="text-2 leading-none text-cn-foreground-2">No results</span>
-            </div>
-          )}
-        </div>
+        {filteredBySearchOptions.length === 0 && <DropdownMenu.NoOptions>No results</DropdownMenu.NoOptions>}
 
-        {customFooter && (
-          <div className="border-cn-borders-4 border-t p-1">
-            <DropdownMenu.Item asChild>{customFooter}</DropdownMenu.Item>
-          </div>
+        {onReset && (
+          <>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item title={buttonLabel} onClick={onReset} />
+          </>
         )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

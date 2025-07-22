@@ -16,17 +16,17 @@ export const RepoHeader = ({ name, isPublic, isLoading, className }: RepoHeaderP
     <div className={cn('grid grid-cols-[auto,1fr] items-center gap-2 px-6 pb-2 pt-7', className)}>
       {isLoading && (
         <>
-          <Skeleton className="bg-cn-background-0 h-[var(--cn-line-height-7-tight)] w-28" />
-          <Skeleton className="bg-cn-background-0 h-6 w-14" />
+          <Skeleton className="h-[var(--cn-line-height-7-tight)] w-28 bg-cn-background-0" />
+          <Skeleton className="h-6 w-14 bg-cn-background-0" />
         </>
       )}
 
       {!isLoading && (
         <>
-          <Text className="font-heading-hero truncate" as="h2" color="primary">
+          <Text className="truncate" variant="heading-hero" as="h2" color="foreground-1">
             {name}
           </Text>
-          <StatusBadge variant="outline" theme="success" className="min-w-fit rounded-full">
+          <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} className="min-w-fit rounded-full">
             {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
           </StatusBadge>
         </>

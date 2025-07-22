@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Button, Carousel, Icon, ModalDialog, Spacer } from '@/components'
+import { Button, Carousel, Dialog, IconV2, Spacer } from '@/components'
 import { INITIAL_ZOOM_LEVEL, ZOOM_INC_DEC_LEVEL } from '@/utils/utils'
 
 export interface ImageCarouselProps {
@@ -15,18 +15,18 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
   const [zoomLevel, setZoomLevel] = useState(INITIAL_ZOOM_LEVEL)
 
   return (
-    <ModalDialog.Root
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         setIsOpen(false)
         setZoomLevel(1)
       }}
     >
-      <ModalDialog.Content size="md">
-        <ModalDialog.Header>
-          <ModalDialog.Title>{title ? title : <Spacer size={7} />}</ModalDialog.Title>
-        </ModalDialog.Header>
-        <ModalDialog.Body>
+      <Dialog.Content size="md">
+        <Dialog.Header>
+          <Dialog.Title>{title ? title : <Spacer size={7} />}</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Body>
           <Carousel.Root className="flex-1 overflow-hidden" initialSlide={initialSlide}>
             <Carousel.Content className="h-full" carouselBlockClassName="h-full">
               {imgEvent &&
@@ -44,8 +44,8 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
                 })}
             </Carousel.Content>
           </Carousel.Root>
-        </ModalDialog.Body>
-        <ModalDialog.Footer className="!justify-center">
+        </Dialog.Body>
+        <Dialog.Footer className="!justify-center">
           <Button
             variant="outline"
             size="sm"
@@ -58,7 +58,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
             }}
             title="Zoom out"
           >
-            <Icon name="minus" size={16} />
+            <IconV2 name="minus" />
           </Button>
           <Button
             variant="outline"
@@ -72,10 +72,10 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
             }}
             title="Zoom in"
           >
-            <Icon name="plus" size={16} />
+            <IconV2 name="plus" />
           </Button>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

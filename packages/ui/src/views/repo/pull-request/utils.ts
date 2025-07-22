@@ -8,13 +8,13 @@ export const getPrState = (
   state?: string
 ): { icon: IconType; text: string; theme: StatusBadgeProps['theme'] } => {
   if (state === 'open' && is_draft) {
-    return { icon: 'pr-draft', text: 'Draft', theme: 'muted' }
+    return { icon: 'git-pull-request-draft', text: 'Draft', theme: 'muted' }
   } else if (merged) {
-    return { icon: 'pr-merge', text: 'Merged', theme: 'merged' }
+    return { icon: 'git-merge', text: 'Merged', theme: 'merged' }
   } else if (state === 'closed') {
-    return { icon: 'pr-closed', text: 'Closed', theme: 'danger' }
+    return { icon: 'git-pull-request-closed', text: 'Closed', theme: 'danger' }
   } else {
-    return { icon: 'pr-open', text: 'Open', theme: 'success' }
+    return { icon: 'git-pull-request', text: 'Open', theme: 'success' }
   }
 }
 

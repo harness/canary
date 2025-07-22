@@ -1,4 +1,4 @@
-import { Icon, IconNameMap } from '@components/icon'
+import { IconNameMapV2, IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -12,7 +12,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
       status: 'cn-badge-status'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-badge-sm'
     },
 
@@ -27,7 +27,7 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'default',
+    size: 'md',
     theme: 'muted'
   }
 })
@@ -37,8 +37,8 @@ type BadgeBaseProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
   'color' | 'role' | 'aria-readonly' | 'tabIndex' | 'onClick'
 > & {
-  size?: 'default' | 'sm'
-  icon?: keyof typeof IconNameMap
+  size?: 'sm' | 'md'
+  icon?: keyof typeof IconNameMapV2
 }
 
 // Status theme props (variant is required)
@@ -77,7 +77,7 @@ function StatusBadge({ className, variant, size, pulse, theme = 'muted', childre
       {isStatusVariant && (
         <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
       )}
-      {icon && <Icon skipSize className="cn-badge-icon" name={icon} />}
+      {icon && <IconV2 skipSize className="cn-badge-icon" name={icon} />}
       {children}
     </div>
   )

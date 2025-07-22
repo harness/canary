@@ -32,8 +32,8 @@ export default {
       minWidth: '0',
       maxWidth: '100%',
       borderRadius: 'var(--cn-input-radius)',
-      paddingBlock: 'var(--cn-input-default-py)',
-      paddingInline: 'var(--cn-input-default-pl) var(--cn-input-default-pr)',
+      paddingBlock: 'var(--cn-input-md-py)',
+      paddingInline: 'var(--cn-input-md-pl) var(--cn-input-md-pr)',
       '@apply w-full text-inherit bg-transparent': '',
 
       '&:focus-visible': {
@@ -41,7 +41,7 @@ export default {
       },
 
       '&::placeholder': {
-        color: 'var(--cn-text-3)'
+        color: 'var(--cn-state-disabled-text)'
       },
 
       '&:where([disabled])': {
@@ -64,14 +64,14 @@ export default {
     },
     '&-container': {
       color: 'var(--cn-text-1)',
-      height: 'var(--cn-input-size-default)',
+      height: 'var(--cn-input-size-md)',
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
-      backgroundColor: 'var(--cn-bg-2)',
+      backgroundColor: 'var(--cn-comp-input-bg)',
       '@apply w-full font-body-normal p-0 flex items-center transition-[color,box-shadow,border-color]': '',
 
       '&:where(:focus-within)': {
-        borderColor: 'var(--cn-border-1)',
+        borderColor: 'var(--cn-border-brand)',
         boxShadow: 'var(--cn-ring-selected)',
         outline: 'none'
       },
@@ -97,7 +97,7 @@ export default {
       },
 
       '&:where(:hover):not(:has(input[disabled])):not(.cn-input-success, .cn-input-warning, .cn-input-danger)': {
-        borderColor: 'var(--cn-border-1)'
+        borderColor: 'var(--cn-border-brand)'
       },
 
       '&:where(.cn-input-sm)': {

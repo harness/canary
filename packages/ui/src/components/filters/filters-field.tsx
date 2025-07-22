@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
@@ -6,7 +6,7 @@ import { Label } from '@components/form-primitives'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import { default as MulltiSelect } from './filters-bar/actions/variants/checkbox'
+import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
@@ -36,12 +36,14 @@ interface FilterFieldProps<T extends string, V extends FilterValueTypes, CustomV
   filter: FilterField<V>
   filterOption: FilterOptionConfig<T, CustomValue>
   onUpdateFilter: (selectedValues: V) => void
+  setIsOpen: (open: boolean) => void
 }
 
 const FilterFieldInternal = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
   filter,
   filterOption,
-  onUpdateFilter
+  onUpdateFilter,
+  setIsOpen
 }: FilterFieldProps<T, V, CustomValue>): JSX.Element | null => {
   const uniqId = useMemo(() => `filter-${Math.random().toString(36).slice(2, 11)}`, [])
 
@@ -50,7 +52,16 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
   switch (filterOption.type) {
     case FilterFieldTypes.Calendar: {
       const calendarFilter = filter as FilterField<Date>
-      return <Calendar filter={calendarFilter} onUpdateFilter={values => onUpdateFilter(values as V)} />
+      return (
+        <Calendar
+          filter={calendarFilter}
+          onUpdateFilter={values => {
+            onUpdateFilter(values as V)
+            // Currently this supports only single selection, will be handled based on calendar type
+            values && setIsOpen(false)
+          }}
+        />
+      )
     }
     case FilterFieldTypes.Text: {
       const textFilter = filter as FilterField<string>
@@ -62,14 +73,18 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
         <Combobox
           filterValue={comboBoxFilter.value}
           {...filterOption.filterFieldConfig}
-          onUpdateFilter={values => onUpdateFilter(values as V)}
+          onUpdateFilter={values => {
+            onUpdateFilter(values as V)
+            // Currently this supports only single selection, will be fixing in migration
+            values && setIsOpen(false)
+          }}
         />
       )
     }
     case FilterFieldTypes.MultiSelect: {
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
-        <MulltiSelect
+        <MultiSelectFilter
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}
@@ -117,6 +132,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     type: filterOption.value,
     value
   }
+  const [isOpen, setIsOpen] = useState(shouldOpenFilter)
 
   const onFilterValueChange = (selectedValues: V) => {
     onChange(selectedValues)
@@ -128,6 +144,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
         filter={activeFilterOption}
         filterOption={filterOption}
         onUpdateFilter={onFilterValueChange}
+        setIsOpen={setIsOpen}
       />
     )
   }
@@ -136,6 +153,8 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     <FilterBoxWrapper
       contentClassName={filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : ''}
       handleRemoveFilter={() => removeFilter()}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       onOpenChange={onOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
@@ -144,6 +163,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       <FilterFieldInternal<T, V, CustomValue>
         filter={activeFilterOption}
         filterOption={filterOption}
+        setIsOpen={setIsOpen}
         onUpdateFilter={onFilterValueChange}
       />
     </FilterBoxWrapper>

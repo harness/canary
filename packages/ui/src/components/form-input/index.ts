@@ -1,10 +1,8 @@
-import { Checkbox } from '@components/checkbox'
-import { Textarea } from '@components/form-primitives'
-import { NumberInput, TextInput } from '@components/inputs'
-import { Radio } from '@components/radio'
+import { ForwardedRef, ReactElement } from 'react'
 
-import { withForm } from './components/form-hoc'
-import { FormMultiSelect } from './components/form-multi-select-v2'
+import { Checkbox, MultiSelect, NumberInput, Radio, Select, SelectProps, Textarea, TextInput } from '@/components'
+
+import { withForm, WithFormProps } from './components/form-hoc'
 
 const FormInput = {
   Text: withForm(TextInput),
@@ -17,7 +15,12 @@ const FormInput = {
     checked: field.value,
     onCheckedChange: field.onChange
   })),
-  MultiSelect: FormMultiSelect
+  Select: withForm(Select) as <T = string>(
+    props: FormSelectProps<T> & { ref?: ForwardedRef<HTMLButtonElement> }
+  ) => ReactElement,
+  MultiSelect: withForm(MultiSelect)
 }
 
-export { FormInput }
+type FormSelectProps<T = string> = Omit<SelectProps<T>, 'onChange'> & WithFormProps
+
+export { FormInput, FormSelectProps }

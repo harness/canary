@@ -54,7 +54,7 @@ return (
 
 ## Sizes
 
-The `Card` component supports three sizes: `sm`, `default`, and `md`. The size prop does not actually change the size of the card, but rather the padding and border radius.
+The `Card` component supports three sizes: `sm`, `md`, and `lg`. The size prop does not actually change the size of the card, but rather the padding and border radius.
 
 <DocsPage.ComponentExample
   client:only
@@ -64,11 +64,11 @@ The `Card` component supports three sizes: `sm`, `default`, and `md`. The size p
       <Card.Content>Compact size</Card.Content>
     </Card.Root>
     <Card.Root>
-      <Card.Title>Default Card</Card.Title>
+      <Card.Title>Medium Card</Card.Title>
       <Card.Content>Standard size</Card.Content>
     </Card.Root>
-    <Card.Root size="md">
-      <Card.Title>Medium Card</Card.Title>
+    <Card.Root size="lg">
+      <Card.Title>Large Card</Card.Title>
       <Card.Content>Larger size</Card.Content>
     </Card.Root>
   </div>`}
@@ -140,7 +140,7 @@ The root component for the card.
 <Card.Root
   orientation="vertical"              // [OPTIONAL] Orientation of the card
   position="start"                    // [OPTIONAL] Position of the image
-  size="default"                      // [OPTIONAL] Size of the card
+  size="md"                           // [OPTIONAL] Size of the card
   selected={false}                    // [OPTIONAL] Whether the card is selected
   disabled={false}                    // [OPTIONAL] Whether the card is disabled
   className="custom-class"            // [OPTIONAL] Custom class name
@@ -170,8 +170,8 @@ The root component for the card.
       name: "size",
       description: "The size of the card.",
       required: false,
-      value: "'sm' | 'default' | 'lg'",
-      defaultValue: "'default'",
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'md'",
     },
     {
       name: "selected",

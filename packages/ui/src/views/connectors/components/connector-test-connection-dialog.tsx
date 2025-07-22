@@ -2,10 +2,10 @@ import { ReactNode } from 'react'
 
 import { useTranslation } from '@/context'
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { Dialog } from '@components/dialog'
+import { IconV2 } from '@components/icon-v2'
 import { Layout } from '@components/layout'
 import { MarkdownViewer } from '@components/markdown-viewer'
-import { ModalDialog } from '@components/modal-dialog'
 import { Progress } from '@components/progress'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
@@ -69,11 +69,11 @@ export const ConnectorTestConnectionDialog = ({
     )
   }
   return (
-    <ModalDialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{title}</ModalDialog.Title>
-          <ModalDialog.Body>
+    <Dialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>{title}</Dialog.Title>
+          <Dialog.Body>
             <div className="gap-y-0.5">
               <div className="text-sm font-normal text-cn-foreground-4">
                 <Layout.Horizontal gap="xs" align="center">
@@ -98,10 +98,10 @@ export const ConnectorTestConnectionDialog = ({
               <div className="mb-2 mt-4 gap-y-3">
                 <Layout.Horizontal gap="xs" align="center" className="text-center">
                   {(status === 'success' || status === 'error') && (
-                    <Icon
+                    <IconV2
                       className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
-                      name={status === 'success' ? 'success' : 'triangle-warning'}
-                      size={14}
+                      name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
+                      size="xs"
                     />
                   )}
                   <div className="letter-spacing-1 text-base font-medium text-cn-foreground-1">{description}</div>
@@ -109,7 +109,7 @@ export const ConnectorTestConnectionDialog = ({
 
                 {status === 'running' && (
                   <div className="mb-1 mt-4">
-                    <Progress value={percentageFilled} size="sm" color="accent" rounded="sm" />
+                    <Progress value={percentageFilled / 100} state="processing" size="sm" hideIcon hidePercentage />
                   </div>
                 )}
                 {status === 'error' && (
@@ -127,7 +127,11 @@ export const ConnectorTestConnectionDialog = ({
                                   className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
                                 >
                                   {t('views:connectors.viewDocumentation', 'View Documentation')}
-                                  <Icon name="attachment-link" className="ml-1 text-cn-foreground-accent" size={12} />
+                                  <IconV2
+                                    name="open-new-window"
+                                    className="ml-1 text-cn-foreground-accent"
+                                    size="2xs"
+                                  />
                                 </Button>
                               </span>
                             )}
@@ -151,9 +155,9 @@ ${JSON.stringify(errorData, null, 2)}
                 )}
               </div>
             </div>
-          </ModalDialog.Body>
-        </ModalDialog.Header>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+          </Dialog.Body>
+        </Dialog.Header>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

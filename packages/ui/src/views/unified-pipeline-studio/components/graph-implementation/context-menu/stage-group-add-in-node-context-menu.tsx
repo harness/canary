@@ -1,5 +1,4 @@
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon, Text } from '@components/index'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -23,37 +22,31 @@ export const StageGroupAddInNodeContextMenu = () => {
         className="absolute"
         style={{ left: `${contextMenuData?.position.x}px`, top: `${contextMenuData?.position.y}px` }}
       >
-        <DropdownMenu.Item
+        <DropdownMenu.IconItem
+          icon="plus"
+          title="Add Stage"
           key={`add-${YamlEntityType.Stage}`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.Stage)
           }}
-        >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Stage</Text>
-        </DropdownMenu.Item>
+        />
         <DropdownMenu.Separator />
-        <DropdownMenu.Item
+        <DropdownMenu.IconItem
+          icon="plus"
+          title="Add Serial group"
           key={`add-${YamlEntityType.SerialStageGroup}`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.SerialStageGroup)
           }}
-        >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Serial group</Text>
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
+        />
+        <DropdownMenu.IconItem
+          icon="plus"
+          title="Add Parallel group"
           key={`add-${YamlEntityType.ParallelStageGroup}`}
-          className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.ParallelStageGroup)
           }}
-        >
-          <Icon name="plus" size={12} className="text-cn-foreground-3" />
-          <Text wrap="nowrap">Add Parallel group</Text>
-        </DropdownMenu.Item>
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

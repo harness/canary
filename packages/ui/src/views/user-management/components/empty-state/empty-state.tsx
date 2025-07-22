@@ -11,7 +11,7 @@ export const EmptyState = () => {
   return (
     <NoData
       textWrapperClassName="w-[350px]"
-      iconName="no-data-members"
+      imageName="no-data-members"
       title={t('views:noData.noUsers', 'No Users Found')}
       description={[
         t(

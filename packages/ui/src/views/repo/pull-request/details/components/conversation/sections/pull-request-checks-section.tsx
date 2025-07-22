@@ -1,4 +1,4 @@
-import { Accordion, Icon, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, IconV2, Layout, StackedList, StatusBadge, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
@@ -34,26 +34,28 @@ const PullRequestCheckSection = ({
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <Icon name="pending-clock" className="text-icons-alert" />
+        return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
       case ExecutionState.RUNNING:
-        return <Icon name="comments" className="text-cn-foreground-warning" />
+        return <IconV2 name="message" className="text-cn-foreground-warning" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <Icon name="triangle-warning" className="text-cn-foreground-danger" />
+        return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
       default:
-        return <Icon name="success" className="text-cn-foreground-success" />
+        return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
     }
   }
 
   return !isEmpty(checkData) ? (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger className="py-3">
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
-          description={<LineDescription text={checksInfo.content} />}
-        />
-        <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
+            description={<LineDescription text={checksInfo.content} />}
+          />
+          <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
+        </Layout.Flex>
       </Accordion.Trigger>
       <Accordion.Content className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
         {checkData.map(check => {
@@ -63,10 +65,10 @@ const PullRequestCheckSection = ({
             <div key={check.check?.id} className={cn('flex items-center justify-between gap-2 border-t py-2.5')}>
               <div className="flex items-center gap-2">
                 {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                <Text size={1} color="primary" truncate className="max-w-[300px] overflow-hidden">
+                <Text color="foreground-1" truncate className="max-w-[300px] overflow-hidden">
                   {check?.check?.identifier}
                 </Text>
-                <Text size={1} color="tertiaryBackground">
+                <Text color="foreground-3">
                   {check?.check?.status === ExecutionState.SUCCESS
                     ? `Succeeded in ${time}`
                     : check?.check?.status === ExecutionState.FAILURE
@@ -102,18 +104,14 @@ const PullRequestCheckSection = ({
                         }) || ''
                       }
                     >
-                      <Text size={1} color="tertiaryBackground">
-                        Details
-                      </Text>
+                      <Text color="foreground-3">Details</Text>
                     </Link>
                   )}
                 </div>
                 <div className="col-span-1 flex justify-end">
                   {check?.check?.status === ExecutionState.PENDING ? (
                     <StatusBadge variant="outline" size="sm">
-                      <Text size={1} color="tertiaryBackground">
-                        Required
-                      </Text>
+                      <Text color="foreground-3">Required</Text>
                     </StatusBadge>
                   ) : (
                     <div className="min-w-[70px]"></div>
@@ -176,5 +174,7 @@ const PullRequestCheckSection = ({
     </Accordion.Item>
   ) : null
 }
+
+PullRequestCheckSection.displayName = 'PullRequestCheckSection'
 
 export default PullRequestCheckSection

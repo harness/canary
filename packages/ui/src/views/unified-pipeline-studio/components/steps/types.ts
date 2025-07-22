@@ -14,7 +14,8 @@ export const APPROVAL_STEP_IDENTIFIER = 'approval'
 export const BARRIER_STEP_IDENTIFIER = 'barrier'
 export const ACTION_STEP_IDENTIFIER = 'action'
 
-export const TEMPLATE_STEP_IDENTIFIER = 'template'
+export const TEMPLATE_CI_STEP_IDENTIFIER = 'template' // This would change to "build" once Backend support for the same gets added.
+export const TEMPLATE_CD_STEP_IDENTIFIER = 'deploy'
 
 export const GROUP_IDENTIFIER = 'group'
 export const PARALLEL_IDENTIFIER = 'parallel'

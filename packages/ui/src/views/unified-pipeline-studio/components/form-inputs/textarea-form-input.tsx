@@ -17,7 +17,6 @@ type TextareaFormInputProps = InputProps<AnyFormikValue, TextareaFormInputConfig
 function TextareaFormInputInternal(props: TextareaFormInputProps): JSX.Element {
   const { readonly, path, input } = props
   const { label, required, placeholder, description } = input
-
   const { field, fieldState } = useController({
     name: path,
     disabled: readonly

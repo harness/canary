@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Icon } from '@/components'
+import { IconPropsV2, IconV2, Text } from '@/components'
 import { useTranslation } from '@/context'
 
 import { CommandPalette } from './command-palette'
@@ -11,6 +11,8 @@ enum PageKey {
   PROJECTS = 'projects',
   PIPELINES = 'pipelines'
 }
+
+const renderIcon = (name: IconPropsV2['name']) => <IconV2 name={name} size="xs" className="text-cn-foreground-3" />
 
 interface CommandOption {
   label: string
@@ -50,17 +52,17 @@ export function CommandPaletteWrapper() {
         label: 'Search repositories...',
         key: PageKey.REPOSITORIES,
         shortcut: ['⇧', 'R'],
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => renderIcon('repository')
       },
       {
         label: 'Create repository',
         action: () => alert('Create Repository'),
-        icon: () => <Icon name="plus" size={14} className="text-icons-1" />
+        icon: () => renderIcon('plus')
       },
       {
         label: 'Import repository',
         action: () => alert('Import Repository'),
-        icon: () => <Icon name="download" size={14} className="text-icons-1" />
+        icon: () => renderIcon('download')
       }
     ],
     [PageKey.PROJECTS]: [
@@ -68,17 +70,17 @@ export function CommandPaletteWrapper() {
         label: 'Search projects...',
         key: PageKey.PROJECTS,
         shortcut: ['⇧', 'P'],
-        icon: () => <Icon name="environment" size={14} className="text-icons-1" />
+        icon: () => renderIcon('environments')
       },
       {
         label: 'Create project',
         action: () => alert('Create Project'),
-        icon: () => <Icon name="plus" size={14} className="text-icons-1" />
+        icon: () => renderIcon('plus')
       },
       {
         label: 'Import project',
         action: () => alert('Import Project'),
-        icon: () => <Icon name="download" size={14} className="text-icons-1" />
+        icon: () => renderIcon('download')
       }
     ],
     [PageKey.PIPELINES]: [
@@ -86,12 +88,12 @@ export function CommandPaletteWrapper() {
         label: 'Search pipelines...',
         key: PageKey.PIPELINES,
         shortcut: ['⇧', 'L'],
-        icon: () => <Icon name="pipelines" size={14} className="text-icons-1" />
+        icon: () => renderIcon('pipeline')
       },
       {
         label: 'Create pipeline',
         action: () => alert('Create Pipeline'),
-        icon: () => <Icon name="plus" size={14} className="text-icons-1" />
+        icon: () => renderIcon('plus')
       }
     ]
   }
@@ -101,46 +103,46 @@ export function CommandPaletteWrapper() {
       {
         label: 'petstore-app',
         url: '/canary/repos/petstore-app/summary',
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => renderIcon('repository')
       },
       {
         label: 'RealWorld',
         url: '/canary/repos/real-world/summary',
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => renderIcon('repository')
       },
       {
         label: 'sock shop',
         url: '/canary/repos/sock-shop/summary',
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => renderIcon('repository')
       },
       {
         label: 'anthos',
         url: '/canary/repos/anthos/summary',
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => renderIcon('repository')
       },
       {
         label: 'acme-web',
         url: '/canary/repos/acme-web/summary',
-        icon: () => <Icon name="repositories" size={14} className="text-icons-1" />
+        icon: () => renderIcon('repository')
       }
     ],
     [PageKey.PROJECTS]: [
       {
         label: 'Canary',
         url: '/canary/repos/petstore-app/summary',
-        icon: () => <Icon name="file" size={14} className="text-icons-1" />
+        icon: () => renderIcon('page')
       },
       {
         label: 'Paypal',
         url: '/canary/repos/real-world/summary',
-        icon: () => <Icon name="file" size={14} className="text-icons-1" />
+        icon: () => renderIcon('page')
       }
     ],
     [PageKey.PIPELINES]: [
       {
         label: 'build-pipeline',
         url: '/canary/pipelines/build-pipeline/studio',
-        icon: () => <Icon name="pipelines" size={14} className="text-icons-1" />
+        icon: () => renderIcon('pipeline')
       }
     ]
   }
@@ -166,11 +168,11 @@ export function CommandPaletteWrapper() {
                 {items.map(({ label, key, action, icon, shortcut }) => (
                   <CommandPalette.Item key={label} onSelect={() => (key ? onItemClick(key) : action?.())}>
                     <div className="mr-2.5">{icon && icon()}</div>
-                    <div className="">{label}</div>
+                    <Text color="foreground-1">{label}</Text>
                     {shortcut && (
                       <CommandPalette.Shortcut>
-                        <span>{shortcut[0]}</span>
-                        <span>{shortcut[1]}</span>
+                        <Text variant="caption-soft">{shortcut[0]}</Text>
+                        <Text variant="caption-soft">{shortcut[1]}</Text>
                       </CommandPalette.Shortcut>
                     )}
                   </CommandPalette.Item>

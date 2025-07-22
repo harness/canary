@@ -1,6 +1,5 @@
-import { NoData, SkeletonList, SkeletonTable, Table } from '@/components'
+import { NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/index'
 
@@ -44,7 +43,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
         withBorder
         className="min-h-[65vh]"
         textWrapperClassName="max-w-[350px]"
-        iconName="no-data-cog"
+        imageName="no-data-cog"
         title={t('views:noData.noActivities', 'No activities yet')}
         description={[t('views:noData.noActivitiesDescription', 'There are no activities yet.')]}
       />
@@ -52,10 +51,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      variant="asStackedList"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.activity', 'Activity')}</Table.Head>
@@ -75,8 +71,13 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
                 <Table.Cell className="max-w-80 content-center items-center truncate">
                   <Activity activity={description} />
                 </Table.Cell>
-                <Table.Cell className="my-2 block max-w-80 content-center items-center truncate p-2.5 font-medium text-cn-foreground-3">
-                  {activityTime ? timeAgo(activityTime) : null}
+                <Table.Cell className="my-2 block max-w-80 content-center items-center p-2.5">
+                  {activityTime ? (
+                    <TimeAgoCard
+                      timestamp={activityTime}
+                      textProps={{ variant: 'body-strong', color: 'foreground-3', truncate: true }}
+                    />
+                  ) : null}
                 </Table.Cell>
 
                 <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">

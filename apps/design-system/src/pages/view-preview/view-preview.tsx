@@ -10,8 +10,10 @@ import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connect
 import { ConnectorsPage } from '@subjects/views/connectors/connectors'
 import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
 import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
+import DataTableDemo from '@subjects/views/data-table-demo'
 import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
 import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
+import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
@@ -46,14 +48,18 @@ import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoTagsList } from '@subjects/views/repo-tags/repo-tags-list'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+import { SearchPagePreview } from '@subjects/views/search-page/search-page-preview'
 import { SecretInputExample } from '@subjects/views/secrets/secret-input'
 import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
+import { SecretsMultiSelectPage } from '@subjects/views/secrets/secrets-multi-select'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
+import TableV2Demo from '@subjects/views/table-v2-demo'
+import { ViewOnlyView } from '@subjects/views/templates/view-only'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
-import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, Tooltip } from '@harnessio/ui/components'
+import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { AppViewWrapper } from './app-view-wrapper'
@@ -90,6 +96,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   repository: {
     label: 'Repository',
     items: {
+      'repo-search': {
+        label: 'Search',
+        element: (
+          <RootViewWrapper>
+            <SearchPagePreview />
+          </RootViewWrapper>
+        )
+      },
       'repo-create': {
         label: 'Create Repository',
         element: (
@@ -494,12 +508,25 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   },
-  multiSelec: {
+  multiSelect: {
     label: 'Multi Select Demo',
     items: {
       'multi-select-demo': {
         label: 'Multi Select Demo',
         element: <MultipleSelectorWithDisabledOption />
+      }
+    }
+  },
+  tableV2: {
+    label: 'Table V2 Demo',
+    items: {
+      'table-v2-demo': {
+        label: 'Table V2 Demo',
+        element: <TableV2Demo />
+      },
+      'data-table-demo': {
+        label: 'Data Table Demo',
+        element: <DataTableDemo />
       }
     }
   },
@@ -513,6 +540,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'secrets-list-page': {
         label: 'Secrets List Page',
         element: <SecretsListPage />
+      },
+      'secrets-multi-select-page': {
+        label: 'Secrets Multi Select Page',
+        element: <SecretsMultiSelectPage />
       },
       'connectors-list-page': {
         label: 'Connectors List Page',
@@ -537,6 +568,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'delegate-connectivity': {
         label: 'Delegate Connectivity',
         element: <DelegateConnectivityWrapper />
+      },
+      'draggable-cards-demo': {
+        label: 'Draggable Cards Demo',
+        element: <DraggableCardsDemo />
       }
     }
   },
@@ -547,12 +582,26 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'project-create': { label: 'Project Create', element: <CreateProjectView /> },
       'project-create-additional': { label: 'Project Create Additional', element: <CreateProjectView isAdditional /> }
     }
+  },
+
+  templates: {
+    label: 'Templates',
+    items: {
+      'view-only': {
+        label: 'View only',
+        element: (
+          <RootViewWrapper>
+            <ViewOnlyView />
+          </RootViewWrapper>
+        )
+      }
+    }
   }
 }
 
 const ViewPreview: FC = () => {
   return (
-    <Tooltip.Provider>
+    <TooltipProvider>
       <Routes>
         {Object.entries(viewPreviews).map(([_, group]) =>
           Object.entries(group.items).map(([route, { element }]) => (
@@ -562,7 +611,7 @@ const ViewPreview: FC = () => {
         <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
       </Routes>
       <ViewSettings routes={Object.keys(viewPreviews)} />
-    </Tooltip.Provider>
+    </TooltipProvider>
   )
 }
 

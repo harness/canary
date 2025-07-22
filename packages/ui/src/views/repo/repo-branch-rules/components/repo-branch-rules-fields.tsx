@@ -6,13 +6,13 @@ import {
   ControlGroup,
   Fieldset,
   FormInput,
-  Icon,
+  IconV2,
   Input,
   Label,
   Message,
   MessageTheme,
   MultiSelect,
-  MultiSelectV2,
+  MultiSelectOption,
   SplitButton,
   StackedList,
   Switch
@@ -115,7 +115,6 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           />
           <SplitButton<PatternsButtonType>
             buttonClassName="px-0 w-full"
-            id="patterns-type"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
@@ -145,16 +144,16 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                 onClick={() => handleRemovePattern(pattern.pattern)}
               >
                 <span className="flex items-center gap-1">
-                  <Icon
+                  <IconV2
                     className={cn('text-icons-success', {
                       'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
                     })}
-                    name="circle-plus"
-                    size={10}
+                    name="plus-circle"
+                    size="2xs"
                   />
                   {pattern.pattern}
                 </span>
-                <Icon className="rotate-45" name="plus" size={10} />
+                <IconV2 name="xmark" size="2xs" />
               </Button>
             ))}
           </div>
@@ -192,7 +191,7 @@ export const BranchSettingsRuleBypassListField: FC<
 > = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
   const { t } = useTranslation()
 
-  const multiSelectOptions: MultiSelectV2.MultiSelectOption[] = useMemo(() => {
+  const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
         id: option.id!,
@@ -237,7 +236,7 @@ export const BranchSettingsRuleListField: FC<{
   recentStatusChecks?: string[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (ruleId: string, check: string) => void
+  handleSelectChangeForRule: (ruleId: string, checks: string[]) => void
   handleInputChange: (ruleId: string, value: string) => void
 }> = ({
   rules,
@@ -255,7 +254,8 @@ export const BranchSettingsRuleListField: FC<{
       <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
       <Fieldset className="gap-y-5">
         {branchRules.map((rule, index) => {
-          const isChecked = rules[index]?.checked ?? false
+          const matchingRule = rules.find(r => r.id === rule.id)
+          const { checked: isChecked = false, disabled: isDisabled = false } = matchingRule || {}
 
           return (
             <Fieldset key={rule.id} className="gap-y-4">
@@ -263,6 +263,7 @@ export const BranchSettingsRuleListField: FC<{
                 id={rule.id}
                 checked={isChecked}
                 onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
               />
@@ -283,13 +284,18 @@ export const BranchSettingsRuleListField: FC<{
               )}
 
               {!!rule?.hasSelect && isChecked && (
-                <MultiSelect
-                  className="pl-[26px]"
-                  selectedItems={rules[index].selectOptions.map(option => ({ id: option, label: option }))}
-                  placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                  handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
-                  options={recentStatusChecks?.map(check => ({ id: check, label: check })) ?? []}
-                />
+                <div className="pl-[26px]">
+                  <MultiSelect
+                    value={rules[index].selectOptions.map(option => ({ id: option, key: option }))}
+                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                    onChange={options => {
+                      const selectedKeys = options.map(option => option.key)
+                      handleSelectChangeForRule(rule.id, selectedKeys)
+                    }}
+                    options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
+                    disallowCreation
+                  />
+                </div>
               )}
 
               {!!rule?.hasInput && isChecked && (

@@ -4,18 +4,15 @@ import { Drawer as DrawerPrimitive } from 'vaul'
 
 type DrawerRootProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Root>
 
-type DrawerContextType = Pick<DrawerRootProps, 'direction' | 'nested'>
+type DrawerContextType = Pick<DrawerRootProps, 'direction' | 'nested' | 'modal'> & {
+  isParentOpen?: boolean
+}
 
 export const DrawerContext = createContext<DrawerContextType>({
-  direction: 'right'
+  direction: 'right',
+  isParentOpen: false
 })
 
 export const useDrawerContext = () => {
-  const ctx = useContext(DrawerContext)
-
-  if (!ctx) {
-    throw new Error('useDrawerContext must be used within <Drawer.Root>')
-  }
-
-  return ctx
+  return useContext(DrawerContext)
 }

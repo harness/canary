@@ -1,6 +1,6 @@
 import { useTranslation } from '@/context'
 
-import { Icon, NoData, SkeletonList, StackedList } from '../../../components'
+import { IconV2, NoData, SkeletonList, StackedList } from '../../../components'
 import { Meter } from '../../../components/meter'
 import { PipelineExecutionStatus } from '../common/execution-types'
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
@@ -21,13 +21,13 @@ const Description = ({ sha, description, version }: { sha?: string; description?
       {description && <span className="w-full overflow-hidden break-words text-cn-foreground-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
-          <Icon size={11} name={'signpost'} />
+          <IconV2 size="2xs" name="version" />
           {version}
         </div>
       )}
       {sha && (
         <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-1 text-cn-foreground-1">
-          <Icon className="text-icons-9" size={12} name={'tube-sign'} />
+          <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
       )}
@@ -56,7 +56,7 @@ export const PipelineList = ({
     return query ? (
       <StackedList.Root className="grow place-content-center">
         <NoData
-          iconName="no-search-magnifying-glass"
+          imageName="no-search-magnifying-glass"
           title="No search results"
           description={[
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -70,7 +70,7 @@ export const PipelineList = ({
       </StackedList.Root>
     ) : (
       <NoData
-        iconName="no-data-folder"
+        imageName="no-data-folder"
         title="No pipelines yet"
         description={['There are no pipelines in this project yet.', 'Create new one.']}
         primaryButton={{

@@ -10,112 +10,11 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8 min-w-[400px]">
-  {/* Basic Number Input */}
-  <div className="font-bold w-full mb-2">Basic Number Input:</div>
-  <NumberInput id="basic-number" label="Basic Number Input" placeholder="Enter a number" />
-  
-  {/* Number Input with Min/Max */}
-  <div className="font-bold w-full mb-2">Number Input with Min/Max Limits:</div>
-  <NumberInput 
-    id="limited-range" 
-    label="Limited Range (0-10)" 
-    min={0} 
-    max={10} 
-    defaultValue={5}
-    onChange={(value) => console.log('Value changed:', value)} 
-  />
-  
-  {/* Decimal Numbers */}
-  <div className="font-bold w-full mb-2">Decimal Numbers:</div>
-  <NumberInput 
-    id="decimal-input" 
-    allowDecimal
-    label="With Decimals" 
-    decimalScale={2} 
-    defaultValue={3.14} 
-  />
-  <NumberInput 
-    id="integer-only" 
-    label="Integer Only" 
-    allowDecimal={false}
-    defaultValue={42} 
-  />
-  
-  {/* Negative Values */}
-  <div className="font-bold w-full mb-2">Negative Values:</div>
-  <NumberInput 
-    id="allow-negative" 
-    label="Allow Negative"  
-    defaultValue={-10} 
-  />
-  <NumberInput 
-    id="positive-only" 
-    label="Positive Only"  
-    min={0}
-    defaultValue={10} 
-  />
-  
-  {/* Custom Steppers */}
-  <div className="font-bold w-full mb-2">Custom Step Values:</div>
-  <NumberInput 
-    id="small-increment" 
-    label="Increment by 0.1" 
-    step={0.1} 
-    allowDecimal={true}
-    defaultValue={1.0} 
-  />
-  <NumberInput 
-    id="large-increment" 
-    label="Increment by 5" 
-    step={5} 
-    defaultValue={10} 
-  />
-  
-  {/* Disabled & Error States */}
-  <div className="font-bold w-full mb-2">States and Feedback:</div>
-  <NumberInput 
-    id="disabled-input" 
-    label="Disabled Input" 
-    disabled 
-    defaultValue={50} 
-  />
-  <NumberInput 
-    id="error-input" 
-    label="With Error" 
-    error="Please enter a valid number" 
-    theme="danger"
-  />
-  <NumberInput 
-    id="warning-input" 
-    label="With Warning" 
-    warning="This is a high value" 
-    theme="warning"
-    defaultValue={95}
-  />
-  <NumberInput 
-    id="caption-input" 
-    label="With Caption" 
-    caption="Enter your preferred quantity" 
-    defaultValue={1}
-  />
-  
-  {/* Optional Label */}
-  <NumberInput 
-    id="optional-input" 
-    label="Optional Field" 
-    optional={true} 
-  />
-  
-  {/* Without Stepper UI */}
-  <div className="font-bold w-full mb-2">Without Stepper Buttons:</div>
-  <NumberInput 
-    hideStepper
-    id="no-stepper" 
-    label="No Stepper UI" 
-    placeholder="Enter a number manually"
-  />
-</div>`}
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput id="basic-number" label="Basic Number Input" placeholder="Enter a number" />
+  </Layout.Vertical>
+`}
 />
 
 ## Usage
@@ -137,7 +36,199 @@ return (
 )
 ```
 
+## Disable
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput id="disabled-number" label="Number Input" placeholder="Enter a number" disabled />
+  </Layout.Vertical>`}
+/>
+
+## Read only
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput id="read-only-number" label="Number Input" placeholder="Enter a number" readOnly />
+  </Layout.Vertical>`}
+/>
+
+## Optional
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput id="read-only-number" label="Number Input" placeholder="Enter a number" optional />
+  </Layout.Vertical>`}
+/>
+
+## Without Stepper UI
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput
+      hideStepper
+      id="no-stepper"
+      label="No Stepper UI"
+      placeholder="Enter a number manually"
+    />
+  </Layout.Vertical>`}
+/>
+
+## Theme
+
+The `NumberInput` component accepts a `theme` prop, which defines the visual state of the input: either `success`, `warning`, or `danger`.
+
+When an error occurs, set `theme="danger"` and pass the error message to the `error` prop.
+
+For warnings, set `theme="warning"` and provide the warning message via the `warning` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput
+      id="success-input"
+      label="Success"
+      theme="success"
+      caption="Caption text"
+    />
+    <NumberInput
+      id="error-input"
+      label="With Error"
+      error="Please enter a valid number"
+      theme="danger"
+    />
+    <NumberInput
+      id="warning-input"
+      label="With Warning"
+      warning="This is a high value"
+      theme="warning"
+      defaultValue={95}
+    />
+  </Layout.Vertical>`}
+/>
+
+## Min / Max limits
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput
+      id="limited-range"
+      label="Limited Range (0-10)"
+      min={0}
+      max={10}
+      defaultValue={5}
+      onChange={(value) => console.log("Value changed:", value)}
+    />
+  </Layout.Vertical>`}
+/>
+
+## Integer / Decimal value
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput
+      id="decimal-input"
+      allowDecimal
+      label="With Decimals"
+      decimalScale={2}
+      defaultValue={3.14}
+    />
+    <NumberInput
+      id="integer-only"
+      label="Integer Only"
+      allowDecimal={false}
+      defaultValue={42}
+    />
+  </Layout.Vertical>`}
+/>
+
+## Positive / Negative value
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput id="allow-negative" label="Allow Negative" defaultValue={-10} />
+    <NumberInput
+      id="positive-only"
+      label="Positive Only"
+      min={0}
+      defaultValue={10}
+    />
+  </Layout.Vertical>`}
+/>
+
+## Custom Steppers
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput
+      id="small-increment"
+      label="Increment by 0.1"
+      step={0.1}
+      allowDecimal={true}
+      defaultValue={1.0}
+    />
+  </Layout.Vertical>`}
+/>
+
+## With Suffix
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput
+      id="suffix-input"
+      label="Suffix Input"
+      defaultValue={15}
+      suffix={<Button variant="outline" iconOnly className="cn-input-suffix">
+        <IconV2 name="nav-arrow-right" size="xs" />
+      </Button>}
+    />
+  </Layout.Vertical>`}
+/>
+
+## Orientation
+
+The `NumberInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <NumberInput id="vertical-number" label="Vertical Number Input" placeholder="Enter a number" />
+    <NumberInput id="horizontal-number" label="Horizontal Number Input" placeholder="Enter a number" orientation="horizontal" />
+  </Layout.Vertical>`}
+/>
+
 ## API Reference
+
+```typescript
+interface InformerProps extends Omit<TooltipProps, "children"> {
+  className?: string;
+  /**
+   * If disabled, the tooltip will not be shown
+   */
+  disabled?: boolean;
+  iconProps?: IconPropsV2;
+}
+```
 
 <DocsPage.PropsTable
   props={[
@@ -182,6 +273,13 @@ return (
       required: false,
       defaultValue: "",
       value: "string",
+    },
+    {
+      name: "suffix",
+      description:
+        "Optional element to display after the input. Can be a React component or any other node.",
+      required: false,
+      value: "ReactNode",
     },
     {
       name: "error",
@@ -250,8 +348,8 @@ return (
       name: "theme",
       description: "Theme styling for the input and caption",
       required: false,
-      defaultValue: "default",
-      value: "default | success | danger | warning",
+      defaultValue: "'default'",
+      value: "'default' | 'success' | 'danger' | 'warning'",
     },
     {
       name: "defaultValue",
@@ -278,8 +376,41 @@ return (
       name: "size",
       description: "Size of the input field",
       required: false,
-      defaultValue: "default",
-      value: "default | sm",
+      defaultValue: "'md'",
+      value: "'md' | 'sm'",
+    },
+    {
+      name: "readOnly",
+      description: "Whether the input is read-only.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "informerContent",
+      description: "Content to display in the label informer tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "informerProps",
+      description: "Additional props for configuring the informer tooltip.",
+      required: false,
+      value: "InformerProps",
+    },
+    {
+      name: "labelSuffix",
+      description:
+        "Customized with a suffix element that appears on the right side of the label.",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "orientation",
+      description: "Defines the layout direction of the input and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
   ]}
 />

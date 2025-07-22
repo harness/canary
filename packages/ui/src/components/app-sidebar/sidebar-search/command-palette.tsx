@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 
-import { ModalDialog } from '@components/modal-dialog'
+import { Dialog } from '@components/dialog'
 import { cn } from '@utils/cn'
 import { Command as CommandPrimitive } from 'cmdk'
 
@@ -22,29 +22,29 @@ const Root = React.forwardRef<
 ))
 Root.displayName = 'Root'
 
-const Dialog = ({ children, open, onOpenChange }: PropsWithChildren<DialogProps>) => (
-  <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
-    <ModalDialog.Content hideClose>
-      <ModalDialog.Body>
+const CommandPaletteDialog = ({ children, open, onOpenChange }: PropsWithChildren<DialogProps>) => (
+  <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Content hideClose>
+      <Dialog.Body>
         <Root className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-cn-foreground-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2.5 [&_[cmdk-item]]:py-1.5 [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
           {children}
         </Root>
-      </ModalDialog.Body>
-    </ModalDialog.Content>
-  </ModalDialog.Root>
+      </Dialog.Body>
+    </Dialog.Content>
+  </Dialog.Root>
 )
-Dialog.displayName = 'Dialog'
+CommandPaletteDialog.displayName = 'CommandPaletteDialog'
 
 const Dropdown = ({ children, open, onOpenChange }: PropsWithChildren<DialogProps>) => (
-  <ModalDialog.Root open={open} onOpenChange={onOpenChange}>
-    <ModalDialog.Content>
-      <ModalDialog.Body>
+  <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Content>
+      <Dialog.Body>
         <Root className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-cn-foreground-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2.5 [&_[cmdk-item]]:py-1.5 [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
           {children}
         </Root>
-      </ModalDialog.Body>
-    </ModalDialog.Content>
-  </ModalDialog.Root>
+      </Dialog.Body>
+    </Dialog.Content>
+  </Dialog.Root>
 )
 Dropdown.displayName = 'Dropdown'
 
@@ -108,7 +108,7 @@ const Item = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-[4px] px-5 py-0 text-sm text-cn-foreground-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-cn-background-selected data-[selected=true]:text-cn-foreground-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-[4px] px-5 py-0 text-sm text-cn-foreground-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-cn-background-hover data-[selected=true]:text-cn-foreground-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       className
     )}
     {...props}
@@ -139,7 +139,7 @@ Shortcut.displayName = 'Shortcut'
 
 export const CommandPalette = {
   Root,
-  Dialog,
+  Dialog: CommandPaletteDialog,
   Dropdown,
   Input,
   Empty,

@@ -9,7 +9,7 @@
         "$type": "sizing",
         "$value": "{size.8}"
       },
-      "default": {
+      "md": {
         "$type": "sizing",
         "$value": "{size.9}"
       }
@@ -23,7 +23,7 @@
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       },
-      "default": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.2}"
       }
@@ -53,7 +53,7 @@
         "$type": "spacing",
         "$value": "{spacing.4}"
       },
-      "default": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.5}"
       }
@@ -67,15 +67,9 @@
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       },
-      "default": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.2}"
-      }
-    },
-    "wrapper": {
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.3-half}"
       }
     }
   },
@@ -85,7 +79,7 @@
         "$type": "spacing",
         "$value": "{spacing.1}"
       },
-      "default": {
+      "md": {
         "$type": "spacing",
         "$value": "{spacing.1}"
       }

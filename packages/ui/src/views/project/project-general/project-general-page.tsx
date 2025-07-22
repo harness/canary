@@ -10,9 +10,10 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Icon,
+  IconV2,
   Legend,
-  SkeletonForm
+  SkeletonForm,
+  Text
 } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout, TypesSpace } from '@/views'
@@ -101,9 +102,9 @@ export const ProjectSettingsGeneralPage = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
-        <h2 className="mb-10 text-2xl font-medium text-cn-foreground-1">
+        <Text as="h2" variant="heading-section" color="foreground-1" className="mb-10">
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
-        </h2>
+        </Text>
 
         {isLoading && <SkeletonForm />}
 
@@ -153,7 +154,7 @@ export const ProjectSettingsGeneralPage = ({
                     ) : (
                       <Button variant="ghost" type="button" theme="success" className="pointer-events-none">
                         {t('views:projectSettings.general.formSubmitButton.savedState', 'Saved')}&nbsp;&nbsp;
-                        <Icon name="tick" size={14} />
+                        <IconV2 name="check" size="xs" />
                       </Button>
                     )}
                   </ButtonLayout>

@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { NoData, Pagination } from '@/components'
+import { NoData, Pagination, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
@@ -37,12 +37,14 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="3xl">
-        <h1 className="text-cn-foreground-1 mb-6 text-2xl font-medium">{t('views:projectSettings.rules', 'Rules')}</h1>
+        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+          {t('views:projectSettings.rules', 'Rules')}
+        </Text>
         {!rulesData?.length && !isDirtyList && !isLoading ? (
           <NoData
             withBorder
             textWrapperClassName="max-w-[350px]"
-            iconName="no-data-members"
+            imageName="no-data-members"
             title={t('views:noData.rules', 'No rules yet')}
             description={[
               t(

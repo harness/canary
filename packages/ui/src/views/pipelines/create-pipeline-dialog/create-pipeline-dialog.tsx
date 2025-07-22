@@ -5,12 +5,12 @@ import {
   Alert,
   Button,
   ButtonLayout,
-  ControlGroup,
+  Dialog,
   Fieldset,
   FormWrapper,
   Input,
-  ModalDialog,
-  Select
+  Select,
+  SelectValueOption
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -58,6 +58,9 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
 
   const branch = watch('branch')
 
+  const branchOptions: SelectValueOption[] =
+    branchNames?.map(branchName => ({ label: branchName, value: branchName })) ?? []
+
   useEffect(() => {
     setValue('branch', defaultBranch ?? '')
   }, [defaultBranch, setValue])
@@ -83,20 +86,20 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   }
 
   return (
-    <ModalDialog.Root
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         onClose()
         reset()
       }}
     >
-      <ModalDialog.Content aria-describedby={undefined}>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Create Pipeline</ModalDialog.Title>
-        </ModalDialog.Header>
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Header>
+          <Dialog.Title>Create Pipeline</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
               <Fieldset>
                 <Input
                   id="name"
@@ -117,26 +120,14 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 />
               </Fieldset>
 
-              <Fieldset>
-                <ControlGroup>
-                  <Select.Root
-                    disabled={isLoadingBranchNames}
-                    name="branch"
-                    value={branch}
-                    onValueChange={value => handleSelectChange('branch', value)}
-                    placeholder="Select"
-                    label="Branch"
-                  >
-                    <Select.Content>
-                      {branchNames?.map(branchName => (
-                        <Select.Item key={branchName} value={branchName}>
-                          {branchName}
-                        </Select.Item>
-                      ))}
-                    </Select.Content>
-                  </Select.Root>
-                </ControlGroup>
-              </Fieldset>
+              <Select
+                label="Branch"
+                placeholder="Select"
+                options={branchOptions}
+                value={branch}
+                onChange={value => handleSelectChange('branch', value)}
+                disabled={isLoadingBranchNames}
+              />
 
               {errorMessage && (
                 <Alert.Root theme="danger">
@@ -144,25 +135,25 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 </Alert.Root>
               )}
             </div>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close
+              <Dialog.Close
                 onClick={() => {
                   onCancel()
                   reset()
                 }}
               >
                 Cancel
-              </ModalDialog.Close>
+              </Dialog.Close>
               <Button type="submit" disabled={isLoadingBranchNames}>
                 Create Pipeline
               </Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

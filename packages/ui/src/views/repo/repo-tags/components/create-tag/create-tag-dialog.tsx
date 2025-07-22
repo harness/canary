@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, ControlGroup, FormInput, FormWrapper, Label, ModalDialog } from '@/components'
+import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorListItem } from '@/views/repo'
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
@@ -63,17 +63,15 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={handleClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title className="font-medium">
-            {t('views:repos.createTagTitle', 'Create a tag')}
-          </ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={handleClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
+        </Dialog.Header>
 
         <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
               <FormInput.Text
                 id="name"
                 label={t('views:forms.tagName', 'Name')}
@@ -104,22 +102,22 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
                 </Alert.Root>
               )}
             </div>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
+              <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
                 {t('views:repos.cancel', 'Cancel')}
-              </ModalDialog.Close>
+              </Dialog.Close>
               <Button type="submit" disabled={isLoading} loading={isLoading}>
                 {isLoading
                   ? t('views:repos.creatingTagButton', 'Creating tag...')
                   : t('views:repos.createTagButton', 'Create tag')}
               </Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

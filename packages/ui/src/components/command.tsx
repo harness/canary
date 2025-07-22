@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { ModalDialog, ScrollArea } from '@/components'
+import { Dialog, ScrollArea } from '@/components'
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
@@ -23,13 +23,13 @@ CommandRoot.displayName = CommandPrimitive.displayName
 
 const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
-    <ModalDialog.Root {...props}>
-      <ModalDialog.Content className="overflow-hidden p-0">
+    <Dialog.Root {...props}>
+      <Dialog.Content className="overflow-hidden p-0">
         <CommandRoot className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-cn-foreground-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
         </CommandRoot>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 
@@ -60,7 +60,7 @@ const CommandList = React.forwardRef<
   }
 >(({ className, children, heightClassName, ...props }, ref) => (
   <CommandPrimitive.List ref={ref} className={cn('flex flex-col', className)} {...props}>
-    <ScrollArea viewportClassName={cn('max-h-[300px]', heightClassName)}>{children}</ScrollArea>
+    <ScrollArea className={cn('max-h-[300px]', heightClassName)}>{children}</ScrollArea>
   </CommandPrimitive.List>
 ))
 

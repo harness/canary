@@ -2,8 +2,9 @@ import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
 
 import { ListActions, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
-import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
+import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
+import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { Sort, SortValue } from '@components/sorts'
 import ListControlBar from '@views/repo/components/list-control-bar'
 
@@ -85,21 +86,19 @@ const FilterGroup = <
             <FilterHandler.Dropdown>
               {(addFilter, availableFilters, resetFilters) => {
                 return (
-                  <FilterSelect<V, CustomValue>
+                  <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
                     options={filterOptions.filter(option => availableFilters.includes(option.value))}
                     onChange={option => {
                       addFilter(option.value)
                       setOpenedFilter(option.value)
                     }}
-                    onReset={resetFilters}
+                    onReset={() => resetFilters()}
                     inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
                     buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                    displayLabel={
-                      <FilterSelectLabel
-                        selectedFilters={filterOptions.length - availableFilters.length}
-                        displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                      />
-                    }
+                    displayLabel={renderFilterSelectLabel({
+                      selectedFilters: filterOptions.length - availableFilters.length,
+                      displayLabel: t('component:filter.defaultLabel', 'Filter')
+                    })}
                   />
                 )
               }}

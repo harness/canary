@@ -1,24 +1,27 @@
 {
+  "alert": {
+    "close": "Close alert",
+    "contentRegion": "Alert content",
+    "showLess": "Show less",
+    "showMore": "Show more"
+  },
   "navbar": {
     "pin": "Pin",
     "remove": "Remove",
     "reorder": "Reorder",
     "unpin": "Unpin",
-    "searchButton": "Open search dialog",
-    "search": "Search",
     "command-palette": "Command Palette",
     "nothing-found": "Nothing found",
+    "search": "Search",
     "settings": "Settings",
-    "appearence": "Appearance",
+    "appearance": "Appearance",
     "language": "Language",
     "logout": "Log out",
     "more": "More",
     "recent": "Recent",
     "user-management": "User Management",
-    "sidebarToggle": {
-      "expand": "Expand",
-      "collapse": "Collapse"
-    },
+    "searchButton": "Open search dialog",
+    "appearence": "Appearance",
     "profile": "Profile",
     "theme": "Theme",
     "customNav": "Customize navigation",
@@ -80,6 +83,9 @@
     "inputLabel": "To confirm, type",
     "cancel": "Cancel"
   },
+  "dropdownMenu": {
+    "noOptions": "No options available"
+  },
   "filter": {
     "delete": "Delete Filter",
     "inputPlaceholder": "Filter by...",
@@ -111,6 +117,11 @@
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
   },
+  "select": {
+    "placeholder": "Select an option",
+    "noResults": "No results found",
+    "noOptions": "No options available"
+  },
   "pagination": {
     "previous": "Previous",
     "next": "Next"
@@ -118,6 +129,16 @@
   "searchFile": {
     "input": "Search files...",
     "noFile": "No file found."
+  },
+  "sidebar": {
+    "sidebarToggle": {
+      "collapse": "Collapse",
+      "expand": "Expand"
+    },
+    "toggle": "Toggle sidebar"
+  },
+  "widgets": {
+    "viewMore": "View more"
   },
   "sort": {
     "defaultLabel": "Sort",

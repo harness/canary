@@ -23,7 +23,7 @@ export interface BaseInputProps
 const inputVariants = cva('cn-input-container', {
   variants: {
     size: {
-      default: '',
+      md: '',
       sm: 'cn-input-sm'
     },
     theme: {
@@ -35,7 +35,7 @@ const inputVariants = cva('cn-input-container', {
   },
   defaultVariants: {
     theme: 'default',
-    size: 'default'
+    size: 'md'
   }
 })
 

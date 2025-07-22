@@ -23,6 +23,9 @@ const PipelineStudioLayout = {
   HeaderLeft: ({ children }: { children: JSX.Element | (JSX.Element | null)[] | string }) => {
     return <div className="flex items-center gap-x-3">{children}</div>
   },
+  HeaderRight: ({ children }: { children: JSX.Element | (JSX.Element | null)[] | string }) => {
+    return <div className="flex items-center gap-x-3">{children}</div>
+  },
   View: ({ children }: { children: ReactElement }) => {
     return <div>{children}</div>
   },
@@ -40,11 +43,25 @@ const PipelineStudioLayout = {
       </Resizable.Panel>
     )
   },
-  SplitPanel: ({ children, open }: { children: ReactElement; open?: boolean }) => {
+  SplitDivider: ({ children }: { children: ReactNode }) => {
+    return (
+      <div style={{ height: 80, minHeight: 80 }} className="border-t border-cn-borders-2 px-4 flex items-center">
+        {children}
+      </div>
+    )
+  },
+  SplitPanel: ({ children, open, defaultSize }: { children: ReactElement; open?: boolean; defaultSize?: number }) => {
     return open ? (
       <>
         <Resizable.Handle />
-        <Resizable.Panel defaultSize={30} id="panel" minSize={10} maxSize={90} order={2} className="h-full">
+        <Resizable.Panel
+          defaultSize={defaultSize ?? 30}
+          id="panel"
+          minSize={10}
+          maxSize={90}
+          order={2}
+          className="h-full"
+        >
           {children}
         </Resizable.Panel>
       </>

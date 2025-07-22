@@ -5,7 +5,7 @@
         "$type": "sizing",
         "$value": "{size.5}"
       },
-      "default": {
+      "md": {
         "$type": "sizing",
         "$value": "{size.6}"
       }

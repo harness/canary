@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon, Tag } from '@/components'
+import { IconV2, Tag, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -28,10 +28,10 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
   return (
     <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-2 text-cn-foreground-2">
-      <p>
-        {`#${number}`} opened {timestamp} by{' '}
+      <Text>
+        {`#${number}`} opened <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
         <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
-      </p>
+      </Text>
 
       <span className="pointer-events-none h-3.5 w-px bg-cn-background-3" aria-hidden />
 
@@ -40,23 +40,23 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
         <div className="flex items-center gap-0.5">
-          <Icon className="text-icons-1" size={12} name="tasks" />
+          <IconV2 className="text-icons-1" size="2xs" name="tasks" />
           <p>
             {tasks} task{tasks === 1 ? '' : 's'}
           </p>
         </div>
       )}
-      <span className="pointer-events-none h-3.5 w-px bg-cn-background-3" aria-hidden />
+      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
 
       {sourceBranch && (
         <>
           <Link to={`${relativePath}/code/${targetBranch}`}>
-            <Tag variant="secondary" icon="branch-2" value={targetBranch} showIcon />
+            <Tag variant="secondary" icon="git-branch" value={targetBranch} showIcon />
           </Link>
 
           <span>&larr;</span>
           <Link to={`${relativePath}/code/${sourceBranch}`}>
-            <Tag variant="secondary" icon="branch-2" value={sourceBranch} showIcon />
+            <Tag variant="secondary" icon="git-branch" value={sourceBranch} showIcon />
           </Link>
         </>
       )}

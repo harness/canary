@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Layout } from '@/components'
+import { Avatar, Layout, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { timeAgo } from '@/utils'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -352,7 +351,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col border-l border-cn-borders-2 bg-cn-background-1 p-4">
+        <div className="flex w-full flex-col bg-cn-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -374,6 +373,10 @@ const PullRequestDiffViewer = ({
               onClose()
               setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
+            lineNumber={lineNumber}
+            sideKey={sideKey}
+            diff={data}
+            lang={lang}
             comment={commentText}
             setComment={value => setNewComments(prev => ({ ...prev, [commentKey]: value }))}
           />
@@ -388,7 +391,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border-l border-cn-borders-2 bg-cn-background-1">
+        <div className="bg-cn-background-1">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -446,7 +449,7 @@ const PullRequestDiffViewer = ({
                           name: parent.author,
                           description: (
                             <Layout.Horizontal className="text-cn-foreground-2">
-                              <span>{timeAgo(parent?.created as number)}</span>
+                              <TimeAgoCard timestamp={parent?.created} />
                               {parent?.deleted ? (
                                 <>
                                   <span>&nbsp;|&nbsp;</span>
@@ -476,6 +479,8 @@ const PullRequestDiffViewer = ({
                             onCancelClick={() => {
                               toggleEditMode(componentId, '')
                             }}
+                            diff={data}
+                            lang={lang}
                             comment={editComments[componentId]}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                           />
@@ -523,7 +528,7 @@ const PullRequestDiffViewer = ({
                                   name: reply.author,
                                   description: (
                                     <Layout.Horizontal className="text-cn-foreground-2">
-                                      <span>{timeAgo(reply?.created as number)}</span>
+                                      <TimeAgoCard timestamp={reply?.created} />
                                       {reply?.deleted ? (
                                         <>
                                           <span>&nbsp;|&nbsp;</span>
@@ -553,6 +558,8 @@ const PullRequestDiffViewer = ({
                                     onCancelClick={() => {
                                       toggleEditMode(replyComponentId, '')
                                     }}
+                                    diff={data}
+                                    lang={lang}
                                     comment={editComments[replyComponentId]}
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))

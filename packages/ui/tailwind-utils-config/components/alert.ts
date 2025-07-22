@@ -2,18 +2,24 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const themes = ['info', 'danger', 'warning'] as const
 
-const themeStyleMapper: Record<(typeof themes)[number], { backgroundColor: string; color: string }> = {
+const themeStyleMapper: Record<
+  (typeof themes)[number],
+  { backgroundColor: string; color: string; fadeBgColor: string }
+> = {
   info: {
     backgroundColor: 'gray-soft',
-    color: 'text-2'
+    color: 'text-2',
+    fadeBgColor: 'default'
   },
   danger: {
     backgroundColor: 'red-soft',
-    color: 'text-danger'
+    color: 'text-danger',
+    fadeBgColor: 'danger'
   },
   warning: {
     backgroundColor: 'yellow-soft',
-    color: 'text-warning'
+    color: 'text-warning',
+    fadeBgColor: 'warning'
   }
 }
 
@@ -22,11 +28,14 @@ function createAlertVariantStyles() {
 
   themes.forEach(theme => {
     const style: CSSRuleObject = {}
-    const { backgroundColor, color } = themeStyleMapper[theme as keyof typeof themeStyleMapper]
+    const { backgroundColor, color, fadeBgColor } = themeStyleMapper[theme as keyof typeof themeStyleMapper]
 
     style[`backgroundColor`] = `var(--cn-set-${backgroundColor}-bg)`
     style[`> .cn-alert-icon`] = {
       color: `var(--cn-${color})`
+    }
+    style[` .cn-alert-fade-overlay`] = {
+      background: `var(--cn-comp-alert-fade-${fadeBgColor})`
     }
 
     combinationStyles[`&:where(.cn-alert-${theme})`] = style
@@ -69,26 +78,27 @@ export default {
     },
 
     '&-min-h-content': {
-      '@apply min-h-[70px]': ''
-    },
-
-    '&-min-h-content-no-title': {
-      '@apply min-h-[60px]': ''
+      minHeight: 'var(--cn-alert-min-h)'
     },
 
     '&-text-wrap': {
       background: 'inherit',
-      gap: 'var(--cn-spacing-3)',
-      '@apply grid justify-items-start': ''
+      transition: 'padding 0.2s linear',
+      '@apply relative': '',
+
+      '&-expanded': {
+        paddingBottom: 'calc(var(--cn-spacing-3) + var(--cn-btn-size-md))'
+      }
     },
 
     '&-fade-overlay': {
-      background: 'inherit',
-      maskImage: 'linear-gradient(to top, black, transparent)',
+      background: 'var(--cn-comp-alert-fade-default)',
       visibility: 'visible',
+      height: 'var(--cn-alert-fade-height)',
       opacity: '1',
       transition: 'opacity 0.2s linear',
-      '@apply absolute inset-0 pointer-events-none': '',
+      borderRadius: 'var(--cn-alert-radius)',
+      '@apply absolute bottom-0 left-0 right-0 pointer-events-none': '',
 
       '&-not-visible': {
         visibility: 'hidden',
@@ -120,9 +130,16 @@ export default {
     },
 
     '&-expand-button': {
+      '@apply absolute bottom-0 left-0 z-[1]': '',
+
+      '&:where(:focus-visible)': {
+        // TODO: remove !important after fixing the cn-button:focus-visible
+        position: 'absolute !important'
+      },
+
       '&-icon': {
-        width: 'var(--cn-icon-size-default)',
-        height: 'var(--cn-icon-size-default)',
+        width: 'var(--cn-icon-size-sm)',
+        height: 'var(--cn-icon-size-sm)',
 
         '&-rotate-180': {
           transform: 'rotate(180deg)',

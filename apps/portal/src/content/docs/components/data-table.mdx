@@ -1,0 +1,345 @@
+---
+title: Data Table
+description: Data table component with sorting, selection, and expansion capabilities
+beta: true
+---
+
+The `Data Table` component provides a powerful way to display and interact with tabular data, featuring row selection, expansion, sorting, and custom cell rendering. Built on TanStack Table, it offers a comprehensive solution for complex data display needs.
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
+    { name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive' }
+  ]
+
+const [expanded, setExpanded] = React.useState<ExpandedState>({})
+const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
+const [tableSorting, setTableSorting] = React.useState<SortingState>([])
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name',
+enableSorting: true
+},
+{
+accessorKey: 'email',
+header: 'Email',
+enableSorting: false
+},
+{
+accessorKey: 'status',
+header: 'Status'
+}
+]
+
+const sortedData = [...users].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+
+    const sort = tableSorting[0]
+    const key = sort.id as keyof User
+
+    if (a[key] < b[key]) return sort.desc ? 1 : -1
+    if (a[key] > b[key]) return sort.desc ? -1 : 1
+    return 0
+
+})
+
+const renderSubComponent = ({ row }) => {
+const user = row.original
+return (
+
+<div>
+  <p>This is a placeholder for expanded content for {user.name}</p>
+</div>
+) }
+
+return (
+
+<DataTable
+  columns={columns}
+  data={sortedData}
+  getRowId={(row) => row.email}
+  size="compact"
+  enableRowSelection
+  enableExpanding
+  renderSubComponent={renderSubComponent}
+  currentExpanded={expanded}
+  onExpandedChange={setExpanded}
+  currentRowSelection={rowSelection}
+  onRowSelectionChange={setRowSelection}
+  currentSorting={tableSorting}
+  onSortingChange={setTableSorting}
+  getRowCanExpand={(row) => row.original.status === "active"}
+  getRowCanSelect={(row) => row.original.status === "active"}
+/>
+) }`} />
+
+## Anatomy
+
+```jsx
+<DataTable
+  columns={columns} // Column definitions
+  data={data} // Data to display
+  size="normal" // Size variant
+  getRowId={(row) => row.id} // Function to get unique row ID
+  enableRowSelection // Enable row selection
+  enableExpanding // Enable row expansion
+  renderSubComponent={renderSubComponent} // Render expanded content
+  currentSorting={sorting} // Current sorting state
+  onSortingChange={setSorting} // Sorting change handler
+  pagination={paginationProps} // Pagination configuration
+/>
+```
+
+## Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+import { useState } from "react";
+import type {
+  ColumnDef,
+  SortingState,
+  RowSelectionState,
+  ExpandedState,
+} from "@tanstack/react-table";
+
+// Define your data type
+type User = {
+  name: string;
+  email: string;
+  status: "active" | "inactive";
+};
+
+// Define your columns
+const columns: ColumnDef<User>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    enableSorting: true,
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+  },
+];
+
+function MyTable() {
+  // State for sorting, selection, and expansion
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+
+  // Your data
+  const data = [
+    { name: "John Doe", email: "john@example.com", status: "active" },
+    { name: "Jane Smith", email: "jane@example.com", status: "inactive" },
+  ];
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.email}
+      currentSorting={sorting}
+      onSortingChange={setSorting}
+      enableRowSelection
+      currentRowSelection={rowSelection}
+      onRowSelectionChange={setRowSelection}
+      enableExpanding
+      currentExpanded={expanded}
+      onExpandedChange={setExpanded}
+      renderSubComponent={({ row }) => (
+        <div className="p-4">
+          <p>Additional details for {row.original.name}</p>
+        </div>
+      )}
+    />
+  );
+}
+```
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "data",
+      description: "Array of data items to display in the table",
+      required: true,
+      value: "TData[]",
+    },
+    {
+      name: "columns",
+      description:
+        "Column definitions following TanStack Table's ColumnDef format",
+      required: true,
+      value: "ColumnDef<TData, unknown>[]",
+    },
+    {
+      name: "size",
+      description: "Size variant of the table",
+      required: false,
+      value: "'normal' | 'relaxed' | 'compact'",
+      defaultValue: "'normal'",
+    },
+    {
+      name: "getRowId",
+      description: "Function to get a unique ID for each row",
+      required: false,
+      value: "(row: TData) => string",
+    },
+    {
+      name: "pagination",
+      description: "Pagination configuration",
+      required: false,
+      value: "PaginationProps",
+    },
+    {
+      name: "getRowClassName",
+      description: "Function to apply custom class names to rows",
+      required: false,
+      value: "(row: Row<TData>) => string | undefined",
+    },
+    {
+      name: "onRowClick",
+      description: "Callback function when a row is clicked",
+      required: false,
+      value: "(data: TData, index: number) => void",
+    },
+    {
+      name: "disableHighlightOnHover",
+      description: "Disable row highlighting on hover",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the table container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "currentSorting",
+      description: "Current sorting state",
+      required: false,
+      value: "SortingState",
+    },
+    {
+      name: "onSortingChange",
+      description: "Callback for when sorting changes",
+      required: false,
+      value: "OnChangeFn<SortingState>",
+    },
+    {
+      name: "enableRowSelection",
+      description: "Enable row selection functionality",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "currentRowSelection",
+      description: "Current row selection state",
+      required: false,
+      value: "RowSelectionState",
+    },
+    {
+      name: "onRowSelectionChange",
+      description: "Callback for when row selection changes",
+      required: false,
+      value: "OnChangeFn<RowSelectionState>",
+    },
+    {
+      name: "enableExpanding",
+      description: "Enable row expansion functionality",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "getRowCanExpand",
+      description: "Function to determine if a row can be expanded",
+      required: false,
+      value: "(row: Row<TData>) => boolean",
+    },
+    {
+      name: "getRowCanSelect",
+      description: "Function to determine if a row can be selected",
+      required: false,
+      value: "(row: Row<TData>) => boolean",
+    },
+    {
+      name: "currentExpanded",
+      description: "Current expanded rows state",
+      required: false,
+      value: "ExpandedState",
+    },
+    {
+      name: "onExpandedChange",
+      description: "Callback for when expanded state changes",
+      required: false,
+      value: "OnChangeFn<ExpandedState>",
+    },
+    {
+      name: "renderSubComponent",
+      description: "Render function for expanded row content",
+      required: false,
+      value: "(props: { row: Row<TData> }) => React.ReactNode",
+    },
+    {
+      name: "enableColumnResizing",
+      description: "Enable column resizing functionality",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+## Examples
+
+### Table with Custom Cell Rendering
+
+```tsx
+import { DataTable, StatusBadge } from "@harnessio/ui/components";
+
+const columns = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: (info) => (
+      <StatusBadge
+        theme={info.getValue() === "active" ? "success" : "danger"}
+        size="sm"
+      >
+        {info.getValue()}
+      </StatusBadge>
+    ),
+  },
+];
+```
+
+### Table with Conditional Row Selection
+
+```tsx
+<DataTable
+  columns={columns}
+  data={data}
+  enableRowSelection
+  getRowCanSelect={(row) => row.original.status === "active"}
+  currentRowSelection={rowSelection}
+  onRowSelectionChange={setRowSelection}
+/>
+```

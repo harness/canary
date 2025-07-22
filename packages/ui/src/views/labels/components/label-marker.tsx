@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { cn } from '@utils/cn'
 import { ILabelType, LabelType } from '@views/labels'
 
@@ -61,11 +61,11 @@ export const LabelMarker: FC<LabelMarkerProps> = ({
           variant="ghost"
           onClick={onDelete}
         >
-          <Icon name="cross" size={10} />
+          <IconV2 name="xmark" size="2xs" />
         </Button>
       )}
 
-      {isDynamic && <Icon name="circle-plus" size={12} className="min-w-3 text-icons-4" role="presentation" />}
+      {isDynamic && <IconV2 name="plus-circle" size="2xs" className="min-w-3 text-icons-4" role="presentation" />}
     </div>
   )
 }

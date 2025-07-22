@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon, MoreActionsTooltip, NoData, Table } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, Table } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelValuesType } from '@/views'
@@ -41,7 +41,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       return (
         <NoData
           withBorder
-          iconName="no-search-magnifying-glass"
+          imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
@@ -55,7 +55,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     return (
       <NoData
         withBorder
-        iconName="no-data-branches"
+        imageName="no-data-branches"
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
         primaryButton={{ label: t('views:projectSettings.newLabels', 'Create label'), to: 'create' }}
@@ -66,7 +66,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed" variant="asStackedList">
+    <Table.Root tableClassName="table-fixed" className="mb-8 mt-5">
       <Table.Header>
         <Table.Row>
           <Table.Head className={cn('w-1/4', { 'w-4/12': isSmallWidth })}>
@@ -80,18 +80,18 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
         </Table.Row>
       </Table.Header>
 
-      <Table.Body hasHighlightOnHover>
+      <Table.Body>
         {labels.map(label => (
           <Table.Row key={label.id}>
             <Table.Cell className={cn('w-1/4 !py-3', { 'w-4/12': isSmallWidth })}>
               <LabelCellContent label={label} values={values?.[label.key]} />
             </Table.Cell>
             <Table.Cell className="w-1/4 !py-3.5 leading-none">
-              <span className="inline-flex h-4 max-w-full items-center gap-x-1 rounded bg-cn-background-8 px-1.5 text-1 leading-4 text-cn-foreground-1">
-                <Icon
-                  className="flex-none text-icons-9"
-                  name={label.scope === 0 ? 'repo-icon' : 'folder-icon'}
-                  size={12}
+              <span className="bg-cn-background-8 text-1 text-cn-foreground-1 inline-flex h-4 max-w-full items-center gap-x-1 rounded px-1.5 leading-4">
+                <IconV2
+                  className="text-icons-9 flex-none"
+                  name={label.scope === 0 ? 'repository' : 'folder'}
+                  size="2xs"
                 />
 
                 <span
@@ -103,7 +103,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               </span>
             </Table.Cell>
             <Table.Cell className={cn('w-1/2 !py-3', { 'w-5/12': isSmallWidth })}>
-              <span className="line-clamp-3 break-words text-sm text-cn-foreground-3">{label?.description || ''}</span>
+              <span className="text-cn-foreground-3 line-clamp-3 break-words text-sm">{label?.description || ''}</span>
             </Table.Cell>
             <Table.Cell className="w-[54px] !py-2 text-right">
               <MoreActionsTooltip

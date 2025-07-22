@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
+import { Text } from '@components/text'
 
 import { StepsPaletteContentLayout } from './step-palette-content-layout'
 import { StepsPaletteItemLayout } from './step-palette-item-layout'
@@ -33,7 +34,7 @@ const StepPaletteSection = forwardRef<
               }}
             >
               <StepsPaletteItemLayout.Left>
-                <Icon name="harness-plugin" size={36} />
+                <IconV2 name="harness-plugins" size="lg" />
               </StepsPaletteItemLayout.Left>
               <StepsPaletteItemLayout.Right>
                 <StepsPaletteItemLayout.Header>
@@ -46,7 +47,7 @@ const StepPaletteSection = forwardRef<
           </StepsPaletteContentLayout.SectionItem>
         ))
       ) : (
-        <p className="text-cn-foreground-3">There is no steps for provided query.</p>
+        <Text color="foreground-3">There is no steps for provided query.</Text>
       )}
     </StepsPaletteContentLayout.Section>
   )

@@ -4,26 +4,13 @@ import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
 import { Button } from './button'
-import { Icon, IconProps } from './icon'
+import { Illustration, IllustrationsNameType } from './illustration'
 import { Text } from './text'
 
 export interface NoDataProps {
   title: string
-  iconName?:
-    | Pick<IconProps, 'name'>
-    | 'no-data-folder'
-    | 'no-search-magnifying-glass'
-    | 'no-data-merge'
-    | 'no-data-cog'
-    | 'no-data-webhooks'
-    | 'no-data-branches'
-    | 'no-data-members'
-    | 'no-repository'
-    | 'no-data-error'
-    | 'no-data-commits'
-    | 'no-data-pr'
-    | 'no-data-tags'
-  iconSize?: number
+  imageName?: IllustrationsNameType
+  imageSize?: number
   description: string[]
   primaryButton?: {
     label: string
@@ -43,8 +30,8 @@ export interface NoDataProps {
 }
 
 export const NoData: FC<NoDataProps> = ({
-  iconName,
-  iconSize = 112,
+  imageName,
+  imageSize = 112,
   title,
   description,
   primaryButton,
@@ -58,19 +45,17 @@ export const NoData: FC<NoDataProps> = ({
     <div
       className={cn(
         'flex h-full w-full flex-col place-content-center place-items-center gap-4 my-auto',
-        { 'h-auto min-h-[75vh] border border-cn-borders-4 rounded-md': withBorder },
+        { 'h-auto grow border border-cn-borders-4 rounded-md': withBorder },
         className
       )}
     >
-      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} themeDependent />}
+      {imageName && <Illustration name={imageName} size={imageSize} themeDependent />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5 pb-4', textWrapperClassName)}>
-        <Text size={5} weight="medium">
-          {title}
-        </Text>
+        <Text variant="heading-section">{title}</Text>
         {description && (
           <div className="flex flex-col">
             {description.map((line, index) => (
-              <Text key={index} size={2} weight="normal" align="center" color="tertiaryBackground">
+              <Text key={index} align="center" color="foreground-3">
                 {line}
               </Text>
             ))}

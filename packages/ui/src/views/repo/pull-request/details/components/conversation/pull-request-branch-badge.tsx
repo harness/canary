@@ -1,4 +1,4 @@
-import { Button, Icon } from '@/components'
+import { Button, IconV2 } from '@/components'
 
 interface BranchBadgeProps {
   branchName: string
@@ -9,7 +9,7 @@ interface BranchBadgeProps {
 const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, onClick, className = '' }) => {
   return (
     <Button variant="secondary" size="sm" onClick={onClick} className={`cursor-pointer ${className}`}>
-      <Icon name="branch" size={12} className="mr-1" /> {branchName}
+      <IconV2 name="git-branch" size="2xs" className="mr-1" /> {branchName}
     </Button>
   )
 }

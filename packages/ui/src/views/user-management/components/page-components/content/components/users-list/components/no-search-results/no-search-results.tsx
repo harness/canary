@@ -11,7 +11,7 @@ export const NoSearchResults = () => {
     <NoData
       withBorder
       textWrapperClassName="max-w-[350px]"
-      iconName="no-search-magnifying-glass"
+      imageName="no-search-magnifying-glass"
       title={t('views:noData.noResults', 'No search results')}
       description={[
         t('views:noData.noResultsDescription', 'No users match your search. Try adjusting your keywords or filters.', {

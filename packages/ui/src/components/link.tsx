@@ -5,7 +5,7 @@ import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
-import { Icon, IconProps } from './icon'
+import { IconPropsV2, IconV2 } from './icon-v2'
 
 export const linkVariants = cva('cn-link', {
   variants: {
@@ -14,13 +14,13 @@ export const linkVariants = cva('cn-link', {
       secondary: 'cn-link-secondary'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-link-sm'
     }
   },
   defaultVariants: {
     variant: 'default',
-    size: 'default'
+    size: 'md'
   }
 })
 
@@ -29,12 +29,12 @@ interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, Var
    * If true, the 'chevron-left' icon will be displayed before the link text.
    * If a string, that string will be used as the icon name.
    */
-  prefixIcon?: boolean | IconProps['name']
+  prefixIcon?: boolean | IconPropsV2['name']
   /**
    * If true, the 'arrow-to-top-right' icon will be displayed before the link text.
    * If a string, that string will be used as the icon name.
    */
-  suffixIcon?: boolean | IconProps['name']
+  suffixIcon?: boolean | IconPropsV2['name']
   /**
    * If true, the link will be disabled and not clickable.
    * The default value is false.
@@ -72,19 +72,13 @@ const Link = ({
       data-disabled={disabled}
       aria-disabled={disabled}
     >
-      {!!prefixIcon && (
-        <Icon className="cn-link-icon" name={typeof prefixIcon === 'string' ? prefixIcon : 'chevron-left'} skipSize />
-      )}
+      {!!prefixIcon && <IconV2 name={typeof prefixIcon === 'string' ? prefixIcon : 'nav-arrow-left'} size="2xs" />}
       {children}
-      {!!suffixIcon && (
-        <Icon
-          className="cn-link-icon"
-          name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-to-top-right'}
-          skipSize
-        />
-      )}
+      {!!suffixIcon && <IconV2 name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-up-right'} size="2xs" />}
     </LinkBase>
   )
 }
+
+Link.displayName = 'Link'
 
 export { Link, type LinkProps }

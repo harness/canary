@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, Sidebar, Text } from '@harnessio/ui/components'
+import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -29,13 +29,14 @@ import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { ProjectRulesCreateOrUpdateContainer } from './pages-v2/project/project-rules-create-container'
 import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
+import ProjectPullRequestListPage from './pages-v2/project/pull-request/pull-request-list'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import PullRequestConversationPage from './pages-v2/pull-request/pull-request-conversation'
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
-import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import RepoPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoLabelFormContainer } from './pages-v2/repo/labels/label-form-container'
 import { RepoLabelsList } from './pages-v2/repo/labels/labels-list-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
@@ -51,9 +52,11 @@ import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
+import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-rules-list-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
+import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
@@ -201,12 +204,19 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <span>{Page.Summary}</span>,
               routeName: RouteConstants.toRepoSummary,
               pageTitle: Page.Summary
-            }
+            },
+            children: [
+              {
+                path: '*',
+                element: <RepoSummaryPage />
+              }
+            ]
           },
           {
             path: 'commits',
             handle: {
-              breadcrumb: () => <span>{Page.Commits}</span>
+              breadcrumb: () => <span>{Page.Commits}</span>,
+              routeName: RouteConstants.toRepoCommits
             },
             children: [
               {
@@ -302,15 +312,23 @@ export const repoRoutes: CustomRouteObject[] = [
             }
           },
           {
+            path: 'search',
+            element: <SearchPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.Search}</span>,
+              routeName: RouteConstants.toRepoSearch
+            }
+          },
+          {
             path: 'pulls',
             handle: {
               breadcrumb: () => <span>{Page.Pull_Requests}</span>,
-              routeName: RouteConstants.toPullRequests
+              routeName: RouteConstants.toRepoPullRequests
             },
             children: [
               {
                 index: true,
-                element: <PullRequestListPage />,
+                element: <RepoPullRequestListPage />,
                 handle: {
                   pageTitle: Page.Pull_Requests
                 }
@@ -394,7 +412,8 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'pipelines',
             handle: {
-              breadcrumb: () => <span>{Page.Pipelines}</span>
+              breadcrumb: () => <span>{Page.Pipelines}</span>,
+              routeName: RouteConstants.toRepoPipelines
             },
             children: [
               {
@@ -477,7 +496,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 children: [
                   {
                     index: true,
-                    element: <RepoSettingsGeneralPageContainer />,
+                    element: <RepoSettingsRulesListContainer />,
                     handle: {
                       pageTitle: Page.Branch_Rules
                     }
@@ -486,7 +505,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create',
                     element: <RepoBranchSettingsRulesPageContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a rule</span>
+                      breadcrumb: () => <span>Create a rule</span>,
+                      routeName: RouteConstants.toRepoBranchRuleCreate
                     }
                   },
                   {
@@ -567,10 +587,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <CreateWebhookContainer />,
                 handle: {
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
-                    <>
+                    <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
                       <span className="ml-1.5">Details</span>
-                    </>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookDetails
                 }
@@ -580,10 +600,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <WebhookExecutionsContainer />,
                 handle: {
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
-                    <>
+                    <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
                       <span className="ml-1.5">Executions</span>
-                    </>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutions
                 }
@@ -593,12 +613,12 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <WebhookExecutionDetailsContainer />,
                 handle: {
                   breadcrumb: ({ webhookId, executionId }: { webhookId: string; executionId: string }) => (
-                    <>
-                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
-                      <Text className="ml-1.5">Executions</Text>
+                    <Breadcrumb.Item>
+                      <span>{webhookId}</span> <Breadcrumb.Separator />
+                      <span className="ml-1.5">Executions</span>
                       <Breadcrumb.Separator className="mx-1.5" />
-                      <Text>{executionId}</Text>
-                    </>
+                      <span>{executionId}</span>
+                    </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutionDetails
                 }
@@ -654,7 +674,7 @@ export const repoRoutes: CustomRouteObject[] = [
   },
   {
     path: 'search',
-    element: <EmptyPage pathName="Search" comingSoon={true} />,
+    element: <SearchPage />,
     handle: {
       breadcrumb: () => <span>{Page.Search}</span>,
       pageTitle: Page.Search
@@ -674,6 +694,22 @@ export const repoRoutes: CustomRouteObject[] = [
       },
       labelsRoute,
       rulesRoute
+    ]
+  },
+  {
+    path: 'pulls',
+    handle: {
+      breadcrumb: () => <span>{Page.Pull_Requests}</span>,
+      routeName: RouteConstants.toProjectPullRequests
+    },
+    children: [
+      {
+        index: true,
+        element: <ProjectPullRequestListPage />,
+        handle: {
+          pageTitle: Page.Pull_Requests
+        }
+      }
     ]
   }
 ]
@@ -1083,11 +1119,11 @@ export const routes: CustomRouteObject[] = [
         element: <ProfileSettingsLayout />,
         handle: {
           breadcrumb: () => (
-            <>
+            <Layout.Flex direction="row" align="center" gap="xs">
               <span>User</span>
-              <Breadcrumb.Separator className="mx-2.5" />
+              <Breadcrumb.Separator />
               <span>{Page.Settings}</span>
-            </>
+            </Layout.Flex>
           ),
           pageTitle: Page.Settings
         },
@@ -1167,6 +1203,47 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
           })
         },
         children: repoRoutes
+      },
+      {
+        path: 'profile-settings',
+        element: <ProfileSettingsLayout />,
+        handle: {
+          breadcrumb: () => (
+            <>
+              <span>User</span>
+              <Breadcrumb.Separator className="mx-2.5" />
+              <span>{Page.Settings}</span>
+            </>
+          ),
+          pageTitle: Page.Settings
+        },
+        children: [
+          {
+            index: true,
+            element: <Navigate to="general" replace />,
+            handle: {
+              breadcrumb: () => <span>{Page.General}</span>
+            }
+          },
+          {
+            path: 'general',
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.General}</span>,
+              routeName: RouteConstants.toProfileGeneral,
+              pageTitle: Page.General
+            }
+          },
+          {
+            path: 'keys',
+            element: <SettingsProfileKeysPage />,
+            handle: {
+              breadcrumb: () => <span>{Page.Keys}</span>,
+              routeName: RouteConstants.toProfileKeys,
+              pageTitle: Page.Keys
+            }
+          }
+        ]
       }
     ]
   }

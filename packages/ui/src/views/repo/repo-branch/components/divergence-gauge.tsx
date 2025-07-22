@@ -47,21 +47,18 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
         <div className="mx-auto grid w-28 grid-flow-col grid-cols-2 items-center justify-center">
           <Progress
-            className="rounded-l-none"
-            variant="divergence"
-            value={adjustedBehindPercentage}
+            className="rotate-180 [&_.cn-progress-root]:rounded-l-none"
+            value={adjustedBehindPercentage / 100}
             size="sm"
-            rotated="180deg"
-            indicatorRounded="right-sm"
-            indicatorColor="dark-gray"
+            hideIcon
+            hidePercentage
           />
           <Progress
-            className="rounded-l-none"
-            variant="divergence"
-            value={adjustedAheadPercentage}
+            className="[&_.cn-progress-root]:rounded-l-none"
+            value={adjustedAheadPercentage / 100}
             size="sm"
-            indicatorRounded="right-sm"
-            indicatorColor="light-gray"
+            hideIcon
+            hidePercentage
           />
         </div>
       )}

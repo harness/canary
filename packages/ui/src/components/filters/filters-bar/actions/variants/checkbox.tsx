@@ -7,34 +7,27 @@ interface CheckboxFilterProps {
   onUpdateFilter: (values: Array<CheckboxOptions>) => void
 }
 
-const Checkbox = ({ filter, filterOption, onUpdateFilter }: CheckboxFilterProps) => {
+const MultiSelectFilter = ({ filter, filterOption, onUpdateFilter }: CheckboxFilterProps) => {
   const filteredOptions = filterOption
   const filterValue = filter
 
   return (
     <>
-      {!!filteredOptions.length && (
-        <div className="px-2 py-1">
-          {filteredOptions.map(option => (
-            <DropdownMenu.CheckboxItem
-              checked={filterValue.map(v => v.value).includes(option.value)}
-              onSelect={event => {
-                event?.preventDefault()
-                event?.stopPropagation()
-                const newValues = filterValue.map(v => v.value).includes(option.value)
-                  ? filterValue.filter(v => v.value !== option.value)
-                  : [...filterValue, { label: option.label, value: option.value }]
-                onUpdateFilter(newValues)
-              }}
-              key={option.value}
-            >
-              {option.label}
-            </DropdownMenu.CheckboxItem>
-          ))}
-        </div>
-      )}
+      {filteredOptions.map(option => (
+        <DropdownMenu.CheckboxItem
+          title={option.label}
+          checked={filterValue.map(v => v.value).includes(option.value)}
+          onCheckedChange={isChecked => {
+            const newValues = !isChecked
+              ? filterValue.filter(v => v.value !== option.value)
+              : [...filterValue, { label: option.label, value: option.value }]
+            onUpdateFilter(newValues)
+          }}
+          key={option.value}
+        />
+      ))}
     </>
   )
 }
 
-export default Checkbox
+export { MultiSelectFilter }

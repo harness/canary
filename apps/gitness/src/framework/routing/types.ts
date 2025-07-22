@@ -12,10 +12,13 @@ export enum RouteConstants {
   toRepoSummary = 'toRepoSummary',
   toRepoBranchCommits = 'toRepoBranchCommits',
   toRepoTagCommits = 'toRepoTagCommits',
+  toRepoPipelines = 'toRepoPipelines',
+  toRepoCommits = 'toRepoCommits',
   toRepoBranches = 'toRepoBranches',
   toRepoFiles = 'toRepoFiles',
+  toRepoSearch = 'toRepoSearch',
   toRepoWebhooks = 'toRepoWebhooks',
-  toPullRequests = 'toPullRequests',
+  toRepoPullRequests = 'toRepoPullRequests',
   toPullRequest = 'toPullRequest',
   toPullRequestCompare = 'toPullRequestCompare',
   toPullRequestConversation = 'toPullRequestConversation',
@@ -76,13 +79,15 @@ export enum RouteConstants {
   toProfileGeneral = 'toProfileGeneral',
   toRepoLabels = 'toRepoLabels',
   toProjectLabels = 'toProjectLabels',
+  toProjectPullRequests = 'toProjectPullRequests',
   toRepoWebhookDetails = 'toRepoWebhookDetails',
   toRepoWebhookExecutions = 'toRepoWebhookExecutions',
   toRepoWebhookExecutionDetails = 'toRepoWebhookExecutionDetails',
   toRepoWebhookCreate = 'toRepoWebhookCreate',
   toImportProject = 'toImportProject',
   toRepoFileDetails = 'toRepoFileDetails',
-  toRepoTags = 'toRepoTags'
+  toRepoTags = 'toRepoTags',
+  toRepoBranchRuleCreate = 'toRepoBranchRuleCreate'
 }
 
 export interface RouteEntry {

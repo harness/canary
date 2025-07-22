@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Icon } from '@/components'
+import { IconV2, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -45,10 +45,10 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
   return (
     <div className={cn('px-6 py-5', className)}>
       <div className="flex flex-col gap-[18px]">
-        <h1 className="max-w-[600px] text-4 font-medium leading-snug">
+        <Text as="h1" variant="heading-subsection" className="max-w-[600px]">
           {title.number && <span className="text-cn-foreground-2">#{title.number} </span>}
           <span className="text-cn-foreground-1">{title.title}</span>
-        </h1>
+        </Text>
       </div>
 
       <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-2 leading-none">
@@ -81,7 +81,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Simple Operation</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {simpleOperation}
-                <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
             </div>
           )}
@@ -90,7 +90,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Advanced Operations</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {advancedOperations}
-                <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
             </div>
           )}
@@ -99,7 +99,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
               <span className="leading-tight text-cn-foreground-2">Data Transfer</span>
               <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
                 {dataTransfer}
-                <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+                <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
             </div>
           )}

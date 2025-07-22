@@ -12,15 +12,15 @@ export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onCh
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
         <ToggleGroup.Root
-          className="gap-0"
-          onValueChange={onChangeView}
+          onChange={onChangeView as (value: string) => void}
           value={view}
-          type="single"
-          unselectable={'on'}
+          unselectable
           size="xs"
+          variant="ghost"
+          selectedVariant="secondary"
         >
-          <ToggleGroup.Item value={'edit'}>Edit</ToggleGroup.Item>
-          <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>
+          <ToggleGroup.Item value={'edit'} text="Edit" />
+          <ToggleGroup.Item value={'preview'} text="Preview" />
         </ToggleGroup.Root>
       </StackedList.Item>
     </StackedList.Root>

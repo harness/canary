@@ -1,5 +1,5 @@
-import { Icon, Spacer, Table, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { IconV2, Spacer, Table, Text, TimeAgoCard } from '@/components'
+import { useTranslation } from '@/context'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -21,7 +21,6 @@ export const Summary = ({
   toCommitDetails,
   toRepoFileDetails
 }: SummaryProps) => {
-  const { navigate } = useRouterContext()
   const { t } = useTranslation()
 
   return (
@@ -33,7 +32,7 @@ export const Summary = ({
         </>
       )}
 
-      <Table.Root variant="asStackedList">
+      <Table.Root>
         {!hideHeader && (
           <Table.Header>
             <Table.Row>
@@ -52,7 +51,7 @@ export const Summary = ({
             </Table.Row>
           )}
           {files.map(file => (
-            <Table.Row key={file.id} onClick={() => navigate(toRepoFileDetails?.({ path: file.path }) ?? '')}>
+            <Table.Row key={file.id} to={toRepoFileDetails?.({ path: file.path }) ?? ''}>
               <Table.Cell>
                 <div
                   className={`flex cursor-pointer items-center gap-1.5 ${
@@ -65,43 +64,44 @@ export const Summary = ({
                       : ''
                   }`}
                 >
-                  <Icon
+                  <IconV2
                     className={
                       file.status
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'ml-3 text-icons-alert'
+                            ? 'ml-3 text-cn-foreground-warning'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'ml-3 text-icons-warning'
-                              : 'ml-3 text-icons-danger'
+                              ? 'ml-3 text-cn-foreground-warning'
+                              : 'ml-3 text-cn-foreground-danger'
                         : 'text-icons-9'
                     }
                     name={
                       file.status
                         ? file.status === FileStatus.SAFE
                           ? file.type === SummaryItemType.File
-                            ? 'file'
+                            ? 'page'
                             : 'folder'
-                          : 'triangle-warning'
+                          : 'warning-triangle-solid'
                         : file.type === SummaryItemType.File
-                          ? 'file'
+                          ? 'page'
                           : 'folder'
                     }
-                    size={16}
                   />
                   <span className="w-44 truncate text-cn-foreground-1">{file.name}</span>
                 </div>
               </Table.Cell>
               <Table.Cell>
-                <Text color="tertiaryBackground" className="line-clamp-1">
+                <Text color="foreground-3" className="line-clamp-1">
                   {file.lastCommitMessage}
                 </Text>
               </Table.Cell>
               <Table.Cell className="text-right">
-                <Text color="tertiaryBackground" wrap="nowrap">
-                  {file.timestamp}
-                </Text>
+                <TimeAgoCard
+                  timestamp={file?.timestamp}
+                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                  textProps={{ color: 'foreground-3', wrap: 'nowrap', align: 'right' }}
+                />
               </Table.Cell>
             </Table.Row>
           ))}

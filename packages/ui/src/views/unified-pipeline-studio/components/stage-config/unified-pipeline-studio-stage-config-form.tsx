@@ -1,6 +1,6 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, Icon } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -48,11 +48,12 @@ const componentsMap: Record<
 interface UnifiedPipelineStudioStageConfigFormProps {
   requestClose: () => void
   isDrawer?: boolean
+  isDirtyRef: { current?: boolean }
 }
 
 export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudioStageConfigFormProps) => {
-  const { requestClose, isDrawer = false } = props
-  const { Content, Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { requestClose, isDrawer = false, isDirtyRef } = props
+  const { Content, Header, Title, Description, Footer, Body } = componentsMap[isDrawer ? 'true' : 'false']
 
   const {
     addStageIntention,
@@ -79,6 +80,11 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
   }, [editStageIntention, yamlRevision])
 
   const resolver = useZodValidationResolver(stageFormDefinition ?? { inputs: [] })
+
+  // NOTE: prevent rendering "Edit" form before values are provided
+  if (editStageIntention && !defaultStageValues) {
+    return <></>
+  }
 
   return (
     <RootForm
@@ -107,50 +113,50 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
       }}
       validateAfterFirstSubmit={true}
     >
-      {rootForm => (
-        <Content>
-          <Header>
-            <Title>{editStageIntention ? 'Edit' : 'Add'} Stage</Title>
-            <Description>
-              Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
-            </Description>
-            {/* <ButtonLayout horizontalAlign="start">
-              <Button variant={'ai'}> AI Autofill</Button>
-              <Button variant={'outline'}> Use Template</Button>
-            </ButtonLayout> */}
-          </Header>
-          <Body>
-            <EntityFormLayout.Form>
-              <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
-            </EntityFormLayout.Form>
-          </Body>
-          <Footer>
-            <ButtonLayout.Root>
-              <ButtonLayout.Primary>
-                <Button variant="secondary" onClick={requestClose}>
-                  Cancel
-                </Button>
-                <Button onClick={() => rootForm.submitForm()}>Submit</Button>
-              </ButtonLayout.Primary>
-              {!!editStageIntention && (
-                <ButtonLayout.Secondary>
-                  <Button
-                    variant="secondary"
-                    iconOnly
-                    onClick={() => {
-                      requestYamlModifications.deleteInArray({ path: editStageIntention.path })
-                      requestClose()
-                    }}
-                    aria-label="Remove Stage"
-                  >
-                    <Icon name="trash" />
+      {rootForm => {
+        isDirtyRef.current = rootForm.formState.isDirty
+
+        return (
+          <Content>
+            <Header>
+              <Title>{editStageIntention ? 'Edit' : 'Add'} Stage</Title>
+              <Description>
+                Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
+              </Description>
+            </Header>
+            <Body>
+              <EntityFormLayout.Form>
+                <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
+              </EntityFormLayout.Form>
+            </Body>
+            <Footer>
+              <ButtonLayout.Root>
+                <ButtonLayout.Primary>
+                  <Button variant="secondary" onClick={requestClose}>
+                    Cancel
                   </Button>
-                </ButtonLayout.Secondary>
-              )}
-            </ButtonLayout.Root>
-          </Footer>
-        </Content>
-      )}
+                  <Button onClick={() => rootForm.submitForm()}>Submit</Button>
+                </ButtonLayout.Primary>
+                {!!editStageIntention && (
+                  <ButtonLayout.Secondary>
+                    <Button
+                      variant="secondary"
+                      iconOnly
+                      onClick={() => {
+                        requestYamlModifications.deleteInArray({ path: editStageIntention.path })
+                        requestClose()
+                      }}
+                      aria-label="Remove Stage"
+                    >
+                      <IconV2 name="trash" />
+                    </Button>
+                  </ButtonLayout.Secondary>
+                )}
+              </ButtonLayout.Root>
+            </Footer>
+          </Content>
+        )
+      }}
     </RootForm>
   )
 }

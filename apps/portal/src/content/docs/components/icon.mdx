@@ -1,54 +1,69 @@
 ---
 title: Icon
-description: Icon component
+description: IconV2 component
 beta: true
 ---
 
-The `Icon` component allows you to render various icons with customizable properties such as size, color theme, and name.
+The `IconV2` component allows you to render various icons with customizable properties such as size, color theme, and name. It will soon replace the old `Icon` component.
 
 import { DocsPage } from "../../../components/docs-page";
-import IconGrid from "../../../components/IconGrid.astro";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid place-items-center">
-    <Icon name="double-tick" size={48} />
-</div>`}
+  code={`<IconV2 name="check" size="lg" />`}
+/>
+
+## Size Variants
+
+IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, `lg` and `xl`. The default size is `sm`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" align="center">
+    <IconV2 name="star" size="2xs" />
+    <IconV2 name="star" size="xs" />
+    <IconV2 name="star" size="sm" />
+    <IconV2 name="star" size="md" />
+    <IconV2 name="star" size="lg" />
+    <IconV2 name="star" size="xl" />
+  </Layout.Flex>`}
+/>
+
+## Colored Icon
+
+By default, IconV2 components will inherit the color from the parent. You can also set the color explicitly using the `className` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md">
+    <div className="text-cn-foreground-success">
+      <IconV2 name="check" size="md" />
+    </div>
+    <IconV2 className="text-cn-foreground-danger" name="xmark" size="md" />
+  </Layout.Flex>`}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Icon } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 
 //...
 
-return <Icon name="double-tick" size={48} />
+return <IconV2 name="check" size="lg" />
 ```
-
-## Available Icons
-
-The following icons are available:
-
-<div class="bg-cn-background-3 border p-3 max-h-[50vh] overflow-auto rounded">
-  <IconGrid />
-</div>
 
 ## API Reference
 
-The `Icon` component can be sized either using the `size` prop or the `height` and `width` props.
-The `size` prop can be used as a shorthand to set both height and width. Some icons have specific alternatives
-that can be used in light and dark modes; setting the `themeDependent` prop will opt into switching between
-the light and dark versions of the icon.
+The `IconV2` component can be sized using the `size` prop, which applies predefined size classes.
 
 ```typescript jsx
-<Icon
+<IconV2
   name="double-tick"   // name of the icon
-  size={16}            // [OPTIONAL] size of the icon in pixels
-  height={16}          // [OPTIONAL] height of the icon in pixels
-  width={16}           // [OPTIONAL] width of the icon in pixels
-  themeDependent       // [OPTIONAL] if true, a light version of the icon will be used if available
+  size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg, xl)
   className="my-class" // [OPTIONAL] custom class name
+  skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
 />
 ```
 
@@ -62,27 +77,14 @@ the light and dark versions of the icon.
     },
     {
       name: "size",
-      description: "Size of the icon in pixels",
+      description: "Size variant of the icon",
       required: false,
-      value: "number",
-      defaultValue: "16",
+      value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+      defaultValue: "'sm'",
     },
     {
-      name: "height",
-      description: "Height of the icon in pixels",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "width",
-      description: "Width of the icon in pixels",
-      required: false,
-      value: "number",
-    },
-    {
-      name: "themeDependent",
-      description:
-        "If true, a light version of the icon will be used if available",
+      name: "skipSize",
+      description: "Skip applying size classes when custom styling is needed",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -95,3 +97,18 @@ the light and dark versions of the icon.
     },
   ]}
 />
+
+## Related pages
+
+<CardGrid>
+  <LinkCard
+    title="All Icons"
+    description="Explore the comprehensive icon library"
+    href="/foundations/icons"
+  />
+  <LinkCard
+    title="Logos"
+    description="Logo component reference"
+    href="/components/logo"
+  />
+</CardGrid>

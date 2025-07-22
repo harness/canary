@@ -794,7 +794,7 @@
     "packages/ui/src/icons/wrench-icon.svg",
     "packages/ui/src/icons/x-mark.svg",
     "packages/ui/src/index.ts",
-    "packages/ui/src/styles.css",
+    "packages/ui/src/styles/styles.css",
     "packages/ui/src/types/index.ts",
     "packages/ui/src/utils/CanaryOutletFactory.ts",
     "packages/ui/src/utils/cn.ts",
@@ -1378,7 +1378,7 @@
       "type": 0,
       "name": "apps",
       "lastCommitMessage": "fix: branch/gitRef normalization from routes (#505)",
-      "timestamp": "3 hours ago",
+      "timestamp": "Nov 14, 2024",
       "user": {
         "name": "Shaurya Kalia"
       },
@@ -1414,7 +1414,7 @@
       "type": 0,
       "name": "packages",
       "lastCommitMessage": "fix: branch/gitRef normalization from routes (#505)",
-      "timestamp": "3 hours ago",
+      "timestamp": "Nov 14, 2024",
       "user": {
         "name": "Shaurya Kalia"
       },
@@ -1460,7 +1460,7 @@
   "latestCommitInfo": {
     "userName": "Shaurya Kalia",
     "message": "fix: branch/gitRef normalization from routes (#505)",
-    "timestamp": "3 hours ago",
+    "timestamp": "Nov 14, 2024",
     "sha": "ec92d11"
   },
   "isEditingDescription": false,

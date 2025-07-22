@@ -1,4 +1,4 @@
-import { DropdownMenu, Icon } from '@/components'
+import { DropdownMenu, IconV2, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 interface DropdownMenuComponentProps<T> {
@@ -18,13 +18,11 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
         <span className="text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
           {selectedItem.label}
         </span>
-        <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
+        <IconV2 name="nav-solid-arrow-down" size="2xs" className="chevron-down text-icons-7" />
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-56" align="end">
+      <DropdownMenu.Content align="end">
         {items.map(item => (
-          <DropdownMenu.Item className="py-2.5" key={item.value} onClick={() => onItemSelect(item)}>
-            {item.label}
-          </DropdownMenu.Item>
+          <DropdownMenu.Item key={item.value} onClick={() => onItemSelect(item)} title={item.label} />
         ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
@@ -57,7 +55,9 @@ const PullRequestFilters = <T extends FilterOption>({
 }: PullRequestFilterProps<T>) => {
   return (
     <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-cn-borders-2 pb-2', className)}>
-      <h3 className="text-4 font-medium leading-snug text-cn-foreground-1">Overview</h3>
+      <Text as="h3" variant="heading-subsection" color="foreground-1" className="leading-snug">
+        Overview
+      </Text>
 
       <div className="flex items-center gap-x-5">
         <DropdownMenuComponent items={activityFilters} selectedItem={activityFilter} onItemSelect={setActivityFilter} />

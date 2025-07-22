@@ -1,7 +1,7 @@
 export default {
   '.cn-card': {
     border: 'var(--cn-card-border) solid var(--cn-border-2)',
-    borderRadius: 'var(--cn-card-default-radius)',
+    borderRadius: 'var(--cn-card-md-radius)',
     backgroundColor: 'var(--cn-bg-2)',
     '&:hover:not(.cn-card-disabled)': {
       borderColor: 'var(--cn-border-1)'
@@ -14,16 +14,16 @@ export default {
         padding: `var(--cn-card-sm-py) var(--cn-card-sm-px)`
       }
     },
-    '&:where(.cn-card-default)': {
-      borderRadius: 'var(--cn-card-default-radius)',
-      '.cn-card-content-wrapper': {
-        padding: `var(--cn-card-default-py) var(--cn-card-default-px)`
-      }
-    },
     '&:where(.cn-card-md)': {
       borderRadius: 'var(--cn-card-md-radius)',
       '.cn-card-content-wrapper': {
         padding: `var(--cn-card-md-py) var(--cn-card-md-px)`
+      }
+    },
+    '&:where(.cn-card-lg)': {
+      borderRadius: 'var(--cn-card-lg-radius)',
+      '.cn-card-content-wrapper': {
+        padding: `var(--cn-card-lg-py) var(--cn-card-lg-px)`
       }
     },
 

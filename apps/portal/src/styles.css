@@ -1,5 +1,8 @@
 body {
   @apply text-cn-foreground-2 text-base overscroll-none !important;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-smooth: auto;
 }
 
 main {
@@ -24,6 +27,22 @@ code {
 
 .content-panel {
   @apply px-0 pb-0 m-0 border-none !important;
+}
+
+/* Line numbers for LiveEditor */
+.line-numbers .prism-code {
+  counter-reset: line-number;
+}
+
+.line-numbers .token-line::before {
+  counter-increment: line-number;
+  content: counter(line-number);
+  display: inline-block;
+  text-align: right;
+  margin-right: 1rem;
+  min-width: 2rem;
+  opacity: 0.3;
+  user-select: none;
 }
 
 /* Global sidebar style overrides */

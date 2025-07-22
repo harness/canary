@@ -3,8 +3,8 @@ import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useSt
 import { cn } from '@utils/cn'
 import { cva } from 'class-variance-authority'
 
-import { Icon } from './icon'
-import { Logo } from './logo'
+import { IconV2, IconV2NamesType } from './icon-v2'
+import { LogoV2, LogoV2NamesType } from './logo-v2'
 
 type CardSelectType = 'single' | 'multiple'
 
@@ -15,15 +15,17 @@ interface CardSelectRootProps<T> {
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
-  orientation?: 'horizontal' | 'vertical'
+  layout?: 'horizontal' | 'vertical' | 'grid'
   gap?: 'sm' | 'md' | 'lg'
+  rows?: number
+  cols?: number
   children: ReactNode
 }
 
 interface CardSelectItemProps extends HTMLAttributes<HTMLInputElement> {
   value: unknown
-  icon?: React.ComponentProps<typeof Icon>['name']
-  logo?: React.ComponentProps<typeof Logo>['name']
+  icon?: IconV2NamesType
+  logo?: LogoV2NamesType
   disabled?: boolean
   children: ReactNode
 }
@@ -52,9 +54,10 @@ function isChecked(value: unknown, current: unknown | unknown[]) {
 
 const cardSelectVariants = cva('cn-card-select-root', {
   variants: {
-    orientation: {
-      vertical: '',
-      horizontal: 'cn-card-select-horizontal'
+    layout: {
+      vertical: 'cn-card-select-vertical',
+      horizontal: 'cn-card-select-horizontal',
+      grid: 'cn-card-select-grid'
     },
     gap: {
       sm: 'cn-card-select-gap-sm',
@@ -63,21 +66,23 @@ const cardSelectVariants = cva('cn-card-select-root', {
     }
   },
   defaultVariants: {
-    orientation: 'vertical',
+    layout: 'vertical',
     gap: 'md'
   }
 })
 
 function CardSelectRoot<T extends CardSelectType>({
   type,
-  orientation = 'vertical',
+  layout = 'vertical',
   gap = 'md',
   name = `card-select-${Math.random().toString(36).slice(2)}`,
   value,
   defaultValue,
   onValueChange,
   disabled = false,
-  children
+  children,
+  rows,
+  cols
 }: CardSelectRootProps<T>) {
   const [internalValue, setInternalValue] = useState<unknown | unknown[]>(
     defaultValue ?? (type === 'multiple' ? [] : undefined)
@@ -114,7 +119,16 @@ function CardSelectRoot<T extends CardSelectType>({
         onValueChange: handleValueChange
       }}
     >
-      <div className={cardSelectVariants({ orientation, gap })} role={type === 'single' ? 'radiogroup' : 'group'}>
+      <div
+        className={cardSelectVariants({ layout, gap })}
+        role={type === 'single' ? 'radiogroup' : 'group'}
+        style={
+          {
+            '--cols': cols,
+            '--rows': rows
+          } as React.CSSProperties
+        }
+      >
         {children}
       </div>
     </CardSelectContext.Provider>
@@ -154,11 +168,11 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
       >
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
-            {icon && <Icon name={icon} className="cn-card-select-icon" />}
-            {logo && !icon && <Logo name={logo} className="cn-card-select-logo" />}
+            {icon && <IconV2 name={icon} className="cn-card-select-icon" />}
+            {logo && !icon && <LogoV2 name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
-          {checked && <Icon name="check" className="cn-card-select-check" />}
+          {checked && <IconV2 name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}

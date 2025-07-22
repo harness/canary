@@ -15,7 +15,7 @@ export interface PropsTableProps {
 }
 
 const PropsTable: FC<PropsTableProps> = ({ props }) => (
-  <Table.Root variant="asStackedList" className="not-content">
+  <Table.Root className="not-content">
     <Table.Header>
       <Table.Row>
         <Table.Head className="font-black">Prop</Table.Head>

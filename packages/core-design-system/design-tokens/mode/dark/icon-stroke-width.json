@@ -1,0 +1,28 @@
+{
+  "iconStrokeWidth": {
+    "2xs": {
+      "$type": "borderWidth",
+      "$value": "1.4"
+    },
+    "xs": {
+      "$type": "borderWidth",
+      "$value": "1.2"
+    },
+    "sm": {
+      "$type": "borderWidth",
+      "$value": "1.2"
+    },
+    "md": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
+    "lg": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
+    "xl": {
+      "$type": "borderWidth",
+      "$value": "1"
+    }
+  }
+}

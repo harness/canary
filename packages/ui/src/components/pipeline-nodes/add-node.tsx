@@ -1,5 +1,5 @@
 import { Button } from '@components/button'
-import { Icon } from '@components/icon'
+import { IconV2 } from '@components/icon-v2'
 
 export interface AddNodeProp {
   onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -15,11 +15,10 @@ export function AddNode(props: AddNodeProp) {
         rounded
         style={{ alignSelf: 'center' }}
         variant="outline"
-        size="lg"
         onMouseDown={e => e.stopPropagation()}
         onClick={onClick}
       >
-        <Icon name="plus" size={15} />
+        <IconV2 name="plus" />
       </Button>
     </div>
   )

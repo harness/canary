@@ -14,7 +14,7 @@
     },
     "container": {
       "$type": "number",
-      "$value": "{spacing.9}"
+      "$value": "{spacing.8}"
     }
   },
   "heading": {
@@ -83,7 +83,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
+        "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
@@ -95,7 +95,7 @@
         "fontFamily": "{fontFamily.default}",
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
+        "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
       },
@@ -113,6 +113,17 @@
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
     "single-line": {
+      "code": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.mono}",
+          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.none}",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
+      },
       "normal": {
         "$type": "typography",
         "$value": {
@@ -162,6 +173,17 @@
       },
       "$description": "Reduced-emphasis supporting text for secondary information. Creates visual hierarchy through weight reduction while maintaining size consistency with normal captions. Visually recedes while remaining accessible.\n\nCommon uses: Timestamps, Metadata displays, Copyright information, Secondary attributions, Optional information."
     },
+    "strong": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.snug}",
+        "letterSpacing": "{tracking.normal}",
+        "paragraphSpacing": "0.375rem"
+      }
+    },
     "single-line": {
       "normal": {
         "$type": "typography",
@@ -184,6 +206,16 @@
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
+      },
+      "strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.none}",
+          "letterSpacing": "{tracking.normal}"
+        }
       }
     }
   },
@@ -195,7 +227,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.normal}",
+          "lineHeight": "{lineHeight.2.snug}",
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.none}"
         },
@@ -207,7 +239,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.normal}",
+          "lineHeight": "{lineHeight.2.snug}",
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.underline}"
         },
@@ -328,6 +360,10 @@
     }
   },
   "layout": {
+    "4xs": {
+      "$type": "number",
+      "$value": "{spacing.half}"
+    },
     "3xs": {
       "$type": "number",
       "$value": "{spacing.1}"
@@ -355,6 +391,10 @@
     "xl": {
       "$type": "number",
       "$value": "{spacing.8}"
+    },
+    "2xl": {
+      "$type": "number",
+      "$value": "{spacing.10}"
     }
   }
 }

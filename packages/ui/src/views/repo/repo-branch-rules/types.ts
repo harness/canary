@@ -7,6 +7,7 @@ export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsForm
 export type Rule = {
   id: string
   checked: boolean
+  disabled: boolean
   submenu: ('merge' | 'rebase' | 'squash')[]
   selectOptions: string[]
   input: string
@@ -23,7 +24,7 @@ export enum BranchRulesActionType {
 export type BranchRulesAction =
   | { type: BranchRulesActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
   | { type: BranchRulesActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
-  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; checkName: string }
+  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: string[] }
   | { type: BranchRulesActionType.SET_INITIAL_RULES; payload: Rule[] }
   | { type: BranchRulesActionType.SET_INPUT_VALUE; ruleId: string; value: string }
 
@@ -45,7 +46,9 @@ export enum BranchRuleId {
   DELETE_BRANCH = 'delete_branch',
   BLOCK_BRANCH_CREATION = 'create_forbidden',
   BLOCK_BRANCH_DELETION = 'delete_forbidden',
-  REQUIRE_PULL_REQUEST = 'update_forbidden',
+  BLOCK_BRANCH_UPDATE = 'update_forbidden_with_merge_block',
+  BLOCK_FORCE_PUSH = 'update_force_forbidden',
+  REQUIRE_PULL_REQUEST = 'update_forbidden_without_merge_block',
   REQUIRE_CODE_REVIEW = 'require_minimum_count',
   REQUIRE_CODE_OWNERS = 'require_code_owners'
 }
@@ -86,6 +89,7 @@ export const repoBranchSettingsFormSchema = z.object({
     z.object({
       id: z.string(),
       checked: z.boolean(),
+      disabled: z.boolean(),
       submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
       selectOptions: z.array(z.string()),
       input: z.string()

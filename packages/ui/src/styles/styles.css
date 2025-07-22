@@ -1,0 +1,540 @@
+@import url('./shared-style-variables.css');
+@import url('./remove-old-theme-values.css');
+@import url('./diff-styles.css');
+
+@import url('@harnessio/core-design-system/core-styles');
+@import url('@harnessio/core-design-system/themes');
+@import url('@harnessio/core-design-system/mfe-themes');
+
+@import 'highlight.js/styles/atom-one-dark.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 500;
+  src: url('../fonts/InterVariable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/InterVariable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}
+
+@layer base {
+  html {
+    @apply text-base;
+  }
+
+  body {
+    @apply bg-cn-background-0 text-cn-foreground-2 overscroll-y-none text-sm font-normal -tracking-[0.02em];
+  }
+}
+
+@layer utilities {
+  /*
+    Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.
+    Works as well with inputs with transparent background.
+
+    https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
+  */
+  .remove-autocomplete-styles:-webkit-autofill,
+  .remove-autocomplete-styles:-webkit-autofill:hover,
+  .remove-autocomplete-styles:-webkit-autofill:focus {
+    transition:
+      background-color 5000s,
+      color 5000s;
+  }
+
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+:root,
+:host {
+  --cn-breadcrumbs-height: 55px;
+  --cn-tabs-nav-height: 45px;
+  --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height));
+  --cn-inset-layout-indent: 6px;
+  --cn-inset-layout-indent-with-borders: calc(var(--cn-inset-layout-indent) + 2px);
+}
+
+.border-linear {
+  @apply pointer-events-none absolute inset-0 rounded-[inherit] border border-transparent;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.connector-gradient {
+  @apply bg-gradient-to-b from-[#2F2F33]/0 to-[#161619]/100;
+}
+
+/* Text utilities */
+.text-radial-gradient {
+  /* remove hardcode colors */
+  @apply text-cn-foreground-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+}
+
+/* Card utilities */
+.card-auth {
+  @apply w-[362px] border-none;
+}
+.card-auth-header {
+  @apply space-x-0 space-y-0 p-0;
+}
+.card-auth-content {
+  @apply w-full py-6;
+}
+
+/* Form utilities */
+.text-form-error {
+  @apply text-cn-foreground-danger text-2 mt-2 font-light;
+}
+.form-input {
+  @apply border-cn-borders-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
+  @apply placeholder:text-cn-foreground-1/50 !important;
+}
+
+/* Temporary studio controls override */
+.react-flow__panel {
+  @apply left-auto right-0 m-6 flex gap-[1px] !important;
+}
+.react-flow__controls-button {
+  @apply rounded-md invert !important;
+}
+
+.diff-style-root tr {
+  content-visibility: auto;
+}
+
+.diff-widget-tooltip {
+  position: relative;
+}
+
+.diff-widget-tooltip::after {
+  display: none;
+  box-sizing: border-box;
+  background-color: var(--diff-grey);
+  position: absolute;
+  content: attr(data-title);
+  font-size: 11px;
+  padding: 1px 2px;
+  border-radius: 4px;
+  overflow: hidden;
+  top: 50%;
+  z-index: 20;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  left: calc(100% + 8px);
+  color: var(--cn-bg-1);
+}
+
+.diff-widget-tooltip::before {
+  display: none;
+  box-sizing: border-box;
+  content: '';
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  left: calc(100% - 2px);
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: var(--diff-grey);
+}
+
+.diff-widget-tooltip:hover::before {
+  display: block;
+}
+
+.diff-widget-tooltip:hover::after {
+  display: block;
+}
+
+.diff-tailwindcss-wrapper {
+  .diff-line-widget-new-content,
+  .diff-line-widget-new-placeholder,
+  .diff-line-new-placeholder,
+  .diff-line-new-num {
+    @apply border-l;
+  }
+
+  .diff-line-extend-old-placeholder {
+    @apply border-cn-borders-2 border-r;
+  }
+}
+
+.diff-tailwindcss-wrapper .invisible {
+  visibility: hidden;
+}
+.diff-tailwindcss-wrapper .group:hover .group-hover\:visible {
+  visibility: visible;
+}
+.diff-tailwindcss-wrapper .sticky {
+  position: sticky;
+}
+.diff-tailwindcss-wrapper .left-0 {
+  left: 0;
+}
+.diff-tailwindcss-wrapper .left-\[100\%\] {
+  left: 100%;
+}
+.diff-tailwindcss-wrapper .right-\[100\%\] {
+  right: 100%;
+}
+.diff-tailwindcss-wrapper .top-0 {
+  top: 0;
+}
+.diff-tailwindcss-wrapper .top-\[1px\] {
+  top: 1px;
+}
+.diff-tailwindcss-wrapper .top-\[50\%\] {
+  top: 50%;
+}
+.diff-tailwindcss-wrapper .z-\[1\] {
+  z-index: 1;
+}
+.diff-tailwindcss-wrapper .ml-\[-1\.5em\] {
+  margin-left: -1.5em;
+}
+.diff-tailwindcss-wrapper .block {
+  display: block;
+}
+.diff-tailwindcss-wrapper .inline-block {
+  display: inline-block;
+}
+.diff-tailwindcss-wrapper .flex {
+  display: flex;
+}
+.diff-tailwindcss-wrapper .table {
+  display: table;
+}
+.diff-tailwindcss-wrapper .hidden {
+  display: none;
+}
+.diff-tailwindcss-wrapper .h-\[50\%\] {
+  height: 50%;
+}
+.diff-tailwindcss-wrapper .h-full {
+  height: 100%;
+}
+.diff-tailwindcss-wrapper .min-h-\[28px\] {
+  min-height: 28px;
+}
+.diff-tailwindcss-wrapper .w-\[1\%\] {
+  width: 1%;
+}
+.diff-tailwindcss-wrapper .w-\[1\.5em\] {
+  width: 1.5em;
+}
+.diff-tailwindcss-wrapper .w-\[1\.5px\] {
+  width: 1.5px;
+}
+.diff-tailwindcss-wrapper .w-\[10px\] {
+  width: 10px;
+}
+.diff-tailwindcss-wrapper .w-\[1px\] {
+  width: 1px;
+}
+.diff-tailwindcss-wrapper .w-\[50\%\] {
+  width: 50%;
+}
+.diff-tailwindcss-wrapper .w-full {
+  width: 100%;
+}
+.diff-tailwindcss-wrapper .w-max {
+  width: -moz-max-content;
+  width: max-content;
+}
+.diff-tailwindcss-wrapper .min-w-\[100px\] {
+  min-width: 100px;
+}
+.diff-tailwindcss-wrapper .min-w-\[40px\] {
+  min-width: 40px;
+}
+.diff-tailwindcss-wrapper .min-w-full {
+  min-width: 100%;
+}
+.diff-tailwindcss-wrapper .flex-shrink-0,
+.diff-tailwindcss-wrapper .shrink-0 {
+  flex-shrink: 0;
+}
+.diff-tailwindcss-wrapper .basis-\[50\%\] {
+  flex-basis: 50%;
+}
+.diff-tailwindcss-wrapper .table-fixed {
+  table-layout: fixed;
+}
+.diff-tailwindcss-wrapper .border-collapse {
+  border-collapse: collapse;
+}
+.diff-tailwindcss-wrapper .origin-center {
+  transform-origin: center;
+}
+.diff-tailwindcss-wrapper .translate-x-\[-50\%\] {
+  --cn-tw-translate-x: -50%;
+}
+.diff-tailwindcss-wrapper .translate-x-\[-50\%\],
+.diff-tailwindcss-wrapper .translate-x-\[50\%\] {
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
+    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
+    scaleY(var(--cn-tw-scale-y, 1));
+}
+.diff-tailwindcss-wrapper .translate-x-\[50\%\] {
+  --cn-tw-translate-x: 50%;
+}
+.diff-tailwindcss-wrapper .translate-y-\[-50\%\] {
+  --cn-tw-translate-y: -50%;
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
+    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
+    scaleY(var(--cn-tw-scale-y, 1));
+}
+.diff-tailwindcss-wrapper .cursor-pointer {
+  cursor: pointer;
+}
+.diff-tailwindcss-wrapper .select-none {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.diff-tailwindcss-wrapper .flex-col {
+  flex-direction: column;
+}
+.diff-tailwindcss-wrapper .items-start {
+  align-items: flex-start;
+}
+.diff-tailwindcss-wrapper .items-center {
+  align-items: center;
+}
+.diff-tailwindcss-wrapper .justify-center {
+  justify-content: center;
+}
+.diff-tailwindcss-wrapper .overflow-x-auto {
+  overflow-x: auto;
+}
+.diff-tailwindcss-wrapper .overflow-y-hidden {
+  overflow-y: hidden;
+}
+.diff-tailwindcss-wrapper .whitespace-nowrap {
+  white-space: nowrap;
+}
+.diff-tailwindcss-wrapper .break-all {
+  word-break: break-all;
+}
+.diff-tailwindcss-wrapper .bg-\[rgb\(222\2c 222\2c 222\)\] {
+  --cn-tw-bg-opacity: 1;
+  background-color: rgb(222 222 222 / var(--cn-tw-bg-opacity));
+}
+.diff-tailwindcss-wrapper .fill-current {
+  fill: currentColor;
+}
+.diff-tailwindcss-wrapper .p-0 {
+  padding: 0;
+}
+.diff-tailwindcss-wrapper .p-\[1px\] {
+  padding: 1px;
+}
+.diff-tailwindcss-wrapper .px-\[10px\] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.diff-tailwindcss-wrapper .py-\[2px\] {
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+.diff-tailwindcss-wrapper .py-\[6px\] {
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
+.diff-tailwindcss-wrapper .pl-\[1\.5em\] {
+  padding-left: 1.5em;
+}
+.diff-tailwindcss-wrapper .pl-\[10px\] {
+  padding-left: 10px;
+}
+.diff-tailwindcss-wrapper .pl-\[2\.0em\] {
+  padding-left: 2em;
+}
+.diff-tailwindcss-wrapper .pr-\[10px\] {
+  padding-right: 10px;
+}
+.diff-tailwindcss-wrapper .text-right {
+  text-align: right;
+}
+.diff-tailwindcss-wrapper .indent-\[0\.2em\] {
+  text-indent: 0.2em;
+}
+.diff-tailwindcss-wrapper .align-top {
+  vertical-align: top;
+}
+.diff-tailwindcss-wrapper .align-middle {
+  vertical-align: middle;
+}
+.diff-tailwindcss-wrapper .text-\[1\.2em\] {
+  font-size: 1.2em;
+}
+.diff-tailwindcss-wrapper .leading-\[1\.4\] {
+  line-height: 1.4;
+}
+.diff-tailwindcss-wrapper .leading-\[1\.6\] {
+  line-height: 1.6;
+}
+.diff-tailwindcss-wrapper .text-red-500 {
+  --cn-tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--cn-tw-text-opacity));
+}
+.diff-tailwindcss-wrapper .opacity-\[0\.5\] {
+  opacity: 0.5;
+}
+.diff-tailwindcss-wrapper .filter {
+  filter: var(--cn-tw-blur) var(--cn-tw-brightness) var(--cn-tw-contrast) var(--cn-tw-grayscale) var(--cn-tw-hue-rotate)
+    var(--cn-tw-invert) var(--cn-tw-saturate) var(--cn-tw-sepia) var(--cn-tw-drop-shadow);
+}
+.diff-tailwindcss-wrapper .transition-transform {
+  transition-duration: 0.15s;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.diff-tailwindcss-wrapper .scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.diff-tailwindcss-wrapper .scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.diff-tailwindcss-wrapper .scrollbar-disable::-webkit-scrollbar {
+  display: none;
+}
+.diff-tailwindcss-wrapper .scrollbar-disable {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sub-menu-icon-bg {
+  stop {
+    stop-color: var(--cn-text-2);
+
+    & + stop {
+      stop-color: var(--cn-text-3);
+    }
+  }
+}
+
+:where(:focus-visible) {
+  outline: 2px solid var(--cn-border-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+mark {
+  background: var(--cn-set-brand-solid-bg);
+  color: var(--cn-set-brand-solid-text);
+}
+
+/* Hack for detecting scroll on select */
+@keyframes detect-scroll {
+  from,
+  to {
+    --can-scroll: ;
+  }
+}
+
+[data-radix-select-viewport] {
+  animation: detect-scroll linear;
+  animation-timeline: scroll(self);
+
+  --padding-if-can-scroll: var(--can-scroll) 4px 0 4px 4px;
+  --padding-if-cant-scroll: 4px;
+  padding: var(--padding-if-can-scroll, var(--padding-if-cant-scroll));
+}
+
+/* Select scrollbar */
+
+[data-radix-select-viewport] {
+  scrollbar-width: auto !important;
+}
+
+[data-radix-select-viewport]::-webkit-scrollbar {
+  width: 14px;
+  display: block !important;
+}
+
+[data-radix-select-viewport]::-webkit-scrollbar-thumb {
+  background-color: var(--cn-bg-2);
+  border: 4px solid transparent;
+  border-radius: 7px;
+  background-clip: content-box;
+}
+
+.breadcrumbs {
+  @apply bg-cn-background-1 fixed top-0 z-30 ml-56 w-full;
+}
+
+.top-\[100px\] {
+  top: 100px;
+}
+
+.top-\[55px\] {
+  top: 55px;
+}
+
+.layer-high {
+  @apply z-[19];
+}
+.layer-medium {
+  @apply z-[15];
+}
+.layer-low {
+  @apply z-10;
+}
+
+/*  MONACO EDITOR  */
+.monaco-scrollable-element > .scrollbar > .slider {
+  border-radius: var(--cn-rounded-full, 0.25rem);
+  --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
+}
+
+.monaco-diff-editor.side-by-side .editor.modified {
+  @apply !border-cn-borders-2 !border-l !border-solid !shadow-none;
+}
+
+/* In View Diff Renderer */
+.diffViewBlock {
+  @apply visible box-border flex h-auto min-h-[48px] flex-col;
+}
+
+/* .hidden extension */
+.diffViewBlock.hiddenDiff {
+  @apply invisible h-[var(--block-height)] [contain-intrinsic-size:auto_var(--block-height)] [content-visibility:auto];
+}
+
+.diffViewBlock.hiddenDiff > * {
+  visibility: hidden !important;
+}
+.diffViewBlock.hiddenDiff > * > * {
+  display: none !important;
+}
+
+.nested-sidebar-height {
+  height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent-with-borders));
+}

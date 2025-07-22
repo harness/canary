@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, Icon, IconProps, Layout, Tag } from '@/components'
+import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Layout, Tag } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -23,6 +23,33 @@ const labelActivityToTitleDict: Record<LabelActivity, string> = {
   unassign: 'removed'
 }
 
+const formatListWithAndFragment = (names: string[]): React.ReactNode => {
+  switch (names?.length) {
+    case 0:
+      return null
+    case 1:
+      return <strong>{names[0]}</strong>
+    case 2:
+      return (
+        <>
+          <strong>{names[0]}</strong> and <strong>{names[1]}</strong>
+        </>
+      )
+    default:
+      return (
+        <>
+          {names.slice(0, -1).map((name, index) => (
+            <>
+              <strong>{name}</strong>
+              {index < names.length - 2 ? ', ' : ''}
+            </>
+          ))}{' '}
+          and <strong>{names[names.length - 1]}</strong>
+        </>
+      )
+  }
+}
+
 interface SystemCommentProps extends TypesPullReq {
   commentItems: CommentItem<TypesPullReqActivity>[]
   repoMetadataPath?: string
@@ -41,6 +68,20 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   const { navigate } = useRouterContext()
 
   const payloadMain = useMemo(() => commentItems[0]?.payload, [commentItems])
+
+  const displayNameList = useMemo(() => {
+    const checkList = payloadMain?.metadata?.mentions?.ids ?? []
+    const uniqueList = [...new Set(checkList)]
+    const mentionsMap = payloadMain?.mentions ?? {}
+    return uniqueList.map(id => mentionsMap[id]?.display_name ?? '')
+  }, [payloadMain?.metadata?.mentions?.ids, payloadMain?.mentions])
+
+  const principalNameList = useMemo(() => {
+    const checkList = (payloadMain?.payload as any)?.principal_ids ?? []
+    const uniqueList = [...new Set(checkList)]
+    const mentionsMap = payloadMain?.mentions ?? {}
+    return uniqueList.map(id => mentionsMap[id as number]?.display_name ?? '')
+  }, [(payloadMain?.payload as any)?.principal_ids, payloadMain?.mentions])
 
   const {
     header,
@@ -97,7 +138,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="pr-merge" size={12} />
+          icon: <IconV2 name="git-merge" size="2xs" />
         }
 
       case CommentType.REVIEW_SUBMIT:
@@ -109,9 +150,9 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           },
           icon:
             decision === 'approved' ? (
-              <Icon name="success" size={18} className="text-cn-foreground-success" />
+              <IconV2 name="check-circle-solid" size="md" className="text-cn-foreground-success" />
             ) : (
-              <Icon name="triangle-warning" size={18} className="text-cn-foreground-danger" />
+              <IconV2 name="warning-triangle-solid" size="md" className="text-cn-foreground-danger" />
             )
         }
 
@@ -132,7 +173,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Layout.Horizontal>
             )
           },
-          icon: <Icon name="tube-sign" size={14} />
+          icon: <IconV2 name="git-commit" size="xs" />
         }
 
       case CommentType.BRANCH_RESTORE:
@@ -155,19 +196,19 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="git-branch" size={12} />
+          icon: <IconV2 name="git-branch" size="xs" />
         }
       }
 
       case CommentType.STATE_CHANGE: {
-        const iconName: IconProps['name'] =
+        const iconName: IconPropsV2['name'] =
           openFromDraft || changedToDraft
             ? changedToDraft
-              ? 'pr-draft'
-              : 'pr-review'
+              ? 'git-pull-request-draft'
+              : 'eye'
             : old === 'closed' && newData === 'open'
-              ? 'pr-open'
-              : 'pr-closed'
+              ? 'git-pull-request'
+              : 'git-pull-request-closed'
 
         return {
           header: {
@@ -179,7 +220,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name={iconName} size={12} />
+          icon: <IconV2 name={iconName} size="2xs" />
         }
       }
 
@@ -192,7 +233,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="edit-pen" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
 
       case CommentType.REVIEW_DELETE: {
@@ -209,25 +250,37 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="edit-pen" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
       }
 
       case CommentType.REVIEW_ADD: {
-        const mentionId = metadata?.mentions?.ids?.[0] ?? 0
-        const mentionDisplayName = mentions?.[mentionId]?.display_name ?? ''
+        const activityMentions = formatListWithAndFragment(displayNameList)
+        const principalMentions = formatListWithAndFragment(principalNameList)
 
         return {
           header: {
             description: (
               <span className="text-sm text-cn-foreground-3">
                 {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED && 'self-requested a review'}
-                {reviewer_type === ReviewerAddActivity.ASSIGNED && `assigned ${mentionDisplayName} as a reviewer`}
-                {reviewer_type === ReviewerAddActivity.REQUESTED && `requested a review from ${mentionDisplayName}`}
+                {reviewer_type === ReviewerAddActivity.ASSIGNED && <>assigned {activityMentions} as a reviewer</>}
+                {reviewer_type === ReviewerAddActivity.REQUESTED && <>requested a review from {activityMentions}</>}
+                {reviewer_type === ReviewerAddActivity.CODEOWNERS && (
+                  <>
+                    requested a review from {principalMentions} as{' '}
+                    {principalNameList?.length > 1 ? 'code owners' : 'code owner'}
+                  </>
+                )}
+                {reviewer_type === ReviewerAddActivity.DEFAULT && (
+                  <>
+                    requested a review from {principalMentions} as{' '}
+                    {principalNameList?.length > 1 ? 'default reviewers' : 'default reviewer'}
+                  </>
+                )}
               </span>
             )
           },
-          icon: <Icon name="pr-review" size={14} className="p-0.5" />
+          icon: <IconV2 name="eye" size="xs" className="p-0.5" />
         }
       }
 
@@ -253,7 +306,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </span>
             )
           },
-          icon: <Icon name="edit-pen" size={14} className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
         }
       }
 

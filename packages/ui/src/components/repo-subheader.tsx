@@ -1,4 +1,4 @@
-import { TabNav } from '@/components'
+import { Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -7,9 +7,11 @@ export enum RepoTabsKeys {
   CODE = 'code',
   PIPELINES = 'pipelines',
   COMMITS = 'commits',
+  TAGS = 'tags',
   PULLS = 'pulls',
   BRANCHES = 'branches',
-  SETTINGS = 'settings'
+  SETTINGS = 'settings',
+  SEARCH = 'search'
 }
 
 export const repoTabsKeysArr = Object.values(RepoTabsKeys)
@@ -17,23 +19,41 @@ export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 interface RepoSubheaderProps {
   className?: string
   showPipelinesTab?: boolean
+  showSearchTab?: boolean
+  summaryPath?: string
+  filesPath?: string
+  commitsPath?: string
 }
 
-export const RepoSubheader = ({ showPipelinesTab = true, className }: RepoSubheaderProps) => {
+export const RepoSubheader = ({
+  showPipelinesTab = true,
+  showSearchTab = false,
+  className,
+  summaryPath,
+  filesPath,
+  commitsPath
+}: RepoSubheaderProps) => {
   const { t } = useTranslation()
 
   return (
     <SandboxLayout.SubHeader className={className}>
-      <TabNav.Root>
-        <TabNav.Item to="summary">{t('views:repos.summary', 'Summary')}</TabNav.Item>
-        <TabNav.Item to="code">{t('views:repos.files', 'Files')}</TabNav.Item>
-        {showPipelinesTab && <TabNav.Item to="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabNav.Item>}
-        <TabNav.Item to="commits">{t('views:repos.commits', 'Commits')}</TabNav.Item>
-        <TabNav.Item to="tags">{t('views:repos.tags', 'Tags')}</TabNav.Item>
-        <TabNav.Item to="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabNav.Item>
-        <TabNav.Item to="branches">{t('views:repos.branches', 'Branches')}</TabNav.Item>
-        <TabNav.Item to="settings">{t('views:repos.settings', 'Settings')}</TabNav.Item>
-      </TabNav.Root>
+      <Tabs.NavRoot>
+        <Tabs.List className="border-b border-cn-borders-3 px-6">
+          <Tabs.Trigger value={summaryPath || RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
+          <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
+          {showPipelinesTab && (
+            <Tabs.Trigger value={RepoTabsKeys.PIPELINES}>{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>
+          )}
+          <Tabs.Trigger value={commitsPath || RepoTabsKeys.COMMITS}>{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.PULLS}>{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.BRANCHES}>{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
+          {showSearchTab && (
+            <Tabs.Trigger value={RepoTabsKeys.SEARCH}>{t('views:repos.search', 'Search')}</Tabs.Trigger>
+          )}
+          <Tabs.Trigger value={RepoTabsKeys.SETTINGS}>{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
+        </Tabs.List>
+      </Tabs.NavRoot>
     </SandboxLayout.SubHeader>
   )
 }

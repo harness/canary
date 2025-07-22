@@ -12,9 +12,13 @@ import { useTemplateListStore } from './template-list.store'
 
 const PipelineStudioViewWrapper = () => {
   const [yamlRevision, onYamlRevisionChange] = useState<YamlRevision>({ yaml: pipeline1 })
-  const [selectedPath, onSelectedPathChange] = useState<string | undefined>()
+  const [selectedPath, onSelectedPathChange] = useState<{
+    stages?: string | undefined
+    steps?: string | undefined
+    onecanvas?: string | undefined
+  }>({})
 
-  const [panelOpen, onPanelOpenChange] = useState<boolean>(true)
+  const [panelOpen, onPanelOpenChange] = useState<boolean>(false)
   const [errors, onErrorsChange] = useState<UnifiedPipelineStudioProps['errors']>({
     isYamlValid: true,
     problems: [],

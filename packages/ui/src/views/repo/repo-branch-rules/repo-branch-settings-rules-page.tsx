@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,7 +31,7 @@ interface RepoBranchSettingsRulesPageProps {
   useBranchRulesStore: () => IBranchRulesStore
   handleCheckboxChange: (id: string, checked: boolean) => void
   handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (id: string, selectedOption: string) => void
+  handleSelectChangeForRule: (id: string, selectedOptions: string[]) => void
   handleInputChange: (id: string, input: string) => void
   handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void
@@ -124,9 +124,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   return (
     <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
-      <h1 className="text-cn-foreground-1 mb-10 text-2xl font-medium">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
-      </h1>
+      </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />

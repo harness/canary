@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { noop } from 'lodash-es'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
-import { Icon } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
@@ -96,7 +96,7 @@ function apiExecutions2Executions(data: ListExecutionsOkResponse): IExecution[] 
 const Branch = ({ children }: { children: React.ReactNode }): React.ReactElement => {
   return (
     <div className="flex items-center gap-1 rounded-md bg-cn-background-1/10 px-1.5 font-mono">
-      <Icon name="branch" size={11} className="text-cn-foreground-3" />
+      <IconV2 name="git-branch" size="2xs" className="text-cn-foreground-3" />
       {children}
     </div>
   )

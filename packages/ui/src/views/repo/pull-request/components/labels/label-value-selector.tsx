@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Icon, ScrollArea, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchBox, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
@@ -87,8 +87,8 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
   }
 
   return (
-    <>
-      <div className="relative px-2 py-1.5">
+    <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+      <DropdownMenu.Header className="relative">
         <SearchBox.Root
           className="w-full"
           inputClassName="pl-1.5 pr-8"
@@ -105,45 +105,33 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         </SearchBox.Root>
 
         <Button iconOnly size="sm" className="absolute right-2.5 top-2 z-20" variant="ghost" onClick={onSearchClean}>
-          <Icon name="cross" size={12} />
+          <IconV2 name="xmark" size="2xs" />
         </Button>
-      </div>
+      </DropdownMenu.Header>
 
-      {(isAllowAddNewValue || !!values.length) && <DropdownMenu.Separator />}
+      {values.map(value => (
+        <DropdownMenu.Item
+          key={value.id}
+          onSelect={handleOnSelect(value)}
+          title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />}
+          checkmark={label.selectedValueId === value.id}
+        />
+      ))}
 
-      <ScrollArea viewportClassName="max-h-[224px]">
-        {values.map(value => (
-          <DropdownMenu.Item key={value.id} onSelect={handleOnSelect(value)}>
-            <div className="relative w-full pr-7">
-              <Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />
+      {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
 
-              {label.selectedValueId === value.id && (
-                <Icon className="absolute right-0 top-1 text-icons-2" name="tick" size={12} />
-              )}
-            </div>
-          </DropdownMenu.Item>
-        ))}
+      {isAllowAddNewValue && !!label?.isCustom && (
+        <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
+          <DropdownMenu.Item
+            onSelect={handleAddNewValue}
+            title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />}
+          />
+        </DropdownMenu.Group>
+      )}
 
-        {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
-
-        {isAllowAddNewValue && !!label?.isCustom && (
-          <>
-            <span className="px-2 pb-1.5 pt-1 leading-[1.125rem] text-cn-foreground-2">
-              {t('views:pullRequests.addValue', 'Add new value')}
-            </span>
-
-            <DropdownMenu.Item onSelect={handleAddNewValue}>
-              <Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />
-            </DropdownMenu.Item>
-          </>
-        )}
-
-        {!values.length && !label?.isCustom && (
-          <span className="block flex-none gap-x-5 px-2 py-[7px] text-cn-foreground-2">
-            {t('views:pullRequests.labelNotFound', 'Label not found')}
-          </span>
-        )}
-      </ScrollArea>
-    </>
+      {!values.length && !label?.isCustom && (
+        <DropdownMenu.NoOptions>{t('views:pullRequests.labelNotFound', 'Label not found')}</DropdownMenu.NoOptions>
+      )}
+    </DropdownMenu.Content>
   )
 }

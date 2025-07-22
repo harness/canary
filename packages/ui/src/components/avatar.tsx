@@ -5,12 +5,12 @@ import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Icon } from './icon'
+import { IconV2 } from './icon-v2'
 
 const avatarVariants = cva('cn-avatar', {
   variants: {
     size: {
-      default: '',
+      md: '',
       sm: 'cn-avatar-sm',
       lg: 'cn-avatar-lg'
     },
@@ -20,12 +20,12 @@ const avatarVariants = cva('cn-avatar', {
     }
   },
   defaultVariants: {
-    size: 'default',
+    size: 'md',
     rounded: false
   }
 })
 
-interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
+export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   name?: string
   src?: string
   size?: VariantProps<typeof avatarVariants>['size']
@@ -33,7 +33,7 @@ interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
 }
 
 const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
-  ({ name, src, size = 'default', rounded = false, className, ...props }, ref) => {
+  ({ name, src, size = 'md', rounded = false, className, ...props }, ref) => {
     const initials = getInitials(name || '')
 
     return (
@@ -42,12 +42,13 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
           <>
             <AvatarPrimitive.Image src={src} alt={name || ''} className="cn-avatar-image" />
             <AvatarPrimitive.Fallback className="cn-avatar-fallback">
-              {initials || <Icon name="avatar" className="cn-avatar-icon" />}
+              {/* TODO: Design system: Check whether we need cn-avatar-icon */}
+              {initials || <IconV2 name="user" className="cn-avatar-icon" />}
             </AvatarPrimitive.Fallback>
           </>
         ) : (
           <AvatarPrimitive.Fallback className="cn-avatar-fallback" delayMs={0}>
-            {initials || <Icon name="avatar" className="cn-avatar-icon" />}
+            {initials || <IconV2 name="user" className="cn-avatar-icon" />}
           </AvatarPrimitive.Fallback>
         )}
       </AvatarPrimitive.Root>

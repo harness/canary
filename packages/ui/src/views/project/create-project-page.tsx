@@ -8,7 +8,7 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  Icon,
+  Illustration,
   Link as StyledLink,
   LinkProps as StyledLinkProps,
   Text
@@ -136,18 +136,18 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
       <div className="relative z-10 w-80 max-w-full">
         <div className="mb-10 grid justify-items-center">
           {isLightTheme ? (
-            <Icon size={112} name="create-workspace-light" />
+            <Illustration name="create-workspace-light" />
           ) : (
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Text className="mt-3 text-center text-cn-foreground-1" weight="medium" size={5} align="center" as="h1">
+          <Text className="mt-3" variant="heading-section" color="foreground-1" align="center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Text>
 
-          <p className="mt-0.5 text-center text-sm leading-snug text-cn-foreground-2">
+          <Text className="mt-0.5">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
-          </p>
+          </Text>
         </div>
 
         <FormWrapper {...formWrapper} onSubmit={handleSubmit(onFormSubmit)}>
@@ -169,7 +169,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
           </Fieldset>
 
           <ControlGroup type="button">
-            <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError} size="lg">
+            <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
               {isLoading
                 ? t('views:createProject.create.projectCreation', 'Creating project...')
                 : t('views:createProject.create.createProject', 'Create project')}
@@ -177,22 +177,24 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
             <div className="mt-3 flex items-center justify-center gap-2">
               <div className="w-[145px] shrink border-t border-cn-borders-3" />
-              <span className="text-sm text-cn-foreground-3">{t('views:createProject.or', 'or')}</span>
+              <Text color="foreground-3" as="span">
+                {t('views:createProject.or', 'or')}
+              </Text>
               <div className="w-[145px] shrink border-t border-cn-borders-3" />
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
-            <Button asChild className="mt-3 w-full" rounded variant="outline" size="lg">
+            <Button asChild className="mt-3 w-full" rounded variant="outline">
               <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
             </Button>
           </ControlGroup>
         </FormWrapper>
 
         {isFirst && (
-          <p className="foreground-5 mt-4 text-center text-sm text-cn-foreground-3">
+          <Text className="mt-4" align="center" color="foreground-3">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps}>{t('views:createProject.logout.link', 'Log out')}</StyledLink>
-          </p>
+          </Text>
         )}
       </div>
     </Floating1ColumnLayout>

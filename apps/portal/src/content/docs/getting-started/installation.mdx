@@ -1,0 +1,127 @@
+---
+title: Installation
+description: Steps to get up and running with the Harness Canary UI components
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Code } from "@astrojs/starlight/components";
+
+The Harness Canary UI library provides a comprehensive set of components, hooks, and utilities to build consistent UIs that match the Harness design system.
+
+<Tabs>
+  <TabItem label="npm">
+    <Code code="npm install @harnessio/ui" lang="bash" />
+  </TabItem>
+  <TabItem label="yarn">
+    <Code code="yarn add @harnessio/ui" lang="bash" />
+  </TabItem>
+  <TabItem label="pnpm">
+    <Code code="pnpm add @harnessio/ui" lang="bash" />
+  </TabItem>
+</Tabs>
+
+## Peer Dependencies
+
+The library requires the following peer dependencies:
+
+<Code
+  code={`{
+    "react": ">=17",
+    "react-router-dom": ">=5"
+}`}
+  lang="json"
+/>
+
+Make sure to install these dependencies if they are not already in your project.
+
+## Setting Up Tailwind CSS
+
+Harness Canary UI is built with Tailwind CSS. You'll need to configure your tailwind.config.js to include the UI library's configuration:
+
+## Importing Styles
+
+Import the UI library's styles in your main CSS file or entry point:
+
+```js
+// In your entry file (e.g., main.jsx, App.jsx, etc.)
+import "@harnessio/ui/styles.css";
+```
+
+## Usage
+
+The library provides multiple entry points for different types of exports:
+
+```js
+// Import components
+import { Button, Text, Badge } from '@harnessio/ui/components';
+
+// Import hooks
+import { useMediaQuery, useDisclosure } from '@harnessio/ui/hooks';
+
+// Import utilities
+import { cn, formatDate } from '@harnessio/ui/utils';
+
+// Import views (pre-built layouts and complex components)
+import { DataTable, PageLayout } from '@harnessio/ui/views';
+
+// Import types
+import type { ButtonProps, TextVariants } from '@harnessio/ui/types';
+```
+
+## Additional Resources
+
+### Markdown Styles
+
+If you're using the Markdown components, import the specialized styles:
+
+```js
+import "@harnessio/ui/markdown-preview-styles.css";
+```
+
+## Verify Installation
+
+Create a simple component to verify your installation is working correctly:
+
+```jsx
+import { Button, Text } from "@harnessio/ui/components";
+
+function TestComponent() {
+  return (
+    <div className="p-4 space-y-4">
+      <Text variant="heading-section">Installation Successful!</Text>
+      <Button>Click Me</Button>
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+### Missing Styles
+
+If components appear unstyled, check that:
+
+<ol className="list-decimal pl-6 space-y-2">
+  <li>You've imported the `@harnessio/ui/styles.css` file</li>
+  <li>Your Tailwind configuration includes the UI library's preset</li>
+  <li>
+    The content paths in your Tailwind config include the UI library components
+  </li>
+</ol>
+
+### Type Errors
+
+Ensure you're using compatible TypeScript versions and that your `tsconfig.json` is set up to handle the library's types.
+
+### Version Compatibility
+
+The current version of @harnessio/ui is designed to work with:
+
+<ul className="list-disc pl-6 space-y-1">
+  <li>React 17 or higher</li>
+  <li>react-router-dom 5 or higher</li>
+  <li>Tailwind CSS 3.x</li>
+</ul>
+
+If you're using earlier versions, you may encounter compatibility issues.

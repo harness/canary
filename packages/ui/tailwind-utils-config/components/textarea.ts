@@ -1,6 +1,7 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const themes = ['danger', 'warning'] as const
+const sizes = ['sm'] as const
 
 function createInputThemeStyles() {
   const styles: CSSRuleObject = {}
@@ -22,17 +23,22 @@ function createInputThemeStyles() {
     }
   })
 
+  sizes.forEach(size => {
+    styles[`&.cn-textarea-${size}`] = {
+      padding: `var(--cn-input-${size}-py) var(--cn-input-${size}-pr) var(--cn-input-${size}-py) var(--cn-input-${size}-pl)`
+    }
+  })
+
   return styles
 }
 
 export default {
   '.cn-textarea': {
     borderRadius: 'var(--cn-input-radius)',
-    padding:
-      'var(--cn-input-default-py) var(--cn-input-default-pr) var(--cn-input-default-py) var(--cn-input-default-pl)',
+    padding: 'var(--cn-input-md-py) var(--cn-input-md-pr) var(--cn-input-md-py) var(--cn-input-md-pl)',
     minHeight: 'var(--cn-input-text-area-min-height)',
     border: 'var(--cn-input-border) solid var(--cn-border-2)',
-    backgroundColor: 'var(--cn-bg-2)',
+    backgroundColor: 'var(--cn-comp-input-bg)',
     '@apply font-body-normal': '',
     color: 'var(--cn-text-1)',
     whiteSpace: 'pre-wrap',
@@ -44,11 +50,11 @@ export default {
     },
 
     '&::placeholder': {
-      color: 'var(--cn-text-3)'
+      color: 'var(--cn-state-disabled-text)'
     },
 
     '&:where(:focus)': {
-      borderColor: 'var(--cn-border-1)',
+      borderColor: 'var(--cn-border-brand)',
       boxShadow: 'var(--cn-ring-selected)',
       outline: 'none'
     },
@@ -69,8 +75,8 @@ export default {
       borderColor: 'var(--cn-state-disabled-border)'
     },
 
-    '&:where(:hover):not(:disabled):not(.cn-textarea-danger)': {
-      borderColor: 'var(--cn-border-1)'
+    '&:where(:hover):not(:disabled):not(.cn-textarea-danger):not(.cn-textarea-warning)': {
+      borderColor: 'var(--cn-border-brand)'
     },
 
     '&-resizable': {

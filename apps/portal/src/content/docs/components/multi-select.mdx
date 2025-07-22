@@ -8,65 +8,169 @@ The `MultiSelect` component allows users to select multiple options from a dropd
 
 import { DocsPage } from "@/components/docs-page";
 
-<DocsPage.ComponentExample client:only code={`<div className="flex w-full flex-col flex-wrap gap-4 items-baseline">
-    <div> MultiSelect with custom select items </div>
-    <div className="relative w-full">
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
       <MultiSelect
-        label="Select options label"
-        selectedItems={[{ label: 'Option 2', id: 'option2' }]}
-        t={(val) => val}
+        label="Label"
+        caption="Caption text"
+        defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
         options={[
-          { label: 'Option 1', id: 'option1' },
-          { label: 'Option 2', id: 'option2' },
-          { label: 'Option 3', id: 'option3' }
+          { key: 'nextjs', id: 'nextjs' },
+          { key: 'Vite', id: 'vite' },
+          { key: 'Nuxt', id: 'nuxt' },
+          { key: 'Vue', id: 'vue' },
         ]}
-        handleChange={(selected) => console.log(selected)}
-        placeholder="select an option"
-        error="Please select at least one option"
-        customOptionElem={(data) => <i><b>{data.label}</b></i>}
+        placeholder="Select frameworks you like..."
       />
-    </div>
-    <div className="mt-[36px]"> MultiSelect with search-box </div>
-    <MultiSelect
-      selectedItems={[{ label: 'Option B', id: 'optionB' }, { label: 'Option C', id: 'optionC' }]}
-      t={(val) => val}
-      options={[
-        { label: 'Option A', id: 'optionA' },
-        { label: 'Option B', id: 'optionB' },
-        { label: 'Option C', id: 'optionC' }
-      ]}
-      handleChangeSearchValue={(searchValue) => console.log(searchValue)}
-      searchValue={"search value"}
-      handleChange={(selected) => console.log(selected)}
-    />
-
-</div>`}
+    </Layout.Vertical>
+  `}
 />
 
 ## Usage
 
-```typescript jsx
-import { MultiSelect } from '@harnessio/ui/components'
+```tsx
+import { MultiSelect, MultiSelectOption } from "@harnessio/ui/components";
+import { useState } from "react";
 
-//...
+// Basic usage with controlled component
+const MyComponent = () => {
+  const [selected, setSelected] = useState<MultiSelectOption[]>([]);
 
-return (
-  <MultiSelect
-    label="Select options"
-    searchValue="search value"
-    placeholder="Select options"
-    error="Please select at least one option"
-    selectedItems={[{ label: 'Option 2', id: 'option2' }]}
-    options={[
-      { label: 'Option 1', value: 'option1' },
-      { label: 'Option 2', value: 'option2' },
-      { label: 'Option 3', value: 'option3' }
-    ]}
-    handleChange={(selected) => console.log(selected)}
-    handleChangeSearchValue={(searchValue) => console.log(searchValue)}
-    customOptionElem={(data) => <b>{data.label}</b>}
-  />
-)
+  return (
+    <MultiSelect
+      label="Select frameworks"
+      placeholder="Select options..."
+      options={[{ key: "react" }, { key: "vue" }, { key: "angular" }]}
+      value={selected}
+      onChange={setSelected}
+    />
+  );
+};
+```
+
+## Disallow Creation
+
+The `MultiSelect` component accepts an optional `disallowCreation` prop.
+When set to `true`, it disables the ability to add new items that are not part of the existing options list.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <MultiSelect
+      defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+      disallowCreation
+    />
+  </Layout.Vertical>
+`}
+/>
+
+## Form Integration
+
+The `MultiSelect` component integrates seamlessly with form elements like labels, captions, and validation messages.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <MultiSelect
+      label="Label text"
+      caption="Caption text"
+      defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+    />
+
+    <MultiSelect
+      label="Label text"
+      caption="Caption text"
+      defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+      error="Error text"
+    />
+
+    <MultiSelect
+      label="Label text"
+      caption="Caption text"
+      defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+      warning="Warning text"
+    />
+
+  </Layout.Vertical>
+`}
+/>
+
+## Orientation
+
+The `MultiSelect` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
+Available options are `horizontal` and `vertical` (default).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <MultiSelect
+      label="Vertical"
+      caption="Caption text"
+      defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+    />
+
+    <MultiSelect
+      label="Horizontal"
+      caption="Caption text"
+      defaultValue={[{ key: 'React', id: 'react' }, { key: 'category', value: 'frontend', id: 'frontend' }]}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+      orientation="horizontal"
+    />
+
+  </Layout.Vertical>
+`}
+/>
+
+## MultiSelectOption Type
+
+```typescript
+interface MultiSelectOption {
+  id: string | number; // Required - the unique identifier for the option
+  key: string; // Required - the main identifier for the option
+  value?: string; // Optional - used for key-value pairs
+  disable?: boolean; // Optional - disables the option in the dropdown
+  onReset?: () => void; // Optional - custom reset handler for the option
+}
 ```
 
 ## API Reference
@@ -74,55 +178,144 @@ return (
 <DocsPage.PropsTable
   props={[
     {
-      name: "selectedItems",
-      description: "Array of selected items.",
-      required: true,
+      name: "label",
+      description: "Label displayed above the component.",
+      value: "string",
+      required: false,
     },
     {
-      name: "t",
-      description: "Translation function.",
-      required: true,
+      name: "caption",
+      description: "Helper text displayed below the component.",
+      value: "string",
+      required: false,
     },
     {
-      name: "placeholder",
-      description: "Placeholder text for the input field.",
-      required: true,
+      name: "value",
+      description: "Selected options (controlled mode).",
+      value: "MultiSelectOption[]",
+      required: false,
     },
     {
-      name: "handleChange",
-      description: "Callback function called when selection changes.",
-      required: true,
+      name: "defaultValue",
+      description: "Initial selected options (uncontrolled mode).",
+      value: "MultiSelectOption[]",
+      required: false,
+      default: "[]",
     },
     {
       name: "options",
-      description: "Array of options to display in the dropdown.",
-      required: true,
+      description: "Available options to select from.",
+      value: "MultiSelectOption[]",
+      required: false,
     },
     {
-      name: "searchValue",
-      description: "Current search value.",
+      name: "placeholder",
+      description: "Placeholder text when no options are selected.",
+      value: "string",
+      required: false,
+    },
+    {
+      name: "searchQuery",
+      description: "Current search query string (controlled search).",
+      value: "string | null",
+      required: false,
+    },
+    {
+      name: "setSearchQuery",
+      description: "Callback to update search query.",
+      value: "(query: string | null) => void",
+      required: false,
+    },
+    {
+      name: "onChange",
+      description: "Callback when selected options change.",
+      value: "(options: MultiSelectOption[]) => void",
+      required: false,
+    },
+    {
+      name: "maxSelected",
+      description: "Maximum number of items that can be selected.",
+      value: "number",
+      required: false,
+      default: "Number.MAX_SAFE_INTEGER",
+    },
+    {
+      name: "onMaxSelected",
+      description: "Callback when max selection limit is reached.",
+      value: "(maxLimit: number) => void",
+      required: false,
+    },
+    {
+      name: "disabled",
+      description: "Disables the component.",
+      value: "boolean",
+      required: false,
+      default: "false",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class names.",
+      value: "string",
+      required: false,
+    },
+    {
+      name: "disallowCreation",
+      description: "Prevents creating new options.",
+      value: "boolean",
+      required: false,
+      default: "false",
+    },
+    {
+      name: "isLoading",
+      description: "Shows loading state in the dropdown.",
+      value: "boolean",
+      required: false,
+      default: "false",
+    },
+    {
+      name: "optional",
+      description: "Shows '(optional)' next to the label.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "theme",
+      description: "Visual theme variant.",
+      required: false,
+      value: "'default' | 'danger' | 'warning'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "caption",
+      description: "Helper text displayed below the select.",
       required: false,
       value: "string",
     },
     {
-      name: "handleChangeSearchValue",
-      description: "Callback function called when the search value changes.",
-      required: false,
-    },
-    {
-      name: "customOptionElem",
-      description: "Custom render function for options.",
-      required: false,
-    },
-    {
       name: "error",
-      description: "Error message to display.",
+      description: "Error message (sets theme to 'danger').",
       required: false,
+      value: "string",
     },
     {
-      name: "label",
-      description: "Label for the input field.",
+      name: "warning",
+      description: "Warning message (sets theme to 'warning').",
       required: false,
+      value: "string",
+    },
+    {
+      name: "rootClassName",
+      description: "Custom class name for the root container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "orientation",
+      description: "Defines the layout direction of the select and its label.",
+      required: false,
+      defaultValue: "'vertical'",
+      value: "'vertical' | 'horizontal'",
     },
   ]}
 />

@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, Icon, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs } from '@/components'
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
@@ -18,7 +18,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
-import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
@@ -46,6 +45,7 @@ export const DiffModeOptions = [
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
+  toPullRequestConversation?: ({ pullRequestId }: { pullRequestId: number }) => string
 }
 export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   onFormSubmit: (data: CompareFormFields) => void
@@ -85,7 +85,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
-  setSearchLabelQuery?: (query: string) => void
+  setSearchLabelQuery: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
   editLabelsProps: LinkProps
@@ -129,7 +129,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   addLabel,
   removeLabel,
   editLabelsProps,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  toPullRequestConversation
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
 
@@ -150,8 +151,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const {
     reset,
     getValues,
-    formState: { isValid }
+    formState: { isValid },
+    watch
   } = formMethods
+
+  const descriptionValue = watch('description')
+
+  useEffect(() => {
+    setDesc(descriptionValue ?? '')
+  }, [descriptionValue, setDesc])
 
   useEffect(() => {
     if (commitData && commitData.length > 0) {
@@ -186,14 +194,14 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-2 leading-snug text-cn-foreground-2">
+          <Text className="max-w-xl">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
             )}
-          </p>
+          </Text>
           <Layout.Horizontal align="center" gap="xs">
-            <Icon name="compare" size={14} className="text-icons-1" />
+            <IconV2 name="git-compare" size="xs" className="text-icons-1" />
 
             {branchSelectorRenderer}
 
@@ -202,33 +210,33 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Horizontal gap="3xs" align="center">
                   {mergeability ? (
                     <>
-                      <Icon className="text-icons-success" name="tick" size={12} />
-                      <p className="text-2 leading-none text-cn-foreground-success">
+                      <IconV2 className="text-icons-success" name="check" size="2xs" />
+                      <Text variant="body-single-line-normal" color="success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <span className="text-cn-foreground-2">
+                        <Text variant="body-single-line-normal" as="span" color="foreground-2">
                           {t(
                             'views:pullRequests.compareChangesAbleToMergeDescription',
                             'These branches can be automatically merged.'
                           )}
-                        </span>
-                      </p>
+                        </Text>
+                      </Text>
                     </>
                   ) : (
                     <>
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
-                          <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-2 leading-none text-cn-foreground-2">
+                          <IconV2 name="xmark" size="2xs" className="text-icons-1" />
+                          <Text variant="body-single-line-normal">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
                             )}
-                          </p>
+                          </Text>
                         </>
                       ) : (
                         <>
-                          <Icon className="text-icons-danger" name="x-mark" size={12} />
-                          <p className="text-2 leading-none text-cn-foreground-danger">
+                          <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
+                          <Text variant="body-single-line-normal" color="danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-cn-foreground-2">
                               {t(
@@ -236,7 +244,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                                 'You can still create the pull request.'
                               )}
                             </span>
-                          </p>
+                          </Text>
                         </>
                       )}
                     </>
@@ -293,18 +301,22 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal align="center">
-                  <Icon name="compare" size={14} className="text-icons-success" />
+                  <IconV2 name="git-compare" size="xs" className="text-icons-success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
-                    <p className="text-2 text-cn-foreground-1">{prBranchCombinationExists.title}</p>
+                    <Text color="foreground-1">{prBranchCombinationExists.title}</Text>
                     <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
 
-                <p className="text-2  text-cn-foreground-2">{prBranchCombinationExists.description}</p>
+                <Text>{prBranchCombinationExists.description}</Text>
               </div>
             </div>
-            <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>
+            <Button
+              onClick={() =>
+                navigate(toPullRequestConversation?.({ pullRequestId: prBranchCombinationExists.number }) ?? '')
+              }
+            >
               {t('views:pullRequests.compareChangesViewPRLink', 'View pull request')}
             </Button>
           </Layout.Horizontal>
@@ -312,26 +324,18 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <Tabs.List className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-cn-background-2">
+              <Tabs.List variant="overlined" className="-mx-20 px-20">
                 {!prBranchCombinationExists && (
-                  <TabTriggerItem
-                    value="overview"
-                    icon="comments"
-                    label={t('views:pullRequests.compareChangesTabOverview', 'Overview')}
-                  />
+                  <Tabs.Trigger value="overview" icon="message">
+                    {t('views:pullRequests.compareChangesTabOverview', 'Overview')}
+                  </Tabs.Trigger>
                 )}
-                <TabTriggerItem
-                  value="commits"
-                  icon="tube-sign"
-                  label={t('views:pullRequests.compareChangesTabCommits', 'Commits')}
-                  badgeCount={diffStats.commits ? diffStats.commits : undefined}
-                />
-                <TabTriggerItem
-                  value="changes"
-                  icon="changes"
-                  label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
-                  badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
-                />
+                <Tabs.Trigger value="commits" icon="git-commit" counter={diffStats?.commits}>
+                  {t('views:pullRequests.compareChangesTabCommits', 'Commits')}
+                </Tabs.Trigger>
+                <Tabs.Trigger value="changes" icon="page" counter={diffStats?.files_changed}>
+                  {t('views:pullRequests.compareChangesTabChanges', 'Changes')}
+                </Tabs.Trigger>
               </Tabs.List>
               {!prBranchCombinationExists && (
                 <Tabs.Content className="pt-7" value="overview">
@@ -396,7 +400,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   />
                 ) : (
                   <NoData
-                    iconName={'no-data-commits'}
+                    imageName="no-data-commits"
                     title={t('views:noData.noCommitsYet', 'No commits yet')}
                     description={[
                       t(
@@ -419,7 +423,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   />
                 ) : (
                   <NoData
-                    iconName="no-data-folder"
+                    imageName="no-data-folder"
                     title="No changes to display"
                     description={['There are no changes to display for the selected branches.']}
                   />
@@ -431,7 +435,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <>
             <Spacer size={10} />
             <NoData
-              iconName="no-data-pr"
+              imageName="no-data-pr"
               title={t('views:noData.compareChanges')}
               description={[t('views:noData.compareChangesDescription')]}
             />

@@ -1,4 +1,4 @@
-import { TabNav } from '@/components'
+import { Tabs } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout, SubHeaderWrapper } from '@/views'
 
@@ -8,17 +8,19 @@ export const ExecutionTabs = ({ className }: { className?: string }) => {
   return (
     <SubHeaderWrapper className={className}>
       <SandboxLayout.SubHeader>
-        <TabNav.Root>
-          <TabNav.Item to="summary">{t('views:execution.summary', 'Summary')}</TabNav.Item>
-          <TabNav.Item to="logs">{t('views:execution.logs', 'Logs')}</TabNav.Item>
-          <TabNav.Item to="graph">{t('views:execution.graph', 'Graph')}</TabNav.Item>
-          <TabNav.Item to="inputs">{t('views:execution.inputs', 'Inputs')}</TabNav.Item>
-          <TabNav.Item to="opa">{t('views:execution.opa', 'Policy evaluations')}</TabNav.Item>
-          <TabNav.Item to="artifacts">{t('views:execution.artifacts', 'Artifacts')}</TabNav.Item>
-          <TabNav.Item to="tests">{t('views:execution.tests', 'Tests')}</TabNav.Item>
-          <TabNav.Item to="sto">{t('views:execution.sto', 'Security tests')}</TabNav.Item>
-          <TabNav.Item to="secrets">{t('views:execution.secrets', 'Secrets')}</TabNav.Item>
-        </TabNav.Root>
+        <Tabs.NavRoot>
+          <Tabs.List className="border-b border-cn-borders-3 px-6">
+            <Tabs.Trigger value="summary">{t('views:execution.summary', 'Summary')}</Tabs.Trigger>
+            <Tabs.Trigger value="logs">{t('views:execution.logs', 'Logs')}</Tabs.Trigger>
+            <Tabs.Trigger value="graph">{t('views:execution.graph', 'Graph')}</Tabs.Trigger>
+            <Tabs.Trigger value="inputs">{t('views:execution.inputs', 'Inputs')}</Tabs.Trigger>
+            <Tabs.Trigger value="opa">{t('views:execution.opa', 'Policy evaluations')}</Tabs.Trigger>
+            <Tabs.Trigger value="artifacts">{t('views:execution.artifacts', 'Artifacts')}</Tabs.Trigger>
+            <Tabs.Trigger value="tests">{t('views:execution.tests', 'Tests')}</Tabs.Trigger>
+            <Tabs.Trigger value="sto">{t('views:execution.sto', 'Security tests')}</Tabs.Trigger>
+            <Tabs.Trigger value="secrets">{t('views:execution.secrets', 'Secrets')}</Tabs.Trigger>
+          </Tabs.List>
+        </Tabs.NavRoot>
       </SandboxLayout.SubHeader>
     </SubHeaderWrapper>
   )

@@ -1,0 +1,94 @@
+---
+title: Time Ago Card
+description: A card component that displays a timestamp in a human-readable "time ago" format.
+beta: true
+---
+
+The `TimeAgoCard` component displays a timestamp in a human-readable format, such as "5 minutes ago". It also provides an option to view the full date and time when clicked.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+    <TimeAgoCard timestamp={new Date().toISOString()} />
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { TimeAgoCard } from "@/components";
+
+//...
+
+return (
+  <TimeAgoCard timestamp={new Date().toISOString()} />
+);
+```
+
+## Timestamp variants
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+    <Text>
+      without timestamp: <TimeAgoCard />
+    </Text>
+    <Text>
+      string timestamp: <TimeAgoCard timestamp="2022-01-01T00:00:00Z" />
+    </Text>
+    <Text>
+      number timestamp: <TimeAgoCard timestamp={new Date("2022-01-01T00:00:00Z").getTime()} />
+    </Text>
+  </div>`}
+/>
+
+## cutoffDays variants
+
+`cutoffDays` is the number of days after which the full date will be shown instead of "time ago". By default, it is set to 8 days.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-8">
+    <Text>
+      more than cutoffDays default ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000 * 60 * 60 * 24 * 9).toISOString()} />
+    </Text>
+    <Text>
+      less than cutoffDays default ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString()} />
+    </Text>
+  </div>`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "timestamp",
+      description: "The timestamp to display in the card.",
+      required: false,
+      value: "'string' | 'number' | 'null'",
+    },
+    {
+      name: "cutoffDays",
+      description:
+        "The number of days after which the full date will be shown instead of 'time ago'.",
+      required: false,
+      value: "'number'",
+      defaultValue: "8",
+    },
+    {
+      name: "dateTimeFormatOptions",
+      description: "Options for formatting the date and time.",
+      required: false,
+      value: "'Intl.DateTimeFormatOptions'",
+    },
+    {
+      name: "textProps",
+      description: "Props for the trigger text element.",
+      required: false,
+      value: "'TextProps'",
+    },
+  ]}
+/>

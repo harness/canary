@@ -1,6 +1,7 @@
-import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+
+import { IconNameMapV2, IconV2 } from './icon-v2'
 
 const tagVariants = cva('cn-tag', {
   variants: {
@@ -9,7 +10,7 @@ const tagVariants = cva('cn-tag', {
       secondary: 'cn-tag-secondary'
     },
     size: {
-      default: '',
+      md: '',
       sm: 'cn-tag-sm'
     },
     theme: {
@@ -34,7 +35,7 @@ const tagVariants = cva('cn-tag', {
   },
   defaultVariants: {
     variant: 'outline',
-    size: 'default',
+    size: 'md',
     theme: 'gray'
   }
 })
@@ -44,7 +45,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   size?: VariantProps<typeof tagVariants>['size']
   theme?: VariantProps<typeof tagVariants>['theme']
   rounded?: boolean
-  icon?: React.ComponentProps<typeof Icon>['name']
+  icon?: keyof typeof IconNameMapV2
   showIcon?: boolean
   showReset?: boolean
   onReset?: () => void
@@ -87,9 +88,9 @@ function Tag({
       {...props}
     >
       {showIcon && (
-        <Icon
+        <IconV2
           skipSize
-          name={icon || 'tag-2'}
+          name={icon || 'label'}
           className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
         />
       )}
@@ -98,7 +99,7 @@ function Tag({
       </span>
       {showReset && !disabled && (
         <button onClick={onReset}>
-          <Icon skipSize name="close-2" className="cn-tag-reset-icon" />
+          <IconV2 skipSize name="xmark" className="cn-tag-reset-icon" />
         </button>
       )}
     </div>

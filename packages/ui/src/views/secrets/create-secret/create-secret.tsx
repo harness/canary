@@ -11,7 +11,8 @@ import {
   FormInput,
   FormWrapper,
   Input,
-  Spacer
+  Spacer,
+  Text
 } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
@@ -175,9 +176,9 @@ export function CreateSecretPage({
           )}
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
             <div>
-              <label htmlFor="secret-file-input" className="mb-2.5 block text-sm font-medium text-cn-foreground-2">
+              <Text<'label'> as="label" htmlFor="secret-file-input" className="mb-2.5 block" variant="body-strong">
                 Secret File
-              </label>
+              </Text>
               <div
                 className="rounded-md border-2 border-dashed border-cn-borders-2 p-4"
                 onDragOver={handleDragOver}
@@ -186,9 +187,7 @@ export function CreateSecretPage({
                 <div className="flex flex-col items-center justify-center">
                   {!selectedFile ? (
                     <>
-                      <p className="mb-2 text-sm text-cn-foreground-2">
-                        Drag and drop your file here or click to browse
-                      </p>
+                      <Text className="mb-2">Drag and drop your file here or click to browse</Text>
                       <Button type="button" variant="outline" onClick={openFileInput}>
                         Browse Files
                       </Button>
@@ -196,9 +195,9 @@ export function CreateSecretPage({
                   ) : (
                     <div className="flex w-full flex-col">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-cn-foreground-2">
+                        <Text as="span">
                           Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
-                        </span>
+                        </Text>
                         <div className="flex gap-2">
                           <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
                             Change
@@ -213,7 +212,9 @@ export function CreateSecretPage({
                 </div>
               </div>
               {errors.file && (
-                <div className="mt-1 text-sm text-cn-foreground-danger">{errors.file.message?.toString()}</div>
+                <Text color="danger" className="mt-1">
+                  {errors.file.message?.toString()}
+                </Text>
               )}
             </div>
           )}

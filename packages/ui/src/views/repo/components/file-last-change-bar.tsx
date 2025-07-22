@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
+import { Avatar, CommitCopyActions, IconV2, StackedList, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { LatestFileTypes } from '@/views'
 
@@ -8,13 +8,13 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
       <Avatar name={user?.name} src={user?.avatarUrl} rounded />
-      <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
+      <Text color="foreground-3" wrap="nowrap">
         {user?.name || ''}
       </Text>
-      <Text size={2} weight="normal" color="primary" className="line-clamp-1 truncate text-wrap">
+      <Text color="foreground-1" className="line-clamp-1" truncate wrap="wrap">
         {lastCommitMessage}
       </Text>
-      <Icon className="shrink-0 text-icons-success" name="tick" size={12} />
+      <IconV2 className="text-icons-success shrink-0" name="check" size="2xs" />
     </div>
   )
 }
@@ -24,7 +24,11 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
     <div className="flex items-center gap-2">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
       <span className="h-3 border-l border-cn-borders-2" />
-      <span className="text-sm text-cn-foreground-3">{timestamp}</span>
+      <TimeAgoCard
+        timestamp={timestamp}
+        dateTimeFormatOptions={{ dateStyle: 'medium' }}
+        textProps={{ color: 'foreground-3' }}
+      />
     </div>
   )
 }

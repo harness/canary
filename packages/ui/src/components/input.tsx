@@ -1,6 +1,6 @@
 import { forwardRef, InputHTMLAttributes, ReactNode } from 'react'
 
-import { Caption, ControlGroup, Icon, IconProps, Label, Message, MessageTheme } from '@/components'
+import { Caption, ControlGroup, IconPropsV2, IconV2, Label, Message, MessageTheme } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -25,9 +25,7 @@ const inputVariants = cva(
         default:
           'border-cn-borders-2 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 disabled:border-cn-borders-disabled disabled:placeholder:text-cn-foreground-disabled',
         danger: 'border-cn-borders-danger',
-        clean: 'bg-transparent outline-none focus:outline-none',
-        sidebar:
-          'border-cn-borders-2 bg-transparent text-sidebar-foreground-1 placeholder:text-sidebar-foreground-4 focus-within:border-sidebar-border-4 focus-visible:border-sidebar-border-4'
+        clean: 'bg-transparent outline-none focus:outline-none'
       }
     },
     defaultVariants: {
@@ -78,7 +76,7 @@ export interface InputProps extends BaseInputProps {
   optional?: boolean
   className?: string
   wrapperClassName?: string
-  inputIconName?: IconProps['name']
+  inputIconName?: IconPropsV2['name']
   rightElement?: ReactNode
   rightElementVariant?: 'default' | 'filled'
   customContent?: ReactNode
@@ -152,7 +150,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
       return inputIconName ? (
         <span className="relative">
-          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
+          <IconV2 className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size="xs" />
           {baseInputComp}
         </span>
       ) : (

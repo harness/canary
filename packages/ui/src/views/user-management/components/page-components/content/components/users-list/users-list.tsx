@@ -35,7 +35,7 @@ export const UsersList = () => {
   }
 
   return (
-    <Table.Root variant="asStackedList">
+    <Table.Root disableHighlightOnHover>
       <Table.Header className="h-[46px]">
         <Table.Row className="pointer-events-none">
           <Table.Head className="w-[346px]">User</Table.Head>

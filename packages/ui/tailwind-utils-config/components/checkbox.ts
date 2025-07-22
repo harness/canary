@@ -24,6 +24,7 @@ export default {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: '0',
     position: 'relative',
     width: 'var(--cn-size-4)',
     height: 'var(--cn-size-4)',

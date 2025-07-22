@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, FormInput, FormWrapper, ModalDialog } from '@/components'
+import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -51,14 +51,14 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={onClose}>
-      <ModalDialog.Content aria-describedby={undefined}>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
               <FormInput.Text
                 id="identifier"
                 value={identifier}
@@ -79,15 +79,15 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
                 </Alert.Root>
               )}
             </div>
-          </ModalDialog.Body>
-          <ModalDialog.Footer>
+          </Dialog.Body>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</ModalDialog.Close>
+              <Dialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</Dialog.Close>
               <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

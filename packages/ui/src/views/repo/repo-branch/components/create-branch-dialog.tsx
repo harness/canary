@@ -6,11 +6,11 @@ import {
   Button,
   ButtonLayout,
   ControlGroup,
+  Dialog,
   Fieldset,
   FormInput,
   FormWrapper,
-  Label,
-  ModalDialog
+  Label
 } from '@/components'
 import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -89,14 +89,14 @@ export function CreateBranchDialog({
   }
 
   return (
-    <ModalDialog.Root open={open} onOpenChange={handleClose}>
-      <ModalDialog.Content aria-describedby={undefined}>
-        <ModalDialog.Header>
-          <ModalDialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={open} onOpenChange={handleClose}>
+      <Dialog.Content aria-describedby={undefined}>
+        <Dialog.Header>
+          <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <ModalDialog.Body>
-            <div className="space-y-7 mb-7">
+          <Dialog.Body>
+            <div className="mb-7 space-y-7">
               <Fieldset>
                 <FormInput.Text
                   id="name"
@@ -122,20 +122,20 @@ export function CreateBranchDialog({
                 </Alert.Root>
               ) : null}
             </div>
-          </ModalDialog.Body>
+          </Dialog.Body>
 
-          <ModalDialog.Footer>
+          <Dialog.Footer>
             <ButtonLayout>
-              <ModalDialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+              <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
                 {t('views:repos.cancel', 'Cancel')}
-              </ModalDialog.Close>
+              </Dialog.Close>
               <Button type="submit" disabled={isCreatingBranch}>
                 {t('views:repos.createBranchButton', 'Create branch')}
               </Button>
             </ButtonLayout>
-          </ModalDialog.Footer>
+          </Dialog.Footer>
         </FormWrapper>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

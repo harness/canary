@@ -11,8 +11,9 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
-  Icon,
-  Legend
+  IconV2,
+  Legend,
+  Text
 } from '@/components'
 import { SkeletonForm } from '@/components/skeletons'
 import { TFunctionWithFallback, useTranslation } from '@/context'
@@ -180,9 +181,9 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
 
   return (
     <SandboxLayout.Content className="max-w-[476px] px-0">
-      <h1 className="mb-10 text-6 font-medium text-cn-foreground-1">
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {t('views:profileSettings.accountSettings', 'Account settings')}
-      </h1>
+      </Text>
 
       {isLoadingUser && <SkeletonForm />}
 
@@ -240,7 +241,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
               </ButtonLayout>
@@ -291,7 +292,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
                     {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                    <IconV2 name="check" size="xs" />
                   </Button>
                 )}
               </ButtonLayout>

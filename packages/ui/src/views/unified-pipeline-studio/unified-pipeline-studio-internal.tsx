@@ -1,4 +1,4 @@
-import { Button, FileToolbarActions, Icon } from '@components/index'
+import { Button, Checkbox, FileToolbarActions, IconV2 } from '@components/index'
 import { noop } from 'lodash-es'
 
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
@@ -29,6 +29,8 @@ export const PipelineStudioInternal = (): JSX.Element => {
     isYamlDirty,
     hideSaveBtn,
     lastCommitInfo,
+    splitView,
+    setSplitView,
     setRightDrawer,
     setEditPipelineIntention
   } = useUnifiedPipelineStudioContext()
@@ -37,8 +39,20 @@ export const PipelineStudioInternal = (): JSX.Element => {
     <YamlEditorContextProvider>
       <PipelineStudioLayout.Root>
         <PipelineStudioLayout.Header isYamlView={view === 'yaml'}>
-          <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
           <PipelineStudioLayout.HeaderLeft>
+            <VisualYamlToggle view={view} setView={setView} isYamlValid={errors.isYamlValid} />
+            {view === 'visual' ? (
+              <Checkbox
+                checked={splitView}
+                label="Split view"
+                onCheckedChange={value => {
+                  setSplitView?.(!!value)
+                }}
+              />
+            ) : null}
+          </PipelineStudioLayout.HeaderLeft>
+
+          <PipelineStudioLayout.HeaderRight>
             <Button
               size="sm"
               variant="outline"
@@ -49,7 +63,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
                 setRightDrawer(RightDrawer.PipelineConfig)
               }}
             >
-              <Icon name="edit-pen" />
+              <IconV2 name="edit-pencil" />
             </Button>
             {view === 'yaml' ? (
               <FileToolbarActions
@@ -68,7 +82,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
                   onClick={() => onSave(yamlRevision.yaml)}
                   disabled={!isYamlDirty}
                 >
-                  {!saveInProgress && !isYamlDirty && <Icon name="tick" className="cn-text-success"></Icon>}
+                  {!saveInProgress && !isYamlDirty && <IconV2 name="check" className="cn-text-success" />}
                   Save
                 </Button>
                 <Button size="sm" onClick={() => onRun()} disabled={isYamlDirty || saveInProgress}>
@@ -76,7 +90,7 @@ export const PipelineStudioInternal = (): JSX.Element => {
                 </Button>
               </>
             ) : null}
-          </PipelineStudioLayout.HeaderLeft>
+          </PipelineStudioLayout.HeaderRight>
         </PipelineStudioLayout.Header>
 
         <PipelineStudioLayout.Split>

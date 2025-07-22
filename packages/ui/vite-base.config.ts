@@ -7,6 +7,7 @@ import tsConfigPaths from 'vite-tsconfig-paths'
 
 const external = [
   'react',
+  'react-dom',
   'react-hook-form',
   'react-router-dom',
   'react-router',
@@ -17,6 +18,11 @@ const external = [
 
 export default defineConfig({
   plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],
+  resolve: {
+    alias: {
+      'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw')
+    }
+  },
   build: {
     lib: {
       cssFileName: 'styles',

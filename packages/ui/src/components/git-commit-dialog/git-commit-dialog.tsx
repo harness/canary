@@ -6,14 +6,14 @@ import {
   ButtonLayout,
   CommitToGitRefOption,
   ControlGroup,
+  Dialog,
   FormInput,
   FormWrapper,
   GitCommitFormType,
-  Icon,
+  IconV2,
   Link,
   Message,
   MessageTheme,
-  ModalDialog,
   Radio,
   Tag
 } from '@/components'
@@ -123,13 +123,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   }
 
   return (
-    <ModalDialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <ModalDialog.Content>
-        <ModalDialog.Header>
-          <ModalDialog.Title>Commit Changes</ModalDialog.Title>
-        </ModalDialog.Header>
+    <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
+      <Dialog.Content size="md">
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
-        <ModalDialog.Body>
+        <Dialog.Body>
           <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             {isFileNameRequired && (
               <FormInput.Text
@@ -162,7 +162,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   label={
                     <span className="flex items-center gap-2">
                       Commit directly to the
-                      <Tag size="sm" value={currentBranch} icon="branch-2" showIcon />
+                      <Tag size="sm" value={currentBranch} icon="git-branch" showIcon />
                       branch
                     </span>
                   }
@@ -201,7 +201,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     autoFocus
                     prefix={
                       <div className="grid place-items-center px-2">
-                        <Icon name="branch" size={14} />
+                        <IconV2 name="git-branch" size="xs" />
                       </div>
                     }
                     id="newBranchName"
@@ -212,13 +212,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               )}
             </ControlGroup>
           </FormWrapper>
-        </ModalDialog.Body>
+        </Dialog.Body>
 
-        <ModalDialog.Footer>
+        <Dialog.Footer>
           <ButtonLayout>
-            <ModalDialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
+            <Dialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
               Cancel
-            </ModalDialog.Close>
+            </Dialog.Close>
             {!bypassable ? (
               <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
@@ -231,8 +231,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </Button>
             )}
           </ButtonLayout>
-        </ModalDialog.Footer>
-      </ModalDialog.Content>
-    </ModalDialog.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

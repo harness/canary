@@ -2,6 +2,8 @@ import { cn } from '@utils/cn'
 
 import './step-node.css'
 
+import { Text } from '@components/text'
+
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
 import { ExecutionStatus } from './components/execution-status'
@@ -101,7 +103,7 @@ export function StepNode(props: StepNodeProps) {
           {icon}
           <span className="line-clamp-2 text-2 font-medium leading-snug text-cn-foreground-1">
             {name}
-            {!!counter && <span className="font-normal text-cn-foreground-2"> ({counter})</span>}
+            {!!counter && <Text as="span"> ({counter})</Text>}
           </span>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>

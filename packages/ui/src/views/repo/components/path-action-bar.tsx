@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, IconV2, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 
@@ -18,6 +18,7 @@ export interface PathActionBarProps {
   parentPath?: string
   setParentPath?: (value: string) => void
   selectedRefType: BranchSelectorTab
+  fullResourcePath?: string
 }
 
 export const PathActionBar: FC<PathActionBarProps> = ({
@@ -33,10 +34,12 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   handleCancelFileEdit,
   parentPath,
   setParentPath,
-  selectedRefType
+  selectedRefType,
+  fullResourcePath
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
+
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs
@@ -49,6 +52,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         fileName={fileName}
         parentPath={parentPath}
         setParentPath={setParentPath}
+        fullResourcePath={fullResourcePath}
       />
       {codeMode === CodeModes.VIEW &&
         pathNewFile &&
@@ -56,8 +60,8 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         selectedRefType === BranchSelectorTab.BRANCHES && (
           <Button variant="outline" asChild>
             <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
-              <Icon name="plus" size={12} />
-              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
+              <IconV2 name="plus" size="2xs" />
+              <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
             </Link>
           </Button>
         )}
@@ -74,3 +78,4 @@ export const PathActionBar: FC<PathActionBarProps> = ({
     </div>
   )
 }
+PathActionBar.displayName = 'PathActionBar'

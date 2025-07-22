@@ -74,7 +74,7 @@ export default {
     borderWidth: `var(--cn-tag-border)`,
     borderRadius: `var(--cn-tag-radius-default)`,
     maxWidth: `var(--cn-tag-max-width)`,
-    height: `var(--cn-tag-size-default)`,
+    height: `var(--cn-tag-size-md)`,
     '@apply w-fit flex items-center transition-colors select-none font-body-single-line-normal': '',
 
     '&:where(.cn-tag-sm)': {
@@ -109,8 +109,8 @@ export default {
     },
 
     '.cn-tag-icon': {
-      minWidth: `var(--cn-icon-size-default, 16px)`,
-      height: `var(--cn-icon-size-default, 16px)`
+      minWidth: `var(--cn-icon-size-sm, 16px)`,
+      height: `var(--cn-icon-size-sm, 16px)`
     },
     '.cn-tag-text': {
       '@apply truncate leading-normal align-middle inline-block': ''

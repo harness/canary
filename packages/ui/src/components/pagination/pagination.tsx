@@ -216,11 +216,19 @@ export const Pagination: FC<PaginationProps> = ({
           <PaginationPrimitive.Content className="cn-pagination-hide-pages">
             {/* Previous Button */}
             <PaginationPrimitive.Item className="cn-pagination-item-previous">
-              <PaginationPrimitive.Previous href={getPrevPageLink?.()} onClick={onPrevious} disabled={!hasPrevious} />
+              <PaginationPrimitive.Previous
+                href={hasPrevious ? getPrevPageLink?.() : undefined}
+                onClick={onPrevious}
+                disabled={!hasPrevious}
+              />
             </PaginationPrimitive.Item>
             {/* Next Button */}
             <PaginationPrimitive.Item className="cn-pagination-item-next">
-              <PaginationPrimitive.Next href={getNextPageLink?.()} onClick={onNext} disabled={!hasNext} />
+              <PaginationPrimitive.Next
+                href={hasNext ? getNextPageLink?.() : undefined}
+                onClick={onNext}
+                disabled={!hasNext}
+              />
             </PaginationPrimitive.Item>
           </PaginationPrimitive.Content>
         )}

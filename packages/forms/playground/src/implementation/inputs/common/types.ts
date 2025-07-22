@@ -1,5 +1,6 @@
 import { ArrayInputConfig } from '../array-input'
 import { CheckboxInputConfig } from '../checkbox-input'
+import { GroupInputConfig } from '../group-input'
 import { IntegerInputConfig } from '../integer-input'
 import { ListInputConfig } from '../list-input'
 import { SelectInputConfig } from '../select-input'
@@ -11,7 +12,8 @@ export enum InputType {
   integer = 'integer',
   select = 'select',
   array = 'array',
-  list = 'list'
+  list = 'list',
+  group = 'group'
 }
 
 export type InputConfigType =
@@ -21,3 +23,4 @@ export type InputConfigType =
   | ArrayInputConfig
   | SelectInputConfig
   | ListInputConfig
+  | GroupInputConfig

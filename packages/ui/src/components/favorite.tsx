@@ -20,7 +20,7 @@ const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteT
     <IconV2
       name={isFavorite ? 'star-solid' : 'star'}
       size="md"
-      className={isFavorite ? 'text-label-background-yellow' : 'text-icons-6'}
+      className={isFavorite ? 'text-cn-foreground-warning' : 'text-icons-6'}
     />
   </Button>
 )

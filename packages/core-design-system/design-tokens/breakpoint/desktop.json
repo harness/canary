@@ -11,8 +11,10 @@
     "viewportMax": {
       "$type": "number",
       "$value": "1919"
-    },
-    "container": {
+    }
+  },
+  "container": {
+    "spacing": {
       "$type": "number",
       "$value": "{spacing.8}"
     }

@@ -116,7 +116,7 @@ export default function ReposListPage() {
   })
 
   const onFavoriteToggle = ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
-    const mutation = isFavorite ? deleteFavorite : createFavorite
+    const mutation = isFavorite ? createFavorite : deleteFavorite
     mutation({ resource_id: repoId })
   }
 

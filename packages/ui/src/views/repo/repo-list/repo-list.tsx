@@ -52,10 +52,7 @@ const Title = ({
         <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
-        <Favorite
-          isFavorite={isFavorite}
-          onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite: !isFavorite })}
-        />
+        <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
       </Layout.Flex>
     </Layout.Flex>
   )

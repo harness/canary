@@ -31,8 +31,10 @@ export function useFavoriteRepository({ onSuccess, onMutate }: UseFavoriteReposi
         body: JSON.stringify({ resource_id, resource_type: RESOURCE_TYPE })
       })
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}))
-        throw { message: errorData.message || 'Failed to favorite repository' }
+        // const errorData = await res.json().catch(() => ({}))
+        /**
+         * @TODO: Add error handling here
+         */
       }
       return res.json()
     },

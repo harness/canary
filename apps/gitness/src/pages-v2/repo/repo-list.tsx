@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useMutation } from '@tanstack/react-query'
-
 import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
 import { Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
@@ -11,25 +9,13 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useAPIPath } from '../../hooks/useAPIPath'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
+import { useFavoriteRepository } from './hooks/useRepoMutation'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
-interface TData {
-  resource_id: number
-  resource_type: 'REPOSITORY'
-}
-
-type TVariables = {
-  resource_id: number
-}
-
-type TError = unknown
-
 export default function ReposListPage() {
-  const getApiPath = useAPIPath()
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
@@ -116,29 +102,16 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
-  const { mutate: createFavorite } = useMutation<TData, TError, TVariables>({
-    mutationFn: ({ resource_id }) =>
-      fetch(getApiPath('/api/v1/user/favorite'), {
-        method: 'POST',
-        body: JSON.stringify({ resource_id, resource_type: 'REPOSITORY' })
-      }).then(res => res.json()),
+  const { createFavorite, deleteFavorite } = useFavoriteRepository({
     onSuccess: data => {
-      const updatedRepos =
+      const updated =
         repositories?.map(repo => (repo.id === data.resource_id ? { ...repo, is_favorite: true } : repo)) ?? []
-      setRepositories(updatedRepos, updatedRepos.length, PAGE_SIZE)
-    }
-  })
-
-  const { mutate: deleteFavorite } = useMutation<unknown, TError, TVariables>({
-    mutationFn: ({ resource_id }) =>
-      fetch(getApiPath('/api/v1/user/favorite'), {
-        method: 'DELETE',
-        body: JSON.stringify({ resource_id, resource_type: 'REPOSITORY' })
-      }).then(res => res.json()),
+      setRepositories(updated, updated.length, PAGE_SIZE)
+    },
     onMutate: variables => {
-      const updatedRepos =
+      const updated =
         repositories?.map(repo => (repo.id === variables.resource_id ? { ...repo, is_favorite: false } : repo)) ?? []
-      setRepositories(updatedRepos, updatedRepos.length, PAGE_SIZE)
+      setRepositories(updated, updated.length, PAGE_SIZE)
     }
   })
 

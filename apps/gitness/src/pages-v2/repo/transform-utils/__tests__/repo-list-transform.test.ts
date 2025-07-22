@@ -1,10 +1,8 @@
+import { RepoRepositoryOutput } from '@harnessio/code-service-client'
+
 import { transformRepoList } from '../repo-list-transform'
 
-// Mock data
-/**
- * @todo add type info here once api contract is updated
- */
-const mockRepos = [
+const mockRepos: RepoRepositoryOutput[] = [
   {
     id: 1,
     identifier: 'repo1',

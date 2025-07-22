@@ -52,7 +52,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
-  const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
+  const { presetRuleData, principals } = useRepoRulesStore()
   const formMethods = useForm<RepoTagSettingsFormFields>({
     resolver: zodResolver(repoTagSettingsFormSchema),
     mode: 'onChange',
@@ -140,14 +140,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
             principalsSearchQuery={principalsSearchQuery}
           />
 
-          <TagSettingsRuleListField
-            rules={rules}
-            // recentStatusChecks={recentStatusChecks}
-            handleCheckboxChange={handleCheckboxChange}
-            // handleSubmenuChange={handleSubmenuChange}
-            // handleSelectChangeForRule={handleSelectChangeForRule}
-            // handleInputChange={handleInputChange}
-          />
+          <TagSettingsRuleListField rules={rules} handleCheckboxChange={handleCheckboxChange} />
         </div>
         <Fieldset className="mt-5">
           <ControlGroup>

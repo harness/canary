@@ -1,6 +1,8 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
+import { noop } from '@tanstack/react-table'
+
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
@@ -14,7 +16,7 @@ const RepoViewWrapper: FC<
       path="*"
       element={
         <>
-          <RepoHeader name="Ipsum" isPublic />
+          <RepoHeader name="Ipsum" isPublic onFavoriteToggle={noop} />
           <SubHeaderWrapper>
             <RepoSubheader />
           </SubHeaderWrapper>

@@ -55,6 +55,7 @@ import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-
 import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-rules-list-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
+import { RepoTagSettingsRulesPageContainer } from './pages-v2/repo/repo-tag-rules-container'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
 import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
@@ -511,7 +512,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   },
                   {
                     path: 'create/tag',
-                    element: <RepoBranchSettingsRulesPageContainer />,
+                    element: <RepoTagSettingsRulesPageContainer />,
                     handle: {
                       breadcrumb: () => <span>Create a tag</span>,
                       routeName: RouteConstants.toRepoTagRuleCreate

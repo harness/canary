@@ -124,7 +124,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                     }
                   ]}
                 >
-                  {t('views:repos.create-repository', 'Create Repository')}
+                  {t('views:repos.createBranchRule', 'New branch rule')}
                 </SplitButton>
               </ListActions.Right>
             </ListActions.Root>

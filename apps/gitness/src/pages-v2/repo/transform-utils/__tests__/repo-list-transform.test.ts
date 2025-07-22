@@ -1,6 +1,9 @@
 import { transformRepoList } from '../repo-list-transform'
 
 // Mock data
+/**
+ * @todo add type info here once api contract is updated
+ */
 const mockRepos = [
   {
     id: 1,

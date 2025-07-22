@@ -79,7 +79,9 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
           ))}
         </ScrollArea>
       </div>
-      <div className="flex flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">{children}</div>
+      <div className="flex h-[fill-available] flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">
+        {children}
+      </div>
     </div>
   )
 }

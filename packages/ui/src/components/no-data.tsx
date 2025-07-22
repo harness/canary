@@ -45,7 +45,7 @@ export const NoData: FC<NoDataProps> = ({
     <div
       className={cn(
         'flex h-full w-full flex-col place-content-center place-items-center gap-4 my-auto',
-        { 'h-auto min-h-[75vh] border border-cn-borders-4 rounded-md': withBorder },
+        { 'h-auto grow border border-cn-borders-4 rounded-md': withBorder },
         className
       )}
     >

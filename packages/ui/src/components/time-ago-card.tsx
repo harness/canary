@@ -163,7 +163,7 @@ export const TimeAgoCard = memo(
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
           <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick} ref={ref}>
-            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
+            <Text<'time'> as="time" color="foreground-1" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
               {formattedShort}
             </Text>
           </Popover.Trigger>

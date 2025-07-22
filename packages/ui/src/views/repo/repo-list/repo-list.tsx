@@ -26,7 +26,7 @@ const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => {
   return (
     <div className="inline-flex items-center gap-2.5">
       <span className="max-w-full truncate font-medium">{title}</span>
-      <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
+      <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'} className="rounded-4">
         {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
       </StatusBadge>
     </div>
@@ -92,18 +92,18 @@ export function RepoList({
             'pointer-events-none': repo.importing
           })}
         >
-          <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+          <StackedList.Item key={repo.name} className="h-[68.8px] pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
             <StackedList.Field
               primary
+              title={<Title title={repo.name} isPrivate={repo.private} />}
               description={
                 repo.importing ? (
                   t('views:repos.importing', 'Importing…')
-                ) : (
+                ) : repo.description ? (
                   <span className="max-w-full truncate">{repo.description}</span>
-                )
+                ) : undefined
               }
-              title={<Title title={repo.name} isPrivate={repo.private} />}
-              className="flex max-w-[80%] gap-1.5 text-wrap"
+              className="flex max-w-[80%] text-wrap"
             />
             {!repo.importing && (
               <StackedList.Field

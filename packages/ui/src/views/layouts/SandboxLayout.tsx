@@ -87,7 +87,7 @@ function Content({ children, maxWidth, className }: ContentProps) {
   return (
     <div
       className={cn(
-        'px-5 pt-7 pb-11 flex flex-col grow w-full',
+        'px-6 pt-7 pb-11 flex flex-col grow w-full',
         { [`max-w-${maxWidth} mx-auto`]: !!maxWidth },
         className
       )}

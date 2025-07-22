@@ -22,7 +22,7 @@ const listItemVariants = cva(
   }
 )
 
-const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-[0.3125rem] text-sm', {
+const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-[2px] text-sm', {
   variants: {
     right: {
       true: 'items-end'
@@ -135,7 +135,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {description && (
       <div
         className={cn(
-          'text-cn-foreground-2 flex gap-2 text-ellipsis whitespace-nowrap',
+          'text-cn-foreground-2 flex gap-2 text-ellipsis whitespace-nowrap leading-none',
           primary ? 'text-sm' : 'text-2',
           className
         )}

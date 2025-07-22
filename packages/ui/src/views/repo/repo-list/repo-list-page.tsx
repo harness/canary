@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton, Text } from '@/components'
+import { IconV2, ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -76,11 +76,11 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content>
+      <SandboxLayout.Content className="pt-0">
         {showTopBar && (
           <>
-            <Spacer size={8} />
-            <div className="flex items-end">
+            <Spacer size={7} className="mt-[30px]" />
+            <div className="flex items-end tracking-[-0.8px]">
               <Text variant="heading-section" as="h1" color="foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
               </Text>
@@ -89,10 +89,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             <ListActions.Root>
               <ListActions.Left>
                 <SearchInput
-                  inputContainerClassName="max-w-96"
+                  inputContainerClassName="max-w-[22.5rem]"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
-                  size="sm"
+                  size="md"
                   onChange={handleSearch}
                 />
               </ListActions.Left>
@@ -118,13 +118,14 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                     }
                   ]}
                 >
+                  <IconV2 name="plus" />
                   {t('views:repos.create-repository', 'Create Repository')}
                 </SplitButton>
               </ListActions.Right>
             </ListActions.Root>
           </>
         )}
-        <Spacer size={5} />
+        <Spacer size={4.5} />
         <RepoList
           repos={repositories || []}
           handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}

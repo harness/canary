@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import {
   createFavorite,
   deleteFavorite,
-  useDeleteFavoriteMutation,
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
@@ -106,39 +105,27 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
-  const onFavoriteToggle = ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
-    if (isFavorite) {
-      createFavorite({
-        body: {
-          resource_id: repoId,
-          resource_type: 'REPOSITORY'
-        }
-      })
-        .then(() => {
-          const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: true } : repo)) ?? []
-          setRepositories(updated, updated.length, PAGE_SIZE)
+  const onFavoriteToggle = async ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
+    try {
+      if (isFavorite) {
+        await createFavorite({
+          body: {
+            resource_id: repoId,
+            resource_type: 'REPOSITORY'
+          }
         })
-        .catch(_error => {
-          /**
-           * @TODO Add error handling
-           */
+      } else {
+        await deleteFavorite({
+          body: {
+            resource_id: repoId,
+            resource_type: 'REPOSITORY'
+          }
         })
-    } else {
-      deleteFavorite({
-        body: {
-          resource_id: repoId,
-          resource_type: 'REPOSITORY'
-        }
-      })
-        .then(() => {
-          const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: false } : repo)) ?? []
-          setRepositories(updated, updated.length, PAGE_SIZE)
-        })
-        .catch(_error => {
-          /**
-           * @TODO Add error handling
-           */
-        })
+      }
+      const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: isFavorite } : repo)) ?? []
+      setRepositories(updated, updated.length, PAGE_SIZE)
+    } catch {
+      // TODO: Add error handling
     }
   }
 

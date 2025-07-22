@@ -1,6 +1,6 @@
 import { Outlet, useParams } from 'react-router-dom'
 
-import { createFavorite, deleteFavorite } from '@harnessio/code-service-client'
+import { createFavorite, deleteFavorite, EnumResourceType } from '@harnessio/code-service-client'
 import { RepoSubheader } from '@harnessio/ui/components'
 import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
@@ -17,37 +17,20 @@ const RepoLayout = () => {
   const { toRepoCommits } = useRepoCommits()
   const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo } = useGitRef()
 
-  const onFavoriteToggle = (isFavorite: boolean) => {
-    if (isFavorite) {
-      createFavorite({
-        body: {
-          resource_id: repoData?.id,
-          resource_type: 'REPOSITORY'
-        }
-      })
-        .then(() => {
-          refetchRepo()
-        })
-        .catch(_error => {
-          /**
-           * @TODO Add error handling
-           */
-        })
-    } else {
-      deleteFavorite({
-        body: {
-          resource_id: repoData?.id,
-          resource_type: 'REPOSITORY'
-        }
-      })
-        .then(() => {
-          refetchRepo()
-        })
-        .catch(_error => {
-          /**
-           * @TODO Add error handling
-           */
-        })
+  const onFavoriteToggle = async (isFavorite: boolean) => {
+    try {
+      const body: { resource_id: number | undefined; resource_type: EnumResourceType } = {
+        resource_id: repoData?.id,
+        resource_type: 'REPOSITORY'
+      }
+      if (isFavorite) {
+        await createFavorite({ body })
+      } else {
+        await deleteFavorite({ body })
+      }
+      refetchRepo()
+    } catch {
+      // TODO: Add error handling
     }
   }
 

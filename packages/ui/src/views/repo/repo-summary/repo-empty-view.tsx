@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   ButtonLayout,
   ControlGroup,
@@ -19,6 +20,7 @@ interface RepoEmptyViewProps {
   httpUrl: string
   sshUrl: string
   gitRef: string
+  tokenGenerationError?: string
   handleCreateToken: () => void
   navigateToProfileKeys?: () => void
 }
@@ -29,6 +31,7 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   httpUrl,
   sshUrl,
   gitRef,
+  tokenGenerationError,
   handleCreateToken,
   navigateToProfileKeys
 }) => {
@@ -84,6 +87,11 @@ git push -u origin main
             <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
             </ButtonLayout>
+            {tokenGenerationError && (
+              <Alert.Root theme="danger" className="mt-2">
+                <Alert.Description>{tokenGenerationError}</Alert.Description>
+              </Alert.Root>
+            )}
             <Text className="mt-2">
               You can also manage your git credential{' '}
               <span

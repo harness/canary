@@ -76,7 +76,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   isRepoEmpty?: boolean
   branchSelectorRenderer: React.ReactElement
   toRepoFileDetails?: ({ path }: { path: string }) => string
-  tokenGenerationError?: string | null
+  tokenGenerationError?: string
   refType?: BranchSelectorTab
 }
 
@@ -130,6 +130,7 @@ export function RepoSummaryView({
         httpUrl={repository?.git_url ?? 'could not fetch url'}
         repoName={repoId}
         projName={spaceId}
+        tokenGenerationError={tokenGenerationError}
         gitRef={gitRef || selectedBranchOrTag?.name || ''}
         handleCreateToken={handleCreateToken}
         navigateToProfileKeys={navigateToProfileKeys}

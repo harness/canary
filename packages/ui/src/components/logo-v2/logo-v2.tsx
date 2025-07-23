@@ -39,18 +39,19 @@ export type LogoPropsV2 = LogoDefaultPropsV2 | LogoFallbackPropsV2
 
 const LogoV2: FC<LogoPropsV2> = ({ name, size, className, skipSize = false, fallback }) => {
   const Component = name ? LogoNameMapV2[name] : undefined
+  const sizeClasses = skipSize ? '' : logoVariants({ size })
 
   if (!Component && fallback) {
     console.warn(`Logo "${name}" not found, falling back to "${fallback}".`)
-    return <LogoV2 name={fallback} size={size} className={className} skipSize={skipSize} />
+    const FallbackComponent = LogoNameMapV2[fallback]
+
+    return <FallbackComponent className={cn(sizeClasses, className)} />
   }
 
   if (!Component) {
     console.warn(`Logo "${name}" not found in LogoNameMapV2.`)
     return null
   }
-
-  const sizeClasses = skipSize ? '' : logoVariants({ size })
 
   return <Component className={cn(sizeClasses, className)} />
 }

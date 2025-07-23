@@ -43,18 +43,19 @@ export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
 
 const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false, fallback }) => {
   const Component = name ? IconNameMapV2[name] : undefined
+  const sizeClasses = skipSize ? '' : iconVariants({ size })
 
   if (!Component && fallback) {
     console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
-    return <IconV2 name={fallback} size={size} className={className} skipSize={skipSize} />
+    const FallbackComponent = IconNameMapV2[fallback]
+
+    return <FallbackComponent className={cn(sizeClasses, className)} />
   }
 
   if (!Component) {
     console.warn(`Icon "${name}" not found in IconNameMapV2.`)
     return null
   }
-
-  const sizeClasses = skipSize ? '' : iconVariants({ size })
 
   return <Component className={cn(sizeClasses, className)} />
 }

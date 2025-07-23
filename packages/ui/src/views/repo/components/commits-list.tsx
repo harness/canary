@@ -129,11 +129,13 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
 function renderCommitLink({
   commitMessage = '',
+  title = '',
   sha = '',
   toCommitDetails,
   Link
 }: {
   commitMessage?: string
+  title?: string
   sha?: string
   toCommitDetails: RoutingProps['toCommitDetails']
   Link: React.ComponentType<LinkProps>
@@ -143,7 +145,7 @@ function renderCommitLink({
       className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
       to={`${toCommitDetails?.({ sha })}`}
     >
-      <Text variant="heading-base" truncate>
+      <Text variant="heading-base" truncate title={title}>
         {commitMessage}
       </Text>
     </Link>
@@ -167,7 +169,7 @@ function renderCommitTitle({
 }) {
   if (!toCommitDetails) {
     return (
-      <Text variant="heading-base" truncate title={commitMessage}>
+      <Text variant="heading-base" truncate title={title}>
         {commitMessage}
       </Text>
     )
@@ -183,6 +185,7 @@ function renderCommitTitle({
       const peacesEls = peaces.map(peace => {
         return renderCommitLink({
           commitMessage: peace,
+          title,
           sha,
           toCommitDetails,
           Link
@@ -196,7 +199,7 @@ function renderCommitTitle({
             &nbsp;(
             <Link
               className="hover:underline"
-              title={commitMessage}
+              title={title}
               to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
             >
               #{pullRequestId}
@@ -212,6 +215,7 @@ function renderCommitTitle({
 
   return renderCommitLink({
     commitMessage,
+    title,
     sha,
     toCommitDetails,
     Link

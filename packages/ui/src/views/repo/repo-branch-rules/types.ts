@@ -50,7 +50,8 @@ export enum BranchRuleId {
   BLOCK_FORCE_PUSH = 'update_force_forbidden',
   REQUIRE_PULL_REQUEST = 'update_forbidden_without_merge_block',
   REQUIRE_CODE_REVIEW = 'require_minimum_count',
-  REQUIRE_CODE_OWNERS = 'require_code_owners'
+  REQUIRE_CODE_OWNERS = 'require_code_owners',
+  AUTO_ADD_CODE_OWNERS = 'request_code_owners'
 }
 
 export enum PatternsButtonType {

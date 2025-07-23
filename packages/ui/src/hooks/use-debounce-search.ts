@@ -28,6 +28,11 @@ export const useDebounceSearch = ({ handleChangeSearchValue, searchValue }: UseD
     debouncedChangeSearchRef.current(value)
   }, [])
 
+  const handleStringSearchChange = useCallback((value: string) => {
+    setSearch(value)
+    debouncedChangeSearchRef.current(value)
+  }, [])
+
   const handleResetSearch = useCallback(() => {
     setSearch('')
     handleChangeSearchValue?.('')
@@ -36,6 +41,7 @@ export const useDebounceSearch = ({ handleChangeSearchValue, searchValue }: UseD
   return {
     handleResetSearch,
     handleSearchChange,
+    handleStringSearchChange,
     search
   }
 }

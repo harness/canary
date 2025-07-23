@@ -74,6 +74,8 @@
     "RequirePullRequestDescription": "Interdire les modifications directes sur les branches sans requête de tirage",
     "RequireCodeReview": "Exiger un minimum de réviseurs",
     "RequireCodeReviewDescription": "Les requêtes de tirage doivent être approuvées par un nombre minimal de réviseurs",
+    "AutoAddCodeOwners": "Ajouter les code owners comme réviseurs",
+    "AutoAddCodeOwnersDescription": "Ajouter automatiquement les code owners pertinents comme réviseurs",
     "RequireCodeOwners": "Exiger une revue des code owners",
     "RequireCodeOwnersDescription": "Exiger une revue des code owners sur les requêtes de tirage",
     "RequestApprovalRule": "Demander l'approbation des nouvelles modifications",

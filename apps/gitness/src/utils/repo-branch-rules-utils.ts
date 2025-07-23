@@ -20,6 +20,7 @@ const ruleIds = [
   BranchRuleId.BLOCK_FORCE_PUSH,
   BranchRuleId.REQUIRE_PULL_REQUEST,
   BranchRuleId.REQUIRE_CODE_REVIEW,
+  BranchRuleId.AUTO_ADD_CODE_OWNERS,
   BranchRuleId.REQUIRE_CODE_OWNERS,
   BranchRuleId.REQUIRE_LATEST_COMMIT,
   BranchRuleId.REQUIRE_NO_CHANGE_REQUEST,
@@ -63,6 +64,9 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
       case BranchRuleId.REQUIRE_CODE_REVIEW:
         checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
         input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
+        break
+      case BranchRuleId.AUTO_ADD_CODE_OWNERS:
+        checked = definition?.pullreq?.reviewers?.request_code_owners || false
         break
       case BranchRuleId.REQUIRE_CODE_OWNERS:
         checked = definition?.pullreq?.approvals?.require_code_owners || false
@@ -209,6 +213,9 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
         },
         status_checks: {
           require_identifiers: rulesMap[BranchRuleId.STATUS_CHECKS]?.selectOptions || []
+        },
+        reviewers: {
+          request_code_owners: rulesMap[BranchRuleId.AUTO_ADD_CODE_OWNERS]?.checked || false
         }
       }
     }

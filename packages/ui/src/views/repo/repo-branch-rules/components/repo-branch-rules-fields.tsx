@@ -20,6 +20,7 @@ import {
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
@@ -190,6 +191,10 @@ export const BranchSettingsRuleBypassListField: FC<
   }
 > = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
   const { t } = useTranslation()
+  const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setPrincipalsSearchQuery,
+    searchValue: principalsSearchQuery || ''
+  })
 
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
@@ -208,8 +213,8 @@ export const BranchSettingsRuleBypassListField: FC<
           name="bypass"
           options={multiSelectOptions}
           placeholder={t('views:repos.selectUsers', 'Select users')}
-          searchQuery={principalsSearchQuery}
-          setSearchQuery={setPrincipalsSearchQuery}
+          searchQuery={debouncedPrincipalsSearchQuery}
+          setSearchQuery={handleStringSearchChange}
           disallowCreation
           error={errors?.bypass?.message?.toString()}
         />

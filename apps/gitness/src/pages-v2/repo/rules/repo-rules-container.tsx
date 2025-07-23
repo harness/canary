@@ -7,8 +7,8 @@ import { NotFoundPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
 import { useRepoRulesStore } from '../stores/repo-settings-store'
-import { RepoBranchSettingsRulesPageContainer } from './repo-branch-rules-container'
-import { RepoTagSettingsRulesPageContainer } from './repo-tag-rules-container'
+import { RepoBranchRulesContainer } from './repo-branch-rules-container'
+import { RepoTagRulesContainer } from './repo-tag-rules-container'
 
 export enum RuleType {
   BRANCH = 'branch',
@@ -51,10 +51,10 @@ export const RepoRulesContainer = () => {
   // Render the appropriate container based on rule type
   switch (rulesData?.type) {
     case RuleType.TAG:
-      return <RepoTagSettingsRulesPageContainer />
+      return <RepoTagRulesContainer />
     case RuleType.BRANCH:
     default:
-      return <RepoBranchSettingsRulesPageContainer />
+      return <RepoBranchRulesContainer />
   }
 }
 

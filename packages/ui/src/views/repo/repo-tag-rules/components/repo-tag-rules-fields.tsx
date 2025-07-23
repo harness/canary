@@ -108,7 +108,7 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
             {...register!('pattern')}
             caption={t(
               'views:repos.createRuleCaption',
-              'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
+              'Match tags using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
             )}
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
           />

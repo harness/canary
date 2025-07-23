@@ -17,7 +17,7 @@ interface CloneCredentialDialogProps extends Partial<RoutingProps> {
     lifetime: string
     token: string
   }
-  error?: string
+  tokenGenerationError?: string
 }
 const formSchema = z.object({
   identifier: z.string(),
@@ -32,7 +32,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
   onClose,
   navigateToManageToken,
   tokenData,
-  error
+  tokenGenerationError
 }) => {
   const { t } = useTranslation()
   useForm<TCloneCredentialsDialog>({
@@ -79,9 +79,9 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
 
             {/* Alert or Success Message */}
             <div className="mt-2">
-              {error ? (
+              {tokenGenerationError ? (
                 <Alert.Root theme="danger" className="mt-2">
-                  <Alert.Description>{error}</Alert.Description>
+                  <Alert.Description>{tokenGenerationError}</Alert.Description>
                 </Alert.Root>
               ) : (
                 <span>{t('views:repos.cloneCredGenerated')}</span>

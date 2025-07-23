@@ -134,7 +134,6 @@ export default function RepoSummaryPage() {
     ? customHooks.useGenerateToken(MFETokenFlag ? tokenHash : '', currentUser?.uid || '', MFETokenFlag)
     : null
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
-  const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
@@ -188,16 +187,6 @@ export default function RepoSummaryPage() {
         }
         setCreatedTokenData(tokenData)
         setShowTokenDialog(true)
-        setSuccessTokenDialog(true)
-        setTokenGenerationError(null)
-      },
-      onError: error => {
-        setCreatedTokenData({ identifier: '', lifetime: '', token: '' })
-        setShowTokenDialog(true)
-        setSuccessTokenDialog(true)
-        const errorMsg =
-          error?.message && typeof error.message === 'string' ? error.message : 'Failed to generate token'
-        setTokenGenerationError(errorMsg)
       }
     }
   )
@@ -225,7 +214,6 @@ export default function RepoSummaryPage() {
       }
       setCreatedTokenData(tokenDataNew)
       setShowTokenDialog(true)
-      setSuccessTokenDialog(true)
       setMFETokenFlag(false)
       setTokenGenerationError(null)
     } else if (MFEtokenData && MFEtokenData.data.status === 'ERROR') {
@@ -233,7 +221,6 @@ export default function RepoSummaryPage() {
       const errorMsg = MFEtokenData.data.message || 'Failed to generate token'
       setTokenGenerationError(errorMsg)
       setShowTokenDialog(true)
-      setSuccessTokenDialog(true)
     }
   }, [MFEtokenData, tokenHash])
 
@@ -369,16 +356,16 @@ export default function RepoSummaryPage() {
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
       />
-      {successTokenDialog && (
+      {showTokenDialog && (
         <CloneCredentialDialog
-          open={successTokenDialog}
+          open={showTokenDialog}
           onClose={() => {
-            setSuccessTokenDialog(false)
+            setShowTokenDialog(false)
             setTokenGenerationError(null)
           }}
           navigateToManageToken={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
           tokenData={createdTokenData || { identifier: '', lifetime: '', token: '' }}
-          error={tokenGenerationError || undefined}
+          tokenGenerationError={tokenGenerationError || undefined}
         />
       )}
     </>

@@ -106,14 +106,18 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
 
     const renderContent = () => {
       if (iconOnly) {
-        return <IconV2 {...prefixIconProps} name={prefixIcon} />
+        return <IconV2 {...prefixIconProps} name={prefixIcon} fallback={prefixIconProps?.fallback ?? 'stop'} />
       }
 
       return (
         <>
-          {prefixIcon && <IconV2 {...prefixIconProps} name={prefixIcon} />}
+          {prefixIcon && (
+            <IconV2 {...prefixIconProps} name={prefixIcon} fallback={prefixIconProps?.fallback ?? 'stop'} />
+          )}
           {text}
-          {suffixIcon && <IconV2 {...suffixIconProps} name={suffixIcon} />}
+          {suffixIcon && (
+            <IconV2 {...suffixIconProps} name={suffixIcon} fallback={suffixIconProps?.fallback ?? 'stop'} />
+          )}
         </>
       )
     }

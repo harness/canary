@@ -15,6 +15,7 @@ interface RepoSettingsRulesPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   projectScope?: boolean
   toRepoBranchRuleCreate: () => string
+  toRepoTagRuleCreate: () => string
 }
 
 export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
@@ -26,7 +27,8 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   isRulesLoading,
   apiError,
   projectScope = false,
-  toRepoBranchRuleCreate
+  toRepoBranchRuleCreate,
+  toRepoTagRuleCreate
 }) => {
   const { rules } = useRepoRulesStore()
   const { t } = useTranslation()
@@ -56,6 +58,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
         setRulesSearchQuery={setRulesSearchQuery}
         projectScope={projectScope}
         toRepoBranchRuleCreate={toRepoBranchRuleCreate}
+        toRepoTagRuleCreate={toRepoTagRuleCreate}
       />
     </SandboxLayout.Content>
   )

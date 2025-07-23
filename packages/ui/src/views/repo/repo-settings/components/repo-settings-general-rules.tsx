@@ -3,7 +3,6 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Alert,
-  Button,
   IconV2,
   ListActions,
   MoreActionsTooltip,
@@ -11,6 +10,7 @@ import {
   SearchInput,
   SkeletonList,
   Spacer,
+  SplitButton,
   StackedList
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -57,6 +57,7 @@ export interface RepoSettingsGeneralRulesProps {
   setRulesSearchQuery?: (query: string) => void
   projectScope?: boolean
   toRepoBranchRuleCreate?: () => string
+  toRepoTagRuleCreate?: () => string
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -67,9 +68,10 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
-  toRepoBranchRuleCreate
+  toRepoBranchRuleCreate,
+  toRepoTagRuleCreate
 }) => {
-  const { Link, NavLink } = useRouterContext()
+  const { navigate, Link } = useRouterContext()
   const { t } = useTranslation()
 
   const handleSearchChange = useCallback(
@@ -104,9 +106,26 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
+                {/* <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
                   <Button variant="primary">{t('views:repos.newRule', 'New branch rule')}</Button>
-                </NavLink>
+                </NavLink> */}
+                <SplitButton<string>
+                  dropdownContentClassName="mt-0 min-w-[170px]"
+                  handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
+                  handleOptionChange={option => {
+                    if (option === 'tag-rule') {
+                      navigate(toRepoTagRuleCreate?.() || '')
+                    }
+                  }}
+                  options={[
+                    {
+                      value: 'tag-rule',
+                      label: t('views:repos.newTagRule', 'New tag rule')
+                    }
+                  ]}
+                >
+                  {t('views:repos.createBranchRule', 'New branch rule')}
+                </SplitButton>
               </ListActions.Right>
             </ListActions.Root>
 

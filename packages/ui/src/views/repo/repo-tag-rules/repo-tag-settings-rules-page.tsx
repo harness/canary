@@ -3,53 +3,47 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
+import { IProjectRulesStore, IRepoStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
-  BranchSettingsRuleBypassListField,
-  BranchSettingsRuleDescriptionField,
-  BranchSettingsRuleListField,
-  BranchSettingsRuleNameField,
-  BranchSettingsRuleTargetPatternsField,
-  BranchSettingsRuleToggleField
-} from './components/repo-branch-rules-fields'
-import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
+  TagSettingsRuleBypassListField,
+  TagSettingsRuleDescriptionField,
+  TagSettingsRuleListField,
+  TagSettingsRuleNameField,
+  TagSettingsRuleTargetPatternsField,
+  TagSettingsRuleToggleField
+} from './components/repo-tag-rules-fields'
+import { ITagRulesStore, RepoTagSettingsFormFields, repoTagSettingsFormSchema } from './types'
 
-type BranchSettingsErrors = {
+type TagSettingsErrors = {
   principals: string | null
   statusChecks?: string | null
   addRule: string | null
   updateRule: string | null
 }
 
-interface RepoBranchSettingsRulesPageProps {
+interface RepoTagSettingsRulesPageProps {
   isLoading?: boolean
-  handleRuleUpdate: (data: RepoBranchSettingsFormFields) => void
-  apiErrors?: BranchSettingsErrors
+  handleRuleUpdate: (data: RepoTagSettingsFormFields) => void
+  apiErrors?: TagSettingsErrors
   useRepoRulesStore: () => IRepoStore | IProjectRulesStore
-  useBranchRulesStore: () => IBranchRulesStore
+  useTagRulesStore: () => ITagRulesStore
   handleCheckboxChange: (id: string, checked: boolean) => void
-  handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (id: string, selectedOptions: string[]) => void
-  handleInputChange: (id: string, input: string) => void
-  handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
+  handleInitialRules: (presetRuleData: RepoTagSettingsFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string
   isSubmitSuccess?: boolean
   projectScope?: boolean
 }
 
-export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> = ({
+export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
   isLoading,
   handleRuleUpdate,
   useRepoRulesStore,
   apiErrors,
-  useBranchRulesStore,
+  useTagRulesStore,
   handleCheckboxChange,
-  handleSubmenuChange,
-  handleSelectChangeForRule,
-  handleInputChange,
   handleInitialRules,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
@@ -58,18 +52,17 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
-  const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
-  const formMethods = useForm<RepoBranchSettingsFormFields>({
-    resolver: zodResolver(repoBranchSettingsFormSchema),
+  const { presetRuleData, principals } = useRepoRulesStore()
+  const formMethods = useForm<RepoTagSettingsFormFields>({
+    resolver: zodResolver(repoTagSettingsFormSchema),
     mode: 'onChange',
     defaultValues: {
       identifier: '',
       description: '',
       pattern: '',
-      patterns: [],
       state: true,
-      default: false,
       repo_owners: false,
+      patterns: [],
       bypass: [],
       rules: []
     }
@@ -85,9 +78,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     formState: { errors }
   } = formMethods
 
-  const { rules } = useBranchRulesStore()
+  const { rules } = useTagRulesStore()
 
-  const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
+  const onSubmit: SubmitHandler<RepoTagSettingsFormFields> = data => {
     const formData = { ...data, rules }
     handleRuleUpdate(formData)
   }
@@ -98,10 +91,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         identifier: presetRuleData?.identifier || '',
         description: presetRuleData?.description || '',
         pattern: '',
-        patterns: presetRuleData?.patterns || [],
         state: presetRuleData?.state && true,
-        default: presetRuleData?.default || false,
         repo_owners: presetRuleData?.repo_owners || false,
+        patterns: presetRuleData?.patterns || [],
         bypass: presetRuleData?.bypass || [],
         rules: []
       })
@@ -126,26 +118,21 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
       <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
         {presetRuleData
-          ? t('views:repos.updateBranchRule', 'Update branch rule')
-          : t('views:repos.CreateRule', 'Create a branch rule')}
+          ? t('views:repos.updateTagRule', 'Update tag rule')
+          : t('views:repos.CreateTagRule', 'Create a tag rule')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-        <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
+        <TagSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
 
-        <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
+        <TagSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
 
-        <BranchSettingsRuleDescriptionField register={register} errors={errors} />
+        <TagSettingsRuleDescriptionField register={register} errors={errors} />
 
         <div className="flex flex-col gap-y-11">
-          <BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
-            errors={errors}
-          />
+          <TagSettingsRuleTargetPatternsField watch={watch} setValue={setValue} register={register} errors={errors} />
 
-          <BranchSettingsRuleBypassListField
+          <TagSettingsRuleBypassListField
             register={register}
             errors={errors}
             setValue={setValue}
@@ -155,14 +142,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             principalsSearchQuery={principalsSearchQuery}
           />
 
-          <BranchSettingsRuleListField
-            rules={rules}
-            recentStatusChecks={recentStatusChecks}
-            handleCheckboxChange={handleCheckboxChange}
-            handleSubmenuChange={handleSubmenuChange}
-            handleSelectChangeForRule={handleSelectChangeForRule}
-            handleInputChange={handleInputChange}
-          />
+          <TagSettingsRuleListField rules={rules} handleCheckboxChange={handleCheckboxChange} />
         </div>
         <Fieldset className="mt-5">
           <ControlGroup>

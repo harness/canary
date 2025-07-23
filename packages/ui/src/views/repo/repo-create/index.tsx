@@ -70,7 +70,7 @@ export function RepoCreatePage({
     defaultValues: {
       name: '',
       description: '',
-      defaultBranch: _defaultBranchOptions?.at(0) ?? 'test',
+      defaultBranch: _defaultBranchOptions?.at(0) ?? 'main',
       gitignore: '',
       license: '',
       access: '2',
@@ -158,15 +158,17 @@ export function RepoCreatePage({
           </Fieldset>
 
           {/* DEFAULT BRANCH */}
-          <Select
-            value={defaultBranchValue}
-            options={defaultBranchOptions}
-            onChange={value => handleSelectChange('defaultBranch', value)}
-            placeholder="Select"
-            label="Select a default branch"
-            error={errors.defaultBranch?.message?.toString()}
-            caption="Choose the name to initialize the default branch of your repository."
-          />
+          {defaultBranchOptions.length ? (
+            <Select
+              value={defaultBranchValue}
+              options={defaultBranchOptions}
+              onChange={value => handleSelectChange('defaultBranch', value)}
+              placeholder="Select"
+              label="Select a default branch"
+              error={errors.defaultBranch?.message?.toString()}
+              caption="Choose the name to initialize the default branch of your repository."
+            />
+          ) : undefined}
 
           {/* GITIGNORE */}
           <Select

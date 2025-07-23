@@ -2,6 +2,7 @@ import { ComponentProps, forwardRef, ReactNode } from 'react'
 
 import { usePortal } from '@/context'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
+import { cn } from '@utils/cn'
 
 import { Illustration } from './illustration'
 
@@ -15,11 +16,22 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
-} & Pick<TooltipPrimitiveContentType, 'side' | 'align'>
+} & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   (
-    { children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open, ...props },
+    {
+      children,
+      title,
+      content,
+      hideArrow = false,
+      delay = 500,
+      side = 'top',
+      align = 'center',
+      open,
+      className,
+      ...props
+    },
     ref
   ) => {
     const { portalContainer } = usePortal()
@@ -29,7 +41,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}
-            className="cn-tooltip"
+            className={cn('cn-tooltip', className)}
             side={side}
             align={align}
             sideOffset={4}

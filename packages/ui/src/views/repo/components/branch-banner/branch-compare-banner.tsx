@@ -36,7 +36,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center gap-x-2">
-        <IconV2 name="git-branch" size="xs" className="text-success-9" />
+        <IconV2 name="git-branch" size="xs" className="text-icons-success" />
         <span className="text-2 font-medium text-cn-foreground-1">{branch.name}</span>
         <span className="text-2 text-cn-foreground-2">
           {t('views:repos.hadRecentPushes', 'had recent pushes')}{' '}

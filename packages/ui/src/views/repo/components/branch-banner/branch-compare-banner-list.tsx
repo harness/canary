@@ -29,7 +29,7 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
     return null
   }
   return (
-    <div className="rounded-md border border-cn-borders-2 bg-cn-background-2 mb-4 overflow-hidden">
+    <div className="rounded-md border border-cn-borders-success bg-cn-background-2 mb-4 overflow-hidden">
       <div>
         {visibleCandidates?.map((branch, index) => (
           <div key={branch.name} className="relative">

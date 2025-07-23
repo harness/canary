@@ -41,7 +41,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
           {branch.name}
         </Text>
         <Text variant="body-single-line-normal" color="foreground-2">
-          {t('views:repos.hadRecentPushes', 'had recent pushes')}{' '}
+          {t('views:repos.hadRecentPushes', 'had recent pushes ')}
           <TimeAgoCard
             timestamp={branch.updated}
             textProps={{ variant: 'body-single-line-normal', color: 'foreground-2', truncate: true }}

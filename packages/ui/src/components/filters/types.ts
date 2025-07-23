@@ -87,6 +87,7 @@ export type {
   FilterValueTypes,
   FilterOptionConfig,
   ComboBoxFilterOptionConfig,
+  MultiSelectFilterOptionConfig,
   CheckboxFilterOptionConfig,
   TextFilterOptionConfig,
   CalendarFilterOptionConfig

@@ -1,5 +1,6 @@
 import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, ILabelsStore, LabelType } from '@/views'
+import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
@@ -274,6 +275,7 @@ export type PRListFilters = {
   created_lt?: Date
   created_gt?: Date
   label_by?: LabelsValue
+  review_decision?: CheckboxOptions[]
 }
 
 export enum PRFilterGroupTogglerOptions {

@@ -85,3 +85,9 @@ export const innerBlockName = (filePath: string) => `inner-${filePath}`
 // If there are more than 200 diffs, we decrease the detection margin to make sure browser do not crash. As a result, Cmd-F won't work well on diffs that got hidden/out of viewport.
 export const calculateDetectionMargin = (diffsLength: number) =>
   diffsLength >= 200 ? 5000 : IN_VIEWPORT_DETECTION_MARGIN
+
+export const getReviewOptions = () => [
+  { label: 'Approved', value: 'approved' },
+  { label: 'Changes Requested', value: 'changereq' },
+  { label: 'Pending', value: 'pending' }
+]

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
 import {
   Button,
@@ -30,6 +30,7 @@ import {
   PULL_REQUEST_LIST_HEADER_FILTER_STATES,
   PullRequestPageProps
 } from './pull-request.types'
+import { getReviewOptions } from './utils'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -42,7 +43,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   repoId,
   onFilterChange,
   onFilterOpen,
-  defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
   principalData,
@@ -59,7 +59,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     usePullRequestListStore()
 
   const { t } = useTranslation()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [_searchParams, setSearchParams] = useSearchParams()
   const [activeFilterGrp, setActiveFilterGrp] = useState<PRFilterGroupTogglerOptions>(PRFilterGroupTogglerOptions.All)
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
@@ -70,8 +70,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
-
-  const [isAllFilterDataPresent, setisAllFilterDataPresent] = useState<boolean>(true)
 
   const labelsFilterConfig: CustomFilterOptionConfig<keyof PRListFilters, LabelsValue> = {
     label: t('views:repos.prListFilterOptions.labels.label', 'Label'),
@@ -105,6 +103,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
+    reviewOptions: getReviewOptions(),
     isPrincipalsLoading: isPrincipalsLoading,
     customFilterOptions: [labelsFilterConfig],
     principalData: computedPrincipalData.map(userInfo => ({
@@ -133,19 +132,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const noData = !(pullRequests && pullRequests.length > 0)
-  const createdByFilter = searchParams.get('created_by')
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
-
-  useEffect(() => {
-    setisAllFilterDataPresent(
-      createdByFilter && !defaultSelectedAuthorError
-        ? !!defaultSelectedAuthor || computedPrincipalData.length > 0
-        : true
-    )
-  }, [defaultSelectedAuthor, defaultSelectedAuthorError, computedPrincipalData, createdByFilter])
 
   const showTopBar = !noData || selectedFiltersCnt > 0 || !!searchQuery?.length
 
@@ -229,7 +219,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           prev.delete('created_by')
         }
         // Update with proper userId
-        // prev.append('created_by', '3335')
+        prev.append('created_by', '3335')
         return prev
       })
     }
@@ -323,44 +313,40 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               </ListActions.Right>
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
-              renderSelectedFilters={filterFieldRenderer =>
-                isAllFilterDataPresent && (
-                  <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
-                    {PR_FILTER_OPTIONS.map(filterOption => {
-                      return (
-                        <PRListFilterHandler.Component
-                          parser={filterOption.parser}
-                          filterKey={filterOption.value}
-                          key={filterOption.value}
-                        >
-                          {({ onChange, removeFilter, value }) =>
-                            filterFieldRenderer({
-                              filterOption,
-                              onChange,
-                              removeFilter,
-                              value: value,
-                              onOpenChange: isOpen => {
-                                handleFilterOpen(filterOption.value, isOpen)
-                              }
-                            })
-                          }
-                        </PRListFilterHandler.Component>
-                      )
-                    })}
-                  </PRListFilterHandler.Content>
-                )
-              }
-              renderFilterOptions={filterOptionsRenderer =>
-                isAllFilterDataPresent && (
-                  <PRListFilterHandler.Dropdown>
-                    {(addFilter, availableFilters, resetFilters) => (
-                      <div className="flex items-center gap-x-4">
-                        {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
-                      </div>
-                    )}
-                  </PRListFilterHandler.Dropdown>
-                )
-              }
+              renderSelectedFilters={filterFieldRenderer => (
+                <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
+                  {PR_FILTER_OPTIONS.map(filterOption => {
+                    return (
+                      <PRListFilterHandler.Component
+                        parser={filterOption.parser}
+                        filterKey={filterOption.value}
+                        key={filterOption.value}
+                      >
+                        {({ onChange, removeFilter, value }) =>
+                          filterFieldRenderer({
+                            filterOption,
+                            onChange,
+                            removeFilter,
+                            value: value,
+                            onOpenChange: isOpen => {
+                              handleFilterOpen(filterOption.value, isOpen)
+                            }
+                          })
+                        }
+                      </PRListFilterHandler.Component>
+                    )
+                  })}
+                </PRListFilterHandler.Content>
+              )}
+              renderFilterOptions={filterOptionsRenderer => (
+                <PRListFilterHandler.Dropdown>
+                  {(addFilter, availableFilters, resetFilters) => (
+                    <div className="flex items-center gap-x-4">
+                      {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
+                    </div>
+                  )}
+                </PRListFilterHandler.Dropdown>
+              )}
               openedFilter={openedFilter}
               setOpenedFilter={setOpenedFilter}
               selectedFiltersCnt={selectedFiltersCnt}

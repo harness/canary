@@ -2,7 +2,9 @@ import { isEmpty } from 'lodash-es'
 
 import { ReviewerListPullReqOkResponse, TypesUser } from '@harnessio/code-service-client'
 
-import { ApprovalItem, ApprovalItems, PullReqReviewDecision } from './types/types'
+import { ApprovalItem, ApprovalItems, PullReqReviewDecision } from './types'
+
+// import { ApprovalItem, ApprovalItems, PullReqReviewDecision } from './types/types'
 
 export function parseSpecificDiff(rawDiff: string, sourceFileName: string, targetFileName: string) {
   // Split the raw diff into individual diffs

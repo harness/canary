@@ -16,11 +16,11 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
-import { usePRChecksDecision } from '../../pages/pull-request/hooks/usePRChecksDecision'
-import { extractSpecificViolations, getCommentsInfoData } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
+import { usePRChecksDecision } from './hooks/usePRChecksDecision'
+import { extractSpecificViolations, getCommentsInfoData } from './pull-request-utils'
 import { PR_COMMENTS_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {

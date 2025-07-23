@@ -2,8 +2,8 @@ import { create } from 'zustand'
 
 import { CreateWebhookFormFields, WebhookExecutionType, WebhookStore } from '@harnessio/ui/views'
 
-import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
+import { timeAgoFromEpochTime } from '../../../utils/time-utils'
 
 export const useWebhookStore = create<WebhookStore>(set => ({
   webhooks: null,

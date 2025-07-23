@@ -91,6 +91,9 @@ export default {
           solidred: 'var(--cn-set-red-solid-border)',
           risk: 'var(--cn-icon-risk)'
         },
+        'cn-icon': {
+          yellow: 'var(--cn-set-yellow-solid-bg)'
+        },
         toast: {
           background: {
             danger: 'hsla(var(--canary-toast-background-danger))'

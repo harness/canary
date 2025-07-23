@@ -23,7 +23,8 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   setSearchQuery,
   isRepository = false,
   className,
-  labelsListViewProps
+  labelsListViewProps,
+  createdIn
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -95,6 +96,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
             {...labelsListViewProps}
             labels={spaceLabels}
             labelContext={{ space: space_ref, repo: repo_ref }}
+            createdIn={createdIn}
             handleResetQueryAndPages={handleResetQueryAndPages}
             searchQuery={searchQuery}
             values={spaceValues}

@@ -64,12 +64,14 @@ export const RepoLabelsList = () => {
     label?.scope === 0 ? deleteRepoLabel({ key }) : deleteSpaceLabel({ key })
   }
 
+  console.log('repo_ref', repo_ref)
+
   return (
     <>
       <LabelsListPage
         className="max-w-[772px] px-0"
         useLabelsStore={useLabelsStore}
-        createdIn={space_ref}
+        createdIn={repo_ref}
         searchQuery={query}
         setSearchQuery={setQuery}
         isRepository

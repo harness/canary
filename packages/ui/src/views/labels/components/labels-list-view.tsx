@@ -22,6 +22,22 @@ export interface LabelsListViewProps {
    * When the widthType is set to 'small', 'name' column is bigger and 'description' column is smaller
    */
   widthType?: 'default' | 'small'
+  createdIn?: string
+}
+
+const getDisplayPath = (scope: number, path?: string): string => {
+  if (!path) return ''
+
+  switch (scope) {
+    case 0:
+      return path
+    case 1:
+      return path.split('/')[0] || ''
+    case 2:
+      return path.split('/').slice(0, 2).join('/')
+    default:
+      return path.split('/').slice(0, 3).join('/')
+  }
 }
 
 export const LabelsListView: FC<LabelsListViewProps> = ({
@@ -32,7 +48,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   handleResetQueryAndPages,
   values,
   widthType = 'default',
-  labelContext
+  createdIn
 }) => {
   const { t } = useTranslation()
 
@@ -94,11 +110,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                   size="2xs"
                 />
 
-                <span
-                  className="truncate"
-                  title={label.scope === 0 ? (labelContext.repo ?? '') : (labelContext.space ?? '')}
-                >
-                  {label.scope === 0 ? labelContext.repo : labelContext.space}
+                <span className="truncate" title={getDisplayPath(label.scope, createdIn)}>
+                  {getDisplayPath(label.scope, createdIn)}
                 </span>
               </span>
             </Table.Cell>

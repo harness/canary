@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 
 import {
   Avatar,
@@ -6,6 +6,7 @@ import {
   CommitCopyActions,
   IconV2,
   Layout,
+  LinkProps,
   NodeGroup,
   StackedList,
   Text,
@@ -19,6 +20,7 @@ type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
   toCode?: ({ sha }: { sha: string }) => string
 }
 interface CommitProps extends Partial<RoutingProps> {
@@ -26,8 +28,9 @@ interface CommitProps extends Partial<RoutingProps> {
   className?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, className }) => {
+export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequest, toCode, className }) => {
   const { Link, navigate } = useRouterContext()
+
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -62,7 +65,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
-                      <Layout.Horizontal className="w-full truncate">
+                      <Layout.Horizontal className="w-full">
                         <Link
                           className="grow overflow-hidden"
                           onClick={e => {
@@ -72,22 +75,14 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                           to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                         >
                           <Layout.Vertical>
-                            {toCommitDetails ? (
-                              <p>
-                                <Link
-                                  className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
-                                  to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
-                                >
-                                  <Text variant="heading-base" title={commit.message || commit.title} truncate>
-                                    {commit.title}
-                                  </Text>
-                                </Link>
-                              </p>
-                            ) : (
-                              <Text variant="heading-base" title={commit.message || commit.title} truncate>
-                                {commit.title}
-                              </Text>
-                            )}
+                            {renderCommitTitle({
+                              commitMessage: commit.title,
+                              title: commit.message || commit.title,
+                              sha: commit.sha,
+                              Link,
+                              toPullRequest,
+                              toCommitDetails
+                            })}
                             <div className="flex items-center gap-x-1.5">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
                               <Text color="foreground-3">{authorName || ''}</Text>
@@ -130,4 +125,95 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
       ))}
     </div>
   )
+}
+
+function renderCommitLink({
+  commitMessage = '',
+  sha = '',
+  toCommitDetails,
+  Link
+}: {
+  commitMessage?: string
+  sha?: string
+  toCommitDetails: RoutingProps['toCommitDetails']
+  Link: React.ComponentType<LinkProps>
+}) {
+  return (
+    <Link
+      className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
+      to={`${toCommitDetails?.({ sha })}`}
+    >
+      <Text variant="heading-base" truncate>
+        {commitMessage}
+      </Text>
+    </Link>
+  )
+}
+
+function renderCommitTitle({
+  commitMessage = '',
+  title = '',
+  sha = '',
+  toPullRequest,
+  toCommitDetails,
+  Link
+}: {
+  commitMessage?: string
+  title?: string
+  sha?: string
+  toCommitDetails: RoutingProps['toCommitDetails']
+  toPullRequest: RoutingProps['toPullRequest']
+  Link: React.ComponentType<LinkProps>
+}) {
+  if (!toCommitDetails) {
+    return (
+      <Text variant="heading-base" truncate title={commitMessage}>
+        {commitMessage}
+      </Text>
+    )
+  }
+
+  const match = commitMessage.match(/\(#\d+\)(\n|$)/)
+
+  if (match?.length && toPullRequest) {
+    const pullRequestId = match[0].replace('(#', '').replace(')', '').replace('\n', '')
+    const pullRequestIdInt = parseInt(pullRequestId)
+    if (!isNaN(pullRequestIdInt)) {
+      const peaces = commitMessage.split(match[0])
+      const peacesEls = peaces.map(peace => {
+        return renderCommitLink({
+          commitMessage: peace,
+          sha,
+          toCommitDetails,
+          Link
+        })
+      })
+      peacesEls.splice(
+        1,
+        0,
+        <Text variant="heading-base">
+          <Layout.Flex>
+            &nbsp;(
+            <Link
+              className="text-sm font-medium leading-snug hover:underline"
+              title={commitMessage}
+              to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
+            >
+              #{pullRequestId}
+            </Link>
+            )&nbsp;
+          </Layout.Flex>
+        </Text>
+      )
+
+      return <Layout.Flex>{peacesEls}</Layout.Flex>
+    }
+  }
+
+  return renderCommitLink({
+    commitMessage,
+    sha,
+    toCommitDetails,
+    Link
+  })
 }

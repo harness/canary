@@ -57,7 +57,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
           </Link>
         </Button>
         <Button
-          size="sm"
+          size="xs"
           variant="ghost"
           iconOnly
           onClick={handleDismiss}

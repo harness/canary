@@ -28,7 +28,7 @@ import { transformFormOutput } from '../../../utils/repo-tag-rules-utils'
 import { useRepoRulesStore } from '../stores/repo-settings-store'
 import { useTagRulesStore } from '../stores/repo-tags-rules-store'
 
-export const RepoTagSettingsRulesPageContainer = () => {
+export const RepoTagRulesContainer = () => {
   const { t } = useTranslation()
   const routes = useRoutes()
   const navigate = useNavigate()

@@ -29,7 +29,7 @@ import { transformFormOutput } from '../../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../stores/repo-branch-rules-store'
 import { useRepoRulesStore } from '../stores/repo-settings-store'
 
-export const RepoBranchSettingsRulesPageContainer = () => {
+export const RepoBranchRulesContainer = () => {
   const { t } = useTranslation()
   const routes = useRoutes()
   const navigate = useNavigate()

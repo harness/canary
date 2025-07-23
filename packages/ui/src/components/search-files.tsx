@@ -38,9 +38,15 @@ interface SearchFilesProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
   searchInputSize?: SearchInputProps['size']
+  inputContainerClassName?: string
 }
 
-export const SearchFiles = ({ navigateToFile, filesList, searchInputSize = 'sm' }: SearchFilesProps) => {
+export const SearchFiles = ({
+  navigateToFile,
+  filesList,
+  searchInputSize = 'sm',
+  inputContainerClassName
+}: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const { t } = useTranslation()
@@ -84,13 +90,11 @@ export const SearchFiles = ({ navigateToFile, filesList, searchInputSize = 'sm' 
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Anchor asChild>
-        <div>
-          <SearchInput
-            placeholder={t('component:searchFile.input', 'Search files...')}
-            size={searchInputSize}
-            onChange={handleInputChange}
-          />
-        </div>
+        <SearchInput
+          inputContainerClassName={inputContainerClassName}
+          size={searchInputSize}
+          onChange={handleInputChange}
+        />
       </Popover.Anchor>
       <Popover.Content
         align="start"

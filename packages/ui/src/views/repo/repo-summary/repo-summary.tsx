@@ -1,3 +1,5 @@
+import { cloneElement } from 'react'
+
 import {
   Button,
   ButtonLayout,
@@ -176,11 +178,16 @@ export function RepoSummaryView({
                   </>
                 )}
             */}
-            <ListActions.Root>
+            <ListActions.Root className="flex-wrap gap-y-2">
               <ListActions.Left>
-                <ButtonLayout>
-                  {branchSelectorRenderer}
-                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="md" />
+                <ButtonLayout className="w-full " horizontalAlign="start">
+                  {cloneElement(branchSelectorRenderer, { className: 'w-full max-w-fit' })}
+                  <SearchFiles
+                    navigateToFile={navigateToFile}
+                    filesList={filesList}
+                    searchInputSize="md"
+                    inputContainerClassName="max-w-80 min-w-40 w-full"
+                  />
                 </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
@@ -295,7 +302,6 @@ export function RepoSummaryView({
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
-              is_public={repository?.is_public}
             />
             {renderSidebarComponent}
           </SandboxLayout.Content>

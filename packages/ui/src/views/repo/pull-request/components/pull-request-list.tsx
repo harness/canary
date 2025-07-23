@@ -51,7 +51,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     !!closedPRs
   ) {
     return (
-      <StackedList.Root>
+      <StackedList.Root className="grid grow grid-rows-[auto,1fr]">
         <StackedList.Item disableHover>
           <StackedList.Field
             title={
@@ -97,7 +97,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     openPRs > 0
   ) {
     return (
-      <StackedList.Root>
+      <StackedList.Root className="grid grow grid-rows-[auto,1fr]">
         <StackedList.Item disableHover>
           <StackedList.Field
             title={

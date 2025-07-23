@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Button, DropdownMenu, IconV2, Text, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
+import { cn } from '@utils/cn'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
@@ -22,6 +23,7 @@ interface BranchSelectorProps {
   preSelectedTab?: BranchSelectorTab
   isFilesPage?: boolean
   setCreateBranchDialogOpen?: (open: boolean) => void
+  className?: string
 }
 export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   repoId,
@@ -39,7 +41,8 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   dynamicWidth = false,
   preSelectedTab,
   isFilesPage = false,
-  setCreateBranchDialogOpen
+  setCreateBranchDialogOpen,
+  className
 }) => {
   const isTag = selectedBranchorTag
     ? tagList?.some(tag => tag.name === selectedBranchorTag.name && tag.sha === selectedBranchorTag.sha)
@@ -49,7 +52,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
-        <Button className="justify-start px-3" variant="outline" size={buttonSize}>
+        <Button className={cn('justify-start px-3', className)} variant="outline" size={buttonSize}>
           {!branchPrefix && (
             <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
           )}

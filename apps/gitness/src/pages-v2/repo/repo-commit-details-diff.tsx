@@ -12,7 +12,7 @@ import {
 } from '@harnessio/code-service-client'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
-import Explorer from '../../components/FileExplorer'
+import Explorer from '../../components-v2/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'

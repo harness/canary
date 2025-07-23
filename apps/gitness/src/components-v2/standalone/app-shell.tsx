@@ -5,7 +5,6 @@ import { NavbarItemType, Toaster, useSidebar } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { MainContentLayout } from '@harnessio/ui/views'
 
-import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../../data/pinned-items'
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -15,6 +14,7 @@ import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import { PathParams } from '../../RouteDefinitions'
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
+import { useNav } from '../stores/recent-pinned-nav-links.store'
 import { AppSideBar } from './side-bar'
 
 interface NavLinkStorageInterface {

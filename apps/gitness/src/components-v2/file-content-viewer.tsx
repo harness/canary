@@ -14,7 +14,6 @@ import { BranchSelectorTab, CommitsList, monacoThemes } from '@harnessio/ui/view
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
-import GitBlame from '../components/GitBlame'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
@@ -34,6 +33,7 @@ import {
   normalizeGitRef,
   REFS_TAGS_PREFIX
 } from '../utils/git-utils'
+import GitBlame from './GitBlame'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
   return getIsMarkdown(language) ? 'preview' : 'code'

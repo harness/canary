@@ -53,49 +53,42 @@ const flexVariants = cva('flex', {
   }
 })
 
-const spacingVariants = cva('', {
-  variants: {
-    spacing: {
-      small: 'gap-[var(--cn-spacing-2)]',
-      medium: 'gap-[var(--cn-spacing-4)]',
-      large: 'gap-[var(--cn-spacing-6)]'
-    }
-  },
-  defaultVariants: {
-    spacing: 'medium'
-  }
-})
-
 const gapVariants = cva('', {
   variants: {
     gap: {
       none: 'gap-0',
-      xs: 'gap-[var(--cn-layout-xs,var(--cn-spacing-2))]',
-      sm: 'gap-[var(--cn-layout-sm,var(--cn-spacing-3))]',
-      md: 'gap-[var(--cn-layout-md,var(--cn-spacing-4))]',
-      lg: 'gap-[var(--cn-layout-lg,var(--cn-spacing-6))]',
-      xl: 'gap-[var(--cn-layout-xl,var(--cn-spacing-8))]'
+      '3xs': 'gap-[var(--cn-layout-3xs)]',
+      '2xs': 'gap-[var(--cn-layout-2xs)]',
+      xs: 'gap-[var(--cn-layout-xs)]',
+      sm: 'gap-[var(--cn-layout-sm)]',
+      md: 'gap-[var(--cn-layout-md)]',
+      lg: 'gap-[var(--cn-layout-lg)]',
+      xl: 'gap-[var(--cn-layout-xl)]'
     },
     gapX: {
       none: 'gap-x-0',
-      xs: 'gap-x-[var(--cn-layout-xs,var(--cn-spacing-2))]',
-      sm: 'gap-x-[var(--cn-layout-sm,var(--cn-spacing-3))]',
-      md: 'gap-x-[var(--cn-layout-md,var(--cn-spacing-4))]',
-      lg: 'gap-x-[var(--cn-layout-lg,var(--cn-spacing-6))]',
-      xl: 'gap-x-[var(--cn-layout-xl,var(--cn-spacing-8))]'
+      '3xs': 'gap-x-[var(--cn-layout-3xs)]',
+      '2xs': 'gap-x-[var(--cn-layout-2xs)]',
+      xs: 'gap-x-[var(--cn-layout-xs)]',
+      sm: 'gap-x-[var(--cn-layout-sm)]',
+      md: 'gap-x-[var(--cn-layout-md)]',
+      lg: 'gap-x-[var(--cn-layout-lg)]',
+      xl: 'gap-x-[var(--cn-layout-xl)]'
     },
     gapY: {
       none: 'gap-y-0',
-      xs: 'gap-y-[var(--cn-layout-xs,var(--cn-spacing-2))]',
-      sm: 'gap-y-[var(--cn-layout-sm,var(--cn-spacing-3))]',
-      md: 'gap-y-[var(--cn-layout-md,var(--cn-spacing-4))]',
-      lg: 'gap-y-[var(--cn-layout-lg,var(--cn-spacing-6))]',
-      xl: 'gap-y-[var(--cn-layout-xl,var(--cn-spacing-8))]'
+      '3xs': 'gap-y-[var(--cn-layout-3xs)]',
+      '2xs': 'gap-y-[var(--cn-layout-2xs)]',
+      xs: 'gap-y-[var(--cn-layout-xs)]',
+      sm: 'gap-y-[var(--cn-layout-sm)]',
+      md: 'gap-y-[var(--cn-layout-md)]',
+      lg: 'gap-y-[var(--cn-layout-lg)]',
+      xl: 'gap-y-[var(--cn-layout-xl)]'
     }
   }
 })
 
-type GapSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type GapSize = 'none' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface LayoutProps {
   children?: ReactNode
@@ -157,12 +150,12 @@ const Grid = forwardRef<HTMLDivElement, GridProps & HTMLAttributes<HTMLDivElemen
 )
 Grid.displayName = 'LayoutGrid'
 
-interface HorizontalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
+interface HorizontalProps extends Omit<FlexProps, 'direction'> {}
 
 const Horizontal = forwardRef<HTMLDivElement, HorizontalProps & HTMLAttributes<HTMLDivElement>>(
-  ({ children, className, spacing, ...props }, ref) => {
+  ({ children, className, gap = 'md', ...props }, ref) => {
     return (
-      <Flex ref={ref} direction="row" className={cn(spacingVariants({ spacing }), className)} {...props}>
+      <Flex ref={ref} direction="row" className={className} gap={gap} {...props}>
         {children}
       </Flex>
     )
@@ -170,12 +163,12 @@ const Horizontal = forwardRef<HTMLDivElement, HorizontalProps & HTMLAttributes<H
 )
 Horizontal.displayName = 'LayoutHorizontal'
 
-interface VerticalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
+interface VerticalProps extends Omit<FlexProps, 'direction'> {}
 
 const Vertical = forwardRef<HTMLDivElement, VerticalProps & HTMLAttributes<HTMLDivElement>>(
-  ({ children, className, spacing, ...props }, ref) => {
+  ({ children, className, gap = 'md', ...props }, ref) => {
     return (
-      <Flex ref={ref} direction="column" className={cn(spacingVariants({ spacing }), className)} {...props}>
+      <Flex ref={ref} direction="column" className={className} gap={gap} {...props}>
         {children}
       </Flex>
     )

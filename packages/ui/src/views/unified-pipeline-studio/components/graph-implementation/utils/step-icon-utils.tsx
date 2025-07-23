@@ -8,7 +8,7 @@ import {
   getIsTemplateStep
 } from './common-step-utils'
 
-const getIconNameBasedOnStep = (step: any): IconPropsV2['name'] => {
+const getIconNameBasedOnStep = (step: any): NonNullable<IconPropsV2['name']> => {
   if (getIsRunStep(step)) return 'run'
 
   if (getIsRunTestStep(step)) return 'run-test'

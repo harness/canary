@@ -7,7 +7,7 @@ import { EditRepoDetails } from './edit-repo-details-dialog'
 
 interface DetailItem {
   id: string
-  iconName: 'git-commit' | 'git-pull-request' | 'tag' | 'git-branch' | IconPropsV2['name']
+  iconName: 'git-commit' | 'git-pull-request' | 'tag' | 'git-branch' | NonNullable<IconPropsV2['name']>
   name: string
   count: number
   to: string

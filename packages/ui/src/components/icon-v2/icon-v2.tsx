@@ -23,22 +23,39 @@ const iconVariants = cva('cn-icon', {
   }
 })
 
-export interface IconPropsV2 extends SVGProps<SVGSVGElement> {
-  name: IconV2NamesType
+interface BaseIconPropsV2 extends SVGProps<SVGSVGElement> {
   size?: VariantProps<typeof iconVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
 }
 
-const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false }) => {
-  const Component = IconNameMapV2[name]
+interface IconDefaultPropsV2 extends BaseIconPropsV2 {
+  name: IconV2NamesType
+  fallback?: never
+}
+
+interface IconFallbackPropsV2 extends BaseIconPropsV2 {
+  name?: IconV2NamesType
+  fallback: IconV2NamesType
+}
+
+export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
+
+const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false, fallback }) => {
+  const Component = name ? IconNameMapV2[name] : undefined
+  const sizeClasses = skipSize ? '' : iconVariants({ size })
+
+  if (!Component && fallback) {
+    console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
+    const FallbackComponent = IconNameMapV2[fallback]
+
+    return <FallbackComponent className={cn(sizeClasses, className)} />
+  }
 
   if (!Component) {
     console.warn(`Icon "${name}" not found in IconNameMapV2.`)
     return null
   }
-
-  const sizeClasses = skipSize ? '' : iconVariants({ size })
 
   return <Component className={cn(sizeClasses, className)} />
 }

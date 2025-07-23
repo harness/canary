@@ -151,7 +151,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                             cn({
                               check: checkState === 'success',
                               xmark: checkState === 'failure'
-                            }) as IconPropsV2['name']
+                            }) as NonNullable<IconPropsV2['name']>
                           }
                           size="2xs"
                         />

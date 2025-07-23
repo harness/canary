@@ -25,7 +25,7 @@ import { transformDataFromApi, transformFormOutput } from '../../utils/repo-bran
 import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
-export const ProjectRulesCreateOrUpdateContainer = () => {
+export const ProjectBranchRulesContainer = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 

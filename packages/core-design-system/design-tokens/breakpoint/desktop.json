@@ -394,15 +394,23 @@
     },
     "lg": {
       "$type": "number",
-      "$value": "{spacing.6}"
+      "$value": "{spacing.5}"
     },
     "xl": {
       "$type": "number",
-      "$value": "{spacing.8}"
+      "$value": "{spacing.6}"
     },
     "2xl": {
       "$type": "number",
+      "$value": "{spacing.8}"
+    },
+    "3xl": {
+      "$type": "number",
       "$value": "{spacing.10}"
+    },
+    "4xl": {
+      "$type": "number",
+      "$value": "{spacing.20}"
     }
   }
 }

@@ -69,8 +69,8 @@ The `ToggleGroup.Root` component can be used as a controlled or uncontrolled com
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large">
-      <Layout.Vertical spacing="small">
+    <Layout.Vertical gap="lg">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Controlled type</Text>
         <ToggleGroup.Root value="2" onValueChange={() => {}}>
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -78,7 +78,7 @@ The `ToggleGroup.Root` component can be used as a controlled or uncontrolled com
           <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Uncontrolled with default value</Text>
         <ToggleGroup.Root value="2">
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -86,7 +86,7 @@ The `ToggleGroup.Root` component can be used as a controlled or uncontrolled com
           <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Fully uncontrolled</Text>
         <ToggleGroup.Root>
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -105,8 +105,8 @@ The `ToggleGroup.Root` component accepts a `type` prop to define selection behav
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large">
-      <Layout.Vertical spacing="small">
+    <Layout.Vertical gap="lg">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Single type</Text>
         <ToggleGroup.Root value="2">
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -114,7 +114,7 @@ The `ToggleGroup.Root` component accepts a `type` prop to define selection behav
           <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Multiple type</Text>
         <ToggleGroup.Root type="multiple" value={[2]}>
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -133,8 +133,8 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large">
-      <Layout.Vertical spacing="small">
+    <Layout.Vertical gap="lg">
+      <Layout.Vertical gap="xs">
       <Text variant="heading-subsection" align="center">variant / selectedVariant</Text>
       <Text variant="body-strong" align="center">outline / primary</Text>
       <ToggleGroup.Root value="2">
@@ -143,7 +143,7 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
         <ToggleGroup.Item value="3" text="Option 3" />
       </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
       <Text variant="body-strong" align="center">outline / secondary</Text>
       <ToggleGroup.Root value="2" variant="outline" selectedVariant="secondary">
         <ToggleGroup.Item value="1" text="Option 1" />
@@ -151,7 +151,7 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
         <ToggleGroup.Item value="3" text="Option 3" />
       </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
       <Text variant="body-strong" align="center">ghost / primary</Text>
       <ToggleGroup.Root value="2" variant="ghost">
         <ToggleGroup.Item value="1" text="Option 1" />
@@ -159,7 +159,7 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
         <ToggleGroup.Item value="3" text="Option 3" />
       </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
       <Text variant="body-strong" align="center">ghost / secondary</Text>
       <ToggleGroup.Root value="2" variant="ghost" selectedVariant="secondary">
         <ToggleGroup.Item value="1" text="Option 1" />
@@ -167,7 +167,7 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
         <ToggleGroup.Item value="3" text="Option 3" />
       </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
       <Text variant="body-strong" align="center">transparent / primary</Text>
       <ToggleGroup.Root value="2" variant="transparent">
         <ToggleGroup.Item value="1" text="Option 1" />
@@ -175,7 +175,7 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
         <ToggleGroup.Item value="3" text="Option 3" />
       </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
       <Text variant="body-strong" align="center">transparent / secondary</Text>
       <ToggleGroup.Root value="2" variant="transparent" selectedVariant="secondary">
         <ToggleGroup.Item value="1" text="Option 1" />
@@ -194,8 +194,8 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large">
-      <Layout.Vertical spacing="small">
+    <Layout.Vertical gap="lg">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Medium size (md)</Text>
         <ToggleGroup.Root value="2">
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -203,7 +203,7 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
           <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Small size (sm)</Text>
         <ToggleGroup.Root value="2" size="sm">
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -211,7 +211,7 @@ The `ToggleGroup.Root` component accepts a `size` prop to control its overall di
           <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Extra Small size (xs)</Text>
         <ToggleGroup.Root value="2" size="xs">
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -230,8 +230,8 @@ The `ToggleGroup.Root` component accepts a `orientation` prop to control the dir
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large">
-      <Layout.Vertical spacing="small">
+    <Layout.Vertical gap="lg">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Horizontal orientation</Text>
         <ToggleGroup.Root value="2">
           <ToggleGroup.Item value="1" text="Option 1" />
@@ -239,7 +239,7 @@ The `ToggleGroup.Root` component accepts a `orientation` prop to control the dir
           <ToggleGroup.Item value="3" text="Option 3" />
         </ToggleGroup.Root>
       </Layout.Vertical>
-      <Layout.Vertical spacing="small">
+      <Layout.Vertical gap="xs">
         <Text variant="heading-subsection">Vertical orientation</Text>
         <ToggleGroup.Root value="2" orientation="vertical">
           <ToggleGroup.Item value="1" text="Option 1" />

@@ -15,7 +15,7 @@ import { DocsPage } from "@/components/docs-page";
     const [group1Value, setGroup1Value] = React.useState('option1');
 
     return (
-      <Layout.Vertical spacing="large" className="min-w-[400px]">
+      <Layout.Vertical gap="lg" className="min-w-[400px]">
         <Radio.Root
             value={group1Value}
             onValueChange={setGroup1Value}
@@ -68,7 +68,7 @@ If there's no label, the optional indicator will be shown next to each individua
     const [group1Value, setGroup1Value] = React.useState('option1');
 
       return (
-        <Layout.Vertical spacing="large" className="min-w-[400px]">
+        <Layout.Vertical gap="lg" className="min-w-[400px]">
             <Radio.Root
               value={group1Value}
               onValueChange={setGroup1Value}
@@ -103,7 +103,7 @@ Alternatively, the `disabled` prop can be passed to individual `Radio.Item` to d
     const [group1Value, setGroup1Value] = React.useState('option1');
 
       return (
-        <Layout.Vertical spacing="large" className="min-w-[400px]">
+        <Layout.Vertical gap="lg" className="min-w-[400px]">
             <Radio.Root
               value={group1Value}
               onValueChange={setGroup1Value}
@@ -138,7 +138,7 @@ The radio group can be marked as error via the `error` prop on `Radio.Root`.
     const [group1Value, setGroup1Value] = React.useState('');
 
       return (
-        <Layout.Vertical spacing="large" className="min-w-[400px]">
+        <Layout.Vertical gap="lg" className="min-w-[400px]">
             <Radio.Root
               value={group1Value}
               onValueChange={setGroup1Value}
@@ -165,7 +165,7 @@ Available options are `horizontal` and `vertical` (default).
     const [group1Value, setGroup1Value] = React.useState('option1');
 
         return (
-          <Layout.Vertical spacing="large" className="min-w-[400px]">
+          <Layout.Vertical gap="lg" className="min-w-[400px]">
             <Radio.Root
                 value={group1Value}
                 onValueChange={setGroup1Value}

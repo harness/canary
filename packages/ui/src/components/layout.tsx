@@ -53,19 +53,6 @@ const flexVariants = cva('flex', {
   }
 })
 
-const spacingVariants = cva('', {
-  variants: {
-    spacing: {
-      small: 'gap-[var(--cn-spacing-2)]',
-      medium: 'gap-[var(--cn-spacing-4)]',
-      large: 'gap-[var(--cn-spacing-6)]'
-    }
-  },
-  defaultVariants: {
-    spacing: 'medium'
-  }
-})
-
 const gapVariants = cva('', {
   variants: {
     gap: {
@@ -163,12 +150,12 @@ const Grid = forwardRef<HTMLDivElement, GridProps & HTMLAttributes<HTMLDivElemen
 )
 Grid.displayName = 'LayoutGrid'
 
-interface HorizontalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
+interface HorizontalProps extends Omit<FlexProps, 'direction'> {}
 
 const Horizontal = forwardRef<HTMLDivElement, HorizontalProps & HTMLAttributes<HTMLDivElement>>(
-  ({ children, className, spacing, ...props }, ref) => {
+  ({ children, className, gap = 'md', ...props }, ref) => {
     return (
-      <Flex ref={ref} direction="row" className={cn(spacingVariants({ spacing }), className)} {...props}>
+      <Flex ref={ref} direction="row" className={className} gap={gap} {...props}>
         {children}
       </Flex>
     )
@@ -176,12 +163,12 @@ const Horizontal = forwardRef<HTMLDivElement, HorizontalProps & HTMLAttributes<H
 )
 Horizontal.displayName = 'LayoutHorizontal'
 
-interface VerticalProps extends Omit<FlexProps, 'direction'>, VariantProps<typeof spacingVariants> {}
+interface VerticalProps extends Omit<FlexProps, 'direction'> {}
 
 const Vertical = forwardRef<HTMLDivElement, VerticalProps & HTMLAttributes<HTMLDivElement>>(
-  ({ children, className, spacing, ...props }, ref) => {
+  ({ children, className, gap = 'md', ...props }, ref) => {
     return (
-      <Flex ref={ref} direction="column" className={cn(spacingVariants({ spacing }), className)} {...props}>
+      <Flex ref={ref} direction="column" className={className} gap={gap} {...props}>
         {children}
       </Flex>
     )

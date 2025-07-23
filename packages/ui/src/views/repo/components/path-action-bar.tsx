@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, IconV2, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 

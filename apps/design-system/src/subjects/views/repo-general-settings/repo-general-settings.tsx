@@ -38,6 +38,7 @@ export const RepoGeneralSettings = () => {
         useRepoRulesStore={useRepoRulesStore}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
         branchSelectorRenderer={DummyComponent}
+        openRepoArchiveDialog={() => {}}
       />
 
       <DeleteAlertDialog

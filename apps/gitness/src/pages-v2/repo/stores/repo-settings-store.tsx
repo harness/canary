@@ -19,6 +19,7 @@ interface IRepoStore {
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
+  verifyCommitterIdentity: boolean
 
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RepoRuleListOkResponse) => void
@@ -26,6 +27,7 @@ interface IRepoStore {
   setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
+  setVerifyCommitterIdentity: (enabled: boolean) => void
 }
 
 export const useRepoRulesStore = create<IRepoStore>(set => ({
@@ -34,13 +36,15 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     name: '',
     description: '',
     defaultBranch: '',
-    isPublic: false
+    isPublic: false,
+    archived: false
   },
   branches: [],
   presetRuleData: null,
 
   rules: null,
   securityScanning: false,
+  verifyCommitterIdentity: false,
   principals: null,
   recentStatusChecks: null,
 
@@ -51,7 +55,8 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
         name: repoData.identifier || '',
         description: repoData.description || '',
         defaultBranch: repoData.default_branch || '',
-        isPublic: repoData.is_public ?? false
+        isPublic: repoData.is_public ?? false,
+        archived: repoData.archived ?? false
       }
     }),
   setRules: data => {
@@ -87,5 +92,6 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       return
     }
     set({ recentStatusChecks: data })
-  }
+  },
+  setVerifyCommitterIdentity: enabled => set({ verifyCommitterIdentity: enabled })
 }))

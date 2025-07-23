@@ -5,7 +5,8 @@ export const useRepoRulesStore = (): IRepoStore => ({
     name: 'canary',
     description: '',
     defaultBranch: 'main',
-    isPublic: true
+    isPublic: true,
+    archived: false
   },
   rules: [
     {
@@ -17,6 +18,7 @@ export const useRepoRulesStore = (): IRepoStore => ({
     }
   ],
   securityScanning: false,
+  verifyCommitterIdentity: false,
   presetRuleData: null,
   principals: [
     {

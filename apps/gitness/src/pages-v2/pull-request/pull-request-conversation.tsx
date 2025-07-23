@@ -551,8 +551,8 @@ export default function PullRequestConversationPage() {
         message:
           method === 'squash'
             ? pullReqCommits?.commits
-                ?.map(commit => `* ${commit.message}`)
-                .join('\n')
+                ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
+                .join('\n\n')
                 ?.slice(0, 1000)
             : ''
       }

@@ -1,5 +1,5 @@
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, ILabelsStore, LabelType } from '@/views'
+import { ColorsEnum, ILabelsStore, LabelType, TypesBranchTable } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
@@ -242,9 +242,11 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   spaceId?: string
   defaultSelectedAuthorError?: UsererrorError | null
   isPrincipalsLoading?: boolean
+  prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
+  repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void
   isLoading?: boolean

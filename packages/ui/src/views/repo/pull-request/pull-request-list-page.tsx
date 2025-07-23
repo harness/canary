@@ -16,9 +16,11 @@ import { SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+import { isEmpty } from 'lodash-es'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
+import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
@@ -38,11 +40,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   onFilterOpen,
   defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
+  prCandidateBranches,
   principalsSearchQuery,
   principalData,
   defaultSelectedAuthor,
   isPrincipalsLoading,
   isLoading,
+  repository,
   searchQuery,
   setSearchQuery,
   onLabelClick,
@@ -245,6 +249,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             <Text as="h1" variant="heading-section" className="mb-6">
               Pull Requests
             </Text>
+
+            {!isEmpty(prCandidateBranches) && (
+              <BranchCompareBannerList
+                prCandidateBranches={prCandidateBranches}
+                defaultBranchName={repository?.default_branch || 'main'}
+                repoId={repoId}
+                spaceId={spaceId}
+              />
+            )}
 
             <ListActions.Root>
               <ListActions.Left>

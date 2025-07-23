@@ -195,7 +195,7 @@ function renderCommitTitle({
           <Layout.Flex>
             &nbsp;(
             <Link
-              className="text-sm font-medium leading-snug hover:underline"
+              className="hover:underline"
               title={commitMessage}
               to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
             >

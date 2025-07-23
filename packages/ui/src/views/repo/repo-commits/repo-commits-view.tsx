@@ -12,6 +12,7 @@ export interface RepoCommitsViewProps {
   page: number
   setPage: (page: number) => void
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
   toCode?: ({ sha }: { sha: string }) => string
   renderProp: () => JSX.Element | null
 }
@@ -25,7 +26,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   setPage,
   toCommitDetails,
   toCode,
-  renderProp: BranchSelectorContainer
+  renderProp: BranchSelectorContainer,
+  toPullRequest
 }) => {
   const { t } = useTranslation()
 
@@ -93,7 +95,12 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
               />
             ) : (
               <>
-                <CommitsList data={commitsList} toCode={toCode} toCommitDetails={toCommitDetails} />
+                <CommitsList
+                  data={commitsList}
+                  toCode={toCode}
+                  toCommitDetails={toCommitDetails}
+                  toPullRequest={toPullRequest}
+                />
                 <Pagination
                   className="pl-[26px]"
                   indeterminate

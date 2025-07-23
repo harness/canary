@@ -60,6 +60,9 @@ export default function RepoCommitsPage() {
   return (
     <RepoCommitsView
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      toPullRequest={({ pullRequestId }: { pullRequestId: number }) =>
+        routes.toPullRequest({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
+      }
       toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, '*': sha })}
       commitsList={commitData?.commits}
       isFetchingCommits={isFetchingCommits}

@@ -34,13 +34,14 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     setValues,
     setRepoSpaceRef,
     resetLabelsAndValues,
-    setIsLoading
+    setIsLoading,
+    getParentScopeLabels
   } = useLabelsStore()
 
   const { data: { body: labels, headers } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
     {
       space_ref: `${space_ref}/+`,
-      queryParams: { page: queryPage || 1, limit: 10, query: query ?? '' }
+      queryParams: { page: queryPage || 1, limit: 10, query: query ?? '', inherited: getParentScopeLabels }
     },
     { enabled }
   )

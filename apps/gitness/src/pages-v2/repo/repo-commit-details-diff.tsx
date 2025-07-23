@@ -47,7 +47,8 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
 
   const { data: currentCommitDiffData } = useGetCommitDiffQuery({
     repo_ref: repoRef,
-    commit_sha: commitSHA || ''
+    commit_sha: commitSHA || '',
+    queryParams: {}
   })
 
   useEffect(() => {

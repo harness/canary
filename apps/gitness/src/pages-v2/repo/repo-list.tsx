@@ -1,7 +1,12 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
+import {
+  createFavorite,
+  deleteFavorite,
+  useDeleteRepositoryMutation,
+  useListReposQuery
+} from '@harnessio/code-service-client'
 import { Toast, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -20,6 +25,7 @@ export default function ReposListPage() {
   const spaceURL = useGetSpaceURLParam() ?? ''
   const {
     setRepositories,
+    repositories,
     page,
     setPage,
     importRepoIdentifier,
@@ -50,6 +56,7 @@ export default function ReposListPage() {
       retry: 5
     }
   )
+  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || '25')
 
   const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
     {},
@@ -65,12 +72,11 @@ export default function ReposListPage() {
 
   useEffect(() => {
     const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
-    const perPage = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     if (repoData) {
       const transformedRepos = transformRepoList(repoData)
-      setRepositories(transformedRepos, totalItems, perPage)
+      setRepositories(transformedRepos, totalItems, PAGE_SIZE)
     } else {
-      setRepositories([], totalItems, perPage)
+      setRepositories([], totalItems, PAGE_SIZE)
     }
   }, [repoData, headers, setRepositories])
 
@@ -99,6 +105,30 @@ export default function ReposListPage() {
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
 
+  const onFavoriteToggle = async ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
+    try {
+      if (isFavorite) {
+        await createFavorite({
+          body: {
+            resource_id: repoId,
+            resource_type: 'REPOSITORY'
+          }
+        })
+      } else {
+        await deleteFavorite({
+          body: {
+            resource_id: repoId,
+            resource_type: 'REPOSITORY'
+          }
+        })
+      }
+      const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: isFavorite } : repo)) ?? []
+      setRepositories(updated, updated.length, PAGE_SIZE)
+    } catch {
+      // TODO: Add error handling
+    }
+  }
+
   return (
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
@@ -112,6 +142,7 @@ export default function ReposListPage() {
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      onFavoriteToggle={onFavoriteToggle}
     />
   )
 }

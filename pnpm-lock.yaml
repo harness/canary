@@ -154,8 +154,8 @@ importers:
   apps/gitness:
     dependencies:
       '@harnessio/code-service-client':
-        specifier: 3.5.0
-        version: 3.5.0
+        specifier: 3.7.0
+        version: 3.7.0
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
@@ -2430,8 +2430,8 @@ packages:
     resolution: {integrity: sha512-kjotm7XJrJ6v+7knhPaRgaT6q8F8K2jiafwYdNHLzmV0uGLuZY43FK6smNSHUPrhq5kX2slCUy+RGG/xGqmIKA==}
     engines: {node: '>=10.13.0'}
 
-  '@harnessio/code-service-client@3.5.0':
-    resolution: {integrity: sha512-iHWYr3YOR5dICegth6+BcLTlcBsV1yw0+u6Rwz+iOWGEZrEhKLt1D+uUVy+Xa+5zJt8gDk5iWrQ9n3RxIdf/cA==}
+  '@harnessio/code-service-client@3.7.0':
+    resolution: {integrity: sha512-rrIDid5LKexYvvYLP0XbWl6S9QkzHU6vw4CRaXIToNXx2hOO1xC/bbiqSL7ZJen9XH2Y4APWntIhujf3/1aJHA==}
 
   '@hookform/resolvers@3.10.0':
     resolution: {integrity: sha512-79Dv+3mDF7i+2ajj7SkypSKHhl1cbln1OGavqrsF7p6mbUv11xpqpacPsGDCTRvCSjEEIez2ef1NveSVL3b0Ag==}
@@ -12100,7 +12100,7 @@ snapshots:
     dependencies:
       is-negated-glob: 1.0.0
 
-  '@harnessio/code-service-client@3.5.0': {}
+  '@harnessio/code-service-client@3.7.0': {}
 
   '@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2))':
     dependencies:

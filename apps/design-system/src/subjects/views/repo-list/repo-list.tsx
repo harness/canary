@@ -34,6 +34,7 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
         searchQuery=""
         setSearchQuery={noop}
         setQueryPage={noop}
+        onFavoriteToggle={noop}
         {...props}
       />
     </>

@@ -2,11 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
-  GitPathDetails,
   OpenapiContentInfo,
   OpenapiGetContentOutput,
   pathDetails,
   RepoPathsDetailsOutput,
+  TypesPathDetails,
   UpdateRepositoryErrorResponse,
   useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
@@ -257,7 +257,7 @@ export default function RepoSummaryPage() {
         if (response?.details && response.details.length) {
           setFiles(
             sortFilesByType(
-              response.details.map((item: GitPathDetails) => ({
+              response.details.map((item: TypesPathDetails) => ({
                 id: item?.path || '',
                 type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
                 name: item?.path || '',

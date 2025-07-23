@@ -40,7 +40,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { repoData, securityScanning } = useRepoRulesStore()
+  const { repoData, securityScanning, verifyCommitterIdentity } = useRepoRulesStore()
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
@@ -61,6 +61,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
         <FormSeparator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}
+          verifyCommitterIdentity={verifyCommitterIdentity}
           handleUpdateSecuritySettings={handleUpdateSecuritySettings}
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}

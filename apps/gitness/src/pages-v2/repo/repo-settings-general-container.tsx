@@ -35,7 +35,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()
-  const { setRepoData, setSecurityScanning } = useRepoRulesStore()
+  const { setRepoData, setSecurityScanning, setVerifyCommitterIdentity } = useRepoRulesStore()
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
 
@@ -121,6 +121,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     {
       onSuccess: ({ body: data }) => {
         setSecurityScanning(data.secret_scanning_enabled || false)
+        setVerifyCommitterIdentity(data.principal_committer_match || false)
         setApiError(null)
       },
       onError: (error: FindSecuritySettingsErrorResponse) => {
@@ -135,6 +136,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     {
       onSuccess: ({ body: data }) => {
         setSecurityScanning(data.secret_scanning_enabled || false)
+        setVerifyCommitterIdentity(data.principal_committer_match || false)
         setApiError(null)
       },
       onError: (error: UpdateSecuritySettingsErrorResponse) => {
@@ -180,7 +182,9 @@ export const RepoSettingsGeneralPageContainer = () => {
   }, [repoData?.default_branch, repoData, setRepoData])
 
   const handleUpdateSecuritySettings = (data: SecurityScanning) => {
-    updateSecuritySettings({ body: { secret_scanning_enabled: data.secretScanning } })
+    updateSecuritySettings({
+      body: { secret_scanning_enabled: data.secretScanning, principal_committer_match: data.verifyCommitterIdentity }
+    })
   }
 
   const loadingStates = {

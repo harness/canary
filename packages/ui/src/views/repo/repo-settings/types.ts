@@ -36,6 +36,7 @@ export type RepoUpdateData = z.infer<typeof generalSettingsFormSchema>
 
 export interface SecurityScanning {
   secretScanning: boolean
+  verifyCommitterIdentity: boolean
 }
 
 export interface RuleDataType {
@@ -50,6 +51,7 @@ export interface IRepoStore {
   repoData: RepoData
   rules: RuleDataType[] | null
   securityScanning: boolean
+  verifyCommitterIdentity: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
   recentStatusChecks: string[] | null

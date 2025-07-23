@@ -167,6 +167,8 @@
     "security": "Sécurité",
     "secretScanning": "Analyse des secrets",
     "secretScanningDescription": "Empêcher les commits contenant des secrets comme les mots de passe ou jetons API.",
+    "verifyCommitterIdentity": "Verify committer identity",
+    "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
     "rules": "Règles",
     "webhooks": "Webhooks",
     "labels": "Labels",

@@ -188,8 +188,9 @@ export const BranchSettingsRuleBypassListField: FC<
     bypassOptions: PrincipalType[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
+    bypassListPlaceholder?: string
   }
-> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery, bypassListPlaceholder }) => {
   const { t } = useTranslation()
   const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
     handleChangeSearchValue: setPrincipalsSearchQuery,
@@ -212,7 +213,7 @@ export const BranchSettingsRuleBypassListField: FC<
           label={t('views:repos.bypassList', 'Bypass list')}
           name="bypass"
           options={multiSelectOptions}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
+          placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
           searchQuery={debouncedPrincipalsSearchQuery}
           setSearchQuery={handleStringSearchChange}
           disallowCreation

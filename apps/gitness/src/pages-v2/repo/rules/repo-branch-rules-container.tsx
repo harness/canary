@@ -223,6 +223,10 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     return <NotFoundPage pageTypeText="rules" />
   }
 
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersAndServiceAccounts', 'Select users and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
+
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -238,6 +242,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      bypassListPlaceholder={searchPlaceholder}
     />
   )
 }

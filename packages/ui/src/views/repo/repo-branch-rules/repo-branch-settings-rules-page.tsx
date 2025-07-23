@@ -38,6 +38,7 @@ interface RepoBranchSettingsRulesPageProps {
   principalsSearchQuery: string
   isSubmitSuccess?: boolean
   projectScope?: boolean
+  bypassListPlaceholder?: string
 }
 
 export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> = ({
@@ -54,7 +55,8 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   setPrincipalsSearchQuery,
   principalsSearchQuery,
   isSubmitSuccess,
-  projectScope = false
+  projectScope = false,
+  bypassListPlaceholder
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
@@ -153,6 +155,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             bypassOptions={principals}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
+            bypassListPlaceholder={bypassListPlaceholder}
           />
 
           <BranchSettingsRuleListField

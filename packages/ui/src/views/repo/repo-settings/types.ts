@@ -12,6 +12,7 @@ export interface RepoData {
   description: string
   defaultBranch: string
   isPublic: boolean
+  archived: boolean
 }
 
 export enum AccessLevel {
@@ -29,7 +30,8 @@ export enum ErrorTypes {
   UPDATE_SECURITY = 'updateSecurity',
   DELETE_REPO = 'deleteRepo',
   FETCH_RULES = 'fetchRules',
-  DELETE_RULE = 'deleteRule'
+  DELETE_RULE = 'deleteRule',
+  ARCHIVE_REPO = 'archiveRepo'
 }
 
 export type RepoUpdateData = z.infer<typeof generalSettingsFormSchema>
@@ -85,5 +87,6 @@ export const errorTypes = new Set([
   ErrorTypes.FETCH_BRANCH,
   ErrorTypes.DESCRIPTION_UPDATE,
   ErrorTypes.BRANCH_UPDATE,
-  ErrorTypes.UPDATE_ACCESS
+  ErrorTypes.UPDATE_ACCESS,
+  ErrorTypes.ARCHIVE_REPO
 ])

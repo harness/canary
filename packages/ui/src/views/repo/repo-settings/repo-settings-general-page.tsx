@@ -24,6 +24,7 @@ interface RepoSettingsGeneralPageProps {
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
   openRepoAlertDeleteDialog: () => void
+  openRepoArchiveDialog: () => void
   useRepoRulesStore: () => IRepoStore
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
@@ -35,6 +36,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   loadingStates,
   isRepoUpdateSuccess,
   openRepoAlertDeleteDialog,
+  openRepoArchiveDialog,
   useRepoRulesStore,
   branchSelectorRenderer
 }) => {
@@ -68,7 +70,12 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
         />
         <FormSeparator />
-        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
+        <RepoSettingsGeneralDelete
+          archived={repoData?.archived}
+          apiError={apiError}
+          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+          openRepoArchiveDialog={openRepoArchiveDialog}
+        />
       </Fieldset>
     </SandboxLayout.Content>
   )

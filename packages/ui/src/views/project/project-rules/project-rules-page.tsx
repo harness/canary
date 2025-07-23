@@ -37,7 +37,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="3xl">
-        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+        <Text as="h1" variant="heading-section" className="mb-6">
           {t('views:projectSettings.rules', 'Rules')}
         </Text>
         {!rulesData?.length && !isDirtyList && !isLoading ? (

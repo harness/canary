@@ -97,21 +97,24 @@ const textVariants = cva('', {
 
 type TextVariant = Exclude<VariantProps<typeof textVariants>['variant'], undefined | null>
 
-const textVariantToElement: Record<TextVariant, TextElement> = {
-  'heading-hero': 'p',
-  'heading-section': 'p',
-  'heading-subsection': 'p',
-  'heading-base': 'p',
-  'heading-small': 'p',
-  'body-normal': 'p',
-  'body-single-line-normal': 'p',
-  'body-strong': 'p',
-  'body-single-line-strong': 'p',
-  'body-code': 'pre',
-  'caption-normal': 'span',
-  'caption-soft': 'span',
-  'caption-single-line-normal': 'span',
-  'caption-single-line-soft': 'span'
+const textVariantToElement: Record<
+  TextVariant,
+  { element: TextElement; color: VariantProps<typeof textVariants>['color'] }
+> = {
+  'heading-hero': { element: 'p', color: 'foreground-1' },
+  'heading-section': { element: 'p', color: 'foreground-1' },
+  'heading-subsection': { element: 'p', color: 'foreground-1' },
+  'heading-base': { element: 'p', color: 'foreground-1' },
+  'heading-small': { element: 'p', color: 'foreground-1' },
+  'body-normal': { element: 'p', color: 'foreground-2' },
+  'body-single-line-normal': { element: 'p', color: 'foreground-2' },
+  'body-strong': { element: 'p', color: 'foreground-2' },
+  'body-single-line-strong': { element: 'p', color: 'foreground-2' },
+  'body-code': { element: 'pre', color: 'foreground-2' },
+  'caption-normal': { element: 'span', color: 'foreground-2' },
+  'caption-soft': { element: 'span', color: 'foreground-2' },
+  'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
+  'caption-single-line-soft': { element: 'span', color: 'foreground-2' }
 }
 
 const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {
@@ -120,7 +123,7 @@ const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, '
   if (as) return as
 
   if (textVariantToElement[variant ?? 'body-normal']) {
-    return textVariantToElement[variant ?? 'body-normal']
+    return textVariantToElement[variant ?? 'body-normal'].element
   }
 
   return 'span' as ElementType
@@ -154,7 +157,7 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
       variant = 'body-normal',
       asChild,
       align,
-      color = 'foreground-2',
+      color: _color,
       wrap,
       as,
       ...props
@@ -165,6 +168,7 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
 
     const Comp = getTextNode({ as, variant, asChild })
     const isHeading = !as && !!variant?.startsWith('heading')
+    const color = _color ?? textVariantToElement[variant ?? 'body-normal'].color
 
     const getTitleFromRef = useCallback(
       (element: HTMLElement | null) => {

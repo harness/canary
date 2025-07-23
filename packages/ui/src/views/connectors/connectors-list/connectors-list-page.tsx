@@ -77,7 +77,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !connectors.length && !searchQuery })}>
-        <Text as="h1" variant="heading-section" color="foreground-1">
+        <Text as="h1" variant="heading-section">
           Connectors
         </Text>
         <Spacer size={7} />

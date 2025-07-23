@@ -151,7 +151,7 @@ A common layout pattern with a sidebar and main content area.
   client:only
   code={`<Layout.Grid columns="250px 1fr" gap="md" className="p-4 border rounded-md">
   <div className="bg-cn-background-2 p-4 rounded-md">
-    <Text variant="heading-base" color="foreground-1" className="mb-3">Sidebar</Text>
+    <Text variant="heading-base" className="mb-3">Sidebar</Text>
     <Layout.Vertical gap="sm">
       <Text variant="body-normal" className="p-2 hover:bg-cn-background-3 rounded cursor-pointer">Navigation Item 1</Text>
       <Text variant="body-normal" className="p-2 hover:bg-cn-background-3 rounded cursor-pointer">Navigation Item 2</Text>
@@ -159,7 +159,7 @@ A common layout pattern with a sidebar and main content area.
     </Layout.Vertical>
   </div>
   <div className="bg-cn-background-2 p-4 rounded-md">
-    <Text variant="heading-base" color="foreground-1" className="mb-3">Main Content</Text>
+    <Text variant="heading-base" className="mb-3">Main Content</Text>
     <Text variant="body-normal">This is the main content area. It takes up most of the available space.</Text>
   </div>
 </Layout.Grid>`}
@@ -176,7 +176,7 @@ A traditional page layout with header, content, and footer sections.
     <Text variant="heading-base" className="font-bold">Header</Text>
   </div>
   <div className="px-4">
-    <Text variant="heading-base" color="foreground-1" className="mb-3">Main Content</Text>
+    <Text variant="heading-base" className="mb-3">Main Content</Text>
     <Text variant="body-normal">This is the main content area of the page.</Text>
     <Spacer size={16} />
     <Layout.Grid columns="1fr 1fr" gap="md">
@@ -201,7 +201,7 @@ A common layout for forms with labels and inputs.
 <DocsPage.ComponentExample
   client:only
   code={`<Layout.Grid gap="md" className="p-4 border rounded-md w-96">
-    <Text color="foreground-1" variant="heading-subsection">Contact Information</Text> 
+    <Text variant="heading-subsection">Contact Information</Text> 
     <TextInput 
         label="Name"
         name="name"
@@ -228,32 +228,32 @@ A grid of cards for dashboard displays.
   client:only
   code={`<Layout.Grid columns="1fr 1fr 1fr" rows="auto" gap="md" className="p-4 border rounded-md">
   <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
-    <Text variant="heading-base" color="foreground-1" className="mb-2">Total Users</Text>
+    <Text variant="heading-base" className="mb-2">Total Users</Text>
     <Text variant="heading-section">1,234</Text>
     <Text variant="caption-normal" color="success" className="mt-2">+12% from last month</Text>
   </div>
   
   <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
-    <Text variant="heading-base" color="foreground-1" className="mb-2">Revenue</Text>
+    <Text variant="heading-base" className="mb-2">Revenue</Text>
     <Text variant="heading-section">$48,234</Text>
     <Text variant="caption-normal" color="success" className="mt-2">+5% from last month</Text>
   </div>
   
   <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
-    <Text variant="heading-base" color="foreground-1" className="mb-2">Active Deployments</Text>
+    <Text variant="heading-base" className="mb-2">Active Deployments</Text>
     <Text variant="heading-section">26</Text>
     <Text variant="caption-normal" color="danger" className="mt-2">-3 from last month</Text>
   </div>
   
   <div className="bg-cn-background-2 p-4 rounded-md shadow-sm col-span-2">
-    <Text variant="heading-base" color="foreground-1" className="mb-2">Monthly Activity</Text>
+    <Text variant="heading-base" className="mb-2">Monthly Activity</Text>
     <div className="h-32 bg-cn-background-3 rounded-md flex items-center justify-center">
       <Text variant="body-normal" color="foreground-2">[Chart]</Text>
     </div>
   </div>
   
   <div className="bg-cn-background-2 p-4 rounded-md shadow-sm">
-    <Text variant="heading-base" color="foreground-1" className="mb-2">Recent Updates</Text>
+    <Text variant="heading-base" className="mb-2">Recent Updates</Text>
     <Layout.Vertical gap="sm">
       <Text variant="caption-normal" className="p-2 bg-cn-background-3 rounded-md">System update completed</Text>
       <Text variant="caption-normal" className="p-2 bg-cn-background-3 rounded-md">New feature deployed</Text>

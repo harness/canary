@@ -93,14 +93,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
       <Table.Header>
         <Table.Row>
           <Table.Head className="py-3">
-            <Text variant="heading-small" color="foreground-1">
-              {tableTitleName}
-            </Text>
+            <Text variant="heading-small">{tableTitleName}</Text>
           </Table.Head>
           <Table.Head className="py-3">
-            <Text variant="heading-small" color="foreground-1">
-              {tableTitleVal}
-            </Text>
+            <Text variant="heading-small">{tableTitleVal}</Text>
           </Table.Head>
         </Table.Row>
       </Table.Header>

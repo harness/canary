@@ -67,7 +67,7 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
 
   return (
     <Layout.Grid ref={contentRef} className={cn('group', className)}>
-      <Text variant="heading-base" color="foreground-1" as="h4" className="mb-4">
+      <Text variant="heading-base" as="h4" className="mb-4">
         {title}
       </Text>
 

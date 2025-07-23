@@ -17,7 +17,7 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
   const { t } = useTranslation()
   return (
     <Layout.Vertical gap="xl">
-      <Text as="h1" variant="heading-subsection" color="foreground-1">
+      <Text as="h1" variant="heading-subsection">
         {t('views:common.details', 'Details')}
       </Text>
       <ConnectorEntityForm

@@ -56,7 +56,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={className}>
-        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+        <Text as="h1" variant="heading-section" className="mb-6">
           {t('views:labelData.title', 'Labels')}
         </Text>
 

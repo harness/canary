@@ -11,9 +11,12 @@ import {
 } from 'react'
 
 import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { PrincipalType } from '@/types'
 import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty, isUndefined } from 'lodash-es'
+
+import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 
 interface TextSelection {
   start: number
@@ -62,6 +65,9 @@ export interface PullRequestCommentBoxProps {
   isEditMode?: boolean
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
+  searchPrincipalsQuery: string
+  setSearchPrincipalsQuery: (query: string) => void
+  principals?: PrincipalType[]
 }
 
 const TABS_KEYS = {
@@ -83,7 +89,10 @@ export const PullRequestCommentBox = ({
   comment,
   setComment,
   isEditMode,
-  handleUpload
+  handleUpload,
+  searchPrincipalsQuery,
+  setSearchPrincipalsQuery,
+  principals
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -96,6 +105,10 @@ export const PullRequestCommentBox = ({
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
   }
+
+  useEffect(() => {
+    console.log('principals', principals)
+  }, [principals])
 
   const handleSaveComment = () => {
     if (comment.trim()) {
@@ -415,7 +428,7 @@ export const PullRequestCommentBox = ({
               onDragLeave={handleDragLeave}
               ref={dropZoneRef}
             >
-              <Textarea
+              {/* <Textarea
                 ref={textAreaRef}
                 className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
                 autoFocus={!!inReplyMode}
@@ -430,9 +443,17 @@ export const PullRequestCommentBox = ({
                   }
                 }}
                 resizable
+              /> */}
+
+              <PullRequestCommentTextarea
+                setSearchPrincipalsQuery={setSearchPrincipalsQuery}
+                searchPrincipalsQuery={searchPrincipalsQuery}
+                value={comment}
+                setValue={setComment}
+                users={principals}
               />
               {isDragging && (
-                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
+                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />
               )}
 
               <div className="bg-cn-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
@@ -495,3 +516,4 @@ export const PullRequestCommentBox = ({
     </div>
   )
 }
+PullRequestCommentBox.displayName = 'PullRequestCommentBox'

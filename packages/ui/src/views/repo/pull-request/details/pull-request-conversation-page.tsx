@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Alert, Spacer } from '@/components'
+import { PrincipalType } from '@/types'
 import {
   PullRequestCommentBox,
   PullRequestCommentBoxProps,
@@ -21,7 +22,10 @@ export interface PullRequestConversationPageProps {
   filtersProps: PullRequestFilterProps<{ label: string; value: string }>
   overviewProps: PullRequestOverviewProps
   commentBoxProps: PullRequestCommentBoxProps
-  sideBarProps: PullRequestSideBarProps
+  sideBarProps: Omit<PullRequestSideBarProps, 'usersList' | 'searchQuery' | 'setSearchQuery'>
+  principals?: PrincipalType[]
+  searchPrincipalsQuery: string
+  setSearchPrincipalsQuery: (query: string) => void
 }
 
 export const PullRequestConversationPage: FC<PullRequestConversationPageProps> = ({
@@ -30,7 +34,10 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
   filtersProps,
   overviewProps,
   commentBoxProps,
-  sideBarProps
+  sideBarProps,
+  principals,
+  searchPrincipalsQuery,
+  setSearchPrincipalsQuery
 }) => {
   return (
     <SandboxLayout.Columns columnWidths="minmax(calc(100% - 288px), 1fr) 288px">
@@ -55,15 +62,26 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
           <PullRequestOverview {...overviewProps} />
           <Spacer size={9} />
 
-          <PullRequestCommentBox {...commentBoxProps} />
+          <PullRequestCommentBox
+            {...commentBoxProps}
+            searchPrincipalsQuery={searchPrincipalsQuery}
+            setSearchPrincipalsQuery={setSearchPrincipalsQuery}
+            principals={principals}
+          />
         </SandboxLayout.Content>
       </SandboxLayout.Column>
 
       <SandboxLayout.Column>
         <SandboxLayout.Content className="px-0 pt-0">
-          <PullRequestSideBar {...sideBarProps} />
+          <PullRequestSideBar
+            {...sideBarProps}
+            searchQuery={searchPrincipalsQuery}
+            setSearchQuery={setSearchPrincipalsQuery}
+            usersList={principals}
+          />
         </SandboxLayout.Content>
       </SandboxLayout.Column>
     </SandboxLayout.Columns>
   )
 }
+PullRequestConversationPage.displayName = 'PullRequestConversationPage-UI'

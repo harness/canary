@@ -53,9 +53,6 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
       // ICON STYLES
       '.cn-tag-icon': {
         color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
-      },
-      '.cn-tag-reset-icon': {
-        color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
       }
     }
 
@@ -108,16 +105,8 @@ export default {
       ...createTagVariantStyles('secondary')
     },
 
-    '.cn-tag-icon': {
-      minWidth: `var(--cn-icon-size-sm, 16px)`,
-      height: `var(--cn-icon-size-sm, 16px)`
-    },
     '.cn-tag-text': {
       '@apply truncate leading-normal align-middle inline-block': ''
-    },
-    '.cn-tag-reset-icon': {
-      minWidth: `var(--cn-icon-size-xs, 12px)`,
-      height: `var(--cn-icon-size-xs, 12px)`
     }
   }
 }

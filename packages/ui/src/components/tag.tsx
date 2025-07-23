@@ -89,7 +89,8 @@ function Tag({
     >
       {showIcon && (
         <IconV2
-          skipSize
+          // skipSize
+          size="sm"
           name={icon || 'label'}
           className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
         />
@@ -99,7 +100,7 @@ function Tag({
       </span>
       {showReset && !disabled && (
         <button onClick={onReset}>
-          <IconV2 skipSize name="xmark" className="cn-tag-reset-icon" />
+          <IconV2 size="xs" name="xmark" className="cn-tag-icon" />
         </button>
       )}
     </div>

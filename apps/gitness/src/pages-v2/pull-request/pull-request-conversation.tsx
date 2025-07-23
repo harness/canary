@@ -185,7 +185,7 @@ export default function PullRequestConversationPage() {
   const { currentUser: currentUserData } = useAppContext()
 
   const [checkboxBypass, setCheckboxBypass] = useState(false)
-  const [searchReviewers, setSearchReviewers] = useState('')
+  const [searchPrincipalsQuery, setSearchPrincipalsQuery] = useState('')
   const [addReviewerError, setAddReviewerError] = useState('')
   const [removeReviewerError, setRemoveReviewerError] = useState('')
   const [changesLoading, setChangesLoading] = useState(true)
@@ -213,7 +213,7 @@ export default function PullRequestConversationPage() {
 
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchPrincipalsQuery, accountIdentifier: accountId }
   })
 
   const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({
@@ -852,6 +852,9 @@ export default function PullRequestConversationPage() {
         filtersProps={filtersData}
         panelProps={panelProps}
         overviewProps={overviewProps}
+        principals={principals as PrincipalType[]}
+        searchPrincipalsQuery={searchPrincipalsQuery}
+        setSearchPrincipalsQuery={setSearchPrincipalsQuery}
         // TODO: create useMemo of commentBoxProps
         commentBoxProps={{
           comment,
@@ -863,7 +866,7 @@ export default function PullRequestConversationPage() {
         // TODO: create useMemo of sideBarProps
         sideBarProps={{
           addReviewers: handleAddReviewer,
-          usersList: principals as PrincipalType[],
+
           currentUserId: currentUserData?.uid,
           pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
           processReviewDecision,
@@ -879,8 +882,6 @@ export default function PullRequestConversationPage() {
             review_decision: val.review_decision,
             sha: val.sha
           })),
-          searchQuery: searchReviewers,
-          setSearchQuery: setSearchReviewers,
           labelsList: labels,
           labelsValues,
           PRLabels: appliedLabels,
@@ -894,3 +895,4 @@ export default function PullRequestConversationPage() {
     </>
   )
 }
+PullRequestConversationPage.displayName = 'PullRequestConversationPage'

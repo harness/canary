@@ -11,6 +11,7 @@ import {
   Spacer,
   Text
 } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 interface RepoEmptyViewProps {
@@ -32,6 +33,7 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   handleCreateToken,
   navigateToProfileKeys
 }) => {
+  const { t } = useTranslation()
   const getInitialCommitMarkdown = () => {
     return `
 \`\`\`shell
@@ -66,7 +68,7 @@ git push -u origin main
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{
-            label: 'New file',
+            label: t('views:repos.new-file', 'New File'),
             to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
           }}
           className="min-h-[40vh] py-0"

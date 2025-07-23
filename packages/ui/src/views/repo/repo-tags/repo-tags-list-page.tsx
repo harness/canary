@@ -55,7 +55,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
       >
         {!isLoading && (!!tagsList.length || isDirtyList) && (
           <>
-            <Spacer size={2} />
             <Text as="h1" variant="heading-section">
               {t('views:repos.tags', 'Tags')}
             </Text>

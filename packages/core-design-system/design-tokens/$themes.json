@@ -24170,7 +24170,6 @@
       "breakpoint.viewport": "c0aa3fc7895e8b9f4b381b233a80214821447dfa",
       "breakpoint.viewportMin": "6be5f8330bfa441a8ad6e3e543365c7864021a72",
       "breakpoint.viewportMax": "8a8be6a3522300c276a7f78aed8779e0b6bd0fda",
-      "breakpoint.container": "ed2c337e342e73dec8eef97c30c677b147362d8e",
       "layout.3xs": "f22be0bc6dfe23c7200230adb739505a1abe3402",
       "layout.2xs": "d15309b2acf4f35d5f2827114cd5d2c4abe69151",
       "layout.xs": "dd8a0fefa7206c72772a9c707f20d0f9620e38ad",
@@ -24404,7 +24403,8 @@
       "sidebar.sub-group.px": "5006092a42bb07d1e40ae23b2baec1ee97f03ffd",
       "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352",
       "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6",
-      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d"
+      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d",
+      "container.spacing-px": "ed2c337e342e73dec8eef97c30c677b147362d8e"
     },
     "group": "breakpoint"
   }

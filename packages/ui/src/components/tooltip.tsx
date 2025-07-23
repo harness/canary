@@ -18,13 +18,23 @@ export type TooltipProps = {
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  ({ children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open }, ref) => {
+  (
+    { children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open, ...props },
+    ref
+  ) => {
     const { portalContainer } = usePortal()
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
         <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal container={portalContainer}>
-          <TooltipPrimitive.Content ref={ref} className="cn-tooltip" side={side} align={align} sideOffset={4}>
+          <TooltipPrimitive.Content
+            ref={ref}
+            className="cn-tooltip"
+            side={side}
+            align={align}
+            sideOffset={4}
+            {...props}
+          >
             {!!title && <span className="cn-tooltip-title">{title}</span>}
             <div>{content}</div>
             {!hideArrow && (

@@ -1,6 +1,6 @@
 {
   "repos": {
-    "create-new-file-no-plus": "Créer un nouveau fichier",
+    "create-file": "Créer fichier",
     "upload-files": "Télécharger des fichiers",
     "summary": "Résumé",
     "files": "Fichiers",
@@ -224,6 +224,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "create-new-file-no-plus": "Create File",
     "newRule": "Nouvelle règle de branche",
     "branchCreated": "Branche créée",
     "branchCreatedDescription": "La branche {{name}} a été créée avec succès",

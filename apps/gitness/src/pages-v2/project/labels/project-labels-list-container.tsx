@@ -58,6 +58,7 @@ export const ProjectLabelsList = () => {
         searchQuery={query}
         setSearchQuery={setQuery}
         labelsListViewProps={{ handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
+        isRepository={space_ref?.includes('/')}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

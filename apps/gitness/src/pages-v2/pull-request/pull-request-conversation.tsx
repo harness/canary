@@ -160,7 +160,8 @@ export default function PullRequestConversationPage() {
     prPanelData,
     pullReqChecksDecision,
     updateCommentStatus,
-    dryMerge
+    dryMerge,
+    pullReqCommits
   } = usePullRequestProviderStore(state => ({
     dryMerge: state.dryMerge,
     pullReqMetadata: state.pullReqMetadata,
@@ -169,7 +170,8 @@ export default function PullRequestConversationPage() {
     setRuleViolationArr: state.setRuleViolationArr,
     prPanelData: state.prPanelData,
     pullReqChecksDecision: state.pullReqChecksDecision,
-    updateCommentStatus: state.updateCommentStatus
+    updateCommentStatus: state.updateCommentStatus,
+    pullReqCommits: state.pullReqCommits
   }))
 
   const { currentUser: currentUserData } = useAppContext()
@@ -545,8 +547,14 @@ export default function PullRequestConversationPage() {
         method: method,
         source_sha: pullReqMetadata?.source_sha,
         bypass_rules: checkboxBypass,
-        dry_run: false
-        // message: data.commitMessage
+        dry_run: false,
+        message:
+          method === 'squash'
+            ? pullReqCommits?.commits
+                ?.map(commit => `* ${commit.message}`)
+                .join('\n')
+                ?.slice(0, 1000)
+            : ''
       }
       mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
         .then(_res => {
@@ -565,7 +573,7 @@ export default function PullRequestConversationPage() {
       //todo: add catch to show errors
       // .catch(exception => showError(getErrorMessage(exception)))
     },
-    [pullReqMetadata?.source_sha, checkboxBypass, repoRef, prId, handleRefetchData, setRuleViolationArr]
+    [pullReqMetadata?.source_sha, checkboxBypass, repoRef, prId, handleRefetchData, setRuleViolationArr, pullReqCommits]
   )
 
   const handlePrState = useCallback(

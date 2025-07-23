@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
+import { Alert, Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -17,6 +17,7 @@ interface CloneCredentialDialogProps extends Partial<RoutingProps> {
     lifetime: string
     token: string
   }
+  error?: string
 }
 const formSchema = z.object({
   identifier: z.string(),
@@ -30,7 +31,8 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
   open,
   onClose,
   navigateToManageToken,
-  tokenData
+  tokenData,
+  error
 }) => {
   const { t } = useTranslation()
   useForm<TCloneCredentialsDialog>({
@@ -75,7 +77,16 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
               autoFocus
             />
 
-            <span>{t('views:repos.cloneCredGenerated')}</span>
+            {/* Alert or Success Message */}
+            <div className="mt-2">
+              {error ? (
+                <Alert.Root theme="danger" className="mt-2">
+                  <Alert.Description>{error}</Alert.Description>
+                </Alert.Root>
+              ) : (
+                <span>{t('views:repos.cloneCredGenerated')}</span>
+              )}
+            </div>
           </div>
         </Dialog.Body>
         <Dialog.Footer>

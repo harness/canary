@@ -189,6 +189,15 @@ export default function RepoSummaryPage() {
         setCreatedTokenData(tokenData)
         setShowTokenDialog(true)
         setSuccessTokenDialog(true)
+        setTokenGenerationError(null)
+      },
+      onError: error => {
+        setCreatedTokenData({ identifier: '', lifetime: '', token: '' })
+        setShowTokenDialog(true)
+        setSuccessTokenDialog(true)
+        const errorMsg =
+          error?.message && typeof error.message === 'string' ? error.message : 'Failed to generate token'
+        setTokenGenerationError(errorMsg)
       }
     }
   )
@@ -220,7 +229,11 @@ export default function RepoSummaryPage() {
       setMFETokenFlag(false)
       setTokenGenerationError(null)
     } else if (MFEtokenData && MFEtokenData.data.status === 'ERROR') {
-      setTokenGenerationError(MFEtokenData.data.message)
+      setCreatedTokenData({ identifier: '', lifetime: '', token: '' })
+      const errorMsg = MFEtokenData.data.message || 'Failed to generate token'
+      setTokenGenerationError(errorMsg)
+      setShowTokenDialog(true)
+      setSuccessTokenDialog(true)
     }
   }, [MFEtokenData, tokenHash])
 
@@ -356,12 +369,16 @@ export default function RepoSummaryPage() {
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
       />
-      {showTokenDialog && createdTokenData && (
+      {successTokenDialog && (
         <CloneCredentialDialog
           open={successTokenDialog}
-          onClose={() => setSuccessTokenDialog(false)}
+          onClose={() => {
+            setSuccessTokenDialog(false)
+            setTokenGenerationError(null)
+          }}
           navigateToManageToken={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
-          tokenData={createdTokenData}
+          tokenData={createdTokenData || { identifier: '', lifetime: '', token: '' }}
+          error={tokenGenerationError || undefined}
         />
       )}
     </>

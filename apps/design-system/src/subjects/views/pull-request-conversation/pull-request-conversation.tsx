@@ -93,6 +93,9 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
       <PullRequestConversationPage
         rebaseErrorMessage={null}
         filtersProps={filtersData}
+        searchPrincipalsQuery={searchReviewers}
+        setSearchPrincipalsQuery={noop}
+        principals={undefined}
         panelProps={{
           handleRebaseBranch,
           handlePrState,
@@ -146,6 +149,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
             uid: currentUserData?.uid
           },
           onCopyClick: noop,
+
           toggleConversationStatus: noop,
           onCommitSuggestion: noop,
           addSuggestionToBatch: noop,
@@ -163,7 +167,6 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
         }}
         sideBarProps={{
           addReviewers: noop,
-          usersList: undefined,
           currentUserId: currentUserData?.uid,
           pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
           processReviewDecision,
@@ -172,8 +175,6 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           addReviewerError: '',
           removeReviewerError: '',
           reviewers,
-          searchQuery: searchReviewers,
-          setSearchQuery: noop,
           labelsList,
           PRLabels: PRLabels?.label_data,
           searchLabelQuery: searchLabel,

@@ -7,6 +7,7 @@ import {
   Fieldset,
   FormSeparator,
   Input,
+  Link,
   MarkdownViewer,
   NoData,
   Spacer,
@@ -97,7 +98,8 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                className="cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -106,7 +108,7 @@ git push -u origin main
                   }
                 }}
               >
-                here
+                here.
               </span>
             </Text>
           </ControlGroup>
@@ -122,7 +124,8 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                className="hover:underline cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -132,7 +135,7 @@ git push -u origin main
                 }}
               >
                 create an API token
-              </span>
+              </span>{' '}
               In order to pull from or push into this repository.
             </p>
           </ControlGroup>

@@ -156,7 +156,6 @@ export function RepoSummaryView({
             )}
             {selectedBranchOrTag?.name !== repository?.default_branch && (
               <>
-                <Spacer size={2} />
                 <BranchInfoBar
                   defaultBranchName={repository?.default_branch}
                   repoId={repoId}

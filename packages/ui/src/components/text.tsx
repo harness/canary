@@ -160,6 +160,7 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
       color: _color,
       wrap,
       as,
+      title,
       ...props
     },
     ref
@@ -189,7 +190,7 @@ const TextWithRef = forwardRef<HTMLElement, TextProps>(
         className={cn(textVariants({ variant, align, color, truncate: isTruncated, lineClamp, wrap }), className)}
         {...props}
         {...wrapConditionalObjectElement({ role: 'heading' }, isHeading)}
-        {...wrapConditionalObjectElement({ title: titleText }, !!isTruncated || !!lineClamp)}
+        {...wrapConditionalObjectElement({ title: title || titleText }, !!isTruncated || !!lineClamp)}
       >
         {children}
       </Comp>

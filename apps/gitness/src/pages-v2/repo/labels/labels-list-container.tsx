@@ -64,8 +64,6 @@ export const RepoLabelsList = () => {
     label?.scope === 0 ? deleteRepoLabel({ key }) : deleteSpaceLabel({ key })
   }
 
-  console.log('repo_ref', repo_ref)
-
   return (
     <>
       <LabelsListPage

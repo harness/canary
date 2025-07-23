@@ -23,6 +23,7 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { PathParams } from '../../../RouteDefinitions'
 import { transformFormOutput } from '../../../utils/repo-branch-rules-utils'
@@ -96,7 +97,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       type: isMFE ? ['user', 'serviceaccount'] : ['user'],
       ...(isMFE && { inherited: true }),
       query: principalsSearchQuery,
-      // @ts-expect-error : BE issue - not implemnted
+      // @ts-expect-error : BE issue - not implemented
       accountIdentifier: accountId,
       orgIdentifier,
       projectIdentifier

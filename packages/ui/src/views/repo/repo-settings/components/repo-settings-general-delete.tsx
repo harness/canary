@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, FormSeparator, Layout, Spacer, Text } from '@/components'
+import { Button, ButtonLayout, Layout, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { ErrorTypes } from '@/views'
 

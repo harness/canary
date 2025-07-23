@@ -55,9 +55,9 @@ import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-ru
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
-import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/rules/repo-branch-rules-container'
+import { RepoBranchRulesContainer } from './pages-v2/repo/rules/repo-branch-rules-container'
 import RepoRulesContainer from './pages-v2/repo/rules/repo-rules-container'
-import { RepoTagSettingsRulesPageContainer } from './pages-v2/repo/rules/repo-tag-rules-container'
+import { RepoTagRulesContainer } from './pages-v2/repo/rules/repo-tag-rules-container'
 import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
@@ -505,7 +505,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   },
                   {
                     path: 'create/branch',
-                    element: <RepoBranchSettingsRulesPageContainer />,
+                    element: <RepoBranchRulesContainer />,
                     handle: {
                       breadcrumb: () => <span>Create a rule</span>,
                       routeName: RouteConstants.toRepoBranchRuleCreate
@@ -513,7 +513,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   },
                   {
                     path: 'create/tag',
-                    element: <RepoTagSettingsRulesPageContainer />,
+                    element: <RepoTagRulesContainer />,
                     handle: {
                       breadcrumb: () => <span>Create a tag</span>,
                       routeName: RouteConstants.toRepoTagRuleCreate

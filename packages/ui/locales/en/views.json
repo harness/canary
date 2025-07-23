@@ -230,7 +230,6 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
-    "create-new-file-no-plus": "Create File",
     "newRule": "New branch rule",
     "deleteConnector": "Delete Connector",
     "deleteSecret": "Delete Secret",

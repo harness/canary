@@ -224,7 +224,6 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
-    "create-new-file-no-plus": "Create File",
     "newRule": "Nouvelle règle de branche",
     "branchCreated": "Branche créée",
     "branchCreatedDescription": "La branche {{name}} a été créée avec succès",

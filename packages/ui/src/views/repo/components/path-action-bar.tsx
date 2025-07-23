@@ -58,7 +58,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         pathNewFile &&
         pathUploadFiles &&
         selectedRefType === BranchSelectorTab.BRANCHES && (
-          <Button variant="outline" asChild>
+          <Button asChild>
             <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
               <span className="truncate">{t('views:repos.new-file', 'New File')}</span>
             </Link>

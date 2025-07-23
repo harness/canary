@@ -32,6 +32,7 @@ const formSchema = z.object({
     .min(1, { message: 'Please provide a name' })
     .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
   description: z.string(),
+  defaultBranch: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),
   access: z.enum(['1', '2'], { errorMap: () => ({ message: 'Please select who has access' }) }),
@@ -45,6 +46,7 @@ interface RepoCreatePageProps {
   onFormCancel: () => void
   isLoading: boolean
   isSuccess: boolean
+  defaultBranchOptions?: string[]
   gitIgnoreOptions?: string[]
   licenseOptions?: { value?: string; label?: string }[]
   apiError?: string
@@ -55,6 +57,7 @@ export function RepoCreatePage({
   onFormCancel,
   isLoading,
   isSuccess,
+  defaultBranchOptions: _defaultBranchOptions,
   gitIgnoreOptions: _gitIgnoreOptions,
   licenseOptions: _licenseOptions,
   apiError
@@ -67,6 +70,7 @@ export function RepoCreatePage({
     defaultValues: {
       name: '',
       description: '',
+      defaultBranch: _defaultBranchOptions?.at(0) ?? 'test',
       gitignore: '',
       license: '',
       access: '2',
@@ -83,9 +87,15 @@ export function RepoCreatePage({
     formState: { errors }
   } = formMethods
 
+  const defaultBranchValue = watch('defaultBranch')
   const gitignoreValue = watch('gitignore')
   const licenseValue = watch('license')
   const readmeValue = watch('readme')
+
+  const defaultBranchOptions: SelectValueOption[] = useMemo(
+    () => _defaultBranchOptions?.map(option => ({ value: option, label: option })) ?? [],
+    [_defaultBranchOptions]
+  )
 
   const gitIgnoreOptions: SelectValueOption[] = useMemo(
     () => _gitIgnoreOptions?.map(option => ({ value: option, label: option })) ?? [],
@@ -146,6 +156,17 @@ export function RepoCreatePage({
               optional
             />
           </Fieldset>
+
+          {/* DEFAULT BRANCH */}
+          <Select
+            value={defaultBranchValue}
+            options={defaultBranchOptions}
+            onChange={value => handleSelectChange('defaultBranch', value)}
+            placeholder="Select"
+            label="Select a default branch"
+            error={errors.defaultBranch?.message?.toString()}
+            caption="Choose the name to initialize the default branch of your repository."
+          />
 
           {/* GITIGNORE */}
           <Select

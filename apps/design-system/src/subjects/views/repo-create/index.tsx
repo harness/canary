@@ -5,7 +5,7 @@ import { RepoCreatePage } from '@harnessio/ui/views'
 import { useRepoCreateStore } from './repo-create-store'
 
 export const CreateRepoView = () => {
-  const { gitIgnoreOptions, licenseOptions } = useRepoCreateStore()
+  const { defaultBranchOptions, gitIgnoreOptions, licenseOptions } = useRepoCreateStore()
 
   return (
     <RepoCreatePage
@@ -13,6 +13,7 @@ export const CreateRepoView = () => {
       onFormCancel={noop}
       isLoading={false}
       isSuccess={false}
+      defaultBranchOptions={defaultBranchOptions}
       gitIgnoreOptions={gitIgnoreOptions}
       licenseOptions={licenseOptions}
     />

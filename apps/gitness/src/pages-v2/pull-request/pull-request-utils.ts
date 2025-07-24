@@ -6,13 +6,25 @@ import {
   EnumPullReqReviewDecision,
   ListPullReqQueryQueryParams,
   TypesCodeOwnerEvaluationEntry,
+  TypesPrincipalInfo,
+  TypesPullReqReviewer,
   TypesRuleViolations,
   TypesViolation
 } from '@harnessio/code-service-client'
-import { ExecutionState, PRListFilters } from '@harnessio/ui/views'
+import {
+  DefaultReviewersApprovalsData,
+  DefaultReviewersDataProps,
+  ExecutionState,
+  PrincipalInfoWithReviewDecision,
+  PRListFilters
+} from '@harnessio/ui/views'
 
-import { extractInfoForCodeOwnerContentProps } from '../../types'
-import { PullReqReviewDecision, TypeCheckData } from './types'
+import {
+  extractInfoForPRPanelChangesProps,
+  PullReqReviewDecision,
+  TypeCheckData,
+  TypesDefaultReviewerApprovalsResponseWithRevDecision
+} from './types'
 
 export const processReviewDecision = (
   review_decision: EnumPullReqReviewDecision | PullReqReviewDecision.outdated,
@@ -241,7 +253,82 @@ export const findWaitingDecisions = (entries: TypesCodeOwnerEvaluationEntry[] | 
   }
 }
 
-export const extractInfoForCodeOwnerContent = ({
+export const getUnifiedDefaultReviewersState = (
+  info?: TypesDefaultReviewerApprovalsResponseWithRevDecision[]
+): DefaultReviewersDataProps => {
+  const defaultReviewState = {
+    defReviewerApprovalRequiredByRule: false,
+    defReviewerLatestApprovalRequiredByRule: false,
+    defReviewerApprovedLatestChanges: true,
+    defReviewerApprovedChanges: true,
+    changesRequestedByDefaultReviewers: [] as PrincipalInfoWithReviewDecision[]
+  }
+
+  info?.forEach(item => {
+    if (item?.minimum_required_count !== undefined && item.minimum_required_count > 0) {
+      defaultReviewState.defReviewerApprovalRequiredByRule = true
+      if (item.current_count !== undefined && item.current_count < item.minimum_required_count) {
+        defaultReviewState.defReviewerApprovedChanges = false
+      }
+    }
+    if (item?.minimum_required_count_latest !== undefined && item.minimum_required_count_latest > 0) {
+      defaultReviewState.defReviewerLatestApprovalRequiredByRule = true
+      if (item.current_count !== undefined && item.current_count < item.minimum_required_count_latest) {
+        defaultReviewState.defReviewerApprovedLatestChanges = false
+      }
+    }
+
+    item?.principals?.forEach(principal => {
+      if (principal?.review_decision === PullReqReviewDecision.changeReq)
+        defaultReviewState.changesRequestedByDefaultReviewers.push(principal)
+    })
+  })
+
+  return defaultReviewState
+}
+
+export const updateReviewDecisionPrincipal = (reviewers: TypesPullReqReviewer[], principals: TypesPrincipalInfo[]) => {
+  const reviewDecisionMap: {
+    [x: number]: { sha: string; review_decision: EnumPullReqReviewDecision } | null
+  } = reviewers?.reduce(
+    (acc, rev) => {
+      if (rev.reviewer?.id) {
+        acc[rev.reviewer.id] = {
+          sha: rev.sha ?? '',
+          review_decision: rev.review_decision ?? 'pending'
+        }
+      }
+      return acc
+    },
+    {} as { [x: number]: { sha: string; review_decision: EnumPullReqReviewDecision } | null }
+  )
+
+  return principals?.map(principal => {
+    if (principal?.id) {
+      return {
+        ...principal,
+        review_decision: reviewDecisionMap[principal.id] ? reviewDecisionMap[principal.id]?.review_decision : 'pending',
+        review_sha: reviewDecisionMap[principal.id]?.sha
+      }
+    }
+    return principal
+  })
+}
+
+export const defaultReviewerResponseWithDecision = (
+  reviewers: TypesPullReqReviewer[],
+  defaultRevApprovalResponse?: DefaultReviewersApprovalsData[]
+) => {
+  return defaultRevApprovalResponse?.map(res => {
+    return {
+      ...res,
+      principals:
+        reviewers && res.principals ? updateReviewDecisionPrincipal(reviewers, res.principals) : res.principals
+    }
+  })
+}
+
+export const extractInfoForPRPanelChanges = ({
   approvedEvaluations,
   reqNoChangeReq,
   reqCodeOwnerApproval,
@@ -254,8 +341,12 @@ export const extractInfoForCodeOwnerContent = ({
   latestApprovalArr,
   codeOwnerApprovalEntries,
   changeReqReviewer,
-  changeReqEvaluations
-}: extractInfoForCodeOwnerContentProps) => {
+  changeReqEvaluations,
+  defReviewerApprovalRequiredByRule,
+  defReviewerLatestApprovalRequiredByRule,
+  defReviewerApprovedLatestChanges,
+  defReviewerApprovedChanges
+}: extractInfoForPRPanelChangesProps) => {
   let statusMessage = ''
   let statusColor = 'grey' // Default color for no rules required
   let title = ''
@@ -266,7 +357,9 @@ export const extractInfoForCodeOwnerContent = ({
     reqCodeOwnerApproval ||
     (minApproval && minApproval > 0) ||
     reqCodeOwnerLatestApproval ||
-    (minReqLatestApproval && minReqLatestApproval > 0)
+    (minReqLatestApproval && minReqLatestApproval > 0) ||
+    defReviewerApprovalRequiredByRule ||
+    defReviewerLatestApprovalRequiredByRule
   ) {
     if (
       codeOwnerChangeReqEntries &&
@@ -282,14 +375,7 @@ export const extractInfoForCodeOwnerContent = ({
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
       statusColor = 'text-cn-foreground-danger'
       statusIcon = 'error'
-    } else if (
-      (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) ||
-      (!isEmpty(latestCodeOwnerApprovalArr) &&
-        latestCodeOwnerApprovalArr &&
-        minReqLatestApproval &&
-        latestCodeOwnerApprovalArr?.length < minReqLatestApproval &&
-        reqCodeOwnerLatestApproval)
-    ) {
+    } else if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Latest changes are pending approval from code owners'
       statusColor = 'text-cn-foreground-warning'
@@ -309,10 +395,20 @@ export const extractInfoForCodeOwnerContent = ({
       statusMessage = 'Latest changes are pending approval from required reviewers'
       statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
+    } else if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
+      title = 'Approvals pending'
+      statusMessage = 'Latest changes are pending approval from default reviewers'
+      statusColor = 'text-cn-foreground-warning'
+      statusIcon = 'pending'
     } else if (minApproval && approvedEvaluations && approvedEvaluations?.length < minApproval && minApproval > 0) {
       title = 'Approvals pending'
       statusMessage = 'Changes are pending approval from required reviewers'
 
+      statusColor = 'text-cn-foreground-warning'
+      statusIcon = 'pending'
+    } else if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
+      title = 'Approvals pending'
+      statusMessage = 'Changes are pending approval from default reviewers'
       statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (reqCodeOwnerLatestApproval && latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0) {

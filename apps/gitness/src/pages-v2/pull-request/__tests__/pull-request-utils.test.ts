@@ -7,7 +7,7 @@ import {
   changedFileId,
   checkIfOutdatedSha,
   determineStatusMessage,
-  extractInfoForCodeOwnerContent,
+  extractInfoForPRPanelChanges,
   extractInfoFromRuleViolationArr,
   extractSpecificViolations,
   findChangeReqDecisions,
@@ -220,7 +220,7 @@ describe('generateAlphaNumericHash', () => {
   })
 })
 
-// Mock data for extractInfoForCodeOwnerContent
+// Mock data for extractInfoForPRPanelChanges
 const mockPropsForCodeOwnerContent = {
   approvedEvaluations: [{ reviewer: { display_name: 'John Doe' } as TypesPrincipalInfo, approved: true }],
   reqNoChangeReq: false,
@@ -243,9 +243,9 @@ const mockPropsForCodeOwnerContent = {
   changeReqEvaluations: []
 }
 
-describe('extractInfoForCodeOwnerContent', () => {
+describe('extractInfoForPRPanelChanges', () => {
   it('should extract information for code owner content', () => {
-    const result = extractInfoForCodeOwnerContent(mockPropsForCodeOwnerContent)
+    const result = extractInfoForPRPanelChanges(mockPropsForCodeOwnerContent)
     expect(result).toEqual({
       title: 'Changes approved',
       statusMessage: 'Changes were approved by code owners',

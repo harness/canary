@@ -70,6 +70,34 @@ export interface PullReqChecksDecisionData {
   checkInfo: CheckInfo
 }
 
+export interface DefaultReviewersApprovalsData {
+  current_count?: number
+  minimum_required_count?: number
+  minimum_required_count_latest?: number
+  principals?: TypesPrincipalInfo[] | PrincipalInfoWithReviewDecision[] | null
+}
+
+/**
+ * Interface for the principal info with review decision
+ */
+export interface PrincipalInfoWithReviewDecision extends TypesPrincipalInfo {
+  review_decision?: string
+  review_sha?: string
+}
+
+/**
+ * Interface for the defaultReviewersData object
+ */
+export interface DefaultReviewersDataProps {
+  defReviewerLatestApprovalRequiredByRule: boolean
+  defReviewerApprovalRequiredByRule: boolean
+  defReviewerApprovedChanges: boolean
+  defReviewerApprovedLatestChanges: boolean
+  changesRequestedByDefaultReviewers?: PrincipalInfoWithReviewDecision[]
+  updatedDefaultApprovals?: DefaultReviewersApprovalsData[]
+  defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
+}
+
 export interface PRPanelData {
   conflictingFiles?: string[]
   allowedMethods?: string[]
@@ -85,7 +113,9 @@ export interface PRPanelData {
   commentsLoading: boolean
   commentsInfoData: CommentsInfoData
   ruleViolationArr?: RuleViolationArr
+  defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
 }
+
 export interface DiffStatistics {
   additions?: number
   commits?: number
@@ -542,7 +572,14 @@ export interface PullRequestChangesSectionProps {
       }
     | undefined
   )[]
-  latestCodeOwnerApprovalArr?: LatestCodeOwnerApprovalArrType[]
+  latestCodeOwnerApprovalArr?: (
+    | {
+        entryEvaluation: TypesOwnerEvaluation[]
+      }
+    | undefined
+  )[]
+  accordionValues: string[]
+  defaultReviewersData?: DefaultReviewersDataProps
 }
 
 export const PullRequestFilterOption = {

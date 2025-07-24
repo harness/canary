@@ -116,7 +116,8 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
             commentsInfoData: getCommentsInfoData({
               requiresCommentApproval,
               resolvedCommentArrParams: resolvedCommentArr?.params
-            })
+            }),
+            defaultReviewersApprovals: res?.default_reviewer_aprovals
           }
 
           // We are adding data object comparison,

@@ -9,6 +9,7 @@ import {
   ApprovalItem,
   ApprovalItems,
   CommentItem,
+  DefaultReviewersApprovalsData,
   DiffHeaderProps,
   EnumPullReqReviewDecisionExtended,
   ReviewerListPullReqOkResponse,
@@ -320,4 +321,16 @@ export const jumpToFile = (
   }
 
   attemptScroll()
+}
+
+export const getDefaultReviewersApprovalCount = (data: DefaultReviewersApprovalsData): string => {
+  if (data.minimum_required_count && data.minimum_required_count > 0) {
+    return `${data.current_count} / ${data.minimum_required_count}`
+  }
+
+  if (data?.minimum_required_count_latest && data?.minimum_required_count_latest > 0) {
+    return `${data.current_count} / ${data.minimum_required_count_latest}`
+  }
+
+  return `${data.current_count}`
 }

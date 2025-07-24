@@ -31,6 +31,7 @@ import {
 import { SkeletonList } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
+  DefaultReviewersDataProps,
   LatestCodeOwnerApprovalArrType,
   PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
@@ -44,7 +45,6 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
-import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
@@ -52,13 +52,16 @@ import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import {
   capitalizeFirstLetter,
   checkIfOutdatedSha,
-  extractInfoForCodeOwnerContent,
+  defaultReviewerResponseWithDecision,
+  extractInfoForPRPanelChanges,
   extractInfoFromRuleViolationArr,
   findChangeReqDecisions,
   findWaitingDecisions,
+  getUnifiedDefaultReviewersState,
   processReviewDecision
 } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
+import { CodeOwnerReqDecision } from './types'
 
 const getMockPullRequestActions = (
   handlePrState: (data: string) => void,
@@ -465,8 +468,26 @@ export default function PullRequestConversationPage() {
     }
   }, [commentId, isScrolledToComment, prPanelData.PRStateLoading, activityData])
 
+  const defaultReviewersData: DefaultReviewersDataProps = useMemo(() => {
+    const updatedDefaultApprovals = reviewers
+      ? defaultReviewerResponseWithDecision(reviewers, prPanelData?.defaultReviewersApprovals)
+      : prPanelData?.defaultReviewersApprovals
+
+    return {
+      ...getUnifiedDefaultReviewersState(updatedDefaultApprovals),
+      updatedDefaultApprovals,
+      defaultReviewersApprovals: prPanelData?.defaultReviewersApprovals
+    }
+  }, [reviewers, prPanelData?.defaultReviewersApprovals])
+
   const changesInfo = useMemo(() => {
-    return extractInfoForCodeOwnerContent({
+    const {
+      defReviewerApprovalRequiredByRule,
+      defReviewerLatestApprovalRequiredByRule,
+      defReviewerApprovedLatestChanges,
+      defReviewerApprovedChanges
+    } = defaultReviewersData
+    return extractInfoForPRPanelChanges({
       approvedEvaluations,
       reqNoChangeReq: prPanelData?.atLeastOneReviewerRule,
       reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
@@ -479,7 +500,11 @@ export default function PullRequestConversationPage() {
       latestApprovalArr,
       codeOwnerApprovalEntries,
       changeReqReviewer,
-      changeReqEvaluations
+      changeReqEvaluations,
+      defReviewerApprovalRequiredByRule,
+      defReviewerLatestApprovalRequiredByRule,
+      defReviewerApprovedLatestChanges,
+      defReviewerApprovedChanges
     })
   }, [
     prPanelData?.atLeastOneReviewerRule,
@@ -494,7 +519,8 @@ export default function PullRequestConversationPage() {
     latestApprovalArr,
     codeOwnerApprovalEntries,
     changeReqReviewer,
-    changeReqEvaluations
+    changeReqEvaluations,
+    defaultReviewersData
   ])
 
   useEffect(() => {
@@ -728,6 +754,7 @@ export default function PullRequestConversationPage() {
       codeOwnerPendingEntries,
       codeOwnerApprovalEntries,
       latestCodeOwnerApprovalArr,
+      defaultReviewersData,
       actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData),
       checkboxBypass,
       setCheckboxBypass,

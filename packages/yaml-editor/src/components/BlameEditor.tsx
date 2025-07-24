@@ -172,7 +172,7 @@ export function BlameEditor({
     [blameData]
   )
 
-  // prevent line numbers to appear at the initial position (for a moment)
+  // prevent line numbers to appear initially at the wrong position
   useLayoutEffect(() => {
     if (holderRef.current) holderRef.current.style.setProperty('--line-number-display', `none`)
   }, [])

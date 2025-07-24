@@ -70,6 +70,34 @@ export interface PullReqChecksDecisionData {
   checkInfo: CheckInfo
 }
 
+export interface DefaultReviewersApprovalsData {
+  current_count?: number
+  minimum_required_count?: number
+  minimum_required_count_latest?: number
+  principals?: TypesPrincipalInfo[] | PrincipalInfoWithReviewDecision[] | null
+}
+
+/**
+ * Interface for the principal info with review decision
+ */
+export interface PrincipalInfoWithReviewDecision extends TypesPrincipalInfo {
+  review_decision?: string
+  review_sha?: string
+}
+
+/**
+ * Interface for the defaultReviewersData object
+ */
+export interface DefaultReviewersDataProps {
+  defReviewerLatestApprovalRequiredByRule: boolean
+  defReviewerApprovalRequiredByRule: boolean
+  defReviewerApprovedChanges: boolean
+  defReviewerApprovedLatestChanges: boolean
+  changesRequestedByDefaultReviewers?: PrincipalInfoWithReviewDecision[]
+  updatedDefaultApprovals?: DefaultReviewersApprovalsData[]
+  defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
+}
+
 export interface PRPanelData {
   conflictingFiles?: string[]
   allowedMethods?: string[]
@@ -85,7 +113,9 @@ export interface PRPanelData {
   commentsLoading: boolean
   commentsInfoData: CommentsInfoData
   ruleViolationArr?: RuleViolationArr
+  defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
 }
+
 export interface DiffStatistics {
   additions?: number
   commits?: number
@@ -514,13 +544,19 @@ export type LatestCodeOwnerApprovalArrType = {
 export interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }
   minApproval?: number
-  codeOwners?: TypesCodeOwnerEvaluation | null
+  codeOwnersData: CodeOwnersData
   minReqLatestApproval?: number
   approvedEvaluations?: TypesPullReqReviewer[]
   changeReqEvaluations?: TypesPullReqReviewer[]
   latestApprovalArr?: TypesPullReqReviewer[]
   reqNoChangeReq?: boolean
   changeReqReviewer?: string
+  accordionValues: string[]
+  defaultReviewersData?: DefaultReviewersDataProps
+}
+
+export interface CodeOwnersData {
+  codeOwners?: TypesCodeOwnerEvaluation | null
   codeOwnerChangeReqEntries?: (
     | {
         owner_evaluations: TypesOwnerEvaluation[]
@@ -542,8 +578,15 @@ export interface PullRequestChangesSectionProps {
       }
     | undefined
   )[]
-  latestCodeOwnerApprovalArr?: LatestCodeOwnerApprovalArrType[]
+  latestCodeOwnerApprovalArr?: (
+    | {
+        entryEvaluation: TypesOwnerEvaluation[]
+      }
+    | undefined
+  )[]
 }
+
+export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval'> & CodeOwnersData
 
 export const PullRequestFilterOption = {
   ...PullRequestState,

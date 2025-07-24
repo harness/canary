@@ -1,13 +1,7 @@
 import { atom } from 'jotai'
 
-import {
-  TypesCheck,
-  TypesCodeOwnerEvaluation,
-  TypesCodeOwnerEvaluationEntry,
-  TypesOwnerEvaluation,
-  TypesPullReqReviewer,
-  TypesUserGroupOwnerEvaluation
-} from '@harnessio/code-service-client'
+import { TypesCheck, TypesDefaultReviewerApprovalsResponse } from '@harnessio/code-service-client'
+import { PrincipalInfoWithReviewDecision, PullRequestChangesSectionProps } from '@harnessio/ui/views'
 
 export enum PullReqReviewDecision {
   approved = 'approved',
@@ -111,58 +105,25 @@ export interface ApprovalItems {
   items: ApprovalItem[]
 }
 
-export interface PullRequestChangesSectionProps {
-  changesInfo: { header: string; content: string; status: string }
-  minApproval?: number
-  codeOwners?: TypesCodeOwnerEvaluation | null
-  minReqLatestApproval?: number
-  approvedEvaluations?: TypesPullReqReviewer[]
-  changeReqEvaluations?: TypesPullReqReviewer[]
-  latestApprovalArr?: TypesPullReqReviewer[]
-  reqNoChangeReq?: boolean
-  changeReqReviewer?: string
-  codeOwnerChangeReqEntries?: (
-    | {
-        owner_evaluations: TypesOwnerEvaluation[]
-        line_number?: number
-        pattern?: string
-        user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
-      }
-    | undefined
-  )[]
-  reqCodeOwnerApproval?: boolean
-  reqCodeOwnerLatestApproval?: boolean
-  codeOwnerPendingEntries?: TypesCodeOwnerEvaluationEntry[]
-  codeOwnerApprovalEntries?: (
-    | {
-        owner_evaluations: TypesOwnerEvaluation[]
-        line_number?: number
-        pattern?: string
-        user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
-      }
-    | undefined
-  )[]
-  latestCodeOwnerApprovalArr?: (
-    | {
-        entryEvaluation: TypesOwnerEvaluation[]
-      }
-    | undefined
-  )[]
-}
-
-export type extractInfoForCodeOwnerContentProps = Pick<
+export type extractInfoForPRPanelChangesProps = Pick<
   PullRequestChangesSectionProps,
   | 'approvedEvaluations'
   | 'reqNoChangeReq'
-  | 'reqCodeOwnerApproval'
   | 'minApproval'
-  | 'reqCodeOwnerLatestApproval'
   | 'minReqLatestApproval'
-  | 'codeOwnerChangeReqEntries'
-  | 'codeOwnerPendingEntries'
-  | 'latestCodeOwnerApprovalArr'
   | 'latestApprovalArr'
-  | 'codeOwnerApprovalEntries'
   | 'changeReqReviewer'
   | 'changeReqEvaluations'
+  | 'defaultReviewersData'
+  | 'codeOwnersData'
 >
+
+export interface TypesDefaultReviewerApprovalsResponseWithRevDecision extends TypesDefaultReviewerApprovalsResponse {
+  principals?: PrincipalInfoWithReviewDecision[] | null // Override the 'principals' field
+}
+
+export enum CodeOwnerReqDecision {
+  CHANGEREQ = 'changereq',
+  APPROVED = 'approved',
+  WAIT_FOR_APPROVAL = ''
+}

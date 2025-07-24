@@ -79,7 +79,7 @@ const FilterGroup = <
               value={searchInput}
               handleChange={handleInputChange}
               placeholder={t('views:search', 'Search')}
-              inputClassName="bg-cn-background-1"
+              // inputClassName="bg-cn-background-1"
             />
           </ListActions.Left>
           <ListActions.Right>

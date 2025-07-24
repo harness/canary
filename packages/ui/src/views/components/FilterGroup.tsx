@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
 
-import { ListActions, SearchInput } from '@/components'
+import { ListActions, SearchBox, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
@@ -20,7 +20,7 @@ interface FilterGroupProps<
   handleFilterOpen?: (filter: V, isOpen: boolean) => void
   searchInput: string
   sortConfig: Omit<ComponentProps<typeof Sort.Root>, 'children'>
-  handleInputChange: (value: string) => void
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
 }
@@ -73,11 +73,13 @@ const FilterGroup = <
       <Sort.Root {...sortConfig} onSortChange={onSortValueChange}>
         <ListActions.Root>
           <ListActions.Left>
-            <SearchInput
-              inputContainerClassName="max-w-80"
+            <SearchBox.Root
+              width="full"
+              className="max-w-80"
               value={searchInput}
-              onChange={handleInputChange}
+              handleChange={handleInputChange}
               placeholder={t('views:search', 'Search')}
+              inputClassName="bg-cn-background-1"
             />
           </ListActions.Left>
           <ListActions.Right>

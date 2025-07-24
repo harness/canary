@@ -10,7 +10,7 @@ import { noop } from 'lodash-es'
 import { booleanParser } from '@harnessio/filters'
 
 import { RepoList } from './repo-list'
-import { RepoListFilters, RepoListFiltersKeys, RepoListProps } from './types'
+import { RepoListFilters, RepoListProps } from './types'
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
@@ -79,8 +79,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setPage(1)
   }
 
-  const onFilterSelectionChange = (filterValues: RepoListFiltersKeys[]) => {}
-
   const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
 
   return (
@@ -100,10 +98,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 sortOptions: [],
                 onSortChange: noop
               }}
-              onFilterSelectionChange={onFilterSelectionChange}
               onFilterValueChange={onFilterValueChange}
               searchInput={searchQuery || ''}
-              handleInputChange={handleSearch}
+              handleInputChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)}
               headerAction={
                 <SplitButton<string>
                   dropdownContentClassName="mt-0 min-w-[170px]"

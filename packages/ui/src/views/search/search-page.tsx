@@ -1,11 +1,14 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Layout, Pagination, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
+import { Button, ButtonGroup, Layout, Pagination, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { RepositoryType, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
+import { noop } from 'lodash-es'
+import ToggleGroup from 'tailwind-utils-config/components/toggle-group'
 
 import { SearchResultItem, SearchResultsList } from './components/search-results-list'
+import { SemanticSearchResultsList } from './components/semantic-search-results-list'
 
 const languageOptions = [
   { label: 'JavaScript', value: 'javascript' },
@@ -29,8 +32,10 @@ export interface SearchPageViewProps {
   isLoading: boolean
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
-  regex: boolean
-  setRegex: (selected: boolean) => void
+  regexEnabled: boolean
+  setRegexEnabled: (selected: boolean) => void
+  semanticEnabled: boolean
+  setSemanticEnabled: (selected: boolean) => void
   useSearchResultsStore: () => {
     results: SearchResultItem[]
     page: number
@@ -58,8 +63,10 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   isLoading,
   searchQuery,
   setSearchQuery,
-  regex,
-  setRegex,
+  regexEnabled,
+  setRegexEnabled,
+  semanticEnabled,
+  setSemanticEnabled,
   useSearchResultsStore,
   stats,
   toRepoFileDetails,
@@ -112,40 +119,48 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           onChange={handleSearchChange}
           placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
           suffix={
-            <Toggle
-              defaultValue={regex}
-              onChange={setRegex}
-              iconOnly
-              prefixIcon="regex"
-              prefixIconProps={{
-                size: 'md'
-              }}
-              tooltipProps={{ content: 'Enable Regex' }}
-            />
+            <>
+              <Toggle
+                defaultValue={semanticEnabled}
+                onChange={setSemanticEnabled}
+                iconOnly
+                prefixIcon="sparks"
+                prefixIconProps={{
+                  size: 'md'
+                }}
+                tooltipProps={{ content: 'Enable AI Semantic Search' }}
+              />
+              <Toggle
+                defaultValue={regexEnabled}
+                onChange={setRegexEnabled}
+                iconOnly
+                prefixIcon="regex"
+                prefixIconProps={{
+                  size: 'md'
+                }}
+                tooltipProps={{ content: 'Enable Regex' }}
+              />
+            </>
           }
           autoFocus
         />
         <Spacer size={5} />
-        {results.length > 0 || selectedLanguage || selectedRepoId ? (
+        {!semanticEnabled && (results.length > 0 || selectedLanguage || selectedRepoId) ? (
           <Layout.Horizontal gap="sm">
             {repos ? (
               <Select
                 isLoading={isReposListLoading}
-                label={t('views:search.repository', 'Repository')}
                 onChange={value => onRepoSelect?.(value)}
                 value={selectedRepoId}
                 options={repos.map(repo => ({ label: repo.name, value: repo.name }))}
                 placeholder={t('views:search.repositoryPlaceholder', 'Select a repository')}
-                orientation="horizontal"
               />
             ) : null}
             <Select
-              label={t('views:search.language', 'Language')}
               onChange={value => onLanguageSelect?.(value)}
               options={languageOptions}
               value={selectedLanguage}
               placeholder={'Select a language'}
-              orientation="horizontal"
             />
             <Button variant={'secondary'} onClick={onClearFilters}>
               Clear Filters
@@ -166,12 +181,16 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
 
         <Spacer size={5} />
 
-        <SearchResultsList
-          isLoading={isLoading}
-          isDirtyList={isDirtyList}
-          useSearchResultsStore={useSearchResultsStore}
-          toRepoFileDetails={toRepoFileDetails}
-        />
+        {semanticEnabled ? (
+          <SemanticSearchResultsList />
+        ) : (
+          <SearchResultsList
+            isLoading={isLoading}
+            isDirtyList={isDirtyList}
+            useSearchResultsStore={useSearchResultsStore}
+            toRepoFileDetails={toRepoFileDetails}
+          />
+        )}
 
         <Spacer size={5} />
 

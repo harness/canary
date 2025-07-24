@@ -31,7 +31,8 @@ export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useQueryState('query')
   const [selectedRepoId, setSelectedRepoId] = useQueryState('repo')
   const [selectedLanguage, setSelectedLanguage] = useQueryState('language')
-  const [regex, setRegex] = useState(false)
+  const [regexEnabled, setRegexEnabled] = useState(false)
+  const [semanticEnabled, setSemanticEnabled] = useState(false)
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
   const [stats, setStats] = useState<Stats>()
   const getApiPath = useAPIPath()
@@ -64,7 +65,7 @@ export default function SearchPage() {
           query: `( ${query} ) case:no${selectedLanguage ? ` lang:${selectedLanguage}` : ''}`,
           max_result_count: 50,
           recursive: false,
-          enable_regex: regex
+          enable_regex: regexEnabled
         })
       }).then(res => res.json()),
     onSuccess: data => {
@@ -88,7 +89,7 @@ export default function SearchPage() {
     if (searchQuery.trim() !== '') {
       mutate({ query: searchQuery })
     }
-  }, [searchQuery, mutate, regex, selectedRepoId, selectedLanguage])
+  }, [searchQuery, mutate, regexEnabled, selectedRepoId, selectedLanguage])
 
   const handleRepoSelect = (repoName: string) => {
     setSelectedRepoId(repoName)
@@ -99,11 +100,13 @@ export default function SearchPage() {
       isLoading={isLoading}
       searchQuery={searchQuery}
       setSearchQuery={q => q && setSearchQuery(q)}
-      regex={regex}
+      regexEnabled={regexEnabled}
+      setRegexEnabled={setRegexEnabled}
+      semanticEnabled={semanticEnabled}
+      setSemanticEnabled={setSemanticEnabled}
       repos={repos ? transformRepoList(repos) : undefined}
       selectedRepoId={selectedRepoId}
       isReposListLoading={isReposListLoading}
-      setRegex={setRegex}
       onClearFilters={() => {
         setSelectedRepoId(null)
         setSelectedLanguage(null)

@@ -121,6 +121,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           setCheckboxBypass: noop,
           onRestoreBranch: noop,
           onDeleteBranch: noop,
+          onRevertPR: noop,
           showDeleteBranchButton,
           showRestoreBranchButton,
           headerMsg: errorMsg,

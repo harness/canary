@@ -47,6 +47,7 @@ interface HeaderProps {
   pullReqMetadata: TypesPullReq | undefined
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
@@ -68,15 +69,20 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             </StatusBadge>
             <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
-          {props.showDeleteBranchButton ? (
-            <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
-              Delete Branch
+          <Layout.Horizontal>
+            <Button variant="secondary" onClick={props.onRevertPR}>
+              Revert
             </Button>
-          ) : props.showRestoreBranchButton ? (
-            <Button variant="secondary" onClick={props.onRestoreBranch}>
-              Restore Branch
-            </Button>
-          ) : null}
+            {props.showDeleteBranchButton ? (
+              <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
+                Delete Branch
+              </Button>
+            ) : props.showRestoreBranchButton ? (
+              <Button variant="secondary" onClick={props.onRestoreBranch}>
+                Restore Branch
+              </Button>
+            ) : null}
+          </Layout.Horizontal>
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
@@ -194,6 +200,7 @@ export interface PullRequestPanelProps
   setCheckboxBypass?: (value: boolean) => void
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
@@ -221,6 +228,7 @@ const PullRequestPanel = ({
   setCheckboxBypass,
   onRestoreBranch,
   onDeleteBranch,
+  onRevertPR,
   showRestoreBranchButton,
   showDeleteBranchButton,
   headerMsg,
@@ -298,6 +306,7 @@ const PullRequestPanel = ({
                 pullReqMetadata={pullReqMetadata}
                 onRestoreBranch={onRestoreBranch}
                 onDeleteBranch={onDeleteBranch}
+                onRevertPR={onRevertPR}
                 showRestoreBranchButton={showRestoreBranchButton}
                 showDeleteBranchButton={showDeleteBranchButton}
                 headerMsg={headerMsg}

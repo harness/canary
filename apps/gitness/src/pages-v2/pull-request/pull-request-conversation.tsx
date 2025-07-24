@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
@@ -25,6 +25,7 @@ import {
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useRestorePullReqSourceBranchMutation,
+  useRevertPullReqOpMutation,
   useReviewerListPullReqQuery,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
@@ -159,6 +160,7 @@ export default function PullRequestConversationPage() {
   const routes = useRoutes()
   const {
     pullReqMetadata,
+    repoMetadata,
     refetchPullReq,
     refetchActivities,
     setRuleViolationArr,
@@ -176,7 +178,8 @@ export default function PullRequestConversationPage() {
     prPanelData: state.prPanelData,
     pullReqChecksDecision: state.pullReqChecksDecision,
     updateCommentStatus: state.updateCommentStatus,
-    pullReqCommits: state.pullReqCommits
+    pullReqCommits: state.pullReqCommits,
+    repoMetadata: state.repoMetadata
   }))
 
   const { currentUser: currentUserData } = useAppContext()
@@ -205,6 +208,8 @@ export default function PullRequestConversationPage() {
   const prId = (pullRequestId && Number(pullRequestId)) || -1
 
   const filtersData = usePrFilters()
+
+  const navigate = useNavigate()
 
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
@@ -281,6 +286,40 @@ export default function PullRequestConversationPage() {
     queryParams: { dry_run_rules: true }
   })
 
+  const { mutateAsync: revertPR } = useRevertPullReqOpMutation(
+    {
+      repo_ref: repoRef,
+      pullreq_number: prId
+    },
+    {
+      onSuccess: res => {
+        navigate(
+          routes.toPullRequestCompare({
+            spaceId,
+            repoId,
+            diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${res.body.branch}`
+          })
+        )
+      },
+      onError: error => {
+        const revertBranchExistsRegex = /Branch\s+"([^"]+)"\s+already exists\./
+        const match = error.message?.match(revertBranchExistsRegex)
+        if (match) {
+          const branchName = match[1]
+          navigate(
+            routes.toPullRequestCompare({
+              spaceId,
+              repoId,
+              diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${branchName}`
+            })
+          )
+        } else {
+          setErrorMsg(error.message || 'An error occurred while reverting the pull request.')
+        }
+      }
+    }
+  )
+
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
 
   const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
@@ -332,11 +371,9 @@ export default function PullRequestConversationPage() {
       })
   }, [deleteBranch, repoRef, prId, refetchBranch, refetchActivities])
 
-  // useEffect(() => {
-  //   if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
-  //     setShowDeleteBranchButton(true)
-  //   }
-  // }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
+  const onRevertPR = () => {
+    revertPR({ body: {} }).catch(error => setErrorMsg(error.message))
+  }
 
   useEffect(() => {
     if (sourceBranch && !branchError && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
@@ -747,6 +784,7 @@ export default function PullRequestConversationPage() {
       setCheckboxBypass,
       onRestoreBranch,
       onDeleteBranch,
+      onRevertPR,
       showDeleteBranchButton,
       showRestoreBranchButton,
       headerMsg: errorMsg,
@@ -773,6 +811,7 @@ export default function PullRequestConversationPage() {
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
+    onRevertPR,
     showDeleteBranchButton,
     showRestoreBranchButton,
     errorMsg

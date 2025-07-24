@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
 
-import { ListActions, SearchBox, SearchInput } from '@/components'
+import { ListActions, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'

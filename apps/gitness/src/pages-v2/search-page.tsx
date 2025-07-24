@@ -28,7 +28,6 @@ export default function SearchPage() {
   const [selectedLanguage, setSelectedLanguage] = useQueryState('language')
   const [regexEnabled, setRegexEnabled] = useQueryState<boolean>('regexEnabled', parseAsBoolean)
   const [semanticEnabled, setSemanticEnabled] = useQueryState<boolean>('semantic', parseAsBoolean)
-  console.log({ semanticEnabled })
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
   const [semanticSearchResults, setSemanticSearchResults] = useState<SemanticSearchResultItem[]>([])
   const [stats, setStats] = useState<Stats>()

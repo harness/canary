@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   ButtonLayout,
   ControlGroup,
@@ -19,6 +20,7 @@ interface RepoEmptyViewProps {
   httpUrl: string
   sshUrl: string
   gitRef: string
+  tokenGenerationError?: string
   handleCreateToken: () => void
   navigateToProfileKeys?: () => void
 }
@@ -29,6 +31,7 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   httpUrl,
   sshUrl,
   gitRef,
+  tokenGenerationError,
   handleCreateToken,
   navigateToProfileKeys
 }) => {
@@ -84,12 +87,18 @@ git push -u origin main
             <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
             </ButtonLayout>
+            {tokenGenerationError && (
+              <Alert.Root theme="danger" className="mt-2">
+                <Alert.Description>{tokenGenerationError}</Alert.Description>
+              </Alert.Root>
+            )}
             <Text className="mt-2">
               You can also manage your git credential{' '}
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                className="cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -98,7 +107,7 @@ git push -u origin main
                   }
                 }}
               >
-                here
+                here.
               </span>
             </Text>
           </ControlGroup>
@@ -114,7 +123,8 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                className="hover:underline cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -124,7 +134,7 @@ git push -u origin main
                 }}
               >
                 create an API token
-              </span>
+              </span>{' '}
               In order to pull from or push into this repository.
             </p>
           </ControlGroup>

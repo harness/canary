@@ -134,6 +134,7 @@ export function RepoSummaryView({
         httpUrl={repository?.git_url ?? 'could not fetch url'}
         repoName={repoId}
         projName={spaceId}
+        tokenGenerationError={tokenGenerationError || undefined}
         gitRef={gitRef || selectedBranchOrTag?.name || ''}
         handleCreateToken={handleCreateToken}
         navigateToProfileKeys={navigateToProfileKeys}

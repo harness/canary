@@ -12,16 +12,25 @@ import {
   UpdateRepositoryErrorResponse,
   UpdateSecuritySettingsErrorResponse,
   useDeleteRepositoryMutation,
+  useFindGeneralSettingsQuery,
   useFindRepositoryQuery,
   useFindSecuritySettingsQuery,
   useUpdateDefaultBranchMutation,
+  useUpdateGeneralSettingsMutation,
   useUpdatePublicAccessMutation,
   useUpdateRepositoryMutation,
   useUpdateSecuritySettingsMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog, ExitConfirmDialog } from '@harnessio/ui/components'
 import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
-import { AccessLevel, ErrorTypes, RepoSettingsGeneralPage, RepoUpdateData, SecurityScanning } from '@harnessio/ui/views'
+import {
+  AccessLevel,
+  ErrorTypes,
+  RepoSettingsFeaturesFormFields,
+  RepoSettingsGeneralPage,
+  RepoUpdateData,
+  SecurityScanning
+} from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -35,7 +44,13 @@ export const RepoSettingsGeneralPageContainer = () => {
   const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()
-  const { repoData: repoDataStore, setRepoData, setSecurityScanning, setVerifyCommitterIdentity } = useRepoRulesStore()
+  const {
+    repoData: repoDataStore,
+    setRepoData,
+    setSecurityScanning,
+    setVerifyCommitterIdentity,
+    setGitLfsEnabled
+  } = useRepoRulesStore()
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
   const [isRepoArchiveDialogOpen, setRepoArchiveDialogOpen] = useState(false)
@@ -133,6 +148,34 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
+  const { isLoading: isLoadingFeaturesSettings } = useFindGeneralSettingsQuery(
+    { repo_ref: repoRef },
+    {
+      onSuccess: ({ body: data }) => {
+        setGitLfsEnabled(data.git_lfs_enabled || false)
+        setApiError(null)
+      },
+      onError: error => {
+        const message = error.message || 'Error fetching general settings'
+        setApiError({ type: ErrorTypes.FETCH_GENERAL, message })
+      }
+    }
+  )
+
+  const { mutate: updateFeaturesSettings, isLoading: isUpdatingFeaturesSettings } = useUpdateGeneralSettingsMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: ({ body: data }) => {
+        setGitLfsEnabled(data.git_lfs_enabled || false)
+        setApiError(null)
+      },
+      onError: error => {
+        const message = error.message || 'Error updating general settings'
+        setApiError({ type: ErrorTypes.UPDATE_GENERAL, message })
+      }
+    }
+  )
+
   const { mutate: updateSecuritySettings, isLoading: isUpdatingSecuritySettings } = useUpdateSecuritySettingsMutation(
     { repo_ref: repoRef },
     {
@@ -202,11 +245,17 @@ export const RepoSettingsGeneralPageContainer = () => {
     })
   }
 
+  const handleUpdateFeaturesSettings = (data: RepoSettingsFeaturesFormFields) => {
+    updateFeaturesSettings({ body: { git_lfs_enabled: data.gitLfsEnabled } })
+  }
+
   const loadingStates = {
-    isLoadingRepoData: isLoadingRepoData || isLoadingSecuritySettings,
+    isLoadingRepoData: isLoadingRepoData || isLoadingSecuritySettings || isLoadingFeaturesSettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
+    isLoadingFeaturesSettings,
     isLoadingSecuritySettings,
-    isUpdatingSecuritySettings
+    isUpdatingSecuritySettings,
+    isUpdatingFeaturesSettings
   }
 
   return (
@@ -214,6 +263,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       <RepoSettingsGeneralPage
         handleRepoUpdate={handleRepoUpdate}
         handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+        handleUpdateFeaturesSettings={handleUpdateFeaturesSettings}
         apiError={apiError}
         loadingStates={loadingStates}
         isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}

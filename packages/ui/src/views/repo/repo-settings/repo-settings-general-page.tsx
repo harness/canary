@@ -6,6 +6,7 @@ import { SandboxLayout } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
+import { RepoSettingsFeaturesForm, RepoSettingsFeaturesFormFields } from './components/repo-settings-general-features'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
 import { RepoSettingsSecurityForm, RepoSettingsSecurityFormFields } from './components/repo-settings-general-security'
 import { ErrorTypes, IRepoStore, RepoUpdateData } from './types'
@@ -15,10 +16,13 @@ interface ILoadingStates {
   isUpdatingRepoData: boolean
   isLoadingSecuritySettings: boolean
   isUpdatingSecuritySettings: boolean
+  isLoadingFeaturesSettings: boolean
+  isUpdatingFeaturesSettings: boolean
 }
 
 interface RepoSettingsGeneralPageProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
+  handleUpdateFeaturesSettings: (data: RepoSettingsFeaturesFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
@@ -32,6 +36,7 @@ interface RepoSettingsGeneralPageProps {
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   handleRepoUpdate,
   handleUpdateSecuritySettings,
+  handleUpdateFeaturesSettings,
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
@@ -42,7 +47,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { repoData, securityScanning, verifyCommitterIdentity } = useRepoRulesStore()
+  const { repoData, securityScanning, verifyCommitterIdentity, gitLfsEnabled } = useRepoRulesStore()
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
@@ -68,6 +73,14 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
           isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+        />
+        <FormSeparator />
+        <RepoSettingsFeaturesForm
+          gitLfsEnabled={gitLfsEnabled}
+          handleUpdateFeaturesSettings={handleUpdateFeaturesSettings}
+          apiError={apiError}
+          isUpdatingFeaturesSettings={loadingStates.isUpdatingFeaturesSettings}
+          isLoadingFeaturesSettings={loadingStates.isLoadingFeaturesSettings}
         />
         <FormSeparator />
         <RepoSettingsGeneralDelete

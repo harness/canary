@@ -20,10 +20,11 @@ interface IRepoStore {
   principals: PrincipalType[] | null
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
   verifyCommitterIdentity: boolean
-
+  gitLfsEnabled: boolean
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RepoRuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
+  setGitLfsEnabled: (enabled: boolean) => void
   setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
@@ -41,7 +42,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   },
   branches: [],
   presetRuleData: null,
-
+  gitLfsEnabled: false,
   rules: null,
   securityScanning: false,
   verifyCommitterIdentity: false,
@@ -70,6 +71,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     set({ rules: rulesData })
   },
   setSecurityScanning: enabled => set({ securityScanning: enabled }),
+  setGitLfsEnabled: enabled => set({ gitLfsEnabled: enabled }),
   setPresetRuleData: data => {
     if (!data) {
       set({ presetRuleData: null })

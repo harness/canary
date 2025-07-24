@@ -298,7 +298,7 @@ export default function PullRequestConversationPage() {
       },
       onError: error => {
         const revertBranchExistsRegex = /Branch\s+"([^"]+)"\s+already exists\./
-        const match = error?.message?.match(revertBranchExistsRegex)
+        const match = error.message?.match(revertBranchExistsRegex)
         if (match) {
           const branchName = match[1]
           navigate(
@@ -309,7 +309,7 @@ export default function PullRequestConversationPage() {
             })
           )
         } else {
-          setErrorMsg(error?.message || 'An error occurred while reverting the pull request.')
+          setErrorMsg(error.message || 'An error occurred while reverting the pull request.')
         }
       }
     }

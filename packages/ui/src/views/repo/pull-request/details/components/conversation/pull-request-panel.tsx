@@ -69,22 +69,20 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             </StatusBadge>
             <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
-          {props.showDeleteBranchButton ? (
-            <>
-              <Layout.Horizontal>
-                <Button variant="secondary" onClick={props.onRevertPR}>
-                  Revert
-                </Button>
-                <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
-                  Delete Branch
-                </Button>
-              </Layout.Horizontal>
-            </>
-          ) : props.showRestoreBranchButton ? (
-            <Button variant="secondary" onClick={props.onRestoreBranch}>
-              Restore Branch
+          <Layout.Horizontal>
+            <Button variant="secondary" onClick={props.onRevertPR}>
+              Revert
             </Button>
-          ) : null}
+            {props.showDeleteBranchButton ? (
+              <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
+                Delete Branch
+              </Button>
+            ) : props.showRestoreBranchButton ? (
+              <Button variant="secondary" onClick={props.onRestoreBranch}>
+                Restore Branch
+              </Button>
+            ) : null}
+          </Layout.Horizontal>
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">

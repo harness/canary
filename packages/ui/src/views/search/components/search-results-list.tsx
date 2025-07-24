@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Button, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
+import { Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -10,7 +10,6 @@ interface SearchResultsListProps {
   useSearchResultsStore: () => {
     results: SearchResultItem[]
   }
-  clearSearch: () => void
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
 }
 
@@ -35,8 +34,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   isLoading,
   isDirtyList,
   useSearchResultsStore,
-  toRepoFileDetails,
-  clearSearch
+  toRepoFileDetails
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
@@ -61,7 +59,6 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             : t('views:search.enterSearchTerms', 'Enter search terms to find relevant results')}
         </Text>
         <Spacer size={4} />
-        {isDirtyList && <Button onClick={clearSearch}>{t('views:search.clearSearch', 'Clear search')}</Button>}
       </div>
     )
   }
@@ -85,8 +82,10 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                 {item.matches
                   .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : 3)
                   .map(match => (
-                    <div key={`${match.before}-${match.fragments.join('')}-${match.after}`}>
-                      <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
+                    <div
+                      key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
+                    >
+                      <pre className={cn('bg-cn-background-1 p-1 mt-1 rounded')}>
                         <code className="monospace">
                           {match.before.trim().length > 0 && (
                             <>

@@ -245,7 +245,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
     defaultReviewersOptions?: PrincipalType[] | null
     principalsSearchQuery?: string
     setPrincipalsSearchQuery?: (val: string) => void
-    handleSelectChangeForRule: (ruleId: string, options: any[]) => void
+    handleSelectChangeForRule: (ruleId: string, options: MultiSelectOption[]) => void
   }
 > = ({ defaultReviewersOptions, rule, setPrincipalsSearchQuery, principalsSearchQuery, handleSelectChangeForRule }) => {
   const { t } = useTranslation()
@@ -267,7 +267,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
   return (
     <>
       <MultiSelect
-        value={rule?.selectOptions?.map(option => ({
+        value={selectOptions?.map(option => ({
           id: option.id?.toString() || '',
           key: option.key
         }))}
@@ -297,7 +297,7 @@ export const BranchSettingsRuleListField: FC<{
   defaultReviewersOptions?: PrincipalType[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (ruleId: string, checks: any[]) => void
+  handleSelectChangeForRule: (ruleId: string, checks: MultiSelectOption[]) => void
   handleInputChange: (ruleId: string, value: string) => void
   setPrincipalsSearchQuery?: (val: string) => void
   principalsSearchQuery?: string
@@ -356,11 +356,10 @@ export const BranchSettingsRuleListField: FC<{
               {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.STATUS_CHECKS && (
                 <div className="pl-[26px]">
                   <MultiSelect
-                    value={rules[index].selectOptions.map(option => ({ id: option.id, key: option.key }))}
+                    value={rules[index].selectOptions.map(option => ({ id: option?.id, key: option?.key }))}
                     placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
                     onChange={options => {
-                      const selectedKeys = options.map(option => option.key)
-                      handleSelectChangeForRule(rule.id, selectedKeys)
+                      handleSelectChangeForRule(rule.id, options)
                     }}
                     options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
                     disallowCreation

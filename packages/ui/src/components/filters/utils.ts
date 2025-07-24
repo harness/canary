@@ -27,8 +27,13 @@ export const getFilterLabelValue = <
       return formatDate(filterValue)
     }
     case FilterFieldTypes.ComboBox: {
+      const filterValue = filter.value as ComboBoxOptions | undefined
+      if (filterValue?.label) {
+        return filterValue.label
+      }
+
       const options = filterOption.filterFieldConfig?.options
-      return options?.find(option => option.value === (filter.value as ComboBoxOptions)?.value)?.label
+      return options?.find(option => option.value === filterValue?.value)?.label
     }
     case FilterFieldTypes.MultiSelect: {
       return (filter.value as CheckboxOptions[])?.map(option => option.label).join(', ')

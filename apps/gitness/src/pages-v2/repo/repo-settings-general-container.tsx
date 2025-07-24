@@ -142,7 +142,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       onSuccess: ({ body: data }) => {
         setSecurityScanning(data.secret_scanning_enabled || false)
         setVerifyCommitterIdentity(data.principal_committer_match || false)
-        // @ts-ignore vulnerability_scanning_mode is not defined in the type
+        // @ts-expect-error vulnerability_scanning_mode is not defined in the type
         setVulnerabilityScanning(data?.vulnerability_scanning_mode)
         setApiError(null)
       },

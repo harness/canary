@@ -42,6 +42,7 @@ export * from './components/repo-settings-general-features'
 export interface SecurityScanning {
   secretScanning: boolean
   verifyCommitterIdentity: boolean
+  vulnerabilityScanning: boolean
 }
 
 export interface RuleDataType {
@@ -57,6 +58,7 @@ export interface IRepoStore {
   rules: RuleDataType[] | null
   securityScanning: boolean
   verifyCommitterIdentity: boolean
+  vulnerabilityScanning: string
   gitLfsEnabled: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null

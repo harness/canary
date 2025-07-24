@@ -10,7 +10,8 @@ import { ErrorTypes } from '../types'
 
 const formSchema = z.object({
   secretScanning: z.boolean(),
-  verifyCommitterIdentity: z.boolean()
+  verifyCommitterIdentity: z.boolean(),
+  vulnerabilityScanning: z.boolean()
 })
 
 export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
@@ -18,19 +19,23 @@ export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
 interface RepoSettingsSecurityFormProps {
   securityScanning: boolean
   verifyCommitterIdentity: boolean
+  vulnerabilityScanning: boolean
   apiError: { type: ErrorTypes; message: string } | null
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
+  showVulnerabilityScanning?: boolean
 }
 
 export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   securityScanning,
   verifyCommitterIdentity,
+  vulnerabilityScanning,
   handleUpdateSecuritySettings,
   apiError,
   isUpdatingSecuritySettings,
-  isLoadingSecuritySettings
+  isLoadingSecuritySettings,
+  showVulnerabilityScanning = false
 }) => {
   const { t } = useTranslation()
   const {
@@ -43,7 +48,8 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
     mode: 'onChange',
     defaultValues: {
       secretScanning: securityScanning,
-      verifyCommitterIdentity: verifyCommitterIdentity
+      verifyCommitterIdentity: verifyCommitterIdentity,
+      vulnerabilityScanning: vulnerabilityScanning
     }
   })
 
@@ -61,10 +67,18 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
     })()
   }
 
+  const onVulnerabilityScanningCheckboxChange = (checked: boolean) => {
+    setValue('vulnerabilityScanning', checked)
+    handleSubmit(data => {
+      handleUpdateSecuritySettings(data)
+    })()
+  }
+
   useEffect(() => {
     setValue('secretScanning', securityScanning)
     setValue('verifyCommitterIdentity', verifyCommitterIdentity)
-  }, [securityScanning, verifyCommitterIdentity, setValue])
+    setValue('vulnerabilityScanning', vulnerabilityScanning)
+  }, [securityScanning, verifyCommitterIdentity, vulnerabilityScanning, setValue])
 
   const isDisabled =
     (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
@@ -96,6 +110,26 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
           {errors.secretScanning && (
             <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
           )}
+
+          {showVulnerabilityScanning ? (
+            <>
+              <Checkbox
+                checked={watch('vulnerabilityScanning')}
+                id="vulnerability-scanning"
+                onCheckedChange={onVulnerabilityScanningCheckboxChange}
+                disabled={isDisabled}
+                title={tooltipMessage}
+                label={t('views:repos.vulnerabilityScanning', 'Vulnerability scanning')}
+                caption={t(
+                  'views:repos.vulnerabilityScanningDescription',
+                  'Scan incoming commits for known vulnerabilities.'
+                )}
+              />
+              {errors.vulnerabilityScanning && (
+                <Message theme={MessageTheme.ERROR}>{errors.vulnerabilityScanning.message?.toString()}</Message>
+              )}
+            </>
+          ) : null}
 
           <Checkbox
             checked={watch('verifyCommitterIdentity')}

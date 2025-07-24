@@ -178,6 +178,8 @@
     "security": "Sécurité",
     "secretScanning": "Analyse des secrets",
     "secretScanningDescription": "Empêcher les commits contenant des secrets comme les mots de passe ou jetons API.",
+    "vulnerabilityScanning": "Vulnerability scanning",
+    "vulnerabilityScanningDescription": "Scan incoming commits for known vulnerabilities.",
     "verifyCommitterIdentity": "Verify committer identity",
     "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
     "rules": "Règles",

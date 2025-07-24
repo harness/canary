@@ -47,6 +47,7 @@ interface HeaderProps {
   pullReqMetadata: TypesPullReq | undefined
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
@@ -69,9 +70,16 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
           {props.showDeleteBranchButton ? (
-            <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
-              Delete Branch
-            </Button>
+            <>
+              <Layout.Horizontal>
+                <Button variant="secondary" onClick={props.onRevertPR}>
+                  Revert
+                </Button>
+                <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
+                  Delete Branch
+                </Button>
+              </Layout.Horizontal>
+            </>
           ) : props.showRestoreBranchButton ? (
             <Button variant="secondary" onClick={props.onRestoreBranch}>
               Restore Branch
@@ -189,6 +197,7 @@ export interface PullRequestPanelProps
   setCheckboxBypass?: (value: boolean) => void
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
@@ -219,6 +228,7 @@ const PullRequestPanel = ({
   setCheckboxBypass,
   onRestoreBranch,
   onDeleteBranch,
+  onRevertPR,
   showRestoreBranchButton,
   showDeleteBranchButton,
   headerMsg,
@@ -295,6 +305,7 @@ const PullRequestPanel = ({
                 pullReqMetadata={pullReqMetadata}
                 onRestoreBranch={onRestoreBranch}
                 onDeleteBranch={onDeleteBranch}
+                onRevertPR={onRevertPR}
                 showRestoreBranchButton={showRestoreBranchButton}
                 showDeleteBranchButton={showDeleteBranchButton}
                 headerMsg={headerMsg}

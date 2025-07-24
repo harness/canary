@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
@@ -21,10 +21,12 @@ import {
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
   useDeletePullReqSourceBranchMutation,
+  useFindRepositoryQuery,
   useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useRestorePullReqSourceBranchMutation,
+  useRevertPullReqOpMutation,
   useReviewerListPullReqQuery,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
@@ -201,6 +203,8 @@ export default function PullRequestConversationPage() {
 
   const filtersData = usePrFilters()
 
+  const navigate = useNavigate()
+
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
@@ -276,12 +280,19 @@ export default function PullRequestConversationPage() {
     queryParams: { dry_run_rules: true }
   })
 
+  const { mutateAsync: revertPR } = useRevertPullReqOpMutation({
+    repo_ref: repoRef,
+    pullreq_number: prId
+  })
+
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
 
   const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId)
   })
+
+  const { data: { body: repoData } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const handleUpdateDescription = useCallback(
     (title: string, description: string) => {
@@ -327,11 +338,38 @@ export default function PullRequestConversationPage() {
       })
   }, [deleteBranch, repoRef, prId, refetchBranch, refetchActivities])
 
-  // useEffect(() => {
-  //   if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
-  //     setShowDeleteBranchButton(true)
-  //   }
-  // }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
+  const revertBranchExistsRegex = /Branch\s+"([^"]+)"\s+already exists\./
+  const handleRevertError = (error: any) => {
+    const match = error?.message?.match(revertBranchExistsRegex)
+    if (match) {
+      const branchName = match[1]
+      navigate(
+        routes.toPullRequestCompare({
+          spaceId,
+          repoId,
+          diffRefs: `${pullReqMetadata?.target_branch || repoData?.default_branch}...${branchName}`
+        })
+      )
+    } else {
+      setErrorMsg(error?.message)
+    }
+  }
+  const onRevertPR = () => {
+    revertPR({ body: {} })
+      .then(
+        res => {
+          navigate(
+            routes.toPullRequestCompare({
+              spaceId,
+              repoId,
+              diffRefs: `${pullReqMetadata?.target_branch || repoData?.default_branch}...${res.body.branch}`
+            })
+          )
+        },
+        error => handleRevertError(error)
+      )
+      .catch(error => handleRevertError(error))
+  }
 
   useEffect(() => {
     if (sourceBranch && !branchError && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
@@ -733,6 +771,7 @@ export default function PullRequestConversationPage() {
       setCheckboxBypass,
       onRestoreBranch,
       onDeleteBranch,
+      onRevertPR,
       showDeleteBranchButton,
       showRestoreBranchButton,
       headerMsg: errorMsg,
@@ -761,6 +800,7 @@ export default function PullRequestConversationPage() {
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
+    onRevertPR,
     showDeleteBranchButton,
     showRestoreBranchButton,
     errorMsg

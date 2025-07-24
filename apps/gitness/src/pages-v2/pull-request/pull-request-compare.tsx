@@ -38,14 +38,14 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/types'
-import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { getErrorMessage } from '../../utils/error-utils'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
+import { parseSpecificDiff } from './diff-utils'
+import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
+import { changesInfoAtom, DiffFileEntry } from './types'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.

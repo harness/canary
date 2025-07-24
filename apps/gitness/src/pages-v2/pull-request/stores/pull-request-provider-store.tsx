@@ -5,7 +5,7 @@ import { create } from 'zustand'
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
 import { CodeCommentState, DiffStatistics, PullRequestDataState, PullRequestState } from '@harnessio/ui/views'
 
-import { extractSpecificViolations, getCommentsInfoData } from '../../../pages/pull-request/utils'
+import { extractSpecificViolations, getCommentsInfoData } from '../pull-request-utils'
 
 export const codeOwnersNotFoundMessage = 'CODEOWNERS file not found'
 export const codeOwnersNotFoundMessage2 = `path "CODEOWNERS" not found`

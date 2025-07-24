@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { TypesMembershipUser } from '@harnessio/code-service-client'
 import { MemberData } from '@harnessio/ui/views'
 
-import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
+import { timeAgoFromEpochTime } from '../../../utils/time-utils'
 
 export interface IMemberListStore {
   // state

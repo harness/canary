@@ -11,8 +11,8 @@ import {
 } from '@harnessio/code-service-client'
 import { ExecutionState, PRListFilters } from '@harnessio/ui/views'
 
-import { PullReqReviewDecision, TypeCheckData } from '../../pages/pull-request/types/types'
 import { extractInfoForCodeOwnerContentProps } from '../../types'
+import { PullReqReviewDecision, TypeCheckData } from './types'
 
 export const processReviewDecision = (
   review_decision: EnumPullReqReviewDecision | PullReqReviewDecision.outdated,
@@ -525,3 +525,25 @@ export const buildPRFilters = (filterData: PRListFilters) =>
     },
     {}
   )
+
+export const getCommentsInfoData = ({
+  requiresCommentApproval,
+  resolvedCommentArrParams
+}: {
+  requiresCommentApproval: boolean
+  resolvedCommentArrParams?: number[]
+}) => {
+  const resolvedComments = requiresCommentApproval && !resolvedCommentArrParams
+
+  if (resolvedComments) {
+    return { header: 'All comments are resolved', content: undefined, status: 'success' }
+  }
+
+  const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
+
+  return {
+    header: 'Unresolved comments',
+    content: `There are ${unresolvedCount} unresolved comments`,
+    status: 'failed'
+  }
+}

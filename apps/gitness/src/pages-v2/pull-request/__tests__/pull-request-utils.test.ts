@@ -1,7 +1,6 @@
 import { TypesCodeOwnerEvaluationEntry, TypesOwnerEvaluation, TypesPrincipalInfo } from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 
-import { PullReqReviewDecision, TypeCheckData } from '../../../pages/pull-request/types/types'
 import {
   buildPRFilters,
   capitalizeFirstLetter,
@@ -17,6 +16,7 @@ import {
   normalizeGitFilePath,
   processReviewDecision
 } from '../pull-request-utils'
+import { PullReqReviewDecision, TypeCheckData } from '../types'
 
 export enum EnumCheckStatus {
   Error = 'error',

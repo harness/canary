@@ -2079,6 +2079,25 @@
       "gradient-stop-3": {
         "$type": "color",
         "$value": "{chrome.950}"
+      },
+      "mask": {
+        "from": {
+          "$type": "color",
+          "$value": "{pure.white}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{pure.white}"
+        }
       }
     },
     "pipeline": {

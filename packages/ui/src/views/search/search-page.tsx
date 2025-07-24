@@ -102,8 +102,9 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           'h-full': !isLoading && !results.length && !searchQuery
         })}
       >
-        <Spacer size={2} />
-        <Text variant="heading-section">{t('views:search.title', 'Search')}</Text>
+        <Text as="h1" variant="heading-section">
+          {t('views:search.title', 'Search')}
+        </Text>
         <Spacer size={6} />
 
         <SearchInput

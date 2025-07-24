@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { NoData, Pagination, Text } from '@/components'
+import { Checkbox, NoData, Pagination, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
@@ -17,6 +17,9 @@ export interface ProjectRulesPageProps {
   handleRuleClick: (identifier: string) => void
   toProjectBranchRuleCreate?: () => string
   toProjectTagRuleCreate?: () => string
+  showParentScopeLabelsCheckbox?: boolean
+  parentScopeLabelsChecked?: boolean
+  onParentScopeLabelsChange?: (checked: boolean) => void
 }
 export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   useProjectRulesStore,
@@ -29,7 +32,10 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   apiError,
   handleRuleClick,
   toProjectBranchRuleCreate,
-  toProjectTagRuleCreate
+  toProjectTagRuleCreate,
+  showParentScopeLabelsCheckbox = false,
+  parentScopeLabelsChecked = false,
+  onParentScopeLabelsChange
 }) => {
   const { t } = useTranslation()
   const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
@@ -44,6 +50,16 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
         <Text as="h1" variant="heading-section" className="mb-6">
           {t('views:projectSettings.rules', 'Rules')}
         </Text>
+        {showParentScopeLabelsCheckbox && (
+          <div className="mb-[18px]">
+            <Checkbox
+              id="parent-labels"
+              checked={parentScopeLabelsChecked}
+              onCheckedChange={onParentScopeLabelsChange}
+              label={t('views:rules.showParentRules', 'Show rules from parent scopes')}
+            />
+          </div>
+        )}
         {!rulesData?.length && !isDirtyList && !isLoading ? (
           <NoData
             withBorder
@@ -58,7 +74,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             ]}
             primaryButton={{
               label: t('views:projectSettings.addRule', 'Add new rule'),
-              to: 'create'
+              to: 'create/branch'
             }}
           />
         ) : (

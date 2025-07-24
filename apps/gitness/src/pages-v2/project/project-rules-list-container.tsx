@@ -21,6 +21,7 @@ export const ProjectRulesListContainer = () => {
 
   const [query, setQuery] = useQueryState('query')
   const [page, setPage] = useState(1)
+  const [showParentRules, setShowParentRules] = useState(false)
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -46,7 +47,8 @@ export const ProjectRulesListContainer = () => {
     space_ref: `${space_ref}/+`,
     queryParams: {
       page: queryPage,
-      query: query ?? ''
+      query: query ?? '',
+      inherited: showParentRules
     }
   })
 
@@ -74,7 +76,8 @@ export const ProjectRulesListContainer = () => {
         rulesAppliedCount: getTotalRulesApplied(rule),
         bypassAllowed: rule.definition?.bypass?.repo_owners === true,
         identifier: rule.identifier,
-        state: rule.state ? String(rule.state) : undefined
+        state: rule.state ? String(rule.state) : undefined,
+        type: rule.type as 'branch' | 'tag'
       }))
       setRules(formattedRules, headers)
       setApiError(null)
@@ -104,6 +107,9 @@ export const ProjectRulesListContainer = () => {
         handleRuleClick={handleRuleEditClick}
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
+        showParentScopeLabelsCheckbox={space_ref?.includes('/')}
+        parentScopeLabelsChecked={showParentRules}
+        onParentScopeLabelsChange={setShowParentRules}
       />
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}

@@ -11,7 +11,8 @@ import {
   SkeletonList,
   Spacer,
   SplitButton,
-  StackedList
+  StackedList,
+  Tag
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType } from '@/views'
@@ -152,6 +153,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                               <IconV2 className="text-icons-9" name="minus-circle" />
                             )}
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
+                            {rule.type && <Tag variant="outline" size="sm" theme="gray" value={rule.type} />}
                           </div>
                         }
                         description={

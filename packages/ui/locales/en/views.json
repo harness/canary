@@ -646,6 +646,13 @@
     "reader": "Reader",
     "readerDesc": "Can view but cannot make changes or leave comments."
   },
+  "rules": {
+    "showParentRules": "Show rules from parent scopes",
+    "edit": "Edit rule",
+    "delete": "Delete rule",
+    "exclude": "Exclude",
+    "include": "Include"
+  },
   "commits": {
     "commitDetailsDiffShowing": "Showing",
     "commitDetailsDiffChangedFiles": "changed files",
@@ -657,12 +664,6 @@
     "verified": "Verified",
     "browseFiles": "Browse files",
     "createNewCommit": "Create new commit"
-  },
-  "rules": {
-    "edit": "Edit rule",
-    "delete": "Delete rule",
-    "exclude": "Exclude",
-    "include": "Include"
   },
   "code": "Code",
   "createTagDialog": {

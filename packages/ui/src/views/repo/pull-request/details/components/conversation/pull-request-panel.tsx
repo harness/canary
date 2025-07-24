@@ -213,13 +213,9 @@ const PullRequestPanel = ({
   checksInfo,
   approvedEvaluations,
   changeReqEvaluations,
-  codeOwners,
+  codeOwnersData,
   latestApprovalArr,
   changeReqReviewer,
-  codeOwnerChangeReqEntries,
-  codeOwnerPendingEntries,
-  codeOwnerApprovalEntries,
-  latestCodeOwnerApprovalArr,
   actions,
   checkboxBypass,
   setCheckboxBypass,
@@ -413,13 +409,7 @@ const PullRequestPanel = ({
                   latestApprovalArr={latestApprovalArr}
                   reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
                   changeReqReviewer={changeReqReviewer}
-                  codeOwners={codeOwners}
-                  codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
-                  reqCodeOwnerApproval={prPanelData.reqCodeOwnerApproval}
-                  reqCodeOwnerLatestApproval={prPanelData.reqCodeOwnerLatestApproval}
-                  codeOwnerPendingEntries={codeOwnerPendingEntries}
-                  codeOwnerApprovalEntries={codeOwnerApprovalEntries}
-                  latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
+                  codeOwnersData={codeOwnersData}
                   defaultReviewersData={defaultReviewersData}
                 />
               )}

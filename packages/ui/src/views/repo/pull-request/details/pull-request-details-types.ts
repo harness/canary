@@ -544,13 +544,19 @@ export type LatestCodeOwnerApprovalArrType = {
 export interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }
   minApproval?: number
-  codeOwners?: TypesCodeOwnerEvaluation | null
+  codeOwnersData: CodeOwnersData
   minReqLatestApproval?: number
   approvedEvaluations?: TypesPullReqReviewer[]
   changeReqEvaluations?: TypesPullReqReviewer[]
   latestApprovalArr?: TypesPullReqReviewer[]
   reqNoChangeReq?: boolean
   changeReqReviewer?: string
+  accordionValues: string[]
+  defaultReviewersData?: DefaultReviewersDataProps
+}
+
+export interface CodeOwnersData {
+  codeOwners?: TypesCodeOwnerEvaluation | null
   codeOwnerChangeReqEntries?: (
     | {
         owner_evaluations: TypesOwnerEvaluation[]
@@ -578,9 +584,9 @@ export interface PullRequestChangesSectionProps {
       }
     | undefined
   )[]
-  accordionValues: string[]
-  defaultReviewersData?: DefaultReviewersDataProps
 }
+
+export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval'> & CodeOwnersData
 
 export const PullRequestFilterOption = {
   ...PullRequestState,

@@ -1,29 +1,13 @@
-import { useMemo, type FC } from 'react'
+import { type FC } from 'react'
 
-import {
-  Accordion,
-  Avatar,
-  AvatarTooltipProps,
-  AvatarWithTooltip,
-  IconV2,
-  Layout,
-  StackedList,
-  StatusBadge,
-  Text
-} from '@/components'
-import {
-  DefaultReviewersApprovalsData,
-  easyPluralize,
-  getDefaultReviewersApprovalCount,
-  PrincipalInfoWithReviewDecision,
-  PullReqReviewDecision,
-  PullRequestChangesSectionProps,
-  TypesOwnerEvaluation
-} from '@/views'
+import { Accordion, IconV2, Layout, StackedList, StatusBadge } from '@/components'
+import { easyPluralize, PullRequestChangesSectionProps } from '@/views'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 
+import { CodeOwnersSection } from './components/code-owners-section'
+import { DefaultReviewersSection } from './components/default-reviewers-section'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 const getStatusIcon = (status: string) => {
@@ -39,106 +23,7 @@ const getStatusIcon = (status: string) => {
   }
 }
 
-interface HeaderItemProps {
-  header: string
-}
-
-const HeaderItem: FC<HeaderItemProps> = ({ header }) => {
-  return <span className="text-1 text-cn-foreground-1">{header}</span>
-}
-
-interface AvatarUser {
-  id?: number
-  display_name?: string
-  email?: string
-}
-
-interface AvatarItemProps {
-  users?: AvatarUser[]
-}
-
-const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
-  return (
-    <StackedList.Field
-      className="pb-0"
-      title={
-        <div className="flex items-center">
-          {users &&
-            users.map((user, idx) => {
-              if (idx < 2) {
-                const tooltipProps: AvatarTooltipProps = {
-                  side: 'top',
-                  content: (
-                    <Layout.Horizontal align="center" justify="between" className="m-1">
-                      <Avatar name={user?.display_name || ''} size="lg" rounded />
-                      <Layout.Vertical gap="2xs">
-                        <Text>{user?.display_name}</Text>
-                        <Text>{user?.email}</Text>
-                      </Layout.Vertical>
-                    </Layout.Horizontal>
-                  )
-                }
-                return (
-                  <AvatarWithTooltip
-                    key={user?.id || idx}
-                    name={user?.display_name || ''}
-                    size="md"
-                    rounded
-                    tooltipProps={tooltipProps}
-                  />
-                )
-              }
-              if (idx === 2 && users?.length > 2) {
-                // Get all emails from remaining users (index 2 and beyond)
-                const remainingEmails = users
-                  .slice(2)
-                  .map(user => user?.email || user?.display_name || '')
-                  .filter(Boolean)
-
-                const tooltipProps: AvatarTooltipProps = {
-                  side: 'top',
-                  content: (
-                    <ul className="my-1 flex flex-col gap-y-0.5">
-                      {remainingEmails?.map(email => (
-                        <div
-                          key={email}
-                          className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-0"
-                        >
-                          <Avatar name={email} size="md" rounded className="mr-1" />
-                          <Text>{email}</Text>
-                        </div>
-                      ))}
-                    </ul>
-                  )
-                }
-
-                return (
-                  <AvatarWithTooltip
-                    key={idx}
-                    name={`+ ${users.length - 2}`}
-                    size="md"
-                    rounded
-                    tooltipProps={tooltipProps}
-                  />
-                )
-              }
-              return null
-            })}
-        </div>
-      }
-    />
-  )
-}
-
 const ACCORDION_VALUE = 'item-1'
-
-const mapEvaluationsToUsers = (evaluations: TypesOwnerEvaluation[]): AvatarUser[] => {
-  return evaluations.map(({ owner }) => ({
-    id: owner?.id,
-    display_name: owner?.display_name,
-    email: owner?.email
-  }))
-}
 
 const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   changesInfo,
@@ -146,154 +31,22 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   minReqLatestApproval,
   approvedEvaluations,
   changeReqEvaluations,
-  codeOwners,
   latestApprovalArr,
   reqNoChangeReq,
   changeReqReviewer,
-  reqCodeOwnerApproval,
-  reqCodeOwnerLatestApproval,
-  codeOwnerChangeReqEntries,
-  codeOwnerPendingEntries,
-  codeOwnerApprovalEntries,
-  latestCodeOwnerApprovalArr,
+  codeOwnersData,
   accordionValues,
   defaultReviewersData
 }) => {
-  // TODO: consider when states change like refetchReviewers
-  // refetchCodeOwners
-
-  const codeOwnerStatus = useMemo(() => {
-    const getData = () => {
-      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval) {
-        return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-          text: 'Waiting on code owner reviews of latest changes'
-        }
-      }
-
-      if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval) {
-        return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-          text: 'Changes are pending approval from code owners'
-        }
-      }
-
-      if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length) {
-        return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-3" />,
-          text: 'Some changes were approved by code owners'
-        }
-      }
-
-      if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval) {
-        return {
-          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
-          text: 'Latest changes were approved by code owners'
-        }
-      }
-
-      if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval) {
-        return {
-          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
-          text: 'Changes were approved by code owners'
-        }
-      }
-
-      if (codeOwnerApprovalEntries?.length) {
-        if (
-          reqCodeOwnerLatestApproval &&
-          minReqLatestApproval &&
-          latestCodeOwnerApprovalArr &&
-          latestCodeOwnerApprovalArr?.length < minReqLatestApproval
-        ) {
-          return {
-            icon: <IconV2 name="clock-solid" className="text-cn-foreground-warning" />,
-            text: 'Latest changes are pending approval from required reviewers'
-          }
-        }
-
-        return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-          text: 'Changes were approved by code owners'
-        }
-      }
-
-      return {
-        icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-        text: 'No codeowner reviews'
-      }
-    }
-
-    const data = getData()
-
-    return (
-      <div className="flex items-center gap-x-2">
-        {data.icon}
-        <span className="text-2 text-cn-foreground-1">{data.text}</span>
-      </div>
-    )
-  }, [
-    codeOwnerPendingEntries,
-    reqCodeOwnerLatestApproval,
-    codeOwnerApprovalEntries,
-    latestCodeOwnerApprovalArr,
-    minReqLatestApproval,
-    reqCodeOwnerApproval
-  ])
-
   const {
-    defReviewerLatestApprovalRequiredByRule = false,
-    defReviewerApprovalRequiredByRule = false,
-    defReviewerApprovedChanges = false,
-    defReviewerApprovedLatestChanges = false,
-    defaultReviewersApprovals = []
-  } = defaultReviewersData || {}
-
-  const defaultReviewerStatus = useMemo(() => {
-    const getData = () => {
-      if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
-        return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-          text: "Waiting on default reviewer's reviews of latest changes"
-        }
-      }
-
-      if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
-        return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-          text: 'Changes are pending approval from default reviewers'
-        }
-      }
-
-      if (defReviewerLatestApprovalRequiredByRule && defReviewerApprovedLatestChanges) {
-        return {
-          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
-          text: 'Latest changes were approved by default reviewers'
-        }
-      }
-
-      if (defReviewerApprovalRequiredByRule && defReviewerApprovedChanges) {
-        return {
-          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
-          text: 'changes were approved by code owners'
-        }
-      }
-
-      return {
-        icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
-        text: 'Default reviewers were added to the PR'
-      }
-    }
-
-    const data = getData()
-
-    return (
-      <div className="flex items-center gap-x-2">
-        {data.icon}
-        <span className="text-2 text-cn-foreground-1">{data.text}</span>
-      </div>
-    )
-  }, [defaultReviewersData])
+    codeOwners,
+    reqCodeOwnerApproval,
+    reqCodeOwnerLatestApproval,
+    codeOwnerChangeReqEntries,
+    codeOwnerPendingEntries,
+    codeOwnerApprovalEntries,
+    latestCodeOwnerApprovalArr
+  } = codeOwnersData
 
   const viewBtn =
     (minApproval && minApproval > 0) ||
@@ -381,119 +134,18 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             </div>
           )}
 
-          {!isEmpty(defaultReviewersApprovals) &&
-            (defaultReviewersData?.defReviewerApprovalRequiredByRule ||
-              defaultReviewersData?.defReviewerLatestApprovalRequiredByRule) && (
-              <div className="ml-6 flex items-center justify-between">
-                {defaultReviewerStatus}
-                {(defaultReviewersData?.defReviewerApprovalRequiredByRule ||
-                  defaultReviewersData?.defReviewerLatestApprovalRequiredByRule) && (
-                  <StatusBadge variant="secondary">Required</StatusBadge>
-                )}
-              </div>
-            )}
+          <DefaultReviewersSection defaultReviewersData={defaultReviewersData} />
 
-          {!isEmpty(defaultReviewersApprovals) && (
-            <div className="ml-6 bg-inherit">
-              <StackedList.Root className="ml-2 cursor-default border-transparent bg-inherit">
-                <StackedList.Item
-                  isHeader
-                  disableHover
-                  className="text-cn-foreground-3 cursor-default !bg-transparent px-0"
-                >
-                  <StackedList.Field title={<HeaderItem header="Required" />} />
-                  <StackedList.Field title={<HeaderItem header="Default reviewers" />} />
-                  <StackedList.Field title={<HeaderItem header="Changes requested by" />} />
-                  <StackedList.Field title={<HeaderItem header="Approved by" />} />
-                </StackedList.Item>
-                {defaultReviewersData?.updatedDefaultApprovals
-                  ?.filter(
-                    (data: DefaultReviewersApprovalsData) =>
-                      data.minimum_required_count || data.minimum_required_count_latest
-                  ) // only consider response with min default reviewers required (>0)
-                  .map((data: DefaultReviewersApprovalsData, index: number) => {
-                    // changes requested by default reviewers
-                    const defaultReviewersChangeRequested = (
-                      data?.principals as PrincipalInfoWithReviewDecision[]
-                    )?.filter(principal => principal?.review_decision === PullReqReviewDecision.changeReq)
-
-                    // approved by default reviewers
-                    const defaultReviewersApproved = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
-                      principal => principal?.review_decision === PullReqReviewDecision.approved
-                    )
-
-                    return (
-                      <StackedList.Item key={index} disableHover>
-                        <StackedList.Field title={getDefaultReviewersApprovalCount(data)} />
-                        {data?.principals && <AvatarItem users={data.principals} />}
-                        {defaultReviewersChangeRequested && <AvatarItem users={defaultReviewersChangeRequested} />}
-                        {defaultReviewersApproved && <AvatarItem users={defaultReviewersApproved} />}
-                      </StackedList.Item>
-                    )
-                  })}
-              </StackedList.Root>
-            </div>
-          )}
-
-          {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (
-            <div className="ml-6 flex items-center justify-between">
-              {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
-                <div className="flex items-center gap-x-2">
-                  <IconV2
-                    name="warning-triangle-solid"
-                    className={cn({
-                      'text-cn-foreground-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
-                      'text-cn-foreground-warning': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
-                    })}
-                  />
-                  <span className="text-2 text-cn-foreground-1">
-                    {'Code owners requested changes to the pull request'}
-                  </span>
-                </div>
-              ) : (
-                codeOwnerStatus
-              )}
-              {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
-                <StatusBadge variant="secondary">Required</StatusBadge>
-              )}
-            </div>
-          )}
-          {/* TODO: add codeowners table */}
-          {codeOwners && !isEmpty(codeOwners?.evaluation_entries) && (
-            <div className="ml-6 bg-inherit">
-              <StackedList.Root className="ml-2 cursor-default border-transparent bg-inherit">
-                <StackedList.Item
-                  isHeader
-                  disableHover
-                  className="text-cn-foreground-3 cursor-default !bg-transparent px-0"
-                >
-                  <StackedList.Field title={<HeaderItem header="Code" />} />
-                  <StackedList.Field title={<HeaderItem header="Owners" />} />
-                  <StackedList.Field title={<HeaderItem header="Changes requested by" />} />
-                  <StackedList.Field title={<HeaderItem header="Approved by" />} />
-                </StackedList.Item>
-
-                {codeOwners?.evaluation_entries?.map(entry => {
-                  const changeReqEvaluations = entry?.owner_evaluations?.filter(
-                    evaluation => evaluation.review_decision === 'changereq'
-                  )
-                  const approvedEvaluations = entry?.owner_evaluations?.filter(
-                    evaluation => evaluation.review_decision === 'approved'
-                  )
-                  return (
-                    <StackedList.Item key={entry.pattern} disableHover>
-                      <StackedList.Field title={entry?.pattern} />
-                      {entry?.owner_evaluations && (
-                        <AvatarItem users={mapEvaluationsToUsers(entry?.owner_evaluations)} />
-                      )}
-                      {changeReqEvaluations && <AvatarItem users={mapEvaluationsToUsers(changeReqEvaluations)} />}
-                      {approvedEvaluations && <AvatarItem users={mapEvaluationsToUsers(approvedEvaluations)} />}
-                    </StackedList.Item>
-                  )
-                })}
-              </StackedList.Root>
-            </div>
-          )}
+          <CodeOwnersSection
+            codeOwners={codeOwners}
+            reqCodeOwnerApproval={reqCodeOwnerApproval}
+            reqCodeOwnerLatestApproval={reqCodeOwnerLatestApproval}
+            codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
+            codeOwnerPendingEntries={codeOwnerPendingEntries}
+            codeOwnerApprovalEntries={codeOwnerApprovalEntries}
+            latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
+            minReqLatestApproval={minReqLatestApproval}
+          />
         </Layout.Vertical>
       </Accordion.Content>
     </Accordion.Item>

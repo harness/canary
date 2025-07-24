@@ -31,10 +31,12 @@ import {
 import { SkeletonList } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
+  CodeOwnersData,
   DefaultReviewersDataProps,
   LatestCodeOwnerApprovalArrType,
   PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
+  PullRequestPanelProps,
   TypesPullReq
 } from '@harnessio/ui/views'
 
@@ -415,35 +417,42 @@ export default function PullRequestConversationPage() {
     }
   }, [reviewers, pullReqMetadata?.source_sha])
 
-  const { codeOwnerChangeReqEntries, codeOwnerPendingEntries, codeOwnerApprovalEntries, latestCodeOwnerApprovalArr } =
-    useMemo(() => {
-      const data = codeOwners?.evaluation_entries
-      const codeOwnerApprovalEntries = findChangeReqDecisions(data, CodeOwnerReqDecision.APPROVED)
+  const codeOwnersData: CodeOwnersData = useMemo(() => {
+    const data = codeOwners?.evaluation_entries
+    const codeOwnerApprovalEntries = findChangeReqDecisions(data, CodeOwnerReqDecision.APPROVED)
 
-      // TODO: This code was written by @Lee. It needs to be refactored.
-      const latestCodeOwnerApprovalArr = codeOwnerApprovalEntries?.reduce<LatestCodeOwnerApprovalArrType[]>(
-        (acc, entry) => {
-          // Filter the owner_evaluations for 'changereq' decisions
-          const entryEvaluation = entry?.owner_evaluations.filter(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (evaluation: any) => !checkIfOutdatedSha(evaluation?.review_sha, pullReqMetadata?.source_sha)
-          )
+    // TODO: This code was written by @Lee. It needs to be refactored.
+    const latestCodeOwnerApprovalArr = codeOwnerApprovalEntries?.reduce<LatestCodeOwnerApprovalArrType[]>(
+      (acc, entry) => {
+        // Filter the owner_evaluations for 'changereq' decisions
+        const entryEvaluation = entry?.owner_evaluations.filter(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (evaluation: any) => !checkIfOutdatedSha(evaluation?.review_sha, pullReqMetadata?.source_sha)
+        )
 
-          // If there are any 'changereq' decisions, return the entry along with them
-          if (entryEvaluation && !!entryEvaluation?.length) acc.push({ entryEvaluation })
+        // If there are any 'changereq' decisions, return the entry along with them
+        if (entryEvaluation && !!entryEvaluation?.length) acc.push({ entryEvaluation })
 
-          return acc
-        },
-        []
-      )
+        return acc
+      },
+      []
+    )
 
-      return {
-        codeOwnerChangeReqEntries: findChangeReqDecisions(data, CodeOwnerReqDecision.CHANGEREQ),
-        codeOwnerPendingEntries: findWaitingDecisions(data),
-        codeOwnerApprovalEntries,
-        latestCodeOwnerApprovalArr
-      }
-    }, [codeOwners?.evaluation_entries, pullReqMetadata?.source_sha])
+    return {
+      codeOwners: codeOwners,
+      codeOwnerChangeReqEntries: findChangeReqDecisions(data, CodeOwnerReqDecision.CHANGEREQ),
+      codeOwnerPendingEntries: findWaitingDecisions(data),
+      codeOwnerApprovalEntries,
+      latestCodeOwnerApprovalArr,
+      reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
+      reqCodeOwnerLatestApproval: prPanelData?.reqCodeOwnerLatestApproval
+    }
+  }, [
+    codeOwners,
+    pullReqMetadata?.source_sha,
+    prPanelData?.reqCodeOwnerApproval,
+    prPanelData?.reqCodeOwnerLatestApproval
+  ])
 
   useEffect(() => {
     refetchCodeOwners()
@@ -481,12 +490,6 @@ export default function PullRequestConversationPage() {
   }, [reviewers, prPanelData?.defaultReviewersApprovals])
 
   const changesInfo = useMemo(() => {
-    const {
-      defReviewerApprovalRequiredByRule,
-      defReviewerLatestApprovalRequiredByRule,
-      defReviewerApprovedLatestChanges,
-      defReviewerApprovedChanges
-    } = defaultReviewersData
     return extractInfoForPRPanelChanges({
       approvedEvaluations,
       reqNoChangeReq: prPanelData?.atLeastOneReviewerRule,
@@ -494,17 +497,17 @@ export default function PullRequestConversationPage() {
       minApproval: prPanelData?.minApproval,
       reqCodeOwnerLatestApproval: prPanelData?.reqCodeOwnerLatestApproval,
       minReqLatestApproval: prPanelData?.minReqLatestApproval,
-      codeOwnerChangeReqEntries,
-      codeOwnerPendingEntries,
-      latestCodeOwnerApprovalArr,
+      codeOwnerChangeReqEntries: codeOwnersData?.codeOwnerChangeReqEntries,
+      codeOwnerPendingEntries: codeOwnersData?.codeOwnerPendingEntries,
+      latestCodeOwnerApprovalArr: codeOwnersData?.latestCodeOwnerApprovalArr,
       latestApprovalArr,
-      codeOwnerApprovalEntries,
+      codeOwnerApprovalEntries: codeOwnersData?.codeOwnerApprovalEntries,
       changeReqReviewer,
       changeReqEvaluations,
-      defReviewerApprovalRequiredByRule,
-      defReviewerLatestApprovalRequiredByRule,
-      defReviewerApprovedLatestChanges,
-      defReviewerApprovedChanges
+      defReviewerApprovalRequiredByRule: defaultReviewersData?.defReviewerApprovalRequiredByRule,
+      defReviewerLatestApprovalRequiredByRule: defaultReviewersData?.defReviewerLatestApprovalRequiredByRule,
+      defReviewerApprovedLatestChanges: defaultReviewersData?.defReviewerApprovedLatestChanges,
+      defReviewerApprovedChanges: defaultReviewersData?.defReviewerApprovedChanges
     })
   }, [
     prPanelData?.atLeastOneReviewerRule,
@@ -513,14 +516,11 @@ export default function PullRequestConversationPage() {
     prPanelData?.reqCodeOwnerLatestApproval,
     prPanelData?.minReqLatestApproval,
     approvedEvaluations,
-    codeOwnerChangeReqEntries,
-    codeOwnerPendingEntries,
-    latestCodeOwnerApprovalArr,
     latestApprovalArr,
-    codeOwnerApprovalEntries,
     changeReqReviewer,
     changeReqEvaluations,
-    defaultReviewersData
+    defaultReviewersData,
+    codeOwnersData
   ])
 
   useEffect(() => {
@@ -725,7 +725,7 @@ export default function PullRequestConversationPage() {
   /**
    * Memoize panelProps
    */
-  const panelProps = useMemo(() => {
+  const panelProps: PullRequestPanelProps = useMemo(() => {
     return {
       handleRebaseBranch,
       handlePrState,
@@ -750,11 +750,8 @@ export default function PullRequestConversationPage() {
       codeOwners,
       latestApprovalArr,
       changeReqReviewer,
-      codeOwnerChangeReqEntries,
-      codeOwnerPendingEntries,
-      codeOwnerApprovalEntries,
-      latestCodeOwnerApprovalArr,
       defaultReviewersData,
+      codeOwnersData,
       actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData),
       checkboxBypass,
       setCheckboxBypass,
@@ -781,10 +778,8 @@ export default function PullRequestConversationPage() {
     codeOwners,
     latestApprovalArr,
     changeReqReviewer,
-    codeOwnerChangeReqEntries,
-    codeOwnerPendingEntries,
-    codeOwnerApprovalEntries,
-    latestCodeOwnerApprovalArr,
+    defaultReviewersData,
+    codeOwnersData,
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,

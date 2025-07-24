@@ -31,6 +31,7 @@ interface RepoSettingsGeneralPageProps {
   openRepoArchiveDialog: () => void
   useRepoRulesStore: () => IRepoStore
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  isMFE?: boolean
 }
 
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
@@ -43,11 +44,13 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   openRepoAlertDeleteDialog,
   openRepoArchiveDialog,
   useRepoRulesStore,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  isMFE = false
 }) => {
   const { t } = useTranslation()
 
-  const { repoData, securityScanning, verifyCommitterIdentity, gitLfsEnabled } = useRepoRulesStore()
+  const { repoData, securityScanning, verifyCommitterIdentity, gitLfsEnabled, vulnerabilityScanning } =
+    useRepoRulesStore()
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
@@ -67,8 +70,10 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
         />
         <FormSeparator />
         <RepoSettingsSecurityForm
+          isMFE={isMFE}
           securityScanning={securityScanning}
           verifyCommitterIdentity={verifyCommitterIdentity}
+          vulnerabilityScanning={vulnerabilityScanning === 'detect'}
           handleUpdateSecuritySettings={handleUpdateSecuritySettings}
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}

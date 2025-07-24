@@ -12,7 +12,7 @@ export type Rule = {
   disabled: boolean
   hidden: boolean
   validationMessage: {
-    theme: MessageTheme,
+    theme: MessageTheme
     message: string
   }
   submenu: ('merge' | 'rebase' | 'squash')[]

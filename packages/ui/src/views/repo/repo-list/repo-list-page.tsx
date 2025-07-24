@@ -3,7 +3,9 @@ import { FC, useCallback, useMemo } from 'react'
 import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+import { ComboBoxOption } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes } from '@components/filters/types'
+import { Scope } from '@views/common/types'
 import FilterGroup from '@views/components/FilterGroup'
 import { noop } from 'lodash-es'
 
@@ -78,6 +80,11 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
 
+  const ScopeOptions: ComboBoxOption[] = [
+    { label: 'Account, organizations and projects', value: 'ALL' },
+    { label: 'Account', value: Scope.Account }
+  ]
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
@@ -131,6 +138,28 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
                 },
                 parser: booleanParser
+              },
+              {
+                label: t('views:scope.label', 'Scope'),
+                value: 'recursive',
+                type: FilterFieldTypes.ComboBox,
+                filterFieldConfig: {
+                  options: [
+                    { label: t('views:scope.all', 'Account, organizations and projects'), value: 'ALL' },
+                    { label: t('views:scope.account', 'Account'), value: 'ACCOUNT' }
+                  ],
+                  onSearch: noop,
+                  noResultsMessage: '',
+                  loadingMessage: '',
+                  placeholder: 'Select scope',
+                  allowSearch: false
+                },
+                parser: {
+                  parse: (value: string): ComboBoxOption => {
+                    return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
+                  },
+                  serialize: (value: ComboBoxOption): string => value?.value || ''
+                }
               }
             ]}
           />

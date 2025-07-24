@@ -658,6 +658,11 @@
     "browseFiles": "Browse files",
     "createNewCommit": "Create new commit"
   },
+  "scope": {
+    "label": "Scope",
+    "all": "Account, organizations and projects",
+    "account": "Account"
+  },
   "rules": {
     "edit": "Edit rule",
     "delete": "Delete rule",

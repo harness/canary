@@ -646,6 +646,11 @@
     "browseFiles": "Parcourir les fichiers",
     "createNewCommit": "Créer un nouveau commit"
   },
+  "scope": {
+    "label": "Périmètre",
+    "all": "Compte, organisations et projets",
+    "account": "Compte"
+  },
   "rules": {
     "edit": "Edit rule",
     "delete": "Delete rule"

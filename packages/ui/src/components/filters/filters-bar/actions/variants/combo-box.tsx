@@ -2,19 +2,20 @@ import { ReactNode } from 'react'
 
 import { DropdownMenu, ScrollArea, SearchInput } from '@components/index'
 
-export interface ComboBoxOptions {
+export interface ComboBoxOption {
   label: string
   value: string
 }
 
 interface ComboBoxProps {
-  options: Array<ComboBoxOptions>
+  options: Array<ComboBoxOption>
   onSearch?: (searchQuery: string) => void
-  onUpdateFilter: (selectedValues?: ComboBoxOptions) => void
-  filterValue?: ComboBoxOptions
+  onUpdateFilter: (selectedValues?: ComboBoxOption) => void
+  filterValue?: ComboBoxOption
   isLoading?: boolean
   placeholder?: string
   noResultsMessage: ReactNode
+  allowSearch?: boolean
 }
 
 export default function ComboBox({
@@ -24,7 +25,8 @@ export default function ComboBox({
   filterValue,
   placeholder,
   isLoading,
-  noResultsMessage
+  noResultsMessage,
+  allowSearch = true
 }: ComboBoxProps) {
   const selectedFilterValue = filterValue?.value
 
@@ -57,13 +59,15 @@ export default function ComboBox({
   return (
     <>
       <DropdownMenu.Header>
-        <SearchInput
-          inputContainerClassName="mb-0.5"
-          placeholder={placeholder}
-          autoFocus
-          onKeyDown={e => e.stopPropagation()}
-          onChange={value => onSearch?.(value)}
-        />
+        {allowSearch ? (
+          <SearchInput
+            inputContainerClassName="mb-0.5"
+            placeholder={placeholder}
+            autoFocus
+            onKeyDown={e => e.stopPropagation()}
+            onChange={value => onSearch?.(value)}
+          />
+        ) : null}
       </DropdownMenu.Header>
       {renderContent()}
     </>

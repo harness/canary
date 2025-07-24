@@ -1,5 +1,5 @@
 import { TFunctionWithFallback } from '@/context'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
+import { ComboBoxOption } from '@components/filters/filters-bar/actions/variants/combo-box'
 import {
   CalendarFilterOptionConfig,
   ComboBoxFilterOptionConfig,
@@ -53,9 +53,9 @@ export const getPRListFilterOptions = ({
       isLoading: isPrincipalsLoading
     },
     parser: {
-      parse: (value: string): ComboBoxOptions =>
+      parse: (value: string): ComboBoxOption =>
         principalData.find(user => user.value === value) || { label: '', value },
-      serialize: (value: ComboBoxOptions): string => value?.value || ''
+      serialize: (value: ComboBoxOption): string => value?.value || ''
     }
   },
   {

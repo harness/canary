@@ -1,3 +1,4 @@
+import { CheckboxOptions } from '@components/filters'
 import { RepositoryType } from '@views/repo/repo.types'
 
 export interface RepoStore {
@@ -29,6 +30,7 @@ export interface FavoriteProps {
 
 export type RepoListFilters = {
   favorite?: boolean
+  recursive?: CheckboxOptions
 }
 
 export interface FilterProps {

@@ -38,6 +38,7 @@ export default function ReposListPage() {
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
+  const [recursive, setRecursive] = useQueryState<boolean>('recursive')
 
   const {
     data: { body: repoData, headers } = {},
@@ -50,7 +51,8 @@ export default function ReposListPage() {
       queryParams: {
         page: queryPage,
         query: query ?? '',
-        only_favorites: favorite
+        only_favorites: favorite,
+        recursive
       },
       space_ref: `${spaceURL}/+`
     },
@@ -145,7 +147,10 @@ export default function ReposListPage() {
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
-      onFilterChange={({ favorite }) => setFavorite(favorite ?? null)}
+      onFilterChange={({ favorite, recursive }) => {
+        setFavorite(favorite ?? null)
+        console.log('recursive', recursive)
+      }}
     />
   )
 }

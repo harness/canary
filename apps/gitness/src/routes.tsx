@@ -26,10 +26,12 @@ import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
-import { ProjectRulesCreateOrUpdateContainer } from './pages-v2/project/project-rules-create-container'
 import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
 import ProjectPullRequestListPage from './pages-v2/project/pull-request/pull-request-list'
+import { ProjectBranchRulesContainer } from './pages-v2/project/rules/project-branch-rules-container'
+import { ProjectRulesContainer } from './pages-v2/project/rules/project-rules-container'
+import { ProjectTagRulesContainer } from './pages-v2/project/rules/project-tag-rules-container'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -124,23 +126,34 @@ const rulesRoute = {
   path: 'rules',
   handle: {
     breadcrumb: () => <span>{Page.Branch_Rules}</span>,
-    pageTitle: Page.Branch_Rules
+    pageTitle: Page.Branch_Rules,
+    routeName: RouteConstants.toProjectRules
   },
+
   children: [
     {
       index: true,
       element: <ProjectRulesListContainer />
     },
     {
-      path: 'create',
-      element: <ProjectRulesCreateOrUpdateContainer />,
+      path: 'create/branch',
+      element: <ProjectBranchRulesContainer />,
       handle: {
-        breadcrumb: () => <span>Create a rule</span>
+        breadcrumb: () => <span>Create a branch rule</span>,
+        routeName: RouteConstants.toProjectBranchRuleCreate
+      }
+    },
+    {
+      path: 'create/tag',
+      element: <ProjectTagRulesContainer />,
+      handle: {
+        breadcrumb: () => <span>Create a tag rule</span>,
+        routeName: RouteConstants.toProjectTagRuleCreate
       }
     },
     {
       path: ':ruleId',
-      element: <ProjectRulesCreateOrUpdateContainer />,
+      element: <ProjectRulesContainer />,
       handle: {
         breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
       }

@@ -18,14 +18,14 @@ import {
   RepoBranchSettingsRulesPage
 } from '@harnessio/ui/views'
 
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useIsMFE } from '../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
-import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
-import { useProjectRulesStore } from './stores/project-rules-store'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../../framework/hooks/useIsMFE'
+import { useMFEContext } from '../../../framework/hooks/useMFEContext'
+import { transformDataFromApi, transformFormOutput } from '../../../utils/repo-branch-rules-utils'
+import { useBranchRulesStore } from '../../repo/stores/repo-branch-rules-store'
+import { useProjectRulesStore } from '../stores/project-rules-store'
 
-export const ProjectRulesCreateOrUpdateContainer = () => {
+export const ProjectBranchRulesContainer = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 

@@ -24,7 +24,7 @@ interface RepoSettingsSecurityFormProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
-  isMFE?: boolean
+  showVulnerabilityScanning?: boolean
 }
 
 export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
@@ -35,7 +35,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   apiError,
   isUpdatingSecuritySettings,
   isLoadingSecuritySettings,
-  isMFE = false
+  showVulnerabilityScanning = false
 }) => {
   const { t } = useTranslation()
   const {
@@ -111,7 +111,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
             <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
           )}
 
-          {isMFE ? (
+          {showVulnerabilityScanning ? (
             <>
               <Checkbox
                 checked={watch('vulnerabilityScanning')}

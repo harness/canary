@@ -31,7 +31,7 @@ interface RepoSettingsGeneralPageProps {
   openRepoArchiveDialog: () => void
   useRepoRulesStore: () => IRepoStore
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
-  isMFE?: boolean
+  showVulnerabilityScanning?: boolean
 }
 
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
@@ -45,7 +45,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   openRepoArchiveDialog,
   useRepoRulesStore,
   branchSelectorRenderer,
-  isMFE = false
+  showVulnerabilityScanning = false
 }) => {
   const { t } = useTranslation()
 
@@ -70,7 +70,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
         />
         <FormSeparator />
         <RepoSettingsSecurityForm
-          isMFE={isMFE}
+          showVulnerabilityScanning={showVulnerabilityScanning}
           securityScanning={securityScanning}
           verifyCommitterIdentity={verifyCommitterIdentity}
           vulnerabilityScanning={vulnerabilityScanning === 'detect'}

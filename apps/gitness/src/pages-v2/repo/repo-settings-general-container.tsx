@@ -283,7 +283,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
         openRepoArchiveDialog={() => setRepoArchiveDialogOpen(true)}
         branchSelectorRenderer={BranchSelectorContainer}
-        isMFE={isMfe}
+        showVulnerabilityScanning={isMfe}
       />
       <ExitConfirmDialog
         open={isRepoArchiveDialogOpen}

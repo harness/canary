@@ -86,6 +86,7 @@ export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boo
             defaultTheme: 'dark',
             themes
           }}
+          className={'grow'}
         />
       )}
     </>

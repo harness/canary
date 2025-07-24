@@ -23,14 +23,15 @@ import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProjectLabelFormContainer } from './pages-v2/project/labels/project-label-form-container'
 import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list-container'
-import { ProjectBranchRulesContainer } from './pages-v2/project/project-branch-rules-container'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container'
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
-import { ProjectTagRulesContainer } from './pages-v2/project/project-tag-rules-container'
 import ProjectPullRequestListPage from './pages-v2/project/pull-request/pull-request-list'
+import { ProjectBranchRulesContainer } from './pages-v2/project/rules/project-branch-rules-container'
+import { ProjectRulesContainer } from './pages-v2/project/rules/project-rules-container'
+import { ProjectTagRulesContainer } from './pages-v2/project/rules/project-tag-rules-container'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -152,7 +153,7 @@ const rulesRoute = {
     },
     {
       path: ':ruleId',
-      element: <ProjectTagRulesContainer />,
+      element: <ProjectRulesContainer />,
       handle: {
         breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
       }

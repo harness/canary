@@ -19,13 +19,13 @@ import {
   TagRulesActionType
 } from '@harnessio/ui/views'
 
-import { useRoutes } from '../../framework/context/NavigationContext'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { transformDataFromApi } from '../../utils/repo-branch-rules-utils'
-import { transformFormOutput } from '../../utils/repo-tag-rules-utils'
-import { useTagRulesStore } from '../repo/stores/repo-tags-rules-store'
-import { useProjectRulesStore } from './stores/project-rules-store'
+import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
+import { useMFEContext } from '../../../framework/hooks/useMFEContext'
+import { transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
+import { transformFormOutput } from '../../../utils/repo-tag-rules-utils'
+import { useTagRulesStore } from '../../repo/stores/repo-tags-rules-store'
+import { useProjectRulesStore } from '../stores/project-rules-store'
 
 export const ProjectTagRulesContainer = () => {
   const { t } = useTranslation()
@@ -33,7 +33,7 @@ export const ProjectTagRulesContainer = () => {
   const navigate = useNavigate()
 
   const spaceRef = useGetSpaceURLParam()
-  const { identifier } = useParams()
+  const { ruleId: ruleIdentifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useTagRulesStore()
@@ -63,9 +63,9 @@ export const ProjectTagRulesContainer = () => {
     error: fetchRuleError,
     isLoading: fetchRuleIsLoading
   } = useSpaceRuleGetQuery(
-    { space_ref: `${spaceRef}/+` || '', rule_identifier: identifier ?? '' },
+    { space_ref: `${spaceRef}/+` || '', rule_identifier: ruleIdentifier ?? '' },
     {
-      enabled: !!identifier
+      enabled: !!ruleIdentifier
     }
   )
 
@@ -98,7 +98,7 @@ export const ProjectTagRulesContainer = () => {
     error: updateRuleError,
     isLoading: updatingRule
   } = useSpaceRuleUpdateMutation(
-    { space_ref: `${spaceRef}/+`, rule_identifier: identifier! },
+    { space_ref: `${spaceRef}/+`, rule_identifier: ruleIdentifier! },
     {
       onSuccess: () => {
         setIsSubmitSuccess(true)
@@ -110,7 +110,7 @@ export const ProjectTagRulesContainer = () => {
   const handleRuleUpdate = (data: RepoTagSettingsFormFields) => {
     const formattedData = transformFormOutput(data)
 
-    if (identifier) {
+    if (ruleIdentifier) {
       // Update existing rule
       updateRule({
         body: formattedData
@@ -179,11 +179,11 @@ export const ProjectTagRulesContainer = () => {
     updateRule: updateRuleError?.message || null
   }
 
-  if (!!identifier && fetchRuleIsLoading) {
+  if (!!ruleIdentifier && fetchRuleIsLoading) {
     return <SkeletonForm className="mt-7" />
   }
 
-  if (!!identifier && !!fetchRuleError) {
+  if (!!ruleIdentifier && !!fetchRuleError) {
     return <NotFoundPage pageTypeText="rules" />
   }
 

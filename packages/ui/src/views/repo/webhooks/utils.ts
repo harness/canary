@@ -8,7 +8,11 @@ import { WebhookTriggerEnum } from './webhook-create/types'
 export const formatWebhookTriggers = (triggers?: WebhookTriggerEnum[] | string[] | null): string => {
   return triggers?.length
     ? triggers
-        .map(trigger => String(trigger).replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))
+        .map(trigger =>
+          String(trigger)
+            .replace(/_/g, ' ')
+            .replace(/\b\w/g, match => match.toUpperCase())
+        )
         .join(', ')
     : 'All Events'
 }

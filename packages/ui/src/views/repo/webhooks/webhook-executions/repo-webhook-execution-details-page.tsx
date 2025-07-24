@@ -7,7 +7,11 @@ import { formatDuration } from '@utils/TimeUtils'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
 
-import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
+import {
+  getBranchAndTagEvents,
+  getPrActivityEvents,
+  getPrEvents
+} from '../webhook-create/components/create-webhook-form-data'
 import { WebhookExecutionEditorControlBar } from './components/webhook-executions-editor-control-bar'
 
 interface RepoWebhookExecutionDetailsPageProps {
@@ -74,7 +78,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
   }, [execution, view])
 
   const events = useMemo(() => {
-    return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
+    return [...getBranchAndTagEvents(t), ...getPrEvents(t), ...getPrActivityEvents(t)]
   }, [])
 
   const onChangeView = (value: string) => {

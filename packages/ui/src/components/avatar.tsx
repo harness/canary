@@ -33,34 +33,48 @@ export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   src?: string
   size?: VariantProps<typeof avatarVariants>['size']
   rounded?: boolean
-  tooltipProps?: AvatarTooltipProps
 }
 
 const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
-  ({ name, src, size = 'md', rounded = false, className, tooltipProps, ...props }, ref) => {
+  ({ name, src, size = 'md', rounded = false, className, ...props }, ref) => {
     const initials = getInitials(name || '')
 
     return (
-      <Tooltip content={tooltipProps?.content || name || ''} {...tooltipProps}>
-        <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size, rounded }), className)} {...props}>
-          {src ? (
-            <>
-              <AvatarPrimitive.Image src={src} alt={name || ''} className="cn-avatar-image" />
-              <AvatarPrimitive.Fallback className="cn-avatar-fallback">
-                {/* TODO: Design system: Check whether we need cn-avatar-icon */}
-                {initials || <IconV2 name="user" className="cn-avatar-icon" />}
-              </AvatarPrimitive.Fallback>
-            </>
-          ) : (
-            <AvatarPrimitive.Fallback className="cn-avatar-fallback" delayMs={0}>
+      <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size, rounded }), className)} {...props}>
+        {src ? (
+          <>
+            <AvatarPrimitive.Image src={src} alt={name || ''} className="cn-avatar-image" />
+            <AvatarPrimitive.Fallback className="cn-avatar-fallback">
+              {/* TODO: Design system: Check whether we need cn-avatar-icon */}
               {initials || <IconV2 name="user" className="cn-avatar-icon" />}
             </AvatarPrimitive.Fallback>
-          )}
-        </AvatarPrimitive.Root>
+          </>
+        ) : (
+          <AvatarPrimitive.Fallback className="cn-avatar-fallback" delayMs={0}>
+            {initials || <IconV2 name="user" className="cn-avatar-icon" />}
+          </AvatarPrimitive.Fallback>
+        )}
+      </AvatarPrimitive.Root>
+    )
+  }
+)
+
+Avatar.displayName = 'Avatar'
+
+export interface AvatarWithTooltipProps extends AvatarProps {
+  tooltipProps?: AvatarTooltipProps
+}
+
+const AvatarWithTooltip = forwardRef<HTMLSpanElement, AvatarWithTooltipProps>(
+  ({ tooltipProps, ...avatarProps }, ref) => {
+    return (
+      <Tooltip content={tooltipProps?.content || avatarProps.name || ''} {...tooltipProps}>
+        <Avatar ref={ref} {...avatarProps} />
       </Tooltip>
     )
   }
 )
-Avatar.displayName = 'Avatar'
 
-export { Avatar }
+AvatarWithTooltip.displayName = 'AvatarWithTooltip'
+
+export { Avatar, AvatarWithTooltip }

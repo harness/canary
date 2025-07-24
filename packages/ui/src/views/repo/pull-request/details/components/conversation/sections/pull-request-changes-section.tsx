@@ -1,6 +1,16 @@
 import { useMemo, type FC } from 'react'
 
-import { Accordion, Avatar, AvatarTooltipProps, IconV2, Layout, StackedList, StatusBadge } from '@/components'
+import {
+  Accordion,
+  Avatar,
+  AvatarTooltipProps,
+  AvatarWithTooltip,
+  IconV2,
+  Layout,
+  StackedList,
+  StatusBadge,
+  Text
+} from '@/components'
 import {
   DefaultReviewersApprovalsData,
   easyPluralize,
@@ -58,11 +68,18 @@ const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
               if (idx < 2) {
                 const tooltipProps: AvatarTooltipProps = {
                   side: 'top',
-                  title: user?.display_name || '',
-                  content: user?.email || user?.display_name || ''
+                  content: (
+                    <Layout.Horizontal align="center" justify="between" className="m-1">
+                      <Avatar name={user?.display_name || ''} size="lg" rounded />
+                      <Layout.Vertical gap="2xs">
+                        <Text>{user?.display_name}</Text>
+                        <Text>{user?.email}</Text>
+                      </Layout.Vertical>
+                    </Layout.Horizontal>
+                  )
                 }
                 return (
-                  <Avatar
+                  <AvatarWithTooltip
                     key={user?.id || idx}
                     name={user?.display_name || ''}
                     size="md"
@@ -77,14 +94,33 @@ const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
                   .slice(2)
                   .map(user => user?.email || user?.display_name || '')
                   .filter(Boolean)
-                  .join(', ')
 
                 const tooltipProps: AvatarTooltipProps = {
                   side: 'top',
-                  content: remainingEmails
+                  content: (
+                    <ul className="my-1 flex flex-col gap-y-0.5">
+                      {remainingEmails?.map(email => (
+                        <div
+                          key={email}
+                          className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-0"
+                        >
+                          <Avatar name={email} size="md" rounded className="mr-1" />
+                          <Text>{email}</Text>
+                        </div>
+                      ))}
+                    </ul>
+                  )
                 }
 
-                return <Avatar key={idx} name={`+ ${users.length - 2}`} size="md" rounded tooltipProps={tooltipProps} />
+                return (
+                  <AvatarWithTooltip
+                    key={idx}
+                    name={`+ ${users.length - 2}`}
+                    size="md"
+                    rounded
+                    tooltipProps={tooltipProps}
+                  />
+                )
               }
               return null
             })}

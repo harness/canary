@@ -17,17 +17,26 @@ const Switch = forwardRef<
 >(({ className, label, caption, showOptionalLabel, ...props }, ref) => {
   const switchId = `switch-${Math.random().toString(36).slice(2, 11)}`
   return (
-    <div className="cn-switch-wrapper">
-      <SwitchPrimitives.Root id={props.id || switchId} className={cn('cn-switch-root', className)} {...props} ref={ref}>
+    <div className="cn-switch-wrapper flex items-start w-full">
+      <SwitchPrimitives.Root
+        id={props.id || switchId}
+        className={cn('cn-switch-root flex-shrink-0', className)}
+        {...props}
+        ref={ref}
+      >
         <SwitchPrimitives.Thumb className="cn-switch-thumb" />
       </SwitchPrimitives.Root>
       {(label || caption) && (
-        <div className="cn-switch-label-wrapper">
-          <Label htmlFor={props.id || switchId} optional={showOptionalLabel} className="cn-switch-label">
+        <div className="cn-switch-label-wrapper flex-1 min-w-0 overflow-hidden ml-2">
+          <Label
+            htmlFor={props.id || switchId}
+            optional={showOptionalLabel}
+            className="cn-switch-label block whitespace-nowrap overflow-hidden text-ellipsis"
+          >
             {label}
           </Label>
           {/* TODO: Design system: update to Text component once available */}
-          <p className="cn-switch-description">{caption || ''}</p>
+          <p className="cn-switch-description block whitespace-nowrap overflow-hidden text-ellipsis">{caption || ''}</p>
         </div>
       )}
     </div>

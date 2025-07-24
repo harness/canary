@@ -9,10 +9,14 @@ export default {
     maxWidth: '100%',
 
     '&.cn-control-group-horizontal': {
-      '@apply flex-row': '',
+      '@apply flex-row items-baseline': '',
+      '&:has(.cn-control-group-label .cn-caption)': {
+        '@apply items-start': ''
+      },
 
       '.cn-control-group-label': {
-        width: 'var(--cn-input-horizontal-label-max-width)',
+        maxWidth: 'var(--cn-input-horizontal-label-max-width)',
+        '@apply justify-center': ''
       },
 
       '.cn-control-group-input': {

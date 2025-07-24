@@ -331,27 +331,34 @@ export const defaultReviewerResponseWithDecision = (
 export const extractInfoForPRPanelChanges = ({
   approvedEvaluations,
   reqNoChangeReq,
-  reqCodeOwnerApproval,
+  codeOwnersData,
   minApproval,
-  reqCodeOwnerLatestApproval,
   minReqLatestApproval,
-  codeOwnerChangeReqEntries,
-  codeOwnerPendingEntries,
-  latestCodeOwnerApprovalArr,
   latestApprovalArr,
-  codeOwnerApprovalEntries,
   changeReqReviewer,
   changeReqEvaluations,
-  defReviewerApprovalRequiredByRule,
-  defReviewerLatestApprovalRequiredByRule,
-  defReviewerApprovedLatestChanges,
-  defReviewerApprovedChanges
+  defaultReviewersData
 }: extractInfoForPRPanelChangesProps) => {
   let statusMessage = ''
   let statusColor = 'grey' // Default color for no rules required
   let title = ''
   let statusIcon = ''
   let isNotRequired = false
+  const {
+    reqCodeOwnerApproval,
+    reqCodeOwnerLatestApproval,
+    codeOwnerChangeReqEntries,
+    codeOwnerPendingEntries,
+    latestCodeOwnerApprovalArr,
+    codeOwnerApprovalEntries
+  } = codeOwnersData
+  const {
+    defReviewerApprovalRequiredByRule,
+    defReviewerLatestApprovalRequiredByRule,
+    defReviewerApprovedLatestChanges,
+    defReviewerApprovedChanges
+  } = defaultReviewersData || {}
+
   if (
     reqNoChangeReq ||
     reqCodeOwnerApproval ||
@@ -363,7 +370,7 @@ export const extractInfoForPRPanelChanges = ({
   ) {
     if (
       codeOwnerChangeReqEntries &&
-      codeOwnerChangeReqEntries.length > 0 &&
+      codeOwnerChangeReqEntries?.length > 0 &&
       (reqCodeOwnerApproval || reqCodeOwnerLatestApproval)
     ) {
       title = 'Changes requested by code owner'

@@ -224,21 +224,23 @@ describe('generateAlphaNumericHash', () => {
 const mockPropsForCodeOwnerContent = {
   approvedEvaluations: [{ reviewer: { display_name: 'John Doe' } as TypesPrincipalInfo, approved: true }],
   reqNoChangeReq: false,
-  reqCodeOwnerApproval: true,
+  codeOwnersData: {
+    reqCodeOwnerApproval: true,
+    reqCodeOwnerLatestApproval: false,
+    codeOwnerChangeReqEntries: [],
+    codeOwnerPendingEntries: [],
+    codeOwnerApprovalEntries: [
+      {
+        owner_evaluations: [
+          { reviewer: { display_name: 'Jane Smith' } as TypesPrincipalInfo, approved: true } as TypesOwnerEvaluation
+        ]
+      }
+    ]
+  },
   minApproval: 1,
-  reqCodeOwnerLatestApproval: false,
   minReqLatestApproval: 0,
-  codeOwnerChangeReqEntries: [],
-  codeOwnerPendingEntries: [],
   latestCodeOwnerApprovalArr: [],
   latestApprovalArr: [],
-  codeOwnerApprovalEntries: [
-    {
-      owner_evaluations: [
-        { reviewer: { display_name: 'Jane Smith' } as TypesPrincipalInfo, approved: true } as TypesOwnerEvaluation
-      ]
-    }
-  ],
   changeReqReviewer: 'John Doe',
   changeReqEvaluations: []
 }

@@ -109,23 +109,14 @@ export type extractInfoForPRPanelChangesProps = Pick<
   PullRequestChangesSectionProps,
   | 'approvedEvaluations'
   | 'reqNoChangeReq'
-  | 'reqCodeOwnerApproval'
   | 'minApproval'
-  | 'reqCodeOwnerLatestApproval'
   | 'minReqLatestApproval'
-  | 'codeOwnerChangeReqEntries'
-  | 'codeOwnerPendingEntries'
-  | 'latestCodeOwnerApprovalArr'
   | 'latestApprovalArr'
-  | 'codeOwnerApprovalEntries'
   | 'changeReqReviewer'
   | 'changeReqEvaluations'
-> & {
-  defReviewerApprovalRequiredByRule?: boolean
-  defReviewerLatestApprovalRequiredByRule?: boolean
-  defReviewerApprovedLatestChanges?: boolean
-  defReviewerApprovedChanges?: boolean
-}
+  | 'defaultReviewersData'
+  | 'codeOwnersData'
+>
 
 export interface TypesDefaultReviewerApprovalsResponseWithRevDecision extends TypesDefaultReviewerApprovalsResponse {
   principals?: PrincipalInfoWithReviewDecision[] | null // Override the 'principals' field

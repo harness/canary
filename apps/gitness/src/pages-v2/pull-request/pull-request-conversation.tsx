@@ -493,34 +493,24 @@ export default function PullRequestConversationPage() {
     return extractInfoForPRPanelChanges({
       approvedEvaluations,
       reqNoChangeReq: prPanelData?.atLeastOneReviewerRule,
-      reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
       minApproval: prPanelData?.minApproval,
-      reqCodeOwnerLatestApproval: prPanelData?.reqCodeOwnerLatestApproval,
       minReqLatestApproval: prPanelData?.minReqLatestApproval,
-      codeOwnerChangeReqEntries: codeOwnersData?.codeOwnerChangeReqEntries,
-      codeOwnerPendingEntries: codeOwnersData?.codeOwnerPendingEntries,
-      latestCodeOwnerApprovalArr: codeOwnersData?.latestCodeOwnerApprovalArr,
       latestApprovalArr,
-      codeOwnerApprovalEntries: codeOwnersData?.codeOwnerApprovalEntries,
       changeReqReviewer,
       changeReqEvaluations,
-      defReviewerApprovalRequiredByRule: defaultReviewersData?.defReviewerApprovalRequiredByRule,
-      defReviewerLatestApprovalRequiredByRule: defaultReviewersData?.defReviewerLatestApprovalRequiredByRule,
-      defReviewerApprovedLatestChanges: defaultReviewersData?.defReviewerApprovedLatestChanges,
-      defReviewerApprovedChanges: defaultReviewersData?.defReviewerApprovedChanges
+      codeOwnersData,
+      defaultReviewersData
     })
   }, [
     prPanelData?.atLeastOneReviewerRule,
-    prPanelData?.reqCodeOwnerApproval,
     prPanelData?.minApproval,
-    prPanelData?.reqCodeOwnerLatestApproval,
     prPanelData?.minReqLatestApproval,
     approvedEvaluations,
     latestApprovalArr,
     changeReqReviewer,
     changeReqEvaluations,
-    defaultReviewersData,
-    codeOwnersData
+    codeOwnersData,
+    defaultReviewersData
   ])
 
   useEffect(() => {

@@ -145,7 +145,7 @@ export default function ReposListPage() {
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
-      onFilterChange={filters => setFavorite(!!filters?.favorite)}
+      onFilterChange={({ favorite }) => setFavorite(favorite ?? null)}
     />
   )
 }

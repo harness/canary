@@ -1,6 +1,6 @@
 {
   "repos": {
-    "new-file": "New File",
+    "create-file": "Create File",
     "upload-files": "Télécharger des fichiers",
     "summary": "Résumé",
     "files": "Fichiers",
@@ -35,7 +35,6 @@
     "findTag": "Trouver une étiquette",
     "allCommits": "Tous les commits",
     "noFile": "Aucun fichier disponible",
-    "create-file": "Create File",
     "private": "Privé",
     "public": "Public",
     "name": "Nom",

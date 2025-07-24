@@ -14,6 +14,11 @@ import { booleanParser } from '@harnessio/filters'
 import { RepoList } from './repo-list'
 import { RepoListFilters, RepoListProps } from './types'
 
+const ExtendedScope = {
+  All: 'ALL',
+  ...Scope
+} as const
+
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
   isLoading,
@@ -81,7 +86,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
 
   const ScopeOptions: ComboBoxOption[] = [
-    { label: 'Account, organizations and projects', value: 'ALL' },
+    { label: 'Account, organizations and projects', value: ExtendedScope.All },
     { label: 'Account', value: Scope.Account }
   ]
 
@@ -158,7 +163,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   parse: (value: string): ComboBoxOption => {
                     return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
                   },
-                  serialize: (value: ComboBoxOption): string => value?.value || ''
+                  serialize: (value: ComboBoxOption): string => (value?.value === ExtendedScope.All ? 'true' : 'false')
                 }
               }
             ]}
@@ -183,4 +188,4 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   )
 }
 
-export { SandboxRepoListPage }
+export { SandboxRepoListPage, ExtendedScope }

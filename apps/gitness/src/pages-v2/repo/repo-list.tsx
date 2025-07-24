@@ -8,7 +8,7 @@ import {
   useListReposQuery
 } from '@harnessio/code-service-client'
 import { Toast, useToast } from '@harnessio/ui/components'
-import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
+import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage, Scope } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -147,9 +147,9 @@ export default function ReposListPage() {
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
-      onFilterChange={({ favorite, recursive }) => {
+      onFilterChange={({ favorite, recursive }: RepoListFilters) => {
         setFavorite(favorite ?? null)
-        console.log('recursive', recursive)
+        setRecursive(recursive?.value === ExtendedScope.All ? true : false)
       }}
     />
   )

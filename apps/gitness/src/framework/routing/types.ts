@@ -88,7 +88,10 @@ export enum RouteConstants {
   toRepoFileDetails = 'toRepoFileDetails',
   toRepoTags = 'toRepoTags',
   toRepoBranchRuleCreate = 'toRepoBranchRuleCreate',
-  toRepoTagRuleCreate = 'toRepoTagRuleCreate'
+  toRepoTagRuleCreate = 'toRepoTagRuleCreate',
+  toProjectBranchRuleCreate = 'toProjectBranchRuleCreate',
+  toProjectTagRuleCreate = 'toProjectTagRuleCreate',
+  toProjectRules = 'toProjectRules'
 }
 
 export interface RouteEntry {

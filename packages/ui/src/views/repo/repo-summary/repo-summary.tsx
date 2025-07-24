@@ -192,8 +192,7 @@ export function RepoSummaryView({
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
-                        <IconV2 name="plus" size="2xs" />
-                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
+                        <span className="truncate">{t('views:repos.create-file', 'Create File')}</span>
                       </Link>
                     </Button>
                   ) : null}

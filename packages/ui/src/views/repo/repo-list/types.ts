@@ -27,10 +27,18 @@ export interface FavoriteProps {
   onFavoriteToggle: ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => void
 }
 
+export type RepoListFilters = {
+  favorite?: boolean
+}
+
+export interface FilterProps {
+  onFilterChange: (filters: RepoListFilters) => void
+}
+
 /**
  * RoutingProps made optional for usage in apps/design-system
  */
-export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
+export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps, FilterProps {
   useRepoStore: () => RepoStore
   isLoading: boolean
   isError: boolean

@@ -1,14 +1,13 @@
 import { TypesCodeOwnerEvaluationEntry, TypesOwnerEvaluation, TypesPrincipalInfo } from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 
-import { PullReqReviewDecision, TypeCheckData } from '../../../pages/pull-request/types/types'
 import {
   buildPRFilters,
   capitalizeFirstLetter,
   changedFileId,
   checkIfOutdatedSha,
   determineStatusMessage,
-  extractInfoForCodeOwnerContent,
+  extractInfoForPRPanelChanges,
   extractInfoFromRuleViolationArr,
   extractSpecificViolations,
   findChangeReqDecisions,
@@ -17,6 +16,7 @@ import {
   normalizeGitFilePath,
   processReviewDecision
 } from '../pull-request-utils'
+import { PullReqReviewDecision, TypeCheckData } from '../types'
 
 export enum EnumCheckStatus {
   Error = 'error',
@@ -220,32 +220,34 @@ describe('generateAlphaNumericHash', () => {
   })
 })
 
-// Mock data for extractInfoForCodeOwnerContent
+// Mock data for extractInfoForPRPanelChanges
 const mockPropsForCodeOwnerContent = {
   approvedEvaluations: [{ reviewer: { display_name: 'John Doe' } as TypesPrincipalInfo, approved: true }],
   reqNoChangeReq: false,
-  reqCodeOwnerApproval: true,
+  codeOwnersData: {
+    reqCodeOwnerApproval: true,
+    reqCodeOwnerLatestApproval: false,
+    codeOwnerChangeReqEntries: [],
+    codeOwnerPendingEntries: [],
+    codeOwnerApprovalEntries: [
+      {
+        owner_evaluations: [
+          { reviewer: { display_name: 'Jane Smith' } as TypesPrincipalInfo, approved: true } as TypesOwnerEvaluation
+        ]
+      }
+    ]
+  },
   minApproval: 1,
-  reqCodeOwnerLatestApproval: false,
   minReqLatestApproval: 0,
-  codeOwnerChangeReqEntries: [],
-  codeOwnerPendingEntries: [],
   latestCodeOwnerApprovalArr: [],
   latestApprovalArr: [],
-  codeOwnerApprovalEntries: [
-    {
-      owner_evaluations: [
-        { reviewer: { display_name: 'Jane Smith' } as TypesPrincipalInfo, approved: true } as TypesOwnerEvaluation
-      ]
-    }
-  ],
   changeReqReviewer: 'John Doe',
   changeReqEvaluations: []
 }
 
-describe('extractInfoForCodeOwnerContent', () => {
+describe('extractInfoForPRPanelChanges', () => {
   it('should extract information for code owner content', () => {
-    const result = extractInfoForCodeOwnerContent(mockPropsForCodeOwnerContent)
+    const result = extractInfoForPRPanelChanges(mockPropsForCodeOwnerContent)
     expect(result).toEqual({
       title: 'Changes approved',
       statusMessage: 'Changes were approved by code owners',

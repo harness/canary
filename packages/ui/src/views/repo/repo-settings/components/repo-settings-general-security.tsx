@@ -9,13 +9,15 @@ import { z } from 'zod'
 import { ErrorTypes } from '../types'
 
 const formSchema = z.object({
-  secretScanning: z.boolean()
+  secretScanning: z.boolean(),
+  verifyCommitterIdentity: z.boolean()
 })
 
 export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
 
 interface RepoSettingsSecurityFormProps {
   securityScanning: boolean
+  verifyCommitterIdentity: boolean
   apiError: { type: ErrorTypes; message: string } | null
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
@@ -24,6 +26,7 @@ interface RepoSettingsSecurityFormProps {
 
 export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   securityScanning,
+  verifyCommitterIdentity,
   handleUpdateSecuritySettings,
   apiError,
   isUpdatingSecuritySettings,
@@ -39,12 +42,20 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      secretScanning: securityScanning
+      secretScanning: securityScanning,
+      verifyCommitterIdentity: verifyCommitterIdentity
     }
   })
 
-  const onCheckboxChange = (checked: boolean) => {
+  const onSecurityScanningCheckboxChange = (checked: boolean) => {
     setValue('secretScanning', checked)
+    handleSubmit(data => {
+      handleUpdateSecuritySettings(data)
+    })()
+  }
+
+  const onVerifyCommitterIdentityCheckboxChange = (checked: boolean) => {
+    setValue('verifyCommitterIdentity', checked)
     handleSubmit(data => {
       handleUpdateSecuritySettings(data)
     })()
@@ -52,7 +63,8 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
 
   useEffect(() => {
     setValue('secretScanning', securityScanning)
-  }, [securityScanning, setValue])
+    setValue('verifyCommitterIdentity', verifyCommitterIdentity)
+  }, [securityScanning, verifyCommitterIdentity, setValue])
 
   const isDisabled =
     (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
@@ -72,7 +84,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
           <Checkbox
             checked={watch('secretScanning')}
             id="secret-scanning"
-            onCheckedChange={onCheckboxChange}
+            onCheckedChange={onSecurityScanningCheckboxChange}
             disabled={isDisabled}
             title={tooltipMessage}
             label={t('views:repos.secretScanning', 'Secret scanning')}
@@ -83,6 +95,22 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
           />
           {errors.secretScanning && (
             <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
+          )}
+
+          <Checkbox
+            checked={watch('verifyCommitterIdentity')}
+            id="verify-committer-identity"
+            onCheckedChange={onVerifyCommitterIdentityCheckboxChange}
+            disabled={isDisabled}
+            title={tooltipMessage}
+            label={t('views:repos.verifyCommitterIdentity', 'Verify committer identity')}
+            caption={t(
+              'views:repos.verifyCommitterIdentityDescription',
+              'Block commits not committed by the user pushing the changes.'
+            )}
+          />
+          {errors.verifyCommitterIdentity && (
+            <Message theme={MessageTheme.ERROR}>{errors.verifyCommitterIdentity.message?.toString()}</Message>
           )}
         </ControlGroup>
       )}

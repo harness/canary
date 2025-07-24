@@ -37,6 +37,7 @@ export default function ReposListPage() {
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
+  const [favorite, setFavorite] = useQueryState<boolean>('favorite')
 
   const {
     data: { body: repoData, headers } = {},
@@ -48,7 +49,8 @@ export default function ReposListPage() {
     {
       queryParams: {
         page: queryPage,
-        query: query ?? ''
+        query: query ?? '',
+        only_favorites: favorite
       },
       space_ref: `${spaceURL}/+`
     },
@@ -143,6 +145,7 @@ export default function ReposListPage() {
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
+      onFilterChange={({ favorite }) => setFavorite(favorite ?? null)}
     />
   )
 }

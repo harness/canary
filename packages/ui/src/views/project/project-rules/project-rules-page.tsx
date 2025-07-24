@@ -15,6 +15,8 @@ export interface ProjectRulesPageProps {
   openRulesAlertDeleteDialog: (identifier: string) => void
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
+  toProjectBranchRuleCreate?: () => string
+  toProjectTagRuleCreate?: () => string
 }
 export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   useProjectRulesStore,
@@ -25,7 +27,9 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   setPage,
   openRulesAlertDeleteDialog,
   apiError,
-  handleRuleClick
+  handleRuleClick,
+  toProjectBranchRuleCreate,
+  toProjectTagRuleCreate
 }) => {
   const { t } = useTranslation()
   const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
@@ -67,6 +71,8 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             rulesSearchQuery={searchQuery}
             setRulesSearchQuery={setSearchQuery}
             projectScope
+            toRepoBranchRuleCreate={toProjectBranchRuleCreate}
+            toRepoTagRuleCreate={toProjectTagRuleCreate}
           />
         )}
 

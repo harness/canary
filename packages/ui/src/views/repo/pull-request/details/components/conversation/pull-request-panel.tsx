@@ -31,7 +31,7 @@ import {
 import { cn } from '@utils/cn'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
-import { PullRequestRoutingProps } from '../../pull-request-details-types'
+import { DefaultReviewersDataProps, PullRequestRoutingProps } from '../../pull-request-details-types'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
@@ -176,7 +176,12 @@ const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
 export interface PullRequestPanelProps
   extends Omit<
       PullRequestChangesSectionProps,
-      'reqNoChangeReq' | 'reqCodeOwnerApproval' | 'minApproval' | 'reqCodeOwnerLatestApproval' | 'minReqLatestApproval'
+      | 'reqNoChangeReq'
+      | 'reqCodeOwnerApproval'
+      | 'minApproval'
+      | 'reqCodeOwnerLatestApproval'
+      | 'minReqLatestApproval'
+      | 'accordionValues'
     >,
     Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
@@ -198,6 +203,7 @@ export interface PullRequestPanelProps
   spaceId?: string
   repoId?: string
   error?: string | null
+  defaultReviewersData?: DefaultReviewersDataProps
 }
 
 const PullRequestPanel = ({
@@ -207,13 +213,9 @@ const PullRequestPanel = ({
   checksInfo,
   approvedEvaluations,
   changeReqEvaluations,
-  codeOwners,
+  codeOwnersData,
   latestApprovalArr,
   changeReqReviewer,
-  codeOwnerChangeReqEntries,
-  codeOwnerPendingEntries,
-  codeOwnerApprovalEntries,
-  latestCodeOwnerApprovalArr,
   actions,
   checkboxBypass,
   setCheckboxBypass,
@@ -230,6 +232,7 @@ const PullRequestPanel = ({
   spaceId,
   repoId,
   error,
+  defaultReviewersData,
   ...routingProps
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
@@ -403,16 +406,11 @@ const PullRequestPanel = ({
                   minReqLatestApproval={prPanelData.minReqLatestApproval}
                   approvedEvaluations={approvedEvaluations}
                   changeReqEvaluations={changeReqEvaluations}
-                  codeOwners={codeOwners}
                   latestApprovalArr={latestApprovalArr}
                   reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
                   changeReqReviewer={changeReqReviewer}
-                  codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
-                  reqCodeOwnerApproval={prPanelData.reqCodeOwnerApproval}
-                  reqCodeOwnerLatestApproval={prPanelData.reqCodeOwnerLatestApproval}
-                  codeOwnerPendingEntries={codeOwnerPendingEntries}
-                  codeOwnerApprovalEntries={codeOwnerApprovalEntries}
-                  latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
+                  codeOwnersData={codeOwnersData}
+                  defaultReviewersData={defaultReviewersData}
                 />
               )}
 
@@ -420,10 +418,10 @@ const PullRequestPanel = ({
                 !pullReqMetadata?.merged && <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />}
 
               <PullRequestCheckSection
+                {...routingProps}
                 checkData={checks ?? []}
                 checksInfo={checksInfo}
                 accordionValues={accordionValues}
-                {...routingProps}
               />
 
               {!pullReqMetadata?.merged && (

@@ -8,6 +8,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import { ErrorTypes, ProjectRulesPage } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -15,7 +16,9 @@ import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesListContainer = () => {
+  const routes = useRoutes()
   const space_ref = useGetSpaceURLParam()
+
   const [query, setQuery] = useQueryState('query')
   const [page, setPage] = useState(1)
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -99,6 +102,8 @@ export const ProjectRulesListContainer = () => {
         setPage={setPage}
         apiError={apiError}
         handleRuleClick={handleRuleEditClick}
+        toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
+        toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
       />
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}

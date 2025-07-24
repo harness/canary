@@ -18,6 +18,9 @@ export const SearchPagePreview = () => {
       setSearchQuery={setSearchQuery}
       useSearchResultsStore={useSearchResultsStore}
       toRepoFileDetails={() => '#'}
+      onRepoSelect={() => {}}
+      onLanguageSelect={() => {}}
+      onClearFilters={() => {}}
     />
   )
 }

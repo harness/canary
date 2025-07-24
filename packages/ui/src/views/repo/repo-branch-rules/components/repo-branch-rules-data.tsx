@@ -65,6 +65,11 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
     hasInput: true
   },
   {
+    id: BranchRuleId.AUTO_ADD_CODE_OWNERS,
+    label: t('views:repos.AutoAddCodeOwners', 'Add Code Owners as reviewers'),
+    description: t('views:repos.AutoAddCodeOwnersDescription', 'Automatically add relevant Code Owners as reviewers')
+  },
+  {
     id: BranchRuleId.REQUIRE_CODE_OWNERS,
     label: t('views:repos.RequireCodeOwners', 'Require review from code owners'),
     description: t(

@@ -3,13 +3,22 @@ import { useParams } from 'react-router-dom'
 
 import { useMutation } from '@tanstack/react-query'
 
+import { useListReposQuery } from '@harnessio/code-service-client'
 import { SearchPageView, SearchResultItem } from '@harnessio/ui/views'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
+import { transformRepoList } from './repo/transform-utils/repo-list-transform'
+
+interface Stats {
+  total_files: number
+  total_matches: number
+}
 
 interface TData {
   file_matches: SearchResultItem[]
+  stats: Stats
 }
 
 interface TVariables {
@@ -19,24 +28,40 @@ interface TVariables {
 type TError = unknown
 
 export default function SearchPage() {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useQueryState('query')
+  const [selectedRepoId, setSelectedRepoId] = useQueryState('repo')
+  const [selectedLanguage, setSelectedLanguage] = useQueryState('language')
   const [regex, setRegex] = useState(false)
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
+  const [stats, setStats] = useState<Stats>()
   const getApiPath = useAPIPath()
   const { scope } = useMFEContext()
   const { repoId } = useParams()
 
   const scopeRef = [scope.accountId, scope.orgIdentifier, scope.projectIdentifier].filter(Boolean).join('/')
-  const repoRef = `${scopeRef}/${repoId}`
+  const repoRef = `${scopeRef}/${repoId || selectedRepoId}`
+
+  const { data: { body: repos } = {}, isLoading: isReposListLoading } = useListReposQuery(
+    {
+      queryParams: {
+        page: 1,
+        query: ''
+      },
+      space_ref: `${scopeRef}/+`
+    },
+    {
+      enabled: !repoId
+    }
+  )
 
   const { mutate, isLoading } = useMutation<TData, TError, TVariables>({
     mutationFn: ({ query }) =>
       fetch(getApiPath('/api/v1/search'), {
         method: 'POST',
         body: JSON.stringify({
-          repo_paths: repoId ? [repoRef] : [],
-          space_paths: repoId ? [] : [scopeRef],
-          query: `( ${query} ) case:no`,
+          repo_paths: repoId || selectedRepoId ? [repoRef] : [],
+          space_paths: repoId || selectedRepoId ? [] : [scopeRef],
+          query: `( ${query} ) case:no${selectedLanguage ? ` lang:${selectedLanguage}` : ''}`,
           max_result_count: 50,
           recursive: false,
           enable_regex: regex
@@ -55,6 +80,7 @@ export default function SearchPage() {
           }
         })
       )
+      setStats(data.stats)
     }
   })
 
@@ -62,7 +88,11 @@ export default function SearchPage() {
     if (searchQuery.trim() !== '') {
       mutate({ query: searchQuery })
     }
-  }, [searchQuery, mutate, regex])
+  }, [searchQuery, mutate, regex, selectedRepoId, selectedLanguage])
+
+  const handleRepoSelect = (repoName: string) => {
+    setSelectedRepoId(repoName)
+  }
 
   return (
     <SearchPageView
@@ -70,7 +100,19 @@ export default function SearchPage() {
       searchQuery={searchQuery}
       setSearchQuery={q => q && setSearchQuery(q)}
       regex={regex}
+      repos={repos ? transformRepoList(repos) : undefined}
+      selectedRepoId={selectedRepoId}
+      isReposListLoading={isReposListLoading}
       setRegex={setRegex}
+      onClearFilters={() => {
+        setSelectedRepoId(null)
+        setSelectedLanguage(null)
+      }}
+      stats={stats}
+      selectedLanguage={selectedLanguage}
+      onLanguageSelect={language => {
+        setSelectedLanguage(language)
+      }}
       useSearchResultsStore={() => {
         return {
           results: searchResults,
@@ -84,6 +126,7 @@ export default function SearchPage() {
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
         `/repos/${repoPath}/code/refs/heads/${branch}/~/${filePath}`
       }
+      onRepoSelect={handleRepoSelect}
     />
   )
 }

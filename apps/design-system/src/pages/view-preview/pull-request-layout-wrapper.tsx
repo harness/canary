@@ -2,8 +2,9 @@ import { FC, PropsWithChildren, useCallback } from 'react'
 import { Route } from 'react-router-dom'
 
 import { pullRequestStore } from '@subjects/views/pull-request-conversation/pull-request-store'
+import { noop } from 'lodash-es'
 
-import { PullRequestLayout } from '@harnessio/ui/views'
+import { BranchSelectorV2, PullRequestLayout } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 
@@ -26,6 +27,23 @@ const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLEl
             updateTitle={() => {
               return Promise.resolve()
             }}
+            updateTargetBranch={() => {
+              return Promise.resolve()
+            }}
+            branchSelectorRenderer={() => (
+              <BranchSelectorV2
+                repoId="canary"
+                spaceId="org"
+                branchList={[]}
+                tagList={[]}
+                selectedBranchorTag={{ name: 'main', sha: 'sha' }}
+                selectedBranch={{ name: 'main', sha: 'sha' }}
+                onSelectBranch={noop}
+                isBranchOnly={false}
+                dynamicWidth={false}
+                setSearchQuery={noop}
+              />
+            )}
           />
         }
       >

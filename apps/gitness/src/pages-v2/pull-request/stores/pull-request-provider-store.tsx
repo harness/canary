@@ -5,7 +5,7 @@ import { create } from 'zustand'
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
 import { CodeCommentState, DiffStatistics, PullRequestDataState, PullRequestState } from '@harnessio/ui/views'
 
-import { extractSpecificViolations, getCommentsInfoData } from '../../../pages/pull-request/utils'
+import { extractSpecificViolations, getCommentsInfoData } from '../pull-request-utils'
 
 export const codeOwnersNotFoundMessage = 'CODEOWNERS file not found'
 export const codeOwnersNotFoundMessage2 = `path "CODEOWNERS" not found`
@@ -116,7 +116,8 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
             commentsInfoData: getCommentsInfoData({
               requiresCommentApproval,
               resolvedCommentArrParams: resolvedCommentArr?.params
-            })
+            }),
+            defaultReviewersApprovals: res?.default_reviewer_aprovals
           }
 
           // We are adding data object comparison,

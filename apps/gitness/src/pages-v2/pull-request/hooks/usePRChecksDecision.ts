@@ -6,7 +6,7 @@ import pluralize from 'pluralize'
 import { TypesPullReq, TypesRepositoryCore, useChecksPullReqQuery } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/ui/views'
 
-import { determineStatusMessage, generateStatusSummary } from '../../../pages/pull-request/utils'
+import { determineStatusMessage, generateStatusSummary } from '../pull-request-utils'
 
 interface Check {
   check: {
@@ -68,7 +68,7 @@ export function usePRChecksDecision({
           case ExecutionState.PENDING:
           case ExecutionState.SUCCESS:
             _count[check.check.status]++
-            setCount({ ..._count, [check.check.status]: _count[check.check.status] + 1 })
+            setCount({ ..._count })
             break
           default:
             console.error('Unrecognized PR check status', check)

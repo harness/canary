@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Layout, Tag } from '@/components'
+import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Layout, Tag, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -95,7 +95,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       navigate(url || '')
     }
 
-    const { payload, type, author, metadata, mentions } = payloadMain
+    const { payload, type, author, metadata, mentions, created } = payloadMain
 
     const {
       old_draft,
@@ -135,6 +135,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 />
                 {merge_method === MergeStrategy.REBASE ? ', now at ' : 'by commit'}
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={merge_sha as string} />
+                <TimeAgoCard timestamp={created} />
               </span>
             )
           },

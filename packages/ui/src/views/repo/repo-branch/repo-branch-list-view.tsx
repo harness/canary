@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchInput, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -48,10 +48,11 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
-        <Spacer size={2} />
         {(isLoading || !!branchList.length || isDirtyList) && (
           <>
-            <span className="text-24 font-medium text-cn-foreground-1">{t('views:repos.branches', 'Branches')}</span>
+            <Text as="h1" variant="heading-section">
+              {t('views:repos.branches', 'Branches')}
+            </Text>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

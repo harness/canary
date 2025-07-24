@@ -23,13 +23,14 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { PathParams } from '../../../RouteDefinitions'
 import { transformFormOutput } from '../../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../stores/repo-branch-rules-store'
 import { useRepoRulesStore } from '../stores/repo-settings-store'
 
-export const RepoBranchSettingsRulesPageContainer = () => {
+export const RepoBranchRulesContainer = () => {
   const { t } = useTranslation()
   const routes = useRoutes()
   const navigate = useNavigate()
@@ -43,7 +44,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
-    scope: { accountId }
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const branchRules = useMemo(() => {
@@ -87,9 +88,23 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   )
 
+  const isMFE = useIsMFE()
+
   const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
+    queryParams: {
+      page: 1,
+      limit: 100,
+      type: isMFE ? ['user', 'serviceaccount'] : ['user'],
+      ...(isMFE && { inherited: true }),
+      query: principalsSearchQuery,
+      // @ts-expect-error : BE issue - not implemented
+      accountIdentifier: accountId,
+      orgIdentifier,
+      projectIdentifier
+    },
+    stringifyQueryParamsOptions: {
+      arrayFormat: 'repeat'
+    }
   })
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentQuery({
@@ -208,6 +223,10 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     return <NotFoundPage pageTypeText="rules" />
   }
 
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersAndServiceAccounts', 'Select users and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
+
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -223,6 +242,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      bypassListPlaceholder={searchPlaceholder}
     />
   )
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
+import { noop } from 'lodash-es'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ErrorTypes, RepoSettingsGeneralPage } from '@harnessio/ui/views'
@@ -10,7 +11,9 @@ const loadingStates = {
   isUpdatingRepoData: false,
   isLoadingSecuritySettings: false,
   isUpdatingSecuritySettings: false,
-  isRulesLoading: false
+  isRulesLoading: false,
+  isLoadingFeaturesSettings: false,
+  isUpdatingFeaturesSettings: false
 }
 
 // Simple dummy component that satisfies the type requirement
@@ -38,6 +41,8 @@ export const RepoGeneralSettings = () => {
         useRepoRulesStore={useRepoRulesStore}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
         branchSelectorRenderer={DummyComponent}
+        openRepoArchiveDialog={() => {}}
+        handleUpdateFeaturesSettings={noop}
       />
 
       <DeleteAlertDialog

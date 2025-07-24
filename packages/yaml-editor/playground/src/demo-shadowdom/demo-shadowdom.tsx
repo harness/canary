@@ -4,11 +4,11 @@ import styleCss from 'monaco-editor/min/vs/editor/editor.main.css?inline'
 
 import { ThemeDefinition, YamlEditor } from '../../../src'
 import { YamlRevision } from '../../../src/components/YamlEditor'
+import ShadowDomWrapper from '../common/components/shadow-dom-wrapper'
 import { stageApproval } from '../common/content/pipeline-stage-approval'
 import { getInlineActionExample } from '../common/inline-actions/inline-actions-def'
 import unifiedSchema from '../common/schema/unified.json'
 import { harnessDarkTheme, harnessLightTheme } from '../common/theme/theme'
-import ShadowDomWrapper from './shadow-dom-wrapper'
 
 const themes: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
@@ -22,7 +22,7 @@ const schemaConfig = {
 
 const themeConfig = {
   defaultTheme: 'dark',
-  themes
+  monacoThemes: themes
 }
 
 export const DemoShadowDom: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = () => {

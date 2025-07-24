@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import './playground.css'
 
+import { DemoShadowDomBlame } from './demo-shadowdom-blame/demo-shadowdom-blame'
 import { DemoShadowDom } from './demo-shadowdom/demo-shadowdom'
 import { Demo1 } from './demo1/demo1'
 import { Demo2 } from './demo2/demo2'
@@ -9,7 +10,7 @@ import { Demo3 } from './demo3/demo3'
 
 const demoArr = [
   {
-    name: 'ShadowDom',
+    name: 'YamlEditor ShadowDom',
     component: DemoShadowDom
   },
   {
@@ -23,6 +24,10 @@ const demoArr = [
   {
     name: 'CodeEditor',
     component: Demo3
+  },
+  {
+    name: 'BlameEditor ShadowDom',
+    component: DemoShadowDomBlame
   }
 ]
 

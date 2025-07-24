@@ -1,6 +1,6 @@
 import { Children, createContext, isValidElement, ReactNode, useContext } from 'react'
 
-import { Button, IconV2NamesType } from '@/components'
+import { Button, ButtonLayout, IconV2NamesType } from '@/components'
 
 import { Dialog } from './dialog'
 import { LogoV2NamesType } from './logo-v2'
@@ -90,8 +90,10 @@ const Content = ({ title, children }: ContentProps) => {
       <Dialog.Body>{otherChildren}</Dialog.Body>
 
       <Dialog.Footer>
-        {cancelEl ?? <Cancel />}
-        {confirmEl ?? <Confirm />}
+        <ButtonLayout>
+          {cancelEl ?? <Cancel />}
+          {confirmEl ?? <Confirm />}
+        </ButtonLayout>
       </Dialog.Footer>
     </Dialog.Content>
   )

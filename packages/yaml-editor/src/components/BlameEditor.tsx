@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import Editor, { EditorProps, loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
@@ -39,6 +39,7 @@ export interface BlameEditorProps {
   showSeparators?: boolean
   height?: EditorProps['height']
   options?: monaco.editor.IStandaloneEditorConstructionOptions
+  className?: string
 }
 
 export function BlameEditor({
@@ -50,15 +51,16 @@ export function BlameEditor({
   showSeparators = true,
   theme: themeFromProps,
   height = '75vh',
-  options
+  options,
+  className
 }: BlameEditorProps): JSX.Element {
   const blameDataRef = useRef(blameData)
+
+  const holderRef = useRef<HTMLDivElement>(null)
 
   const instanceId = useRef(createRandomString(5))
   const monaco = useMonaco()
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
-
-  const [lineNumbersDelta, setLineNumbersDelta] = useState(0)
 
   const monacoRef = useRef<typeof monaco | null>(null)
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
@@ -170,23 +172,31 @@ export function BlameEditor({
     [blameData]
   )
 
+  // prevent line numbers to appear at the initial position (for a moment)
+  useLayoutEffect(() => {
+    if (holderRef.current) holderRef.current.style.setProperty('--line-number-display', `none`)
+  }, [])
+
   // set adjustment for lines numbers position
   useEffect(() => {
-    if (lineNumbersPosition === 'center') {
-      const scrollableEl = document.getElementsByClassName('lines-content')[0]
+    if (lineNumbersPosition === 'center' && holderRef.current) {
+      const scrollableEl = holderRef.current.getElementsByClassName('lines-content')[0]
 
       if (scrollableEl) {
         const config = { attributes: true }
 
-        const callback: MutationCallback = mutationList => {
-          for (const _ of mutationList) {
-            const left = parseInt(getComputedStyle(scrollableEl).left)
-            setLineNumbersDelta(left)
+        const callback = () => {
+          const left = parseInt(getComputedStyle(scrollableEl).left)
+          if (holderRef.current) {
+            holderRef.current.style.setProperty('--line-number-offset', `${BLAME_MESSAGE_WIDTH + 16 + left}px`)
+            holderRef.current.style.setProperty('--line-number-display', `block`)
           }
         }
 
         const observer = new MutationObserver(callback)
         observer.observe(scrollableEl, config)
+
+        callback()
 
         return () => {
           observer.disconnect()
@@ -199,16 +209,18 @@ export function BlameEditor({
   const lineNumbersCss = useMemo(() => {
     return `
       .monaco-editor-${instanceId.current} .margin {
-        left: ${BLAME_MESSAGE_WIDTH + 16 + lineNumbersDelta}px !important;
+        display: var(--line-number-display);
+        left: var(--line-number-offset);
         pointer-events: none;
       }`
-  }, [lineNumbersDelta])
+  }, [])
 
-  const clipSelection = `
-   .monaco-editor-${instanceId.current} .view-overlays {
+  const clipSelection = useMemo(() => {
+    return `.monaco-editor-${instanceId.current} .view-overlays {
     clip-path: polygon(${BLAME_MESSAGE_WIDTH + 16}px 0, 100% 0%, 100% 100%, ${BLAME_MESSAGE_WIDTH + 16}px 100%);
     height:100% !important;
    }`
+  }, [])
 
   const mergedOptions = useMemo(
     () => ({
@@ -218,13 +230,19 @@ export function BlameEditor({
     [options]
   )
 
-  return (
-    <>
+  const styleEl = useMemo(() => {
+    return (
       <style
         dangerouslySetInnerHTML={{
           __html: `${monacoEditorCss} ${monacoEditorCommitInfoCss} ${lineNumbersCss} ${clipSelection}`
         }}
       />
+    )
+  }, [monacoEditorCss, monacoEditorCommitInfoCss, clipSelection, lineNumbersCss])
+
+  return (
+    <div className={className} ref={holderRef}>
+      {styleEl}
       <Editor
         className={`monaco-editor-${instanceId.current} overflow-hidden rounded-b-md border-x border-b`}
         height={height}
@@ -233,6 +251,6 @@ export function BlameEditor({
         options={mergedOptions}
         onMount={handleEditorDidMount}
       />
-    </>
+    </div>
   )
 }

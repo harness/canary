@@ -20,6 +20,7 @@ import {
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
@@ -187,9 +188,14 @@ export const BranchSettingsRuleBypassListField: FC<
     bypassOptions: PrincipalType[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
+    bypassListPlaceholder?: string
   }
-> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery, bypassListPlaceholder }) => {
   const { t } = useTranslation()
+  const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setPrincipalsSearchQuery,
+    searchValue: principalsSearchQuery || ''
+  })
 
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
@@ -207,9 +213,9 @@ export const BranchSettingsRuleBypassListField: FC<
           label={t('views:repos.bypassList', 'Bypass list')}
           name="bypass"
           options={multiSelectOptions}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
-          searchQuery={principalsSearchQuery}
-          setSearchQuery={setPrincipalsSearchQuery}
+          placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
+          searchQuery={debouncedPrincipalsSearchQuery}
+          setSearchQuery={handleStringSearchChange}
           disallowCreation
           error={errors?.bypass?.message?.toString()}
         />

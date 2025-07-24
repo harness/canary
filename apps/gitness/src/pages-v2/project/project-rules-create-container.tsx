@@ -19,6 +19,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../repo/stores/repo-branch-rules-store'
@@ -36,7 +37,7 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
-    scope: { accountId }
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const branchRules = useMemo(() => {
@@ -76,9 +77,23 @@ export const ProjectRulesCreateOrUpdateContainer = () => {
     }
   )
 
+  const isMFE = useIsMFE()
+
   const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
+    queryParams: {
+      page: 1,
+      limit: 100,
+      type: isMFE ? ['user', 'serviceaccount'] : ['user'],
+      ...(isMFE && { inherited: true }),
+      query: principalsSearchQuery,
+      // @ts-expect-error : BE issue - not implemnted
+      accountIdentifier: accountId,
+      orgIdentifier,
+      projectIdentifier
+    },
+    stringifyQueryParamsOptions: {
+      arrayFormat: 'repeat'
+    }
   })
 
   const {

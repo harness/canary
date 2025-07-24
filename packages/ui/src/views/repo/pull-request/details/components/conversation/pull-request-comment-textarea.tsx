@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
-import { Textarea } from '@/components'
+import { IconV2, Textarea, TextareaProps } from '@/components'
 import { PrincipalType } from '@/types'
 import { Command } from '@components/command'
 import { cn } from '@utils/cn'
+import { Command as CommandPrimitive } from 'cmdk'
 
 import { getCaretCoordinates, getCurrentWord, replaceWord } from './utils'
 
-interface Props {
+interface PullRequestCommentTextareaProps extends TextareaProps {
   value: string
   setValue: (value: string) => void
   users?: PrincipalType[]
@@ -15,176 +16,219 @@ interface Props {
   searchPrincipalsQuery: string
 }
 
-export function PullRequestCommentTextarea({
-  value,
-  setValue,
-  users,
-  setSearchPrincipalsQuery,
-  searchPrincipalsQuery
-}: Props) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [commandValue, setCommandValue] = useState('')
+export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRequestCommentTextareaProps>(
+  (
+    {
+      value,
+      setValue,
+      users = [],
+      setSearchPrincipalsQuery,
+      onChange,
+      searchPrincipalsQuery,
+      ...textareaProps
+    }: PullRequestCommentTextareaProps,
+    ref
+  ) => {
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+    const dropdownRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
+    const [commandValue, setCommandValue] = useState('')
 
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [dropdownOpen, setDropdownOpen] = useState(false)
 
-  // TODO: check if this is possible?!?
-  // const texarea = textareaRef.current;
-  // const dropdown = dropdownRef.current;
+    const handleBlur = useCallback((e: Event) => {
+      const dropdown = dropdownRef.current
+      if (dropdown) {
+        setDropdownOpen(false)
+        setCommandValue('')
+      }
+    }, [])
 
-  const handleBlur = useCallback((e: Event) => {
-    const dropdown = dropdownRef.current
-    if (dropdown) {
-      setDropdownOpen(false)
-      // dropdown.classList.add('hidden')
-      setCommandValue('')
-    }
-  }, [])
+    useEffect(() => {
+      if (commandValue) {
+        const searchQuery = commandValue.replace('@', '')
+        setSearchPrincipalsQuery(searchQuery)
+      } else {
+        setSearchPrincipalsQuery('')
+      }
+    }, [commandValue, setSearchPrincipalsQuery])
 
-  useEffect(() => {
-    if (commandValue) {
-      const searchQuery = commandValue.replace('@', '')
-      setSearchPrincipalsQuery(searchQuery)
-    } else {
-      setSearchPrincipalsQuery('')
-    }
-  }, [commandValue, setSearchPrincipalsQuery])
+    // Combine refs to handle both forward ref and internal ref
+    const setRefs = (element: HTMLTextAreaElement | null) => {
+      // Save to local ref
+      textareaRef.current = element
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    const textarea = textareaRef.current
-    const input = inputRef.current
-    const dropdown = dropdownRef.current
-    // if (textarea && input && dropdown) {
-    if (textarea && input) {
-      const currentWord = getCurrentWord(textarea)
-      // const isDropdownHidden = dropdown.classList.contains('hidden')
-      if (currentWord.startsWith('@') && dropdownOpen) {
-        // FIXME: handle Escape
-        if (
-          e.key === 'ArrowUp' ||
-          e.keyCode === 38 ||
-          e.key === 'ArrowDown' ||
-          e.keyCode === 40 ||
-          e.key === 'Enter' ||
-          e.keyCode === 13 ||
-          e.key === 'Escape' ||
-          e.keyCode === 27
-        ) {
-          e.preventDefault()
-          input.dispatchEvent(new KeyboardEvent('keydown', e))
-        }
+      // Forward to external ref
+      if (typeof ref === 'function') {
+        ref(element)
+      } else if (ref) {
+        ref.current = element
       }
     }
-  }, [])
 
-  const onTextValueChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const text = e.target.value
+    const handleKeyDown = useCallback(
+      (e: KeyboardEvent) => {
+        const textarea = textareaRef.current
+        const input = inputRef.current
+
+        if (e.key === 'Escape') {
+          setDropdownOpen(false)
+          setCommandValue('')
+          return
+        }
+
+        if (textarea && input) {
+          const currentWord = getCurrentWord(textarea)
+
+          if (currentWord.startsWith('@')) {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Enter' || e.key === 'Escape') {
+              e.preventDefault()
+
+              input.dispatchEvent(new KeyboardEvent('keydown', e))
+            }
+          }
+        }
+      },
+      [setCommandValue]
+    )
+
+    const onTextValueChange = useCallback(
+      (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const text = e.target.value
+        const textarea = textareaRef.current
+        const dropdown = dropdownRef.current
+
+        console.log('onChange')
+
+        if (textarea && dropdown) {
+          const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
+          const currentWord = getCurrentWord(textarea)
+          setValue(text)
+          console.log({ currentWord })
+          // Only show dropdown when typing @ followed by at least one character
+          if (currentWord.startsWith('@')) {
+            setCommandValue(currentWord)
+            dropdown.style.left = caret.left + 'px'
+            dropdown.style.top = caret.top + caret.height + 'px'
+            setDropdownOpen(true)
+          } else {
+            // Hide dropdown when not typing @ mention or when @ is deleted
+            if (commandValue !== '') {
+              setCommandValue('')
+              setDropdownOpen(false)
+            }
+          }
+        }
+      },
+      [setValue, commandValue]
+    )
+
+    const onCommandSelect = useCallback((value: string) => {
       const textarea = textareaRef.current
       const dropdown = dropdownRef.current
-
       if (textarea && dropdown) {
-        const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
+        replaceWord(textarea, `${value}`)
+        setCommandValue('')
+        setDropdownOpen(false)
+      }
+    }, [])
+
+    const handleMouseDown = useCallback((e: Event) => {
+      e.preventDefault()
+      e.stopPropagation()
+    }, [])
+
+    const handleSelectionChange = useCallback(() => {
+      const textarea = textareaRef.current
+      const dropdown = dropdownRef.current
+      if (textarea && dropdown) {
         const currentWord = getCurrentWord(textarea)
-        setValue(text)
-        console.log({ currentWord })
-        if (currentWord.startsWith('@') && currentWord.length > 1) {
-          setCommandValue(currentWord)
-          dropdown.style.left = caret.left + 'px'
-          dropdown.style.top = caret.top + caret.height + 'px'
-          setDropdownOpen(true)
-          console.log('Dropdown opened')
-        } else {
-          // Hide dropdown when not typing @ mention or when @ is deleted
+        if (!currentWord.startsWith('@')) {
           setCommandValue('')
           setDropdownOpen(false)
         }
       }
-    },
-    [setValue]
-  )
+    }, [])
 
-  const onCommandSelect = useCallback((value: string) => {
-    const textarea = textareaRef.current
-    const dropdown = dropdownRef.current
-    if (textarea && dropdown) {
-      replaceWord(textarea, `${value}`)
-      setCommandValue('')
-      setDropdownOpen(false)
-      // dropdown.classList.add('hidden')
-    }
-  }, [])
-
-  const handleMouseDown = useCallback((e: Event) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }, [])
-
-  const handleSectionChange = useCallback((e: Event) => {
-    const textarea = textareaRef.current
-    const dropdown = dropdownRef.current
-    if (textarea && dropdown) {
-      const currentWord = getCurrentWord(textarea)
-      console.log(currentWord)
-      if (!currentWord.startsWith('@')) {
-        setCommandValue('')
-        setDropdownOpen(false)
+    const renderCommandList = () => {
+      if (typeof users === 'undefined') {
+        return (
+          <Command.Loading className="text-cn-foreground-3 min-w-52 px-2 py-4 text-sm">
+            <div className="flex place-content-center space-x-2">
+              <IconV2 className="animate-spin" name="loader" />
+            </div>
+          </Command.Loading>
+        )
       }
-    }
-  }, [])
 
-  useEffect(() => {
-    const textarea = textareaRef.current
-    const dropdown = dropdownRef.current
-    textarea?.addEventListener('keydown', handleKeyDown)
-    textarea?.addEventListener('blur', handleBlur)
-    document?.addEventListener('selectionchange', handleSectionChange)
-    dropdown?.addEventListener('mousedown', handleMouseDown)
-    return () => {
-      textarea?.removeEventListener('keydown', handleKeyDown)
-      textarea?.removeEventListener('blur', handleBlur)
-      document?.removeEventListener('selectionchange', handleSectionChange)
-      dropdown?.removeEventListener('mousedown', handleMouseDown)
-    }
-  }, [handleBlur, handleKeyDown, handleMouseDown, handleSectionChange])
+      if (users === null || (Array.isArray(users) && users.length === 0)) {
+        return <Command.Empty className="text-cn-foreground-3 px-2 py-4 text-sm">No results.</Command.Empty>
+      }
 
-  return (
-    <div className="relative w-full">
-      <Textarea
-        resizable
-        value={value}
-        onChange={onTextValueChange}
-        ref={textareaRef}
-        className="bg-cn-background-2 text-cn-foreground-1 h-auto min-h-36 resize-none p-3 pb-10"
-        autoComplete="off"
-        autoCorrect="off"
-        placeholder="Add your comment here"
-      />
-      {/* <p className="prose-none mt-1 text-sm text-muted-foreground">Supports markdown.</p> */}
-      <Command.Root
-        ref={dropdownRef}
-        className={cn('absolute z-[10000] h-auto max-h-32 max-w-min overflow-y-scroll border border-popover shadow', {
-          // hidden: !dropdownOpen
-        })}
-      >
-        <div className="hidden">
-          {/* REMINDER: className="hidden" won't hide the SearchIcon and border */}
-          <Command.Input ref={inputRef} value={commandValue} />
-        </div>
-        <Command.List>
-          <Command.Group className="max-w-min overflow-auto">
-            {users?.map(user => {
-              return (
-                <Command.Item key={user.id} value={user.email} onSelect={onCommandSelect}>
-                  {user.email}
-                </Command.Item>
-              )
-            })}
-          </Command.Group>
-        </Command.List>
-      </Command.Root>
-    </div>
-  )
-}
+      console.log(users)
+
+      return (
+        <Command.Group className="min-w-52 max-w-min overflow-auto">
+          {users?.map(user => {
+            return (
+              <Command.Item key={user.uid} value={user.email} onSelect={onCommandSelect}>
+                {user.email}
+              </Command.Item>
+            )
+          })}
+        </Command.Group>
+      )
+    }
+
+    useEffect(() => {
+      const textarea = textareaRef.current
+      const dropdown = dropdownRef.current
+      textarea?.addEventListener('keydown', handleKeyDown)
+      textarea?.addEventListener('blur', handleBlur)
+      document?.addEventListener('selectionchange', handleSelectionChange)
+      dropdown?.addEventListener('mousedown', handleMouseDown)
+      return () => {
+        textarea?.removeEventListener('keydown', handleKeyDown)
+        textarea?.removeEventListener('blur', handleBlur)
+        document?.removeEventListener('selectionchange', handleSelectionChange)
+        dropdown?.removeEventListener('mousedown', handleMouseDown)
+      }
+    }, [handleBlur, handleKeyDown, handleMouseDown, handleSelectionChange])
+
+    return (
+      <div className="relative w-full">
+        <Textarea
+          {...textareaProps}
+          resizable
+          value={value}
+          onChange={e => {
+            onTextValueChange(e)
+            onChange?.(e)
+          }}
+          ref={setRefs}
+          className="bg-cn-background-2 text-cn-foreground-1 h-auto min-h-36 resize-none p-3 pb-10"
+          autoComplete="off"
+          autoCorrect="off"
+          placeholder="Add your comment here"
+        />
+        {/* <p className="prose-none mt-1 text-sm text-muted-foreground">Supports markdown.</p> */}
+
+        <Command.Root
+          ref={dropdownRef}
+          shouldFilter={false}
+          className={cn('absolute z-[10000] h-auto max-h-32 max-w-min overflow-y-scroll border border-popover shadow', {
+            hidden: !dropdownOpen
+          })}
+        >
+          <div className="hidden">
+            {/* Input is needed for accessibility features */}
+            <CommandPrimitive.Input ref={inputRef} />
+          </div>
+
+          <Command.List>{renderCommandList()}</Command.List>
+        </Command.Root>
+      </div>
+    )
+  }
+)
 PullRequestCommentTextarea.displayName = 'PullRequestCommentTextarea'

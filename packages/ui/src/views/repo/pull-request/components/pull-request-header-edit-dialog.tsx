@@ -1,51 +1,75 @@
 import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
+import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { BranchSelectorContainerProps } from '@views/repo/components'
 import { z } from 'zod'
 
 interface PullRequestHeaderEditDialogProps {
   open: boolean
   onClose: () => void
-  onSubmit: (newTitle: string, newDescription: string) => void
+  onSubmit: (newTitle: string, newDescription: string, branch: string) => void
   initialTitle: string
   initialDescription?: string
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  sourceBranch?: string
+  targetBranch?: string
 }
 
 // Field names as constants to avoid lint warnings with string literals
 const FIELD_TITLE = 'title'
 const FIELD_DESCRIPTION = 'description'
+const FIELD_BRANCH = 'branch'
 
-const formSchema = z.object({
-  [FIELD_TITLE]: z.string().min(1, { message: 'Title is required' }),
-  [FIELD_DESCRIPTION]: z.string().optional()
-})
+const createFormSchema = (sourceBranch?: string) =>
+  z
+    .object({
+      [FIELD_TITLE]: z.string().min(1, { message: 'Title is required' }),
+      [FIELD_DESCRIPTION]: z.string().optional(),
+      [FIELD_BRANCH]: z.string().optional()
+    })
+    .refine(data => data[FIELD_BRANCH] !== sourceBranch, {
+      message: 'Target branch cannot be the same as source branch',
+      path: [FIELD_BRANCH]
+    })
 
-type FormFields = z.infer<typeof formSchema>
+type FormFields = z.infer<ReturnType<typeof createFormSchema>>
 
 export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> = ({
   open,
   onClose,
   onSubmit,
   initialTitle,
-  initialDescription = ''
+  initialDescription = '',
+  branchSelectorRenderer,
+  sourceBranch,
+  targetBranch
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const BranchSelector = branchSelectorRenderer
 
   const formMethods = useForm<FormFields>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createFormSchema(sourceBranch)),
     mode: 'onChange',
-    defaultValues: { title: initialTitle, description: initialDescription }
+    defaultValues: {
+      title: initialTitle,
+      description: initialDescription,
+      branch: targetBranch || ''
+    }
   })
 
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
-    reset
+    formState: { isSubmitting, errors },
+    setValue,
+    reset,
+    watch
   } = formMethods
+
+  const branchValue = watch(FIELD_BRANCH)
 
   const handleFormSubmit = async (data: FormFields) => {
     if (!data.title) return
@@ -53,7 +77,7 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
     setIsLoading(true)
 
     try {
-      onSubmit(data.title, data.description || '')
+      await onSubmit(data.title, data.description || '', data.branch || '')
       onClose()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred')
@@ -67,12 +91,17 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   useEffect(() => {
     reset({
       title: initialTitle,
-      description: initialDescription
+      description: initialDescription,
+      branch: targetBranch || ''
     })
   }, [initialTitle, initialDescription, reset])
 
   const handleDialogClose = () => {
-    reset()
+    reset({
+      title: initialTitle,
+      description: initialDescription,
+      branch: targetBranch || ''
+    })
     onClose()
   }
 
@@ -86,19 +115,30 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           className="block"
         >
           <Dialog.Header>
-            <Dialog.Title>Edit PR title</Dialog.Title>
+            <Dialog.Title>Edit Pull Request</Dialog.Title>
           </Dialog.Header>
 
           <Dialog.Body>
-            <div className="mb-7 space-y-7">
+            <div className="my-7 space-y-7">
               <FormInput.Text
-                id="title"
-                {...register('title')}
+                id={FIELD_TITLE}
+                {...register(FIELD_TITLE)}
                 placeholder="Enter pull request title"
                 label="Title"
                 onFocus={event => event.target.select()}
                 autoFocus
               />
+
+              <ControlGroup>
+                <Label>Target Branch</Label>
+                <BranchSelector
+                  {...register(FIELD_BRANCH)}
+                  onSelectBranchorTag={value => setValue(FIELD_BRANCH, value.name)}
+                  isBranchOnly={true}
+                  dynamicWidth={true}
+                  selectedBranch={{ name: branchValue || targetBranch || '', sha: '' }}
+                />
+              </ControlGroup>
 
               <FormInput.Textarea
                 {...register(FIELD_DESCRIPTION)}
@@ -106,6 +146,12 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
                 label="Description"
                 rows={5}
               />
+
+              {errors[FIELD_BRANCH] && (
+                <Alert.Root theme="danger">
+                  <Alert.Description>{errors[FIELD_BRANCH]?.message}</Alert.Description>
+                </Alert.Root>
+              )}
 
               {error && <p className="text-cn-foreground-danger">{error}</p>}
             </div>

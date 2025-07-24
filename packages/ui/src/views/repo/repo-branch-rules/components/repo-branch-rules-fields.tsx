@@ -280,11 +280,11 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
         setSearchQuery={handleStringSearchChange}
         disallowCreation
       />
-      {!isEmpty(validationMessage?.message) && (
-        <Message theme={validationMessage?.theme!} className="mt-2">
-          {validationMessage?.theme === MessageTheme.WARNING
-            ? t(`views:repos.${validationMessage?.message}`)
-            : validationMessage?.message}
+      {validationMessage && !isEmpty(validationMessage.message) && (
+        <Message theme={validationMessage.theme} className="mt-2">
+          {validationMessage.theme === MessageTheme.WARNING
+            ? t(`views:repos.${validationMessage.message}`)
+            : validationMessage.message}
         </Message>
       )}
     </>
@@ -323,8 +323,7 @@ export const BranchSettingsRuleListField: FC<{
           const {
             checked: isChecked = false,
             disabled: isDisabled = false,
-            hidden: isHidden = false,
-            validationMessage: validationMessage = ''
+            hidden: isHidden = false
           } = matchingRule || {}
 
           return (

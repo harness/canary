@@ -66,7 +66,7 @@ const mockFormOutput = {
     { id: BranchRuleId.REQUIRE_LATEST_COMMIT, checked: true },
     { id: BranchRuleId.REQUIRE_NO_CHANGE_REQUEST, checked: false },
     { id: BranchRuleId.COMMENTS, checked: true },
-    { id: BranchRuleId.STATUS_CHECKS, checked: true, selectOptions: ['check1', 'check2'] },
+    { id: BranchRuleId.STATUS_CHECKS, checked: true, selectOptions: [{ id: 'check1', key: 'check1' }, { id: 'check2', key: 'check2' }] },
     { id: BranchRuleId.MERGE, checked: true, submenu: ['merge', 'rebase'] },
     { id: BranchRuleId.DELETE_BRANCH, checked: true },
     { id: BranchRuleId.BLOCK_BRANCH_CREATION, checked: true },
@@ -102,7 +102,10 @@ describe('transformDataFromApi', () => {
     expect(ruleMap.get(BranchRuleId.REQUIRE_LATEST_COMMIT)?.checked).toBe(true)
     expect(ruleMap.get(BranchRuleId.REQUIRE_CODE_REVIEW)?.checked).toBe(true)
     expect(ruleMap.get(BranchRuleId.REQUIRE_CODE_REVIEW)?.input).toBe('2')
-    expect(ruleMap.get(BranchRuleId.STATUS_CHECKS)?.selectOptions).toEqual(['check1', 'check2'])
+    expect(ruleMap.get(BranchRuleId.STATUS_CHECKS)?.selectOptions?.map(option => option.id)).toEqual([
+      'check1',
+      'check2'
+    ])
     expect(ruleMap.get(BranchRuleId.MERGE)?.submenu).toEqual(['merge', 'rebase'])
   })
 

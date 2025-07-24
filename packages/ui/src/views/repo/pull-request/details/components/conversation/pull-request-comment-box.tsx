@@ -446,11 +446,22 @@ export const PullRequestCommentBox = ({
               /> */}
 
               <PullRequestCommentTextarea
+                ref={textAreaRef}
+                users={principals}
+                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
+                autoFocus={!!inReplyMode}
                 setSearchPrincipalsQuery={setSearchPrincipalsQuery}
                 searchPrincipalsQuery={searchPrincipalsQuery}
                 value={comment}
                 setValue={setComment}
-                users={principals}
+                onChange={e => onCommentChange(e)}
+                onKeyUp={e => onKeyUp(e)}
+                onMouseUp={() => onMouseUp()}
+                onPaste={e => {
+                  if (e.clipboardData.files.length > 0) {
+                    handlePasteForUpload(e)
+                  }
+                }}
               />
               {isDragging && (
                 <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />

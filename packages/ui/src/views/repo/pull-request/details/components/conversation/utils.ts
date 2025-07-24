@@ -45,9 +45,7 @@ const properties = [
   'MozTabSize'
 ] as const
 
-const isBrowser = typeof window !== 'undefined'
-// @ts-expect-error
-const isFirefox = isBrowser && window.mozInnerScreenX != null
+const isFirefox = typeof window !== 'undefined' && 'mozInnerScreenX' in window
 
 export function getCaretPosition(element: HTMLTextAreaElement) {
   return {
@@ -117,15 +115,11 @@ export function replaceWord(element: HTMLTextAreaElement, value: string) {
   }
 }
 
-export function getCaretCoordinates(element: HTMLTextAreaElement, position: number, options?: { debug: boolean }) {
-  if (!isBrowser) {
-    throw new Error('textarea-caret-position#getCaretCoordinates should only be called in a browser')
-  }
-
-  const debug = (options && options.debug) || false
-  if (debug) {
-    const el = document.querySelector('#input-textarea-caret-position-mirror-div')
-    if (el) el?.parentNode?.removeChild(el)
+export function getCaretCoordinates(element: HTMLTextAreaElement, position: number) {
+  // Clean up any existing mirror div
+  const existingDiv = document.querySelector('#input-textarea-caret-position-mirror-div')
+  if (existingDiv) {
+    existingDiv.parentNode?.removeChild(existingDiv)
   }
 
   // The mirror div will replicate the textarea's style
@@ -143,7 +137,7 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
 
   // Position off-screen
   style.position = 'absolute' // required to return coordinates properly
-  if (!debug) style.visibility = 'hidden' // not 'display: none' because we want rendering
+  style.visibility = 'hidden' // not 'display: none' because we want rendering
 
   // Transfer the element's properties to the div
   properties.forEach(function (prop) {
@@ -191,7 +185,6 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
   // The  *only* reliable way to do that is to copy the *entire* rest of the
   // textarea's content into the <span> created at the caret position.
   // For inputs, just '.' would be enough, but no need to bother.
-  // REMINDER: changed it from "." to empty string ""...
   span.textContent = element.value.substring(position) || '' // || because a completely empty faux span doesn't render at all
   div.appendChild(span)
 
@@ -201,11 +194,8 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
     height: parseInt(computed['lineHeight'])
   }
 
-  if (debug) {
-    span.style.backgroundColor = '#aaa'
-  } else {
-    document.body.removeChild(div)
-  }
+  // Always clean up the mirror div
+  document.body.removeChild(div)
 
   return coordinates
 }

@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { Tabs } from '@/components/tabs'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
+import { BranchSelectorContainerProps, BranchSelectorListItem } from '@views/repo'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
 import { IPullRequestStore } from '@views/repo/pull-request/pull-request.types'
 
@@ -11,6 +12,8 @@ interface PullRequestLayoutProps {
   spaceId?: string
   repoId?: string
   updateTitle: (title: string, description: string) => void
+  updateTargetBranch: (branchName: string) => void
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
 
 enum PullRequestTabsKeys {
@@ -23,7 +26,9 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   usePullRequestStore,
   spaceId,
   repoId,
-  updateTitle
+  updateTitle,
+  updateTargetBranch,
+  branchSelectorRenderer
 }) => {
   const { Outlet } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
@@ -33,7 +38,13 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="mx-auto max-w-[1500px] px-6">
         {pullRequest && (
-          <PullRequestHeader className="mb-10" updateTitle={updateTitle} data={{ ...pullRequest, spaceId, repoId }} />
+          <PullRequestHeader
+            className="mb-10"
+            updateTitle={updateTitle}
+            updateTargetBranch={updateTargetBranch}
+            data={{ ...pullRequest, spaceId, repoId }}
+            branchSelectorRenderer={branchSelectorRenderer}
+          />
         )}
 
         <Tabs.NavRoot>

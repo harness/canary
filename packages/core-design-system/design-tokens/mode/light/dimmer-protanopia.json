@@ -2092,7 +2092,7 @@
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pure.white}"
+        "$value": "{chrome.50}"
       },
       "gradient-stop-3": {
         "$type": "color",

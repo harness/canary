@@ -2079,15 +2079,15 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.100}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pure.white}"
+        "$value": "{chrome.50}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{chrome.100}"
       }
     },
     "pipeline": {

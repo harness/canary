@@ -295,6 +295,22 @@ export default function PullRequestConversationPage() {
             diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${res.body.branch}`
           })
         )
+      },
+      onError: error => {
+        const revertBranchExistsRegex = /Branch\s+"([^"]+)"\s+already exists\./
+        const match = error?.message?.match(revertBranchExistsRegex)
+        if (match) {
+          const branchName = match[1]
+          navigate(
+            routes.toPullRequestCompare({
+              spaceId,
+              repoId,
+              diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${branchName}`
+            })
+          )
+        } else {
+          setErrorMsg(error?.message || 'An error occurred while reverting the pull request.')
+        }
       }
     }
   )
@@ -350,29 +366,8 @@ export default function PullRequestConversationPage() {
       })
   }, [deleteBranch, repoRef, prId, refetchBranch, refetchActivities])
 
-  const revertBranchExistsRegex = /Branch\s+"([^"]+)"\s+already exists\./
-  const handleRevertError = (error: any) => {
-    const match = error?.message?.match(revertBranchExistsRegex)
-    if (match) {
-      const branchName = match[1]
-      navigate(
-        routes.toPullRequestCompare({
-          spaceId,
-          repoId,
-          diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${branchName}`
-        })
-      )
-    } else {
-      setErrorMsg(error?.message)
-    }
-  }
   const onRevertPR = () => {
-    revertPR({ body: {} })
-      .then(
-        () => {},
-        error => handleRevertError(error)
-      )
-      .catch(error => handleRevertError(error))
+    revertPR({ body: {} }).catch(error => setErrorMsg(error.message))
   }
 
   useEffect(() => {

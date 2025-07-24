@@ -31,10 +31,13 @@ export enum ErrorTypes {
   DELETE_REPO = 'deleteRepo',
   FETCH_RULES = 'fetchRules',
   DELETE_RULE = 'deleteRule',
-  ARCHIVE_REPO = 'archiveRepo'
+  ARCHIVE_REPO = 'archiveRepo',
+  FETCH_GENERAL = 'fetchGeneral',
+  UPDATE_GENERAL = 'updateGeneral'
 }
 
 export type RepoUpdateData = z.infer<typeof generalSettingsFormSchema>
+export * from './components/repo-settings-general-features'
 
 export interface SecurityScanning {
   secretScanning: boolean
@@ -54,6 +57,7 @@ export interface IRepoStore {
   rules: RuleDataType[] | null
   securityScanning: boolean
   verifyCommitterIdentity: boolean
+  gitLfsEnabled: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
   recentStatusChecks: string[] | null

@@ -27,8 +27,6 @@ export interface FavoriteProps {
   onFavoriteToggle: ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => void
 }
 
-export type RepoListFiltersKeys = keyof RepoListFilters
-
 export type RepoListFilters = {
   favorite?: boolean
 }

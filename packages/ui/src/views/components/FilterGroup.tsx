@@ -74,7 +74,7 @@ const FilterGroup = <
         <ListActions.Root>
           <ListActions.Left>
             <SearchInput
-              className="max-w-80"
+              inputContainerClassName="max-w-80"
               value={searchInput}
               onChange={handleInputChange}
               placeholder={t('views:search', 'Search')}

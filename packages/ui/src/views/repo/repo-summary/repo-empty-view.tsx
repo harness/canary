@@ -68,7 +68,7 @@ git push -u origin main
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{
-            label: t('views:repos.new-file', 'New File'),
+            label: t('views:repos.create-file', 'Create File'),
             to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
           }}
           className="min-h-[40vh] py-0"

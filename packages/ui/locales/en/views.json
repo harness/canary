@@ -35,6 +35,7 @@
     "findTag": "Find a tag",
     "allCommits": "All commits",
     "noFile": "No files available",
+    "create-file": "Create File",
     "private": "Private",
     "public": "Public",
     "name": "Name",

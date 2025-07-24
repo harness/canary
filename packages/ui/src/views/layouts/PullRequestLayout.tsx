@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Tabs } from '@/components/tabs'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
-import { BranchSelectorContainerProps, BranchSelectorListItem } from '@views/repo'
+import { BranchSelectorContainerProps } from '@views/repo'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
 import { IPullRequestStore } from '@views/repo/pull-request/pull-request.types'
 

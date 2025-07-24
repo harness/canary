@@ -16,7 +16,6 @@ export const getPrEvents = (t: TFunctionWithFallback) => [
   { id: WebhookTriggerEnum.PR_UPDATED, event: t('views:webhookData.prUpdated', 'PR updated') },
   { id: WebhookTriggerEnum.PR_REOPENED, event: t('views:webhookData.prReopened', 'PR reopened') },
   { id: WebhookTriggerEnum.PR_CLOSED, event: t('views:webhookData.prClosed', 'PR closed') },
-  { id: WebhookTriggerEnum.PR_COMMENT_CREATED, event: t('views:webhookData.prCommentCreated', 'PR comment created') },
   { id: WebhookTriggerEnum.PR_MERGED, event: t('views:webhookData.prMerged', 'PR merged') }
 ]
 

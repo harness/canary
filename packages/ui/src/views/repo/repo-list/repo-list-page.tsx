@@ -1,11 +1,16 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { ListActions, NoData, Pagination, SearchInput, Spacer, SplitButton, Text } from '@/components'
+import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+import { FilterFieldTypes } from '@components/filters/types'
+import FilterGroup from '@views/components/FilterGroup'
+import { noop } from 'lodash-es'
+
+import { booleanParser } from '@harnessio/filters'
 
 import { RepoList } from './repo-list'
-import { RepoListProps } from './types'
+import { RepoListFilters, RepoListFiltersKeys, RepoListProps } from './types'
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
@@ -19,6 +24,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toImportRepo,
   toImportMultipleRepos,
   onFavoriteToggle,
+  onFilterChange,
   ...routingProps
 }) => {
   const { t } = useTranslation()
@@ -73,7 +79,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setPage(1)
   }
 
-  // return null
+  const onFilterSelectionChange = (filterValues: RepoListFiltersKeys[]) => {}
+
+  const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
 
   return (
     <SandboxLayout.Main>
@@ -87,17 +95,16 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               </Text>
             </div>
             <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchInput
-                  inputContainerClassName="max-w-96"
-                  defaultValue={searchQuery || ''}
-                  placeholder={t('views:repos.search', 'Search')}
-                  size="sm"
-                  onChange={handleSearch}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
+            <FilterGroup<RepoListFilters, keyof RepoListFilters>
+              sortConfig={{
+                sortOptions: [],
+                onSortChange: noop
+              }}
+              onFilterSelectionChange={onFilterSelectionChange}
+              onFilterValueChange={onFilterValueChange}
+              searchInput={searchQuery || ''}
+              handleInputChange={handleSearch}
+              headerAction={
                 <SplitButton<string>
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toCreateRepo?.() || '')}
@@ -121,8 +128,19 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 >
                   {t('views:repos.create-repository', 'Create Repository')}
                 </SplitButton>
-              </ListActions.Right>
-            </ListActions.Root>
+              }
+              filterOptions={[
+                {
+                  label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
+                  value: 'favorite',
+                  type: FilterFieldTypes.Checkbox,
+                  filterFieldConfig: {
+                    label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
+                  },
+                  parser: booleanParser
+                }
+              ]}
+            />
           </>
         )}
         <Spacer size={5} />

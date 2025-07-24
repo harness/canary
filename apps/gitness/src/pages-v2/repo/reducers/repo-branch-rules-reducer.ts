@@ -32,17 +32,23 @@ export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction):
       })
 
     case BranchRulesActionType.SET_SELECT_OPTION:
-      return state.map(rule =>
-        rule.id === action.ruleId
-          ? {
-              ...rule,
-              selectOptions: action.selectedOptions
-            }
-          : rule
+      return handleRuleInterdependencies(
+        action.ruleId,
+        state.map(rule =>
+          rule.id === action.ruleId
+            ? {
+                ...rule,
+                selectOptions: action.selectedOptions
+              }
+            : rule
+        )
       )
 
     case BranchRulesActionType.SET_INPUT_VALUE:
-      return state.map(rule => (rule.id === action.ruleId ? { ...rule, input: action.value } : rule))
+      return handleRuleInterdependencies(
+        action.ruleId,
+        state.map(rule => (rule.id === action.ruleId ? { ...rule, input: action.value } : rule))
+      )
 
     case BranchRulesActionType.SET_INITIAL_RULES:
       return action.payload || []

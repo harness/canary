@@ -3,8 +3,10 @@ import {
   OpenapiRule,
   OpenapiRuleDefinition,
   RepoRuleAddRequestBody,
-  RepoRuleGetOkResponse
+  RepoRuleGetOkResponse,
+  TypesPrincipalInfo
 } from '@harnessio/code-service-client'
+import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
 import {
   BranchRuleId,
   MergeStrategy,
@@ -19,6 +21,8 @@ const ruleIds = [
   BranchRuleId.BLOCK_BRANCH_UPDATE,
   BranchRuleId.BLOCK_FORCE_PUSH,
   BranchRuleId.REQUIRE_PULL_REQUEST,
+  BranchRuleId.ENABLE_DEFAULT_REVIEWERS,
+  BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT,
   BranchRuleId.REQUIRE_CODE_REVIEW,
   BranchRuleId.AUTO_ADD_CODE_OWNERS,
   BranchRuleId.REQUIRE_CODE_OWNERS,
@@ -30,16 +34,33 @@ const ruleIds = [
   BranchRuleId.DELETE_BRANCH
 ]
 
+const getDetailsByIds = (ids: number[], objMap: { [key: string]: TypesPrincipalInfo }): MultiSelectOption[] => {
+  return ids
+    .map(id => objMap[id])
+    .filter(user => user !== undefined)
+    .map(user => ({
+      id: String(user.id),
+      key: user.display_name || '',
+      value: user.email || ''
+    }))
+}
+
 // Util to transform API response into expected-form format for branch-rules-edit
 
 const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
   const rules = []
+  const users = data?.users || {}
 
   for (const rule of ruleIds) {
     let checked = false
     let disabled = false
+    let hidden = false
+    let validationMessage = {
+      theme: MessageTheme.DEFAULT,
+      message: ''
+    }
     let submenu: MergeStrategy[] = []
-    let selectOptions: string[] = []
+    let selectOptions: MultiSelectOption[] = []
     let input: string = ''
     const definition = data?.definition as OpenapiRuleDefinition
 
@@ -60,6 +81,15 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
       case BranchRuleId.REQUIRE_PULL_REQUEST:
         checked = (definition?.lifecycle?.update_forbidden && !definition?.pullreq?.merge?.block) || false
         disabled = (definition?.lifecycle?.update_forbidden && definition?.pullreq?.merge?.block) || false
+        break
+      case BranchRuleId.ENABLE_DEFAULT_REVIEWERS:
+        checked = (definition?.pullreq?.reviewers?.default_reviewer_ids?.length ?? 0) > 0
+        selectOptions = getDetailsByIds(definition?.pullreq?.reviewers?.default_reviewer_ids || [], users)
+        break
+      case BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT:
+        checked = (definition?.pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0) > 0
+        input = definition?.pullreq?.approvals?.require_minimum_default_reviewer_count?.toString() || ''
+        hidden = !definition?.pullreq?.reviewers?.default_reviewer_ids?.length
         break
       case BranchRuleId.REQUIRE_CODE_REVIEW:
         checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
@@ -82,7 +112,10 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
         break
       case BranchRuleId.STATUS_CHECKS:
         checked = (definition?.pullreq?.status_checks?.require_identifiers?.length ?? 0) > 0
-        selectOptions = definition?.pullreq?.status_checks?.require_identifiers || []
+        selectOptions = (definition?.pullreq?.status_checks?.require_identifiers || []).map(check => ({
+          id: check,
+          key: check
+        }))
         break
       case BranchRuleId.MERGE:
         checked = (definition?.pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
@@ -100,6 +133,8 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
       id: rule,
       checked,
       disabled,
+      hidden,
+      validationMessage,
       submenu,
       selectOptions,
       input
@@ -201,6 +236,9 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
           require_no_change_request: rulesMap[BranchRuleId.REQUIRE_NO_CHANGE_REQUEST]?.checked || false,
           require_minimum_count: rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].checked
             ? parseInt(rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].input) || 0
+            : 0,
+          require_minimum_default_reviewer_count: rulesMap[BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT].checked
+            ? parseInt(rulesMap[BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT].input) || 0
             : 0
         },
         comments: {
@@ -212,10 +250,14 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
           block: rulesMap[BranchRuleId.BLOCK_BRANCH_UPDATE]?.checked || false
         },
         status_checks: {
-          require_identifiers: rulesMap[BranchRuleId.STATUS_CHECKS]?.selectOptions || []
+          require_identifiers:
+            rulesMap[BranchRuleId.STATUS_CHECKS]?.selectOptions.map(option => String(option.id)) || []
         },
         reviewers: {
-          request_code_owners: rulesMap[BranchRuleId.AUTO_ADD_CODE_OWNERS]?.checked || false
+          request_code_owners: rulesMap[BranchRuleId.AUTO_ADD_CODE_OWNERS]?.checked || false,
+          default_reviewer_ids: rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS]?.checked
+            ? rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS].selectOptions.map(option => parseInt(String(option.id)))
+            : []
         }
       }
     }

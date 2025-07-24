@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, MultiSelectOption, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,7 +31,7 @@ interface RepoBranchSettingsRulesPageProps {
   useBranchRulesStore: () => IBranchRulesStore
   handleCheckboxChange: (id: string, checked: boolean) => void
   handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (id: string, selectedOptions: string[]) => void
+  handleSelectChangeForRule: (id: string, selectedOptions: MultiSelectOption[]) => void
   handleInputChange: (id: string, input: string) => void
   handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void
@@ -160,6 +160,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
           <BranchSettingsRuleListField
             rules={rules}
+            defaultReviewersOptions={principals?.filter(principal => principal.type === 'user')}
+            setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+            principalsSearchQuery={principalsSearchQuery}
             recentStatusChecks={recentStatusChecks}
             handleCheckboxChange={handleCheckboxChange}
             handleSubmenuChange={handleSubmenuChange}

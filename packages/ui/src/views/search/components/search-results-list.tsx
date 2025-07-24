@@ -8,7 +8,7 @@ interface SearchResultsListProps {
   isLoading: boolean
   isDirtyList: boolean
   useSearchResultsStore: () => {
-    results: SearchResultItem[]
+    results?: SearchResultItem[]
   }
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
 }
@@ -44,7 +44,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
     return <SkeletonList />
   }
 
-  if (!results.length) {
+  if (!results?.length) {
     return (
       <div className={cn('flex flex-col items-center justify-center py-12')}>
         <Text variant="heading-section">

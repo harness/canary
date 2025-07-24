@@ -21,7 +21,6 @@ import {
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
   useDeletePullReqSourceBranchMutation,
-  useFindRepositoryQuery,
   useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
@@ -156,6 +155,7 @@ export default function PullRequestConversationPage() {
   const routes = useRoutes()
   const {
     pullReqMetadata,
+    repoMetadata,
     refetchPullReq,
     refetchActivities,
     setRuleViolationArr,
@@ -173,7 +173,8 @@ export default function PullRequestConversationPage() {
     prPanelData: state.prPanelData,
     pullReqChecksDecision: state.pullReqChecksDecision,
     updateCommentStatus: state.updateCommentStatus,
-    pullReqCommits: state.pullReqCommits
+    pullReqCommits: state.pullReqCommits,
+    repoMetadata: state.repoMetadata
   }))
 
   const { currentUser: currentUserData } = useAppContext()
@@ -280,10 +281,23 @@ export default function PullRequestConversationPage() {
     queryParams: { dry_run_rules: true }
   })
 
-  const { mutateAsync: revertPR } = useRevertPullReqOpMutation({
-    repo_ref: repoRef,
-    pullreq_number: prId
-  })
+  const { mutateAsync: revertPR } = useRevertPullReqOpMutation(
+    {
+      repo_ref: repoRef,
+      pullreq_number: prId
+    },
+    {
+      onSuccess: res => {
+        navigate(
+          routes.toPullRequestCompare({
+            spaceId,
+            repoId,
+            diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${res.body.branch}`
+          })
+        )
+      }
+    }
+  )
 
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
 
@@ -291,8 +305,6 @@ export default function PullRequestConversationPage() {
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId)
   })
-
-  const { data: { body: repoData } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const handleUpdateDescription = useCallback(
     (title: string, description: string) => {
@@ -347,7 +359,7 @@ export default function PullRequestConversationPage() {
         routes.toPullRequestCompare({
           spaceId,
           repoId,
-          diffRefs: `${pullReqMetadata?.target_branch || repoData?.default_branch}...${branchName}`
+          diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${branchName}`
         })
       )
     } else {
@@ -357,15 +369,7 @@ export default function PullRequestConversationPage() {
   const onRevertPR = () => {
     revertPR({ body: {} })
       .then(
-        res => {
-          navigate(
-            routes.toPullRequestCompare({
-              spaceId,
-              repoId,
-              diffRefs: `${pullReqMetadata?.target_branch || repoData?.default_branch}...${res.body.branch}`
-            })
-          )
-        },
+        () => {},
         error => handleRevertError(error)
       )
       .catch(error => handleRevertError(error))

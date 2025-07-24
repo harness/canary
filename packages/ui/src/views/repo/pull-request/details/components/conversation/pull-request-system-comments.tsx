@@ -113,7 +113,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       value,
       value_color
     } = payload as GeneralPayload
-    console.log('payload', payload)
 
     const openFromDraft = old_draft === true && new_draft === false
     const changedToDraft = old_draft === false && new_draft === true

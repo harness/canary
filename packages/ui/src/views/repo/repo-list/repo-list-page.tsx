@@ -89,7 +89,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
-  const ScopeOptions: ComboBoxOptions[] = useMemo(() => {
+  const getScopeOptions = (): ComboBoxOptions[] => {
     if (accountId && orgIdentifier && projectIdentifier) return []
 
     if (accountId && orgIdentifier) {
@@ -107,7 +107,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     }
 
     return []
-  }, [scope])
+  }
 
   return (
     <SandboxLayout.Main>
@@ -168,13 +168,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 value: 'recursive',
                 type: FilterFieldTypes.ComboBox,
                 filterFieldConfig: {
-                  options: ScopeOptions,
+                  options: getScopeOptions(),
                   placeholder: 'Select scope',
                   allowSearch: false
                 },
                 parser: {
                   parse: (value: string): ComboBoxOptions => {
-                    return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
+                    return getScopeOptions().find(scope => scope.value === value) || { label: '', value }
                   },
                   serialize: (value: ComboBoxOptions): string => {
                     const selected = value?.value

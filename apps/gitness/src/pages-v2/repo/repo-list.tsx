@@ -158,13 +158,14 @@ export default function ReposListPage() {
       onFavoriteToggle={onFavoriteToggle}
       onFilterChange={({ favorite, recursive }: RepoListFilters) => {
         setFavorite(favorite ?? null)
-        console.log(recursive)
+        if (!recursive) return
+
         if (accountId && orgIdentifier && projectIdentifier) return
 
         if (accountId && orgIdentifier) {
-          setRecursive(recursive?.value === ExtendedScope.OrgProg)
+          setRecursive(recursive.value === ExtendedScope.OrgProg)
         } else if (accountId) {
-          setRecursive(recursive?.value === ExtendedScope.All)
+          setRecursive(recursive.value === ExtendedScope.All)
         }
       }}
     />

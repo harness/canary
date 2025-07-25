@@ -4,6 +4,8 @@ import { MessageTheme } from '@components/index'
 import { MultiSelectOption } from '@components/multi-select'
 import { z } from 'zod'
 
+import { MergeStrategy } from '../pull-request/details/pull-request-details-types'
+
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
 
 export type Rule = {
@@ -15,7 +17,7 @@ export type Rule = {
     theme: MessageTheme
     message: string
   }
-  submenu: ('merge' | 'rebase' | 'squash')[]
+  submenu: MergeStrategy[]
   selectOptions: MultiSelectOption[]
   input: string
 }
@@ -105,7 +107,7 @@ export const repoBranchSettingsFormSchema = z.object({
         theme: z.nativeEnum(MessageTheme),
         message: z.string()
       }),
-      submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
+      submenu: z.array(z.nativeEnum(MergeStrategy)),
       selectOptions: z.array(z.object({ id: z.union([z.string(), z.number()]), key: z.string() })),
       input: z.string()
     })

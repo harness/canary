@@ -114,6 +114,7 @@ export interface PRPanelData {
   commentsInfoData: CommentsInfoData
   ruleViolationArr?: RuleViolationArr
   defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
+  mergeBlockedViaRule?: boolean
 }
 
 export interface DiffStatistics {
@@ -340,7 +341,9 @@ export enum ExecutionState {
   KILLED = 'killed',
   BLOCKED = 'blocked',
   WAITING_ON_DEPENDENCIES = 'waiting_on_dependencies',
-  UNKNOWN = 'unknown'
+  UNKNOWN = 'unknown',
+  FAILURE_IGNORED = 'failure_ignored',
+  IGNORE_FAILED = 'ignorefailed'
 }
 
 export interface DiffViewerExchangeState {
@@ -645,11 +648,6 @@ export enum LabelActivity {
   UN_ASSIGN = 'unassign',
   RE_ASSIGN = 'reassign'
 }
-export enum MergeStrategy {
-  MERGE = 'merge',
-  SQUASH = 'squash',
-  REBASE = 'rebase'
-}
 
 export interface DiffHeaderProps {
   text: string
@@ -665,4 +663,25 @@ export interface DiffHeaderProps {
   fileViews?: Map<string, string>
   checksumAfter?: string
   diffData?: DiffFileEntry
+}
+
+export enum MergeStrategy {
+  MERGE = 'merge',
+  SQUASH = 'squash',
+  REBASE = 'rebase',
+  FAST_FORWARD = 'fast-forward'
+}
+
+export enum MergeMethodDisplay {
+  MERGED = 'merged',
+  SQUASHED = 'squashed',
+  REBASED = 'rebased',
+  FAST_FORWARDED = 'fast-forwarded'
+}
+
+export const mergeMethodMapping: Record<MergeStrategy, MergeMethodDisplay> = {
+  [MergeStrategy.MERGE]: MergeMethodDisplay.MERGED,
+  [MergeStrategy.SQUASH]: MergeMethodDisplay.SQUASHED,
+  [MergeStrategy.REBASE]: MergeMethodDisplay.REBASED,
+  [MergeStrategy.FAST_FORWARD]: MergeMethodDisplay.FAST_FORWARDED
 }

@@ -98,7 +98,8 @@
     "MergeStrategy": {
       "Merge": "Allow Merge Commit",
       "Squash": "Allow Squash and Merge",
-      "Rebase": "Allow Rebase and Merge"
+      "Rebase": "Allow Rebase and Merge",
+      "FastForward": "Allow Fast Forward"
     },
     "AutoDeleteBranch": "Auto delete branch on merge",
     "AutoDeleteBranchDescription": "Automatically delete the source branch of a pull request after it is merged",

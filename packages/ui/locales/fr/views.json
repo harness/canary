@@ -98,7 +98,8 @@
     "MergeStrategy": {
       "Merge": "Autoriser la fusion par commit",
       "Squash": "Autoriser la fusion par écrasement",
-      "Rebase": "Autoriser la fusion par rebase"
+      "Rebase": "Autoriser la fusion par rebase",
+      "FastForward": "Autoriser avance rapide"
     },
     "AutoDeleteBranch": "Suppression automatique de la branche après fusion",
     "AutoDeleteBranchDescription": "Supprimer automatiquement la branche source après sa fusion",

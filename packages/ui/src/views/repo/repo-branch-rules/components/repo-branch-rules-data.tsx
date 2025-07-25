@@ -8,7 +8,7 @@ export interface BranchRuleType {
   hasSelect?: boolean
   hasSubmenu?: boolean
   submenuOptions?: {
-    id: string
+    id: MergeStrategy
     label: string
   }[]
   hasInput?: boolean
@@ -140,7 +140,8 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
     submenuOptions: [
       { id: MergeStrategy.MERGE, label: t('views:repos.MergeStrategy.Merge', 'Allow Merge Commit') },
       { id: MergeStrategy.SQUASH, label: t('views:repos.MergeStrategy.Squash', 'Allow Squash and Merge') },
-      { id: MergeStrategy.REBASE, label: t('views:repos.MergeStrategy.Rebase', 'Allow Rebase and Merge') }
+      { id: MergeStrategy.REBASE, label: t('views:repos.MergeStrategy.Rebase', 'Allow Rebase and Merge') },
+      { id: MergeStrategy.FAST_FORWARD, label: t('views:repos.MergeStrategy.FastForward', 'Allow Fast Forward') }
     ]
   },
   {

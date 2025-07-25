@@ -490,14 +490,6 @@ mark {
   @apply bg-cn-background-1 fixed top-0 z-30 ml-56 w-full;
 }
 
-.top-\[100px\] {
-  top: 100px;
-}
-
-.top-\[55px\] {
-  top: 55px;
-}
-
 .layer-high {
   @apply z-[19];
 }

@@ -1,8 +1,9 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes } from '@components/filters/types'
 import FilterGroup from '@views/components/FilterGroup'
 import { noop } from 'lodash-es'
@@ -11,6 +12,13 @@ import { booleanParser } from '@harnessio/filters'
 
 import { RepoList } from './repo-list'
 import { RepoListFilters, RepoListProps } from './types'
+
+enum ExtendedScope {
+  All = 'ALL',
+  Account = 'ACCOUNT',
+  OrgProg = 'ORGANIZATION_AND_PROJECT',
+  Organization = 'ORGANIZATION'
+}
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
@@ -25,10 +33,12 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toImportMultipleRepos,
   onFavoriteToggle,
   onFilterChange,
+  scope,
   ...routingProps
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
+  const [showScope, setShowScope] = useState(false)
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -76,7 +86,35 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setPage(1)
   }
 
-  const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
+  const onFilterValueChange = (filterValues: RepoListFilters) => {
+    onFilterChange(filterValues)
+    /**
+     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
+     */
+    setShowScope([ExtendedScope.All, ExtendedScope.OrgProg].includes(filterValues.recursive?.value as ExtendedScope))
+  }
+
+  const { projectIdentifier, orgIdentifier, accountId } = scope
+
+  const getScopeOptions = (): ComboBoxOptions[] => {
+    if (accountId && orgIdentifier && projectIdentifier) return []
+
+    if (accountId && orgIdentifier) {
+      return [
+        { label: t('views:scope.orgAndProject', 'Organizations and projects'), value: ExtendedScope.OrgProg },
+        { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
+      ]
+    }
+
+    if (accountId) {
+      return [
+        { label: t('views:scope.all', 'Account, organizations and projects'), value: ExtendedScope.All },
+        { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
+      ]
+    }
+
+    return []
+  }
 
   return (
     <SandboxLayout.Main>
@@ -131,6 +169,30 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
                 },
                 parser: booleanParser
+              },
+              {
+                label: t('views:scope.label', 'Scope'),
+                value: 'recursive',
+                type: FilterFieldTypes.ComboBox,
+                filterFieldConfig: {
+                  options: getScopeOptions(),
+                  placeholder: 'Select scope',
+                  allowSearch: false
+                },
+                parser: {
+                  parse: (value: string): ComboBoxOptions => {
+                    return getScopeOptions().find(scope => scope.value === value) || { label: '', value }
+                  },
+                  serialize: (value: ComboBoxOptions): string => {
+                    const selected = value?.value
+
+                    if (accountId && orgIdentifier && projectIdentifier) return ''
+                    if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+                    if (accountId) return String(selected === ExtendedScope.All)
+
+                    return ''
+                  }
+                }
               }
             ]}
           />
@@ -144,6 +206,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
           onFavoriteToggle={onFavoriteToggle}
+          scope={scope}
+          showScope={showScope}
           {...routingProps}
         />
         {!!repositories?.length && (
@@ -154,4 +218,4 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   )
 }
 
-export { SandboxRepoListPage }
+export { SandboxRepoListPage, ExtendedScope }

@@ -14,7 +14,8 @@ interface ComboBoxProps {
   filterValue?: ComboBoxOptions
   isLoading?: boolean
   placeholder?: string
-  noResultsMessage: ReactNode
+  noResultsMessage?: ReactNode
+  allowSearch?: boolean
 }
 
 export default function ComboBox({
@@ -24,7 +25,8 @@ export default function ComboBox({
   filterValue,
   placeholder,
   isLoading,
-  noResultsMessage
+  noResultsMessage,
+  allowSearch = true
 }: ComboBoxProps) {
   const selectedFilterValue = filterValue?.value
 
@@ -57,13 +59,15 @@ export default function ComboBox({
   return (
     <>
       <DropdownMenu.Header>
-        <SearchInput
-          inputContainerClassName="mb-0.5"
-          placeholder={placeholder}
-          autoFocus
-          onKeyDown={e => e.stopPropagation()}
-          onChange={value => onSearch?.(value)}
-        />
+        {allowSearch ? (
+          <SearchInput
+            inputContainerClassName="mb-0.5"
+            placeholder={placeholder}
+            autoFocus
+            onKeyDown={e => e.stopPropagation()}
+            onChange={value => onSearch?.(value)}
+          />
+        ) : null}
       </DropdownMenu.Header>
       {renderContent()}
     </>

@@ -35,6 +35,7 @@ import {
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
@@ -49,11 +50,13 @@ export const RepoSettingsGeneralPageContainer = () => {
     setRepoData,
     setSecurityScanning,
     setVerifyCommitterIdentity,
-    setGitLfsEnabled
+    setGitLfsEnabled,
+    setVulnerabilityScanning
   } = useRepoRulesStore()
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
   const [isRepoArchiveDialogOpen, setRepoArchiveDialogOpen] = useState(false)
+  const isMfe = useIsMFE()
 
   const closeAlertDeleteDialog = () => {
     isRepoAlertDeleteDialogOpen && setRepoIsAlertDeleteDialogOpen(false)
@@ -139,6 +142,8 @@ export const RepoSettingsGeneralPageContainer = () => {
       onSuccess: ({ body: data }) => {
         setSecurityScanning(data.secret_scanning_enabled || false)
         setVerifyCommitterIdentity(data.principal_committer_match || false)
+        // @ts-expect-error vulnerability_scanning_mode is not defined in the type
+        setVulnerabilityScanning(data?.vulnerability_scanning_mode)
         setApiError(null)
       },
       onError: (error: FindSecuritySettingsErrorResponse) => {
@@ -182,6 +187,8 @@ export const RepoSettingsGeneralPageContainer = () => {
       onSuccess: ({ body: data }) => {
         setSecurityScanning(data.secret_scanning_enabled || false)
         setVerifyCommitterIdentity(data.principal_committer_match || false)
+        // @ts-expect-error vulnerability_scanning_mode is not defined in the type from the API
+        setVulnerabilityScanning(data.vulnerability_scanning_mode)
         setApiError(null)
       },
       onError: (error: UpdateSecuritySettingsErrorResponse) => {
@@ -241,7 +248,12 @@ export const RepoSettingsGeneralPageContainer = () => {
 
   const handleUpdateSecuritySettings = (data: SecurityScanning) => {
     updateSecuritySettings({
-      body: { secret_scanning_enabled: data.secretScanning, principal_committer_match: data.verifyCommitterIdentity }
+      body: {
+        secret_scanning_enabled: data.secretScanning,
+        principal_committer_match: data.verifyCommitterIdentity,
+        // @ts-expect-error vulnerability_scanning_mode is not defined in the type from the API
+        vulnerability_scanning_mode: data.vulnerabilityScanning ? 'detect' : 'disabled'
+      }
     })
   }
 
@@ -271,6 +283,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
         openRepoArchiveDialog={() => setRepoArchiveDialogOpen(true)}
         branchSelectorRenderer={BranchSelectorContainer}
+        showVulnerabilityScanning={isMfe}
       />
       <ExitConfirmDialog
         open={isRepoArchiveDialogOpen}

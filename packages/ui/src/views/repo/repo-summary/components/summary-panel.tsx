@@ -1,7 +1,17 @@
 import { FC } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconPropsV2, IconV2, Spacer, Text, TimeAgoCard } from '@/components'
-import { useRouterContext } from '@/context'
+import {
+  Button,
+  CounterBadge,
+  DropdownMenu,
+  IconPropsV2,
+  IconV2,
+  Layout,
+  Separator,
+  Text,
+  TimeAgoCard
+} from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -34,6 +44,8 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   isEditDialogOpen,
   setEditDialogOpen
 }) => {
+  const { t } = useTranslation()
+
   const onClose = () => {
     setEditDialogOpen(false)
   }
@@ -44,11 +56,20 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   const { Link } = useRouterContext()
   return (
     <>
-      <div className="flex flex-col items-start">
-        <div className="flex w-full items-center justify-between">
-          <Text variant="heading-base" as="h5">
-            {title}
-          </Text>
+      <Layout.Grid gapY="lg" className="pr-3">
+        <Layout.Grid gapX="xs" justify="between" flow="column">
+          <Layout.Grid gapY="xs">
+            <Text variant="heading-base" as="h5">
+              {title}
+            </Text>
+
+            {!!timestamp?.length && (
+              <Text as="span" color="foreground-3">
+                Created <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+              </Text>
+            )}
+          </Layout.Grid>
+
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button variant="ghost" size="xs" aria-label="More options" iconOnly>
@@ -58,42 +79,36 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             <DropdownMenu.Content align="end">
               <DropdownMenu.Item
                 onClick={() => setEditDialogOpen(true)}
-                title={<span>{description?.length ? 'Edit Description' : 'Add description'}</span>}
+                title={
+                  description?.length
+                    ? t('views:repos.summary.summaryPanel.editDescription', 'Edit Description')
+                    : t('views:repos.summary.summaryPanel.addDescription', 'Add Description')
+                }
               />
             </DropdownMenu.Content>
           </DropdownMenu.Root>
-        </div>
-        {!!timestamp?.length && (
-          <>
-            <Spacer size={2} />
-            <Text as="span" color="foreground-3">
-              Created <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-            </Text>
-          </>
-        )}
+        </Layout.Grid>
 
         {!!description?.length && (
-          <>
-            <Spacer size={3} />
-            <Text className="border-cn-borders-4 w-full border-y py-1" lineClamp={6}>
-              {description}
-            </Text>
-          </>
+          <Layout.Grid gapY="sm">
+            <Separator />
+            <Text lineClamp={6}>{description}</Text>
+            <Separator />
+          </Layout.Grid>
         )}
-        <Spacer size={5} />
 
-        <div className="flex flex-col gap-3">
+        <Layout.Grid gapY="sm">
           {details?.map(item => (
             <Link key={item.id} to={item.to}>
-              <div className="flex cursor-pointer items-center gap-1.5">
+              <Layout.Flex className="cursor-pointer gap-1.5" align="center" gap="2xs">
                 <IconV2 name={item.iconName} size="xs" className="text-cn-foreground-2" />
                 <Text color="foreground-1">{item.name}</Text>
                 <CounterBadge>{item.count}</CounterBadge>
-              </div>
+              </Layout.Flex>
             </Link>
           ))}
-        </div>
-      </div>
+        </Layout.Grid>
+      </Layout.Grid>
       <EditRepoDetails
         showEditRepoDetails={isEditDialogOpen}
         description={description}

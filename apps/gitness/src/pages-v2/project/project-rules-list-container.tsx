@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
-import { useSpaceRuleDeleteMutation, useSpaceRuleListQuery } from '@harnessio/code-service-client'
+import { OpenapiRuleType, useSpaceRuleDeleteMutation, useSpaceRuleListQuery } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import { ErrorTypes, ProjectRulesPage } from '@harnessio/ui/views'
@@ -21,6 +21,7 @@ export const ProjectRulesListContainer = () => {
 
   const [query, setQuery] = useQueryState('query')
   const [page, setPage] = useState(1)
+  const [showParentRules, setShowParentRules] = useState(false)
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -28,6 +29,7 @@ export const ProjectRulesListContainer = () => {
 
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
+  const [ruleTypeFilter, setRuleTypeFilter] = useState<OpenapiRuleType | null>(null)
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
 
   const closeAlertDeleteDialog = () => {
@@ -46,7 +48,10 @@ export const ProjectRulesListContainer = () => {
     space_ref: `${space_ref}/+`,
     queryParams: {
       page: queryPage,
-      query: query ?? ''
+      query: query ?? '',
+      inherited: showParentRules,
+      // @ts-expect-error BE expects an array but the API only works with a string
+      type: ruleTypeFilter ? ruleTypeFilter : undefined
     }
   })
 
@@ -74,7 +79,8 @@ export const ProjectRulesListContainer = () => {
         rulesAppliedCount: getTotalRulesApplied(rule),
         bypassAllowed: rule.definition?.bypass?.repo_owners === true,
         identifier: rule.identifier,
-        state: rule.state ? String(rule.state) : undefined
+        state: rule.state ? String(rule.state) : undefined,
+        type: rule.type as 'branch' | 'tag'
       }))
       setRules(formattedRules, headers)
       setApiError(null)
@@ -104,6 +110,12 @@ export const ProjectRulesListContainer = () => {
         handleRuleClick={handleRuleEditClick}
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
+        toProjectRuleDetails={(identifier: string) => routes.toProjectRuleDetails({ space_ref, ruleId: identifier })}
+        showParentScopeLabelsCheckbox={space_ref?.includes('/')}
+        parentScopeLabelsChecked={showParentRules}
+        onParentScopeLabelsChange={setShowParentRules}
+        ruleTypeFilter={ruleTypeFilter}
+        setRuleTypeFilter={setRuleTypeFilter}
       />
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}

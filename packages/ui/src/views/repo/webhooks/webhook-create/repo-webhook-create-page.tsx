@@ -7,7 +7,7 @@ import { SandboxLayout, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
 
-import { getBranchEvents, getPrEvents, getTagEvents } from './components/create-webhook-form-data'
+import { getBranchAndTagEvents, getPrActivityEvents, getPrEvents } from './components/create-webhook-form-data'
 import {
   WebhookDescriptionField,
   WebhookEventSettingsFieldset,
@@ -82,9 +82,9 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   }, [preSetWebhookData])
 
   const eventSettingsComponents = [
-    { fieldName: 'branchEvents', events: getBranchEvents(t) },
-    { fieldName: 'tagEvents', events: getTagEvents(t) },
-    { fieldName: 'prEvents', events: getPrEvents(t) }
+    { fieldName: 'branchAndTagEvents', events: getBranchAndTagEvents(t) },
+    { fieldName: 'prEvents', events: getPrEvents(t) },
+    { fieldName: 'prActivityEvents', events: getPrActivityEvents(t) }
   ]
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {

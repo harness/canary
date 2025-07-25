@@ -75,6 +75,10 @@
     "BlockForcePushDescription": "Only allow users with bypass permission to force push to matching branches",
     "RequirePullRequest": "Require pull request",
     "RequirePullRequestDescription": "Do not allow any changes to matching branches without a pull request",
+    "EnableDefaultReviewers": "Enable default reviewers",
+    "EnableDefaultReviewersDescription": "Require approval from default reviewer for each pull request",
+    "RequireMinimumDefaultReviewerCount": "Require minimum number of default reviewers",
+    "RequireMinimumDefaultReviewerCountDescription": "Require a minimum number of default reviewers",
     "RequireCodeReview": "Require a minimum number of reviewers",
     "RequireCodeReviewDescription": "Require approval on pull requests from a minimum number of reviewers",
     "AutoAddCodeOwners": "Add Code Owners as reviewers",
@@ -94,7 +98,8 @@
     "MergeStrategy": {
       "Merge": "Allow Merge Commit",
       "Squash": "Allow Squash and Merge",
-      "Rebase": "Allow Rebase and Merge"
+      "Rebase": "Allow Rebase and Merge",
+      "FastForward": "Allow Fast Forward"
     },
     "AutoDeleteBranch": "Auto delete branch on merge",
     "AutoDeleteBranchDescription": "Automatically delete the source branch of a pull request after it is merged",
@@ -111,8 +116,10 @@
     "bypassList": "Bypass list",
     "selectUsers": "Select users",
     "editPermissionsCheckboxDescription": "Allow users with edit permission on the repository to bypass",
+    "selectDefaultReviewers": "Select default reviewers",
     "rulesTitle": "Rules: select all that apply",
     "selectStatusesPlaceholder": "Select status checks",
+    "enterMinDefaultReviewers": "Enter minimum number of default reviewers",
     "enterMinReviewers": "Enter minimum number of reviewers",
     "updateBranchRule": "Update branch rule",
     "CreateRule": "Create a branch rule",
@@ -173,11 +180,16 @@
     "rulesApplied": "rules applied",
     "bypassAllowed": "bypass allowed",
     "bypassNotAllowed": " bypass not allowed",
+    "allRules": "All Rules",
+    "branchRules": "Branch Rules",
+    "tagRules": "Tag Rules",
     "newTagRule": "New tag rule",
     "createBranchRule": "New branch rule",
     "security": "Security",
     "secretScanning": "Secret scanning",
     "secretScanningDescription": "Block commits containing secrets like passwords, API keys and tokens.",
+    "vulnerabilityScanning": "Vulnerability scanning",
+    "vulnerabilityScanningDescription": "Scan incoming commits for known vulnerabilities.",
     "verifyCommitterIdentity": "Verify committer identity",
     "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
     "rules": "Rules",
@@ -243,6 +255,13 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "defaultReviewers": "Default reviewers",
+    "atLeastMinReviewer": "Select at least {{count}} default reviewer",
+    "atLeastMinReviewers": "Select at least {{count}} default reviewers",
+    "defaultReviewerWarning": "Pull requests authored by the selected default reviewer will skip the required default reviewer check as there aren't enough default reviewers to satisfy the condition - consider adding additional default reviewers.",
+    "defaultReviewersWarning": "Pull requests authored by the selected default reviewers will have the required default reviewer check reduced by one as there aren't enough default reviewers to satisfy the condition - consider adding additional default reviewers.",
+    "RequireMinDefaultReviewers": "Require a minimum number of default reviewers",
+    "RequireMinDefaultReviewersDescription": "Require approval on pull requests from a minimum number of default reviewers",
     "newRule": "New branch rule",
     "deleteConnector": "Delete Connector",
     "deleteSecret": "Delete Secret",
@@ -644,6 +663,13 @@
     "reader": "Reader",
     "readerDesc": "Can view but cannot make changes or leave comments."
   },
+  "rules": {
+    "showParentRules": "Show rules from parent scopes",
+    "edit": "Edit rule",
+    "delete": "Delete rule",
+    "exclude": "Exclude",
+    "include": "Include"
+  },
   "commits": {
     "commitDetailsDiffShowing": "Showing",
     "commitDetailsDiffChangedFiles": "changed files",
@@ -656,11 +682,12 @@
     "browseFiles": "Browse files",
     "createNewCommit": "Create new commit"
   },
-  "rules": {
-    "edit": "Edit rule",
-    "delete": "Delete rule",
-    "exclude": "Exclude",
-    "include": "Include"
+  "scope": {
+    "orgAndProject": "Organizations and projects",
+    "orgOnly": "Organizations only",
+    "all": "Account, organizations and projects",
+    "accountOnly": "Account only",
+    "label": "Scope"
   },
   "code": "Code",
   "createTagDialog": {
@@ -678,10 +705,14 @@
     "prCreated": "PR created",
     "prUpdated": "PR updated",
     "prReopened": "PR reopened",
-    "prBranchUpdated": "PR branch updated",
     "prClosed": "PR closed",
-    "prCommentCreated": "PR comment created",
     "prMerged": "PR merged",
+    "prBranchUpdated": "PR branch updated",
+    "prCommentCreated": "PR comment created",
+    "prCommentStatusUpdated": "PR comment status updated",
+    "prCommentUpdated": "PR comment updated",
+    "prReviewSubmitted": "PR review submitted",
+    "prLabelAssigned": "PR label assigned",
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"

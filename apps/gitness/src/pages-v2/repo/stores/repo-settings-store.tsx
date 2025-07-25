@@ -21,6 +21,7 @@ interface IRepoStore {
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
   verifyCommitterIdentity: boolean
   gitLfsEnabled: boolean
+  vulnerabilityScanning: 'detect' | 'disabled'
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RepoRuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
@@ -29,6 +30,7 @@ interface IRepoStore {
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
   setVerifyCommitterIdentity: (enabled: boolean) => void
+  setVulnerabilityScanning: (enabled: 'detect' | 'disabled') => void
 }
 
 export const useRepoRulesStore = create<IRepoStore>(set => ({
@@ -48,6 +50,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   verifyCommitterIdentity: false,
   principals: null,
   recentStatusChecks: null,
+  vulnerabilityScanning: 'disabled',
 
   // Actions
   setRepoData: repoData =>
@@ -66,7 +69,8 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       rulesAppliedCount: getTotalRulesApplied(rule),
       bypassAllowed: rule.definition?.bypass?.repo_owners === true,
       identifier: rule.identifier,
-      state: rule.state ? String(rule.state) : undefined
+      state: rule.state ? String(rule.state) : undefined,
+      type: rule.type as 'branch' | 'tag'
     }))
     set({ rules: rulesData })
   },
@@ -95,5 +99,6 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     }
     set({ recentStatusChecks: data })
   },
-  setVerifyCommitterIdentity: enabled => set({ verifyCommitterIdentity: enabled })
+  setVerifyCommitterIdentity: enabled => set({ verifyCommitterIdentity: enabled }),
+  setVulnerabilityScanning: enabled => set({ vulnerabilityScanning: enabled })
 }))

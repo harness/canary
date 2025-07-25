@@ -12,6 +12,7 @@ import {
   useCreatePullReqMutation,
   useDiffStatsQuery,
   useFindRepositoryQuery,
+  useGetContentQuery,
   useGetPullReqByBranchesQuery,
   useListCommitsQuery,
   useListPrincipalsQuery,
@@ -40,7 +41,7 @@ import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
 import { getErrorMessage } from '../../utils/error-utils'
-import { normalizeGitRef } from '../../utils/git-utils'
+import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { parseSpecificDiff } from './diff-utils'
@@ -53,6 +54,7 @@ import { changesInfoAtom, DiffFileEntry } from './types'
 export const CreatePullRequest = () => {
   const routes = useRoutes()
   const [desc, setDesc] = useState('')
+  const [prTemplate, setPrTemplate] = useState<string>()
   const createPullRequestMutation = useCreatePullReqMutation({})
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
@@ -100,6 +102,18 @@ export const CreatePullRequest = () => {
           `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`,
     [commitRange, targetRef, sourceRef]
   )
+
+  const { data: { body: prTemplateData } = {} } = useGetContentQuery({
+    path: '.harness/pull_request_template.md',
+    repo_ref: repoRef,
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(diffTargetBranch || '') }
+  })
+
+  useEffect(() => {
+    if (prTemplateData?.content?.data) {
+      setPrTemplate(decodeGitContent(prTemplateData?.content?.data))
+    }
+  }, [prTemplateData, setDesc])
 
   const handleUpload = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => {
     const reader = new FileReader()
@@ -467,6 +481,7 @@ export const CreatePullRequest = () => {
       <PullRequestComparePage
         desc={desc}
         setDesc={setDesc}
+        prTemplate={prTemplate}
         handleUpload={handleUpload}
         toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}

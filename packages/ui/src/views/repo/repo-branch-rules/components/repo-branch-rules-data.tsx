@@ -8,10 +8,11 @@ export interface BranchRuleType {
   hasSelect?: boolean
   hasSubmenu?: boolean
   submenuOptions?: {
-    id: string
+    id: MergeStrategy
     label: string
   }[]
   hasInput?: boolean
+  isNested?: boolean
 }
 
 export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
@@ -54,6 +55,25 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
       'views:repos.RequirePullRequestDescription',
       'Do not allow any changes to matching branches without a pull request'
     )
+  },
+  {
+    id: BranchRuleId.ENABLE_DEFAULT_REVIEWERS,
+    label: t('views:repos.EnableDefaultReviewers', 'Enable default reviewers'),
+    description: t(
+      'views:repos.EnableDefaultReviewersDescription',
+      'Automatically add default reviewers to pull requests'
+    ),
+    hasSelect: true
+  },
+  {
+    id: BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT,
+    label: t('views:repos.RequireMinimumDefaultReviewerCount', 'Require minimum number of default reviewers'),
+    description: t(
+      'views:repos.RequireMinimumDefaultReviewerCountDescription',
+      'Require a minimum number of default reviewers'
+    ),
+    hasInput: true,
+    isNested: true
   },
   {
     id: BranchRuleId.REQUIRE_CODE_REVIEW,
@@ -120,7 +140,8 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
     submenuOptions: [
       { id: MergeStrategy.MERGE, label: t('views:repos.MergeStrategy.Merge', 'Allow Merge Commit') },
       { id: MergeStrategy.SQUASH, label: t('views:repos.MergeStrategy.Squash', 'Allow Squash and Merge') },
-      { id: MergeStrategy.REBASE, label: t('views:repos.MergeStrategy.Rebase', 'Allow Rebase and Merge') }
+      { id: MergeStrategy.REBASE, label: t('views:repos.MergeStrategy.Rebase', 'Allow Rebase and Merge') },
+      { id: MergeStrategy.FAST_FORWARD, label: t('views:repos.MergeStrategy.FastForward', 'Allow Fast Forward') }
     ]
   },
   {

@@ -34,11 +34,20 @@ import {
 import { cn } from '@utils/cn'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
-import { DefaultReviewersDataProps, PullRequestRoutingProps } from '../../pull-request-details-types'
+import {
+  DefaultReviewersDataProps,
+  mergeMethodMapping,
+  MergeStrategy,
+  PullRequestRoutingProps
+} from '../../pull-request-details-types'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
+
+export const getMergeMethodDisplay = (mergeMethodType: MergeStrategy): string => {
+  return mergeMethodMapping[mergeMethodType]
+}
 
 interface HeaderProps {
   isDraft?: boolean
@@ -50,18 +59,25 @@ interface HeaderProps {
   pullReqMetadata: TypesPullReq | undefined
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
+  const { pullReqMetadata } = props
+  const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
+  const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
   if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1 font-medium">
-            <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
+            <span>{props?.pullReqMetadata?.merger?.display_name}</span>
+            <span>
+              {areRulesBypassed ? `bypassed branch rules and ${mergeMethod} branch` : `${mergeMethod} branch`}
+            </span>
             <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.source_branch}
             </StatusBadge>
@@ -71,15 +87,20 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             </StatusBadge>
             <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
-          {props.showDeleteBranchButton ? (
-            <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
-              Delete Branch
+          <Layout.Horizontal>
+            <Button variant="secondary" onClick={props.onRevertPR}>
+              Revert
             </Button>
-          ) : props.showRestoreBranchButton ? (
-            <Button variant="secondary" onClick={props.onRestoreBranch}>
-              Restore Branch
-            </Button>
-          ) : null}
+            {props.showDeleteBranchButton ? (
+              <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
+                Delete Branch
+              </Button>
+            ) : props.showRestoreBranchButton ? (
+              <Button variant="secondary" onClick={props.onRestoreBranch}>
+                Restore Branch
+              </Button>
+            ) : null}
+          </Layout.Horizontal>
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
@@ -197,6 +218,7 @@ export interface PullRequestPanelProps
   setCheckboxBypass?: (value: boolean) => void
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
@@ -230,6 +252,7 @@ const PullRequestPanel = ({
   setCheckboxBypass,
   onRestoreBranch,
   onDeleteBranch,
+  onRevertPR,
   showRestoreBranchButton,
   showDeleteBranchButton,
   headerMsg,
@@ -343,6 +366,7 @@ const PullRequestPanel = ({
                 pullReqMetadata={pullReqMetadata}
                 onRestoreBranch={onRestoreBranch}
                 onDeleteBranch={onDeleteBranch}
+                onRevertPR={onRevertPR}
                 showRestoreBranchButton={showRestoreBranchButton}
                 showDeleteBranchButton={showDeleteBranchButton}
                 headerMsg={headerMsg}

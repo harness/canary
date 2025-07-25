@@ -1,4 +1,4 @@
-import { Spacer, Text } from '@/components'
+import { Checkbox, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
@@ -16,6 +16,12 @@ interface RepoSettingsRulesPageProps {
   projectScope?: boolean
   toRepoBranchRuleCreate: () => string
   toRepoTagRuleCreate: () => string
+  showParentScopeLabelsCheckbox?: boolean
+  parentScopeLabelsChecked?: boolean
+  onParentScopeLabelsChange?: (checked: boolean) => void
+  ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
+  setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
+  toProjectRuleDetails?: (identifier: string) => string
 }
 
 export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
@@ -28,7 +34,13 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   apiError,
   projectScope = false,
   toRepoBranchRuleCreate,
-  toRepoTagRuleCreate
+  toRepoTagRuleCreate,
+  showParentScopeLabelsCheckbox = false,
+  parentScopeLabelsChecked = false,
+  onParentScopeLabelsChange,
+  ruleTypeFilter,
+  setRuleTypeFilter,
+  toProjectRuleDetails
 }) => {
   const { rules } = useRepoRulesStore()
   const { t } = useTranslation()
@@ -46,6 +58,17 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
           )}
         </>
       ) : null}
+      {showParentScopeLabelsCheckbox && (
+        <div>
+          <Checkbox
+            id="parent-labels"
+            checked={parentScopeLabelsChecked}
+            onCheckedChange={onParentScopeLabelsChange}
+            label={t('views:rules.showParentRules', 'Show rules from parent scopes')}
+            className="mt-6"
+          />
+        </div>
+      )}
       <Spacer size={6} />
 
       <RepoSettingsGeneralRules
@@ -59,6 +82,9 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
         projectScope={projectScope}
         toRepoBranchRuleCreate={toRepoBranchRuleCreate}
         toRepoTagRuleCreate={toRepoTagRuleCreate}
+        ruleTypeFilter={ruleTypeFilter}
+        setRuleTypeFilter={setRuleTypeFilter}
+        toProjectRuleDetails={toProjectRuleDetails}
       />
     </SandboxLayout.Content>
   )

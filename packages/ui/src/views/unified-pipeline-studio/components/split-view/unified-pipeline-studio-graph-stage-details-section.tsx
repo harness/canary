@@ -59,7 +59,7 @@ export const PipelineStudioGraphViewStageDetailsSection = ({
       }}
     >
       <Text variant="heading-subsection">{stage?.name}</Text>
-      <Layout.Flex align="center" gap="lg">
+      <Layout.Flex align="center" gap="xl">
         {stage?.steps?.length ? renderDetail('Steps', stage.steps.length) : null}
         {stage?.service ? renderDetail('Service', stage.service) : null}
         {stage?.environment?.id ? renderDetail('Env', stage.environment.id) : null}

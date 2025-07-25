@@ -13,7 +13,8 @@ const mockRepos: RepoRepositoryOutput[] = [
     updated: 1617181723,
     created: 1617181723,
     importing: false,
-    is_favorite: true
+    is_favorite: true,
+    path: 'accountId/repo1'
   }
 ]
 
@@ -34,7 +35,8 @@ describe('transformRepoList', () => {
         timestamp: '1970-01-19T17:13:01.723Z', // Epoch gets converted to ISO-8601 string
         createdAt: 1617181723,
         importing: false,
-        favorite: true
+        favorite: true,
+        path: 'accountId/repo1'
       }
     ])
   })

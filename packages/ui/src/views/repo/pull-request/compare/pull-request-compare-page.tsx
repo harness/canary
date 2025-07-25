@@ -78,6 +78,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
+  prTemplate?: string
   isFetchingCommits?: boolean
   jumpToDiff: string
   setJumpToDiff: (fileName: string) => void
@@ -118,6 +119,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   handleUpload,
   desc,
   setDesc,
+  prTemplate,
   isFetchingCommits,
   jumpToDiff,
   setJumpToDiff,
@@ -151,6 +153,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const {
     reset,
     getValues,
+    setValue,
     formState: { isValid },
     watch
   } = formMethods
@@ -162,13 +165,19 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   }, [descriptionValue, setDesc])
 
   useEffect(() => {
+    if (prTemplate) {
+      setValue('description', prTemplate)
+    }
+  }, [prTemplate, setValue])
+
+  useEffect(() => {
     if (commitData && commitData.length > 0) {
       reset({
         title: commitData[commitData.length - 1]?.title,
-        description: ''
+        description: prTemplate ?? ''
       })
     }
-  }, [commitData, reset])
+  }, [commitData, reset, prTemplate])
 
   useEffect(() => {
     if (isSuccess) {

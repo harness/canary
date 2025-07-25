@@ -6,8 +6,6 @@ export const determineScope = ({
   repoPath
 }: {
   accountId: string
-  orgIdentifier?: string
-  projectIdentifier?: string
   repoIdentifier: string
   repoPath: string
 }): ScopeType | undefined => {
@@ -24,4 +22,18 @@ export const determineScope = ({
   if (parts.length === 4 && parts[0] === accountId && parts[3] === repoIdentifier) {
     return ScopeType.Project
   }
+}
+
+export const getScopedPath = ({
+  accountId,
+  repoIdentifier,
+  repoPath
+}: {
+  accountId: string
+  repoIdentifier: string
+  repoPath: string
+}): string => {
+  const parts = repoPath.split('/')
+  const filteredParts = parts.filter(part => part !== accountId && part !== repoIdentifier)
+  return filteredParts.join('/')
 }

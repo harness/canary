@@ -14,7 +14,7 @@ interface ComboBoxProps {
   filterValue?: ComboBoxOptions
   isLoading?: boolean
   placeholder?: string
-  noResultsMessage: ReactNode
+  noResultsMessage?: ReactNode
   allowSearch?: boolean
 }
 

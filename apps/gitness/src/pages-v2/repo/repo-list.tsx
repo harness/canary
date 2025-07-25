@@ -8,7 +8,7 @@ import {
   useListReposQuery
 } from '@harnessio/code-service-client'
 import { Toast, useToast } from '@harnessio/ui/components'
-import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage, Scope } from '@harnessio/ui/views'
+import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -135,12 +135,14 @@ export default function ReposListPage() {
     }
   }
 
+  const { accountId, orgIdentifier, projectIdentifier } = scope
+
   return (
     <SandboxRepoListPage
       scope={{
-        accountId: scope.accountId || '',
-        orgIdentifier: scope.orgIdentifier,
-        projectIdentifier: scope.projectIdentifier
+        accountId: accountId || '',
+        orgIdentifier,
+        projectIdentifier
       }}
       useRepoStore={useRepoStore}
       isLoading={isFetching}
@@ -156,7 +158,14 @@ export default function ReposListPage() {
       onFavoriteToggle={onFavoriteToggle}
       onFilterChange={({ favorite, recursive }: RepoListFilters) => {
         setFavorite(favorite ?? null)
-        setRecursive(recursive?.value === ExtendedScope.All ? true : false)
+        console.log(recursive)
+        if (accountId && orgIdentifier && projectIdentifier) return
+
+        if (accountId && orgIdentifier) {
+          setRecursive(recursive?.value === ExtendedScope.OrgProg)
+        } else if (accountId) {
+          setRecursive(recursive?.value === ExtendedScope.All)
+        }
       }}
     />
   )

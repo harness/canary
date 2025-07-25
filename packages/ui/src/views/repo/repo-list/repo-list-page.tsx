@@ -169,9 +169,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 type: FilterFieldTypes.ComboBox,
                 filterFieldConfig: {
                   options: ScopeOptions,
-                  onSearch: noop,
-                  noResultsMessage: '',
-                  loadingMessage: '',
                   placeholder: 'Select scope',
                   allowSearch: false
                 },

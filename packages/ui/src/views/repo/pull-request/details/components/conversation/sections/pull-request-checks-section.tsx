@@ -1,5 +1,4 @@
-import { Accordion, IconV2, Layout, StackedList, StatusBadge, Text } from '@/components'
-import { useRouterContext } from '@/context'
+import { Accordion, IconV2, Layout, Link, StackedList, StatusBadge, Text } from '@/components'
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
@@ -23,8 +22,6 @@ const PullRequestCheckSection = ({
   // toPRCheck, TODO: add back when checks page is implemented
   accordionValues
 }: PullRequestMergeSectionProps) => {
-  const { Link } = useRouterContext()
-
   const getStatusIcon = (status: EnumCheckStatus) => {
     switch (status) {
       // TODO: fix icons to use from nucleo
@@ -86,7 +83,7 @@ const PullRequestCheckSection = ({
                   )}
                 </div>
                 <div className="col-span-1 flex justify-end">
-                  {check?.check?.status === ExecutionState.PENDING ? (
+                  {check?.required ? (
                     <StatusBadge variant="outline" size="sm">
                       <Text color="foreground-3">Required</Text>
                     </StatusBadge>

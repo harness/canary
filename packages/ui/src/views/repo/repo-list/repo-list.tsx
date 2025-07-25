@@ -11,13 +11,14 @@ import {
   TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { determineScope, getScopedPath } from '@components/scope/utils'
 import { cn } from '@utils/cn'
 import { Scope } from '@views/common'
 
 import { RepositoryType } from '../repo.types'
 import { FavoriteProps, RoutingProps } from './types'
 
-export interface PageProps extends Partial<RoutingProps>, FavoriteProps {
+export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
   repos: RepositoryType[]
   handleResetFiltersQueryAndPages: () => void
   isDirtyList: boolean
@@ -48,13 +49,16 @@ const Title = ({
   repoId: number
   repoName: string
   isPrivate: boolean
-  onFavoriteToggle: PageProps['onFavoriteToggle']
+  onFavoriteToggle: RepoListProps['onFavoriteToggle']
   isFavorite?: boolean
   scope: Scope
   repoPath: string
   showScope?: boolean
 }) => {
   const { t } = useTranslation()
+  const repoScopeParams = { ...scope, repoIdentifier: repoName, repoPath }
+  const scopeType = determineScope(repoScopeParams)
+  const scopedPath = getScopedPath(repoScopeParams)
   return (
     <Layout.Flex gap="xs" align="center">
       <span className="max-w-full truncate font-medium">{repoName}</span>
@@ -63,7 +67,7 @@ const Title = ({
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
         <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
-        {showScope ? <ScopeTag repoIdentifier={repoName} repoPath={repoPath} {...scope} /> : null}
+        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
       </Layout.Flex>
     </Layout.Flex>
   )
@@ -80,7 +84,7 @@ export function RepoList({
   onFavoriteToggle,
   scope,
   showScope = false
-}: PageProps) {
+}: RepoListProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
 

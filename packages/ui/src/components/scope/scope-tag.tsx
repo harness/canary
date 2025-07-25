@@ -1,24 +1,22 @@
-import { Scope, ScopeType } from '@views/common'
+import { ScopeType } from '@views/common'
 
 import { Tag } from '../tag'
-import { determineScope, getScopedPath } from './utils'
 
-interface ScopeTagProps extends Scope {
-  repoIdentifier: string
-  repoPath: string
+interface ScopeTagProps {
+  scopeType: ScopeType
+  scopedPath?: string
 }
 
-const ScopeTag: React.FC<ScopeTagProps> = props => {
-  const scope = determineScope(props)
-  switch (scope) {
+const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath }) => {
+  switch (scopeType) {
     case ScopeType.Account:
-      return <Tag value={scope} theme="lime" size="sm" />
+      return <Tag value={scopeType} theme="lime" size="sm" />
 
     case ScopeType.Org:
-      return <Tag label={scope} value={getScopedPath(props)} variant="secondary" theme="pink" size="sm" />
+      return <Tag label={scopeType} value={scopedPath || ''} variant="secondary" theme="pink" size="sm" />
 
     case ScopeType.Project:
-      return <Tag label={scope} value={getScopedPath(props)} variant="secondary" theme="blue" size="sm" />
+      return <Tag label={scopeType} value={scopedPath || ''} variant="secondary" theme="blue" size="sm" />
     default:
       return <></>
   }

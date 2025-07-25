@@ -39,7 +39,7 @@ const ruleIds = [
 const getDetailsByIds = (ids: number[], objMap: { [key: string]: TypesPrincipalInfo }): MultiSelectOption[] => {
   return ids
     .map(id => objMap[id])
-    .filter(user => user !== undefined)
+    .filter(Boolean)
     .map(user => ({
       id: String(user.id),
       key: user.display_name || '',

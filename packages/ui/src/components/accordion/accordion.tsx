@@ -1,4 +1,12 @@
-import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, ReactNode, useContext } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  createContext,
+  ElementRef,
+  forwardRef,
+  PropsWithoutRef,
+  ReactNode,
+  useContext
+} from 'react'
 
 import { Card } from '@components/card'
 import { IconPropsV2, IconV2 } from '@components/icon-v2'
@@ -93,7 +101,7 @@ AccordionItem.displayName = 'AccordionItem'
 type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   prefix?: ReactNode
   suffix?: ReactNode
-  indicatorProps?: Omit<IconPropsV2, 'name' | 'fallback'>
+  indicatorProps?: PropsWithoutRef<Omit<IconPropsV2, 'name' | 'fallback'>>
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(

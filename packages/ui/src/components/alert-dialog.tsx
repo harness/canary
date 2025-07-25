@@ -1,4 +1,4 @@
-import { Children, createContext, isValidElement, ReactNode, useContext } from 'react'
+import { Children, createContext, forwardRef, isValidElement, ReactNode, useContext } from 'react'
 
 import { Button, ButtonLayout, IconV2NamesType } from '@/components'
 
@@ -53,7 +53,7 @@ interface ContentProps {
   children?: ReactNode
 }
 
-const Content = ({ title, children }: ContentProps) => {
+const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...props }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Content must be used within AlertDialog.Root')
 
@@ -77,7 +77,7 @@ const Content = ({ title, children }: ContentProps) => {
   })
 
   return (
-    <Dialog.Content>
+    <Dialog.Content ref={ref} {...props}>
       <Dialog.Header
         icon={
           context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
@@ -97,28 +97,30 @@ const Content = ({ title, children }: ContentProps) => {
       </Dialog.Footer>
     </Dialog.Content>
   )
-}
+})
+Content.displayName = 'AlertDialog.Content'
 
-const Cancel = ({ children = 'Cancel', ...props }: { children?: ReactNode }) => {
+const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ children = 'Cancel', ...props }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
 
   return (
     <Dialog.Close asChild>
-      <Button variant="secondary" loading={context.loading} onClick={context.onCancel} {...props}>
+      <Button variant="secondary" loading={context.loading} onClick={context.onCancel} ref={ref} {...props}>
         {children}
       </Button>
     </Dialog.Close>
   )
-}
+})
 Cancel.displayName = 'AlertDialog.Cancel'
 
-const Confirm = ({ children = 'Confirm', ...props }: { children?: ReactNode }) => {
+const Confirm = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ children = 'Confirm', ...props }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Confirm must be used within AlertDialog.Root')
 
   return (
     <Button
+      ref={ref}
       theme={context.theme === 'danger' ? 'danger' : undefined}
       loading={context.loading}
       onClick={context.onConfirm}
@@ -127,7 +129,7 @@ const Confirm = ({ children = 'Confirm', ...props }: { children?: ReactNode }) =
       {context.loading ? 'Loading...' : children}
     </Button>
   )
-}
+})
 Confirm.displayName = 'AlertDialog.Confirm'
 
 export const AlertDialog = {

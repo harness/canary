@@ -79,12 +79,12 @@ BreadcrumbSeparator.displayName = 'BreadcrumbSeparator'
 
 type BreadcrumbEllipsisProps = ComponentProps<'span'>
 
-const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) => (
-  <span role="presentation" aria-hidden="true" className={cn('cn-breadcrumb-ellipsis', className)} {...props}>
+const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, BreadcrumbEllipsisProps>(({ className, ...props }, ref) => (
+  <span role="presentation" aria-hidden="true" className={cn('cn-breadcrumb-ellipsis', className)} {...props} ref={ref}>
     <IconV2 name="more-horizontal" skipSize />
     <span className="sr-only">More</span>
   </span>
-)
+))
 BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'
 
 type BreadcrumbCopyProps = ComponentPropsWithRef<typeof CopyButton>

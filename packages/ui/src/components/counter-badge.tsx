@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -22,21 +24,24 @@ type CounterBadgeProps = Omit<
   theme?: VariantProps<typeof counterBadgeVariants>['theme']
 }
 
-function CounterBadge({ className, theme = 'default', children, ...props }: CounterBadgeProps) {
-  return (
-    <div
-      className={cn(
-        counterBadgeVariants({
-          theme
-        }),
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </div>
-  )
-}
+const CounterBadge = forwardRef<HTMLDivElement, CounterBadgeProps>(
+  ({ className, theme = 'default', children, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          counterBadgeVariants({
+            theme
+          }),
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    )
+  }
+)
 CounterBadge.displayName = 'CounterBadge'
 
 export { CounterBadge, counterBadgeVariants }

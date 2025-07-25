@@ -3,6 +3,7 @@ import {
   IconV2,
   Layout,
   NoData,
+  ScopeTag,
   SkeletonList,
   StackedList,
   StatusBadge,
@@ -11,6 +12,7 @@ import {
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
+import { Scope } from '@views/common'
 
 import { RepositoryType } from '../repo.types'
 import { FavoriteProps, RoutingProps } from './types'
@@ -20,6 +22,7 @@ export interface PageProps extends Partial<RoutingProps>, FavoriteProps {
   handleResetFiltersQueryAndPages: () => void
   isDirtyList: boolean
   isLoading: boolean
+  scope: Scope
 }
 
 const Stats = ({ pulls }: { pulls: number }) => (
@@ -33,26 +36,31 @@ const Stats = ({ pulls }: { pulls: number }) => (
 
 const Title = ({
   repoId,
-  title,
+  repoName,
   isPrivate,
   isFavorite,
-  onFavoriteToggle
+  onFavoriteToggle,
+  scope,
+  repoPath
 }: {
   repoId: number
-  title: string
+  repoName: string
   isPrivate: boolean
-  isFavorite?: boolean
   onFavoriteToggle: PageProps['onFavoriteToggle']
+  isFavorite?: boolean
+  scope: Scope
+  repoPath: string
 }) => {
   const { t } = useTranslation()
   return (
     <Layout.Flex gap="xs" align="center">
-      <span className="max-w-full truncate font-medium">{title}</span>
+      <span className="max-w-full truncate font-medium">{repoName}</span>
       <Layout.Flex align="center">
         <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
         <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
+        <ScopeTag repoIdentifier={repoName} repoPath={repoPath} {...scope} />
       </Layout.Flex>
     </Layout.Flex>
   )
@@ -66,7 +74,8 @@ export function RepoList({
   toRepository,
   toCreateRepo,
   toImportRepo,
-  onFavoriteToggle
+  onFavoriteToggle,
+  scope
 }: PageProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -131,10 +140,12 @@ export function RepoList({
               title={
                 <Title
                   repoId={repo.id}
-                  title={repo.name}
+                  repoName={repo.name}
                   isPrivate={repo.private}
                   isFavorite={repo.favorite}
                   onFavoriteToggle={onFavoriteToggle}
+                  repoPath={repo.path}
+                  scope={scope}
                 />
               }
               className="flex max-w-[80%] gap-1.5 text-wrap"

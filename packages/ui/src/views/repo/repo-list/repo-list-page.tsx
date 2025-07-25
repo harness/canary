@@ -21,7 +21,6 @@ enum ExtendedScope {
 }
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
-  scope,
   useRepoStore,
   isLoading,
   isError,
@@ -34,6 +33,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toImportMultipleRepos,
   onFavoriteToggle,
   onFilterChange,
+  scope,
   ...routingProps
 }) => {
   const { t } = useTranslation()
@@ -199,6 +199,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
           onFavoriteToggle={onFavoriteToggle}
+          scope={scope}
           {...routingProps}
         />
         {!!repositories?.length && (

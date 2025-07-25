@@ -7,6 +7,7 @@ import {
   ListPullReqQueryQueryParams,
   TypesPullReqRepo,
   useGetPrincipalQuery,
+  useGetUserQuery,
   useListPrincipalsQuery
 } from '@harnessio/code-service-client'
 import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
@@ -97,6 +98,17 @@ export default function PullRequestListPage() {
     { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
   )
 
+  // TODO: can we move this to some hook which is accessible globally ?
+  const {
+    data: { body: currentUser } = {},
+    isFetching: fetchingCurrentUser,
+    error: currentUserError
+  } = useGetUserQuery({
+    queryParams: {
+      routingId: mfeContext?.scope?.accountId
+    }
+  })
+
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
     {
       queryParams: {
@@ -140,6 +152,7 @@ export default function PullRequestListPage() {
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
       defaultSelectedAuthor={defaultSelectedAuthor}
+      currentUserState={{ currentUser, fetchingCurrentUser, currentUserError }}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}

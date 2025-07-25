@@ -246,6 +246,11 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
+  currentUserState?: {
+    currentUser?: Partial<PrincipalType>
+    fetchingCurrentUser?: boolean
+    currentUserError?: UsererrorError | null
+  }
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void
@@ -278,6 +283,7 @@ export type PRListFilters = {
   created_gt?: Date
   label_by?: LabelsValue
   review_decision?: CheckboxOptions[]
+  // reviewer_id?: string
 }
 
 export enum PRFilterGroupTogglerOptions {

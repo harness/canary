@@ -62,5 +62,5 @@ export enum RepoSortMethod {
   Identifier = 'identifier',
   Newest = 'created,desc',
   Oldest = 'created,asc',
-  LastPush = 'last_git_push,desc'
+  LastPush = 'last_git_push'
 }

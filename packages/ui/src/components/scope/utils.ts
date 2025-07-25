@@ -16,7 +16,7 @@ export const determineScope = ({
   }
 
   if (parts.length === 3 && parts[0] === accountId && parts[2] === repoIdentifier) {
-    return ScopeType.Org
+    return ScopeType.Organization
   }
 
   if (parts.length === 4 && parts[0] === accountId && parts[3] === repoIdentifier) {

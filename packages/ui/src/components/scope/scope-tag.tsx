@@ -12,7 +12,7 @@ const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath }) => {
     case ScopeType.Account:
       return <Tag value={scopeType} theme="lime" size="sm" />
 
-    case ScopeType.Org:
+    case ScopeType.Organization:
       return <Tag label={scopeType} value={scopedPath || ''} variant="secondary" theme="pink" size="sm" />
 
     case ScopeType.Project:

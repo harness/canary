@@ -7,12 +7,14 @@ import {
   Checkbox,
   CounterBadge,
   IconV2,
+  Input,
   Layout,
   MoreActionsTooltip,
   SplitButton,
   StackedList,
   StatusBadge,
   Text,
+  Textarea,
   TimeAgoCard,
   type ButtonThemes
 } from '@/components'
@@ -26,6 +28,7 @@ import {
   PullRequestChangesSectionProps,
   PullRequestFilterOption,
   PullRequestState,
+  TypesListCommitResponse,
   TypesPullReqCheck
 } from '@/views'
 import { cn } from '@utils/cn'
@@ -204,9 +207,11 @@ export interface PullRequestPanelProps
   repoId?: string
   error?: string | null
   defaultReviewersData?: DefaultReviewersDataProps
+  pullReqCommits: TypesListCommitResponse
 }
 
 const PullRequestPanel = ({
+  pullReqCommits,
   pullReqMetadata,
   checks,
   changesInfo,
@@ -239,6 +244,46 @@ const PullRequestPanel = ({
   const [notBypassable, setNotBypassable] = useState(false)
   const [mergeButtonValue, setMergeButtonValue] = useState(actions[0].id)
   const [accordionValues, setAccordionValues] = useState<string[]>([])
+  const [showMergeInputs, setShowMergeInputs] = useState(false)
+  const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
+  const [mergeMessage, setMergeMessage] = useState('')
+  const [selectedMergeOption, setSelectedMergeOption] = useState<string | null>(null)
+
+  useEffect(() => {
+    setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
+  }, [pullReqMetadata?.title])
+
+  // Handler for merge type selection
+  const handleMergeTypeSelect = (value: string) => {
+    if (actions[parseInt(value)].title === 'Squash and merge') {
+      setMergeMessage(
+        pullReqCommits?.commits
+          ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
+          .join('\n\n')
+          ?.slice(0, 1000) ?? ''
+      )
+    } else {
+      setMergeMessage('')
+    }
+    setMergeButtonValue(value)
+    setShowMergeInputs(true)
+    setSelectedMergeOption(value)
+  }
+
+  // Handler for canceling merge input
+  const handleCancelMerge = () => {
+    setShowMergeInputs(false)
+    setSelectedMergeOption(null)
+  }
+
+  // Handler for confirming merge
+  const handleConfirmMerge = () => {
+    setShowMergeInputs(false)
+    const actionIdx = actions.findIndex(action => action.id === selectedMergeOption)
+    if (actionIdx !== -1) {
+      actions[actionIdx]?.action?.()
+    }
+  }
 
   const handleAccordionValuesChange = useCallback((data: string | string[]) => {
     if (typeof data === 'string') return
@@ -306,88 +351,117 @@ const PullRequestPanel = ({
           />
 
           {!pullReqMetadata?.merged && (
-            <StackedList.Field
-              right
-              title={
-                <Layout.Horizontal align="center" justify="center" gap="xs">
-                  {!!commitSuggestionsBatchCount && (
-                    <Button variant="outline" onClick={() => onCommitSuggestions()}>
-                      Commit suggestion
-                      {/* TODO: Design system: Add Badge counter icon theme once it is ready */}
-                      <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
-                    </Button>
-                  )}
-                  {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
-                    <Checkbox
-                      id="checkbox-bypass"
-                      showOptionalLabel
-                      checked={!!checkboxBypass}
-                      onCheckedChange={() => {
-                        if (typeof checkboxBypass === 'boolean') {
-                          setCheckboxBypass?.(!checkboxBypass)
-                        }
-                      }}
-                      label="Bypass and merge anyway"
-                    />
-                  )}
-
-                  {actions && !pullReqMetadata?.closed ? (
-                    <SplitButton
-                      theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
-                      disabled={buttonState.disabled}
-                      variant="outline"
-                      selectedValue={mergeButtonValue}
-                      handleOptionChange={setMergeButtonValue}
-                      options={actions.map(action => ({
-                        value: action.id,
-                        label: action.title,
-                        description: action.description,
-                        disabled: action.disabled
-                      }))}
-                      handleButtonClick={() => {
-                        actions[parseInt(mergeButtonValue)]?.action?.()
-                      }}
-                    >
-                      {actions[parseInt(mergeButtonValue)].title}
-                    </SplitButton>
-                  ) : (
-                    <Button
-                      disabled={(!checkboxBypass && prPanelData.ruleViolation && !isClosed) || showRestoreBranchButton}
-                      onClick={actions[0].action}
-                    >
-                      Open for review
-                    </Button>
-                  )}
-
-                  {isShowMoreTooltip && (
-                    <MoreActionsTooltip
-                      className="!ml-2"
-                      iconName="more-horizontal"
-                      sideOffset={-8}
-                      alignOffset={2}
-                      actions={[
-                        {
-                          title: 'Mark as draft',
-                          onClick: () => handlePrState('draft')
-                        },
-                        {
-                          title: 'Close pull request',
-                          onClick: () => handlePrState('closed')
-                        },
-                        ...(isRebasable
-                          ? [
-                              {
-                                title: 'Rebase',
-                                onClick: () => handleRebaseBranch()
-                              }
-                            ]
-                          : [])
-                      ]}
-                    />
-                  )}
-                </Layout.Horizontal>
-              }
-            />
+            <>
+              <StackedList.Field
+                right
+                title={
+                  <Layout.Horizontal align="center" justify="center" gap="xs">
+                    {!!commitSuggestionsBatchCount && (
+                      <Button variant="outline" onClick={() => onCommitSuggestions()}>
+                        Commit suggestion
+                        {/* TODO: Design system: Add Badge counter icon theme once it is ready */}
+                        <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
+                      </Button>
+                    )}
+                    {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
+                      <Checkbox
+                        id="checkbox-bypass"
+                        showOptionalLabel
+                        checked={!!checkboxBypass}
+                        onCheckedChange={() => {
+                          if (typeof checkboxBypass === 'boolean') {
+                            setCheckboxBypass?.(!checkboxBypass)
+                          }
+                        }}
+                        label="Bypass and merge anyway"
+                      />
+                    )}
+                    {actions && !pullReqMetadata?.closed && !showMergeInputs ? (
+                      <SplitButton
+                        theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
+                        disabled={buttonState.disabled}
+                        variant="outline"
+                        selectedValue={mergeButtonValue}
+                        handleOptionChange={handleMergeTypeSelect}
+                        options={actions.map(action => ({
+                          value: action.id,
+                          label: action.title,
+                          description: action.description,
+                          disabled: action.disabled
+                        }))}
+                        handleButtonClick={() => handleMergeTypeSelect(mergeButtonValue)}
+                      >
+                        {actions[parseInt(mergeButtonValue)].title}
+                      </SplitButton>
+                    ) : null}
+                    {/* When in merge input mode, replace dropdown with Cancel/Confirm buttons, keep status/tooltip untouched */}
+                    {actions && !pullReqMetadata?.closed && showMergeInputs ? (
+                      <>
+                        <Button variant="outline" onClick={handleCancelMerge}>
+                          Cancel
+                        </Button>
+                        <Button theme="success" onClick={handleConfirmMerge}>
+                          Confirm {actions[parseInt(selectedMergeOption || '0')]?.title || 'Merge'}
+                        </Button>
+                      </>
+                    ) : null}
+                    {isShowMoreTooltip && (
+                      <MoreActionsTooltip
+                        className="!ml-2"
+                        iconName="more-horizontal"
+                        sideOffset={-8}
+                        alignOffset={2}
+                        actions={[
+                          {
+                            title: 'Mark as draft',
+                            onClick: () => handlePrState('draft')
+                          },
+                          {
+                            title: 'Close pull request',
+                            onClick: () => handlePrState('closed')
+                          },
+                          ...(isRebasable
+                            ? [
+                                {
+                                  title: 'Rebase',
+                                  onClick: () => handleRebaseBranch()
+                                }
+                              ]
+                            : [])
+                        ]}
+                      />
+                    )}
+                  </Layout.Horizontal>
+                }
+              />
+              {/* Merge input fields below, only when in merge input mode */}
+              {showMergeInputs && (
+                <div className="flex flex-col items-center w-full mt-4">
+                  <div className="flex flex-col gap-4 w-full">
+                    <div>
+                      <Input
+                        id="merge-title"
+                        label="PR Title"
+                        className="w-full bg-white"
+                        value={mergeTitle}
+                        onChange={e => setMergeTitle(e.target.value)}
+                        optional
+                      />
+                    </div>
+                    <div>
+                      <Textarea
+                        id="merge-message"
+                        label="Commit Message"
+                        className="w-full"
+                        value={mergeMessage}
+                        onChange={e => setMergeMessage(e.target.value)}
+                        optional
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </StackedList.Item>
         <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">

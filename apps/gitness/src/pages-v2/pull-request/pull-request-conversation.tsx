@@ -730,6 +730,7 @@ export default function PullRequestConversationPage() {
         status: pullReqChecksDecision?.checkInfo.status as EnumCheckStatus
       },
       prPanelData,
+      pullReqCommits,
       checks: pullReqChecksDecision?.data?.checks,
       error: mergeErrorMessage,
       // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this

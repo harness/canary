@@ -2,8 +2,6 @@ import { ScopeType } from '@views/common'
 
 export const determineScope = ({
   accountId,
-  orgIdentifier,
-  projectIdentifier,
   repoIdentifier,
   repoPath
 }: {

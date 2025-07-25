@@ -3,7 +3,6 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Alert,
-  Button,
   IconV2,
   ListActions,
   MoreActionsTooltip,

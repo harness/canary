@@ -10,8 +10,8 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
+import { Avatar, Button, ButtonVariants, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { HandleAiPullRequestSummaryType, handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty, isUndefined } from 'lodash-es'
 
@@ -38,6 +38,7 @@ interface StringSelection {
 
 interface ToolbarItem {
   icon: IconV2NamesType
+  variant?: ButtonVariants
   action: ToolbarAction
   title?: string
   size?: number
@@ -62,6 +63,7 @@ export interface PullRequestCommentBoxProps {
   onSaveComment?: (comment: string) => void
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
 }
 
 const TABS_KEYS = {
@@ -83,7 +85,8 @@ export const PullRequestCommentBox = ({
   comment,
   setComment,
   isEditMode,
-  handleUpload
+  handleUpload,
+  handleAiPullRequestSummary
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -91,6 +94,7 @@ export const PullRequestCommentBox = ({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
+  const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
@@ -116,6 +120,27 @@ export const PullRequestCommentBox = ({
 
   const handleFileSelect = () => {
     fileInputRef.current?.click()
+  }
+
+  const handleAiSummary = (currentTextSelection: TextSelection) => {
+    console.debug('handleAiSummary', {
+      currentTextSelection: currentTextSelection
+    })
+    if (handleAiPullRequestSummary) {
+      setShowAiLoader(true)
+
+      handleAiPullRequestSummary(currentTextSelection)
+        .then(response => {
+          console.debug('response', {
+            response: response
+          })
+
+          parseAndSetComment(comment, response.textSelection, TextSelectionBehavior.Parse, response.summary)
+        })
+        .finally(() => {
+          setShowAiLoader(false)
+        })
+    }
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -284,7 +309,10 @@ export const PullRequestCommentBox = ({
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {
-    const initial: ToolbarItem[] = []
+    const initial: ToolbarItem[] = handleAiPullRequestSummary
+      ? [{ icon: 'ai' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
+      : []
+
     // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
@@ -293,7 +321,7 @@ export const PullRequestCommentBox = ({
       { icon: 'bold', action: ToolbarAction.BOLD },
       { icon: 'italic', action: ToolbarAction.ITALIC },
       { icon: 'attachment', action: ToolbarAction.UPLOAD },
-      { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+      { icon: 'list', action: ToolbarAction.UNORDERED_LIST },
       { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
@@ -301,6 +329,9 @@ export const PullRequestCommentBox = ({
 
   const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
     switch (type) {
+      case ToolbarAction.AI_SUMMARY:
+        handleAiSummary(textSelection)
+        break
       case ToolbarAction.SUGGESTION:
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Parse, '```suggestion\n', '\n```')
         break
@@ -316,7 +347,7 @@ export const PullRequestCommentBox = ({
       case ToolbarAction.UPLOAD:
         handleFileSelect()
         break
-      case ToolbarAction.UNORDER_LIST:
+      case ToolbarAction.UNORDERED_LIST:
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Split, '- ')
         break
       case ToolbarAction.CHECK_LIST:
@@ -373,7 +404,7 @@ export const PullRequestCommentBox = ({
         const parsedComment = parseComment(comment, textSelection, '')
 
         if (isListString(parsedComment.previousLine)) {
-          handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection)
+          handleActionClick(ToolbarAction.UNORDERED_LIST, comment, textSelection)
         }
         if (isListSelectString(parsedComment.previousLine)) {
           handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
@@ -431,6 +462,12 @@ export const PullRequestCommentBox = ({
                 }}
                 resizable
               />
+
+              {showAiLoader && (
+                <div className="absolute left-0 top-0 flex size-full cursor-wait items-center justify-center">
+                  <IconV2 size="lg" className="animate-spin" name="loader" />
+                </div>
+              )}
               {isDragging && (
                 <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
               )}
@@ -442,7 +479,7 @@ export const PullRequestCommentBox = ({
                     <Fragment key={`${comment}-${index}`}>
                       <Button
                         size="sm"
-                        variant="ghost"
+                        variant={item.variant ?? 'ghost'}
                         iconOnly
                         onClick={() => handleActionClick(item.action, comment, textSelection)}
                       >

@@ -1,9 +1,9 @@
-import { forwardRef } from 'react'
+import { forwardRef, useCallback } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
-import { HandleUploadType, PullRequestCommentBox } from '@/views'
+import { HandleAiPullRequestSummaryType, HandleUploadType, PullRequestCommentBox } from '@/views'
 import { z } from 'zod'
 
 // Define the form schema
@@ -23,10 +23,14 @@ interface PullRequestFormProps {
   description?: string
   setDescription: (description: string) => void
   formMethods: UseFormReturn<FormFields>
+  handleAiPullRequestSummary: HandleAiPullRequestSummaryType
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  ({ apiError, onFormSubmit, handleUpload, description, setDescription, formMethods }, ref) => {
+  (
+    { apiError, onFormSubmit, handleUpload, description, setDescription, formMethods, handleAiPullRequestSummary },
+    ref
+  ) => {
     const { t } = useTranslation()
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
@@ -49,6 +53,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
           handleUpload={handleUpload}
           comment={description ?? ''}
           setComment={setDescription}
+          handleAiPullRequestSummary={handleAiPullRequestSummary}
         ></PullRequestCommentBox>
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (

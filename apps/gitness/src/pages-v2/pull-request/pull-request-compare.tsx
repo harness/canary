@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useMutation } from '@tanstack/react-query'
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
 import { compact } from 'lodash-es'
@@ -39,6 +40,8 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useAPIPath } from '../../hooks/useAPIPath.ts'
+import { useGitRef } from '../../hooks/useGitRef.ts'
 import { PathParams } from '../../RouteDefinitions'
 import { getErrorMessage } from '../../utils/error-utils'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
@@ -47,6 +50,16 @@ import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { parseSpecificDiff } from './diff-utils'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
 import { changesInfoAtom, DiffFileEntry } from './types'
+
+interface AiPullRequestSummaryParams {
+  repoMetadata: {
+    path: string
+  }
+  baseRef: string
+  headRef: string
+  // TODO I may be able to use a more locally scoped textSelection rather than pass it through the call chain
+  textSelection: { start: number; end: number }
+}
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -317,7 +330,10 @@ export const CreatePullRequest = () => {
   }
 
   const onSubmit = (data: CompareFormFields) => {
-    handleSubmit(data, false)
+    console.debug('onSubmit', {
+      data: data
+    })
+    // handleSubmit(data, false)
   }
 
   const onDraftSubmit = (data: CompareFormFields) => {
@@ -476,6 +492,51 @@ export const CreatePullRequest = () => {
     setLabels(newLabels)
   }
 
+  const getApiPath = useAPIPath()
+  const { fullGitRef: baseRef } = useGitRef()
+
+  const mutation = useMutation(
+    async ({ repoMetadata, baseRef, headRef, textSelection }: AiPullRequestSummaryParams) => {
+      return fetch(getApiPath(`/api/v1/repos/${repoMetadata?.path}/+/genai/change-summary`), {
+        method: 'POST',
+        body: JSON.stringify({
+          base_ref: baseRef,
+          head_ref: headRef
+        })
+      })
+        .then(res => res.json())
+        .then(json => ({
+          summary: json.summary,
+          textSelection: textSelection
+        }))
+    }
+  )
+
+  const handleAiPullRequestSummary = useCallback(
+    async textSelection => {
+      /*
+       * TODO: Need to know how to get the two remaining query args
+       *
+       *  Need `repoMetadata.path` in the form of `{accountId}/{orgId}/{projectId}/{repoId}`
+       *  The `repoRef` at the top of this file only provides `{accountId}/{repoId}`, which causes the query to fail
+       *
+       *  Need  `headRef` which looks to be of the form `refs/heads/{branchName}`
+       */
+      const repoMetadata = {
+        path: `{accountId}/{orgId}/{projectId}/{repoId}`
+      }
+      const headRef = `refs/heads/{branchName}`
+
+      return await mutation.mutateAsync({
+        repoMetadata,
+        baseRef,
+        headRef,
+        textSelection
+      })
+    },
+    [mutation]
+  )
+
   const renderContent = () => {
     return (
       <PullRequestComparePage
@@ -505,6 +566,7 @@ export const CreatePullRequest = () => {
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
         prBranchCombinationExists={prBranchCombinationExists}
+        handleAiPullRequestSummary={handleAiPullRequestSummary}
         diffData={
           diffStats?.files_changed || 0
             ? diffs?.map(item => ({

@@ -7,6 +7,7 @@ import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   CommitSelectorListItem,
   CommitsList,
+  HandleAiPullRequestSummaryType,
   HandleUploadType,
   ILabelType,
   LabelValuesType,
@@ -56,6 +57,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   isSuccess: boolean
   mergeability?: boolean
   onSelectCommit: (commit: CommitSelectorListItem) => void
+  handleAiPullRequestSummary: HandleAiPullRequestSummaryType
 
   diffData: HeaderProps[]
   diffStats: TypesDiffStats
@@ -100,6 +102,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isSuccess,
   onFormDraftSubmit,
   mergeability = false,
+  handleAiPullRequestSummary,
 
   diffData,
   diffStats,
@@ -367,6 +370,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                           onFormDraftSubmit={onFormDraftSubmit}
                           onFormSubmit={onFormSubmit}
                           formMethods={formMethods}
+                          handleAiPullRequestSummary={handleAiPullRequestSummary}
                         />
                       </div>
                     </div>

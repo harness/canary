@@ -107,7 +107,7 @@ export const repoBranchSettingsFormSchema = z.object({
         theme: z.nativeEnum(MessageTheme),
         message: z.string()
       }),
-      submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
+      submenu: z.array(z.nativeEnum(MergeStrategy)),
       selectOptions: z.array(z.object({ id: z.union([z.string(), z.number()]), key: z.string() })),
       input: z.string()
     })

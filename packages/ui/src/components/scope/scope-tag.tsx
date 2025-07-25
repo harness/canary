@@ -1,4 +1,4 @@
-import { Scope, ScopeType } from '@views/common'
+import { Scope } from '@views/common'
 
 import { Tag } from '../tag'
 import { determineScope } from './utils'

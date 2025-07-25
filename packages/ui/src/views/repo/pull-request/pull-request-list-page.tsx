@@ -1,7 +1,8 @@
-import { FC, useCallback, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import {
   Button,
+  ButtonGroup,
   ListActions,
   NoData,
   Pagination,
@@ -50,6 +51,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   principalsSearchQuery,
   principalData,
   defaultSelectedAuthor,
+  currentUserState,
   isPrincipalsLoading,
   isLoading,
   repository,
@@ -70,6 +72,24 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
   )
+
+  useEffect(() => {
+    const currentParams = new URLSearchParams(window.location.search)
+    if (
+      currentParams.has('created_by') &&
+      currentParams.get('created_by') === String(currentUserState?.currentUser?.id)
+    ) {
+      if (currentParams.has('review_decision')) {
+        setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
+      } else {
+        setActiveFilterGrp(PRFilterGroupTogglerOptions.Created)
+      }
+    } else if (currentParams.has('review_decision')) {
+      setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
+    } else {
+      setActiveFilterGrp(PRFilterGroupTogglerOptions.All)
+    }
+  }, [currentUserState, window.location.search])
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
@@ -209,27 +229,44 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     )
   }
 
-  const onFilterGroupChange = (filterGroup: string) => {
-    if (filterGroup === PRFilterGroupTogglerOptions.All) {
-      setSearchParams(prev => {
-        prev.delete('created_by')
-        return prev
-      })
-    }
+  const onFilterGroupChange = useCallback(
+    (filterGroup: string) => {
+      const searchParams = new URLSearchParams(window.location.search)
+      if (filterGroup === PRFilterGroupTogglerOptions.All) {
+        const { created_by, review_decision, review_id, ...restObj } = Object.fromEntries(searchParams.entries())
+        setSearchParams(
+          new URLSearchParams({
+            ...restObj
+          })
+        )
+      }
 
-    if (filterGroup === PRFilterGroupTogglerOptions.Created) {
-      setSearchParams(prev => {
-        if (prev.has('created_by')) {
-          prev.delete('created_by')
-        }
-        // Update with proper userId
-        prev.append('created_by', '3335')
-        return prev
-      })
-    }
+      if (filterGroup === PRFilterGroupTogglerOptions.Created) {
+        const { created_by, review_decision, review_id, ...restObj } = Object.fromEntries(searchParams.entries())
+        setSearchParams(
+          new URLSearchParams({
+            ...restObj,
+            created_by: String(currentUserState?.currentUser?.id)
+          })
+        )
+      }
 
-    setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
-  }
+      if (filterGroup === PRFilterGroupTogglerOptions.ReviewRequested) {
+        const { created_by, ...restObj } = Object.fromEntries(searchParams.entries())
+
+        setSearchParams(
+          new URLSearchParams({
+            ...restObj,
+            review_decision: restObj.review_decision || 'pending',
+            review_id: String(currentUserState?.currentUser?.id)
+          })
+        )
+      }
+
+      setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
+    },
+    [currentUserState?.fetchingCurrentUser, window.location.search]
+  )
 
   const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {
     if (filterValues === 'created_by' && isOpen) {
@@ -254,8 +291,16 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       {}
     )
 
+    //Always set reviewer_id along with review_decision as BE API needs it.
+    // if (_filterValues.review_decision && currentUserState?.currentUser?.id) {
+    //   _filterValues.reviewer_id = String(currentUserState.currentUser.id)
+    // }
+
     onFilterChange?.(_filterValues)
   }
+
+  const activeClass = 'bg-cn-background-primary text-cn-foreground-primary'
+  const inactiveClass = ''
 
   return (
     <SandboxLayout.Main>
@@ -291,11 +336,27 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <ToggleGroup.Root type="single" value={activeFilterGrp} onChange={onFilterGroupChange} unselectable>
-                  <ToggleGroup.Item value={PRFilterGroupTogglerOptions.All} text="All" />
-                  <ToggleGroup.Item value={PRFilterGroupTogglerOptions.Created} text="Created" />
-                  <ToggleGroup.Item value={PRFilterGroupTogglerOptions.ReviewRequested} text="Review Requested" />
-                </ToggleGroup.Root>
+                <ButtonGroup
+                  buttonsProps={[
+                    {
+                      children: 'All',
+                      onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.All),
+                      className: activeFilterGrp === PRFilterGroupTogglerOptions.All ? activeClass : inactiveClass
+                    },
+                    {
+                      children: 'Created',
+                      onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.Created),
+                      className: activeFilterGrp === PRFilterGroupTogglerOptions.Created ? activeClass : inactiveClass
+                    },
+                    {
+                      children: 'Review Requested',
+                      onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.ReviewRequested),
+                      className:
+                        activeFilterGrp === PRFilterGroupTogglerOptions.ReviewRequested ? activeClass : inactiveClass
+                    }
+                  ]}
+                  size="sm"
+                />
 
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (

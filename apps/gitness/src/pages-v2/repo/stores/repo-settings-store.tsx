@@ -69,7 +69,8 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       rulesAppliedCount: getTotalRulesApplied(rule),
       bypassAllowed: rule.definition?.bypass?.repo_owners === true,
       identifier: rule.identifier,
-      state: rule.state ? String(rule.state) : undefined
+      state: rule.state ? String(rule.state) : undefined,
+      type: rule.type as 'branch' | 'tag'
     }))
     set({ rules: rulesData })
   },

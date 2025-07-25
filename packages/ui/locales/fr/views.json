@@ -173,6 +173,9 @@
     "rulesApplied": "Règles appliquées",
     "bypassAllowed": "Contournement autorisé",
     "bypassNotAllowed": "Contournement non autorisé",
+    "allRules": "All Rules",
+    "branchRules": "Branch Rules",
+    "tagRules": "Tag Rules",
     "newTagRule": "New tag rule",
     "createBranchRule": "New branch rule",
     "security": "Sécurité",
@@ -634,6 +637,11 @@
     "reader": "Reader",
     "readerDesc": "Can view but cannot make changes or leave comments."
   },
+  "rules": {
+    "showParentRules": "Show rules from parent scopes",
+    "edit": "Edit rule",
+    "delete": "Delete rule"
+  },
   "commits": {
     "commitDetailsDiffShowing": "Affichage de",
     "commitDetailsDiffChangedFiles": "fichiers modifiés",
@@ -654,10 +662,6 @@
     "label": "Périmètre",
     "account": "Compte"
   },
-  "rules": {
-    "edit": "Edit rule",
-    "delete": "Delete rule"
-  },
   "code": "Code",
   "createTagDialog": {
     "validation": {
@@ -674,10 +678,14 @@
     "prCreated": "Requête de tirage créée",
     "prUpdated": "Requête de tirage mise à jour",
     "prReopened": "Requête de tirage rouverte",
-    "prBranchUpdated": "Branche de la requête de tirage mise à jour",
     "prClosed": "Requête de tirage fermée",
-    "prCommentCreated": "Commentaire de la requête de tirage créé",
     "prMerged": "Requête de tirage fusionnée",
+    "prBranchUpdated": "Branche de la requête de tirage mise à jour",
+    "prCommentCreated": "Commentaire de la requête de tirage créé",
+    "prCommentStatusUpdated": "PR comment status updated",
+    "prCommentUpdated": "PR comment updated",
+    "prReviewSubmitted": "PR review submitted",
+    "prLabelAssigned": "PR label assigned",
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"

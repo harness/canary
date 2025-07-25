@@ -11,7 +11,7 @@ const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-[var(--cn-inset-layout-indent)] overflow-hidden">
     <div
       className={cn(
-        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_hsl(var(--cn-bg-0))]',
+        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_var(--cn-bg-0)]',
         className
       )}
     />

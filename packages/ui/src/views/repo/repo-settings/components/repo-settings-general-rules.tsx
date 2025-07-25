@@ -62,7 +62,7 @@ export interface RepoSettingsGeneralRulesProps {
   toRepoTagRuleCreate?: () => string
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
-  toProjectRuleDetails?: (identifier: string) => string
+  toProjectRuleDetails?: (identifier: string, scope: number) => string
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -156,8 +156,12 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             <StackedList.Root>
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
-                  <Link to={toProjectRuleDetails?.(rule.identifier) || ''} key={rule.identifier}>
-                    <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">
+                  <Link
+                    to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''}
+                    key={rule.identifier}
+                    target="_blank"
+                  >
+                    <StackedList.Item className="cursor-pointer py-3 pr-1.5">
                       <StackedList.Field
                         className="gap-1.5"
                         title={

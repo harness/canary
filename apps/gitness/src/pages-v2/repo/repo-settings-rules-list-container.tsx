@@ -17,6 +17,7 @@ import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
@@ -42,6 +43,10 @@ export const RepoSettingsRulesListContainer = () => {
     setAlertDeleteParams(identifier)
     setRuleIsAlertDeleteDialogOpen(true)
   }
+
+  const {
+    routes: { toAccountSettings, toOrgSettings, toProjectSettings }
+  } = useMFEContext()
 
   const {
     data: { body: rulesData } = {},
@@ -99,6 +104,12 @@ export const RepoSettingsRulesListContainer = () => {
     navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
+  const transformToRuleDetailsUrl = (url?: string, ruleId?: string): string => {
+    if (!url || !ruleId) return ''
+
+    return url.replace('code', 'codeV2').replace('settings', 'manage-repositories/rules/' + ruleId)
+  }
+
   return (
     <>
       <RepoSettingsRulesPage
@@ -116,7 +127,19 @@ export const RepoSettingsRulesListContainer = () => {
         showParentScopeLabelsCheckbox
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
-        toProjectRuleDetails={identifier => routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })}
+        toProjectRuleDetails={(identifier, scope) => {
+          if (scope === 0) {
+            return routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })
+          }
+          if (scope === 1) {
+            return transformToRuleDetailsUrl(toAccountSettings?.(), identifier)
+          } else if (scope === 2) {
+            return transformToRuleDetailsUrl(toOrgSettings?.(), identifier)
+          } else if (scope === 3) {
+            return transformToRuleDetailsUrl(toProjectSettings?.(), identifier)
+          }
+          return ''
+        }}
       />
 
       <DeleteAlertDialog

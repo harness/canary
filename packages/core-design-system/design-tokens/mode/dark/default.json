@@ -1500,6 +1500,10 @@
         "$type": "color",
         "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
         "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
+      },
+      "mask": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)"
       }
     },
     "slider": {
@@ -2061,15 +2065,34 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{chrome.1000}"
+        "$value": "{chrome.950}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{chrome.900}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{chrome.1000}"
+        "$value": "{chrome.950}"
+      },
+      "mask": {
+        "from": {
+          "$type": "color",
+          "$value": "{pure.white}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{pure.white}"
+        }
       }
     },
     "pipeline": {

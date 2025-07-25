@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, IconV2, StatusBadge, Link as StyledLink } from '@/components'
+import { Button, ButtonLayout, DropdownMenu, IconV2, Layout, Link as StyledLink, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/views'
 
@@ -31,9 +31,9 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const hasAhead = !!ahead
 
   return (
-    <div className="flex min-h-9 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 py-1 pl-4 pr-1">
-      <div className="flex items-center gap-x-1.5">
-        <span className="text-2 leading-tight text-cn-foreground-1">
+    <div className="border-cn-borders-2 bg-cn-background-2 flex min-h-9 items-center justify-between rounded-md border px-4 py-2">
+      <Layout.Flex align="center" gapX="2xs">
+        <Text color="foreground-1">
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
           {hasAhead && (
             <>
@@ -49,22 +49,22 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             </StyledLink>
           )}
           {!hasAhead && !hasBehind && 'up to date with'}
-        </span>
-        {/* TODO: Design system: change it to tag */}
-        <StatusBadge variant="secondary" theme="muted" size="sm">
+        </Text>
+
+        <Tag variant="secondary" theme="blue" size="md" value={defaultBranchName}>
           <IconV2 name="git-branch" size="xs" />
-          <span>{defaultBranchName}</span>
-        </StatusBadge>
-      </div>
-      {refType === BranchSelectorTab.BRANCHES ? (
+        </Tag>
+      </Layout.Flex>
+
+      {refType === BranchSelectorTab.BRANCHES && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="group/contribute data-[state=open]:border-cn-borders-9 gap-x-2 px-2.5 data-[state=open]:text-cn-foreground-1 [&_svg]:data-[state=open]:text-icons-9"
+              className="group/contribute data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1"
               variant="outline"
             >
               <IconV2 name="git-pull-request" size="xs" />
-              <span>Contribute</span>
+              Contribute
               <IconV2
                 className="chevron-down text-icons-7 group-data-[state=open]/contribute:text-icons-2"
                 name="nav-arrow-down"
@@ -72,43 +72,50 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content align="end">
-            <DropdownMenu.Slot className="flex gap-x-2">
-              <div className="border-cn-borders-4 flex size-6 shrink-0 items-center justify-center rounded-full border">
-                <IconV2 name="git-pull-request" size="2xs" />
-              </div>
-              <div>
-                <span className="text-2 leading-snug text-cn-foreground-1">
-                  This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
-                </span>
-                <StatusBadge className="mt-1" variant="secondary" theme="muted" size="sm">
-                  <IconV2 name="git-branch" size="xs" />
-                  <span>{defaultBranchName}</span>
-                </StatusBadge>
-                .
-                <p className="mt-2.5 text-2 leading-tight text-cn-foreground-2">
-                  {t('views:repos.compareBranchesToSeeChanges', 'Compare branches to see your changes.')}
-                </p>
-                <p className="mt-2.5 text-2 leading-tight text-cn-foreground-2">
-                  {t(
-                    'views:repos.afterComparingOpenPullRequest',
-                    'After comparing changes, you may open a pull request to contribute your changes upstream.'
-                  )}
-                </p>
-              </div>
-            </DropdownMenu.Slot>
-            <DropdownMenu.Slot className="mt-4 flex flex-col gap-y-2.5">
-              <Button className="w-full" variant="outline" asChild>
-                <Link
-                  to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-                >
-                  Compare
-                </Link>
-              </Button>
+          <DropdownMenu.Content align="end" className="w-60">
+            <DropdownMenu.Slot>
+              <Layout.Grid gapY="xs" className="p-2">
+                <Layout.Grid flow="column" gapX="xs">
+                  <div className="border-cn-borders-4 rounded-2 flex size-8 shrink-0 items-center justify-center border">
+                    <IconV2 name="git-pull-request" size="md" />
+                  </div>
+                  <Layout.Grid gapY="xs">
+                    <Text variant="body-single-line-strong" color="foreground-1">
+                      This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
+                      <Tag
+                        className="inline-flex"
+                        variant="outline"
+                        theme="gray"
+                        size="sm"
+                        value={defaultBranchName}
+                        icon="git-branch"
+                        showIcon
+                      ></Tag>
+                    </Text>
+
+                    <Text color="foreground-3">
+                      {t(
+                        'views:repos.compareBranchesToSeeChanges',
+                        'Open a pull request to contribute your changes upstream.'
+                      )}
+                    </Text>
+                  </Layout.Grid>
+                </Layout.Grid>
+
+                <ButtonLayout>
+                  <Button className="w-full" variant="outline" asChild>
+                    <Link
+                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                    >
+                      Compare
+                    </Link>
+                  </Button>
+                </ButtonLayout>
+              </Layout.Grid>
             </DropdownMenu.Slot>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-      ) : null}
+      )}
     </div>
   )
 }

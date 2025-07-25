@@ -54,11 +54,12 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   }
 
   const { Link } = useRouterContext()
+
   return (
     <>
       <Layout.Grid gapY="lg" className="pr-3">
         <Layout.Grid gapX="xs" justify="between" flow="column">
-          <Layout.Grid gapY="xs">
+          <Layout.Grid gapY="2xs">
             <Text variant="heading-base" as="h5">
               {title}
             </Text>

@@ -65,11 +65,12 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
             <>
               <TextInput
                 className="truncate"
+                inputContainerClassName="bg-cn-background-3"
                 label={t('views:repos.gitCloneUrl', 'Git clone URL')}
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
-                suffix={<CopyButton name={httpsUrl} />}
+                suffix={<CopyButton name={httpsUrl} buttonVariant="transparent" />}
               />
               <Text className="mt-4" color="foreground-3">
                 {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
@@ -86,11 +87,12 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           ) : (
             <TextInput
               className="truncate"
+              inputContainerClassName="bg-cn-background-3"
               id="sshUrl"
               label={t('views:repos.gitCloneUrl', 'Git clone URL')}
               readOnly
               value={sshUrl}
-              suffix={<CopyButton name={sshUrl || ''} buttonVariant="transparent" iconSize="xs" />}
+              suffix={<CopyButton name={sshUrl || ''} buttonVariant="transparent" />}
             />
           )}
         </DropdownMenu.Slot>

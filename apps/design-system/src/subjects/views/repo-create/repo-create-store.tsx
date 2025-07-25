@@ -1,6 +1,4 @@
 export const useRepoCreateStore = () => {
-  const defaultBranchOptions = ['main', 'master']
-
   const gitIgnoreOptions = [
     'AL',
     'Actionscript',
@@ -257,7 +255,6 @@ export const useRepoCreateStore = () => {
   ]
 
   return {
-    defaultBranchOptions,
     gitIgnoreOptions,
     licenseOptions
   }

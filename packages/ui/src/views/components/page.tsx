@@ -37,7 +37,7 @@ export interface PageHeaderProps {
 
 const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, children, button, moreActions }) => {
   return (
-    <Layout.Flex justify="between" gap="lg" className="mb-10">
+    <Layout.Flex justify="between" gap="xl" className="mb-10">
       <Layout.Vertical className="gap-[var(--cn-spacing-5)]">
         <Layout.Vertical>
           {!!backLink && (

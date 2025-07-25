@@ -17,7 +17,7 @@ function splitArray<T>(array: T[]): [T[], T[]] {
 }
 
 const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode }) => (
-  <Layout.Grid key={label} flow="row" gapX="xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
+  <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
     <Text color="foreground-3" as="dt">
       {label}
     </Text>

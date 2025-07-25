@@ -57,38 +57,68 @@ const gapVariants = cva('', {
   variants: {
     gap: {
       none: 'gap-0',
-      '3xs': 'gap-[var(--cn-layout-3xs)]',
-      '2xs': 'gap-[var(--cn-layout-2xs)]',
-      xs: 'gap-[var(--cn-layout-xs)]',
-      sm: 'gap-[var(--cn-layout-sm)]',
-      md: 'gap-[var(--cn-layout-md)]',
-      lg: 'gap-[var(--cn-layout-lg)]',
-      xl: 'gap-[var(--cn-layout-xl)]'
+      '4xs': 'cn-layout-gap-4xs',
+      '3xs': 'cn-layout-gap-3xs',
+      '2xs': 'cn-layout-gap-2xs',
+      xs: 'cn-layout-gap-xs',
+      sm: 'cn-layout-gap-sm',
+      md: 'cn-layout-gap-md',
+      lg: 'cn-layout-gap-lg',
+      xl: 'cn-layout-gap-xl',
+      '2xl': 'cn-layout-gap-2xl',
+      '3xl': 'cn-layout-gap-3xl',
+      '4xl': 'cn-layout-gap-4xl'
     },
     gapX: {
       none: 'gap-x-0',
-      '3xs': 'gap-x-[var(--cn-layout-3xs)]',
-      '2xs': 'gap-x-[var(--cn-layout-2xs)]',
-      xs: 'gap-x-[var(--cn-layout-xs)]',
-      sm: 'gap-x-[var(--cn-layout-sm)]',
-      md: 'gap-x-[var(--cn-layout-md)]',
-      lg: 'gap-x-[var(--cn-layout-lg)]',
-      xl: 'gap-x-[var(--cn-layout-xl)]'
+      '4xs': 'cn-layout-gap-x-4xs',
+      '3xs': 'cn-layout-gap-x-3xs',
+      '2xs': 'cn-layout-gap-x-2xs',
+      xs: 'cn-layout-gap-x-xs',
+      sm: 'cn-layout-gap-x-sm',
+      md: 'cn-layout-gap-x-md',
+      lg: 'cn-layout-gap-x-lg',
+      xl: 'cn-layout-gap-x-xl',
+      '2xl': 'cn-layout-gap-x-2xl',
+      '3xl': 'cn-layout-gap-x-3xl',
+      '4xl': 'cn-layout-gap-x-4xl'
     },
     gapY: {
       none: 'gap-y-0',
-      '3xs': 'gap-y-[var(--cn-layout-3xs)]',
-      '2xs': 'gap-y-[var(--cn-layout-2xs)]',
-      xs: 'gap-y-[var(--cn-layout-xs)]',
-      sm: 'gap-y-[var(--cn-layout-sm)]',
-      md: 'gap-y-[var(--cn-layout-md)]',
-      lg: 'gap-y-[var(--cn-layout-lg)]',
-      xl: 'gap-y-[var(--cn-layout-xl)]'
+      '4xs': 'cn-layout-gap-y-4xs',
+      '3xs': 'cn-layout-gap-y-3xs',
+      '2xs': 'cn-layout-gap-y-2xs',
+      xs: 'cn-layout-gap-y-xs',
+      sm: 'cn-layout-gap-y-sm',
+      md: 'cn-layout-gap-y-md',
+      lg: 'cn-layout-gap-y-lg',
+      xl: 'cn-layout-gap-y-xl',
+      '2xl': 'cn-layout-gap-y-2xl',
+      '3xl': 'cn-layout-gap-y-3xl',
+      '4xl': 'cn-layout-gap-y-4xl'
     }
   }
 })
 
-type GapSize = 'none' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+/**
+ * GapSize defines the available sizes for gaps in the layout.
+ *
+ * | Size | CSS Variable |
+ * |------|--------------|
+ * | none | No gap |
+ * | 4xs  | var(--cn-spacing-half) |
+ * | 3xs  | var(--cn-spacing-1) |
+ * | 2xs  | var(--cn-spacing-1-half) |
+ * | xs   | var(--cn-spacing-2) |
+ * | sm   | var(--cn-spacing-3) |
+ * | md   | var(--cn-spacing-4) |
+ * | lg   | var(--cn-spacing-5) |
+ * | xl   | var(--cn-spacing-6) |
+ * | 2xl  | var(--cn-spacing-8) |
+ * | 3xl  | var(--cn-spacing-10) |
+ * | 4xl  | var(--cn-spacing-20) |
+ */
+type GapSize = 'none' | '4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'
 
 interface LayoutProps {
   children?: ReactNode

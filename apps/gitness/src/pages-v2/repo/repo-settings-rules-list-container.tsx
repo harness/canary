@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 
 import {
+  OpenapiRuleType,
   RepoRuleDeleteErrorResponse,
   RepoRuleListErrorResponse,
   useRepoRuleDeleteMutation,
@@ -31,6 +32,8 @@ export const RepoSettingsRulesListContainer = () => {
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
+  const [parentScopeLabelsChecked, setParentScopeLabelsChecked] = useState(false)
+  const [ruleTypeFilter, setRuleTypeFilter] = useState<OpenapiRuleType | null>(null)
 
   const closeAlertDeleteDialog = () => {
     isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
@@ -45,7 +48,15 @@ export const RepoSettingsRulesListContainer = () => {
     refetch: refetchRulesList,
     isLoading: isRulesLoading
   } = useRepoRuleListQuery(
-    { repo_ref: repoRef, queryParams: { query: rulesSearchQuery } },
+    {
+      repo_ref: repoRef,
+      queryParams: {
+        query: rulesSearchQuery,
+        inherited: parentScopeLabelsChecked,
+        // @ts-expect-error BE expects an array but the API only works with a string
+        type: ruleTypeFilter ? ruleTypeFilter : undefined
+      }
+    },
     {
       onError: (error: RepoRuleListErrorResponse) => {
         const message = error.message || 'Error fetching rules'
@@ -100,6 +111,12 @@ export const RepoSettingsRulesListContainer = () => {
         apiError={apiError}
         toRepoBranchRuleCreate={() => routes.toRepoBranchRuleCreate({ spaceId, repoId: repoName })}
         toRepoTagRuleCreate={() => routes.toRepoTagRuleCreate({ spaceId, repoId: repoName })}
+        parentScopeLabelsChecked={parentScopeLabelsChecked}
+        onParentScopeLabelsChange={setParentScopeLabelsChecked}
+        showParentScopeLabelsCheckbox
+        ruleTypeFilter={ruleTypeFilter}
+        setRuleTypeFilter={setRuleTypeFilter}
+        toProjectRuleDetails={identifier => routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })}
       />
 
       <DeleteAlertDialog

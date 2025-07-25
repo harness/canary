@@ -173,6 +173,9 @@
     "rulesApplied": "Règles appliquées",
     "bypassAllowed": "Contournement autorisé",
     "bypassNotAllowed": "Contournement non autorisé",
+    "allRules": "All Rules",
+    "branchRules": "Branch Rules",
+    "tagRules": "Tag Rules",
     "newTagRule": "New tag rule",
     "createBranchRule": "New branch rule",
     "security": "Sécurité",
@@ -634,6 +637,11 @@
     "reader": "Reader",
     "readerDesc": "Can view but cannot make changes or leave comments."
   },
+  "rules": {
+    "showParentRules": "Show rules from parent scopes",
+    "edit": "Edit rule",
+    "delete": "Delete rule"
+  },
   "commits": {
     "commitDetailsDiffShowing": "Affichage de",
     "commitDetailsDiffChangedFiles": "fichiers modifiés",
@@ -645,10 +653,6 @@
     "verified": "Vérifié",
     "browseFiles": "Parcourir les fichiers",
     "createNewCommit": "Créer un nouveau commit"
-  },
-  "rules": {
-    "edit": "Edit rule",
-    "delete": "Delete rule"
   },
   "code": "Code",
   "createTagDialog": {

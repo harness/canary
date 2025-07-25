@@ -11,8 +11,10 @@ import {
   SkeletonList,
   Spacer,
   SplitButton,
-  StackedList
+  StackedList,
+  Tag
 } from '@/components'
+import { Select } from '@/components/form-primitives/select'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType } from '@/views'
 
@@ -58,6 +60,9 @@ export interface RepoSettingsGeneralRulesProps {
   projectScope?: boolean
   toRepoBranchRuleCreate?: () => string
   toRepoTagRuleCreate?: () => string
+  ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
+  setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
+  toProjectRuleDetails?: (identifier: string) => string
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -69,7 +74,10 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   rulesSearchQuery,
   setRulesSearchQuery,
   toRepoBranchRuleCreate,
-  toRepoTagRuleCreate
+  toRepoTagRuleCreate,
+  ruleTypeFilter,
+  setRuleTypeFilter,
+  toProjectRuleDetails
 }) => {
   const { navigate, Link } = useRouterContext()
   const { t } = useTranslation()
@@ -106,9 +114,17 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                {/* <NavLink to={toRepoBranchRuleCreate?.() ?? ''}>
-                  <Button variant="primary">{t('views:repos.newRule', 'New branch rule')}</Button>
-                </NavLink> */}
+                <Select
+                  options={[
+                    { label: t('views:repos.allRules', 'All Rules'), value: null },
+                    { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
+                    { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' }
+                  ]}
+                  value={ruleTypeFilter}
+                  onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
+                  size="md"
+                  triggerClassName="min-w-[150px]"
+                />
                 <SplitButton<string>
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
@@ -140,7 +156,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             <StackedList.Root>
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
-                  <Link to={`../rules/${rule.identifier}`} key={rule.identifier}>
+                  <Link to={toProjectRuleDetails?.(rule.identifier) || ''} key={rule.identifier}>
                     <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">
                       <StackedList.Field
                         className="gap-1.5"
@@ -152,6 +168,14 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                               <IconV2 className="text-icons-9" name="minus-circle" />
                             )}
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
+                            {rule.type && (
+                              <Tag
+                                variant="outline"
+                                size="sm"
+                                theme={rule.type === 'branch' ? 'blue' : 'green'}
+                                value={rule.type}
+                              />
+                            )}
                           </div>
                         }
                         description={

@@ -51,6 +51,7 @@ export interface RuleDataType {
   bypassAllowed: boolean
   identifier?: string
   state?: string
+  type?: 'branch' | 'tag'
 }
 
 export interface IRepoStore {

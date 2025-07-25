@@ -6,6 +6,7 @@ import { Command } from '@components/command'
 import { cn } from '@utils/cn'
 import { Command as CommandPrimitive } from 'cmdk'
 
+import { PrincipalsMentionMap } from '../../pull-request-details-types'
 import { getCaretCoordinates, getCurrentWord, replaceWord } from './utils'
 
 interface PullRequestCommentTextareaProps extends TextareaProps {
@@ -14,6 +15,7 @@ interface PullRequestCommentTextareaProps extends TextareaProps {
   users?: PrincipalType[]
   setSearchPrincipalsQuery: (query: string) => void
   searchPrincipalsQuery: string
+  setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
 }
 
 export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRequestCommentTextareaProps>(
@@ -21,10 +23,12 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     {
       value,
       setValue,
-      users = [],
+      users,
       setSearchPrincipalsQuery,
       onChange,
+      className,
       searchPrincipalsQuery,
+      setPrincipalsMentionMap,
       ...textareaProps
     }: PullRequestCommentTextareaProps,
     ref
@@ -77,7 +81,8 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           return
         }
 
-        if (textarea && input) {
+        // Only handle keyboard events when dropdown is open
+        if (textarea && input && dropdownOpen) {
           const currentWord = getCurrentWord(textarea)
 
           if (currentWord.startsWith('@')) {
@@ -89,7 +94,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           }
         }
       },
-      [setCommandValue]
+      [setCommandValue, dropdownOpen]
     )
 
     const onTextValueChange = useCallback(
@@ -98,13 +103,10 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
         const textarea = textareaRef.current
         const dropdown = dropdownRef.current
 
-        console.log('onChange')
-
         if (textarea && dropdown) {
           const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
           const currentWord = getCurrentWord(textarea)
           setValue(text)
-          console.log({ currentWord })
           // Only show dropdown when typing @ followed by at least one character
           if (currentWord.startsWith('@')) {
             setCommandValue(currentWord)
@@ -127,7 +129,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       const textarea = textareaRef.current
       const dropdown = dropdownRef.current
       if (textarea && dropdown) {
-        replaceWord(textarea, `${value}`)
+        replaceWord(textarea, `@[${value}]`)
         setCommandValue('')
         setDropdownOpen(false)
       }
@@ -153,8 +155,8 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     const renderCommandList = () => {
       if (typeof users === 'undefined') {
         return (
-          <Command.Loading className="text-cn-foreground-3 min-w-52 px-2 py-4 text-sm">
-            <div className="flex place-content-center space-x-2">
+          <Command.Loading className="text-cn-foreground-3 min-w-52 px-2 py-4">
+            <div className="grid place-content-center space-x-2">
               <IconV2 className="animate-spin" name="loader" />
             </div>
           </Command.Loading>
@@ -162,7 +164,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       }
 
       if (users === null || (Array.isArray(users) && users.length === 0)) {
-        return <Command.Empty className="text-cn-foreground-3 px-2 py-4 text-sm">No results.</Command.Empty>
+        return <Command.Empty className="p-2 min-w-max text-sm">User not found</Command.Empty>
       }
 
       console.log(users)
@@ -171,7 +173,14 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
         <Command.Group className="min-w-52 max-w-min overflow-auto">
           {users?.map(user => {
             return (
-              <Command.Item key={user.uid} value={user.email} onSelect={onCommandSelect}>
+              <Command.Item
+                key={user.uid}
+                value={user.email}
+                onSelect={(...args) => {
+                  onCommandSelect(...args)
+                  setPrincipalsMentionMap((prev: PrincipalsMentionMap) => ({ ...prev, [user.email]: user }))
+                }}
+              >
                 {user.email}
               </Command.Item>
             )
@@ -199,6 +208,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       <div className="relative w-full">
         <Textarea
           {...textareaProps}
+          className={cn('field-sizing-content max-h-96', className)}
           resizable
           value={value}
           onChange={e => {
@@ -206,17 +216,15 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
             onChange?.(e)
           }}
           ref={setRefs}
-          className="bg-cn-background-2 text-cn-foreground-1 h-auto min-h-36 resize-none p-3 pb-10"
           autoComplete="off"
           autoCorrect="off"
           placeholder="Add your comment here"
         />
-        {/* <p className="prose-none mt-1 text-sm text-muted-foreground">Supports markdown.</p> */}
 
         <Command.Root
           ref={dropdownRef}
           shouldFilter={false}
-          className={cn('absolute z-[10000] h-auto max-h-32 max-w-min overflow-y-scroll border border-popover shadow', {
+          className={cn('absolute z-[10000] h-auto max-w-min border', {
             hidden: !dropdownOpen
           })}
         >
@@ -225,7 +233,8 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
             <CommandPrimitive.Input ref={inputRef} />
           </div>
 
-          <Command.List>{renderCommandList()}</Command.List>
+          {/* max-h-52 - setting max height of the list to 208px */}
+          <Command.List heightClassName="max-h-52">{renderCommandList()}</Command.List>
         </Command.Root>
       </div>
     )

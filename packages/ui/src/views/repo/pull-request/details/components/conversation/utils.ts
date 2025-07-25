@@ -1,5 +1,7 @@
 // https://github.com/component/textarea-caret-position
 
+import { PrincipalsMentionMap } from '../../pull-request-details-types'
+
 // We'll copy the properties below into the mirror div.
 // Note that some browsers, such as Firefox, do not concatenate properties
 // into their shorthand (e.g. padding-top, padding-bottom etc. -> padding),
@@ -199,3 +201,23 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
 
   return coordinates
 }
+
+/**
+ * Replaces all mentions of the form @[\d+] with the email from the mentionsMap.
+ * If the id is not found in the mentionsMap, the original mention is left unchanged.
+ * @param input The string that contains the mentions to be replaced.
+ * @param mentionsMap A map of principalId to TypesPrincipalInfo.
+ * @returns A string with all mentions replaced with their corresponding email.
+ */
+export const replaceMentionIdWithEmail = (input: string, mentionsMap: PrincipalsMentionMap) =>
+  input.replace(/@\[(\d+)\]/g, (match, id) => (mentionsMap[id] ? `@[${mentionsMap[id].email}]` : match))
+
+/**
+ * Replaces all mentions of the form @[\S+@\S+\.\S+] with the id from the emailMap.
+ * If the email is not found in the emailMap, the original mention is left unchanged.
+ * @param input The string that contains the mentions to be replaced.
+ * @param emailMap A map of email to TypesPrincipalInfo.
+ * @returns A string with all mentions replaced with their corresponding id.
+ */
+export const replaceMentionEmailWithId = (input: string, emailMap: PrincipalsMentionMap) =>
+  input.replace(/@\[(\S+@\S+\.\S+)\]/g, (match, email) => (emailMap[email] ? `@[${emailMap[email].id}]` : match))

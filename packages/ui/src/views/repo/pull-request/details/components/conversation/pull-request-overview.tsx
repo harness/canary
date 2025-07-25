@@ -202,3 +202,5 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
     </div>
   )
 }
+
+PullRequestOverview.displayName = 'PullRequestOverview'

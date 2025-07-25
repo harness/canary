@@ -340,3 +340,4 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 }
 
 export const PullRequestRegularAndCodeComment = memo(PullRequestRegularAndCodeCommentInternal)
+PullRequestRegularAndCodeComment.displayName = 'PullRequestRegularAndCodeComment'

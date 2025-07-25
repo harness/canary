@@ -685,3 +685,4 @@ export const mergeMethodMapping: Record<MergeStrategy, MergeMethodDisplay> = {
   [MergeStrategy.REBASE]: MergeMethodDisplay.REBASED,
   [MergeStrategy.FAST_FORWARD]: MergeMethodDisplay.FAST_FORWARDED
 }
+export type PrincipalsMentionMap = Record<string, TypesPrincipalInfo>

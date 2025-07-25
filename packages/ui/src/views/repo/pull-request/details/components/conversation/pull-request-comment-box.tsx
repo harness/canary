@@ -10,13 +10,14 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { Avatar, Button, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { PrincipalType } from '@/types'
-import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
+import { handleFileDrop, handlePaste, HandleUploadType, PrincipalsMentionMap, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty, isUndefined } from 'lodash-es'
 
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
+import { replaceMentionEmailWithId } from './utils'
 
 interface TextSelection {
   start: number
@@ -102,6 +103,8 @@ export const PullRequestCommentBox = ({
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
+  const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
   }
@@ -112,7 +115,8 @@ export const PullRequestCommentBox = ({
 
   const handleSaveComment = () => {
     if (comment.trim()) {
-      onSaveComment(comment)
+      const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
+      onSaveComment(formattedComment)
       setComment('') // Clear the comment box after saving
     }
   }
@@ -408,7 +412,7 @@ export const PullRequestCommentBox = ({
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1 overflow-auto', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -446,12 +450,14 @@ export const PullRequestCommentBox = ({
               /> */}
 
               <PullRequestCommentTextarea
+                resizable
                 ref={textAreaRef}
                 users={principals}
                 className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
                 autoFocus={!!inReplyMode}
                 setSearchPrincipalsQuery={setSearchPrincipalsQuery}
                 searchPrincipalsQuery={searchPrincipalsQuery}
+                setPrincipalsMentionMap={setPrincipalsMentionMap}
                 value={comment}
                 setValue={setComment}
                 onChange={e => onCommentChange(e)}
@@ -467,7 +473,7 @@ export const PullRequestCommentBox = ({
                 <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />
               )}
 
-              <div className="bg-cn-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
+              <Layout.Flex align="center" className="bg-cn-background-2 pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -484,7 +490,7 @@ export const PullRequestCommentBox = ({
                     </Fragment>
                   )
                 })}
-              </div>
+              </Layout.Flex>
             </div>
           </Tabs.Content>
           <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>

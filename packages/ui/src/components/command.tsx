@@ -69,7 +69,9 @@ CommandList.displayName = CommandPrimitive.List.displayName
 const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => <CommandPrimitive.Empty ref={ref} className="px-2 py-4 text-sm text-cn-foreground-3" {...props} />)
+>(({ className, ...props }, ref) => (
+  <CommandPrimitive.Empty ref={ref} className={cn('px-2 py-4 text-sm text-cn-foreground-3', className)} {...props} />
+))
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
@@ -124,7 +126,7 @@ const CommandLoading = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Loading
     ref={ref}
-    className={cn('relative flex select-none items-center rounded px-2 py-1.5 text-sm outline-none', className)}
+    className={cn('relative select-none rounded px-2 py-1.5 text-sm outline-none', className)}
     {...props}
   />
 ))

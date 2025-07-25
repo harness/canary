@@ -666,3 +666,5 @@ export interface DiffHeaderProps {
   checksumAfter?: string
   diffData?: DiffFileEntry
 }
+
+export type PrincipalsMentionMap = Record<string, TypesPrincipalInfo>

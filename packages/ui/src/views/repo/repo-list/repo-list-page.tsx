@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo, useState } from 'react'
 
-import { IconV2, NoData, Pagination, SortValue, Spacer, SplitButton, Text } from '@/components'
+import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'

@@ -19,6 +19,7 @@ import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
+import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsRulesListContainer = () => {
@@ -104,12 +105,6 @@ export const RepoSettingsRulesListContainer = () => {
     navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
-  const transformToRuleDetailsUrl = (url?: string, ruleId?: string): string => {
-    if (!url || !ruleId) return ''
-
-    return url.replace('code', 'codeV2').replace('settings', 'manage-repositories/rules/' + ruleId)
-  }
-
   return (
     <>
       <RepoSettingsRulesPage
@@ -128,17 +123,16 @@ export const RepoSettingsRulesListContainer = () => {
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
         toProjectRuleDetails={(identifier, scope) => {
-          if (scope === 0) {
-            return routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })
-          }
-          if (scope === 1) {
-            return transformToRuleDetailsUrl(toAccountSettings?.(), identifier)
-          } else if (scope === 2) {
-            return transformToRuleDetailsUrl(toOrgSettings?.(), identifier)
-          } else if (scope === 3) {
-            return transformToRuleDetailsUrl(toProjectSettings?.(), identifier)
-          }
-          return ''
+          return generateRuleDetailsUrl({
+            scope,
+            identifier,
+            toAccountSettings,
+            toOrgSettings,
+            toProjectSettings,
+            toRepoBranchRule: routes.toRepoBranchRule,
+            spaceId,
+            repoId: repoName
+          })
         }}
       />
 

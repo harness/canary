@@ -14,6 +14,7 @@ import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
+import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesListContainer = () => {
@@ -101,12 +102,6 @@ export const ProjectRulesListContainer = () => {
     navigate(`${identifier}`)
   }
 
-  const transformToRuleDetailsUrl = (url?: string, ruleId?: string): string => {
-    if (!url || !ruleId) return ''
-
-    return url.replace('code', 'codeV2').replace('settings', 'manage-repositories/rules/' + ruleId)
-  }
-
   return (
     <>
       <ProjectRulesPage
@@ -122,14 +117,13 @@ export const ProjectRulesListContainer = () => {
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
         toProjectRuleDetails={(identifier, scope) => {
-          if (scope === 1) {
-            return transformToRuleDetailsUrl(toAccountSettings?.(), identifier)
-          } else if (scope === 2) {
-            return transformToRuleDetailsUrl(toOrgSettings?.(), identifier)
-          } else if (scope === 3) {
-            return transformToRuleDetailsUrl(toProjectSettings?.(), identifier)
-          }
-          return ''
+          return generateRuleDetailsUrl({
+            scope,
+            identifier,
+            toAccountSettings,
+            toOrgSettings,
+            toProjectSettings
+          })
         }}
         showParentScopeLabelsCheckbox={space_ref?.includes('/')}
         parentScopeLabelsChecked={showParentRules}

@@ -111,7 +111,6 @@ export const CreatePullRequest = () => {
 
   useEffect(() => {
     if (prTemplateData?.content?.data) {
-      setDesc(decodeGitContent(prTemplateData?.content?.data))
       setPrTemplate(decodeGitContent(prTemplateData?.content?.data))
     }
   }, [prTemplateData, setDesc])

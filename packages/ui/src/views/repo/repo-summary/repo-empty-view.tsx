@@ -6,11 +6,11 @@ import {
   CopyButton,
   Fieldset,
   FormSeparator,
-  Input,
   MarkdownViewer,
   NoData,
   Spacer,
-  Text
+  Text,
+  TextInput
 } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
@@ -83,8 +83,18 @@ git push -u origin main
             Please Generate Git Cradentials if it’s your first time cloning the repository
           </Text>
           <Text variant="heading-base">Git clone URL</Text>
-          <Input label="HTTP" value={httpUrl} readOnly rightElement={<CopyButton name={httpUrl} />} />
-          <Input label="SSH" value={sshUrl} readOnly rightElement={<CopyButton name={sshUrl} />} />
+          <TextInput
+            label="HTTP"
+            value={httpUrl}
+            readOnly
+            suffix={<CopyButton name={httpUrl} buttonVariant="transparent" />}
+          />
+          <TextInput
+            label="SSH"
+            value={sshUrl}
+            readOnly
+            suffix={<CopyButton name={sshUrl} buttonVariant="transparent" />}
+          />
           <ControlGroup>
             <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>

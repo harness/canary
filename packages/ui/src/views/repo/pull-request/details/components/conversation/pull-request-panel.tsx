@@ -254,8 +254,6 @@ const PullRequestPanel = ({
   const [accordionValues, setAccordionValues] = useState<string[]>([])
   const [showMergeInputs, setShowMergeInputs] = useState(false)
 
-  const [selectedMergeOption, setSelectedMergeOption] = useState<string | null>(null)
-
   useEffect(() => {
     setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
   }, [pullReqMetadata?.title])
@@ -273,17 +271,15 @@ const PullRequestPanel = ({
     }
     setMergeButtonValue(value)
     setShowMergeInputs(true)
-    setSelectedMergeOption(value)
   }
 
   const handleCancelMerge = () => {
     setShowMergeInputs(false)
-    setSelectedMergeOption(null)
   }
 
   const handleConfirmMerge = () => {
     setShowMergeInputs(false)
-    const actionIdx = actions.findIndex(action => action.id === selectedMergeOption)
+    const actionIdx = actions.findIndex(action => action.id === mergeButtonValue)
     if (actionIdx !== -1) {
       actions[actionIdx]?.action?.()
     }
@@ -405,7 +401,7 @@ const PullRequestPanel = ({
                           Cancel
                         </Button>
                         <Button theme="success" onClick={handleConfirmMerge}>
-                          Confirm {actions[parseInt(selectedMergeOption || '0')]?.title || 'Merge'}
+                          Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
                         </Button>
                       </>
                     ) : null}
@@ -439,30 +435,28 @@ const PullRequestPanel = ({
                 }
               />
               {showMergeInputs && (
-                <div className="flex flex-col items-center w-full mt-4">
-                  <div className="flex flex-col gap-4 w-full">
-                    <div>
-                      <Input
-                        id="merge-title"
-                        label="PR Title"
-                        className="w-full bg-white"
-                        value={mergeTitle}
-                        onChange={e => setMergeTitle(e.target.value)}
-                        optional
-                      />
-                    </div>
-                    <div>
-                      <Textarea
-                        id="merge-message"
-                        label="Commit Message"
-                        className="w-full"
-                        value={mergeMessage}
-                        onChange={e => setMergeMessage(e.target.value)}
-                        optional
-                      />
-                    </div>
-                  </div>
-                </div>
+                <Layout.Vertical className="items-center w-full mt-4">
+                  <Layout.Vertical className="gap-4 w-full">
+                    <Input
+                      id="merge-title"
+                      label="PR Title"
+                      className="w-full bg-cn-background-1"
+                      value={mergeTitle}
+                      onChange={e => setMergeTitle(e.target.value)}
+                      optional
+                      placeholder="Enter pull request title (optional)"
+                    />
+                    <Textarea
+                      id="merge-message"
+                      label="Commit Message"
+                      className="w-full"
+                      value={mergeMessage}
+                      onChange={e => setMergeMessage(e.target.value)}
+                      optional
+                      placeholder="Enter commit message (optional)"
+                    />
+                  </Layout.Vertical>
+                </Layout.Vertical>
               )}
             </>
           )}

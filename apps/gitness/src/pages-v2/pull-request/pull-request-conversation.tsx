@@ -557,6 +557,9 @@ export default function PullRequestConversationPage() {
     refetchActivities()
   }, [refetchCodeOwners, refetchPullReq, refetchActivities])
 
+  const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
+  const [mergeMessage, setMergeMessage] = useState('')
+
   const handleMerge = useCallback(
     (method: EnumMergeMethod) => {
       const payload: OpenapiMergePullReq = {
@@ -564,13 +567,8 @@ export default function PullRequestConversationPage() {
         source_sha: pullReqMetadata?.source_sha,
         bypass_rules: checkboxBypass,
         dry_run: false,
-        message:
-          method === 'squash'
-            ? pullReqCommits?.commits
-                ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
-                .join('\n\n')
-                ?.slice(0, 1000)
-            : ''
+        title: mergeTitle,
+        message: mergeMessage
       }
       mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
         .then(_res => {
@@ -589,7 +587,16 @@ export default function PullRequestConversationPage() {
       //todo: add catch to show errors
       // .catch(exception => showError(getErrorMessage(exception)))
     },
-    [pullReqMetadata?.source_sha, checkboxBypass, repoRef, prId, handleRefetchData, setRuleViolationArr, pullReqCommits]
+    [
+      pullReqMetadata?.source_sha,
+      checkboxBypass,
+      repoRef,
+      prId,
+      handleRefetchData,
+      setRuleViolationArr,
+      mergeTitle,
+      mergeMessage
+    ]
   )
 
   const handlePrState = useCallback(
@@ -756,7 +763,11 @@ export default function PullRequestConversationPage() {
       toPRCheck: ({ pipelineId, executionId }: { pipelineId: string; executionId: string }) =>
         routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
       spaceId,
-      repoId
+      repoId,
+      mergeTitle,
+      mergeMessage,
+      setMergeTitle,
+      setMergeMessage
     }
   }, [
     handleRebaseBranch,
@@ -776,7 +787,11 @@ export default function PullRequestConversationPage() {
     onDeleteBranch,
     showDeleteBranchButton,
     showRestoreBranchButton,
-    errorMsg
+    errorMsg,
+    mergeTitle,
+    mergeMessage,
+    setMergeTitle,
+    setMergeMessage
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

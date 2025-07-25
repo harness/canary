@@ -13,7 +13,8 @@ const mockRepos: RepoRepositoryOutput[] = [
     updated: 1617181723,
     created: 1617181723,
     importing: false,
-    is_favorite: true
+    is_favorite: true,
+    path: 'accountId/repo1'
   }
 ]
 

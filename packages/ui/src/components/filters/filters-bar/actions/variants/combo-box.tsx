@@ -2,16 +2,16 @@ import { ReactNode } from 'react'
 
 import { DropdownMenu, ScrollArea, SearchInput } from '@components/index'
 
-export interface ComboBoxOption {
+export interface ComboBoxOptions {
   label: string
   value: string
 }
 
 interface ComboBoxProps {
-  options: Array<ComboBoxOption>
+  options: Array<ComboBoxOptions>
   onSearch?: (searchQuery: string) => void
-  onUpdateFilter: (selectedValues?: ComboBoxOption) => void
-  filterValue?: ComboBoxOption
+  onUpdateFilter: (selectedValues?: ComboBoxOptions) => void
+  filterValue?: ComboBoxOptions
   isLoading?: boolean
   placeholder?: string
   noResultsMessage: ReactNode

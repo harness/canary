@@ -3,7 +3,7 @@ import { FC, useCallback, useMemo } from 'react'
 import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import { ComboBoxOption } from '@components/filters/filters-bar/actions/variants/combo-box'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes } from '@components/filters/types'
 import FilterGroup from '@views/components/FilterGroup'
 import { noop } from 'lodash-es'
@@ -89,7 +89,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
-  const ScopeOptions: ComboBoxOption[] = useMemo(() => {
+  const ScopeOptions: ComboBoxOptions[] = useMemo(() => {
     if (accountId && orgIdentifier && projectIdentifier) return []
 
     if (accountId && orgIdentifier) {
@@ -176,10 +176,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   allowSearch: false
                 },
                 parser: {
-                  parse: (value: string): ComboBoxOption => {
+                  parse: (value: string): ComboBoxOptions => {
                     return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
                   },
-                  serialize: (value: ComboBoxOption): string => {
+                  serialize: (value: ComboBoxOptions): string => {
                     const selected = value?.value
 
                     if (accountId && orgIdentifier && projectIdentifier) return ''

@@ -7,7 +7,7 @@ import { Label } from '@components/form-primitives'
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
-import Combobox, { ComboBoxOption } from './filters-bar/actions/variants/combo-box'
+import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import {
   CheckboxOptions,
@@ -68,7 +68,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       return <Text filter={textFilter} onUpdateFilter={values => onUpdateFilter(values as V)} />
     }
     case FilterFieldTypes.ComboBox: {
-      const comboBoxFilter = filter as FilterField<ComboBoxOption>
+      const comboBoxFilter = filter as FilterField<ComboBoxOptions>
       return (
         <Combobox
           filterValue={comboBoxFilter.value}

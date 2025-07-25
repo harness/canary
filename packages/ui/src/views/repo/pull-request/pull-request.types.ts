@@ -1,6 +1,6 @@
 import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, ILabelsStore, LabelType, TypesBranchTable } from '@/views'
-import { ComboBoxOption } from '@components/filters/filters-bar/actions/variants/combo-box'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
 
@@ -272,7 +272,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
 }
 
 export type PRListFilters = {
-  created_by?: ComboBoxOption
+  created_by?: ComboBoxOptions
   created_lt?: Date
   created_gt?: Date
   label_by?: LabelsValue

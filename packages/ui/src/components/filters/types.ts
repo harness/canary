@@ -1,6 +1,6 @@
 import { JSX, ReactNode } from 'react'
 
-import { ComboBoxOption } from '@components/filters/filters-bar/actions/variants/combo-box'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { Parser } from '@harnessio/filters'
 
@@ -30,7 +30,7 @@ interface FilterOptionConfigBase<Key extends string, V = undefined> {
   parser?: Parser<V>
 }
 
-interface ComboBoxFilterOptionConfig<Key extends string = string> extends FilterOptionConfigBase<Key, ComboBoxOption> {
+interface ComboBoxFilterOptionConfig<Key extends string = string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
   type: FilterFieldTypes.ComboBox
   filterFieldConfig: {
     options: Array<{ label: string; value: string }>

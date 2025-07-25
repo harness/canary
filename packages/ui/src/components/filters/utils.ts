@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { format } from 'date-fns'
 
-import { ComboBoxOption } from './filters-bar/actions/variants/combo-box'
+import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
 import { CheckboxOptions, FilterFieldConfig, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
 
 export const getFilterLabelValue = <
@@ -27,7 +27,7 @@ export const getFilterLabelValue = <
       return formatDate(filterValue)
     }
     case FilterFieldTypes.ComboBox: {
-      const filterValue = filter.value as ComboBoxOption | undefined
+      const filterValue = filter.value as ComboBoxOptions | undefined
       if (filterValue?.label) {
         return filterValue.label
       }

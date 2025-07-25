@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -38,6 +38,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
+  const [showScope, setShowScope] = useState(false)
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -85,7 +86,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setPage(1)
   }
 
-  const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
+  const onFilterValueChange = (filterValues: RepoListFilters) => {
+    onFilterChange(filterValues)
+    /**
+     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
+     */
+    setShowScope([ExtendedScope.All, ExtendedScope.OrgProg].includes(filterValues.recursive?.value as ExtendedScope))
+  }
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
@@ -200,6 +207,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           toImportRepo={toImportRepo}
           onFavoriteToggle={onFavoriteToggle}
           scope={scope}
+          showScope={showScope}
           {...routingProps}
         />
         {!!repositories?.length && (

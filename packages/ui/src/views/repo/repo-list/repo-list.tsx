@@ -23,6 +23,7 @@ export interface PageProps extends Partial<RoutingProps>, FavoriteProps {
   isDirtyList: boolean
   isLoading: boolean
   scope: Scope
+  showScope?: boolean
 }
 
 const Stats = ({ pulls }: { pulls: number }) => (
@@ -41,7 +42,8 @@ const Title = ({
   isFavorite,
   onFavoriteToggle,
   scope,
-  repoPath
+  repoPath,
+  showScope = false
 }: {
   repoId: number
   repoName: string
@@ -50,6 +52,7 @@ const Title = ({
   isFavorite?: boolean
   scope: Scope
   repoPath: string
+  showScope?: boolean
 }) => {
   const { t } = useTranslation()
   return (
@@ -60,7 +63,7 @@ const Title = ({
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
         <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
-        <ScopeTag repoIdentifier={repoName} repoPath={repoPath} {...scope} />
+        {showScope ? <ScopeTag repoIdentifier={repoName} repoPath={repoPath} {...scope} /> : null}
       </Layout.Flex>
     </Layout.Flex>
   )
@@ -75,7 +78,8 @@ export function RepoList({
   toCreateRepo,
   toImportRepo,
   onFavoriteToggle,
-  scope
+  scope,
+  showScope = false
 }: PageProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -146,6 +150,7 @@ export function RepoList({
                   onFavoriteToggle={onFavoriteToggle}
                   repoPath={repo.path}
                   scope={scope}
+                  showScope={showScope}
                 />
               }
               className="flex max-w-[80%] gap-1.5 text-wrap"

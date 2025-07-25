@@ -1,6 +1,6 @@
 export default {
   '.cn-form': {
-    '@apply flex flex-col gap-y-7': ''
+    '@apply flex flex-col gap-y-6': ''
   },
 
   ':where(.cn-control-group)': {

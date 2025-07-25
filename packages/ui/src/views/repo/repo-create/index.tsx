@@ -136,7 +136,7 @@ export function RepoCreatePage({
             {t('views:repos.importRepo', 'Import a repository')}.
           </Link>
         </Text>
-        <Spacer size={10} />
+        <Spacer size={6} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)}>
           {/* NAME */}
           <Fieldset>
@@ -167,6 +167,7 @@ export function RepoCreatePage({
               label="Select a default branch"
               error={errors.defaultBranch?.message?.toString()}
               caption="Choose the name to initialize the default branch of your repository."
+              contentWidth="triggerWidth"
             />
           ) : undefined}
 
@@ -179,6 +180,7 @@ export function RepoCreatePage({
             label="Add a .gitignore"
             error={errors.gitignore?.message?.toString()}
             caption="Choose which files not to track from a list of templates."
+            contentWidth="triggerWidth"
           />
 
           {/* LICENSE */}
@@ -190,6 +192,7 @@ export function RepoCreatePage({
             label="Choose a license"
             error={errors.license?.message?.toString()}
             caption="A license tells others what they can and can't do with your code."
+            contentWidth="triggerWidth"
           />
 
           {/* ACCESS */}
@@ -235,7 +238,7 @@ export function RepoCreatePage({
           )}
 
           {/* SUBMIT BUTTONS */}
-          <Fieldset>
+          <Fieldset className="mt-8">
             <ControlGroup>
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}

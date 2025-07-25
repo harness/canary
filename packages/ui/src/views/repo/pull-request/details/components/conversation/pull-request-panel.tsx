@@ -253,7 +253,6 @@ const PullRequestPanel = ({
     setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
   }, [pullReqMetadata?.title])
 
-  // Handler for merge type selection
   const handleMergeTypeSelect = (value: string) => {
     if (actions[parseInt(value)].title === 'Squash and merge') {
       setMergeMessage(
@@ -270,13 +269,11 @@ const PullRequestPanel = ({
     setSelectedMergeOption(value)
   }
 
-  // Handler for canceling merge input
   const handleCancelMerge = () => {
     setShowMergeInputs(false)
     setSelectedMergeOption(null)
   }
 
-  // Handler for confirming merge
   const handleConfirmMerge = () => {
     setShowMergeInputs(false)
     const actionIdx = actions.findIndex(action => action.id === selectedMergeOption)
@@ -434,7 +431,6 @@ const PullRequestPanel = ({
                   </Layout.Horizontal>
                 }
               />
-              {/* Merge input fields below, only when in merge input mode */}
               {showMergeInputs && (
                 <div className="flex flex-col items-center w-full mt-4">
                   <div className="flex flex-col gap-4 w-full">

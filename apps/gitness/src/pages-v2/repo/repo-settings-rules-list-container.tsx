@@ -116,6 +116,7 @@ export const RepoSettingsRulesListContainer = () => {
         showParentScopeLabelsCheckbox
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
+        toProjectRuleDetails={identifier => routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })}
       />
 
       <DeleteAlertDialog

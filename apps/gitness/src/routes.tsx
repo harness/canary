@@ -155,7 +155,8 @@ const rulesRoute = {
       path: ':ruleId',
       element: <ProjectRulesContainer />,
       handle: {
-        breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>
+        breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>,
+        routeName: RouteConstants.toProjectRuleDetails
       }
     }
   ]

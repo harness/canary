@@ -21,6 +21,7 @@ interface RepoSettingsRulesPageProps {
   onParentScopeLabelsChange?: (checked: boolean) => void
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
+  toProjectRuleDetails?: (identifier: string) => string
 }
 
 export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
@@ -38,7 +39,8 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   parentScopeLabelsChecked = false,
   onParentScopeLabelsChange,
   ruleTypeFilter,
-  setRuleTypeFilter
+  setRuleTypeFilter,
+  toProjectRuleDetails
 }) => {
   const { rules } = useRepoRulesStore()
   const { t } = useTranslation()
@@ -82,6 +84,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
         toRepoTagRuleCreate={toRepoTagRuleCreate}
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
+        toProjectRuleDetails={toProjectRuleDetails}
       />
     </SandboxLayout.Content>
   )

@@ -110,6 +110,7 @@ export const ProjectRulesListContainer = () => {
         handleRuleClick={handleRuleEditClick}
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
+        toProjectRuleDetails={(identifier: string) => routes.toProjectRuleDetails({ space_ref, ruleId: identifier })}
         showParentScopeLabelsCheckbox={space_ref?.includes('/')}
         parentScopeLabelsChecked={showParentRules}
         onParentScopeLabelsChange={setShowParentRules}

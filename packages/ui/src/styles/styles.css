@@ -509,11 +509,6 @@ mark {
 }
 
 /*  MONACO EDITOR  */
-.monaco-editor,
-.monaco-diff-editor {
-  min-height: 100px;
-}
-
 .monaco-scrollable-element > .scrollbar > .slider {
   border-radius: var(--cn-rounded-full, 0.25rem);
   --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));

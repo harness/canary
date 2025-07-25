@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
-import { useSpaceRuleDeleteMutation, useSpaceRuleListQuery } from '@harnessio/code-service-client'
+import { OpenapiRuleType, useSpaceRuleDeleteMutation, useSpaceRuleListQuery } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import { ErrorTypes, ProjectRulesPage } from '@harnessio/ui/views'
@@ -29,6 +29,7 @@ export const ProjectRulesListContainer = () => {
 
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
+  const [ruleTypeFilter, setRuleTypeFilter] = useState<OpenapiRuleType | null>(null)
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
 
   const closeAlertDeleteDialog = () => {
@@ -48,7 +49,9 @@ export const ProjectRulesListContainer = () => {
     queryParams: {
       page: queryPage,
       query: query ?? '',
-      inherited: showParentRules
+      inherited: showParentRules,
+      // @ts-expect-error BE expects an array but the API only works with a string
+      type: ruleTypeFilter ? ruleTypeFilter : undefined
     }
   })
 
@@ -110,6 +113,8 @@ export const ProjectRulesListContainer = () => {
         showParentScopeLabelsCheckbox={space_ref?.includes('/')}
         parentScopeLabelsChecked={showParentRules}
         onParentScopeLabelsChange={setShowParentRules}
+        ruleTypeFilter={ruleTypeFilter}
+        setRuleTypeFilter={setRuleTypeFilter}
       />
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}

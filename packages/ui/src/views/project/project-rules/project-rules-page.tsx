@@ -20,6 +20,8 @@ export interface ProjectRulesPageProps {
   showParentScopeLabelsCheckbox?: boolean
   parentScopeLabelsChecked?: boolean
   onParentScopeLabelsChange?: (checked: boolean) => void
+  ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
+  setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
 }
 export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   useProjectRulesStore,
@@ -35,7 +37,9 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   toProjectTagRuleCreate,
   showParentScopeLabelsCheckbox = false,
   parentScopeLabelsChecked = false,
-  onParentScopeLabelsChange
+  onParentScopeLabelsChange,
+  ruleTypeFilter,
+  setRuleTypeFilter
 }) => {
   const { t } = useTranslation()
   const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
@@ -89,6 +93,8 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             projectScope
             toRepoBranchRuleCreate={toProjectBranchRuleCreate}
             toRepoTagRuleCreate={toProjectTagRuleCreate}
+            ruleTypeFilter={ruleTypeFilter}
+            setRuleTypeFilter={setRuleTypeFilter}
           />
         )}
 

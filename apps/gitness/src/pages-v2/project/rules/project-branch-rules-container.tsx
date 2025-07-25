@@ -8,6 +8,7 @@ import {
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
 } from '@harnessio/code-service-client'
+import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
@@ -138,8 +139,12 @@ export const ProjectBranchRulesContainer = () => {
     dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string[]) => {
-    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
+  const handleSelectChangeForRule = (ruleId: string, selectedOptions: MultiSelectOption[]) => {
+    dispatch({
+      type: BranchRulesActionType.SET_SELECT_OPTION,
+      ruleId,
+      selectedOptions
+    })
   }
 
   const handleInputChange = (ruleId: string, value: string) => {
@@ -155,6 +160,11 @@ export const ProjectBranchRulesContainer = () => {
             id: rule.id,
             checked: false,
             disabled: false,
+            hidden: false,
+            validationMessage: {
+              theme: MessageTheme.DEFAULT,
+              message: ''
+            },
             submenu: [],
             selectOptions: [],
             input: ''
@@ -169,6 +179,11 @@ export const ProjectBranchRulesContainer = () => {
           id: rule.id,
           checked: rule.checked || false,
           disabled: rule.disabled || false,
+          hidden: rule.hidden || false,
+          validationMessage: rule.validationMessage || {
+            theme: MessageTheme.DEFAULT,
+            message: ''
+          },
           submenu: (rule.submenu || []) as MergeStrategy[],
           selectOptions: rule.selectOptions || [],
           input: rule.input || ''

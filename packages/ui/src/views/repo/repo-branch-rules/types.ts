@@ -1,5 +1,7 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
+import { MessageTheme } from '@components/index'
+import { MultiSelectOption } from '@components/multi-select'
 import { z } from 'zod'
 
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
@@ -8,8 +10,13 @@ export type Rule = {
   id: string
   checked: boolean
   disabled: boolean
+  hidden: boolean
+  validationMessage: {
+    theme: MessageTheme
+    message: string
+  }
   submenu: ('merge' | 'rebase' | 'squash')[]
-  selectOptions: string[]
+  selectOptions: MultiSelectOption[]
   input: string
 }
 
@@ -24,7 +31,7 @@ export enum BranchRulesActionType {
 export type BranchRulesAction =
   | { type: BranchRulesActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
   | { type: BranchRulesActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
-  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: string[] }
+  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: MultiSelectOption[] }
   | { type: BranchRulesActionType.SET_INITIAL_RULES; payload: Rule[] }
   | { type: BranchRulesActionType.SET_INPUT_VALUE; ruleId: string; value: string }
 
@@ -49,6 +56,8 @@ export enum BranchRuleId {
   BLOCK_BRANCH_UPDATE = 'update_forbidden_with_merge_block',
   BLOCK_FORCE_PUSH = 'update_force_forbidden',
   REQUIRE_PULL_REQUEST = 'update_forbidden_without_merge_block',
+  ENABLE_DEFAULT_REVIEWERS = 'enable_default_reviewers',
+  REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT = 'require_minimum_default_reviewer_count',
   REQUIRE_CODE_REVIEW = 'require_minimum_count',
   REQUIRE_CODE_OWNERS = 'require_code_owners',
   AUTO_ADD_CODE_OWNERS = 'request_code_owners'
@@ -91,8 +100,13 @@ export const repoBranchSettingsFormSchema = z.object({
       id: z.string(),
       checked: z.boolean(),
       disabled: z.boolean(),
+      hidden: z.boolean(),
+      validationMessage: z.object({
+        theme: z.nativeEnum(MessageTheme),
+        message: z.string()
+      }),
       submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
-      selectOptions: z.array(z.string()),
+      selectOptions: z.array(z.object({ id: z.union([z.string(), z.number()]), key: z.string() })),
       input: z.string()
     })
   )

@@ -12,6 +12,7 @@ export interface BranchRuleType {
     label: string
   }[]
   hasInput?: boolean
+  isNested?: boolean
 }
 
 export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
@@ -54,6 +55,25 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
       'views:repos.RequirePullRequestDescription',
       'Do not allow any changes to matching branches without a pull request'
     )
+  },
+  {
+    id: BranchRuleId.ENABLE_DEFAULT_REVIEWERS,
+    label: t('views:repos.EnableDefaultReviewers', 'Enable default reviewers'),
+    description: t(
+      'views:repos.EnableDefaultReviewersDescription',
+      'Automatically add default reviewers to pull requests'
+    ),
+    hasSelect: true
+  },
+  {
+    id: BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT,
+    label: t('views:repos.RequireMinimumDefaultReviewerCount', 'Require minimum number of default reviewers'),
+    description: t(
+      'views:repos.RequireMinimumDefaultReviewerCountDescription',
+      'Require a minimum number of default reviewers'
+    ),
+    hasInput: true,
+    isNested: true
   },
   {
     id: BranchRuleId.REQUIRE_CODE_REVIEW,

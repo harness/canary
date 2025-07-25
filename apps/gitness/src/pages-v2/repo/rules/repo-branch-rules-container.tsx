@@ -8,10 +8,11 @@ import {
   useRepoRuleGetQuery,
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
+import { MessageTheme, MultiSelectOption, SkeletonForm } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
+  BranchRuleId,
   BranchRulesActionType,
   getBranchRules,
   MergeStrategy,
@@ -150,8 +151,12 @@ export const RepoBranchRulesContainer = () => {
     dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string[]) => {
-    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
+  const handleSelectChangeForRule = (ruleId: string, selectedOptions: MultiSelectOption[]) => {
+    dispatch({
+      type: BranchRulesActionType.SET_SELECT_OPTION,
+      ruleId,
+      selectedOptions
+    })
   }
 
   const handleInputChange = (ruleId: string, value: string) => {
@@ -167,6 +172,11 @@ export const RepoBranchRulesContainer = () => {
             id: rule.id,
             checked: false,
             disabled: false,
+            hidden: rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT,
+            validationMessage: {
+              theme: MessageTheme.DEFAULT,
+              message: ''
+            },
             submenu: [],
             selectOptions: [],
             input: ''
@@ -181,6 +191,11 @@ export const RepoBranchRulesContainer = () => {
           id: rule.id,
           checked: rule.checked || false,
           disabled: rule.disabled || false,
+          hidden: rule.hidden || false,
+          validationMessage: rule.validationMessage || {
+            theme: MessageTheme.DEFAULT,
+            message: ''
+          },
           submenu: (rule.submenu || []) as MergeStrategy[],
           selectOptions: rule.selectOptions || [],
           input: rule.input || ''

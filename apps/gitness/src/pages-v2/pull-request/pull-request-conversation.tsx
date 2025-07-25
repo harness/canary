@@ -536,12 +536,14 @@ export default function PullRequestConversationPage() {
       changeReqReviewer,
       changeReqEvaluations,
       codeOwnersData,
-      defaultReviewersData
+      defaultReviewersData,
+      mergeBlockedViaRule: prPanelData?.mergeBlockedViaRule
     })
   }, [
     prPanelData?.atLeastOneReviewerRule,
     prPanelData?.minApproval,
     prPanelData?.minReqLatestApproval,
+    prPanelData?.mergeBlockedViaRule,
     approvedEvaluations,
     latestApprovalArr,
     changeReqReviewer,
@@ -761,13 +763,13 @@ export default function PullRequestConversationPage() {
         content: changesInfo.statusMessage,
         status: changesInfo.statusIcon
       },
+      checks: pullReqChecksDecision?.data?.checks,
       checksInfo: {
         header: pullReqChecksDecision.checkInfo.title,
         content: pullReqChecksDecision.summaryText,
         status: pullReqChecksDecision?.checkInfo.status as EnumCheckStatus
       },
       prPanelData,
-      checks: pullReqChecksDecision?.data?.checks,
       error: mergeErrorMessage,
       // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this
       pullReqMetadata,

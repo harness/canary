@@ -11,10 +11,6 @@ import { LineDescription, LineTitle } from './pull-request-line-title'
 
 const ACCORDION_VALUE = 'item-3'
 
-interface ExecutionPayloadType {
-  execution_number: number
-}
-
 interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> {
   checkData: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
@@ -24,7 +20,7 @@ interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> 
 const PullRequestCheckSection = ({
   checkData,
   checksInfo,
-  toPRCheck,
+  // toPRCheck, TODO: add back when checks page is implemented
   accordionValues
 }: PullRequestMergeSectionProps) => {
   const { Link } = useRouterContext()
@@ -69,7 +65,8 @@ const PullRequestCheckSection = ({
                   {check?.check?.identifier}
                 </Text>
                 <Text color="foreground-3">
-                  {check?.check?.status === ExecutionState.SUCCESS
+                  {check?.check?.status === ExecutionState.SUCCESS ||
+                  check?.check?.status === ExecutionState.FAILURE_IGNORED
                     ? `Succeeded in ${time}`
                     : check?.check?.status === ExecutionState.FAILURE
                       ? `Failed in ${time}`
@@ -82,29 +79,9 @@ const PullRequestCheckSection = ({
               </div>
               <div className="grid grid-cols-[84px_auto] items-center">
                 <div className="col-span-1">
-                  {/* TODO: figure out how to do link in this? */}
-                  {/* <Link
-              className="text-blue-500 mx-2"
-              to={
-                routes.toCODEPullRequest({
-                  repoPath: repoMetadata.path as string,
-                  pullRequestId: String(pullReqMetadata.number),
-                  pullRequestSection: PullRequestSection.CHECKS
-                }) + `?uid=${check?.check?.identifier}`
-              }
-            ></Link> */}
                   {check?.check?.status !== ExecutionState.PENDING && (
-                    <Link
-                      to={
-                        toPRCheck?.({
-                          pipelineId: check?.check?.identifier || '',
-                          executionId: (
-                            check?.check?.payload?.data as ExecutionPayloadType
-                          ).execution_number?.toString()
-                        }) || ''
-                      }
-                    >
-                      <Text color="foreground-3">Details</Text>
+                    <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
+                      Details
                     </Link>
                   )}
                 </div>
@@ -120,55 +97,6 @@ const PullRequestCheckSection = ({
               </div>
             </div>
           )
-          // return (
-          //   <div key={check_idx} className="flex justify-between py-2 border-t">
-          //     <div className="flex items-center">
-          //       {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-
-          //       <div className="truncate min-w-[200px] max-w-[200px] pl-3 pt-0.5"> {check?.check?.identifier}</div>
-          //       <div className="truncate max-w-[200px] pl-3 pt-0.5">
-          //         {check?.check?.status === ExecutionState.SUCCESS
-          //           ? `Succeeded in ${time}`
-          //           : check?.check?.status === ExecutionState.FAILURE
-          //             ? `Failed in ${time}`
-          //             : check?.check?.status === ExecutionState.RUNNING
-          //               ? 'Running...'
-          //               : check?.check?.status === ExecutionState.PENDING
-          //                 ? 'Pending...'
-          //                 : `Errored in ${time}`}
-          //       </div>
-          //     </div>
-          //     <div className="grid grid-cols-[84px_auto] items-center">
-          //       <div className="col-span-1">
-          //         {/* TODO: figure out how to do link in this? */}
-          //         {/* <Link
-          //   className="text-blue-500 mx-2"
-          //   to={
-          //     routes.toCODEPullRequest({
-          //       repoPath: repoMetadata.path as string,
-          //       pullRequestId: String(pullReqMetadata.number),
-          //       pullRequestSection: PullRequestSection.CHECKS
-          //     }) + `?uid=${check?.check?.identifier}`
-          //   }
-          // ></Link> */}
-          //         {check?.check?.status !== ExecutionState.PENDING && (
-          //           <Text weight="medium" size={1}>
-          //             Details
-          //           </Text>
-          //         )}
-          //       </div>
-          //       <div className="col-span-1 flex justify-end">
-          //         {check.required ? (
-          //           <div className="border rounded-full bg-transparent">
-          //             <Text className="text-2 text-cn-foreground-3 px-2 py-1.5">required</Text>
-          //           </div>
-          //         ) : (
-          //           <div className="min-w-[70px]"></div>
-          //         )}
-          //       </div>
-          //     </div>
-          //   </div>
-          // )
         })}
       </Accordion.Content>
     </Accordion.Item>

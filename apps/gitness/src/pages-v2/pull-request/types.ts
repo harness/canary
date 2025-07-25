@@ -116,7 +116,9 @@ export type extractInfoForPRPanelChangesProps = Pick<
   | 'changeReqEvaluations'
   | 'defaultReviewersData'
   | 'codeOwnersData'
->
+> & {
+  mergeBlockedViaRule?: boolean
+}
 
 export interface TypesDefaultReviewerApprovalsResponseWithRevDecision extends TypesDefaultReviewerApprovalsResponse {
   principals?: PrincipalInfoWithReviewDecision[] | null // Override the 'principals' field

@@ -15,6 +15,8 @@ import {
   Rule
 } from '@harnessio/ui/views'
 
+import { getDefaultReviewersValidationMessage } from '../pages-v2/repo/transform-utils/handle_rule_interdependencies'
+
 const ruleIds = [
   BranchRuleId.BLOCK_BRANCH_CREATION,
   BranchRuleId.BLOCK_BRANCH_DELETION,
@@ -85,6 +87,10 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
       case BranchRuleId.ENABLE_DEFAULT_REVIEWERS:
         checked = (definition?.pullreq?.reviewers?.default_reviewer_ids?.length ?? 0) > 0
         selectOptions = getDetailsByIds(definition?.pullreq?.reviewers?.default_reviewer_ids || [], users)
+        validationMessage = getDefaultReviewersValidationMessage(
+          definition?.pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0,
+          definition?.pullreq?.reviewers?.default_reviewer_ids?.length ?? 0
+        )
         break
       case BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT:
         checked = (definition?.pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0) > 0

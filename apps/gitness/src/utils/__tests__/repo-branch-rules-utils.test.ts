@@ -66,13 +66,30 @@ const mockFormOutput = {
     { id: BranchRuleId.REQUIRE_LATEST_COMMIT, checked: true },
     { id: BranchRuleId.REQUIRE_NO_CHANGE_REQUEST, checked: false },
     { id: BranchRuleId.COMMENTS, checked: true },
-    { id: BranchRuleId.STATUS_CHECKS, checked: true, selectOptions: [{ id: 'check1', key: 'check1' }, { id: 'check2', key: 'check2' }] },
+    {
+      id: BranchRuleId.STATUS_CHECKS,
+      checked: true,
+      selectOptions: [
+        { id: 'check1', key: 'check1' },
+        { id: 'check2', key: 'check2' }
+      ]
+    },
     { id: BranchRuleId.MERGE, checked: true, submenu: ['merge', 'rebase'] },
     { id: BranchRuleId.DELETE_BRANCH, checked: true },
     { id: BranchRuleId.BLOCK_BRANCH_CREATION, checked: true },
     { id: BranchRuleId.BLOCK_BRANCH_DELETION, checked: false },
     { id: BranchRuleId.REQUIRE_PULL_REQUEST, checked: true },
     { id: BranchRuleId.REQUIRE_CODE_REVIEW, checked: true, input: '2' },
+    {
+      id: BranchRuleId.ENABLE_DEFAULT_REVIEWERS,
+      checked: true,
+      selectOptions: [
+        { id: 'user1', key: 'user1' },
+        { id: 'user2', key: 'user2' }
+      ]
+    },
+    { id: BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT, checked: true, input: '1' },
+    { id: BranchRuleId.BLOCK_FORCE_PUSH, checked: true },
     { id: BranchRuleId.REQUIRE_CODE_OWNERS, checked: true }
   ] as unknown as Rule[]
 }

@@ -1,6 +1,33 @@
 import { MessageTheme } from '@harnessio/ui/components'
 import { BranchRuleId, Rule } from '@harnessio/ui/views'
 
+export const getDefaultReviewersValidationMessage = (
+  minDefaultReviewerCount: number,
+  defaultReviewersCount: number
+): { message: string; theme: MessageTheme } => {
+  const validationMessage = {
+    message: '',
+    theme: MessageTheme.DEFAULT
+  }
+
+  if (minDefaultReviewerCount === defaultReviewersCount) {
+    if (defaultReviewersCount === 1) {
+      validationMessage.message = 'defaultReviewerWarning'
+    } else if (defaultReviewersCount > 1) {
+      validationMessage.message = 'defaultReviewersWarning'
+    }
+    validationMessage.theme = MessageTheme.WARNING
+  } else if (minDefaultReviewerCount > defaultReviewersCount) {
+    validationMessage.message =
+      minDefaultReviewerCount > 1
+        ? `Select at least ${minDefaultReviewerCount} default reviewers`
+        : 'Select at least 1 default reviewer'
+    validationMessage.theme = MessageTheme.ERROR
+  }
+
+  return validationMessage
+}
+
 export const handleRuleInterdependencies = (ruleId: string, rules: Rule[]): Rule[] => {
   const newRules = [...rules]
 
@@ -40,28 +67,9 @@ export const handleRuleInterdependencies = (ruleId: string, rules: Rule[]): Rule
     const minDefaultReviewerCount = Number(reqiureMinDefaultReviewers.input)
     const defaultReviewersCount = enableDefaultReviewersRule.selectOptions?.length || 0
 
-    const validationMessage = {
-      message: '',
-      theme: MessageTheme.DEFAULT
-    }
-    if (minDefaultReviewerCount === defaultReviewersCount) {
-      if (defaultReviewersCount === 1) {
-        validationMessage.message = 'defaultReviewerWarning'
-      } else if (defaultReviewersCount > 1) {
-        validationMessage.message = 'defaultReviewersWarning'
-      }
-      validationMessage.theme = MessageTheme.WARNING
-    } else if (minDefaultReviewerCount > defaultReviewersCount) {
-      validationMessage.message =
-        minDefaultReviewerCount > 1
-          ? `Select at least ${minDefaultReviewerCount} default reviewers`
-          : 'Select at least 1 default reviewer'
-      validationMessage.theme = MessageTheme.ERROR
-    }
-
     newRules[getIndex(BranchRuleId.ENABLE_DEFAULT_REVIEWERS)] = {
       ...enableDefaultReviewersRule,
-      validationMessage
+      validationMessage: getDefaultReviewersValidationMessage(minDefaultReviewerCount, defaultReviewersCount)
     }
   }
 

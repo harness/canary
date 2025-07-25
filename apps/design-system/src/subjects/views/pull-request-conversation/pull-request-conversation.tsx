@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useState } from 'react'
 
 import { usePrFilters } from '@subjects/views/pull-request-conversation/hooks/use-pr-filters'
 import { noop } from '@utils/viewUtils'
@@ -82,6 +82,9 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
 
   const filtersData = usePrFilters()
 
+  const [mergeTitle, setMergeTitle] = useState('Fix: Update user authentication flow')
+  const [mergeMessage, setMergeMessage] = useState('')
+
   return (
     <>
       <CommitSuggestionsDialog
@@ -128,7 +131,12 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           onCommitSuggestions: noop,
           toPRCheck: _ => '',
           spaceId: '',
-          repoId: ''
+          repoId: '',
+          pullReqCommits: undefined,
+          mergeTitle,
+          mergeMessage,
+          setMergeTitle,
+          setMergeMessage
         }}
         overviewProps={{
           toCommitDetails: _ => '',

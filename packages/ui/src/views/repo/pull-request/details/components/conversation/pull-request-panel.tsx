@@ -207,7 +207,11 @@ export interface PullRequestPanelProps
   repoId?: string
   error?: string | null
   defaultReviewersData?: DefaultReviewersDataProps
-  pullReqCommits: TypesListCommitResponse
+  pullReqCommits: TypesListCommitResponse | undefined
+  mergeTitle: string
+  mergeMessage: string
+  setMergeTitle: (title: string) => void
+  setMergeMessage: (message: string) => void
 }
 
 const PullRequestPanel = ({
@@ -238,6 +242,10 @@ const PullRequestPanel = ({
   repoId,
   error,
   defaultReviewersData,
+  mergeTitle,
+  mergeMessage,
+  setMergeTitle,
+  setMergeMessage,
   ...routingProps
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
@@ -245,8 +253,7 @@ const PullRequestPanel = ({
   const [mergeButtonValue, setMergeButtonValue] = useState(actions[0].id)
   const [accordionValues, setAccordionValues] = useState<string[]>([])
   const [showMergeInputs, setShowMergeInputs] = useState(false)
-  const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
-  const [mergeMessage, setMergeMessage] = useState('')
+
   const [selectedMergeOption, setSelectedMergeOption] = useState<string | null>(null)
 
   useEffect(() => {

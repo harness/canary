@@ -11,7 +11,7 @@
 export function transformToRuleDetailsUrl(url?: string, ruleId?: string): string {
   if (!url || !ruleId) return ''
 
-  return url.replace('code', 'codeV2').replace('settings', 'manage-repositories/rules/' + ruleId)
+  return url.replace('code', 'codev2').replace('settings', 'manage-repositories/rules/' + ruleId)
 }
 
 /**

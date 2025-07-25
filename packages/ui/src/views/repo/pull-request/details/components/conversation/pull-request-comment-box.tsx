@@ -45,7 +45,6 @@ interface ToolbarItem {
 
 export interface PullRequestCommentBoxProps {
   className?: string
-  onSaveComment: (comment: string) => void
   comment: string
   lang?: string
   diff?: string
@@ -60,6 +59,7 @@ export interface PullRequestCommentBoxProps {
   onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
+  onSaveComment?: (comment: string) => void
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
 }
@@ -98,7 +98,7 @@ export const PullRequestCommentBox = ({
   }
 
   const handleSaveComment = () => {
-    if (comment.trim()) {
+    if (onSaveComment && comment.trim()) {
       onSaveComment(comment)
       setComment('') // Clear the comment box after saving
     }
@@ -477,19 +477,21 @@ export const PullRequestCommentBox = ({
             </div>
           )}
 
-          <div className="ml-auto flex gap-x-3">
-            {(inReplyMode || isEditMode) && (
-              <Button variant="outline" onClick={onCancelClick}>
-                Cancel
-              </Button>
-            )}
+          {onSaveComment ? (
+            <div className="ml-auto flex gap-x-3">
+              {(inReplyMode || isEditMode) && (
+                <Button variant="outline" onClick={onCancelClick}>
+                  Cancel
+                </Button>
+              )}
 
-            {isEditMode ? (
-              <Button onClick={handleSaveComment}>Save</Button>
-            ) : (
-              <Button onClick={handleSaveComment}>Comment</Button>
-            )}
-          </div>
+              {isEditMode ? (
+                <Button onClick={handleSaveComment}>Save</Button>
+              ) : (
+                <Button onClick={handleSaveComment}>Comment</Button>
+              )}
+            </div>
+          ) : undefined}
         </div>
       </div>
     </div>

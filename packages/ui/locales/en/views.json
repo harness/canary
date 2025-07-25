@@ -681,6 +681,13 @@
     "browseFiles": "Browse files",
     "createNewCommit": "Create new commit"
   },
+  "scope": {
+    "orgAndProject": "Organizations and projects",
+    "orgOnly": "Organizations only",
+    "all": "Account, organizations and projects",
+    "accountOnly": "Account only",
+    "label": "Scope"
+  },
   "code": "Code",
   "createTagDialog": {
     "validation": {

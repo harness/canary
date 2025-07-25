@@ -36,6 +36,9 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
         setQueryPage={noop}
         onFavoriteToggle={noop}
         onFilterChange={noop}
+        scope={{
+          accountId: 'account-id'
+        }}
         {...props}
       />
     </>

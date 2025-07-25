@@ -1,4 +1,7 @@
+import { CheckboxOptions } from '@components/filters'
 import { RepositoryType } from '@views/repo/repo.types'
+
+import { Scope } from '../..'
 
 export interface RepoStore {
   repositories: RepositoryType[] | null
@@ -29,6 +32,7 @@ export interface FavoriteProps {
 
 export type RepoListFilters = {
   favorite?: boolean
+  recursive?: CheckboxOptions
 }
 
 export interface FilterProps {
@@ -46,4 +50,5 @@ export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps, Fil
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   setQueryPage: (page: number) => void
+  scope: Scope
 }

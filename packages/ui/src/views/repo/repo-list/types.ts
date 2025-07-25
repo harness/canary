@@ -1,6 +1,8 @@
 import { CheckboxOptions } from '@components/filters'
 import { RepositoryType } from '@views/repo/repo.types'
 
+import { ScopeInterface } from '../..'
+
 export interface RepoStore {
   repositories: RepositoryType[] | null
   totalItems: number
@@ -48,4 +50,5 @@ export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps, Fil
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   setQueryPage: (page: number) => void
+  scope: ScopeInterface
 }

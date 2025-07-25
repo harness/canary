@@ -659,9 +659,11 @@
     "createNewCommit": "Create new commit"
   },
   "scope": {
-    "label": "Scope",
+    "orgAndProject": "Organizations and projects",
+    "orgOnly": "Organizations only",
     "all": "Account, organizations and projects",
-    "account": "Account"
+    "accountOnly": "Account only",
+    "label": "Scope"
   },
   "rules": {
     "edit": "Edit rule",

@@ -12,6 +12,7 @@ import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage, Sc
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -39,6 +40,7 @@ export default function ReposListPage() {
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
+  const { scope } = useMFEContext()
 
   const {
     data: { body: repoData, headers } = {},
@@ -135,6 +137,11 @@ export default function ReposListPage() {
 
   return (
     <SandboxRepoListPage
+      scope={{
+        accountId: scope.accountId || '',
+        orgIdentifier: scope.orgIdentifier,
+        projectIdentifier: scope.projectIdentifier
+      }}
       useRepoStore={useRepoStore}
       isLoading={isFetching}
       isError={isError}

@@ -1,5 +1,5 @@
-export enum Scope {
-  Account = 'ACCOUNT',
-  Organization = 'ORGANIZATION',
-  Project = 'PROJECT'
+export interface ScopeInterface {
+  accountId: string
+  orgIdentifier?: string
+  projectIdentifier?: string
 }

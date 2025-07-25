@@ -647,8 +647,11 @@
     "createNewCommit": "Créer un nouveau commit"
   },
   "scope": {
-    "label": "Périmètre",
+    "orgAndProject": "Organizations and projects",
+    "orgOnly": "Organizations only",
     "all": "Compte, organisations et projets",
+    "accountOnly": "Account only",
+    "label": "Périmètre",
     "account": "Compte"
   },
   "rules": {

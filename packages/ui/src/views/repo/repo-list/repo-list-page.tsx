@@ -5,7 +5,6 @@ import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOption } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes } from '@components/filters/types'
-import { Scope } from '@views/common/types'
 import FilterGroup from '@views/components/FilterGroup'
 import { noop } from 'lodash-es'
 
@@ -14,12 +13,15 @@ import { booleanParser } from '@harnessio/filters'
 import { RepoList } from './repo-list'
 import { RepoListFilters, RepoListProps } from './types'
 
-const ExtendedScope = {
-  All: 'ALL',
-  ...Scope
-} as const
+enum ExtendedScope {
+  All = 'ALL',
+  Account = 'ACCOUNT',
+  OrgProg = 'ORGANIZATION_AND_PROJECT',
+  Organization = 'ORGANIZATION'
+}
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
+  scope,
   useRepoStore,
   isLoading,
   isError,
@@ -85,10 +87,27 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   const onFilterValueChange = (filterValues: RepoListFilters) => onFilterChange(filterValues)
 
-  const ScopeOptions: ComboBoxOption[] = [
-    { label: 'Account, organizations and projects', value: ExtendedScope.All },
-    { label: 'Account', value: Scope.Account }
-  ]
+  const { projectIdentifier, orgIdentifier, accountId } = scope
+
+  const ScopeOptions: ComboBoxOption[] = useMemo(() => {
+    if (accountId && orgIdentifier && projectIdentifier) return []
+
+    if (accountId && orgIdentifier) {
+      return [
+        { label: t('views:scope.orgAndProject', 'Organizations and projects'), value: ExtendedScope.OrgProg },
+        { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
+      ]
+    }
+
+    if (accountId) {
+      return [
+        { label: t('views:scope.all', 'Account, organizations and projects'), value: ExtendedScope.All },
+        { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
+      ]
+    }
+
+    return []
+  }, [scope])
 
   return (
     <SandboxLayout.Main>
@@ -149,10 +168,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 value: 'recursive',
                 type: FilterFieldTypes.ComboBox,
                 filterFieldConfig: {
-                  options: [
-                    { label: t('views:scope.all', 'Account, organizations and projects'), value: 'ALL' },
-                    { label: t('views:scope.account', 'Account'), value: 'ACCOUNT' }
-                  ],
+                  options: ScopeOptions,
                   onSearch: noop,
                   noResultsMessage: '',
                   loadingMessage: '',
@@ -163,7 +179,15 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   parse: (value: string): ComboBoxOption => {
                     return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
                   },
-                  serialize: (value: ComboBoxOption): string => (value?.value === ExtendedScope.All ? 'true' : 'false')
+                  serialize: (value: ComboBoxOption): string => {
+                    const selected = value?.value
+
+                    if (accountId && orgIdentifier && projectIdentifier) return ''
+                    if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+                    if (accountId) return String(selected === ExtendedScope.All)
+
+                    return ''
+                  }
                 }
               }
             ]}

@@ -282,3 +282,7 @@ export type PRListFilters = {
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void
+export type HandleAiPullRequestSummaryType = (textSelection: {
+  start: number
+  end: number
+}) => Promise<{ summary: string; textSelection: { start: number; end: number } }>

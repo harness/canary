@@ -474,7 +474,7 @@ const PullRequestPanel = ({
                   <Layout.Vertical className="gap-4 w-full">
                     <Input
                       id="merge-title"
-                      label="PR Title"
+                      label="Pull Request Title"
                       className="w-full bg-cn-background-1"
                       value={mergeTitle}
                       onChange={e => setMergeTitle(e.target.value)}

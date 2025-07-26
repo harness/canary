@@ -55,7 +55,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
         </Alert.Root>
       )
     }
-    
+
     return (
       <div className={cn('flex flex-col items-center justify-center py-12')}>
         <Text variant="heading-section">

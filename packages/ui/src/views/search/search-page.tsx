@@ -39,6 +39,9 @@ export interface SearchPageViewProps {
   setRegexEnabled: (selected: boolean) => void
   semanticEnabled: boolean
   setSemanticEnabled: (selected: boolean) => void
+  isProjectScope: boolean
+  semanticSearchError?: string
+  searchError?: string
   useSearchResultsStore: () => {
     results?: SearchResultItem[]
     semanticResults?: SemanticSearchResultItem[]
@@ -68,6 +71,9 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   setRegexEnabled,
   semanticEnabled,
   setSemanticEnabled,
+  isProjectScope,
+  semanticSearchError,
+  searchError,
   useSearchResultsStore,
   stats,
   toRepoFileDetails,
@@ -121,16 +127,18 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
           suffix={
             <>
-              <Toggle
-                selected={semanticEnabled}
-                onChange={setSemanticEnabled}
-                iconOnly
-                prefixIcon="sparks"
-                prefixIconProps={{
-                  size: 'md'
-                }}
-                tooltipProps={{ content: 'Enable AI Semantic Search' }}
-              />
+              {isProjectScope ? (
+                <Toggle
+                  selected={semanticEnabled}
+                  onChange={setSemanticEnabled}
+                  iconOnly
+                  prefixIcon="sparks"
+                  prefixIconProps={{
+                    size: 'md'
+                  }}
+                  tooltipProps={{ content: 'Enable AI Semantic Search' }}
+                />
+              ) : null}
               {!semanticEnabled ? (
                 <Toggle
                   selected={regexEnabled}
@@ -200,6 +208,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
             isDirtyList={isDirtyList}
             useSearchResultsStore={useSearchResultsStore}
             toRepoFileDetails={toRepoFileDetails}
+            semanticSearchError={semanticSearchError}
           />
         ) : (
           <SearchResultsList
@@ -207,6 +216,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
             isDirtyList={isDirtyList}
             useSearchResultsStore={useSearchResultsStore}
             toRepoFileDetails={toRepoFileDetails}
+            searchError={searchError}
           />
         )}
 

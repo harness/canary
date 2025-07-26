@@ -17,7 +17,9 @@ import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
+import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsRulesListContainer = () => {
@@ -42,6 +44,10 @@ export const RepoSettingsRulesListContainer = () => {
     setAlertDeleteParams(identifier)
     setRuleIsAlertDeleteDialogOpen(true)
   }
+
+  const {
+    routes: { toAccountSettings, toOrgSettings, toProjectSettings }
+  } = useMFEContext()
 
   const {
     data: { body: rulesData } = {},
@@ -116,7 +122,18 @@ export const RepoSettingsRulesListContainer = () => {
         showParentScopeLabelsCheckbox
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
-        toProjectRuleDetails={identifier => routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })}
+        toProjectRuleDetails={(identifier, scope) => {
+          return generateRuleDetailsUrl({
+            scope,
+            identifier,
+            toAccountSettings,
+            toOrgSettings,
+            toProjectSettings,
+            toRepoBranchRule: routes.toRepoBranchRule,
+            spaceId,
+            repoId: repoName
+          })
+        }}
       />
 
       <DeleteAlertDialog

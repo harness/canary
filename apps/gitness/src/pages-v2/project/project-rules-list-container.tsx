@@ -10,9 +10,11 @@ import { ErrorTypes, ProjectRulesPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
+import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesListContainer = () => {
@@ -26,6 +28,9 @@ export const ProjectRulesListContainer = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { setRules } = useProjectRulesStore()
+  const {
+    routes: { toAccountSettings, toOrgSettings, toProjectSettings }
+  } = useMFEContext()
 
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
@@ -80,7 +85,8 @@ export const ProjectRulesListContainer = () => {
         bypassAllowed: rule.definition?.bypass?.repo_owners === true,
         identifier: rule.identifier,
         state: rule.state ? String(rule.state) : undefined,
-        type: rule.type as 'branch' | 'tag'
+        type: rule.type as 'branch' | 'tag',
+        scope: rule.scope
       }))
       setRules(formattedRules, headers)
       setApiError(null)
@@ -110,7 +116,15 @@ export const ProjectRulesListContainer = () => {
         handleRuleClick={handleRuleEditClick}
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
-        toProjectRuleDetails={(identifier: string) => routes.toProjectRuleDetails({ space_ref, ruleId: identifier })}
+        toProjectRuleDetails={(identifier, scope) => {
+          return generateRuleDetailsUrl({
+            scope,
+            identifier,
+            toAccountSettings,
+            toOrgSettings,
+            toProjectSettings
+          })
+        }}
         showParentScopeLabelsCheckbox={space_ref?.includes('/')}
         parentScopeLabelsChecked={showParentRules}
         onParentScopeLabelsChange={setShowParentRules}

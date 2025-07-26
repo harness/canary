@@ -276,6 +276,7 @@ const PullRequestPanel = ({
   const [mergeButtonValue, setMergeButtonValue] = useState(actions[0].id)
   const [accordionValues, setAccordionValues] = useState<string[]>([])
   const [showMergeInputs, setShowMergeInputs] = useState(false)
+  const [showActionBtn, setShowActionBtn] = useState(false)
 
   useEffect(() => {
     setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
@@ -292,16 +293,26 @@ const PullRequestPanel = ({
     } else {
       setMergeMessage('')
     }
+    setShowActionBtn(true)
     setMergeButtonValue(value)
-    setShowMergeInputs(true)
+    if (
+      actions[parseInt(value)].title === 'Merge pull request' ||
+      actions[parseInt(value)].title === 'Squash and merge'
+    ) {
+      setShowMergeInputs(true)
+    } else {
+      setShowMergeInputs(false)
+    }
   }
 
   const handleCancelMerge = () => {
     setShowMergeInputs(false)
+    setShowActionBtn(false)
   }
 
   const handleConfirmMerge = () => {
     setShowMergeInputs(false)
+    setShowActionBtn(false)
     const actionIdx = actions.findIndex(action => action.id === mergeButtonValue)
     if (actionIdx !== -1) {
       actions[actionIdx]?.action?.()
@@ -400,7 +411,7 @@ const PullRequestPanel = ({
                         label="Bypass and merge anyway"
                       />
                     )}
-                    {actions && !pullReqMetadata?.closed && !showMergeInputs ? (
+                    {actions && !pullReqMetadata?.closed && !showActionBtn ? (
                       <SplitButton
                         theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
                         disabled={buttonState.disabled}
@@ -419,7 +430,7 @@ const PullRequestPanel = ({
                       </SplitButton>
                     ) : null}
                     {/* When in merge input mode, replace dropdown with Cancel/Confirm buttons, keep status/tooltip untouched */}
-                    {actions && !pullReqMetadata?.closed && showMergeInputs ? (
+                    {actions && !pullReqMetadata?.closed && showActionBtn ? (
                       <>
                         <Button variant="outline" onClick={handleCancelMerge}>
                           Cancel

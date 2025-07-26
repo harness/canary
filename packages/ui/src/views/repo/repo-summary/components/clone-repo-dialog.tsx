@@ -31,13 +31,13 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button>
           <IconV2 name="copy" size="sm" />
-          {t('views:repos.cloneRepo', 'Clone repository')}
+          {t('views:repos.cloneRepo', 'Clone Repository')}
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[360px]" align="end">
         <DropdownMenu.Header>
           <Text variant="body-single-line-strong" color="foreground-1" className="p-1">
-            {t('views:repos.cloneRepo', 'Clone repository')}
+            {t('views:repos.cloneRepo', 'Clone Repository')}
           </Text>
 
           <Tabs.Root

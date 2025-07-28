@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Params, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
 

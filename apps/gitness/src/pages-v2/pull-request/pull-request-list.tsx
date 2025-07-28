@@ -78,11 +78,7 @@ export default function PullRequestListPage() {
   const { data: { body: prCandidateBranches } = {} } = usePrCandidatesQuery({ repo_ref: repoRef, queryParams: {} })
 
   // TODO: can we move this to some hook which is accessible globally ?
-  const {
-    data: { body: currentUser } = {},
-    isFetching: fetchingCurrentUser,
-    error: currentUserError
-  } = useGetUserQuery({
+  const { data: { body: currentUser } = {} } = useGetUserQuery({
     queryParams: {
       routingId: mfeContext?.scope?.accountId
     }

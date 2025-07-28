@@ -2,7 +2,6 @@ import { TFunctionWithFallback } from '@/context'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import {
   CalendarFilterOptionConfig,
-  CheckboxOptions,
   ComboBoxFilterOptionConfig,
   CustomFilterOptionConfig,
   FilterFieldTypes,

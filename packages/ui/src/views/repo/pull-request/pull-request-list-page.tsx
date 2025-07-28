@@ -23,6 +23,7 @@ import {
   MultiSelectFilterOptionConfig
 } from '@components/filters/types'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+import { splitObjectProps } from '@utils/typeUtils'
 import { isEmpty } from 'lodash-es'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
@@ -264,31 +265,43 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     (filterGroup: string) => {
       const searchParams = new URLSearchParams(window.location.search)
       if (filterGroup === PRFilterGroupTogglerOptions.All) {
-        const { created_by, review_decision, review_id, ...restObj } = Object.fromEntries(searchParams.entries())
+        const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
+          'created_by',
+          'review_decision',
+          'review_id'
+        ])
         setSearchParams(
           new URLSearchParams({
-            ...restObj
+            ...rest
           })
         )
       }
 
       if (filterGroup === PRFilterGroupTogglerOptions.Created) {
-        const { created_by, review_decision, review_id, ...restObj } = Object.fromEntries(searchParams.entries())
+        const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
+          'created_by',
+          'review_decision',
+          'review_id'
+        ])
         setSearchParams(
           new URLSearchParams({
-            ...restObj,
+            ...rest,
             created_by: String(currentUserId)
           })
         )
       }
 
       if (filterGroup === PRFilterGroupTogglerOptions.ReviewRequested) {
-        const { created_by, ...restObj } = Object.fromEntries(searchParams.entries())
+        const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
+          'created_by',
+          'review_decision',
+          'review_id'
+        ])
 
         setSearchParams(
           new URLSearchParams({
-            ...restObj,
-            review_decision: restObj.review_decision || 'pending',
+            ...rest,
+            review_decision: rest.review_decision || 'pending',
             review_id: String(currentUserId)
           })
         )

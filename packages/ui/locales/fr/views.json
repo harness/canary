@@ -58,11 +58,11 @@
       "afterOption": {
         "label": "Créé après"
       },
-      "review": {
-        "label": "Reviews"
-      },
       "labels": {
         "label": "Label"
+      },
+      "review": {
+        "label": "Reviews"
       },
       "labelByOption": {
         "label": "Label by"

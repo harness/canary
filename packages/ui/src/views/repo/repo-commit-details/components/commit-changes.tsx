@@ -124,6 +124,10 @@ const CommitsAccordion: FC<{
                       </div>
                     ) : null}
                     <PullRequestDiffViewer
+                      /**
+                       * In commit changes we don't need principal props as we don't have any comments.
+                       */
+                      principalProps={{}}
                       data={header?.data}
                       fontsize={fontsize}
                       highlight={highlight}

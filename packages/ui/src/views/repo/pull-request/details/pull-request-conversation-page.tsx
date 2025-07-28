@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Alert, Spacer } from '@/components'
 import {
+  PrincipalPropsType,
   PullRequestCommentBox,
   PullRequestCommentBoxProps,
   PullRequestFilterProps,
@@ -14,14 +15,16 @@ import {
   PullRequestSideBarProps,
   SandboxLayout
 } from '@/views'
+import { noop } from 'lodash-es'
 
 export interface PullRequestConversationPageProps {
   rebaseErrorMessage: string | null
   panelProps: PullRequestPanelProps
   filtersProps: PullRequestFilterProps<{ label: string; value: string }>
-  overviewProps: PullRequestOverviewProps
-  commentBoxProps: PullRequestCommentBoxProps
-  sideBarProps: PullRequestSideBarProps
+  overviewProps: Omit<PullRequestOverviewProps, 'principalProps'>
+  commentBoxProps: Omit<PullRequestCommentBoxProps, 'principalProps'>
+  sideBarProps: Omit<PullRequestSideBarProps, 'usersList' | 'searchQuery' | 'setSearchQuery'>
+  principalProps: PrincipalPropsType
 }
 
 export const PullRequestConversationPage: FC<PullRequestConversationPageProps> = ({
@@ -30,7 +33,8 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
   filtersProps,
   overviewProps,
   commentBoxProps,
-  sideBarProps
+  sideBarProps,
+  principalProps
 }) => {
   return (
     <SandboxLayout.Columns columnWidths="minmax(calc(100% - 288px), 1fr) 288px">
@@ -52,18 +56,24 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
           <PullRequestFilters {...filtersProps} />
           <Spacer size={6} />
 
-          <PullRequestOverview {...overviewProps} />
+          <PullRequestOverview {...overviewProps} principalProps={principalProps} />
           <Spacer size={9} />
 
-          <PullRequestCommentBox {...commentBoxProps} />
+          <PullRequestCommentBox {...commentBoxProps} principalProps={principalProps} />
         </SandboxLayout.Content>
       </SandboxLayout.Column>
 
       <SandboxLayout.Column>
         <SandboxLayout.Content className="px-0 pt-0">
-          <PullRequestSideBar {...sideBarProps} />
+          <PullRequestSideBar
+            {...sideBarProps}
+            searchQuery={principalProps?.searchPrincipalsQuery || ''}
+            setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
+            usersList={principalProps?.principals}
+          />
         </SandboxLayout.Content>
       </SandboxLayout.Column>
     </SandboxLayout.Columns>
   )
 }
+PullRequestConversationPage.displayName = 'PullRequestConversationPage-UI'

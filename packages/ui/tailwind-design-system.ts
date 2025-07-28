@@ -4,7 +4,7 @@ import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 import { ComponentStyles } from './tailwind-utils-config/components'
-import { typography as typographyStyles } from './tailwind-utils-config/utilities'
+import { fieldSizing, typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
   darkMode: ['class'],
@@ -32,7 +32,7 @@ export default {
           success: 'var(--cn-text-success)',
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
-          accent: 'var(--cn-text-accent)',
+          accent: 'var(--cn-comp-link-text)',
           disabled: 'var(--cn-state-disabled-text)',
           multitype: {
             codebrackets: 'var(--cn-set-blue-surface-text)',
@@ -390,6 +390,7 @@ export default {
      */
     plugin(({ addUtilities }) => {
       addUtilities(typographyStyles)
+      addUtilities(fieldSizing)
     }),
     plugin(({ addComponents }) => {
       addComponents(ComponentStyles)

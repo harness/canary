@@ -23,6 +23,7 @@ interface RepoSubheaderProps {
   summaryPath?: string
   filesPath?: string
   commitsPath?: string
+  isRepoEmpty?: boolean
 }
 
 export const RepoSubheader = ({
@@ -31,7 +32,8 @@ export const RepoSubheader = ({
   className,
   summaryPath,
   filesPath,
-  commitsPath
+  commitsPath,
+  isRepoEmpty = false
 }: RepoSubheaderProps) => {
   const { t } = useTranslation()
 
@@ -40,16 +42,28 @@ export const RepoSubheader = ({
       <Tabs.NavRoot>
         <Tabs.List className="px-6">
           <Tabs.Trigger value={summaryPath || RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
-          <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE}>{t('views:repos.files', 'Files')}</Tabs.Trigger>
+          <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE} disabled={isRepoEmpty}>
+            {t('views:repos.files', 'Files')}
+          </Tabs.Trigger>
           {showPipelinesTab && (
             <Tabs.Trigger value={RepoTabsKeys.PIPELINES}>{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>
           )}
-          <Tabs.Trigger value={commitsPath || RepoTabsKeys.COMMITS}>{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
-          <Tabs.Trigger value={RepoTabsKeys.TAGS}>{t('views:repos.tags', 'Tags')}</Tabs.Trigger>
-          <Tabs.Trigger value={RepoTabsKeys.PULLS}>{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
-          <Tabs.Trigger value={RepoTabsKeys.BRANCHES}>{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
+          <Tabs.Trigger value={commitsPath || RepoTabsKeys.COMMITS} disabled={isRepoEmpty}>
+            {t('views:repos.commits', 'Commits')}
+          </Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.TAGS} disabled={isRepoEmpty}>
+            {t('views:repos.tags', 'Tags')}
+          </Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.PULLS} disabled={isRepoEmpty}>
+            {t('views:repos.pull-requests', 'Pull Requests')}
+          </Tabs.Trigger>
+          <Tabs.Trigger value={RepoTabsKeys.BRANCHES} disabled={isRepoEmpty}>
+            {t('views:repos.branches', 'Branches')}
+          </Tabs.Trigger>
           {showSearchTab && (
-            <Tabs.Trigger value={RepoTabsKeys.SEARCH}>{t('views:repos.search', 'Search')}</Tabs.Trigger>
+            <Tabs.Trigger value={RepoTabsKeys.SEARCH} disabled={isRepoEmpty}>
+              {t('views:repos.search', 'Search')}
+            </Tabs.Trigger>
           )}
           <Tabs.Trigger value={RepoTabsKeys.SETTINGS}>{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
         </Tabs.List>

@@ -10,10 +10,21 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, ButtonVariants, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { HandleAiPullRequestSummaryType, handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
+import { Avatar, Button, ButtonVariants, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs } from '@/components'
+import {
+  HandleAiPullRequestSummaryType,
+  handleFileDrop,
+  handlePaste,
+  HandleUploadType,
+  PrincipalsMentionMap,
+  ToolbarAction,
+  type PrincipalPropsType
+} from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty, isUndefined } from 'lodash-es'
+
+import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
+import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface TextSelection {
   start: number
@@ -64,6 +75,12 @@ export interface PullRequestCommentBoxProps {
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
   handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
+  principalProps: PrincipalPropsType
+  principalsMentionMap?: PrincipalsMentionMap
+  setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  preserveCommentOnSave?: boolean
+  buttonTitle?: string
+  textareaPlaceholder?: string
 }
 
 const TABS_KEYS = {
@@ -86,7 +103,13 @@ export const PullRequestCommentBox = ({
   setComment,
   isEditMode,
   handleUpload,
-  handleAiPullRequestSummary
+  handleAiPullRequestSummary,
+  principalProps,
+  principalsMentionMap: parentPrincipalsMentionMap,
+  setPrincipalsMentionMap: parentSetPrincipalsMentionMap,
+  preserveCommentOnSave = false,
+  buttonTitle,
+  textareaPlaceholder
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -97,14 +120,33 @@ export const PullRequestCommentBox = ({
   const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
+  const [localPrincipalsMentionMap, setLocalPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+
+  const {
+    principalsMentionMap,
+    setPrincipalsMentionMap
+  }: {
+    principalsMentionMap: PrincipalsMentionMap
+    setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  } = useMemo(() => {
+    return {
+      principalsMentionMap: parentPrincipalsMentionMap ?? localPrincipalsMentionMap,
+      setPrincipalsMentionMap: parentSetPrincipalsMentionMap ?? setLocalPrincipalsMentionMap
+    }
+  }, [parentPrincipalsMentionMap, localPrincipalsMentionMap, parentSetPrincipalsMentionMap])
+
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
   }
 
   const handleSaveComment = () => {
     if (onSaveComment && comment.trim()) {
-      onSaveComment(comment)
-      setComment('') // Clear the comment box after saving
+      const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
+      onSaveComment(formattedComment)
+
+      if (!preserveCommentOnSave) {
+        setComment('') // Clear the comment box after saving
+      }
     }
   }
 
@@ -423,7 +465,7 @@ export const PullRequestCommentBox = ({
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1 overflow-auto', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -443,12 +485,16 @@ export const PullRequestCommentBox = ({
               onDragLeave={handleDragLeave}
               ref={dropZoneRef}
             >
-              <Textarea
+              <PullRequestCommentTextarea
+                resizable
                 ref={textAreaRef}
-                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
+                placeholder={textareaPlaceholder ?? 'Add your comment here'}
+                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3"
                 autoFocus={!!inReplyMode}
-                placeholder="Add your comment here"
+                principalProps={principalProps}
+                setPrincipalsMentionMap={setPrincipalsMentionMap}
                 value={comment}
+                setValue={setComment}
                 onChange={e => onCommentChange(e)}
                 onKeyUp={e => onKeyUp(e)}
                 onMouseUp={() => onMouseUp()}
@@ -457,7 +503,6 @@ export const PullRequestCommentBox = ({
                     handlePasteForUpload(e)
                   }
                 }}
-                resizable
               />
 
               {showAiLoader && (
@@ -466,10 +511,10 @@ export const PullRequestCommentBox = ({
                 </div>
               )}
               {isDragging && (
-                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
+                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />
               )}
 
-              <div className="bg-cn-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
+              <Layout.Flex align="center" className="bg-cn-background-2 pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -486,13 +531,16 @@ export const PullRequestCommentBox = ({
                     </Fragment>
                   )
                 })}
-              </div>
+              </Layout.Flex>
             </div>
           </Tabs.Content>
           <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
+                <MarkdownViewer
+                  markdownClassName="!bg-cn-background-2 w-full"
+                  source={replaceMentionEmailWithDisplayName(comment, principalsMentionMap)}
+                />
               ) : (
                 <span className="text-cn-foreground-1">Nothing to preview</span>
               )}
@@ -504,7 +552,7 @@ export const PullRequestCommentBox = ({
           {activeTab === TABS_KEYS.WRITE && (
             <div>
               <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-              <Button size="sm" variant="ghost" onClick={handleFileSelect}>
+              <Button size="sm" variant="transparent" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
@@ -520,9 +568,9 @@ export const PullRequestCommentBox = ({
               )}
 
               {isEditMode ? (
-                <Button onClick={handleSaveComment}>Save</Button>
+                <Button onClick={handleSaveComment}>{buttonTitle || 'Save'}</Button>
               ) : (
-                <Button onClick={handleSaveComment}>Comment</Button>
+                <Button onClick={handleSaveComment}>{buttonTitle || 'Comment'}</Button>
               )}
             </div>
           ) : undefined}
@@ -531,3 +579,4 @@ export const PullRequestCommentBox = ({
     </div>
   )
 }
+PullRequestCommentBox.displayName = 'PullRequestCommentBox'

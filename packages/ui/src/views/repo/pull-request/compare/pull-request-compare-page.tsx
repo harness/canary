@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { PrincipalType, TypesDiffStats } from '@/types'
+import { TypesDiffStats } from '@/types'
 import {
   CommitSelectorListItem,
   CommitsList,
@@ -11,6 +11,7 @@ import {
   HandleUploadType,
   ILabelType,
   LabelValuesType,
+  PrincipalPropsType,
   PullRequestSideBar,
   SandboxLayout,
   TypesCommit
@@ -57,7 +58,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   isSuccess: boolean
   mergeability?: boolean
   onSelectCommit: (commit: CommitSelectorListItem) => void
-  handleAiPullRequestSummary: HandleAiPullRequestSummaryType
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
 
   diffData: HeaderProps[]
   diffStats: TypesDiffStats
@@ -71,9 +72,6 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchCommitQuery: (query: string | null) => void
   currentUser?: string
 
-  searchReviewersQuery: string
-  setSearchReviewersQuery: (query: string) => void
-  usersList?: PrincipalType[]
   reviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void
@@ -93,6 +91,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   removeLabel?: (id: number) => void
   editLabelsProps: LinkProps
   branchSelectorRenderer: ReactElement
+  principalProps: PrincipalPropsType
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -111,9 +110,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   useRepoCommitsStore,
   currentUser,
 
-  searchReviewersQuery,
-  setSearchReviewersQuery,
-  usersList,
+  principalProps,
   reviewers,
   handleAddReviewer,
   handleDeleteReviewer,
@@ -361,6 +358,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       <div className="w-full">
                         <Spacer size={1} />
                         <PullRequestCompareForm
+                          principalProps={principalProps}
                           description={desc}
                           setDescription={setDesc}
                           handleUpload={handleUpload}
@@ -376,15 +374,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     </div>
                     <PullRequestSideBar
                       addReviewers={handleAddReviewer}
-                      usersList={usersList ?? []}
                       currentUserId={currentUser}
                       pullRequestMetadata={{ source_sha: '' }}
                       processReviewDecision={mockProcessReviewDecision}
                       refetchReviewers={noop}
                       handleDelete={handleDeleteReviewer}
                       reviewers={reviewers ?? []}
-                      searchQuery={searchReviewersQuery}
-                      setSearchQuery={setSearchReviewersQuery}
+                      searchQuery={principalProps?.searchPrincipalsQuery || ''}
+                      setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
+                      usersList={principalProps?.principals}
                       labelsList={labelsList}
                       labelsValues={labelsValues}
                       PRLabels={PRLabels}
@@ -432,6 +430,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 {/* Content for Changes */}
                 {(diffData ?? []).length > 0 ? (
                   <PullRequestCompareDiffList
+                    principalProps={principalProps}
                     diffData={diffData}
                     currentUser={currentUser}
                     diffStats={diffStats}

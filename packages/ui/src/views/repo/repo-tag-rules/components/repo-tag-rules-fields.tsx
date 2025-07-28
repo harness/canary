@@ -176,7 +176,7 @@ export const TagSettingsRuleBypassListField: FC<
     return (
       bypassOptions?.map(option => ({
         id: option.id!,
-        key: option.display_name
+        key: option.display_name || ''
       })) || []
     )
   }, [bypassOptions])

@@ -14,7 +14,7 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { formatNumber } from '@/utils'
-import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TypesDiffStats } from '@/views'
+import { DiffModeOptions, InViewDiffRenderer, jumpToFile, PrincipalPropsType, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { chunk } from 'lodash-es'
 
@@ -53,6 +53,7 @@ interface PullRequestAccordionProps {
   openItems: string[]
   onToggle: () => void
   setCollapsed: (val: boolean) => void
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
@@ -61,7 +62,8 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   currentUser,
   openItems,
   onToggle,
-  setCollapsed
+  setCollapsed,
+  principalProps
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -122,6 +124,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                       </div>
                     )}
                     <PullRequestDiffViewer
+                      principalProps={principalProps}
                       currentUser={currentUser}
                       data={header?.data}
                       fontsize={fontsize}
@@ -155,6 +158,7 @@ interface PullRequestCompareDiffListProps {
   currentUser?: string
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
@@ -162,7 +166,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   diffData,
   currentUser,
   jumpToDiff,
-  setJumpToDiff
+  setJumpToDiff,
+  principalProps
 }) => {
   const { t } = useTranslation()
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
@@ -288,6 +293,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
                   >
                     <PullRequestAccordion
+                      principalProps={principalProps}
                       key={`item?.title ? ${item?.title}-${index} : ${index}`}
                       header={item}
                       currentUser={currentUser}

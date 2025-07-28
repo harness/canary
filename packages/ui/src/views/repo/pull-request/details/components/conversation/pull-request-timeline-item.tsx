@@ -1,8 +1,11 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
 import { Avatar, Button, IconV2, Input, MoreActionsTooltip, NodeGroup } from '@/components'
-import { HandleUploadType, PullRequestCommentBox } from '@/views'
+import { HandleUploadType, PrincipalPropsType, PrincipalsMentionMap, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
+import { isEmpty } from 'lodash-es'
+
+import { replaceEmailAsKey, replaceMentionEmailWithId } from './utils'
 
 interface ItemHeaderProps {
   avatar?: ReactNode
@@ -128,6 +131,10 @@ export interface TimelineItemProps {
   onQuoteReply?: (parentId: number, rawText: string) => void
   quoteReplyText?: string
   hideEditDelete?: boolean
+  principalProps: PrincipalPropsType
+  principalsMentionMap: PrincipalsMentionMap
+  setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  mentions?: PrincipalsMentionMap
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -163,10 +170,21 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   handleUpload,
   onQuoteReply,
   quoteReplyText,
-  hideEditDelete
+  hideEditDelete,
+  principalProps,
+  principalsMentionMap,
+  setPrincipalsMentionMap,
+  mentions
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
+
+  useEffect(() => {
+    if (!isEmpty(mentions)) {
+      const updatedMentions = replaceEmailAsKey(mentions)
+      setPrincipalsMentionMap(prev => ({ ...prev, ...updatedMentions }))
+    }
+  }, [mentions, setPrincipalsMentionMap])
 
   useEffect(() => {
     if (quoteReplyText) setComment(quoteReplyText)
@@ -254,11 +272,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
 
               {isEditMode ? (
                 <PullRequestCommentBox
+                  principalsMentionMap={principalsMentionMap}
+                  setPrincipalsMentionMap={setPrincipalsMentionMap}
+                  principalProps={principalProps}
                   handleUpload={handleUpload}
                   isEditMode
                   currentUser={currentUser}
                   onSaveComment={() => {
-                    handleSaveComment?.(comment, parentCommentId)
+                    handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
                     setComment('')
                   }}
                   onCancelClick={() => {
@@ -275,10 +296,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                 <>
                   {hideReplyHere ? (
                     <PullRequestCommentBox
+                      principalsMentionMap={principalsMentionMap}
+                      setPrincipalsMentionMap={setPrincipalsMentionMap}
+                      principalProps={principalProps}
                       handleUpload={handleUpload}
                       inReplyMode
                       onSaveComment={() => {
-                        handleSaveComment?.(comment, parentCommentId)
+                        handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
                         setHideReplyHere?.(false)
                       }}
                       onCancelClick={() => {
@@ -332,4 +356,5 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   )
 }
 
+PullRequestTimelineItem.displayName = 'PullRequestTimelineItem'
 export default PullRequestTimelineItem

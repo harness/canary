@@ -203,7 +203,7 @@ export const BranchSettingsRuleBypassListField: FC<
     return (
       bypassOptions?.map(option => ({
         id: option.id!,
-        key: option.display_name
+        key: option.display_name || ''
       })) || []
     )
   }, [bypassOptions])
@@ -259,7 +259,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
     return (
       defaultReviewersOptions?.map(option => ({
         id: option.id?.toString() || '',
-        key: option.display_name
+        key: option.display_name || ''
       })) || []
     )
   }, [defaultReviewersOptions])

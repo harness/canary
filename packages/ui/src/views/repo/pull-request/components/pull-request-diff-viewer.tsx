@@ -8,6 +8,8 @@ import {
   CommitSuggestion,
   CreateCommentPullReqRequest,
   HandleUploadType,
+  PrincipalPropsType,
+  PrincipalsMentionMap,
   PullRequestCommentBox,
   TypesPullReqActivity
 } from '@/views'
@@ -21,6 +23,7 @@ import { OverlayScrollbars } from 'overlayscrollbars'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
+import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
 
@@ -70,6 +73,7 @@ interface PullRequestDiffviewerProps {
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
   collapseDiff?: () => void
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestDiffViewer = ({
@@ -97,7 +101,8 @@ const PullRequestDiffViewer = ({
   handleUpload,
   scrolledToComment,
   setScrolledToComment,
-  collapseDiff
+  collapseDiff,
+  principalProps
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslation()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -111,6 +116,7 @@ const PullRequestDiffViewer = ({
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
   const diffInstanceRef = useRef<HTMLDivElement | null>(null)
   const [isInView, setIsInView] = useState(false)
+  const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -156,12 +162,13 @@ const PullRequestDiffViewer = ({
   }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
-  const handleQuoteReply = useCallback((parentId: number, originalText: string) => {
+
+  const handleQuoteReply = useCallback((parentId: number, originalText: string, mentions: PrincipalsMentionMap) => {
     const quoted = quoteTransform(originalText)
     setQuoteReplies(prev => ({
       ...prev,
       [parentId]: {
-        text: quoted
+        text: replaceMentionIdWithEmail(quoted, mentions)
       }
     }))
   }, [])
@@ -344,6 +351,7 @@ const PullRequestDiffViewer = ({
 
   const [newComments, setNewComments] = useState<Record<string, string>>({})
 
+  // comment widget (add comment)
   const renderWidgetLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderWidgetLine']>>(
     ({ onClose, side, lineNumber }) => {
       const sideKey = side === SplitSide.old ? 'oldFile' : 'newFile'
@@ -354,11 +362,15 @@ const PullRequestDiffViewer = ({
         <div className="flex w-full flex-col bg-cn-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
+            principalsMentionMap={principalsMentionMap}
+            setPrincipalsMentionMap={setPrincipalsMentionMap}
             isEditMode
+            principalProps={principalProps}
             onSaveComment={() => {
               onClose()
-              if (commentText.trim() && handleSaveComment) {
-                handleSaveComment(commentText.trim(), undefined, {
+              const trimmedComment = commentText.trim()
+              if (trimmedComment && handleSaveComment) {
+                handleSaveComment(replaceMentionEmailWithId(trimmedComment, principalsMentionMap), undefined, {
                   line_end: lineNumber,
                   line_end_new: sideKey === 'newFile',
                   line_start: lineNumber,
@@ -383,9 +395,10 @@ const PullRequestDiffViewer = ({
         </div>
       )
     },
-    [handleSaveComment, fileName, newComments, currentUser, handleUpload]
+    [handleSaveComment, fileName, newComments, currentUser, handleUpload, principalProps]
   )
 
+  // comment display
   const renderExtendLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderExtendLine']>>(
     ({ data: threads }) => {
       if (!threads) return <></>
@@ -400,9 +413,13 @@ const PullRequestDiffViewer = ({
             const parentInitials = getInitials(parent.author ?? '', 2)
             return (
               <PullRequestTimelineItem
+                principalsMentionMap={principalsMentionMap}
+                setPrincipalsMentionMap={setPrincipalsMentionMap}
+                mentions={parent?.payload?.mentions}
                 wrapperClassName="pb-3"
                 key={parent.id}
                 id={parentIdAttr}
+                principalProps={principalProps}
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
@@ -415,7 +432,9 @@ const PullRequestDiffViewer = ({
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
                 toggleConversationStatus={toggleConversationStatus}
-                onQuoteReply={handleQuoteReply}
+                onQuoteReply={(parentId: number, originalText: string) =>
+                  handleQuoteReply(parentId, originalText, parent?.payload?.mentions || {})
+                }
                 quoteReplyText={quoteReplies[parent.id]?.text || ''}
                 contentHeader={
                   !!parent.payload?.resolved && (
@@ -428,8 +447,12 @@ const PullRequestDiffViewer = ({
                 content={
                   <div className="px-4 pt-4">
                     <PullRequestTimelineItem
+                      mentions={parent?.payload?.mentions}
+                      principalsMentionMap={principalsMentionMap}
+                      setPrincipalsMentionMap={setPrincipalsMentionMap}
                       titleClassName="w-full"
                       parentCommentId={parent.id}
+                      principalProps={principalProps}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
                       hideReplySection
@@ -442,7 +465,9 @@ const PullRequestDiffViewer = ({
                       onCopyClick={onCopyClick}
                       commentId={parent.id}
                       setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
-                      onQuoteReply={handleQuoteReply}
+                      onQuoteReply={(parentId: number, rawText: string) =>
+                        handleQuoteReply(parentId, rawText, parent?.payload?.mentions || {})
+                      }
                       icon={<Avatar name={parentInitials} rounded />}
                       header={[
                         {
@@ -467,11 +492,17 @@ const PullRequestDiffViewer = ({
                           </div>
                         ) : editModes[componentId] ? (
                           <PullRequestCommentBox
+                            principalsMentionMap={principalsMentionMap}
+                            setPrincipalsMentionMap={setPrincipalsMentionMap}
+                            principalProps={principalProps}
                             handleUpload={handleUpload}
                             isEditMode
                             onSaveComment={() => {
                               if (parent?.id) {
-                                updateComment?.(parent?.id, editComments[componentId])
+                                updateComment?.(
+                                  parent?.id,
+                                  replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
+                                )
                                 toggleEditMode(componentId, '')
                               }
                             }}
@@ -481,7 +512,10 @@ const PullRequestDiffViewer = ({
                             }}
                             diff={data}
                             lang={lang}
-                            comment={editComments[componentId]}
+                            comment={replaceMentionIdWithEmail(
+                              editComments[componentId],
+                              parent?.payload?.mentions || {}
+                            )}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                           />
                         ) : (
@@ -505,8 +539,11 @@ const PullRequestDiffViewer = ({
 
                           return (
                             <PullRequestTimelineItem
+                              principalsMentionMap={principalsMentionMap}
+                              setPrincipalsMentionMap={setPrincipalsMentionMap}
                               key={reply.id}
                               id={replyIdAttr}
+                              principalProps={principalProps}
                               parentCommentId={parent?.id}
                               isLast={isLastComment}
                               handleSaveComment={handleSaveComment}
@@ -521,7 +558,9 @@ const PullRequestDiffViewer = ({
                               contentClassName="border-transparent"
                               titleClassName="!flex max-w-full"
                               setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
-                              onQuoteReply={handleQuoteReply}
+                              onQuoteReply={(parentId: number, rawText: string) =>
+                                handleQuoteReply(parentId, rawText, reply?.payload?.mentions || {})
+                              }
                               icon={<Avatar name={replyInitials} rounded />}
                               header={[
                                 {
@@ -546,11 +585,20 @@ const PullRequestDiffViewer = ({
                                   </div>
                                 ) : editModes[replyComponentId] ? (
                                   <PullRequestCommentBox
+                                    principalsMentionMap={principalsMentionMap}
+                                    setPrincipalsMentionMap={setPrincipalsMentionMap}
+                                    principalProps={principalProps}
                                     handleUpload={handleUpload}
                                     isEditMode
                                     onSaveComment={() => {
                                       if (reply?.id) {
-                                        updateComment?.(reply?.id, editComments[replyComponentId])
+                                        updateComment?.(
+                                          reply?.id,
+                                          replaceMentionEmailWithId(
+                                            editComments[replyComponentId],
+                                            principalsMentionMap
+                                          )
+                                        )
                                         toggleEditMode(replyComponentId, '')
                                       }
                                     }}
@@ -560,7 +608,10 @@ const PullRequestDiffViewer = ({
                                     }}
                                     diff={data}
                                     lang={lang}
-                                    comment={editComments[replyComponentId]}
+                                    comment={replaceMentionIdWithEmail(
+                                      editComments[replyComponentId],
+                                      reply?.payload?.mentions || {}
+                                    )}
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
                                     }
@@ -589,7 +640,18 @@ const PullRequestDiffViewer = ({
         </div>
       )
     },
-    [currentUser, handleSaveComment, updateComment, deleteComment, fileName, hideReplyHeres, editModes, editComments, t]
+    [
+      currentUser,
+      handleSaveComment,
+      updateComment,
+      deleteComment,
+      fileName,
+      hideReplyHeres,
+      editModes,
+      editComments,
+      t,
+      principalProps
+    ]
   )
 
   useCustomEventListener<DiffViewerCustomEvent>(
@@ -639,4 +701,5 @@ const PullRequestDiffViewer = ({
   )
 }
 
+PullRequestDiffViewer.displayName = 'PullRequestDiffViewer'
 export default PullRequestDiffViewer

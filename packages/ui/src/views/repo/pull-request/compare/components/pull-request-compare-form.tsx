@@ -1,9 +1,10 @@
 import { forwardRef } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { FormInput, FormWrapper } from '@/components'
+import { Alert, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
-import { HandleAiPullRequestSummaryType, HandleUploadType, PullRequestCommentBox } from '@/views'
+import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
+import { noop } from 'lodash-es'
 import { z } from 'zod'
 
 // Define the form schema
@@ -20,15 +21,25 @@ interface PullRequestFormProps {
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
   handleUpload?: HandleUploadType
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
   description?: string
   setDescription: (description: string) => void
   formMethods: UseFormReturn<FormFields>
-  handleAiPullRequestSummary: HandleAiPullRequestSummaryType
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
   (
-    { apiError, onFormSubmit, handleUpload, description, setDescription, formMethods, handleAiPullRequestSummary },
+    {
+      apiError,
+      onFormSubmit,
+      handleUpload,
+      description,
+      setDescription,
+      formMethods,
+      handleAiPullRequestSummary,
+      principalProps
+    },
     ref
   ) => {
     const { t } = useTranslation()
@@ -49,15 +60,29 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
         />
 
         <PullRequestCommentBox
-          isEditMode
-          handleUpload={handleUpload}
+          preserveCommentOnSave
+          onSaveComment={newComment => {
+            onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
+          }}
+          textareaPlaceholder={t(
+            'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+            'Enter pull request description'
+          )}
+          buttonTitle="Create pull request"
           comment={description ?? ''}
           setComment={setDescription}
           handleAiPullRequestSummary={handleAiPullRequestSummary}
-        ></PullRequestCommentBox>
+          principalProps={principalProps}
+          handleUpload={handleUpload}
+          principalsMentionMap={{}}
+          setPrincipalsMentionMap={noop}
+        />
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
-          <span className="text-1 text-cn-foreground-danger">{apiError?.toString()}</span>
+          <Alert.Root theme="danger">
+            <Alert.Title>Pull Request Error</Alert.Title>
+            <Alert.Description>{apiError?.toString()}</Alert.Description>
+          </Alert.Root>
         )}
       </FormWrapper>
     )

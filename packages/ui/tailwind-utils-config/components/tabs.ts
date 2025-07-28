@@ -126,6 +126,11 @@ export default {
     '&:where([disabled])': {
       color: 'var(--cn-state-disabled-text)',
       cursor: 'not-allowed'
+    },
+
+    '&:where([aria-disabled="true"])': {
+      color: 'var(--cn-state-disabled-text)',
+      cursor: 'not-allowed'
     }
   }
 }

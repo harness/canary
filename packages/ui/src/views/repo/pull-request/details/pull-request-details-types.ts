@@ -1,4 +1,4 @@
-import { PrincipalType } from '@/types'
+import { PrincipalType, UsererrorError } from '@/types'
 import {
   EnumPullReqReviewDecision,
   PullReqReviewDecision,
@@ -685,4 +685,13 @@ export const mergeMethodMapping: Record<MergeStrategy, MergeMethodDisplay> = {
   [MergeStrategy.SQUASH]: MergeMethodDisplay.SQUASHED,
   [MergeStrategy.REBASE]: MergeMethodDisplay.REBASED,
   [MergeStrategy.FAST_FORWARD]: MergeMethodDisplay.FAST_FORWARDED
+}
+export type PrincipalsMentionMap = Record<string, TypesPrincipalInfo>
+
+export interface PrincipalPropsType {
+  principals?: PrincipalType[]
+  searchPrincipalsQuery?: string
+  setSearchPrincipalsQuery?: (query: string) => void
+  isPrincipalsLoading?: boolean
+  principalsError?: UsererrorError | null
 }

@@ -24,6 +24,7 @@ import {
   HandleUploadType,
   InViewDiffRenderer,
   jumpToFile,
+  PrincipalPropsType,
   TypesPullReq,
   TypesPullReqActivity
 } from '@/views'
@@ -101,6 +102,7 @@ interface DataProps {
   setJumpToDiff: (filePath: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
   pullReqMetadata?: TypesPullReq
+  principalProps: PrincipalPropsType
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({
@@ -202,6 +204,7 @@ const PullRequestAccordion: React.FC<{
   setCollapsed: (val: boolean) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
   pullReqMetadata?: TypesPullReq
+  principalProps: PrincipalPropsType
 }> = ({
   header,
   diffMode,
@@ -231,7 +234,8 @@ const PullRequestAccordion: React.FC<{
   onToggle,
   setCollapsed,
   toRepoFileDetails,
-  pullReqMetadata
+  pullReqMetadata,
+  principalProps
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -383,6 +387,7 @@ const PullRequestAccordion: React.FC<{
                       </div>
                     ) : null}
                     <PullRequestDiffViewer
+                      principalProps={principalProps}
                       handleUpload={handleUpload}
                       data={rawDiffData}
                       fontsize={fontsize}
@@ -419,6 +424,8 @@ const PullRequestAccordion: React.FC<{
   )
 }
 
+PullRequestAccordion.displayName = 'PullRequestAccordion'
+
 function PullRequestChangesInternal({
   data,
   diffMode,
@@ -447,7 +454,8 @@ function PullRequestChangesInternal({
   jumpToDiff,
   setJumpToDiff,
   toRepoFileDetails,
-  pullReqMetadata
+  pullReqMetadata,
+  principalProps
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
@@ -557,6 +565,7 @@ function PullRequestChangesInternal({
                   >
                     <PullRequestAccordion
                       handleUpload={handleUpload}
+                      principalProps={principalProps}
                       key={`${item.title}-${index}`}
                       header={item}
                       diffMode={diffMode}
@@ -600,3 +609,4 @@ function PullRequestChangesInternal({
 }
 
 export const PullRequestChanges = memo(PullRequestChangesInternal)
+PullRequestChanges.displayName = 'PullRequestChanges'

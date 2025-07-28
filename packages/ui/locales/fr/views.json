@@ -280,11 +280,6 @@
     "configuration": "Configuration",
     "references": "Références",
     "activityHistory": "Historique des activités",
-    "sort": {
-      "lastModifiedAt": "Last modified",
-      "createdAt": "Created",
-      "name": "Name"
-    },
     "createNew": "Créer un nouveau connecteur",
     "errorEncountered": "Erreur rencontrée",
     "viewDetails": "Voir les détails",
@@ -508,7 +503,6 @@
     "compareChangesFormTitlePlaceholder": "Saisissez le titre de la pull request",
     "compareChangesFormTitleLabel": "Title",
     "compareChangesFormDescriptionPlaceholder": "Ajoutez la description de la pull request ici.",
-    "compareChangesFormDescriptionLabel": "Description",
     "compareChanges": "Comparaison des modifications",
     "compareChangesDescription": "Choisissez deux branches pour voir les modifications ou pour créer une nouvelle pull request. Si nécessaire, vous pouvez aussi",
     "compareChangesAbleToMerge": "Fusion possible.",
@@ -543,6 +537,7 @@
     "split": "Diviser",
     "unified": "Unifié",
     "markViewed": "Marquer comme vu",
+    "compareChangesFormDescriptionLabel": "Description",
     "selectUsersAndServiceAccounts": "Sélectionner des utilisateurs et des comptes de service",
     "viewed": "Vu",
     "compareChangesForkLink": "comparer entre les forks",

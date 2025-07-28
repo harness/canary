@@ -6,6 +6,7 @@ import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { combineAndNormalizePrincipalsAndGroups } from '../repo-branch-rules/utils'
 import {
   TagSettingsRuleBypassListField,
   TagSettingsRuleDescriptionField,
@@ -35,6 +36,7 @@ interface RepoTagSettingsRulesPageProps {
   principalsSearchQuery: string
   isSubmitSuccess?: boolean
   projectScope?: boolean
+  bypassListPlaceholder?: string
 }
 
 export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
@@ -48,11 +50,12 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
   setPrincipalsSearchQuery,
   principalsSearchQuery,
   isSubmitSuccess,
-  projectScope = false
+  projectScope = false,
+  bypassListPlaceholder
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
-  const { presetRuleData, principals } = useRepoRulesStore()
+  const { presetRuleData, principals, userGroups } = useRepoRulesStore()
   const formMethods = useForm<RepoTagSettingsFormFields>({
     resolver: zodResolver(repoTagSettingsFormSchema),
     mode: 'onChange',
@@ -137,9 +140,10 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
             errors={errors}
             setValue={setValue}
             watch={watch}
-            bypassOptions={principals}
+            bypassOptions={combineAndNormalizePrincipalsAndGroups(principals, userGroups)}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
+            bypassListPlaceholder={bypassListPlaceholder}
           />
 
           <TagSettingsRuleListField rules={rules} handleCheckboxChange={handleCheckboxChange} />

@@ -14,9 +14,10 @@ import {
   Switch
 } from '@/components'
 import { useTranslation } from '@/context'
-import { PrincipalType } from '@/types'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import { PatternsButtonType } from '@views/repo/repo-branch-rules/types'
+import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
+import { getIcon } from '@views/repo/repo-branch-rules/utils'
 
 import { TagFieldProps, TagRule } from '../types'
 import { getTagRules } from './repo-tag-rules-data'
@@ -164,19 +165,28 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
 
 export const TagSettingsRuleBypassListField: FC<
   TagFieldProps & {
-    bypassOptions: PrincipalType[] | null
+    bypassOptions: NormalizedPrincipal[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
     register: any
+    bypassListPlaceholder?: string
   }
-> = ({ bypassOptions, errors, setPrincipalsSearchQuery, principalsSearchQuery, register }) => {
+> = ({ bypassOptions, errors, setPrincipalsSearchQuery, principalsSearchQuery, register, bypassListPlaceholder }) => {
   const { t } = useTranslation()
+  const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setPrincipalsSearchQuery,
+    searchValue: principalsSearchQuery || ''
+  })
 
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
         id: option.id!,
-        key: option.display_name || ''
+
+        key: option.display_name,
+        type: option.type,
+        icon: getIcon(option.type as EnumBypassListType),
+        title: option.email_or_identifier
       })) || []
     )
   }, [bypassOptions])
@@ -188,9 +198,9 @@ export const TagSettingsRuleBypassListField: FC<
           label={t('views:repos.bypassList', 'Bypass list')}
           name="bypass"
           options={multiSelectOptions}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
-          searchQuery={principalsSearchQuery}
-          setSearchQuery={setPrincipalsSearchQuery}
+          placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
+          searchQuery={debouncedPrincipalsSearchQuery}
+          setSearchQuery={handleStringSearchChange}
           disallowCreation
           error={errors?.bypass?.message?.toString()}
         />

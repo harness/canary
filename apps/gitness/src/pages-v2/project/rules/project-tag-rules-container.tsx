@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   useListPrincipalsQuery,
   useListStatusCheckRecentSpaceQuery,
+  useListUsergroupsQuery,
   useSpaceRuleAddMutation,
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
@@ -21,6 +22,7 @@ import {
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 import { transformFormOutput } from '../../../utils/repo-tag-rules-utils'
@@ -34,12 +36,12 @@ export const ProjectTagRulesContainer = () => {
 
   const spaceRef = useGetSpaceURLParam()
   const { ruleId: ruleIdentifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
+  const { setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useTagRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
-    scope: { accountId }
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const tagRules = useMemo(() => {
@@ -83,9 +85,32 @@ export const ProjectTagRulesContainer = () => {
     }
   )
 
+  const isMFE = useIsMFE()
+
   const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
+    queryParams: {
+      page: 1,
+      limit: 100,
+      type: isMFE ? ['user', 'serviceaccount'] : ['user'],
+      ...(isMFE && { inherited: true }),
+      query: principalsSearchQuery,
+      // @ts-expect-error : BE issue - not implemnted
+      accountIdentifier: accountId,
+      orgIdentifier,
+      projectIdentifier
+    },
+    stringifyQueryParamsOptions: {
+      arrayFormat: 'repeat'
+    }
+  })
+
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
+    space_ref: `${spaceRef}/+`,
+    queryParams: {
+      page: 1,
+      limit: 100,
+      query: principalsSearchQuery
+    }
   })
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
@@ -167,6 +192,12 @@ export const ProjectTagRulesContainer = () => {
   }, [principals, setPrincipals])
 
   useEffect(() => {
+    if (userGroups) {
+      setUserGroups(userGroups as PrincipalType[])
+    }
+  }, [userGroups, setUserGroups])
+
+  useEffect(() => {
     if (recentStatusChecks) {
       setRecentStatusChecks(recentStatusChecks)
     }
@@ -174,6 +205,7 @@ export const ProjectTagRulesContainer = () => {
 
   const errors = {
     principals: principalsError?.message || null,
+    userGroups: userGroupsError?.message || null,
     statusChecks: statusChecksError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null

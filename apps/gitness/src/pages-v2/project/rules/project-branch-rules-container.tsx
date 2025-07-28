@@ -57,7 +57,7 @@ export const ProjectBranchRulesContainer = () => {
       setRecentStatusChecks(null)
       resetRules()
     }
-  }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
+  }, [resetRules, setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks])
 
   const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
     { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier ?? '' },

@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
+  useListUsergroupsQuery,
   useRepoRuleAddMutation,
   useRepoRuleGetQuery,
   useRepoRuleUpdateMutation
@@ -22,6 +23,8 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { PathParams } from '../../../RouteDefinitions'
 import { transformFormOutput } from '../../../utils/repo-tag-rules-utils'
@@ -37,12 +40,14 @@ export const RepoTagRulesContainer = () => {
 
   const { spaceId } = useParams<PathParams>()
   const { identifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
+  const spaceURL = useGetSpaceURLParam()
+
+  const { setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks } = useRepoRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useTagRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
   const {
-    scope: { accountId }
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const tagRules = useMemo(() => {
@@ -56,10 +61,11 @@ export const RepoTagRulesContainer = () => {
     return () => {
       setPresetRuleData(null)
       setPrincipals(null)
+      setUserGroups(null)
       setRecentStatusChecks(null)
       resetRules()
     }
-  }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
+  }, [resetRules, setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks])
 
   const {
     data: { body: rulesData } = {},
@@ -86,9 +92,32 @@ export const RepoTagRulesContainer = () => {
     }
   )
 
+  const isMFE = useIsMFE()
+
   const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
+    queryParams: {
+      page: 1,
+      limit: 100,
+      type: isMFE ? ['user', 'serviceaccount'] : ['user'],
+      ...(isMFE && { inherited: true }),
+      query: principalsSearchQuery,
+      // @ts-expect-error : BE issue - not implemented
+      accountIdentifier: accountId,
+      orgIdentifier,
+      projectIdentifier
+    },
+    stringifyQueryParamsOptions: {
+      arrayFormat: 'repeat'
+    }
+  })
+
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
+    space_ref: `${spaceURL}/+`,
+    queryParams: {
+      page: 1,
+      limit: 100,
+      query: principalsSearchQuery
+    }
   })
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentQuery({
@@ -169,6 +198,12 @@ export const RepoTagRulesContainer = () => {
   }, [principals, setPrincipals])
 
   useEffect(() => {
+    if (userGroups) {
+      setUserGroups(userGroups as PrincipalType[])
+    }
+  }, [userGroups, setUserGroups])
+
+  useEffect(() => {
     if (recentStatusChecks) {
       setRecentStatusChecks(recentStatusChecks)
     }
@@ -176,6 +211,7 @@ export const RepoTagRulesContainer = () => {
 
   const errors = {
     principals: principalsError?.message || null,
+    userGroupsError: userGroupsError?.message || null,
     statusChecks: statusChecksError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null
@@ -189,6 +225,10 @@ export const RepoTagRulesContainer = () => {
     return <NotFoundPage pageTypeText="rules" />
   }
 
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersAndServiceAccounts', 'Select users and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
+
   return (
     <RepoTagSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -201,6 +241,7 @@ export const RepoTagRulesContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      bypassListPlaceholder={searchPlaceholder}
     />
   )
 }

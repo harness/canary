@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react'
+import { ForwardedRef, forwardRef, MouseEvent, ReactNode } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -53,24 +53,28 @@ export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | Spli
  * - variant=solid with theme=primary (default)
  * - variant=surface with theme=success|danger|muted
  */
-export const SplitButton = <T extends string>({
-  handleButtonClick,
-  loading = false,
-  selectedValue,
-  options,
-  handleOptionChange,
-  className,
-  buttonClassName,
-  theme = 'default',
-  variant = 'primary',
-  disabled = false,
-  disableDropdown = false,
-  disableButton = false,
-  children,
-  dropdownContentClassName
-}: SplitButtonProps<T>) => {
+const SplitButtonBase = <T extends string>(
+  {
+    handleButtonClick,
+    loading = false,
+    selectedValue,
+    options,
+    handleOptionChange,
+    className,
+    buttonClassName,
+    theme = 'default',
+    variant = 'primary',
+    disabled = false,
+    disableDropdown = false,
+    disableButton = false,
+    children,
+    dropdownContentClassName,
+    ...props
+  }: SplitButtonProps<T>,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
   return (
-    <div className={cn('flex', className)}>
+    <div className={cn('flex', className)} ref={ref} {...props}>
       <Button
         className={cn('rounded-r-none border-r-0', buttonClassName)}
         theme={theme}
@@ -122,4 +126,6 @@ export const SplitButton = <T extends string>({
   )
 }
 
-SplitButton.displayName = 'SplitButton'
+export const SplitButton = forwardRef(SplitButtonBase) as <T extends string>(
+  props: SplitButtonProps<T> & { ref?: ForwardedRef<HTMLButtonElement> }
+) => ReturnType<typeof SplitButtonBase>

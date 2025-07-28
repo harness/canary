@@ -1,4 +1,4 @@
-import { ElementRef, FC, forwardRef, ReactNode, useCallback, useState } from 'react'
+import { ElementRef, FC, forwardRef, PropsWithoutRef, ReactNode, useCallback, useState } from 'react'
 
 import { Button, ButtonProps, IconPropsV2, IconV2, IconV2NamesType, Tooltip, TooltipProps } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
@@ -40,7 +40,7 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
   text?: string
   size?: VariantProps<typeof toggleVariants>['size']
   suffixIcon?: IconV2NamesType
-  suffixIconProps?: Omit<IconPropsV2, 'name'>
+  suffixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
   selected?: boolean
   defaultValue?: boolean
   tooltipProps?: ToggleTooltipProps
@@ -50,7 +50,7 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & 
 type TogglePropsIconOnly = TogglePropsBase & {
   iconOnly: true
   prefixIcon: IconV2NamesType
-  prefixIconProps?: Omit<IconPropsV2, 'name'>
+  prefixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
   suffixIcon?: never
   suffixIconProps?: never
 }
@@ -58,7 +58,7 @@ type TogglePropsIconOnly = TogglePropsBase & {
 type TogglePropsNotIconOnly = TogglePropsBase & {
   iconOnly?: false
   prefixIcon?: IconV2NamesType
-  prefixIconProps?: Omit<IconPropsV2, 'name'>
+  prefixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
 }
 
 export type ToggleProps = TogglePropsIconOnly | TogglePropsNotIconOnly
@@ -84,7 +84,8 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       onChange,
       tooltipProps,
       defaultValue,
-      selected: selectedProp
+      selected: selectedProp,
+      ...props
     },
     ref
   ) => {
@@ -124,7 +125,14 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
 
     return (
       <TooltipWrapper tooltipProps={tooltipProps}>
-        <TogglePrimitive.Root ref={ref} asChild pressed={selected} onPressedChange={handleChange} disabled={disabled}>
+        <TogglePrimitive.Root
+          ref={ref}
+          {...props}
+          asChild
+          pressed={selected}
+          onPressedChange={handleChange}
+          disabled={disabled}
+        >
           <Button
             className={cn(className, toggleVariants({ size, variant, iconOnly }))}
             variant={selected ? selectedVariant : variant}

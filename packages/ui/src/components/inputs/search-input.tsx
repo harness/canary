@@ -59,7 +59,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         className={cn('cn-input-search', className)}
         onChange={handleInputChange}
         prefix={
-          <div className="grid w-8 shrink-0 place-items-center border-r-0">
+          <div className="grid w-8 shrink-0 place-items-center border-r-0 ml-1">
             <IconV2 name="search" size="sm" />
           </div>
         }

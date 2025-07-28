@@ -146,7 +146,7 @@
     },
     "createBranchTitle": "Créer une branche",
     "createBranchButton": "Créer une branche",
-    "newBranch": "Nouvelle branche",
+    "newBranch": "New branch",
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",

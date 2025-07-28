@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 
 import { Button, NoData, Pagination, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import FilterGroup from '@views/components/FilterGroup'
@@ -34,12 +33,6 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t)
-
-  const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : undefined),
-    searchValue: searchQuery || ''
-  })
-
   const onFilterSelectionChange = (filterValues: ConnectorListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
@@ -82,18 +75,20 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
         </Text>
         <Spacer size={7} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
-          sortConfig={{
+          simpleSortConfig={{
             sortOptions: [
-              { label: t('views:connectors.sort.lastModifiedAt', 'Last modified'), value: 'lastModifiedAt' },
-              { label: t('views:connectors.sort.createdAt', 'Created'), value: 'createdAt' },
-              { label: t('views:connectors.sort.name', 'Name'), value: 'name' }
+              { label: 'Last modified', value: 'lastModifiedAt,DESC' },
+              { label: 'Oldest', value: 'createdAt,ASC' },
+              { label: 'Newest', value: 'createdAt,DESC' },
+              { label: 'Name (A - Z, 0 - 9)', value: 'name,ASC' },
+              { label: 'Name (Z - A, 9 - 0)', value: 'name,DESC' }
             ],
-            onSortChange
+            onSortChange,
+            defaultSort: 'lastModifiedAt,DESC'
           }}
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}
-          searchInput={searchInput}
-          handleInputChange={handleInputChange}
+          handleInputChange={(value: string) => setSearchQuery(value)}
           headerAction={<Button onClick={onCreate}>{t('views:connectors.createNew', 'New connector')}</Button>}
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />

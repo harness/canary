@@ -8,7 +8,7 @@ import {
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { SortValue, Toast, useToast } from '@harnessio/ui/components'
+import { Toast, useToast } from '@harnessio/ui/components'
 import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -173,11 +173,10 @@ export default function ReposListPage() {
           setRecursive(recursive.value === ExtendedScope.All)
         }
       }}
-      onSortChange={(sortValues: SortValue[]) => {
-        const sortValue = sortValues?.[0]
-        const { type, direction } = sortValue || {}
-        const sortKey = type?.split(',')?.[0] as ListReposQueryQueryParams['sort'] | undefined
-        const orderKey = direction as unknown as ListReposQueryQueryParams['order'] | undefined
+      onSortChange={(sortValues: string) => {
+        const [type, direction] = sortValues?.split(',') || []
+        const sortKey = type as ListReposQueryQueryParams['sort'] | undefined
+        const orderKey = direction as ListReposQueryQueryParams['order'] | undefined
 
         setSort(sortKey ?? null)
         setOrder(orderKey ?? null)

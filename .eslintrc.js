@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires  */
 const { classNameRules } = require('./eslint/rules.js')
 
 module.exports = {

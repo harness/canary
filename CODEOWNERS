@@ -1,4 +1,23 @@
-packages/canary @knagurski
-packages/views @knagurski
-packages/ui @knagurski
-apps/design-system @knagurski
+# Global configs
+.github/ abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+.eslintrc.js abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+.prettierrc.yml abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+
+# Common ownership for shared config files
+/packages/*/package.json abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+/apps/*/package.json abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+/packages/*/vite.config.ts abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+/apps/*/vite.config.ts abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+
+# Apps
+/apps/gitness/* abhinav.rastogi@harness.io vardan.bansal@harness.io
+/apps/portal/* kevin.nagurski@harness.io pranesh.g@harness.io abhinav.rastogi@harness.io vardan.bansal@harness.io
+
+# Packages with shared ownership
+/packages/ui/* abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io
+
+# Packages with individual owners
+/packages/forms/* srdjan.arsic@harness.io
+/packages/unified-pipeline/* srdjan.arsic@harness.io
+/packages/yaml-editor/* srdjan.arsic@harness.io
+/packages/core-design-system/* pranesh.g@harness.io

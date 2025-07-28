@@ -73,8 +73,8 @@ export interface PullRequestCommentBoxProps {
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
   principalProps: PrincipalPropsType
-  principalsMentionMap: PrincipalsMentionMap
-  setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  principalsMentionMap?: PrincipalsMentionMap
+  setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   preserveCommentOnSave?: boolean
   buttonTitle?: string
   textareaPlaceholder?: string

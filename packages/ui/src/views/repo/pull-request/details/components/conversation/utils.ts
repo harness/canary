@@ -131,7 +131,7 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
   div.id = 'input-textarea-caret-position-mirror-div'
   document.body.appendChild(div)
 
-  const style = div.style
+  const style: CSSStyleDeclaration = div.style
   const computed = window.getComputedStyle(element)
   const isInput = element.nodeName === 'INPUT'
 
@@ -166,6 +166,7 @@ export function getCaretCoordinates(element: HTMLTextAreaElement, position: numb
         style.lineHeight = computed.height
       }
     } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       style[prop] = computed[prop]
     }

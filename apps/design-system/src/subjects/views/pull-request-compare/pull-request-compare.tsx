@@ -17,6 +17,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
 
   return (
     <PullRequestComparePage
+      principalProps={{}}
       desc=""
       setDesc={noop}
       handleDeleteReviewer={noop}
@@ -50,8 +51,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       searchCommitQuery={null}
       setSearchCommitQuery={noop}
       isLoading={false}
-      searchReviewersQuery=""
-      setSearchReviewersQuery={noop}
       jumpToDiff=""
       setJumpToDiff={noop}
       editLabelsProps={{ to: '' }}

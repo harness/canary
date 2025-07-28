@@ -72,8 +72,6 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
   }
   const activities = state === 'complex-1' ? mockActivities : undefined
 
-  const searchReviewers = ''
-
   const labelsList: ILabelType[] = state === 'complex-1' ? mockLabelList : []
   const PRLabels = state === 'complex-1' ? mockPrLabels : { label_data: [] as LabelAssignmentType[] }
   const searchLabel = ''
@@ -96,9 +94,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
       <PullRequestConversationPage
         rebaseErrorMessage={null}
         filtersProps={filtersData}
-        searchPrincipalsQuery={searchReviewers}
-        setSearchPrincipalsQuery={noop}
-        principals={undefined}
+        principalProps={{}}
         panelProps={{
           handleRebaseBranch,
           handlePrState,

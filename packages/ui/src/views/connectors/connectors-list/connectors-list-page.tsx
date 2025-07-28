@@ -34,12 +34,6 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t)
-
-  const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : undefined),
-    searchValue: searchQuery || ''
-  })
-
   const onFilterSelectionChange = (filterValues: ConnectorListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
@@ -82,7 +76,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
         </Text>
         <Spacer size={7} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
-          sortConfig={{
+          simpleSortConfig={{
             sortOptions: [
               { label: 'Last modified', value: 'lastModifiedAt,DESC' },
               { label: 'Oldest', value: 'createdAt,ASC' },
@@ -95,8 +89,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           }}
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}
-          searchInput={searchInput}
-          handleInputChange={handleInputChange}
+          handleInputChange={(value: string) => setSearchQuery(value)}
           headerAction={<Button onClick={onCreate}>{t('views:connectors.createNew', 'New connector')}</Button>}
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />

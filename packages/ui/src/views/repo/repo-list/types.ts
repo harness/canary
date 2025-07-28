@@ -41,7 +41,7 @@ export interface FilterProps {
 }
 
 export interface SortProps {
-  onSortChange: (sortValues: SortValue[]) => void
+  onSortChange: (sortValues: string) => void
 }
 
 /**
@@ -59,8 +59,8 @@ export interface RepoListPageProps extends Partial<RoutingProps>, FavoriteProps,
 }
 
 export enum RepoSortMethod {
-  Identifier = 'identifier',
+  Identifier = 'identifier,desc',
   Newest = 'created,desc',
   Oldest = 'created,asc',
-  LastPush = 'last_git_push'
+  LastPush = 'last_git_push,desc'
 }

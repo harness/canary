@@ -87,8 +87,6 @@ interface SelectProps<T = string>
   contentClassName?: string
   suffix?: ReactNode
   triggerClassName?: string
-  triggerRenderer?: (selectedLabel?: ReactNode) => ReactNode
-  dropdownAlign?: 'start' | 'end'
 }
 
 // Helper function to check option types
@@ -156,8 +154,6 @@ function SelectInner<T = string>(
     informerProps,
     informerContent,
     labelSuffix,
-    triggerRenderer,
-    dropdownAlign = 'start',
     ...props
   }: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -340,34 +336,6 @@ function SelectInner<T = string>(
     }
   }, [searchQuery])
 
-  const triggerContent = (
-    <>
-      <div className="cn-select-trigger">
-        <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
-          {selectedOption ? selectedOption.label : placeholder}
-        </Text>
-        <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
-      </div>
-      {suffix ? (
-        <div
-          className="cn-select-suffix"
-          // Don't trigger dropdown menu when suffix is clicked
-          onPointerDown={e => {
-            e.stopPropagation()
-          }}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.stopPropagation()
-            }
-          }}
-          role="none"
-        >
-          {suffix}
-        </div>
-      ) : null}
-    </>
-  )
-
   return (
     <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
       {(!!label || (isHorizontal && !!caption)) && (
@@ -410,9 +378,31 @@ function SelectInner<T = string>(
             id={id}
             ref={ref}
             disabled={disabled}
-            className={cn(!triggerRenderer ? selectVariants({ theme, size }) : null, triggerClassName)}
+            className={cn(selectVariants({ theme, size }), triggerClassName)}
           >
-            {triggerRenderer ? triggerRenderer(selectedOption?.label) : triggerContent}
+            <div className="cn-select-trigger">
+              <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
+                {selectedOption ? selectedOption.label : placeholder}
+              </Text>
+              <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
+            </div>
+            {suffix ? (
+              <div
+                className="cn-select-suffix"
+                // Don't trigger dropdown menu when suffix is clicked
+                onPointerDown={e => {
+                  e.stopPropagation()
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.stopPropagation()
+                  }
+                }}
+                role="none"
+              >
+                {suffix}
+              </div>
+            ) : null}
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content
@@ -421,7 +411,7 @@ function SelectInner<T = string>(
               { 'max-w-none w-[--radix-dropdown-menu-trigger-width]': contentWidth === 'triggerWidth' },
               contentClassName
             )}
-            align={dropdownAlign}
+            align="start"
             scrollAreaProps={{ onScrollBottom: onScrollEnd, rootMargin: { bottom: '50px' } }}
           >
             {(allowSearch || header) && (

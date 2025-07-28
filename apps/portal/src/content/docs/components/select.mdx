@@ -621,7 +621,7 @@ Available options are `horizontal` and `vertical` (default).
     const [value, setValue] = React.useState('banana');
 
     return (
-      <Layout.Vertical gap="xl" className="min-w-[400px]">
+      <Layout.Vertical gap="lg" className="min-w-[400px]">
         <Select
           label="Vertical"
             options={[
@@ -675,9 +675,7 @@ The `Select` component is the main component for creating dropdown selections.
   isLoading                 // [OPTIONAL] loading state
   allowSearch               // [OPTIONAL] enable search
   onSearch={customSearch}   // [OPTIONAL] custom search function
-  optionRenderer={renderer} // [OPTIONAL] custom option
-  triggerRenderer={triggerRenderer} // [OPTIONAL] custom trigger renderer
-  dropdownAlign             // [OPTIONAL] dropdown alignment
+  optionRenderer={renderer} // [OPTIONAL] custom option renderer
 
   // Form integration props
   id="my-select"            // [OPTIONAL] HTML id
@@ -891,20 +889,6 @@ The `Select` component is the main component for creating dropdown selections.
       required: false,
       defaultValue: "'vertical'",
       value: "'vertical' | 'horizontal'",
-    },
-    {
-      name: "dropdownAlign",
-      description:
-        "Defines the alignment of the dropdown relative to the trigger.",
-      required: false,
-      value: "'start' | 'end'",
-      defaultValue: "'start'",
-    },
-    {
-      name: "triggerRenderer",
-      description: "Custom renderer for the trigger button.",
-      required: false,
-      value: "(selectedLabel: ReactNode) => ReactNode",
     },
   ]}
 />

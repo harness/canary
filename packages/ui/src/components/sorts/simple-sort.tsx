@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, IconV2, Select, SortOption } from '@/components'
+import { Button, DropdownMenu, IconV2, SortOption } from '@/components'
 
 interface SimpleSortProps {
   sortOptions: SortOption[]
@@ -11,24 +11,32 @@ interface SimpleSortProps {
 export default function SimpleSort(props: SimpleSortProps) {
   const { sortOptions, defaultSort, onSortChange } = props
   const [sortSelections, updateSortSelections] = useState(defaultSort)
+  const selectedOptionLabel = sortOptions.find(option => option.value === sortSelections)?.label
 
   return (
-    <Select
-      value={sortSelections}
-      triggerRenderer={selectedLabel => (
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button size="sm" variant="transparent">
           <IconV2 name="arrows-updown" size="2xs" />
-          {selectedLabel || 'Sort'}
-          <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size="2xs" />
+          {selectedOptionLabel || 'Sort'}
+          <IconV2 name="nav-solid-arrow-down" size="2xs" />
         </Button>
-      )}
-      contentClassName="min-w-[224px]"
-      dropdownAlign="end"
-      options={sortOptions}
-      onChange={value => {
-        updateSortSelections(value)
-        onSortChange?.(value)
-      }}
-    />
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content align="end" className="min-w-56">
+        {sortOptions.map(option => (
+          <DropdownMenu.Item
+            key={option.value}
+            title={option.label}
+            checkmark={option.value === sortSelections}
+            onSelect={() => {
+              updateSortSelections(option.value)
+              onSortChange?.(option.value)
+            }}
+          >
+            {option.label}
+          </DropdownMenu.Item>
+        ))}
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

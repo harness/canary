@@ -65,7 +65,6 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
             <>
               <TextInput
                 className="truncate"
-                inputContainerClassName="bg-cn-background-3"
                 label={t('views:repos.gitCloneUrl', 'Git clone URL')}
                 id="httpsUrl"
                 readOnly
@@ -75,19 +74,10 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               <Text className="mt-4" color="foreground-3">
                 {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
               </Text>
-              <Button onClick={handleCreateToken} className="mt-4 w-full">
-                {t('views:repos.cloneCredential', 'Generate Clone Credential')}
-              </Button>
-              {tokenGenerationError && (
-                <Alert.Root theme="danger" className="mt-2">
-                  <Alert.Description>{tokenGenerationError}</Alert.Description>
-                </Alert.Root>
-              )}
             </>
           ) : (
             <TextInput
               className="truncate"
-              inputContainerClassName="bg-cn-background-3"
               id="sshUrl"
               label={t('views:repos.gitCloneUrl', 'Git clone URL')}
               readOnly
@@ -96,6 +86,18 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
             />
           )}
         </DropdownMenu.Slot>
+        {currentTab === 'https' && (
+          <DropdownMenu.Footer>
+            <Button onClick={handleCreateToken} className="w-full">
+              {t('views:repos.cloneCredential', 'Generate Clone Credential')}
+            </Button>
+            {tokenGenerationError && (
+              <Alert.Root theme="danger" className="mt-2">
+                <Alert.Description>{tokenGenerationError}</Alert.Description>
+              </Alert.Root>
+            )}
+          </DropdownMenu.Footer>
+        )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

@@ -38,9 +38,10 @@ function createButtonVariantStyles() {
           backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-hover)`
         }
 
-        style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)`] = {
-          backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-selected)`
-        }
+        style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
+          {
+            backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-selected)`
+          }
       } else {
         // Default styles
         style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
@@ -54,9 +55,10 @@ function createButtonVariantStyles() {
         }
 
         // Active styles
-        style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)`] = {
-          backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
-        }
+        style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
+          {
+            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
+          }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {

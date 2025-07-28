@@ -18,15 +18,15 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite, o
     <div className={cn('grid grid-cols-[auto,1fr] items-center gap-2 px-6 pb-2 pt-7', className)}>
       {isLoading ? (
         <>
-          <Skeleton className="h-[var(--cn-line-height-7-tight)] w-28 bg-cn-background-0" />
-          <Skeleton className="h-6 w-14 bg-cn-background-0" />
+          <Skeleton className="bg-cn-background-0 h-[var(--cn-line-height-7-tight)] w-28" />
+          <Skeleton className="bg-cn-background-0 h-6 w-14" />
         </>
       ) : (
         <Layout.Flex gap="xs" justify="start" align="center">
           <Text className="truncate" variant="heading-hero" as="h2">
             {name}
           </Text>
-          <Layout.Flex justify="start" align="center">
+          <Layout.Flex justify="start" align="center" gap="4xs">
             <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} className="min-w-fit rounded-full">
               {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
             </StatusBadge>

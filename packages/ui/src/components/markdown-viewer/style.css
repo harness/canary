@@ -216,10 +216,10 @@
   }
 
   pre {
-    @apply bg-cn-background-2 border-cn-borders-2 mb-0 rounded border px-4 py-[13px];
+    @apply bg-cn-background-1 border-cn-borders-3 font-code text-cn-foreground-1 mb-0 rounded border py-3 pl-4 pr-3;
 
     code {
-      @apply text-cn-foreground-1 mr-6 p-0 text-sm;
+      @apply text-cn-foreground-1 mr-7 p-0 text-sm;
     }
   }
 

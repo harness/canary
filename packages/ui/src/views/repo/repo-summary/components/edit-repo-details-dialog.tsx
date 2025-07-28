@@ -29,12 +29,12 @@ export const EditRepoDetails = ({
     <Dialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
       <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title className="mb-4">Repository Description</Dialog.Title>
+          <Dialog.Title>Repository Description</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
           <Textarea
             label="Description"
-            className="h-24 text-cn-foreground-1"
+            className="text-cn-foreground-1 h-24"
             value={newDesc}
             defaultValue={description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {

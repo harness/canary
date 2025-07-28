@@ -90,11 +90,9 @@ export const SearchFiles = ({
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Anchor asChild>
-        <SearchInput
-          inputContainerClassName={inputContainerClassName}
-          size={searchInputSize}
-          onChange={handleInputChange}
-        />
+        <div className={inputContainerClassName}>
+          <SearchInput size={searchInputSize} onChange={handleInputChange} />
+        </div>
       </Popover.Anchor>
       <Popover.Content
         align="start"
@@ -102,7 +100,7 @@ export const SearchFiles = ({
         onOpenAutoFocus={event => {
           event.preventDefault()
         }}
-        className="!p-1"
+        className="w-[var(--radix-popper-anchor-width)] !p-1"
       >
         <Command.Root>
           <Command.List heightClassName="max-h-60">

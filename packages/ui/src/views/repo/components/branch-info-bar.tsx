@@ -31,7 +31,12 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const hasAhead = !!ahead
 
   return (
-    <div className="flex min-h-9 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 px-4 py-2">
+    <Layout.Flex
+      className="border-cn-borders-2 bg-cn-background-2 min-h-9rounded-md border px-4 py-2"
+      align="center"
+      justify="between"
+      gapX="xs"
+    >
       <Layout.Flex align="center" gapX="2xs">
         <Text color="foreground-1">
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
@@ -51,7 +56,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           {!hasAhead && !hasBehind && 'up to date with'}
         </Text>
 
-        <Tag variant="secondary" theme="blue" size="md" value={defaultBranchName}>
+        <Tag variant="secondary" theme="blue" size="md" icon="git-branch" value={defaultBranchName}>
           <IconV2 name="git-branch" size="xs" />
         </Tag>
       </Layout.Flex>
@@ -76,7 +81,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             <DropdownMenu.Slot>
               <Layout.Grid gapY="xs" className="p-2">
                 <Layout.Grid flow="column" gapX="xs">
-                  <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
+                  <div className="border-cn-borders-4 rounded-2 flex size-8 shrink-0 items-center justify-center border">
                     <IconV2 name="git-pull-request" size="md" />
                   </div>
                   <Layout.Grid gapY="xs">
@@ -84,8 +89,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                       This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
                       <Tag
                         className="inline-flex align-middle"
-                        variant="outline"
-                        theme="gray"
+                        variant="secondary"
+                        theme="blue"
                         size="sm"
                         value={defaultBranchName}
                         icon="git-branch"
@@ -116,7 +121,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )}
-    </div>
+    </Layout.Flex>
   )
 }
 

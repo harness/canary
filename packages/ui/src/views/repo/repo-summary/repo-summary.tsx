@@ -221,7 +221,13 @@ export function RepoSummaryView({
             <Spacer size={5} />
             <StackedList.Root onlyTopRounded borderBackground>
               <StackedList.Item className="py-2" isHeader disableHover>
-                <StackedList.Field title={<Text color="foreground-3">{t('views:repos.readme', 'README.md')}</Text>} />
+                <StackedList.Field
+                  title={
+                    <Text variant="caption-single-line-normal" color="foreground-1">
+                      {t('views:repos.readme', 'README.md')}
+                    </Text>
+                  }
+                />
                 <StackedList.Field
                   right
                   title={

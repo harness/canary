@@ -31,7 +31,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const hasAhead = !!ahead
 
   return (
-    <div className="border-cn-borders-2 bg-cn-background-2 flex min-h-9 items-center justify-between rounded-md border px-4 py-2">
+    <div className="flex min-h-9 items-center justify-between rounded-md border border-cn-borders-2 bg-cn-background-2 px-4 py-2">
       <Layout.Flex align="center" gapX="2xs">
         <Text color="foreground-1">
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
@@ -76,21 +76,21 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             <DropdownMenu.Slot>
               <Layout.Grid gapY="xs" className="p-2">
                 <Layout.Grid flow="column" gapX="xs">
-                  <div className="border-cn-borders-4 rounded-2 flex size-8 shrink-0 items-center justify-center border">
+                  <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
                     <IconV2 name="git-pull-request" size="md" />
                   </div>
                   <Layout.Grid gapY="xs">
                     <Text variant="body-single-line-strong" color="foreground-1">
                       This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
                       <Tag
-                        className="inline-flex"
+                        className="inline-flex align-middle"
                         variant="outline"
                         theme="gray"
                         size="sm"
                         value={defaultBranchName}
                         icon="git-branch"
                         showIcon
-                      ></Tag>
+                      />
                     </Text>
 
                     <Text color="foreground-3">

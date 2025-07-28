@@ -53,6 +53,7 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         isSubmitting={false}
       />
       <PullRequestChangesPage
+        principalProps={{}}
         handleUpload={noop}
         usePullRequestProviderStore={usePullRequestProviderStore}
         setDiffMode={noop}

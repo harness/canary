@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Card, Layout, Link, SkeletonList, Spacer, Text } from '@/components'
+import { Alert, Card, Layout, Link, SkeletonList, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -22,13 +22,15 @@ interface SemanticSearchResultsListProps {
     semanticResults?: SemanticSearchResultItem[]
   }
   toRepoFileDetails: (params: { filePath: string }) => string
+  semanticSearchError?: string
 }
 
 export const SemanticSearchResultsList: FC<SemanticSearchResultsListProps> = ({
   isLoading,
   isDirtyList,
   useSearchResultsStore,
-  toRepoFileDetails
+  toRepoFileDetails,
+  semanticSearchError
 }) => {
   const { t } = useTranslation()
   const { semanticResults } = useSearchResultsStore()
@@ -39,6 +41,13 @@ export const SemanticSearchResultsList: FC<SemanticSearchResultsListProps> = ({
   }
 
   if (!semanticResults?.length) {
+    if (semanticSearchError) {
+      return (
+        <Alert.Root theme="danger">
+          <Alert.Title>{semanticSearchError}</Alert.Title>
+        </Alert.Root>
+      )
+    }
     return (
       <div className={cn('flex flex-col items-center justify-center py-12')}>
         <Text variant="heading-section">

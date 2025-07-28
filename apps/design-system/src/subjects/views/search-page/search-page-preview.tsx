@@ -24,6 +24,7 @@ export const SearchPagePreview = () => {
       onRepoSelect={() => {}}
       onLanguageSelect={() => {}}
       onClearFilters={() => {}}
+      isProjectScope={false}
     />
   )
 }

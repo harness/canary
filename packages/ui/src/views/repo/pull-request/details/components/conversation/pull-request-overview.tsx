@@ -9,6 +9,7 @@ import {
   isSystemComment,
   orderSortDate,
   PRCommentFilterType,
+  PrincipalPropsType,
   TypesPullReqActivity
 } from '@/views'
 import { PullRequestRegularAndCodeComment } from '@views/repo/pull-request/details/components/conversation/regular-and-code-comment'
@@ -51,6 +52,7 @@ export interface PullRequestOverviewProps
   diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
   toCode?: ({ sha }: { sha: string }) => string
   handleUpload: HandleUploadType
+  principalProps: PrincipalPropsType
 }
 
 export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
@@ -72,7 +74,8 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   toggleConversationStatus,
   handleUpdateDescription,
   toCommitDetails,
-  toCode
+  toCode,
+  principalProps
 }) => {
   /**
    * Get sorted model of Data props
@@ -154,6 +157,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
       <div>
         {activityFilter.value === PRCommentFilterType.SHOW_EVERYTHING && (
           <PullRequestDescBox
+            principalProps={principalProps}
             handleUpload={handleUpload}
             title={pullReqMetadata?.title}
             handleUpdateDescription={handleUpdateDescription}
@@ -170,6 +174,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
           if (isSystemComment(commentItems)) {
             return (
               <PullRequestSystemComments
+                principalProps={principalProps}
                 key={commentItems[0].id}
                 toCommitDetails={toCommitDetails}
                 commentItems={commentItems}
@@ -184,6 +189,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
           return (
             <PullRequestRegularAndCodeComment
               key={commentItems[0].id}
+              principalProps={principalProps}
               commentItems={commentItems}
               parentItem={parentActivity}
               handleUpload={handleUpload}

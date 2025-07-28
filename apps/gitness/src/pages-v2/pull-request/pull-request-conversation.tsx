@@ -30,7 +30,6 @@ import {
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
-import { PrincipalType } from '@harnessio/ui/types'
 import {
   CodeOwnersData,
   DefaultReviewersDataProps,
@@ -211,7 +210,11 @@ export default function PullRequestConversationPage() {
 
   const navigate = useNavigate()
 
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+  const {
+    data: { body: principals } = {},
+    isLoading: isPrincipalsLoading,
+    error: principalsError
+  } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchPrincipalsQuery, accountIdentifier: accountId }
   })
@@ -852,9 +855,13 @@ export default function PullRequestConversationPage() {
         filtersProps={filtersData}
         panelProps={panelProps}
         overviewProps={overviewProps}
-        principals={principals as PrincipalType[]}
-        searchPrincipalsQuery={searchPrincipalsQuery}
-        setSearchPrincipalsQuery={setSearchPrincipalsQuery}
+        principalProps={{
+          principals,
+          searchPrincipalsQuery,
+          setSearchPrincipalsQuery,
+          isPrincipalsLoading,
+          principalsError
+        }}
         // TODO: create useMemo of commentBoxProps
         commentBoxProps={{
           comment,

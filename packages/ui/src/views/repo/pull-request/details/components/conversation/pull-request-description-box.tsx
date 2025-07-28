@@ -1,7 +1,9 @@
 import { FC, useState } from 'react'
 
 import { Avatar, Button, DropdownMenu, IconV2, MarkdownViewer, Text, TimeAgoCard } from '@/components'
-import { HandleUploadType } from '@/views'
+import { HandleUploadType, PrincipalPropsType } from '@/views'
+import { cn } from '@utils/cn'
+import { noop } from 'lodash-es'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 import PullRequestTimelineItem from './pull-request-timeline-item'
@@ -15,6 +17,7 @@ export interface PullRequestDescBoxProps {
   description?: string
   handleUpdateDescription: (title: string, description: string) => void
   handleUpload: HandleUploadType
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
@@ -25,10 +28,12 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   description,
   handleUpdateDescription,
   title,
-  handleUpload
+  handleUpload,
+  principalProps
 }) => {
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
+
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
@@ -51,6 +56,10 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   }
   return (
     <PullRequestTimelineItem
+      // PR Description feature doesn't support mentions
+      principalsMentionMap={{}}
+      setPrincipalsMentionMap={noop}
+      principalProps={principalProps}
       icon={<IconV2 name="git-pull-request" size="2xs" />}
       isLast={isLast}
       header={[
@@ -71,9 +80,17 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
       contentClassName="pb-0"
       content={
         description && (
-          <div className="flex w-full max-w-full justify-between p-4">
+          <div
+            className={cn('p-4', {
+              'flex justify-between': !edit
+            })}
+          >
             {edit ? (
               <PullRequestCommentBox
+                // PR Description feature doesn't support mentions
+                principalProps={principalProps}
+                principalsMentionMap={{}}
+                setPrincipalsMentionMap={noop}
                 isEditMode
                 handleUpload={handleUpload}
                 onSaveComment={() => {
@@ -99,5 +116,6 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
     />
   )
 }
+PullRequestDescBox.displayName = 'PullRequestDescBox'
 
 export default PullRequestDescBox

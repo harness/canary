@@ -16,6 +16,7 @@ import {
   useFileViewAddPullReqMutation,
   useFileViewDeletePullReqMutation,
   useFileViewListPullReqQuery,
+  useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useRawDiffQuery,
   useReviewerListPullReqQuery
@@ -82,8 +83,18 @@ export default function PullRequestChanges() {
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId')
   const [scrolledToComment, setScrolledToComment] = useState(false)
+  const [searchPrincipalsQuery, setSearchPrincipalsQuery] = useState('')
   const [jumpToDiff, setJumpToDiff] = useState('')
   const isMfe = useIsMFE()
+
+  const {
+    data: { body: principals } = {},
+    isLoading: isPrincipalsLoading,
+    error: principalsError
+  } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchPrincipalsQuery, accountIdentifier: accountId }
+  })
 
   const {
     data: { body: reviewers } = {},
@@ -337,6 +348,8 @@ export default function PullRequestChanges() {
   }, [activityData])
 
   const handleSaveComment = async (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => {
+    console.log('comment in gitness', comment)
+
     const reqBody = parentId
       ? {
           text: comment,
@@ -426,6 +439,13 @@ export default function PullRequestChanges() {
         prId={prId}
       />
       <PullRequestChangesPage
+        principalProps={{
+          principals,
+          searchPrincipalsQuery,
+          setSearchPrincipalsQuery,
+          isPrincipalsLoading,
+          principalsError
+        }}
         handleUpload={handleUpload}
         usePullRequestProviderStore={usePullRequestProviderStore}
         setDiffMode={setDiffMode}

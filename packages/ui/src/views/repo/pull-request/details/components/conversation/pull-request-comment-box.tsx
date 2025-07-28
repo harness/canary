@@ -10,14 +10,20 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { PrincipalType } from '@/types'
-import { handleFileDrop, handlePaste, HandleUploadType, PrincipalsMentionMap, ToolbarAction } from '@/views'
+import { Avatar, Button, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs } from '@/components'
+import {
+  handleFileDrop,
+  handlePaste,
+  HandleUploadType,
+  PrincipalsMentionMap,
+  ToolbarAction,
+  type PrincipalPropsType
+} from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty, isUndefined } from 'lodash-es'
 
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
-import { replaceMentionEmailWithId } from './utils'
+import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface TextSelection {
   start: number
@@ -66,9 +72,12 @@ export interface PullRequestCommentBoxProps {
   isEditMode?: boolean
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
-  searchPrincipalsQuery: string
-  setSearchPrincipalsQuery: (query: string) => void
-  principals?: PrincipalType[]
+  principalProps: PrincipalPropsType
+  principalsMentionMap: PrincipalsMentionMap
+  setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  preserveCommentOnSave?: boolean
+  buttonTitle?: string
+  textareaPlaceholder?: string
 }
 
 const TABS_KEYS = {
@@ -91,9 +100,12 @@ export const PullRequestCommentBox = ({
   setComment,
   isEditMode,
   handleUpload,
-  searchPrincipalsQuery,
-  setSearchPrincipalsQuery,
-  principals
+  principalProps,
+  principalsMentionMap: parentPrincipalsMentionMap,
+  setPrincipalsMentionMap: parentSetPrincipalsMentionMap,
+  preserveCommentOnSave = false,
+  buttonTitle,
+  textareaPlaceholder
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -103,21 +115,33 @@ export const PullRequestCommentBox = ({
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
-  const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+  const [localPrincipalsMentionMap, setLocalPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+
+  const {
+    principalsMentionMap,
+    setPrincipalsMentionMap
+  }: {
+    principalsMentionMap: PrincipalsMentionMap
+    setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  } = useMemo(() => {
+    return {
+      principalsMentionMap: parentPrincipalsMentionMap ?? localPrincipalsMentionMap,
+      setPrincipalsMentionMap: parentSetPrincipalsMentionMap ?? setLocalPrincipalsMentionMap
+    }
+  }, [parentPrincipalsMentionMap, localPrincipalsMentionMap, parentSetPrincipalsMentionMap])
 
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
   }
 
-  useEffect(() => {
-    console.log('principals', principals)
-  }, [principals])
-
   const handleSaveComment = () => {
     if (comment.trim()) {
       const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
       onSaveComment(formattedComment)
-      setComment('') // Clear the comment box after saving
+
+      if (!preserveCommentOnSave) {
+        setComment('') // Clear the comment box after saving
+      }
     }
   }
 
@@ -432,31 +456,13 @@ export const PullRequestCommentBox = ({
               onDragLeave={handleDragLeave}
               ref={dropZoneRef}
             >
-              {/* <Textarea
-                ref={textAreaRef}
-                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
-                autoFocus={!!inReplyMode}
-                placeholder="Add your comment here"
-                value={comment}
-                onChange={e => onCommentChange(e)}
-                onKeyUp={e => onKeyUp(e)}
-                onMouseUp={() => onMouseUp()}
-                onPaste={e => {
-                  if (e.clipboardData.files.length > 0) {
-                    handlePasteForUpload(e)
-                  }
-                }}
-                resizable
-              /> */}
-
               <PullRequestCommentTextarea
                 resizable
                 ref={textAreaRef}
-                users={principals}
-                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
+                placeholder={textareaPlaceholder ?? 'Add your comment here'}
+                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3"
                 autoFocus={!!inReplyMode}
-                setSearchPrincipalsQuery={setSearchPrincipalsQuery}
-                searchPrincipalsQuery={searchPrincipalsQuery}
+                principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
                 value={comment}
                 setValue={setComment}
@@ -496,7 +502,10 @@ export const PullRequestCommentBox = ({
           <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
+                <MarkdownViewer
+                  markdownClassName="!bg-cn-background-2 w-full"
+                  source={replaceMentionEmailWithDisplayName(comment, principalsMentionMap)}
+                />
               ) : (
                 <span className="text-cn-foreground-1">Nothing to preview</span>
               )}
@@ -508,7 +517,7 @@ export const PullRequestCommentBox = ({
           {activeTab === TABS_KEYS.WRITE && (
             <div>
               <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-              <Button size="sm" variant="ghost" onClick={handleFileSelect}>
+              <Button size="sm" variant="transparent" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
@@ -523,9 +532,9 @@ export const PullRequestCommentBox = ({
             )}
 
             {isEditMode ? (
-              <Button onClick={handleSaveComment}>Save</Button>
+              <Button onClick={handleSaveComment}>{buttonTitle || 'Save'}</Button>
             ) : (
-              <Button onClick={handleSaveComment}>Comment</Button>
+              <Button onClick={handleSaveComment}>{buttonTitle || 'Comment'}</Button>
             )}
           </div>
         </div>

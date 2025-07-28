@@ -1,21 +1,18 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
 import { IconV2, Textarea, TextareaProps } from '@/components'
-import { PrincipalType } from '@/types'
 import { Command } from '@components/command'
 import { cn } from '@utils/cn'
 import { Command as CommandPrimitive } from 'cmdk'
 
-import { PrincipalsMentionMap } from '../../pull-request-details-types'
+import { PrincipalPropsType, PrincipalsMentionMap } from '../../pull-request-details-types'
 import { getCaretCoordinates, getCurrentWord, replaceWord } from './utils'
 
 interface PullRequestCommentTextareaProps extends TextareaProps {
   value: string
   setValue: (value: string) => void
-  users?: PrincipalType[]
-  setSearchPrincipalsQuery: (query: string) => void
-  searchPrincipalsQuery: string
   setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  principalProps: PrincipalPropsType
 }
 
 export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRequestCommentTextareaProps>(
@@ -23,11 +20,9 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     {
       value,
       setValue,
-      users,
-      setSearchPrincipalsQuery,
+      principalProps,
       onChange,
       className,
-      searchPrincipalsQuery,
       setPrincipalsMentionMap,
       ...textareaProps
     }: PullRequestCommentTextareaProps,
@@ -40,7 +35,9 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
 
     const [dropdownOpen, setDropdownOpen] = useState(false)
 
-    const handleBlur = useCallback((e: Event) => {
+    const { setSearchPrincipalsQuery, principals, isPrincipalsLoading } = principalProps || {}
+
+    const handleBlur = useCallback(() => {
       const dropdown = dropdownRef.current
       if (dropdown) {
         setDropdownOpen(false)
@@ -51,9 +48,9 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     useEffect(() => {
       if (commandValue) {
         const searchQuery = commandValue.replace('@', '')
-        setSearchPrincipalsQuery(searchQuery)
+        setSearchPrincipalsQuery?.(searchQuery)
       } else {
-        setSearchPrincipalsQuery('')
+        setSearchPrincipalsQuery?.('')
       }
     }, [commandValue, setSearchPrincipalsQuery])
 
@@ -153,7 +150,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     }, [])
 
     const renderCommandList = () => {
-      if (typeof users === 'undefined') {
+      if (isPrincipalsLoading) {
         return (
           <Command.Loading className="text-cn-foreground-3 min-w-52 px-2 py-4">
             <div className="grid place-content-center space-x-2">
@@ -163,25 +160,26 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
         )
       }
 
-      if (users === null || (Array.isArray(users) && users.length === 0)) {
+      if (principals === null || (Array.isArray(principals) && principals.length === 0)) {
         return <Command.Empty className="p-2 min-w-max text-sm">User not found</Command.Empty>
       }
 
-      console.log(users)
-
       return (
         <Command.Group className="min-w-52 max-w-min overflow-auto">
-          {users?.map(user => {
+          {principals?.map(principal => {
             return (
               <Command.Item
-                key={user.uid}
-                value={user.email}
+                key={principal.uid}
+                value={principal.email}
                 onSelect={(...args) => {
                   onCommandSelect(...args)
-                  setPrincipalsMentionMap((prev: PrincipalsMentionMap) => ({ ...prev, [user.email]: user }))
+                  setPrincipalsMentionMap((prev: PrincipalsMentionMap) => ({
+                    ...prev,
+                    [principal.email || '']: principal
+                  }))
                 }}
               >
-                {user.email}
+                {principal.email}
               </Command.Item>
             )
           })}
@@ -218,7 +216,6 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           ref={setRefs}
           autoComplete="off"
           autoCorrect="off"
-          placeholder="Add your comment here"
         />
 
         <Command.Root

@@ -5,6 +5,8 @@ import { useTranslation } from '@/context'
 import {
   CommentItem,
   isCodeComment,
+  PrincipalPropsType,
+  PrincipalsMentionMap,
   PullRequestCommentBox,
   PullRequestOverviewProps,
   removeLastPlus,
@@ -19,6 +21,8 @@ import PullRequestTimelineItem, {
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get } from 'lodash-es'
+
+import { replaceEmailAsKey, replaceMentionEmailWithId, replaceMentionIdWithEmail } from './utils'
 
 const getAvatar = (name?: string) => <Avatar name={name} rounded />
 
@@ -64,6 +68,9 @@ interface BaseCompProps {
   headerData: TimelineItemProps['header'][number]
   customProps: Partial<Omit<TimelineItemProps, 'header'>>
   customHeaderData: TimelineItemProps['header'][number]
+  principalProps: PrincipalPropsType
+  principalsMentionMap: PrincipalsMentionMap
+  setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
 }
 
 const BaseComp: FC<BaseCompProps> = ({
@@ -77,12 +84,18 @@ const BaseComp: FC<BaseCompProps> = ({
   toggleConversationStatus,
   headerData,
   customProps,
-  customHeaderData
+  customHeaderData,
+  principalProps,
+  principalsMentionMap,
+  setPrincipalsMentionMap
 }) => {
   if (!payload?.id) return null
 
   return (
     <PullRequestTimelineItem
+      principalsMentionMap={principalsMentionMap}
+      setPrincipalsMentionMap={setPrincipalsMentionMap}
+      principalProps={principalProps}
       replyBoxClassName="p-4"
       id={`comment-${payload?.id}`}
       handleUpload={handleUpload}
@@ -124,6 +137,7 @@ export interface PullRequestRegularAndCodeCommentProps
     commentItem: PRCommentViewProps['commentItem']
     parentItem?: CommentItem<TypesPullReqActivity>
   }>
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeCommentProps> = ({
@@ -137,7 +151,8 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   onCopyClick,
   handleDeleteComment,
   handleUpdateComment,
-  componentViewBase: ComponentViewBase
+  componentViewBase: ComponentViewBase,
+  principalProps
 }) => {
   const { t } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -146,6 +161,11 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
   const [editModes, setEditModes] = useState<Record<string, boolean>>({})
   const [editComments, setEditComments] = useState<Record<string, string>>({})
+
+  // const initialPrincipalsMentionMap = replaceEmailAsKey(parentItem?.payload?.mentions || {})
+  const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>(() =>
+    replaceEmailAsKey(parentItem?.payload?.mentions || {})
+  )
 
   const payload = commentItems[0]?.payload
   const isCode = isCodeComment(commentItems)
@@ -167,14 +187,17 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
     setHideReplyHeres(prev => ({ ...prev, [id]: state }))
   }, [])
 
-  const handleQuoteReply = useCallback((commentId: number, originalText: string) => {
-    setQuoteReplies(prev => ({
-      ...prev,
-      [commentId]: {
-        text: quoteTransform(originalText)
-      }
-    }))
-  }, [])
+  const handleQuoteReply = useCallback(
+    (commentId: number, originalText: string) => {
+      setQuoteReplies(prev => ({
+        ...prev,
+        [commentId]: {
+          text: replaceMentionIdWithEmail(quoteTransform(originalText), parentItem?.payload?.mentions || {})
+        }
+      }))
+    },
+    [parentItem?.payload?.mentions]
+  )
 
   const renderContentItemsBlock = () => (
     <div className="px-4 pt-4">
@@ -187,6 +210,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         return (
           <BaseComp
             key={`${commentItem.id}-${commentItem.author}-pr-comment`}
+            principalProps={principalProps}
+            principalsMentionMap={principalsMentionMap}
+            setPrincipalsMentionMap={setPrincipalsMentionMap}
             payload={payload}
             handleUpload={handleUpload}
             hideReplyHeres={hideReplyHeres}
@@ -215,17 +241,23 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                 <div className="rounded-md border bg-cn-background-1 p-1">{t('views:pullRequests.deletedComment')}</div>
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
+                  principalsMentionMap={principalsMentionMap}
+                  setPrincipalsMentionMap={setPrincipalsMentionMap}
+                  principalProps={principalProps}
                   handleUpload={handleUpload}
                   isEditMode
                   onSaveComment={() => {
                     if (commentItem.id) {
-                      handleUpdateComment?.(commentItem.id, editComments[componentId])
+                      handleUpdateComment?.(
+                        commentItem.id,
+                        replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
+                      )
                       toggleEditMode(componentId, '')
                     }
                   }}
                   currentUser={currentUser?.display_name}
                   onCancelClick={() => toggleEditMode(componentId, '')}
-                  comment={editComments[componentId]}
+                  comment={replaceMentionIdWithEmail(editComments[componentId], parentItem?.payload?.mentions || {})}
                   setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                 />
               ) : (
@@ -255,7 +287,10 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
   return isCode ? (
     <BaseComp
+      principalsMentionMap={principalsMentionMap}
+      setPrincipalsMentionMap={setPrincipalsMentionMap}
       payload={payload}
+      principalProps={principalProps}
       handleUpload={handleUpload}
       hideReplyHeres={hideReplyHeres}
       toggleReplyBox={toggleReplyBox}
@@ -290,6 +325,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               </div>
             )}
             <PullRequestDiffViewer
+              principalProps={principalProps}
               handleUpload={handleUpload}
               data={removeLastPlus(codeDiffSnapshot)}
               fileName={payload?.code_comment?.path ?? ''}
@@ -307,7 +343,10 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
     />
   ) : (
     <BaseComp
+      principalsMentionMap={principalsMentionMap}
+      setPrincipalsMentionMap={setPrincipalsMentionMap}
       payload={payload}
+      principalProps={principalProps}
       handleUpload={handleUpload}
       hideReplyHeres={hideReplyHeres}
       toggleReplyBox={toggleReplyBox}

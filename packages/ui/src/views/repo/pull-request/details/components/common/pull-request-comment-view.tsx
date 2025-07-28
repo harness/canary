@@ -6,7 +6,7 @@ import { Button, CounterBadge, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
-import { replaceMentionIdWithEmail } from '../conversation/utils'
+import { replaceMentionIdWithDisplayName } from '../conversation/utils'
 
 export interface PRCommentViewProps {
   parentItem?: CommentItem<TypesPullReqActivity>
@@ -36,7 +36,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   const isApplied = appliedCheckSum === checkSums?.[0]
   const isInBatch = suggestionsBatch?.some(suggestion => suggestion.comment_id === commentItem.id)
 
-  const formattedComment = replaceMentionIdWithEmail(
+  const formattedComment = replaceMentionIdWithDisplayName(
     commentItem?.payload?.text || '',
     commentItem?.payload?.mentions || {}
   )
@@ -96,4 +96,5 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   )
 }
 
+PRCommentView.displayName = 'PRCommentView'
 export default PRCommentView

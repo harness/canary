@@ -125,7 +125,8 @@ export function MarkdownViewer({
 
       if (target instanceof HTMLAnchorElement) {
         const href = target.getAttribute('href')
-        if (href && !/^https?:\/\//.test(href)) {
+        // Only intercept internal links, allow external protocols (mailto:, tel:, etc.) to work normally
+        if (href && !/^(https?:\/\/|mailto:|tel:|data:|javascript:|sms:)/.test(href)) {
           event.preventDefault()
           if (href.startsWith('#')) {
             document.getElementById(href.slice(1))?.scrollIntoView()

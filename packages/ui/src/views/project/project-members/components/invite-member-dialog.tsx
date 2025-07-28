@@ -50,13 +50,13 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   const principalDataToIdMap = useMemo(
     () =>
       principals.reduce(
-        (acc, principal) => ({ ...acc, [principal.uid]: principal }),
+        (acc, principal) => ({ ...acc, [principal.uid!]: principal }),
         {} as Record<string, PrincipalType>
       ),
     [principals]
   )
   const memberOptions: SelectValueOption[] = useMemo(
-    () => principals.map(principal => ({ label: principal.display_name, value: principal.uid })),
+    () => principals.map(principal => ({ label: principal.display_name, value: principal.uid || '' })),
     [principals]
   )
 

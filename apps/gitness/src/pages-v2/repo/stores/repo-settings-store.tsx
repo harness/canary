@@ -4,8 +4,10 @@ import {
   FindRepositoryOkResponse,
   ListPrincipalsOkResponse,
   ListStatusCheckRecentOkResponse,
+  ListUsergroupsOkResponse,
   RepoRuleGetOkResponse,
-  RepoRuleListOkResponse
+  RepoRuleListOkResponse,
+  TypesUserGroupInfo
 } from '@harnessio/code-service-client'
 import { PrincipalType } from '@harnessio/ui/types'
 import { RepoBranchSettingsFormFields, RepoData, RuleDataType } from '@harnessio/ui/views'
@@ -18,6 +20,7 @@ interface IRepoStore {
   securityScanning: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
+  userGroups: TypesUserGroupInfo[] | null
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
   verifyCommitterIdentity: boolean
   gitLfsEnabled: boolean
@@ -27,6 +30,7 @@ interface IRepoStore {
   setSecurityScanning: (enabled: boolean) => void
   setGitLfsEnabled: (enabled: boolean) => void
   setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
+  setUserGroups: (data: ListUsergroupsOkResponse | null) => void
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
   setVerifyCommitterIdentity: (enabled: boolean) => void
@@ -49,6 +53,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   securityScanning: false,
   verifyCommitterIdentity: false,
   principals: null,
+  userGroups: null,
   recentStatusChecks: null,
   vulnerabilityScanning: 'disabled',
 
@@ -92,6 +97,13 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       return
     }
     set({ principals: data as PrincipalType[] })
+  },
+  setUserGroups: data => {
+    if (!data) {
+      set({ userGroups: null })
+      return
+    }
+    set({ userGroups: data as TypesUserGroupInfo[] })
   },
   setRecentStatusChecks: data => {
     if (!data) {

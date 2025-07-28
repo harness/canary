@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   useListPrincipalsQuery,
   useListStatusCheckRecentSpaceQuery,
+  useListUsergroupsQuery,
   useSpaceRuleAddMutation,
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
@@ -33,7 +34,7 @@ export const ProjectBranchRulesContainer = () => {
   const spaceURL = useGetSpaceURLParam()
 
   const { ruleId: ruleIdentifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
+  const { setPresetRuleData, setPrincipals, setRecentStatusChecks, setUserGroups } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
@@ -52,6 +53,7 @@ export const ProjectBranchRulesContainer = () => {
     return () => {
       setPresetRuleData(null)
       setPrincipals(null)
+      setUserGroups(null)
       setRecentStatusChecks(null)
       resetRules()
     }
@@ -94,6 +96,15 @@ export const ProjectBranchRulesContainer = () => {
     },
     stringifyQueryParamsOptions: {
       arrayFormat: 'repeat'
+    }
+  })
+
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
+    space_ref: `${spaceURL}/+`,
+    queryParams: {
+      page: 1,
+      limit: 100,
+      query: principalsSearchQuery
     }
   })
 
@@ -207,6 +218,12 @@ export const ProjectBranchRulesContainer = () => {
   }, [principals, setPrincipals])
 
   useEffect(() => {
+    if (userGroups) {
+      setUserGroups(userGroups as PrincipalType[])
+    }
+  }, [userGroups, setUserGroups])
+
+  useEffect(() => {
     if (recentStatusChecks) {
       setRecentStatusChecks(recentStatusChecks)
     }
@@ -214,6 +231,7 @@ export const ProjectBranchRulesContainer = () => {
 
   const errors = {
     principals: principalsError?.message || null,
+    userGroups: userGroupsError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null,
     statusChecks: statusChecksError?.message || null

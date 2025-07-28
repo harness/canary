@@ -55,4 +55,12 @@ export interface PrincipalType {
   avatar_url?: string
 }
 
+export interface TypesUserGroupInfo {
+  description?: string
+  id?: number
+  identifier?: string
+  name?: string
+  scope?: number
+}
+
 export type NonEmptyReactNode = Exclude<ReactNode, boolean | null | undefined>

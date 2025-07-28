@@ -1,5 +1,5 @@
 import { EnumRuleState, type RepoRuleGetOkResponse } from '@harnessio/code-service-client'
-import { BranchRuleId, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/ui/views'
+import { BranchRuleId, EnumBypassListType, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/ui/views'
 
 import { getTotalRulesApplied, transformDataFromApi, transformFormOutput } from '../repo-branch-rules-utils'
 
@@ -57,8 +57,10 @@ const mockFormOutput = {
   ],
   state: true,
   bypass: [
-    { id: 1, key: 'User One' },
-    { id: 2, key: 'User Two' }
+    { id: 1, key: 'User One', type: EnumBypassListType.USER, email: 'user1@example.com' },
+    { id: 2, key: 'Service Account One', type: EnumBypassListType.SERVICEACCOUNT, email: 'serviceaccount1@example.com' },
+    { id: 3, key: 'User Group One', type: EnumBypassListType.USER_GROUP, email: 'usergroup1@example.com' },
+    { id: 4, key: 'User Group Two', type: EnumBypassListType.USER_GROUP, email: 'usergroup2@example.com' }
   ],
   default: true,
   repo_owners: true,

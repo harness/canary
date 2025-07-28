@@ -9,6 +9,7 @@ import {
 import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
 import {
   BranchRuleId,
+  EnumBypassListType,
   MergeStrategy,
   PatternsButtonType,
   RepoBranchSettingsFormFields,
@@ -167,7 +168,9 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
         if (user) {
           acc.push({
             id: userId,
-            key: user?.display_name || ''
+            key: user?.display_name || '',
+            type: (user.type || 'user') as EnumBypassListType,
+            title: user?.email || ''
           })
         }
 
@@ -175,6 +178,22 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
       }, [])
     : []
 
+  const bypassUserGroups = data?.definition?.bypass?.user_group_ids
+    ? data?.definition?.bypass?.user_group_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userGroupId) => {
+        const userGroup = data?.user_groups?.[userGroupId]
+
+        if (userGroup) {
+          acc.push({
+            id: userGroupId,
+            key: userGroup?.name || '',
+            type: 'user_group' as EnumBypassListType,
+            title: userGroup?.identifier || ''
+          })
+        }
+
+        return acc
+      }, [])
+    : []
   return {
     identifier: data.identifier || '',
     description: data.description || '',
@@ -182,7 +201,7 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
     patterns: formatPatterns,
     rules: rules,
     state: data.state === 'active',
-    bypass,
+    bypass: [...bypass, ...bypassUserGroups],
     default: data?.pattern?.default,
     repo_owners: data?.definition?.bypass?.repo_owners
   }
@@ -220,7 +239,8 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     },
     definition: {
       bypass: {
-        user_ids: formOutput.bypass.map(it => it.id),
+        user_ids: formOutput.bypass.filter(it => it.type !== EnumBypassListType.USER_GROUP).map(it => it.id),
+        user_group_ids: formOutput.bypass.filter(it => it.type === EnumBypassListType.USER_GROUP).map(it => it.id),
         repo_owners: formOutput.repo_owners || false
       },
       lifecycle: {

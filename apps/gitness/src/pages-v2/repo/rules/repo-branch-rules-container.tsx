@@ -2,8 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
+  TypesUserGroupInfo,
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
+  useListUsergroupsQuery,
   useRepoRuleAddMutation,
   useRepoRuleGetQuery,
   useRepoRuleUpdateMutation
@@ -24,6 +26,7 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { PathParams } from '../../../RouteDefinitions'
@@ -40,7 +43,8 @@ export const RepoBranchRulesContainer = () => {
 
   const { spaceId } = useParams<PathParams>()
   const { identifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
+  const spaceURL = useGetSpaceURLParam()
+  const { setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks } = useRepoRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
@@ -59,6 +63,7 @@ export const RepoBranchRulesContainer = () => {
     return () => {
       setPresetRuleData(null)
       setPrincipals(null)
+      setUserGroups(null)
       setRecentStatusChecks(null)
       resetRules()
     }
@@ -105,6 +110,15 @@ export const RepoBranchRulesContainer = () => {
     },
     stringifyQueryParamsOptions: {
       arrayFormat: 'repeat'
+    }
+  })
+
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
+    space_ref: `${spaceURL}/+`,
+    queryParams: {
+      page: 1,
+      limit: 100,
+      query: principalsSearchQuery
     }
   })
 
@@ -218,6 +232,12 @@ export const RepoBranchRulesContainer = () => {
   }, [principals, setPrincipals])
 
   useEffect(() => {
+    if (userGroups) {
+      setUserGroups(userGroups as TypesUserGroupInfo[])
+    }
+  }, [userGroups, setUserGroups])
+
+  useEffect(() => {
     if (recentStatusChecks) {
       setRecentStatusChecks(recentStatusChecks)
     }
@@ -225,6 +245,7 @@ export const RepoBranchRulesContainer = () => {
 
   const errors = {
     principals: principalsError?.message || null,
+    userGroups: userGroupsError?.message || null,
     statusChecks: statusChecksError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null

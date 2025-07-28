@@ -11,7 +11,18 @@ import {
   useState
 } from 'react'
 
-import { Command, CommonInputsProp, ControlGroup, FormCaption, Label, SkeletonList, Tag } from '@/components'
+import {
+  Command,
+  CommonInputsProp,
+  ControlGroup,
+  FormCaption,
+  IconV2,
+  IconV2NamesType,
+  Label,
+  Layout,
+  SkeletonList,
+  Tag
+} from '@/components'
 import { generateAlphaNumericHash } from '@/utils'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
@@ -36,6 +47,8 @@ export interface MultiSelectOption {
   id: string | number
   key: string
   value?: string
+  icon?: IconV2NamesType
+  title?: string
   disable?: boolean
   theme?:
     | 'gray'
@@ -325,6 +338,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                         showReset={!disabled}
                         onReset={() => handleUnselect(option)}
                         disabled={disabled}
+                        title={option.title}
+                        icon={option.icon}
                       />
                     )
                   })}
@@ -389,6 +404,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                             key={option.id}
                             value={String(option.id)}
                             disabled={option.disable}
+                            title={option.title}
                             onSelect={() => {
                               setInputValue('')
                               setSearchQuery?.('')
@@ -401,7 +417,10 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                               }
                             }}
                           >
-                            {option.key}
+                            <Layout.Flex align="center" gap="xs">
+                              {option.icon && <IconV2 name={option.icon} />}
+                              {option.key}
+                            </Layout.Flex>
                           </Command.Item>
                         ))}
                       </Command.Group>

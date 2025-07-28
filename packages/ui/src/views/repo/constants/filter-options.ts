@@ -34,7 +34,6 @@ interface PRListFilterOptions {
   t: TFunctionWithFallback
   onAuthorSearch: (name: string) => void
   isPrincipalsLoading?: boolean
-  reviewOptions: CheckboxOptions[]
   principalData: { label: string; value: string }[]
   customFilterOptions?: PRListFilterOptionConfig
 }
@@ -44,7 +43,6 @@ export const getPRListFilterOptions = ({
   onAuthorSearch,
   isPrincipalsLoading,
   principalData,
-  reviewOptions,
   customFilterOptions = []
 }: PRListFilterOptions): PRListFilterOptionConfig => [
   {
@@ -76,26 +74,6 @@ export const getPRListFilterOptions = ({
     value: 'created_gt',
     type: FilterFieldTypes.Calendar,
     parser: dateParser
-  },
-  {
-    label: t('views:repos.prListFilterOptions.review.label', 'Reviews'),
-    value: 'review_decision',
-    type: FilterFieldTypes.MultiSelect,
-    filterFieldConfig: {
-      options: reviewOptions
-    },
-    parser: {
-      parse: (value: string) => {
-        // Since "," can be encoded while appending to URL
-        const valueArr = decodeURIComponent(value)
-          .split(',')
-          .filter(Boolean)
-          .map(val => reviewOptions.find(option => option.value === val))
-          .filter((option): option is CheckboxOptions => option !== undefined)
-        return valueArr
-      },
-      serialize: (value: CheckboxOptions[]) => value.reduce((acc, val) => (acc += `${val.value},`), '')
-    }
   },
   ...customFilterOptions
 ]

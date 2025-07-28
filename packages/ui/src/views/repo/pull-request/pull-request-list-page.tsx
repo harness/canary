@@ -10,13 +10,18 @@ import {
   SkeletonList,
   Spacer,
   StackedList,
-  Text,
-  ToggleGroup
+  Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
-import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import {
+  CheckboxOptions,
+  CustomFilterOptionConfig,
+  FilterFieldTypes,
+  FilterOptionConfig,
+  MultiSelectFilterOptionConfig
+} from '@components/filters/types'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
 import { isEmpty } from 'lodash-es'
 
@@ -51,14 +56,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   principalsSearchQuery,
   principalData,
   defaultSelectedAuthor,
-  currentUserState,
+  currentUser,
   isPrincipalsLoading,
   isLoading,
   repository,
   searchQuery,
   setSearchQuery,
   onLabelClick,
-  toPullRequest
+  toPullRequest,
+  isProjectLevel
 }) => {
   const { Link, useSearchParams } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
@@ -72,13 +78,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
   )
+  const currentUserId = currentUser?.id
 
   useEffect(() => {
+    if (!isProjectLevel) {
+      return
+    }
+
     const currentParams = new URLSearchParams(window.location.search)
-    if (
-      currentParams.has('created_by') &&
-      currentParams.get('created_by') === String(currentUserState?.currentUser?.id)
-    ) {
+    if (currentParams.has('created_by') && currentParams.get('created_by') === String(currentUserId)) {
       if (currentParams.has('review_decision')) {
         setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
       } else {
@@ -89,7 +97,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     } else {
       setActiveFilterGrp(PRFilterGroupTogglerOptions.All)
     }
-  }, [currentUserState, window.location.search])
+  }, [currentUserId, window.location.search, isProjectLevel])
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
@@ -122,14 +130,37 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     }
   }
 
+  const reviewOptions = getReviewOptions()
+  const reviewFilterConfig: MultiSelectFilterOptionConfig<keyof PRListFilters> = {
+    label: t('views:repos.prListFilterOptions.review.label', 'Reviews'),
+    value: 'review_decision',
+    type: FilterFieldTypes.MultiSelect,
+    filterFieldConfig: {
+      options: reviewOptions
+    },
+    parser: {
+      parse: (value: string) => {
+        // Since "," can be encoded while appending to URL
+        const valueArr = decodeURIComponent(value)
+          .split(',')
+          .filter(Boolean)
+          .map(val => reviewOptions.find(option => option.value === val))
+          .filter((option): option is CheckboxOptions => option !== undefined)
+        return valueArr
+      },
+      serialize: (value: CheckboxOptions[]) => value.reduce((acc, val) => (acc += `${val.value},`), '')
+    }
+  }
+
+  const customFilterOptions = [labelsFilterConfig, ...(isProjectLevel ? [reviewFilterConfig] : [])]
+
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
     t,
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
-    reviewOptions: getReviewOptions(),
-    isPrincipalsLoading: isPrincipalsLoading,
-    customFilterOptions: [labelsFilterConfig],
+    isPrincipalsLoading,
+    customFilterOptions,
     principalData: computedPrincipalData.map(userInfo => ({
       label: userInfo?.display_name || '',
       value: String(userInfo?.id)
@@ -246,7 +277,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         setSearchParams(
           new URLSearchParams({
             ...restObj,
-            created_by: String(currentUserState?.currentUser?.id)
+            created_by: String(currentUserId)
           })
         )
       }
@@ -258,14 +289,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           new URLSearchParams({
             ...restObj,
             review_decision: restObj.review_decision || 'pending',
-            review_id: String(currentUserState?.currentUser?.id)
+            review_id: String(currentUserId)
           })
         )
       }
 
       setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
     },
-    [currentUserState?.fetchingCurrentUser, window.location.search]
+    [currentUserId, window.location.search]
   )
 
   const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {
@@ -290,11 +321,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       },
       {}
     )
-
-    //Always set reviewer_id along with review_decision as BE API needs it.
-    // if (_filterValues.review_decision && currentUserState?.currentUser?.id) {
-    //   _filterValues.reviewer_id = String(currentUserState.currentUser.id)
-    // }
 
     onFilterChange?.(_filterValues)
   }
@@ -336,27 +362,29 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <ButtonGroup
-                  buttonsProps={[
-                    {
-                      children: 'All',
-                      onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.All),
-                      className: activeFilterGrp === PRFilterGroupTogglerOptions.All ? activeClass : inactiveClass
-                    },
-                    {
-                      children: 'Created',
-                      onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.Created),
-                      className: activeFilterGrp === PRFilterGroupTogglerOptions.Created ? activeClass : inactiveClass
-                    },
-                    {
-                      children: 'Review Requested',
-                      onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.ReviewRequested),
-                      className:
-                        activeFilterGrp === PRFilterGroupTogglerOptions.ReviewRequested ? activeClass : inactiveClass
-                    }
-                  ]}
-                  size="sm"
-                />
+                {isProjectLevel && (
+                  <ButtonGroup
+                    buttonsProps={[
+                      {
+                        children: 'All',
+                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.All),
+                        className: activeFilterGrp === PRFilterGroupTogglerOptions.All ? activeClass : inactiveClass
+                      },
+                      {
+                        children: 'Created',
+                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.Created),
+                        className: activeFilterGrp === PRFilterGroupTogglerOptions.Created ? activeClass : inactiveClass
+                      },
+                      {
+                        children: 'Review Requested',
+                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.ReviewRequested),
+                        className:
+                          activeFilterGrp === PRFilterGroupTogglerOptions.ReviewRequested ? activeClass : inactiveClass
+                      }
+                    ]}
+                    size="sm"
+                  />
+                )}
 
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (

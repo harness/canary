@@ -149,7 +149,7 @@ export default function PullRequestListPage() {
       principalsSearchQuery={principalsSearchQuery}
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
-      currentUserState={{ currentUser, fetchingCurrentUser, currentUserError }}
+      currentUser={currentUser}
       defaultSelectedAuthor={defaultSelectedAuthor}
       repository={repoData}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}

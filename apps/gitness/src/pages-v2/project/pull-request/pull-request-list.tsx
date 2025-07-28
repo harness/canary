@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Params, useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
@@ -40,20 +40,23 @@ export default function PullRequestListPage() {
 
   const { accountId = '', orgIdentifier = '', projectIdentifier = '' } = mfeContext?.scope || {}
 
-  const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query]
+  const queryParams: ListPullReqQueryQueryParams = useMemo(() => {
+    return {
+      ...filterValues,
+      accountIdentifier: accountId,
+      orgIdentifier: orgIdentifier,
+      projectIdentifier: projectIdentifier,
+      limit: 10,
+      exclude_description: true,
+      page,
+      sort: 'merged',
+      order: 'desc',
+      query: query ?? '',
+      include_subspaces: true
+    }
+  }, [accountId, orgIdentifier, projectIdentifier, page, query, filterValues])
 
-  const queryParams: Params<string> = {
-    accountIdentifier: accountId,
-    orgIdentifier: orgIdentifier,
-    projectIdentifier: projectIdentifier,
-    limit: '10',
-    exclude_description: 'true',
-    page: String(page),
-    sort: 'merged',
-    order: 'desc',
-    query: query ?? '',
-    include_subspaces: 'true'
-  }
+  const queryKey = ['pullRequests', queryParams]
 
   /**
    *
@@ -99,11 +102,7 @@ export default function PullRequestListPage() {
   )
 
   // TODO: can we move this to some hook which is accessible globally ?
-  const {
-    data: { body: currentUser } = {},
-    isFetching: fetchingCurrentUser,
-    error: currentUserError
-  } = useGetUserQuery({
+  const { data: { body: currentUser } = {} } = useGetUserQuery({
     queryParams: {
       routingId: mfeContext?.scope?.accountId
     }
@@ -145,6 +144,7 @@ export default function PullRequestListPage() {
 
   return (
     <SandboxPullRequestListPage
+      isProjectLevel
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}
@@ -152,7 +152,7 @@ export default function PullRequestListPage() {
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
       defaultSelectedAuthor={defaultSelectedAuthor}
-      currentUserState={{ currentUser, fetchingCurrentUser, currentUserError }}
+      currentUser={currentUser}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
@@ -161,7 +161,7 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
+      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData, currentUser?.id))}
       searchQuery={query}
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}

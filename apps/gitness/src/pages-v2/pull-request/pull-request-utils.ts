@@ -601,33 +601,42 @@ export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViola
   }
 }
 
-export const buildPRFilters = (filterData: PRListFilters) =>
-  Object.entries(filterData).reduce<Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>>(
-    (acc, [key, value]) => {
-      if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-        acc[key] = value.getTime().toString()
-      }
-      if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-        acc[key] = value.value
-      }
-      if (key === 'label_by') {
-        const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-        const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-          if (value === true) {
-            labelAcc.labelId.push(labelKey)
-          } else if (value) {
-            labelAcc.valueId.push(value)
-          }
-          return labelAcc
-        }, defaultLabel)
+export const buildPRFilters = (filterData: PRListFilters, reviewerId?: number) => {
+  const filters = Object.entries(filterData).reduce<
+    Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
+  >((acc, [key, value]) => {
+    if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
+      acc[key] = value.getTime().toString()
+    }
+    if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
+      acc[key] = value.value
+    }
+    if (key === 'review_decision' && Array.isArray(value)) {
+      acc[key] = value.map((item: { value: string }) => item.value).join(',')
+    }
+    if (key === 'label_by') {
+      const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
+      const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
+        if (value === true) {
+          labelAcc.labelId.push(labelKey)
+        } else if (value) {
+          labelAcc.valueId.push(value)
+        }
+        return labelAcc
+      }, defaultLabel)
 
-        acc['label_id'] = labelId.map(Number)
-        acc['value_id'] = valueId.map(Number)
-      }
-      return acc
-    },
-    {}
-  )
+      acc['label_id'] = labelId.map(Number)
+      acc['value_id'] = valueId.map(Number)
+    }
+    return acc
+  }, {})
+
+  if (filters['review_decision']) {
+    filters['reviewer_id'] = reviewerId
+  }
+
+  return filters
+}
 
 export const getCommentsInfoData = ({
   requiresCommentApproval,

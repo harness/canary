@@ -246,11 +246,8 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
-  currentUserState?: {
-    currentUser?: Partial<PrincipalType>
-    fetchingCurrentUser?: boolean
-    currentUserError?: UsererrorError | null
-  }
+  currentUser?: Partial<PrincipalType>
+  isProjectLevel?: boolean
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void

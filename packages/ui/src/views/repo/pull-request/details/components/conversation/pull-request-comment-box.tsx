@@ -506,7 +506,7 @@ export const PullRequestCommentBox = ({
               />
 
               {showAiLoader && (
-                <div className="absolute left-0 top-0 flex size-full cursor-wait items-center justify-center">
+                <div className="absolute flex inset-0 cursor-wait items-center justify-center">
                   <IconV2 size="lg" className="animate-spin" name="loader" />
                 </div>
               )}

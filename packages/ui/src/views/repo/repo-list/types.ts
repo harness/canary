@@ -1,5 +1,4 @@
 import { CheckboxOptions } from '@components/filters'
-import { SortValue } from '@components/sorts'
 import { RepositoryType } from '@views/repo/repo.types'
 
 import { Scope } from '../..'

@@ -2,7 +2,6 @@ import { FC, useState } from 'react'
 
 import { Button, NoData, Pagination, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import FilterGroup from '@views/components/FilterGroup'

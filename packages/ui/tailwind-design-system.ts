@@ -32,7 +32,7 @@ export default {
           success: 'var(--cn-text-success)',
           danger: 'var(--cn-text-danger)',
           warning: 'var(--cn-text-warning)',
-          accent: 'var(--cn-text-accent)',
+          accent: 'var(--cn-comp-link-text)',
           disabled: 'var(--cn-state-disabled-text)',
           multitype: {
             codebrackets: 'var(--cn-set-blue-surface-text)',

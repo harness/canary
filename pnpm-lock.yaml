@@ -654,8 +654,8 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(react@17.0.2)
       '@git-diff-view/react':
-        specifier: ^0.0.21
-        version: 0.0.21(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        specifier: ^0.0.30
+        version: 0.0.30(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@git-diff-view/shiki':
         specifier: ^0.0.21
         version: 0.0.21
@@ -2411,14 +2411,14 @@ packages:
   '@git-diff-view/core@0.0.16':
     resolution: {integrity: sha512-AmVDNZBGXYUSv15bBTryArR+pe4HWX3QziKp3RHHzHOswqcbVMYhp5o3hId8g8nbRmj3jXLKeL6JiSRaOQahaA==}
 
-  '@git-diff-view/core@0.0.21':
-    resolution: {integrity: sha512-Xws2ltKsncX1kLbo+WFCGtbU4NhDAWhNAVqBwZ3nqFs3bqDJolEl9r9NUh0wMTvrKs2dDs/14ajtzz0qd6C2/w==}
+  '@git-diff-view/core@0.0.30':
+    resolution: {integrity: sha512-CyYi/y1q543aYeWQO9c+1awfRh47dPF7n4SNQQVl5I6U2NH4Ctg8eON6e2bIEd4dom/awZ1Hb8kTvaesBpfxJA==}
 
   '@git-diff-view/lowlight@0.0.16':
     resolution: {integrity: sha512-XL3rjMD7hvPCd97LDMhLw02qYzc1xGgUGmzjp1aJqnuh+QjO5opEbebXXp5rsmhinbSjYy1/kq3v5EB2YX6PhA==}
 
-  '@git-diff-view/lowlight@0.0.21':
-    resolution: {integrity: sha512-6ALCGWtTLyqs88oIWed3m2FdcTPydZAZODBDX6s491Ktnfff/NLL8eFT9T3jkwr8mjmq/+OiRlsLO73EwnkPhg==}
+  '@git-diff-view/lowlight@0.0.30':
+    resolution: {integrity: sha512-TeWqLZLy3+gL4AjCs9kNFZs44Bt9MdLbXAqigDgEOnTwCWAU5Ll/iBlr84vL/QQlWF19pw9t7wYetonpo2TkaQ==}
 
   '@git-diff-view/react@0.0.16':
     resolution: {integrity: sha512-mBvPfNYDDY/D8ZOdfzZ6bR76uSJel1Ma3OAmmYzwzVDhj/KfMRAwUuE4KCFXVWMi5dR1ZC/apUnIJRw5pGc99g==}
@@ -2426,8 +2426,8 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2
 
-  '@git-diff-view/react@0.0.21':
-    resolution: {integrity: sha512-JehkakAKlIwwRtlABLFWZEw+aYwm+Yam/+d8izPocKL3lz/PKohBs0YfQ19R8KEPIHTIXeloSl38abdC8pYQCg==}
+  '@git-diff-view/react@0.0.30':
+    resolution: {integrity: sha512-MtePI/ww+TTifdnFYxmz3ATlCWPg2uRQvmYj+FuhMUJBaUwCl4v74d9S7fSFk7gmHTjfGaNFP1th+CUdqlCOsA==}
     peerDependencies:
       react: 17.0.2
       react-dom: 17.0.2
@@ -2669,6 +2669,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
+  '@jridgewell/sourcemap-codec@1.5.4':
+    resolution: {integrity: sha512-VT2+G1VQs/9oz078bLrYbecdZKs912zQlkelYpuf+SXF+QvZDYJlbx/LSx+meSAwdDFnF8FVXW92AVjjkVmgFw==}
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
@@ -4310,8 +4313,14 @@ packages:
   '@vue/reactivity@3.5.13':
     resolution: {integrity: sha512-NaCwtw8o48B9I6L1zl2p41OHo/2Z4wqYGGIK1Khu5T7yxrn+ATOixn/Udn2m+6kZKB/J7cuT9DbWWhRxqixACg==}
 
+  '@vue/reactivity@3.5.18':
+    resolution: {integrity: sha512-x0vPO5Imw+3sChLM5Y+B6G1zPjwdOri9e8V21NnTnlEvkxatHEH5B5KEAJcjuzQ7BsjGrKtfzuQ5eQwXh8HXBg==}
+
   '@vue/shared@3.5.13':
     resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
+
+  '@vue/shared@3.5.18':
+    resolution: {integrity: sha512-cZy8Dq+uuIXbxCZpuLd2GJdeSO/lIzIspC2WtkqIpje5QyFbvLaI5wZtdUjLHjGZrlVX6GilejatWwVYYRc8tA==}
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -4414,6 +4423,11 @@ packages:
 
   acorn@8.14.1:
     resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.15.0:
+    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -8539,6 +8553,11 @@ packages:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
     engines: {node: '>=0.10.0'}
 
+  reactivity-store@0.3.11:
+    resolution: {integrity: sha512-s21jwqVm1yJg4Gv1P/I09UVbnODJvK7JQiK6bNDBtZGgDqCF3m8hhMMkruWzA0B2uEGd9zNP2cWuE6opF50wqg==}
+    peerDependencies:
+      react: 17.0.2
+
   reactivity-store@0.3.9:
     resolution: {integrity: sha512-ADKscagTECPmc1zWkCbj6iuJgan3+DX8FcB3FwG4k00B+07kz+HWfp9hup5uyaElYnCrZsuvoClxzWV6AqP91A==}
     peerDependencies:
@@ -9905,6 +9924,11 @@ packages:
 
   use-sync-external-store@1.4.0:
     resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
+    peerDependencies:
+      react: 17.0.2
+
+  use-sync-external-store@1.5.0:
+    resolution: {integrity: sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==}
     peerDependencies:
       react: 17.0.2
 
@@ -12080,9 +12104,9 @@ snapshots:
       highlight.js: 11.11.1
       lowlight: 3.3.0
 
-  '@git-diff-view/core@0.0.21':
+  '@git-diff-view/core@0.0.30':
     dependencies:
-      '@git-diff-view/lowlight': 0.0.21
+      '@git-diff-view/lowlight': 0.0.30
       fast-diff: 1.3.0
       highlight.js: 11.11.1
       lowlight: 3.3.0
@@ -12093,7 +12117,7 @@ snapshots:
       highlight.js: 11.11.1
       lowlight: 3.3.0
 
-  '@git-diff-view/lowlight@0.0.21':
+  '@git-diff-view/lowlight@0.0.30':
     dependencies:
       '@types/hast': 3.0.4
       highlight.js: 11.11.1
@@ -12110,17 +12134,17 @@ snapshots:
       reactivity-store: 0.3.9(react@17.0.2)
       use-sync-external-store: 1.4.0(react@17.0.2)
 
-  '@git-diff-view/react@0.0.21(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
+  '@git-diff-view/react@0.0.30(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
     dependencies:
-      '@git-diff-view/core': 0.0.21
+      '@git-diff-view/core': 0.0.30
       '@types/hast': 3.0.4
       fast-diff: 1.3.0
       highlight.js: 11.11.1
       lowlight: 3.3.0
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
-      reactivity-store: 0.3.9(react@17.0.2)
-      use-sync-external-store: 1.4.0(react@17.0.2)
+      reactivity-store: 0.3.11(react@17.0.2)
+      use-sync-external-store: 1.5.0(react@17.0.2)
 
   '@git-diff-view/shiki@0.0.21':
     dependencies:
@@ -12432,6 +12456,9 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
+  '@jridgewell/sourcemap-codec@1.5.4':
+    optional: true
+
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
@@ -12440,7 +12467,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.4
     optional: true
 
   '@jsonjoy.com/base64@1.1.2(tslib@2.8.1)':
@@ -14570,7 +14597,13 @@ snapshots:
     dependencies:
       '@vue/shared': 3.5.13
 
+  '@vue/reactivity@3.5.18':
+    dependencies:
+      '@vue/shared': 3.5.18
+
   '@vue/shared@3.5.13': {}
+
+  '@vue/shared@3.5.18': {}
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -14686,10 +14719,13 @@ snapshots:
 
   acorn-walk@8.3.4:
     dependencies:
-      acorn: 8.14.1
+      acorn: 8.15.0
     optional: true
 
   acorn@8.14.1: {}
+
+  acorn@8.15.0:
+    optional: true
 
   add@2.0.6: {}
 
@@ -19918,6 +19954,13 @@ snapshots:
       loose-envify: 1.4.0
       object-assign: 4.1.1
 
+  reactivity-store@0.3.11(react@17.0.2):
+    dependencies:
+      '@vue/reactivity': 3.5.18
+      '@vue/shared': 3.5.18
+      react: 17.0.2
+      use-sync-external-store: 1.5.0(react@17.0.2)
+
   reactivity-store@0.3.9(react@17.0.2):
     dependencies:
       '@vue/reactivity': 3.5.13
@@ -21308,7 +21351,7 @@ snapshots:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 16.18.126
-      acorn: 8.14.1
+      acorn: 8.15.0
       acorn-walk: 8.3.4
       arg: 4.1.3
       create-require: 1.1.1
@@ -21329,7 +21372,7 @@ snapshots:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 22.13.9
-      acorn: 8.14.1
+      acorn: 8.15.0
       acorn-walk: 8.3.4
       arg: 4.1.3
       create-require: 1.1.1
@@ -21350,7 +21393,7 @@ snapshots:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 22.13.9
-      acorn: 8.14.1
+      acorn: 8.15.0
       acorn-walk: 8.3.4
       arg: 4.1.3
       create-require: 1.1.1
@@ -21628,6 +21671,10 @@ snapshots:
       '@types/react': 17.0.83
 
   use-sync-external-store@1.4.0(react@17.0.2):
+    dependencies:
+      react: 17.0.2
+
+  use-sync-external-store@1.5.0(react@17.0.2):
     dependencies:
       react: 17.0.2
 

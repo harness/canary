@@ -23,7 +23,7 @@ import { OverlayScrollbars } from 'overlayscrollbars'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
-import { replaceMentionEmailWithId } from '../details/components/conversation/utils'
+import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
 
@@ -162,12 +162,13 @@ const PullRequestDiffViewer = ({
   }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
-  const handleQuoteReply = useCallback((parentId: number, originalText: string) => {
+
+  const handleQuoteReply = useCallback((parentId: number, originalText: string, mentions: PrincipalsMentionMap) => {
     const quoted = quoteTransform(originalText)
     setQuoteReplies(prev => ({
       ...prev,
       [parentId]: {
-        text: quoted
+        text: replaceMentionIdWithEmail(quoted, mentions)
       }
     }))
   }, [])
@@ -432,7 +433,9 @@ const PullRequestDiffViewer = ({
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
                 toggleConversationStatus={toggleConversationStatus}
-                onQuoteReply={handleQuoteReply}
+                onQuoteReply={(parentId: number, originalText: string) =>
+                  handleQuoteReply(parentId, originalText, parent?.payload?.mentions || {})
+                }
                 quoteReplyText={quoteReplies[parent.id]?.text || ''}
                 contentHeader={
                   !!parent.payload?.resolved && (
@@ -463,7 +466,9 @@ const PullRequestDiffViewer = ({
                       onCopyClick={onCopyClick}
                       commentId={parent.id}
                       setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
-                      onQuoteReply={handleQuoteReply}
+                      onQuoteReply={(parentId: number, rawText: string) =>
+                        handleQuoteReply(parentId, rawText, parent?.payload?.mentions || {})
+                      }
                       icon={<Avatar name={parentInitials} rounded />}
                       header={[
                         {
@@ -508,7 +513,10 @@ const PullRequestDiffViewer = ({
                             }}
                             diff={data}
                             lang={lang}
-                            comment={editComments[componentId]}
+                            comment={replaceMentionIdWithEmail(
+                              editComments[componentId],
+                              parent?.payload?.mentions || {}
+                            )}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                           />
                         ) : (
@@ -551,7 +559,9 @@ const PullRequestDiffViewer = ({
                               contentClassName="border-transparent"
                               titleClassName="!flex max-w-full"
                               setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
-                              onQuoteReply={handleQuoteReply}
+                              onQuoteReply={(parentId: number, rawText: string) =>
+                                handleQuoteReply(parentId, rawText, reply?.payload?.mentions || {})
+                              }
                               icon={<Avatar name={replyInitials} rounded />}
                               header={[
                                 {
@@ -583,7 +593,13 @@ const PullRequestDiffViewer = ({
                                     isEditMode
                                     onSaveComment={() => {
                                       if (reply?.id) {
-                                        updateComment?.(reply?.id, editComments[replyComponentId])
+                                        updateComment?.(
+                                          reply?.id,
+                                          replaceMentionEmailWithId(
+                                            editComments[replyComponentId],
+                                            principalsMentionMap
+                                          )
+                                        )
                                         toggleEditMode(replyComponentId, '')
                                       }
                                     }}
@@ -593,7 +609,10 @@ const PullRequestDiffViewer = ({
                                     }}
                                     diff={data}
                                     lang={lang}
-                                    comment={editComments[replyComponentId]}
+                                    comment={replaceMentionIdWithEmail(
+                                      editComments[replyComponentId],
+                                      reply?.payload?.mentions || {}
+                                    )}
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
                                     }

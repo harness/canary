@@ -62,7 +62,7 @@ interface BaseCompProps {
   hideReplyHeres: Record<string, boolean>
   toggleReplyBox: (state: boolean, id?: number) => void
   quoteReplies: Record<number, { text: string }>
-  handleQuoteReply: (commentId: number, originalText: string) => void
+  handleQuoteReply: (commentId: number, originalText: string, mentions: PrincipalsMentionMap) => void
   currentUser: PullRequestOverviewProps['currentUser']
   toggleConversationStatus: PullRequestOverviewProps['toggleConversationStatus']
   headerData: TimelineItemProps['header'][number]
@@ -103,7 +103,9 @@ const BaseComp: FC<BaseCompProps> = ({
       hideReplyHere={hideReplyHeres[payload?.id]}
       setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
       quoteReplyText={quoteReplies[payload?.id]?.text || ''}
-      onQuoteReply={handleQuoteReply}
+      onQuoteReply={(commentId: number, originalText: string) =>
+        handleQuoteReply(commentId, originalText, payload?.mentions || {})
+      }
       currentUser={currentUser?.display_name}
       toggleConversationStatus={toggleConversationStatus}
       parentCommentId={payload?.id}
@@ -118,6 +120,8 @@ const BaseComp: FC<BaseCompProps> = ({
     />
   )
 }
+
+BaseComp.displayName = 'BaseComp'
 
 export interface PullRequestRegularAndCodeCommentProps
   extends Pick<
@@ -187,17 +191,14 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
     setHideReplyHeres(prev => ({ ...prev, [id]: state }))
   }, [])
 
-  const handleQuoteReply = useCallback(
-    (commentId: number, originalText: string) => {
-      setQuoteReplies(prev => ({
-        ...prev,
-        [commentId]: {
-          text: replaceMentionIdWithEmail(quoteTransform(originalText), parentItem?.payload?.mentions || {})
-        }
-      }))
-    },
-    [parentItem?.payload?.mentions]
-  )
+  const handleQuoteReply = useCallback((commentId: number, originalText: string, mentions: PrincipalsMentionMap) => {
+    setQuoteReplies(prev => ({
+      ...prev,
+      [commentId]: {
+        text: replaceMentionIdWithEmail(quoteTransform(originalText), mentions)
+      }
+    }))
+  }, [])
 
   const renderContentItemsBlock = () => (
     <div className="px-4 pt-4">
@@ -218,7 +219,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
             hideReplyHeres={hideReplyHeres}
             toggleReplyBox={toggleReplyBox}
             quoteReplies={quoteReplies}
-            handleQuoteReply={handleQuoteReply}
+            handleQuoteReply={(commentId: number, originalText: string) =>
+              handleQuoteReply(commentId, originalText, commentItem?.payload?.mentions || {})
+            }
             currentUser={currentUser}
             toggleConversationStatus={toggleConversationStatus}
             headerData={headerData}
@@ -257,7 +260,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   }}
                   currentUser={currentUser?.display_name}
                   onCancelClick={() => toggleEditMode(componentId, '')}
-                  comment={replaceMentionIdWithEmail(editComments[componentId], parentItem?.payload?.mentions || {})}
+                  comment={replaceMentionIdWithEmail(editComments[componentId], commentItem?.payload?.mentions || {})}
                   setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                 />
               ) : (
@@ -295,7 +298,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       hideReplyHeres={hideReplyHeres}
       toggleReplyBox={toggleReplyBox}
       quoteReplies={quoteReplies}
-      handleQuoteReply={handleQuoteReply}
+      handleQuoteReply={(commentId: number, originalText: string) =>
+        handleQuoteReply(commentId, originalText, parentItem?.payload?.mentions || {})
+      }
       currentUser={currentUser}
       toggleConversationStatus={toggleConversationStatus}
       headerData={headerData}
@@ -351,7 +356,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       hideReplyHeres={hideReplyHeres}
       toggleReplyBox={toggleReplyBox}
       quoteReplies={quoteReplies}
-      handleQuoteReply={handleQuoteReply}
+      handleQuoteReply={(commentId: number, originalText: string) =>
+        handleQuoteReply(commentId, originalText, parentItem?.payload?.mentions || {})
+      }
       currentUser={currentUser}
       toggleConversationStatus={toggleConversationStatus}
       headerData={headerData}

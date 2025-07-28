@@ -15,7 +15,7 @@ export default {
       },
 
       '.cn-control-group-label': {
-        maxWidth: 'var(--cn-input-horizontal-label-max-width)',
+        width: 'var(--cn-input-horizontal-label-max-width)',
         '@apply justify-center': ''
       },
 

@@ -546,7 +546,7 @@
     "unified": "Unified",
     "markViewed": "Mark Viewed",
     "compareChangesFormDescriptionLabel": "Description",
-    "selectUsersAndServiceAccounts": "Select users and service accounts",
+    "selectUsersUGAndServiceAccounts": "Select users, user groups and service accounts",
     "viewed": "Viewed",
     "compareChangesForkLink": "compare across forks",
     "compareChangesOr": "or",

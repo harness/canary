@@ -538,7 +538,7 @@
     "unified": "Unifié",
     "markViewed": "Marquer comme vu",
     "compareChangesFormDescriptionLabel": "Description",
-    "selectUsersAndServiceAccounts": "Sélectionner des utilisateurs et des comptes de service",
+    "selectUsersUGAndServiceAccounts": "Sélectionner des utilisateurs, des groupes d'utilisateurs et des comptes de service",
     "viewed": "Vu",
     "compareChangesForkLink": "comparer entre les forks",
     "compareChangesOr": "ou",

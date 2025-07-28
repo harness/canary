@@ -226,7 +226,7 @@ export const RepoTagRulesContainer = () => {
   }
 
   const searchPlaceholder = isMFE
-    ? t('views:pullRequests.selectUsersAndServiceAccounts', 'Select users and service accounts')
+    ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
     : t('views:pullRequests.selectUsers', 'Select users')
 
   return (

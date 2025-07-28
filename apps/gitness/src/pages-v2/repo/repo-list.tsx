@@ -55,6 +55,7 @@ export default function ReposListPage() {
     {
       queryParams: {
         page: queryPage,
+        limit: 10, // Set page size to 5 records per page
         query: query ?? '',
         only_favorites: favorite,
         recursive,
@@ -67,7 +68,7 @@ export default function ReposListPage() {
       retry: 5
     }
   )
-  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || '25')
+  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
 
   const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
     {},

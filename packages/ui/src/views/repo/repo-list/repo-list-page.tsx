@@ -217,7 +217,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           showScope={showScope}
           {...routingProps}
         />
-        {!!repositories?.length && (
+        {/* Show pagination when there are repositories OR when there are total items but no repositories on current page */}
+        {(!!repositories?.length || (totalItems > 0 && !repositories?.length)) && (
           <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
         )}
       </SandboxLayout.Content>

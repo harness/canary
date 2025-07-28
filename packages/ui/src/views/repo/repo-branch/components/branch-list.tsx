@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import {
   Avatar,
-  Button,
   CopyButton,
   IconPropsV2,
   IconV2,
@@ -12,7 +11,6 @@ import {
   StatusBadge,
   Table,
   Tag,
-  Text,
   TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -170,7 +168,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               </Table.Cell>
               {/* calculated divergence bar & default branch */}
               <Table.Cell className="content-center">
-                <div className="block w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center">
                   {branch?.behindAhead?.default ? (
                     <Tag variant="outline" size="md" value={t('views:repos.default', 'Default')} theme="gray" rounded />
                   ) : (

@@ -10,7 +10,8 @@
       "pulls": 0,
       "timestamp": "Dec 6, 2024",
       "createdAt": 1733489262454,
-      "importing": false
+      "importing": false,
+      "path": "accountId/repoId"
     }
   ],
   "totalPages": 1,

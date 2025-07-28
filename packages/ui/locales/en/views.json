@@ -101,7 +101,8 @@
     "MergeStrategy": {
       "Merge": "Allow Merge Commit",
       "Squash": "Allow Squash and Merge",
-      "Rebase": "Allow Rebase and Merge"
+      "Rebase": "Allow Rebase and Merge",
+      "FastForward": "Allow Fast Forward"
     },
     "AutoDeleteBranch": "Auto delete branch on merge",
     "AutoDeleteBranchDescription": "Automatically delete the source branch of a pull request after it is merged",
@@ -154,9 +155,9 @@
     "importRepo": "Import a repository",
     "emptyRepo": "This repository is empty.",
     "repositories": "Repositories",
-    "import-repository": "Import repository",
-    "import-repositories": "Import repositories",
-    "create-repository": "Create repository",
+    "import-repository": "Import Repository",
+    "import-repositories": "Import Repositories",
+    "create-repository": "Create Repository",
     "importing": "Importing…",
     "updated": "Updated",
     "unarchiveRepo": "Unarchive Repository",
@@ -198,7 +199,7 @@
     "webhooks": "Webhooks",
     "labels": "Labels",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
-    "cloneRepo": "Clone repository",
+    "cloneRepo": "Clone Repository",
     "cloneHttps": "HTTPS",
     "cloneSsh": "SSH",
     "gitCloneUrl": "Git clone URL",
@@ -683,6 +684,13 @@
     "verified": "Verified",
     "browseFiles": "Browse files",
     "createNewCommit": "Create new commit"
+  },
+  "scope": {
+    "orgAndProject": "Organizations and projects",
+    "orgOnly": "Organizations only",
+    "all": "Account, organizations and projects",
+    "accountOnly": "Account only",
+    "label": "Scope"
   },
   "code": "Code",
   "createTagDialog": {

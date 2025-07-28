@@ -125,6 +125,9 @@ export interface TypesPullReq {
   title?: string
   labels?: TypesLabelPullReqAssignmentInfo[]
   updated?: number
+  merge_violations_bypassed?: boolean | null
+  rebase_check_status?: string
+  rebase_conflicts?: string[]
 }
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'

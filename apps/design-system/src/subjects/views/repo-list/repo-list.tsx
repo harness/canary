@@ -2,11 +2,11 @@ import { FC, useCallback } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { RepoListProps, SandboxRepoListPage } from '@harnessio/ui/views'
+import { RepoListPageProps, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import repoListStore from './repo-list-store.json'
 
-const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
+const RepoListWrapper: FC<Partial<RepoListPageProps>> = props => {
   const useRepoListStore = useCallback(
     () => ({
       ...repoListStore,
@@ -36,6 +36,10 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
         setQueryPage={noop}
         onFavoriteToggle={noop}
         onFilterChange={noop}
+        onSortChange={noop}
+        scope={{
+          accountId: 'account-id'
+        }}
         {...props}
       />
     </>

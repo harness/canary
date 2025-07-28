@@ -66,6 +66,7 @@ export function usePRChecksDecision({
           case ExecutionState.FAILURE:
           case ExecutionState.RUNNING:
           case ExecutionState.PENDING:
+          case ExecutionState.FAILURE_IGNORED:
           case ExecutionState.SUCCESS:
             _count[check.check.status]++
             setCount({ ..._count })
@@ -75,21 +76,22 @@ export function usePRChecksDecision({
             break
         }
       }
-      // *******
-      // NOTE:
-      // Determine the overall status based on the counts of each check type after receiving the final counts of everything after
-      // the order of precedence being error, then failure, then killed, followed by running, pending, and finally success.
-      //  {
-      //   const matrix = {error: 1,
-      //   failure: 0,
-      //   killed: 0,
-      //   running: 0,
-      //   pending: 1,
-      //   skipped: 0,
-      //   success: 1 }
-      //   So basically the overall status will be determined by the highest precedence check that has occurred
-      //   which is error and it is then set for it to be used in the check tab.
-      // *******
+      /* ---------
+        NOTE: Determine the overall status based on the counts of each check type after receiving the final counts of everything 
+        the order of precedence being error, then failure, then killed, followed by running, pending, and finally success.
+        {
+          const matrix = {error: 1,
+          failure: 0,
+          killed: 0,
+          running: 0,
+          pending: 1,
+          skipped: 0,
+          failure_ignored: 0,
+          success: 1 
+        }
+        So basically the overall status will be determined by the highest precedence check that has occurred
+        which is error and it is then set for it to be used in the check tab.
+      -------- */
       if (_count.error) {
         _status = ExecutionState.ERROR
         setColor('text-cn-foreground-danger')
@@ -120,6 +122,11 @@ export function usePRChecksDecision({
         setColor('text-cn-foreground-3')
         setBackground('text-cn-foreground-3')
         setMessage(`${_count.skipped}/${total} ${pluralize('check', _count.skipped)} skipped.`)
+      } else if (_count.failure_ignored) {
+        _status = ExecutionState.FAILURE_IGNORED
+        setColor('text-cn-foreground-success')
+        setBackground('text-cn-foreground-success')
+        setMessage(`${_count.failure_ignored}/${total} ${pluralize('check', _count.failure_ignored)} failure ignored.`)
       } else if (_count.success) {
         _status = ExecutionState.SUCCESS
         setColor('text-cn-foreground-success')
@@ -182,5 +189,6 @@ const DEFAULT_COUNTS = {
   running: 0,
   success: 0,
   skipped: 0,
-  killed: 0
+  killed: 0,
+  failure_ignored: 0
 }

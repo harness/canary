@@ -1,7 +1,5 @@
 export default {
   '.cn-sidebar': {
-    '--cn-sidebar-min-height': '100vh',
-
     '&.cn-sidebar': {
       display: 'flex',
       flexDirection: 'column',
@@ -19,6 +17,8 @@ export default {
     },
 
     '&-wrapper': {
+      '--cn-sidebar-min-height': '100vh',
+
       display: 'flex',
       justifyContent: 'space-between',
       width: '100%',

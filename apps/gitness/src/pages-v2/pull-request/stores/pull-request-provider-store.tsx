@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { isEqual } from 'lodash-es'
+import { isEmpty, isEqual } from 'lodash-es'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
@@ -14,8 +14,9 @@ export const oldCommitRefetchRequired = 'A newer commit is available. Only the l
 export const prMergedRefetchRequired = 'Pull request already merged'
 export const POLLING_INTERVAL = 10000
 
-export enum PR_COMMENTS_RULES {
-  REQUIRE_RESOLVE_ALL = 'pullreq.comments.require_resolve_all'
+export enum PR_RULES {
+  REQUIRE_RESOLVE_ALL = 'pullreq.comments.require_resolve_all',
+  MERGE_BLOCK = 'pullreq.merge.block'
 }
 
 export const usePullRequestProviderStore = create<PullRequestDataState>((set, get) => ({
@@ -94,15 +95,14 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
         .then(({ body: res }) => {
           const requiresCommentApproval = res?.requires_comment_resolution ?? false
           const ruleViolationArr = res?.rule_violations ? { data: { rule_violations: res.rule_violations } } : undefined
-          const resolvedCommentArr = extractSpecificViolations(
-            ruleViolationArr,
-            PR_COMMENTS_RULES.REQUIRE_RESOLVE_ALL
-          )?.[0]
+          const resolvedCommentArr = extractSpecificViolations(ruleViolationArr, PR_RULES.REQUIRE_RESOLVE_ALL)?.[0]
+          const mergeBlockedViaRule = !isEmpty(extractSpecificViolations(ruleViolationArr, 'pullreq.merge.blocked'))
 
           const newPrPanelData = {
             requiresCommentApproval,
             ruleViolationArr,
             resolvedCommentArr,
+            mergeBlockedViaRule,
             ruleViolation: !!res?.rule_violations?.length,
             atLeastOneReviewerRule: res?.requires_no_change_requests ?? false,
             reqCodeOwnerApproval: res?.requires_code_owners_approval ?? false,
@@ -211,7 +211,8 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
       content: undefined,
       status: ''
     },
-    ruleViolationArr: undefined
+    ruleViolationArr: undefined,
+    mergeBlockedViaRule: false
   },
   updateCommentStatus: async (
     repoRef: string,

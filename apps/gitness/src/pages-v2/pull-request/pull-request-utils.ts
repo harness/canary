@@ -41,6 +41,7 @@ export function generateStatusSummary(checks: TypeCheckData[]) {
     failedReq: 0,
     pendingReq: 0,
     runningReq: 0,
+    failureIgnoredReq: 0,
     successReq: 0,
     failed: 0,
     pending: 0,
@@ -80,6 +81,14 @@ export function generateStatusSummary(checks: TypeCheckData[]) {
           statusCounts.runningReq += 1
         } else {
           statusCounts.running += 1
+        }
+        break
+
+      case ExecutionState.FAILURE_IGNORED:
+        if (required) {
+          statusCounts.failureIgnoredReq += 1
+        } else {
+          statusCounts.failureIgnoredReq += 1
         }
         break
 
@@ -156,10 +165,15 @@ export function determineStatusMessage(
       title = 'Some required checks are running'
       status = 'running'
       content = `${message}`
-      color = 'text-blue'
-    } else if (checks.every(check => check.check.status === ExecutionState.SUCCESS)) {
+      color = 'text-cn-foreground-warning'
+    } else if (
+      checks.every(
+        check =>
+          check?.check?.status !== undefined &&
+          [ExecutionState.SUCCESS, ExecutionState.FAILURE_IGNORED].includes(check.check.status as ExecutionState)
+      )
+    ) {
       title = 'All checks have succeeded'
-      status = 'success'
       content = `${message}`
       color = 'text-cn-foreground-3'
     } else {
@@ -175,18 +189,24 @@ export function determineStatusMessage(
       title = 'Some checks have failed'
       content = ` ${message}`
       status = 'failure'
-      color = 'text-cn-foreground-3'
+      color = 'text-cn-foreground-danger'
     } else if (checks.some(check => check.check.status === ExecutionState.PENDING)) {
       title = 'Some checks haven’t been completed yet'
       status = 'pending'
       content = `${message}`
-      color = 'ORANGE_500'
+      color = 'text-cn-foreground-warning'
     } else if (checks.some(check => check.check.status === ExecutionState.RUNNING)) {
       title = 'Some checks are running'
       content = `${message}`
       status = 'running'
-      color = 'PRIMARY_6'
-    } else if (checks.every(check => check.check.status === ExecutionState.SUCCESS)) {
+      color = 'text-cn-foreground-warning'
+    } else if (
+      checks.every(
+        check =>
+          check?.check?.status !== undefined &&
+          [ExecutionState.SUCCESS, ExecutionState.FAILURE_IGNORED].includes(check.check.status as ExecutionState)
+      )
+    ) {
       title = 'All checks have succeeded'
       content = `${message}`
       color = 'text-cn-foreground-3'
@@ -337,7 +357,8 @@ export const extractInfoForPRPanelChanges = ({
   latestApprovalArr,
   changeReqReviewer,
   changeReqEvaluations,
-  defaultReviewersData
+  defaultReviewersData,
+  mergeBlockedViaRule
 }: extractInfoForPRPanelChangesProps) => {
   let statusMessage = ''
   let statusColor = 'grey' // Default color for no rules required
@@ -366,9 +387,14 @@ export const extractInfoForPRPanelChanges = ({
     reqCodeOwnerLatestApproval ||
     (minReqLatestApproval && minReqLatestApproval > 0) ||
     defReviewerApprovalRequiredByRule ||
-    defReviewerLatestApprovalRequiredByRule
+    defReviewerLatestApprovalRequiredByRule ||
+    mergeBlockedViaRule
   ) {
-    if (
+    if (mergeBlockedViaRule) {
+      title = 'Base branch does not allow updates'
+      statusColor = 'text-cn-foreground-danger'
+      statusIcon = 'warning'
+    } else if (
       codeOwnerChangeReqEntries &&
       codeOwnerChangeReqEntries?.length > 0 &&
       (reqCodeOwnerApproval || reqCodeOwnerLatestApproval)

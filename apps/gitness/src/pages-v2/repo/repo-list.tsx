@@ -4,14 +4,16 @@ import { useParams } from 'react-router-dom'
 import {
   createFavorite,
   deleteFavorite,
+  ListReposQueryQueryParams,
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { Toast, useToast } from '@harnessio/ui/components'
-import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
+import { SortValue, Toast, useToast } from '@harnessio/ui/components'
+import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -38,6 +40,10 @@ export default function ReposListPage() {
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
+  const [recursive, setRecursive] = useQueryState<boolean>('recursive')
+  const { scope } = useMFEContext()
+  const [sort, setSort] = useQueryState<ListReposQueryQueryParams['sort']>('sort')
+  const [order, setOrder] = useQueryState<ListReposQueryQueryParams['order']>('order')
 
   const {
     data: { body: repoData, headers } = {},
@@ -50,7 +56,10 @@ export default function ReposListPage() {
       queryParams: {
         page: queryPage,
         query: query ?? '',
-        only_favorites: favorite
+        only_favorites: favorite,
+        recursive,
+        sort,
+        order
       },
       space_ref: `${spaceURL}/+`
     },
@@ -131,8 +140,15 @@ export default function ReposListPage() {
     }
   }
 
+  const { accountId, orgIdentifier, projectIdentifier } = scope
+
   return (
     <SandboxRepoListPage
+      scope={{
+        accountId: accountId || '',
+        orgIdentifier,
+        projectIdentifier
+      }}
       useRepoStore={useRepoStore}
       isLoading={isFetching}
       isError={isError}
@@ -145,7 +161,27 @@ export default function ReposListPage() {
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
-      onFilterChange={({ favorite }) => setFavorite(favorite ?? null)}
+      onFilterChange={({ favorite, recursive }: RepoListFilters) => {
+        setFavorite(favorite ?? null)
+        if (!recursive) return
+
+        if (accountId && orgIdentifier && projectIdentifier) return
+
+        if (accountId && orgIdentifier) {
+          setRecursive(recursive.value === ExtendedScope.OrgProg)
+        } else if (accountId) {
+          setRecursive(recursive.value === ExtendedScope.All)
+        }
+      }}
+      onSortChange={(sortValues: SortValue[]) => {
+        const sortValue = sortValues?.[0]
+        const { type, direction } = sortValue || {}
+        const sortKey = type?.split(',')?.[0] as ListReposQueryQueryParams['sort'] | undefined
+        const orderKey = direction as unknown as ListReposQueryQueryParams['order'] | undefined
+
+        setSort(sortKey ?? null)
+        setOrder(orderKey ?? null)
+      }}
     />
   )
 }

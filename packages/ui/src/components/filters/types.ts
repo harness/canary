@@ -34,11 +34,15 @@ interface ComboBoxFilterOptionConfig<Key extends string = string> extends Filter
   type: FilterFieldTypes.ComboBox
   filterFieldConfig: {
     options: Array<{ label: string; value: string }>
-    onSearch: (query: string) => void
-    noResultsMessage: string
+    onSearch?: (query: string) => void
+    noResultsMessage?: string
     loadingMessage?: string
     placeholder: string
     isLoading?: boolean
+    /**
+     * Searching is enabled by default, but can be disabled if the options are few and do not require searching.
+     */
+    allowSearch?: boolean
   }
 }
 

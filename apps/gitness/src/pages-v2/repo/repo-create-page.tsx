@@ -18,7 +18,6 @@ export const CreateRepo = () => {
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
-  const defaultBranchOptions = ['main', 'master']
 
   const onSubmit = (data: FormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
@@ -62,7 +61,6 @@ export const CreateRepo = () => {
         onFormCancel={onCancel}
         isLoading={isLoading}
         isSuccess={isSuccess}
-        defaultBranchOptions={defaultBranchOptions}
         gitIgnoreOptions={gitIgnoreOptions}
         licenseOptions={licenseOptions}
         apiError={error?.message?.toString()}

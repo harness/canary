@@ -22,7 +22,7 @@ export interface ProjectRulesPageProps {
   onParentScopeLabelsChange?: (checked: boolean) => void
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
-  toProjectRuleDetails?: (identifier: string) => string
+  toProjectRuleDetails?: (identifier: string, scope: number) => string
 }
 export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   useProjectRulesStore,

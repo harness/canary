@@ -6,12 +6,11 @@ import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes } from '@components/filters/types'
 import FilterGroup from '@views/components/FilterGroup'
-import { noop } from 'lodash-es'
 
 import { booleanParser } from '@harnessio/filters'
 
 import { RepoList } from './repo-list'
-import { RepoListFilters, RepoListProps } from './types'
+import { RepoListFilters, RepoListPageProps, RepoSortMethod } from './types'
 
 enum ExtendedScope {
   All = 'ALL',
@@ -20,7 +19,7 @@ enum ExtendedScope {
   Organization = 'ORGANIZATION'
 }
 
-const SandboxRepoListPage: FC<RepoListProps> = ({
+const SandboxRepoListPage: FC<RepoListPageProps> = ({
   useRepoStore,
   isLoading,
   isError,
@@ -33,6 +32,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   toImportMultipleRepos,
   onFavoriteToggle,
   onFilterChange,
+  onSortChange,
   scope,
   ...routingProps
 }) => {
@@ -96,7 +96,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
-  const getScopeOptions = (): ComboBoxOptions[] => {
+  const getFilterScopeOptions = (): ComboBoxOptions[] => {
     if (accountId && orgIdentifier && projectIdentifier) return []
 
     if (accountId && orgIdentifier) {
@@ -116,6 +116,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     return []
   }
 
+  const FilterSortOptions = [
+    { label: 'Name', value: RepoSortMethod.Identifier },
+    { label: 'Newest', value: RepoSortMethod.Newest },
+    { label: 'Oldest', value: RepoSortMethod.Oldest },
+    { label: 'Last push', value: RepoSortMethod.LastPush }
+  ]
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
@@ -129,8 +136,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <Spacer size={6} />
           <FilterGroup<RepoListFilters, keyof RepoListFilters>
             sortConfig={{
-              sortOptions: [],
-              onSortChange: noop
+              sortOptions: FilterSortOptions,
+              onSortChange
             }}
             onFilterValueChange={onFilterValueChange}
             searchInput={searchQuery || ''}
@@ -175,13 +182,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 value: 'recursive',
                 type: FilterFieldTypes.ComboBox,
                 filterFieldConfig: {
-                  options: getScopeOptions(),
+                  options: getFilterScopeOptions(),
                   placeholder: 'Select scope',
                   allowSearch: false
                 },
                 parser: {
                   parse: (value: string): ComboBoxOptions => {
-                    return getScopeOptions().find(scope => scope.value === value) || { label: '', value }
+                    return getFilterScopeOptions().find(scope => scope.value === value) || { label: '', value }
                   },
                   serialize: (value: ComboBoxOptions): string => {
                     const selected = value?.value
@@ -218,4 +225,4 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   )
 }
 
-export { SandboxRepoListPage, ExtendedScope }
+export { ExtendedScope, SandboxRepoListPage }

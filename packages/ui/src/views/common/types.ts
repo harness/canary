@@ -5,8 +5,7 @@ export interface Scope {
 }
 
 export enum ScopeType {
-  Account = 'ACCOUNT',
-  Org = 'ORG',
-  Project = 'PROJECT',
-  Repo = 'REPO'
+  Account = 'Account',
+  Organization = 'Organization',
+  Project = 'Project'
 }

@@ -11,13 +11,14 @@ import {
   TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { determineScope, getScopedPath } from '@components/scope/utils'
 import { cn } from '@utils/cn'
 import { Scope } from '@views/common'
 
 import { RepositoryType } from '../repo.types'
 import { FavoriteProps, RoutingProps } from './types'
 
-export interface PageProps extends Partial<RoutingProps>, FavoriteProps {
+export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
   repos: RepositoryType[]
   handleResetFiltersQueryAndPages: () => void
   isDirtyList: boolean
@@ -26,8 +27,19 @@ export interface PageProps extends Partial<RoutingProps>, FavoriteProps {
   showScope?: boolean
 }
 
-const Stats = ({ pulls }: { pulls: number }) => (
-  <div className="flex select-none items-center justify-end gap-3 font-medium">
+const Stats = ({
+  pulls,
+  repoId,
+  onFavoriteToggle,
+  isFavorite
+}: {
+  pulls: number
+  repoId: number
+  onFavoriteToggle: RepoListProps['onFavoriteToggle']
+  isFavorite?: boolean
+}) => (
+  <div className="flex select-none items-center justify-end gap-2 font-medium">
+    <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
     <span className="flex items-center gap-1">
       <IconV2 name="git-pull-request" className="text-icons-7" />
       <span className="text-2 text-cn-foreground-1 font-normal">{pulls || 0}</span>
@@ -36,34 +48,30 @@ const Stats = ({ pulls }: { pulls: number }) => (
 )
 
 const Title = ({
-  repoId,
   repoName,
   isPrivate,
-  isFavorite,
-  onFavoriteToggle,
   scope,
   repoPath,
   showScope = false
 }: {
-  repoId: number
   repoName: string
   isPrivate: boolean
-  onFavoriteToggle: PageProps['onFavoriteToggle']
-  isFavorite?: boolean
   scope: Scope
   repoPath: string
   showScope?: boolean
 }) => {
   const { t } = useTranslation()
+  const repoScopeParams = { ...scope, repoIdentifier: repoName, repoPath }
+  const scopeType = determineScope(repoScopeParams)
+  const scopedPath = getScopedPath(repoScopeParams)
   return (
     <Layout.Flex gap="xs" align="center">
       <span className="max-w-full truncate font-medium">{repoName}</span>
-      <Layout.Flex align="center">
+      <Layout.Flex align="center" gap="xs">
         <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
-        <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
-        {showScope ? <ScopeTag repoIdentifier={repoName} repoPath={repoPath} {...scope} /> : null}
+        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
       </Layout.Flex>
     </Layout.Flex>
   )
@@ -80,7 +88,7 @@ export function RepoList({
   onFavoriteToggle,
   scope,
   showScope = false
-}: PageProps) {
+}: RepoListProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
 
@@ -113,10 +121,10 @@ export function RepoList({
           t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
         ]}
         primaryButton={{
-          label: t('views:repos.create-repository', 'Create repository'),
+          label: t('views:repos.create-repository', 'Create Repository'),
           to: toCreateRepo?.()
         }}
-        secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: toImportRepo?.() }}
+        secondaryButton={{ label: t('views:repos.import-repository', 'Import Repository'), to: toImportRepo?.() }}
       />
     )
   }
@@ -143,11 +151,8 @@ export function RepoList({
               }
               title={
                 <Title
-                  repoId={repo.id}
                   repoName={repo.name}
                   isPrivate={repo.private}
-                  isFavorite={repo.favorite}
-                  onFavoriteToggle={onFavoriteToggle}
                   repoPath={repo.path}
                   scope={scope}
                   showScope={showScope}
@@ -163,7 +168,14 @@ export function RepoList({
                     <TimeAgoCard timestamp={repo.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
                   </Text>
                 }
-                description={<Stats pulls={repo.pulls} />}
+                description={
+                  <Stats
+                    pulls={repo.pulls}
+                    repoId={repo.id}
+                    isFavorite={repo.favorite}
+                    onFavoriteToggle={onFavoriteToggle}
+                  />
+                }
                 right
                 label
                 secondary

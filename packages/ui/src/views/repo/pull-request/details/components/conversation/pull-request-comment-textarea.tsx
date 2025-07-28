@@ -107,8 +107,13 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           // Only show dropdown when typing @ followed by at least one character
           if (currentWord.startsWith('@')) {
             setCommandValue(currentWord)
+
+            // Account for textarea scroll position when positioning dropdown
+            const adjustedTop = caret.top - textarea.scrollTop
+
             dropdown.style.left = caret.left + 'px'
-            dropdown.style.top = caret.top + caret.height + 'px'
+            // Position relative to the visible caret position, not the absolute position
+            dropdown.style.top = adjustedTop + caret.height + 'px'
             setDropdownOpen(true)
           } else {
             // Hide dropdown when not typing @ mention or when @ is deleted

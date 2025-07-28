@@ -67,7 +67,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   toPullRequest,
   isProjectLevel
 }) => {
-  const { Link, useSearchParams } = useRouterContext()
+  const { Link, useSearchParams, location } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
 
@@ -86,7 +86,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       return
     }
 
-    const currentParams = new URLSearchParams(window.location.search)
+    const currentParams = new URLSearchParams(location.search)
     if (currentParams.has('created_by') && currentParams.get('created_by') === String(currentUserId)) {
       if (currentParams.has('review_decision')) {
         setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
@@ -98,7 +98,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     } else {
       setActiveFilterGrp(PRFilterGroupTogglerOptions.All)
     }
-  }, [currentUserId, window.location.search, isProjectLevel])
+  }, [currentUserId, location.search, isProjectLevel])
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
@@ -263,7 +263,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const onFilterGroupChange = useCallback(
     (filterGroup: string) => {
-      const searchParams = new URLSearchParams(window.location.search)
+      const searchParams = new URLSearchParams(location.search)
       if (filterGroup === PRFilterGroupTogglerOptions.All) {
         const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
           'created_by',
@@ -309,7 +309,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
       setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
     },
-    [currentUserId, window.location.search]
+    [currentUserId, location.search]
   )
 
   const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {

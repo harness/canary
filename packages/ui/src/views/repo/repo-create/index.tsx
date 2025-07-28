@@ -123,10 +123,9 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-1">
-        <Spacer size={5} />
+      <SandboxLayout.Content className="mx-auto w-[610px] pb-20">
         <Text variant="heading-section">{t('views:repos.createNewRepo', 'Create a new repository')}</Text>
-        <Spacer size={2.5} />
+        <Spacer size={4} />
         <Text className="max-w-[476px]">
           {t(
             'views:repos.repoContains',
@@ -245,7 +244,7 @@ export function RepoCreatePage({
                 <Button type="submit" disabled={isLoading || !isEmpty(errors)}>
                   {!isLoading ? 'Create repository' : 'Creating repository...'}
                 </Button>
-                <Button type="button" variant="outline" onClick={onFormCancel}>
+                <Button type="button" variant="secondary" onClick={onFormCancel}>
                   Cancel
                 </Button>
               </ButtonLayout>

@@ -87,11 +87,12 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           >
             {edit ? (
               <PullRequestCommentBox
-                // PR Description feature doesn't support mentions
+                isEditMode
+                preserveCommentOnSave
                 principalProps={principalProps}
+                // PR Description feature doesn't support mentions
                 principalsMentionMap={{}}
                 setPrincipalsMentionMap={noop}
-                isEditMode
                 handleUpload={handleUpload}
                 onSaveComment={() => {
                   if (title && description) {

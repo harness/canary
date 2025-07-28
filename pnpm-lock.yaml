@@ -833,9 +833,6 @@ importers:
       react-intersection-observer:
         specifier: ^9.15.1
         version: 9.15.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
-      react-mentions:
-        specifier: ^4.4.10
-        version: 4.4.10(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       react-resizable-panels:
         specifier: ^2.0.19
         version: 2.1.7(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
@@ -894,9 +891,6 @@ importers:
       '@types/react':
         specifier: ^17.0.3
         version: 17.0.83
-      '@types/react-mentions':
-        specifier: ^4.4.1
-        version: 4.4.1
       '@types/simple-icons':
         specifier: ^5.21.1
         version: 5.21.1
@@ -1807,9 +1801,6 @@ packages:
   '@babel/runtime@7.26.9':
     resolution: {integrity: sha512-aA63XwOkcl4xxQa3HjPMqOP6LiK0ZDv3mUPYEFXkpHbaFjtGggE1A61FjFzJnB+p7/oy2gA8E+rcBNl/zC1tMg==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/runtime@7.4.5':
-    resolution: {integrity: sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==}
 
   '@babel/template@7.26.9':
     resolution: {integrity: sha512-qyRplbeIpNZhmzOysF/wFMuP9sctmh2cFzRAZOn1YapxBsE1i9bJIY586R/WBLfLcmcBlM8ROBiQURnnNy+zfA==}
@@ -3981,9 +3972,6 @@ packages:
     resolution: {integrity: sha512-Z+2VcYXJwOqQ79HreLU/1fyQ88eXSSFh6I3JdrEHQIfYSI0kCQpTGvOrbE6jFGGYXKsHuwY9tBa/w5Uo6KzrEg==}
     peerDependencies:
       '@types/react': ^17.0.3
-
-  '@types/react-mentions@4.4.1':
-    resolution: {integrity: sha512-65QdcZYkGe2I4GnOLY2OhlXCGz/Csd8NhytwE5r59CoFeYafMltAE/WqFB/Y6SoPU8LvF7EyUrq6Rxrf0Kzxkg==}
 
   '@types/react@17.0.83':
     resolution: {integrity: sha512-l0m4ArKJvmFtR4e8UmKrj1pB4tUgOhJITf+mADyF/p69Ts1YAR/E+G9XEM0mHXKVRa1dQNHseyyDNzeuAXfXQw==}
@@ -8490,12 +8478,6 @@ packages:
       '@types/react': ^17.0.3
       react: 17.0.2
 
-  react-mentions@4.4.10:
-    resolution: {integrity: sha512-JHiQlgF1oSZR7VYPjq32wy97z1w1oE4x10EuhKjPr4WUKhVzG1uFQhQjKqjQkbVqJrmahf+ldgBTv36NrkpKpA==}
-    peerDependencies:
-      react: 17.0.2
-      react-dom: 17.0.2
-
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
@@ -8621,9 +8603,6 @@ packages:
 
   regenerator-runtime@0.11.1:
     resolution: {integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==}
-
-  regenerator-runtime@0.13.11:
-    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
 
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
@@ -9331,11 +9310,6 @@ packages:
 
   style-to-object@1.0.8:
     resolution: {integrity: sha512-xT47I/Eo0rwJmaXC4oilDGDWLohVhR6o/xAQcPQN8q6QBuZVL8qMYL85kLmST5cPjAorwvqIA4qXTRQoYHaL6g==}
-
-  substyle@9.4.1:
-    resolution: {integrity: sha512-VOngeq/W1/UkxiGzeqVvDbGDPM8XgUyJVWjrqeh+GgKqspEPiLYndK+XRcsKUHM5Muz/++1ctJ1QCF/OqRiKWA==}
-    peerDependencies:
-      react: 17.0.2
 
   sucrase@3.35.0:
     resolution: {integrity: sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA==}
@@ -11664,10 +11638,6 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@babel/runtime@7.4.5':
-    dependencies:
-      regenerator-runtime: 0.13.11
-
   '@babel/template@7.26.9':
     dependencies:
       '@babel/code-frame': 7.26.2
@@ -13979,10 +13949,6 @@ snapshots:
   '@types/range-parser@1.2.7': {}
 
   '@types/react-dom@17.0.26(@types/react@17.0.83)':
-    dependencies:
-      '@types/react': 17.0.83
-
-  '@types/react-mentions@4.4.1':
     dependencies:
       '@types/react': 17.0.83
 
@@ -19894,15 +19860,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-mentions@4.4.10(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
-    dependencies:
-      '@babel/runtime': 7.4.5
-      invariant: 2.2.4
-      prop-types: 15.8.1
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-      substyle: 9.4.1(react@17.0.2)
-
   react-refresh@0.14.2: {}
 
   react-remove-scroll-bar@2.3.8(@types/react@17.0.83)(react@17.0.2):
@@ -20065,8 +20022,6 @@ snapshots:
   regenerate@1.4.2: {}
 
   regenerator-runtime@0.11.1: {}
-
-  regenerator-runtime@0.13.11: {}
 
   regenerator-runtime@0.14.1: {}
 
@@ -21010,12 +20965,6 @@ snapshots:
   style-to-object@1.0.8:
     dependencies:
       inline-style-parser: 0.2.4
-
-  substyle@9.4.1(react@17.0.2):
-    dependencies:
-      '@babel/runtime': 7.26.9
-      invariant: 2.2.4
-      react: 17.0.2
 
   sucrase@3.35.0:
     dependencies:

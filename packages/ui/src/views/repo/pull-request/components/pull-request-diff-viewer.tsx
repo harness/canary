@@ -407,7 +407,6 @@ const PullRequestDiffViewer = ({
         <div className="bg-cn-background-1">
           {threads.map(thread => {
             const parent = thread.parent
-            // thread?.parent?.payload?.mentions
             const componentId = `activity-code-${parent?.id}`
             const parentIdAttr = `comment-${parent?.id}`
             const replies = thread.replies

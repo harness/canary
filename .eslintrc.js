@@ -47,7 +47,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
 
     /**
-     * Soon it will be converted to "error"
+     * Soon it will be converted to "error" 
      * once all the old variants are removed
      */
     'no-restricted-syntax': ['warn', ...classNameRules],

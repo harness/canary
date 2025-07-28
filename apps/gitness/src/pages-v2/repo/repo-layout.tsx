@@ -50,6 +50,7 @@ const RepoLayout = () => {
           summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': gitRefPath })}
           filesPath={routes.toRepoFiles({ spaceId, repoId, '*': gitRefPath })}
           commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}
+          isRepoEmpty={!!repoData?.is_empty}
         />
       </SubHeaderWrapper>
       <Outlet />

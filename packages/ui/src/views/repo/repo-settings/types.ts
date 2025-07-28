@@ -52,6 +52,7 @@ export interface RuleDataType {
   identifier?: string
   state?: string
   type?: 'branch' | 'tag'
+  scope?: number
 }
 
 export interface IRepoStore {

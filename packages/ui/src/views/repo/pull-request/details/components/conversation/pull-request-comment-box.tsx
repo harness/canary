@@ -523,6 +523,7 @@ export const PullRequestCommentBox = ({
                         size="sm"
                         variant={item.variant ?? 'ghost'}
                         iconOnly
+                        disabled={showAiLoader}
                         onClick={() => handleActionClick(item.action, comment, textSelection)}
                       >
                         <IconV2 name={item.icon} />

@@ -126,9 +126,13 @@ export const PullRequestCommentBox = ({
     if (handleAiPullRequestSummary) {
       setShowAiLoader(true)
 
+      const originalComment = comment
+
+      parseAndSetComment(comment, currentTextSelection, TextSelectionBehavior.Parse, 'Generating AI Summary...')
+
       handleAiPullRequestSummary()
         .then(response => {
-          parseAndSetComment(comment, currentTextSelection, TextSelectionBehavior.Parse, response.summary)
+          parseAndSetComment(originalComment, currentTextSelection, TextSelectionBehavior.Parse, response.summary)
         })
         .finally(() => {
           setShowAiLoader(false)

@@ -17,8 +17,7 @@ import formSharedStyles from './form-shared-styles'
 import iconsAndLogos from './icon-and-logo'
 import inputStyles from './input'
 import labelStyles from './label'
-// 🚨 TODO: Design system: Unused style, check whether it is still needed.
-// import  layoutStyles  from './layout'
+import layoutStyles from './layout'
 import linkStyles from './link'
 import multiSelectStyles from './multi-select'
 import paginationStyles from './pagination'
@@ -49,6 +48,7 @@ export const ComponentStyles = [
   labelStyles,
   tagStyles,
   linkStyles,
+  layoutStyles,
   avatarStyles,
   cardStyles,
   cardSelectStyles,

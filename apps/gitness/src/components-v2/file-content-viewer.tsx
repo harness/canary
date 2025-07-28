@@ -2,12 +2,18 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
-import { FileViewerControlBar, MarkdownViewer, Pagination, SkeletonList, ViewTypeValue } from '@harnessio/ui/components'
+import {
+  FileViewerControlBar,
+  getIsMarkdown,
+  MarkdownViewer,
+  Pagination,
+  SkeletonList,
+  ViewTypeValue
+} from '@harnessio/ui/components'
 import { BranchSelectorTab, CommitsList, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
-import GitBlame from '../components/GitBlame'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
@@ -27,8 +33,7 @@ import {
   normalizeGitRef,
   REFS_TAGS_PREFIX
 } from '../utils/git-utils'
-
-const getIsMarkdown = (language?: string) => language === 'markdown'
+import GitBlame from './GitBlame'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
   return getIsMarkdown(language) ? 'preview' : 'code'
@@ -134,15 +139,14 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const renderFileView = () => {
     switch (view) {
       case 'preview':
-        // For Markdown 'preview'
         if (getIsMarkdown(language)) {
           return (
             <div className="pb-11">
-              <MarkdownViewer source={fileContent} withBorderWrapper />
+              <MarkdownViewer source={fileContent} withBorder />
             </div>
           )
         }
-        // If a non-markdown file somehow has 'preview', we could fallback to 'code'
+
         return (
           <CodeEditor
             className="overflow-hidden rounded-b-md border-x border-b"

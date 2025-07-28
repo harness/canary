@@ -171,6 +171,9 @@
 }
 
 .diff-tailwindcss-wrapper {
+  .diff-line-widget-new-content,
+  .diff-line-widget-new-placeholder,
+  .diff-line-new-placeholder,
   .diff-line-new-num {
     @apply border-l;
   }
@@ -485,14 +488,6 @@ mark {
 
 .breadcrumbs {
   @apply bg-cn-background-1 fixed top-0 z-30 ml-56 w-full;
-}
-
-.top-\[100px\] {
-  top: 100px;
-}
-
-.top-\[55px\] {
-  top: 55px;
 }
 
 .layer-high {

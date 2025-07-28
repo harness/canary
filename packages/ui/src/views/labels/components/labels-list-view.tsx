@@ -22,6 +22,22 @@ export interface LabelsListViewProps {
    * When the widthType is set to 'small', 'name' column is bigger and 'description' column is smaller
    */
   widthType?: 'default' | 'small'
+  createdIn?: string
+}
+
+const getDisplayPath = (scope: number, path?: string): string => {
+  if (!path) return ''
+
+  switch (scope) {
+    case 0:
+      return path
+    case 1:
+      return path.split('/')[0] || ''
+    case 2:
+      return path.split('/').slice(0, 2).join('/')
+    default:
+      return path.split('/').slice(0, 3).join('/')
+  }
 }
 
 export const LabelsListView: FC<LabelsListViewProps> = ({
@@ -32,7 +48,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   handleResetQueryAndPages,
   values,
   widthType = 'default',
-  labelContext
+  createdIn
 }) => {
   const { t } = useTranslation()
 
@@ -66,7 +82,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed">
+    <Table.Root tableClassName="table-fixed" className="mb-8 mt-5">
       <Table.Header>
         <Table.Row>
           <Table.Head className={cn('w-1/4', { 'w-4/12': isSmallWidth })}>
@@ -87,23 +103,20 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               <LabelCellContent label={label} values={values?.[label.key]} />
             </Table.Cell>
             <Table.Cell className="w-1/4 !py-3.5 leading-none">
-              <span className="inline-flex h-4 max-w-full items-center gap-x-1 rounded bg-cn-background-8 px-1.5 text-1 leading-4 text-cn-foreground-1">
+              <span className="bg-cn-background-8 text-1 text-cn-foreground-1 inline-flex h-4 max-w-full items-center gap-x-1 rounded px-1.5 leading-4">
                 <IconV2
-                  className="flex-none text-icons-9"
+                  className="text-icons-9 flex-none"
                   name={label.scope === 0 ? 'repository' : 'folder'}
                   size="2xs"
                 />
 
-                <span
-                  className="truncate"
-                  title={label.scope === 0 ? (labelContext.repo ?? '') : (labelContext.space ?? '')}
-                >
-                  {label.scope === 0 ? labelContext.repo : labelContext.space}
+                <span className="truncate" title={getDisplayPath(label.scope, createdIn)}>
+                  {getDisplayPath(label.scope, createdIn)}
                 </span>
               </span>
             </Table.Cell>
             <Table.Cell className={cn('w-1/2 !py-3', { 'w-5/12': isSmallWidth })}>
-              <span className="line-clamp-3 break-words text-sm text-cn-foreground-3">{label?.description || ''}</span>
+              <span className="text-cn-foreground-3 line-clamp-3 break-words text-sm">{label?.description || ''}</span>
             </Table.Cell>
             <Table.Cell className="w-[54px] !py-2 text-right">
               <MoreActionsTooltip

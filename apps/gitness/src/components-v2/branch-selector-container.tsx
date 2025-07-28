@@ -18,6 +18,7 @@ interface BranchSelectorContainerProps {
   isFilesPage?: boolean
   setCreateBranchDialogOpen?: (open: boolean) => void
   onBranchQueryChange?: (query: string) => void
+  className?: string
 }
 export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
   selectedBranch,
@@ -27,7 +28,8 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   preSelectedTab,
   setCreateBranchDialogOpen,
   isFilesPage = false,
-  onBranchQueryChange
+  onBranchQueryChange,
+  className
 }) => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -99,6 +101,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
 
   return (
     <BranchSelectorV2
+      className={className}
       branchList={branchList}
       tagList={tagList}
       selectedBranchorTag={selectedBranch ?? { name: '', sha: '', default: false }}

@@ -75,8 +75,6 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
           {...filterOption.filterFieldConfig}
           onUpdateFilter={values => {
             onUpdateFilter(values as V)
-            // Currently this supports only single selection, will be fixing in migration
-            values && setIsOpen(false)
           }}
         />
       )

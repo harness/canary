@@ -31,11 +31,20 @@ import {
 import { cn } from '@utils/cn'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
-import { PullRequestRoutingProps } from '../../pull-request-details-types'
+import {
+  DefaultReviewersDataProps,
+  mergeMethodMapping,
+  MergeStrategy,
+  PullRequestRoutingProps
+} from '../../pull-request-details-types'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
+
+export const getMergeMethodDisplay = (mergeMethodType: MergeStrategy): string => {
+  return mergeMethodMapping[mergeMethodType]
+}
 
 interface HeaderProps {
   isDraft?: boolean
@@ -47,18 +56,25 @@ interface HeaderProps {
   pullReqMetadata: TypesPullReq | undefined
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
+  const { pullReqMetadata } = props
+  const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
+  const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
   if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1 font-medium">
-            <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
+            <span>{props?.pullReqMetadata?.merger?.display_name}</span>
+            <span>
+              {areRulesBypassed ? `bypassed branch rules and ${mergeMethod} branch` : `${mergeMethod} branch`}
+            </span>
             <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
               {props?.pullReqMetadata?.source_branch}
             </StatusBadge>
@@ -68,15 +84,20 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             </StatusBadge>
             <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
           </div>
-          {props.showDeleteBranchButton ? (
-            <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
-              Delete Branch
+          <Layout.Horizontal>
+            <Button variant="secondary" onClick={props.onRevertPR}>
+              Revert
             </Button>
-          ) : props.showRestoreBranchButton ? (
-            <Button variant="secondary" onClick={props.onRestoreBranch}>
-              Restore Branch
-            </Button>
-          ) : null}
+            {props.showDeleteBranchButton ? (
+              <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
+                Delete Branch
+              </Button>
+            ) : props.showRestoreBranchButton ? (
+              <Button variant="secondary" onClick={props.onRestoreBranch}>
+                Restore Branch
+              </Button>
+            ) : null}
+          </Layout.Horizontal>
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
@@ -176,7 +197,12 @@ const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
 export interface PullRequestPanelProps
   extends Omit<
       PullRequestChangesSectionProps,
-      'reqNoChangeReq' | 'reqCodeOwnerApproval' | 'minApproval' | 'reqCodeOwnerLatestApproval' | 'minReqLatestApproval'
+      | 'reqNoChangeReq'
+      | 'reqCodeOwnerApproval'
+      | 'minApproval'
+      | 'reqCodeOwnerLatestApproval'
+      | 'minReqLatestApproval'
+      | 'accordionValues'
     >,
     Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
@@ -189,6 +215,7 @@ export interface PullRequestPanelProps
   setCheckboxBypass?: (value: boolean) => void
   onRestoreBranch: () => void
   onDeleteBranch: () => void
+  onRevertPR: () => void
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
@@ -198,6 +225,7 @@ export interface PullRequestPanelProps
   spaceId?: string
   repoId?: string
   error?: string | null
+  defaultReviewersData?: DefaultReviewersDataProps
 }
 
 const PullRequestPanel = ({
@@ -207,18 +235,15 @@ const PullRequestPanel = ({
   checksInfo,
   approvedEvaluations,
   changeReqEvaluations,
-  codeOwners,
+  codeOwnersData,
   latestApprovalArr,
   changeReqReviewer,
-  codeOwnerChangeReqEntries,
-  codeOwnerPendingEntries,
-  codeOwnerApprovalEntries,
-  latestCodeOwnerApprovalArr,
   actions,
   checkboxBypass,
   setCheckboxBypass,
   onRestoreBranch,
   onDeleteBranch,
+  onRevertPR,
   showRestoreBranchButton,
   showDeleteBranchButton,
   headerMsg,
@@ -230,6 +255,7 @@ const PullRequestPanel = ({
   spaceId,
   repoId,
   error,
+  defaultReviewersData,
   ...routingProps
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
@@ -295,6 +321,7 @@ const PullRequestPanel = ({
                 pullReqMetadata={pullReqMetadata}
                 onRestoreBranch={onRestoreBranch}
                 onDeleteBranch={onDeleteBranch}
+                onRevertPR={onRevertPR}
                 showRestoreBranchButton={showRestoreBranchButton}
                 showDeleteBranchButton={showDeleteBranchButton}
                 headerMsg={headerMsg}
@@ -403,16 +430,11 @@ const PullRequestPanel = ({
                   minReqLatestApproval={prPanelData.minReqLatestApproval}
                   approvedEvaluations={approvedEvaluations}
                   changeReqEvaluations={changeReqEvaluations}
-                  codeOwners={codeOwners}
                   latestApprovalArr={latestApprovalArr}
                   reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
                   changeReqReviewer={changeReqReviewer}
-                  codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
-                  reqCodeOwnerApproval={prPanelData.reqCodeOwnerApproval}
-                  reqCodeOwnerLatestApproval={prPanelData.reqCodeOwnerLatestApproval}
-                  codeOwnerPendingEntries={codeOwnerPendingEntries}
-                  codeOwnerApprovalEntries={codeOwnerApprovalEntries}
-                  latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
+                  codeOwnersData={codeOwnersData}
+                  defaultReviewersData={defaultReviewersData}
                 />
               )}
 
@@ -420,10 +442,10 @@ const PullRequestPanel = ({
                 !pullReqMetadata?.merged && <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />}
 
               <PullRequestCheckSection
+                {...routingProps}
                 checkData={checks ?? []}
                 checksInfo={checksInfo}
                 accordionValues={accordionValues}
-                {...routingProps}
               />
 
               {!pullReqMetadata?.merged && (
@@ -439,7 +461,7 @@ const PullRequestPanel = ({
             </Accordion.Root>
           ) : (
             <Layout.Horizontal gap="xs" align="center" justify="between" className="w-full py-4">
-              <Layout.Horizontal align="center" className="w-full" gap="xs">
+              <Layout.Horizontal gap="3xs" align="center" className="w-full">
                 <StatusBadge variant="secondary" size="sm">
                   <Link
                     className="flex items-center gap-x-1.5"

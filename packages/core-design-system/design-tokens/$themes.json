@@ -1597,7 +1597,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -1931,7 +1930,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -2559,7 +2559,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -2893,7 +2892,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -3520,7 +3520,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -3854,7 +3853,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -4480,7 +4480,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -4814,7 +4813,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -5441,7 +5441,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -5775,7 +5774,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -6402,7 +6402,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -6736,7 +6735,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -7363,7 +7363,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -7697,7 +7696,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -8324,7 +8324,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -8658,7 +8657,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -9285,7 +9285,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -9619,7 +9618,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -10246,7 +10246,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -10580,7 +10579,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -11207,7 +11207,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -11541,7 +11540,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -12168,7 +12168,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -12502,7 +12501,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -13129,7 +13129,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -13463,7 +13462,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -14089,7 +14089,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -14423,7 +14422,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -15049,7 +15049,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -15383,7 +15382,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -16009,7 +16009,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -16343,7 +16342,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -16969,7 +16969,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -17303,7 +17302,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -17929,7 +17929,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -18263,7 +18262,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -18889,7 +18889,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -19223,7 +19222,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -19873,7 +19873,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -20207,7 +20206,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -20833,7 +20833,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -21167,7 +21166,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -21793,7 +21793,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -22127,7 +22126,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -22753,7 +22753,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -23087,7 +23086,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -23713,7 +23713,6 @@
       "border.1": "5ad2231a611605964ba70f80e7aabb48f04bc704",
       "border.2": "9084bef359e38136e0dddac25a464896456a9b1a",
       "border.3": "5ff5d5233f7cb0233ce7634bc480026668c818f6",
-      "border.accent": "8db219e896acc4d828aaaf4add646d96540a84ea",
       "border.success": "b13758973865eab0b4d79028a48e457eae8bec47",
       "border.danger": "33d53c1486021bb3c9edce4123b484a2aabc8de0",
       "border.warning": "027e57e08a1edcaaa7fbe033902bb3f65497abb4",
@@ -24047,7 +24046,8 @@
       "flow.onboard.ellipse-t-2.default": "dcf39668c229dd78326b87e66f3187c3575f2376",
       "flow.onboard.ellipse-t-2.danger": "5c480adf9a3351f8f66fe42722729fca8a4ec0da",
       "flow.onboard.ellipse-b.default": "d527a05727ae29b8d86af64efc7f7a26b01f22ea",
-      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01"
+      "flow.onboard.ellipse-b.danger": "18261f1dee39801e11bab7001f53775aa48f8e01",
+      "border.brand": "8db219e896acc4d828aaaf4add646d96540a84ea"
     },
     "group": "mode"
   },
@@ -24170,7 +24170,6 @@
       "breakpoint.viewport": "c0aa3fc7895e8b9f4b381b233a80214821447dfa",
       "breakpoint.viewportMin": "6be5f8330bfa441a8ad6e3e543365c7864021a72",
       "breakpoint.viewportMax": "8a8be6a3522300c276a7f78aed8779e0b6bd0fda",
-      "breakpoint.container": "ed2c337e342e73dec8eef97c30c677b147362d8e",
       "layout.3xs": "f22be0bc6dfe23c7200230adb739505a1abe3402",
       "layout.2xs": "d15309b2acf4f35d5f2827114cd5d2c4abe69151",
       "layout.xs": "dd8a0fefa7206c72772a9c707f20d0f9620e38ad",
@@ -24404,7 +24403,8 @@
       "sidebar.sub-group.px": "5006092a42bb07d1e40ae23b2baec1ee97f03ffd",
       "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352",
       "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6",
-      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d"
+      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d",
+      "container.spacing-px": "ed2c337e342e73dec8eef97c30c677b147362d8e"
     },
     "group": "breakpoint"
   }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import {
   Button,
+  Favorite,
   IconV2,
   LogoV2,
   MoreActionsTooltip,
@@ -154,18 +155,10 @@ export function ConnectorsList({
                   {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
                 </Table.Cell>
                 <Table.Cell className="content-center !p-1.5" disableLink>
-                  <Button
-                    size="sm"
-                    iconOnly
-                    variant="ghost"
-                    onClick={() => onToggleFavoriteConnector(identifier, !isFavorite)}
-                  >
-                    {isFavorite ? (
-                      <IconV2 name="star-solid" size="xs" className="fill-icons-alert" />
-                    ) : (
-                      <IconV2 name="star" size="xs" className="text-icons-6" />
-                    )}
-                  </Button>
+                  <Favorite
+                    isFavorite={isFavorite}
+                    onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
+                  />
                 </Table.Cell>
                 <Table.Cell className="content-center !p-0" disableLink>
                   <MoreActionsTooltip

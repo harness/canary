@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { RenderForm, RootForm, useZodValidationResolver } from '../../../../src'
+import { collectDefaultValues, RenderForm, RootForm, useZodValidationResolver } from '../../../../src'
 import { UpdateValues } from '../../helpers/update-values-btn'
 import inputComponentFactory from '../../implementation/factory/factory'
 import { formDefinition } from './form-definition'
@@ -8,7 +8,10 @@ import { formDefinition } from './form-definition'
 function RuntimeExample() {
   const [formState, setFormState] = useState<{ isValid?: boolean; isSubmitted?: boolean }>({})
   const [logs, setLogs] = useState<{ label: string; log: string }[]>([])
-  const [defaultValues, setDefaultValues] = useState({ input1: '<+input.sda>' })
+  const [defaultValues, setDefaultValues] = useState({
+    ...collectDefaultValues(formDefinition),
+    input1: '<+input.sda>'
+  })
 
   const onSubmit = values => {
     addLog('SUBMIT', values)
@@ -30,7 +33,7 @@ function RuntimeExample() {
 
   const resolver = useZodValidationResolver(formDefinition, {
     validationConfig: {
-      globalValidation: (value, input, metadata) => {
+      globalValidation: (value, _input, _metadata) => {
         if (typeof value === 'string' && value.indexOf('<+input') !== -1) {
           // TODO: validate runtime input value here
           return { continue: false }

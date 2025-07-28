@@ -1,13 +1,13 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC } from 'react'
 
 import { Fieldset, FormSeparator, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
+import { RepoSettingsFeaturesForm, RepoSettingsFeaturesFormFields } from './components/repo-settings-general-features'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
-import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 import { RepoSettingsSecurityForm, RepoSettingsSecurityFormFields } from './components/repo-settings-general-security'
 import { ErrorTypes, IRepoStore, RepoUpdateData } from './types'
 
@@ -16,57 +16,45 @@ interface ILoadingStates {
   isUpdatingRepoData: boolean
   isLoadingSecuritySettings: boolean
   isUpdatingSecuritySettings: boolean
-  isRulesLoading: boolean
+  isLoadingFeaturesSettings: boolean
+  isUpdatingFeaturesSettings: boolean
 }
 
 interface RepoSettingsGeneralPageProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
+  handleUpdateFeaturesSettings: (data: RepoSettingsFeaturesFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-  handleRuleClick: (identifier: string) => void
-  openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
+  openRepoArchiveDialog: () => void
   useRepoRulesStore: () => IRepoStore
-  rulesSearchQuery: string
-  setRulesSearchQuery: (query: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  showVulnerabilityScanning?: boolean
 }
 
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   handleRepoUpdate,
   handleUpdateSecuritySettings,
+  handleUpdateFeaturesSettings,
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
-  handleRuleClick,
-  openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog,
+  openRepoArchiveDialog,
   useRepoRulesStore,
-  rulesSearchQuery,
-  setRulesSearchQuery,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  showVulnerabilityScanning = false
 }) => {
-  const { location } = useRouterContext()
   const { t } = useTranslation()
-  const rulesRef = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
-    if (location.pathname.endsWith('/rules')) {
-      rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
-    }
-
-    if (location.pathname.endsWith('/general')) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }, [location.pathname])
-
-  const { repoData, securityScanning, rules } = useRepoRulesStore()
+  const { repoData, securityScanning, verifyCommitterIdentity, gitLfsEnabled, vulnerabilityScanning } =
+    useRepoRulesStore()
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
+      <Text as="h1" variant="heading-section" className="mb-10">
         {t('views:repos.settings', 'Settings')}
       </Text>
 
@@ -81,27 +69,31 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           branchSelectorRenderer={branchSelectorRenderer}
         />
         <FormSeparator />
-        <div ref={rulesRef}>
-          <RepoSettingsGeneralRules
-            isLoading={loadingStates.isRulesLoading}
-            rules={rules}
-            apiError={apiError}
-            handleRuleClick={handleRuleClick}
-            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-            rulesSearchQuery={rulesSearchQuery}
-            setRulesSearchQuery={setRulesSearchQuery}
-          />
-        </div>
-        <FormSeparator />
         <RepoSettingsSecurityForm
+          showVulnerabilityScanning={showVulnerabilityScanning}
           securityScanning={securityScanning}
+          verifyCommitterIdentity={verifyCommitterIdentity}
+          vulnerabilityScanning={vulnerabilityScanning === 'detect'}
           handleUpdateSecuritySettings={handleUpdateSecuritySettings}
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
           isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
         />
         <FormSeparator />
-        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
+        <RepoSettingsFeaturesForm
+          gitLfsEnabled={gitLfsEnabled}
+          handleUpdateFeaturesSettings={handleUpdateFeaturesSettings}
+          apiError={apiError}
+          isUpdatingFeaturesSettings={loadingStates.isUpdatingFeaturesSettings}
+          isLoadingFeaturesSettings={loadingStates.isLoadingFeaturesSettings}
+        />
+        <FormSeparator />
+        <RepoSettingsGeneralDelete
+          archived={repoData?.archived}
+          apiError={apiError}
+          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+          openRepoArchiveDialog={openRepoArchiveDialog}
+        />
       </Fieldset>
     </SandboxLayout.Content>
   )

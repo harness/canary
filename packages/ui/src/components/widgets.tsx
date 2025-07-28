@@ -44,7 +44,7 @@ const Item: FC<WidgetsItemProps> = ({ children, title, moreLink, isWidgetTable =
       className={cn('overflow-hidden', { 'break-inside-avoid pb-[var(--cn-spacing-10)] last:pb-0': isTwoColumn })}
     >
       <Layout.Flex justify="between" gap="md" align="start">
-        <Text as="h2" variant="heading-subsection" color="foreground-1">
+        <Text as="h2" variant="heading-subsection">
           {title}
         </Text>
         {!!moreLink && (

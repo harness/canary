@@ -137,6 +137,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withIcon = itemIsIcon(props)
     const withLogo = itemIsLogo(props)
     const withAvatar = itemIsAvatar(props)
+    const withFallback = !withIcon && !withLogo && !withAvatar
     const isLink = isSidebarItemLink(props)
 
     const {
@@ -181,19 +182,19 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           'cn-sidebar-item-content-complete': withDescription && withRightElement
         })}
       >
-        {withIcon && props.icon && (
-          <>
-            {withDescription && (
-              <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
-                <IconV2 name={props.icon} size="md" />
-              </div>
-            )}
-            {!withDescription && <IconV2 name={props.icon} size="sm" className="cn-sidebar-item-content-icon" />}
-          </>
-        )}
+        {(withIcon || withFallback) &&
+          (withDescription ? (
+            <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
+              <IconV2 name={props.icon} size="md" fallback="stop" />
+            </div>
+          ) : (
+            <IconV2 name={props.icon} size="sm" fallback="stop" className="cn-sidebar-item-content-icon" />
+          ))}
+
         {withLogo && props.logo && (
           <LogoV2 name={props.logo} size={withDescription ? 'md' : 'sm'} className="cn-sidebar-item-content-icon" />
         )}
+
         {withAvatar && (
           <Avatar
             src={props.src}

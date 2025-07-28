@@ -206,10 +206,22 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     if (!initialFiltersRef.current) return
 
     const currentQuery = createQueryString(filtersOrder, filtersMap)
-    const searchParamsFiltersMap = {} as Record<FilterKeys, FilterType>
+    const searchParamsFiltersMap = Object.entries(filtersMap).reduce(
+      (acc, [key, filter]) => {
+        acc[key as FilterKeys] = filter
+
+        if (!searchParams.has(key)) {
+          acc[key as FilterKeys] = { ...createNewFilter(), state: FilterStatus.HIDDEN }
+        }
+        return acc
+      },
+      {} as Record<FilterKeys, FilterType>
+    )
 
     // we don't need to update URL here since it's already updated
     debug('Syncing search params with filters: %s', currentQuery)
+
+    const updatedFiltersOrder = filtersOrder.filter(key => searchParams.has(key as string))
 
     searchParams.forEach((value, key) => {
       if (filtersMap[key as FilterKeys]) {
@@ -221,11 +233,15 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
           query: value,
           state: FilterStatus.FILTER_APPLIED
         }
+
+        if (!updatedFiltersOrder.includes(key)) {
+          updatedFiltersOrder.push(key)
+        }
       }
     }, {})
 
     // check if filtersOrder should be passed or not
-    const searchParamsQuery = createQueryString(filtersOrder, searchParamsFiltersMap)
+    const searchParamsQuery = createQueryString(updatedFiltersOrder, searchParamsFiltersMap)
 
     if (currentQuery === searchParamsQuery) {
       return
@@ -233,7 +249,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     // check typecasting
     setFiltersMapTrigger(searchParamsFiltersMap as Record<FilterKeys, FilterType>)
-    setFiltersOrderTrigger({ updatedFiltersOrder: Object.keys(searchParamsFiltersMap) as FilterKeys[] })
+    setFiltersOrderTrigger({ updatedFiltersOrder })
   }, [searchParams])
 
   const createNewFilter = (): FilterType => ({

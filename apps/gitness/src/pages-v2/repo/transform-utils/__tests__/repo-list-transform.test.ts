@@ -2,7 +2,6 @@ import { RepoRepositoryOutput } from '@harnessio/code-service-client'
 
 import { transformRepoList } from '../repo-list-transform'
 
-// Mock data
 const mockRepos: RepoRepositoryOutput[] = [
   {
     id: 1,
@@ -13,7 +12,9 @@ const mockRepos: RepoRepositoryOutput[] = [
     num_pulls: 10,
     updated: 1617181723,
     created: 1617181723,
-    importing: false
+    importing: false,
+    is_favorite: true,
+    path: 'accountId/repo1'
   }
 ]
 
@@ -33,7 +34,9 @@ describe('transformRepoList', () => {
         pulls: 10,
         timestamp: '1970-01-19T17:13:01.723Z', // Epoch gets converted to ISO-8601 string
         createdAt: 1617181723,
-        importing: false
+        importing: false,
+        favorite: true,
+        path: 'accountId/repo1'
       }
     ])
   })

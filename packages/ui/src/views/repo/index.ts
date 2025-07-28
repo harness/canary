@@ -37,6 +37,7 @@ export * from '@views/repo/repo-tags/types'
 // repo settings
 export * from '@views/repo/repo-settings/repo-settings-layout'
 export * from '@views/repo/repo-settings/repo-settings-general-page'
+export * from '@views/repo/repo-settings/repo-settings-rules-page'
 export * from '@views/repo/repo-settings/types'
 
 // repo import
@@ -47,6 +48,11 @@ export * from '@views/repo/repo-import/types'
 // repo branch rules
 export * from '@views/repo/repo-branch-rules'
 export * from '@views/repo/repo-branch-rules/types'
+
+// repo tag rules
+export * from '@views/repo/repo-tag-rules/repo-tag-settings-rules-page'
+export * from '@views/repo/repo-tag-rules/types'
+export * from '@views/repo/repo-tag-rules/components/repo-tag-rules-data'
 
 // repo commit details
 export * from '@views/repo/repo-commit-details'

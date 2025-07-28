@@ -129,7 +129,6 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 <FormInput.Textarea
                   id="description"
                   {...register('description')}
-                  defaultValue={desc}
                   placeholder={t(
                     'views:pullRequests.compareChangesFormDescriptionPlaceholder',
                     'Add Pull Request description here.'

@@ -1,25 +1,17 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import {
-  ManageNavigation,
-  MenuGroupType,
-  MenuGroupTypes,
-  MoreSubmenu,
-  NavbarItemType,
-  SettingsMenu,
-  Sidebar
-} from '@harnessio/ui/components'
+import { ManageNavigation, MenuGroupType, MenuGroupTypes, NavbarItemType, Sidebar } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { SidebarView } from '@harnessio/ui/views'
 
-import { useNav } from '../../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
+import { useNav } from '../stores/recent-pinned-nav-links.store'
 
 const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
   const { t } = useTranslation()
@@ -149,12 +141,12 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
         handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
         changeLanguage={changeLanguage}
         lang={i18n.language}
+        moreMenu={moreMenu}
+        settingsMenu={settingsMenu}
       />
 
       <Sidebar.Inset>
         {children}
-        <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
-        <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
         <ManageNavigation
           pinnedItems={pinnedMenu}
           recentItems={recentMenu}

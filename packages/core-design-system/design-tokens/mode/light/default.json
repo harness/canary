@@ -56,7 +56,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{blue.600}",
+      "$value": "{chrome.300}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
@@ -69,9 +69,9 @@
       "$value": "{chrome.100}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "accent": {
+    "brand": {
       "$type": "color",
-      "$value": "{blue.700}",
+      "$value": "{blue.600}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -96,13 +96,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.05",
+            "value": "0.16",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "{chrome.300}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -110,19 +110,19 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.07",
+            "value": "0.22",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "{chrome.300}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
       "text": {
         "$type": "color",
-        "$value": "{chrome.400}",
+        "$value": "{chrome.500}",
         "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
       },
       "bg": {
@@ -1314,6 +1314,12 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
+    "input": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.3}"
+      }
+    },
     "link": {
       "text": {
         "$type": "color",
@@ -1322,7 +1328,7 @@
       },
       "text-hover": {
         "$type": "color",
-        "$value": "{blue.800}",
+        "$value": "{blue.700}",
         "$description": "Hover color for text links."
       }
     },
@@ -1464,12 +1470,12 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.2}",
+          "$value": "{border.1}",
           "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{border.accent}"
+          "$value": "{border.brand}"
         }
       },
       "selected": {
@@ -1503,6 +1509,10 @@
         "$type": "color",
         "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
         "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
+      },
+      "mask": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)"
       }
     },
     "slider": {
@@ -1903,7 +1913,7 @@
           "y": "0",
           "blur": "0",
           "spread": "2",
-          "color": "{border.accent}",
+          "color": "{border.brand}",
           "type": "dropShadow"
         }
       ],
@@ -2064,15 +2074,34 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{chrome.50}"
+        "$value": "{chrome.100}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pure.white}"
+        "$value": "{chrome.50}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{chrome.50}"
+        "$value": "{chrome.100}"
+      },
+      "mask": {
+        "from": {
+          "$type": "color",
+          "$value": "{pure.black}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{pure.black}"
+        }
       }
     },
     "pipeline": {

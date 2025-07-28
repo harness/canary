@@ -344,7 +344,11 @@ interface DropdownMenuIconItemProps extends Omit<DropdownMenuItemProps, 'prefix'
 
 const DropdownMenuIconItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuIconItemProps>(
   ({ icon, iconClassName, ...props }, ref) => (
-    <DropdownMenuItem ref={ref} {...props} prefix={<IconV2 size="2xs" name={icon} className={iconClassName} />} />
+    <DropdownMenuItem
+      ref={ref}
+      {...props}
+      prefix={<IconV2 size="2xs" name={icon} className={iconClassName} fallback="stop" />}
+    />
   )
 )
 DropdownMenuIconItem.displayName = displayNames.iconItem

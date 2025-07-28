@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
-import { Button, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
+import { Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -8,9 +8,8 @@ interface SearchResultsListProps {
   isLoading: boolean
   isDirtyList: boolean
   useSearchResultsStore: () => {
-    results: SearchResultItem[]
+    results?: SearchResultItem[]
   }
-  clearSearch: () => void
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
 }
 
@@ -23,7 +22,7 @@ export interface SearchResultItem {
     line_num: number
     before: string
     after: string
-    segments: Array<{
+    fragments: Array<{
       pre: string
       match: string
       post: string
@@ -35,17 +34,17 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   isLoading,
   isDirtyList,
   useSearchResultsStore,
-  toRepoFileDetails,
-  clearSearch
+  toRepoFileDetails
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
 
   if (isLoading) {
     return <SkeletonList />
   }
 
-  if (!results.length) {
+  if (!results?.length) {
     return (
       <div className={cn('flex flex-col items-center justify-center py-12')}>
         <Text variant="heading-section">
@@ -60,7 +59,6 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             : t('views:search.enterSearchTerms', 'Enter search terms to find relevant results')}
         </Text>
         <Spacer size={4} />
-        {isDirtyList && <Button onClick={clearSearch}>{t('views:search.clearSearch', 'Clear search')}</Button>}
       </div>
     )
   }
@@ -70,8 +68,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
       {results.map(item => (
         <Card.Root key={`${item.repo_path}/${item.file_name}`} tabIndex={0}>
           <Layout.Vertical gap="sm">
-            <Layout.Horizontal gap="sm">
-              <Tag value={item.repo_path} icon="repository" />
+            <Layout.Horizontal gap="xs">
+              <Tag value={item.repo_path} icon="repository" showIcon={true} size={'sm'} />
               <Link
                 to={toRepoFileDetails({ repoPath: item.repo_path, filePath: item.file_name, branch: item.repo_branch })}
               >
@@ -81,25 +79,55 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
 
             {item.matches && item.matches.length > 1 && (
               <Layout.Vertical gap="sm">
-                {item.matches.slice(0, 3).map((match, matchIndex) => (
-                  <div key={`match-${matchIndex}`}>
-                    <Text variant="body-normal">Line {match.line_num}</Text>
-                    <pre className={cn('bg-cn-background-1 p-1 mt-1 overflow-x-scroll rounded')}>
-                      <code>
-                        {match.before}
-                        {match.segments?.map((segment, segIndex) => (
-                          <span key={`seg-${segIndex}`}>
-                            {segment.pre}
-                            <span className={cn('bg-yellow-100/30')}>{segment.match}</span>
-                            {segment.post}
-                          </span>
-                        ))}
-                        {match.after}
-                      </code>
-                    </pre>
-                  </div>
-                ))}
-                {item.matches?.length > 3 && <Text variant="body-normal">+{item.matches.length - 3} more</Text>}
+                {item.matches
+                  .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : 3)
+                  .map(match => (
+                    <div
+                      key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
+                    >
+                      <pre className={cn('bg-cn-background-1 p-1 mt-1 rounded')}>
+                        <code className="monospace">
+                          {match.before.trim().length > 0 && (
+                            <>
+                              {match.line_num - 1} {match.before}
+                              <br />
+                            </>
+                          )}
+                          {match.line_num}{' '}
+                          {match.fragments?.map((segment, segIndex) => (
+                            <span key={`seg-${segIndex}`}>
+                              {segment.pre}
+                              <mark>{segment.match}</mark>
+                              {segment.post}
+                            </span>
+                          ))}
+                          {match.after.trim().length > 0 && (
+                            <>
+                              <br />
+                              {match.line_num + 1} {match.after}
+                            </>
+                          )}
+                        </code>
+                      </pre>
+                    </div>
+                  ))}
+                {item.matches?.length > 3 && (
+                  <Text
+                    variant="body-normal"
+                    className="text-cn-primary cursor-pointer hover:underline"
+                    onClick={() => {
+                      const key = `${item.repo_path}/${item.file_name}`
+                      setExpandedItems(prev => ({
+                        ...prev,
+                        [key]: !prev[key]
+                      }))
+                    }}
+                  >
+                    {expandedItems[`${item.repo_path}/${item.file_name}`]
+                      ? t('views:search.showLess', '- Show Less')
+                      : t('views:search.showMore', `+${item.matches.length - 3} more`)}
+                  </Text>
+                )}
               </Layout.Vertical>
             )}
           </Layout.Vertical>

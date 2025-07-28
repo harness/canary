@@ -1,9 +1,14 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useGetPullReqQuery, useUpdatePullReqMutation } from '@harnessio/code-service-client'
+import {
+  useChangeTargetBranchMutation,
+  useGetPullReqQuery,
+  useUpdatePullReqMutation
+} from '@harnessio/code-service-client'
 import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
 
+import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
@@ -36,6 +41,17 @@ const PullRequestLayout = () => {
       }
     }
   )
+  const { mutateAsync: updateTargetBranch } = useChangeTargetBranchMutation(
+    {
+      repo_ref: repoRef,
+      pullreq_number: Number(pullRequestId)
+    },
+    {
+      onSuccess: () => {
+        refetchPullReq()
+      }
+    }
+  )
   useEffect(() => {
     if (pullReqData) {
       setPullRequest(pullReqData)
@@ -58,12 +74,20 @@ const PullRequestLayout = () => {
     updateTitle({ body: { title, description } })
   }
 
+  const handleUpdateTargetBranch = (branchName: string) => {
+    if (branchName) {
+      updateTargetBranch({ body: { branch_name: branchName } })
+    }
+  }
+
   return (
     <PullRequestLayoutView
       usePullRequestStore={usePullRequestStore}
       spaceId={spaceId || ''}
       repoId={repoId}
       updateTitle={handleUpdateTitle}
+      updateTargetBranch={handleUpdateTargetBranch}
+      branchSelectorRenderer={BranchSelectorContainer}
     />
   )
 }

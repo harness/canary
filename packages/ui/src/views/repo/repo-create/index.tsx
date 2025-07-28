@@ -32,6 +32,7 @@ const formSchema = z.object({
     .min(1, { message: 'Please provide a name' })
     .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
   description: z.string(),
+  defaultBranch: z.string().min(1, { message: 'Please provide a name to initialize the default branch' }),
   gitignore: z.string().optional(),
   license: z.string().optional(),
   access: z.enum(['1', '2'], { errorMap: () => ({ message: 'Please select who has access' }) }),
@@ -67,6 +68,7 @@ export function RepoCreatePage({
     defaultValues: {
       name: '',
       description: '',
+      defaultBranch: 'main',
       gitignore: '',
       license: '',
       access: '2',
@@ -113,7 +115,7 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-11">
+      <SandboxLayout.Content className="mx-auto w-[570px] pb-20 pt-1">
         <Spacer size={5} />
         <Text variant="heading-section">{t('views:repos.createNewRepo', 'Create a new repository')}</Text>
         <Spacer size={2.5} />
@@ -144,6 +146,14 @@ export function RepoCreatePage({
               placeholder="Enter a description of this repository"
               label="Description"
               optional
+            />
+            {/* DEFAULT BRANCH */}
+            <FormInput.Text
+              id="default-branch"
+              label="Default branch"
+              {...register('defaultBranch')}
+              placeholder="Enter name to initialize default branch"
+              // error={errors.defaultBranch?.message?.toString()}
             />
           </Fieldset>
 

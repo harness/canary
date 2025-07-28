@@ -1,3 +1,5 @@
+import { cloneElement } from 'react'
+
 import {
   Button,
   ButtonLayout,
@@ -11,9 +13,18 @@ import {
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { BranchSelectorListItem, CommitDivergenceType, RepoFile, SandboxLayout } from '@/views'
+import {
+  BranchSelectorListItem,
+  CommitDivergenceType,
+  RepoFile,
+  RepoRepositoryOutput,
+  SandboxLayout,
+  TypesBranchTable
+} from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { isEmpty } from 'lodash-es'
 
+import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import { CloneRepoDialog } from './components/clone-repo-dialog'
 import SummaryPanel from './components/summary-panel'
 import { RepoEmptyView } from './repo-empty-view'
@@ -35,16 +46,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   loading: boolean
   filesList: string[]
   navigateToFile: (path: string) => void
-  repository:
-    | {
-        git_ssh_url?: string
-        git_url?: string
-        description?: string
-        created?: number
-        default_branch?: string
-        is_public?: boolean
-      }
-    | undefined
+  repository?: RepoRepositoryOutput
   handleCreateToken: () => void
   // TODO: fix this
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,6 +80,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   toRepoFileDetails?: ({ path }: { path: string }) => string
   tokenGenerationError?: string | null
   refType?: BranchSelectorTab
+  prCandidateBranches?: TypesBranchTable[]
 }
 
 export function RepoSummaryView({
@@ -87,6 +90,7 @@ export function RepoSummaryView({
   loading,
   filesList,
   navigateToFile,
+  prCandidateBranches,
   repository,
   files,
   decodedReadmeContent,
@@ -130,6 +134,7 @@ export function RepoSummaryView({
         httpUrl={repository?.git_url ?? 'could not fetch url'}
         repoName={repoId}
         projName={spaceId}
+        tokenGenerationError={tokenGenerationError || undefined}
         gitRef={gitRef || selectedBranchOrTag?.name || ''}
         handleCreateToken={handleCreateToken}
         navigateToProfileKeys={navigateToProfileKeys}
@@ -142,45 +147,41 @@ export function RepoSummaryView({
       <SandboxLayout.Columns columnWidths="1fr 256px">
         <SandboxLayout.Column className="w-full min-w-0">
           <SandboxLayout.Content className="pl-6">
-            {/*
-              TODO: Implement proper recent push detection logic:
-              1. Backend needs to:
-                - Track and store information about recent pushes
-                - Provide an API endpoint that returns array of recent pushes:
-                  {
-                    recentPushes: Array<{
-                      branchName: string
-                      pushedAt: string // ISO timestamp
-                      userId: string // to show banner only to user who made the push
-                    }>
-                  }
-                - Consider:
-                  * Clearing push data after PR is created
-                  * Clearing push data after 24h
-                  * Limiting number of shown pushes (e.g. max 3 most recent)
-                  * Sorting pushes by timestamp (newest first)
+            {!isEmpty(prCandidateBranches) && (
+              <BranchCompareBannerList
+                prCandidateBranches={prCandidateBranches}
+                defaultBranchName={repository?.default_branch || 'main'}
+                repoId={repoId}
+                spaceId={spaceId}
+              />
+            )}
+            {selectedBranchOrTag?.name !== repository?.default_branch && (
+              <>
+                <BranchInfoBar
+                  defaultBranchName={repository?.default_branch}
+                  repoId={repoId}
+                  spaceId={spaceId}
+                  selectedBranchTag={selectedBranchOrTag ?? { name: '', sha: '' }}
+                  currentBranchDivergence={{
+                    ahead: currentBranchDivergence?.ahead || 0,
+                    behind: currentBranchDivergence?.behind || 0
+                  }}
+                  refType={refType}
+                />
+                <Spacer size={5} />
+              </>
+            )}
 
-              2. Frontend needs to:
-                - Fetch recent pushes data from the API
-                - Filter pushes to show only where:
-                  * Current user is the one who made the push
-                  * Push was made less than 24h ago
-                  * No PR has been created from this branch yet
-                - Format timestamps using <TimeAgoCard />
-                - Remove mock data below
-
-                Example:
-                {selectedBranchTag.name !== repository?.default_branch && (
-                  <>
-                    <Spacer size={6} />
-                  </>
-                )}
-            */}
-            <ListActions.Root>
+            <ListActions.Root className="flex-wrap gap-y-2">
               <ListActions.Left>
-                <ButtonLayout>
-                  {branchSelectorRenderer}
-                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} searchInputSize="md" />
+                <ButtonLayout className="w-full " horizontalAlign="start">
+                  {cloneElement(branchSelectorRenderer, { className: 'w-full max-w-fit' })}
+                  <SearchFiles
+                    navigateToFile={navigateToFile}
+                    filesList={filesList}
+                    searchInputSize="md"
+                    inputContainerClassName="max-w-80 min-w-40 w-full"
+                  />
                 </ButtonLayout>
               </ListActions.Left>
               <ListActions.Right>
@@ -191,8 +192,7 @@ export function RepoSummaryView({
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
-                        <IconV2 name="plus" size="2xs" />
-                        <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create File')}</span>
+                        <span className="truncate">{t('views:repos.create-file', 'Create File')}</span>
                       </Link>
                     </Button>
                   ) : null}
@@ -205,23 +205,6 @@ export function RepoSummaryView({
                 </ButtonLayout>
               </ListActions.Right>
             </ListActions.Root>
-            {selectedBranchOrTag?.name !== repository?.default_branch && (
-              <>
-                <Spacer size={4} />
-                <BranchInfoBar
-                  // useRepoBranchesStore={useRepoBranchesStore}
-                  defaultBranchName={repository?.default_branch}
-                  repoId={repoId}
-                  spaceId={spaceId}
-                  selectedBranchTag={selectedBranchOrTag ?? { name: '', sha: '' }}
-                  currentBranchDivergence={{
-                    ahead: currentBranchDivergence?.ahead || 0,
-                    behind: currentBranchDivergence?.behind || 0
-                  }}
-                  refType={refType}
-                />
-              </>
-            )}
             <Spacer size={5} />
             <Summary
               toCommitDetails={toCommitDetails}
@@ -252,7 +235,7 @@ export function RepoSummaryView({
                 />
               </StackedList.Item>
             </StackedList.Root>
-            <MarkdownViewer source={decodedReadmeContent || ''} withBorderWrapper />
+            <MarkdownViewer source={decodedReadmeContent || ''} withBorder />
           </SandboxLayout.Content>
         </SandboxLayout.Column>
         <SandboxLayout.Column>
@@ -295,7 +278,6 @@ export function RepoSummaryView({
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
-              is_public={repository?.is_public}
             />
             {renderSidebarComponent}
           </SandboxLayout.Content>

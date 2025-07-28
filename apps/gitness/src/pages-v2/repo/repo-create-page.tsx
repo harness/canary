@@ -21,7 +21,7 @@ export const CreateRepo = () => {
 
   const onSubmit = (data: FormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
-      default_branch: 'main',
+      default_branch: data.defaultBranch,
       parent_ref: spaceURL,
       description: data.description,
       git_ignore: data.gitignore,

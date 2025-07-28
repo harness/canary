@@ -70,6 +70,34 @@ export interface PullReqChecksDecisionData {
   checkInfo: CheckInfo
 }
 
+export interface DefaultReviewersApprovalsData {
+  current_count?: number
+  minimum_required_count?: number
+  minimum_required_count_latest?: number
+  principals?: TypesPrincipalInfo[] | PrincipalInfoWithReviewDecision[] | null
+}
+
+/**
+ * Interface for the principal info with review decision
+ */
+export interface PrincipalInfoWithReviewDecision extends TypesPrincipalInfo {
+  review_decision?: string
+  review_sha?: string
+}
+
+/**
+ * Interface for the defaultReviewersData object
+ */
+export interface DefaultReviewersDataProps {
+  defReviewerLatestApprovalRequiredByRule: boolean
+  defReviewerApprovalRequiredByRule: boolean
+  defReviewerApprovedChanges: boolean
+  defReviewerApprovedLatestChanges: boolean
+  changesRequestedByDefaultReviewers?: PrincipalInfoWithReviewDecision[]
+  updatedDefaultApprovals?: DefaultReviewersApprovalsData[]
+  defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
+}
+
 export interface PRPanelData {
   conflictingFiles?: string[]
   allowedMethods?: string[]
@@ -85,7 +113,10 @@ export interface PRPanelData {
   commentsLoading: boolean
   commentsInfoData: CommentsInfoData
   ruleViolationArr?: RuleViolationArr
+  defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
+  mergeBlockedViaRule?: boolean
 }
+
 export interface DiffStatistics {
   additions?: number
   commits?: number
@@ -168,7 +199,7 @@ export interface TypesPrincipalInfo {
   updated?: number
 }
 
-export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned'
+export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned' | 'default' | 'code_owners'
 
 export declare type ReviewerListPullReqOkResponse = TypesPullReqReviewer[]
 export interface TypesPullReqReviewer {
@@ -232,11 +263,14 @@ export type EnumPullReqActivityType =
   | 'reviewer-add'
   | 'label-modify'
   | 'branch-restore'
+  | 'target-branch-change'
 
 export enum ReviewerAddActivity {
   REQUESTED = 'requested',
   ASSIGNED = 'assigned',
-  SELF_ASSIGNED = 'self_assigned'
+  SELF_ASSIGNED = 'self_assigned',
+  DEFAULT = 'default',
+  CODEOWNERS = 'code_owners'
 }
 
 export interface TypesPullReqChecks {
@@ -272,7 +306,7 @@ export interface TypesCheckPayload {
 }
 
 export type EnumCheckPayloadKind = '' | 'markdown' | 'pipeline' | 'raw'
-export type EnumCheckStatus = 'error' | 'failure' | 'pending' | 'running' | 'success' | 'blocked'
+export type EnumCheckStatus = 'error' | 'failure' | 'pending' | 'running' | 'success' | 'blocked' | 'failure_ignored'
 
 export interface TypesViolation {
   code?: string
@@ -307,7 +341,9 @@ export enum ExecutionState {
   KILLED = 'killed',
   BLOCKED = 'blocked',
   WAITING_ON_DEPENDENCIES = 'waiting_on_dependencies',
-  UNKNOWN = 'unknown'
+  UNKNOWN = 'unknown',
+  FAILURE_IGNORED = 'failure_ignored',
+  IGNORE_FAILED = 'ignorefailed'
 }
 
 export interface DiffViewerExchangeState {
@@ -511,13 +547,19 @@ export type LatestCodeOwnerApprovalArrType = {
 export interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }
   minApproval?: number
-  codeOwners?: TypesCodeOwnerEvaluation | null
+  codeOwnersData: CodeOwnersData
   minReqLatestApproval?: number
   approvedEvaluations?: TypesPullReqReviewer[]
   changeReqEvaluations?: TypesPullReqReviewer[]
   latestApprovalArr?: TypesPullReqReviewer[]
   reqNoChangeReq?: boolean
   changeReqReviewer?: string
+  accordionValues: string[]
+  defaultReviewersData?: DefaultReviewersDataProps
+}
+
+export interface CodeOwnersData {
+  codeOwners?: TypesCodeOwnerEvaluation | null
   codeOwnerChangeReqEntries?: (
     | {
         owner_evaluations: TypesOwnerEvaluation[]
@@ -539,8 +581,15 @@ export interface PullRequestChangesSectionProps {
       }
     | undefined
   )[]
-  latestCodeOwnerApprovalArr?: LatestCodeOwnerApprovalArrType[]
+  latestCodeOwnerApprovalArr?: (
+    | {
+        entryEvaluation: TypesOwnerEvaluation[]
+      }
+    | undefined
+  )[]
 }
+
+export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval'> & CodeOwnersData
 
 export const PullRequestFilterOption = {
   ...PullRequestState,
@@ -599,11 +648,6 @@ export enum LabelActivity {
   UN_ASSIGN = 'unassign',
   RE_ASSIGN = 'reassign'
 }
-export enum MergeStrategy {
-  MERGE = 'merge',
-  SQUASH = 'squash',
-  REBASE = 'rebase'
-}
 
 export interface DiffHeaderProps {
   text: string
@@ -619,4 +663,25 @@ export interface DiffHeaderProps {
   fileViews?: Map<string, string>
   checksumAfter?: string
   diffData?: DiffFileEntry
+}
+
+export enum MergeStrategy {
+  MERGE = 'merge',
+  SQUASH = 'squash',
+  REBASE = 'rebase',
+  FAST_FORWARD = 'fast-forward'
+}
+
+export enum MergeMethodDisplay {
+  MERGED = 'merged',
+  SQUASHED = 'squashed',
+  REBASED = 'rebased',
+  FAST_FORWARDED = 'fast-forwarded'
+}
+
+export const mergeMethodMapping: Record<MergeStrategy, MergeMethodDisplay> = {
+  [MergeStrategy.MERGE]: MergeMethodDisplay.MERGED,
+  [MergeStrategy.SQUASH]: MergeMethodDisplay.SQUASHED,
+  [MergeStrategy.REBASE]: MergeMethodDisplay.REBASED,
+  [MergeStrategy.FAST_FORWARD]: MergeMethodDisplay.FAST_FORWARDED
 }

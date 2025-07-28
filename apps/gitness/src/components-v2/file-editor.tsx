@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { EditViewTypeValue, FileEditorControlBar } from '@harnessio/ui/components'
+import { EditViewTypeValue, FileEditorControlBar, getIsMarkdown, MarkdownViewer } from '@harnessio/ui/components'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -59,12 +59,18 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   )
   const pathToSplit = useMemo(() => {
     if (isNew) {
-      return parentPath
+      // When in new file mode, use fullResourcePath to ensure we maintain the directory structure
+      if (fullResourcePath && parentPath !== fullResourcePath) {
+        // Update parentPath to match fullResourcePath when in new file mode
+        setParentPath(fullResourcePath)
+      }
+      return fullResourcePath || parentPath
     } else if (parentPath?.length && fileName.length) {
       return [parentPath, fileName].join(FILE_SEPERATOR)
     }
     return parentPath?.length ? parentPath : fileName
-  }, [isNew, parentPath, fileName])
+  }, [isNew, parentPath, fileName, fullResourcePath, setParentPath])
+
   const pathParts = useMemo(
     () => [
       {
@@ -75,6 +81,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     ],
     [pathToSplit, repoId, repoPath]
   )
+
   const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
   const commitAction = useMemo(
     () => (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
@@ -157,6 +164,47 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
+  const renderFileView = () => {
+    switch (view) {
+      case 'preview':
+        if (getIsMarkdown(language)) {
+          return <MarkdownViewer source={contentRevision.code} withBorder className="max-h-screen overflow-auto" />
+        }
+
+        return (
+          <CodeDiffEditor
+            height="100%"
+            language={language}
+            original={originalFileContent}
+            modified={contentRevision.code}
+            themeConfig={themeConfig}
+            theme={monacoTheme}
+            options={{
+              readOnly: true
+            }}
+          />
+        )
+
+      case 'edit':
+        return (
+          <CodeEditor
+            height="100%"
+            language={language}
+            codeRevision={contentRevision}
+            onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
+            themeConfig={themeConfig}
+            theme={monacoTheme}
+            options={{
+              readOnly: false
+            }}
+          />
+        )
+
+      default:
+        return null
+    }
+  }
+
   return (
     <>
       <GitCommitDialog
@@ -195,31 +243,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
       <FileEditorControlBar view={view} onChangeView={onChangeView} />
 
-      {view === 'edit' ? (
-        <CodeEditor
-          height="100%"
-          language={language}
-          codeRevision={contentRevision}
-          onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
-            readOnly: false
-          }}
-        />
-      ) : (
-        <CodeDiffEditor
-          height="100%"
-          language={language}
-          original={originalFileContent}
-          modified={contentRevision.code}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
-            readOnly: true
-          }}
-        />
-      )}
+      {renderFileView()}
     </>
   )
 }

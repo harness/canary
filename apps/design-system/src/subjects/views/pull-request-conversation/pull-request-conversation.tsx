@@ -61,6 +61,11 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
 
   const comment = ''
 
+  const codeOwnersData = {
+    codeOwners,
+    codeOwnerPendingEntries
+  }
+
   const processReviewDecision = (): EnumPullReqReviewDecision | PullReqReviewDecision.outdated => {
     // Example implementation
     return 'approved'
@@ -108,15 +113,15 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           // TODO: add dry merge check into pr context
           approvedEvaluations,
           changeReqEvaluations,
-          codeOwners,
+          codeOwnersData,
           latestApprovalArr,
           changeReqReviewer,
-          codeOwnerPendingEntries,
           actions: mockPullRequestActions,
           checkboxBypass: false,
           setCheckboxBypass: noop,
           onRestoreBranch: noop,
           onDeleteBranch: noop,
+          onRevertPR: noop,
           showDeleteBranchButton,
           showRestoreBranchButton,
           headerMsg: errorMsg,

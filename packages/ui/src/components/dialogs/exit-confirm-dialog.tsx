@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, Dialog } from '@/components'
+import { Alert, Button, ButtonLayout, Dialog } from '@/components'
 
 export interface ExitConfirmOptions {
   title?: string
@@ -9,6 +9,7 @@ export interface ExitConfirmOptions {
   cancelText?: string
   onConfirm: () => void
   onCancel?: () => void
+  error?: string
 }
 
 export type ExitConfirmDialogProps = ExitConfirmOptions & { open: boolean }
@@ -20,7 +21,8 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
   title = 'You have unsaved changes',
   subtitle = 'Are you sure you want to leave this page without saving?',
   confirmText = 'Leave',
-  cancelText = 'Stay'
+  cancelText = 'Stay',
+  error
 }) => {
   return (
     <Dialog.Root
@@ -39,6 +41,11 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
             <Dialog.Close onClick={() => onCancel?.()}>{cancelText}</Dialog.Close>
             <Button onClick={onConfirm}>{confirmText}</Button>
           </ButtonLayout>
+          {error && (
+            <Alert.Root>
+              <Alert.Title>{error}</Alert.Title>
+            </Alert.Root>
+          )}
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>

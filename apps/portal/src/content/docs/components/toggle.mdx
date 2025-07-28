@@ -64,40 +64,40 @@ The `Toggle` component accepts a `variant` prop to control its applyed styles. S
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" align="center">
+  <Layout.Vertical gap="xl" align="center">
     <Text variant="heading-subsection" align="center">variant / selectedVariant</Text>
 
-    <Layout.Horizontal spacing="large">
-      <Layout.Vertical spacing="small" align="center">
+    <Layout.Horizontal gap="xl">
+      <Layout.Vertical gap="xs" align="center">
         <Text className="w-[200px]" variant="body-strong" align="center">outline / primary</Text>
         <Toggle text="Toggle" />
       </Layout.Vertical>
 
-      <Layout.Vertical spacing="small" align="center">
+      <Layout.Vertical gap="xs" align="center">
         <Text className="w-[200px]" variant="body-strong" align="center">outline / secondary</Text>
         <Toggle text="Toggle" selectedVariant="secondary" />
       </Layout.Vertical>
     </Layout.Horizontal>
 
-    <Layout.Horizontal spacing="large">
-      <Layout.Vertical spacing="small" align="center">
+    <Layout.Horizontal gap="xl">
+      <Layout.Vertical gap="xs" align="center">
         <Text className="w-[200px]" variant="body-strong" align="center">ghost / primary</Text>
         <Toggle text="Toggle" variant="ghost" />
       </Layout.Vertical>
 
-      <Layout.Vertical spacing="small" align="center">
+      <Layout.Vertical gap="xs" align="center">
         <Text className="w-[200px]" variant="body-strong" align="center">ghost / secondary</Text>
         <Toggle text="Toggle" variant="ghost" selectedVariant="secondary" />
       </Layout.Vertical>
     </Layout.Horizontal>
 
-    <Layout.Horizontal spacing="large">
-      <Layout.Vertical spacing="small" align="center">
+    <Layout.Horizontal gap="xl">
+      <Layout.Vertical gap="xs" align="center">
         <Text className="w-[200px]" variant="body-strong" align="center">transparent / primary</Text>
         <Toggle text="Toggle" variant="transparent" />
       </Layout.Vertical>
 
-      <Layout.Vertical spacing="small" align="center">
+      <Layout.Vertical gap="xs" align="center">
         <Text className="w-[200px]" variant="body-strong" align="center">transparent / secondary</Text>
         <Toggle text="Toggle" variant="transparent" selectedVariant="secondary" />
       </Layout.Vertical>

@@ -14,7 +14,7 @@ export const ProjectSettingsTabNav: FC<ProjectSettingsTabNavProps> = ({ isMFE })
   return (
     <SandboxLayout.SubHeader>
       <Tabs.NavRoot>
-        <Tabs.List className="border-b border-cn-borders-3 px-6">
+        <Tabs.List className="px-6">
           {!isMFE ? (
             <>
               <Tabs.Trigger value="general">{t('views:projectSettings.tabs.general', 'General')}</Tabs.Trigger>

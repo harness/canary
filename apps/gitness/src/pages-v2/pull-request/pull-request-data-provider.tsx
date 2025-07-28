@@ -16,12 +16,12 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
-import { usePRChecksDecision } from '../../pages/pull-request/hooks/usePRChecksDecision'
-import { extractSpecificViolations, getCommentsInfoData } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { PR_COMMENTS_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
+import { usePRChecksDecision } from './hooks/usePRChecksDecision'
+import { extractSpecificViolations, getCommentsInfoData } from './pull-request-utils'
+import { PR_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
@@ -77,6 +77,7 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     repo_ref: repoRef
   })
   const pullReqChecksDecision = usePRChecksDecision({ repoMetadata, pullReqMetadata: pullReqData })
+
   const handleEvent = useCallback(
     (data: TypesPullReq) => {
       if (data && String(data?.number) === pullRequestId) {
@@ -115,7 +116,8 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     const hasChanges =
       !isEqual(store.pullReqMetadata, pullReqData) ||
       !isEqual(store.pullReqCommits, commits) ||
-      !isEqual(store.pullReqActivities, activities)
+      !isEqual(store.pullReqActivities, activities) ||
+      !isEqual(store.pullReqChecksDecision, pullReqChecksDecision)
 
     if (hasChanges) {
       setResolvedCommentArr(undefined)
@@ -210,7 +212,7 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
   useEffect(() => {
     const ruleViolationArr = prPanelData.ruleViolationArr
 
-    const requireResCommentRule = extractSpecificViolations(ruleViolationArr, PR_COMMENTS_RULES.REQUIRE_RESOLVE_ALL)
+    const requireResCommentRule = extractSpecificViolations(ruleViolationArr, PR_RULES.REQUIRE_RESOLVE_ALL)
     setResolvedCommentArr(requireResCommentRule?.[0])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prPanelData.ruleViolationArr, pullReqMetadata, repoMetadata, prPanelData.ruleViolation])

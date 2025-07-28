@@ -2,6 +2,8 @@ import { MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Ta
 import { useRouterContext, useTranslation } from '@/context'
 import { WebhookType } from '@/views'
 
+import { formatWebhookTriggers } from '../../utils'
+
 export interface RepoWebhookListProps {
   webhooks: WebhookType[]
   error?: string
@@ -94,8 +96,8 @@ export function RepoWebhookList({
       <Table.Root>
         <Table.Header>
           <Table.Row>
-            <Table.Head className="w-1/2">Name</Table.Head>
-            <Table.Head className="w-1/2">Execution</Table.Head>
+            <Table.Head className="w-2/3">Name</Table.Head>
+            <Table.Head className="w-1/3">Execution</Table.Head>
             <Table.Head></Table.Head>
           </Table.Row>
         </Table.Header>
@@ -105,7 +107,7 @@ export function RepoWebhookList({
               to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
-              <Table.Cell className="cursor-pointer">
+              <Table.Cell className="cursor-pointer w-1/2 pr-4 max-w-0">
                 <Switch
                   checked={webhook.enabled}
                   onClick={e => {
@@ -114,13 +116,8 @@ export function RepoWebhookList({
                     handleEnableWebhook(webhook.id, !webhook.enabled)
                   }}
                   label={webhook.display_name}
-                  caption={
-                    webhook?.triggers?.length
-                      ? webhook.triggers
-                          .map(trigger => trigger.replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))
-                          .join(', ')
-                      : 'All Events'
-                  }
+                  caption={formatWebhookTriggers(webhook?.triggers)}
+                  captionTooltip={formatWebhookTriggers(webhook?.triggers)}
                 />
               </Table.Cell>
               <Table.Cell className="cursor-pointer content-center">

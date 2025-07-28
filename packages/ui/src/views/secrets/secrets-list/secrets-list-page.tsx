@@ -60,7 +60,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
-        <Text as="h1" variant="heading-section" color="foreground-1">
+        <Text as="h1" variant="heading-section">
           Secrets
         </Text>
         <Spacer size={6} />

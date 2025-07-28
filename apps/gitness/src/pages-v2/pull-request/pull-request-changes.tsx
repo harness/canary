@@ -33,14 +33,13 @@ import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
-import { changedFileId, DIFF2HTML_CONFIG } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
+import { parseSpecificDiff } from './diff-utils'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
-import { normalizeGitFilePath } from './pull-request-utils'
+import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
+import { PullReqReviewDecision } from './types'
 
 export const changesInfoAtom = atom<{ path?: string; raw?: string; fileViews?: Map<string, string> }>({})
 

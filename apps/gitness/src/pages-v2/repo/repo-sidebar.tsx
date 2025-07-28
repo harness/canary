@@ -13,7 +13,7 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarVi
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
-import Explorer from '../../components/FileExplorer'
+import Explorer from '../../components-v2/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
@@ -180,7 +180,7 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
+      <div className="grid grow" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
         {!repoData?.is_empty && (
           <RepoSidebarView
             navigateToNewFile={navigateToNewFile}

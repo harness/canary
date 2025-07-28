@@ -12,12 +12,12 @@ import {
 } from '@harnessio/code-service-client'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
-import Explorer from '../../components/FileExplorer'
+import Explorer from '../../components-v2/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
-import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
+import { parseSpecificDiff } from '../pull-request/diff-utils'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-request/pull-request-utils'
 import { useCommitDetailsStore } from './stores/commit-details-store'
 
@@ -47,7 +47,8 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
 
   const { data: currentCommitDiffData } = useGetCommitDiffQuery({
     repo_ref: repoRef,
-    commit_sha: commitSHA || ''
+    commit_sha: commitSHA || '',
+    queryParams: {}
   })
 
   useEffect(() => {

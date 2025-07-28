@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, MultiSelectOption, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,13 +31,14 @@ interface RepoBranchSettingsRulesPageProps {
   useBranchRulesStore: () => IBranchRulesStore
   handleCheckboxChange: (id: string, checked: boolean) => void
   handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (id: string, selectedOptions: string[]) => void
+  handleSelectChangeForRule: (id: string, selectedOptions: MultiSelectOption[]) => void
   handleInputChange: (id: string, input: string) => void
   handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string
   isSubmitSuccess?: boolean
   projectScope?: boolean
+  bypassListPlaceholder?: string
 }
 
 export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> = ({
@@ -54,7 +55,8 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   setPrincipalsSearchQuery,
   principalsSearchQuery,
   isSubmitSuccess,
-  projectScope = false
+  projectScope = false,
+  bypassListPlaceholder
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
@@ -124,8 +126,10 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   return (
     <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
-      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
-        {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
+      <Text as="h1" variant="heading-section" className="mb-10">
+        {presetRuleData
+          ? t('views:repos.updateBranchRule', 'Update branch rule')
+          : t('views:repos.CreateRule', 'Create a branch rule')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
@@ -151,10 +155,14 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             bypassOptions={principals}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
+            bypassListPlaceholder={bypassListPlaceholder}
           />
 
           <BranchSettingsRuleListField
             rules={rules}
+            defaultReviewersOptions={principals?.filter(principal => principal.type === 'user')}
+            setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+            principalsSearchQuery={principalsSearchQuery}
             recentStatusChecks={recentStatusChecks}
             handleCheckboxChange={handleCheckboxChange}
             handleSubmenuChange={handleSubmenuChange}
@@ -174,7 +182,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
                     ? t('views:repos.updatingRule', 'Updating rule...')
                     : t('views:repos.creatingRuleButton', 'Creating rule...')}
               </Button>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" asChild>
                 <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
               </Button>
             </ButtonLayout>

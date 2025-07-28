@@ -5,22 +5,26 @@ import {
   ListPullReqQueryQueryParams,
   useGetPrincipalQuery,
   useListPrincipalsQuery,
-  useListPullReqQuery
+  useListPullReqQuery,
+  usePrCandidatesQuery
 } from '@harnessio/code-service-client'
 import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
+import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { useLabelsStore } from '../project/stores/labels-store'
 import { usePopulateLabelStore } from '../repo/labels/hooks/use-populate-label-store'
+import { buildPRFilters } from './pull-request-utils'
 import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } = usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
+  const { repoData } = useGitRef()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
@@ -70,6 +74,8 @@ export default function PullRequestListPage() {
     }
   )
 
+  const { data: { body: prCandidateBranches } = {} } = usePrCandidatesQuery({ repo_ref: repoRef, queryParams: {} })
+
   const onLabelClick = (labelId: number) => {
     // Update filter values with the label ID for API call
     setFilterValues(prevFilters => {
@@ -104,8 +110,9 @@ export default function PullRequestListPage() {
 
   useEffect(() => {
     if (pullRequestData) {
-      setPullRequests(pullRequestData, headers)
-      setOpenClosePullRequests(pullRequestData)
+      const validPullRequests = Array.isArray(pullRequestData) ? pullRequestData.filter(pr => pr !== null) : []
+      setPullRequests(validPullRequests, headers)
+      setOpenClosePullRequests(validPullRequests)
     }
   }, [pullRequestData, headers, setPullRequests])
 
@@ -126,10 +133,12 @@ export default function PullRequestListPage() {
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}
+      prCandidateBranches={prCandidateBranches}
       principalsSearchQuery={principalsSearchQuery}
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
       defaultSelectedAuthor={defaultSelectedAuthor}
+      repository={repoData}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
@@ -138,38 +147,11 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={(filterData: PRListFilters) => {
-        setFilterValues(
-          Object.entries(filterData).reduce<
-            Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
-          >((acc, [key, value]) => {
-            if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-              acc[key] = value.getTime().toString()
-            }
-            if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-              acc[key] = value.value
-            }
-            if (key === 'label_by') {
-              const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-              const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-                if (value === true) {
-                  labelAcc.labelId.push(labelKey)
-                } else if (value) {
-                  labelAcc.valueId.push(value)
-                }
-                return labelAcc
-              }, defaultLabel)
-
-              acc['label_id'] = labelId.map(Number)
-              acc['value_id'] = valueId.map(Number)
-            }
-            return acc
-          }, {})
-        )
-      }}
+      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
       searchQuery={query}
       setSearchQuery={setQuery}
       onLabelClick={onLabelClick}
+      toPullRequest={({ prNumber }) => prNumber.toString()}
     />
   )
 }

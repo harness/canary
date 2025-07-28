@@ -6,18 +6,24 @@ import { searchResultsStore } from './search-results-store'
 
 export const SearchPagePreview = () => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
-  const [regex, setRegex] = useState(false)
+  const [regexEnabled, setRegexEnabled] = useState(false)
+  const [semanticEnabled, setSemanticEnabled] = useState(false)
   const useSearchResultsStore = useCallback(() => searchResultsStore, [])
 
   return (
     <SearchPageView
       isLoading={false}
       searchQuery={searchQuery}
-      regex={regex}
-      setRegex={setRegex}
+      regexEnabled={regexEnabled}
+      setRegexEnabled={setRegexEnabled}
+      semanticEnabled={semanticEnabled}
+      setSemanticEnabled={setSemanticEnabled}
       setSearchQuery={setSearchQuery}
       useSearchResultsStore={useSearchResultsStore}
       toRepoFileDetails={() => '#'}
+      onRepoSelect={() => {}}
+      onLanguageSelect={() => {}}
+      onClearFilters={() => {}}
     />
   )
 }

@@ -70,6 +70,8 @@ export interface RepositoryType {
   createdAt: number
   timestamp: string
   importing?: boolean
+  favorite?: boolean
+  path: string
 }
 
 export interface BranchData {

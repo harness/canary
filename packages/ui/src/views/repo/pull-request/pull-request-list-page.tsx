@@ -16,9 +16,11 @@ import { SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+import { isEmpty } from 'lodash-es'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
+import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
@@ -38,14 +40,17 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   onFilterOpen,
   defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
+  prCandidateBranches,
   principalsSearchQuery,
   principalData,
   defaultSelectedAuthor,
   isPrincipalsLoading,
   isLoading,
+  repository,
   searchQuery,
   setSearchQuery,
-  onLabelClick
+  onLabelClick,
+  toPullRequest
 }) => {
   const { Link, useSearchParams } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
@@ -170,14 +175,22 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         <NoData
           imageName="no-data-folder"
           title="No pull requests yet"
-          description={[
-            t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
-            t('views:noData.createNewPullRequest', 'Create a new pull request.')
-          ]}
-          primaryButton={{
-            label: 'Create pull request',
-            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-          }}
+          description={
+            repoId
+              ? [
+                  t('views:noData.noPullRequestsInRepo', `There are no pull requests in this repo yet.`),
+                  t('views:noData.createNewPullRequest', 'Create a new pull request.')
+                ]
+              : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
+          }
+          primaryButton={
+            repoId
+              ? {
+                  label: 'Create pull request',
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
+              : undefined
+          }
         />
       )
     }
@@ -191,6 +204,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         openPRs={openPullReqs}
         headerFilter={headerFilter}
         setHeaderFilter={setHeaderFilter}
+        toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
       />
     )
@@ -232,9 +246,18 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <Text as="h1" variant="heading-section" color="foreground-1" className="mb-6">
+            <Text as="h1" variant="heading-section" className="mb-6">
               Pull Requests
             </Text>
+
+            {!isEmpty(prCandidateBranches) && (
+              <BranchCompareBannerList
+                prCandidateBranches={prCandidateBranches}
+                defaultBranchName={repository?.default_branch || 'main'}
+                repoId={repoId}
+                spaceId={spaceId}
+              />
+            )}
 
             <ListActions.Root>
               <ListActions.Left>
@@ -265,9 +288,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     />
                   )}
                 </PRListFilterHandler.Dropdown>
-                <Button asChild>
-                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
-                </Button>
+                {/**
+                 * Creating a pull request is permitted only when inside a repository.
+                 */}
+                {repoId ? (
+                  <Button asChild>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                  </Button>
+                ) : null}
               </ListActions.Right>
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>

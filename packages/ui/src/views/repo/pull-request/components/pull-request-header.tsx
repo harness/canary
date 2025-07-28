@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Separator, StatusBadge, Tag, TimeAgoCard } from '@/components'
+import { Button, IconV2, StatusBadge, Tag, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+import { BranchSelectorContainerProps } from '@views/repo'
 
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
@@ -25,6 +26,8 @@ interface PullRequestTitleProps {
     description?: string
   }
   updateTitle: (title: string, description: string) => void
+  updateTargetBranch: (branchName: string) => void
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
@@ -44,19 +47,23 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     repoId,
     description
   },
-  updateTitle
+  updateTitle,
+  updateTargetBranch,
+  branchSelectorRenderer
 }) => {
   const { Link } = useRouterContext()
-  const [isEditing, setIsEditing] = useState(false)
 
   const stateObject = getPrState(is_draft, merged, state)
 
   const handleSubmit = useCallback(
-    async (newTitle: string, newDescription: string) => {
+    async (newTitle: string, newDescription: string, newBranch: string) => {
       await updateTitle(newTitle, newDescription)
+      await updateTargetBranch(newBranch)
     },
-    [updateTitle]
+    [updateTitle, updateTargetBranch]
   )
+
+  const [isEditing, setIsEditing] = useState(false)
 
   return (
     <>
@@ -77,10 +84,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             }}
           >
             <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
-          </Button>
-          <Separator orientation="vertical" className="mx-1 h-4 bg-cn-background-0" />
-          <Button variant="link" onClick={() => setIsEditing(true)}>
-            {description ? 'Edit description' : 'Add a description'}
           </Button>
         </div>
 
@@ -115,6 +118,9 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         onSubmit={handleSubmit}
         initialTitle={title || ''}
         initialDescription={description || ''}
+        branchSelectorRenderer={branchSelectorRenderer}
+        sourceBranch={source_branch}
+        targetBranch={target_branch}
       />
     </>
   )

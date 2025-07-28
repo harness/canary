@@ -19,13 +19,18 @@ interface IRepoStore {
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
-
+  verifyCommitterIdentity: boolean
+  gitLfsEnabled: boolean
+  vulnerabilityScanning: 'detect' | 'disabled'
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RepoRuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
+  setGitLfsEnabled: (enabled: boolean) => void
   setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
+  setVerifyCommitterIdentity: (enabled: boolean) => void
+  setVulnerabilityScanning: (enabled: 'detect' | 'disabled') => void
 }
 
 export const useRepoRulesStore = create<IRepoStore>(set => ({
@@ -34,15 +39,18 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     name: '',
     description: '',
     defaultBranch: '',
-    isPublic: false
+    isPublic: false,
+    archived: false
   },
   branches: [],
   presetRuleData: null,
-
+  gitLfsEnabled: false,
   rules: null,
   securityScanning: false,
+  verifyCommitterIdentity: false,
   principals: null,
   recentStatusChecks: null,
+  vulnerabilityScanning: 'disabled',
 
   // Actions
   setRepoData: repoData =>
@@ -51,7 +59,8 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
         name: repoData.identifier || '',
         description: repoData.description || '',
         defaultBranch: repoData.default_branch || '',
-        isPublic: repoData.is_public ?? false
+        isPublic: repoData.is_public ?? false,
+        archived: repoData.archived ?? false
       }
     }),
   setRules: data => {
@@ -60,11 +69,14 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       rulesAppliedCount: getTotalRulesApplied(rule),
       bypassAllowed: rule.definition?.bypass?.repo_owners === true,
       identifier: rule.identifier,
-      state: rule.state ? String(rule.state) : undefined
+      state: rule.state ? String(rule.state) : undefined,
+      type: rule.type as 'branch' | 'tag',
+      scope: rule.scope ?? 0
     }))
     set({ rules: rulesData })
   },
   setSecurityScanning: enabled => set({ securityScanning: enabled }),
+  setGitLfsEnabled: enabled => set({ gitLfsEnabled: enabled }),
   setPresetRuleData: data => {
     if (!data) {
       set({ presetRuleData: null })
@@ -87,5 +99,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       return
     }
     set({ recentStatusChecks: data })
-  }
+  },
+  setVerifyCommitterIdentity: enabled => set({ verifyCommitterIdentity: enabled }),
+  setVulnerabilityScanning: enabled => set({ vulnerabilityScanning: enabled })
 }))

@@ -113,3 +113,11 @@ export interface ILabelsStore {
 
   resetLabelsAndValues: () => void
 }
+
+export interface TypesBranchTable {
+  created?: number
+  created_by?: number
+  name?: string
+  updated?: number
+  updated_by?: number
+}

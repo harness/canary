@@ -1,16 +1,18 @@
 import {
+  Alert,
   Button,
   ButtonLayout,
   ControlGroup,
   CopyButton,
   Fieldset,
   FormSeparator,
-  Input,
   MarkdownViewer,
   NoData,
   Spacer,
-  Text
+  Text,
+  TextInput
 } from '@/components'
+import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 interface RepoEmptyViewProps {
@@ -19,6 +21,7 @@ interface RepoEmptyViewProps {
   httpUrl: string
   sshUrl: string
   gitRef: string
+  tokenGenerationError?: string
   handleCreateToken: () => void
   navigateToProfileKeys?: () => void
 }
@@ -29,9 +32,11 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   httpUrl,
   sshUrl,
   gitRef,
+  tokenGenerationError,
   handleCreateToken,
   navigateToProfileKeys
 }) => {
+  const { t } = useTranslation()
   const getInitialCommitMarkdown = () => {
     return `
 \`\`\`shell
@@ -66,7 +71,7 @@ git push -u origin main
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{
-            label: 'New file',
+            label: t('views:repos.create-file', 'Create File'),
             to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
           }}
           className="min-h-[40vh] py-0"
@@ -78,18 +83,34 @@ git push -u origin main
             Please Generate Git Cradentials if it’s your first time cloning the repository
           </Text>
           <Text variant="heading-base">Git clone URL</Text>
-          <Input label="HTTP" value={httpUrl} readOnly rightElement={<CopyButton name={httpUrl} />} />
-          <Input label="SSH" value={sshUrl} readOnly rightElement={<CopyButton name={sshUrl} />} />
+          <TextInput
+            label="HTTP"
+            value={httpUrl}
+            readOnly
+            suffix={<CopyButton name={httpUrl} buttonVariant="transparent" />}
+          />
+          <TextInput
+            label="SSH"
+            value={sshUrl}
+            readOnly
+            suffix={<CopyButton name={sshUrl} buttonVariant="transparent" />}
+          />
           <ControlGroup>
             <ButtonLayout horizontalAlign="start">
               <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
             </ButtonLayout>
+            {tokenGenerationError && (
+              <Alert.Root theme="danger" className="mt-2">
+                <Alert.Description>{tokenGenerationError}</Alert.Description>
+              </Alert.Root>
+            )}
             <Text className="mt-2">
               You can also manage your git credential{' '}
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                className="cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -98,7 +119,7 @@ git push -u origin main
                   }
                 }}
               >
-                here
+                here.
               </span>
             </Text>
           </ControlGroup>
@@ -114,7 +135,8 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                className="hover:underline cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -124,7 +146,7 @@ git push -u origin main
                 }}
               >
                 create an API token
-              </span>
+              </span>{' '}
               In order to pull from or push into this repository.
             </p>
           </ControlGroup>

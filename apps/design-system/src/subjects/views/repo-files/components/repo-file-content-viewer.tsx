@@ -60,7 +60,7 @@ export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boo
         handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
       />
       {isMarkdown && view === 'preview' ? (
-        <MarkdownViewer source={repoFilesStore.markdownFileContent} withBorderWrapper />
+        <MarkdownViewer source={repoFilesStore.markdownFileContent} withBorder />
       ) : view === 'code' ? (
         <CodeEditor
           language="json"
@@ -86,6 +86,7 @@ export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boo
             defaultTheme: 'dark',
             themes
           }}
+          className={'grow'}
         />
       )}
     </>

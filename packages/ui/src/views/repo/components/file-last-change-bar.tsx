@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, IconV2, StackedList, Text, TimeAgoCard } from '@/components'
+import { Avatar, CommitCopyActions, IconV2, Separator, StackedList, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { LatestFileTypes } from '@/views'
 
@@ -21,9 +21,9 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
 
 const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
-      <span className="h-3 border-l border-cn-borders-2" />
+      <Separator orientation="vertical" className="h-3" />
       <TimeAgoCard
         timestamp={timestamp}
         dateTimeFormatOptions={{ dateStyle: 'medium' }}
@@ -49,11 +49,15 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
 
   return (
     <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>
-      <StackedList.Item disableHover isHeader className="px-3 py-2">
+      <StackedList.Item disableHover isHeader className="gap-4 px-3 py-4">
         {props ? (
           <>
             <StackedList.Field title={<TopTitle {...props} />} />
-            <StackedList.Field right title={<TopDetails toCommitDetails={toCommitDetails} {...props} />} />
+            <StackedList.Field
+              className="flex-none"
+              right
+              title={<TopDetails toCommitDetails={toCommitDetails} {...props} />}
+            />
           </>
         ) : (
           <Text>{t('views:repos.noFile', 'No files available')}</Text>

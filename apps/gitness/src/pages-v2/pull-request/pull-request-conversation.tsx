@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
@@ -25,15 +25,19 @@ import {
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useRestorePullReqSourceBranchMutation,
+  useRevertPullReqOpMutation,
   useReviewerListPullReqQuery,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
+  CodeOwnersData,
+  DefaultReviewersDataProps,
   LatestCodeOwnerApprovalArrType,
   PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
+  PullRequestPanelProps,
   TypesPullReq
 } from '@harnessio/ui/views'
 
@@ -44,7 +48,6 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
-import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
@@ -52,13 +55,16 @@ import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import {
   capitalizeFirstLetter,
   checkIfOutdatedSha,
-  extractInfoForCodeOwnerContent,
+  defaultReviewerResponseWithDecision,
+  extractInfoForPRPanelChanges,
   extractInfoFromRuleViolationArr,
   findChangeReqDecisions,
   findWaitingDecisions,
+  getUnifiedDefaultReviewersState,
   processReviewDecision
 } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
+import { CodeOwnerReqDecision } from './types'
 
 const getMockPullRequestActions = (
   handlePrState: (data: string) => void,
@@ -154,13 +160,15 @@ export default function PullRequestConversationPage() {
   const routes = useRoutes()
   const {
     pullReqMetadata,
+    repoMetadata,
     refetchPullReq,
     refetchActivities,
     setRuleViolationArr,
     prPanelData,
     pullReqChecksDecision,
     updateCommentStatus,
-    dryMerge
+    dryMerge,
+    pullReqCommits
   } = usePullRequestProviderStore(state => ({
     dryMerge: state.dryMerge,
     pullReqMetadata: state.pullReqMetadata,
@@ -169,7 +177,9 @@ export default function PullRequestConversationPage() {
     setRuleViolationArr: state.setRuleViolationArr,
     prPanelData: state.prPanelData,
     pullReqChecksDecision: state.pullReqChecksDecision,
-    updateCommentStatus: state.updateCommentStatus
+    updateCommentStatus: state.updateCommentStatus,
+    pullReqCommits: state.pullReqCommits,
+    repoMetadata: state.repoMetadata
   }))
 
   const { currentUser: currentUserData } = useAppContext()
@@ -198,6 +208,8 @@ export default function PullRequestConversationPage() {
   const prId = (pullRequestId && Number(pullRequestId)) || -1
 
   const filtersData = usePrFilters()
+
+  const navigate = useNavigate()
 
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
@@ -274,6 +286,40 @@ export default function PullRequestConversationPage() {
     queryParams: { dry_run_rules: true }
   })
 
+  const { mutateAsync: revertPR } = useRevertPullReqOpMutation(
+    {
+      repo_ref: repoRef,
+      pullreq_number: prId
+    },
+    {
+      onSuccess: res => {
+        navigate(
+          routes.toPullRequestCompare({
+            spaceId,
+            repoId,
+            diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${res.body.branch}`
+          })
+        )
+      },
+      onError: error => {
+        const revertBranchExistsRegex = /Branch\s+"([^"]+)"\s+already exists\./
+        const match = error.message?.match(revertBranchExistsRegex)
+        if (match) {
+          const branchName = match[1]
+          navigate(
+            routes.toPullRequestCompare({
+              spaceId,
+              repoId,
+              diffRefs: `${pullReqMetadata?.target_branch || repoMetadata?.default_branch}...${branchName}`
+            })
+          )
+        } else {
+          setErrorMsg(error.message || 'An error occurred while reverting the pull request.')
+        }
+      }
+    }
+  )
+
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
 
   const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
@@ -325,11 +371,9 @@ export default function PullRequestConversationPage() {
       })
   }, [deleteBranch, repoRef, prId, refetchBranch, refetchActivities])
 
-  // useEffect(() => {
-  //   if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
-  //     setShowDeleteBranchButton(true)
-  //   }
-  // }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
+  const onRevertPR = () => {
+    revertPR({ body: {} }).catch(error => setErrorMsg(error.message))
+  }
 
   useEffect(() => {
     if (sourceBranch && !branchError && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
@@ -410,35 +454,42 @@ export default function PullRequestConversationPage() {
     }
   }, [reviewers, pullReqMetadata?.source_sha])
 
-  const { codeOwnerChangeReqEntries, codeOwnerPendingEntries, codeOwnerApprovalEntries, latestCodeOwnerApprovalArr } =
-    useMemo(() => {
-      const data = codeOwners?.evaluation_entries
-      const codeOwnerApprovalEntries = findChangeReqDecisions(data, CodeOwnerReqDecision.APPROVED)
+  const codeOwnersData: CodeOwnersData = useMemo(() => {
+    const data = codeOwners?.evaluation_entries
+    const codeOwnerApprovalEntries = findChangeReqDecisions(data, CodeOwnerReqDecision.APPROVED)
 
-      // TODO: This code was written by @Lee. It needs to be refactored.
-      const latestCodeOwnerApprovalArr = codeOwnerApprovalEntries?.reduce<LatestCodeOwnerApprovalArrType[]>(
-        (acc, entry) => {
-          // Filter the owner_evaluations for 'changereq' decisions
-          const entryEvaluation = entry?.owner_evaluations.filter(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (evaluation: any) => !checkIfOutdatedSha(evaluation?.review_sha, pullReqMetadata?.source_sha)
-          )
+    // TODO: This code was written by @Lee. It needs to be refactored.
+    const latestCodeOwnerApprovalArr = codeOwnerApprovalEntries?.reduce<LatestCodeOwnerApprovalArrType[]>(
+      (acc, entry) => {
+        // Filter the owner_evaluations for 'changereq' decisions
+        const entryEvaluation = entry?.owner_evaluations.filter(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (evaluation: any) => !checkIfOutdatedSha(evaluation?.review_sha, pullReqMetadata?.source_sha)
+        )
 
-          // If there are any 'changereq' decisions, return the entry along with them
-          if (entryEvaluation && !!entryEvaluation?.length) acc.push({ entryEvaluation })
+        // If there are any 'changereq' decisions, return the entry along with them
+        if (entryEvaluation && !!entryEvaluation?.length) acc.push({ entryEvaluation })
 
-          return acc
-        },
-        []
-      )
+        return acc
+      },
+      []
+    )
 
-      return {
-        codeOwnerChangeReqEntries: findChangeReqDecisions(data, CodeOwnerReqDecision.CHANGEREQ),
-        codeOwnerPendingEntries: findWaitingDecisions(data),
-        codeOwnerApprovalEntries,
-        latestCodeOwnerApprovalArr
-      }
-    }, [codeOwners?.evaluation_entries, pullReqMetadata?.source_sha])
+    return {
+      codeOwners: codeOwners,
+      codeOwnerChangeReqEntries: findChangeReqDecisions(data, CodeOwnerReqDecision.CHANGEREQ),
+      codeOwnerPendingEntries: findWaitingDecisions(data),
+      codeOwnerApprovalEntries,
+      latestCodeOwnerApprovalArr,
+      reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
+      reqCodeOwnerLatestApproval: prPanelData?.reqCodeOwnerLatestApproval
+    }
+  }, [
+    codeOwners,
+    pullReqMetadata?.source_sha,
+    prPanelData?.reqCodeOwnerApproval,
+    prPanelData?.reqCodeOwnerLatestApproval
+  ])
 
   useEffect(() => {
     refetchCodeOwners()
@@ -463,36 +514,42 @@ export default function PullRequestConversationPage() {
     }
   }, [commentId, isScrolledToComment, prPanelData.PRStateLoading, activityData])
 
+  const defaultReviewersData: DefaultReviewersDataProps = useMemo(() => {
+    const updatedDefaultApprovals = reviewers
+      ? defaultReviewerResponseWithDecision(reviewers, prPanelData?.defaultReviewersApprovals)
+      : prPanelData?.defaultReviewersApprovals
+
+    return {
+      ...getUnifiedDefaultReviewersState(updatedDefaultApprovals),
+      updatedDefaultApprovals,
+      defaultReviewersApprovals: prPanelData?.defaultReviewersApprovals
+    }
+  }, [reviewers, prPanelData?.defaultReviewersApprovals])
+
   const changesInfo = useMemo(() => {
-    return extractInfoForCodeOwnerContent({
+    return extractInfoForPRPanelChanges({
       approvedEvaluations,
       reqNoChangeReq: prPanelData?.atLeastOneReviewerRule,
-      reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
       minApproval: prPanelData?.minApproval,
-      reqCodeOwnerLatestApproval: prPanelData?.reqCodeOwnerLatestApproval,
       minReqLatestApproval: prPanelData?.minReqLatestApproval,
-      codeOwnerChangeReqEntries,
-      codeOwnerPendingEntries,
-      latestCodeOwnerApprovalArr,
       latestApprovalArr,
-      codeOwnerApprovalEntries,
       changeReqReviewer,
-      changeReqEvaluations
+      changeReqEvaluations,
+      codeOwnersData,
+      defaultReviewersData,
+      mergeBlockedViaRule: prPanelData?.mergeBlockedViaRule
     })
   }, [
     prPanelData?.atLeastOneReviewerRule,
-    prPanelData?.reqCodeOwnerApproval,
     prPanelData?.minApproval,
-    prPanelData?.reqCodeOwnerLatestApproval,
     prPanelData?.minReqLatestApproval,
+    prPanelData?.mergeBlockedViaRule,
     approvedEvaluations,
-    codeOwnerChangeReqEntries,
-    codeOwnerPendingEntries,
-    latestCodeOwnerApprovalArr,
     latestApprovalArr,
-    codeOwnerApprovalEntries,
     changeReqReviewer,
-    changeReqEvaluations
+    changeReqEvaluations,
+    codeOwnersData,
+    defaultReviewersData
   ])
 
   useEffect(() => {
@@ -545,8 +602,14 @@ export default function PullRequestConversationPage() {
         method: method,
         source_sha: pullReqMetadata?.source_sha,
         bypass_rules: checkboxBypass,
-        dry_run: false
-        // message: data.commitMessage
+        dry_run: false,
+        message:
+          method === 'squash'
+            ? pullReqCommits?.commits
+                ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
+                .join('\n\n')
+                ?.slice(0, 1000)
+            : ''
       }
       mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
         .then(_res => {
@@ -565,7 +628,7 @@ export default function PullRequestConversationPage() {
       //todo: add catch to show errors
       // .catch(exception => showError(getErrorMessage(exception)))
     },
-    [pullReqMetadata?.source_sha, checkboxBypass, repoRef, prId, handleRefetchData, setRuleViolationArr]
+    [pullReqMetadata?.source_sha, checkboxBypass, repoRef, prId, handleRefetchData, setRuleViolationArr, pullReqCommits]
   )
 
   const handlePrState = useCallback(
@@ -691,7 +754,7 @@ export default function PullRequestConversationPage() {
   /**
    * Memoize panelProps
    */
-  const panelProps = useMemo(() => {
+  const panelProps: PullRequestPanelProps = useMemo(() => {
     return {
       handleRebaseBranch,
       handlePrState,
@@ -700,13 +763,13 @@ export default function PullRequestConversationPage() {
         content: changesInfo.statusMessage,
         status: changesInfo.statusIcon
       },
+      checks: pullReqChecksDecision?.data?.checks,
       checksInfo: {
         header: pullReqChecksDecision.checkInfo.title,
         content: pullReqChecksDecision.summaryText,
         status: pullReqChecksDecision?.checkInfo.status as EnumCheckStatus
       },
       prPanelData,
-      checks: pullReqChecksDecision?.data?.checks,
       error: mergeErrorMessage,
       // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this
       pullReqMetadata,
@@ -716,15 +779,14 @@ export default function PullRequestConversationPage() {
       codeOwners,
       latestApprovalArr,
       changeReqReviewer,
-      codeOwnerChangeReqEntries,
-      codeOwnerPendingEntries,
-      codeOwnerApprovalEntries,
-      latestCodeOwnerApprovalArr,
+      defaultReviewersData,
+      codeOwnersData,
       actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData),
       checkboxBypass,
       setCheckboxBypass,
       onRestoreBranch,
       onDeleteBranch,
+      onRevertPR,
       showDeleteBranchButton,
       showRestoreBranchButton,
       headerMsg: errorMsg,
@@ -746,13 +808,12 @@ export default function PullRequestConversationPage() {
     codeOwners,
     latestApprovalArr,
     changeReqReviewer,
-    codeOwnerChangeReqEntries,
-    codeOwnerPendingEntries,
-    codeOwnerApprovalEntries,
-    latestCodeOwnerApprovalArr,
+    defaultReviewersData,
+    codeOwnersData,
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
+    onRevertPR,
     showDeleteBranchButton,
     showRestoreBranchButton,
     errorMsg

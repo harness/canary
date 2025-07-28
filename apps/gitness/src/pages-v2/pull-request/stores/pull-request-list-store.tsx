@@ -1,12 +1,16 @@
 import { create } from 'zustand'
 
-import { ListPullReqOkResponse } from '@harnessio/code-service-client'
-import { ColorsEnum, PullRequestType } from '@harnessio/ui/views'
+import { TypesPullReq } from '@harnessio/code-service-client'
+import { ColorsEnum, PullRequest } from '@harnessio/ui/views'
 
 import { PageResponseHeader } from '../../../types'
 
+type PullRequestInterface = TypesPullReq & {
+  repoId?: string
+}
+
 interface PullRequestListStore {
-  pullRequests: PullRequestType[] | null
+  pullRequests: PullRequest[] | null
   labelsQuery: string
   totalItems: number
   pageSize: number
@@ -15,8 +19,8 @@ interface PullRequestListStore {
   page: number
   setPage: (page: number) => void
   setLabelsQuery: (query: string) => void
-  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
-  setOpenClosePullRequests: (data: ListPullReqOkResponse) => void
+  setPullRequests: (data: PullRequestInterface[], headers?: Headers) => void
+  setOpenClosePullRequests: (data: PullRequestInterface[]) => void
 }
 
 export const usePullRequestListStore = create<PullRequestListStore>(set => ({
@@ -31,7 +35,8 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   setPage: page => set({ page }),
 
   setPullRequests: (data, headers) => {
-    const transformedPullRequests: PullRequestType[] = data.map(item => ({
+    const transformedPullRequests: PullRequest[] = data.map(item => ({
+      repoId: item?.repoId || '',
       is_draft: item?.is_draft,
       merged: item?.merged,
       name: item?.title,

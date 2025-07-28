@@ -142,7 +142,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
+      <Text as="h1" variant="heading-section" className="mb-10">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}

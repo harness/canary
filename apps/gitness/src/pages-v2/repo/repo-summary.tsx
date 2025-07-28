@@ -2,16 +2,17 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
-  GitPathDetails,
   OpenapiContentInfo,
   OpenapiGetContentOutput,
   pathDetails,
   RepoPathsDetailsOutput,
+  TypesPathDetails,
   UpdateRepositoryErrorResponse,
   useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
   useGetContentQuery,
   useListPathsQuery,
+  usePrCandidatesQuery,
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
@@ -83,6 +84,8 @@ export default function RepoSummaryPage() {
     useCalculateCommitDivergenceMutation({
       repo_ref: repoRef
     })
+
+  const { data: { body: prCandidateBranches } = {} } = usePrCandidatesQuery({ repo_ref: repoRef, queryParams: {} })
 
   // Navigate to default branch if no branch is selected
   useEffect(() => {
@@ -257,7 +260,7 @@ export default function RepoSummaryPage() {
         if (response?.details && response.details.length) {
           setFiles(
             sortFilesByType(
-              response.details.map((item: GitPathDetails) => ({
+              response.details.map((item: TypesPathDetails) => ({
                 id: item?.path || '',
                 type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
                 name: item?.path || '',
@@ -323,6 +326,7 @@ export default function RepoSummaryPage() {
         loading={isLoading}
         filesList={filesList}
         navigateToFile={navigateToFile}
+        prCandidateBranches={prCandidateBranches}
         repository={repoData}
         handleCreateToken={handleCreateToken}
         repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
@@ -354,7 +358,7 @@ export default function RepoSummaryPage() {
         toRepoCommits={() => toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
-        toRepoPullRequests={() => routes.toPullRequests({ spaceId, repoId })}
+        toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

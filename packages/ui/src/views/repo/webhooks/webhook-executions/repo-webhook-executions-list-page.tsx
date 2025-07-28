@@ -4,7 +4,11 @@ import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Te
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout, WebhookStore } from '@/views'
 
-import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
+import {
+  getBranchAndTagEvents,
+  getPrActivityEvents,
+  getPrEvents
+} from '../webhook-create/components/create-webhook-form-data'
 
 interface RepoWebhookExecutionsPageProps {
   useWebhookStore: () => WebhookStore
@@ -25,13 +29,13 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalItems, pageSize } = useWebhookStore()
   const { navigate } = useRouterContext()
   const events = useMemo(() => {
-    return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
+    return [...getBranchAndTagEvents(t), ...getPrEvents(t), ...getPrActivityEvents(t)]
   }, [t])
 
   return (
     <SandboxLayout.Main className="mx-0">
       <SandboxLayout.Content className="pl-0">
-        <Text as="h1" variant="heading-section" color="foreground-1" className="mb-4">
+        <Text as="h1" variant="heading-section" className="mb-4">
           Order Status Update Webhook
         </Text>
         <Text>
@@ -39,7 +43,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           real-time tracking.
         </Text>
         <FormSeparator className="my-6" />
-        <Text as="h2" variant="heading-subsection" color="foreground-1" className="mb-4">
+        <Text as="h2" variant="heading-subsection" className="mb-4">
           Executions
         </Text>
         {isLoading ? (

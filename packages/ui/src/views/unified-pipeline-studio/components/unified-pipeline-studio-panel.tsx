@@ -12,7 +12,7 @@ export const UnifiedPipelineStudioPanel = ({
   return (
     <Tabs.Root defaultValue="problems" className="h-full">
       <div className="flex flex-row justify-between border-b">
-        <Tabs.List className="ml-4">
+        <Tabs.List className="ml-4 border-none">
           <Tabs.Trigger value="problems">Problems</Tabs.Trigger>
           <Tabs.Trigger value="console">Console</Tabs.Trigger>
         </Tabs.List>

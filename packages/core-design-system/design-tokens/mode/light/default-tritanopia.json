@@ -78,7 +78,7 @@
       "$value": "{chrome.100}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
-    "accent": {
+    "brand": {
       "$type": "color",
       "$value": "{set.brand.solid.bg}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
@@ -1323,6 +1323,12 @@
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       }
     },
+    "input": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.3}"
+      }
+    },
     "link": {
       "text": {
         "$type": "color",
@@ -1478,7 +1484,7 @@
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{border.accent}"
+          "$value": "{border.brand}"
         }
       },
       "selected": {
@@ -1512,6 +1518,10 @@
         "$type": "color",
         "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
         "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
+      },
+      "mask": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)"
       }
     },
     "slider": {
@@ -1912,7 +1922,7 @@
           "y": "0",
           "blur": "0",
           "spread": "2",
-          "color": "{border.accent}",
+          "color": "{border.brand}",
           "type": "dropShadow"
         }
       ],
@@ -2077,11 +2087,30 @@
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pure.white}"
+        "$value": "{chrome.50}"
       },
       "gradient-stop-3": {
         "$type": "color",
         "$value": "{chrome.100}"
+      },
+      "mask": {
+        "from": {
+          "$type": "color",
+          "$value": "{pure.black}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{pure.black}"
+        }
       }
     },
     "pipeline": {

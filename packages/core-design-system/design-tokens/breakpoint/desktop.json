@@ -11,10 +11,18 @@
     "viewportMax": {
       "$type": "number",
       "$value": "1919"
-    },
-    "container": {
+    }
+  },
+  "container": {
+    "spacing-px": {
       "$type": "number",
-      "$value": "{spacing.9}"
+      "$value": "{spacing.8}",
+      "$description": "Horizontal spacing for the page container."
+    },
+    "spacing-py": {
+      "$type": "number",
+      "$value": "{spacing.7}",
+      "$description": "Vertical spacing for the page container."
     }
   },
   "heading": {
@@ -360,6 +368,10 @@
     }
   },
   "layout": {
+    "4xs": {
+      "$type": "number",
+      "$value": "{spacing.half}"
+    },
     "3xs": {
       "$type": "number",
       "$value": "{spacing.1}"
@@ -382,15 +394,23 @@
     },
     "lg": {
       "$type": "number",
-      "$value": "{spacing.6}"
+      "$value": "{spacing.5}"
     },
     "xl": {
       "$type": "number",
-      "$value": "{spacing.8}"
+      "$value": "{spacing.6}"
     },
     "2xl": {
       "$type": "number",
+      "$value": "{spacing.8}"
+    },
+    "3xl": {
+      "$type": "number",
       "$value": "{spacing.10}"
+    },
+    "4xl": {
+      "$type": "number",
+      "$value": "{spacing.20}"
     }
   }
 }

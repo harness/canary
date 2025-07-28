@@ -1,4 +1,8 @@
+import { CheckboxOptions } from '@components/filters'
+import { SortValue } from '@components/sorts'
 import { RepositoryType } from '@views/repo/repo.types'
+
+import { Scope } from '../..'
 
 export interface RepoStore {
   repositories: RepositoryType[] | null
@@ -23,10 +27,27 @@ export interface RoutingProps {
   toImportMultipleRepos: () => string
 }
 
+export interface FavoriteProps {
+  onFavoriteToggle: ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => void
+}
+
+export type RepoListFilters = {
+  favorite?: boolean
+  recursive?: CheckboxOptions
+}
+
+export interface FilterProps {
+  onFilterChange: (filters: RepoListFilters) => void
+}
+
+export interface SortProps {
+  onSortChange: (sortValues: SortValue[]) => void
+}
+
 /**
  * RoutingProps made optional for usage in apps/design-system
  */
-export interface RepoListProps extends Partial<RoutingProps> {
+export interface RepoListPageProps extends Partial<RoutingProps>, FavoriteProps, FilterProps, SortProps {
   useRepoStore: () => RepoStore
   isLoading: boolean
   isError: boolean
@@ -34,4 +55,12 @@ export interface RepoListProps extends Partial<RoutingProps> {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   setQueryPage: (page: number) => void
+  scope: Scope
+}
+
+export enum RepoSortMethod {
+  Identifier = 'identifier',
+  Newest = 'created,desc',
+  Oldest = 'created,asc',
+  LastPush = 'last_git_push'
 }

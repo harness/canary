@@ -17,7 +17,7 @@ interface StepInfoProps {
 const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
-      <Layout.Horizontal gap="xs">
+      <Layout.Horizontal gap="3xs">
         <Text as="h3" variant="body-strong" color="foreground-1" className="flex-none">
           {item.step}
         </Text>
@@ -120,7 +120,7 @@ const PullRequestMergeSection = ({
                 }
                 icon={
                   unchecked ? (
-                    <IconV2 name="clock" className="text-icons-alert" />
+                    <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
                   ) : (
                     <IconV2
                       className={mergeable ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}

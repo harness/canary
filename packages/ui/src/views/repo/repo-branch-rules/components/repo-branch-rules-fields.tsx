@@ -19,8 +19,11 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
-import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { BranchRuleId, FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
+import clsx from 'clsx'
+import { isEmpty } from 'lodash-es'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()
@@ -187,9 +190,14 @@ export const BranchSettingsRuleBypassListField: FC<
     bypassOptions: PrincipalType[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
+    bypassListPlaceholder?: string
   }
-> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+> = ({ bypassOptions, register, errors, setPrincipalsSearchQuery, principalsSearchQuery, bypassListPlaceholder }) => {
   const { t } = useTranslation()
+  const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setPrincipalsSearchQuery,
+    searchValue: principalsSearchQuery || ''
+  })
 
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
@@ -207,9 +215,9 @@ export const BranchSettingsRuleBypassListField: FC<
           label={t('views:repos.bypassList', 'Bypass list')}
           name="bypass"
           options={multiSelectOptions}
-          placeholder={t('views:repos.selectUsers', 'Select users')}
-          searchQuery={principalsSearchQuery}
-          setSearchQuery={setPrincipalsSearchQuery}
+          placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
+          searchQuery={debouncedPrincipalsSearchQuery}
+          setSearchQuery={handleStringSearchChange}
           disallowCreation
           error={errors?.bypass?.message?.toString()}
         />
@@ -231,37 +239,100 @@ export const BranchSettingsRuleBypassListField: FC<
   )
 }
 
+export const BranchSettingsRuleDefaultReviewersField: FC<
+  FieldProps & {
+    rule?: Rule
+    defaultReviewersOptions?: PrincipalType[] | null
+    principalsSearchQuery?: string
+    setPrincipalsSearchQuery?: (val: string) => void
+    handleSelectChangeForRule: (ruleId: string, options: MultiSelectOption[]) => void
+  }
+> = ({ defaultReviewersOptions, rule, setPrincipalsSearchQuery, principalsSearchQuery, handleSelectChangeForRule }) => {
+  const { t } = useTranslation()
+  const { validationMessage, selectOptions } = rule || {}
+  const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setPrincipalsSearchQuery,
+    searchValue: principalsSearchQuery || ''
+  })
+
+  const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
+    return (
+      defaultReviewersOptions?.map(option => ({
+        id: option.id?.toString() || '',
+        key: option.display_name
+      })) || []
+    )
+  }, [defaultReviewersOptions])
+
+  return (
+    <>
+      <MultiSelect
+        value={selectOptions?.map(option => ({
+          id: option.id?.toString() || '',
+          key: option.key
+        }))}
+        placeholder={t('views:repos.selectDefaultReviewers', 'Select default reviewers')}
+        onChange={options => {
+          handleSelectChangeForRule(BranchRuleId.ENABLE_DEFAULT_REVIEWERS, options)
+        }}
+        options={multiSelectOptions}
+        searchQuery={debouncedPrincipalsSearchQuery}
+        setSearchQuery={handleStringSearchChange}
+        disallowCreation
+      />
+      {validationMessage && !isEmpty(validationMessage.message) && (
+        <Message theme={validationMessage.theme} className="mt-2">
+          {validationMessage.theme === MessageTheme.WARNING
+            ? t(`views:repos.${validationMessage.message}`)
+            : validationMessage.message}
+        </Message>
+      )}
+    </>
+  )
+}
+
 export const BranchSettingsRuleListField: FC<{
   rules: Rule[]
   recentStatusChecks?: string[] | null
+  defaultReviewersOptions?: PrincipalType[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
-  handleSelectChangeForRule: (ruleId: string, checks: string[]) => void
+  handleSelectChangeForRule: (ruleId: string, checks: MultiSelectOption[]) => void
   handleInputChange: (ruleId: string, value: string) => void
+  setPrincipalsSearchQuery?: (val: string) => void
+  principalsSearchQuery?: string
 }> = ({
   rules,
   recentStatusChecks,
+  defaultReviewersOptions,
   handleCheckboxChange,
   handleSubmenuChange,
   handleSelectChangeForRule,
-  handleInputChange
+  handleInputChange,
+  setPrincipalsSearchQuery,
+  principalsSearchQuery
 }) => {
   const { t } = useTranslation()
   const branchRules = getBranchRules(t)
-
   return (
     <ControlGroup className="max-w-[476px]">
       <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
       <Fieldset className="gap-y-5">
         {branchRules.map((rule, index) => {
-          const isChecked = rules[index]?.checked ?? false
+          const matchingRule = rules.find(r => r.id === rule.id)
+          const {
+            checked: isChecked = false,
+            disabled: isDisabled = false,
+            hidden: isHidden = false
+          } = matchingRule || {}
 
           return (
-            <Fieldset key={rule.id} className="gap-y-4">
+            <Fieldset key={rule.id} className={clsx('gap-y-4', rule.isNested && 'pl-[26px]', isHidden && 'hidden')}>
               <Checkbox
                 id={rule.id}
                 checked={isChecked}
                 onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
               />
@@ -281,17 +352,28 @@ export const BranchSettingsRuleListField: FC<{
                 </Fieldset>
               )}
 
-              {!!rule?.hasSelect && isChecked && (
+              {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.STATUS_CHECKS && (
                 <div className="pl-[26px]">
                   <MultiSelect
-                    value={rules[index].selectOptions.map(option => ({ id: option, key: option }))}
+                    value={rules[index].selectOptions.map(option => ({ id: option?.id, key: option?.key }))}
                     placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
                     onChange={options => {
-                      const selectedKeys = options.map(option => option.key)
-                      handleSelectChangeForRule(rule.id, selectedKeys)
+                      handleSelectChangeForRule(rule.id, options)
                     }}
                     options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
                     disallowCreation
+                  />
+                </div>
+              )}
+
+              {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.ENABLE_DEFAULT_REVIEWERS && (
+                <div className="pl-[26px]">
+                  <BranchSettingsRuleDefaultReviewersField
+                    defaultReviewersOptions={defaultReviewersOptions}
+                    rule={rules[index]}
+                    setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+                    principalsSearchQuery={principalsSearchQuery}
+                    handleSelectChangeForRule={handleSelectChangeForRule}
                   />
                 </div>
               )}
@@ -301,7 +383,12 @@ export const BranchSettingsRuleListField: FC<{
                   <Input
                     id="name"
                     size="md"
-                    placeholder={t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')}
+                    type="number"
+                    placeholder={
+                      rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT
+                        ? t('views:repos.enterMinDefaultReviewers', 'Enter minimum number of default reviewers')
+                        : t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')
+                    }
                     value={rules[index].input || ''}
                     onChange={e => handleInputChange(rule.id, e.target.value)}
                   />

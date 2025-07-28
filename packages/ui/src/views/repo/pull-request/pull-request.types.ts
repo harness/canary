@@ -1,5 +1,5 @@
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, ILabelsStore, LabelType } from '@/views'
+import { ColorsEnum, ILabelsStore, LabelType, TypesBranchTable } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
@@ -24,6 +24,10 @@ export enum PULL_REQUEST_LIST_HEADER_FILTER_STATES {
   CLOSED = 'closed'
 }
 
+export interface PullRequest extends PullRequestType {
+  repoId?: string
+}
+
 export interface PullRequestType {
   is_draft?: boolean
   merged?: number | null // TODO: Should merged really be all these??
@@ -45,7 +49,7 @@ export interface PullRequestType {
 export type IconType = 'git-pull-request-draft' | 'git-pull-request-closed' | 'git-merge' | 'git-pull-request'
 
 export interface PullRequestListStore {
-  pullRequests: PullRequestType[] | null
+  pullRequests: PullRequest[] | null
   totalItems: number
   pageSize: number
   page: number
@@ -120,6 +124,9 @@ export interface TypesPullReq {
   title?: string
   labels?: TypesLabelPullReqAssignmentInfo[]
   updated?: number
+  merge_violations_bypassed?: boolean | null
+  rebase_check_status?: string
+  rebase_conflicts?: string[]
 }
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
@@ -226,7 +233,11 @@ export interface PRListLabelType {
   id?: number
 }
 
-export interface PullRequestPageProps {
+interface RoutingProps {
+  toPullRequest: ({ prNumber, repoId }: { prNumber: number; repoId?: string }) => string
+}
+
+export interface PullRequestPageProps extends Partial<RoutingProps> {
   usePullRequestListStore: () => PullRequestListStore
   useLabelsStore: () => ILabelsStore
   onFilterOpen?: (filter: keyof PRListFilters) => void
@@ -234,14 +245,32 @@ export interface PullRequestPageProps {
   spaceId?: string
   defaultSelectedAuthorError?: UsererrorError | null
   isPrincipalsLoading?: boolean
+  prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
+  repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void
   isLoading?: boolean
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
+  onLabelClick?: (labelId: number) => void
+}
+
+export interface PullRequestListProps extends Partial<RoutingProps> {
+  pullRequests?: PullRequest[]
+  handleResetFilters?: () => void
+  hasActiveFilters?: boolean
+  query?: string
+  openPRs?: number
+  handleOpenClick?: () => void
+  closedPRs?: number
+  handleCloseClick?: () => void
+  repoId?: string
+  spaceId?: string
+  headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
+  setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
   onLabelClick?: (labelId: number) => void
 }
 

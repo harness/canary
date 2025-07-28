@@ -38,7 +38,7 @@ export default {
     borderRadius: 'var(--cn-input-radius)',
     height: 'var(--cn-input-size-md)',
     border: 'var(--cn-input-border) solid var(--cn-border-2)',
-    backgroundColor: 'var(--cn-bg-2)',
+    backgroundColor: 'var(--cn-comp-input-bg)',
     color: 'var(--cn-text-1)',
     textAlign: 'start',
     '@apply transition-[box-shadow,border-color]': '',
@@ -48,7 +48,7 @@ export default {
     },
 
     '&:focus-visible, &:where([data-state="open"])': {
-      borderColor: 'var(--cn-border-1)',
+      borderColor: 'var(--cn-border-brand)',
       boxShadow: 'var(--cn-ring-selected)',
       outline: 'none'
     },
@@ -65,7 +65,7 @@ export default {
     },
 
     '&:where(:hover):not(:disabled)': {
-      borderColor: 'var(--cn-border-1)'
+      borderColor: 'var(--cn-border-brand)'
     },
 
     '&-content': {

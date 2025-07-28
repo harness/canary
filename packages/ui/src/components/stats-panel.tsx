@@ -12,7 +12,7 @@ export const StatsPanel: FC<StatsPanelProps> = ({ data }) => {
   return (
     <Layout.Flex wrap="wrap" gap="md" className="gap-x-[var(--cn-spacing-11)]">
       {data.map((stat, index) => (
-        <Layout.Vertical spacing="small" key={index}>
+        <Layout.Vertical gap="xs" key={index}>
           <Text variant="body-single-line-normal" color="foreground-3">
             {stat.label}
           </Text>

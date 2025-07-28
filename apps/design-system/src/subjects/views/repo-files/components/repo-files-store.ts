@@ -48,6 +48,7 @@ export interface RepoFilesStoreType {
   latestCommitInfo: LatestFileTypes
   repository: RepoRepositoryOutput
   jsonFileContent: string
+  mdFileContent: string
   blameJsonFileContent: BlameItem[]
   markdownFileContent: string
   pathParts: PathParts[]
@@ -1666,6 +1667,51 @@ export const repoFilesStore: RepoFilesStoreType = {
     '    "typescript-eslint": "^8.14.0"\n' +
     '  }\n' +
     '}\n',
+  mdFileContent:
+    '# Harness Canary\n' +
+    '\n' +
+    'This repository contains the code for Harness Canary, a platform for continuous integration and deployment.\n' +
+    '\n' +
+    '## Getting Started\n' +
+    '\n' +
+    'To get started with Harness Canary, follow these steps:\n' +
+    '\n' +
+    '1. Clone the repository:\n' +
+    '   ```bash\n' +
+    '   git clone http://localhost:3000/git/canary/canary.git\n' +
+    '   ```\n' +
+    '2. Navigate to the project directory:\n' +
+    '   ```bash\n' +
+    '   cd canary\n' +
+    '   ```\n' +
+    '3. Install the dependencies:\n' +
+    '   ```bash\n' +
+    '   pnpm install\n' +
+    '   ```\n' +
+    '4. Run the application:\n' +
+    '   ```bash\n' +
+    '   pnpm start\n' +
+    '   ```\n' +
+    '\n' +
+    '## Contributing\n' +
+    '\n' +
+    'We welcome contributions to Harness Canary! If you would like to contribute, please follow these steps:\n' +
+    '\n' +
+    '1. Fork the repository on GitHub.\n' +
+    '2. Create a new branch for your feature or bug fix:\n' +
+    '   ```bash\n' +
+    '   git checkout -b my-feature\n' +
+    '   ```\n' +
+    '3. Make your changes and commit them:\n' +
+    '   ```bash\n' +
+    '   git commit -m "Add my feature"\n' +
+    '   ```\n' +
+    '4. Push your changes to your forked repository:\n' +
+    '   ```bash\n' +
+    '   git push origin my-feature\n' +
+    '   ```\n' +
+    '5. Create a pull request on the main repository.\n' +
+    '\n',
   blameJsonFileContent: [
     {
       fromLineNumber: 1,

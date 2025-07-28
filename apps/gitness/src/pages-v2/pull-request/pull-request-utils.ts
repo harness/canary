@@ -4,14 +4,27 @@ import { get, isEmpty } from 'lodash-es'
 
 import {
   EnumPullReqReviewDecision,
+  ListPullReqQueryQueryParams,
   TypesCodeOwnerEvaluationEntry,
+  TypesPrincipalInfo,
+  TypesPullReqReviewer,
   TypesRuleViolations,
   TypesViolation
 } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/ui/views'
+import {
+  DefaultReviewersApprovalsData,
+  DefaultReviewersDataProps,
+  ExecutionState,
+  PrincipalInfoWithReviewDecision,
+  PRListFilters
+} from '@harnessio/ui/views'
 
-import { PullReqReviewDecision, TypeCheckData } from '../../pages/pull-request/types/types'
-import { extractInfoForCodeOwnerContentProps } from '../../types'
+import {
+  extractInfoForPRPanelChangesProps,
+  PullReqReviewDecision,
+  TypeCheckData,
+  TypesDefaultReviewerApprovalsResponseWithRevDecision
+} from './types'
 
 export const processReviewDecision = (
   review_decision: EnumPullReqReviewDecision | PullReqReviewDecision.outdated,
@@ -28,6 +41,7 @@ export function generateStatusSummary(checks: TypeCheckData[]) {
     failedReq: 0,
     pendingReq: 0,
     runningReq: 0,
+    failureIgnoredReq: 0,
     successReq: 0,
     failed: 0,
     pending: 0,
@@ -67,6 +81,14 @@ export function generateStatusSummary(checks: TypeCheckData[]) {
           statusCounts.runningReq += 1
         } else {
           statusCounts.running += 1
+        }
+        break
+
+      case ExecutionState.FAILURE_IGNORED:
+        if (required) {
+          statusCounts.failureIgnoredReq += 1
+        } else {
+          statusCounts.failureIgnoredReq += 1
         }
         break
 
@@ -143,10 +165,15 @@ export function determineStatusMessage(
       title = 'Some required checks are running'
       status = 'running'
       content = `${message}`
-      color = 'text-blue'
-    } else if (checks.every(check => check.check.status === ExecutionState.SUCCESS)) {
+      color = 'text-cn-foreground-warning'
+    } else if (
+      checks.every(
+        check =>
+          check?.check?.status !== undefined &&
+          [ExecutionState.SUCCESS, ExecutionState.FAILURE_IGNORED].includes(check.check.status as ExecutionState)
+      )
+    ) {
       title = 'All checks have succeeded'
-      status = 'success'
       content = `${message}`
       color = 'text-cn-foreground-3'
     } else {
@@ -162,18 +189,24 @@ export function determineStatusMessage(
       title = 'Some checks have failed'
       content = ` ${message}`
       status = 'failure'
-      color = 'text-cn-foreground-3'
+      color = 'text-cn-foreground-danger'
     } else if (checks.some(check => check.check.status === ExecutionState.PENDING)) {
       title = 'Some checks haven’t been completed yet'
       status = 'pending'
       content = `${message}`
-      color = 'ORANGE_500'
+      color = 'text-cn-foreground-warning'
     } else if (checks.some(check => check.check.status === ExecutionState.RUNNING)) {
       title = 'Some checks are running'
       content = `${message}`
       status = 'running'
-      color = 'PRIMARY_6'
-    } else if (checks.every(check => check.check.status === ExecutionState.SUCCESS)) {
+      color = 'text-cn-foreground-warning'
+    } else if (
+      checks.every(
+        check =>
+          check?.check?.status !== undefined &&
+          [ExecutionState.SUCCESS, ExecutionState.FAILURE_IGNORED].includes(check.check.status as ExecutionState)
+      )
+    ) {
       title = 'All checks have succeeded'
       content = `${message}`
       color = 'text-cn-foreground-3'
@@ -240,36 +273,130 @@ export const findWaitingDecisions = (entries: TypesCodeOwnerEvaluationEntry[] | 
   }
 }
 
-export const extractInfoForCodeOwnerContent = ({
+export const getUnifiedDefaultReviewersState = (
+  info?: TypesDefaultReviewerApprovalsResponseWithRevDecision[]
+): DefaultReviewersDataProps => {
+  const defaultReviewState = {
+    defReviewerApprovalRequiredByRule: false,
+    defReviewerLatestApprovalRequiredByRule: false,
+    defReviewerApprovedLatestChanges: true,
+    defReviewerApprovedChanges: true,
+    changesRequestedByDefaultReviewers: [] as PrincipalInfoWithReviewDecision[]
+  }
+
+  info?.forEach(item => {
+    if (item?.minimum_required_count !== undefined && item.minimum_required_count > 0) {
+      defaultReviewState.defReviewerApprovalRequiredByRule = true
+      if (item.current_count !== undefined && item.current_count < item.minimum_required_count) {
+        defaultReviewState.defReviewerApprovedChanges = false
+      }
+    }
+    if (item?.minimum_required_count_latest !== undefined && item.minimum_required_count_latest > 0) {
+      defaultReviewState.defReviewerLatestApprovalRequiredByRule = true
+      if (item.current_count !== undefined && item.current_count < item.minimum_required_count_latest) {
+        defaultReviewState.defReviewerApprovedLatestChanges = false
+      }
+    }
+
+    item?.principals?.forEach(principal => {
+      if (principal?.review_decision === PullReqReviewDecision.changeReq)
+        defaultReviewState.changesRequestedByDefaultReviewers.push(principal)
+    })
+  })
+
+  return defaultReviewState
+}
+
+export const updateReviewDecisionPrincipal = (reviewers: TypesPullReqReviewer[], principals: TypesPrincipalInfo[]) => {
+  const reviewDecisionMap: {
+    [x: number]: { sha: string; review_decision: EnumPullReqReviewDecision } | null
+  } = reviewers?.reduce(
+    (acc, rev) => {
+      if (rev.reviewer?.id) {
+        acc[rev.reviewer.id] = {
+          sha: rev.sha ?? '',
+          review_decision: rev.review_decision ?? 'pending'
+        }
+      }
+      return acc
+    },
+    {} as { [x: number]: { sha: string; review_decision: EnumPullReqReviewDecision } | null }
+  )
+
+  return principals?.map(principal => {
+    if (principal?.id) {
+      return {
+        ...principal,
+        review_decision: reviewDecisionMap[principal.id] ? reviewDecisionMap[principal.id]?.review_decision : 'pending',
+        review_sha: reviewDecisionMap[principal.id]?.sha
+      }
+    }
+    return principal
+  })
+}
+
+export const defaultReviewerResponseWithDecision = (
+  reviewers: TypesPullReqReviewer[],
+  defaultRevApprovalResponse?: DefaultReviewersApprovalsData[]
+) => {
+  return defaultRevApprovalResponse?.map(res => {
+    return {
+      ...res,
+      principals:
+        reviewers && res.principals ? updateReviewDecisionPrincipal(reviewers, res.principals) : res.principals
+    }
+  })
+}
+
+export const extractInfoForPRPanelChanges = ({
   approvedEvaluations,
   reqNoChangeReq,
-  reqCodeOwnerApproval,
+  codeOwnersData,
   minApproval,
-  reqCodeOwnerLatestApproval,
   minReqLatestApproval,
-  codeOwnerChangeReqEntries,
-  codeOwnerPendingEntries,
-  latestCodeOwnerApprovalArr,
   latestApprovalArr,
-  codeOwnerApprovalEntries,
   changeReqReviewer,
-  changeReqEvaluations
-}: extractInfoForCodeOwnerContentProps) => {
+  changeReqEvaluations,
+  defaultReviewersData,
+  mergeBlockedViaRule
+}: extractInfoForPRPanelChangesProps) => {
   let statusMessage = ''
   let statusColor = 'grey' // Default color for no rules required
   let title = ''
   let statusIcon = ''
   let isNotRequired = false
+  const {
+    reqCodeOwnerApproval,
+    reqCodeOwnerLatestApproval,
+    codeOwnerChangeReqEntries,
+    codeOwnerPendingEntries,
+    latestCodeOwnerApprovalArr,
+    codeOwnerApprovalEntries
+  } = codeOwnersData
+  const {
+    defReviewerApprovalRequiredByRule,
+    defReviewerLatestApprovalRequiredByRule,
+    defReviewerApprovedLatestChanges,
+    defReviewerApprovedChanges
+  } = defaultReviewersData || {}
+
   if (
     reqNoChangeReq ||
     reqCodeOwnerApproval ||
     (minApproval && minApproval > 0) ||
     reqCodeOwnerLatestApproval ||
-    (minReqLatestApproval && minReqLatestApproval > 0)
+    (minReqLatestApproval && minReqLatestApproval > 0) ||
+    defReviewerApprovalRequiredByRule ||
+    defReviewerLatestApprovalRequiredByRule ||
+    mergeBlockedViaRule
   ) {
-    if (
+    if (mergeBlockedViaRule) {
+      title = 'Base branch does not allow updates'
+      statusColor = 'text-cn-foreground-danger'
+      statusIcon = 'warning'
+    } else if (
       codeOwnerChangeReqEntries &&
-      codeOwnerChangeReqEntries.length > 0 &&
+      codeOwnerChangeReqEntries?.length > 0 &&
       (reqCodeOwnerApproval || reqCodeOwnerLatestApproval)
     ) {
       title = 'Changes requested by code owner'
@@ -281,14 +408,7 @@ export const extractInfoForCodeOwnerContent = ({
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
       statusColor = 'text-cn-foreground-danger'
       statusIcon = 'error'
-    } else if (
-      (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) ||
-      (!isEmpty(latestCodeOwnerApprovalArr) &&
-        latestCodeOwnerApprovalArr &&
-        minReqLatestApproval &&
-        latestCodeOwnerApprovalArr?.length < minReqLatestApproval &&
-        reqCodeOwnerLatestApproval)
-    ) {
+    } else if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Latest changes are pending approval from code owners'
       statusColor = 'text-cn-foreground-warning'
@@ -308,10 +428,20 @@ export const extractInfoForCodeOwnerContent = ({
       statusMessage = 'Latest changes are pending approval from required reviewers'
       statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
+    } else if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
+      title = 'Approvals pending'
+      statusMessage = 'Latest changes are pending approval from default reviewers'
+      statusColor = 'text-cn-foreground-warning'
+      statusIcon = 'pending'
     } else if (minApproval && approvedEvaluations && approvedEvaluations?.length < minApproval && minApproval > 0) {
       title = 'Approvals pending'
       statusMessage = 'Changes are pending approval from required reviewers'
 
+      statusColor = 'text-cn-foreground-warning'
+      statusIcon = 'pending'
+    } else if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
+      title = 'Approvals pending'
+      statusMessage = 'Changes are pending approval from default reviewers'
       statusColor = 'text-cn-foreground-warning'
       statusIcon = 'pending'
     } else if (reqCodeOwnerLatestApproval && latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0) {
@@ -494,5 +624,55 @@ export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViola
     uniqueViolations,
     checkIfBypassAllowed,
     violationArr
+  }
+}
+
+export const buildPRFilters = (filterData: PRListFilters) =>
+  Object.entries(filterData).reduce<Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>>(
+    (acc, [key, value]) => {
+      if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
+        acc[key] = value.getTime().toString()
+      }
+      if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
+        acc[key] = value.value
+      }
+      if (key === 'label_by') {
+        const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
+        const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
+          if (value === true) {
+            labelAcc.labelId.push(labelKey)
+          } else if (value) {
+            labelAcc.valueId.push(value)
+          }
+          return labelAcc
+        }, defaultLabel)
+
+        acc['label_id'] = labelId.map(Number)
+        acc['value_id'] = valueId.map(Number)
+      }
+      return acc
+    },
+    {}
+  )
+
+export const getCommentsInfoData = ({
+  requiresCommentApproval,
+  resolvedCommentArrParams
+}: {
+  requiresCommentApproval: boolean
+  resolvedCommentArrParams?: number[]
+}) => {
+  const resolvedComments = requiresCommentApproval && !resolvedCommentArrParams
+
+  if (resolvedComments) {
+    return { header: 'All comments are resolved', content: undefined, status: 'success' }
+  }
+
+  const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
+
+  return {
+    header: 'Unresolved comments',
+    content: `There are ${unresolvedCount} unresolved comments`,
+    status: 'failed'
   }
 }

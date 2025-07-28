@@ -11,7 +11,7 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <Layout.Vertical gap="xl" className="min-w-[400px]">
       <TextInput label="Text input label" placeholder="Enter the value" />
     </Layout.Vertical>
 `}
@@ -40,7 +40,7 @@ return (
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput disabled placeholder="Username" label="Disabled Input" />
   </Layout.Vertical>`}
 />
@@ -50,7 +50,7 @@ return (
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput label="Text input label" placeholder="Enter the value" value="Value" readOnly />
   </Layout.Vertical>`}
 />
@@ -60,7 +60,7 @@ return (
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput label="Text input label" placeholder="Enter the value" value="Value" optional />
   </Layout.Vertical>`}
 />
@@ -76,7 +76,7 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput
       label="Success Input"
       id="someinput"
@@ -104,7 +104,7 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput
       label="Medium Input"
       placeholder="Enter the value"
@@ -123,7 +123,7 @@ Available options are `md` (medium) and `sm` (small)
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput
       label="Medium Input"
       placeholder="Enter the value"
@@ -143,7 +143,7 @@ The `TextInput` component supports `prefix` and `suffix` props, which allow addi
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Layout.Vertical spacing="large" className="min-w-[400px]">
+    <Layout.Vertical gap="xl" className="min-w-[400px]">
       <TextInput prefix="https://" suffix=".com" />
 
       <TextInput
@@ -166,7 +166,7 @@ Available options are `horizontal` and `vertical` (default).
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Vertical spacing="large" className="min-w-[400px]">
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
     <TextInput
       label="Vertical orientation"
       error="This field is required"

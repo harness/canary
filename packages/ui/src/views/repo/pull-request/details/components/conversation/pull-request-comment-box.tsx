@@ -123,19 +123,12 @@ export const PullRequestCommentBox = ({
   }
 
   const handleAiSummary = (currentTextSelection: TextSelection) => {
-    console.debug('handleAiSummary', {
-      currentTextSelection: currentTextSelection
-    })
     if (handleAiPullRequestSummary) {
       setShowAiLoader(true)
 
-      handleAiPullRequestSummary(currentTextSelection)
+      handleAiPullRequestSummary()
         .then(response => {
-          console.debug('response', {
-            response: response
-          })
-
-          parseAndSetComment(comment, response.textSelection, TextSelectionBehavior.Parse, response.summary)
+          parseAndSetComment(comment, currentTextSelection, TextSelectionBehavior.Parse, response.summary)
         })
         .finally(() => {
           setShowAiLoader(false)

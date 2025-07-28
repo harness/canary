@@ -10,6 +10,7 @@ import {
   CreateRepositoryErrorResponse,
   mergeCheck,
   OpenapiCreatePullReqRequest,
+  RepoRepositoryOutput,
   useCreatePullReqMutation,
   useDiffStatsQuery,
   useFindRepositoryQuery,
@@ -52,13 +53,9 @@ import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-re
 import { changesInfoAtom, DiffFileEntry } from './types'
 
 interface AiPullRequestSummaryParams {
-  repoMetadata: {
-    path: string
-  }
+  repoMetadata: RepoRepositoryOutput
   baseRef: string
   headRef: string
-  // TODO I may be able to use a more locally scoped textSelection rather than pass it through the call chain
-  textSelection: { start: number; end: number }
 }
 
 /**
@@ -330,10 +327,7 @@ export const CreatePullRequest = () => {
   }
 
   const onSubmit = (data: CompareFormFields) => {
-    console.debug('onSubmit', {
-      data: data
-    })
-    // handleSubmit(data, false)
+    handleSubmit(data, false)
   }
 
   const onDraftSubmit = (data: CompareFormFields) => {
@@ -495,47 +489,35 @@ export const CreatePullRequest = () => {
   const getApiPath = useAPIPath()
   const { fullGitRef: baseRef } = useGitRef()
 
-  const mutation = useMutation(
-    async ({ repoMetadata, baseRef, headRef, textSelection }: AiPullRequestSummaryParams) => {
-      return fetch(getApiPath(`/api/v1/repos/${repoMetadata?.path}/+/genai/change-summary`), {
-        method: 'POST',
-        body: JSON.stringify({
-          base_ref: baseRef,
-          head_ref: headRef
-        })
+  const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
+    return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
+      method: 'POST',
+      body: JSON.stringify({
+        base_ref: baseRef,
+        head_ref: headRef
       })
-        .then(res => res.json())
-        .then(json => ({
-          summary: json.summary,
-          textSelection: textSelection
-        }))
-    }
-  )
+    })
+      .then(res => res.json())
+      .then(json => ({
+        summary: json.summary
+      }))
+  })
 
-  const handleAiPullRequestSummary = useCallback(
-    async textSelection => {
-      /*
-       * TODO: Need to know how to get the two remaining query args
-       *
-       *  Need `repoMetadata.path` in the form of `{accountId}/{orgId}/{projectId}/{repoId}`
-       *  The `repoRef` at the top of this file only provides `{accountId}/{repoId}`, which causes the query to fail
-       *
-       *  Need  `headRef` which looks to be of the form `refs/heads/{branchName}`
-       */
-      const repoMetadata = {
-        path: `{accountId}/{orgId}/{projectId}/{repoId}`
-      }
-      const headRef = `refs/heads/{branchName}`
+  const handleAiPullRequestSummary = useCallback(async () => {
+    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name) {
+      const headRef = `refs/heads/${selectedSourceBranch.name}`
 
       return await mutation.mutateAsync({
         repoMetadata,
         baseRef,
-        headRef,
-        textSelection
+        headRef
       })
-    },
-    [mutation]
-  )
+    }
+
+    return Promise.resolve({
+      summary: ''
+    })
+  }, [mutation])
 
   const renderContent = () => {
     return (

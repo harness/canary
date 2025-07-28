@@ -10,8 +10,9 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs } from '@/components'
+import { Avatar, Button, ButtonVariants, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs } from '@/components'
 import {
+  HandleAiPullRequestSummaryType,
   handleFileDrop,
   handlePaste,
   HandleUploadType,
@@ -48,6 +49,7 @@ interface StringSelection {
 
 interface ToolbarItem {
   icon: IconV2NamesType
+  variant?: ButtonVariants
   action: ToolbarAction
   title?: string
   size?: number
@@ -55,7 +57,6 @@ interface ToolbarItem {
 
 export interface PullRequestCommentBoxProps {
   className?: string
-  onSaveComment: (comment: string) => void
   comment: string
   lang?: string
   diff?: string
@@ -70,8 +71,10 @@ export interface PullRequestCommentBoxProps {
   onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
+  onSaveComment?: (comment: string) => void
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
   principalProps: PrincipalPropsType
   principalsMentionMap?: PrincipalsMentionMap
   setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
@@ -100,6 +103,7 @@ export const PullRequestCommentBox = ({
   setComment,
   isEditMode,
   handleUpload,
+  handleAiPullRequestSummary,
   principalProps,
   principalsMentionMap: parentPrincipalsMentionMap,
   setPrincipalsMentionMap: parentSetPrincipalsMentionMap,
@@ -113,6 +117,7 @@ export const PullRequestCommentBox = ({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
+  const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
 
   const [localPrincipalsMentionMap, setLocalPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
@@ -135,7 +140,7 @@ export const PullRequestCommentBox = ({
   }
 
   const handleSaveComment = () => {
-    if (comment.trim()) {
+    if (onSaveComment && comment.trim()) {
       const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
       onSaveComment(formattedComment)
 
@@ -157,6 +162,24 @@ export const PullRequestCommentBox = ({
 
   const handleFileSelect = () => {
     fileInputRef.current?.click()
+  }
+
+  const handleAiSummary = (currentTextSelection: TextSelection) => {
+    if (handleAiPullRequestSummary) {
+      setShowAiLoader(true)
+
+      const originalComment = comment
+
+      parseAndSetComment(comment, currentTextSelection, TextSelectionBehavior.Parse, 'Generating AI Summary...')
+
+      handleAiPullRequestSummary()
+        .then(response => {
+          parseAndSetComment(originalComment, currentTextSelection, TextSelectionBehavior.Parse, response.summary)
+        })
+        .finally(() => {
+          setShowAiLoader(false)
+        })
+    }
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -325,7 +348,10 @@ export const PullRequestCommentBox = ({
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {
-    const initial: ToolbarItem[] = []
+    const initial: ToolbarItem[] = handleAiPullRequestSummary
+      ? [{ icon: 'ai' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
+      : []
+
     // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
@@ -334,7 +360,7 @@ export const PullRequestCommentBox = ({
       { icon: 'bold', action: ToolbarAction.BOLD },
       { icon: 'italic', action: ToolbarAction.ITALIC },
       { icon: 'attachment', action: ToolbarAction.UPLOAD },
-      { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+      { icon: 'list', action: ToolbarAction.UNORDERED_LIST },
       { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
@@ -342,6 +368,9 @@ export const PullRequestCommentBox = ({
 
   const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
     switch (type) {
+      case ToolbarAction.AI_SUMMARY:
+        handleAiSummary(textSelection)
+        break
       case ToolbarAction.SUGGESTION:
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Parse, '```suggestion\n', '\n```')
         break
@@ -357,7 +386,7 @@ export const PullRequestCommentBox = ({
       case ToolbarAction.UPLOAD:
         handleFileSelect()
         break
-      case ToolbarAction.UNORDER_LIST:
+      case ToolbarAction.UNORDERED_LIST:
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Split, '- ')
         break
       case ToolbarAction.CHECK_LIST:
@@ -414,7 +443,7 @@ export const PullRequestCommentBox = ({
         const parsedComment = parseComment(comment, textSelection, '')
 
         if (isListString(parsedComment.previousLine)) {
-          handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection)
+          handleActionClick(ToolbarAction.UNORDERED_LIST, comment, textSelection)
         }
         if (isListSelectString(parsedComment.previousLine)) {
           handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
@@ -475,6 +504,12 @@ export const PullRequestCommentBox = ({
                   }
                 }}
               />
+
+              {showAiLoader && (
+                <div className="absolute flex inset-0 cursor-wait items-center justify-center">
+                  <IconV2 size="lg" className="animate-spin" name="loader" />
+                </div>
+              )}
               {isDragging && (
                 <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />
               )}
@@ -486,8 +521,9 @@ export const PullRequestCommentBox = ({
                     <Fragment key={`${comment}-${index}`}>
                       <Button
                         size="sm"
-                        variant="ghost"
+                        variant={item.variant ?? 'ghost'}
                         iconOnly
+                        disabled={showAiLoader}
                         onClick={() => handleActionClick(item.action, comment, textSelection)}
                       >
                         <IconV2 name={item.icon} />
@@ -524,19 +560,21 @@ export const PullRequestCommentBox = ({
             </div>
           )}
 
-          <div className="ml-auto flex gap-x-3">
-            {(inReplyMode || isEditMode) && (
-              <Button variant="outline" onClick={onCancelClick}>
-                Cancel
-              </Button>
-            )}
+          {onSaveComment ? (
+            <div className="ml-auto flex gap-x-3">
+              {(inReplyMode || isEditMode) && (
+                <Button variant="outline" onClick={onCancelClick}>
+                  Cancel
+                </Button>
+              )}
 
-            {isEditMode ? (
-              <Button onClick={handleSaveComment}>{buttonTitle || 'Save'}</Button>
-            ) : (
-              <Button onClick={handleSaveComment}>{buttonTitle || 'Comment'}</Button>
-            )}
-          </div>
+              {isEditMode ? (
+                <Button onClick={handleSaveComment}>{buttonTitle || 'Save'}</Button>
+              ) : (
+                <Button onClick={handleSaveComment}>{buttonTitle || 'Comment'}</Button>
+              )}
+            </div>
+          ) : undefined}
         </div>
       </div>
     </div>

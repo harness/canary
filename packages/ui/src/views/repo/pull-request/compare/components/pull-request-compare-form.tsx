@@ -3,7 +3,7 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
 import { Alert, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
-import { HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
+import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
@@ -21,14 +21,27 @@ interface PullRequestFormProps {
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
   handleUpload?: HandleUploadType
-  desc?: string
-  setDesc: (desc: string) => void
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
+  description?: string
+  setDescription: (description: string) => void
   formMethods: UseFormReturn<FormFields>
   principalProps: PrincipalPropsType
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  ({ apiError, onFormSubmit, handleUpload, desc, setDesc, formMethods, principalProps }, ref) => {
+  (
+    {
+      apiError,
+      onFormSubmit,
+      handleUpload,
+      description,
+      setDescription,
+      formMethods,
+      handleAiPullRequestSummary,
+      principalProps
+    },
+    ref
+  ) => {
     const { t } = useTranslation()
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
@@ -55,9 +68,10 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
             'views:pullRequests.compareChangesFormDescriptionPlaceholder',
             'Enter pull request description'
           )}
-          comment={desc!}
           buttonTitle="Create pull request"
-          setComment={setDesc}
+          comment={description ?? ''}
+          setComment={setDescription}
+          handleAiPullRequestSummary={handleAiPullRequestSummary}
           principalProps={principalProps}
           handleUpload={handleUpload}
           principalsMentionMap={{}}

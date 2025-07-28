@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useMutation } from '@tanstack/react-query'
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
 import { compact, noop } from 'lodash-es'
@@ -9,6 +10,7 @@ import {
   CreateRepositoryErrorResponse,
   mergeCheck,
   OpenapiCreatePullReqRequest,
+  RepoRepositoryOutput,
   useCreatePullReqMutation,
   useDiffStatsQuery,
   useFindRepositoryQuery,
@@ -38,6 +40,8 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useAPIPath } from '../../hooks/useAPIPath.ts'
+import { useGitRef } from '../../hooks/useGitRef.ts'
 import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
@@ -46,6 +50,12 @@ import { parseSpecificDiff } from './diff-utils'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
 import { changesInfoAtom, DiffFileEntry } from './types'
+
+interface AiPullRequestSummaryParams {
+  repoMetadata: RepoRepositoryOutput
+  baseRef: string
+  headRef: string
+}
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -437,6 +447,39 @@ export const CreatePullRequest = () => {
     setLabels(newLabels)
   }
 
+  const getApiPath = useAPIPath()
+  const { fullGitRef: baseRef } = useGitRef()
+
+  const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
+    return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
+      method: 'POST',
+      body: JSON.stringify({
+        base_ref: baseRef,
+        head_ref: headRef
+      })
+    })
+      .then(res => res.json())
+      .then(json => ({
+        summary: json.summary
+      }))
+  })
+
+  const handleAiPullRequestSummary = useCallback(async () => {
+    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name) {
+      const headRef = `refs/heads/${selectedSourceBranch.name}`
+
+      return await mutation.mutateAsync({
+        repoMetadata,
+        baseRef,
+        headRef
+      })
+    }
+
+    return Promise.resolve({
+      summary: ''
+    })
+  }, [mutation])
+
   const renderContent = () => {
     return (
       <PullRequestComparePage
@@ -466,6 +509,7 @@ export const CreatePullRequest = () => {
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
         prBranchCombinationExists={prBranchCombinationExists}
+        handleAiPullRequestSummary={handleAiPullRequestSummary}
         diffData={
           diffStats?.files_changed || 0
             ? diffs?.map(item => ({

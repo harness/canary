@@ -26,7 +26,7 @@ import PullRequestTimelineItem from '../details/components/conversation/pull-req
 import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
-import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
+import { ExtendedDiffView, ExtendedDiffViewProps } from './extended-diff-view/extended-diff-view'
 
 import '@git-diff-view/react/styles/diff-view.css'
 
@@ -362,8 +362,8 @@ const PullRequestDiffViewer = ({
   const [newComments, setNewComments] = useState<Record<string, string>>({})
 
   // comment widget (add comment)
-  const renderWidgetLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderWidgetLine']>>(
-    ({ onClose, side, lineNumber }) => {
+  const renderWidgetLine = useCallback<NonNullable<ExtendedDiffViewProps<Thread[]>['renderWidgetLine']>>(
+    ({ onClose, side, lineNumber, lineFromNumber }) => {
       const sideKey = side === SplitSide.old ? 'oldFile' : 'newFile'
       const commentKey = `${side}:${lineNumber}`
       const commentText = newComments[commentKey] ?? ''
@@ -383,7 +383,7 @@ const PullRequestDiffViewer = ({
                 handleSaveComment(replaceMentionEmailWithId(trimmedComment, principalsMentionMap), undefined, {
                   line_end: lineNumber,
                   line_end_new: sideKey === 'newFile',
-                  line_start: lineNumber,
+                  line_start: lineFromNumber,
                   line_start_new: sideKey === 'newFile',
                   path: fileName
                 })

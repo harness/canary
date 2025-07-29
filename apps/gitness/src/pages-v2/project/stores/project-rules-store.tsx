@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { PrincipalType } from '@harnessio/ui/types'
+import { PrincipalType, TypesUserGroupInfo } from '@harnessio/ui/types'
 import { IProjectRulesStore } from '@harnessio/ui/views'
 
 import { PageResponseHeader } from '../../../types'
@@ -11,6 +11,7 @@ export const useProjectRulesStore = create<IProjectRulesStore>(set => ({
   presetRuleData: null,
   rules: null,
   principals: null,
+  userGroups: null,
   recentStatusChecks: null,
   totalItems: 0,
   pageSize: 10,
@@ -34,6 +35,13 @@ export const useProjectRulesStore = create<IProjectRulesStore>(set => ({
       return
     }
     set({ principals: data as PrincipalType[] })
+  },
+  setUserGroups: data => {
+    if (!data) {
+      set({ userGroups: null })
+      return
+    }
+    set({ userGroups: data as TypesUserGroupInfo[] })
   },
   setRecentStatusChecks: data => {
     if (!data) {

@@ -52,6 +52,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   label?: string
   value: string
   disabled?: boolean
+  title?: string
 }
 
 function Tag({
@@ -67,6 +68,7 @@ function Tag({
   showReset = false,
   showIcon = false,
   disabled = false,
+  title,
   ...props
 }: TagProps) {
   if (label && value) {
@@ -95,7 +97,7 @@ function Tag({
           className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
         />
       )}
-      <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={value || label}>
+      <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={title || value || label}>
         {value || label}
       </span>
       {showReset && !disabled && (

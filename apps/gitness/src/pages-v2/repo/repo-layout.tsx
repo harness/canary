@@ -19,14 +19,14 @@ const RepoLayout = () => {
 
   const onFavoriteToggle = async (isFavorite: boolean) => {
     try {
-      const body: { resource_id: number | undefined; resource_type: EnumResourceType } = {
-        resource_id: repoData?.id,
+      const body: { resource_id: number; resource_type: EnumResourceType } = {
+        resource_id: Number(repoData?.id),
         resource_type: 'REPOSITORY'
       }
       if (isFavorite) {
         await createFavorite({ body })
       } else {
-        await deleteFavorite({ body })
+        await deleteFavorite({ queryParams: { resource_type: 'REPOSITORY' }, resource_id: Number(repoData?.id) })
       }
       refetchRepo()
     } catch {

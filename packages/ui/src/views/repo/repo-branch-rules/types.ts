@@ -70,6 +70,20 @@ export enum PatternsButtonType {
   EXCLUDE = 'Exclude'
 }
 
+export enum EnumBypassListType {
+  SERVICE = 'service',
+  SERVICEACCOUNT = 'serviceaccount',
+  USER = 'user',
+  USER_GROUP = 'user_group'
+}
+
+export interface NormalizedPrincipal {
+  id: number
+  email_or_identifier: string
+  type: EnumBypassListType
+  display_name: string
+}
+
 export type IBranchRulesStore = {
   rules: Rule[]
   dispatch: Dispatch
@@ -92,7 +106,10 @@ export const repoBranchSettingsFormSchema = z.object({
   bypass: z.array(
     z.object({
       id: z.number(),
-      key: z.string()
+      key: z.string(),
+      type: z.nativeEnum(EnumBypassListType),
+      title: z.string().optional(),
+      icon: z.string().optional()
     })
   ),
   default: z.boolean().optional(),

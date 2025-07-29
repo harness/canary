@@ -38,7 +38,9 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
       <Layout.Flex gap="xs" align="center">
         <IconV2 name="git-branch" size="sm" className="text-icons-success" />
         <Text variant="body-strong" color="foreground-1">
-          {branch.name}
+          <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${branch.name}`}>
+            {branch.name}
+          </Link>
         </Text>
         <Text variant="body-single-line-normal" color="foreground-2">
           {t('views:repos.hadRecentPushes', 'had recent pushes ')}

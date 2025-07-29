@@ -1330,6 +1330,26 @@
         "$type": "color",
         "$value": "{bg.2}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
+      },
+      "hljs-keyword": {
+        "$type": "color",
+        "$value": "{purple.800}"
+      },
+      "hljs-title-class": {
+        "$type": "color",
+        "$value": "{yellow.700}"
+      },
+      "hljs-string": {
+        "$type": "color",
+        "$value": "{green.700}"
+      },
+      "hljs-title-function": {
+        "$type": "color",
+        "$value": "{blue.700}"
+      },
+      "hljs-name": {
+        "$type": "color",
+        "$value": "{red.800}"
       }
     },
     "input": {

@@ -14,6 +14,7 @@ import {
 import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
+  easyPluralize,
   ExecutionState,
   PrincipalInfoWithReviewDecision,
   PRListFilters
@@ -671,9 +672,8 @@ export const getCommentsInfoData = ({
   const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
 
   return {
-    header: `Unresolved comment${unresolvedCount === 1 ? '' : 's'}`,
-    content:
-      unresolvedCount === 1 ? 'There is 1 unresolved comment' : `There are ${unresolvedCount} unresolved comments`,
+    header: `Unresolved ${easyPluralize(unresolvedCount, 'comment', 'comments')}`,
+    content: `There ${unresolvedCount === 1 ? 'is' : 'are'} ${unresolvedCount} unresolved ${easyPluralize(unresolvedCount, 'comment', 'comments')}`,
     status: 'failed'
   }
 }

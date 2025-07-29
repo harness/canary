@@ -71,7 +71,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <Button onClick={openCreateTagDialog}>
-                  <Layout.Horizontal gap="xs">
+                  <Layout.Horizontal gap="xs" align="center">
                     <IconV2 name="plus" size="sm" />
                     <span>{t('views:repos.newTag', 'New Tag')}</span>
                   </Layout.Horizontal>

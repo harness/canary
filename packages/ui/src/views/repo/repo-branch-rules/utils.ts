@@ -31,7 +31,7 @@ export function combineAndNormalizePrincipalsAndGroups(
     })
   }
 
-  return normalizedData
+  return normalizedData.sort((a, b) => a.display_name.localeCompare(b.display_name))
 }
 
 export const getIcon = (type: EnumBypassListType) => {

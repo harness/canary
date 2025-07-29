@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
+  TypesUserGroupInfo,
   useListPrincipalsQuery,
   useListStatusCheckRecentSpaceQuery,
   useListUsergroupsQuery,
@@ -186,16 +187,11 @@ export const ProjectTagRulesContainer = () => {
   }, [rulesData, setPresetRuleData])
 
   useEffect(() => {
-    if (principals) {
+    if (principals || userGroups) {
       setPrincipals(principals as PrincipalType[])
+      setUserGroups(userGroups as TypesUserGroupInfo[])
     }
-  }, [principals, setPrincipals])
-
-  useEffect(() => {
-    if (userGroups) {
-      setUserGroups(userGroups as PrincipalType[])
-    }
-  }, [userGroups, setUserGroups])
+  }, [principals, setPrincipals, userGroups, setUserGroups])
 
   useEffect(() => {
     if (recentStatusChecks) {

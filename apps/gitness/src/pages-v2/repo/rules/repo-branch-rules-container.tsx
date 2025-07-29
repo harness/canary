@@ -226,16 +226,11 @@ export const RepoBranchRulesContainer = () => {
   }, [rulesData, setPresetRuleData])
 
   useEffect(() => {
-    if (principals) {
+    if (principals || userGroups) {
       setPrincipals(principals as PrincipalType[])
-    }
-  }, [principals, setPrincipals])
-
-  useEffect(() => {
-    if (userGroups) {
       setUserGroups(userGroups as TypesUserGroupInfo[])
     }
-  }, [userGroups, setUserGroups])
+  }, [principals, setPrincipals, userGroups, setUserGroups])
 
   useEffect(() => {
     if (recentStatusChecks) {

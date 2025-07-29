@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
+  TypesUserGroupInfo,
   useListPrincipalsQuery,
   useListStatusCheckRecentSpaceQuery,
   useListUsergroupsQuery,
@@ -34,7 +35,7 @@ export const ProjectBranchRulesContainer = () => {
   const spaceURL = useGetSpaceURLParam()
 
   const { ruleId: ruleIdentifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks, setUserGroups } = useProjectRulesStore()
+  const { setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
@@ -212,16 +213,11 @@ export const ProjectBranchRulesContainer = () => {
   }, [rulesData, setPresetRuleData])
 
   useEffect(() => {
-    if (principals) {
+    if (principals || userGroups) {
       setPrincipals(principals as PrincipalType[])
+      setUserGroups(userGroups as TypesUserGroupInfo[])
     }
-  }, [principals, setPrincipals])
-
-  useEffect(() => {
-    if (userGroups) {
-      setUserGroups(userGroups as PrincipalType[])
-    }
-  }, [userGroups, setUserGroups])
+  }, [principals, setPrincipals, userGroups, setUserGroups])
 
   useEffect(() => {
     if (recentStatusChecks) {

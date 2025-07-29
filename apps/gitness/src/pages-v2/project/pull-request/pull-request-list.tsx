@@ -105,7 +105,7 @@ export default function PullRequestListPage() {
       queryParams: {
         page: 1,
         limit: 100,
-        // @ts-expect-error : BE issue - not implemnted
+        // @ts-expect-error : BE issue - not implemented
         type: 'user',
         query: principalsSearchQuery,
         accountIdentifier: accountId

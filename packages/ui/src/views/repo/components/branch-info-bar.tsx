@@ -32,13 +32,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-borders-2 bg-cn-background-2 min-h-9rounded-md border px-4 py-2"
+      className="border-cn-borders-2 bg-cn-background-2 min-h-9 rounded-md border px-4 py-2"
       align="center"
       justify="between"
       gapX="xs"
     >
-      <Layout.Flex align="center" gapX="2xs">
-        <Text color="foreground-1">
+      <Text color="foreground-1">
+        <span className="mr-[var(--cn-layout-2xs)]">
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
           {hasAhead && (
             <>
@@ -54,12 +54,18 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
             </StyledLink>
           )}
           {!hasAhead && !hasBehind && 'up to date with'}
-        </Text>
+        </span>
 
-        <Tag variant="secondary" theme="blue" size="md" icon="git-branch" value={defaultBranchName}>
-          <IconV2 name="git-branch" size="xs" />
-        </Tag>
-      </Layout.Flex>
+        <Tag
+          variant="secondary"
+          theme="blue"
+          size="md"
+          icon="git-branch"
+          showIcon
+          value={defaultBranchName}
+          className="align-middle"
+        />
+      </Text>
 
       {refType === BranchSelectorTab.BRANCHES && (
         <DropdownMenu.Root>
@@ -88,10 +94,10 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                     <Text variant="body-single-line-strong" color="foreground-1">
                       This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
                       <Tag
-                        className="inline-flex align-middle"
+                        className="mt-0.5 align-sub"
                         variant="secondary"
                         theme="blue"
-                        size="sm"
+                        size="md"
                         value={defaultBranchName}
                         icon="git-branch"
                         showIcon

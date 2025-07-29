@@ -148,12 +148,15 @@ export function RepoSummaryView({
         <SandboxLayout.Column className="w-full min-w-0">
           <SandboxLayout.Content className="pl-6">
             {!isEmpty(prCandidateBranches) && (
-              <BranchCompareBannerList
-                prCandidateBranches={prCandidateBranches}
-                defaultBranchName={repository?.default_branch || 'main'}
-                repoId={repoId}
-                spaceId={spaceId}
-              />
+              <>
+                <BranchCompareBannerList
+                  prCandidateBranches={prCandidateBranches}
+                  defaultBranchName={repository?.default_branch || 'main'}
+                  repoId={repoId}
+                  spaceId={spaceId}
+                />
+                <Spacer size={4} />
+              </>
             )}
             {selectedBranchOrTag?.name !== repository?.default_branch && (
               <>
@@ -168,7 +171,7 @@ export function RepoSummaryView({
                   }}
                   refType={refType}
                 />
-                <Spacer size={5} />
+                <Spacer size={4} />
               </>
             )}
 
@@ -205,7 +208,7 @@ export function RepoSummaryView({
                 </ButtonLayout>
               </ListActions.Right>
             </ListActions.Root>
-            <Spacer size={5} />
+            <Spacer size={4.5} />
             <Summary
               toCommitDetails={toCommitDetails}
               latestFile={{
@@ -232,9 +235,11 @@ export function RepoSummaryView({
                   right
                   title={
                     <Button variant="outline" iconOnly asChild>
-                      <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}>
+                      <Link
+                        to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}
+                        aria-label={t('views:repos.editReadme', 'Edit README.md')}
+                      >
                         <IconV2 name="edit-pencil" className="text-icons-3" />
-                        <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
                       </Link>
                     </Button>
                   }

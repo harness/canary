@@ -70,7 +70,7 @@ export default {
       userSelect: 'none',
       '@apply transition-colors': '',
 
-      '&:not(:where([data-disabled]))': {
+      '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
           outline: 'none',
@@ -84,7 +84,7 @@ export default {
         }
       },
 
-      '&:where([data-disabled])': {
+      '&:where([aria-disabled=true])': {
         opacity: 'var(--cn-disabled-opacity)',
         cursor: 'not-allowed'
       },

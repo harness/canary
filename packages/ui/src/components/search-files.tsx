@@ -13,7 +13,11 @@ const markedFileClassName = 'w-full text-cn-foreground-1'
  */
 const getMarkedFileElement = (file: string, query: string, matchIndex: number): ReactNode => {
   if (matchIndex === -1) {
-    return <Text className={markedFileClassName}>{file}</Text>
+    return (
+      <Text className={markedFileClassName} truncate>
+        {file}
+      </Text>
+    )
   }
 
   const startText = file.slice(0, matchIndex)
@@ -21,7 +25,7 @@ const getMarkedFileElement = (file: string, query: string, matchIndex: number): 
   const endText = file.slice(matchIndex + query.length)
 
   return (
-    <Text className={markedFileClassName}>
+    <Text className={markedFileClassName} truncate>
       {startText && <span>{startText}</span>}
       {matchedText && <mark>{matchedText}</mark>}
       {endText && <span>{endText}</span>}
@@ -102,14 +106,16 @@ export const SearchFiles = ({
         }}
         className="w-[var(--radix-popper-anchor-width)] !p-1"
       >
-        <Command.Root>
-          <Command.List heightClassName="max-h-60">
+        <Command.Root className="bg-transparent">
+          <Command.List
+            scrollAreaProps={{ className: 'max-h-60', classNameContent: 'overflow-hidden [&>[cmdk-group]]:!p-0' }}
+          >
             {filteredFiles.length ? (
               <Command.Group>
                 {filteredFiles?.map(({ file, element }) => (
                   <Command.Item
                     key={file}
-                    className="break-words"
+                    className="!cn-dropdown-menu-item"
                     value={file}
                     onSelect={() => {
                       navigateToFile(file)

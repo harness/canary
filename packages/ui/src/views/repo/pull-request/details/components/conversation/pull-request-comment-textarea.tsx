@@ -236,7 +236,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           </div>
 
           {/* max-h-52 - setting max height of the list to 208px */}
-          <Command.List heightClassName="max-h-52">{renderCommandList()}</Command.List>
+          <Command.List scrollAreaProps={{ className: 'max-h-52' }}>{renderCommandList()}</Command.List>
         </Command.Root>
       </div>
     )

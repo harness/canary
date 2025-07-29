@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Alert, Button, CopyButton, DropdownMenu, IconV2, Tabs, Text, TextInput } from '@/components'
+import { Alert, Button, CopyButton, DropdownMenu, IconV2, Layout, Tabs, Text, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
@@ -34,30 +34,31 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           {t('views:repos.cloneRepo', 'Clone Repository')}
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className="w-[360px]" align="end">
-        <DropdownMenu.Header>
-          <Text variant="body-single-line-strong" color="foreground-1" className="p-1">
-            {t('views:repos.cloneRepo', 'Clone Repository')}
-          </Text>
+      <DropdownMenu.Content
+        align="end"
+        className="w-[360px] [&>.cn-dropdown-menu-container-header]:border-b-0 [&>.cn-dropdown-menu-container-header]:pb-0"
+      >
+        <DropdownMenu.Header className="pb-0">
+          <Layout.Grid gapY="sm">
+            <Text variant="body-single-line-strong" color="foreground-1">
+              {t('views:repos.cloneRepo', 'Clone repository')}
+            </Text>
 
-          <Tabs.Root
-            className="mb-[-11px] mt-3"
-            value={currentTab}
-            onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
-          >
-            <Tabs.List className="-mx-3 px-4" activeClassName="bg-cn-background-3" variant="overlined">
-              <Tabs.Trigger value={CloneRepoTabs.HTTPS} onClick={() => setCurrentTab(CloneRepoTabs.HTTPS)}>
-                {t('views:repos.cloneHttps', 'HTTPS')}
-              </Tabs.Trigger>
-              <Tabs.Trigger
-                value={CloneRepoTabs.SSH}
-                onClick={() => setCurrentTab(CloneRepoTabs.SSH)}
-                disabled={!isSSHAvailable}
-              >
-                {t('views:repos.cloneSsh', 'SSH')}
-              </Tabs.Trigger>
-            </Tabs.List>
-          </Tabs.Root>
+            <Tabs.Root value={currentTab} onValueChange={val => setCurrentTab(val as CloneRepoTabs)}>
+              <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
+                <Tabs.Trigger value={CloneRepoTabs.HTTPS} onClick={() => setCurrentTab(CloneRepoTabs.HTTPS)}>
+                  {t('views:repos.cloneHttps', 'HTTPS')}
+                </Tabs.Trigger>
+                <Tabs.Trigger
+                  value={CloneRepoTabs.SSH}
+                  onClick={() => setCurrentTab(CloneRepoTabs.SSH)}
+                  disabled={!isSSHAvailable}
+                >
+                  {t('views:repos.cloneSsh', 'SSH')}
+                </Tabs.Trigger>
+              </Tabs.List>
+            </Tabs.Root>
+          </Layout.Grid>
         </DropdownMenu.Header>
 
         <DropdownMenu.Slot className="p-3">

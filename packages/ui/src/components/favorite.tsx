@@ -12,7 +12,7 @@ const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteT
     variant="transparent"
     selectedVariant="primary"
     prefixIcon={isFavorite ? 'star-solid' : 'star'}
-    prefixIconProps={{ className: isFavorite ? 'text-cn-icon-yellow' : 'text-icons-6' }}
+    prefixIconProps={{ className: isFavorite ? 'text-cn-icon-yellow' : 'text-cn-foreground-2' }}
     onChange={onFavoriteToggle}
   />
 )

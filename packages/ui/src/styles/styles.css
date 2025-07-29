@@ -35,7 +35,7 @@
 
 @layer base {
   body {
-    @apply bg-cn-background-0 text-cn-foreground-2 font-body-normal overflow-y-hidden;
+    @apply bg-cn-background-0 text-cn-foreground-2 font-body-normal overscroll-y-none;
   }
 }
 

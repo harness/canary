@@ -32,7 +32,7 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
   }
   return (
     <Layout.Grid
-      className="mb-4 overflow-hidden rounded-3 border border-cn-borders-success bg-cn-background-1 px-4 py-3.5"
+      className="overflow-hidden rounded-3 border border-cn-borders-success bg-cn-background-1 px-4 py-3.5"
       gap="sm"
     >
       {visibleCandidates?.map((branch, index) => (

@@ -47,7 +47,7 @@ export default function PullRequestListPage() {
       ...(orgIdentifier && { orgIdentifier }),
       ...(projectIdentifier && { projectIdentifier }),
       query: query ?? '',
-      page: queryPage,
+      page,
       ...filterValues
     }),
     [accountId, orgIdentifier, projectIdentifier, filterValues, query, queryPage]

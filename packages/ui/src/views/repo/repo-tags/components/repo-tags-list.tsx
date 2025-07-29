@@ -85,7 +85,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 onClick: onResetFiltersAndPages
               }
             : {
-                label: t('views:noData.createNewTag', 'Create new tag.'),
+                label: t('views:noData.createNewTag', 'Create tag'),
                 onClick: onOpenCreateTagDialog
               }
         }

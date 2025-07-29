@@ -1267,7 +1267,7 @@
       },
       "plain-lineNumber-color": {
         "$type": "color",
-        "$value": "{text.2}",
+        "$value": "{chrome.200}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
@@ -1305,13 +1305,45 @@
       },
       "hunk-content-color": {
         "$type": "color",
-        "$value": "{text.2}",
+        "$value": "{chrome.300}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {
         "$type": "color",
         "$value": "{bg.2}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
+      },
+      "hljs-comment": {
+        "$type": "color",
+        "$value": "{chrome.300}"
+      },
+      "hljs-keyword": {
+        "$type": "color",
+        "$value": "{purple.150}"
+      },
+      "hljs-title-class": {
+        "$type": "color",
+        "$value": "{yellow.100}"
+      },
+      "hljs-string": {
+        "$type": "color",
+        "$value": "{green.100}"
+      },
+      "hljs-title-function": {
+        "$type": "color",
+        "$value": "{blue.150}"
+      },
+      "hljs-name": {
+        "$type": "color",
+        "$value": "{red.150}"
+      },
+      "hljs-literal": {
+        "$type": "color",
+        "$value": "{cyan.150}"
+      },
+      "hljs-attr": {
+        "$type": "color",
+        "$value": "{orange.200}"
       }
     },
     "input": {

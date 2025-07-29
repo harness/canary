@@ -11,9 +11,7 @@ const createToggleStyles = () => {
       paddingRight: `var(--cn-btn-px-${size})`,
       paddingTop: `var(--cn-btn-py-${size})`,
       paddingBottom: `var(--cn-btn-py-${size})`,
-      '&[data-state="off"]': {
-        border: 'var(--cn-btn-border) solid transparent'
-      }
+      border: 'var(--cn-btn-border) solid transparent'
     }
   })
 
@@ -22,6 +20,10 @@ const createToggleStyles = () => {
 
 export default {
   '.cn-toggle': {
-    ...createToggleStyles()
+    ...createToggleStyles(),
+
+    '&[data-state="on"]': {
+      color: 'var(--cn-text-1)'
+    }
   }
 }

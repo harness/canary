@@ -470,8 +470,8 @@ const PullRequestPanel = ({
                 }
               />
               {showMergeInputs && (
-                <Layout.Vertical className="items-center w-full mt-4">
-                  <Layout.Vertical className="gap-4 w-full">
+                <Layout.Vertical className="mt-4 w-full items-center">
+                  <Layout.Vertical className="w-full gap-4">
                     <Input
                       id="merge-title"
                       label="Pull Request Title"

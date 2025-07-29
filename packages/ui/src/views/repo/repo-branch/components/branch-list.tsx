@@ -173,7 +173,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               </Table.Cell>
               {/* calculated divergence bar & default branch */}
               <Table.Cell className="content-center">
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="flex size-full items-center justify-center">
                   {branch?.behindAhead?.default ? (
                     <Tag variant="outline" size="md" value={t('views:repos.default', 'Default')} theme="gray" rounded />
                   ) : (
@@ -200,7 +200,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     <Link
                       to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                       onClick={e => e.stopPropagation()}
-                      className="flex gap-2 w-full"
+                      className="flex w-full gap-2"
                     >
                       <IconV2
                         name={

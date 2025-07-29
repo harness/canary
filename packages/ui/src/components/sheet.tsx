@@ -52,7 +52,7 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('bg-cn-background fixed z-50 gap-4 p-6 shadow-lg transition ease-in-out', {
+const sheetVariants = cva('fixed z-50 gap-4 bg-cn-background p-6 shadow-lg transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',

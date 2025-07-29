@@ -135,7 +135,7 @@ git push -u origin main
               <span
                 role="button"
                 tabIndex={0}
-                className="hover:underline cn-link cn-link-default cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
+                className="cn-link cn-link-default cursor-pointer hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cn-foreground-accent"
                 data-disabled="false"
                 onClick={() => navigateToProfileKeys?.()}
                 onKeyDown={e => {

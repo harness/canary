@@ -42,7 +42,7 @@ const Stats = ({
     <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
     <span className="flex items-center gap-1">
       <IconV2 name="git-pull-request" className="text-icons-7" />
-      <span className="text-2 text-cn-foreground-1 font-normal">{pulls || 0}</span>
+      <span className="text-2 font-normal text-cn-foreground-1">{pulls || 0}</span>
     </span>
   </div>
 )

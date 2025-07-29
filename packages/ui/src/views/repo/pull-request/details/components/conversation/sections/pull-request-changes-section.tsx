@@ -87,7 +87,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="circle" className="text-icons-7 fill-transparent" />
+                  <IconV2 name="circle" className="fill-transparent text-icons-7" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
                   </span>
@@ -108,7 +108,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="circle" className="text-icons-7 fill-transparent" />
+                  <IconV2 name="circle" className="fill-transparent text-icons-7" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>

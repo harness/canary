@@ -45,7 +45,7 @@ const PipelineStudioLayout = {
   },
   SplitDivider: ({ children }: { children: ReactNode }) => {
     return (
-      <div style={{ height: 80, minHeight: 80 }} className="border-t border-cn-borders-2 px-4 flex items-center">
+      <div style={{ height: 80, minHeight: 80 }} className="flex items-center border-t border-cn-borders-2 px-4">
         {children}
       </div>
     )

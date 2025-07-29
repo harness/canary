@@ -107,7 +107,7 @@ export function RepoWebhookList({
               to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
-              <Table.Cell className="cursor-pointer w-1/2 pr-4 max-w-0">
+              <Table.Cell className="w-1/2 max-w-0 cursor-pointer pr-4">
                 <Switch
                   checked={webhook.enabled}
                   onClick={e => {

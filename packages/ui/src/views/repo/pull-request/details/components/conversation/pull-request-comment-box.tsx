@@ -489,7 +489,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3"
+                className="min-h-36 bg-cn-background-2 p-3 text-cn-foreground-1"
                 autoFocus={!!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -506,12 +506,12 @@ export const PullRequestCommentBox = ({
               />
 
               {showAiLoader && (
-                <div className="absolute flex inset-0 cursor-wait items-center justify-center">
+                <div className="absolute inset-0 flex cursor-wait items-center justify-center">
                   <IconV2 size="lg" className="animate-spin" name="loader" />
                 </div>
               )}
               {isDragging && (
-                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />
+                <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
               )}
 
               <Layout.Flex align="center" className="bg-cn-background-2 pb-2 pt-1">
@@ -528,7 +528,7 @@ export const PullRequestCommentBox = ({
                       >
                         <IconV2 name={item.icon} />
                       </Button>
-                      {isFirst && <div className="bg-cn-background-3 h-4 w-px" />}
+                      {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>
                   )
                 })}

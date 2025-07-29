@@ -61,6 +61,8 @@ The `Toggle` component can be used in both controlled and uncontrolled modes. In
 
 The `Toggle` component accepts a `variant` prop to control its applyed styles. Supported values are: `outline`, `ghost`, and `transparent`. The `selectedVariant` prop controls the style when the toggle is pressed, with options for `primary` and `secondary`.
 
+**Note**: When the variant is set to `transparent`, the `selectedVariant` is ignored — the selected state will also remain `transparent`, following the design specification.
+
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -93,13 +95,8 @@ The `Toggle` component accepts a `variant` prop to control its applyed styles. S
 
     <Layout.Horizontal gap="xl">
       <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">transparent / primary</Text>
+        <Text className="w-[200px]" variant="body-strong" align="center">transparent</Text>
         <Toggle text="Toggle" variant="transparent" />
-      </Layout.Vertical>
-
-      <Layout.Vertical gap="xs" align="center">
-        <Text className="w-[200px]" variant="body-strong" align="center">transparent / secondary</Text>
-        <Toggle text="Toggle" variant="transparent" selectedVariant="secondary" />
       </Layout.Vertical>
     </Layout.Horizontal>
 

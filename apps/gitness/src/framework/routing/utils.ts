@@ -18,7 +18,9 @@ export const generateRouteNameToPathFunctions = (routeEntries: RouteEntry[]): Ro
         /* Ensures generated routes are absolute in nature */
         '/' +
         /* Replace each parameter in the path with the corresponding value from params */
-        pathWithSplat.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params?.[key] || `:${key}`)
+        pathWithSplat.replace(/:([a-zA-Z0-9_]+)/g, (_, key) =>
+          params?.[key] ? encodeURIComponent(params[key]) : `:${key}`
+        )
       )
     }
     return map

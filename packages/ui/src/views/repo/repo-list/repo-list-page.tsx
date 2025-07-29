@@ -161,6 +161,9 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 ? [
                     {
                       label: t('views:scope.label', 'Scope'),
+                      /**
+                       * @todo check why this explicit cast is needed, gives type error otherwise
+                       */
                       value: 'recursive' as keyof RepoListFilters,
                       type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
                       filterFieldConfig: {

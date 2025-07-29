@@ -42,5 +42,21 @@ export const useRepoRulesStore = (): IRepoStore => ({
       updated: 1736833375578
     }
   ],
+  userGroups: [
+    {
+      id: 6,
+      identifier: 'test3',
+      name: 'Test 3',
+      description: 'usergroup description',
+      scope: 0
+    },
+    {
+      id: 7,
+      identifier: 'test4',
+      name: 'Test 4',
+      description: 'usergroup description',
+      scope: 0
+    }
+  ],
   recentStatusChecks: null
 })

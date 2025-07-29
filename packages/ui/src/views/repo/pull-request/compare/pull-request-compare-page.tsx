@@ -203,7 +203,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="text-6 text-cn-foreground-1 mt-7 font-medium leading-snug tracking-tight">
+        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
@@ -270,7 +270,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="border-cn-borders-2 bg-cn-background-2 mt-4 rounded-md border p-4"
+            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
           >
             <p className="text-2 leading-none">
               {isBranchSelected ? (
@@ -309,7 +309,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="border-cn-borders-2 bg-cn-background-2 mt-4 rounded-md border p-4"
+            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
           >
             <div className="flex items-center gap-x-1.5">
               <div>

@@ -1,7 +1,6 @@
 import { Accordion, IconV2, Layout, Link, StackedList, StatusBadge, Text } from '@/components'
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
-import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 
@@ -50,51 +49,52 @@ const PullRequestCheckSection = ({
           <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
         </Layout.Flex>
       </Accordion.Trigger>
-      <Accordion.Content className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
-        {checkData.map(check => {
-          const time = timeDistance(check?.check?.created, check?.check?.updated)
-
-          return (
-            <div key={check.check?.id} className={cn('flex items-center justify-between gap-2 border-t py-2.5')}>
-              <div className="flex items-center gap-2">
-                {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                <Text color="foreground-1" truncate className="max-w-[300px] overflow-hidden">
-                  {check?.check?.identifier}
-                </Text>
-                <Text color="foreground-3">
-                  {check?.check?.status === ExecutionState.SUCCESS ||
-                  check?.check?.status === ExecutionState.FAILURE_IGNORED
-                    ? `Succeeded in ${time}`
-                    : check?.check?.status === ExecutionState.FAILURE
-                      ? `Failed in ${time}`
-                      : check?.check?.status === ExecutionState.RUNNING
-                        ? 'Running...'
-                        : check?.check?.status === ExecutionState.PENDING
-                          ? 'Pending...'
-                          : `Errored in ${time}`}
-                </Text>
-              </div>
-              <div className="grid grid-cols-[84px_auto] items-center">
-                <div className="col-span-1">
-                  {check?.check?.status !== ExecutionState.PENDING && (
-                    <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
-                      Details
-                    </Link>
-                  )}
-                </div>
-                <div className="col-span-1 flex justify-end">
-                  {check?.required ? (
-                    <StatusBadge variant="outline" size="sm">
-                      <Text color="foreground-3">Required</Text>
-                    </StatusBadge>
-                  ) : (
-                    <div className="min-w-[70px]"></div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )
-        })}
+      <Accordion.Content>
+        <div className="ml-6 bg-inherit">
+          <StackedList.Root className="cursor-default border-transparent bg-inherit">
+            {checkData.map(check => {
+              const time = timeDistance(check?.check?.created, check?.check?.updated)
+              return (
+                <StackedList.Item key={check.check?.id}>
+                  {getStatusIcon(check?.check?.status as EnumCheckStatus)}
+                  <StackedList.Field title={check?.check?.identifier} />
+                  <StackedList.Field
+                    title={
+                      check?.check?.status === ExecutionState.SUCCESS ||
+                      check?.check?.status === ExecutionState.FAILURE_IGNORED
+                        ? `Succeeded in ${time}`
+                        : check?.check?.status === ExecutionState.FAILURE
+                          ? `Failed in ${time}`
+                          : check?.check?.status === ExecutionState.RUNNING
+                            ? 'Running...'
+                            : check?.check?.status === ExecutionState.PENDING
+                              ? 'Pending...'
+                              : `Errored in ${time}`
+                    }
+                  />
+                  <StackedList.Field
+                    title={
+                      check?.required && (
+                        <StatusBadge variant="outline" size="sm">
+                          <Text color="foreground-3">Required</Text>
+                        </StatusBadge>
+                      )
+                    }
+                  />
+                  <StackedList.Field
+                    title={
+                      check?.check?.status !== ExecutionState.PENDING && (
+                        <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
+                          Details
+                        </Link>
+                      )
+                    }
+                  />
+                </StackedList.Item>
+              )
+            })}
+          </StackedList.Root>
+        </div>
       </Accordion.Content>
     </Accordion.Item>
   ) : null

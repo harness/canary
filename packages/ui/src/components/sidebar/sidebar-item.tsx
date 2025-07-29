@@ -299,7 +299,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {withActionMenu && (
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger className="cn-sidebar-item-action-button cn-sidebar-item-action-menu">
+            <DropdownMenu.Trigger className="cn-sidebar-item-action-menu cn-sidebar-item-action-button">
               <IconV2 name="more-vert" size="xs" />
             </DropdownMenu.Trigger>
             <DropdownMenu.Content side="bottom" align="end" sideOffset={4}>

@@ -1,5 +1,4 @@
-import { Button } from './button'
-import { IconV2 } from './icon-v2'
+import { Toggle } from './toggle'
 
 interface FavoriteIconProps {
   isFavorite?: boolean
@@ -7,22 +6,15 @@ interface FavoriteIconProps {
 }
 
 const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle }) => (
-  <Button
-    size="sm"
+  <Toggle
     iconOnly
-    variant="ghost"
-    onClick={e => {
-      e.preventDefault()
-      e.stopPropagation()
-      onFavoriteToggle(!isFavorite)
-    }}
-  >
-    <IconV2
-      name={isFavorite ? 'star-solid' : 'star'}
-      size="md"
-      className={isFavorite ? 'text-cn-icon-yellow' : 'text-icons-6'}
-    />
-  </Button>
+    size="sm"
+    variant="transparent"
+    selectedVariant="primary"
+    prefixIcon={isFavorite ? 'star-solid' : 'star'}
+    prefixIconProps={{ className: isFavorite ? 'text-cn-icon-yellow' : 'text-cn-foreground-2' }}
+    onChange={onFavoriteToggle}
+  />
 )
 
 export { Favorite }

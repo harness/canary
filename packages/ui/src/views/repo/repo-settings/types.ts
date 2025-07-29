@@ -1,4 +1,4 @@
-import { PrincipalType } from '@/types'
+import { PrincipalType, TypesUserGroupInfo } from '@/types'
 import { RepoBranchSettingsFormFields } from '@/views'
 import { z } from 'zod'
 
@@ -64,6 +64,7 @@ export interface IRepoStore {
   gitLfsEnabled: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
+  userGroups: TypesUserGroupInfo[] | null
   recentStatusChecks: string[] | null
 }
 
@@ -71,6 +72,7 @@ export interface IProjectRulesStore {
   rules: RuleDataType[] | null
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
+  userGroups: TypesUserGroupInfo[] | null
   recentStatusChecks: string[] | null
   totalItems: number
   pageSize: number
@@ -78,6 +80,7 @@ export interface IProjectRulesStore {
   setRules: (data: RuleDataType[], headers?: Headers) => void
   setPresetRuleData: (data: RepoBranchSettingsFormFields | null) => void
   setPrincipals: (data: PrincipalType[] | null) => void
+  setUserGroups: (data: TypesUserGroupInfo[] | null) => void
   setRecentStatusChecks: (data: string[] | null) => void
 }
 

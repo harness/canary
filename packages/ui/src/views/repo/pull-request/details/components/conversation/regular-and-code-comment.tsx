@@ -3,6 +3,7 @@ import { FC, memo, useCallback, useState } from 'react'
 import { Avatar, IconV2, Layout, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import {
+  activitiesToDiffCommentItems,
   CommentItem,
   isCodeComment,
   PrincipalPropsType,
@@ -207,6 +208,12 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         const commentIdAttr = `comment-${commentItem.id}`
         const name = commentItem.payload?.author?.display_name
         const avatar = getAvatar(name)
+        // codeBlockContent is required for suggestions in a code-comment, TODO: fix this parsing at gitness for both conversation and changes
+        commentItem.codeBlockContent = activitiesToDiffCommentItems(
+          commentItem,
+          'payload.payload',
+          'payload'
+        ).codeBlockContent
 
         return (
           <BaseComp

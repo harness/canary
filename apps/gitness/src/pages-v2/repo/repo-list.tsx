@@ -127,10 +127,8 @@ export default function ReposListPage() {
         })
       } else {
         await deleteFavorite({
-          body: {
-            resource_id: repoId,
-            resource_type: 'REPOSITORY'
-          }
+          queryParams: { resource_type: 'REPOSITORY' },
+          resource_id: repoId
         })
       }
       const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: isFavorite } : repo)) ?? []

@@ -34,12 +34,8 @@
 }
 
 @layer base {
-  html {
-    @apply text-base;
-  }
-
   body {
-    @apply bg-cn-background-0 text-cn-foreground-2 overscroll-y-none text-sm font-normal -tracking-[0.02em];
+    @apply bg-cn-background-0 text-cn-foreground-2 font-body-normal overscroll-y-none;
   }
 }
 

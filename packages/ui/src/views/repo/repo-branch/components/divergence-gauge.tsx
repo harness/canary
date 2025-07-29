@@ -25,7 +25,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
   const adjustedAheadPercentage = adjustPercentage(aheadPercentage)
 
   return (
-    <div className={cn('mt-0.5 flex w-full flex-col gap-[3px]', className)}>
+    <div className={cn('flex w-full flex-col gap-[4px]', className)}>
       <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
         <span className="truncate text-right text-2 leading-none text-cn-foreground-3">
           {behindAhead.behind ?? 0}
@@ -34,7 +34,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
             {t('views:repos.behind', 'behind')}
           </span>
         </span>
-        <div className="h-3 w-px bg-cn-background-3" aria-hidden />
+        <div className="h-[1.125rem] w-px bg-cn-borders-3" aria-hidden />
         <span className="truncate text-2 leading-none text-cn-foreground-3">
           {behindAhead.ahead ?? 0}
           <span className="sr-only">

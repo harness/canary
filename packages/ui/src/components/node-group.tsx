@@ -30,7 +30,7 @@ function Icon({
   className?: string
 }) {
   return (
-    <div className="col-start-1 row-start-1 flex size-full items-center justify-center self-start">
+    <div className="col-start-1 row-start-1 flex size-full items-start justify-center self-start">
       <div
         className={cn(
           'border-cn-borders-4 bg-cn-background-2 text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium',
@@ -38,7 +38,7 @@ function Icon({
           className
         )}
       >
-        {simpleNodeIcon ? <div className="size-1 rounded-[1px] bg-icons-8" /> : <>{children}</>}
+        {simpleNodeIcon ? <div className="size-1 rounded-full bg-icons-8" /> : <>{children}</>}
       </div>
     </div>
   )

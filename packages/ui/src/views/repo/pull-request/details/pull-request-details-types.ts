@@ -199,6 +199,14 @@ export interface TypesPrincipalInfo {
   updated?: number
 }
 
+export interface TypesUserGroupInfo {
+  description?: string
+  id?: number
+  identifier?: string
+  name?: string
+  scope?: number
+}
+
 export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned' | 'default' | 'code_owners'
 
 export declare type ReviewerListPullReqOkResponse = TypesPullReqReviewer[]

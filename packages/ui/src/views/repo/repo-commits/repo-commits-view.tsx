@@ -46,7 +46,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   }, [xNextPage])
 
   return (
-    <SandboxLayout.Main fullWidth>
+    <SandboxLayout.Main className="ml-1">
       <SandboxLayout.Content>
         <Text variant="heading-section">Commits</Text>
         <Spacer size={6} />
@@ -54,7 +54,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
           <BranchSelectorContainer />
         </div>
 
-        <Spacer size={5} />
+        <Spacer size={3} />
 
         {isFetchingCommits ? (
           <SkeletonList />
@@ -100,6 +100,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                   toCode={toCode}
                   toCommitDetails={toCommitDetails}
                   toPullRequest={toPullRequest}
+                  className="ml-1"
                 />
                 <Pagination
                   className="pl-[26px]"

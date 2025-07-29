@@ -2,8 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
+  TypesUserGroupInfo,
   useListPrincipalsQuery,
   useListStatusCheckRecentSpaceQuery,
+  useListUsergroupsQuery,
   useSpaceRuleAddMutation,
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
@@ -33,7 +35,7 @@ export const ProjectBranchRulesContainer = () => {
   const spaceURL = useGetSpaceURLParam()
 
   const { ruleId: ruleIdentifier } = useParams()
-  const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useProjectRulesStore()
+  const { setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks } = useProjectRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch, resetRules } = useBranchRulesStore()
   const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
@@ -52,10 +54,11 @@ export const ProjectBranchRulesContainer = () => {
     return () => {
       setPresetRuleData(null)
       setPrincipals(null)
+      setUserGroups(null)
       setRecentStatusChecks(null)
       resetRules()
     }
-  }, [resetRules, setPresetRuleData, setPrincipals, setRecentStatusChecks])
+  }, [resetRules, setPresetRuleData, setPrincipals, setUserGroups, setRecentStatusChecks])
 
   const { data: { body: rulesData } = {} } = useSpaceRuleGetQuery(
     { space_ref: `${spaceURL}/+`, rule_identifier: ruleIdentifier ?? '' },
@@ -96,6 +99,20 @@ export const ProjectBranchRulesContainer = () => {
       arrayFormat: 'repeat'
     }
   })
+
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery(
+    {
+      space_ref: `${spaceURL}/+`,
+      queryParams: {
+        page: 1,
+        limit: 100,
+        query: principalsSearchQuery
+      }
+    },
+    {
+      enabled: isMFE
+    }
+  )
 
   const {
     mutate: updateRule,
@@ -201,10 +218,11 @@ export const ProjectBranchRulesContainer = () => {
   }, [rulesData, setPresetRuleData])
 
   useEffect(() => {
-    if (principals) {
+    if (principals || userGroups) {
       setPrincipals(principals as PrincipalType[])
+      setUserGroups(userGroups as TypesUserGroupInfo[])
     }
-  }, [principals, setPrincipals])
+  }, [principals, setPrincipals, userGroups, setUserGroups])
 
   useEffect(() => {
     if (recentStatusChecks) {
@@ -214,11 +232,14 @@ export const ProjectBranchRulesContainer = () => {
 
   const errors = {
     principals: principalsError?.message || null,
+    userGroups: userGroupsError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null,
     statusChecks: statusChecksError?.message || null
   }
-
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -234,6 +255,7 @@ export const ProjectBranchRulesContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      bypassListPlaceholder={searchPlaceholder}
       projectScope
     />
   )

@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 
 import { TypesBranchTable } from '@/views'
 import { Layout } from '@components/layout'
+import { Separator } from '@components/separator'
 
 import BranchCompareBanner from './branch-compare-banner'
 
@@ -30,12 +31,12 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
     return null
   }
   return (
-    <Layout.Flex
-      direction="column"
-      className="rounded-md border border-cn-borders-success bg-cn-background-2 mb-5 overflow-hidden"
+    <Layout.Grid
+      className="overflow-hidden rounded-3 border border-cn-borders-success bg-cn-background-1 px-4 py-3.5"
+      gap="sm"
     >
       {visibleCandidates?.map((branch, index) => (
-        <div key={branch.name} className="relative">
+        <>
           <BranchCompareBanner
             branch={branch}
             defaultBranchName={defaultBranchName}
@@ -43,10 +44,10 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
             spaceId={spaceId}
             onDismiss={handleDismiss}
           />
-          {index < visibleCandidates.length - 1 && <div className="mx-4 border-b border-cn-borders-2"></div>}
-        </div>
+          {index < visibleCandidates.length - 1 && <Separator />}
+        </>
       ))}
-    </Layout.Flex>
+    </Layout.Grid>
   )
 }
 

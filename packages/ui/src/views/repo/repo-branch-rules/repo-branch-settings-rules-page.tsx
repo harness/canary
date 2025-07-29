@@ -15,6 +15,7 @@ import {
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
 import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
+import { combineAndNormalizePrincipalsAndGroups } from './utils'
 
 type BranchSettingsErrors = {
   principals: string | null
@@ -60,7 +61,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 }) => {
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
-  const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
+  const { presetRuleData, principals, userGroups, recentStatusChecks } = useRepoRulesStore()
   const formMethods = useForm<RepoBranchSettingsFormFields>({
     resolver: zodResolver(repoBranchSettingsFormSchema),
     mode: 'onChange',
@@ -152,7 +153,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             errors={errors}
             setValue={setValue}
             watch={watch}
-            bypassOptions={principals}
+            bypassOptions={combineAndNormalizePrincipalsAndGroups(principals, userGroups)}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
             bypassListPlaceholder={bypassListPlaceholder}

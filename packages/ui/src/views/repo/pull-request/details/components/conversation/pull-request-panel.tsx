@@ -4,6 +4,7 @@ import {
   Accordion,
   Alert,
   Button,
+  ButtonLayout,
   Checkbox,
   CounterBadge,
   IconV2,
@@ -409,6 +410,7 @@ const PullRequestPanel = ({
                           }
                         }}
                         label="Bypass and merge anyway"
+                        className="[&_.cn-label-text]:overflow-visible [&_.cn-label-text]:text-ellipsis-none"
                       />
                     )}
                     {actions && !pullReqMetadata?.closed && !showActionBtn ? (
@@ -431,14 +433,14 @@ const PullRequestPanel = ({
                     ) : null}
                     {/* When in merge input mode, replace dropdown with Cancel/Confirm buttons, keep status/tooltip untouched */}
                     {actions && !pullReqMetadata?.closed && showActionBtn ? (
-                      <>
+                      <ButtonLayout>
                         <Button variant="outline" onClick={handleCancelMerge}>
                           Cancel
                         </Button>
                         <Button theme="success" onClick={handleConfirmMerge}>
                           Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
                         </Button>
-                      </>
+                      </ButtonLayout>
                     ) : null}
                     {isShowMoreTooltip && (
                       <MoreActionsTooltip

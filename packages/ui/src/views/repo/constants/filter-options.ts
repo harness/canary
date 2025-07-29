@@ -48,7 +48,7 @@ export const getPRListFilterOptions = ({
   customFilterOptions = [],
   scope
 }: PRListFilterOptions & { scope: Scope }): PRListFilterOptionConfig => {
-  const ScopeOptions = getFilterScopeOptions({ t, ...scope })
+  const scopeFilterOptions = getFilterScopeOptions({ t, scope })
   const { accountId, orgIdentifier, projectIdentifier } = scope
   return [
     {
@@ -91,14 +91,13 @@ export const getPRListFilterOptions = ({
             value: 'include_subspaces' as keyof PRListFilters,
             type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
             filterFieldConfig: {
-              options: ScopeOptions,
+              options: scopeFilterOptions,
               placeholder: 'Select scope',
               allowSearch: false
             },
             parser: {
-              parse: (value: string): ComboBoxOptions => {
-                return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
-              },
+              parse: (value: string): ComboBoxOptions =>
+                scopeFilterOptions.find(scope => scope.value === value) || { label: '', value },
               serialize: (value: ComboBoxOptions): string => {
                 const selected = value?.value
 

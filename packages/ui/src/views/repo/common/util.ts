@@ -6,10 +6,11 @@ import { ExtendedScope } from './types'
 
 export const getFilterScopeOptions = ({
   t,
-  accountId,
-  orgIdentifier,
-  projectIdentifier
-}: { t: TFunctionWithFallback } & Scope): ComboBoxOptions[] => {
+  scope: { accountId, orgIdentifier, projectIdentifier }
+}: {
+  t: TFunctionWithFallback
+  scope: Scope
+}): ComboBoxOptions[] => {
   if (accountId && orgIdentifier && projectIdentifier) return []
 
   if (accountId && orgIdentifier) {

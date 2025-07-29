@@ -98,7 +98,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     { label: 'Last push', value: RepoSortMethod.LastPush }
   ]
 
-  const ScopeOptions = getFilterScopeOptions({ t, ...scope })
+  const scopeFilterOptions = getFilterScopeOptions({ t, scope })
 
   return (
     <SandboxLayout.Main>
@@ -164,13 +164,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                       value: 'recursive' as keyof RepoListFilters,
                       type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
                       filterFieldConfig: {
-                        options: ScopeOptions,
+                        options: scopeFilterOptions,
                         placeholder: 'Select scope',
                         allowSearch: false
                       },
                       parser: {
                         parse: (value: string): ComboBoxOptions => {
-                          return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
+                          return scopeFilterOptions.find(scope => scope.value === value) || { label: '', value }
                         },
                         serialize: (value: ComboBoxOptions): string => {
                           const selected = value?.value

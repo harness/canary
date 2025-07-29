@@ -109,7 +109,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                                 navigate(toCode?.({ sha: commit?.sha || '' }) || '')
                               }}
                             >
-                              <IconV2 name="code-brackets" />
+                              <IconV2 name="code" />
                             </Button>
                           </Layout.Horizontal>
                         )}

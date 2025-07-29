@@ -52,11 +52,11 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
-        <Button className={cn('justify-start px-3', className)} variant="outline" size={buttonSize}>
+        <Button className={cn('flex justify-start px-3', className)} variant="outline" size={buttonSize}>
           {!branchPrefix && (
             <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
           )}
-          <Text className="truncate">
+          <Text className="w-[8.75rem] truncate text-left">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}

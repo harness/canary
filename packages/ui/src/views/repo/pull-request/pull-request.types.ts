@@ -1,5 +1,6 @@
 import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, ILabelsStore, LabelType, Scope, TypesBranchTable } from '@/views'
+import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
@@ -282,6 +283,7 @@ export type PRListFilters = {
   created_lt?: Date
   created_gt?: Date
   label_by?: LabelsValue
+  include_subspaces?: CheckboxOptions
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void

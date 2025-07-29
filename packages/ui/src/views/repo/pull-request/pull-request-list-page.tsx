@@ -137,13 +137,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
-    /**
-     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
-     */
-    /**
-     * @TODO fix this
-     */
-    setShowScope([ExtendedScope.All, ExtendedScope.OrgProg].includes('' as ExtendedScope))
   }
 
   useEffect(() => {
@@ -217,7 +210,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
         scope={scope}
-        showScope={showScope || true}
+        showScope={showScope}
       />
     )
   }
@@ -245,6 +238,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       {}
     )
 
+    /**
+     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
+     */
+    setShowScope(
+      [ExtendedScope.All, ExtendedScope.OrgProg].includes(filterValues.include_subspaces?.value as ExtendedScope)
+    )
     onFilterChange?.(_filterValues)
   }
 

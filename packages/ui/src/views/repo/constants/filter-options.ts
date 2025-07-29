@@ -84,7 +84,7 @@ export const getPRListFilterOptions = ({
       ? [
           {
             label: t('views:scope.label', 'Scope'),
-            value: 'recursive' as keyof PRListFilters,
+            value: 'include_subspaces' as keyof PRListFilters,
             type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
             filterFieldConfig: {
               options: ScopeOptions,

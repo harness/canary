@@ -154,7 +154,9 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
+      onFilterChange={filterData => {
+        setFilterValues(buildPRFilters(filterData))
+      }}
       searchQuery={query}
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}

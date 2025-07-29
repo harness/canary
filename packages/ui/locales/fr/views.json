@@ -651,6 +651,14 @@
     "edit": "Edit rule",
     "delete": "Delete rule"
   },
+  "scope": {
+    "orgAndProject": "Organisations et projets",
+    "orgOnly": "Organisations uniquement",
+    "all": "Compte, organisations et projets",
+    "accountOnly": "Compte uniquement",
+    "label": "Périmètre",
+    "account": "Compte"
+  },
   "commits": {
     "commitDetailsDiffShowing": "Affichage de",
     "commitDetailsDiffChangedFiles": "fichiers modifiés",
@@ -662,14 +670,6 @@
     "verified": "Vérifié",
     "browseFiles": "Parcourir les fichiers",
     "createNewCommit": "Créer un nouveau commit"
-  },
-  "scope": {
-    "orgAndProject": "Organisations et projets",
-    "orgOnly": "Organisations uniquement",
-    "all": "Compte, organisations et projets",
-    "accountOnly": "Compte uniquement",
-    "label": "Périmètre",
-    "account": "Compte"
   },
   "code": "Code",
   "createTagDialog": {

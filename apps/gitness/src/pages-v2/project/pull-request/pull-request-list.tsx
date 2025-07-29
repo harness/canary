@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
@@ -41,16 +41,15 @@ export default function PullRequestListPage() {
 
   const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
 
-  const queryParams: {
-    accountIdentifier: string
-    orgIdentifier?: string
-    projectIdentifier?: string
-  } & ListSpacePullReqQueryQueryParams = {
-    accountIdentifier: accountId || '',
-    ...(orgIdentifier ? { orgIdentifier } : {}),
-    ...(projectIdentifier ? { projectIdentifier } : {}),
-    ...filterValues
-  }
+  const queryParams = useMemo(
+    () => ({
+      accountIdentifier: accountId,
+      ...(orgIdentifier && { orgIdentifier }),
+      ...(projectIdentifier && { projectIdentifier }),
+      ...filterValues
+    }),
+    [accountId, orgIdentifier, projectIdentifier, filterValues]
+  )
 
   /**
    *

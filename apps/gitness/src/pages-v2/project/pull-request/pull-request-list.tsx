@@ -37,7 +37,7 @@ export default function PullRequestListPage() {
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
   const getApiPath = useAPIPath()
 
-  const { accountId, orgIdentifier, projectIdentifier } = scope || {}
+  const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
 
   const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
 
@@ -154,7 +154,7 @@ export default function PullRequestListPage() {
       onFilterChange={filterData => {
         setFilterValues(
           buildPRFilters(filterData, {
-            accountId: accountId || '',
+            accountId,
             orgIdentifier,
             projectIdentifier
           })
@@ -164,7 +164,7 @@ export default function PullRequestListPage() {
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}
       scope={{
-        accountId: accountId || '',
+        accountId,
         orgIdentifier,
         projectIdentifier
       }}

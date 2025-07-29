@@ -36,7 +36,7 @@ export default function PullRequestListPage() {
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
   const { scope } = useMFEContext()
-  const { accountId, orgIdentifier, projectIdentifier } = scope || {}
+  const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
@@ -154,12 +154,14 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData, _scope))}
+      onFilterChange={filterData =>
+        setFilterValues(buildPRFilters(filterData, { accountId, orgIdentifier, projectIdentifier }))
+      }
       searchQuery={query}
       setSearchQuery={setQuery}
       onLabelClick={onLabelClick}
       toPullRequest={({ prNumber }) => prNumber.toString()}
-      scope={_scope}
+      scope={{ accountId, orgIdentifier, projectIdentifier }}
     />
   )
 }

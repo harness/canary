@@ -25,7 +25,7 @@ export enum PULL_REQUEST_LIST_HEADER_FILTER_STATES {
 }
 
 export interface PullRequest extends PullRequestType {
-  repoId?: string
+  repo?: Pick<RepoRepositoryOutput, 'identifier' | 'path'>
 }
 
 export interface PullRequestType {

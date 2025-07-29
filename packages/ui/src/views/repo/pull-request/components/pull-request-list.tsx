@@ -21,7 +21,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   onLabelClick,
   toPullRequest,
   scope,
-  showScope
+  showScope = false
 }) => {
   const { identifier: repoId } = repo || {}
   const { Link } = useRouterContext()
@@ -159,7 +159,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             pullRequest?.number
               ? (toPullRequest?.({
                   prNumber: pullRequest.number,
-                  repoId: pullRequest?.repoId
+                  repoId: pullRequest?.repo?.identifier
                 }) ?? '')
               : ''
           }
@@ -173,7 +173,6 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                     <PullRequestItemTitle
                       pullRequest={pullRequest}
                       onLabelClick={onLabelClick}
-                      repoPath={repo?.path}
                       scope={scope}
                       showScope={showScope}
                     />

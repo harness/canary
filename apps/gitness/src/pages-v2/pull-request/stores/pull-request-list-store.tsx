@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 
-import { TypesPullReq } from '@harnessio/code-service-client'
+import { RepoRepositoryOutput, TypesPullReq } from '@harnessio/code-service-client'
 import { ColorsEnum, PullRequest } from '@harnessio/ui/views'
 
 import { PageResponseHeader } from '../../../types'
 
 type PullRequestInterface = TypesPullReq & {
-  repoId?: string
+  repo?: Pick<RepoRepositoryOutput, 'identifier' | 'path'>
 }
 
 interface PullRequestListStore {
@@ -36,7 +36,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
 
   setPullRequests: (data, headers) => {
     const transformedPullRequests: PullRequest[] = data.map(item => ({
-      repoId: item?.repoId || '',
+      repo: { identifier: item.repo?.identifier || '', path: item.repo?.path || '' },
       is_draft: item?.is_draft,
       merged: item?.merged,
       name: item?.title,

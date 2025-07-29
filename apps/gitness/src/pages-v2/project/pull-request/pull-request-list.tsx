@@ -81,9 +81,15 @@ export default function PullRequestListPage() {
     queryKey,
     queryFn: fetchPullRequests,
     select: ({ data, headers }) => ({
-      pullRequestData: data.flatMap(item =>
-        item.pull_request ? [{ ...item.pull_request, repoId: item.repository?.identifier }] : []
-      ),
+      pullRequestData: data
+        .filter(item => item.pull_request)
+        .map(item => ({
+          ...item.pull_request,
+          repo: {
+            identifier: item.repository?.identifier || '',
+            path: item.repository?.path || ''
+          }
+        })),
       headers
     })
   })

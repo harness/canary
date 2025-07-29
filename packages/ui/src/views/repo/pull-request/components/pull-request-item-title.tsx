@@ -13,17 +13,16 @@ interface PullRequestItemTitleProps {
   onLabelClick?: (labelId: number) => void
   scope: Scope
   showScope?: boolean
-  repoPath?: string
 }
 
 export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   pullRequest,
   onLabelClick,
-  repoPath,
   scope,
   showScope
 }) => {
-  const { name, labels, state, is_draft: isDraft, comments, merged, repoId } = pullRequest
+  const { name, labels, state, is_draft: isDraft, comments, merged, repo } = pullRequest
+  const { identifier: repoId, path: repoPath } = repo || {}
   const isSuccess = !!merged
   const repoScopeParams = { ...scope, repoIdentifier: repoId || '', repoPath: repoPath || '' }
   const scopeType = determineScope(repoScopeParams)
@@ -45,7 +44,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
 
         {repoId ? (
           <Layout.Flex gap="xs" align="center">
-            <Tag value={repoId} icon="repository" />
+            <Tag value={repoId} showIcon icon="repository" />
             <p className="mr-1 truncate text-3 font-medium leading-snug">{name}</p>
             {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
           </Layout.Flex>

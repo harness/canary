@@ -100,13 +100,13 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             </span>
             <span>into</span>
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
-              <Tag variant="secondary" icon="git-branch" size="sm" value={target_branch || ''} showIcon />
+              <Tag variant="secondary" theme="blue" icon="git-branch" value={target_branch || ''} showIcon />
             </Link>
             <span>from</span>
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}>
-              <Tag variant="secondary" icon="git-branch" size="sm" value={source_branch || ''} showIcon />
+              <Tag variant="secondary" theme="blue" icon="git-branch" value={source_branch || ''} showIcon />
             </Link>
-            <span className="mx-1.5 h-4 w-px bg-cn-background-3" />
+            <span className="mx-1.5 h-4 w-px bg-cn-border-3" />
             <TimeAgoCard timestamp={created} />
           </div>
         </div>

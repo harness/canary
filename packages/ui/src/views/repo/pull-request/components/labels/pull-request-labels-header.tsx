@@ -136,7 +136,7 @@ export const LabelsHeader = ({
                 autoFocus
                 id="search"
                 defaultValue={searchQuery}
-                placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
+                placeholder={t('views:search.searchPlaceholder', 'Search')}
                 onChange={handleSearchQuery}
               />
             </DropdownMenu.Header>
@@ -164,7 +164,7 @@ export const LabelsHeader = ({
             )}
 
             <DropdownMenu.Footer>
-              <Link variant="secondary" {...editLabelsProps}>
+              <Link className="font-body-single-line-strong" variant="secondary" {...editLabelsProps}>
                 {t('views:pullRequests.editLabels', 'Edit labels')}
               </Link>
             </DropdownMenu.Footer>

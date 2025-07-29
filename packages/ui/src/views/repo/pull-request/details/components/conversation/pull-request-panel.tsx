@@ -410,7 +410,7 @@ const PullRequestPanel = ({
                           }
                         }}
                         label="Bypass and merge anyway"
-                        className="[&_.cn-label-text]:overflow-visible [&_.cn-label-text]:text-ellipsis-none"
+                        truncateLabel={false}
                       />
                     )}
                     {actions && !pullReqMetadata?.closed && !showActionBtn ? (

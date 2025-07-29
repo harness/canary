@@ -21,6 +21,7 @@ export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxP
   caption?: string
   error?: boolean
   showOptionalLabel?: boolean
+  truncateLabel?: boolean
 }
 
 /**
@@ -28,7 +29,7 @@ export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxP
  * Built on top of Radix UI Checkbox primitive with additional styling.
  */
 const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<CheckboxProps, 'required'>>(
-  ({ className, label, caption, error, showOptionalLabel, ...props }, ref) => {
+  ({ className, label, caption, error, showOptionalLabel, truncateLabel = true, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
     return (
@@ -48,7 +49,11 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
             <Label
               htmlFor={checkboxId}
               optional={showOptionalLabel}
-              className={`cn-checkbox-label ${props.disabled ? 'disabled' : ''}`}
+              className={cn(
+                'cn-checkbox-label',
+                { disabled: props.disabled },
+                { 'cn-checkbox-label-no-truncate': !truncateLabel }
+              )}
             >
               {label}
             </Label>

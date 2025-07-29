@@ -7,18 +7,6 @@ export function combineAndNormalizePrincipalsAndGroups(
 ): NormalizedPrincipal[] {
   const normalizedData: NormalizedPrincipal[] = []
 
-  // Process principals data if available
-  if (principals && Array.isArray(principals)) {
-    principals.forEach(principal => {
-      normalizedData.push({
-        id: principal.id || -1,
-        email_or_identifier: principal.email || principal.uid || '',
-        type: (principal.type as EnumBypassListType) || EnumBypassListType.USER,
-        display_name: principal.display_name || principal.email || 'Unknown User'
-      })
-    })
-  }
-
   // Process user groups data if available
   if (userGroups && Array.isArray(userGroups)) {
     userGroups.forEach(group => {
@@ -31,7 +19,19 @@ export function combineAndNormalizePrincipalsAndGroups(
     })
   }
 
-  return normalizedData.sort((a, b) => a.display_name.localeCompare(b.display_name))
+  // Process principals data if available
+  if (principals && Array.isArray(principals)) {
+    principals.forEach(principal => {
+      normalizedData.push({
+        id: principal.id || -1,
+        email_or_identifier: principal.email || principal.uid || '',
+        type: (principal.type as EnumBypassListType) || EnumBypassListType.USER,
+        display_name: principal.display_name || principal.email || 'Unknown User'
+      })
+    })
+  }
+
+  return normalizedData
 }
 
 export const getIcon = (type: EnumBypassListType) => {

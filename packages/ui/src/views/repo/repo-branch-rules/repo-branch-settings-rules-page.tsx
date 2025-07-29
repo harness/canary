@@ -7,12 +7,12 @@ import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLa
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
+  BranchSettingsRuleBypassListField,
   BranchSettingsRuleDescriptionField,
   BranchSettingsRuleListField,
   BranchSettingsRuleNameField,
   BranchSettingsRuleTargetPatternsField,
-  BranchSettingsRuleToggleField,
-  BranchSettingsRuleBypassListField
+  BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
 import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
 import { combineAndNormalizePrincipalsAndGroups } from './utils'

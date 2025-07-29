@@ -24,8 +24,6 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
   const adjustedBehindPercentage = adjustPercentage(behindPercentage)
   const adjustedAheadPercentage = adjustPercentage(aheadPercentage)
 
-  console.log('percentage', adjustedBehindPercentage, adjustedAheadPercentage)
-
   return (
     <div className={cn('flex w-full flex-col gap-[4px]', className)}>
       <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">

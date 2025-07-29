@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Link, ScrollArea, SearchInput, StatusBadge, Tabs } from '@/components'
+import { Button, DropdownMenu, Layout, Link, SearchInput, Tabs, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 
@@ -38,100 +38,81 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   return (
     <DropdownMenu.Content
-      style={{ width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '298px' }}
+      className="[&>.cn-dropdown-menu-container-header]:border-b-0 [&>.cn-dropdown-menu-container-header]:pb-0"
+      style={{ width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '358px' }}
       align="start"
+      scrollAreaProps={{ className: 'max-h-[188px]' }}
     >
-      <DropdownMenu.Header>
-        <div className="">
-          {isBranchOnly ? (
-            <span className="text-2 font-medium leading-none">Switch branches</span>
-          ) : (
-            <span className="text-2 font-medium leading-none">Switch branches/tags</span>
+      <DropdownMenu.Header className="pb-0">
+        <Layout.Grid gapY="sm">
+          <Text variant="body-single-line-strong" color="foreground-1">
+            {isBranchOnly ? 'Switch branches' : 'Switch branches/tags'}
+          </Text>
+
+          <SearchInput
+            autoFocus
+            id="search"
+            placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
+            defaultValue={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={e => e.stopPropagation()}
+          />
+
+          {!isBranchOnly && (
+            <Tabs.Root
+              value={activeTab}
+              onValueChange={value => {
+                setActiveTab(value as BranchSelectorTab)
+                setSearchQuery('')
+              }}
+            >
+              <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
+                <Tabs.Trigger value="branches" onClick={() => setActiveTab(BranchSelectorTab.BRANCHES)}>
+                  {t('views:repos.branches', 'Branches')}
+                </Tabs.Trigger>
+
+                <Tabs.Trigger value="tags" onClick={() => setActiveTab(BranchSelectorTab.TAGS)}>
+                  {t('views:repos.tags', 'Tags')}
+                </Tabs.Trigger>
+              </Tabs.List>
+            </Tabs.Root>
           )}
-          <div role="presentation" onKeyDown={e => e.stopPropagation()}>
-            <SearchInput
-              autoFocus
-              inputContainerClassName="mt-2"
-              id="search"
-              size="sm"
-              placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
-              defaultValue={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </div>
-        </div>
-
-        {!isBranchOnly && (
-          <Tabs.Root
-            className="mb-[-11px] mt-2"
-            value={activeTab}
-            onValueChange={value => {
-              setActiveTab(value as BranchSelectorTab)
-              setSearchQuery('')
-            }}
-          >
-            <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
-              <Tabs.Trigger value="branches" onClick={() => setActiveTab(BranchSelectorTab.BRANCHES)}>
-                {t('views:repos.branches', 'Branches')}
-              </Tabs.Trigger>
-
-              <Tabs.Trigger value="tags" onClick={() => setActiveTab(BranchSelectorTab.TAGS)}>
-                {t('views:repos.tags', 'Tags')}
-              </Tabs.Trigger>
-            </Tabs.List>
-          </Tabs.Root>
-        )}
+        </Layout.Grid>
       </DropdownMenu.Header>
 
       {filteredItems.length === 0 && (
-        <DropdownMenu.Slot className="px-5 py-4 text-center">
+        <DropdownMenu.NoOptions>
           {isFilesPage && activeTab === BranchSelectorTab.BRANCHES ? (
-            <div className="w-full overflow-hidden">
-              <Button
-                variant="link"
-                className="inline-block h-auto max-w-full whitespace-normal text-left leading-tight"
-                onClick={() => setCreateBranchDialogOpen?.(true)}
-              >
-                <span className="break-words">
-                  Create branch {searchQuery} from {selectedBranch?.name}
-                </span>
-              </Button>
-            </div>
+            <Button variant="link" className="w-full break-words" onClick={() => setCreateBranchDialogOpen?.(true)}>
+              Create branch {searchQuery} from {selectedBranch?.name}
+            </Button>
           ) : (
-            <span className="text-14 leading-tight text-cn-foreground-2">
-              {t('views:noData.noResults', 'No search results')}
-            </span>
+            <Text color="foreground-3">{t('views:noData.noResults', 'No search results')}</Text>
           )}
-        </DropdownMenu.Slot>
+        </DropdownMenu.NoOptions>
       )}
 
-      {!!filteredItems.length && (
-        <ScrollArea className="max-h-44">
-          {filteredItems.map(item => {
-            const isSelected = selectedBranch ? item.name === selectedBranch.name : false
-            const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
+      {filteredItems?.map(item => {
+        const isSelected = selectedBranch ? item.name === selectedBranch.name : false
+        const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
 
-            return (
-              <DropdownMenu.Item
-                onClick={() => onSelectBranch?.(item, activeTab)}
-                key={item.name}
-                title={
-                  <div className="flex w-full items-center justify-between gap-x-2">
-                    {item.name}
+        return (
+          <DropdownMenu.Item
+            onClick={() => onSelectBranch?.(item, activeTab)}
+            key={item.name}
+            title={
+              <Layout.Flex align="center" gap="xs">
+                {isDefault && (
+                  <Tag variant="outline" theme="blue" size="sm" rounded value={t('views:repos.default', 'Default')} />
+                )}
 
-                    {isDefault && (
-                      <StatusBadge variant="outline" theme="muted" size="sm">
-                        {t('views:repos.default', 'Default')}
-                      </StatusBadge>
-                    )}
-                  </div>
-                }
-                checkmark={isSelected}
-              />
-            )
-          })}
-        </ScrollArea>
-      )}
+                {item.name}
+              </Layout.Flex>
+            }
+            checkmark={isSelected}
+          />
+        )
+      })}
 
       <DropdownMenu.Footer>
         <Link to={viewAllUrl} variant="secondary" className="w-full">

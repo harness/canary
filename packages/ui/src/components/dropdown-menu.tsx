@@ -4,7 +4,7 @@ import { usePortal, useTranslation } from '@/context'
 import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
-import { ScrollArea, ScrollAreaIntersectionProps } from '@components/scroll-area'
+import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
 import { Text, TextProps } from '@components/text'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { omit } from 'lodash-es'
@@ -62,7 +62,7 @@ const innerComponentsDisplayNames = [
 
 interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
   isSubContent?: boolean
-  scrollAreaProps?: ScrollAreaIntersectionProps
+  scrollAreaProps?: Omit<ScrollAreaProps, 'children'>
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(

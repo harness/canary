@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, ReactNode, SetStateAction } from 'react'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
@@ -13,12 +13,12 @@ export interface NoDataProps {
   imageSize?: number
   description: string[]
   primaryButton?: {
-    label: string
+    label: ReactNode | string
     onClick?: () => void
     to?: string
   }
   secondaryButton?: {
-    label: string
+    label: ReactNode | string
     to?: string
     onClick?: () => void
   }
@@ -73,11 +73,11 @@ export const NoData: FC<NoDataProps> = ({
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button variant="outline" asChild onClick={() => secondaryButton?.onClick?.()}>
+                <Button variant="secondary" asChild onClick={() => secondaryButton?.onClick?.()}>
                   <NavLink to={secondaryButton.to}>{secondaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" onClick={() => secondaryButton?.onClick?.()}>
+                <Button variant="secondary" onClick={() => secondaryButton?.onClick?.()}>
                   {secondaryButton.label}
                 </Button>
               ))}

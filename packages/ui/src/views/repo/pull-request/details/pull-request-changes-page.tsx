@@ -11,6 +11,7 @@ import { PullRequestChanges } from './components/changes/pull-request-changes'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
 import {
   orderSortDate,
+  PrincipalPropsType,
   PullRequestDataState,
   ReviewerListPullReqOkResponse,
   TypesPullReqActivity
@@ -56,6 +57,7 @@ interface RepoPullRequestChangesPageProps {
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  principalProps: PrincipalPropsType
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   loadingReviewers,
@@ -95,7 +97,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   setScrolledToComment,
   jumpToDiff,
   setJumpToDiff,
-  toRepoFileDetails
+  toRepoFileDetails,
+  principalProps
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
 
@@ -124,6 +127,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     return (
       <PullRequestChanges
         handleUpload={handleUpload}
+        principalProps={principalProps}
         data={
           diffs?.map(item => ({
             text: item.filePath,
@@ -206,3 +210,4 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
 }
 
 export { PullRequestChangesPage }
+PullRequestChangesPage.displayName = 'PullRequestChangesPage'

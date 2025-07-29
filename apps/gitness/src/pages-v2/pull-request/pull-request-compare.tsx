@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useMutation } from '@tanstack/react-query'
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
-import { compact } from 'lodash-es'
+import { compact, noop } from 'lodash-es'
 
 import {
   CreateRepositoryErrorResponse,
   mergeCheck,
   OpenapiCreatePullReqRequest,
+  RepoRepositoryOutput,
   useCreatePullReqMutation,
   useDiffStatsQuery,
   useFindRepositoryQuery,
@@ -19,7 +21,6 @@ import {
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { IconV2 } from '@harnessio/ui/components'
-import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -39,14 +40,22 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useAPIPath } from '../../hooks/useAPIPath.ts'
+import { useGitRef } from '../../hooks/useGitRef.ts'
 import { PathParams } from '../../RouteDefinitions'
-import { getErrorMessage } from '../../utils/error-utils'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { parseSpecificDiff } from './diff-utils'
+import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
 import { changesInfoAtom, DiffFileEntry } from './types'
+
+interface AiPullRequestSummaryParams {
+  repoMetadata: RepoRepositoryOutput
+  baseRef: string
+  headRef: string
+}
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -115,56 +124,14 @@ export const CreatePullRequest = () => {
     }
   }, [prTemplateData, setDesc])
 
-  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => {
-    const reader = new FileReader()
-    // Set up a function to be called when the load event is triggered
-    reader.onload = async function () {
-      if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
-        const markdown = await uploadImage(reader.result)
-        if (blob.type.startsWith('image/')) {
-          setDesc(`${currentComment} \n ![image](${markdown})`) // Set the markdown content
-        } else {
-          setMarkdownContent(`${currentComment} \n ${markdown}`) // Set the markdown content
-        }
-      }
-    }
-    reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
-  }
-  const uploadImage = async (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fileBlob: any
-  ) => {
-    try {
-      const response = await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'content-type': 'application/octet-stream'
-        },
-        body: fileBlob,
-        redirect: 'follow'
-      })
-      // const response = await repoArtifactUpload({
-      //   method: 'POST',
-      //   headers: { 'content-type': 'application/octet-stream' },
-      //   body: fileBlob,
-      //   redirect: 'follow',
-      //   repo_ref: repoRef
-      // })
+  const { handleUpload } = usePRCommonInteractions({
+    repoRef,
+    prId: -1,
+    refetchActivities: noop,
+    updateCommentStatus: noop,
+    currentUserName: currentUser?.display_name
+  })
 
-      const result = await response.json()
-      if (!response.ok && result) {
-        // TODO: fix error state
-        console.warn(getErrorMessage(result))
-        return ''
-      }
-      const filePath = result.file_path
-      return `${window.location.origin}/api/v1/repos/${repoRef}/uploads/${filePath}`
-    } catch (exception) {
-      console.warn(getErrorMessage(exception))
-      return ''
-    }
-  }
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
   const [searchReviewers, setSearchReviewers] = useState('')
@@ -180,7 +147,11 @@ export const CreatePullRequest = () => {
       enabled: targetRef !== undefined && sourceRef !== undefined && cachedDiff.path !== path
     }
   )
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+  const {
+    data: { body: principals } = {},
+    isLoading: isPrincipalsLoading,
+    error: principalsError
+  } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
@@ -476,6 +447,39 @@ export const CreatePullRequest = () => {
     setLabels(newLabels)
   }
 
+  const getApiPath = useAPIPath()
+  const { fullGitRef: baseRef } = useGitRef()
+
+  const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
+    return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
+      method: 'POST',
+      body: JSON.stringify({
+        base_ref: baseRef,
+        head_ref: headRef
+      })
+    })
+      .then(res => res.json())
+      .then(json => ({
+        summary: json.summary
+      }))
+  })
+
+  const handleAiPullRequestSummary = useCallback(async () => {
+    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name) {
+      const headRef = `refs/heads/${selectedSourceBranch.name}`
+
+      return await mutation.mutateAsync({
+        repoMetadata,
+        baseRef,
+        headRef
+      })
+    }
+
+    return Promise.resolve({
+      summary: ''
+    })
+  }, [mutation])
+
   const renderContent = () => {
     return (
       <PullRequestComparePage
@@ -505,6 +509,7 @@ export const CreatePullRequest = () => {
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
         prBranchCombinationExists={prBranchCombinationExists}
+        handleAiPullRequestSummary={handleAiPullRequestSummary}
         diffData={
           diffStats?.files_changed || 0
             ? diffs?.map(item => ({
@@ -532,9 +537,13 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
-        usersList={principals as PrincipalType[]}
-        searchReviewersQuery={searchReviewers}
-        setSearchReviewersQuery={setSearchReviewers}
+        principalProps={{
+          principals,
+          searchPrincipalsQuery: searchReviewers,
+          setSearchPrincipalsQuery: setSearchReviewers,
+          isPrincipalsLoading,
+          principalsError
+        }}
         reviewers={reviewers}
         handleAddReviewer={handleAddReviewer}
         handleDeleteReviewer={handleDeleteReviewer}

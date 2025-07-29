@@ -44,12 +44,12 @@ export interface UsererrorError {
 export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
 
 export interface PrincipalType {
-  id?: number
-  uid: string
-  display_name: string
-  email: string
-  type?: EnumPrincipalType
   created?: number
+  display_name?: string
+  email?: string
+  id?: number
+  type?: EnumPrincipalType
+  uid?: string
   updated?: number
   // TODO: need to add avatar
   avatar_url?: string

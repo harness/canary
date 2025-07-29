@@ -1,4 +1,4 @@
-import { PrincipalType } from '@/types'
+import { PrincipalType, UsererrorError } from '@/types'
 import {
   EnumPullReqReviewDecision,
   PullReqReviewDecision,
@@ -490,10 +490,11 @@ export enum ToolbarAction {
   BOLD = 'BOLD',
   ITALIC = 'ITALIC',
   UPLOAD = 'UPLOAD',
-  UNORDER_LIST = 'UNORDER_LIST',
+  UNORDERED_LIST = 'UNORDERED_LIST',
   CHECK_LIST = 'CHECK_LIST',
   CODE_BLOCK = 'CODE_BLOCK',
-  SUGGESTION = 'SUGGESTION'
+  SUGGESTION = 'SUGGESTION',
+  AI_SUMMARY = 'AI_SUMMARY'
 }
 
 export interface ApprovalItems {
@@ -684,4 +685,13 @@ export const mergeMethodMapping: Record<MergeStrategy, MergeMethodDisplay> = {
   [MergeStrategy.SQUASH]: MergeMethodDisplay.SQUASHED,
   [MergeStrategy.REBASE]: MergeMethodDisplay.REBASED,
   [MergeStrategy.FAST_FORWARD]: MergeMethodDisplay.FAST_FORWARDED
+}
+export type PrincipalsMentionMap = Record<string, TypesPrincipalInfo>
+
+export interface PrincipalPropsType {
+  principals?: PrincipalType[]
+  searchPrincipalsQuery?: string
+  setSearchPrincipalsQuery?: (query: string) => void
+  isPrincipalsLoading?: boolean
+  principalsError?: UsererrorError | null
 }

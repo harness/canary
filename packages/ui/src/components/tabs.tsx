@@ -161,7 +161,9 @@ interface TabsTriggerBasePropsWithLogo extends TabsTriggerBaseProps {
   logo?: LogoPropsV2['name']
 }
 
-type TabsTriggerExtendedProps = TabsTriggerBasePropsWithIcon | TabsTriggerBasePropsWithLogo
+type TabsTriggerExtendedProps = (TabsTriggerBasePropsWithIcon | TabsTriggerBasePropsWithLogo) & {
+  disabled?: boolean
+}
 
 type TabsTriggerButtonProps = TabsTriggerExtendedProps &
   Omit<ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>, keyof TabsTriggerExtendedProps>
@@ -169,6 +171,7 @@ type TabsTriggerButtonProps = TabsTriggerExtendedProps &
 type TabsTriggerLinkProps = TabsTriggerExtendedProps &
   Omit<ComponentPropsWithoutRef<'a'>, keyof TabsTriggerExtendedProps | 'href'> & {
     linkProps?: Omit<NavLinkProps, 'to'>
+    disabled?: boolean
   }
 
 export type TabsTriggerProps = TabsTriggerButtonProps | TabsTriggerLinkProps
@@ -198,9 +201,14 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   )
 
   if (type === 'tabsnav') {
-    const { linkProps, ..._restProps } = restProps as TabsTriggerLinkProps
+    const { linkProps, disabled, ..._restProps } = restProps as TabsTriggerLinkProps
 
-    const handleClick = () => {
+    const handleClick = (e: React.MouseEvent) => {
+      if (disabled) {
+        e.preventDefault()
+        e.stopPropagation()
+        return
+      }
       onValueChange?.(value)
     }
 
@@ -209,6 +217,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
         role="tab"
         to={value}
         onClick={handleClick}
+        aria-disabled={disabled}
         className={({ isActive }) => {
           return cn(
             tabsTriggerVariants({ variant }),

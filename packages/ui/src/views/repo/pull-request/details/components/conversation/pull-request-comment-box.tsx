@@ -10,10 +10,21 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, IconV2, IconV2NamesType, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { handleFileDrop, handlePaste, HandleUploadType, ToolbarAction } from '@/views'
+import { Avatar, Button, ButtonVariants, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs } from '@/components'
+import {
+  HandleAiPullRequestSummaryType,
+  handleFileDrop,
+  handlePaste,
+  HandleUploadType,
+  PrincipalsMentionMap,
+  ToolbarAction,
+  type PrincipalPropsType
+} from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty, isUndefined } from 'lodash-es'
+
+import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
+import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface TextSelection {
   start: number
@@ -38,6 +49,7 @@ interface StringSelection {
 
 interface ToolbarItem {
   icon: IconV2NamesType
+  variant?: ButtonVariants
   action: ToolbarAction
   title?: string
   size?: number
@@ -45,7 +57,6 @@ interface ToolbarItem {
 
 export interface PullRequestCommentBoxProps {
   className?: string
-  onSaveComment: (comment: string) => void
   comment: string
   lang?: string
   diff?: string
@@ -60,8 +71,16 @@ export interface PullRequestCommentBoxProps {
   onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
+  onSaveComment?: (comment: string) => void
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
+  principalProps: PrincipalPropsType
+  principalsMentionMap?: PrincipalsMentionMap
+  setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  preserveCommentOnSave?: boolean
+  buttonTitle?: string
+  textareaPlaceholder?: string
 }
 
 const TABS_KEYS = {
@@ -83,7 +102,14 @@ export const PullRequestCommentBox = ({
   comment,
   setComment,
   isEditMode,
-  handleUpload
+  handleUpload,
+  handleAiPullRequestSummary,
+  principalProps,
+  principalsMentionMap: parentPrincipalsMentionMap,
+  setPrincipalsMentionMap: parentSetPrincipalsMentionMap,
+  preserveCommentOnSave = false,
+  buttonTitle,
+  textareaPlaceholder
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -91,16 +117,36 @@ export const PullRequestCommentBox = ({
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
+  const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
+
+  const [localPrincipalsMentionMap, setLocalPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+
+  const {
+    principalsMentionMap,
+    setPrincipalsMentionMap
+  }: {
+    principalsMentionMap: PrincipalsMentionMap
+    setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  } = useMemo(() => {
+    return {
+      principalsMentionMap: parentPrincipalsMentionMap ?? localPrincipalsMentionMap,
+      setPrincipalsMentionMap: parentSetPrincipalsMentionMap ?? setLocalPrincipalsMentionMap
+    }
+  }, [parentPrincipalsMentionMap, localPrincipalsMentionMap, parentSetPrincipalsMentionMap])
 
   const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
     setActiveTab(tab)
   }
 
   const handleSaveComment = () => {
-    if (comment.trim()) {
-      onSaveComment(comment)
-      setComment('') // Clear the comment box after saving
+    if (onSaveComment && comment.trim()) {
+      const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
+      onSaveComment(formattedComment)
+
+      if (!preserveCommentOnSave) {
+        setComment('') // Clear the comment box after saving
+      }
     }
   }
 
@@ -116,6 +162,24 @@ export const PullRequestCommentBox = ({
 
   const handleFileSelect = () => {
     fileInputRef.current?.click()
+  }
+
+  const handleAiSummary = (currentTextSelection: TextSelection) => {
+    if (handleAiPullRequestSummary) {
+      setShowAiLoader(true)
+
+      const originalComment = comment
+
+      parseAndSetComment(comment, currentTextSelection, TextSelectionBehavior.Parse, 'Generating AI Summary...')
+
+      handleAiPullRequestSummary()
+        .then(response => {
+          parseAndSetComment(originalComment, currentTextSelection, TextSelectionBehavior.Parse, response.summary)
+        })
+        .finally(() => {
+          setShowAiLoader(false)
+        })
+    }
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -284,7 +348,10 @@ export const PullRequestCommentBox = ({
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {
-    const initial: ToolbarItem[] = []
+    const initial: ToolbarItem[] = handleAiPullRequestSummary
+      ? [{ icon: 'ai' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
+      : []
+
     // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...initial,
@@ -293,7 +360,7 @@ export const PullRequestCommentBox = ({
       { icon: 'bold', action: ToolbarAction.BOLD },
       { icon: 'italic', action: ToolbarAction.ITALIC },
       { icon: 'attachment', action: ToolbarAction.UPLOAD },
-      { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+      { icon: 'list', action: ToolbarAction.UNORDERED_LIST },
       { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
@@ -301,6 +368,9 @@ export const PullRequestCommentBox = ({
 
   const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
     switch (type) {
+      case ToolbarAction.AI_SUMMARY:
+        handleAiSummary(textSelection)
+        break
       case ToolbarAction.SUGGESTION:
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Parse, '```suggestion\n', '\n```')
         break
@@ -316,7 +386,7 @@ export const PullRequestCommentBox = ({
       case ToolbarAction.UPLOAD:
         handleFileSelect()
         break
-      case ToolbarAction.UNORDER_LIST:
+      case ToolbarAction.UNORDERED_LIST:
         parseAndSetComment(comment, textSelection, TextSelectionBehavior.Split, '- ')
         break
       case ToolbarAction.CHECK_LIST:
@@ -373,7 +443,7 @@ export const PullRequestCommentBox = ({
         const parsedComment = parseComment(comment, textSelection, '')
 
         if (isListString(parsedComment.previousLine)) {
-          handleActionClick(ToolbarAction.UNORDER_LIST, comment, textSelection)
+          handleActionClick(ToolbarAction.UNORDERED_LIST, comment, textSelection)
         }
         if (isListSelectString(parsedComment.previousLine)) {
           handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
@@ -395,7 +465,7 @@ export const PullRequestCommentBox = ({
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1 overflow-auto', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -415,12 +485,16 @@ export const PullRequestCommentBox = ({
               onDragLeave={handleDragLeave}
               ref={dropZoneRef}
             >
-              <Textarea
+              <PullRequestCommentTextarea
+                resizable
                 ref={textAreaRef}
-                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3 pb-10"
+                placeholder={textareaPlaceholder ?? 'Add your comment here'}
+                className="bg-cn-background-2 text-cn-foreground-1 min-h-36 p-3"
                 autoFocus={!!inReplyMode}
-                placeholder="Add your comment here"
+                principalProps={principalProps}
+                setPrincipalsMentionMap={setPrincipalsMentionMap}
                 value={comment}
+                setValue={setComment}
                 onChange={e => onCommentChange(e)}
                 onKeyUp={e => onKeyUp(e)}
                 onMouseUp={() => onMouseUp()}
@@ -429,21 +503,27 @@ export const PullRequestCommentBox = ({
                     handlePasteForUpload(e)
                   }
                 }}
-                resizable
               />
+
+              {showAiLoader && (
+                <div className="absolute flex inset-0 cursor-wait items-center justify-center">
+                  <IconV2 size="lg" className="animate-spin" name="loader" />
+                </div>
+              )}
               {isDragging && (
-                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
+                <div className="border-cn-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed z-[100]" />
               )}
 
-              <div className="bg-cn-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
+              <Layout.Flex align="center" className="bg-cn-background-2 pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
                       <Button
                         size="sm"
-                        variant="ghost"
+                        variant={item.variant ?? 'ghost'}
                         iconOnly
+                        disabled={showAiLoader}
                         onClick={() => handleActionClick(item.action, comment, textSelection)}
                       >
                         <IconV2 name={item.icon} />
@@ -452,13 +532,16 @@ export const PullRequestCommentBox = ({
                     </Fragment>
                   )
                 })}
-              </div>
+              </Layout.Flex>
             </div>
           </Tabs.Content>
           <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-cn-background-2 w-full" source={comment} />
+                <MarkdownViewer
+                  markdownClassName="!bg-cn-background-2 w-full"
+                  source={replaceMentionEmailWithDisplayName(comment, principalsMentionMap)}
+                />
               ) : (
                 <span className="text-cn-foreground-1">Nothing to preview</span>
               )}
@@ -470,28 +553,31 @@ export const PullRequestCommentBox = ({
           {activeTab === TABS_KEYS.WRITE && (
             <div>
               <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-              <Button size="sm" variant="ghost" onClick={handleFileSelect}>
+              <Button size="sm" variant="transparent" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
                 <span>Drag & drop, select, or paste to attach files</span>
               </Button>
             </div>
           )}
 
-          <div className="ml-auto flex gap-x-3">
-            {(inReplyMode || isEditMode) && (
-              <Button variant="outline" onClick={onCancelClick}>
-                Cancel
-              </Button>
-            )}
+          {onSaveComment ? (
+            <div className="ml-auto flex gap-x-3">
+              {(inReplyMode || isEditMode) && (
+                <Button variant="outline" onClick={onCancelClick}>
+                  Cancel
+                </Button>
+              )}
 
-            {isEditMode ? (
-              <Button onClick={handleSaveComment}>Save</Button>
-            ) : (
-              <Button onClick={handleSaveComment}>Comment</Button>
-            )}
-          </div>
+              {isEditMode ? (
+                <Button onClick={handleSaveComment}>{buttonTitle || 'Save'}</Button>
+              ) : (
+                <Button onClick={handleSaveComment}>{buttonTitle || 'Comment'}</Button>
+              )}
+            </div>
+          ) : undefined}
         </div>
       </div>
     </div>
   )
 }
+PullRequestCommentBox.displayName = 'PullRequestCommentBox'

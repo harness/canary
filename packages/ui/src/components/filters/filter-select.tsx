@@ -90,7 +90,7 @@ const renderFilterSelectLabel = ({
     <Button size="sm" variant="transparent">
       {displayLabel}
       {selectedFilters > 0 && <CounterBadge>{selectedFilters}</CounterBadge>}
-      <IconV2 className="chevron-down text-icons-4" name="nav-solid-arrow-down" size="2xs" />
+      <IconV2 name="nav-solid-arrow-down" size="2xs" />
     </Button>
   )
 }

@@ -9,10 +9,12 @@ import {
   GeneralPayload,
   LabelActivity,
   MergeStrategy,
+  PrincipalPropsType,
   ReviewerAddActivity,
   TypesPullReqActivity
 } from '@/views'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+import { noop } from 'lodash-es'
 
 import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestTimelineItem, { TimelineItemProps } from './pull-request-timeline-item'
@@ -57,13 +59,15 @@ interface SystemCommentProps extends TypesPullReq {
   pullReqMetadata: TypesPullReq | undefined
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
+  principalProps: PrincipalPropsType
 }
 const PullRequestSystemComments: FC<SystemCommentProps> = ({
   commentItems,
   isLast,
   pullReqMetadata,
   toCommitDetails,
-  toCode
+  toCode,
+  principalProps
 }) => {
   const { navigate } = useRouterContext()
 
@@ -326,6 +330,10 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 
   return (
     <PullRequestTimelineItem
+      // System comments doesn't support mentions
+      principalsMentionMap={{}}
+      setPrincipalsMentionMap={noop}
+      principalProps={principalProps}
       key={payloadMain.id}
       header={[
         {
@@ -339,5 +347,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
     />
   )
 }
+PullRequestSystemComments.displayName = 'PullRequestSystemComments'
 
 export default PullRequestSystemComments

@@ -61,7 +61,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start py-3 pr-3"
+                      className="flex !cursor-default items-start pr-3 pl-5 py-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
@@ -74,7 +74,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                           key={commit?.sha}
                           to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                         >
-                          <Layout.Vertical>
+                          <Layout.Vertical gap="2xs">
                             {renderCommitTitle({
                               commitMessage: commit.title,
                               title: commit.message || commit.title,
@@ -84,7 +84,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                               toCommitDetails
                             })}
                             <div className="flex items-center gap-x-1.5">
-                              {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
+                              {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
                               <Text color="foreground-3">{authorName || ''}</Text>
                               <Text color="foreground-4">
                                 committed on{' '}
@@ -98,12 +98,12 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                           </Layout.Vertical>
                         </Link>
                         {!!commit?.sha && (
-                          <Layout.Horizontal className="gap-2.5">
+                          <Layout.Horizontal className="gap-2.5" align="center">
                             <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                             <Button
                               title="View repository at this point of history"
                               variant="outline"
-                              size="xs"
+                              size="sm"
                               iconOnly
                               onClick={() => {
                                 navigate(toCode?.({ sha: commit?.sha || '' }) || '')

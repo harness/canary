@@ -135,13 +135,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           </div>
           <Spacer size={6} />
           <FilterGroup<RepoListFilters, keyof RepoListFilters>
-            sortConfig={{
+            simpleSortConfig={{
               sortOptions: FilterSortOptions,
+              defaultSort: RepoSortMethod.Identifier,
               onSortChange
             }}
             onFilterValueChange={onFilterValueChange}
-            searchInput={searchQuery || ''}
-            handleInputChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)}
+            handleInputChange={(value: string) => handleSearch(value)}
             headerAction={
               <SplitButton<string>
                 dropdownContentClassName="mt-0 min-w-[170px]"

@@ -293,3 +293,4 @@ export enum PRFilterGroupTogglerOptions {
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void
+export type HandleAiPullRequestSummaryType = () => Promise<{ summary: string }>

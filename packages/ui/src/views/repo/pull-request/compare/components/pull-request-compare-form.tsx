@@ -1,16 +1,12 @@
-import { forwardRef, MouseEvent, useRef, useState } from 'react'
+import { forwardRef } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Button, FormInput, FormWrapper, IconV2, MarkdownViewer, Tabs } from '@/components'
+import { Alert, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
-import { handleFileDrop, handlePaste, HandleUploadType } from '@/views'
-import { cn } from '@utils/cn'
+import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
+import { noop } from 'lodash-es'
 import { z } from 'zod'
 
-const TABS_KEYS = {
-  WRITE: 'write',
-  PREVIEW: 'preview'
-}
 // Define the form schema
 const formSchemaCompare = z.object({
   title: z.string().min(1, { message: 'Please provide a pull request title' }),
@@ -25,80 +21,33 @@ interface PullRequestFormProps {
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
   handleUpload?: HandleUploadType
-  desc?: string
-  setDesc: (desc: string) => void
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
+  description?: string
+  setDescription: (description: string) => void
   formMethods: UseFormReturn<FormFields>
+  principalProps: PrincipalPropsType
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  ({ apiError, onFormSubmit, handleUpload, desc, setDesc, formMethods }, ref) => {
+  (
+    {
+      apiError,
+      onFormSubmit,
+      handleUpload,
+      description,
+      setDescription,
+      formMethods,
+      handleAiPullRequestSummary,
+      principalProps
+    },
+    ref
+  ) => {
     const { t } = useTranslation()
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
     }
-    const [__file, setFile] = useState<File>()
 
     const { register, handleSubmit } = formMethods
-
-    const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
-    const fileInputRef = useRef<HTMLInputElement | null>(null)
-    const [isDragging, setIsDragging] = useState(false)
-    const dropZoneRef = useRef<HTMLDivElement>(null)
-
-    const handleUploadCallback = (file: File) => {
-      setFile(file)
-
-      handleUpload?.(file, setDesc, desc)
-    }
-
-    const handleFileSelect = (e: MouseEvent<HTMLButtonElement>) => {
-      fileInputRef.current?.click()
-      e.stopPropagation()
-      e.preventDefault()
-    }
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]
-      if (file) {
-        handleUploadCallback(file)
-      }
-    }
-    const handleDragEnter = (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-
-      if (e.currentTarget === dropZoneRef.current) {
-        setIsDragging(true)
-      }
-    }
-
-    const handleDragLeave = (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-
-      if (e.currentTarget === dropZoneRef.current && !e.currentTarget.contains(e.relatedTarget as Node)) {
-        setIsDragging(false)
-      }
-    }
-
-    const handleDrop = (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setIsDragging(false)
-      handleDropForUpload(e)
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleDropForUpload = async (event: any) => {
-      handleFileDrop(event, handleUploadCallback)
-    }
-
-    const handlePasteForUpload = (event: React.ClipboardEvent) => {
-      handlePaste(event, handleUploadCallback)
-    }
-    const handleTabChange = (tab: typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW) => {
-      setActiveTab(tab)
-    }
 
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
@@ -110,67 +59,30 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
           label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
         />
 
-        <div className={cn('pb-5 pt-1.5 px-4 flex-1 bg-cn-background-2 border border-cn-borders-2 rounded-md')}>
-          <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-            <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
-              <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
-              <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
-            </Tabs.List>
-
-            <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
-              <div
-                className="relative"
-                onDrop={handleDrop}
-                onDragOver={e => e.preventDefault()}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                ref={dropZoneRef}
-              >
-                <FormInput.Textarea
-                  id="description"
-                  {...register('description')}
-                  placeholder={t(
-                    'views:pullRequests.compareChangesFormDescriptionPlaceholder',
-                    'Add Pull Request description here.'
-                  )}
-                  onPaste={e => {
-                    if (e.clipboardData.files.length > 0) {
-                      handlePasteForUpload(e)
-                    }
-                  }}
-                  label={t('views:pullRequests.compareChangesFormDescriptionLabel', 'Description')}
-                />
-                {isDragging && (
-                  <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
-                )}
-              </div>
-            </Tabs.Content>
-            <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
-              <div className="min-h-24">
-                {desc ? (
-                  <MarkdownViewer markdownClassName="!bg-cn-background-2" source={desc} />
-                ) : (
-                  <span>Nothing to preview</span>
-                )}
-              </div>
-            </Tabs.Content>
-          </Tabs.Root>
-
-          <div className="mt-4 flex items-center justify-between">
-            {activeTab === TABS_KEYS.WRITE && (
-              <div>
-                <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-                <Button variant="ghost" onClick={e => handleFileSelect(e)}>
-                  <IconV2 name="attachment-image" />
-                  <span>Drag & drop, select, or paste to attach files</span>
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
+        <PullRequestCommentBox
+          preserveCommentOnSave
+          onSaveComment={newComment => {
+            onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
+          }}
+          textareaPlaceholder={t(
+            'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+            'Enter pull request description'
+          )}
+          buttonTitle="Create pull request"
+          comment={description ?? ''}
+          setComment={setDescription}
+          handleAiPullRequestSummary={handleAiPullRequestSummary}
+          principalProps={principalProps}
+          handleUpload={handleUpload}
+          principalsMentionMap={{}}
+          setPrincipalsMentionMap={noop}
+        />
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
-          <span className="text-1 text-cn-foreground-danger">{apiError?.toString()}</span>
+          <Alert.Root theme="danger">
+            <Alert.Title>Pull Request Error</Alert.Title>
+            <Alert.Description>{apiError?.toString()}</Alert.Description>
+          </Alert.Root>
         )}
       </FormWrapper>
     )

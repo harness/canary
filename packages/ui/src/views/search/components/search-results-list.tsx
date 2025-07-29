@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
+import { Alert, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -11,6 +11,7 @@ interface SearchResultsListProps {
     results?: SearchResultItem[]
   }
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
+  searchError?: string
 }
 
 export interface SearchResultItem {
@@ -34,7 +35,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   isLoading,
   isDirtyList,
   useSearchResultsStore,
-  toRepoFileDetails
+  toRepoFileDetails,
+  searchError
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
@@ -45,6 +47,15 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   }
 
   if (!results?.length) {
+    // Display error message if there's a search error
+    if (searchError) {
+      return (
+        <Alert.Root theme="danger">
+          <Alert.Title>{searchError}</Alert.Title>
+        </Alert.Root>
+      )
+    }
+
     return (
       <div className={cn('flex flex-col items-center justify-center py-12')}>
         <Text variant="heading-section">

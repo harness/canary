@@ -1,5 +1,4 @@
 import { CheckboxOptions } from '@components/filters/types'
-import { SortValue } from '@components/sorts'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorConfigType } from '../types'
@@ -60,6 +59,6 @@ export interface ConnectorListPageProps extends ConnectorListProps {
   pageSize: number
   goToPage: (page: number) => void
   onFilterChange?: (filterValues: ConnectorListFilters) => void
-  onSortChange?: (sort: SortValue[]) => void
+  onSortChange?: (sort: string) => void
   onCreate: () => void
 }

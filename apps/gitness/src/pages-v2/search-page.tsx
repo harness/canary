@@ -20,7 +20,7 @@ interface TVariables {
   query: string
 }
 
-type TError = unknown
+type TError = Error | { message?: string }
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useQueryState('query')
@@ -51,7 +51,12 @@ export default function SearchPage() {
     }
   )
 
-  const { mutate: searchMutation, isLoading: searchLoading } = useMutation<TData, TError, TVariables>({
+  const {
+    mutate: searchMutation,
+    isLoading: searchLoading,
+    error: searchError,
+    reset: resetSearch
+  } = useMutation<TData, TError, TVariables>({
     mutationFn: ({ query }) =>
       fetch(getApiPath('/api/v1/search'), {
         method: 'POST',
@@ -63,7 +68,14 @@ export default function SearchPage() {
           recursive: false,
           enable_regex: regexEnabled
         })
-      }).then(res => res.json()),
+      }).then(res => {
+        if (!res.ok) {
+          return res.json().then(errorData => {
+            throw new Error(errorData.message || `Error ${res.status}`)
+          })
+        }
+        return res.json()
+      }),
     onSuccess: data => {
       setSearchResults(
         data.file_matches.map(file => {
@@ -81,18 +93,26 @@ export default function SearchPage() {
     }
   })
 
-  const { mutate: semanticSearchMutation, isLoading: semanticSearchLoading } = useMutation<
-    SemanticSearchResultItem[],
-    TError,
-    TVariables
-  >({
+  const {
+    mutate: semanticSearchMutation,
+    isLoading: semanticSearchLoading,
+    error: semanticSearchError,
+    reset: resetSemanticSearch
+  } = useMutation<SemanticSearchResultItem[], TError, TVariables>({
     mutationFn: ({ query }) =>
       fetch(getApiPath(`/api/v1/repos/${repoRef}/+/semantic/search`), {
         method: 'POST',
         body: JSON.stringify({
           query
         })
-      }).then(res => res.json()),
+      }).then(res => {
+        if (!res.ok) {
+          return res.json().then(errorData => {
+            throw new Error(errorData.message || `Error ${res.status}`)
+          })
+        }
+        return res.json()
+      }),
     onSuccess: data => {
       setSemanticSearchResults(data)
       setStats({
@@ -102,27 +122,46 @@ export default function SearchPage() {
   })
 
   useEffect(() => {
-    if (searchQuery.trim() !== '' && !semanticEnabled) {
-      searchMutation({ query: searchQuery })
+    if (searchQuery.trim() === '') {
+      setSearchResults([])
+      setSemanticSearchResults([])
+      resetSemanticSearch()
+      resetSearch()
+      return
     }
-  }, [searchQuery, searchMutation, regexEnabled, selectedRepoId, selectedLanguage, semanticEnabled])
 
-  useEffect(() => {
-    if (searchQuery.trim() !== '' && semanticEnabled) {
+    if (!semanticEnabled) {
+      searchMutation({ query: searchQuery })
+    } else {
       semanticSearchMutation({ query: searchQuery })
     }
-  }, [searchQuery, semanticSearchMutation, semanticEnabled])
+  }, [
+    searchQuery,
+    searchMutation,
+    semanticSearchMutation,
+    regexEnabled,
+    selectedRepoId,
+    selectedLanguage,
+    semanticEnabled
+  ])
 
   return (
     <SearchPageView
       isLoading={searchLoading || semanticSearchLoading}
       searchQuery={searchQuery}
-      setSearchQuery={q => q && setSearchQuery(q)}
+      setSearchQuery={q => {
+        if (!q || q.trim() === '') {
+          setSearchQuery(null)
+        } else {
+          setSearchQuery(q)
+        }
+      }}
       regexEnabled={regexEnabled}
       setRegexEnabled={setRegexEnabled}
       semanticEnabled={semanticEnabled}
       setSemanticEnabled={setSemanticEnabled}
       stats={stats}
+      isProjectScope={!!scope.projectIdentifier}
       useSearchResultsStore={() => {
         return {
           results: searchResults,
@@ -134,6 +173,8 @@ export default function SearchPage() {
           setPaginationFromHeaders: () => {}
         }
       }}
+      semanticSearchError={semanticSearchError?.message?.toString()}
+      searchError={searchError?.message?.toString()}
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
         repoPath && branch
           ? `/repos/${repoPath}/code/refs/heads/${branch}/~/${filePath}`

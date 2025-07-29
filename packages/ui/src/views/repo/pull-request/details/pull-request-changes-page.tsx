@@ -1,13 +1,15 @@
 import { FC, useMemo } from 'react'
 
-import { SkeletonList, Spacer } from '@/components'
+import { SearchFiles, SkeletonList, Spacer } from '@/components'
 import { TypesUser } from '@/types'
+import { SandboxLayout } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
 import { orderBy } from 'lodash-es'
 
 import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
 import { PullRequestChanges } from './components/changes/pull-request-changes'
+import { PullRequestChangesExplorer } from './components/changes/pull-request-changes-explorer'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
 import {
   orderSortDate,
@@ -16,6 +18,17 @@ import {
   ReviewerListPullReqOkResponse,
   TypesPullReqActivity
 } from './pull-request-details-types'
+
+export function getFileNamesFromPaths(paths: string[]): string[] {
+  return paths.map(filePath => {
+    // normalize all backslashes to forward‑slashes
+    const normalized = filePath.replace(/\\/g, '/')
+    // split on slash, drop any empty segments (e.g. from leading/trailing slashes)
+    const segments = normalized.split('/').filter(segment => segment.length > 0)
+    // last segment is the file name (or empty string if input was just slashes)
+    return segments.pop() || ''
+  })
+}
 
 interface RepoPullRequestChangesPageProps {
   usePullRequestProviderStore: () => PullRequestDataState
@@ -102,6 +115,11 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
 
+  console.log(
+    'diffspaths',
+    diffs?.map(diff => diff.filePath)
+  )
+
   // Convert activities to comment threads
   const activityBlocks = useMemo(() => {
     const parentActivities = orderBy(
@@ -176,36 +194,51 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   }
 
   return (
-    <>
-      <PullRequestChangesFilter
-        active={''}
-        loading={loadingReviewers}
-        currentUser={currentUser ?? {}}
-        pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
-        reviewers={reviewers}
-        submitReview={submitReview}
-        refetchReviewers={refetchReviewers}
-        diffMode={diffMode}
-        setDiffMode={setDiffMode}
-        pullReqCommits={pullReqCommits}
-        defaultCommitFilter={defaultCommitFilter}
-        selectedCommits={selectedCommits}
-        setSelectedCommits={setSelectedCommits}
-        viewedFiles={diffs?.[0]?.fileViews?.size || 0}
-        pullReqStats={pullReqStats}
-        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
-        commitSuggestionsBatchCount={commitSuggestionsBatchCount}
-        diffData={diffs?.map(diff => ({
-          filePath: diff.filePath,
-          addedLines: diff.addedLines,
-          deletedLines: diff.deletedLines
-        }))}
-        setJumpToDiff={setJumpToDiff}
-      />
-      <Spacer aria-setsize={5} />
+    <SandboxLayout.Columns columnWidths="288px minmax(calc(100% - 288px), 1fr)">
+      <SandboxLayout.Column>
+        <SandboxLayout.Content className="pl-0 pr-8 pt-0">
+          <div className="flex size-full flex-col gap-3">
+            <SearchFiles
+              navigateToFile={() => {}}
+              filesList={getFileNamesFromPaths(diffs?.map(diff => diff.filePath) || [])}
+            />
+            <PullRequestChangesExplorer paths={diffs?.map(diff => diff.filePath) || []} />
+          </div>
+        </SandboxLayout.Content>
+      </SandboxLayout.Column>
+      <SandboxLayout.Column>
+        <SandboxLayout.Content className="px-0 pt-0">
+          <PullRequestChangesFilter
+            active={''}
+            loading={loadingReviewers}
+            currentUser={currentUser ?? {}}
+            pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
+            reviewers={reviewers}
+            submitReview={submitReview}
+            refetchReviewers={refetchReviewers}
+            diffMode={diffMode}
+            setDiffMode={setDiffMode}
+            pullReqCommits={pullReqCommits}
+            defaultCommitFilter={defaultCommitFilter}
+            selectedCommits={selectedCommits}
+            setSelectedCommits={setSelectedCommits}
+            viewedFiles={diffs?.[0]?.fileViews?.size || 0}
+            pullReqStats={pullReqStats}
+            onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+            commitSuggestionsBatchCount={commitSuggestionsBatchCount}
+            diffData={diffs?.map(diff => ({
+              filePath: diff.filePath,
+              addedLines: diff.addedLines,
+              deletedLines: diff.deletedLines
+            }))}
+            setJumpToDiff={setJumpToDiff}
+          />
+          <Spacer aria-setsize={5} />
 
-      {renderContent()}
-    </>
+          {renderContent()}
+        </SandboxLayout.Content>
+      </SandboxLayout.Column>
+    </SandboxLayout.Columns>
   )
 }
 

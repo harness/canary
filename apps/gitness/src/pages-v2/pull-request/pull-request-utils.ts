@@ -636,7 +636,7 @@ export const buildPRFilters = ({
   reviewerId
 }: {
   filterData: PRListFilters
-  scope: Scope
+  scope?: Scope
   reviewerId?: number
 }) => {
   const filters = Object.entries(filterData).reduce<

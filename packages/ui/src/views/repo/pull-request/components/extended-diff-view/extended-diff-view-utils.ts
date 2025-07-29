@@ -29,7 +29,10 @@ export function populateLines(
 }
 
 export function getLineFromEl(el: HTMLElement | null): number | null {
-  const lineAttr = el?.parentElement?.querySelector('span[data-line-num]')?.getAttribute('data-line-num')
+  const targetEl = el?.querySelector('span[data-line-num]')
+  if (!targetEl) return null
+
+  const lineAttr = targetEl?.getAttribute('data-line-num')
 
   const line = parseInt(lineAttr ?? '', 10)
 
@@ -40,8 +43,8 @@ export function getLineFromEl(el: HTMLElement | null): number | null {
 }
 
 export function getSide(el: HTMLElement | null): 'old' | 'new' | null {
-  const parent = el?.closest('[data-side]')
-  if (!parent) return null
+  const targetEl = el?.closest('[data-side]')
+  if (!targetEl) return null
 
-  return parent.getAttribute('data-side') as 'old' | 'new'
+  return targetEl.getAttribute('data-side') as 'old' | 'new'
 }

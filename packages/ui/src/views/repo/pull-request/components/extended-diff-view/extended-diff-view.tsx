@@ -196,6 +196,11 @@ export const ExtendedDiffView = forwardRef(
               ? props => {
                   return renderWidgetLine({
                     ...props,
+                    onClose: () => {
+                      selectedRangeRef.current = null
+                      updateSelection()
+                      props.onClose()
+                    },
                     lineFromNumber: selectedRangeRef.current?.start ?? props.lineNumber
                   })
                 }

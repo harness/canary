@@ -128,12 +128,6 @@ export default function PullRequestListPage() {
     }
   }, [labelBy])
 
-  const _scope = {
-    accountId: accountId || '',
-    orgIdentifier: orgIdentifier,
-    projectIdentifier: projectIdentifier
-  }
-
   return (
     <SandboxPullRequestListPage
       repoId={repoId}

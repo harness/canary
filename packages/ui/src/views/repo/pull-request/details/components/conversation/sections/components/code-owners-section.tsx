@@ -132,7 +132,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
       {/* TODO: add codeowners table */}
       <div className="ml-6 bg-inherit">
         <StackedList.Root className="ml-2 cursor-default border-transparent bg-inherit">
-          <StackedList.Item isHeader disableHover className="text-cn-foreground-3 cursor-default !bg-transparent px-0">
+          <StackedList.Item isHeader disableHover className="cursor-default !bg-transparent px-0 text-cn-foreground-3">
             <StackedList.Field title={<HeaderItem header="Code" />} />
             <StackedList.Field title={<HeaderItem header="Owners" />} />
             <StackedList.Field title={<HeaderItem header="Changes requested by" />} />

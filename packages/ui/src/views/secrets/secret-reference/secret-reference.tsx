@@ -66,7 +66,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         <div title={entity.secret.name}>
           <StackedList.Field
             title={entity.secret.name}
-            className="truncate overflow-hidden text-nowrap max-w-sm text-cn-foreground-2"
+            className="max-w-sm overflow-hidden truncate text-nowrap text-cn-foreground-2"
           />
         </div>
       </StackedList.Item>

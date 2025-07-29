@@ -130,6 +130,8 @@ The `ToggleGroup.Root` component accepts a `type` prop to define selection behav
 
 The `ToggleGroup.Root` component accepts a `variant` prop to control its appearance in active state. Supported values are: `outline`, `ghost`, and `transparent`. `selectedVariant` prop controls the style when the toggle is pressed, with options for `primary` and `secondary`.
 
+**Note**: When the variant is set to `transparent`, the `selectedVariant` is ignored — the selected state will also remain `transparent`, following the design specification.
+
 <DocsPage.ComponentExample
   client:only
   code={`
@@ -168,16 +170,8 @@ The `ToggleGroup.Root` component accepts a `variant` prop to control its appeara
       </ToggleGroup.Root>
       </Layout.Vertical>
       <Layout.Vertical gap="xs">
-      <Text variant="body-strong" align="center">transparent / primary</Text>
+      <Text variant="body-strong" align="center">transparent</Text>
       <ToggleGroup.Root value="2" variant="transparent">
-        <ToggleGroup.Item value="1" text="Option 1" />
-        <ToggleGroup.Item value="2" text="Option 2" />
-        <ToggleGroup.Item value="3" text="Option 3" />
-      </ToggleGroup.Root>
-      </Layout.Vertical>
-      <Layout.Vertical gap="xs">
-      <Text variant="body-strong" align="center">transparent / secondary</Text>
-      <ToggleGroup.Root value="2" variant="transparent" selectedVariant="secondary">
         <ToggleGroup.Item value="1" text="Option 1" />
         <ToggleGroup.Item value="2" text="Option 2" />
         <ToggleGroup.Item value="3" text="Option 3" />

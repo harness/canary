@@ -46,7 +46,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           </p>
         </div>
       )}
-      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
+      <span className="pointer-events-none h-3.5 w-px bg-cn-background-3" aria-hidden />
 
       {sourceBranch && (
         <>

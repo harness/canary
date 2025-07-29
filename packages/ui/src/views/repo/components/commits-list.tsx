@@ -61,7 +61,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start pr-3 pl-5 py-3"
+                      className="flex !cursor-default items-start py-3 pl-5 pr-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >

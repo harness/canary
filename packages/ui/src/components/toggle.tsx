@@ -71,7 +71,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
     {
       className,
       variant = 'outline',
-      selectedVariant = 'primary',
+      selectedVariant: selectedVariantProp = 'primary',
       size,
       rounded,
       disabled,
@@ -91,6 +91,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
     const isControlled = selectedProp !== undefined
     const [internalSelected, setInternalSelected] = useState(defaultValue)
     const selected = isControlled ? selectedProp : internalSelected
+    const selectedVariant = variant === 'transparent' ? 'transparent' : selectedVariantProp
 
     const handleChange = useCallback(
       (val: boolean) => {

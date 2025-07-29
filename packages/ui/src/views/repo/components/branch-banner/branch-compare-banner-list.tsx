@@ -32,7 +32,7 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
   return (
     <Layout.Flex
       direction="column"
-      className="rounded-md border border-cn-borders-success bg-cn-background-2 mb-5 overflow-hidden"
+      className="mb-5 overflow-hidden rounded-md border border-cn-borders-success bg-cn-background-2"
     >
       {visibleCandidates?.map((branch, index) => (
         <div key={branch.name} className="relative">

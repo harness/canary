@@ -33,7 +33,7 @@ type SelectedValuesProp = Map<string, boolean>
 
 interface ToggleGroupContextValue {
   variant: ToggleGroupVariant
-  selectedVariant?: ToggleGroupSelectedVariant
+  selectedVariant?: ToggleGroupSelectedVariant | 'transparent'
   size: VariantProps<typeof toggleVariants>['size']
   disabled?: boolean
   selectedValues: SelectedValuesProp
@@ -93,7 +93,7 @@ const ToggleGroupRoot = forwardRef<ElementRef<typeof ToggleGroupPrimitive.Root>,
     {
       children,
       variant = 'outline',
-      selectedVariant,
+      selectedVariant: selectedVariantProp,
       size = 'md',
       disabled = false,
       type = 'single',
@@ -133,16 +133,17 @@ const ToggleGroupRoot = forwardRef<ElementRef<typeof ToggleGroupPrimitive.Root>,
       return map
     }, [internalValue])
 
-    const contextValue = useMemo<ToggleGroupContextValue>(
-      () => ({
+    const contextValue = useMemo<ToggleGroupContextValue>(() => {
+      const selectedVariant = variant === 'transparent' ? 'transparent' : selectedVariantProp
+
+      return {
         variant,
         selectedVariant,
         size,
         disabled,
         selectedValues
-      }),
-      [variant, selectedVariant, size, disabled, selectedValues]
-    )
+      }
+    }, [variant, selectedVariantProp, size, disabled, selectedValues])
 
     return (
       <ToggleGroupContext.Provider value={contextValue}>

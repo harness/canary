@@ -96,7 +96,7 @@ const Progress: FC<ProgressProps> = ({
 
     return (
       <>
-        <progress className="cn-progress-root" id={id} value={percentageValue} max={100} />
+        <progress className="cn-progress-root" id={id} value={percentageValue} max={percentageValue} />
 
         {state === 'processing' && (
           <div className="cn-progress-overlay-box">

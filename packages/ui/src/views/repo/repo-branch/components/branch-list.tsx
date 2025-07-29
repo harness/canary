@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import {
   Avatar,
-  CopyButton,
   IconPropsV2,
   IconV2,
   MoreActionsTooltip,
@@ -11,6 +10,7 @@ import {
   StatusBadge,
   Table,
   Tag,
+  Text,
   TimeAgoCard
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -96,18 +96,26 @@ export const BranchesList: FC<BranchListPageProps> = ({
     >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-[25rem]">{t('views:repos.branch', 'Branch')}</Table.Head>
-          <Table.Head className="w-[11.71875rem]">{t('views:repos.update', 'Updated')}</Table.Head>
-          <Table.Head className="w-[11.71875rem]">{t('views:repos.checkStatus', 'Check status')}</Table.Head>
+          <Table.Head className="w-[25rem]">
+            <Text variant="caption-strong">{t('views:repos.branch', 'Branch')}</Text>
+          </Table.Head>
+          <Table.Head className="w-[11.71875rem]">
+            <Text variant="caption-strong">{t('views:repos.update', 'Updated')}</Text>
+          </Table.Head>
+          <Table.Head className="w-[11.71875rem]">
+            <Text variant="caption-strong">{t('views:repos.checkStatus', 'Check status')}</Text>
+          </Table.Head>
           <Table.Head className="w-[11.71875rem]">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
-              <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
+              <Text variant="caption-strong">{t('views:repos.behind', 'Behind')}</Text>
               <div className="h-[1.125rem] w-px bg-cn-borders-2" aria-hidden />
-              <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
+              <Text variant="caption-strong" align="right">
+                {t('views:repos.ahead', 'Ahead')}
+              </Text>
             </div>
           </Table.Head>
           <Table.Head className="w-[11.71875rem] whitespace-nowrap">
-            {t('views:repos.pullRequest', 'Pull Request')}
+            <Text variant="caption-strong">{t('views:repos.pullRequest', 'Pull Request')}</Text>
           </Table.Head>
           <Table.Head className="w-[4.25rem]" />
         </Table.Row>
@@ -129,8 +137,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     icon="lock"
                     theme="blue"
                     showIcon={defaultBranch === branch?.name}
+                    showCopyButton
                   />
-                  <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} />
+                  {/* <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} /> */}
                 </div>
               </Table.Cell>
               {/* user avatar and timestamp */}

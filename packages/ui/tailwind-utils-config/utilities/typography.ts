@@ -30,6 +30,9 @@ export default {
     '&-caption-soft': {
       font: 'var(--cn-caption-soft)'
     },
+    '&-caption-strong': {
+      font: 'var(--cn-caption-strong)'
+    },
     '&-link-default': {
       font: 'var(--cn-comp-link-default)'
     },

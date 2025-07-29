@@ -50,6 +50,7 @@ const textVariants = cva('', {
       'body-code': 'font-body-code',
       'caption-normal': 'font-caption-normal',
       'caption-soft': 'font-caption-soft',
+      'caption-strong': 'font-caption-strong',
       'caption-single-line-normal': 'font-caption-single-line-normal',
       'caption-single-line-soft': 'font-caption-single-line-soft'
     },
@@ -113,6 +114,7 @@ const textVariantToElement: Record<
   'body-code': { element: 'pre', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
   'caption-soft': { element: 'span', color: 'foreground-2' },
+  'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
   'caption-single-line-soft': { element: 'span', color: 'foreground-2' }
 }

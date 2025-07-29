@@ -303,16 +303,16 @@ describe('buildPRFilters', () => {
       created_gt: dateGt,
       created_lt: dateLt
     }
-    const result = buildPRFilters(filterData as any)
+    const result = buildPRFilters({ filterData, scope: { accountId: 'account-id' } })
     expect(result.created_gt).toBe(dateGt.getTime().toString())
     expect(result.created_lt).toBe(dateLt.getTime().toString())
   })
 
   it('should extract value from created_by object', () => {
     const filterData = {
-      created_by: { value: 'user123' }
+      created_by: { value: 'user123', label: 'User 123' }
     }
-    const result = buildPRFilters(filterData as any)
+    const result = buildPRFilters({ filterData, scope: { accountId: 'account-id' } })
     expect(result.created_by).toBe('user123')
   })
 
@@ -325,7 +325,7 @@ describe('buildPRFilters', () => {
         '104': '202'
       }
     }
-    const result = buildPRFilters(filterData as any)
+    const result = buildPRFilters({ filterData: filterData as any, scope: { accountId: 'account-id' } })
     expect(result.label_id).toEqual([101])
     expect(result.value_id).toEqual([201, 202])
   })
@@ -335,12 +335,12 @@ describe('buildPRFilters', () => {
       foo: 'bar',
       baz: 123
     }
-    const result = buildPRFilters(filterData as any)
+    const result = buildPRFilters({ filterData: filterData as any, scope: { accountId: 'account-id' } })
     expect(result).toEqual({})
   })
 
   it('should handle empty filterData', () => {
-    const result = buildPRFilters({} as any)
+    const result = buildPRFilters({ filterData: {} as any, scope: { accountId: 'account-id' } })
     expect(result).toEqual({})
   })
 })

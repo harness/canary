@@ -1,5 +1,6 @@
 import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, ILabelsStore, LabelType, TypesBranchTable } from '@/views'
+import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
@@ -248,6 +249,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
+  currentUser?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void
@@ -279,6 +281,14 @@ export type PRListFilters = {
   created_lt?: Date
   created_gt?: Date
   label_by?: LabelsValue
+  review_decision?: CheckboxOptions[]
+  // reviewer_id?: string
+}
+
+export enum PRFilterGroupTogglerOptions {
+  All = 'All',
+  Created = 'Created',
+  ReviewRequested = 'ReviewRequested'
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void

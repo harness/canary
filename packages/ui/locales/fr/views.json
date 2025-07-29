@@ -60,6 +60,9 @@
       "labels": {
         "label": "Label"
       },
+      "review": {
+        "label": "Reviews"
+      },
       "labelByOption": {
         "label": "Label by"
       }

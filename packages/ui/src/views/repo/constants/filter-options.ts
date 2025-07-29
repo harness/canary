@@ -5,7 +5,8 @@ import {
   ComboBoxFilterOptionConfig,
   CustomFilterOptionConfig,
   FilterFieldTypes,
-  FilterOptionConfig
+  FilterOptionConfig,
+  MultiSelectFilterOptionConfig
 } from '@components/filters/types'
 
 import { Parser } from '@harnessio/filters'
@@ -21,7 +22,10 @@ const dateParser: Parser<Date> = {
 type PRListFilterOptionConfig = Array<
   Extract<
     FilterOptionConfig<keyof PRListFilters, LabelsValue>,
-    CalendarFilterOptionConfig | ComboBoxFilterOptionConfig | CustomFilterOptionConfig<keyof PRListFilters, LabelsValue>
+    | CalendarFilterOptionConfig
+    | ComboBoxFilterOptionConfig
+    | CustomFilterOptionConfig<keyof PRListFilters, LabelsValue>
+    | MultiSelectFilterOptionConfig
   >
 >
 

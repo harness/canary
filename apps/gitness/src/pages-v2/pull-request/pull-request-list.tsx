@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import {
   ListPullReqQueryQueryParams,
   useGetPrincipalQuery,
+  useGetUserQuery,
   useListPrincipalsQuery,
   useListPullReqQuery,
   usePrCandidatesQuery
@@ -51,11 +52,11 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: { page, accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
-    { enabled: !!defaultAuthorId, staleTime: Infinity }
+    { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
   )
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
@@ -75,6 +76,13 @@ export default function PullRequestListPage() {
   )
 
   const { data: { body: prCandidateBranches } = {} } = usePrCandidatesQuery({ repo_ref: repoRef, queryParams: {} })
+
+  // TODO: can we move this to some hook which is accessible globally ?
+  const { data: { body: currentUser } = {} } = useGetUserQuery({
+    queryParams: {
+      routingId: mfeContext?.scope?.accountId
+    }
+  })
 
   const onLabelClick = (labelId: number) => {
     // Update filter values with the label ID for API call
@@ -137,6 +145,7 @@ export default function PullRequestListPage() {
       principalsSearchQuery={principalsSearchQuery}
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
+      currentUser={currentUser}
       defaultSelectedAuthor={defaultSelectedAuthor}
       repository={repoData}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}

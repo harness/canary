@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Params, useParams, useSearchParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -7,6 +7,7 @@ import {
   ListPullReqQueryQueryParams,
   TypesPullReqRepo,
   useGetPrincipalQuery,
+  useGetUserQuery,
   useListPrincipalsQuery
 } from '@harnessio/code-service-client'
 import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
@@ -39,20 +40,23 @@ export default function PullRequestListPage() {
 
   const { accountId = '', orgIdentifier = '', projectIdentifier = '' } = mfeContext?.scope || {}
 
-  const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query]
+  const queryParams: ListPullReqQueryQueryParams = useMemo(() => {
+    return {
+      ...filterValues,
+      accountIdentifier: accountId,
+      orgIdentifier: orgIdentifier,
+      projectIdentifier: projectIdentifier,
+      limit: 10,
+      exclude_description: true,
+      page,
+      sort: 'merged',
+      order: 'desc',
+      query: query ?? '',
+      include_subspaces: true
+    }
+  }, [accountId, orgIdentifier, projectIdentifier, page, query, filterValues])
 
-  const queryParams: Params<string> = {
-    accountIdentifier: accountId,
-    orgIdentifier: orgIdentifier,
-    projectIdentifier: projectIdentifier,
-    limit: '10',
-    exclude_description: 'true',
-    page: String(page),
-    sort: 'merged',
-    order: 'desc',
-    query: query ?? '',
-    include_subspaces: 'true'
-  }
+  const queryKey = ['pullRequests', queryParams]
 
   /**
    *
@@ -90,12 +94,15 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: { page, accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
-    { enabled: !!defaultAuthorId, staleTime: Infinity }
+    { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
   )
+
+  // TODO: can we move this to some hook which is accessible globally ?
+  const { data: { body: currentUser } = {} } = useGetUserQuery({})
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
     {
@@ -140,6 +147,7 @@ export default function PullRequestListPage() {
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
       defaultSelectedAuthor={defaultSelectedAuthor}
+      currentUser={currentUser}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
@@ -148,7 +156,7 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
+      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData, currentUser?.id))}
       searchQuery={query}
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}

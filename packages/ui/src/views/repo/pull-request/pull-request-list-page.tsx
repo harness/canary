@@ -2,6 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import {
   Button,
+  ButtonGroup,
   ListActions,
   NoData,
   Pagination,
@@ -14,8 +15,15 @@ import {
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
-import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import {
+  CheckboxOptions,
+  CustomFilterOptionConfig,
+  FilterFieldTypes,
+  FilterOptionConfig,
+  MultiSelectFilterOptionConfig
+} from '@components/filters/types'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+import { splitObjectProps } from '@utils/typeUtils'
 import { isEmpty } from 'lodash-es'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
@@ -25,7 +33,13 @@ import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import { PRListFilters, PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestPageProps } from './pull-request.types'
+import {
+  PRFilterGroupTogglerOptions,
+  PRListFilters,
+  PULL_REQUEST_LIST_HEADER_FILTER_STATES,
+  PullRequestPageProps
+} from './pull-request.types'
+import { getReviewOptions } from './utils'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -38,12 +52,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   repoId,
   onFilterChange,
   onFilterOpen,
-  defaultSelectedAuthorError,
   setPrincipalsSearchQuery,
   prCandidateBranches,
   principalsSearchQuery,
   principalData,
   defaultSelectedAuthor,
+  currentUser,
   isPrincipalsLoading,
   isLoading,
   repository,
@@ -52,23 +66,43 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   onLabelClick,
   toPullRequest
 }) => {
-  const { Link, useSearchParams } = useRouterContext()
+  const isProjectLevel = !repoId
+  const { Link, useSearchParams, location } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
 
   const { t } = useTranslation()
-  const [searchParams] = useSearchParams()
+  const [_searchParams, setSearchParams] = useSearchParams()
+  const [activeFilterGrp, setActiveFilterGrp] = useState<PRFilterGroupTogglerOptions>(PRFilterGroupTogglerOptions.All)
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
   )
+  const currentUserId = currentUser?.id
+
+  useEffect(() => {
+    if (!isProjectLevel) {
+      return
+    }
+
+    const currentParams = new URLSearchParams(window.location.search)
+    if (currentParams.has('created_by') && currentParams.get('created_by') === String(currentUserId)) {
+      if (currentParams.has('review_decision')) {
+        setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
+      } else {
+        setActiveFilterGrp(PRFilterGroupTogglerOptions.Created)
+      }
+    } else if (currentParams.has('review_decision')) {
+      setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
+    } else {
+      setActiveFilterGrp(PRFilterGroupTogglerOptions.All)
+    }
+  }, [currentUserId, location.search, isProjectLevel])
 
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
-
-  const [isAllFilterDataPresent, setisAllFilterDataPresent] = useState<boolean>(true)
 
   const labelsFilterConfig: CustomFilterOptionConfig<keyof PRListFilters, LabelsValue> = {
     label: t('views:repos.prListFilterOptions.labels.label', 'Label'),
@@ -97,18 +131,41 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     }
   }
 
+  const reviewOptions = getReviewOptions()
+  const reviewFilterConfig: MultiSelectFilterOptionConfig<keyof PRListFilters> = {
+    label: t('views:repos.prListFilterOptions.review.label', 'Reviews'),
+    value: 'review_decision',
+    type: FilterFieldTypes.MultiSelect,
+    filterFieldConfig: {
+      options: reviewOptions
+    },
+    parser: {
+      parse: (value: string) => {
+        // Since "," can be encoded while appending to URL
+        const valueArr = decodeURIComponent(value)
+          .split(',')
+          .filter(Boolean)
+          .map(val => reviewOptions.find(option => option.value === val))
+          .filter((option): option is CheckboxOptions => option !== undefined)
+        return valueArr
+      },
+      serialize: (value: CheckboxOptions[]) => value.reduce((acc, val) => (acc += `${val.value},`), '')
+    }
+  }
+
+  const customFilterOptions = [labelsFilterConfig, ...(isProjectLevel ? [reviewFilterConfig] : [])]
+
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
     t,
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
-    isPrincipalsLoading: isPrincipalsLoading,
-    customFilterOptions: [labelsFilterConfig],
-    principalData:
-      computedPrincipalData?.map(userInfo => ({
-        label: userInfo?.display_name || '',
-        value: String(userInfo?.id)
-      })) ?? []
+    isPrincipalsLoading,
+    customFilterOptions,
+    principalData: computedPrincipalData.map(userInfo => ({
+      label: userInfo?.display_name || '',
+      value: String(userInfo?.id)
+    }))
   })
 
   const handleInputChange = useCallback(
@@ -135,12 +192,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
-
-  useEffect(() => {
-    setisAllFilterDataPresent(
-      searchParams.get('created_by') && !defaultSelectedAuthorError ? !!defaultSelectedAuthor : true
-    )
-  }, [defaultSelectedAuthor, defaultSelectedAuthorError])
 
   const showTopBar = !noData || selectedFiltersCnt > 0 || !!searchQuery?.length
 
@@ -210,6 +261,45 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     )
   }
 
+  const onFilterGroupChange = useCallback(
+    (filterGroup: string) => {
+      const searchParams = new URLSearchParams(window.location.search)
+      const filtersToOmit = ['created_by', 'review_decision']
+      const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), filtersToOmit)
+
+      if (filterGroup === PRFilterGroupTogglerOptions.All) {
+        setSearchParams(
+          new URLSearchParams({
+            ...rest
+          })
+        )
+      }
+
+      if (filterGroup === PRFilterGroupTogglerOptions.Created) {
+        setSearchParams(
+          new URLSearchParams({
+            ...rest,
+            created_by: String(currentUserId)
+          })
+        )
+      }
+
+      if (filterGroup === PRFilterGroupTogglerOptions.ReviewRequested) {
+        const originalParams = Object.fromEntries(searchParams.entries())
+        setSearchParams(
+          new URLSearchParams({
+            ...rest,
+            review_decision: originalParams.review_decision || 'pending',
+            review_id: String(currentUserId)
+          })
+        )
+      }
+
+      setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
+    },
+    [currentUserId, location.search, setSearchParams]
+  )
+
   const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {
     if (filterValues === 'created_by' && isOpen) {
       // Reset search query so that new principal data set would be fetched
@@ -235,6 +325,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     onFilterChange?.(_filterValues)
   }
+
+  const activeClass = 'bg-cn-background-primary text-cn-foreground-primary'
+  const inactiveClass = ''
 
   return (
     <SandboxLayout.Main>
@@ -270,6 +363,30 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
+                {isProjectLevel && (
+                  <ButtonGroup
+                    buttonsProps={[
+                      {
+                        children: 'All',
+                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.All),
+                        className: activeFilterGrp === PRFilterGroupTogglerOptions.All ? activeClass : inactiveClass
+                      },
+                      {
+                        children: 'Created',
+                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.Created),
+                        className: activeFilterGrp === PRFilterGroupTogglerOptions.Created ? activeClass : inactiveClass
+                      },
+                      {
+                        children: 'Review Requested',
+                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.ReviewRequested),
+                        className:
+                          activeFilterGrp === PRFilterGroupTogglerOptions.ReviewRequested ? activeClass : inactiveClass
+                      }
+                    ]}
+                    size="sm"
+                  />
+                )}
+
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
                     <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
@@ -299,33 +416,31 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               </ListActions.Right>
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
-              renderSelectedFilters={filterFieldRenderer =>
-                isAllFilterDataPresent && (
-                  <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
-                    {PR_FILTER_OPTIONS.map(filterOption => {
-                      return (
-                        <PRListFilterHandler.Component
-                          parser={filterOption.parser}
-                          filterKey={filterOption.value}
-                          key={filterOption.value}
-                        >
-                          {({ onChange, removeFilter, value }) =>
-                            filterFieldRenderer({
-                              filterOption,
-                              onChange,
-                              removeFilter,
-                              value: value,
-                              onOpenChange: isOpen => {
-                                handleFilterOpen(filterOption.value, isOpen)
-                              }
-                            })
-                          }
-                        </PRListFilterHandler.Component>
-                      )
-                    })}
-                  </PRListFilterHandler.Content>
-                )
-              }
+              renderSelectedFilters={filterFieldRenderer => (
+                <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
+                  {PR_FILTER_OPTIONS.map(filterOption => {
+                    return (
+                      <PRListFilterHandler.Component
+                        parser={filterOption.parser}
+                        filterKey={filterOption.value}
+                        key={filterOption.value}
+                      >
+                        {({ onChange, removeFilter, value }) =>
+                          filterFieldRenderer({
+                            filterOption,
+                            onChange,
+                            removeFilter,
+                            value: value,
+                            onOpenChange: isOpen => {
+                              handleFilterOpen(filterOption.value, isOpen)
+                            }
+                          })
+                        }
+                      </PRListFilterHandler.Component>
+                    )
+                  })}
+                </PRListFilterHandler.Content>
+              )}
               renderFilterOptions={filterOptionsRenderer => (
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (

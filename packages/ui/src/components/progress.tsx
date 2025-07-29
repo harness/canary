@@ -41,6 +41,7 @@ interface CommonProgressProps extends VariantProps<typeof progressVariants> {
   description?: string
   subtitle?: string
   className?: string
+  hideContainer?: boolean
 }
 interface DeterminateProgressProps extends CommonProgressProps {
   value: number
@@ -68,7 +69,8 @@ const Progress: FC<ProgressProps> = ({
   subtitle,
   hidePercentage = false,
   value = 0,
-  className
+  className,
+  hideContainer = false
 }) => {
   const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
 
@@ -96,7 +98,12 @@ const Progress: FC<ProgressProps> = ({
 
     return (
       <>
-        <progress className="cn-progress-root" id={id} value={percentageValue} max={percentageValue} />
+        <progress
+          className="cn-progress-root"
+          id={id}
+          value={percentageValue}
+          max={hideContainer ? percentageValue : 100}
+        />
 
         {state === 'processing' && (
           <div className="cn-progress-overlay-box">

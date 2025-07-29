@@ -57,6 +57,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
                 size="sm"
                 hideIcon
                 hidePercentage
+                hideContainer
               />
             </div>
           </div>
@@ -68,6 +69,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
                 size="sm"
                 hideIcon
                 hidePercentage
+                hideContainer
               />
             </div>
           </div>

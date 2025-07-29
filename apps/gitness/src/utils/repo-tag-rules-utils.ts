@@ -1,5 +1,11 @@
 import { EnumRuleState, RepoRuleAddRequestBody } from '@harnessio/code-service-client'
-import { EnumBypassListType, PatternsButtonType, RepoTagSettingsFormFields, TagRule, TagRuleId } from '@harnessio/ui/views'
+import {
+  EnumBypassListType,
+  PatternsButtonType,
+  RepoTagSettingsFormFields,
+  TagRule,
+  TagRuleId
+} from '@harnessio/ui/views'
 
 export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, TagRule>>((acc, rule) => {

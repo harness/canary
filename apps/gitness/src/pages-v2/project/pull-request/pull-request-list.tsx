@@ -40,8 +40,6 @@ export default function PullRequestListPage() {
 
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
 
-  const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
-
   const queryParams: ListSpacePullReqQueryQueryParams = useMemo(
     () => ({
       accountIdentifier: accountId,
@@ -51,8 +49,10 @@ export default function PullRequestListPage() {
       page,
       ...filterValues
     }),
-    [accountId, orgIdentifier, projectIdentifier, filterValues, query, queryPage]
+    [accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
   )
+
+  const queryKey = ['pullRequests', queryParams, filterValues]
 
   /**
    *

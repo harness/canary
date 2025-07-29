@@ -1276,7 +1276,7 @@
       },
       "plain-lineNumber-color": {
         "$type": "color",
-        "$value": "{text.3}",
+        "$value": "{chrome.200}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
@@ -1314,7 +1314,7 @@
       },
       "hunk-content-color": {
         "$type": "color",
-        "$value": "{text.2}",
+        "$value": "{chrome.300}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {

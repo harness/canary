@@ -154,7 +154,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       </StackedList.Item>
       {filteredData.map((pullRequest, pullRequest_idx) => (
         <Link
-          key={[pullRequest.number?.toString(), pullRequest?.repoId?.toString()].join('-')}
+          key={`${pullRequest.number}-${pullRequest.repo?.identifier}`}
           to={
             pullRequest?.number
               ? (toPullRequest?.({

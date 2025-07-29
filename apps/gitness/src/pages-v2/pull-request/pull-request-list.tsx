@@ -53,7 +53,7 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
+      queryParams: { page, accountIdentifier: accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
@@ -81,7 +81,7 @@ export default function PullRequestListPage() {
   // TODO: can we move this to some hook which is accessible globally ?
   const { data: { body: currentUser } = {} } = useGetUserQuery({
     queryParams: {
-      routingId: mfeContext?.scope?.accountId
+      routingId: accountId
     }
   })
 
@@ -158,7 +158,13 @@ export default function PullRequestListPage() {
         }
       }}
       onFilterChange={filterData =>
-        setFilterValues(buildPRFilters(filterData, { accountId, orgIdentifier, projectIdentifier }))
+        setFilterValues(
+          buildPRFilters({
+            filterData,
+            scope: { accountId, orgIdentifier, projectIdentifier },
+            reviewerId: currentUser?.id
+          })
+        )
       }
       searchQuery={query}
       setSearchQuery={setQuery}

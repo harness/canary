@@ -340,6 +340,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                         disabled={disabled}
                         title={option.title}
                         icon={option.icon}
+                        showIcon={!!option.icon}
                       />
                     )
                   })}

@@ -170,7 +170,8 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
             id: userId,
             key: user?.display_name || '',
             type: (user.type || 'user') as EnumBypassListType,
-            title: user?.email || ''
+            title: user?.email || '',
+            icon: user?.type === 'user' ? 'user' : 'service-accounts'
           })
         }
 
@@ -187,7 +188,8 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
             id: userGroupId,
             key: userGroup?.name || '',
             type: 'user_group' as EnumBypassListType,
-            title: userGroup?.identifier || ''
+            title: userGroup?.identifier || '',
+            icon: 'group-1'
           })
         }
 

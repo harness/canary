@@ -57,15 +57,28 @@ const mockFormOutput = {
   ],
   state: true,
   bypass: [
-    { id: 1, key: 'User One', type: EnumBypassListType.USER, email: 'user1@example.com' },
+    { id: 1, key: 'User One', type: EnumBypassListType.USER, email: 'user1@example.com', icon: 'user' },
     {
       id: 2,
       key: 'Service Account One',
       type: EnumBypassListType.SERVICEACCOUNT,
-      email: 'serviceaccount1@example.com'
+      email: 'serviceaccount1@example.com',
+      icon: 'service-accounts'
     },
-    { id: 3, key: 'User Group One', type: EnumBypassListType.USER_GROUP, email: 'usergroup1@example.com' },
-    { id: 4, key: 'User Group Two', type: EnumBypassListType.USER_GROUP, email: 'usergroup2@example.com' }
+    {
+      id: 3,
+      key: 'User Group One',
+      type: EnumBypassListType.USER_GROUP,
+      email: 'usergroup1@example.com',
+      icon: 'group-1'
+    },
+    {
+      id: 4,
+      key: 'User Group Two',
+      type: EnumBypassListType.USER_GROUP,
+      email: 'usergroup2@example.com',
+      icon: 'group-1'
+    }
   ],
   default: true,
   repo_owners: true,

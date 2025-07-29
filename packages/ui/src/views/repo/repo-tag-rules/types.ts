@@ -59,7 +59,8 @@ export const repoTagSettingsFormSchema = z.object({
       id: z.number(),
       key: z.string(),
       type: z.nativeEnum(EnumBypassListType),
-      title: z.string().optional()
+      title: z.string().optional(),
+      icon: z.string().optional()
     })
   ),
   state: z.boolean(),

@@ -47,7 +47,9 @@ const PRCommentView: FC<PRCommentViewProps> = ({
         markdownClassName="comment"
         source={formattedComment || ''}
         suggestionBlock={{
-          source: parentItem && parentItem.payload?.code_comment?.path ? parentItem.payload.code_comment.path : '',
+          source:
+            commentItem.codeBlockContent ??
+            (parentItem && parentItem.codeBlockContent ? parentItem.codeBlockContent : ''),
           lang: fileLang,
           commentId: commentItem.id,
           appliedCheckSum: appliedCheckSum,

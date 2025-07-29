@@ -14,6 +14,7 @@ import {
 import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
+  easyPluralize,
   ExecutionState,
   PrincipalInfoWithReviewDecision,
   PRListFilters
@@ -120,8 +121,8 @@ export function generateStatusSummary(checks: TypeCheckData[]) {
     const num = statusCounts.running + statusCounts.runningReq
     summaryParts.push(`${num} running`)
   }
-  if (statusCounts.succeeded > 0 || statusCounts.successReq) {
-    const num = statusCounts.succeeded + statusCounts.successReq
+  if (statusCounts.succeeded > 0 || statusCounts.successReq || statusCounts.failureIgnoredReq) {
+    const num = statusCounts.succeeded + statusCounts.successReq + statusCounts.failureIgnoredReq
     summaryParts.push(`${num} succeeded`)
   }
 
@@ -671,8 +672,8 @@ export const getCommentsInfoData = ({
   const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
 
   return {
-    header: 'Unresolved comments',
-    content: `There are ${unresolvedCount} unresolved comments`,
+    header: `Unresolved ${easyPluralize(unresolvedCount, 'comment', 'comments')}`,
+    content: `There ${unresolvedCount === 1 ? 'is' : 'are'} ${unresolvedCount} unresolved ${easyPluralize(unresolvedCount, 'comment', 'comments')}`,
     status: 'failed'
   }
 }

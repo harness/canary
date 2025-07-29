@@ -13,6 +13,7 @@ import {
   DiffHeaderProps,
   EnumPullReqReviewDecisionExtended,
   ReviewerListPullReqOkResponse,
+  TypesCodeCommentFields,
   TypesPullReqActivity,
   TypesRuleViolations,
   TypesViolation
@@ -172,18 +173,20 @@ export function getFileViewedState(
 
 export const FILE_VIEWED_OBSOLETE_SHA = 'ffffffffffffffffffffffffffffffffffffffff'
 
-export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullReqActivity>) {
-  const right = get(commentItem.payload?.payload?.payload, 'line_start_new', false)
-  const span = right
-    ? commentItem?.payload?.payload?.code_comment?.span_new || 0
-    : commentItem?.payload?.payload?.code_comment?.span_old || 0
-  const lineNumberStart = (
-    right
-      ? commentItem?.payload?.payload?.code_comment?.line_new
-      : commentItem?.payload?.payload?.code_comment?.line_old
-  ) as number
+export function activitiesToDiffCommentItems(
+  commentItem: CommentItem<TypesPullReqActivity>,
+  linesDataPath?: string,
+  dataPath?: string
+) {
+  const commentLineData = get(commentItem, linesDataPath || 'payload.payload.payload', {})
+  const commentData: TypesCodeCommentFields | undefined = (
+    get(commentItem, dataPath || 'payload.payload', {}) as TypesPullReqActivity
+  )?.code_comment
+  const right = get(commentLineData, 'line_start_new', false)
+  const span = right ? commentData?.span_new || 0 : commentData?.span_old || 0
+  const lineNumberStart = (right ? commentData?.line_new : commentData?.line_old) as number
   const lineNumberEnd = lineNumberStart + span - 1
-  const diffSnapshotLines = get(commentItem.payload?.payload?.payload, 'lines', []) as string[]
+  const diffSnapshotLines = get(commentLineData, 'lines', []) as string[]
   const leftLines: string[] = []
   const rightLines: string[] = []
   diffSnapshotLines.forEach(line => {
@@ -198,7 +201,7 @@ export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullR
       rightLines.push(lineContent)
     }
   })
-  const diffHeader = get(commentItem.payload?.payload?.payload, 'title', '') as string
+  const diffHeader = get(commentLineData, 'title', '') as string
   const [oldStartLine, newStartLine] = diffHeader
     .replaceAll(/@|\+|-/g, '')
     .trim()

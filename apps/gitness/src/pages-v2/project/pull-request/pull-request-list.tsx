@@ -152,6 +152,11 @@ export default function PullRequestListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}
+      scope={{
+        accountId: accountId || '',
+        orgIdentifier,
+        projectIdentifier
+      }}
     />
   )
 }

@@ -1,5 +1,5 @@
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, ILabelsStore, LabelType, TypesBranchTable } from '@/views'
+import { ColorsEnum, ILabelsStore, LabelType, Scope, TypesBranchTable } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 import { LabelsValue } from './components/labels'
@@ -256,6 +256,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   onLabelClick?: (labelId: number) => void
+  scope: Scope
 }
 
 export interface PullRequestListProps extends Partial<RoutingProps> {
@@ -267,11 +268,13 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   handleOpenClick?: () => void
   closedPRs?: number
   handleCloseClick?: () => void
-  repoId?: string
+  repo?: RepoRepositoryOutput
   spaceId?: string
   headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
   setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
   onLabelClick?: (labelId: number) => void
+  scope: Scope
+  showScope?: boolean
 }
 
 export type PRListFilters = {

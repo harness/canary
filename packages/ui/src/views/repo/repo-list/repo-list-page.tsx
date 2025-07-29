@@ -9,15 +9,9 @@ import FilterGroup from '@views/components/FilterGroup'
 
 import { booleanParser } from '@harnessio/filters'
 
+import { ExtendedScope } from '../common'
 import { RepoList } from './repo-list'
 import { RepoListFilters, RepoListPageProps, RepoSortMethod } from './types'
-
-enum ExtendedScope {
-  All = 'ALL',
-  Account = 'ACCOUNT',
-  OrgProg = 'ORGANIZATION_AND_PROJECT',
-  Organization = 'ORGANIZATION'
-}
 
 const SandboxRepoListPage: FC<RepoListPageProps> = ({
   useRepoStore,

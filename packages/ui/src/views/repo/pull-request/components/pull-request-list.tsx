@@ -15,12 +15,15 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   handleOpenClick,
   handleCloseClick,
   spaceId,
-  repoId,
+  repo,
   headerFilter,
   setHeaderFilter,
   onLabelClick,
-  toPullRequest
+  toPullRequest,
+  scope,
+  showScope
 }) => {
+  const { identifier: repoId } = repo || {}
   const { Link } = useRouterContext()
   const { t } = useTranslation()
 
@@ -166,7 +169,15 @@ export const PullRequestList: FC<PullRequestListProps> = ({
               <StackedList.Field
                 className="max-w-full gap-1.5"
                 title={
-                  pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} onLabelClick={onLabelClick} />
+                  pullRequest.name && (
+                    <PullRequestItemTitle
+                      pullRequest={pullRequest}
+                      onLabelClick={onLabelClick}
+                      repoPath={repo?.path}
+                      scope={scope}
+                      showScope={showScope}
+                    />
+                  )
                 }
                 description={
                   pullRequest.author &&

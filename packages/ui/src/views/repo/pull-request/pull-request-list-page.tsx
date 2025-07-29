@@ -12,7 +12,7 @@ import {
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
+import { ExtendedScope, SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { CustomFilterOptionConfig, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
@@ -50,8 +50,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   searchQuery,
   setSearchQuery,
   onLabelClick,
-  toPullRequest
+  toPullRequest,
+  scope
 }) => {
+  const [showScope, setShowScope] = useState(false)
   const { Link, useSearchParams } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
@@ -134,6 +136,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
+    /**
+     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
+     */
+    /**
+     * @TODO fix this
+     */
+    setShowScope([ExtendedScope.All, ExtendedScope.OrgProg].includes('' as ExtendedScope))
   }
 
   useEffect(() => {
@@ -197,7 +206,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     return (
       <PullRequestListContent
-        repoId={repoId}
+        repo={repository}
         spaceId={spaceId}
         pullRequests={pullRequests}
         closedPRs={closedPullReqs}
@@ -206,6 +215,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         setHeaderFilter={setHeaderFilter}
         toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
+        scope={scope}
+        showScope={showScope}
       />
     )
   }

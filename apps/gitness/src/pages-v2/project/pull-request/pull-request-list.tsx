@@ -102,11 +102,7 @@ export default function PullRequestListPage() {
   )
 
   // TODO: can we move this to some hook which is accessible globally ?
-  const { data: { body: currentUser } = {} } = useGetUserQuery({
-    queryParams: {
-      routingId: mfeContext?.scope?.accountId
-    }
-  })
+  const { data: { body: currentUser } = {} } = useGetUserQuery({})
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
     {

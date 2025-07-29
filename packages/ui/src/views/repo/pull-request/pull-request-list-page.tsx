@@ -251,12 +251,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             </Text>
 
             {!isEmpty(prCandidateBranches) && (
-              <BranchCompareBannerList
-                prCandidateBranches={prCandidateBranches}
-                defaultBranchName={repository?.default_branch || 'main'}
-                repoId={repoId}
-                spaceId={spaceId}
-              />
+              <>
+                <BranchCompareBannerList
+                  prCandidateBranches={prCandidateBranches}
+                  defaultBranchName={repository?.default_branch || 'main'}
+                  repoId={repoId}
+                  spaceId={spaceId}
+                />
+                <Spacer size={4} />
+              </>
             )}
 
             <ListActions.Root>

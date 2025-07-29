@@ -177,30 +177,37 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 },
                 parser: booleanParser
               },
-              {
-                label: t('views:scope.label', 'Scope'),
-                value: 'recursive',
-                type: FilterFieldTypes.ComboBox,
-                filterFieldConfig: {
-                  options: getFilterScopeOptions(),
-                  placeholder: 'Select scope',
-                  allowSearch: false
-                },
-                parser: {
-                  parse: (value: string): ComboBoxOptions => {
-                    return getFilterScopeOptions().find(scope => scope.value === value) || { label: '', value }
-                  },
-                  serialize: (value: ComboBoxOptions): string => {
-                    const selected = value?.value
+              /**
+               * Scope filter is only applicable at Account and Organization scope
+               */
+              ...(!(accountId && orgIdentifier && projectIdentifier)
+                ? [
+                    {
+                      label: t('views:scope.label', 'Scope'),
+                      value: 'recursive' as keyof RepoListFilters,
+                      type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
+                      filterFieldConfig: {
+                        options: getFilterScopeOptions(),
+                        placeholder: 'Select scope',
+                        allowSearch: false
+                      },
+                      parser: {
+                        parse: (value: string): ComboBoxOptions => {
+                          return getFilterScopeOptions().find(scope => scope.value === value) || { label: '', value }
+                        },
+                        serialize: (value: ComboBoxOptions): string => {
+                          const selected = value?.value
 
-                    if (accountId && orgIdentifier && projectIdentifier) return ''
-                    if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-                    if (accountId) return String(selected === ExtendedScope.All)
+                          if (accountId && orgIdentifier && projectIdentifier) return ''
+                          if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+                          if (accountId) return String(selected === ExtendedScope.All)
 
-                    return ''
-                  }
-                }
-              }
+                          return ''
+                        }
+                      }
+                    }
+                  ]
+                : [])
             ]}
           />
         </>

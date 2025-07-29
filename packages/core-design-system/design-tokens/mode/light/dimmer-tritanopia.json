@@ -1331,6 +1331,10 @@
         "$value": "{bg.2}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       },
+      "hljs-comment": {
+        "$type": "color",
+        "$value": "{chrome.800}"
+      },
       "hljs-keyword": {
         "$type": "color",
         "$value": "{purple.800}"
@@ -1354,6 +1358,10 @@
       "hljs-literal": {
         "$type": "color",
         "$value": "{cyan.600}"
+      },
+      "hljs-attr": {
+        "$type": "color",
+        "$value": "{orange.600}"
       }
     },
     "input": {

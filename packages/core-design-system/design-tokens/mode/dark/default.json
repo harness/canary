@@ -1332,6 +1332,10 @@
       "hljs-name": {
         "$type": "color",
         "$value": "{red.150}"
+      },
+      "hljs-literal": {
+        "$type": "color",
+        "$value": "{cyan.150}"
       }
     },
     "input": {

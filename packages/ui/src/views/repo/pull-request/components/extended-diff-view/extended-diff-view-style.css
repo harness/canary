@@ -1,0 +1,31 @@
+.ExtendedDiffView-RowCell-Selected {
+  --number-background-color: #ccf8a5;
+  --line-background-color: #0278d5;
+  --code-background-color: #e7f8b5fc;
+}
+
+.ExtendedDiffView-RowCell-Selected.diff-line-new-num,
+.ExtendedDiffView-RowCell-Selected.diff-line-old-num {
+  background-color: var(--number-background-color) !important;
+}
+
+.ExtendedDiffView-RowCell-Selected.diff-line-new-num:after,
+.ExtendedDiffView-RowCell-Selected.diff-line-old-num:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -2px;
+  width: 4px;
+  background-color: var(--line-background-color) !important;
+}
+
+.ExtendedDiffView-RowCell-Selected.diff-line-new-content,
+.ExtendedDiffView-RowCell-Selected.diff-line-old-content {
+  background-color: var(--code-background-color) !important;
+}
+
+.diff-line-new-num span[data-line-num],
+.diff-line-old-num span[data-line-num] {
+  pointer-events: none !important;
+}

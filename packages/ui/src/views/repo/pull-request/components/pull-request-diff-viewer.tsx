@@ -13,10 +13,7 @@ import {
   PullRequestCommentBox,
   TypesPullReqActivity
 } from '@/views'
-import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
-
-import '@git-diff-view/react/styles/diff-view.css'
-
+import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { getInitials } from '@utils/stringUtils'
@@ -29,6 +26,9 @@ import PullRequestTimelineItem from '../details/components/conversation/pull-req
 import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
+import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
+
+import '@git-diff-view/react/styles/diff-view.css'
 
 interface Thread {
   parent: CommentItem<TypesPullReqActivity>
@@ -186,8 +186,8 @@ const PullRequestDiffViewer = ({
     //  setExpandAll
   ] = useState(false)
   const [extend, setExtend] = useState<{
-    oldFile: Record<number, { data: Thread[] }>
-    newFile: Record<number, { data: Thread[] }>
+    oldFile: Record<number, { data: Thread[]; fromLine: number }>
+    newFile: Record<number, { data: Thread[]; fromLine: number }>
   }>({ oldFile: {}, newFile: {} })
 
   useEffect(() => {
@@ -202,8 +202,8 @@ const PullRequestDiffViewer = ({
   useEffect(() => {
     if (!comments) return
     const newExtend = { oldFile: {}, newFile: {} } as {
-      oldFile: Record<number, { data: Thread[] }>
-      newFile: Record<number, { data: Thread[] }>
+      oldFile: Record<number, { data: Thread[]; fromLine: number }>
+      newFile: Record<number, { data: Thread[]; fromLine: number }>
     }
 
     comments.forEach(threadArr => {
@@ -211,10 +211,16 @@ const PullRequestDiffViewer = ({
       const parentComment = threadArr[0]
       const codeComment = parentComment.payload?.payload?.code_comment
       if (!codeComment) return
+
       const rightSide = get(parentComment.payload?.payload?.payload, 'line_start_new', false)
+
+      const span = rightSide ? codeComment.span_new || 0 : codeComment.span_old || 0
+      const lineNumberStart = (rightSide ? codeComment.line_new : codeComment.line_old) as number
+      const lineNumberEnd = lineNumberStart + span - 1
+
       const side: 'oldFile' | 'newFile' = rightSide ? 'newFile' : 'oldFile'
-      const lineNumber = rightSide ? codeComment.line_new : codeComment.line_old
-      if (lineNumber == null) return
+
+      if (isNaN(lineNumberEnd)) return
 
       const parent = {
         author: parentComment.author,
@@ -248,10 +254,10 @@ const PullRequestDiffViewer = ({
         checkSums: reply.payload?.metadata?.suggestions?.check_sums
       }))
 
-      if (!newExtend[side][lineNumber]) {
-        newExtend[side][lineNumber] = { data: [] }
+      if (!newExtend[side][lineNumberEnd]) {
+        newExtend[side][lineNumberEnd] = { data: [], fromLine: lineNumberStart }
       }
-      newExtend[side][lineNumber].data.push({ parent, replies })
+      newExtend[side][lineNumberEnd].data.push({ parent, replies })
     })
 
     setExtend(newExtend)
@@ -685,7 +691,7 @@ const PullRequestDiffViewer = ({
         <div ref={diffInstanceRef}>
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore */}
-          <DiffView<Thread[]>
+          <ExtendedDiffView<Thread[]>
             ref={ref}
             className="bg-tr w-full text-cn-foreground-3"
             renderWidgetLine={renderWidgetLine}

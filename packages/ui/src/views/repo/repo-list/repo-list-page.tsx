@@ -10,6 +10,7 @@ import FilterGroup from '@views/components/FilterGroup'
 import { booleanParser } from '@harnessio/filters'
 
 import { ExtendedScope } from '../common'
+import { getFilterScopeOptions } from '../common/util'
 import { RepoList } from './repo-list'
 import { RepoListFilters, RepoListPageProps, RepoSortMethod } from './types'
 
@@ -90,32 +91,14 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
-  const getFilterScopeOptions = (): ComboBoxOptions[] => {
-    if (accountId && orgIdentifier && projectIdentifier) return []
-
-    if (accountId && orgIdentifier) {
-      return [
-        { label: t('views:scope.orgAndProject', 'Organizations and projects'), value: ExtendedScope.OrgProg },
-        { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
-      ]
-    }
-
-    if (accountId) {
-      return [
-        { label: t('views:scope.all', 'Account, organizations and projects'), value: ExtendedScope.All },
-        { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
-      ]
-    }
-
-    return []
-  }
-
   const FilterSortOptions = [
     { label: 'Name', value: RepoSortMethod.Identifier },
     { label: 'Newest', value: RepoSortMethod.Newest },
     { label: 'Oldest', value: RepoSortMethod.Oldest },
     { label: 'Last push', value: RepoSortMethod.LastPush }
   ]
+
+  const ScopeOptions = getFilterScopeOptions({ t, ...scope })
 
   return (
     <SandboxLayout.Main>
@@ -181,13 +164,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                       value: 'recursive' as keyof RepoListFilters,
                       type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
                       filterFieldConfig: {
-                        options: getFilterScopeOptions(),
+                        options: ScopeOptions,
                         placeholder: 'Select scope',
                         allowSearch: false
                       },
                       parser: {
                         parse: (value: string): ComboBoxOptions => {
-                          return getFilterScopeOptions().find(scope => scope.value === value) || { label: '', value }
+                          return ScopeOptions.find(scope => scope.value === value) || { label: '', value }
                         },
                         serialize: (value: ComboBoxOptions): string => {
                           const selected = value?.value

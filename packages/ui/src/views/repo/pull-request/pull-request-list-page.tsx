@@ -110,7 +110,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       computedPrincipalData?.map(userInfo => ({
         label: userInfo?.display_name || '',
         value: String(userInfo?.id)
-      })) ?? []
+      })) ?? [],
+    scope
   })
 
   const handleInputChange = useCallback(
@@ -216,7 +217,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
         scope={scope}
-        showScope={showScope}
+        showScope={showScope || true}
       />
     )
   }

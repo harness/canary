@@ -9,7 +9,8 @@ import {
   LabelAssignmentType,
   LabelValuesType,
   PRReviewer,
-  PullReqReviewDecision
+  PullReqReviewDecision,
+  TypesScopesLabels
 } from '@/views'
 
 import { LabelsHeader, LabelsList } from './labels'
@@ -34,6 +35,7 @@ export interface PullRequestSideBarProps {
   setSearchQuery: (query: string) => void
   labelsList?: ILabelType[]
   labelsValues?: LabelValuesType
+  assignableLabels?: TypesScopesLabels
   PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
   setSearchLabelQuery: (query: string) => void
@@ -57,6 +59,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   setSearchQuery,
   labelsList = [],
   labelsValues = {},
+  assignableLabels = {},
   PRLabels = [],
   searchLabelQuery,
   setSearchLabelQuery,
@@ -97,6 +100,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
             removeLabel={removeLabel}
             searchQuery={searchLabelQuery}
             setSearchQuery={setSearchLabelQuery}
+            assignableLabels={assignableLabels}
           />
           <LabelsList
             showReset={true}

@@ -238,7 +238,7 @@ export default function PullRequestConversationPage() {
   /**
    * get all label-related data
    */
-  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } =
+  const { searchLabel, changeSearchLabel, assignableLabels, handleAddLabel, handleRemoveLabel, appliedLabels } =
     usePrConversationLabels({
       repoRef,
       prId,
@@ -889,8 +889,7 @@ export default function PullRequestConversationPage() {
             review_decision: val.review_decision,
             sha: val.sha
           })),
-          labelsList: labels,
-          labelsValues,
+          assignableLabels: assignableLabels,
           PRLabels: appliedLabels,
           searchLabelQuery: searchLabel,
           setSearchLabelQuery: changeSearchLabel,

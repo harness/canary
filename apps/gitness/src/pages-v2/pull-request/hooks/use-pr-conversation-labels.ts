@@ -3,8 +3,6 @@ import { useCallback, useMemo, useState } from 'react'
 import { useAssignLabelMutation, useListLabelsQuery, useUnassignLabelMutation } from '@harnessio/code-service-client'
 import { HandleAddLabelType, LabelAssignmentType } from '@harnessio/ui/views'
 
-import { useGetRepoLabelAndValuesData } from '../../repo/labels/hooks/use-get-repo-label-and-values-data'
-
 interface UsePrConversationLabelsProps {
   repoRef: string
   prId: number
@@ -21,21 +19,21 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
     setSearchLabel(data)
   }, [])
 
-  const {
-    labels,
-    values: labelsValues,
-    refetchLabels
-  } = useGetRepoLabelAndValuesData({ query: searchLabel, inherited: true, limit: 100 })
-
   const { data: { body: prLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: {}
   })
 
+  const { data: { body: assignableLabels } = {}, refetch: refetchAssignableLabels } = useListLabelsQuery({
+    repo_ref: repoRef,
+    pullreq_number: prId,
+    queryParams: { query: searchLabel, assignable: true }
+  })
+
   const handleOnSuccess = () => {
     refetchPRLabels()
-    refetchLabels()
+    refetchAssignableLabels()
     refetchData()
   }
 
@@ -60,11 +58,10 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
   return {
     searchLabel,
     changeSearchLabel,
-    labels,
-    labelsValues,
+    assignableLabels,
     handleAddLabel,
     handleRemoveLabel,
     appliedLabels,
-    refetchLabels
+    refetchAssignableLabels
   }
 }

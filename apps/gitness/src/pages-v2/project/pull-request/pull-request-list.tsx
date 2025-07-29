@@ -7,6 +7,7 @@ import {
   ListSpacePullReqQueryQueryParams,
   TypesPullReqRepo,
   useGetPrincipalQuery,
+  useGetUserQuery,
   useListPrincipalsQuery
 } from '@harnessio/code-service-client'
 import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
@@ -41,7 +42,7 @@ export default function PullRequestListPage() {
 
   const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
 
-  const queryParams = useMemo(
+  const queryParams: ListSpacePullReqQueryQueryParams = useMemo(
     () => ({
       accountIdentifier: accountId,
       ...(orgIdentifier && { orgIdentifier }),
@@ -95,12 +96,15 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: { page, accountIdentifier: accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
-    { enabled: !!defaultAuthorId, staleTime: Infinity }
+    { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
   )
+
+  // TODO: can we move this to some hook which is accessible globally ?
+  const { data: { body: currentUser } = {} } = useGetUserQuery({})
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
     {
@@ -145,6 +149,7 @@ export default function PullRequestListPage() {
       defaultSelectedAuthorError={defaultSelectedAuthorError}
       principalData={principalDataList}
       defaultSelectedAuthor={defaultSelectedAuthor}
+      currentUser={currentUser}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
@@ -155,10 +160,14 @@ export default function PullRequestListPage() {
       }}
       onFilterChange={filterData =>
         setFilterValues(
-          buildPRFilters(filterData, {
-            accountId,
-            orgIdentifier,
-            projectIdentifier
+          buildPRFilters({
+            filterData,
+            scope: {
+              accountId,
+              orgIdentifier,
+              projectIdentifier
+            },
+            reviewerId: currentUser?.id
           })
         )
       }

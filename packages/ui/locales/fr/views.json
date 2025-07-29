@@ -60,6 +60,9 @@
       "labels": {
         "label": "Label"
       },
+      "review": {
+        "label": "Reviews"
+      },
       "labelByOption": {
         "label": "Label by"
       }
@@ -337,7 +340,7 @@
     "noRulesDescription": "There are no rules in this project. Click on the button below to start adding rules.",
     "noTags": "There are no tags in this project yet.",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
-    "createNewTag": "Create a new Tag.",
+    "createNewTag": "Créer une balise",
     "noWebhookExecution": "No webhook executions yet",
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",

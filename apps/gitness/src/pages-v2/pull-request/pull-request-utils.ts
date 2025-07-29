@@ -630,43 +630,60 @@ export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViola
   }
 }
 
-export const buildPRFilters = (filterData: PRListFilters, scope: Scope) =>
-  Object.entries(filterData).reduce<Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>>(
-    (acc, [key, value]) => {
-      if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-        acc[key] = value.getTime().toString()
-      }
-      if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-        acc[key] = value.value
-      }
-      if (key === 'label_by') {
-        const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-        const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-          if (value === true) {
-            labelAcc.labelId.push(labelKey)
-          } else if (value) {
-            labelAcc.valueId.push(value)
-          }
-          return labelAcc
-        }, defaultLabel)
-
-        acc['label_id'] = labelId.map(Number)
-        acc['value_id'] = valueId.map(Number)
-      }
-      if (key === 'include_subspaces' && typeof value === 'object' && 'value' in value) {
-        const { accountId, orgIdentifier, projectIdentifier } = scope || {}
-        if (accountId && orgIdentifier && projectIdentifier) {
-          acc[key] = 'false'
-        } else if (accountId && orgIdentifier) {
-          acc[key] = String(value.value === ExtendedScope.OrgProg)
-        } else if (accountId) {
-          acc[key] = String(value.value === ExtendedScope.All)
+export const buildPRFilters = ({
+  filterData,
+  scope,
+  reviewerId
+}: {
+  filterData: PRListFilters
+  scope: Scope
+  reviewerId?: number
+}) => {
+  const filters = Object.entries(filterData).reduce<
+    Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
+  >((acc, [key, value]) => {
+    if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
+      acc[key] = value.getTime().toString()
+    }
+    if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
+      acc[key] = value.value
+    }
+    if (key === 'review_decision' && Array.isArray(value)) {
+      acc[key] = value.map((item: { value: string }) => item.value).join(',')
+    }
+    if (key === 'label_by') {
+      const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
+      const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
+        if (value === true) {
+          labelAcc.labelId.push(labelKey)
+        } else if (value) {
+          labelAcc.valueId.push(value)
         }
+        return labelAcc
+      }, defaultLabel)
+
+      acc['label_id'] = labelId.map(Number)
+      acc['value_id'] = valueId.map(Number)
+    }
+    if (key === 'include_subspaces' && typeof value === 'object' && 'value' in value) {
+      const { accountId, orgIdentifier, projectIdentifier } = scope || {}
+      if (accountId && orgIdentifier && projectIdentifier) {
+        acc[key] = 'false'
+      } else if (accountId && orgIdentifier) {
+        acc[key] = String(value.value === ExtendedScope.OrgProg)
+      } else if (accountId) {
+        acc[key] = String(value.value === ExtendedScope.All)
       }
-      return acc
-    },
-    {}
-  )
+    }
+    return acc
+  }, {})
+
+  if (filters['review_decision']) {
+    filters['reviewer_id'] = reviewerId
+  }
+
+  return filters
+}
 
 export const getCommentsInfoData = ({
   requiresCommentApproval,

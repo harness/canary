@@ -249,6 +249,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
+  currentUser?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void
@@ -284,6 +285,14 @@ export type PRListFilters = {
   created_gt?: Date
   label_by?: LabelsValue
   include_subspaces?: CheckboxOptions
+  review_decision?: CheckboxOptions[]
+  // reviewer_id?: string
+}
+
+export enum PRFilterGroupTogglerOptions {
+  All = 'All',
+  Created = 'Created',
+  ReviewRequested = 'ReviewRequested'
 }
 
 export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void

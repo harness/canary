@@ -40,3 +40,31 @@ export function isAnyTypeOf<T extends JavaScriptType[]>(value: unknown, types: [
   const actualType = typeof value
   return types.includes(actualType as JavaScriptType)
 }
+
+/**
+ * Splits an object into two parts: one with the specified keys and one with the remaining keys
+ * @param obj - The object to split
+ * @param keys - Array of keys to extract
+ * @returns An object with two properties: `picked` containing the extracted properties and `rest` containing the remaining properties
+ * @example
+ * const { picked: { created_by, review_decision }, rest } = splitObjectProps(
+ *   Object.fromEntries(searchParams.entries()),
+ *   ['created_by', 'review_decision']
+ * );
+ */
+export function splitObjectProps<T extends Record<string, any>, K extends keyof T>(
+  obj: T,
+  keys: K[]
+): { picked: Pick<T, K>; rest: Omit<T, K> } {
+  const picked = {} as Pick<T, K>
+  const rest = { ...obj }
+
+  for (const key of keys) {
+    if (key in obj) {
+      picked[key] = obj[key]
+      delete rest[key as string]
+    }
+  }
+
+  return { picked, rest }
+}

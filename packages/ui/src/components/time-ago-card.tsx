@@ -96,7 +96,9 @@ export const useFormattedTime = (
     : []
 
   return {
-    formattedShort: formattedShort(),
+    formattedShort: formattedShort()
+      .replace(/^about\s+/i, '')
+      .replace(/less than\s+/i, ''),
     formattedFull,
     time
   }

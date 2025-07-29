@@ -126,6 +126,14 @@ export default {
     '@apply truncate': ''
   },
 
+  '.cn-checkbox-label-no-truncate': {
+    '& .cn-label-text': {
+      '@apply overflow-visible': '',
+      'text-overflow': 'clip',
+      'white-space': 'nowrap'
+    }
+  },
+
   '.cn-checkbox-caption': {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',

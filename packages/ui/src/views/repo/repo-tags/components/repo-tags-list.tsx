@@ -1,12 +1,14 @@
 import { FC } from 'react'
 
 import {
+  ActionData,
   Avatar,
   CommitCopyActions,
   MoreActionsTooltip,
   NoData,
   SkeletonTable,
   Table,
+  Tag,
   Text,
   TimeAgoCard
 } from '@/components'
@@ -37,16 +39,19 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const { t } = useTranslation()
   const { tags: tagsList } = useRepoTagsStore()
 
-  const getTableActions = (tag: CommitTagType) => [
+  const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
+      iconName: 'git-branch',
       title: t('views:repos.createBranch', 'Create branch'),
       onClick: () => onOpenCreateBranchDialog(tag)
     },
     {
+      iconName: 'folder',
       title: t('views:repos.viewFiles', 'View Files'),
       to: `../code/refs/tags/${tag.name}`
     },
     {
+      iconName: 'trash',
       isDanger: true,
       title: t('views:repos.deleteTag', 'Delete tag'),
       onClick: () => onDeleteTag(tag.name)
@@ -96,8 +101,8 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
       <Table.Header>
         <Table.Row className="pointer-events-none select-none">
-          <Table.Head className="w-[12%]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[35%]">{t('views:repos.description', 'Description')}</Table.Head>
+          <Table.Head className="w-[17%]">{t('views:repos.tag', 'Tag')}</Table.Head>
+          <Table.Head className="w-[30%]">{t('views:repos.description', 'Description')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
           <Table.Head className="w-[16%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
@@ -110,7 +115,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
           <Table.Row key={tag.sha}>
             <Table.Cell>
               <Text color="foreground-1" className="block" truncate title={tag.name}>
-                {tag.name}
+                <Tag value={tag.name} theme="violet" rounded />
               </Text>
             </Table.Cell>
             <Table.Cell>
@@ -149,6 +154,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                   ...action,
                   to: action?.to?.replace('${tag.name}', tag.name)
                 }))}
+                iconName="more-horizontal"
               />
             </Table.Cell>
           </Table.Row>

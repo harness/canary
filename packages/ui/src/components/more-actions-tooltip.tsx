@@ -6,7 +6,11 @@ import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
+import { Layout } from './layout'
+import { Text } from './text'
+
 export interface ActionData {
+  iconName?: IconPropsV2['name']
   to?: string
   title: string
   onClick?: () => void
@@ -62,18 +66,24 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
             >
               <DropdownMenu.Item
                 title={
-                  <span className={cn('truncate text-sm', { 'text-cn-foreground-danger': action.isDanger })}>
-                    {action.title}
-                  </span>
+                  <Layout.Horizontal className="items-center">
+                    {action.iconName ? <IconV2 name={action.iconName} size="xs" /> : null}
+                    <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
+                      {action.title}
+                    </Text>
+                  </Layout.Horizontal>
                 }
               />
             </Link>
           ) : (
             <DropdownMenu.Item
               title={
-                <span className={cn('truncate text-sm', { 'text-cn-foreground-danger': action.isDanger })}>
-                  {action.title}
-                </span>
+                <Layout.Horizontal className="items-center">
+                  {action.iconName ? <IconV2 name={action.iconName} size="xs" /> : null}
+                  <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
+                    {action.title}
+                  </Text>
+                </Layout.Horizontal>
               }
               key={`${action.title}-${idx}`}
               onClick={e => {

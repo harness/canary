@@ -120,8 +120,8 @@ export function generateStatusSummary(checks: TypeCheckData[]) {
     const num = statusCounts.running + statusCounts.runningReq
     summaryParts.push(`${num} running`)
   }
-  if (statusCounts.succeeded > 0 || statusCounts.successReq) {
-    const num = statusCounts.succeeded + statusCounts.successReq
+  if (statusCounts.succeeded > 0 || statusCounts.successReq || statusCounts.failureIgnoredReq) {
+    const num = statusCounts.succeeded + statusCounts.successReq + statusCounts.failureIgnoredReq
     summaryParts.push(`${num} succeeded`)
   }
 
@@ -671,8 +671,9 @@ export const getCommentsInfoData = ({
   const unresolvedCount = resolvedCommentArrParams?.[0] || 0 // Ensure a default value
 
   return {
-    header: 'Unresolved comments',
-    content: `There are ${unresolvedCount} unresolved comments`,
+    header: `Unresolved comment${unresolvedCount === 1 ? '' : 's'}`,
+    content:
+      unresolvedCount === 1 ? 'There is 1 unresolved comment' : `There are ${unresolvedCount} unresolved comments`,
     status: 'failed'
   }
 }

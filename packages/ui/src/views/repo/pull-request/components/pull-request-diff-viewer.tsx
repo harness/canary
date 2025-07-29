@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Avatar, Layout, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
+import { useTheme, useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -14,6 +14,9 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
+
+import '@git-diff-view/react/styles/diff-view.css'
+
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { getInitials } from '@utils/stringUtils'
@@ -117,6 +120,7 @@ const PullRequestDiffViewer = ({
   const diffInstanceRef = useRef<HTMLDivElement | null>(null)
   const [isInView, setIsInView] = useState(false)
   const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+  const { isLightTheme } = useTheme()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -618,7 +622,7 @@ const PullRequestDiffViewer = ({
                                   />
                                 ) : (
                                   <PRCommentView
-                                    parentItem={parent?.payload as CommentItem<TypesPullReqActivity>}
+                                    parentItem={parent as CommentItem<TypesPullReqActivity>}
                                     commentItem={reply}
                                     filenameToLanguage={filenameToLanguage}
                                     suggestionsBatch={suggestionsBatch}
@@ -694,6 +698,7 @@ const PullRequestDiffViewer = ({
             registerHighlighter={highlighter}
             diffViewWrap={wrap}
             diffViewAddWidget={addWidget}
+            diffViewTheme={isLightTheme ? 'light' : 'dark'}
           />
         </div>
       )}

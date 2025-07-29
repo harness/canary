@@ -348,8 +348,6 @@ export default function PullRequestChanges() {
   }, [activityData])
 
   const handleSaveComment = async (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => {
-    console.log('comment in gitness', comment)
-
     const reqBody = parentId
       ? {
           text: comment,

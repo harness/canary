@@ -153,7 +153,7 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => {
+      onFilterChange={filterData =>
         setFilterValues(
           buildPRFilters(filterData, {
             accountId,
@@ -161,7 +161,7 @@ export default function PullRequestListPage() {
             projectIdentifier
           })
         )
-      }}
+      }
       searchQuery={query}
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}

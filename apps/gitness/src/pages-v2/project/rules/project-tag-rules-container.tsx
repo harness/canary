@@ -105,14 +105,19 @@ export const ProjectTagRulesContainer = () => {
     }
   })
 
-  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
-    space_ref: `${spaceRef}/+`,
-    queryParams: {
-      page: 1,
-      limit: 100,
-      query: principalsSearchQuery
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery(
+    {
+      space_ref: `${spaceRef}/+`,
+      queryParams: {
+        page: 1,
+        limit: 100,
+        query: principalsSearchQuery
+      }
+    },
+    {
+      enabled: isMFE
     }
-  })
+  )
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
     space_ref: `${spaceRef}/+`,
@@ -215,6 +220,10 @@ export const ProjectTagRulesContainer = () => {
     return <NotFoundPage pageTypeText="rules" />
   }
 
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
+
   return (
     <RepoTagSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -227,6 +236,7 @@ export const ProjectTagRulesContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      bypassListPlaceholder={searchPlaceholder}
       projectScope
     />
   )

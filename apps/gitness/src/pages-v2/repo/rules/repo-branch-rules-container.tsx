@@ -113,14 +113,19 @@ export const RepoBranchRulesContainer = () => {
     }
   })
 
-  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
-    space_ref: `${spaceURL}/+`,
-    queryParams: {
-      page: 1,
-      limit: 100,
-      query: principalsSearchQuery
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery(
+    {
+      space_ref: `${spaceURL}/+`,
+      queryParams: {
+        page: 1,
+        limit: 100,
+        query: principalsSearchQuery
+      }
+    },
+    {
+      enabled: isMFE
     }
-  })
+  )
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentQuery({
     repo_ref: repoRef,

@@ -100,14 +100,19 @@ export const ProjectBranchRulesContainer = () => {
     }
   })
 
-  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery({
-    space_ref: `${spaceURL}/+`,
-    queryParams: {
-      page: 1,
-      limit: 100,
-      query: principalsSearchQuery
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery(
+    {
+      space_ref: `${spaceURL}/+`,
+      queryParams: {
+        page: 1,
+        limit: 100,
+        query: principalsSearchQuery
+      }
+    },
+    {
+      enabled: isMFE
     }
-  })
+  )
 
   const {
     mutate: updateRule,
@@ -232,7 +237,9 @@ export const ProjectBranchRulesContainer = () => {
     updateRule: updateRuleError?.message || null,
     statusChecks: statusChecksError?.message || null
   }
-
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -248,6 +255,7 @@ export const ProjectBranchRulesContainer = () => {
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
       isSubmitSuccess={isSubmitSuccess}
+      bypassListPlaceholder={searchPlaceholder}
       projectScope
     />
   )

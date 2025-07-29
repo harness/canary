@@ -36,7 +36,8 @@ export default function PullRequestListPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
-  const mfeContext = useMFEContext()
+  const { scope } = useMFEContext()
+  const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
@@ -52,7 +53,7 @@ export default function PullRequestListPage() {
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
+      queryParams: { page, accountIdentifier: accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
@@ -67,7 +68,7 @@ export default function PullRequestListPage() {
         // @ts-expect-error : BE issue - not implemnted
         type: 'user',
         query: principalsSearchQuery,
-        accountIdentifier: mfeContext?.scope?.accountId
+        accountIdentifier: accountId
       }
     },
     {
@@ -80,7 +81,7 @@ export default function PullRequestListPage() {
   // TODO: can we move this to some hook which is accessible globally ?
   const { data: { body: currentUser } = {} } = useGetUserQuery({
     queryParams: {
-      routingId: mfeContext?.scope?.accountId
+      routingId: accountId
     }
   })
 
@@ -156,11 +157,20 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
+      onFilterChange={filterData =>
+        setFilterValues(
+          buildPRFilters({
+            filterData,
+            scope: { accountId, orgIdentifier, projectIdentifier },
+            reviewerId: currentUser?.id
+          })
+        )
+      }
       searchQuery={query}
       setSearchQuery={setQuery}
       onLabelClick={onLabelClick}
       toPullRequest={({ prNumber }) => prNumber.toString()}
+      scope={{ accountId, orgIdentifier, projectIdentifier }}
     />
   )
 }

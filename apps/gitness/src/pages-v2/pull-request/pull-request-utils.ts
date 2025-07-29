@@ -16,8 +16,10 @@ import {
   DefaultReviewersDataProps,
   easyPluralize,
   ExecutionState,
+  ExtendedScope,
   PrincipalInfoWithReviewDecision,
-  PRListFilters
+  PRListFilters,
+  Scope
 } from '@harnessio/ui/views'
 
 import {
@@ -628,7 +630,15 @@ export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViola
   }
 }
 
-export const buildPRFilters = (filterData: PRListFilters, reviewerId?: number) => {
+export const buildPRFilters = ({
+  filterData,
+  scope,
+  reviewerId
+}: {
+  filterData: PRListFilters
+  scope?: Scope
+  reviewerId?: number
+}) => {
   const filters = Object.entries(filterData).reduce<
     Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
   >((acc, [key, value]) => {
@@ -654,6 +664,16 @@ export const buildPRFilters = (filterData: PRListFilters, reviewerId?: number) =
 
       acc['label_id'] = labelId.map(Number)
       acc['value_id'] = valueId.map(Number)
+    }
+    if (key === 'include_subspaces' && typeof value === 'object' && 'value' in value) {
+      const { accountId, orgIdentifier, projectIdentifier } = scope || {}
+      if (accountId && orgIdentifier && projectIdentifier) {
+        acc[key] = 'false'
+      } else if (accountId && orgIdentifier) {
+        acc[key] = String(value.value === ExtendedScope.OrgProg)
+      } else if (accountId) {
+        acc[key] = String(value.value === ExtendedScope.All)
+      }
     }
     return acc
   }, {})

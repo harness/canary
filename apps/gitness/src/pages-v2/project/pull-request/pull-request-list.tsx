@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
 import {
-  ListPullReqQueryQueryParams,
+  ListSpacePullReqQueryQueryParams,
   TypesPullReqRepo,
   useGetPrincipalQuery,
   useGetUserQuery,
@@ -28,35 +28,31 @@ export default function PullRequestListPage() {
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
+  const [filterValues, setFilterValues] = useState<ListSpacePullReqQueryQueryParams>({ include_subspaces: false })
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
   const [searchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
-  const mfeContext = useMFEContext()
+  const { scope } = useMFEContext()
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
   const getApiPath = useAPIPath()
 
-  const { accountId = '', orgIdentifier = '', projectIdentifier = '' } = mfeContext?.scope || {}
+  const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
 
-  const queryParams: ListPullReqQueryQueryParams = useMemo(() => {
-    return {
-      ...filterValues,
+  const queryParams: ListSpacePullReqQueryQueryParams = useMemo(
+    () => ({
       accountIdentifier: accountId,
-      orgIdentifier: orgIdentifier,
-      projectIdentifier: projectIdentifier,
-      limit: 10,
-      exclude_description: true,
-      page,
-      sort: 'merged',
-      order: 'desc',
+      ...(orgIdentifier && { orgIdentifier }),
+      ...(projectIdentifier && { projectIdentifier }),
       query: query ?? '',
-      include_subspaces: true
-    }
-  }, [accountId, orgIdentifier, projectIdentifier, page, query, filterValues])
+      page,
+      ...filterValues
+    }),
+    [accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
+  )
 
-  const queryKey = ['pullRequests', queryParams]
+  const queryKey = ['pullRequests', queryParams, filterValues]
 
   /**
    *
@@ -85,16 +81,22 @@ export default function PullRequestListPage() {
     queryKey,
     queryFn: fetchPullRequests,
     select: ({ data, headers }) => ({
-      pullRequestData: data.flatMap(item =>
-        item.pull_request ? [{ ...item.pull_request, repoId: item.repository?.identifier }] : []
-      ),
+      pullRequestData: data
+        .filter(item => item.pull_request)
+        .map(item => ({
+          ...item.pull_request,
+          repo: {
+            identifier: item.repository?.identifier || '',
+            path: item.repository?.path || ''
+          }
+        })),
       headers
     })
   })
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
-      queryParams: { page, accountIdentifier: mfeContext?.scope?.accountId, ...filterValues },
+      queryParams: { page, accountIdentifier: accountId, ...filterValues },
       id: Number(searchParams.get('created_by'))
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
@@ -109,10 +111,10 @@ export default function PullRequestListPage() {
       queryParams: {
         page: 1,
         limit: 100,
-        // @ts-expect-error : BE issue - not implemnted
+        // @ts-expect-error : BE issue - not implemented
         type: 'user',
         query: principalsSearchQuery,
-        accountIdentifier: mfeContext?.scope?.accountId
+        accountIdentifier: accountId
       }
     },
     {
@@ -156,10 +158,27 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData, currentUser?.id))}
+      onFilterChange={filterData =>
+        setFilterValues(
+          buildPRFilters({
+            filterData,
+            scope: {
+              accountId,
+              orgIdentifier,
+              projectIdentifier
+            },
+            reviewerId: currentUser?.id
+          })
+        )
+      }
       searchQuery={query}
       setSearchQuery={setQuery}
       toPullRequest={({ prNumber, repoId }) => `/repos/${repoId}/pulls/${prNumber}`}
+      scope={{
+        accountId,
+        orgIdentifier,
+        projectIdentifier
+      }}
     />
   )
 }

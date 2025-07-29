@@ -1,5 +1,5 @@
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, ILabelsStore, LabelType, TypesBranchTable } from '@/views'
+import { ColorsEnum, ILabelsStore, LabelType, Scope, TypesBranchTable } from '@/views'
 import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
@@ -26,7 +26,7 @@ export enum PULL_REQUEST_LIST_HEADER_FILTER_STATES {
 }
 
 export interface PullRequest extends PullRequestType {
-  repoId?: string
+  repo?: Pick<RepoRepositoryOutput, 'identifier' | 'path'>
 }
 
 export interface PullRequestType {
@@ -258,6 +258,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   onLabelClick?: (labelId: number) => void
+  scope: Scope
 }
 
 export interface PullRequestListProps extends Partial<RoutingProps> {
@@ -269,11 +270,13 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   handleOpenClick?: () => void
   closedPRs?: number
   handleCloseClick?: () => void
-  repoId?: string
+  repo?: RepoRepositoryOutput
   spaceId?: string
   headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
   setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
   onLabelClick?: (labelId: number) => void
+  scope: Scope
+  showScope?: boolean
 }
 
 export type PRListFilters = {
@@ -281,6 +284,7 @@ export type PRListFilters = {
   created_lt?: Date
   created_gt?: Date
   label_by?: LabelsValue
+  include_subspaces?: CheckboxOptions
   review_decision?: CheckboxOptions[]
   // reviewer_id?: string
 }

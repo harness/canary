@@ -15,12 +15,15 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   handleOpenClick,
   handleCloseClick,
   spaceId,
-  repoId,
+  repo,
   headerFilter,
   setHeaderFilter,
   onLabelClick,
-  toPullRequest
+  toPullRequest,
+  scope,
+  showScope = false
 }) => {
+  const { identifier: repoId } = repo || {}
   const { Link } = useRouterContext()
   const { t } = useTranslation()
 
@@ -151,12 +154,12 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       </StackedList.Item>
       {filteredData.map((pullRequest, pullRequest_idx) => (
         <Link
-          key={[pullRequest.number?.toString(), pullRequest?.repoId?.toString()].join('-')}
+          key={`${pullRequest.number}-${pullRequest.repo?.identifier}`}
           to={
             pullRequest?.number
               ? (toPullRequest?.({
                   prNumber: pullRequest.number,
-                  repoId: pullRequest?.repoId
+                  repoId: pullRequest?.repo?.identifier
                 }) ?? '')
               : ''
           }
@@ -166,7 +169,14 @@ export const PullRequestList: FC<PullRequestListProps> = ({
               <StackedList.Field
                 className="max-w-full gap-1.5"
                 title={
-                  pullRequest.name && <PullRequestItemTitle pullRequest={pullRequest} onLabelClick={onLabelClick} />
+                  pullRequest.name && (
+                    <PullRequestItemTitle
+                      pullRequest={pullRequest}
+                      onLabelClick={onLabelClick}
+                      scope={scope}
+                      showScope={showScope}
+                    />
+                  )
                 }
                 description={
                   pullRequest.author &&

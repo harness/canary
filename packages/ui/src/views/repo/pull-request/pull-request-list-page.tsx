@@ -13,7 +13,7 @@ import {
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
+import { ExtendedScope, SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import {
   CheckboxOptions,
@@ -64,10 +64,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   searchQuery,
   setSearchQuery,
   onLabelClick,
-  toPullRequest
+  toPullRequest,
+  scope
 }) => {
-  const isProjectLevel = !repoId
+  const [showScope, setShowScope] = useState(false)
   const { Link, useSearchParams, location } = useRouterContext()
+  const isProjectLevel = !repoId
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
 
@@ -165,7 +167,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     principalData: computedPrincipalData.map(userInfo => ({
       label: userInfo?.display_name || '',
       value: String(userInfo?.id)
-    }))
+    })),
+    scope
   })
 
   const handleInputChange = useCallback(
@@ -248,7 +251,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     return (
       <PullRequestListContent
-        repoId={repoId}
+        repo={repository}
         spaceId={spaceId}
         pullRequests={pullRequests}
         closedPRs={closedPullReqs}
@@ -257,6 +260,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         setHeaderFilter={setHeaderFilter}
         toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
+        scope={scope}
+        showScope={showScope}
       />
     )
   }
@@ -323,6 +328,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       {}
     )
 
+    /**
+     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
+     */
+    setShowScope(
+      [ExtendedScope.All, ExtendedScope.OrgProg].includes(filterValues.include_subspaces?.value as ExtendedScope)
+    )
     onFilterChange?.(_filterValues)
   }
 

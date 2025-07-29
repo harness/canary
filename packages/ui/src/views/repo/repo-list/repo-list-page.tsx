@@ -9,15 +9,10 @@ import FilterGroup from '@views/components/FilterGroup'
 
 import { booleanParser } from '@harnessio/filters'
 
+import { ExtendedScope } from '../common'
+import { getFilterScopeOptions } from '../common/util'
 import { RepoList } from './repo-list'
 import { RepoListFilters, RepoListPageProps, RepoSortMethod } from './types'
-
-enum ExtendedScope {
-  All = 'ALL',
-  Account = 'ACCOUNT',
-  OrgProg = 'ORGANIZATION_AND_PROJECT',
-  Organization = 'ORGANIZATION'
-}
 
 const SandboxRepoListPage: FC<RepoListPageProps> = ({
   useRepoStore,
@@ -96,32 +91,14 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
-  const getFilterScopeOptions = (): ComboBoxOptions[] => {
-    if (accountId && orgIdentifier && projectIdentifier) return []
-
-    if (accountId && orgIdentifier) {
-      return [
-        { label: t('views:scope.orgAndProject', 'Organizations and projects'), value: ExtendedScope.OrgProg },
-        { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
-      ]
-    }
-
-    if (accountId) {
-      return [
-        { label: t('views:scope.all', 'Account, organizations and projects'), value: ExtendedScope.All },
-        { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
-      ]
-    }
-
-    return []
-  }
-
   const FilterSortOptions = [
     { label: 'Name', value: RepoSortMethod.Identifier },
     { label: 'Newest', value: RepoSortMethod.Newest },
     { label: 'Oldest', value: RepoSortMethod.Oldest },
     { label: 'Last push', value: RepoSortMethod.LastPush }
   ]
+
+  const scopeFilterOptions = getFilterScopeOptions({ t, scope })
 
   return (
     <SandboxLayout.Main>
@@ -177,30 +154,40 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 },
                 parser: booleanParser
               },
-              {
-                label: t('views:scope.label', 'Scope'),
-                value: 'recursive',
-                type: FilterFieldTypes.ComboBox,
-                filterFieldConfig: {
-                  options: getFilterScopeOptions(),
-                  placeholder: 'Select scope',
-                  allowSearch: false
-                },
-                parser: {
-                  parse: (value: string): ComboBoxOptions => {
-                    return getFilterScopeOptions().find(scope => scope.value === value) || { label: '', value }
-                  },
-                  serialize: (value: ComboBoxOptions): string => {
-                    const selected = value?.value
+              /**
+               * Scope filter is only applicable at Account and Organization scope
+               */
+              ...(!(accountId && orgIdentifier && projectIdentifier)
+                ? [
+                    {
+                      label: t('views:scope.label', 'Scope'),
+                      /**
+                       * @todo check why this explicit cast is needed, gives type error otherwise
+                       */
+                      value: 'recursive' as keyof RepoListFilters,
+                      type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
+                      filterFieldConfig: {
+                        options: scopeFilterOptions,
+                        placeholder: 'Select scope',
+                        allowSearch: false
+                      },
+                      parser: {
+                        parse: (value: string): ComboBoxOptions => {
+                          return scopeFilterOptions.find(scope => scope.value === value) || { label: '', value }
+                        },
+                        serialize: (value: ComboBoxOptions): string => {
+                          const selected = value?.value
 
-                    if (accountId && orgIdentifier && projectIdentifier) return ''
-                    if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-                    if (accountId) return String(selected === ExtendedScope.All)
+                          if (accountId && orgIdentifier && projectIdentifier) return ''
+                          if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+                          if (accountId) return String(selected === ExtendedScope.All)
 
-                    return ''
-                  }
-                }
-              }
+                          return ''
+                        }
+                      }
+                    }
+                  ]
+                : [])
             ]}
           />
         </>

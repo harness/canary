@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
-import { IconV2, Layout, Tag } from '@/components'
-import { PullRequest } from '@/views'
+import { IconV2, Layout, ScopeTag, Tag } from '@/components'
+import { PullRequest, Scope } from '@/views'
+import { determineScope, getScopedPath } from '@components/scope/utils'
 import { cn } from '@utils/cn'
 import { LabelsList } from '@views/repo/pull-request/components/labels'
 
@@ -10,11 +11,22 @@ import { getPrState } from '../utils'
 interface PullRequestItemTitleProps {
   pullRequest: PullRequest
   onLabelClick?: (labelId: number) => void
+  scope: Scope
+  showScope?: boolean
 }
 
-export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullRequest, onLabelClick }) => {
-  const { name, labels, state, is_draft: isDraft, comments, merged, repoId } = pullRequest
+export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
+  pullRequest,
+  onLabelClick,
+  scope,
+  showScope
+}) => {
+  const { name, labels, state, is_draft: isDraft, comments, merged, repo } = pullRequest
+  const { identifier: repoId, path: repoPath } = repo || {}
   const isSuccess = !!merged
+  const repoScopeParams = { ...scope, repoIdentifier: repoId || '', repoPath: repoPath || '' }
+  const scopeType = determineScope(repoScopeParams)
+  const scopedPath = getScopedPath(repoScopeParams)
 
   return (
     <div className="flex w-full items-center justify-between">
@@ -32,8 +44,9 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({ pullReques
 
         {repoId ? (
           <Layout.Flex gap="xs" align="center">
-            <Tag value={repoId} />
+            <Tag value={repoId} showIcon icon="repository" />
             <p className="mr-1 truncate text-3 font-medium leading-snug">{name}</p>
+            {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
           </Layout.Flex>
         ) : (
           <p className="ml-0.5 mr-1 truncate text-3 font-medium leading-snug">{name}</p>

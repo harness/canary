@@ -1,6 +1,7 @@
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { CopyButton, CopyButtonProps } from './copy-button'
 import { IconNameMapV2, IconV2 } from './icon-v2'
 
 const tagVariants = cva('cn-tag', {
@@ -52,6 +53,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   label?: string
   value: string
   disabled?: boolean
+  showCopyButton?: boolean
   title?: string
 }
 
@@ -68,6 +70,7 @@ function Tag({
   showReset = false,
   showIcon = false,
   disabled = false,
+  showCopyButton = false,
   title,
   ...props
 }: TagProps) {
@@ -105,6 +108,17 @@ function Tag({
           <IconV2 size="xs" name="xmark" className="cn-tag-icon" />
         </button>
       )}
+      {showCopyButton ? (
+        <CopyButton
+          name={value || label || ''}
+          buttonVariant="ghost"
+          // @TODO: add disable hover styles on base button as prop
+          className="cn-tag-icon [&:hover]:[background:transparent_!important]"
+          // @TODO: sync with design team to get the righ tokens for the copy button
+          color={theme as CopyButtonProps['color']}
+          size="xs"
+        />
+      ) : null}
     </div>
   )
 }

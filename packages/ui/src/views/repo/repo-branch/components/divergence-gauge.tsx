@@ -44,22 +44,33 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
         </span>
       </div>
       {/* Both behind and ahead are 0, don't show the progress bar */}
+      {/* TODO: replace with meter component when available */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
-        <div className="mx-auto grid w-28 grid-flow-col grid-cols-2 items-center justify-center">
-          <Progress
-            className="rotate-180 [&_.cn-progress-root]:rounded-l-none"
-            value={adjustedBehindPercentage / 100}
-            size="sm"
-            hideIcon
-            hidePercentage
-          />
-          <Progress
-            className="[&_.cn-progress-root]:rounded-l-none"
-            value={adjustedAheadPercentage / 100}
-            size="sm"
-            hideIcon
-            hidePercentage
-          />
+        <div className="mx-auto w-28 flex items-center justify-center">
+          <div className="flex flex-row-reverse w-1/2 justify-start">
+            <div style={{ width: `${adjustedBehindPercentage}%` }}>
+              <Progress
+                className={`rotate-180 [&_.cn-progress-root]:rounded-l-none [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-8 [&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-8`}
+                value={adjustedBehindPercentage / 100}
+                size="sm"
+                hideIcon
+                hidePercentage
+                hideContainer
+              />
+            </div>
+          </div>
+          <div className="flex w-1/2 justify-start">
+            <div style={{ width: `${adjustedAheadPercentage}%` }}>
+              <Progress
+                className={`[&_.cn-progress-root]:rounded-l-none [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-13 [&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-13`}
+                value={adjustedAheadPercentage / 100}
+                size="sm"
+                hideIcon
+                hidePercentage
+                hideContainer
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

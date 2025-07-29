@@ -144,7 +144,6 @@ export default function PullRequestListPage() {
 
   return (
     <SandboxPullRequestListPage
-      isProjectLevel
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}

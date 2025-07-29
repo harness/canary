@@ -250,7 +250,6 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   principalsSearchQuery?: string
   defaultSelectedAuthor?: Partial<PrincipalType>
   currentUser?: Partial<PrincipalType>
-  isProjectLevel?: boolean
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
   setPrincipalsSearchQuery?: (query: string) => void

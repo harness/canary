@@ -64,9 +64,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   searchQuery,
   setSearchQuery,
   onLabelClick,
-  toPullRequest,
-  isProjectLevel
+  toPullRequest
 }) => {
+  const isProjectLevel = !repoId
   const { Link, useSearchParams, location } = useRouterContext()
   const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
     usePullRequestListStore()
@@ -86,7 +86,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       return
     }
 
-    const currentParams = new URLSearchParams(location.search)
+    const currentParams = new URLSearchParams(window.location.search)
     if (currentParams.has('created_by') && currentParams.get('created_by') === String(currentUserId)) {
       if (currentParams.has('review_decision')) {
         setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
@@ -263,13 +263,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const onFilterGroupChange = useCallback(
     (filterGroup: string) => {
-      const searchParams = new URLSearchParams(location.search)
+      const searchParams = new URLSearchParams(window.location.search)
+      const filtersToOmit = ['created_by', 'review_decision']
+      const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), filtersToOmit)
+
       if (filterGroup === PRFilterGroupTogglerOptions.All) {
-        const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
-          'created_by',
-          'review_decision',
-          'review_id'
-        ])
         setSearchParams(
           new URLSearchParams({
             ...rest
@@ -278,11 +276,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       }
 
       if (filterGroup === PRFilterGroupTogglerOptions.Created) {
-        const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
-          'created_by',
-          'review_decision',
-          'review_id'
-        ])
         setSearchParams(
           new URLSearchParams({
             ...rest,
@@ -292,16 +285,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       }
 
       if (filterGroup === PRFilterGroupTogglerOptions.ReviewRequested) {
-        const { rest } = splitObjectProps(Object.fromEntries(searchParams.entries()), [
-          'created_by',
-          'review_decision',
-          'review_id'
-        ])
-
+        const originalParams = Object.fromEntries(searchParams.entries())
         setSearchParams(
           new URLSearchParams({
             ...rest,
-            review_decision: rest.review_decision || 'pending',
+            review_decision: originalParams.review_decision || 'pending',
             review_id: String(currentUserId)
           })
         )
@@ -309,7 +297,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
       setActiveFilterGrp(filterGroup as PRFilterGroupTogglerOptions)
     },
-    [currentUserId, location.search]
+    [currentUserId, location.search, setSearchParams]
   )
 
   const handleFilterOpen = (filterValues: PRListFiltersKeys, isOpen: boolean) => {

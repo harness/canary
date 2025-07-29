@@ -494,7 +494,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="min-h-24 bg-cn-background-2 p-3 text-cn-foreground-1"
+                className="text-cn-foreground-1 min-h-24 pb-8"
                 autoFocus={!!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}

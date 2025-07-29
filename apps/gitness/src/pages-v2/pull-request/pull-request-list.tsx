@@ -35,7 +35,8 @@ export default function PullRequestListPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
-  const mfeContext = useMFEContext()
+  const { scope } = useMFEContext()
+  const { accountId, orgIdentifier, projectIdentifier } = scope || {}
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
@@ -66,7 +67,7 @@ export default function PullRequestListPage() {
         // @ts-expect-error : BE issue - not implemnted
         type: 'user',
         query: principalsSearchQuery,
-        accountIdentifier: mfeContext?.scope?.accountId
+        accountIdentifier: accountId
       }
     },
     {
@@ -127,6 +128,12 @@ export default function PullRequestListPage() {
     }
   }, [labelBy])
 
+  const _scope = {
+    accountId: accountId || '',
+    orgIdentifier: orgIdentifier,
+    projectIdentifier: projectIdentifier
+  }
+
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
@@ -147,11 +154,12 @@ export default function PullRequestListPage() {
           setPopulateLabelStore(true)
         }
       }}
-      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData))}
+      onFilterChange={filterData => setFilterValues(buildPRFilters(filterData, _scope))}
       searchQuery={query}
       setSearchQuery={setQuery}
       onLabelClick={onLabelClick}
       toPullRequest={({ prNumber }) => prNumber.toString()}
+      scope={_scope}
     />
   )
 }

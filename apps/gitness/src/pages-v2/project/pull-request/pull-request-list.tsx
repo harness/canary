@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Params, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
 
 import {
-  ListPullReqQueryQueryParams,
+  ListSpacePullReqQueryQueryParams,
   TypesPullReqRepo,
   useGetPrincipalQuery,
   useListPrincipalsQuery
@@ -27,31 +27,29 @@ export default function PullRequestListPage() {
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
+  const [filterValues, setFilterValues] = useState<ListSpacePullReqQueryQueryParams>({ include_subspaces: false })
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
   const [searchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
-  const mfeContext = useMFEContext()
+  const { scope } = useMFEContext()
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
   const getApiPath = useAPIPath()
 
-  const { accountId = '', orgIdentifier = '', projectIdentifier = '' } = mfeContext?.scope || {}
+  const { accountId, orgIdentifier, projectIdentifier } = scope || {}
 
-  const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query]
+  const queryKey = ['pullRequests', accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
 
-  const queryParams: Params<string> = {
-    accountIdentifier: accountId,
-    orgIdentifier: orgIdentifier,
-    projectIdentifier: projectIdentifier,
-    limit: '10',
-    exclude_description: 'true',
-    page: String(page),
-    sort: 'merged',
-    order: 'desc',
-    query: query ?? '',
-    include_subspaces: 'true'
+  const queryParams: {
+    accountIdentifier: string
+    orgIdentifier?: string
+    projectIdentifier?: string
+  } & ListSpacePullReqQueryQueryParams = {
+    accountIdentifier: accountId || '',
+    ...(orgIdentifier ? { orgIdentifier } : {}),
+    ...(projectIdentifier ? { projectIdentifier } : {}),
+    ...filterValues
   }
 
   /**
@@ -111,7 +109,7 @@ export default function PullRequestListPage() {
         // @ts-expect-error : BE issue - not implemnted
         type: 'user',
         query: principalsSearchQuery,
-        accountIdentifier: mfeContext?.scope?.accountId
+        accountIdentifier: accountId
       }
     },
     {
@@ -155,7 +153,13 @@ export default function PullRequestListPage() {
         }
       }}
       onFilterChange={filterData => {
-        setFilterValues(buildPRFilters(filterData))
+        setFilterValues(
+          buildPRFilters(filterData, {
+            accountId: accountId || '',
+            orgIdentifier,
+            projectIdentifier
+          })
+        )
       }}
       searchQuery={query}
       setSearchQuery={setQuery}

@@ -15,8 +15,10 @@ import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
   ExecutionState,
+  ExtendedScope,
   PrincipalInfoWithReviewDecision,
-  PRListFilters
+  PRListFilters,
+  Scope
 } from '@harnessio/ui/views'
 
 import {
@@ -627,7 +629,7 @@ export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViola
   }
 }
 
-export const buildPRFilters = (filterData: PRListFilters) =>
+export const buildPRFilters = (filterData: PRListFilters, scope: Scope) =>
   Object.entries(filterData).reduce<Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>>(
     (acc, [key, value]) => {
       if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
@@ -649,6 +651,16 @@ export const buildPRFilters = (filterData: PRListFilters) =>
 
         acc['label_id'] = labelId.map(Number)
         acc['value_id'] = valueId.map(Number)
+      }
+      if (key === 'include_subspaces' && typeof value === 'object' && 'value' in value) {
+        const { accountId, orgIdentifier, projectIdentifier } = scope || {}
+        if (accountId && orgIdentifier && projectIdentifier) {
+          acc[key] = 'false'
+        } else if (accountId && orgIdentifier) {
+          acc[key] = String(value.value === ExtendedScope.OrgProg)
+        } else if (accountId) {
+          acc[key] = String(value.value === ExtendedScope.All)
+        }
       }
       return acc
     },

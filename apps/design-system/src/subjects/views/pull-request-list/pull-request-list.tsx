@@ -21,6 +21,9 @@ const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
       useLabelsStore={LabelsListStore.useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}
       isLoading={false}
+      scope={{
+        accountId: 'account-id'
+      }}
       {...props}
     />
   )

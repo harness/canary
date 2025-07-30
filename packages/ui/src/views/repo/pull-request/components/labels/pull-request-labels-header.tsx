@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Text } from '@/components'
+import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
@@ -131,27 +131,22 @@ export const LabelsHeader = ({
         {!labelWithValuesToShow && (
           <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
             <DropdownMenu.Header>
-              <SearchInput
-                size="sm"
-                autoFocus
-                id="search"
-                defaultValue={searchQuery}
-                placeholder={t('views:search.searchPlaceholder', 'Search')}
-                onChange={handleSearchQuery}
-              />
+              <SearchInput size="sm" autoFocus id="search" defaultValue={searchQuery} onChange={handleSearchQuery} />
             </DropdownMenu.Header>
 
             {labelsListWithValues?.map((label, idx) => (
               <DropdownMenu.Item
                 key={`${label.id}-${idx}`}
                 onSelect={handleOnSelect(label)}
-                tag={{
-                  variant: 'secondary',
-                  size: 'sm',
-                  theme: label.color,
-                  label: label.key,
-                  value: (label.values?.length || '').toString()
-                }}
+                title={
+                  <Tag
+                    variant="secondary"
+                    size="sm"
+                    theme={label.color}
+                    label={label.key}
+                    value={(label.values?.length || '').toString()}
+                  />
+                }
                 description={<Text truncate>{label.description}</Text>}
                 checkmark={label.isSelected}
               />

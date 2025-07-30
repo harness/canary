@@ -168,9 +168,11 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 handleOptionChange={option => {
                   if (option === 'new') {
                     navigate(toCreateRepo?.() || '')
-                  } else if (option === 'import') {
+                  }
+                  if (option === 'import') {
                     navigate(toImportRepo?.() || '')
-                  } else if (option === 'import-multiple') {
+                  }
+                  if (option === 'import-multiple') {
                     navigate(toImportMultipleRepos?.() || '')
                   }
                 }}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
@@ -22,7 +22,7 @@ import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-labe
 import { useLabelsStore } from '../stores/labels-store'
 
 export default function PullRequestListPage() {
-  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } = usePullRequestListStore()
+  const { setPullRequests, page, setPage, labelsQuery, prState, pageSize } = usePullRequestListStore()
   const { spaceId } = useParams<PathParams>()
 
   /* Query and Pagination */
@@ -34,23 +34,29 @@ export default function PullRequestListPage() {
   const [searchParams] = useSearchParams()
   const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
-  const { scope } = useMFEContext()
+
+  const oldPageRef = useRef(page)
+  const [lastUpdatedPRFilter, setLastUpdatedPRFilter] = useState<{ updated_lt?: number; updated_gt?: number }>({})
+
+  const mfeContext = useMFEContext()
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
   const getApiPath = useAPIPath()
 
-  const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
+  const { accountId = '', orgIdentifier, projectIdentifier } = mfeContext.scope || {}
 
-  const queryParams: ListSpacePullReqQueryQueryParams = useMemo(
-    () => ({
+  const queryParams: ListSpacePullReqQueryQueryParams = useMemo(() => {
+    return {
+      ...filterValues,
+      ...lastUpdatedPRFilter,
+      state: prState,
       accountIdentifier: accountId,
       ...(orgIdentifier && { orgIdentifier }),
       ...(projectIdentifier && { projectIdentifier }),
-      query: query ?? '',
-      page,
-      ...filterValues
-    }),
-    [accountId, orgIdentifier, projectIdentifier, page, query, filterValues]
-  )
+      limit: pageSize,
+      exclude_description: true,
+      query: query ?? ''
+    }
+  }, [accountId, orgIdentifier, projectIdentifier, query, filterValues, prState, lastUpdatedPRFilter])
 
   const queryKey = ['pullRequests', queryParams, filterValues]
 
@@ -123,11 +129,26 @@ export default function PullRequestListPage() {
   )
 
   useEffect(() => {
+    if (oldPageRef.current === page) return
+
+    if (oldPageRef.current < page) {
+      setLastUpdatedPRFilter({
+        updated_lt: pullRequestData?.pullRequestData?.at(-1)?.updated
+      })
+      oldPageRef.current = page
+    } else if (oldPageRef.current > page) {
+      setLastUpdatedPRFilter({
+        updated_gt: pullRequestData?.pullRequestData?.at(0)?.updated
+      })
+      oldPageRef.current = page
+    }
+  }, [page, pullRequestData])
+
+  useEffect(() => {
     if (pullRequestData) {
       setPullRequests(pullRequestData.pullRequestData, pullRequestData.headers)
-      setOpenClosePullRequests(pullRequestData.pullRequestData)
     }
-  }, [pullRequestData, setPullRequests, setOpenClosePullRequests])
+  }, [pullRequestData, setPullRequests])
 
   useEffect(() => {
     setQueryPage(page)

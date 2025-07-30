@@ -3,12 +3,12 @@ import { FC } from 'react'
 import { IconV2, Text } from '@/components'
 import { cn } from '@utils/cn'
 
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES } from '../pull-request.types'
+import { PRState } from '../pull-request.types'
 
 interface PullRequestListHeaderProps {
   onOpenClick: () => void
   onCloseClick: () => void
-  headerFilter: string
+  headerFilter: Array<PRState>
   closedPRs?: number
   openPRs?: number
 }
@@ -30,15 +30,15 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
       <button onClick={onOpenClick} className="flex items-center gap-1.5">
         <IconV2
           className={cn({
-            'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN,
-            'text-cn-foreground-4': headerFilter !== PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
+            'text-cn-foreground-success': headerFilter.includes('open'),
+            'text-cn-foreground-4': !headerFilter.includes('open')
           })}
           size="xs"
           name="git-pull-request"
         />
         <Text
-          color={headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN ? 'foreground-1' : 'foreground-4'}
-          className={cn({ 'font-medium': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN })}
+          color={headerFilter.includes('open') ? 'foreground-1' : 'foreground-4'}
+          variant={headerFilter.includes('open') ? 'body-single-line-strong' : 'body-single-line-normal'}
         >
           {openPRs} Open
         </Text>
@@ -46,15 +46,15 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
       <button onClick={onCloseClick} className="flex items-center gap-1.5">
         <IconV2
           className={cn({
-            'text-cn-foreground-success': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED,
-            'text-cn-foreground-4': headerFilter !== PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
+            'text-cn-foreground-success': headerFilter.includes('closed'),
+            'text-cn-foreground-4': !headerFilter.includes('closed')
           })}
           size="xs"
           name="check"
         />
         <Text
-          color={headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED ? 'foreground-1' : 'foreground-4'}
-          className={cn({ 'font-medium': headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED })}
+          color={headerFilter.includes('closed') ? 'foreground-1' : 'foreground-4'}
+          variant={headerFilter.includes('closed') ? 'body-single-line-strong' : 'body-single-line-normal'}
         >
           {closedPRs} Closed
         </Text>

@@ -3,6 +3,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Button,
   ButtonGroup,
+  IconV2,
   ListActions,
   NoData,
   Pagination,
@@ -33,12 +34,7 @@ import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import {
-  PRFilterGroupTogglerOptions,
-  PRListFilters,
-  PULL_REQUEST_LIST_HEADER_FILTER_STATES,
-  PullRequestPageProps
-} from './pull-request.types'
+import { PRFilterGroupTogglerOptions, PRListFilters, PullRequestPageProps } from './pull-request.types'
 import { getReviewOptions } from './utils'
 
 type PRListFiltersKeys = keyof PRListFilters
@@ -70,17 +66,24 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [showScope, setShowScope] = useState(false)
   const { Link, useSearchParams, location } = useRouterContext()
   const isProjectLevel = !repoId
-  const { pullRequests, totalItems, pageSize, page, setPage, openPullReqs, closedPullReqs, setLabelsQuery } =
-    usePullRequestListStore()
+  const {
+    pullRequests,
+    totalItems,
+    pageSize,
+    page,
+    setPage,
+    openPullReqs,
+    closedPullReqs,
+    setLabelsQuery,
+    setPrState,
+    prState
+  } = usePullRequestListStore()
 
   const { t } = useTranslation()
   const [_searchParams, setSearchParams] = useSearchParams()
   const [activeFilterGrp, setActiveFilterGrp] = useState<PRFilterGroupTogglerOptions>(PRFilterGroupTogglerOptions.All)
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
 
-  const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
-    PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
-  )
   const currentUserId = currentUser?.id
 
   useEffect(() => {
@@ -213,14 +216,16 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
               t('views:noData.changeSearch', 'or search for a different keyword.')
             ]}
-            primaryButton={{
-              label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: handleResetQuery
-            }}
             secondaryButton={{
-              label: t('views:noData.clearFilters', 'Clear filters'),
+              label: (
+                <>
+                  <IconV2 name="trash" />
+                  <Text>{t('views:noData.clearFilters', 'Clear filters')}</Text>
+                </>
+              ),
               onClick: () => {
                 filtersRef.current?.reset()
+                handleResetQuery()
               }
             }}
           />
@@ -254,10 +259,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         repo={repository}
         spaceId={spaceId}
         pullRequests={pullRequests}
-        closedPRs={closedPullReqs}
-        openPRs={openPullReqs}
-        headerFilter={headerFilter}
-        setHeaderFilter={setHeaderFilter}
+        // Do not show Open and close count if project level
+        closedPRs={!isProjectLevel ? closedPullReqs : undefined}
+        openPRs={!isProjectLevel ? openPullReqs : undefined}
+        headerFilter={prState}
+        setHeaderFilter={setPrState}
         toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
         scope={scope}
@@ -369,10 +375,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             <ListActions.Root>
               <ListActions.Left>
                 <SearchInput
-                  size="sm"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
-                  inputContainerClassName="max-w-96"
+                  inputContainerClassName="max-w-80"
                   onChange={handleInputChange}
                 />
               </ListActions.Left>
@@ -473,7 +478,17 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           </PRListFilterHandler>
         )}
         {renderListContent()}
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+        {isProjectLevel ? (
+          <Pagination
+            indeterminate={true}
+            hasPrevious={page > 1}
+            hasNext={(pullRequests?.length || 0) === pageSize}
+            onPrevious={() => setPage(page - 1)}
+            onNext={() => setPage(page + 1)}
+          />
+        ) : (
+          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

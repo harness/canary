@@ -58,8 +58,8 @@ export default function ComboBox({
 
   return (
     <>
-      <DropdownMenu.Header>
-        {allowSearch ? (
+      {allowSearch ? (
+        <DropdownMenu.Header>
           <SearchInput
             inputContainerClassName="mb-0.5"
             placeholder={placeholder}
@@ -67,8 +67,8 @@ export default function ComboBox({
             onKeyDown={e => e.stopPropagation()}
             onChange={value => onSearch?.(value)}
           />
-        ) : null}
-      </DropdownMenu.Header>
+        </DropdownMenu.Header>
+      ) : null}
       {renderContent()}
     </>
   )

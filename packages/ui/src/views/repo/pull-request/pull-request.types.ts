@@ -20,11 +20,6 @@ export interface CommitSelectorDropdownProps {
   setSearchQuery: (query: string | null) => void
 }
 
-export enum PULL_REQUEST_LIST_HEADER_FILTER_STATES {
-  OPEN = 'open',
-  CLOSED = 'closed'
-}
-
 export interface PullRequest extends PullRequestType {
   repo?: Pick<RepoRepositoryOutput, 'identifier' | 'path'>
 }
@@ -47,6 +42,8 @@ export interface PullRequestType {
   labels: PRListLabelType[]
 }
 
+export type PRState = EnumPullReqState
+
 export type IconType = 'git-pull-request-draft' | 'git-pull-request-closed' | 'git-merge' | 'git-pull-request'
 
 export interface PullRequestListStore {
@@ -54,6 +51,8 @@ export interface PullRequestListStore {
   totalItems: number
   pageSize: number
   page: number
+  prState: Array<PRState>
+  setPrState: (prState: Array<PRState>) => void
   setPage: (page: number) => void
   setLabelsQuery: (query: string) => void
   openPullReqs: number
@@ -272,8 +271,8 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   handleCloseClick?: () => void
   repo?: RepoRepositoryOutput
   spaceId?: string
-  headerFilter: PULL_REQUEST_LIST_HEADER_FILTER_STATES
-  setHeaderFilter: (filter: PULL_REQUEST_LIST_HEADER_FILTER_STATES) => void
+  headerFilter: Array<PRState>
+  setHeaderFilter: (filter: Array<PRState>) => void
   onLabelClick?: (labelId: number) => void
   scope: Scope
   showScope?: boolean

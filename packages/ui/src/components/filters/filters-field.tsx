@@ -101,7 +101,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       const checkboxId = `checkbox-${uniqId}`
       return (
         // TODO Need to remove button once we get the designs for checkbox filter
-        <Button variant="secondary" theme="default" className="gap-x-2.5">
+        <Button variant="secondary" size="sm" className="gap-x-2.5 px-2.5 py-1.5">
           <Checkbox
             id={checkboxId}
             checked={checkboxFilter.value}

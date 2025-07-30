@@ -30,14 +30,14 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
     const getData = () => {
       if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
         return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />,
           text: "Waiting on default reviewer's reviews of latest changes"
         }
       }
 
       if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
         return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />,
           text: 'Changes are pending approval from default reviewers'
         }
       }
@@ -52,7 +52,7 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
       if (defReviewerApprovalRequiredByRule && defReviewerApprovedChanges) {
         return {
           icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
-          text: 'changes were approved by code owners'
+          text: 'Changes were approved by default reviewers'
         }
       }
 
@@ -86,7 +86,7 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
       {(defReviewerApprovalRequiredByRule || defReviewerLatestApprovalRequiredByRule) && (
         <div className="ml-6 flex items-center justify-between">
           {defaultReviewerStatus}
-          <StatusBadge variant="secondary">Required</StatusBadge>
+          <StatusBadge variant="outline">Required</StatusBadge>
         </div>
       )}
       <div className="ml-6 bg-inherit">

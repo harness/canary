@@ -68,11 +68,15 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           name: author,
           // TODO: pr number must be a link
           description: (
-            <span className="flex gap-x-1">
-              created pull request
-              <span className="text-cn-foreground-1">{prNum}</span>
+            <>
+              <Text variant="body-single-line-normal" color="foreground-3">
+                created pull request
+              </Text>
+              <Text variant="body-single-line-normal" color="foreground-1">
+                {prNum}
+              </Text>
               <TimeAgoCard timestamp={createdAt} />
-            </span>
+            </>
           )
         }
       ]}

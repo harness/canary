@@ -1,6 +1,6 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, Button, IconV2, Input, MoreActionsTooltip, NodeGroup } from '@/components'
+import { Avatar, Button, IconV2, Input, Layout, MoreActionsTooltip, NodeGroup, Text } from '@/components'
 import { HandleUploadType, PrincipalPropsType, PrincipalsMentionMap, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
@@ -30,7 +30,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     commentId,
     avatar,
     name,
-    description,
+    description = null,
     selectStatus,
     isComment,
     handleDeleteComment,
@@ -68,13 +68,32 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     ]
 
     return (
-      <div className="inline-flex w-full items-center justify-between gap-1.5">
-        <div className="inline-flex items-baseline gap-1.5">
+      <Layout.Horizontal className="w-full" justify="between">
+        <Layout.Horizontal gap="2xs" align="center" wrap="wrap">
+          {/**
+           * ============
+           * Avatar and Name
+           * ============
+           */}
+
           {!!avatar && <div className="mr-0.5">{avatar}</div>}
-          {!!name && <span className="text-2 font-medium text-cn-foreground-1">{name}</span>}
-          {!!description && <span className="text-2 text-cn-foreground-2">{description}</span>}
-        </div>
-        {!!selectStatus && <span className="justify-end text-2 text-cn-foreground-3">{selectStatus}</span>}
+          {!!name && (
+            <Text variant="body-single-line-normal" color="foreground-1">
+              {name}
+            </Text>
+          )}
+
+          {/**
+           * ============
+           * Description
+           * ============
+           */}
+          {description}
+
+          <Text variant="body-single-line-normal" color="foreground-3">
+            {selectStatus}
+          </Text>
+        </Layout.Horizontal>
         {isComment && !isDeleted && (
           <MoreActionsTooltip
             className="w-[200px]"
@@ -84,7 +103,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             actions={actions}
           />
         )}
-      </div>
+      </Layout.Horizontal>
     )
   }
 )

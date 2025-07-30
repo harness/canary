@@ -1,16 +1,17 @@
-import { Button, IconV2 } from '@/components'
+import { Tag } from '@/components'
+import { useRouterContext } from '@/context'
 
 interface BranchBadgeProps {
   branchName: string
-  onClick?: () => void
-  className?: string
+  spaceId?: string
+  repoId?: string
 }
-
-const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, onClick, className = '' }) => {
+const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, spaceId, repoId }) => {
+  const { Link } = useRouterContext()
   return (
-    <Button variant="secondary" size="sm" onClick={onClick} className={`cursor-pointer ${className}`}>
-      <IconV2 name="git-branch" size="2xs" className="mr-1" /> {branchName}
-    </Button>
+    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${branchName}`}>
+      <Tag variant="secondary" theme="blue" icon="git-branch" value={branchName || ''} showIcon />
+    </Link>
   )
 }
 

@@ -29,21 +29,21 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
     const getData = () => {
       if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval) {
         return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />,
           text: 'Waiting on code owner reviews of latest changes'
         }
       }
 
       if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval) {
         return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />,
           text: 'Changes are pending approval from code owners'
         }
       }
 
       if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length) {
         return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-3" />,
+          icon: <IconV2 name="clock-solid" className="text-cn-foreground-3" />,
           text: 'Some changes were approved by code owners'
         }
       }
@@ -76,14 +76,14 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
         }
 
         return {
-          icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
+          icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
           text: 'Changes were approved by code owners'
         }
       }
 
       return {
-        icon: <IconV2 name="circle" className="text-cn-foreground-warning" />,
-        text: 'No codeowner reviews'
+        icon: <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />,
+        text: 'No codeowner reviews required'
       }
     }
 
@@ -125,9 +125,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
         ) : (
           codeOwnerStatus
         )}
-        {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
-          <StatusBadge variant="secondary">Required</StatusBadge>
-        )}
+        {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && <StatusBadge variant="outline">Required</StatusBadge>}
       </div>
       <div className="ml-6 bg-inherit">
         <StackedList.Root className="ml-2 cursor-default border-transparent bg-inherit">

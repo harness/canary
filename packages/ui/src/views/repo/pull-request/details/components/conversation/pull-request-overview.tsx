@@ -53,9 +53,13 @@ export interface PullRequestOverviewProps
   toCode?: ({ sha }: { sha: string }) => string
   handleUpload: HandleUploadType
   principalProps: PrincipalPropsType
+  spaceId?: string
+  repoId?: string
 }
 
 export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
+  spaceId,
+  repoId,
   data,
   pullReqMetadata,
   activityFilter,
@@ -181,6 +185,8 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                 isLast={isLast}
                 pullReqMetadata={pullReqMetadata}
                 toCode={toCode}
+                spaceId={spaceId}
+                repoId={repoId}
               />
             )
           }

@@ -93,11 +93,11 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
               Revert
             </Button>
             {props.showDeleteBranchButton ? (
-              <Button variant="secondary" theme="danger" onClick={props.onDeleteBranch}>
+              <Button variant="primary" theme="danger" onClick={props.onDeleteBranch}>
                 Delete Branch
               </Button>
             ) : props.showRestoreBranchButton ? (
-              <Button variant="secondary" onClick={props.onRestoreBranch}>
+              <Button variant="outline" onClick={props.onRestoreBranch}>
                 Restore Branch
               </Button>
             ) : null}

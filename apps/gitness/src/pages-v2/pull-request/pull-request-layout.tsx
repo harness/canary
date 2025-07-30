@@ -92,4 +92,5 @@ const PullRequestLayout = () => {
   )
 }
 
+PullRequestLayout.displayName = 'PullRequestLayout'
 export default PullRequestLayout

@@ -120,12 +120,17 @@ ListItem.displayName = 'StackedListItem'
 const ListField = ({ className, title, description, label, primary, right, ...props }: ListFieldProps) => (
   <div className={cn(listFieldVariants({ right }), className)} {...props}>
     {title && (
-      <Text variant={primary ? 'heading-base' : 'body-normal'} color={label ? 'foreground-2' : 'foreground-1'} truncate>
+      <Text
+        as="div"
+        variant={primary ? 'heading-base' : 'body-normal'}
+        color={label ? 'foreground-2' : 'foreground-1'}
+        truncate
+      >
         {title}
       </Text>
     )}
     {description && (
-      <Text variant="body-normal" className={cn('flex gap-2', className)} truncate>
+      <Text as="div" variant="body-normal" className={cn('flex gap-2', className)} truncate>
         {description}
       </Text>
     )}

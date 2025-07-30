@@ -186,22 +186,22 @@
     color: var(--cn-comp-diff-hljs-keyword) !important;
   }
   .hljs-built_in,
-  .hljs-class .hljs-title,
-  .hljs-title.class_ {
+  .hljs-title.class_,
+  .hljs-class .hljs-title {
     color: var(--cn-comp-diff-hljs-title-class) !important;
   }
   .hljs-string,
   .hljs-regexp,
   .hljs-addition,
   .hljs-attribute,
-  .hljs-meta {
+  .hljs-meta .hljs-string {
     color: var(--cn-comp-diff-hljs-string) !important;
   }
+  .hljs-symbol,
   .hljs-bullet,
   .hljs-link,
   .hljs-meta,
   .hljs-selector-id,
-  .hljs-symbol,
   .hljs-title {
     color: var(--cn-comp-diff-hljs-title-function) !important;
   }

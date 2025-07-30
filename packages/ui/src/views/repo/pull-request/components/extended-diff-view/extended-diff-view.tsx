@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef } from 'react'
 
-import { DiffFile, DiffView } from '@git-diff-view/react'
+import { DiffFile, DiffView, SplitSide } from '@git-diff-view/react'
 
 import './extended-diff-view-style.css'
 
@@ -31,11 +31,13 @@ export const ExtendedDiffView = forwardRef(
     // selection for the existing comments
     const preselectedLinesRef = useRef<{ old: number[]; new: number[] }>({ old: [], new: [] })
 
+    // handle existing comments selection
     useEffect(() => {
       preselectedLinesRef.current = getPreselectState(extendData)
       updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
     }, [extendData])
 
+    // handle user selection
     useEffect(() => {
       const container = containerRef.current
       if (!container) return
@@ -107,6 +109,25 @@ export const ExtendedDiffView = forwardRef(
         <DiffView
           {...props}
           ref={ref}
+          onAddWidgetClick={(lineNumber: number, side: SplitSide) => {
+            const oldNewSide = side === SplitSide.old ? 'old' : 'new'
+
+            // NOTE: this covers use case when user click on [+]
+            if (
+              !selectedRangeRef.current ||
+              lineNumber !== selectedRangeRef.current?.end ||
+              oldNewSide !== selectedRangeRef.current?.side
+            ) {
+              selectedRangeRef.current = {
+                start: lineNumber,
+                end: lineNumber,
+                side: oldNewSide
+              }
+              updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
+            }
+
+            props.onAddWidgetClick?.(lineNumber, side)
+          }}
           renderWidgetLine={
             renderWidgetLine
               ? props => {

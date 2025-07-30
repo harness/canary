@@ -1844,7 +1844,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.900}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1852,98 +1852,98 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.4",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.300}",
-      "$description": "Light shadow color with 40% opacity. Creates subtle depth for small UI elements."
-    },
-    "2": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.4",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.300}",
-      "$description": "Medium shadow color with 40% opacity. Provides balanced depth for common UI components."
-    },
-    "3": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.35",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.300}",
-      "$description": "Medium shadow color with 35% opacity. Creates moderate depth for elevated components."
-    },
-    "4": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.35",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.300}",
-      "$description": "Deep shadow color with 35% opacity. Provides significant depth for floating elements."
-    },
-    "5": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.35",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.300}",
-      "$description": "Very deep shadow color with 35% opacity. Creates dramatic elevation for modal content."
-    },
-    "6": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.4",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.300}",
-      "$description": "Extremely deep shadow color with 40% opacity. Provides maximum depth for highly elevated elements."
-    },
-    "inner": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.07",
+            "value": "0.05",
             "space": "lch"
           }
         }
       },
       "$type": "color",
       "$value": "{chrome.900}",
-      "$description": "Subtle inner shadow color with 7% opacity. Creates inset effect for pressed or focused states."
+      "$description": "Light shadow color. Creates subtle depth for small UI elements."
+    },
+    "2": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{chrome.900}",
+      "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
+    },
+    "3": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{chrome.900}",
+      "$description": "Medium shadow color. Creates moderate depth for elevated components."
+    },
+    "4": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{chrome.900}",
+      "$description": "Deep shadow color. Provides significant depth for floating elements."
+    },
+    "5": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.1",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{chrome.900}",
+      "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
+    },
+    "6": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.1",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{chrome.900}",
+      "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
+    },
+    "inner": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.1",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{chrome.900}",
+      "$description": "Subtle inner shadow color. Creates inset effect for pressed or focused states."
     }
   },
   "ring": {

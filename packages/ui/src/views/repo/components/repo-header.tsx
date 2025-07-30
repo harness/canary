@@ -27,7 +27,12 @@ export const RepoHeader = ({ name, isPublic, isLoading, className, isFavorite, o
             {name}
           </Text>
           <Layout.Flex justify="start" align="center" gap="4xs">
-            <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} className="min-w-fit rounded-full">
+            <StatusBadge
+              variant="outline"
+              theme={!isPublic ? 'muted' : 'success'}
+              className="min-w-fit rounded-full"
+              size="md"
+            >
               {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
             </StatusBadge>
             <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />

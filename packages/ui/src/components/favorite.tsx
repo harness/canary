@@ -1,4 +1,6 @@
-import { Toggle } from './toggle'
+import React from 'react'
+
+import { Toggle } from '@/components'
 
 interface FavoriteIconProps {
   isFavorite?: boolean
@@ -12,7 +14,10 @@ const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteT
     variant="transparent"
     selectedVariant="primary"
     prefixIcon={isFavorite ? 'star-solid' : 'star'}
-    prefixIconProps={{ className: isFavorite ? 'text-cn-icon-yellow' : 'text-cn-foreground-2' }}
+    prefixIconProps={{
+      className: isFavorite ? 'text-cn-icon-yellow' : 'text-cn-foreground-2',
+      size: '2xs'
+    }}
     onChange={onFavoriteToggle}
   />
 )

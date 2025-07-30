@@ -32,7 +32,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   tagList,
   selectedBranchorTag,
   branchPrefix,
-  buttonSize,
+  buttonSize = 'md',
   selectedBranch,
   onSelectBranch,
   isBranchOnly = false,
@@ -51,17 +51,16 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        {/* TODO: Design system: Add max-width from tailwind config and add .truncate to span */}
-        <Button className={cn('justify-start px-3', className)} variant="outline" size={buttonSize}>
+        <Button className={cn('justify-start', className)} variant="outline" size={buttonSize}>
           {!branchPrefix && (
             <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
           )}
-          <Text className="truncate">
+          <Text className="truncate text-cn-foreground-1">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
               : selectedBranch?.name || selectedBranchorTag.name}
           </Text>
-          <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0" size="2xs" />
+          <IconV2 name="nav-arrow-down" className="chevron-down ml-auto shrink-0 text-cn-foreground-3" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

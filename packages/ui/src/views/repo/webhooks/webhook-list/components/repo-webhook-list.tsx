@@ -98,7 +98,7 @@ export function RepoWebhookList({
         <Table.Header>
           <Table.Row>
             <Table.Head className="w-[50px] !pr-0"></Table.Head>
-            <Table.Head className="w-[660px]">
+            <Table.Head className="w-auto">
               <Text variant="caption-strong">Name</Text>
             </Table.Head>
             <Table.Head className="w-[136px]">
@@ -123,7 +123,7 @@ export function RepoWebhookList({
                   }}
                 />
               </Table.Cell>
-              <Table.Cell className="w-[660px] max-w-0">
+              <Table.Cell className="w-auto max-w-0">
                 <Layout.Flex className="w-full" direction="column" gap="none">
                   <Text variant="body-strong" className="truncate">
                     {webhook.display_name}

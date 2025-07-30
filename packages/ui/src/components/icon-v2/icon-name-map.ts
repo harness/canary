@@ -3,6 +3,7 @@
  * Generated icon map - DO NOT EDIT DIRECTLY
  */
 
+import Account from './icons/account.svg'
 import Agile from './icons/agile.svg'
 import Ai from './icons/ai.svg'
 import AppNotification from './icons/app-notification.svg'
@@ -479,6 +480,7 @@ import ZoomIn from './icons/zoom-in.svg'
 import ZoomOut from './icons/zoom-out.svg'
 
 export const IconNameMapV2 = {
+  account: Account,
   agile: Agile,
   ai: Ai,
   'app-notification': AppNotification,

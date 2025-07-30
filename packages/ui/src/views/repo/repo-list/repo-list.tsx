@@ -28,14 +28,12 @@ export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
 }
 
 const Stats = ({ pulls }: { pulls: number }) => (
-  <div className="flex select-none items-center justify-end gap-2">
-    <Layout.Flex gap="3xs">
-      <IconV2 name="git-pull-request" />
-      <Text as="span" color="foreground-1">
-        {pulls || 0}
-      </Text>
-    </Layout.Flex>
-  </div>
+  <Layout.Flex gap="3xs" align="center">
+    <IconV2 name="git-pull-request" />
+    <Text as="span" color="foreground-1">
+      {pulls || 0}
+    </Text>
+  </Layout.Flex>
 )
 
 const Title = ({
@@ -156,10 +154,12 @@ export function RepoList({
           className="py-3"
           isLast={repos.length - 1 === repo_idx}
           actions={
-            <Favorite
-              isFavorite={repo.favorite}
-              onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId: repo.id, isFavorite })}
-            />
+            !repo.importing && (
+              <Favorite
+                isFavorite={repo.favorite}
+                onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId: repo.id, isFavorite })}
+              />
+            )
           }
         >
           <Link to={toRepository?.(repo) || ''} className={cn({ 'pointer-events-none': repo.importing })}>

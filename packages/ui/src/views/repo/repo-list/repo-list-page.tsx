@@ -1,11 +1,11 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
 import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
-import FilterGroup from '@views/components/FilterGroup'
+import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
 import { booleanParser } from '@harnessio/filters'
 
@@ -34,6 +34,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const [showScope, setShowScope] = useState(false)
+  const searchRef = useRef<FilterGroupRef>(null)
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -79,6 +80,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const handleResetFiltersQueryAndPages = () => {
     handleSearch('')
     setPage(1)
+    searchRef.current?.resetSearch?.()
   }
 
   const onFilterValueChange = (filterValues: RepoListFilters) => {
@@ -160,7 +162,9 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
               onSortChange
             }}
             onFilterValueChange={onFilterValueChange}
-            handleInputChange={(value: string) => handleSearch(value)}
+            searchValue={searchQuery || ''}
+            ref={searchRef}
+            handleInputChange={handleSearch}
             headerAction={
               <SplitButton<string>
                 dropdownContentClassName="mt-0 min-w-[208px]"

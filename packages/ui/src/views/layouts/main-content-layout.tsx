@@ -38,7 +38,7 @@ export function MainContentLayout({
   return (
     <div
       className={cn(
-        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
+        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] border min-w-fit bg-cn-background-1',
         {
           'mx-[var(--cn-inset-layout-indent)]': isMobile || enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':

@@ -1,4 +1,4 @@
-import { MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Table, Text } from '@/components'
+import { Layout, MoreActionsTooltip, NoData, Pagination, Spacer, Switch, Table, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { WebhookType } from '@/views'
 
@@ -93,12 +93,18 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root>
+      {/* add props so table respects sizes you give */}
+      <Table.Root className="table-fixed">
         <Table.Header>
           <Table.Row>
-            <Table.Head className="w-2/3">Name</Table.Head>
-            <Table.Head className="w-1/3">Execution</Table.Head>
-            <Table.Head></Table.Head>
+            <Table.Head className="w-[50px] !pr-0"></Table.Head>
+            <Table.Head className="w-[660px]">
+              <Text variant="caption-strong">Name</Text>
+            </Table.Head>
+            <Table.Head className="w-[136px]">
+              <Text variant="caption-strong">Execution</Text>
+            </Table.Head>
+            <Table.Head className="w-[68px]"></Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -107,7 +113,7 @@ export function RepoWebhookList({
               to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
-              <Table.Cell className="w-1/2 max-w-0 cursor-pointer pr-4">
+              <Table.Cell className="w-[50px] cursor-pointer flex items-start !pr-0" disableLink>
                 <Switch
                   checked={webhook.enabled}
                   onClick={e => {
@@ -115,34 +121,44 @@ export function RepoWebhookList({
                     e.stopPropagation()
                     handleEnableWebhook(webhook.id, !webhook.enabled)
                   }}
-                  label={webhook.display_name}
-                  caption={formatWebhookTriggers(webhook?.triggers)}
-                  captionTooltip={formatWebhookTriggers(webhook?.triggers)}
                 />
               </Table.Cell>
-              <Table.Cell className="cursor-pointer content-center">
-                <StatusBadge
-                  variant="status"
+              <Table.Cell className="w-[660px] max-w-0">
+                <Layout.Flex className="w-full" direction="column" gap="none">
+                  <Text variant="body-strong" className="truncate">
+                    {webhook.display_name}
+                  </Text>
+                  <Text variant="body-normal" className="truncate" title={formatWebhookTriggers(webhook?.triggers)}>
+                    {formatWebhookTriggers(webhook?.triggers)}
+                  </Text>
+                </Layout.Flex>
+              </Table.Cell>
+              <Table.Cell className="cursor-pointer content-center w-[136px]">
+                <Tag
+                  variant="outline"
                   theme={
                     webhook.latest_execution_result === 'success'
-                      ? 'success'
+                      ? 'green'
                       : webhook.latest_execution_result === 'fatal_error' ||
                           webhook.latest_execution_result === 'retriable_error'
-                        ? 'danger'
-                        : 'muted'
+                        ? 'red'
+                        : 'gray'
                   }
-                >
-                  {webhook.latest_execution_result === 'success'
-                    ? 'Success'
-                    : webhook.latest_execution_result === 'fatal_error' ||
-                        webhook.latest_execution_result === 'retriable_error'
-                      ? 'Failed'
-                      : 'Invalid'}
-                </StatusBadge>
+                  value={
+                    webhook.latest_execution_result === 'success'
+                      ? 'Success'
+                      : webhook.latest_execution_result === 'fatal_error' ||
+                          webhook.latest_execution_result === 'retriable_error'
+                        ? 'Failed'
+                        : 'Invalid'
+                  }
+                  rounded
+                />
               </Table.Cell>
 
               <Table.Cell className="cursor-pointer content-center text-right">
                 <MoreActionsTooltip
+                  iconName="more-horizontal"
                   actions={[
                     {
                       title: t('views:webhookData.edit', 'Edit webhook'),

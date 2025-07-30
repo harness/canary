@@ -6,6 +6,8 @@
 @import url('@harnessio/core-design-system/themes');
 @import url('@harnessio/core-design-system/mfe-themes');
 
+@import 'highlight.js/styles/atom-one-dark.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

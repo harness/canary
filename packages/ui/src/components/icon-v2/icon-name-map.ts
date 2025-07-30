@@ -3,6 +3,7 @@
  * Generated icon map - DO NOT EDIT DIRECTLY
  */
 
+import Account from './icons/account.svg'
 import Agile from './icons/agile.svg'
 import Ai from './icons/ai.svg'
 import AppNotification from './icons/app-notification.svg'
@@ -311,6 +312,7 @@ import OpenInBrowser from './icons/open-in-browser.svg'
 import OpenInWindow from './icons/open-in-window.svg'
 import OpenNewWindow from './icons/open-new-window.svg'
 import OpenSelectHandGesture from './icons/open-select-hand-gesture.svg'
+import Organizations from './icons/organizations.svg'
 import Overrides from './icons/overrides.svg'
 import PageDown from './icons/page-down.svg'
 import PageEdit from './icons/page-edit.svg'
@@ -353,6 +355,7 @@ import PrComment from './icons/pr-comment.svg'
 import Presentation from './icons/presentation.svg'
 import PrivacyPolicy from './icons/privacy-policy.svg'
 import Prohibition from './icons/prohibition.svg'
+import Project from './icons/project.svg'
 import QuestionMark from './icons/question-mark.svg'
 import QuoteMessage from './icons/quote-message.svg'
 import Quote from './icons/quote.svg'
@@ -477,6 +480,7 @@ import ZoomIn from './icons/zoom-in.svg'
 import ZoomOut from './icons/zoom-out.svg'
 
 export const IconNameMapV2 = {
+  account: Account,
   agile: Agile,
   ai: Ai,
   'app-notification': AppNotification,
@@ -785,6 +789,7 @@ export const IconNameMapV2 = {
   'open-in-window': OpenInWindow,
   'open-new-window': OpenNewWindow,
   'open-select-hand-gesture': OpenSelectHandGesture,
+  organizations: Organizations,
   overrides: Overrides,
   'page-down': PageDown,
   'page-edit': PageEdit,
@@ -827,6 +832,7 @@ export const IconNameMapV2 = {
   presentation: Presentation,
   'privacy-policy': PrivacyPolicy,
   prohibition: Prohibition,
+  project: Project,
   'question-mark': QuestionMark,
   'quote-message': QuoteMessage,
   quote: Quote,

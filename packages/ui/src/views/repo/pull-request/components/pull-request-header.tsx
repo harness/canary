@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, StatusBadge, Tag, TimeAgoCard } from '@/components'
-import { useRouterContext } from '@/context'
+import { Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
+import PullRequestBranchBadge from '../details/components/conversation/pull-request-branch-badge'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
@@ -51,8 +51,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   updateTargetBranch,
   branchSelectorRenderer
 }) => {
-  const { Link } = useRouterContext()
-
   const stateObject = getPrState(is_draft, merged, state)
 
   const handleSubmit = useCallback(
@@ -67,12 +65,16 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 
   return (
     <>
-      <div className={cn('flex w-full flex-col gap-y-4', className)}>
-        <div className="text-6 flex w-full max-w-full items-center gap-x-3">
-          <div className="flex items-center gap-x-2.5 leading-snug">
-            <h1 className="text-cn-foreground-1 flex max-w-[95%] items-center truncate font-medium">{title}</h1>
-            <span className="text-cn-foreground-2 font-normal">#{number}</span>
-          </div>
+      <Layout.Vertical gap="md" className={cn(className)}>
+        <Layout.Horizontal gap="xs" align="center">
+          <Layout.Horizontal gap="xs" align="center">
+            <Text as="h1" className="max-w-[95%] truncate" variant="heading-section" color="foreground-1">
+              {title}
+            </Text>
+            <Text as="h1" className="max-w-[95%] truncate" variant="heading-section" color="foreground-2">
+              #{number}
+            </Text>
+          </Layout.Horizontal>
 
           <Button
             className="group"
@@ -85,46 +87,32 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           >
             <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
           </Button>
-        </div>
+        </Layout.Horizontal>
 
-        <div className="flex items-center gap-x-3">
+        <Layout.Horizontal gap="sm" align="center">
           <StatusBadge icon={stateObject.icon} variant="outline" theme={stateObject.theme}>
             {stateObject.text}
           </StatusBadge>
 
-          <div className="text-cn-foreground-2 inline-flex flex-wrap items-center gap-1">
-            <span className="text-cn-foreground-1 font-medium">{author?.display_name || author?.email || ''}</span>
-            <span>{merged ? 'merged' : ' wants to merge'}</span>
-            <span className="text-cn-foreground-1 font-medium">
-              {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
-            </span>
-            <span>into</span>
-            <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
-              <Tag
-                variant="secondary"
-                theme="blue"
-                icon="git-branch"
-                value={target_branch || ''}
-                showIcon
-                enableHover
-              />
-            </Link>
-            <span>from</span>
-            <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}>
-              <Tag
-                variant="secondary"
-                theme="blue"
-                icon="git-branch"
-                value={source_branch || ''}
-                showIcon
-                enableHover
-              />
-            </Link>
-            <span className="bg-cn-border-3 mx-1.5 h-4 w-px" />
+          <Layout.Horizontal gap="3xs" align="center" wrap="wrap">
+            <Text variant="body-single-line-strong" color="foreground-1">
+              {author?.display_name || author?.email || ''}
+            </Text>
+            <Text variant="body-single-line-normal" color="foreground-2">
+              {merged ? 'merged' : ' wants to merge'} {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}{' '}
+              into
+            </Text>
+
+            <PullRequestBranchBadge branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+            <Text variant="body-single-line-normal" color="foreground-2">
+              from
+            </Text>
+            <PullRequestBranchBadge branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+            <span className="mx-1.5 h-4 w-px bg-cn-borders-3" />
             <TimeAgoCard timestamp={created} />
-          </div>
-        </div>
-      </div>
+          </Layout.Horizontal>
+        </Layout.Horizontal>
+      </Layout.Vertical>
 
       <PullRequestHeaderEditDialog
         open={isEditing}

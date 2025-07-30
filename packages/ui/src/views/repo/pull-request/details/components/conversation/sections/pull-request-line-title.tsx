@@ -1,5 +1,6 @@
 import { ReactElement } from 'react'
 
+import { Layout } from '@components/layout'
 import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
@@ -15,21 +16,19 @@ interface LineDescriptionProps {
 
 export const LineTitle = ({ ...props }: LineTitleProps) => {
   return (
-    <div className="inline-flex items-center gap-2">
+    <Layout.Horizontal gap="xs" align="center">
       {props?.icon}
       <Text as="h3" variant="body-single-line-strong" className={cn('text-cn-foreground-1', props?.textClassName)}>
         {props?.text}
       </Text>
-    </div>
+    </Layout.Horizontal>
   )
 }
 
 export const LineDescription = ({ ...props }: LineDescriptionProps) => {
   return (
-    <div className="ml-6 inline-flex items-center gap-2">
-      <Text variant="body-single-line-normal" className="text-cn-foreground-4">
-        {props.text}
-      </Text>
-    </div>
+    <Text className="ml-6" variant="body-normal" color="foreground-3">
+      {props.text}
+    </Text>
   )
 }

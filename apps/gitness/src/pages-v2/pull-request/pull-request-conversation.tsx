@@ -738,7 +738,9 @@ export default function PullRequestConversationPage() {
       removeSuggestionFromBatch,
       filenameToLanguage,
       handleUpload,
-      toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
+      toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`,
+      spaceId,
+      repoId
     }),
     [
       routes,

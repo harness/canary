@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 
-import { Accordion, IconV2, Layout, StackedList, StatusBadge } from '@/components'
+import { Accordion, IconV2, Layout, StackedList, StatusBadge, Text } from '@/components'
 import { easyPluralize, PullRequestChangesSectionProps } from '@/views'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
@@ -81,19 +81,29 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
                   <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
-                  <span className="text-2 text-cn-foreground-1">
+                  <Text variant="body-single-line-normal" color="foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
-                  </span>
+                  </Text>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="circle" className="fill-transparent text-icons-7" />
-                  <span className="text-2 text-cn-foreground-1">
+                  <IconV2
+                    name={
+                      Number(approvedEvaluations?.length) >= Number(minApproval)
+                        ? 'check-circle-solid'
+                        : 'warning-triangle-solid'
+                    }
+                    className={cn({
+                      'text-cn-foreground-success': Number(approvedEvaluations?.length) >= Number(minApproval),
+                      'text-cn-foreground-warning': Number(approvedEvaluations?.length) < Number(minApproval)
+                    })}
+                  />
+                  <Text variant="body-single-line-normal" color="foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
-                  </span>
+                  </Text>
                 </div>
               )}
-              <StatusBadge variant="secondary">Required</StatusBadge>
+              <StatusBadge variant="outline">Required</StatusBadge>
             </div>
           )}
 

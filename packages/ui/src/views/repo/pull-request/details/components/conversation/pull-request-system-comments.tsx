@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Layout, Tag, TimeAgoCard } from '@/components'
+import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Tag, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -30,11 +30,23 @@ const formatListWithAndFragment = (names: string[]): React.ReactNode => {
     case 0:
       return null
     case 1:
-      return <strong>{names[0]}</strong>
+      return (
+        <Text as="span" variant="body-single-line-normal" color="foreground-1">
+          {names[0]}
+        </Text>
+      )
     case 2:
       return (
         <>
-          <strong>{names[0]}</strong> and <strong>{names[1]}</strong>
+          <Text as="span" variant="body-single-line-normal" color="foreground-1">
+            {names[0]}
+          </Text>
+          <Text as="span" variant="body-single-line-normal" color="foreground-3">
+            &nbsp;and&nbsp;
+          </Text>
+          <Text as="span" variant="body-single-line-normal" color="foreground-1">
+            {names[1]}
+          </Text>
         </>
       )
     default:
@@ -42,11 +54,18 @@ const formatListWithAndFragment = (names: string[]): React.ReactNode => {
         <>
           {names.slice(0, -1).map((name, index) => (
             <>
-              <strong>{name}</strong>
-              {index < names.length - 2 ? ', ' : ''}
+              <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                {name}
+                {index < names.length - 2 ? ', ' : ''}
+              </Text>
             </>
-          ))}{' '}
-          and <strong>{names[names.length - 1]}</strong>
+          ))}
+          <Text as="span" variant="body-single-line-normal" color="foreground-3">
+            &nbsp;and&nbsp;
+          </Text>
+          <Text as="span" variant="body-single-line-normal" color="foreground-1">
+            {names[names.length - 1]}
+          </Text>
         </>
       )
   }
@@ -60,6 +79,8 @@ interface SystemCommentProps extends TypesPullReq {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
   principalProps: PrincipalPropsType
+  spaceId?: string
+  repoId?: string
 }
 const PullRequestSystemComments: FC<SystemCommentProps> = ({
   commentItems,
@@ -67,7 +88,9 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   pullReqMetadata,
   toCommitDetails,
   toCode,
-  principalProps
+  principalProps,
+  spaceId,
+  repoId
 }) => {
   const { navigate } = useRouterContext()
 
@@ -94,10 +117,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
     header: TimelineItemProps['header'][number]
   } = useMemo(() => {
     if (!payloadMain) return { header: {} }
-
-    const handleNavigation = (url?: string) => {
-      navigate(url || '')
-    }
 
     const { payload, type, author, metadata, mentions, created } = payloadMain
 
@@ -126,21 +145,29 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2">
-                {merge_method === MergeStrategy.REBASE ? 'rebased changes from branch' : 'merged changes from'}
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {merge_method === MergeStrategy.REBASE ? 'rebased changes from branch' : 'merged changes from'}
+                </Text>
                 <PullRequestBranchBadge
                   branchName={pullReqMetadata?.source_branch as string}
-                  onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.source_branch as string }))}
+                  spaceId={spaceId}
+                  repoId={repoId}
                 />
-                into
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  into
+                </Text>
                 <PullRequestBranchBadge
                   branchName={pullReqMetadata?.target_branch as string}
-                  onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.target_branch as string }))}
+                  spaceId={spaceId}
+                  repoId={repoId}
                 />
-                {merge_method === MergeStrategy.REBASE ? ', now at ' : 'by commit'}
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {merge_method === MergeStrategy.REBASE ? ', now at ' : 'by commit'}
+                </Text>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={merge_sha as string} />
                 <TimeAgoCard timestamp={created} />
-              </span>
+              </>
             )
           },
           icon: <IconV2 name="git-merge" size="2xs" />
@@ -151,7 +178,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           hideIconBorder: true,
           // TODO: fix timeline item to handle commit update as rn it doesnt work
           header: {
-            description: decision === 'approved' ? 'approved these changes' : 'requested changes to this pull request'
+            description: (
+              <Text variant="body-single-line-normal" color="foreground-3">
+                {decision === 'approved' ? 'approved these changes' : 'requested changes to this pull request'}
+              </Text>
+            )
           },
           icon:
             decision === 'approved' ? (
@@ -170,12 +201,16 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             description: !forced ? (
               <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
             ) : (
-              <Layout.Horizontal gap="2xs" align="center">
-                <span>forced pushed</span>
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  forced pushed
+                </Text>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(old)} />
-                <span>to</span>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  to
+                </Text>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
-              </Layout.Horizontal>
+              </>
             )
           },
           icon: <IconV2 name="git-commit" size="xs" />
@@ -189,16 +224,17 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="flex items-center gap-x-1 text-2 text-cn-foreground-2">
-                {isSourceBranchDeleted ? 'deleted the' : 'restored the'}
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {isSourceBranchDeleted ? 'deleted the' : 'restored the'}
+                </Text>
                 {!!sourceBranch && (
-                  <PullRequestBranchBadge
-                    branchName={sourceBranch}
-                    onClick={() => handleNavigation(toCode?.({ sha: sourceBranch as string }))}
-                  />
+                  <PullRequestBranchBadge branchName={sourceBranch} spaceId={spaceId} repoId={repoId} />
                 )}
-                branch
-              </span>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  branch
+                </Text>
+              </>
             )
           },
           icon: <IconV2 name="git-branch" size="xs" />
@@ -218,11 +254,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-cn-foreground-3">
+              <Text variant="body-single-line-normal" color="foreground-3">
                 {!!changedToDraft && 'This pull request is now a draft'}
                 {!!openFromDraft && 'This pull request is no longer a draft'}
                 {!changedToDraft && !openFromDraft && `changed pull request state from ${old} to ${newData}`}
-              </span>
+              </Text>
             )
           },
           icon: <IconV2 name={iconName} size="2xs" />
@@ -233,9 +269,16 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-cn-foreground-3">
-                changed title from <span className="line-through">{String(old)}</span> to {String(newData)}
-              </span>
+              <Text variant="body-single-line-normal" color="foreground-3">
+                changed title from &nbsp;
+                <Text className="line-through" as="span" variant="body-single-line-normal" color="foreground-1">
+                  {String(old)}
+                </Text>
+                &nbsp; to &nbsp;
+                <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                  {String(newData)}
+                </Text>
+              </Text>
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
@@ -248,11 +291,18 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-cn-foreground-3">
-                {author?.id === mentionId
-                  ? 'removed their request for review'
-                  : `removed the request for review from ${mentionDisplayName}`}
-              </span>
+              <Text variant="body-single-line-normal" color="foreground-3">
+                {author?.id === mentionId ? (
+                  'removed their request for review'
+                ) : (
+                  <>
+                    removed the request for review from &nbsp;
+                    <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                      {mentionDisplayName}
+                    </Text>
+                  </>
+                )}
+              </Text>
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
@@ -266,23 +316,23 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="text-sm text-cn-foreground-3">
+              <Text variant="body-single-line-normal" color="foreground-3">
                 {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED && 'self-requested a review'}
                 {reviewer_type === ReviewerAddActivity.ASSIGNED && <>assigned {activityMentions} as a reviewer</>}
                 {reviewer_type === ReviewerAddActivity.REQUESTED && <>requested a review from {activityMentions}</>}
                 {reviewer_type === ReviewerAddActivity.CODEOWNERS && (
                   <>
-                    requested a review from {principalMentions} as{' '}
+                    requested a review from {principalMentions} as &nbsp;
                     {principalNameList?.length > 1 ? 'code owners' : 'code owner'}
                   </>
                 )}
                 {reviewer_type === ReviewerAddActivity.DEFAULT && (
                   <>
-                    requested a review from {principalMentions} as{' '}
+                    requested a review from {principalMentions} as &nbsp;
                     {principalNameList?.length > 1 ? 'default reviewers' : 'default reviewer'}
                   </>
                 )}
-              </span>
+              </Text>
             )
           },
           icon: <IconV2 name="eye" size="xs" className="p-0.5" />
@@ -295,20 +345,22 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <span className="inline-flex items-center text-sm text-cn-foreground-3">
-                {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
-                <div className="mx-1.5">
-                  <Tag
-                    variant="secondary"
-                    size="sm"
-                    key={label as string}
-                    label={label as string}
-                    value={value as string}
-                    theme={(value_color ?? label_color) as ColorsEnum}
-                  />
-                </div>
-                label
-              </span>
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
+                </Text>
+                <Tag
+                  variant="secondary"
+                  size="sm"
+                  key={label as string}
+                  label={label as string}
+                  value={value as string}
+                  theme={(value_color ?? label_color) as ColorsEnum}
+                />
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  label
+                </Text>
+              </>
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />

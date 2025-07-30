@@ -82,6 +82,7 @@ export interface PullRequestCommentBoxProps {
   preserveCommentOnSave?: boolean
   buttonTitle?: string
   textareaPlaceholder?: string
+  allowEmptyValue?: boolean
 }
 
 const TABS_KEYS = {
@@ -111,7 +112,8 @@ export const PullRequestCommentBox = ({
   setPrincipalsMentionMap: parentSetPrincipalsMentionMap,
   preserveCommentOnSave = false,
   buttonTitle,
-  textareaPlaceholder
+  textareaPlaceholder,
+  allowEmptyValue = false
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -142,7 +144,7 @@ export const PullRequestCommentBox = ({
   }
 
   const handleSaveComment = () => {
-    if (onSaveComment && comment.trim()) {
+    if (onSaveComment && (allowEmptyValue || comment.trim())) {
       const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
       onSaveComment(formattedComment)
 

@@ -15,7 +15,7 @@ function Root({ ...props }: RootProps) {
   const { children } = props
 
   return (
-    <Layout.Vertical justify="center" gap="none">
+    <Layout.Vertical justify="center" gap="sm">
       {children}
     </Layout.Vertical>
   )
@@ -25,7 +25,7 @@ function Content({ ...props }: RootProps) {
   const { children } = props
 
   return (
-    <Text truncate className="text-cn-foreground-3">
+    <Text as="p" variant="body-single-line-normal" className="py-1">
       {children}
     </Text>
   )

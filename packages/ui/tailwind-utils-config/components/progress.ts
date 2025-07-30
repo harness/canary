@@ -93,7 +93,6 @@ function createProgressVariantStyles() {
 export default {
   '.cn-progress': {
     '&-container': {
-      padding: 'var(--cn-progress-container-py, 8px) 0px',
       position: 'relative'
     },
 
@@ -165,8 +164,7 @@ export default {
       left: '0',
       height: '100%',
       width: '100%',
-      'pointer-events': 'none',
-      padding: 'var(--cn-progress-container-py, 8px) 0px'
+      'pointer-events': 'none'
     },
 
     '&-overlay': {

@@ -41,6 +41,7 @@ import {
   MergeStrategy,
   PullRequestRoutingProps
 } from '../../pull-request-details-types'
+import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
@@ -64,30 +65,38 @@ interface HeaderProps {
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
+  spaceId?: string
+  repoId?: string
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
-  const { pullReqMetadata } = props
+  const { pullReqMetadata, spaceId, repoId } = props
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
   if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
-          <div className="flex items-center gap-1 font-medium">
+          <Text className="space-x-1" variant="body-single-line-strong" as="h2" color="foreground-1">
             <span>{props?.pullReqMetadata?.merger?.display_name}</span>
             <span>
               {areRulesBypassed ? `bypassed branch rules and ${mergeMethod} branch` : `${mergeMethod} branch`}
             </span>
-            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
-              {props?.pullReqMetadata?.source_branch}
-            </StatusBadge>
+
+            <PullRequestBranchBadge
+              branchName={pullReqMetadata?.source_branch || ''}
+              spaceId={spaceId}
+              repoId={repoId}
+            />
             <span>into</span>
-            <StatusBadge icon="git-branch" variant="secondary" theme="muted" size="sm">
-              {props?.pullReqMetadata?.target_branch}
-            </StatusBadge>
-            <TimeAgoCard timestamp={props?.pullReqMetadata?.merged} />
-          </div>
+            <PullRequestBranchBadge
+              branchName={pullReqMetadata?.target_branch || ''}
+              spaceId={spaceId}
+              repoId={repoId}
+            />
+
+            <TimeAgoCard timestamp={pullReqMetadata?.merged} />
+          </Text>
           <Layout.Horizontal>
             <Button variant="secondary" onClick={props.onRevertPR}>
               Revert
@@ -391,6 +400,8 @@ const PullRequestPanel = ({
                 showRestoreBranchButton={showRestoreBranchButton}
                 showDeleteBranchButton={showDeleteBranchButton}
                 headerMsg={headerMsg}
+                spaceId={spaceId}
+                repoId={repoId}
               />
             }
           />

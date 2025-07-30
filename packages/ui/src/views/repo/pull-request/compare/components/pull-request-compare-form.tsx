@@ -4,7 +4,7 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 import { Alert, FormInput, FormWrapper } from '@/components'
 import { useTranslation } from '@/context'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
-import { noop } from 'lodash-es'
+import { isEmpty, noop } from 'lodash-es'
 import { z } from 'zod'
 
 // Define the form schema
@@ -47,7 +47,13 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
       onFormSubmit(data)
     }
 
-    const { register, handleSubmit } = formMethods
+    const {
+      register,
+      handleSubmit,
+      formState: { errors }
+    } = formMethods
+
+    console.log('errors', errors)
 
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
@@ -61,8 +67,11 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
         <PullRequestCommentBox
           preserveCommentOnSave
+          allowEmptyValue
           onSaveComment={newComment => {
-            onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
+            if (isEmpty(errors)) {
+              onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
+            }
           }}
           textareaPlaceholder={t(
             'views:pullRequests.compareChangesFormDescriptionPlaceholder',

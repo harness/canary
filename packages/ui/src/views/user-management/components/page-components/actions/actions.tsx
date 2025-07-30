@@ -11,6 +11,10 @@ export const Actions = () => {
 
   const { handleDialogOpen } = useDialogData()
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange(e.target.value)
+  }
+
   return (
     <ListActions.Root>
       <ListActions.Left>
@@ -18,7 +22,7 @@ export const Actions = () => {
           className="h-8 max-w-[320px]"
           placeholder={t('views:userManagement.searchPlaceholder', 'Search')}
           value={searchInput || ''}
-          handleChange={handleInputChange}
+          handleChange={handleSearchChange}
         />
       </ListActions.Left>
       <ListActions.Right>

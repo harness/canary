@@ -102,6 +102,9 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     handleChangeSearchValue,
     searchValue
   })
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleSearchChange(e.target.value)
+  }
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
@@ -180,7 +183,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
                 width="full"
                 className={cn({ 'max-w-96': filterTypes })}
                 value={search}
-                handleChange={handleSearchChange}
+                handleChange={handleInputChange}
                 placeholder="Search"
               />
             </ListActions.Left>

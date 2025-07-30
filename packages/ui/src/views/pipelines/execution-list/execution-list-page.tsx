@@ -23,12 +23,15 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
 
   const {
     search: searchInput,
-    handleSearchChange: handleInputChange,
+    handleSearchChange,
     handleResetSearch
   } = useDebounceSearch({
     handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
     searchValue: searchQuery || ''
   })
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleSearchChange(e.target.value)
+  }
 
   if (isError)
     // TODO: improve error handling

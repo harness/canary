@@ -105,7 +105,6 @@ export const ExecutionList = ({
               description={<TimeAgoCard timestamp={execution.started} />}
               right
               label
-              secondary
             />
           </StackedList.Item>
         </LinkComponent>

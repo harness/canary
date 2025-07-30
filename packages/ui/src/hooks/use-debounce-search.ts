@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { debounce } from 'lodash-es'
 
@@ -22,8 +22,7 @@ export const useDebounceSearch = ({ handleChangeSearchValue, searchValue }: UseD
     }
   }, [])
 
-  const handleSearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
+  const handleSearchChange = useCallback((value: string) => {
     setSearch(value)
     debouncedChangeSearchRef.current(value)
   }, [])

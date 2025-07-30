@@ -208,7 +208,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                         }
                         right
                         label
-                        secondary
                       />
                     </StackedList.Item>
                   </Link>

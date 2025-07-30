@@ -175,9 +175,9 @@
       }
     },
     "repositories": "Dépôts",
+    "new-repository": "Créer un dépôt",
     "import-repository": "Importer un dépôt",
     "import-repositories": "Import repositories",
-    "create-repository": "Créer un dépôt",
     "importing": "Importing…",
     "updated": "Mis à jour",
     "unarchiveRepo": "Unarchive Repository",

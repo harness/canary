@@ -1,10 +1,9 @@
 import * as React from 'react'
 
+import { Text } from '@/components'
 import { Slot, Slottable } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-import { IconV2 } from './icon-v2'
 
 const listItemVariants = cva(
   'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle',
@@ -22,7 +21,7 @@ const listItemVariants = cva(
   }
 )
 
-const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-[0.3125rem] text-sm', {
+const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-[0.3125rem]', {
   variants: {
     right: {
       true: 'items-end'
@@ -43,7 +42,6 @@ interface ListFieldProps extends Omit<React.ComponentProps<'div'>, 'title'>, Var
   title?: React.ReactNode
   description?: React.ReactNode
   label?: boolean
-  secondary?: boolean
   primary?: boolean
 }
 
@@ -113,37 +111,23 @@ const ListItem = ({
       {thumbnail && <div className="mr-2 flex items-center">{thumbnail}</div>}
       <Slottable>{children}</Slottable>
       {actions && <div className="ml-2 flex items-center">{actions}</div>}
-      <IconV2 name="nav-arrow-right" className="hidden" />
     </Comp>
   )
 }
 
 ListItem.displayName = 'StackedListItem'
 
-const ListField = ({ className, title, description, label, primary, secondary, right, ...props }: ListFieldProps) => (
+const ListField = ({ className, title, description, label, primary, right, ...props }: ListFieldProps) => (
   <div className={cn(listFieldVariants({ right }), className)} {...props}>
     {title && (
-      <div
-        className={cn(
-          primary ? 'text-3 leading-snug' : secondary ? 'text-2' : 'text-sm',
-          'text-cn-foreground-1 [&>em]:text-cn-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
-          !!label && 'text-cn-foreground-2',
-          className
-        )}
-      >
+      <Text variant={primary ? 'heading-base' : 'body-normal'} color={label ? 'foreground-2' : 'foreground-1'} truncate>
         {title}
-      </div>
+      </Text>
     )}
     {description && (
-      <div
-        className={cn(
-          'text-cn-foreground-2 flex gap-2 text-ellipsis whitespace-nowrap',
-          primary ? 'text-sm' : 'text-2',
-          className
-        )}
-      >
+      <Text variant="body-normal" className={cn('flex gap-2', className)} truncate>
         {description}
-      </div>
+      </Text>
     )}
   </div>
 )

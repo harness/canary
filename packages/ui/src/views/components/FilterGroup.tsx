@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
 
-import { ListActions, SearchInput } from '@/components'
+import { Layout, ListActions, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
@@ -87,38 +87,42 @@ const FilterGroup = <
           <ListActions.Root>
             <ListActions.Left>
               <SearchInput
-                inputContainerClassName="max-w-80"
+                width="full"
+                inputContainerClassName="max-w-[360px]"
                 onChange={handleInputChange}
                 placeholder={t('views:search', 'Search')}
+                name="repositories-search"
               />
             </ListActions.Left>
             <ListActions.Right>
-              <FilterHandler.Dropdown>
-                {(addFilter, availableFilters, resetFilters) => {
-                  return (
-                    <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
-                      options={filterOptions.filter(option => availableFilters.includes(option.value))}
-                      onChange={option => {
-                        addFilter(option.value)
-                        setOpenedFilter(option.value)
-                      }}
-                      onReset={() => resetFilters()}
-                      inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                      buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={renderFilterSelectLabel({
-                        selectedFilters: filterOptions.length - availableFilters.length,
-                        displayLabel: t('component:filter.defaultLabel', 'Filter')
-                      })}
-                    />
-                  )
-                }}
-              </FilterHandler.Dropdown>
-              {multiSortConfig && (
-                <Sort.Select
-                  displayLabel={t('component:sort.defaultLabel', 'Sort')}
-                  buttonLabel={t('component:sort.resetSort', 'Reset sort')}
-                />
-              )}
+              <Layout.Horizontal gap="md">
+                <FilterHandler.Dropdown>
+                  {(addFilter, availableFilters, resetFilters) => {
+                    return (
+                      <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
+                        options={filterOptions.filter(option => availableFilters.includes(option.value))}
+                        onChange={option => {
+                          addFilter(option.value)
+                          setOpenedFilter(option.value)
+                        }}
+                        onReset={() => resetFilters()}
+                        inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                        buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                        displayLabel={renderFilterSelectLabel({
+                          selectedFilters: filterOptions.length - availableFilters.length,
+                          displayLabel: t('component:filter.defaultLabel', 'Filter')
+                        })}
+                      />
+                    )
+                  }}
+                </FilterHandler.Dropdown>
+                {multiSortConfig && (
+                  <Sort.Select
+                    displayLabel={t('component:sort.defaultLabel', 'Sort')}
+                    buttonLabel={t('component:sort.resetSort', 'Reset sort')}
+                  />
+                )}
+              </Layout.Horizontal>
               {simpleSortConfig && <SimpleSort {...simpleSortConfig} />}
               {props.headerAction}
             </ListActions.Right>

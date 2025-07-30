@@ -149,12 +149,9 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     <SandboxLayout.Main>
       <SandboxLayout.Content>
         <>
-          <Spacer size={8} />
-          <div className="flex items-end">
-            <Text variant="heading-section" as="h1">
-              {t('views:repos.repositories', 'Repositories')}
-            </Text>
-          </div>
+          <Text variant="heading-section" as="h1">
+            {t('views:repos.repositories', 'Repositories')}
+          </Text>
           <Spacer size={6} />
           <FilterGroup<RepoListFilters, keyof RepoListFilters>
             simpleSortConfig={{
@@ -166,10 +163,12 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             handleInputChange={(value: string) => handleSearch(value)}
             headerAction={
               <SplitButton<string>
-                dropdownContentClassName="mt-0 min-w-[170px]"
+                dropdownContentClassName="mt-0 min-w-[208px]"
                 handleButtonClick={() => navigate(toCreateRepo?.() || '')}
                 handleOptionChange={option => {
-                  if (option === 'import') {
+                  if (option === 'new') {
+                    navigate(toCreateRepo?.() || '')
+                  } else if (option === 'import') {
                     navigate(toImportRepo?.() || '')
                   } else if (option === 'import-multiple') {
                     navigate(toImportMultipleRepos?.() || '')
@@ -177,22 +176,27 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 }}
                 options={[
                   {
+                    value: 'new',
+                    label: t('views:repos.new-repository', 'New repository')
+                  },
+                  {
                     value: 'import',
-                    label: t('views:repos.import-repository', 'Import Repository')
+                    label: t('views:repos.import-repository', 'Import repository')
                   },
                   {
                     value: 'import-multiple',
-                    label: t('views:repos.import-repositories', 'Import Repositories')
+                    label: t('views:repos.import-repositories', 'Import repositories')
                   }
                 ]}
               >
-                {t('views:repos.create-repository', 'Create Repository')}
+                <IconV2 name="plus" size="sm" />
+                {t('views:repos.new-repository', 'New Repository')}
               </SplitButton>
             }
             filterOptions={filterOptions}
           />
         </>
-        <Spacer size={5} />
+        <Spacer size={4.5} />
         <RepoList
           repos={repositories || []}
           handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}

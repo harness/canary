@@ -175,9 +175,9 @@
       }
     },
     "repositories": "Repositories",
-    "import-repository": "Import Repository",
-    "import-repositories": "Import Repositories",
-    "create-repository": "Create Repository",
+    "new-repository": "New repository",
+    "import-repository": "Import repository",
+    "import-repositories": "Import repositories",
     "importing": "Importing…",
     "updated": "Updated",
     "unarchiveRepo": "Unarchive this repository",

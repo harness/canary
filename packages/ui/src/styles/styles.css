@@ -178,6 +178,9 @@
     @apply border-cn-borders-2 border-r;
   }
 
+  .hljs {
+    color: var(--cn-comp-diff-hljs) !important;
+  }
   .hljs-comment,
   .hljs-quote {
     color: var(--cn-comp-diff-hljs-comment) !important;

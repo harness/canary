@@ -132,14 +132,8 @@ export function RepoList({
   return (
     <StackedList.Root>
       {repos.map((repo, repo_idx) => (
-        <Link
-          key={repo.name}
-          to={toRepository?.(repo) || ''}
-          className={cn({
-            'pointer-events-none': repo.importing
-          })}
-        >
-          <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+        <StackedList.Item key={repo.name} asChild className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+          <Link to={toRepository?.(repo) || ''} className={cn({ 'pointer-events-none': repo.importing })}>
             <StackedList.Field
               primary
               description={
@@ -181,8 +175,8 @@ export function RepoList({
                 secondary
               />
             )}
-          </StackedList.Item>
-        </Link>
+          </Link>
+        </StackedList.Item>
       ))}
     </StackedList.Root>
   )

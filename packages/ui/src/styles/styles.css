@@ -437,9 +437,7 @@
 }
 
 :where(:focus-visible) {
-  outline: 2px solid var(--cn-border-accent);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline: none;
 }
 
 mark {

@@ -54,8 +54,10 @@ export default {
     },
 
     // Container highlight on hover
-    '&:where(.cn-table-v2-highlight-hover) tbody > tr:hover': {
-      backgroundColor: 'var(--cn-state-hover)'
+    '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
+      '&:hover, &:has(.cn-table-v2-cell-link:focus-visible)': {
+        backgroundColor: 'var(--cn-state-hover)'
+      }
     },
 
     // Body

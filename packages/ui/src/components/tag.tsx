@@ -94,7 +94,6 @@ function Tag({
     >
       {showIcon && (
         <IconV2
-          // skipSize
           size="sm"
           name={icon || 'label'}
           className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}

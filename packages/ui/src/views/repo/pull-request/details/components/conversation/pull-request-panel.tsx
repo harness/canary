@@ -114,7 +114,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <Text variant="body-strong" as="h2" color="foreground-1">
+      <Text variant="body-single-line-strong" as="h2" color="foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -145,18 +145,24 @@ const getButtonState = ({
   checksInfo: { status: EnumCheckStatus }
   checkboxBypass?: boolean
   canBypass?: boolean
-}) => {
+}): {
+  disabled: boolean
+  theme: ButtonThemes
+  variant?: 'primary' | 'outline'
+} => {
   if (isDraft) {
     return {
       disabled: false,
-      theme: 'primary'
+      theme: 'default',
+      variant: 'primary'
     }
   }
 
   if (['pending', 'running', 'failure'].includes(checksInfo.status)) {
     return {
       disabled: true,
-      theme: checksInfo.status === 'failure' ? null : 'danger'
+      theme: checksInfo.status === 'failure' ? 'default' : 'danger',
+      variant: 'primary'
     }
   }
 
@@ -164,7 +170,8 @@ const getButtonState = ({
     if (canBypass) {
       return {
         disabled: !checkboxBypass,
-        theme: checkboxBypass ? 'danger' : null
+        theme: checkboxBypass ? 'danger' : 'default',
+        variant: checkboxBypass ? 'outline' : 'primary'
       }
     }
   }
@@ -172,13 +179,15 @@ const getButtonState = ({
   if (isMergeable && !ruleViolation) {
     return {
       disabled: false,
-      theme: 'success'
+      theme: 'success',
+      variant: 'outline'
     }
   }
 
   return {
     disabled: true,
-    theme: null
+    theme: 'default',
+    variant: 'outline'
   }
 }
 
@@ -358,9 +367,9 @@ const PullRequestPanel = ({
 
   return (
     <>
-      <StackedList.Root>
+      <StackedList.Root className="bg-cn-background-1 border-cn-borders-3">
         <StackedList.Item
-          className={cn('items-center py-2', {
+          className={cn('items-center py-2 border-cn-borders-3', {
             'pr-1.5': isShowMoreTooltip
           })}
           disableHover
@@ -415,9 +424,14 @@ const PullRequestPanel = ({
                     )}
                     {actions && !pullReqMetadata?.closed && !showActionBtn ? (
                       <SplitButton
-                        theme={buttonState.theme as Extract<ButtonThemes, 'success' | 'danger' | 'muted'>}
+                        // because of the complex SplitButtonProps type, we need to cast the theme and variant to const
+                        {...(buttonState.variant === 'primary'
+                          ? { theme: 'default' as const, variant: 'primary' as const }
+                          : {
+                              theme: (buttonState.theme || 'default') as 'success' | 'danger' | 'default',
+                              variant: 'outline' as const
+                            })}
                         disabled={buttonState.disabled}
-                        variant="outline"
                         selectedValue={mergeButtonValue}
                         handleOptionChange={handleMergeTypeSelect}
                         options={actions.map(action => ({
@@ -498,7 +512,7 @@ const PullRequestPanel = ({
             </>
           )}
         </StackedList.Item>
-        <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">
+        <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent border-cn-borders-3">
           {!isClosed ? (
             <Accordion.Root
               className="w-full"

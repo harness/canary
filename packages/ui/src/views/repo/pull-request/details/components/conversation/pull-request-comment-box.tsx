@@ -465,13 +465,18 @@ export const PullRequestCommentBox = ({
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-cn-background-2 border-border-1', {
+        className={cn('p-4 pt-3 flex-1  border-cn-borders-3', {
           'border rounded-md': !inReplyMode || isEditMode,
-          'border-t': inReplyMode
+          'bg-cn-background-1': !inReplyMode,
+          'bg-cn-background-2 border-t': inReplyMode
         })}
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <Tabs.List className="-mx-4 px-4" activeClassName="bg-cn-background-2" variant="overlined">
+          <Tabs.List
+            className="-mx-4 px-4"
+            activeClassName={inReplyMode ? 'bg-cn-background-2' : 'bg-cn-background-1'}
+            variant="overlined"
+          >
             <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
             <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
           </Tabs.List>
@@ -489,7 +494,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="min-h-36 bg-cn-background-2 p-3 text-cn-foreground-1"
+                className="text-cn-foreground-1 min-h-24 pb-8"
                 autoFocus={!!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -514,7 +519,10 @@ export const PullRequestCommentBox = ({
                 <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
               )}
 
-              <Layout.Flex align="center" className="bg-cn-background-2 pb-2 pt-1">
+              <Layout.Flex
+                align="center"
+                className="bg-cn-background-1 absolute bottom-[1px] left-[1px] w-[calc(100%-2px)] rounded"
+              >
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -549,13 +557,13 @@ export const PullRequestCommentBox = ({
           </Tabs.Content>
         </Tabs.Root>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           {activeTab === TABS_KEYS.WRITE && (
             <div>
               <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
-              <Button size="sm" variant="transparent" onClick={handleFileSelect}>
+              <Button variant="ghost" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
-                <span>Drag & drop, select, or paste to attach files</span>
+                Drag & drop, select, or paste to attach files
               </Button>
             </div>
           )}

@@ -1,163 +1,32 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import {
-  Accordion,
-  Button,
-  CopyButton,
-  DropdownMenu,
-  Layout,
-  ListActions,
-  StackedList,
-  StatusBadge,
-  Text
-} from '@/components'
+import { DropdownMenu, IconV2, Layout, ListActions, StatusBadge, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { formatNumber } from '@/utils'
 import { DiffModeOptions, InViewDiffRenderer, jumpToFile, PrincipalPropsType, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { chunk } from 'lodash-es'
 
-import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
-import { useDiffConfig } from '../../hooks/useDiffConfig'
+import { HeaderProps, PullRequestAccordion } from '../../components/pull-request-accordian'
 import {
   calculateDetectionMargin,
   IN_VIEWPORT_DETECTION_MARGIN,
   innerBlockName,
   outterBlockName,
-  parseStartingLineIfOne,
   PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE,
-  PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT,
   shouldRetainDiffChildren
 } from '../../utils'
-import { HeaderProps } from '../pull-request-compare.types'
-
-interface LineTitleProps {
-  text: string
-}
-
-const LineTitle: FC<LineTitleProps> = ({ text }) => (
-  <div className="flex items-center justify-between gap-3">
-    <div className="inline-flex items-center gap-2">
-      <Text variant="body-strong">{text}</Text>
-      <CopyButton name={text} />
-    </div>
-  </div>
-)
-
-interface PullRequestAccordionProps {
-  header?: HeaderProps
-  data?: string
-  diffMode: DiffModeEnum
-  currentUser?: string
-  openItems: string[]
-  onToggle: () => void
-  setCollapsed: (val: boolean) => void
-  principalProps: PrincipalPropsType
-}
-
-const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
-  header,
-  diffMode,
-  currentUser,
-  openItems,
-  onToggle,
-  setCollapsed,
-  principalProps
-}) => {
-  const { t: _ts } = useTranslation()
-  const { highlight, wrap, fontsize } = useDiffConfig()
-  const [showHiddenDiff, setShowHiddenDiff] = useState(false)
-  const startingLine = useMemo(
-    () => (parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null),
-    [header?.data]
-  )
-
-  const fileDeleted = useMemo(() => header?.isDeleted, [header?.isDeleted])
-  const isDiffTooLarge = useMemo(() => {
-    if (header?.addedLines && header?.removedLines) {
-      return header?.addedLines + header?.removedLines > PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT
-    }
-    return false
-  }, [header?.addedLines, header?.removedLines])
-  const fileUnchanged = useMemo(
-    () => header?.unchangedPercentage === 100 || (header?.addedLines === 0 && header?.removedLines === 0),
-    [header?.addedLines, header?.removedLines, header?.unchangedPercentage]
-  )
-
-  return (
-    <StackedList.Root>
-      <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion.Root
-          type="multiple"
-          className="w-full"
-          value={openItems}
-          onValueChange={onToggle}
-          indicatorPosition="left"
-        >
-          <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
-              <StackedList.Field title={<LineTitle text={header?.text ?? ''} />} />
-            </Accordion.Trigger>
-            <Accordion.Content className="pb-0">
-              <div className="border-t bg-transparent">
-                {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical align="center" className="w-full py-5">
-                    <Button variant="link" size="sm" aria-label="show diff" onClick={() => setShowHiddenDiff(true)}>
-                      {_ts('views:pullRequests.showDiff')}
-                    </Button>
-                    <span>
-                      {fileDeleted
-                        ? _ts('views:pullRequests.deletedFileDiff')
-                        : isDiffTooLarge
-                          ? _ts('views:pullRequests.largeDiff')
-                          : header?.isBinary
-                            ? _ts('views:pullRequests.binaryNotShown')
-                            : _ts('views:pullRequests.fileNoChanges')}
-                    </span>
-                  </Layout.Vertical>
-                ) : (
-                  <>
-                    {startingLine && (
-                      <div className="bg-[--diff-hunk-lineNumber--]">
-                        <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
-                      </div>
-                    )}
-                    <PullRequestDiffViewer
-                      principalProps={principalProps}
-                      currentUser={currentUser}
-                      data={header?.data}
-                      fontsize={fontsize}
-                      highlight={highlight}
-                      mode={diffMode}
-                      wrap={wrap}
-                      addWidget={false}
-                      fileName={header?.title ?? ''}
-                      lang={header?.lang ?? ''}
-                      isBinary={header?.isBinary}
-                      addedLines={header?.addedLines}
-                      removedLines={header?.removedLines}
-                      deleted={header?.isDeleted}
-                      unchangedPercentage={header?.unchangedPercentage}
-                      collapseDiff={() => setCollapsed(true)}
-                    />
-                  </>
-                )}
-              </div>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion.Root>
-      </StackedList.Item>
-    </StackedList.Root>
-  )
-}
 
 interface PullRequestCompareDiffListProps {
   diffStats: TypesDiffStats
   diffData: HeaderProps[]
   currentUser?: string
+  sourceBranch?: string
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
   principalProps: PrincipalPropsType
+  onGetFullDiff: (path?: string) => Promise<string | void>
+  toRepoFileDetails?: ({ path }: { path: string }) => string
 }
 
 const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
@@ -165,10 +34,14 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   diffData,
   currentUser,
   jumpToDiff,
+  sourceBranch,
   setJumpToDiff,
-  principalProps
+  principalProps,
+  onGetFullDiff,
+  toRepoFileDetails
 }) => {
   const { t } = useTranslation()
+
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -233,7 +106,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
               {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
               {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </Text>
-            <DropdownMenu.Content className="max-h-[360px]" align="end">
+            <DropdownMenu.Content className="max-h-[360px] max-w-[396px]" align="start">
               {diffData?.map(diff => (
                 <DropdownMenu.Item
                   key={diff.filePath}
@@ -243,23 +116,30 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     }
                   }}
                   title={
-                    <>
-                      <Text color="foreground-1" truncate>
-                        {diff.filePath}
-                      </Text>
-                      <div className="ml-4 flex items-center space-x-2">
+                    <Layout.Flex direction="row" align="center" className=" min-w-0 gap-x-3">
+                      <Layout.Flex direction="row" align="center" justify="start" className=" min-w-0 flex-1 gap-x-1.5">
+                        <IconV2 name="page" className="shrink-0 text-icons-1" />
+                        <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
+                          {diff.filePath}
+                        </span>
+                      </Layout.Flex>
+                      <Layout.Flex direction="row" align="center" justify="center" className=" shrink-0 text-2">
                         {diff.addedLines != null && diff.addedLines > 0 && (
                           <StatusBadge variant="outline" size="sm" theme="success">
                             +{diff.addedLines}
                           </StatusBadge>
                         )}
-                        {diff.removedLines != null && diff.removedLines > 0 && (
+                        {diff.addedLines != null &&
+                          diff.addedLines > 0 &&
+                          diff.deletedLines != null &&
+                          diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
+                        {diff.deletedLines != null && diff.deletedLines > 0 && (
                           <StatusBadge variant="outline" size="sm" theme="danger">
-                            -{diff.removedLines}
+                            -{diff.deletedLines}
                           </StatusBadge>
                         )}
-                      </div>
-                    </>
+                      </Layout.Flex>
+                    </Layout.Flex>
                   }
                 />
               ))}
@@ -304,6 +184,11 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       openItems={openItems}
                       onToggle={() => toggleOpen(item.text)}
                       setCollapsed={val => setCollapsed(item.text, val)}
+                      onGetFullDiff={onGetFullDiff}
+                      toRepoFileDetails={toRepoFileDetails}
+                      sourceBranch={sourceBranch}
+                      hideViewedCheckbox
+                      addWidget={false}
                     />
                   </InViewDiffRenderer>
                 </div>

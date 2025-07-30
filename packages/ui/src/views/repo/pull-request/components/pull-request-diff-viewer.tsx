@@ -26,7 +26,8 @@ import PullRequestTimelineItem from '../details/components/conversation/pull-req
 import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
-import { ExtendedDiffView, ExtendedDiffViewProps } from './extended-diff-view/extended-diff-view'
+import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
+import { ExtendedDiffViewProps } from './extended-diff-view/extended-diff-view-types'
 
 import '@git-diff-view/react/styles/diff-view.css'
 

@@ -1,46 +1,11 @@
-import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useRef } from 'react'
 
-import { DiffFile, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
-import { uniq } from 'lodash-es'
+import { DiffFile, DiffView } from '@git-diff-view/react'
 
 import './extended-diff-view-style.css'
 
-import { LinesRange } from './extended-diff-view-types'
-import { getLineFromEl, getSide, orderRange, populateLines } from './extended-diff-view-utils'
-
-export interface ExtendedDiffViewProps<T> extends Omit<DiffViewProps<T>, 'extendData' | 'renderWidgetLine'> {
-  extendData?: {
-    oldFile?: Record<
-      string,
-      {
-        data: T
-        fromLine: number
-      }
-    >
-    newFile?: Record<
-      string,
-      {
-        data: T
-        fromLine: number
-      }
-    >
-  }
-  renderWidgetLine:
-    | (({
-        diffFile,
-        side,
-        lineNumber,
-        lineFromNumber,
-        onClose
-      }: {
-        lineNumber: number
-        lineFromNumber: number
-        side: SplitSide
-        diffFile: DiffFile
-        onClose: () => void
-      }) => React.ReactNode)
-    | undefined
-}
+import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view-types'
+import { getLineFromEl, getPreselectState, getSide, orderRange, updateSelection } from './extended-diff-view-utils'
 
 /**
  * ExtendedDiffView is a extended/patched version of DiffView.
@@ -53,7 +18,7 @@ export const ExtendedDiffView = forwardRef(
       getDiffFileInstance: () => DiffFile
     }>
   ) => {
-    const { extendData, renderWidgetLine, diffFile } = props
+    const { extendData, renderWidgetLine } = props
 
     const containerRef = useRef<HTMLDivElement>(null)
 
@@ -64,61 +29,12 @@ export const ExtendedDiffView = forwardRef(
     const isSelectingRef = useRef(false)
 
     // selection for the existing comments
-    const preselectedLines: { old: number[]; new: number[] } = useMemo(() => {
-      if (!extendData) return { old: [], new: [] }
+    const preselectedLinesRef = useRef<{ old: number[]; new: number[] }>({ old: [], new: [] })
 
-      const oldLines: number[] = populateLines(extendData.oldFile ?? {})
-      const newLines: number[] = populateLines(extendData.newFile ?? {})
-
-      return { old: uniq(oldLines), new: uniq(newLines) }
+    useEffect(() => {
+      preselectedLinesRef.current = getPreselectState(extendData)
+      updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
     }, [extendData])
-
-    const preselectedLinesRef = useRef(preselectedLines)
-    preselectedLinesRef.current = preselectedLines
-
-    const updateSelection = useCallback(() => {
-      if (!containerRef.current) return
-
-      const allCells = containerRef.current?.querySelectorAll<HTMLElement>(`tr[data-line] > td[data-side]`)
-
-      allCells.forEach(cell => {
-        cell.classList.remove('ExtendedDiffView-RowCell-Selected')
-
-        const sideAttr = cell.getAttribute('data-side') as 'old' | 'new'
-        const lineAttr = cell.parentElement
-          ?.querySelector('td[data-side="' + sideAttr + '"] span[data-line-num]')
-          ?.getAttribute('data-line-num')
-
-        const line = parseInt(lineAttr || '', 10)
-
-        if (lineAttr !== line.toString()) return
-
-        const range = selectedRangeRef.current ? orderRange(selectedRangeRef.current) : null
-        const inUserSelected = range && line >= range.start && line <= range.end && range.side === sideAttr
-
-        const inPreselected = preselectedLinesRef.current?.[sideAttr].indexOf(line) !== -1
-
-        if (inUserSelected || inPreselected) {
-          cell.classList.add('ExtendedDiffView-RowCell-Selected')
-        }
-      })
-    }, [preselectedLines, selectedRangeRef])
-
-    useEffect(() => {
-      selectedRangeRef.current = null
-      updateSelection()
-    }, [diffFile])
-
-    useEffect(() => {
-      if (!containerRef.current) return
-      if (
-        !preselectedLinesRef.current ||
-        (preselectedLinesRef.current?.new.length === 0 && preselectedLinesRef.current?.old.length === 0)
-      )
-        return
-
-      updateSelection()
-    }, [preselectedLines])
 
     useEffect(() => {
       const container = containerRef.current
@@ -132,15 +48,15 @@ export const ExtendedDiffView = forwardRef(
         const line = getLineFromEl(e.target)
         if (line == null) return
 
+        isSelectingRef.current = true
+
         selectedRangeRef.current = {
           start: line,
           end: line,
           side: getSide(e.target) ?? 'new'
         }
 
-        isSelectingRef.current = true
-
-        updateSelection()
+        updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
       }
 
       const handleMouseOver = (e: MouseEvent) => {
@@ -153,7 +69,7 @@ export const ExtendedDiffView = forwardRef(
 
         if (line !== null && selectedRangeRef.current) {
           selectedRangeRef.current = { ...selectedRangeRef.current, end: line }
-          updateSelection()
+          updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
         }
       }
 
@@ -198,7 +114,7 @@ export const ExtendedDiffView = forwardRef(
                     ...props,
                     onClose: () => {
                       selectedRangeRef.current = null
-                      updateSelection()
+                      updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
                       props.onClose()
                     },
                     lineFromNumber: selectedRangeRef.current?.start ?? props.lineNumber

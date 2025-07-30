@@ -1,6 +1,6 @@
-import { forEach } from 'lodash-es'
+import { forEach, uniq } from 'lodash-es'
 
-import { LinesRange } from './extended-diff-view-types'
+import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view-types'
 
 export function orderRange(range: LinesRange) {
   const start = Math.min(range.start, range.end)
@@ -47,4 +47,47 @@ export function getSide(el: HTMLElement | null): 'old' | 'new' | null {
   if (!targetEl) return null
 
   return targetEl.getAttribute('data-side') as 'old' | 'new'
+}
+
+export function getPreselectState(extendData: ExtendedDiffViewProps<unknown>['extendData']) {
+  if (!extendData) return { old: [], new: [] }
+
+  const oldLines: number[] = populateLines(extendData.oldFile ?? {})
+  const newLines: number[] = populateLines(extendData.newFile ?? {})
+
+  return { old: uniq(oldLines), new: uniq(newLines) }
+}
+
+export function updateSelection(
+  container: HTMLDivElement | null,
+  selectedRange: LinesRange | null,
+  preselectedLines: { old: number[]; new: number[] }
+) {
+  if (!container) return
+
+  const allCells = container.querySelectorAll<HTMLElement>(`tr[data-line] > td[data-side]`)
+
+  allCells.forEach(cell => {
+    cell.classList.remove('ExtendedDiffView-RowCell-Selected')
+
+    const sideAttr = cell.getAttribute('data-side') as 'old' | 'new'
+    const lineAttr = cell.parentElement
+      ?.querySelector('td[data-side="' + sideAttr + '"] span[data-line-num]')
+      ?.getAttribute('data-line-num')
+
+    const line = parseInt(lineAttr || '', 10)
+
+    if (lineAttr !== line.toString()) return
+
+    // current user selection
+    const range = selectedRange ? orderRange(selectedRange) : null
+    const inUserSelected = range && line >= range.start && line <= range.end && range.side === sideAttr
+
+    // selection for existing comments
+    const inPreselected = preselectedLines?.[sideAttr].indexOf(line) !== -1
+
+    if (inUserSelected || inPreselected) {
+      cell.classList.add('ExtendedDiffView-RowCell-Selected')
+    }
+  })
 }

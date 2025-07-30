@@ -1,8 +1,9 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, Layout, Link, SearchInput, Tabs, Tag, Text } from '@/components'
+import { Button, DropdownMenu, Layout, Link, SearchInput, Tabs, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
+import { wrapConditionalObjectElement } from '@utils/mergeUtils'
 
 export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   selectedBranch,
@@ -94,22 +95,18 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
       {filteredItems?.map(item => {
         const isSelected = selectedBranch ? item.name === selectedBranch.name : false
-        const isDefault = activeTab === BranchSelectorTab.BRANCHES && item.default
+        const isDefault = activeTab === BranchSelectorTab.BRANCHES && !!item.default
 
         return (
           <DropdownMenu.Item
             onClick={() => onSelectBranch?.(item, activeTab)}
             key={item.name}
-            title={
-              <Layout.Flex align="center" gap="xs">
-                {isDefault && (
-                  <Tag variant="outline" theme="blue" size="sm" rounded value={t('views:repos.default', 'Default')} />
-                )}
-
-                {item.name}
-              </Layout.Flex>
-            }
+            title={item.name}
             checkmark={isSelected}
+            {...wrapConditionalObjectElement(
+              { tag: { theme: 'blue', size: 'sm', rounded: true, value: t('views:repos.default', 'default') } },
+              isDefault
+            )}
           />
         )
       })}

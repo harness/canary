@@ -113,7 +113,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         <DropdownMenu.Item
           key={value.id}
           onSelect={handleOnSelect(value)}
-          title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={value.value} />}
+          tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: value.value }}
           checkmark={label.selectedValueId === value.id}
         />
       ))}
@@ -124,7 +124,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
             onSelect={handleAddNewValue}
-            title={<Tag variant="secondary" size="sm" theme={label.color} label={label.key} value={searchState} />}
+            tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: searchState, label: label.key }}
           />
         </DropdownMenu.Group>
       )}

@@ -148,4 +148,4 @@ function TagSplit({
   )
 }
 
-export { Tag }
+export { Tag, type TagProps }

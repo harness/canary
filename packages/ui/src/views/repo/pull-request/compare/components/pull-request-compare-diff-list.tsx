@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   Layout,
   ListActions,
-  Spacer,
   StackedList,
   StatusBadge,
   Text

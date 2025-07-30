@@ -75,6 +75,7 @@ export default function RepoCommitsPage() {
           onSelectBranchorTag={selectBranchOrTag}
           selectedBranch={{ name: gitRefName, sha: '' }}
           preSelectedTab={preSelectedTab}
+          className="min-w-[120px]"
         />
       )}
     />

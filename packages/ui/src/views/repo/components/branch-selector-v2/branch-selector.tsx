@@ -51,7 +51,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button className={cn('justify-start min-w-[120px]', className)} variant="outline" size={buttonSize}>
+        <Button className={cn('justify-start', className)} variant="outline" size={buttonSize}>
           {!branchPrefix && (
             <IconV2 className="shrink-0 fill-transparent" name={isTag ? 'tag' : 'git-branch'} size="xs" />
           )}

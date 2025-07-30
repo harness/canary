@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton, StatusBadge } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
@@ -193,7 +193,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       <Layout.Horizontal className="grow gap-x-5">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
-            <div className="flex items-center gap-x-0.5 text-2 text-cn-foreground-2 group-hover:text-cn-foreground-1">
+            <Button size="sm" variant="transparent">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
@@ -205,8 +205,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   <span className="text-cn-foreground-3">({selectedCommits?.length})</span>
                 </>
               )}
-            </div>
-            <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down text-icons-7" />
+              <IconV2 name="nav-solid-arrow-down" size="2xs" />
+            </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-96" align="start">
             {commitDropdownItems}
@@ -215,10 +215,10 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
-            <span className="text-cn-foreground-2 group-hover:text-cn-foreground-1">
+            <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
-            </span>
-            <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down text-icons-7" />
+              <IconV2 name="nav-solid-arrow-down" size="2xs" />
+            </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">
             {DiffModeOptions.map(item => (
@@ -236,18 +236,20 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <p className="text-2 leading-tight text-cn-foreground-2">
-            {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
-            <DropdownMenu.Trigger className="group">
-              <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
-                {formatNumber(pullReqStats?.files_changed || 0)}{' '}
-                {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-              </span>
-            </DropdownMenu.Trigger>{' '}
-            {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
-            {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
-            {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-          </p>
+          <Layout.Horizontal align="center">
+            <p className="text-2 leading-tight text-cn-foreground-2">
+              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
+              <DropdownMenu.Trigger className="group">
+                <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
+                  {formatNumber(pullReqStats?.files_changed || 0)}{' '}
+                  {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
+                </span>
+              </DropdownMenu.Trigger>{' '}
+              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
+              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
+              {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
+            </p>
+          </Layout.Horizontal>
           <DropdownMenu.Content className="max-w-[396px]" align="start">
             {diffData?.map(diff => (
               <DropdownMenu.Item
@@ -263,22 +265,20 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                         {diff.filePath}
                       </span>
                     </Layout.Horizontal>
-                    <Layout.Horizontal className="shrink-0 text-2">
-                      {diff.addedLines != null && diff.addedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="success">
-                          +{diff.addedLines}
-                        </StatusBadge>
-                      )}
-                      {diff.addedLines != null &&
-                        diff.addedLines > 0 &&
-                        diff.deletedLines != null &&
-                        diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
-                      {diff.deletedLines != null && diff.deletedLines > 0 && (
-                        <StatusBadge variant="outline" size="sm" theme="danger">
-                          -{diff.deletedLines}
-                        </StatusBadge>
-                      )}
-                    </Layout.Horizontal>
+                  </Layout.Horizontal>
+                }
+                label={
+                  <Layout.Horizontal className="shrink-0 text-2" gap="none">
+                    {diff.addedLines != null && diff.addedLines > 0 && (
+                      <span className="text-cn-foreground-success">+{diff.addedLines}</span>
+                    )}
+                    {diff.addedLines != null &&
+                      diff.addedLines > 0 &&
+                      diff.deletedLines != null &&
+                      diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
+                    {diff.deletedLines != null && diff.deletedLines > 0 && (
+                      <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
+                    )}
                   </Layout.Horizontal>
                 }
               />

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton, StatusBadge } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
@@ -265,14 +265,18 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                     </Layout.Horizontal>
                     <Layout.Horizontal className="shrink-0 text-2">
                       {diff.addedLines != null && diff.addedLines > 0 && (
-                        <span className="text-cn-foreground-success">+{diff.addedLines}</span>
+                        <StatusBadge variant="outline" size="sm" theme="success">
+                          +{diff.addedLines}
+                        </StatusBadge>
                       )}
                       {diff.addedLines != null &&
                         diff.addedLines > 0 &&
                         diff.deletedLines != null &&
                         diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
                       {diff.deletedLines != null && diff.deletedLines > 0 && (
-                        <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
+                        <StatusBadge variant="outline" size="sm" theme="danger">
+                          -{diff.deletedLines}
+                        </StatusBadge>
                       )}
                     </Layout.Horizontal>
                   </Layout.Horizontal>

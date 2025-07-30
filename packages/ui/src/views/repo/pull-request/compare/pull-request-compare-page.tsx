@@ -92,6 +92,9 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   editLabelsProps: LinkProps
   branchSelectorRenderer: ReactElement
   principalProps: PrincipalPropsType
+  onGetFullDiff: (path?: string) => Promise<string | void>
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  sourceBranch?: string
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -123,6 +126,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isFetchingCommits,
   jumpToDiff,
   setJumpToDiff,
+  onGetFullDiff,
+  toRepoFileDetails,
+  sourceBranch,
+
   labelsList = [],
   labelsValues = {},
   PRLabels = [],
@@ -436,6 +443,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     diffStats={diffStats}
                     jumpToDiff={jumpToDiff}
                     setJumpToDiff={setJumpToDiff}
+                    onGetFullDiff={onGetFullDiff}
+                    toRepoFileDetails={toRepoFileDetails}
+                    sourceBranch={sourceBranch}
                   />
                 ) : (
                   <NoData

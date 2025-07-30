@@ -55,7 +55,7 @@ interface PullRequestDiffviewerProps {
   lang: string
   fullContent?: string
   addedLines?: number
-  removedLines?: number
+  deletedLines?: number
   isBinary?: boolean
   deleted?: boolean
   unchangedPercentage?: number

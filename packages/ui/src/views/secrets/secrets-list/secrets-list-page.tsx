@@ -27,14 +27,10 @@ const SecretListPage: FC<SecretListPageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
-  const { search: searchInput, handleSearchChange } = useDebounceSearch({
+  const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
     handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : undefined),
     searchValue: searchQuery || ''
   })
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleSearchChange(e.target.value)
-  }
 
   if (isError) {
     return (

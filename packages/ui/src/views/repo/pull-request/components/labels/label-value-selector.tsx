@@ -23,10 +23,6 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
     searchValue: searchState
   })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleSearchChange(e.target.value)
-  }
-
   const { values, isAllowAddNewValue } = useMemo(() => {
     if (!label?.values)
       return {
@@ -98,7 +94,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           inputClassName="pl-1.5 pr-8"
           placeholder={getSearchBoxPlaceholder()}
           value={search}
-          handleChange={handleInputChange}
+          handleChange={handleSearchChange}
           showOnFocus
           hasSearchIcon={false}
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}

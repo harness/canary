@@ -1,9 +1,9 @@
-import { PropsWithChildren } from 'react'
+import { ChangeEvent, PropsWithChildren } from 'react'
 
 export interface SearchContextType {
   searchQuery: string | null
   searchInput: string | null
-  handleInputChange: (value: string) => void
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleResetSearch: () => void
 }
 

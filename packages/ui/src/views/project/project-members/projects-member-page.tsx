@@ -34,10 +34,6 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
     searchValue: searchQuery || ''
   })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleSearchChange(e.target.value)
-  }
-
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
@@ -82,7 +78,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                       width="full"
                       className="max-w-96"
                       value={search}
-                      handleChange={handleInputChange}
+                      handleChange={handleSearchChange}
                       placeholder={t('views:repos.search', 'Search')}
                     />
                   </ListActions.Left>

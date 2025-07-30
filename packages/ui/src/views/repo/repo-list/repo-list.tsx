@@ -101,7 +101,6 @@ export function RepoList({
       <NoData
         withBorder
         imageName="no-search-magnifying-glass"
-        imageSize={112}
         title={t('views:noData.noResults', 'No search results')}
         description={[
           t('views:noData.checkSpelling', 'Check your spelling and filter options,'),

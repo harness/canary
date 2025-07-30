@@ -1,15 +1,15 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 
 import { NoData, StackedList } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequest, PullRequestListProps } from '@/views'
+import { PullRequestListProps } from '@/views'
 
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'
 import { PullRequestListHeader } from './pull-request-list-header'
 
 export const PullRequestList: FC<PullRequestListProps> = ({
-  pullRequests,
+  pullRequests = [],
   openPRs,
   closedPRs,
   handleOpenClick,
@@ -27,32 +27,16 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   const { Link } = useRouterContext()
   const { t } = useTranslation()
 
-  const filteredData = useMemo<PullRequest[]>(() => {
-    if (!pullRequests) return []
-
-    return pullRequests.filter(pr => {
-      if (headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN) return pr.state === 'open'
-      if (headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED)
-        return pr.state !== 'open' || pr.merged !== null
-      return true
-    })
-  }, [headerFilter, pullRequests])
-
   const onOpenClick = () => {
-    setHeaderFilter(PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN)
+    setHeaderFilter(['open'])
     handleOpenClick?.()
   }
   const onCloseClick = () => {
-    setHeaderFilter(PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED)
+    setHeaderFilter(['closed', 'merged'])
     handleCloseClick?.()
   }
 
-  if (
-    !filteredData.length &&
-    headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN &&
-    openPRs === 0 &&
-    !!closedPRs
-  ) {
+  if (!pullRequests.length && headerFilter.includes('open') && openPRs === 0 && !!closedPRs) {
     return (
       <StackedList.Root className="grid grow grid-rows-[auto,1fr]">
         <StackedList.Item disableHover>
@@ -92,13 +76,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     )
   }
 
-  if (
-    !filteredData.length &&
-    headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED &&
-    closedPRs === 0 &&
-    openPRs &&
-    openPRs > 0
-  ) {
+  if (!pullRequests.length && headerFilter.includes('closed') && closedPRs === 0 && openPRs && openPRs > 0) {
     return (
       <StackedList.Root className="grid grow grid-rows-[auto,1fr]">
         <StackedList.Item disableHover>
@@ -135,7 +113,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     )
   }
 
-  if (!filteredData?.length) return <></>
+  if (!pullRequests?.length) return <></>
 
   return (
     <StackedList.Root>
@@ -152,9 +130,9 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           }
         />
       </StackedList.Item>
-      {filteredData.map((pullRequest, pullRequest_idx) => (
+      {pullRequests.map((pullRequest, pullRequest_idx) => (
         <Link
-          key={`${pullRequest.number}-${pullRequest.repo?.identifier}`}
+          key={`${pullRequest.number}-${pullRequest.repo?.path}`}
           to={
             pullRequest?.number
               ? (toPullRequest?.({
@@ -164,7 +142,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
               : ''
           }
         >
-          <StackedList.Item className="px-4 py-3" isLast={filteredData.length - 1 === pullRequest_idx}>
+          <StackedList.Item className="px-4 py-3" isLast={pullRequests.length - 1 === pullRequest_idx}>
             {!!pullRequest.number && (
               <StackedList.Field
                 className="max-w-full gap-1.5"

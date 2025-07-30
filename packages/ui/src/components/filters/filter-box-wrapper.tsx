@@ -51,7 +51,7 @@ const FilterBoxWrapper = ({
       }}
     >
       <DropdownMenu.Trigger asChild>
-        <Button variant="secondary" className="gap-x-3">
+        <Button variant="secondary" size="sm" className="px-2.5 py-1.5">
           <div className="flex items-center gap-x-1.5 text-1">
             <Text as="span" color="foreground-1">
               {filterLabel}

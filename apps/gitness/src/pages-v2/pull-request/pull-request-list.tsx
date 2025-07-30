@@ -23,7 +23,7 @@ import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery } = usePullRequestListStore()
+  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery, prState } = usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
   const { repoData } = useGitRef()
 
@@ -42,7 +42,13 @@ export default function PullRequestListPage() {
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: {
+        page,
+        state: prState,
+        query: query ?? '',
+        exclude_description: true,
+        ...filterValues
+      },
       repo_ref: repoRef,
       stringifyQueryParamsOptions: {
         arrayFormat: 'repeat'
@@ -121,9 +127,13 @@ export default function PullRequestListPage() {
     if (pullRequestData) {
       const validPullRequests = Array.isArray(pullRequestData) ? pullRequestData.filter(pr => pr !== null) : []
       setPullRequests(validPullRequests, headers)
-      setOpenClosePullRequests(validPullRequests)
     }
   }, [pullRequestData, headers, setPullRequests])
+
+  useEffect(() => {
+    const { num_open_pulls = 0, num_closed_pulls = 0, num_merged_pulls = 0 } = repoData || {}
+    setOpenClosePullRequests(num_open_pulls, num_closed_pulls + num_merged_pulls)
+  }, [repoData, setOpenClosePullRequests])
 
   useEffect(() => {
     setQueryPage(page)

@@ -4,7 +4,7 @@ import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/compone
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
-import { FilterFieldTypes } from '@components/filters/types'
+import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import FilterGroup from '@views/components/FilterGroup'
 
 import { booleanParser } from '@harnessio/filters'
@@ -99,6 +99,51 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   ]
 
   const scopeFilterOptions = getFilterScopeOptions({ t, scope })
+  const filterOptions: FilterOptionConfig<keyof RepoListFilters>[] = [
+    {
+      label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
+      value: 'favorite',
+      type: FilterFieldTypes.Checkbox,
+      filterFieldConfig: {
+        label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
+      },
+      parser: booleanParser
+    }
+  ]
+
+  if (!projectIdentifier) {
+    filterOptions.push({
+      label: t('views:scope.label', 'Scope'),
+      value: 'recursive',
+      type: FilterFieldTypes.ComboBox,
+      filterFieldConfig: {
+        options: scopeFilterOptions,
+        placeholder: 'Select scope',
+        allowSearch: false
+      },
+      parser: {
+        parse: (value: string): ComboBoxOptions => {
+          let selectedValue: string
+          if (accountId && orgIdentifier) {
+            selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
+          } else if (accountId) {
+            selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
+          }
+
+          return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+        },
+        serialize: (value: ComboBoxOptions): string => {
+          const selected = value?.value
+
+          if (accountId && orgIdentifier && projectIdentifier) return ''
+          if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+          if (accountId) return String(selected === ExtendedScope.All)
+
+          return ''
+        }
+      }
+    })
+  }
 
   return (
     <SandboxLayout.Main>
@@ -144,51 +189,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 {t('views:repos.create-repository', 'Create Repository')}
               </SplitButton>
             }
-            filterOptions={[
-              {
-                label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
-                value: 'favorite',
-                type: FilterFieldTypes.Checkbox,
-                filterFieldConfig: {
-                  label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
-                },
-                parser: booleanParser
-              },
-              /**
-               * Scope filter is only applicable at Account and Organization scope
-               */
-              ...(!(accountId && orgIdentifier && projectIdentifier)
-                ? [
-                    {
-                      label: t('views:scope.label', 'Scope'),
-                      /**
-                       * @todo check why this explicit cast is needed, gives type error otherwise
-                       */
-                      value: 'recursive' as keyof RepoListFilters,
-                      type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
-                      filterFieldConfig: {
-                        options: scopeFilterOptions,
-                        placeholder: 'Select scope',
-                        allowSearch: false
-                      },
-                      parser: {
-                        parse: (value: string): ComboBoxOptions => {
-                          return scopeFilterOptions.find(scope => scope.value === value) || { label: '', value }
-                        },
-                        serialize: (value: ComboBoxOptions): string => {
-                          const selected = value?.value
-
-                          if (accountId && orgIdentifier && projectIdentifier) return ''
-                          if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-                          if (accountId) return String(selected === ExtendedScope.All)
-
-                          return ''
-                        }
-                      }
-                    }
-                  ]
-                : [])
-            ]}
+            filterOptions={filterOptions}
           />
         </>
         <Spacer size={5} />

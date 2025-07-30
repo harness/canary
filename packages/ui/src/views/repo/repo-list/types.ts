@@ -1,4 +1,4 @@
-import { CheckboxOptions } from '@components/filters'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { RepositoryType } from '@views/repo/repo.types'
 
 import { Scope } from '../..'
@@ -32,7 +32,7 @@ export interface FavoriteProps {
 
 export type RepoListFilters = {
   favorite?: boolean
-  recursive?: CheckboxOptions
+  recursive?: ComboBoxOptions
 }
 
 export interface FilterProps {

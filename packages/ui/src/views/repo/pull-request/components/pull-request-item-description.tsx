@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, Tag, Text, TimeAgoCard } from '@/components'
+import { IconV2, Separator, Tag, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -28,25 +28,25 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
   return (
     <div className="text-2 text-cn-foreground-2 inline-flex max-w-full items-center gap-1.5 pl-[22px]">
-      <Text>
+      <Text variant="body-single-line-normal">
         {`#${number}`} opened <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
-        <span className="inline-block max-w-[200px] truncate align-bottom">{author}</span>
+        <span className="inline-block max-w-[200px] truncate align-text-bottom">{author}</span>
       </Text>
 
-      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
+      <Separator orientation="vertical" className="h-3.5" />
 
-      <p>{reviewRequired ? 'Review required' : 'Draft'}</p>
+      <Text variant="body-single-line-normal">{reviewRequired ? 'Review required' : 'Draft'}</Text>
 
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
         <div className="flex items-center gap-0.5">
           <IconV2 className="text-icons-1" size="2xs" name="tasks" />
-          <p>
+          <Text variant="body-single-line-normal">
             {tasks} task{tasks === 1 ? '' : 's'}
-          </p>
+          </Text>
         </div>
       )}
-      <span className="bg-cn-background-3 pointer-events-none h-3.5 w-px" aria-hidden />
+      <Separator orientation="vertical" className="h-3.5" />
 
       {sourceBranch && (
         <>

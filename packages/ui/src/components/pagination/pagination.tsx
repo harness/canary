@@ -169,7 +169,7 @@ export const Pagination: FC<PaginationProps> = ({
   const totalPages = indeterminate || !totalItems || !pageSize ? undefined : Math.ceil(totalItems / pageSize)
 
   // Render nothing if `totalPages` is absent or <= 1, and both `nextPage` and `previousPage` are absent
-  if ((!totalPages || totalPages <= 1) && !hasNext && !hasPrevious) {
+  if ((!totalPages || totalPages <= 1) && hasNext === undefined && hasPrevious === undefined) {
     return null
   }
 

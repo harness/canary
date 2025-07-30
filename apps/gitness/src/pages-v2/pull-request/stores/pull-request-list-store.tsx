@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { RepoRepositoryOutput, TypesPullReq } from '@harnessio/code-service-client'
-import { ColorsEnum, PullRequest } from '@harnessio/ui/views'
+import { ColorsEnum, PRState, PullRequest } from '@harnessio/ui/views'
 
 import { PageResponseHeader } from '../../../types'
 
@@ -17,22 +17,27 @@ interface PullRequestListStore {
   openPullReqs: number
   closedPullReqs: number
   page: number
+  prState: Array<PRState>
+  setPrState: (prState: Array<PRState>) => void
   setPage: (page: number) => void
   setLabelsQuery: (query: string) => void
   setPullRequests: (data: PullRequestInterface[], headers?: Headers) => void
-  setOpenClosePullRequests: (data: PullRequestInterface[]) => void
+  setOpenClosePullRequests: (openPullReqs: number, closedPullReqs: number) => void
 }
 
 export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   pullRequests: null,
   totalItems: 0,
-  pageSize: 10,
+  pageSize: 30,
   page: 1,
+  prState: ['open'],
   openPullReqs: 0,
   closedPullReqs: 0,
   labels: [],
   labelsQuery: '',
   setPage: page => set({ page }),
+
+  setPrState: (prState: Array<PRState>) => set({ prState }),
 
   setPullRequests: (data, headers) => {
     const transformedPullRequests: PullRequest[] = data.map(item => ({
@@ -66,10 +71,10 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
     })
   },
-  setOpenClosePullRequests: data => {
+  setOpenClosePullRequests: (openPullReqs, closedPullReqs) => {
     set({
-      openPullReqs: data.filter(pr => pr?.state === 'open').length || 0,
-      closedPullReqs: data.filter(pr => pr?.state === 'closed' || pr?.state === 'merged').length || 0
+      openPullReqs,
+      closedPullReqs
     })
   },
 

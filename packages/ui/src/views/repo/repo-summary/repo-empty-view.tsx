@@ -91,7 +91,7 @@ ${sshUrl}
               ),
               to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
             }}
-            className="min-h-[40vh]"
+            className="py-layout-3xl"
           />
 
           <Layout.Grid as="section" gapY="md">

@@ -219,17 +219,21 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       <ListActions.Root>
         <ListActions.Left>
           <DropdownMenu.Root>
-            <p className="text-2 leading-tight text-cn-foreground-2">
+            <Text as="p" variant="body-single-line-normal" className="text-2 leading-tight text-cn-foreground-2 pt-1.5">
               {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
               <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
-                <span className="cursor-pointer text-cn-foreground-accent ease-in-out">
+                <Text
+                  as="span"
+                  variant="body-single-line-normal"
+                  className="cursor-pointer text-cn-foreground-accent ease-in-out"
+                >
                   {formatNumber(changedFilesCount)} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-                </span>
+                </Text>
               </FilesChangedCount>{' '}
               {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions || 0)}{' '}
               {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
               {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-            </p>
+            </Text>
             <DropdownMenu.Content className="max-h-[360px]" align="end">
               {diffData?.map(diff => (
                 <DropdownMenu.Item
@@ -272,7 +276,6 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           />
         </ListActions.Right>
       </ListActions.Root>
-      <Spacer size={3} />
       <div className="flex flex-col" ref={diffsContainerRef}>
         {diffBlocks?.map((diffsBlock, blockIndex) => {
           return (

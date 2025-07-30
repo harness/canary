@@ -396,6 +396,7 @@ const PullRequestDiffViewer = ({
               setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
             lineNumber={lineNumber}
+            lineFromNumber={lineFromNumber}
             sideKey={sideKey}
             diff={data}
             lang={lang}

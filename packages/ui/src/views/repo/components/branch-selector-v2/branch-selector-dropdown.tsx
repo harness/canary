@@ -104,7 +104,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             title={item.name}
             checkmark={isSelected}
             {...wrapConditionalObjectElement(
-              { tag: { theme: 'blue', size: 'sm', rounded: true, value: t('views:repos.default', 'default') } },
+              { tag: { theme: 'blue', size: 'sm', rounded: true, value: t('views:repos.default', 'Default') } },
               isDefault
             )}
           />

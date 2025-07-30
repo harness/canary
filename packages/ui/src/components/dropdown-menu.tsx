@@ -136,15 +136,18 @@ const DropdownBaseItem = ({
 }: DropdownBaseItemProps) => (
   <div className={cn('cn-dropdown-menu-base-item', className)}>
     {children}
-    <Layout.Grid gap="2xs" className="w-full">
+    <Layout.Grid gap="2xs" className="w-fit">
       {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
       {typeof description === 'string' ? <Text>{description}</Text> : description}
     </Layout.Grid>
     {tag && <Tag {...tag} />}
-    {label && <Text variant="caption-soft">{label}</Text>}
-    {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
-    {checkmark && <IconV2 name="check" />}
-    {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
+
+    <div className="ml-auto">
+      {label && <Text variant="caption-soft">{label}</Text>}
+      {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
+      {checkmark && <IconV2 name="check" />}
+      {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
+    </div>
   </div>
 )
 

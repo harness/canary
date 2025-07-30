@@ -61,6 +61,7 @@ export interface PullRequestCommentBoxProps {
   lang?: string
   diff?: string
   lineNumber?: number
+  lineFromNumber?: number
   sideKey?: 'oldFile' | 'newFile'
   setComment: (comment: string) => void
   currentUser?: string
@@ -99,6 +100,7 @@ export const PullRequestCommentBox = ({
   lang = '',
   sideKey,
   lineNumber,
+  lineFromNumber,
   comment,
   setComment,
   isEditMode,
@@ -296,7 +298,7 @@ export const PullRequestCommentBox = ({
         break
       case TextSelectionBehavior.Parse:
         injectedString = isEmpty(parsedComment.selection)
-          ? `${injectedPreString}${parseDiff(diff, sideKey, lineNumber)}${injectedPostString}`
+          ? `${injectedPreString}${parseDiff(diff, sideKey, lineNumber, lineFromNumber)}${injectedPostString}`
           : `${injectedPreString}${parsedComment.selection}${injectedPostString}`
         break
     }
@@ -307,8 +309,13 @@ export const PullRequestCommentBox = ({
     })
   }
 
-  const parseDiff = (diff: string = '', sideKey?: 'oldFile' | 'newFile', lineNumber?: number): string => {
-    if (isUndefined(sideKey) || isUndefined(lineNumber)) {
+  const parseDiff = (
+    diff: string = '',
+    sideKey?: 'oldFile' | 'newFile',
+    lineNumber?: number,
+    lineFromNumber?: number
+  ): string => {
+    if (isUndefined(sideKey) || isUndefined(lineNumber) || isUndefined(lineFromNumber)) {
       return ''
     }
 
@@ -323,22 +330,20 @@ export const PullRequestCommentBox = ({
       if (isEmpty(previousValue) && currentValue.startsWith('@@')) {
         const sectionInfoParts = currentValue.split(' ')
 
-        const fileLineNumber = +(
-          sectionInfoParts
-            .find(part => part.startsWith(sideChangedLineToken))
-            ?.split(',')
-            .at(0)
-            ?.substring(1) ?? ''
+        const sideHeader = sectionInfoParts.find(part => part.startsWith(sideChangedLineToken))
+
+        const fileLineNumber = +(sideHeader?.split(',')[0].substring(1) ?? '')
+
+        const fromOffset = lineFromNumber - fileLineNumber + 1
+        const toOffset = lineNumber - fileLineNumber + 1
+
+        const selectedLines = sideDiffLines.slice(currentIndex + fromOffset, currentIndex + toOffset + 1)
+
+        const cleanedLines = selectedLines.map(line =>
+          line.startsWith(sideChangedLineToken) ? ` ${line.substring(1)}` : line
         )
-        const fileLineOffset = lineNumber - fileLineNumber + 1
 
-        const sideDiffLine = sideDiffLines.at(currentIndex + fileLineOffset) ?? ''
-
-        const modifiedSideDiffLine = sideDiffLine.startsWith(sideChangedLineToken)
-          ? ` ${sideDiffLine.substring(1)}`
-          : sideDiffLine
-
-        return modifiedSideDiffLine
+        return cleanedLines.join('\n')
       }
 
       return previousValue

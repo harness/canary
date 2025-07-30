@@ -1,0 +1,131 @@
+import { forwardRef, useEffect, useRef } from 'react'
+
+import { DiffFile, DiffView } from '@git-diff-view/react'
+
+import './extended-diff-view-style.css'
+
+import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view-types'
+import { getLineFromEl, getPreselectState, getSide, orderRange, updateSelection } from './extended-diff-view-utils'
+
+/**
+ * ExtendedDiffView is a extended/patched version of DiffView.
+ * In the ExtendedDiffView we have ability to select multiple lines when adding comments
+ **/
+export const ExtendedDiffView = forwardRef(
+  <T,>(
+    props: ExtendedDiffViewProps<T>,
+    ref: React.ForwardedRef<{
+      getDiffFileInstance: () => DiffFile
+    }>
+  ) => {
+    const { extendData, renderWidgetLine } = props
+
+    const containerRef = useRef<HTMLDivElement>(null)
+
+    // user selected
+    const selectedRangeRef = useRef<LinesRange | null>(null)
+
+    // is user selection is in progress
+    const isSelectingRef = useRef(false)
+
+    // selection for the existing comments
+    const preselectedLinesRef = useRef<{ old: number[]; new: number[] }>({ old: [], new: [] })
+
+    useEffect(() => {
+      preselectedLinesRef.current = getPreselectState(extendData)
+      updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
+    }, [extendData])
+
+    useEffect(() => {
+      const container = containerRef.current
+      if (!container) return
+
+      const handleMouseDown = (e: MouseEvent) => {
+        if (!(e.target instanceof HTMLElement)) return
+        if (!e.target.classList.contains('diff-line-new-num') && !e.target.classList.contains('diff-line-old-num'))
+          return
+
+        const line = getLineFromEl(e.target)
+        if (line == null) return
+
+        isSelectingRef.current = true
+
+        selectedRangeRef.current = {
+          start: line,
+          end: line,
+          side: getSide(e.target) ?? 'new'
+        }
+
+        updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
+      }
+
+      const handleMouseOver = (e: MouseEvent) => {
+        if (!isSelectingRef.current) return
+        if (!(e.target instanceof HTMLElement)) return
+        if (!e.target.classList.contains('diff-line-new-num') && !e.target.classList.contains('diff-line-old-num'))
+          return
+
+        const line = getLineFromEl(e.target)
+
+        if (line !== null && selectedRangeRef.current) {
+          selectedRangeRef.current = { ...selectedRangeRef.current, end: line }
+          updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
+        }
+      }
+
+      const handleDocumentMouseUp = () => {
+        if (!selectedRangeRef.current) return
+
+        isSelectingRef.current = false
+
+        const newRange = orderRange(selectedRangeRef.current)
+        selectedRangeRef.current = newRange
+
+        const lineNumEl = containerRef.current?.querySelector(
+          `tr td[data-side='${selectedRangeRef.current?.side}'] [data-line-num='${selectedRangeRef.current?.end}']`
+        ) as HTMLElement
+
+        const addEll = lineNumEl?.parentElement?.querySelector('.diff-add-widget') as HTMLElement
+        addEll?.click()
+      }
+
+      container.addEventListener('mousedown', handleMouseDown)
+      container.addEventListener('mouseover', handleMouseOver)
+      document.addEventListener('mouseup', handleDocumentMouseUp)
+
+      return () => {
+        container.removeEventListener('mousedown', handleMouseDown)
+        container.removeEventListener('mouseover', handleMouseOver)
+        document.removeEventListener('mouseup', handleDocumentMouseUp)
+      }
+    }, [isSelectingRef, selectedRangeRef])
+
+    return (
+      <div ref={containerRef}>
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/* @ts-ignore */}
+        <DiffView
+          {...props}
+          ref={ref}
+          renderWidgetLine={
+            renderWidgetLine
+              ? props => {
+                  return renderWidgetLine({
+                    ...props,
+                    onClose: () => {
+                      selectedRangeRef.current = null
+                      updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
+                      props.onClose()
+                    },
+                    lineFromNumber: selectedRangeRef.current?.start ?? props.lineNumber
+                  })
+                }
+              : undefined
+          }
+        />
+      </div>
+    )
+  }
+)
+
+ExtendedDiffView.displayName = 'ExtendedDiffView'

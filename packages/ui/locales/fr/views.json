@@ -206,6 +206,38 @@
     "cloneSsh": "SSH",
     "gitCloneUrl": "Git clone URL",
     "generateCredential": "Veuillez générer un identifiant de clonage si c'est la première fois.",
+    "emptyRepoPage": {
+      "title": "Repository",
+      "subtitle": "Follow the instructions below to get started with your repository.",
+      "noData": {
+        "title": "This repository is empty.",
+        "description": {
+          "0": "We recommend every repository include a",
+          "1": "README, LICENSE, and .gitignrore."
+        },
+        "createFile": "New file"
+      },
+      "cloneInstructions": {
+        "title": "Please generate git credentials if it’s your first time cloning the repository",
+        "subTitle": "Git clone URL",
+        "http": "HTTP",
+        "ssh": "SSH",
+        "generateButton": "Generate clone credential",
+        "manageCredentials": {
+          "0": "You can also manage your git credential",
+          "1": "here"
+        },
+        "pushRepository": {
+          "0": "You might need to",
+          "1": "create an API token",
+          "2": "In order to pull from or push into this repository"
+        }
+      },
+      "initialCommit": "Then push some content into it",
+      "existingRepo": {
+        "title": "Or you can push an existing repository"
+      }
+    },
     "readme": "README.md",
     "editReadme": "Edit README.md",
     "openPullReq": "Requêtes de tirage ouvertes",

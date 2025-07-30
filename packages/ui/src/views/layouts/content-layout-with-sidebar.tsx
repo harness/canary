@@ -1,6 +1,6 @@
 import { FC, Fragment, ReactNode } from 'react'
 
-import { Layout, ScrollArea, Separator, Text } from '@/components'
+import { Layout, Link, ScrollArea, Separator, Text } from '@/components'
 import { INSET_LAYOUT_INDENT, useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -27,13 +27,19 @@ export interface ContentLayoutWithSidebarProps {
   // This is required to ensure that scrolling within the block goes beyond the boundary
   // while the block maintains the correct top padding according to the design.
   sidebarViewportClassName?: string
+  showBackButton?: boolean
+  backButtonLabel?: string
+  backButtonTo?: () => string
 }
 
 export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   children,
   sidebarMenu,
   sidebarOffsetTop = 0,
-  sidebarViewportClassName
+  sidebarViewportClassName,
+  showBackButton = false,
+  backButtonLabel = 'Back',
+  backButtonTo
 }) => {
   const { NavLink } = useRouterContext()
 
@@ -46,13 +52,19 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
           height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${INSET_LAYOUT_INDENT}px)`
         }}
       >
-        <ScrollArea className={cn('pb-11 !px-4 h-full', sidebarViewportClassName)}>
+        {showBackButton && (
+          <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''} className="px-5 mt-7">
+            {backButtonLabel}
+          </Link>
+        )}
+
+        <ScrollArea className={cn('pb-11 !px-5 h-full', sidebarViewportClassName)}>
           {sidebarMenu.map((group, group_idx) => (
             <Fragment key={group.groupId}>
               {group_idx > 0 && <Separator />}
-              <Layout.Grid className="w-full px-0 pb-2.5" gapY="xs">
+              <Layout.Grid className="w-full px-0 pb-2.5" gapY="4xs">
                 {group?.title && (
-                  <Text className="my-[5px] px-2.5" color="foreground-3">
+                  <Text className="my-[4px] px-2.5" color="foreground-3">
                     {group?.title}
                   </Text>
                 )}

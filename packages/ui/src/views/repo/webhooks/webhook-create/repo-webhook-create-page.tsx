@@ -95,7 +95,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
     <SandboxLayout.Content className="max-w-[570px] ml-3">
       <Text as="h1" variant="heading-section" className="mb-4">
         {preSetWebhookData
-          ? t('views:repos.editWebhookTitle', 'Webhook details')
+          ? t('views:repos.editWebhookTitle', 'Order Status Update Webhook')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
       </Text>
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="gap-y-6">
@@ -103,6 +103,11 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           <WebhookToggleField register={register} setValue={setValue} watch={watch} />
         </Fieldset>
         <FormSeparator />
+        {preSetWebhookData ? (
+          <Text as="h2" variant="heading-subsection">
+            {t('views:repos.webhookDetails', 'Details')}
+          </Text>
+        ) : null}
         <Fieldset>
           <WebhookNameField register={register} />
         </Fieldset>

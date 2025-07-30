@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
-import { ListPullReqQueryQueryParams, RepoRepositoryOutput, TypesPullReq } from '@harnessio/code-service-client'
-import { ColorsEnum, PullRequest } from '@harnessio/ui/views'
+import { RepoRepositoryOutput, TypesPullReq } from '@harnessio/code-service-client'
+import { ColorsEnum, PRState, PullRequest } from '@harnessio/ui/views'
 
 import { PageResponseHeader } from '../../../types'
 
@@ -17,8 +17,8 @@ interface PullRequestListStore {
   openPullReqs: number
   closedPullReqs: number
   page: number
-  prState: ListPullReqQueryQueryParams['state']
-  setPrState: (prState: ListPullReqQueryQueryParams['state']) => void
+  prState: Array<PRState>
+  setPrState: (prState: Array<PRState>) => void
   setPage: (page: number) => void
   setLabelsQuery: (query: string) => void
   setPullRequests: (data: PullRequestInterface[], headers?: Headers) => void
@@ -37,7 +37,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   labelsQuery: '',
   setPage: page => set({ page }),
 
-  setPrState: (prState: ListPullReqQueryQueryParams['state']) => set({ prState }),
+  setPrState: (prState: Array<PRState>) => set({ prState }),
 
   setPullRequests: (data, headers) => {
     const transformedPullRequests: PullRequest[] = data.map(item => ({

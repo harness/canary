@@ -42,7 +42,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className="px-0">
+    <SandboxLayout.Content className="ml-3">
       <Text as="h1" variant="heading-section">
         Webhooks
       </Text>
@@ -60,7 +60,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                     id="search"
                     size="sm"
                     defaultValue={searchQuery || ''}
-                    inputContainerClassName="max-w-96"
+                    inputContainerClassName="max-w-80"
                     placeholder={t('views:repos.search', 'Search')}
                     onChange={handleSearchChange}
                   />

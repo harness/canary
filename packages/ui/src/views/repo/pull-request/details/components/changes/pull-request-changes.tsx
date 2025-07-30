@@ -57,7 +57,6 @@ interface DataProps {
   principalProps: PrincipalPropsType
 }
 
-
 function PullRequestChangesInternal({
   data,
   diffMode,

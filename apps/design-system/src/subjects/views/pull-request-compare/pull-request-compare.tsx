@@ -35,9 +35,29 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
           title: 'bot.txt',
           lang: 'txt',
           addedLines: 1,
-          removedLines: 0
+          deletedLines: 0,
+          isDeleted: false,
+          filePath: 'bot.txt',
+          diffData: {
+            fileId: 'some-id',
+            containerId: 'some-container-id',
+            contentId: 'some-content-id',
+            isCombined: false,
+            addedLines: 1,
+            deletedLines: 0,
+            isDeleted: false,
+            filePath: 'bot.txt',
+            isGitDiff: false,
+            language: 'txt',
+            blocks: [],
+            oldName: 'bot.txt',
+            newName: 'bot.txt'
+          }
         }
       ]}
+      onGetFullDiff={async (path?: string) => {
+        return path ?? ''
+      }}
       diffStats={{
         additions: 0,
         commits: 1,

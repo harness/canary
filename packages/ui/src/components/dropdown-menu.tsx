@@ -4,13 +4,14 @@ import { usePortal, useTranslation } from '@/context'
 import { cn, filterChildrenByDisplayNames } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
-import { ScrollArea, ScrollAreaIntersectionProps } from '@components/scroll-area'
+import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
 import { Text, TextProps } from '@components/text'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { omit } from 'lodash-es'
 
 import { IconPropsV2, IconV2 } from './icon-v2'
 import { LogoV2, LogoV2NamesType } from './logo-v2'
+import { Tag, TagProps } from './tag'
 
 const DropdownMenuRoot = DropdownMenuPrimitive.Root
 const DropdownMenuPortal = DropdownMenuPrimitive.Portal
@@ -62,7 +63,7 @@ const innerComponentsDisplayNames = [
 
 interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
   isSubContent?: boolean
-  scrollAreaProps?: ScrollAreaIntersectionProps
+  scrollAreaProps?: Omit<ScrollAreaProps, 'children'>
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(
@@ -111,13 +112,14 @@ const DropdownMenuGroup = forwardRef<
 DropdownMenuGroup.displayName = displayNames.group
 
 interface DropdownBaseItemProps {
-  title: ReactNode
+  title?: ReactNode
   children?: ReactNode
   className?: string
   description?: ReactNode
   label?: string
   shortcut?: string
   checkmark?: boolean
+  tag?: TagProps
   withSubIndicator?: ReactNode
 }
 
@@ -127,20 +129,25 @@ const DropdownBaseItem = ({
   title,
   description,
   label,
+  tag,
   shortcut,
   checkmark,
   withSubIndicator
 }: DropdownBaseItemProps) => (
   <div className={cn('cn-dropdown-menu-base-item', className)}>
     {children}
-    <Layout.Grid gap="2xs" className="w-full">
+    <Layout.Grid gap="2xs" className="w-fit">
       {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
       {typeof description === 'string' ? <Text>{description}</Text> : description}
     </Layout.Grid>
-    {label && <Text variant="caption-soft">{label}</Text>}
-    {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
-    {checkmark && <IconV2 name="check" />}
-    {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
+    {tag && <Tag {...tag} />}
+
+    <div className="ml-auto">
+      {label && <Text variant="caption-soft">{label}</Text>}
+      {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
+      {checkmark && <IconV2 name="check" />}
+      {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
+    </div>
   </div>
 )
 
@@ -151,12 +158,12 @@ interface DropdownMenuItemProps
 }
 
 const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuItemProps>(
-  ({ className, children, title, description, label, shortcut, checkmark, prefix, ...props }, ref) => {
+  ({ className, children, title, description, label, shortcut, checkmark, prefix, tag, ...props }, ref) => {
     const filteredChildren = filterChildrenByDisplayNames(children, innerComponentsDisplayNames)
     const withChildren = filteredChildren.length > 0
 
     const ItemContent = () => (
-      <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, withSubIndicator: withChildren }}>
+      <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, tag, withSubIndicator: withChildren }}>
         {prefix}
       </DropdownBaseItem>
     )
@@ -203,6 +210,7 @@ const DropdownMenuCheckboxItem = forwardRef<
       label,
       shortcut,
       checkmark,
+      tag,
       onCheckedChange,
       onClick,
       ...props
@@ -214,7 +222,7 @@ const DropdownMenuCheckboxItem = forwardRef<
     const checkedDataState = checked === true ? 'checked' : checked
 
     const ItemContent = () => (
-      <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, withSubIndicator: withChildren }}>
+      <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, tag, withSubIndicator: withChildren }}>
         <div className="cn-checkbox-root" {...{ 'data-state': checkedDataState }}>
           {checked && (
             <div className="cn-checkbox-indicator" {...{ 'data-state': checkedDataState }}>
@@ -292,7 +300,7 @@ DropdownMenuRadioGroup.displayName = displayNames.radioGroup
 const DropdownMenuRadioItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
   Omit<DropdownMenuRadioItemProps, 'children' | 'onSelect'>
->(({ className, title, description, label, shortcut, checkmark, ...props }, ref) => (
+>(({ className, title, description, label, shortcut, checkmark, tag, ...props }, ref) => (
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn('cn-dropdown-menu-item', className)}
@@ -302,7 +310,7 @@ const DropdownMenuRadioItem = forwardRef<
     }}
     {...props}
   >
-    <DropdownBaseItem {...{ title, description, label, shortcut, checkmark }}>
+    <DropdownBaseItem {...{ title, description, label, shortcut, checkmark, tag }}>
       <div className="cn-radio-item">
         <DropdownMenuPrimitive.ItemIndicator className="cn-radio-item-indicator" />
       </div>

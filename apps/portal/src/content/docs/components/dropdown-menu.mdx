@@ -29,6 +29,7 @@ It can be composed with several subcomponents such as `DropdownMenu.Root`, `Drop
         <DropdownMenu.Item title="With label" label="Label" />
         <DropdownMenu.Item title="With checkmark" checkmark />
         <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+        <DropdownMenu.Item title="With shortcut" tag={{ value: "Beta", theme: "blue", size: "sm" }} />
 
   </DropdownMenu.Content>
 </DropdownMenu.Root>`}
@@ -724,6 +725,12 @@ The `Item` component represents a dropdown menu item.
       value: "ReactNode",
     },
     {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
       name: "className",
       description: "Custom class name",
       required: false,
@@ -947,6 +954,12 @@ The `CheckboxItem` component displays a checkbox next to the item. When the user
       defaultValue: "false",
     },
     {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
       name: "className",
       description: "Custom class name",
       required: false,
@@ -1083,6 +1096,12 @@ the `onValueChange` prop of the parent `RadioGroup` component is called with the
       defaultValue: "false",
     },
     {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
       name: "className",
       description: "Custom class name",
       required: false,
@@ -1164,6 +1183,12 @@ The `AvatarItem` component is a specialized item that displays an avatar.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
     },
     {
       name: "className",
@@ -1261,6 +1286,12 @@ The `LogoItem` component is a specialized item that displays a logo.
       defaultValue: "false",
     },
     {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
+    },
+    {
       name: "className",
       description: "Custom class name",
       required: false,
@@ -1346,6 +1377,12 @@ The `IconItem` component is a specialized item that displays an icon.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
     },
     {
       name: "className",
@@ -1442,6 +1479,12 @@ The `IndicatorItem` component is a specialized item that displays a color indica
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "tag",
+      description: "Tag to show after the title (e.g. 'New', 'Beta')",
+      required: false,
+      value: "TagProps",
     },
     {
       name: "className",

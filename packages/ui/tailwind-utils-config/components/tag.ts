@@ -32,20 +32,20 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
       backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'surface-bg' : 'soft-bg'})`,
       borderColor: `var(--cn-set-${theme}-${isOutline ? 'surface-border' : 'soft-bg'})`,
 
-      '&:hover:not(.cn-tag-split *)': getHoverStyles(theme, isOutline),
+      '&.cn-tag-hoverable:hover:not(.cn-tag-split *)': getHoverStyles(theme, isOutline),
       '&:where(.cn-tag-split-left)': {
-        '.cn-tag-split:hover &': getHoverStyles(theme, isOutline)
+        '.cn-tag-split.cn-tag-split-hoverable:hover &': getHoverStyles(theme, isOutline)
       },
       '&:where(.cn-tag-split-right)': isOutline
         ? {
             borderColor: `var(--cn-set-${theme}-soft-bg)`,
-            '.cn-tag-split:hover &': {
+            '.cn-tag-split.cn-tag-split-hoverable:hover &': {
               borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
             }
           }
         : {
             backgroundColor: `var(--cn-set-${theme}-surface-bg)`,
-            '.cn-tag-split:hover &': {
+            '.cn-tag-split.cn-tag-split-hoverable:hover &': {
               backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`
             }
           },

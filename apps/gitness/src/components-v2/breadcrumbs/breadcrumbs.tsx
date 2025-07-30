@@ -24,7 +24,7 @@ export const Breadcrumbs = ({
   if (!breadcrumbs.length) return null
 
   return (
-    <Topbar.Root className={cn('bg-cn-background-0 sticky top-0 z-20', { 'pl-0': !isMobile })}>
+    <Topbar.Root className={cn('bg-cn-background-0 sticky top-0 left-0 z-20', { 'pl-1.5': !isMobile })}>
       <Topbar.Left>
         {withMobileSidebarToggle && isMobile && (
           <>

@@ -55,6 +55,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   disabled?: boolean
   showCopyButton?: boolean
   title?: string
+  enableHover?: boolean
 }
 
 function Tag({
@@ -71,13 +72,27 @@ function Tag({
   showIcon = false,
   disabled = false,
   showCopyButton = false,
+  enableHover = false,
   title,
   ...props
 }: TagProps) {
   if (label && value) {
     return (
       <TagSplit
-        {...{ variant, size, theme, rounded, icon, showIcon, showReset, onReset, label: label, value, disabled }}
+        {...{
+          variant,
+          size,
+          theme,
+          rounded,
+          icon,
+          showIcon,
+          showReset,
+          onReset,
+          label: label,
+          value,
+          disabled,
+          enableHover: enableHover || !!onReset
+        }}
       />
     )
   }
@@ -87,7 +102,10 @@ function Tag({
       tabIndex={-1}
       className={cn(
         tagVariants({ variant, size, theme, rounded }),
-        { 'text-cn-foreground-disabled cursor-not-allowed': disabled },
+        {
+          'text-cn-foreground-disabled cursor-not-allowed': disabled,
+          'cn-tag-hoverable': !disabled && (enableHover || !!onReset)
+        },
         className
       )}
       {...props}
@@ -133,12 +151,18 @@ function TagSplit({
   value,
   label = '',
   onReset,
-  disabled = false
+  disabled = false,
+  enableHover = false
 }: TagProps) {
   const sharedProps = { variant, size, theme, rounded, icon, disabled }
 
   return (
-    <div className={cn('cn-tag-split flex w-fit items-center justify-center', { 'cursor-not-allowed': disabled })}>
+    <div
+      className={cn('cn-tag-split flex w-fit items-center justify-center', {
+        'cursor-not-allowed': disabled,
+        'cn-tag-split-hoverable': !disabled && enableHover
+      })}
+    >
       {/* LEFT TAG - should never have a Reset Icon */}
       <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />
 
@@ -148,4 +172,4 @@ function TagSplit({
   )
 }
 
-export { Tag }
+export { Tag, type TagProps }

@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 
 import { Toggle } from '@/components'
 
@@ -7,7 +7,7 @@ interface FavoriteIconProps {
   onFavoriteToggle: (isFavorite: boolean) => void
 }
 
-const Favorite: React.FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle }) => (
+const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle }) => (
   <Toggle
     iconOnly
     size="sm"

@@ -68,10 +68,10 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <>
       <div className={cn('flex w-full flex-col gap-y-4', className)}>
-        <div className="flex w-full max-w-full items-center gap-x-3 text-6">
+        <div className="text-6 flex w-full max-w-full items-center gap-x-3">
           <div className="flex items-center gap-x-2.5 leading-snug">
-            <h1 className="flex max-w-[95%] items-center truncate font-medium text-cn-foreground-1">{title}</h1>
-            <span className="font-normal text-cn-foreground-2">#{number}</span>
+            <h1 className="text-cn-foreground-1 flex max-w-[95%] items-center truncate font-medium">{title}</h1>
+            <span className="text-cn-foreground-2 font-normal">#{number}</span>
           </div>
 
           <Button
@@ -92,21 +92,35 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             {stateObject.text}
           </StatusBadge>
 
-          <div className="inline-flex flex-wrap items-center gap-1 text-cn-foreground-2">
-            <span className="font-medium text-cn-foreground-1">{author?.display_name || author?.email || ''}</span>
+          <div className="text-cn-foreground-2 inline-flex flex-wrap items-center gap-1">
+            <span className="text-cn-foreground-1 font-medium">{author?.display_name || author?.email || ''}</span>
             <span>{merged ? 'merged' : ' wants to merge'}</span>
-            <span className="font-medium text-cn-foreground-1">
+            <span className="text-cn-foreground-1 font-medium">
               {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
             </span>
             <span>into</span>
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
-              <Tag variant="secondary" theme="blue" icon="git-branch" value={target_branch || ''} showIcon />
+              <Tag
+                variant="secondary"
+                theme="blue"
+                icon="git-branch"
+                value={target_branch || ''}
+                showIcon
+                enableHover
+              />
             </Link>
             <span>from</span>
             <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}>
-              <Tag variant="secondary" theme="blue" icon="git-branch" value={source_branch || ''} showIcon />
+              <Tag
+                variant="secondary"
+                theme="blue"
+                icon="git-branch"
+                value={source_branch || ''}
+                showIcon
+                enableHover
+              />
             </Link>
-            <span className="mx-1.5 h-4 w-px bg-cn-border-3" />
+            <span className="bg-cn-border-3 mx-1.5 h-4 w-px" />
             <TimeAgoCard timestamp={created} />
           </div>
         </div>

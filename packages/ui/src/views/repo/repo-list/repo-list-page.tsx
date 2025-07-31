@@ -34,7 +34,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const [showScope, setShowScope] = useState(false)
-  const searchRef = useRef<FilterGroupRef>(null)
+  const filterRef = useRef<FilterGroupRef>(null)
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -78,9 +78,10 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   }
 
   const handleResetFiltersQueryAndPages = () => {
-    handleSearch('')
+    filterRef.current?.resetSearch?.()
+    filterRef.current?.resetFilters?.()
+    setSearchQuery(null)
     setPage(1)
-    searchRef.current?.resetSearch?.()
   }
 
   const onFilterValueChange = (filterValues: RepoListFilters) => {
@@ -163,7 +164,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             }}
             onFilterValueChange={onFilterValueChange}
             searchValue={searchQuery || ''}
-            ref={searchRef}
+            ref={filterRef}
             handleInputChange={handleSearch}
             headerAction={
               <SplitButton<string>

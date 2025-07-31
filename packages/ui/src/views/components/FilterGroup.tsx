@@ -39,6 +39,7 @@ interface FilterGroupProps<
 
 export type FilterGroupRef = {
   resetSearch?: () => void
+  resetFilters?: () => void
 }
 
 const FilterGroupInner = <
@@ -74,6 +75,11 @@ const FilterGroupInner = <
       resetSearch: () => {
         if (searchRef.current) {
           searchRef.current.value = ''
+        }
+      },
+      resetFilters: () => {
+        if (filtersRef.current) {
+          filtersRef.current.reset()
         }
       }
     }

@@ -161,15 +161,17 @@ export default function GitCommitDialog({
   }
 
   useEffect(() => {
-    dryRun(CommitToGitRefOption.DIRECTLY)
-  }, [])
+    if (open) {
+      dryRun(CommitToGitRefOption.DIRECTLY)
+    }
+  }, [open])
 
   const handleClose = () => {
     setError(undefined)
     onClose()
   }
 
-  return (
+  return open ? (
     <GitCommitDialogComp
       isOpen={open}
       onClose={handleClose}
@@ -186,5 +188,5 @@ export default function GitCommitDialog({
       // TODO: Add a loading state for submission
       isSubmitting={false}
     />
-  )
+  ) : null
 }

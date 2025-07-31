@@ -10,7 +10,7 @@ import {
   SkeletonList,
   ViewTypeValue
 } from '@harnessio/ui/components'
-import { BranchSelectorTab, CommitsList, monacoThemes } from '@harnessio/ui/views'
+import { CommitsList, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
@@ -21,18 +21,11 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
+import { useGitRef } from '../hooks/useGitRef'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
-import {
-  decodeGitContent,
-  FILE_SEPERATOR,
-  filenameToLanguage,
-  formatBytes,
-  GitCommitAction,
-  normalizeGitRef,
-  REFS_TAGS_PREFIX
-} from '../utils/git-utils'
+import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
 import GitBlame from './GitBlame'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
@@ -64,15 +57,14 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
+
+  const { gitRefName } = useGitRef()
+
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
       page,
-      git_ref: normalizeGitRef(
-        selectedRefType === BranchSelectorTab.TAGS
-          ? REFS_TAGS_PREFIX + selectedBranchTag?.name
-          : selectedBranchTag?.name
-      ),
+      git_ref: gitRefName,
       path: fullResourcePath
     }
   })

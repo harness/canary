@@ -4,28 +4,19 @@ import { useParams } from 'react-router-dom'
 import {
   OpenapiContentInfo,
   OpenapiGetContentOutput,
-  pathDetails,
-  TypesPathDetails,
   useCalculateCommitDivergenceMutation,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import {
-  BranchSelectorTab,
-  CodeModes,
-  CommitDivergenceType,
-  RepoFile,
-  RepoFiles,
-  SummaryItemType
-} from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, CommitDivergenceType, RepoFiles } from '@harnessio/ui/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
+import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
-import { sortFilesByType } from '../../utils/common-utils'
-import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 
 /**
@@ -55,8 +46,6 @@ export const RepoCode = () => {
     },
     ...splitPathWithParents(fullResourcePath || '', repoPath)
   ]
-  const [files, setFiles] = useState<RepoFile[]>([])
-  const [loading, setLoading] = useState(false)
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const {
     data: { body: repoDetails } = {},
@@ -89,55 +78,13 @@ export const RepoCode = () => {
     return new Map(nonEmptyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
   }, [repoDetails])
 
-  const getSummaryItemType = (type: OpenapiGetContentOutput['type']): SummaryItemType => {
-    if (type === 'dir') {
-      return SummaryItemType.Folder
-    }
-    return SummaryItemType.File
-  }
-
-  const getLastPathSegment = (path: string) => {
-    if (!path || /^\/+$/.test(path)) {
-      return ''
-    }
-    path = path.replace(/\/+$/, '')
-    return path.split('/').pop()
-  }
-
-  useEffect(() => {
-    if (repoEntryPathToFileTypeMap.size > 0) {
-      setLoading(true)
-      pathDetails({
-        queryParams: { git_ref: normalizeGitRef(fullGitRef || '') },
-        body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
-        repo_ref: repoRef
-      })
-        .then(({ body: response }) => {
-          if (response?.details && response.details.length > 0) {
-            setFiles(
-              sortFilesByType(
-                response.details.map((item: TypesPathDetails) => ({
-                  id: item?.path || '',
-                  type: item?.path
-                    ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
-                    : SummaryItemType.File,
-                  name: getLastPathSegment(item?.path || '') || '',
-                  lastCommitMessage: item?.last_commit?.message || '',
-                  timestamp: item?.last_commit?.author?.when ?? '',
-                  user: { name: item?.last_commit?.author?.identity?.name || '' },
-                  sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                  path: routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef || ''}/~/${item?.path}` })
-                }))
-              )
-            )
-          }
-        })
-        .catch()
-        .finally(() => {
-          setLoading(false)
-        })
-    }
-  }, [repoEntryPathToFileTypeMap.size, repoRef, fullGitRef])
+  const { files, loading } = useRepoFileContentDetails({
+    repoRef,
+    fullGitRef,
+    pathToTypeMap: repoEntryPathToFileTypeMap,
+    spaceId,
+    repoId
+  })
 
   const latestFiles = useMemo(() => {
     const { author, message, sha } = repoDetails?.latest_commit || {}

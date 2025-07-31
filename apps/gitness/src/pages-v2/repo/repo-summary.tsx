@@ -4,9 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   OpenapiContentInfo,
   OpenapiGetContentOutput,
-  pathDetails,
-  RepoPathsDetailsOutput,
-  TypesPathDetails,
   UpdateRepositoryErrorResponse,
   useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
@@ -22,9 +19,7 @@ import {
   BranchSelectorTab,
   CloneCredentialDialog,
   CommitDivergenceType,
-  RepoFile,
   RepoSummaryView,
-  SummaryItemType,
   TokenFormType
 } from '@harnessio/ui/views'
 
@@ -36,8 +31,8 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
+import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
-import { sortFilesByType } from '../../utils/common-utils'
 import {
   decodeGitContent,
   getTrimmedSha,
@@ -48,8 +43,6 @@ import {
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
-  const [loading, setLoading] = useState(false)
-  const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -238,47 +231,13 @@ export default function RepoSummaryPage() {
     return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry.path, entry.type]))
   }, [repoDetails?.content?.entries])
 
-  const getSummaryItemType = (type: OpenapiGetContentOutput['type']): SummaryItemType => {
-    if (type === 'dir') {
-      return SummaryItemType.Folder
-    }
-    return SummaryItemType.File
-  }
-
-  useEffect(() => {
-    if (!repoEntryPathToFileTypeMap.size) {
-      return
-    }
-    setLoading(true)
-
-    pathDetails({
-      queryParams: { git_ref: normalizeGitRef(fullGitRef) },
-      body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
-      repo_ref: repoRef
-    })
-      .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
-        if (response?.details && response.details.length) {
-          setFiles(
-            sortFilesByType(
-              response.details.map((item: TypesPathDetails) => ({
-                id: item?.path || '',
-                type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
-                name: item?.path || '',
-                lastCommitMessage: item?.last_commit?.message || '',
-                timestamp: item?.last_commit?.author?.when ?? '',
-                user: { name: item?.last_commit?.author?.identity?.name || '' },
-                sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                path: routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef}/~/${item?.path}` })
-              }))
-            )
-          )
-        }
-      })
-      .catch()
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [repoEntryPathToFileTypeMap, repoRef, fullGitRef])
+  const { files, loading } = useRepoFileContentDetails({
+    repoRef,
+    fullGitRef,
+    pathToTypeMap: repoEntryPathToFileTypeMap,
+    spaceId,
+    repoId
+  })
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,

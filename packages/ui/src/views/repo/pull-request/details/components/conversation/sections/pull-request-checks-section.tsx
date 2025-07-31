@@ -28,7 +28,7 @@ const PullRequestCheckSection = ({
       case ExecutionState.BLOCKED:
         return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
       case ExecutionState.RUNNING:
-        return <IconV2 name="message" className="text-cn-foreground-warning" />
+        return <IconV2 className="text-cn-foreground-warning animate-spin" name="loader" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
         return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />

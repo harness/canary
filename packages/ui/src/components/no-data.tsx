@@ -41,6 +41,7 @@ export const NoData: FC<NoDataProps> = ({
   className
 }) => {
   const { NavLink } = useRouterContext()
+
   return (
     <div
       className={cn(

@@ -64,6 +64,7 @@ export interface RepositoryType {
   name: string
   description?: string
   private: boolean
+  archived?: boolean
   stars: number
   forks: number
   pulls: number

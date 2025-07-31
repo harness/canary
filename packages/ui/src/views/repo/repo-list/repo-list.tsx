@@ -50,12 +50,14 @@ const Stats = ({
 const Title = ({
   repoName,
   isPrivate,
+  isArchived,
   scope,
   repoPath,
   showScope = false
 }: {
   repoName: string
   isPrivate: boolean
+  isArchived?: boolean
   scope: Scope
   repoPath: string
   showScope?: boolean
@@ -71,6 +73,11 @@ const Title = ({
         <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
+        {isArchived && (
+          <StatusBadge variant="outline" size="sm" theme="warning">
+            {t('views:repos.archived', 'Archived')}
+          </StatusBadge>
+        )}
         {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
       </Layout.Flex>
     </Layout.Flex>
@@ -153,6 +160,7 @@ export function RepoList({
                 <Title
                   repoName={repo.name}
                   isPrivate={repo.private}
+                  isArchived={repo.archived}
                   repoPath={repo.path}
                   scope={scope}
                   showScope={showScope}

@@ -7,6 +7,7 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     name: repo.identifier || '',
     description: repo.description || '',
     private: !repo.is_public,
+    archived: repo.archived,
     stars: 0,
     forks: repo.num_forks || 0,
     pulls: repo.num_pulls || 0,

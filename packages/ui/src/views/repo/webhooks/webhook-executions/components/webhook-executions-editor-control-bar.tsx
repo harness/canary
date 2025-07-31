@@ -1,27 +1,34 @@
 import { FC } from 'react'
 
-import { StackedList, ToggleGroup } from '@/components'
+import { StackedList, Tabs } from '@/components'
+
+export enum WebhookExecutionView {
+  PAYLOAD = 'payload',
+  SERVER_RESPONSE = 'server-response'
+}
+
+const TAB_LABELS = {
+  [WebhookExecutionView.PAYLOAD]: 'Payload',
+  [WebhookExecutionView.SERVER_RESPONSE]: 'Server Response'
+}
 
 export interface FileEditorControlBarProps {
   view: string
-  onChangeView: (value: 'Payload' | 'Server Response') => void
+  onChangeView: (value: string) => void
 }
 
 export const WebhookExecutionEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onChangeView }) => {
   return (
     <StackedList.Root onlyTopRounded borderBackground>
-      <StackedList.Item disableHover isHeader className="px-4 py-3">
-        <ToggleGroup.Root
-          variant="ghost"
-          selectedVariant="secondary"
-          onChange={onChangeView as (value: string) => void}
-          value={view}
-          unselectable
-          size="xs"
-        >
-          <ToggleGroup.Item value="payload" className="text-md" text="Payload" />
-          <ToggleGroup.Item value="server-response" className="text-md" text="Server Response" />
-        </ToggleGroup.Root>
+      <StackedList.Item disableHover isHeader className="px-3 py-1 ">
+        <Tabs.Root defaultValue={view} onValueChange={onChangeView}>
+          <Tabs.List variant="ghost">
+            <Tabs.Trigger value={WebhookExecutionView.PAYLOAD}>{TAB_LABELS[WebhookExecutionView.PAYLOAD]}</Tabs.Trigger>
+            <Tabs.Trigger value={WebhookExecutionView.SERVER_RESPONSE}>
+              {TAB_LABELS[WebhookExecutionView.SERVER_RESPONSE]}
+            </Tabs.Trigger>
+          </Tabs.List>
+        </Tabs.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

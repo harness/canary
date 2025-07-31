@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react'
 
 import { NoData, Pagination, SkeletonList } from '@/components'
 import { useTranslation } from '@/context'
-import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TypesCommit } from '@/views'
+import { CommitsList, IPullRequestCommitsStore, TypesCommit } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -33,7 +33,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className="pt-0">
+    <>
       {!commitsList?.length && (
         <NoData
           imageName="no-data-folder"
@@ -64,7 +64,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         getPrevPageLink={getPrevPageLink}
         getNextPageLink={getNextPageLink}
       />
-    </SandboxLayout.Content>
+    </>
   )
 }
 

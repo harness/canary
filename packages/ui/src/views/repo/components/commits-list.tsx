@@ -48,9 +48,15 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
   return (
     <div className={className}>
       {entries.map(([date, commitData], node_idx) => (
-        <NodeGroup.Root className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0" key={date}>
+        <NodeGroup.Root className="grid-cols-[4px_1fr] gap-4 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
-          <NodeGroup.Title>{date && <span className="text-cn-foreground-4">Commits on {date}</span>}</NodeGroup.Title>
+          <NodeGroup.Title>
+            {date && (
+              <Text variant="body-single-line-normal" color="foreground-3">
+                Commits on {date}
+              </Text>
+            )}
+          </NodeGroup.Title>
           <NodeGroup.Content className="overflow-hidden">
             {!!commitData.length && (
               <StackedList.Root>
@@ -85,8 +91,8 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                             })}
                             <div className="flex items-center gap-x-1.5">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
-                              <Text color="foreground-3">{authorName || ''}</Text>
-                              <Text color="foreground-4">
+                              <Text variant="body-single-line-strong">{authorName || ''}</Text>
+                              <Text variant="body-single-line-normal" color="foreground-3">
                                 committed on{' '}
                                 <TimeAgoCard
                                   timestamp={when}

@@ -1,6 +1,6 @@
 # Canary
 
-Welcome to the Harness Canary monorepo! This repository contains multiple projects for Harness' next generation Unified UI.
+Welcome to the Harness Canary monorepo! This repository contains multiple projects for Harness' next generation Unified UI project.
 
 # Repository Structure
 

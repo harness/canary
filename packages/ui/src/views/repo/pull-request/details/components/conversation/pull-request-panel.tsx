@@ -177,7 +177,7 @@ const getButtonState = ({
   })
   if (checksNotAllowingMerge) {
     return {
-      disabled: true,
+      disabled: canBypass ? !checkboxBypass : true,
       theme: 'danger',
       variant: 'primary'
     }

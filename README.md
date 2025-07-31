@@ -55,7 +55,7 @@ You can also publish individual packages by running `pnpm publish` from each pro
 
 DO NOT publish packages using `npm`. Use `pnpm` instead.
 
-## Note for Visual Studio Code Users 
+## Note for Visual Studio Code Users
 
 If you're using Visual Studio Code (VSCode) and encounter issues with package recognition or type definitions after rebuilding the workspace, follow these steps to resolve them:
 

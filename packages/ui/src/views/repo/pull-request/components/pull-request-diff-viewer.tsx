@@ -327,7 +327,8 @@ const PullRequestDiffViewer = ({
 
         setDiffFileInstance(data)
       } catch (e) {
-        alert((e as Error).message)
+        // alert((e as Error).message)
+        console.error(e)
       }
     }, 100),
     []

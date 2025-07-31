@@ -1,4 +1,4 @@
-import { Accordion, IconV2, Layout, Link, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, IconV2, Layout, Link, StackedList, StatusBadge, Table, Text } from '@/components'
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
@@ -49,18 +49,24 @@ const PullRequestCheckSection = ({
           <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
         </Layout.Flex>
       </Accordion.Trigger>
-      <Accordion.Content>
-        <div className="ml-6 bg-inherit">
-          <StackedList.Root className="cursor-default border-transparent bg-inherit">
+      <Accordion.Content className="pl-6">
+        <Table.Root>
+          <Table.Body>
             {checkData.map(check => {
               const time = timeDistance(check?.check?.created, check?.check?.updated)
               return (
-                <StackedList.Item key={check.check?.id}>
-                  {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                  <StackedList.Field title={check?.check?.identifier} />
-                  <StackedList.Field
-                    title={
-                      check?.check?.status === ExecutionState.SUCCESS ||
+                <Table.Row key={check.check?.id}>
+                  <Table.Cell>
+                    <Layout.Horizontal align="center" className="gap-2">
+                      {getStatusIcon(check?.check?.status as EnumCheckStatus)}
+                      <Text color="foreground-1" truncate className="overflow-hidden pl-2">
+                        {check?.check?.identifier}
+                      </Text>
+                    </Layout.Horizontal>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Text color="foreground-3">
+                      {check?.check?.status === ExecutionState.SUCCESS ||
                       check?.check?.status === ExecutionState.FAILURE_IGNORED
                         ? `Succeeded in ${time}`
                         : check?.check?.status === ExecutionState.FAILURE
@@ -69,32 +75,28 @@ const PullRequestCheckSection = ({
                             ? 'Running...'
                             : check?.check?.status === ExecutionState.PENDING
                               ? 'Pending...'
-                              : `Errored in ${time}`
-                    }
-                  />
-                  <StackedList.Field
-                    title={
-                      check?.required && (
-                        <StatusBadge variant="outline" size="sm">
-                          <Text color="foreground-3">Required</Text>
-                        </StatusBadge>
-                      )
-                    }
-                  />
-                  <StackedList.Field
-                    title={
-                      check?.check?.status !== ExecutionState.PENDING && (
-                        <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
-                          Details
-                        </Link>
-                      )
-                    }
-                  />
-                </StackedList.Item>
+                              : `Errored in ${time}`}
+                    </Text>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {check?.check?.status !== ExecutionState.PENDING && (
+                      <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
+                        Details
+                      </Link>
+                    )}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {check?.required && (
+                      <StatusBadge variant="outline" size="sm">
+                        <Text color="foreground-3">Required</Text>
+                      </StatusBadge>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
               )
             })}
-          </StackedList.Root>
-        </div>
+          </Table.Body>
+        </Table.Root>
       </Accordion.Content>
     </Accordion.Item>
   ) : null

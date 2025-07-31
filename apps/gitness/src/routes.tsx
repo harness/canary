@@ -292,7 +292,7 @@ export const repoRoutes: CustomRouteObject[] = [
             }
           },
           {
-            path: 'code',
+            path: 'files',
             element: (
               <ExplorerPathsProvider>
                 <RepoSidebar />

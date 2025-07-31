@@ -125,7 +125,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
             <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <Link
-            to={toRepoFileDetails?.({ path: `code/${sourceBranch}/~/${filePath}` }) ?? ''}
+            to={toRepoFileDetails?.({ path: `files/${sourceBranch}/~/${filePath}` }) ?? ''}
             className="font-medium leading-tight text-cn-foreground-1"
           >
             {text}

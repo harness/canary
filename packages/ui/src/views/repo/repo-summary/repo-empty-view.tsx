@@ -72,7 +72,7 @@ git push -u origin main
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{
             label: t('views:repos.create-file', 'Create file'),
-            to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
+            to: `${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/`
           }}
           className="min-h-[40vh] py-0"
         />

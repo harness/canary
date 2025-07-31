@@ -193,7 +193,7 @@ export function RepoSummaryView({
                     <Button variant="outline" asChild>
                       <Link
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
-                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
+                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
                         <span className="truncate">{t('views:repos.create-file', 'Create file')}</span>
                       </Link>

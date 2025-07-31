@@ -9,7 +9,7 @@ import { BranchSelectorV2, RepoSidebar as RepoSidebarView } from '@harnessio/ui/
 
 export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
-    <div className="grid" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
+    <div className="flex flex-1">
       <RepoSidebarView
         navigateToNewFile={noop}
         navigateToFile={noop}

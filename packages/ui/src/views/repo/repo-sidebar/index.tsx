@@ -26,7 +26,7 @@ export const RepoSidebar = ({
             <div className="flex size-full flex-col gap-3 pt-5">
               <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">
                 {branchSelectorRenderer}
-                <Button iconOnly variant="outline" aria-label="Create File" onClick={navigateToNewFile}>
+                <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
                   <IconV2 name="plus" className="text-icons-3" />
                 </Button>
               </div>

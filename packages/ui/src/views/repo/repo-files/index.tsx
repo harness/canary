@@ -72,11 +72,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
     if (!isView) return children
 
-    if (isRepoEmpty) {
-      return <p>{t('views:repos.emptyRepo')}</p>
-    }
-
-    if (!isDir) {
+    if (!isRepoEmpty && !isDir) {
       return (
         <>
           {!isLoadingRepoDetails && (
@@ -123,9 +119,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         withBorder
         imageName="no-data-folder"
         title="No files yet"
-        description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
-        primaryButton={{ label: 'Create file' }}
-        secondaryButton={{ label: 'Import file' }}
+        description={['There are no files in this repository yet.']}
       />
     )
   }, [

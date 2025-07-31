@@ -103,11 +103,20 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     setFiltersOrderTrigger({ filterKey })
   }
 
+  /**
+   * Removes a filter from the filters map and updates the filters order.
+   * If the filter is sticky the filter will be reset to default value but will remain visible in it's initial position.
+   * @param filterKey The key of the filter to remove.
+   */
   const removeFilter = (filterKey: FilterKeys) => {
     debug('Removing filter with key: %s', filterKey)
-    const updatedFiltersMap = { ...filtersMap, [filterKey]: { ...createNewFilter(), state: FilterStatus.HIDDEN } }
+    const isSticky = filtersConfig[filterKey]?.isSticky
+    const updatedFiltersMap = {
+      ...filtersMap,
+      [filterKey]: { ...createNewFilter(), state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN }
+    }
 
-    const updatedFiltersOrder = filtersOrder.filter(key => key !== filterKey)
+    const updatedFiltersOrder = filtersOrder.filter(key => isSticky || key !== filterKey)
     setFiltersMapTrigger(updatedFiltersMap)
     setFiltersOrderTrigger({ updatedFiltersOrder })
 
@@ -202,6 +211,9 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     onFilterSelectionChange?.(filtersOrder)
   }, [filtersOrder, onFilterSelectionChange])
 
+  /**
+   * SideEffect to sync filter state with search params
+   */
   useEffect(() => {
     if (!initialFiltersRef.current) return
 
@@ -211,7 +223,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
         acc[key as FilterKeys] = filter
 
         if (!searchParams.has(key)) {
-          acc[key as FilterKeys] = { ...createNewFilter(), state: FilterStatus.HIDDEN }
+          acc[key as FilterKeys] = {
+            ...createNewFilter(),
+            state: filtersConfig[key as FilterKeys]?.isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+          }
         }
         return acc
       },
@@ -221,7 +236,9 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     // we don't need to update URL here since it's already updated
     debug('Syncing search params with filters: %s', currentQuery)
 
-    const updatedFiltersOrder = filtersOrder.filter(key => searchParams.has(key as string))
+    const updatedFiltersOrder = filtersOrder.filter(
+      key => searchParams.has(key as string) || filtersConfig[key as FilterKeys]?.isSticky
+    )
 
     searchParams.forEach((value, key) => {
       if (filtersMap[key as FilterKeys]) {

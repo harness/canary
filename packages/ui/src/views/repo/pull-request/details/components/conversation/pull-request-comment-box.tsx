@@ -581,7 +581,13 @@ export const PullRequestCommentBox = ({
         <div className="mt-3 flex items-center justify-between">
           {activeTab === TABS_KEYS.WRITE && (
             <div>
-              <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+              <input
+                type="file"
+                accept="image/*,video/*"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={handleFileChange}
+              />
               <Button variant="ghost" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
                 Drag & drop, select, or paste to attach files

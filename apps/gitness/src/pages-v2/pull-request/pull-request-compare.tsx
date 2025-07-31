@@ -597,11 +597,13 @@ export const CreatePullRequest = () => {
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
               selectedBranch={selectedTargetBranch}
+              branchPrefix="base"
             />
             <IconV2 name="arrow-long-left" />
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
               selectedBranch={selectedSourceBranch}
+              branchPrefix="compare"
             />
           </>
         }

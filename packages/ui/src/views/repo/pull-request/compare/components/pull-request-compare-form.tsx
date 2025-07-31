@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Alert, FormInput, FormWrapper } from '@/components'
+import { Alert, FormInput, FormWrapper, Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
 import { isEmpty, noop } from 'lodash-es'
@@ -57,35 +57,43 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput.Text
-          id="title"
-          {...register('title')}
-          autoFocus
-          placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
-          label={t('views:pullRequests.compareChangesFormTitleLabel', 'Title')}
-        />
+        <Layout.Vertical gap="sm">
+          <Text variant="heading-base">{t('views:pullRequests.compareChangesFormTitleLabel', 'Add a title')}</Text>
+          <FormInput.Text
+            id="title"
+            {...register('title')}
+            autoFocus
+            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
+          />
+        </Layout.Vertical>
+        <Layout.Vertical gap="sm">
+          <Text variant="heading-base">
+            {t('views:pullRequests.compareChangesFormDescriptionHeading', 'Add a description')}
+          </Text>
 
-        <PullRequestCommentBox
-          preserveCommentOnSave
-          allowEmptyValue
-          onSaveComment={newComment => {
-            if (isEmpty(errors)) {
-              onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
-            }
-          }}
-          textareaPlaceholder={t(
-            'views:pullRequests.compareChangesFormDescriptionPlaceholder',
-            'Enter pull request description'
-          )}
-          buttonTitle="Create pull request"
-          comment={description ?? ''}
-          setComment={setDescription}
-          handleAiPullRequestSummary={handleAiPullRequestSummary}
-          principalProps={principalProps}
-          handleUpload={handleUpload}
-          principalsMentionMap={{}}
-          setPrincipalsMentionMap={noop}
-        />
+          <PullRequestCommentBox
+            preserveCommentOnSave
+            allowEmptyValue
+            onSaveComment={newComment => {
+              if (isEmpty(errors)) {
+                onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
+              }
+            }}
+            textareaPlaceholder={t(
+              'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+              'Enter pull request description'
+            )}
+            buttonTitle="Create pull request"
+            comment={description ?? ''}
+            setComment={setDescription}
+            handleAiPullRequestSummary={handleAiPullRequestSummary}
+            principalProps={principalProps}
+            handleUpload={handleUpload}
+            principalsMentionMap={{}}
+            setPrincipalsMentionMap={noop}
+            hideAvatar
+          />
+        </Layout.Vertical>
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
           <Alert.Root theme="danger">

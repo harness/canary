@@ -10,6 +10,7 @@ import {
   FormWrapper,
   IconV2,
   Label,
+  Layout,
   Radio,
   SkeletonForm,
   Text
@@ -87,7 +88,6 @@ export const RepoSettingsGeneralForm: FC<{
 
   return (
     <Fieldset>
-      <Text variant="heading-subsection">{t('views:repos.generalSettings', 'General settings')}</Text>
       {isLoadingRepoData ? (
         <SkeletonForm />
       ) : (
@@ -101,42 +101,44 @@ export const RepoSettingsGeneralForm: FC<{
               disabled
               label={t('views:repos.name', 'Name')}
             />
+          </Fieldset>
 
-            {/* DESCRIPTION */}
+          {/* DESCRIPTION */}
+          <Fieldset>
             <FormInput.Textarea
               id="description"
               {...register('description')}
               placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
               label={t('views:repos.description', 'Description')}
               optional
+              resizable
             />
           </Fieldset>
 
           {/* BRANCH */}
           <Fieldset className="w-[298px]">
             <ControlGroup>
-              <Label className="mb-2">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
-              <BranchSelector
-                onSelectBranchorTag={value => {
-                  handleSelectChange('branch', value.name)
-                }}
-                isBranchOnly={true}
-                dynamicWidth={true}
-                selectedBranch={{ name: branchValue, sha: '' }}
-              />
+              <Layout.Vertical gap="xs">
+                <Label>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
+                <BranchSelector
+                  onSelectBranchorTag={value => {
+                    handleSelectChange('branch', value.name)
+                  }}
+                  isBranchOnly={true}
+                  dynamicWidth={true}
+                  selectedBranch={{ name: branchValue, sha: '' }}
+                />
+              </Layout.Vertical>
             </ControlGroup>
           </Fieldset>
 
-          <Fieldset className="mt-4">
+          <Fieldset>
             <FormInput.Radio label={t('views:repos.visibility', 'Visibility')} id="visibility" {...register('access')}>
               <Radio.Item
                 id="access-public"
                 value="1"
                 label={t('views:repos.public', 'Public')}
-                caption={t(
-                  'views:repos.publicDescription',
-                  'Anyone with access to the gitness environment can clone this repo.'
-                )}
+                caption={t('views:repos.publicDescription', 'Anyone with access to Harness can clone this repo.')}
               />
               <Radio.Item
                 id="access-private"

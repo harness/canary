@@ -186,7 +186,7 @@ export function RepoCreatePage({
                 id="access-public"
                 value="1"
                 label="Public"
-                caption="Anyone with access to the Gitness environment can clone this repo."
+                caption="Anyone with access to Harness can clone this repo."
               />
               <Radio.Item
                 id="access-private"

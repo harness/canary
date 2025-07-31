@@ -5,7 +5,7 @@ const getNavItems = (t: TFunctionWithFallback) => [
   {
     groupId: 0,
     title: t('views:repos.general', 'General'),
-    items: [{ id: 0, title: t('views:repos.generalSettings', 'General Settings'), to: 'general' }]
+    items: [{ id: 0, title: t('views:repos.generalSettings', 'General settings'), to: 'general' }]
   },
   // {
   //   groupId: 1,

@@ -1,7 +1,17 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Checkbox, ControlGroup, Fieldset, Message, MessageTheme, SkeletonForm, Spacer, Text } from '@/components'
+import {
+  Checkbox,
+  ControlGroup,
+  Fieldset,
+  Layout,
+  Message,
+  MessageTheme,
+  SkeletonForm,
+  Spacer,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -62,33 +72,35 @@ export const RepoSettingsFeaturesForm: FC<RepoSettingsFeaturesFormProps> = ({
     : ''
 
   return (
-    <Fieldset className="gap-y-6">
-      <Text variant="heading-subsection">{t('views:repos.features', 'Features')}</Text>
-      {isLoadingFeaturesSettings ? (
-        <SkeletonForm linesCount={2} />
-      ) : (
-        <ControlGroup>
-          <Checkbox
-            checked={watch('gitLfsEnabled')}
-            id="git-lfs-enabled"
-            onCheckedChange={onCheckboxChange}
-            disabled={isDisabled}
-            title={tooltipMessage}
-            label={t('views:repos.gitLfs', 'Git LFS')}
-            caption={t('views:repos.gitLfsDescription', 'Enable Git Large File Storage (LFS) for this repository.')}
-          />
-          {errors.gitLfsEnabled && (
-            <Message theme={MessageTheme.ERROR}>{errors.gitLfsEnabled.message?.toString()}</Message>
-          )}
-        </ControlGroup>
-      )}
+    <Fieldset>
+      <Layout.Vertical gap="xl">
+        <Text variant="heading-subsection">{t('views:repos.features', 'Features')}</Text>
+        {isLoadingFeaturesSettings ? (
+          <SkeletonForm linesCount={2} />
+        ) : (
+          <ControlGroup>
+            <Checkbox
+              checked={watch('gitLfsEnabled')}
+              id="git-lfs-enabled"
+              onCheckedChange={onCheckboxChange}
+              disabled={isDisabled}
+              title={tooltipMessage}
+              label={t('views:repos.gitLfs', 'Git LFS')}
+              caption={t('views:repos.gitLfsDescription', 'Enable Git Large File Storage (LFS) for this repository.')}
+            />
+            {errors.gitLfsEnabled && (
+              <Message theme={MessageTheme.ERROR}>{errors.gitLfsEnabled.message?.toString()}</Message>
+            )}
+          </ControlGroup>
+        )}
 
-      {!!apiError && (apiError.type === ErrorTypes.FETCH_GENERAL || apiError.type === ErrorTypes.UPDATE_GENERAL) && (
-        <>
-          <Spacer size={2} />
-          <Text color="danger">{apiError.message}</Text>
-        </>
-      )}
+        {!!apiError && (apiError.type === ErrorTypes.FETCH_GENERAL || apiError.type === ErrorTypes.UPDATE_GENERAL) && (
+          <>
+            <Spacer size={2} />
+            <Text color="danger">{apiError.message}</Text>
+          </>
+        )}
+      </Layout.Vertical>
     </Fieldset>
   )
 }

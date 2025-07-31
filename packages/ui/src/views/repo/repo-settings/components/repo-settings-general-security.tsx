@@ -1,7 +1,17 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Checkbox, ControlGroup, Fieldset, Message, MessageTheme, SkeletonForm, Spacer, Text } from '@/components'
+import {
+  Checkbox,
+  ControlGroup,
+  Fieldset,
+  Layout,
+  Message,
+  MessageTheme,
+  SkeletonForm,
+  Spacer,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -90,64 +100,68 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
 
   return (
     <Fieldset className="gap-y-6">
-      <Text variant="heading-subsection">{t('views:repos.security', 'Security')}</Text>
-      {isLoadingSecuritySettings ? (
-        <SkeletonForm linesCount={2} />
-      ) : (
-        <ControlGroup>
-          <Checkbox
-            checked={watch('secretScanning')}
-            id="secret-scanning"
-            onCheckedChange={onSecurityScanningCheckboxChange}
-            disabled={isDisabled}
-            title={tooltipMessage}
-            label={t('views:repos.secretScanning', 'Secret scanning')}
-            caption={t(
-              'views:repos.secretScanningDescription',
-              'Block commits containing secrets like passwords, API keys and tokens.'
-            )}
-          />
-          {errors.secretScanning && (
-            <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
-          )}
-
-          {showVulnerabilityScanning ? (
-            <>
+      <Layout.Vertical gap="xl">
+        <Text variant="heading-subsection">{t('views:repos.security', 'Security')}</Text>
+        {isLoadingSecuritySettings ? (
+          <SkeletonForm linesCount={2} />
+        ) : (
+          <ControlGroup>
+            <Layout.Vertical gap="sm">
               <Checkbox
-                checked={watch('vulnerabilityScanning')}
-                id="vulnerability-scanning"
-                onCheckedChange={onVulnerabilityScanningCheckboxChange}
+                checked={watch('secretScanning')}
+                id="secret-scanning"
+                onCheckedChange={onSecurityScanningCheckboxChange}
                 disabled={isDisabled}
                 title={tooltipMessage}
-                label={t('views:repos.vulnerabilityScanning', 'Vulnerability scanning')}
+                label={t('views:repos.secretScanning', 'Secret scanning')}
                 caption={t(
-                  'views:repos.vulnerabilityScanningDescription',
-                  'Scan incoming commits for known vulnerabilities.'
+                  'views:repos.secretScanningDescription',
+                  'Block commits containing secrets like passwords, API keys and tokens.'
                 )}
               />
-              {errors.vulnerabilityScanning && (
-                <Message theme={MessageTheme.ERROR}>{errors.vulnerabilityScanning.message?.toString()}</Message>
+              {errors.secretScanning && (
+                <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
               )}
-            </>
-          ) : null}
 
-          <Checkbox
-            checked={watch('verifyCommitterIdentity')}
-            id="verify-committer-identity"
-            onCheckedChange={onVerifyCommitterIdentityCheckboxChange}
-            disabled={isDisabled}
-            title={tooltipMessage}
-            label={t('views:repos.verifyCommitterIdentity', 'Verify committer identity')}
-            caption={t(
-              'views:repos.verifyCommitterIdentityDescription',
-              'Block commits not committed by the user pushing the changes.'
-            )}
-          />
-          {errors.verifyCommitterIdentity && (
-            <Message theme={MessageTheme.ERROR}>{errors.verifyCommitterIdentity.message?.toString()}</Message>
-          )}
-        </ControlGroup>
-      )}
+              {showVulnerabilityScanning ? (
+                <>
+                  <Checkbox
+                    checked={watch('vulnerabilityScanning')}
+                    id="vulnerability-scanning"
+                    onCheckedChange={onVulnerabilityScanningCheckboxChange}
+                    disabled={isDisabled}
+                    title={tooltipMessage}
+                    label={t('views:repos.vulnerabilityScanning', 'Vulnerability scanning')}
+                    caption={t(
+                      'views:repos.vulnerabilityScanningDescription',
+                      'Scan incoming commits for known vulnerabilities.'
+                    )}
+                  />
+                  {errors.vulnerabilityScanning && (
+                    <Message theme={MessageTheme.ERROR}>{errors.vulnerabilityScanning.message?.toString()}</Message>
+                  )}
+                </>
+              ) : null}
+
+              <Checkbox
+                checked={watch('verifyCommitterIdentity')}
+                id="verify-committer-identity"
+                onCheckedChange={onVerifyCommitterIdentityCheckboxChange}
+                disabled={isDisabled}
+                title={tooltipMessage}
+                label={t('views:repos.verifyCommitterIdentity', 'Verify committer identity')}
+                caption={t(
+                  'views:repos.verifyCommitterIdentityDescription',
+                  'Block commits not committed by the user pushing the changes.'
+                )}
+              />
+              {errors.verifyCommitterIdentity && (
+                <Message theme={MessageTheme.ERROR}>{errors.verifyCommitterIdentity.message?.toString()}</Message>
+              )}
+            </Layout.Vertical>
+          </ControlGroup>
+        )}
+      </Layout.Vertical>
 
       {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
         <>

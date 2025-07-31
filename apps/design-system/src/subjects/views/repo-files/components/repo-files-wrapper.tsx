@@ -17,6 +17,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
   const selectedRefType = 'branches' as BranchSelectorTab
   const spaceId = 'canary'
   const repoId = 'canary'
+  const gitRef = 'refs/heads/main'
 
   /**
    * Render File content view or Edit file view
@@ -48,6 +49,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       selectedBranchTag={selectedBranchTag}
       repoId={repoId}
       spaceId={spaceId}
+      gitRef={gitRef}
       selectedRefType={selectedRefType}
       defaultBranchName={repoFilesStore.repository.default_branch}
       currentBranchDivergence={{ behind: 0, ahead: 0 }}

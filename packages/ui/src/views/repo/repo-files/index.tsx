@@ -35,7 +35,8 @@ interface RepoFilesProps {
   toRepoFileDetails?: ({ path }: { path: string }) => string
   selectedBranchTag: BranchSelectorListItem | null
   repoId: string
-  spaceId: string
+  spaceId?: string
+  gitRef: string
   selectedRefType: BranchSelectorTab
   fullResourcePath?: string
 }
@@ -60,6 +61,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   selectedBranchTag,
   repoId,
   spaceId,
+  gitRef,
   selectedRefType,
   fullResourcePath
 }) => {
@@ -68,7 +70,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
-    if (loading) return <SkeletonList />
+    if (loading || isLoadingRepoDetails) return <SkeletonList />
 
     if (!isView) return children
 
@@ -120,6 +122,10 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         imageName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.']}
+        primaryButton={{
+          label: 'Create file',
+          to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`
+        }}
       />
     )
   }, [

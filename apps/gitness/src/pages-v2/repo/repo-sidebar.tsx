@@ -180,28 +180,26 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="grid grow" style={{ gridTemplateColumns: repoData?.is_empty ? 'auto' : 'auto 1px 1fr' }}>
-        {!repoData?.is_empty && (
-          <RepoSidebarView
-            navigateToNewFile={navigateToNewFile}
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            branchSelectorRenderer={
-              <BranchSelectorContainer
-                onSelectBranchorTag={selectBranchOrTag}
-                selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
-                preSelectedTab={preSelectedTab}
-                isFilesPage
-                setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-                onBranchQueryChange={setBranchQueryForNewBranch}
-              />
-            }
-          >
-            {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
-            )}
-          </RepoSidebarView>
-        )}
+      <div className="flex flex-1">
+        <RepoSidebarView
+          navigateToNewFile={navigateToNewFile}
+          navigateToFile={navigateToFile}
+          filesList={filesList}
+          branchSelectorRenderer={
+            <BranchSelectorContainer
+              onSelectBranchorTag={selectBranchOrTag}
+              selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
+              preSelectedTab={preSelectedTab}
+              isFilesPage
+              setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+              onBranchQueryChange={setBranchQueryForNewBranch}
+            />
+          }
+        >
+          {!!repoDetails?.body?.content?.entries?.length && (
+            <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
+          )}
+        </RepoSidebarView>
 
         <Outlet />
       </div>

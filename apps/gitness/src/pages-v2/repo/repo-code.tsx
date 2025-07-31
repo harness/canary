@@ -160,7 +160,8 @@ export const RepoCode = () => {
       codeMode={codeMode}
       selectedBranchTag={{ name: gitRefName, sha: '' }}
       repoId={repoId}
-      spaceId={spaceId!}
+      spaceId={spaceId}
+      gitRef={fullGitRef}
       selectedRefType={preSelectedTab}
       defaultBranchName={repoData?.default_branch}
       currentBranchDivergence={currBranchDivergence}

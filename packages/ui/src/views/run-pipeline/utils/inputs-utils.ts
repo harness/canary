@@ -1,6 +1,6 @@
 import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { evaluate } from 'cel-js'
-import { cloneDeep, forOwn, get, isNull } from 'lodash-es'
+import { camelCase, cloneDeep, forOwn, get, isNull } from 'lodash-es'
 import * as z from 'zod'
 
 import {
@@ -161,6 +161,18 @@ const validateUniqueInputKeysInLayout = (layout: InputLayout): string[] => {
     .map(([key]) => key)
 }
 
+export function convertMapKeysToCamelCase(map: Record<string, unknown> | null | undefined): Record<string, unknown> {
+  if (!map) return {}
+
+  return Object.entries(map).reduce(
+    (acc, [key, value]) => {
+      acc[camelCase(key)] = value
+      return acc
+    },
+    {} as Record<string, unknown>
+  )
+}
+
 /** pipeline input to form input conversion */
 export function pipelineInput2FormInput(
   name: string,
@@ -188,10 +200,11 @@ export function pipelineInput2FormInput(
     placeholder: inputProps.ui?.placeholder || '',
     description: inputProps.description,
     isVisible: function (values: any) {
+      const camelCaseInputs = convertMapKeysToCamelCase(values?.inputs)
       try {
         if (typeof inputProps.ui?.visible === 'string') {
           const unwrapped = getCorrectParserWithString(inputProps.ui.visible)
-          return unwrapped.kind === PARSERTYPES.CEL ? (evaluate(unwrapped.inner, values?.inputs) as boolean) : true
+          return unwrapped.kind === PARSERTYPES.CEL ? (evaluate(unwrapped.inner, camelCaseInputs) as boolean) : true
         }
         return true
       } catch (e) {

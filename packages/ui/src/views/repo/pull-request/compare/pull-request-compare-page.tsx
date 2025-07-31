@@ -344,7 +344,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <Tabs.List variant="overlined" className="-mx-20 px-20">
+              <Tabs.List variant="overlined" className="-mx-8 px-8">
                 {!prBranchCombinationExists && (
                   <Tabs.Trigger value="overview" icon="info-circle">
                     {t('views:pullRequests.compareChangesTabOverview', 'Overview')}

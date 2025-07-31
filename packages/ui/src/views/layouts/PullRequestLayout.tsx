@@ -36,10 +36,10 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="mx-auto max-w-[1500px] px-6">
+      <SandboxLayout.Content className="px-6">
         {pullRequest && (
           <PullRequestHeader
-            className="mb-10"
+            className="mb-6"
             updateTitle={updateTitle}
             updateTargetBranch={updateTargetBranch}
             data={{ ...pullRequest, spaceId, repoId }}
@@ -48,7 +48,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         )}
 
         <Tabs.NavRoot>
-          <Tabs.List className="-mx-6 mb-7 px-6" variant="overlined">
+          <Tabs.List className="-mx-6 mb-5 px-6" variant="overlined">
             <Tabs.Trigger
               value={PullRequestTabsKeys.CONVERSATION}
               icon="message"

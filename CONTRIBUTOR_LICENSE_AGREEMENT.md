@@ -1,4 +1,4 @@
-## Harness Inc. Individual Contributor License Agreement
+### Harness Inc. Individual Contributor License Agreement
 
 Thank you for your interest in contributing to products or services made available by Harness Inc. or its affiliates (“Harness”). This Individual Contributor License Agreement (“Agreement”) sets out the terms governing your Contributions (as defined below). If you have any questions respecting this Agreement, please contact Harness at legal@harness.io.
 

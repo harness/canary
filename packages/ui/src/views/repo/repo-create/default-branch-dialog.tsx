@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 
 import { Button, Dialog, FormInput, IconV2, Layout, Radio, Text } from '@/components'
@@ -14,7 +14,7 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
 
-  const { register, watch, setValue } = formMethods
+  const { register, watch, setValue, setFocus } = formMethods
   const branchValue = watch('defaultBranch')
   const customBranchRadio = watch('customBranchRadio')
   const customBranchInput = watch('customBranchInput')
@@ -41,6 +41,12 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
     setValue('customBranchInput', customBranchRadio === 'custom' ? value : '')
     handleClose()
   }
+
+  useEffect(() => {
+    if (customBranchRadio === 'custom') {
+      setFocus('customBranchInput')
+    }
+  }, [customBranchRadio])
 
   return (
     <Layout.Horizontal gap="xs" align="center" wrap="wrap">

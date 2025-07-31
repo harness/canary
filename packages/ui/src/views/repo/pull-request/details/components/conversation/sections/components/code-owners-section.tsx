@@ -1,11 +1,11 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, StackedList, StatusBadge } from '@/components'
+import { IconV2, StatusBadge, Table } from '@/components'
 import { CodeOwnersSectionProps, TypesOwnerEvaluation } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
-import { AvatarItem, AvatarUser, HeaderItem } from './commons'
+import { AvatarItem, AvatarUser } from './commons'
 
 const mapEvaluationsToUsers = (evaluations: TypesOwnerEvaluation[]): AvatarUser[] => {
   return evaluations.map(({ owner }) => ({
@@ -128,31 +128,40 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
         {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && <StatusBadge variant="outline">Required</StatusBadge>}
       </div>
       <div className="ml-6 bg-inherit">
-        <StackedList.Root className="ml-2 cursor-default border-transparent bg-inherit">
-          <StackedList.Item isHeader disableHover className="cursor-default !bg-transparent px-0 text-cn-foreground-3">
-            <StackedList.Field title={<HeaderItem header="Code" />} />
-            <StackedList.Field title={<HeaderItem header="Owners" />} />
-            <StackedList.Field title={<HeaderItem header="Changes requested by" />} />
-            <StackedList.Field title={<HeaderItem header="Approved by" />} />
-          </StackedList.Item>
-
-          {codeOwners?.evaluation_entries?.map(entry => {
-            const changeReqEvaluations = entry?.owner_evaluations?.filter(
-              evaluation => evaluation.review_decision === 'changereq'
-            )
-            const approvedEvaluations = entry?.owner_evaluations?.filter(
-              evaluation => evaluation.review_decision === 'approved'
-            )
-            return (
-              <StackedList.Item key={entry.pattern} disableHover>
-                <StackedList.Field title={entry?.pattern} />
-                {entry?.owner_evaluations && <AvatarItem users={mapEvaluationsToUsers(entry?.owner_evaluations)} />}
-                {changeReqEvaluations && <AvatarItem users={mapEvaluationsToUsers(changeReqEvaluations)} />}
-                {approvedEvaluations && <AvatarItem users={mapEvaluationsToUsers(approvedEvaluations)} />}
-              </StackedList.Item>
-            )
-          })}
-        </StackedList.Root>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head className="w-[17.125rem]">Code</Table.Head>
+              <Table.Head className="w-[11rem]">Owners</Table.Head>
+              <Table.Head className="w-[11rem]">Changes requested by</Table.Head>
+              <Table.Head className="w-[11rem]">Approved by</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {codeOwners?.evaluation_entries?.map(entry => {
+              const changeReqEvaluations = entry?.owner_evaluations?.filter(
+                evaluation => evaluation.review_decision === 'changereq'
+              )
+              const approvedEvaluations = entry?.owner_evaluations?.filter(
+                evaluation => evaluation.review_decision === 'approved'
+              )
+              return (
+                <Table.Row key={entry.pattern} className="cursor-pointer">
+                  <Table.Cell>{entry?.pattern}</Table.Cell>
+                  <Table.Cell>
+                    {entry?.owner_evaluations && <AvatarItem users={mapEvaluationsToUsers(entry?.owner_evaluations)} />}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {changeReqEvaluations && <AvatarItem users={mapEvaluationsToUsers(changeReqEvaluations)} />}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {approvedEvaluations && <AvatarItem users={mapEvaluationsToUsers(approvedEvaluations)} />}
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table.Root>
       </div>
     </>
   )

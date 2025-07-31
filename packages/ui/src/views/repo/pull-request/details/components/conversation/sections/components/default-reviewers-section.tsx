@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, StackedList, StatusBadge } from '@/components'
+import { IconV2, StatusBadge, Table } from '@/components'
 import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
@@ -10,7 +10,7 @@ import {
 } from '@/views'
 import { isEmpty } from 'lodash-es'
 
-import { AvatarItem, HeaderItem } from './commons'
+import { AvatarItem } from './commons'
 
 interface DefaultReviewersSectionProps {
   defaultReviewersData?: DefaultReviewersDataProps
@@ -90,38 +90,47 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
         </div>
       )}
       <div className="ml-6 bg-inherit">
-        <StackedList.Root className="ml-2 cursor-default border-transparent bg-inherit">
-          <StackedList.Item isHeader disableHover className="cursor-default !bg-transparent px-0 text-cn-foreground-3">
-            <StackedList.Field title={<HeaderItem header="Required" />} />
-            <StackedList.Field title={<HeaderItem header="Default reviewers" />} />
-            <StackedList.Field title={<HeaderItem header="Changes requested by" />} />
-            <StackedList.Field title={<HeaderItem header="Approved by" />} />
-          </StackedList.Item>
-          {updatedDefaultApprovals
-            ?.filter(
-              (data: DefaultReviewersApprovalsData) => data.minimum_required_count || data.minimum_required_count_latest
-            ) // only consider response with min default reviewers required (>0)
-            .map((data: DefaultReviewersApprovalsData, index: number) => {
-              // changes requested by default reviewers
-              const defaultReviewersChangeRequested = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
-                principal => principal?.review_decision === PullReqReviewDecision.changeReq
-              )
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head className="w-[17.125rem]">Required</Table.Head>
+              <Table.Head className="w-[11rem]">Default reviewers</Table.Head>
+              <Table.Head className="w-[11rem]">Changes requested by</Table.Head>
+              <Table.Head className="w-[11rem]">Approved by</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {updatedDefaultApprovals
+              ?.filter(
+                (data: DefaultReviewersApprovalsData) =>
+                  data.minimum_required_count || data.minimum_required_count_latest
+              ) // only consider response with min default reviewers required (>0)
+              .map((data: DefaultReviewersApprovalsData, index: number) => {
+                // changes requested by default reviewers
+                const defaultReviewersChangeRequested = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
+                  principal => principal?.review_decision === PullReqReviewDecision.changeReq
+                )
 
-              // approved by default reviewers
-              const defaultReviewersApproved = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
-                principal => principal?.review_decision === PullReqReviewDecision.approved
-              )
+                // approved by default reviewers
+                const defaultReviewersApproved = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
+                  principal => principal?.review_decision === PullReqReviewDecision.approved
+                )
 
-              return (
-                <StackedList.Item key={index} disableHover>
-                  <StackedList.Field title={getDefaultReviewersApprovalCount(data)} />
-                  {data?.principals && <AvatarItem users={data.principals} />}
-                  {defaultReviewersChangeRequested && <AvatarItem users={defaultReviewersChangeRequested} />}
-                  {defaultReviewersApproved && <AvatarItem users={defaultReviewersApproved} />}
-                </StackedList.Item>
-              )
-            })}
-        </StackedList.Root>
+                return (
+                  <Table.Row key={index} className="cursor-pointer">
+                    <Table.Cell>{getDefaultReviewersApprovalCount(data)}</Table.Cell>
+                    <Table.Cell>{data?.principals && <AvatarItem users={data.principals} />}</Table.Cell>
+                    <Table.Cell>
+                      {defaultReviewersChangeRequested && <AvatarItem users={defaultReviewersChangeRequested} />}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {defaultReviewersApproved && <AvatarItem users={defaultReviewersApproved} />}
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })}
+          </Table.Body>
+        </Table.Root>
       </div>
     </>
   )

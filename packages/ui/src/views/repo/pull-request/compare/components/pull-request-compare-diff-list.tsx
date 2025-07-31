@@ -179,7 +179,6 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       key={`item?.title ? ${item?.title}-${index} : ${index}`}
                       header={item}
                       currentUser={currentUser}
-                      data={item?.data}
                       diffMode={diffMode}
                       openItems={openItems}
                       onToggle={() => toggleOpen(item.text)}

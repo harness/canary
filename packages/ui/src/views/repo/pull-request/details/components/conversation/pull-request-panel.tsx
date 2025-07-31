@@ -429,6 +429,7 @@ const PullRequestPanel = ({
                     )}
                     {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
                       <Checkbox
+                        className="flex-1"
                         id="checkbox-bypass"
                         showOptionalLabel
                         checked={!!checkboxBypass}
@@ -475,6 +476,11 @@ const PullRequestPanel = ({
                         </Button>
                       </ButtonLayout>
                     ) : null}
+                    {actions && pullReqMetadata?.closed ? (
+                      <Button variant="primary" theme="default" onClick={actions[0].action}>
+                        {actions[0].title}
+                      </Button>
+                    ) : null}
                     {isShowMoreTooltip && (
                       <MoreActionsTooltip
                         className="!ml-2"
@@ -484,17 +490,20 @@ const PullRequestPanel = ({
                         actions={[
                           {
                             title: 'Mark as draft',
-                            onClick: () => handlePrState('draft')
+                            onClick: () => handlePrState('draft'),
+                            iconName: 'page-edit'
                           },
                           {
                             title: 'Close pull request',
-                            onClick: () => handlePrState('closed')
+                            onClick: () => handlePrState('closed'),
+                            iconName: 'git-pull-request-closed'
                           },
                           ...(isRebasable
                             ? [
                                 {
                                   title: 'Rebase',
-                                  onClick: () => handleRebaseBranch()
+                                  onClick: () => handleRebaseBranch(),
+                                  iconName: 'git-rebase' as const
                                 }
                               ]
                             : [])

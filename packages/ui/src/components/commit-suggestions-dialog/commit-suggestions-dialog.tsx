@@ -55,7 +55,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
 
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onFormSubmit)} className="block">
           <Dialog.Body>
-            <ControlGroup className="mb-7 space-y-7">
+            <ControlGroup className="pb-4 space-y-7">
               <FormInput.Text
                 id="title"
                 label="Commit Message"
@@ -67,6 +67,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
                 {...register('message')}
                 placeholder="Add an optional extended description"
                 label="Extended description"
+                className="h-44"
               />
             </ControlGroup>
           </Dialog.Body>

@@ -21,7 +21,7 @@ import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { usePRChecksDecision } from './hooks/usePRChecksDecision'
 import { extractSpecificViolations, getCommentsInfoData } from './pull-request-utils'
-import { PR_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
+import { POLLING_INTERVAL, PR_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
@@ -174,7 +174,7 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
       if (pullReqMetadata?.source_sha && pullRequestTab === PullRequestTab.CONVERSATION && repoRef) {
         dryMerge()
       }
-    }, 10000) // Poll every 10 seconds
+    }, POLLING_INTERVAL)
 
     return () => clearInterval(intervalId)
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -162,7 +162,6 @@ export const LineTitle: React.FC<LineTitleProps> = ({
 
 export const PullRequestAccordion: React.FC<{
   header: HeaderProps
-  data?: string
   diffMode: DiffModeEnum
   currentUser?: string
   comments?: CommentItem<TypesPullReqActivity>[][]

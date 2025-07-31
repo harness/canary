@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import { CodeModes } from '@harnessio/ui/views'
 
-import { isRefABranch, isRefACommitSHA, isRefATag, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
+import { isRefABranch, isRefATag, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
 import { removeLeadingSlash, removeTrailingSlash } from '../utils/path-utils'
 
 const useCodePathDetails = () => {
@@ -40,7 +40,7 @@ const useCodePathDetails = () => {
     gitRefName = fullGitRef.split(REFS_TAGS_PREFIX)[1]
   } else if (isRefABranch(fullGitRef)) {
     gitRefName = fullGitRef.split(REFS_BRANCH_PREFIX)[1]
-  } else if (isRefACommitSHA(fullGitRef)) {
+  } else {
     gitRefName = fullGitRef
   }
 

@@ -89,7 +89,7 @@ ${sshUrl}
                   {t('views:repos.emptyRepoPage.noData.createFile', 'New file')}
                 </>
               ),
-              to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
+              to: `${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/`
             }}
             className="py-layout-3xl"
           />

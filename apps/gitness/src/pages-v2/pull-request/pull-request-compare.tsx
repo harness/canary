@@ -510,7 +510,7 @@ export const CreatePullRequest = () => {
   const isMFE = useIsMFE()
 
   const toRepoFileDetails = ({ path }: { path: string }) =>
-    isMFE ? `${window.apiUrl || ''}/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
+    isMFE ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
 
   const renderContent = () => {
     return (

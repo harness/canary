@@ -6,8 +6,8 @@ import {
   formatBytes,
   getTrimmedSha,
   GitCommitAction,
-  isGitRev,
   isRefABranch,
+  isRefACommitSHA,
   isRefATag,
   normalizeGitRef,
   REFS_BRANCH_PREFIX,
@@ -134,13 +134,13 @@ describe('Git Reference Functions', () => {
     })
   })
 
-  describe('isGitRev', () => {
+  describe('isRefACommitSHA', () => {
     it('should identify valid git commit hashes', () => {
-      expect(isGitRev('1234567')).toBe(true)
-      expect(isGitRev('1234567890abcdef1234567890abcdef12345678')).toBe(true)
-      expect(isGitRev('123456')).toBe(false) // Too short
-      expect(isGitRev('123456g')).toBe(false) // Invalid character
-      expect(isGitRev('')).toBe(false)
+      expect(isRefACommitSHA('1234567')).toBe(true)
+      expect(isRefACommitSHA('1234567890abcdef1234567890abcdef12345678')).toBe(true)
+      expect(isRefACommitSHA('123456')).toBe(false) // Too short
+      expect(isRefACommitSHA('123456g')).toBe(false) // Invalid character
+      expect(isRefACommitSHA('')).toBe(false)
     })
   })
 

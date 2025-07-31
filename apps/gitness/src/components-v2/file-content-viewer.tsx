@@ -25,7 +25,14 @@ import { useGitRef } from '../hooks/useGitRef'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
-import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
+import {
+  decodeGitContent,
+  FILE_SEPERATOR,
+  filenameToLanguage,
+  formatBytes,
+  GitCommitAction,
+  normalizeGitRef
+} from '../utils/git-utils'
 import GitBlame from './GitBlame'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
@@ -64,7 +71,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     repo_ref: repoRef,
     queryParams: {
       page,
-      git_ref: gitRefName,
+      git_ref: normalizeGitRef(gitRefName),
       path: fullResourcePath
     }
   })

@@ -421,7 +421,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{red.800}",
+          "$value": "{red.700}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -484,7 +484,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.800}",
+          "$value": "{yellow.600}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {

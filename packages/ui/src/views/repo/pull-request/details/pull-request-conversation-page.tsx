@@ -51,13 +51,13 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
           )}
 
           <PullRequestPanel {...panelProps} />
-          <Spacer size={12} />
+          <Spacer size={10} />
 
           <PullRequestFilters {...filtersProps} />
           <Spacer size={6} />
 
           <PullRequestOverview {...overviewProps} principalProps={principalProps} />
-          <Spacer size={9} />
+          <Spacer size={20} />
 
           <PullRequestCommentBox {...commentBoxProps} principalProps={principalProps} />
         </SandboxLayout.Content>

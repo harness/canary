@@ -140,6 +140,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
         }}
         overviewProps={{
           toCommitDetails: _ => '',
+          isDeletingComment: false,
           handleUpdateDescription: noop,
           handleDeleteComment: noop,
           handleUpdateComment: noop,

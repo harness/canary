@@ -10,7 +10,17 @@ import {
   useState
 } from 'react'
 
-import { Avatar, Button, ButtonVariants, IconV2, IconV2NamesType, Layout, MarkdownViewer, Tabs } from '@/components'
+import {
+  Avatar,
+  Button,
+  ButtonVariants,
+  IconV2,
+  IconV2NamesType,
+  Layout,
+  MarkdownViewer,
+  Tabs,
+  Text
+} from '@/components'
 import {
   HandleAiPullRequestSummaryType,
   handleFileDrop,
@@ -556,11 +566,13 @@ export const PullRequestCommentBox = ({
             <div className="min-h-24 w-full">
               {comment ? (
                 <MarkdownViewer
-                  markdownClassName="!bg-cn-background-2 w-full"
+                  markdownClassName="bg-transparent w-full"
                   source={replaceMentionEmailWithDisplayName(comment, principalsMentionMap)}
                 />
               ) : (
-                <span className="text-cn-foreground-1">Nothing to preview</span>
+                <Text variant="body-normal" color="foreground-1">
+                  Nothing to preview
+                </Text>
               )}
             </div>
           </Tabs.Content>

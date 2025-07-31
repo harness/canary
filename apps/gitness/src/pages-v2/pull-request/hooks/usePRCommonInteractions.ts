@@ -37,6 +37,8 @@ export function usePRCommonInteractions({
   const count = useRef(generateAlphaNumericHash(5))
   const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
 
+  const [isDeletingComment, setIsDeletingComment] = useState(false)
+
   const uploadImage = useCallback(
     async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -170,6 +172,7 @@ export function usePRCommonInteractions({
 
   const deleteComment = useCallback(
     async (commentId: number) => {
+      setIsDeletingComment(true)
       return commentDeletePullReq({
         repo_ref: repoRef,
         pullreq_number: prId,
@@ -177,9 +180,11 @@ export function usePRCommonInteractions({
       })
         .then(() => {
           refetchActivities()
+          setIsDeletingComment(false)
         })
         .catch(error => {
           console.error('Failed to delete comment:', error)
+          setIsDeletingComment(false)
         })
     },
     [repoRef, prId, refetchActivities]
@@ -235,6 +240,7 @@ export function usePRCommonInteractions({
     handleSaveComment,
     updateComment,
     deleteComment,
+    isDeletingComment,
 
     // suggestions
     isCommitDialogOpen,

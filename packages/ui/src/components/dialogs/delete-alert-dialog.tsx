@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useMemo, useState } from 'react'
 
 import { AlertDialog, Fieldset, Input, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -14,6 +14,7 @@ export interface DeleteAlertDialogProps {
   isLoading?: boolean
   error?: { type?: string; message: string } | null
   withForm?: boolean
+  message?: string
 }
 
 export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
@@ -24,7 +25,8 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   type,
   isLoading = false,
   error,
-  withForm = false
+  withForm = false,
+  message
 }) => {
   const { t } = useTranslation()
   const [verification, setVerification] = useState('')
@@ -41,19 +43,26 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
     deleteFn(identifier!)
   }
 
+  const displayMessageContent = useMemo(() => {
+    if (message) return message
+
+    if (type) {
+      return t(
+        'component:deleteDialog.descriptionWithType',
+        `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
+        { type: type }
+      )
+    }
+    return t(
+      'component:deleteDialog.description',
+      `This will permanently remove all data. This action cannot be undone.`
+    )
+  }, [type, t, message])
+
   return (
     <AlertDialog.Root theme="danger" open={open} onOpenChange={onClose} onConfirm={handleDelete} loading={isLoading}>
       <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
-        {type
-          ? t(
-              'component:deleteDialog.descriptionWithType',
-              `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
-              { type: type }
-            )
-          : t(
-              'component:deleteDialog.description',
-              `This will permanently remove all data. This action cannot be undone.`
-            )}
+        {displayMessageContent}
         {withForm && (
           <Fieldset>
             <Input

@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const spacerVariants = cva('mt-[var(--cn-spacing-4)]', {
   variants: {
     size: {
-      1: 'mt-[var(--cn-spacing-1)]',
+      1: 'mt-[var(--cn-spacing-1)]' /* 1rem */,
       1.5: 'mt-[var(--cn-spacing-1-half)]',
       2: 'mt-[var(--cn-spacing-2)]',
       2.5: 'mt-[var(--cn-spacing-2-half)]',
@@ -23,7 +23,8 @@ const spacerVariants = cva('mt-[var(--cn-spacing-4)]', {
       12: 'mt-[var(--cn-spacing-12)]',
       14: 'mt-[var(--cn-spacing-14)]',
       15: 'mt-[var(--cn-spacing-15)]',
-      16: 'mt-[var(--cn-spacing-16)]'
+      16: 'mt-[var(--cn-spacing-16)]',
+      20: 'mt-[var(--cn-spacing-20)]'
     }
   }
 })

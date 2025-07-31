@@ -77,9 +77,9 @@
     "account": "Account"
   },
   "deleteDialog": {
-    "title": "Are you sure?",
     "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",
+    "title": "Are you sure?",
     "inputLabel": "To confirm, type",
     "cancel": "Cancel"
   },

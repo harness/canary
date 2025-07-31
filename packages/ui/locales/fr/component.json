@@ -77,9 +77,9 @@
     "account": "Compte"
   },
   "deleteDialog": {
-    "title": "Êtes-vous sûr ?",
     "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",
+    "title": "Êtes-vous sûr ?",
     "inputLabel": "To confirm, type",
     "cancel": "Annuler"
   },

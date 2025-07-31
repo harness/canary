@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Layout, TimeAgoCard } from '@/components'
+import { Avatar, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTheme, useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -450,13 +450,16 @@ const PullRequestDiffViewer = ({
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
                       <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
-                      <span className="text-cn-foreground-2">marked this conversation as resolved</span>
+                      <Text variant="body-normal" color="foreground-3">
+                        marked this conversation as resolved
+                      </Text>
                     </div>
                   )
                 }
                 content={
                   <div className="px-4 pt-4">
                     <PullRequestTimelineItem
+                      isReply={false}
                       mentions={parent?.payload?.mentions}
                       principalsMentionMap={principalsMentionMap}
                       setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -466,6 +469,7 @@ const PullRequestDiffViewer = ({
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
                       hideReplySection
+                      isResolved={!!parent.payload?.resolved}
                       isComment
                       replyBoxClassName=""
                       handleDeleteComment={() => deleteComment?.(parent?.id)}
@@ -482,24 +486,12 @@ const PullRequestDiffViewer = ({
                       header={[
                         {
                           name: parent.author,
-                          description: (
-                            <Layout.Horizontal className="text-cn-foreground-2">
-                              <TimeAgoCard timestamp={parent?.created} />
-                              {parent?.deleted ? (
-                                <>
-                                  <span>&nbsp;|&nbsp;</span>
-                                  <span>{t('views:pullRequests.deleted')} </span>
-                                </>
-                              ) : null}
-                            </Layout.Horizontal>
-                          )
+                          description: <TimeAgoCard timestamp={parent?.created} />
                         }
                       ]}
                       content={
                         parent?.deleted ? (
-                          <div className="rounded-md border bg-cn-background-1 p-1">
-                            {t('views:pullRequests.deletedComment')}
-                          </div>
+                          <TextInput value={t('views:pullRequests.deletedComment')} disabled />
                         ) : editModes[componentId] ? (
                           <PullRequestCommentBox
                             principalsMentionMap={principalsMentionMap}
@@ -549,6 +541,7 @@ const PullRequestDiffViewer = ({
 
                           return (
                             <PullRequestTimelineItem
+                              isReply
                               principalsMentionMap={principalsMentionMap}
                               setPrincipalsMentionMap={setPrincipalsMentionMap}
                               key={reply.id}
@@ -575,24 +568,12 @@ const PullRequestDiffViewer = ({
                               header={[
                                 {
                                   name: reply.author,
-                                  description: (
-                                    <Layout.Horizontal className="text-cn-foreground-2">
-                                      <TimeAgoCard timestamp={reply?.created} />
-                                      {reply?.deleted ? (
-                                        <>
-                                          <span>&nbsp;|&nbsp;</span>
-                                          <span>{t('views:pullRequests.deleted')} </span>
-                                        </>
-                                      ) : null}
-                                    </Layout.Horizontal>
-                                  )
+                                  description: <TimeAgoCard timestamp={reply?.created} />
                                 }
                               ]}
                               content={
                                 reply?.deleted ? (
-                                  <div className="rounded-md border bg-cn-background-1 p-1">
-                                    {t('views:pullRequests.deletedComment')}
-                                  </div>
+                                  <TextInput value={t('views:pullRequests.deletedComment')} disabled />
                                 ) : editModes[replyComponentId] ? (
                                   <PullRequestCommentBox
                                     principalsMentionMap={principalsMentionMap}

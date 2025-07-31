@@ -1,6 +1,17 @@
-import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
+import { Children, FC, memo, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 
-import { Avatar, Button, IconV2, Layout, MoreActionsTooltip, NodeGroup, Text, TextInput } from '@/components'
+import {
+  Avatar,
+  Button,
+  DeleteAlertDialog,
+  IconV2,
+  IconV2NamesType,
+  Layout,
+  MoreActionsTooltip,
+  NodeGroup,
+  Text,
+  TextInput
+} from '@/components'
 import { HandleUploadType, PrincipalPropsType, PrincipalsMentionMap, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
@@ -21,6 +32,8 @@ interface ItemHeaderProps {
   isNotCodeComment?: boolean
   onQuoteReply?: () => void
   hideEditDelete?: boolean
+  isReply?: boolean
+  isResolved?: boolean
 }
 
 const ItemHeader: FC<ItemHeaderProps> = memo(
@@ -37,38 +50,49 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     isDeleted = false,
     isNotCodeComment = false,
     onQuoteReply,
-    hideEditDelete
+    hideEditDelete,
+    isReply = false,
+    isResolved = false
   }) => {
-    const actions = [
+    const actions: Array<{
+      title: string
+      onClick: () => void
+      isDanger?: boolean
+      iconName: IconV2NamesType
+    }> = [
       ...(!hideEditDelete
         ? [
             {
               title: 'Edit',
-              onClick: () => onEditClick?.()
+              onClick: () => onEditClick?.(),
+              iconName: 'edit-pencil' as const
             }
           ]
         : []),
       {
         title: 'Quote reply',
-        onClick: () => onQuoteReply?.()
+        onClick: () => onQuoteReply?.(),
+        iconName: 'quote' as const
       },
       {
-        title: 'Copy link to comment',
-        onClick: () => onCopyClick?.(commentId, isNotCodeComment)
+        title: `Copy link to ${isReply ? 'reply' : 'comment'}`,
+        onClick: () => onCopyClick?.(commentId, isNotCodeComment),
+        iconName: 'copy' as const
       },
       ...(!hideEditDelete
         ? [
             {
-              title: 'Delete comment',
+              title: `Delete ${isReply ? 'reply' : 'comment'}`,
               onClick: () => handleDeleteComment?.(),
-              isDanger: true
+              isDanger: true,
+              iconName: 'trash' as const
             }
           ]
         : [])
     ]
 
     return (
-      <Layout.Horizontal className="w-full" justify="between">
+      <Layout.Horizontal className="flex-1" justify="between">
         <Layout.Horizontal gap="2xs" align="center" wrap="wrap">
           {/**
            * ============
@@ -94,7 +118,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             {selectStatus}
           </Text>
         </Layout.Horizontal>
-        {isComment && !isDeleted && (
+        {isComment && !isDeleted && !isResolved && (
           <MoreActionsTooltip
             className="w-[200px]"
             iconName="more-horizontal"
@@ -154,6 +178,8 @@ export interface TimelineItemProps {
   principalsMentionMap: PrincipalsMentionMap
   setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   mentions?: PrincipalsMentionMap
+  isDeletingComment?: boolean
+  isReply?: boolean
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -173,6 +199,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   wrapperClassName,
   titleClassName,
   isComment,
+  isReply,
   onEditClick,
   onCopyClick,
   isEditMode,
@@ -193,10 +220,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   principalProps,
   principalsMentionMap,
   setPrincipalsMentionMap,
-  mentions
+  mentions,
+  isDeletingComment
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   useEffect(() => {
     if (!isEmpty(mentions)) {
@@ -214,6 +244,15 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
       setIsExpanded(false)
     }
   }, [isResolved])
+
+  const handleOpenDeleteDialog = useCallback(() => {
+    setIsDeleteDialogOpen(true)
+  }, [])
+
+  const handleConfirmDeleteComment = () => {
+    setIsDeleteDialogOpen(false)
+    handleDeleteComment?.()
+  }
 
   const renderContent = () => {
     if (!content) return null
@@ -239,134 +278,153 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   }
 
   return (
-    <div id={id}>
-      <NodeGroup.Root className={cn('pb-7 font-sans', wrapperClassName)}>
-        {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
-        <NodeGroup.Title className={titleClassName}>
-          {/* Ensure that header has at least one item */}
-          {!!header.length && (
-            <div className="flex w-full items-center justify-between gap-x-2">
-              <ItemHeader
-                isDeleted={isDeleted}
-                onEditClick={onEditClick}
-                onCopyClick={onCopyClick}
-                isComment={isComment}
-                isNotCodeComment={isNotCodeComment}
-                handleDeleteComment={handleDeleteComment}
-                commentId={commentId}
-                {...header[0]}
-                onQuoteReply={() => {
-                  setHideReplyHere?.(true)
-                  if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
-                }}
-                hideEditDelete={hideEditDelete}
-              />
-              {isResolved && !contentHeader && (
-                <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                  <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
-                  {isExpanded ? 'Hide resolved' : 'Show resolved'}
-                </Button>
-              )}
-            </div>
+    <>
+      <div id={id}>
+        <NodeGroup.Root
+          className={cn(
+            {
+              'pb-8': !isLast,
+              'pb-4': isLast
+            },
+            wrapperClassName
           )}
-        </NodeGroup.Title>
-        {!!content && (
-          <NodeGroup.Content className={contentWrapperClassName}>
-            <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
-              {!!contentHeader && (
-                <div
-                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-cn-background-2', {
-                    'pr-1.5': isResolved
-                  })}
-                >
-                  {contentHeader}
-                  {isResolved && (
-                    <Button variant="ghost" onClick={() => setIsExpanded(prev => !prev)}>
-                      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
-                      {isExpanded ? 'Hide resolved' : 'Show resolved'}
-                    </Button>
-                  )}
-                </div>
-              )}
-
-              {isEditMode ? (
-                <PullRequestCommentBox
-                  principalsMentionMap={principalsMentionMap}
-                  setPrincipalsMentionMap={setPrincipalsMentionMap}
-                  principalProps={principalProps}
-                  handleUpload={handleUpload}
-                  isEditMode
-                  currentUser={currentUser}
-                  onSaveComment={() => {
-                    handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
-                    setComment('')
+        >
+          {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
+          <NodeGroup.Title className={titleClassName}>
+            {/* Ensure that header has at least one item */}
+            {!!header.length && (
+              <div className="flex w-full items-center justify-between gap-x-2">
+                <ItemHeader
+                  isDeleted={isDeleted}
+                  onEditClick={onEditClick}
+                  onCopyClick={onCopyClick}
+                  isComment={isComment}
+                  isReply={isReply}
+                  isNotCodeComment={isNotCodeComment}
+                  handleDeleteComment={handleOpenDeleteDialog}
+                  commentId={commentId}
+                  isResolved={isResolved}
+                  {...header[0]}
+                  onQuoteReply={() => {
+                    setHideReplyHere?.(true)
+                    if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
                   }}
-                  onCancelClick={() => {
-                    setComment('')
-                  }}
-                  comment={comment}
-                  setComment={setComment}
+                  hideEditDelete={hideEditDelete}
                 />
-              ) : (
-                renderContent()
-              )}
-
-              {!hideReplySection && (!isResolved || isExpanded) && (
-                <>
-                  {hideReplyHere ? (
-                    <PullRequestCommentBox
-                      principalsMentionMap={principalsMentionMap}
-                      setPrincipalsMentionMap={setPrincipalsMentionMap}
-                      principalProps={principalProps}
-                      handleUpload={handleUpload}
-                      inReplyMode
-                      onSaveComment={() => {
-                        handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
-                        setHideReplyHere?.(false)
-                      }}
-                      onCancelClick={() => {
-                        setHideReplyHere?.(false)
-                      }}
-                      comment={comment}
-                      setComment={setComment}
-                    />
-                  ) : (
-                    <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
-                      {!!currentUser && <Avatar name={currentUser} rounded />}
-                      <TextInput
-                        wrapperClassName="flex-1"
-                        placeholder="Reply here"
-                        onClick={() => setHideReplyHere?.(true)}
-                        onChange={e => setComment(e.target.value)}
-                      />
-                    </div>
-                  )}
-                  <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
-                      }}
-                    >
-                      {isResolved ? 'Unresolve conversation' : 'Resolve conversation'}
-                    </Button>
-
+                {isResolved && !isComment && !contentHeader && (
+                  <Button variant="transparent" onClick={() => setIsExpanded(prev => !prev)}>
+                    <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
+                    {isExpanded ? 'Hide resolved' : 'Show resolved'}
+                  </Button>
+                )}
+              </div>
+            )}
+          </NodeGroup.Title>
+          {!!content && (
+            <NodeGroup.Content className={contentWrapperClassName}>
+              <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
+                {!!contentHeader && (
+                  <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-background-2')}>
+                    {contentHeader}
                     {isResolved && (
-                      <span className="text-2 text-cn-foreground-2">
-                        {/* TODO: need to identify the author who resolved the conversation */}
-                        <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this conversation
-                        as resolved.
-                      </span>
+                      <Button variant="transparent" onClick={() => setIsExpanded(prev => !prev)}>
+                        <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
+                        {isExpanded ? 'Hide resolved' : 'Show resolved'}
+                      </Button>
                     )}
-                  </div>
-                </>
-              )}
-            </div>
-          </NodeGroup.Content>
-        )}
-        {!isLast && <NodeGroup.Connector />}
-      </NodeGroup.Root>
-    </div>
+                  </Layout.Horizontal>
+                )}
+
+                {isEditMode ? (
+                  <PullRequestCommentBox
+                    principalsMentionMap={principalsMentionMap}
+                    setPrincipalsMentionMap={setPrincipalsMentionMap}
+                    principalProps={principalProps}
+                    handleUpload={handleUpload}
+                    isEditMode
+                    currentUser={currentUser}
+                    onSaveComment={() => {
+                      handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
+                      setComment('')
+                    }}
+                    onCancelClick={() => {
+                      setComment('')
+                    }}
+                    comment={comment}
+                    setComment={setComment}
+                  />
+                ) : (
+                  renderContent()
+                )}
+
+                {!hideReplySection && (!isResolved || isExpanded) && (
+                  <>
+                    {hideReplyHere ? (
+                      <PullRequestCommentBox
+                        principalsMentionMap={principalsMentionMap}
+                        setPrincipalsMentionMap={setPrincipalsMentionMap}
+                        principalProps={principalProps}
+                        handleUpload={handleUpload}
+                        inReplyMode
+                        onSaveComment={() => {
+                          handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
+                          setHideReplyHere?.(false)
+                        }}
+                        onCancelClick={() => {
+                          setHideReplyHere?.(false)
+                        }}
+                        comment={comment}
+                        setComment={setComment}
+                      />
+                    ) : (
+                      <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
+                        {!!currentUser && <Avatar name={currentUser} rounded />}
+                        <TextInput
+                          wrapperClassName="flex-1"
+                          placeholder="Reply here"
+                          onClick={() => setHideReplyHere?.(true)}
+                          onChange={e => setComment(e.target.value)}
+                        />
+                      </div>
+                    )}
+                    <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
+                        }}
+                      >
+                        {isResolved ? 'Unresolve conversation' : 'Resolve conversation'}
+                      </Button>
+
+                      {isResolved && (
+                        <span className="text-2 text-cn-foreground-2">
+                          {/* TODO: need to identify the author who resolved the conversation */}
+                          <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this
+                          conversation as resolved.
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            </NodeGroup.Content>
+          )}
+          {!isLast && <NodeGroup.Connector />}
+        </NodeGroup.Root>
+      </div>
+
+      <DeleteAlertDialog
+        open={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        deleteFn={handleConfirmDeleteComment}
+        error={null}
+        message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
+        type={isReply ? 'reply' : 'comment'}
+        identifier={String(commentId) ?? undefined}
+        isLoading={isDeletingComment}
+      />
+    </>
   )
 }
 

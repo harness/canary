@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, IconV2, Layout, TimeAgoCard } from '@/components'
+import { Avatar, IconV2, TextInput, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -72,6 +72,8 @@ interface BaseCompProps {
   principalProps: PrincipalPropsType
   principalsMentionMap: PrincipalsMentionMap
   setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
+  isDeletingComment?: boolean
+  isReply?: boolean
 }
 
 const BaseComp: FC<BaseCompProps> = ({
@@ -88,12 +90,16 @@ const BaseComp: FC<BaseCompProps> = ({
   customHeaderData,
   principalProps,
   principalsMentionMap,
-  setPrincipalsMentionMap
+  setPrincipalsMentionMap,
+  isDeletingComment,
+  isReply
 }) => {
   if (!payload?.id) return null
 
   return (
     <PullRequestTimelineItem
+      isReply={isReply}
+      isDeletingComment={isDeletingComment}
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       principalProps={principalProps}
@@ -136,6 +142,7 @@ export interface PullRequestRegularAndCodeCommentProps
     | 'handleUpdateComment'
   > {
   commentItems: CommentItem<TypesPullReqActivity>[]
+  isDeletingComment: boolean
   parentItem?: CommentItem<TypesPullReqActivity>
   isLast: boolean
   componentViewBase: FC<{
@@ -147,6 +154,7 @@ export interface PullRequestRegularAndCodeCommentProps
 
 const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeCommentProps> = ({
   commentItems,
+  isDeletingComment,
   parentItem,
   handleUpload,
   currentUser,
@@ -217,6 +225,8 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
         return (
           <BaseComp
+            isDeletingComment={isDeletingComment}
+            isReply={parentItem?.id !== commentItem.id}
             key={`${commentItem.id}-${commentItem.author}-pr-comment`}
             principalProps={principalProps}
             principalsMentionMap={principalsMentionMap}
@@ -237,6 +247,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isNotCodeComment: isCode,
               id: commentIdAttr,
               data: commentItem.payload?.text,
+              isResolved: !!payload?.resolved,
               hideReplySection: true,
               isComment: true,
               isLast: (commentItems?.length || 0) - 1 === idx,
@@ -248,7 +259,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               contentClassName: 'border-0 pb-0 rounded-none',
               icon: avatar,
               content: commentItem.deleted ? (
-                <div className="rounded-md border bg-cn-background-1 p-1">{t('views:pullRequests.deletedComment')}</div>
+                <TextInput value={t('views:pullRequests.deletedComment')} disabled />
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
                   principalsMentionMap={principalsMentionMap}
@@ -277,17 +288,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
             customHeaderData={{
               name,
               avatar: undefined,
-              description: (
-                <Layout.Horizontal className="text-cn-foreground-2">
-                  <TimeAgoCard timestamp={commentItem.created} />
-                  {!!commentItem.deleted && (
-                    <>
-                      <span>&nbsp;|&nbsp;</span>
-                      <span>{t('views:pullRequests.deleted')}</span>
-                    </>
-                  )}
-                </Layout.Horizontal>
-              )
+              description: <TimeAgoCard timestamp={commentItem.created} />
             }}
           />
         )
@@ -297,6 +298,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
   return isCode ? (
     <BaseComp
+      isDeletingComment={isDeletingComment}
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       payload={payload}

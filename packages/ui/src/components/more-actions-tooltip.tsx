@@ -79,7 +79,13 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
             <DropdownMenu.Item
               title={
                 <Layout.Horizontal gap="xs" className="items-center">
-                  {action.iconName ? <IconV2 name={action.iconName} size="xs" /> : null}
+                  {action.iconName ? (
+                    <IconV2
+                      className={cn({ 'text-cn-foreground-danger': action.isDanger })}
+                      name={action.iconName}
+                      size="xs"
+                    />
+                  ) : null}
                   <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                     {action.title}
                   </Text>

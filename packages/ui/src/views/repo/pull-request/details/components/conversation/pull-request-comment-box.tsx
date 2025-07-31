@@ -94,6 +94,7 @@ export interface PullRequestCommentBoxProps {
   textareaPlaceholder?: string
   allowEmptyValue?: boolean
   hideAvatar?: boolean
+  disableSubmit?: boolean
 }
 
 const TABS_KEYS = {
@@ -125,7 +126,8 @@ export const PullRequestCommentBox = ({
   buttonTitle,
   textareaPlaceholder,
   allowEmptyValue = false,
-  hideAvatar = false
+  hideAvatar = false,
+  disableSubmit = false
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -598,15 +600,19 @@ export const PullRequestCommentBox = ({
           {onSaveComment ? (
             <div className="ml-auto flex gap-x-3">
               {(inReplyMode || isEditMode) && (
-                <Button variant="outline" onClick={onCancelClick}>
+                <Button variant="secondary" onClick={onCancelClick}>
                   Cancel
                 </Button>
               )}
 
               {isEditMode ? (
-                <Button onClick={handleSaveComment}>{buttonTitle || 'Save'}</Button>
+                <Button disabled={disableSubmit} onClick={handleSaveComment}>
+                  {buttonTitle || 'Save'}
+                </Button>
               ) : (
-                <Button onClick={handleSaveComment}>{buttonTitle || 'Comment'}</Button>
+                <Button disabled={disableSubmit} onClick={handleSaveComment}>
+                  {buttonTitle || 'Comment'}
+                </Button>
               )}
             </div>
           ) : undefined}

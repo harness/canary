@@ -171,7 +171,7 @@ export function MarkdownViewer({
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
             rehypeSanitize,
-            [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/ }],
+            [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
             [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
           ]}
           components={{

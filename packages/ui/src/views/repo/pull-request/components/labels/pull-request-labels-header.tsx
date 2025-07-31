@@ -8,9 +8,10 @@ import {
   LabelAssignmentType,
   LabelType,
   LabelValuesType,
-  LabelValueType
+  TypesLabelAssignment,
+  TypesScopesLabels
 } from '@/views'
-import { debounce } from 'lodash-es'
+import { debounce, isEmpty } from 'lodash-es'
 
 import { LabelValueSelector } from './label-value-selector'
 
@@ -20,14 +21,14 @@ const getSelectedValueId = (label?: LabelAssignmentType) => {
   }
 }
 
-export interface LabelsWithValueType extends ILabelType {
-  values?: LabelValueType[]
+export interface LabelsWithValueType extends TypesLabelAssignment {
   isCustom?: boolean
   isSelected: boolean
   selectedValueId?: number
 }
 
 interface LabelsHeaderProps {
+  assignableLabels: TypesScopesLabels
   labelsList: ILabelType[]
   labelsValues: LabelValuesType
   selectedLabels: LabelAssignmentType[]
@@ -40,8 +41,7 @@ interface LabelsHeaderProps {
 }
 
 export const LabelsHeader = ({
-  labelsList,
-  labelsValues,
+  assignableLabels,
   selectedLabels,
   addLabel,
   editLabelsProps,
@@ -58,14 +58,13 @@ export const LabelsHeader = ({
   }
 
   const labelsListWithValues = useMemo(() => {
-    return labelsList.map(label => {
+    return assignableLabels?.label_data?.map(label => {
       const isCustom = label.type === LabelType.DYNAMIC
       const selectedLabel = selectedLabels.find(it => it.id === label.id)
-      const labelValues = labelsValues[label.key]
 
       let res: LabelsWithValueType = {
         ...label,
-        isSelected: !!selectedLabel,
+        isSelected: Boolean(selectedLabel),
         selectedValueId: getSelectedValueId(selectedLabel)
       }
 
@@ -73,23 +72,20 @@ export const LabelsHeader = ({
         res = { ...res, isCustom: true }
       }
 
-      if (labelValues) {
-        res = { ...res, values: labelValues }
-      }
-
       return res
     })
-  }, [labelsList, labelsValues, selectedLabels])
+  }, [assignableLabels, selectedLabels])
 
   const handleOnSelect = (label: LabelsWithValueType) => (e: Event) => {
     e.preventDefault()
 
-    if (label.isCustom || !!label?.values?.length) {
+    if (label.isCustom || !isEmpty(label?.values)) {
       setLabelWithValuesToShow(label)
       return
     }
-
-    handleAddOrRemoveLabel({ label_id: label.id }, label.isSelected)
+    if (label.id) {
+      handleAddOrRemoveLabel({ label_id: label.id }, label.isSelected)
+    }
   }
 
   const handleAddOrRemoveLabel = (data: HandleAddLabelType, isSelected: boolean) => {
@@ -133,7 +129,15 @@ export const LabelsHeader = ({
         {!labelWithValuesToShow && (
           <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
             <DropdownMenu.Header>
-              <SearchInput size="sm" autoFocus id="search" defaultValue={searchQuery} onChange={handleSearchQuery} />
+              <SearchInput
+                size="sm"
+                autoFocus
+                id="search"
+                defaultValue={searchQuery}
+                placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
+                onChange={handleSearchQuery}
+                onKeyDown={e => e.stopPropagation()}
+              />
             </DropdownMenu.Header>
 
             {isLabelsLoading && <DropdownMenu.Spinner />}
@@ -152,12 +156,13 @@ export const LabelsHeader = ({
                       value={(label.values?.length || '').toString()}
                     />
                   }
-                  description={<Text truncate>{label.description}</Text>}
+                  // TODO: add description when it is available from PR Labels call
+                  // description={<Text truncate>{label.description}</Text>}
                   checkmark={label.isSelected}
                 />
               ))}
 
-            {!labelsListWithValues.length && !isLabelsLoading && (
+            {isEmpty(labelsListWithValues) && !isLabelsLoading && (
               <DropdownMenu.NoOptions>{t('views:pullRequests.noLabels', 'No labels found')}</DropdownMenu.NoOptions>
             )}
 

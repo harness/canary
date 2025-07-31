@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { InputFactory } from '@harnessio/forms'
 
-import { pipelineInputs2FormInputs } from '../inputs-utils'
+import { convertMapKeysToCamelCase, pipelineInputs2FormInputs } from '../inputs-utils'
 
 const pipelineInputs = {
   foo: {
@@ -31,6 +31,55 @@ const pipelineInputs = {
 const inputComponentFactory = new InputFactory()
 
 const options = { prefix: 'input.' }
+
+describe('convertMapKeysToCamelCase', () => {
+  it('should convert kebab-case keys to camelCase', () => {
+    const input = {
+      'first-name': 'John',
+      'last-name': 'Doe',
+      'contact-info': {
+        'phone-number': '123-456-7890'
+      }
+    }
+
+    const result = convertMapKeysToCamelCase(input)
+
+    expect(result).toEqual({
+      firstName: 'John',
+      lastName: 'Doe',
+      contactInfo: {
+        'phone-number': '123-456-7890' // Note: nested objects are not converted
+      }
+    })
+  })
+
+  it('should handle mixed case formats correctly', () => {
+    const input = {
+      'kebab-case': 'value1',
+      camelCase: 'value2',
+      snake_case: 'value3',
+      normal: 'value4'
+    }
+
+    const result = convertMapKeysToCamelCase(input)
+
+    expect(result).toEqual({
+      kebabCase: 'value1',
+      camelCase: 'value2', // already camelCase, should remain the same
+      snakeCase: 'value3', // lodash camelCase also handles snake_case
+      normal: 'value4' // simple strings remain unchanged
+    })
+  })
+
+  it('should handle empty objects', () => {
+    expect(convertMapKeysToCamelCase({})).toEqual({})
+  })
+
+  it('should handle undefined or null gracefully', () => {
+    expect(convertMapKeysToCamelCase(undefined as unknown as Record<string, unknown>)).toEqual({})
+    expect(convertMapKeysToCamelCase(null as unknown as Record<string, unknown>)).toEqual({})
+  })
+})
 
 describe('pipelineInputs2FormInputs', () => {
   it('handles layout with groups and appends missing inputs (Rule 2)', () => {

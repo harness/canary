@@ -50,12 +50,14 @@ const Stats = ({
 const Title = ({
   repoName,
   isPrivate,
+  isArchived,
   scope,
   repoPath,
   showScope = false
 }: {
   repoName: string
   isPrivate: boolean
+  isArchived?: boolean
   scope: Scope
   repoPath: string
   showScope?: boolean
@@ -71,6 +73,11 @@ const Title = ({
         <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </StatusBadge>
+        {isArchived && (
+          <StatusBadge variant="outline" size="sm" theme="warning">
+            {t('views:repos.archived', 'Archived')}
+          </StatusBadge>
+        )}
         {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
       </Layout.Flex>
     </Layout.Flex>
@@ -132,14 +139,8 @@ export function RepoList({
   return (
     <StackedList.Root>
       {repos.map((repo, repo_idx) => (
-        <Link
-          key={repo.name}
-          to={toRepository?.(repo) || ''}
-          className={cn({
-            'pointer-events-none': repo.importing
-          })}
-        >
-          <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+        <StackedList.Item key={repo.name} asChild className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+          <Link to={toRepository?.(repo) || ''} className={cn({ 'pointer-events-none': repo.importing })}>
             <StackedList.Field
               primary
               description={
@@ -153,6 +154,7 @@ export function RepoList({
                 <Title
                   repoName={repo.name}
                   isPrivate={repo.private}
+                  isArchived={repo.archived}
                   repoPath={repo.path}
                   scope={scope}
                   showScope={showScope}
@@ -181,8 +183,8 @@ export function RepoList({
                 secondary
               />
             )}
-          </StackedList.Item>
-        </Link>
+          </Link>
+        </StackedList.Item>
       ))}
     </StackedList.Root>
   )

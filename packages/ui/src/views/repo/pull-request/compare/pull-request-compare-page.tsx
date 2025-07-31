@@ -92,6 +92,10 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   editLabelsProps: LinkProps
   branchSelectorRenderer: ReactElement
   principalProps: PrincipalPropsType
+  onGetFullDiff: (path?: string) => Promise<string | void>
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  sourceBranch?: string
+  isLabelsLoading?: boolean
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -123,6 +127,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isFetchingCommits,
   jumpToDiff,
   setJumpToDiff,
+  onGetFullDiff,
+  toRepoFileDetails,
+  sourceBranch,
+
   labelsList = [],
   labelsValues = {},
   PRLabels = [],
@@ -132,7 +140,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   removeLabel,
   editLabelsProps,
   branchSelectorRenderer,
-  toPullRequestConversation
+  toPullRequestConversation,
+  isLabelsLoading
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
 
@@ -202,8 +211,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   }
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
+      <SandboxLayout.Content className="px-8">
+        <span className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
@@ -214,8 +223,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             )}
           </Text>
           <Layout.Horizontal align="center" gap="xs">
-            <IconV2 name="git-compare" size="xs" className="text-icons-1" />
-
             {branchSelectorRenderer}
 
             {isBranchSelected &&
@@ -339,7 +346,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
               <Tabs.List variant="overlined" className="-mx-20 px-20">
                 {!prBranchCombinationExists && (
-                  <Tabs.Trigger value="overview" icon="message">
+                  <Tabs.Trigger value="overview" icon="info-circle">
                     {t('views:pullRequests.compareChangesTabOverview', 'Overview')}
                   </Tabs.Trigger>
                 )}
@@ -373,6 +380,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       </div>
                     </div>
                     <PullRequestSideBar
+                      isReviewersLoading={principalProps?.isPrincipalsLoading}
+                      isLabelsLoading={isLabelsLoading}
                       addReviewers={handleAddReviewer}
                       currentUserId={currentUser}
                       pullRequestMetadata={{ source_sha: '' }}
@@ -436,6 +445,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     diffStats={diffStats}
                     jumpToDiff={jumpToDiff}
                     setJumpToDiff={setJumpToDiff}
+                    onGetFullDiff={onGetFullDiff}
+                    toRepoFileDetails={toRepoFileDetails}
+                    sourceBranch={sourceBranch}
                   />
                 ) : (
                   <NoData

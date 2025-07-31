@@ -1,31 +1,19 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, FormInput, Radio, StackedList, Switch } from '@/components'
+import { Checkbox, ControlGroup, FormInput, Radio, Switch } from '@/components'
 import { useTranslation } from '@/context'
 import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()
   return (
-    <StackedList.Root>
-      <StackedList.Item
-        className="!rounded px-5 py-3"
-        disableHover
-        isHeader
-        actions={
-          <Switch
-            {...register('enabled')}
-            checked={watch!('enabled')}
-            onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
-          />
-        }
-      >
-        <StackedList.Field
-          title={t('views:repos.enableWebhookToggle', 'Enable the webhook')}
-          description={t('views:repos.toggleDescription', 'We will deliver event details when this hook is triggered')}
-        />
-      </StackedList.Item>
-    </StackedList.Root>
+    <Switch
+      {...register('enabled')}
+      checked={watch!('enabled')}
+      onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
+      label={t('views:repos.enableWebhookToggle', 'Enable the webhook')}
+      caption={t('views:repos.toggleDescription', 'We will deliver event details when this hook is triggered')}
+    />
   )
 }
 
@@ -90,6 +78,7 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ registe
       label={t('views:repos.sslVerification', 'SSL Verification')}
       id="insecure"
       {...register('insecure')}
+      className="gap-y-5"
     >
       <Radio.Item id="enable-ssl" value="1" label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')} />
       <Radio.Item
@@ -109,6 +98,7 @@ export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ register }) => 
       label={t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
       id="trigger"
       {...register('trigger')}
+      className="gap-y-5"
     >
       <Radio.Item id="all-events" value="1" label={t('views:repos.evenTriggerAllLabel', 'Send me everything')} />
       <Radio.Item

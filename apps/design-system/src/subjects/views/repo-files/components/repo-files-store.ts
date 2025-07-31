@@ -1347,7 +1347,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Abhinav Rastogi'
       },
       sha: '5d6f2d7',
-      path: '/canary/repos/canary/code//~/.dockerignore'
+      path: '/canary/repos/canary/files//~/.dockerignore'
     },
     {
       id: '.eslintignore',
@@ -1360,7 +1360,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'praneshg239'
       },
       sha: '1e126e7',
-      path: '/canary/repos/canary/code//~/.eslintignore'
+      path: '/canary/repos/canary/files//~/.eslintignore'
     },
     {
       id: '.eslintrc.json',
@@ -1373,7 +1373,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'praneshg239'
       },
       sha: 'f915fed',
-      path: '/canary/repos/canary/code//~/.eslintrc.json'
+      path: '/canary/repos/canary/files//~/.eslintrc.json'
     },
     {
       id: '.github',
@@ -1386,7 +1386,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Calvin Lee'
       },
       sha: '280c1cf',
-      path: '/canary/repos/canary/code//~/.github'
+      path: '/canary/repos/canary/files//~/.github'
     },
     {
       id: '.gitignore',
@@ -1398,7 +1398,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Srdjan Arsic'
       },
       sha: '90bc4f6',
-      path: '/canary/repos/canary/code//~/.gitignore'
+      path: '/canary/repos/canary/files//~/.gitignore'
     },
     {
       id: '.husky',
@@ -1410,7 +1410,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Abhinav Rastogi'
       },
       sha: 'd049c42',
-      path: '/canary/repos/canary/code//~/.husky'
+      path: '/canary/repos/canary/files//~/.husky'
     },
     {
       id: '.prettierignore',
@@ -1423,7 +1423,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'praneshg239'
       },
       sha: '1e126e7',
-      path: '/canary/repos/canary/code//~/.prettierignore'
+      path: '/canary/repos/canary/files//~/.prettierignore'
     },
     {
       id: '.prettierrc.yml',
@@ -1436,7 +1436,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'praneshg239'
       },
       sha: 'b8ee588',
-      path: '/canary/repos/canary/code//~/.prettierrc.yml'
+      path: '/canary/repos/canary/files//~/.prettierrc.yml'
     },
     {
       id: '.vscode',
@@ -1449,7 +1449,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'praneshg239'
       },
       sha: '1e126e7',
-      path: '/canary/repos/canary/code//~/.vscode'
+      path: '/canary/repos/canary/files//~/.vscode'
     },
     {
       id: 'CODEOWNERS',
@@ -1461,7 +1461,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Kevin Nagurski'
       },
       sha: 'af5ebaf',
-      path: '/canary/repos/canary/code//~/CODEOWNERS'
+      path: '/canary/repos/canary/files//~/CODEOWNERS'
     },
     {
       id: 'CONTRIBUTOR_LICENSE_AGREEMENT.md',
@@ -1474,7 +1474,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Sanskar'
       },
       sha: 'cdcc2d9',
-      path: '/canary/repos/canary/code//~/CONTRIBUTOR_LICENSE_AGREEMENT.md'
+      path: '/canary/repos/canary/files//~/CONTRIBUTOR_LICENSE_AGREEMENT.md'
     },
     {
       id: 'Dockerfile',
@@ -1487,7 +1487,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Abhinav Rastogi'
       },
       sha: 'c968bb4',
-      path: '/canary/repos/canary/code//~/Dockerfile'
+      path: '/canary/repos/canary/files//~/Dockerfile'
     },
     {
       id: 'LICENSE',
@@ -1499,7 +1499,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Tan Nhu'
       },
       sha: 'e291274',
-      path: '/canary/repos/canary/code//~/LICENSE'
+      path: '/canary/repos/canary/files//~/LICENSE'
     },
     {
       id: 'README.md',
@@ -1511,7 +1511,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Abhinav Rastogi'
       },
       sha: '7f7ab0e',
-      path: '/canary/repos/canary/code//~/README.md'
+      path: '/canary/repos/canary/files//~/README.md'
     },
     {
       id: 'apps',
@@ -1523,7 +1523,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Shaurya Kalia'
       },
       sha: 'ec92d11',
-      path: '/canary/repos/canary/code//~/apps'
+      path: '/canary/repos/canary/files//~/apps'
     },
     {
       id: 'charts',
@@ -1536,7 +1536,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Sanskar'
       },
       sha: 'cdcc2d9',
-      path: '/canary/repos/canary/code//~/charts'
+      path: '/canary/repos/canary/files//~/charts'
     },
     {
       id: 'package.json',
@@ -1549,7 +1549,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'praneshg239'
       },
       sha: 'b8ee588',
-      path: '/canary/repos/canary/code//~/package.json'
+      path: '/canary/repos/canary/files//~/package.json'
     },
     {
       id: 'packages',
@@ -1561,7 +1561,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Shaurya Kalia'
       },
       sha: 'ec92d11',
-      path: '/canary/repos/canary/code//~/packages'
+      path: '/canary/repos/canary/files//~/packages'
     },
     {
       id: 'pnpm-lock.yaml',
@@ -1573,7 +1573,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Kevin Nagurski'
       },
       sha: 'a13c02e',
-      path: '/canary/repos/canary/code//~/pnpm-lock.yaml'
+      path: '/canary/repos/canary/files//~/pnpm-lock.yaml'
     },
     {
       id: 'pnpm-workspace.yaml',
@@ -1585,7 +1585,7 @@ export const repoFilesStore: RepoFilesStoreType = {
         name: 'Tan Nhu'
       },
       sha: 'd47847c',
-      path: '/canary/repos/canary/code//~/pnpm-workspace.yaml'
+      path: '/canary/repos/canary/files//~/pnpm-workspace.yaml'
     }
   ],
   latestCommitInfo: {
@@ -2198,11 +2198,11 @@ export const repoFilesStore: RepoFilesStoreType = {
   pathParts: [
     {
       path: 'canary',
-      parentPath: '/pixel-point-dev/repos/canary/code/main'
+      parentPath: '/pixel-point-dev/repos/canary/files/main'
     },
     {
       path: 'README.md',
-      parentPath: '/pixel-point-dev/repos/canary/code/main/~/README.md'
+      parentPath: '/pixel-point-dev/repos/canary/files/main/~/README.md'
     }
   ]
 }

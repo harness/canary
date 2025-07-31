@@ -46,17 +46,17 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   const { t } = useTranslation()
 
   return (
-    <SandboxLayout.Content className="px-0">
-      <Text as="h1" variant="heading-section">
+    <SandboxLayout.Content className="ml-3">
+      <Text as="h1" variant="heading-section" className="mb-2">
         Rules
       </Text>
       {!projectScope ? (
-        <>
+        <Text className="max-w-[570px]">
           {t(
             'views:repos.rulesDescription',
             'Define standards and automate workflows to ensure better collaboration and control in your repository.'
           )}
-        </>
+        </Text>
       ) : null}
       {showParentScopeLabelsCheckbox && (
         <div>
@@ -65,11 +65,11 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
             checked={parentScopeLabelsChecked}
             onCheckedChange={onParentScopeLabelsChange}
             label={t('views:rules.showParentRules', 'Show rules from parent scopes')}
-            className="mt-6"
+            className="mt-7"
           />
         </div>
       )}
-      <Spacer size={6} />
+      <Spacer size={3} />
 
       <RepoSettingsGeneralRules
         isLoading={isRulesLoading}

@@ -180,7 +180,7 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="grid grow" style={{ gridTemplateColumns: 'auto 1px 1fr' }}>
+      <div className="flex flex-1">
         {!repoData?.is_empty && (
           <RepoSidebarView
             navigateToNewFile={navigateToNewFile}

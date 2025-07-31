@@ -1,12 +1,15 @@
+import { DiffFileEntry } from '../details/pull-request-details-types'
+
 export interface HeaderProps {
   text: string
   data?: string
   title: string
   lang: string
   addedLines?: number
-  removedLines?: number
+  deletedLines?: number
   isBinary?: boolean
-  isDeleted?: boolean
+  isDeleted: boolean
   unchangedPercentage?: number
-  filePath?: string
+  filePath: string
+  diffData: DiffFileEntry
 }

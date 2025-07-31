@@ -83,6 +83,7 @@ export interface PullRequestCommentBoxProps {
   buttonTitle?: string
   textareaPlaceholder?: string
   allowEmptyValue?: boolean
+  hideAvatar?: boolean
 }
 
 const TABS_KEYS = {
@@ -113,7 +114,8 @@ export const PullRequestCommentBox = ({
   preserveCommentOnSave = false,
   buttonTitle,
   textareaPlaceholder,
-  allowEmptyValue = false
+  allowEmptyValue = false,
+  hideAvatar = false
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -470,7 +472,7 @@ export const PullRequestCommentBox = ({
 
   return (
     <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
-      {!inReplyMode && !isEditMode && avatar}
+      {!inReplyMode && !isEditMode && !hideAvatar && avatar}
       <div
         className={cn('p-4 pt-3 flex-1  border-cn-borders-3', {
           'border rounded-md': !inReplyMode || isEditMode,

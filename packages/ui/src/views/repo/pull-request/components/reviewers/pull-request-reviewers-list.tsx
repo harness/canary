@@ -1,3 +1,6 @@
+import { Alert } from '@components/alert'
+import { Text } from '@components/text'
+
 import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request.types'
 import { ReviewerItem } from './pull-request-reviewers-item'
 
@@ -27,10 +30,12 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
 }) => (
   <div className="flex flex-col gap-3">
     {addReviewerError || removeReviewerError ? (
-      <span className="text-1 text-cn-foreground-danger">{addReviewerError ?? removeReviewerError}</span>
-    ) : (
-      <></>
-    )}
+      <Alert.Root theme="danger">
+        <Alert.Title>Failed to add reviewer</Alert.Title>
+        <Alert.Description>{addReviewerError ?? removeReviewerError}</Alert.Description>
+      </Alert.Root>
+    ) : null}
+
     {reviewers.length ? (
       reviewers.map(({ reviewer, review_decision, sha }) => (
         <ReviewerItem
@@ -43,7 +48,9 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
         />
       ))
     ) : (
-      <span className="text-2 font-medium text-cn-foreground-3">No reviewers</span>
+      <Text variant="body-single-line-strong" color="foreground-3">
+        No reviewers
+      </Text>
     )}
   </div>
 )

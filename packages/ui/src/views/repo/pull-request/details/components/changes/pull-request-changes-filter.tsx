@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconV2, SplitButton } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
@@ -189,11 +189,11 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   }
 
   return (
-    <div className="flex items-center justify-between gap-x-5">
-      <div className="flex grow items-center gap-x-5">
+    <Layout.Horizontal align="center" justify="between" className="gap-x-5">
+      <Layout.Horizontal className="grow gap-x-5">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
-            <div className="flex items-center gap-x-0.5 text-2 text-cn-foreground-2 group-hover:text-cn-foreground-1">
+            <Button size="sm" variant="transparent">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
@@ -205,8 +205,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   <span className="text-cn-foreground-3">({selectedCommits?.length})</span>
                 </>
               )}
-            </div>
-            <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down text-icons-7" />
+              <IconV2 name="nav-solid-arrow-down" size="2xs" />
+            </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-96" align="start">
             {commitDropdownItems}
@@ -215,10 +215,10 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
-            <span className="text-cn-foreground-2 group-hover:text-cn-foreground-1">
+            <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
-            </span>
-            <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down text-icons-7" />
+              <IconV2 name="nav-solid-arrow-down" size="2xs" />
+            </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">
             {DiffModeOptions.map(item => (
@@ -236,18 +236,20 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <p className="text-2 leading-tight text-cn-foreground-2">
-            {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
-            <DropdownMenu.Trigger className="group">
-              <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
-                {formatNumber(pullReqStats?.files_changed || 0)}{' '}
-                {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-              </span>
-            </DropdownMenu.Trigger>{' '}
-            {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
-            {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
-            {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-          </p>
+          <Layout.Horizontal align="center">
+            <p className="text-2 leading-tight text-cn-foreground-2">
+              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
+              <DropdownMenu.Trigger className="group">
+                <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
+                  {formatNumber(pullReqStats?.files_changed || 0)}{' '}
+                  {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
+                </span>
+              </DropdownMenu.Trigger>{' '}
+              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
+              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
+              {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
+            </p>
+          </Layout.Horizontal>
           <DropdownMenu.Content className="max-w-[396px]" align="start">
             {diffData?.map(diff => (
               <DropdownMenu.Item
@@ -256,44 +258,48 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   setJumpToDiff(diff.filePath)
                 }}
                 title={
-                  <div className="flex min-w-0 items-center gap-x-3">
-                    <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
+                  <Layout.Horizontal align="center" className="min-w-0 gap-x-3">
+                    <Layout.Horizontal align="center" justify="start" className="min-w-0 flex-1 gap-x-1.5">
                       <IconV2 name="page" className="shrink-0 text-icons-1" />
                       <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
                         {diff.filePath}
                       </span>
-                    </div>
-                    <div className="flex shrink-0 items-center text-2">
-                      {diff.addedLines != null && diff.addedLines > 0 && (
-                        <span className="text-cn-foreground-success">+{diff.addedLines}</span>
-                      )}
-                      {diff.addedLines != null &&
-                        diff.addedLines > 0 &&
-                        diff.deletedLines != null &&
-                        diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
-                      {diff.deletedLines != null && diff.deletedLines > 0 && (
-                        <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
-                      )}
-                    </div>
-                  </div>
+                    </Layout.Horizontal>
+                  </Layout.Horizontal>
+                }
+                label={
+                  <Layout.Horizontal className="shrink-0 text-2" gap="none">
+                    {diff.addedLines != null && diff.addedLines > 0 && (
+                      <span className="text-cn-foreground-success">+{diff.addedLines}</span>
+                    )}
+                    {diff.addedLines != null &&
+                      diff.addedLines > 0 &&
+                      diff.deletedLines != null &&
+                      diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
+                    {diff.deletedLines != null && diff.deletedLines > 0 && (
+                      <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
+                    )}
+                  </Layout.Horizontal>
                 }
               />
             ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-      </div>
+      </Layout.Horizontal>
 
-      <div className="flex items-center gap-x-7">
+      <Layout.Horizontal className="gap-x-7">
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
-            <FileViewGauge.Content className="text-cn-foreground-3">
-              {viewedFiles}/{pullReqStats?.files_changed} file{pullReqStats?.files_changed === 1 ? '' : 's'} viewed
-            </FileViewGauge.Content>
-            <FileViewGauge.Bar total={pullReqStats?.files_changed || 0} filled={viewedFiles} />
+            <div className="py-1">
+              <FileViewGauge.Content className="text-cn-foreground-3">
+                {viewedFiles}/{pullReqStats?.files_changed} file{pullReqStats?.files_changed === 1 ? '' : 's'} viewed
+              </FileViewGauge.Content>
+              <FileViewGauge.Bar total={pullReqStats?.files_changed || 0} filled={viewedFiles} />
+            </div>
           </FileViewGauge.Root>
         )}
 
-        <div className="flex items-center gap-x-2.5">
+        <Layout.Horizontal align="center" className="gap-x-2.5">
           {commitSuggestionsBatchCount > 0 ? (
             <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
               Commit suggestion
@@ -332,8 +338,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               {approveState === PullReqReviewDecision.approve ? approvalItems[0].title : getApprovalState(approveState)}
             </SplitButton>
           )}
-        </div>
-      </div>
-    </div>
+        </Layout.Horizontal>
+      </Layout.Horizontal>
+    </Layout.Horizontal>
   )
 }

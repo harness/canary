@@ -106,9 +106,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               <ListActions.Left>
                 <SearchInput
                   id="search"
-                  size="sm"
+                  size="md"
                   defaultValue={rulesSearchQuery}
-                  inputContainerClassName={'max-w-96'}
+                  inputContainerClassName="max-w-80"
                   placeholder={t('views:repos.search', 'Search')}
                   onChange={handleSearchChange}
                 />
@@ -145,7 +145,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               </ListActions.Right>
             </ListActions.Root>
 
-            <Spacer size={4.5} />
+            <Spacer size={4} />
           </>
           {isLoading ? (
             <>
@@ -167,9 +167,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                         title={
                           <div className="flex items-center gap-2">
                             {rule.state === 'active' ? (
-                              <IconV2 className="text-icons-success" name="check-circle" />
+                              <IconV2 className="text-icons-success" name="check-circle" size="md" />
                             ) : (
-                              <IconV2 className="text-icons-9" name="minus-circle" />
+                              <IconV2 className="text-icons-9" name="minus-circle" size="md" />
                             )}
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                             {rule.type && (

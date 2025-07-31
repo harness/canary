@@ -207,7 +207,7 @@ export function RepoCreatePage({
                   checked={readmeValue}
                   onCheckedChange={handleReadmeChange}
                   label="Add a README file"
-                  caption="This is where you can write a long description for your project"
+                  caption="This is where you can write a long description for your project."
                 />
               </div>
 

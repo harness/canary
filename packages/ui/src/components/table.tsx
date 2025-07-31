@@ -76,7 +76,7 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
   let rowChildren = props.children
   if (props.to || props.linkProps) {
-    rowChildren = Children.map(rowChildren, child => {
+    rowChildren = Children.map(rowChildren, (child, index) => {
       if (isValidElement(child)) {
         // Don't add link props if the cell already has its own link props or if disableLink is true
         if (child.props.to || child.props.linkProps || child.props.disableLink) {
@@ -84,7 +84,8 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
         }
         return cloneElement(child, {
           to: props.to,
-          linkProps: props.linkProps
+          linkProps: props.linkProps,
+          tableLinkChildrenIndex: index + 1
         } as any)
       }
       return child
@@ -162,10 +163,12 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   to?: string
   linkProps?: Omit<LinkProps, 'to'>
   disableLink?: boolean
+  // This prop is used for keyboard navigation. When the first link receives focus, the <tr> gets visually highlighted, and all other links receive tabIndex="-1".
+  tableLinkChildrenIndex?: number
 }
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, to, linkProps, children, disableLink = false, ...props }, ref) => {
+  ({ className, to, linkProps, tableLinkChildrenIndex, children, disableLink = false, ...props }, ref) => {
     const shouldRenderLink = !disableLink && (to || linkProps)
 
     if (shouldRenderLink) {
@@ -176,6 +179,7 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
             variant="secondary"
             className={cn('cn-table-v2-cell-link', linkProps?.className)}
             {...(linkProps || {})}
+            {...(!!tableLinkChildrenIndex && tableLinkChildrenIndex !== 1 ? { tabIndex: -1 } : {})}
           >
             {children}
           </Link>

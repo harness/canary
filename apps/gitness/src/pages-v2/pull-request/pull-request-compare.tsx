@@ -10,6 +10,7 @@ import {
   CreateRepositoryErrorResponse,
   mergeCheck,
   OpenapiCreatePullReqRequest,
+  rawDiff as rawDiffCheck,
   RepoRepositoryOutput,
   useCreatePullReqMutation,
   useDiffStatsQuery,
@@ -38,6 +39,7 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../framework/hooks/useIsMFE.ts'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
@@ -156,7 +158,11 @@ export const CreatePullRequest = () => {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
 
-  const { labels: labelsList, values: labelsValues } = useGetRepoLabelAndValuesData({
+  const {
+    labels: labelsList,
+    values: labelsValues,
+    isLoading: isLabelsLoading
+  } = useGetRepoLabelAndValuesData({
     query: searchLabel,
     inherited: true,
     limit: 100
@@ -480,6 +486,32 @@ export const CreatePullRequest = () => {
     })
   }, [mutation])
 
+  const onGetFullDiff = async (path?: string) => {
+    if (!path) return
+    return rawDiffCheck({
+      repo_ref: repoRef,
+      range: diffApiPath.replace('/diff', ''),
+      queryParams: {
+        // @ts-expect-error : BE issue - path should be string and include_patch is a missing param
+        path: path,
+        include_patch: true,
+        range: 1
+      },
+      headers: { Accept: 'text/plain' }
+    })
+      .then(res => {
+        if (path && res.body && typeof res.body === 'string') {
+          return res.body as string
+        }
+      })
+      .catch(error => console.warn(error))
+  }
+
+  const isMFE = useIsMFE()
+
+  const toRepoFileDetails = ({ path }: { path: string }) =>
+    isMFE ? `${window.apiUrl || ''}/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
+
   const renderContent = () => {
     return (
       <PullRequestComparePage
@@ -498,6 +530,7 @@ export const CreatePullRequest = () => {
         useRepoCommitsStore={useRepoCommitsStore}
         repoId={repoId}
         spaceId={spaceId || ''}
+        isLabelsLoading={isLabelsLoading}
         onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}
@@ -518,12 +551,13 @@ export const CreatePullRequest = () => {
                 title: item.filePath,
                 lang: item.filePath.split('.')?.[1],
                 addedLines: item.addedLines,
-                removedLines: item.deletedLines,
+                deletedLines: item.deletedLines,
                 isBinary: item.isBinary,
-                deleted: item.isDeleted,
+                isDeleted: Boolean(item.isDeleted),
                 unchangedPercentage: item.unchangedPercentage,
                 blocks: item.blocks,
-                filePath: item.filePath
+                filePath: item.filePath,
+                diffData: item
               })) || []
             : []
         }
@@ -563,14 +597,19 @@ export const CreatePullRequest = () => {
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
               selectedBranch={selectedTargetBranch}
+              branchPrefix="base"
             />
             <IconV2 name="arrow-long-left" />
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
               selectedBranch={selectedSourceBranch}
+              branchPrefix="compare"
             />
           </>
         }
+        onGetFullDiff={onGetFullDiff}
+        toRepoFileDetails={toRepoFileDetails}
+        sourceBranch={selectedSourceBranch?.name}
       />
     )
   }

@@ -24,7 +24,8 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
   const {
     labels,
     values: labelsValues,
-    refetchLabels
+    refetchLabels,
+    isLoading: isLabelsLoading
   } = useGetRepoLabelAndValuesData({ query: searchLabel, inherited: true, limit: 100 })
 
   const { data: { body: prLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
@@ -65,6 +66,7 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
     handleAddLabel,
     handleRemoveLabel,
     appliedLabels,
-    refetchLabels
+    refetchLabels,
+    isLabelsLoading
   }
 }

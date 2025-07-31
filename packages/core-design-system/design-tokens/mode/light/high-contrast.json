@@ -430,7 +430,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{red.600}",
+          "$value": "{red.700}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -1321,6 +1321,11 @@
         "$type": "color",
         "$value": "{bg.2}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
+      },
+      "hljs": {
+        "$type": "color",
+        "$value": "{chrome.850}",
+        "$description": "Base text color for code."
       },
       "hljs-comment": {
         "$type": "color",

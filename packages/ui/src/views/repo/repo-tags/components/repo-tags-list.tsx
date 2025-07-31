@@ -48,7 +48,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     {
       iconName: 'folder',
       title: t('views:repos.viewFiles', 'View Files'),
-      to: `../code/refs/tags/${tag.name}`
+      to: `../files/refs/tags/${tag.name}`
     },
     {
       iconName: 'trash',

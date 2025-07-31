@@ -1,4 +1,4 @@
-import { Progress, Text } from '@/components'
+import { Layout, Progress, Text } from '@/components'
 
 interface RootProps {
   children: React.ReactNode
@@ -14,18 +14,20 @@ interface BarProps {
 function Root({ ...props }: RootProps) {
   const { children } = props
 
-  return <div className="flex w-[110px] flex-col justify-center gap-1">{children}</div>
+  return (
+    <Layout.Vertical justify="center" gap="sm">
+      {children}
+    </Layout.Vertical>
+  )
 }
 
 function Content({ ...props }: RootProps) {
   const { children } = props
 
   return (
-    <div className="flex justify-center leading-snug">
-      <Text truncate className="text-cn-foreground-1/70">
-        {children}
-      </Text>
-    </div>
+    <Text as="p" variant="body-single-line-normal" className="py-1">
+      {children}
+    </Text>
   )
 }
 function Bar({ total, filled }: BarProps) {

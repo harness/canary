@@ -46,7 +46,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   }, [xNextPage])
 
   return (
-    <SandboxLayout.Main className="ml-1">
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <Text variant="heading-section">Commits</Text>
         <Spacer size={6} />

@@ -12,6 +12,7 @@ interface BranchSelectorProps {
   repoId: string
   spaceId: string
   branchPrefix?: string
+  hideIcon?: boolean
   buttonSize?: ButtonSizes
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
@@ -31,6 +32,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   tagList,
   selectedBranchorTag,
   branchPrefix,
+  hideIcon = false,
   buttonSize = 'md',
   selectedBranch,
   onSelectBranch,
@@ -51,7 +53,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button className={className} variant="outline" size={buttonSize}>
-          {!branchPrefix && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
+          {!hideIcon && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
           <Text className="truncate">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`

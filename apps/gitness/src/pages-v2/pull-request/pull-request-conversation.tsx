@@ -238,12 +238,20 @@ export default function PullRequestConversationPage() {
   /**
    * get all label-related data
    */
-  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } =
-    usePrConversationLabels({
-      repoRef,
-      prId,
-      refetchData: refetchActivities
-    })
+  const {
+    searchLabel,
+    changeSearchLabel,
+    labels,
+    isLabelsLoading,
+    labelsValues,
+    handleAddLabel,
+    handleRemoveLabel,
+    appliedLabels
+  } = usePrConversationLabels({
+    repoRef,
+    prId,
+    refetchData: refetchActivities
+  })
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
 
@@ -775,7 +783,7 @@ export default function PullRequestConversationPage() {
         content: changesInfo.statusMessage,
         status: changesInfo.statusIcon
       },
-      checks: pullReqChecksDecision?.data?.checks,
+      checks: pullReqChecksDecision?.data?.checks ?? [],
       checksInfo: {
         header: pullReqChecksDecision.checkInfo.title,
         content: pullReqChecksDecision.summaryText,
@@ -817,7 +825,15 @@ export default function PullRequestConversationPage() {
   }, [
     handleRebaseBranch,
     handlePrState,
+    changesInfo.title,
+    changesInfo.statusMessage,
+    changesInfo.statusIcon,
+    pullReqChecksDecision?.data?.checks,
+    pullReqChecksDecision.checkInfo.title,
+    pullReqChecksDecision.checkInfo.status,
+    pullReqChecksDecision.summaryText,
     prPanelData,
+    pullReqCommits,
     mergeErrorMessage,
     pullReqMetadata,
     approvedEvaluations,
@@ -827,6 +843,7 @@ export default function PullRequestConversationPage() {
     changeReqReviewer,
     defaultReviewersData,
     codeOwnersData,
+    handleMerge,
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
@@ -834,10 +851,13 @@ export default function PullRequestConversationPage() {
     showDeleteBranchButton,
     showRestoreBranchButton,
     errorMsg,
+    suggestionsBatch?.length,
+    onCommitSuggestionsBatch,
+    spaceId,
+    repoId,
     mergeTitle,
     mergeMessage,
-    setMergeTitle,
-    setMergeMessage
+    routes
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
@@ -875,7 +895,7 @@ export default function PullRequestConversationPage() {
         // TODO: create useMemo of sideBarProps
         sideBarProps={{
           addReviewers: handleAddReviewer,
-
+          isLabelsLoading,
           currentUserId: currentUserData?.uid,
           pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
           processReviewDecision,

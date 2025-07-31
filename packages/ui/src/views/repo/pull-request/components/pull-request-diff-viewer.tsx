@@ -29,8 +29,6 @@ import { quoteTransform } from '../utils'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
 import { ExtendedDiffViewProps } from './extended-diff-view/extended-diff-view-types'
 
-import '@git-diff-view/react/styles/diff-view.css'
-
 interface Thread {
   parent: CommentItem<TypesPullReqActivity>
   replies: CommentItem<TypesPullReqActivity>[]
@@ -56,7 +54,7 @@ interface PullRequestDiffviewerProps {
   lang: string
   fullContent?: string
   addedLines?: number
-  removedLines?: number
+  deletedLines?: number
   isBinary?: boolean
   deleted?: boolean
   unchangedPercentage?: number

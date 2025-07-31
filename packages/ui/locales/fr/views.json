@@ -1,6 +1,6 @@
 {
   "repos": {
-    "create-file": "Create File",
+    "create-file": "Create file",
     "upload-files": "Télécharger des fichiers",
     "summary": "Résumé",
     "files": "Fichiers",
@@ -17,7 +17,7 @@
     "saving": "Enregistrement...",
     "save": "Enregistrer",
     "cancel": "Annuler",
-    "general": "Général",
+    "webhookSettings": "Webhook Settings",
     "details": "Details",
     "executions": "Executions",
     "generalTab": "General",
@@ -36,6 +36,9 @@
     "noFile": "Aucun fichier disponible",
     "private": "Privé",
     "public": "Public",
+    "archived": "Archivé",
+    "archivedBanner": "Ce dépôt a été archivé le {{date}}. Il est maintenant en lecture seule.",
+    "archivedBannerNoDate": "Ce dépôt a été archivé. Il est maintenant en lecture seule.",
     "name": "Nom",
     "lastCommit": "Dernier commit",
     "date": "Date",
@@ -152,7 +155,6 @@
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",
-    "emptyRepo": "Ce référentiel est vide.",
     "repositories": "Dépôts",
     "import-repository": "Importer un dépôt",
     "import-repositories": "Import repositories",
@@ -194,6 +196,7 @@
     "vulnerabilityScanningDescription": "Scan incoming commits for known vulnerabilities.",
     "verifyCommitterIdentity": "Verify committer identity",
     "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
+    "general": "Général",
     "rules": "Règles",
     "webhooks": "Webhooks",
     "labels": "Labels",
@@ -203,6 +206,38 @@
     "cloneSsh": "SSH",
     "gitCloneUrl": "Git clone URL",
     "generateCredential": "Veuillez générer un identifiant de clonage si c'est la première fois.",
+    "emptyRepoPage": {
+      "title": "Repository",
+      "subtitle": "Follow the instructions below to get started with your repository.",
+      "noData": {
+        "title": "This repository is empty.",
+        "description": {
+          "0": "We recommend every repository include a",
+          "1": "README, LICENSE, and .gitignrore."
+        },
+        "createFile": "New file"
+      },
+      "cloneInstructions": {
+        "title": "Please generate git credentials if it’s your first time cloning the repository",
+        "subTitle": "Git clone URL",
+        "http": "HTTP",
+        "ssh": "SSH",
+        "generateButton": "Generate clone credential",
+        "manageCredentials": {
+          "0": "You can also manage your git credential",
+          "1": "here"
+        },
+        "pushRepository": {
+          "0": "You might need to",
+          "1": "create an API token",
+          "2": "In order to pull from or push into this repository"
+        }
+      },
+      "initialCommit": "Then push some content into it",
+      "existingRepo": {
+        "title": "Or you can push an existing repository"
+      }
+    },
     "readme": "README.md",
     "editReadme": "Edit README.md",
     "openPullReq": "Requêtes de tirage ouvertes",
@@ -245,12 +280,14 @@
     "evenTriggerLabel": "Quels événements souhaitez-vous utiliser pour déclencher ce webhook ?",
     "evenTriggerAllLabel": "Envoyez-moi tout",
     "eventTriggerIndividualLabel": "Permettez-moi de sélectionner des événements individuels",
-    "editWebhookTitle": "Webhook details",
+    "editWebhookTitle": "Order Status Update Webhook",
     "createWebhookTitle": "Créer un webhook",
+    "webhookDetails": "Details",
     "updatingWebhook": "Updating webhook...",
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "emptyRepo": "Ce référentiel est vide.",
     "afterComparingOpenPullRequest": "Après avoir comparé les modifications, vous pouvez ouvrir une demande d'extraction pour contribuer à vos modifications en amont.",
     "defaultReviewers": "Default reviewers",
     "atLeastMinReviewer": "Sélectionnez au moins {{count}} réviseur par défaut",
@@ -503,8 +540,9 @@
     "compareChangesDraftTitle": "Créer une pull request en brouillon",
     "compareChangesDraftDescription": "Ne demande pas de révision de code et ne peut pas être fusionnée.",
     "compareChangesCreatedButton": "Pull request créée",
+    "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Saisissez le titre de la pull request",
-    "compareChangesFormTitleLabel": "Title",
+    "compareChangesFormDescriptionHeading": "Add a description",
     "compareChangesFormDescriptionPlaceholder": "Ajoutez la description de la pull request ici.",
     "compareChanges": "Comparaison des modifications",
     "compareChangesDescription": "Choisissez deux branches pour voir les modifications ou pour créer une nouvelle pull request. Si nécessaire, vous pouvez aussi",
@@ -528,17 +566,17 @@
     "labels": "Étiquettes",
     "noLabels": "No labels found",
     "editLabels": "Edit labels",
+    "markViewed": "Marquer comme vu",
     "deleted": "Supprimé",
     "deletedComment": "Ce commentaire a été supprimé.",
     "reviewers": "Réviseurs",
-    "searchUsers": "Rechercher des utilisateurs",
     "noUsers": "Aucun utilisateur trouvé.",
     "approve": "Approuver",
     "approved": "Approuvée",
     "changereq": "Changement Demandé",
     "split": "Diviser",
     "unified": "Unifié",
-    "markViewed": "Marquer comme vu",
+    "searchUsers": "Rechercher des utilisateurs",
     "searchLabels": "Rechercher des étiquettes..",
     "compareChangesFormDescriptionLabel": "Description",
     "selectUsersUGAndServiceAccounts": "Sélectionner des utilisateurs, des groupes d'utilisateurs et des comptes de service",

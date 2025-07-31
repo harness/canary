@@ -67,6 +67,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
         <SandboxLayout.Content className="px-0 pt-0">
           <PullRequestSideBar
             {...sideBarProps}
+            isReviewersLoading={principalProps?.isPrincipalsLoading}
             searchQuery={principalProps?.searchPrincipalsQuery || ''}
             setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
             usersList={principalProps?.principals}

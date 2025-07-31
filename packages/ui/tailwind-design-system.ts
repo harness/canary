@@ -23,6 +23,19 @@ export default {
         sans: ['Inter', 'sans-serif'],
         code: ['JetBrains Mono', 'monospace']
       },
+      spacing: {
+        'layout-4xs': 'var(--cn-layout-4xs)',
+        'layout-3xs': 'var(--cn-layout-3xs)',
+        'layout-2xs': 'var(--cn-layout-2xs)',
+        'layout-xs': 'var(--cn-layout-xs)',
+        'layout-sm': 'var(--cn-layout-sm)',
+        'layout-md': 'var(--cn-layout-md)',
+        'layout-lg': 'var(--cn-layout-lg)',
+        'layout-xl': 'var(--cn-layout-xl)',
+        'layout-2xl': 'var(--cn-layout-2xl)',
+        'layout-3xl': 'var(--cn-layout-3xl)',
+        'layout-4xl': 'var(--cn-layout-4xl)'
+      },
       colors: {
         /* New colors design variables */
         'cn-foreground': {
@@ -82,7 +95,7 @@ export default {
           warning: 'var(--cn-border-warning)',
           danger: 'var(--cn-border-danger)',
           success: 'var(--cn-border-success)',
-          accent: 'var(--cn-border-accent)',
+          accent: 'var(--cn-border-brand)',
 
           // remove
           // update to focus, disabled, success, danger, warning

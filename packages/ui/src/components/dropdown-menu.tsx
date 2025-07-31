@@ -116,7 +116,7 @@ interface DropdownBaseItemProps {
   children?: ReactNode
   className?: string
   description?: ReactNode
-  label?: string
+  label?: string | ReactNode
   shortcut?: string
   checkmark?: boolean
   tag?: TagProps

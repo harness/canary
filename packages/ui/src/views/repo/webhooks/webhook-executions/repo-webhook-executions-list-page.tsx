@@ -33,12 +33,12 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   }, [t])
 
   return (
-    <SandboxLayout.Main className="mx-0">
-      <SandboxLayout.Content className="pl-0">
-        <Text as="h1" variant="heading-section" className="mb-4">
+    <SandboxLayout.Main className="ml-3">
+      <SandboxLayout.Content>
+        <Text as="h1" variant="heading-section" className="mb-2">
           Order Status Update Webhook
         </Text>
-        <Text>
+        <Text className="max-w-[570px]">
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
@@ -53,10 +53,18 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
             <Table.Root disableHighlightOnHover>
               <Table.Header>
                 <Table.Row>
-                  <Table.Head>ID</Table.Head>
-                  <Table.Head>Event</Table.Head>
-                  <Table.Head>Status</Table.Head>
-                  <Table.Head className="text-right">Last triggered at</Table.Head>
+                  <Table.Head className="w-[136px]">
+                    <Text variant="caption-strong">ID</Text>
+                  </Table.Head>
+                  <Table.Head className="w-[462px]">
+                    <Text variant="caption-strong">Event</Text>
+                  </Table.Head>
+                  <Table.Head className="w-[136px]">
+                    <Text variant="caption-strong">Status</Text>
+                  </Table.Head>
+                  <Table.Head className="flex justify-end w-[176px]">
+                    <Text variant="caption-strong">Last triggered at</Text>
+                  </Table.Head>
                 </Table.Row>
               </Table.Header>
               <Table.Body>

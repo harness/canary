@@ -193,7 +193,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
-  const noData = !(pullRequests && pullRequests.length > 0)
+  const noData = !(pullRequests && pullRequests.length > 0) && closedPullReqs === 0 && openPullReqs === 0
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
@@ -258,7 +258,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       <PullRequestListContent
         repo={repository}
         spaceId={spaceId}
-        pullRequests={pullRequests}
+        pullRequests={pullRequests || []}
         // Do not show Open and close count if project level
         closedPRs={!isProjectLevel ? closedPullReqs : undefined}
         openPRs={!isProjectLevel ? openPullReqs : undefined}

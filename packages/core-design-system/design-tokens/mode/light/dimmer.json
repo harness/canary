@@ -358,7 +358,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{green.800}",
+          "$value": "{green.600}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
@@ -421,7 +421,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{red.800}",
+          "$value": "{red.700}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -484,7 +484,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.800}",
+          "$value": "{yellow.600}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {
@@ -1312,6 +1312,11 @@
         "$type": "color",
         "$value": "{bg.2}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
+      },
+      "hljs": {
+        "$type": "color",
+        "$value": "{chrome.850}",
+        "$description": "Base text color for code."
       },
       "hljs-comment": {
         "$type": "color",

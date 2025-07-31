@@ -4,7 +4,7 @@ import { ContentLayoutWithSidebar } from '@/views'
 const getNavItems = (t: TFunctionWithFallback) => [
   {
     groupId: 0,
-    title: t('views:repos.general', 'Webhook Settings'),
+    title: t('views:repos.webhookSettings', 'Webhook Settings'),
     items: [
       { id: 0, title: t('views:repos.details', 'Details'), to: 'details' },
       { id: 1, title: t('views:repos.executions', 'Executions'), to: 'executions' }
@@ -17,7 +17,14 @@ export function WebhookSettingsLayout() {
   const { t } = useTranslation()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={116} sidebarViewportClassName="pt-7">
+    <ContentLayoutWithSidebar
+      sidebarMenu={getNavItems(t)}
+      sidebarOffsetTop={116}
+      sidebarViewportClassName="pt-5"
+      showBackButton
+      backButtonLabel="Back to webhooks"
+      backButtonTo={() => '../settings/webhooks'}
+    >
       <Outlet />
     </ContentLayoutWithSidebar>
   )

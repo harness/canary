@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { SkeletonList, Spacer } from '@/components'
+import { SkeletonList } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
@@ -202,8 +202,6 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         }))}
         setJumpToDiff={setJumpToDiff}
       />
-      <Spacer aria-setsize={5} />
-
       {renderContent()}
     </>
   )

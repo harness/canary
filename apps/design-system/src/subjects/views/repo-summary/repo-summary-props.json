@@ -1212,7 +1212,7 @@
         "name": "Abhinav Rastogi"
       },
       "sha": "5d6f2d7",
-      "path": "/canary/repos/canary/code//~/.dockerignore",
+      "path": "/canary/repos/canary/files//~/.dockerignore",
       "status": "low_risk"
     },
     {
@@ -1225,7 +1225,7 @@
         "name": "praneshg239"
       },
       "sha": "1e126e7",
-      "path": "/canary/repos/canary/code//~/.eslintignore",
+      "path": "/canary/repos/canary/files//~/.eslintignore",
       "status": "medium_risk"
     },
     {
@@ -1238,7 +1238,7 @@
         "name": "praneshg239"
       },
       "sha": "f915fed",
-      "path": "/canary/repos/canary/code//~/.eslintrc.json"
+      "path": "/canary/repos/canary/files//~/.eslintrc.json"
     },
     {
       "id": ".github",
@@ -1250,7 +1250,7 @@
         "name": "Calvin Lee"
       },
       "sha": "280c1cf",
-      "path": "/canary/repos/canary/code//~/.github",
+      "path": "/canary/repos/canary/files//~/.github",
       "status": "high_risk"
     },
     {
@@ -1263,7 +1263,7 @@
         "name": "Srdjan Arsic"
       },
       "sha": "90bc4f6",
-      "path": "/canary/repos/canary/code//~/.gitignore"
+      "path": "/canary/repos/canary/files//~/.gitignore"
     },
     {
       "id": ".husky",
@@ -1275,7 +1275,7 @@
         "name": "Abhinav Rastogi"
       },
       "sha": "d049c42",
-      "path": "/canary/repos/canary/code//~/.husky"
+      "path": "/canary/repos/canary/files//~/.husky"
     },
     {
       "id": ".prettierignore",
@@ -1287,7 +1287,7 @@
         "name": "praneshg239"
       },
       "sha": "1e126e7",
-      "path": "/canary/repos/canary/code//~/.prettierignore"
+      "path": "/canary/repos/canary/files//~/.prettierignore"
     },
     {
       "id": ".prettierrc.yml",
@@ -1299,7 +1299,7 @@
         "name": "praneshg239"
       },
       "sha": "b8ee588",
-      "path": "/canary/repos/canary/code//~/.prettierrc.yml"
+      "path": "/canary/repos/canary/files//~/.prettierrc.yml"
     },
     {
       "id": ".vscode",
@@ -1311,7 +1311,7 @@
         "name": "praneshg239"
       },
       "sha": "1e126e7",
-      "path": "/canary/repos/canary/code//~/.vscode"
+      "path": "/canary/repos/canary/files//~/.vscode"
     },
     {
       "id": "CODEOWNERS",
@@ -1323,7 +1323,7 @@
         "name": "Kevin Nagurski"
       },
       "sha": "af5ebaf",
-      "path": "/canary/repos/canary/code//~/CODEOWNERS"
+      "path": "/canary/repos/canary/files//~/CODEOWNERS"
     },
     {
       "id": "CONTRIBUTOR_LICENSE_AGREEMENT.md",
@@ -1335,7 +1335,7 @@
         "name": "Sanskar"
       },
       "sha": "cdcc2d9",
-      "path": "/canary/repos/canary/code//~/CONTRIBUTOR_LICENSE_AGREEMENT.md"
+      "path": "/canary/repos/canary/files//~/CONTRIBUTOR_LICENSE_AGREEMENT.md"
     },
     {
       "id": "Dockerfile",
@@ -1347,7 +1347,7 @@
         "name": "Abhinav Rastogi"
       },
       "sha": "c968bb4",
-      "path": "/canary/repos/canary/code//~/Dockerfile"
+      "path": "/canary/repos/canary/files//~/Dockerfile"
     },
     {
       "id": "LICENSE",
@@ -1359,7 +1359,7 @@
         "name": "Tan Nhu"
       },
       "sha": "e291274",
-      "path": "/canary/repos/canary/code//~/LICENSE"
+      "path": "/canary/repos/canary/files//~/LICENSE"
     },
     {
       "id": "README.md",
@@ -1371,7 +1371,7 @@
         "name": "Abhinav Rastogi"
       },
       "sha": "7f7ab0e",
-      "path": "/canary/repos/canary/code//~/README.md"
+      "path": "/canary/repos/canary/files//~/README.md"
     },
     {
       "id": "apps",
@@ -1383,7 +1383,7 @@
         "name": "Shaurya Kalia"
       },
       "sha": "ec92d11",
-      "path": "/canary/repos/canary/code//~/apps"
+      "path": "/canary/repos/canary/files//~/apps"
     },
     {
       "id": "charts",
@@ -1395,7 +1395,7 @@
         "name": "Sanskar"
       },
       "sha": "cdcc2d9",
-      "path": "/canary/repos/canary/code//~/charts"
+      "path": "/canary/repos/canary/files//~/charts"
     },
     {
       "id": "package.json",
@@ -1407,7 +1407,7 @@
         "name": "praneshg239"
       },
       "sha": "b8ee588",
-      "path": "/canary/repos/canary/code//~/package.json"
+      "path": "/canary/repos/canary/files//~/package.json"
     },
     {
       "id": "packages",
@@ -1419,7 +1419,7 @@
         "name": "Shaurya Kalia"
       },
       "sha": "ec92d11",
-      "path": "/canary/repos/canary/code//~/packages"
+      "path": "/canary/repos/canary/files//~/packages"
     },
     {
       "id": "pnpm-lock.yaml",
@@ -1431,7 +1431,7 @@
         "name": "Kevin Nagurski"
       },
       "sha": "a13c02e",
-      "path": "/canary/repos/canary/code//~/pnpm-lock.yaml"
+      "path": "/canary/repos/canary/files//~/pnpm-lock.yaml"
     },
     {
       "id": "pnpm-workspace.yaml",
@@ -1443,7 +1443,7 @@
         "name": "Tan Nhu"
       },
       "sha": "d47847c",
-      "path": "/canary/repos/canary/code//~/pnpm-workspace.yaml"
+      "path": "/canary/repos/canary/files//~/pnpm-workspace.yaml"
     }
   ],
   "decodedReadmeContent": "# Canary\n\nWelcome to the Harness Canary monorepo! This repository contains multiple projects for Harness' next generation Unified UI.\n\n# Repository Structure\n\n- [packages](./packages/): Contains projects for Harness next generation Unified UI projects. They are published as npm packages.\n- [apps](./apps/): Contains deployable/executable standalone applications.\n\n# Projects\n\n- [@harnessio/canary](./packages/canary/) - Harness Canary UI components library built on top of [Radix UI](https://www.radix-ui.com/) and [ShadCN UI](https://ui.shadcn.com/).\n- [@harnessio/unified-pipeline](./packages/unified-pipeline/) - Harness Unified Pipeline library.\n- [@harnessio/views](./packages/views/) - Harness Unified UI View Fragments.\n\n# Getting Started\n\n## Prerequisites\n\nBefore getting started with this repository, ensure you have the following prerequisites:\n\n**Node.js**: You'll need `Node` version `18.20.4` or newer.\nWe use `pnpm` to manage this monorepo. To install `pnpm`, visit the [pnpm installation page](https://pnpm.io/installation).\n\n## Installation\n\nTo set up the necessary dependencies for this monorepo, follow these steps:\n\n1. Clone this repository to your local machine.\n2. Open your terminal and navigate to the root folder of the cloned repository.\n3. Run the following command to install dependencies:\n\n```sh\npnpm install\npnpm deps\n```\n\n## Building\n\nTo build all projects, execute the following command from the repository root folder:\n\n```sh\npnpm build\n```\n\nOr you can build individual project by running `pnpm run build` from each project folder root folder.\n\n## Publishing\n\nTo publish all packages, run:\n\n```sh\npnpm publish:all\n```\n\nYou can also publish individual packages by running `pnpm publish` from each project folder. Note that you'll need to authenticate youself with `npm` before publishing.\n\nDO NOT publish packages using `npm`. Use `pnpm` instead.\n\n## Note for Visual Studio Code Users\n\nIf you're using Visual Studio Code (VSCode) and encounter issues with package recognition or type definitions after rebuilding the workspace, follow these steps to resolve them:\n\n1. Open VSCode.\n2. Press `Cmd-Shift-P` to open the command palette.\n3. Type `Reload Project` and select it from the list.\n\nThis process helps to resolve any issues related to package recognition and type checking.\n\nIf you have any questions or encounter any problems, please don't hesitate to reach out for assistance. Happy coding!\n\n## License\n\nApache License 2.0, see [LICENSE](https://github.com/harness/gitness/blob/main/LICENSE).\n",

@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Fieldset, FormWrapper, Text } from '@/components'
+import { Button, ButtonLayout, Fieldset, FormSeparator, FormWrapper, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -92,16 +92,22 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className="max-w-[570px] px-0">
-      <Text as="h1" variant="heading-section" className="mb-10">
+    <SandboxLayout.Content className="max-w-[570px] ml-3">
+      <Text as="h1" variant="heading-section" className="mb-4">
         {preSetWebhookData
-          ? t('views:repos.editWebhookTitle', 'Webhook details')
+          ? t('views:repos.editWebhookTitle', 'Order Status Update Webhook')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
       </Text>
-      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="gap-y-6">
         <Fieldset>
           <WebhookToggleField register={register} setValue={setValue} watch={watch} />
         </Fieldset>
+        <FormSeparator />
+        {preSetWebhookData ? (
+          <Text as="h2" variant="heading-subsection">
+            {t('views:repos.webhookDetails', 'Details')}
+          </Text>
+        ) : null}
         <Fieldset>
           <WebhookNameField register={register} />
         </Fieldset>
@@ -114,10 +120,10 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
         <Fieldset>
           <WebhookSecretField register={register} />
         </Fieldset>
-        <Fieldset>
+        <Fieldset className="mt-5">
           <WebhookSSLVerificationField register={register} />
         </Fieldset>
-        <Fieldset>
+        <Fieldset className="mt-5">
           <WebhookTriggerField register={register} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
             <div className="flex justify-between">

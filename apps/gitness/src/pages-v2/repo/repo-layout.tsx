@@ -39,9 +39,11 @@ const RepoLayout = () => {
       <RepoHeader
         name={repoData?.identifier ?? ''}
         isPublic={!!repoData?.is_public}
+        isArchived={repoData?.archived}
         isLoading={isLoading}
         isFavorite={repoData?.is_favorite}
         onFavoriteToggle={onFavoriteToggle}
+        archivedDate={repoData?.updated}
       />
       <SubHeaderWrapper>
         <RepoSubheader

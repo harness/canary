@@ -14,6 +14,7 @@ interface ReviewersHeaderProps {
   currentUserId?: string
   searchQuery: string
   setSearchQuery: (query: string) => void
+  isReviewersLoading?: boolean
 }
 
 const ReviewersHeader = ({
@@ -23,7 +24,8 @@ const ReviewersHeader = ({
   handleDelete,
   currentUserId,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  isReviewersLoading
 }: ReviewersHeaderProps) => {
   const { t } = useTranslation()
 
@@ -47,17 +49,12 @@ const ReviewersHeader = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
           <DropdownMenu.Header role="presentation" onKeyDown={e => e.stopPropagation()}>
-            <SearchInput
-              size="sm"
-              autoFocus
-              id="search"
-              defaultValue={searchQuery}
-              placeholder={t('views:pullRequests.searchUsers', 'Search users')}
-              onChange={handleSearchQuery}
-            />
+            <SearchInput size="sm" autoFocus id="search" defaultValue={searchQuery} onChange={handleSearchQuery} />
           </DropdownMenu.Header>
 
-          {!usersList?.length && (
+          {isReviewersLoading && <DropdownMenu.Spinner />}
+
+          {!usersList?.length && !isReviewersLoading && (
             <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           )}
           {usersList?.length === 1 && usersList[0].uid === currentUserId ? (

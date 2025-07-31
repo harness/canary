@@ -177,9 +177,9 @@ export default function SearchPage() {
       searchError={searchError?.message?.toString()}
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
         repoPath && branch
-          ? `/repos/${repoPath}/code/refs/heads/${branch}/~/${filePath}`
+          ? `/repos/${repoPath}/files/refs/heads/${branch}/~/${filePath}`
           : // TODO: get default branch
-            `/repos/${repoRef}/code/refs/heads/main/~/${filePath}`
+            `/repos/${repoRef}/files/refs/heads/main/~/${filePath}`
       }
       // language filter props
       selectedLanguage={selectedLanguage}

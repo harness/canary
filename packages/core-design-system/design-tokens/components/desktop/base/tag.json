@@ -59,7 +59,7 @@
       },
       "max-width": {
         "$type": "sizing",
-        "$value": "{size.28}"
+        "$value": "{size.64}"
       }
     },
     "border": {

@@ -29,55 +29,50 @@ export const RepoHeader = ({
   const formattedDate = archivedDate ? formatDate(archivedDate) : ''
 
   return (
-    <div className={cn('cn-repo-header', className)}>
-      <div className="grid grid-cols-[auto,1fr] items-center gap-2">
+    <Layout.Grid className={cn('cn-repo-header', className)} gapY="md">
+      <Layout.Flex gap="3xs" justify="start" align="center">
         {isLoading ? (
           <>
-            <Skeleton className="bg-cn-background-0 h-[var(--cn-line-height-7-tight)] w-28" />
+            <Layout.Flex gap="xs" justify="start" align="center">
+              <Skeleton className="bg-cn-background-0 h-[var(--cn-line-height-7-tight)] w-28" />
+              <Skeleton className="bg-cn-background-0 h-6 w-14" />
+            </Layout.Flex>
             <Skeleton className="bg-cn-background-0 h-6 w-14" />
           </>
         ) : (
-          <Layout.Flex gap="xs" justify="start" align="center">
-            <Text className="truncate" variant="heading-hero" as="h2">
-              {name}
-            </Text>
-            <Layout.Flex align="center" gap="xs">
-              <StatusBadge
-                variant="outline"
-                theme={!isPublic ? 'muted' : 'success'}
-                className="min-w-fit rounded-full"
-                size="md"
-              >
+          <>
+            <Layout.Flex gap="xs" justify="start" align="center">
+              <Text className="truncate" variant="heading-hero" as="h2">
+                {name}
+              </Text>
+
+              <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} size="md">
                 {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
               </StatusBadge>
+
               {isArchived && (
-                <StatusBadge variant="outline" theme="warning" className="min-w-fit rounded-full" size="md">
+                <StatusBadge variant="outline" theme="warning" size="md">
                   {t('views:repos.archived', 'Archived')}
                 </StatusBadge>
               )}
-              <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
             </Layout.Flex>
-          </Layout.Flex>
+
+            <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
+          </>
         )}
-      </div>
+      </Layout.Flex>
 
       {isArchived && (
-        <div className="mt-4">
-          <Alert.Root theme="warning">
-            <Alert.Description>
-              {formattedDate
-                ? t(
-                    'views:repos.archivedBanner',
-                    'This repository has been archived on {{date}}. It is now read-only.',
-                    {
-                      date: formattedDate
-                    }
-                  )
-                : t('views:repos.archivedBannerNoDate', 'This repository has been archived. It is now read-only.')}
-            </Alert.Description>
-          </Alert.Root>
-        </div>
+        <Alert.Root theme="warning">
+          <Alert.Description>
+            {formattedDate
+              ? t('views:repos.archivedBanner', 'This repository has been archived on {{date}}. It is now read-only.', {
+                  date: formattedDate
+                })
+              : t('views:repos.archivedBannerNoDate', 'This repository has been archived. It is now read-only.')}
+          </Alert.Description>
+        </Alert.Root>
       )}
-    </div>
+    </Layout.Grid>
   )
 }

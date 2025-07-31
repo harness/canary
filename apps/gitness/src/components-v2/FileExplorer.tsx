@@ -92,8 +92,10 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
+        const level = (itemPath ?? '').split('/').length - 1
         return (
           <FileExplorer.FileItem
+            level={level}
             key={itemPath || idx.toString()}
             isActive={itemPath === fullResourcePath}
             link={isFileEditMode && itemPath === fullResourcePath ? undefined : fullPath}

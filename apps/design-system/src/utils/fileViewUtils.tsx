@@ -20,8 +20,9 @@ export const renderEntries = (entries: OpenapiContentInfo[], parentPath: string 
     const fullPath = ''
 
     if (item.type === 'file') {
+      const level = (itemPath ?? '').split('/').length - 1
       return (
-        <FileExplorer.FileItem key={itemPath || idx.toString()} isActive={false} link={undefined}>
+        <FileExplorer.FileItem key={itemPath || idx.toString()} isActive={false} link={undefined} level={level}>
           {item.name}
         </FileExplorer.FileItem>
       )

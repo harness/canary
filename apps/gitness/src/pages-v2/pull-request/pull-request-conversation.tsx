@@ -783,7 +783,7 @@ export default function PullRequestConversationPage() {
         content: changesInfo.statusMessage,
         status: changesInfo.statusIcon
       },
-      checks: pullReqChecksDecision?.data?.checks,
+      checks: pullReqChecksDecision?.data?.checks ?? [],
       checksInfo: {
         header: pullReqChecksDecision.checkInfo.title,
         content: pullReqChecksDecision.summaryText,
@@ -825,7 +825,15 @@ export default function PullRequestConversationPage() {
   }, [
     handleRebaseBranch,
     handlePrState,
+    changesInfo.title,
+    changesInfo.statusMessage,
+    changesInfo.statusIcon,
+    pullReqChecksDecision?.data?.checks,
+    pullReqChecksDecision.checkInfo.title,
+    pullReqChecksDecision.checkInfo.status,
+    pullReqChecksDecision.summaryText,
     prPanelData,
+    pullReqCommits,
     mergeErrorMessage,
     pullReqMetadata,
     approvedEvaluations,
@@ -835,6 +843,7 @@ export default function PullRequestConversationPage() {
     changeReqReviewer,
     defaultReviewersData,
     codeOwnersData,
+    handleMerge,
     checkboxBypass,
     onRestoreBranch,
     onDeleteBranch,
@@ -842,10 +851,13 @@ export default function PullRequestConversationPage() {
     showDeleteBranchButton,
     showRestoreBranchButton,
     errorMsg,
+    suggestionsBatch?.length,
+    onCommitSuggestionsBatch,
+    spaceId,
+    repoId,
     mergeTitle,
     mergeMessage,
-    setMergeTitle,
-    setMergeMessage
+    routes
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

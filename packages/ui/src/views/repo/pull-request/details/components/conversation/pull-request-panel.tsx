@@ -69,6 +69,15 @@ interface HeaderProps {
   repoId?: string
 }
 
+interface ButtonStateProps {
+  isMergeable?: boolean
+  ruleViolation?: boolean
+  isDraft?: boolean
+  checks?: TypesPullReqCheck[]
+  checkboxBypass?: boolean
+  canBypass?: boolean
+}
+
 const HeaderTitle = ({ ...props }: HeaderProps) => {
   const { pullReqMetadata, spaceId, repoId } = props
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
@@ -144,17 +153,10 @@ const getButtonState = ({
   isMergeable,
   ruleViolation,
   isDraft,
-  checksInfo,
+  checks,
   checkboxBypass,
   canBypass
-}: {
-  isMergeable?: boolean
-  ruleViolation?: boolean
-  isDraft?: boolean
-  checksInfo: { status: EnumCheckStatus }
-  checkboxBypass?: boolean
-  canBypass?: boolean
-}): {
+}: ButtonStateProps): {
   disabled: boolean
   theme: ButtonThemes
   variant?: 'primary' | 'outline'
@@ -167,10 +169,16 @@ const getButtonState = ({
     }
   }
 
-  if (['pending', 'running', 'failure'].includes(checksInfo.status)) {
+  let checksNotAllowingMerge = false
+  checks?.forEach(check => {
+    if (check.required && check.check?.status && ['pending', 'running', 'failure'].includes(check.check.status)) {
+      checksNotAllowingMerge = true
+    }
+  })
+  if (checksNotAllowingMerge) {
     return {
       disabled: true,
-      theme: checksInfo.status === 'failure' ? 'default' : 'danger',
+      theme: 'danger',
       variant: 'primary'
     }
   }
@@ -230,7 +238,7 @@ export interface PullRequestPanelProps
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
   pullReqMetadata?: TypesPullReq
-  checks?: TypesPullReqCheck[] | null
+  checks?: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
   actions: PullRequestAction[]
   checkboxBypass?: boolean
@@ -369,14 +377,14 @@ const PullRequestPanel = ({
     isMergeable,
     ruleViolation: prPanelData.ruleViolation,
     isDraft,
-    checksInfo,
+    checks,
     checkboxBypass,
     canBypass: !notBypassable
   })
 
   return (
     <>
-      <StackedList.Root className="bg-cn-background-1 border-cn-borders-3">
+      <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
         <StackedList.Item
           className={cn('items-center py-2 border-cn-borders-3', {
             'pr-1.5': isShowMoreTooltip
@@ -523,7 +531,7 @@ const PullRequestPanel = ({
             </>
           )}
         </StackedList.Item>
-        <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent border-cn-borders-3">
+        <StackedList.Item disableHover className="cursor-default border-cn-borders-3 py-0 hover:bg-transparent">
           {!isClosed ? (
             <Accordion.Root
               className="w-full"

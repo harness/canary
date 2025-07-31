@@ -161,5 +161,52 @@
   "noData": {
     "members": "Aucun membre pour l'instant.",
     "inviteMembers": "Ajoutez les premiers membres de votre équipe en les invitant à rejoindre ce projet."
-  }
+  },
+  "commitDialog": {
+    "title": "Commit changes",
+    "form": {
+      "file": {
+        "label": "File name",
+        "placeholder": "Add a file name"
+      },
+      "commit": {
+        "label": "Commit message",
+        "placeholder": "Add a commit message"
+      },
+      "description": {
+        "label": "Extended description",
+        "placeholder": "Add an optional extended description"
+      },
+      "radioGroup": {
+        "directly": {
+          "labelFirst": "Commit directly to the",
+          "labelSecond": "branch"
+        },
+        "new": {
+          "label": "Create a new branch for this commit and start a pull request",
+          "caption": "Learn more about pull requests",
+          "input": "New branch name"
+        }
+      },
+      "submit": {
+        "default": "Commit changes",
+        "loading": "Committing...",
+        "bypassable": {
+          "directly": "Bypass rules and commit directly",
+          "new": "Bypass rules and commit via new branch"
+        }
+      }
+    },
+    "violationMessages": {
+      "bypassed": {
+        "directly": "Some rules will be bypassed to commit directly",
+        "new": "Some rules will be bypassed to commit by creating branch"
+      },
+      "notAllow": {
+        "directly": "Some rules don't allow you to commit directly",
+        "new": "Some rules don't allow you to create new branch for commit"
+      }
+    }
+  },
+  "cancel": "Cancel"
 }

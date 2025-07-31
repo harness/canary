@@ -21,10 +21,6 @@ export default {
       gap: 'var(--cn-spacing-1)'
     },
 
-    '&-text': {
-      '@apply truncate': ''
-    },
-
     '&-optional': {
       '@apply font-body-normal': '',
       color: 'var(--cn-text-3)'

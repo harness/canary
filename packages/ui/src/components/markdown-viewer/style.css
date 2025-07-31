@@ -150,109 +150,137 @@
     }
   }
 
-  @apply !text-3 !text-cn-foreground-1 !max-w-full font-sans !leading-[1.625rem];
+  &.wmde-markdown {
+    font: var(--cn-comp-markdown-content-paragraph);
+    @apply text-cn-foreground-2 !max-w-full;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply text-cn-foreground-1 border-none pb-0 font-medium;
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-cn-foreground-1 border-none pb-0;
+    }
 
-  h1 {
-    @apply my-6 border-none pb-0 text-[28px] leading-tight;
-  }
+    h1 {
+      font: var(--cn-comp-markdown-title-h1);
+      @apply my-layout-xl;
+    }
 
-  h2 {
-    @apply mb-4 mt-6 text-2xl;
-  }
+    h2 {
+      font: var(--cn-comp-markdown-title-h2);
+      @apply my-layout-lg;
+    }
 
-  h3 {
-    @apply mb-4 mt-6 text-xl;
-  }
+    h3 {
+      font: var(--cn-comp-markdown-title-h3);
+      @apply my-layout-md;
+    }
 
-  p {
-    @apply mb-4;
-  }
+    h4 {
+      font: var(--cn-heading-base);
+      @apply my-layout-sm;
+    }
 
-  ul,
-  ol {
-    @apply mb-4 ps-6;
-  }
+    h5 {
+      font: var(--cn-heading-small);
+      @apply my-layout-xs;
+    }
 
-  li {
-    @apply marker:text-cn-foreground-1 my-1.5 ps-0;
-  }
+    p {
+      @apply my-layout-sm;
+    }
 
-  ol {
-    counter-reset: custom-counter;
-    @apply list-none [counter-reset:custom-counter];
+    ul,
+    ol {
+      @apply my-layout-md pl-6 pr-0;
+
+      & :is(ul, ol) {
+        @apply my-0;
+      }
+    }
 
     li {
-      &:before {
-        content: counter(custom-counter) '.';
-        counter-increment: custom-counter;
-        position: absolute;
-        left: -20px;
-        top: 0;
-      }
-
-      @apply relative my-4;
+      @apply marker:text-cn-foreground-1 my-layout-2xs ps-0;
     }
-  }
 
-  a {
-    @apply text-cn-foreground-accent hover:text-cn-foreground-1 hover:no-underline;
-  }
+    ol {
+      counter-reset: custom-counter;
+      @apply list-none [counter-reset:custom-counter];
 
-  code {
-    @apply bg-cn-background-9 border-cn-borders-2 font-code text-cn-foreground-2 text-2 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
-  }
+      li {
+        &:before {
+          content: counter(custom-counter) '.';
+          counter-increment: custom-counter;
+          position: absolute;
+          left: -20px;
+          top: 0;
+        }
 
-  strong {
-    @apply text-cn-foreground-1;
-  }
+        @apply my-layout-xs relative;
+      }
+    }
 
-  pre {
-    @apply bg-cn-background-1 border-cn-borders-3 font-code text-cn-foreground-1 mb-0 rounded border py-3 pl-4 pr-3;
+    a {
+      font: var(--cn-comp-markdown-content-emphasized);
+      @apply text-cn-foreground-accent hover:text-[var(--cn-comp-link-text-hover)] hover:no-underline;
+    }
 
     code {
-      @apply text-cn-foreground-1 mr-7 p-0 text-sm;
-    }
-  }
-
-  blockquote {
-    @apply text-cn-foreground-2 border-cn-borders-1 my-4 border-l-4 pl-4 pr-0 font-normal not-italic;
-  }
-
-  table {
-    th {
-      @apply text-cn-foreground-1 border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10 text-sm font-medium;
+      @apply font-body-code border-cn-borders-2 text-nowrap rounded border bg-[var(--cn-set-brand-surface-bg)] px-1 !text-[var(--cn-set-brand-surface-text)] before:hidden after:hidden;
     }
 
-    td {
-      @apply text-2 text-cn-foreground-1 border-l-0 border-r-0 px-0 py-3 pr-10;
+    strong {
+      font: var(--cn-comp-markdown-content-emphasized);
+      @apply text-cn-foreground-1;
     }
 
-    tr {
-      @apply !bg-transparent;
+    pre {
+      @apply font-body-code bg-cn-background-1 border-cn-borders-3 text-cn-foreground-1 mb-0 rounded border py-3 pl-4 pr-3;
 
-      &:last-child {
-        td {
-          @apply border-0;
-        }
+      code {
+        @apply bg-cn-background-1 !text-cn-foreground-1 mr-7 p-0;
       }
     }
 
-    thead tr {
-      @apply border-0;
+    blockquote {
+      @apply border-cn-borders-1 my-layout-md border-l-4 pl-4 pr-0;
+    }
+
+    table {
+      @apply my-layout-md;
+
+      th {
+        @apply text-cn-foreground-1 font-heading-small border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10;
+      }
+
+      td {
+        @apply py-layout-sm border-l-0 border-r-0 px-0;
+
+        &:not(:last-child) {
+          @apply pr-layout-3xl;
+        }
+      }
+
+      tr {
+        @apply !bg-transparent;
+
+        &:last-child {
+          td {
+            @apply border-0;
+          }
+        }
+      }
+
+      thead tr {
+        @apply border-0;
+      }
     }
   }
 
   &.comment {
-    @apply !text-2 !text-cn-foreground-2 !bg-transparent !leading-snug;
+    @apply !bg-transparent;
 
     blockquote {
       @apply before:bg-cn-background-softgray relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;

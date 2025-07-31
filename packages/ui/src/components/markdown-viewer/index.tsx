@@ -17,10 +17,6 @@ import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
 
 export const getIsMarkdown = (language?: string) => language === 'markdown'
 
-// TODO: add ai stuff at a later point for code suggestions
-// import type { SuggestionBlock } from 'components/SuggestionBlock/SuggestionBlock'
-// import { CodeSuggestionBlock } from './CodeSuggestionBlock'
-
 const isHeadingElement = (tagName: string) => /^h(1|2|3|4|5|6)/.test(tagName)
 const isRelativeLink = (href: string) =>
   href && !href.startsWith('/') && !href.startsWith('#') && !/^https?:|mailto:|tel:|data:|javascript:|sms:/.test(href)
@@ -30,12 +26,11 @@ type MarkdownViewerProps = {
   maxHeight?: string | number
   withBorder?: boolean
   className?: string
-  // TODO: add ai stuff at a later point for code suggestions
   suggestionBlock?: SuggestionBlock
   suggestionCheckSum?: string
   isSuggestion?: boolean
   markdownClassName?: string
-  showLineNumbers?: boolean // New prop to control line number display
+  showLineNumbers?: boolean
 }
 
 export function MarkdownViewer({
@@ -47,7 +42,7 @@ export function MarkdownViewer({
   suggestionCheckSum,
   isSuggestion,
   markdownClassName,
-  showLineNumbers = false // Default to false
+  showLineNumbers = false
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
   const [isOpen, setIsOpen] = useState(false)
@@ -156,7 +151,7 @@ export function MarkdownViewer({
     <div className={cn({ 'rounded-b-md border-x border-b py-6 px-16': withBorder }, className)}>
       <div ref={ref} style={styles}>
         {isSuggestion && (
-          <div className="rounded-t-md border-x border-t border-cn-borders-2 bg-cn-background-2 px-4 py-3">
+          <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
             <span className="text-2 text-cn-foreground-1">
               {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
                 ? 'Suggestion applied'
@@ -169,9 +164,7 @@ export function MarkdownViewer({
           source={source}
           className={cn(
             'prose prose-invert',
-            {
-              '[&>div>pre]:rounded-t-none [&>div>pre]:mb-2': isSuggestion
-            },
+            { '[&>div>pre]:rounded-t-none [&>div>pre]:mb-2': isSuggestion },
             markdownClassName
           )}
           rehypeRewrite={rehypeRewrite}
@@ -185,25 +178,20 @@ export function MarkdownViewer({
             pre: ({ children, node }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)
 
-              // Extract and process code content for line numbers
               let codeContent = ''
 
-              // Find the code element and extract its content
               if (typeof code === 'string') {
                 codeContent = code
               }
 
-              // Clean code and trim lines and filter by lines
               const trimmedCode = codeContent.trim()
-              // Then split by newlines
               const codeLines = trimmedCode.split('\n')
-              // Filter out any empty lines at the end
               const filteredLines =
                 codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
               const hasLineNumbers = showLineNumbers && filteredLines.length > 1
 
               return (
-                <div className="relative mb-4">
+                <div className="mb-layout-md relative">
                   <CopyButton
                     className="absolute right-3 top-3 z-10"
                     buttonVariant="outline"
@@ -214,7 +202,7 @@ export function MarkdownViewer({
                   <pre className={cn('min-h-[52px]', { '!pt-[15px]': codeLines.length === 1 })}>
                     {hasLineNumbers ? (
                       <div className="relative flex w-full bg-transparent">
-                        <div className="flex-none select-none bg-cn-background-2 text-right">
+                        <div className="bg-cn-background-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
                             <span key={i} className="text-cn-foreground-7 block pr-3 pt-[0.5px] text-sm">
                               {i + 1}
@@ -230,7 +218,6 @@ export function MarkdownViewer({
                 </div>
               )
             },
-            // Rewriting the code component to support code suggestions
             code: ({ children = [], className: _className, ...props }) => {
               const code = props.node && props.node.children ? getCodeString(props.node.children) : children
 
@@ -243,7 +230,7 @@ export function MarkdownViewer({
                 return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
               }
 
-              return <code className={cn(String(_className), 'leading-6 text-sm p-0')}>{children}</code>
+              return <code className={String(_className)}>{children}</code>
             }
           }}
         />

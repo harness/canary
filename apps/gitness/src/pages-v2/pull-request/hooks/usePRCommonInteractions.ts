@@ -68,8 +68,10 @@ export function usePRCommonInteractions({
           console.warn(getErrorMessage(result))
           return ''
         }
+
         const filePath = result.file_path
-        return apiPath(`${uploadsURL}/${filePath}`)
+        const apiPathUrl = apiPath(`${uploadsURL}/${filePath}`)
+        return `${window.location.origin}${apiPathUrl}`
       } catch (exception) {
         console.warn(getErrorMessage(exception))
         return ''

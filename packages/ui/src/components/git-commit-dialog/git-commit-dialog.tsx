@@ -10,13 +10,13 @@ import {
   FormInput,
   FormWrapper,
   GitCommitFormType,
-  IconV2,
   Link,
   Message,
   MessageTheme,
   Radio,
   Tag
 } from '@/components'
+import { useTranslation } from '@/context'
 import { UsererrorError, ViolationState } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -79,6 +79,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   isSubmitting,
   error
 }) => {
+  const { t } = useTranslation()
+
   const formMethods = useForm<GitCommitSchemaType>({
     resolver: zodResolver(createGitCommitSchema(isFileNameRequired)),
     mode: 'onChange',
@@ -124,9 +126,9 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={handleDialogClose}>
-      <Dialog.Content size="md">
+      <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title>Commit Changes</Dialog.Title>
+          <Dialog.Title>{t('component:commitDialog.title', 'Commit changes')}</Dialog.Title>
         </Dialog.Header>
 
         <Dialog.Body>
@@ -134,81 +136,111 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
             {isFileNameRequired && (
               <FormInput.Text
                 id="fileName"
-                label="File Name"
+                label={t('component:commitDialog.form.file.label', 'File name')}
                 {...register('fileName')}
-                placeholder="Add a file name"
+                placeholder={t('component:commitDialog.form.file.placeholder', 'Add a file name')}
                 autoFocus
               />
             )}
+
             <FormInput.Text
               autoFocus={!isFileNameRequired}
               id="message"
-              label="Commit Message"
+              label={t('component:commitDialog.form.commit.label', 'Commit message')}
               {...register('message')}
-              placeholder={commitTitlePlaceHolder ?? 'Add a commit message'}
+              placeholder={
+                commitTitlePlaceHolder ?? t('component:commitDialog.form.commit.placeholder', 'Add a commit message')
+              }
             />
+
             <FormInput.Textarea
               id="description"
               {...register('description')}
-              placeholder="Add an optional extended description"
-              label="Extended description"
+              placeholder={t(
+                'component:commitDialog.form.description.placeholder',
+                'Add an optional extended description'
+              )}
+              label={t('component:commitDialog.form.description.label', 'Extended description')}
             />
-            <ControlGroup>
-              <FormInput.Radio className="gap-6" id="commitToGitRef" {...register('commitToGitRef')}>
+
+            <ControlGroup className="gap-layout-sm">
+              <FormInput.Radio id="commitToGitRef" {...register('commitToGitRef')}>
                 <Radio.Item
                   id={CommitToGitRefOption.DIRECTLY}
                   className="mt-px"
                   value={CommitToGitRefOption.DIRECTLY}
                   label={
-                    <span className="flex items-center gap-2">
-                      Commit directly to the
-                      <Tag size="sm" value={currentBranch} icon="git-branch" showIcon />
-                      branch
-                    </span>
+                    <>
+                      {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to the')}
+                      <Tag
+                        className="-mt-0.5 mx-1.5 align-sub"
+                        variant="secondary"
+                        theme="blue"
+                        size="md"
+                        value={currentBranch}
+                        icon="git-branch"
+                        showIcon
+                      />
+                      {t('component:commitDialog.form.radioGroup.directly.labelSecond', 'branch')}
+                    </>
                   }
                 />
                 <Radio.Item
                   id={CommitToGitRefOption.NEW_BRANCH}
                   className="mt-px"
                   value={CommitToGitRefOption.NEW_BRANCH}
-                  label="Create a new branch for this commit and start a pull request"
+                  label={t(
+                    'component:commitDialog.form.radioGroup.new.label',
+                    'Create a new branch for this commit and start a pull request'
+                  )}
                   caption={
                     // TODO: Add correct path
-                    <Link to="/">Learn more about pull requests</Link>
+                    <Link to="/">
+                      {t('component:commitDialog.form.radioGroup.new.caption', 'Learn more about pull requests')}
+                    </Link>
                   }
                 />
               </FormInput.Radio>
+
+              {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH && (!violation || (violation && bypassable)) && (
+                <div className="ml-[26px]">
+                  <FormInput.Text
+                    autoFocus
+                    id="newBranchName"
+                    {...register('newBranchName')}
+                    placeholder={t('component:commitDialog.form.radioGroup.new.input', 'New branch name')}
+                  />
+                </div>
+              )}
+
               {violation && (
-                <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
+                <Message className="ml-[26px]" theme={MessageTheme.ERROR}>
                   {bypassable
                     ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
-                      ? 'Some rules will be bypassed to commit directly'
-                      : 'Some rules will be bypassed to commit by creating branch'
+                      ? t(
+                          'component:commitDialog.violationMessages.bypassed.directly',
+                          'Some rules will be bypassed to commit directly'
+                        )
+                      : t(
+                          'component:commitDialog.violationMessages.bypassed.new',
+                          'Some rules will be bypassed to commit by creating branch'
+                        )
                     : commitToGitRefValue === CommitToGitRefOption.DIRECTLY
-                      ? "Some rules don't allow you to commit directly"
-                      : "Some rules don't allow you to create new branch for commit"}
-                </Message>
-              )}
-              {error && error?.message && (
-                <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
-                  {error.message}
+                      ? t(
+                          'component:commitDialog.violationMessages.notAllow.directly',
+                          "Some rules don't allow you to commit directly"
+                        )
+                      : t(
+                          'component:commitDialog.violationMessages.notAllow.new',
+                          "Some rules don't allow you to create new branch for commit"
+                        )}
                 </Message>
               )}
 
-              {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH && (!violation || (violation && bypassable)) && (
-                <div className="ml-8 mt-3">
-                  <FormInput.Text
-                    autoFocus
-                    prefix={
-                      <div className="grid place-items-center px-2">
-                        <IconV2 name="git-branch" size="xs" />
-                      </div>
-                    }
-                    id="newBranchName"
-                    {...register('newBranchName')}
-                    placeholder="New Branch Name"
-                  />
-                </div>
+              {error && error?.message && (
+                <Message className="ml-[26px]" theme={MessageTheme.ERROR}>
+                  {error.message}
+                </Message>
               )}
             </ControlGroup>
           </FormWrapper>
@@ -217,17 +249,19 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
         <Dialog.Footer>
           <ButtonLayout>
             <Dialog.Close onClick={() => handleDialogClose(false)} disabled={isSubmitting}>
-              Cancel
+              {t('component:cancel', 'Cancel')}
             </Dialog.Close>
             {!bypassable ? (
               <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
-                {isSubmitting ? 'Committing...' : 'Commit changes'}
+                {isSubmitting
+                  ? t('component:commitDialog.form.submit.loading', 'Committing...')
+                  : t('component:commitDialog.form.submit.default', 'Commit changes')}
               </Button>
             ) : (
               <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
                 {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
-                  ? 'Bypass rules and commit via new branch'
-                  : 'Bypass rules and commit directly'}
+                  ? t('component:commitDialog.form.submit.bypassable.new', 'Bypass rules and commit via new branch')
+                  : t('component:commitDialog.form.submit.bypassable.directly', 'Bypass rules and commit directly')}
               </Button>
             )}
           </ButtonLayout>

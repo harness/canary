@@ -1,6 +1,6 @@
 import { ChangeEvent, Fragment } from 'react'
 
-import { Breadcrumb, Tag, TextInput } from '@/components'
+import { Breadcrumb, CopyButton, Layout, Tag, Text, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface InputPathBreadcrumbItemProps {
@@ -23,7 +23,7 @@ const InputPathBreadcrumbItem = ({
   setParentPath
 }: InputPathBreadcrumbItemProps) => {
   return (
-    <div className="flex items-center gap-1.5 text-cn-foreground-2">
+    <Layout.Flex align="center" gap="2xs">
       <TextInput
         className="w-[200px]"
         size="sm"
@@ -41,9 +41,11 @@ const InputPathBreadcrumbItem = ({
         }}
         autoFocus={!!isNew}
       />
-      <span>in</span>
+      <Text variant="body-single-line-normal" color="foreground-3">
+        in
+      </Text>
       <Tag value={gitRefName} icon="git-branch" showIcon />
-    </div>
+    </Layout.Flex>
   )
 }
 
@@ -73,8 +75,6 @@ export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadc
 export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...props }: PathBreadcrumbsProps) => {
   const { Link } = useRouterContext()
 
-  const length = items.length
-
   const renderInput = () => {
     const { changeFileName, gitRefName, fileName, handleOnBlur, parentPath, setParentPath } = props
 
@@ -96,50 +96,28 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...pro
   }
 
   return (
-    <Breadcrumb.Root>
-      <Breadcrumb.List>
-        {items.map(({ parentPath, path }, idx) => {
-          const isLast = length === idx + 1
-
-          if (isLast) {
-            return (
-              <Breadcrumb.Item key={idx}>
-                {isEdit && length === 1 ? (
-                  <>
-                    <Breadcrumb.Page>{path}</Breadcrumb.Page>
-                    <Breadcrumb.Separator />
-                    {renderInput()}
-                  </>
-                ) : isEdit ? (
-                  renderInput()
-                ) : (
-                  <Breadcrumb.Page>{path}</Breadcrumb.Page>
-                )}
-              </Breadcrumb.Item>
-            )
-          }
-
-          return (
+    <Layout.Flex gap="2xs" align="center" wrap="wrap">
+      <Breadcrumb.Root>
+        <Breadcrumb.List>
+          {items.map(({ parentPath, path }, idx) => (
             <Fragment key={idx}>
               <Breadcrumb.Item>
                 <Breadcrumb.Link asChild>
                   <Link to={parentPath}>{path}</Link>
                 </Breadcrumb.Link>
               </Breadcrumb.Item>
-              <Breadcrumb.Separator />
+              {idx < items.length - 1 && <Breadcrumb.Separator />}
             </Fragment>
-          )
-        })}
+          ))}
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
 
-        {isNew && (
-          <>
-            {!!items.length && <Breadcrumb.Separator />}
-            <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>
-          </>
-        )}
-      </Breadcrumb.List>
-      <Breadcrumb.Copy name={fullResourcePath ?? ''} />
-    </Breadcrumb.Root>
+      <Layout.Flex gap="2xs" align="center">
+        {(isNew || isEdit) && renderInput()}
+
+        <CopyButton name={fullResourcePath || 'Copy path'} />
+      </Layout.Flex>
+    </Layout.Flex>
   )
 }
 

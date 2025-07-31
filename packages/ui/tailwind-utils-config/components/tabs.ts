@@ -25,6 +25,7 @@ export default {
     },
 
     '&-underlined': {
+      minHeight: 'inherit',
       borderBottom: 'var(--cn-tabs-container-border) solid var(--cn-border-3)',
       gap: 'var(--cn-tabs-underlined-container-gap)',
       '@apply font-body-normal': ''
@@ -104,11 +105,12 @@ export default {
     },
 
     '&-underlined': {
+      position: 'relative',
+      bottom: '-1px',
       minHeight: 'var(--cn-tabs-item-underlined-min-height)',
       padding: 'var(--cn-tabs-item-underlined-py) var(--cn-tabs-item-underlined-px)',
       paddingBottom: 'calc(var(--cn-tabs-item-underlined-py) - 1px)', // to compensate for the border and keep the height consistent to the design
       gap: 'var(--cn-tabs-item-underlined-gap)',
-      marginBottom: '-1px',
       color: 'var(--cn-text-2)',
       borderBottom: 'var(--cn-tabs-item-underlined-border) solid transparent',
       '@apply font-body-normal': '',

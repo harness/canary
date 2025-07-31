@@ -1,6 +1,6 @@
 import { KeyboardEvent } from 'react'
 
-import { ButtonGroup, ButtonGroupButtonProps, useCopyButton } from '@/components'
+import { ButtonGroup, ButtonGroupButtonProps, Text, useCopyButton } from '@/components'
 import { useRouterContext } from '@/context'
 
 export const CommitCopyActions = ({
@@ -26,7 +26,11 @@ export const CommitCopyActions = ({
       size="sm"
       buttonsProps={[
         {
-          children: sha.substring(0, 6),
+          children: (
+            <Text variant="body-single-line-normal" color="inherit">
+              {sha.substring(0, 6)}
+            </Text>
+          ),
           onClick: handleNavigation,
           onKeyDown: handleKeyDown,
           className: 'font-mono'

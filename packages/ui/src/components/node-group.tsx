@@ -2,6 +2,8 @@ import { ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
 
+import { IconV2 } from './icon-v2'
+
 interface NodeGroupRootProps {
   className?: string
   children: ReactNode
@@ -38,7 +40,7 @@ function Icon({
           className
         )}
       >
-        {simpleNodeIcon ? <div className="size-1 rounded-full bg-icons-8" /> : <>{children}</>}
+        {simpleNodeIcon ? <IconV2 name="circle" size="xs" /> : <>{children}</>}
       </div>
     </div>
   )

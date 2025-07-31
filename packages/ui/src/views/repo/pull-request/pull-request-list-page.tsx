@@ -199,7 +199,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     setSelectedFiltersCnt(filterValues.length)
   }
 
-  const showTopBar = !noData || selectedFiltersCnt > 0 || !!searchQuery?.length
+  const hasActiveFilters = selectedFiltersCnt > 0 || searchQuery || !!defaultSelectedAuthor
+
+  const showTopBar = !noData || hasActiveFilters
 
   const renderListContent = () => {
     if (isLoading) {
@@ -207,7 +209,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     }
 
     if (noData) {
-      return selectedFiltersCnt > 0 || searchQuery ? (
+      return hasActiveFilters ? (
         <StackedList.Root className="grow place-content-center">
           <NoData
             imageName="no-search-magnifying-glass"

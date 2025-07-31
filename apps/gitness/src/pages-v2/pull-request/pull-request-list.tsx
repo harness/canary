@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import {
@@ -23,7 +23,8 @@ import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery, prState } = usePullRequestListStore()
+  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery, prState, setPrState } =
+    usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
   const { repoData } = useGitRef()
 
@@ -40,6 +41,15 @@ export default function PullRequestListPage() {
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
+  const [shouldSwitchToClosed, setShouldSwitchToClosed] = useState(false)
+
+  const shouldSwitchToClosedTab = useCallback(
+    (hasAuthorFilter: boolean, openCount: number, closedCount: number): boolean => {
+      return hasAuthorFilter && openCount === 0 && closedCount > 0
+    },
+    []
+  )
+
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
       queryParams: {
@@ -47,6 +57,8 @@ export default function PullRequestListPage() {
         state: prState,
         query: query ?? '',
         exclude_description: true,
+        sort: 'updated',
+        order: 'desc',
         ...filterValues
       },
       repo_ref: repoRef,
@@ -55,6 +67,51 @@ export default function PullRequestListPage() {
       }
     },
     { retry: false }
+  )
+
+  // Make separate API calls to get open and closed PR counts for the filtered author
+  const { data: { body: openPRData } = {} } = useListPullReqQuery(
+    {
+      queryParams: {
+        page: 1,
+        state: ['open'],
+        query: query ?? '',
+        exclude_description: true,
+        sort: 'updated',
+        order: 'desc',
+        ...filterValues
+      },
+      repo_ref: repoRef,
+      stringifyQueryParamsOptions: {
+        arrayFormat: 'repeat'
+      }
+    },
+    {
+      retry: false,
+      enabled: !!defaultAuthorId // Only make this call when author filter is applied
+    }
+  )
+
+  const { data: { body: closedPRData } = {} } = useListPullReqQuery(
+    {
+      queryParams: {
+        page: 1,
+        state: ['closed', 'merged'],
+        query: query ?? '',
+        exclude_description: true,
+        sort: 'updated',
+        order: 'desc',
+        ...filterValues
+      },
+      repo_ref: repoRef,
+      stringifyQueryParamsOptions: {
+        arrayFormat: 'repeat'
+      }
+    },
+    {
+      retry: false,
+      enabled: !!defaultAuthorId // Only make this call when author filter is applied
+    }
   )
 
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
@@ -129,6 +186,22 @@ export default function PullRequestListPage() {
       setPullRequests(validPullRequests, headers)
     }
   }, [pullRequestData, headers, setPullRequests])
+
+  useEffect(() => {
+    if (defaultAuthorId && openPRData && closedPRData) {
+      const openCount = Array.isArray(openPRData) ? openPRData.length : 0
+      const closedCount = Array.isArray(closedPRData) ? closedPRData.length : 0
+
+      const shouldSwitch = shouldSwitchToClosedTab(!!defaultAuthorId, openCount, closedCount)
+
+      if (shouldSwitch && !shouldSwitchToClosed) {
+        setShouldSwitchToClosed(true)
+        setPrState(['closed', 'merged'])
+      }
+
+      setOpenClosePullRequests(openCount, closedCount)
+    }
+  }, [defaultAuthorId, openPRData, closedPRData, shouldSwitchToClosed, shouldSwitchToClosedTab])
 
   useEffect(() => {
     const { num_open_pulls = 0, num_closed_pulls = 0, num_merged_pulls = 0 } = repoData || {}

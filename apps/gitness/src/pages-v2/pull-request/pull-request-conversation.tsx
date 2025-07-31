@@ -241,9 +241,8 @@ export default function PullRequestConversationPage() {
   const {
     searchLabel,
     changeSearchLabel,
-    labels,
     isLabelsLoading,
-    labelsValues,
+    assignableLabels,
     handleAddLabel,
     handleRemoveLabel,
     appliedLabels
@@ -913,8 +912,7 @@ export default function PullRequestConversationPage() {
             review_decision: val.review_decision,
             sha: val.sha
           })),
-          labelsList: labels,
-          labelsValues,
+          assignableLabels: assignableLabels,
           PRLabels: appliedLabels,
           searchLabelQuery: searchLabel,
           setSearchLabelQuery: changeSearchLabel,

@@ -4,7 +4,7 @@ import { Button, DropdownMenu, IconV2, SearchBox, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
-import { HandleAddLabelType, LabelValueType } from '@/views'
+import { HandleAddLabelType, TypesLabelValueInfo } from '@/views'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 
@@ -26,7 +26,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
   const { values, isAllowAddNewValue } = useMemo(() => {
     if (!label?.values)
       return {
-        values: [] as LabelValueType[],
+        values: [] as TypesLabelValueInfo[],
         isAllowAddNewValue: !!searchState.length
       }
 
@@ -37,14 +37,14 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
       }
 
     return label.values.reduce<{
-      values: LabelValueType[]
+      values: TypesLabelValueInfo[]
       isAllowAddNewValue: boolean
     }>(
       (acc, item) => {
         const lowerCaseSearchState = searchState.toLowerCase()
-        const lowerCaseValue = item.value.toLowerCase()
+        const lowerCaseValue = item.value?.toLowerCase()
 
-        if (lowerCaseValue.includes(lowerCaseSearchState)) {
+        if (lowerCaseValue?.includes(lowerCaseSearchState)) {
           acc.values.push(item)
         }
 
@@ -58,16 +58,16 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
     )
   }, [label?.values, searchState])
 
-  const handleOnSelect = (value: LabelValueType) => (e: Event) => {
+  const handleOnSelect = (value: TypesLabelValueInfo) => (e: Event) => {
     e.preventDefault()
 
-    handleAddOrRemoveLabel({ label_id: label.id, value_id: value.id }, label.selectedValueId === value.id)
+    handleAddOrRemoveLabel({ label_id: label.id ?? -1, value_id: value?.id ?? -1 }, label.selectedValueId === value.id)
   }
 
   const handleAddNewValue = () => {
     if (!searchState.length) return
 
-    handleAddOrRemoveLabel({ label_id: label.id, value: searchState }, false)
+    handleAddOrRemoveLabel({ label_id: label.id ?? -1, value: searchState }, false)
   }
 
   const getSearchBoxPlaceholder = () => {
@@ -100,7 +100,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         >
           <div className="max-w-20 pr-2">
-            <Tag variant="secondary" size="sm" theme={label.color} value={label.key} />
+            <Tag variant="secondary" size="sm" theme={label.color} value={label.key ?? ''} />
           </div>
         </SearchBox.Root>
 
@@ -119,7 +119,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         <DropdownMenu.Item
           key={value.id}
           onSelect={handleOnSelect(value)}
-          tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: value.value }}
+          tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: value.value ?? '' }}
           checkmark={label.selectedValueId === value.id}
         />
       ))}

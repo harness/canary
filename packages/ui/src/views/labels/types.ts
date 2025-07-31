@@ -1,3 +1,4 @@
+import { EnumLabelColor } from '@views/repo/pull-request'
 import { z } from 'zod'
 
 export enum LabelType {
@@ -81,6 +82,51 @@ export interface LabelValueType {
 }
 
 export type LabelValuesType = Record<string, LabelValueType[]>
+
+export interface TypesLabelValueInfo {
+  color?: string | null
+  id?: number | null
+  value?: string | null
+}
+
+export type EnumLabelType = 'dynamic' | 'static'
+
+export interface TypesLabelAssignment {
+  assigned?: boolean | null
+  assigned_value?: TypesLabelValueInfo
+  color?: EnumLabelColor
+  id?: number
+  key?: string
+  scope?: number
+  type?: EnumLabelType
+  values?: TypesLabelValueInfo[]
+}
+
+export type TypesRepositoryCore = {
+  default_branch?: string
+  id?: number
+  identifier?: string
+  parent_id?: number
+  path?: string
+} | null
+
+export interface TypesSpaceCore {
+  id?: number
+  identifier?: string
+  parent_id?: number
+  path?: string
+}
+
+export interface TypesScopeData {
+  repository?: TypesRepositoryCore
+  scope?: number
+  space?: TypesSpaceCore
+}
+
+export interface TypesScopesLabels {
+  label_data?: TypesLabelAssignment[] | null
+  scope_data?: TypesScopeData[] | null
+}
 
 export interface SetRepoSpaceRefProps {
   repo_ref?: string

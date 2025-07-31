@@ -2,7 +2,14 @@ import { useParams } from 'react-router-dom'
 
 import { CodeModes } from '@harnessio/ui/views'
 
-import { isRefABranch, isRefACommitSHA, isRefATag, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
+import {
+  isRefABranch,
+  isRefACommitSHA,
+  isRefATag,
+  normalizeGitRef,
+  REFS_BRANCH_PREFIX,
+  REFS_TAGS_PREFIX
+} from '../utils/git-utils'
 import { removeLeadingSlash, removeTrailingSlash } from '../utils/path-utils'
 
 const useCodePathDetails = () => {
@@ -20,19 +27,22 @@ const useCodePathDetails = () => {
   // Split the restPath into gitRef and resourcePath
   const [rawSubGitRef = '', rawResourcePath = ''] = restPath.split('~')
 
-  let effectiveGitRef = ''
+  let gitRefToNormalize = ''
   if (rawSubGitRef) {
-    effectiveGitRef = rawSubGitRef
+    gitRefToNormalize = rawSubGitRef
   } else if (branchId) {
-    effectiveGitRef = `${REFS_BRANCH_PREFIX}${branchId}`
+    gitRefToNormalize = branchId
   } else if (tagId) {
-    effectiveGitRef = `${REFS_TAGS_PREFIX}${tagId}`
+    gitRefToNormalize = tagId
   } else if (commitSHA) {
-    effectiveGitRef = commitSHA
+    gitRefToNormalize = commitSHA
+  } else {
+    gitRefToNormalize = branchId || ''
   }
+  let effectiveGitRef = normalizeGitRef(gitRefToNormalize)
 
   // Normalize values
-  const fullGitRef = removeTrailingSlash(effectiveGitRef)
+  const fullGitRef = removeTrailingSlash(effectiveGitRef || '')
   const fullResourcePath = removeLeadingSlash(rawResourcePath)
 
   let gitRefName = ''

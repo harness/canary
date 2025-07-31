@@ -170,8 +170,7 @@ export const filenameToLanguage = (name?: string): string | undefined => {
 
 export const isRefATag = (gitRef?: string) => gitRef?.includes(REFS_TAGS_PREFIX) || false
 export const isRefABranch = (gitRef?: string) => gitRef?.includes(REFS_BRANCH_PREFIX) || false
-export const isRefACommitSHA = (gitRef?: string) =>
-  gitRef ? !(gitRef?.startsWith(REFS_BRANCH_PREFIX) || gitRef?.startsWith(REFS_TAGS_PREFIX)) : false
+export const isRefACommitSHA = (gitRef?: string) => /^[0-9a-f]{7,40}$/i.test(gitRef || '')
 
 // Check if gitRef is a git commit hash (https://github.com/diegohaz/is-git-rev, MIT © Diego Haz)
 export const isGitRev = (gitRef = ''): boolean => /^[0-9a-f]{7,40}$/i.test(gitRef)

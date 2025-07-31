@@ -41,6 +41,7 @@ import { sortFilesByType } from '../../utils/common-utils'
 import {
   decodeGitContent,
   getTrimmedSha,
+  isRefATag,
   normalizeGitRef,
   REFS_BRANCH_PREFIX,
   REFS_TAGS_PREFIX
@@ -90,9 +91,9 @@ export default function RepoSummaryPage() {
   // Navigate to default branch if no branch is selected
   useEffect(() => {
     if (!fullGitRefWoDefault && prefixedDefaultBranch && fullGitRef) {
-      navigate(routes.toRepoSummary({ spaceId, repoId, '*': fullGitRef }))
+      navigate(routes.toRepoSummary({ spaceId, repoId, '*': isRefATag(fullGitRef) ? fullGitRef : gitRefName }))
     }
-  }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef])
+  }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef, gitRefName])
 
   useEffect(() => {
     if (branchDivergence.length) {
@@ -141,10 +142,7 @@ export default function RepoSummaryPage() {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      const newRef =
-        type === BranchSelectorTab.TAGS
-          ? `${REFS_TAGS_PREFIX + branchTagName.name}`
-          : `${REFS_BRANCH_PREFIX + branchTagName.name}`
+      const newRef = type === BranchSelectorTab.TAGS ? `${REFS_TAGS_PREFIX + branchTagName.name}` : branchTagName.name
       setPreSelectedTab(type)
       navigate(routes.toRepoSummary({ spaceId, repoId, '*': newRef }))
     },

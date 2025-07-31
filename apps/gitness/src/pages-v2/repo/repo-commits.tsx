@@ -11,7 +11,7 @@ import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 
 export default function RepoCommitsPage() {
   const routes = useRoutes()
@@ -20,6 +20,9 @@ export default function RepoCommitsPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const { gitRefName, fullGitRef } = useCodePathDetails()
   const { toRepoCommits } = useRepoCommits()
+
+  console.log('gitRefName', gitRefName)
+  console.log('fullGitRef', fullGitRef)
 
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
@@ -47,10 +50,7 @@ export default function RepoCommitsPage() {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      const newRef =
-        type === BranchSelectorTab.TAGS
-          ? `${REFS_TAGS_PREFIX + branchTagName.name}`
-          : `${REFS_BRANCH_PREFIX + branchTagName.name}`
+      const newRef = type === BranchSelectorTab.TAGS ? `${REFS_TAGS_PREFIX + branchTagName.name}` : branchTagName.name
       setPreSelectedTab(type)
       navigate(toRepoCommits({ spaceId, repoId, fullGitRef: newRef, gitRefName: branchTagName.name }))
     },

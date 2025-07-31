@@ -18,7 +18,7 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
-import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { FILE_SEPERATOR, isRefATag, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
@@ -58,9 +58,9 @@ export const RepoSidebar = () => {
   // Navigate to default branch if no branch is selected
   useEffect(() => {
     if (!fullGitRefWoDefault && prefixedDefaultBranch && fullGitRef) {
-      navigate(routes.toRepoFiles({ spaceId, repoId, '*': fullGitRef }))
+      navigate(routes.toRepoFiles({ spaceId, repoId, '*': isRefATag(fullGitRef) ? fullGitRef : gitRefName }))
     }
-  }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef])
+  }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef, gitRefName])
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -137,7 +137,7 @@ export const RepoSidebar = () => {
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
         setPreSelectedTab(type)
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}`)
+        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branchTagName.name}`)
       } else if (type === BranchSelectorTab.TAGS) {
         setPreSelectedTab(type)
         navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)

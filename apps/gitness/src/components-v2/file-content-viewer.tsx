@@ -141,7 +141,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
 
         return (
           <CodeEditor
-            className="overflow-hidden rounded-b-md border-x border-b"
+            className="overflow-hidden"
             height="100%"
             language={language}
             codeRevision={{ code: fileContent }}
@@ -157,7 +157,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       case 'code':
         return (
           <CodeEditor
-            className="overflow-hidden rounded-b-md border-x border-b"
+            className="overflow-hidden"
             height="100%"
             language={language}
             codeRevision={{ code: fileContent }}

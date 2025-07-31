@@ -543,6 +543,7 @@
     "changereq": "Changement Demandé",
     "split": "Diviser",
     "unified": "Unifié",
+    "searchUsers": "Rechercher des utilisateurs",
     "searchLabels": "Rechercher des étiquettes..",
     "compareChangesFormDescriptionLabel": "Description",
     "selectUsersUGAndServiceAccounts": "Sélectionner des utilisateurs, des groupes d'utilisateurs et des comptes de service",

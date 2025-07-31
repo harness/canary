@@ -41,6 +41,8 @@ export interface PullRequestSideBarProps {
   editLabelsProps: LinkProps
   removeLabel?: (id: number) => void
   isCreatingPr?: boolean
+  isReviewersLoading?: boolean
+  isLabelsLoading?: boolean
 }
 
 export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
@@ -63,7 +65,9 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   addLabel,
   editLabelsProps,
   removeLabel,
-  isCreatingPr = false
+  isCreatingPr = false,
+  isReviewersLoading = false,
+  isLabelsLoading = false
 }) => {
   return (
     <>
@@ -76,6 +80,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
           handleDelete={handleDelete}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          isReviewersLoading={isReviewersLoading}
         />
         <ReviewersList
           reviewers={reviewers}
@@ -97,6 +102,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
             removeLabel={removeLabel}
             searchQuery={searchLabelQuery}
             setSearchQuery={setSearchLabelQuery}
+            isLabelsLoading={isLabelsLoading}
           />
           <LabelsList
             showReset={true}
@@ -112,3 +118,5 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
     </>
   )
 }
+
+PullRequestSideBar.displayName = 'PullRequestSideBar'

@@ -17,6 +17,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
 
   return (
     <PullRequestComparePage
+      isLabelsLoading={false}
       principalProps={{}}
       desc=""
       setDesc={noop}

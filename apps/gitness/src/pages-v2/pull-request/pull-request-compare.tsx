@@ -158,7 +158,11 @@ export const CreatePullRequest = () => {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
 
-  const { labels: labelsList, values: labelsValues } = useGetRepoLabelAndValuesData({
+  const {
+    labels: labelsList,
+    values: labelsValues,
+    isLoading: isLabelsLoading
+  } = useGetRepoLabelAndValuesData({
     query: searchLabel,
     inherited: true,
     limit: 100
@@ -526,6 +530,7 @@ export const CreatePullRequest = () => {
         useRepoCommitsStore={useRepoCommitsStore}
         repoId={repoId}
         spaceId={spaceId || ''}
+        isLabelsLoading={isLabelsLoading}
         onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}

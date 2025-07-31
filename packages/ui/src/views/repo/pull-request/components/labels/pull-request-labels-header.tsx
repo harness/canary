@@ -36,6 +36,7 @@ interface LabelsHeaderProps {
   removeLabel?: (id: number) => void
   searchQuery?: string
   setSearchQuery?: (query: string) => void
+  isLabelsLoading?: boolean
 }
 
 export const LabelsHeader = ({
@@ -46,7 +47,8 @@ export const LabelsHeader = ({
   editLabelsProps,
   removeLabel,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  isLabelsLoading
 }: LabelsHeaderProps) => {
   const { t } = useTranslation()
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
@@ -134,25 +136,28 @@ export const LabelsHeader = ({
               <SearchInput size="sm" autoFocus id="search" defaultValue={searchQuery} onChange={handleSearchQuery} />
             </DropdownMenu.Header>
 
-            {labelsListWithValues?.map((label, idx) => (
-              <DropdownMenu.Item
-                key={`${label.id}-${idx}`}
-                onSelect={handleOnSelect(label)}
-                title={
-                  <Tag
-                    variant="secondary"
-                    size="sm"
-                    theme={label.color}
-                    label={label.key}
-                    value={(label.values?.length || '').toString()}
-                  />
-                }
-                description={<Text truncate>{label.description}</Text>}
-                checkmark={label.isSelected}
-              />
-            ))}
+            {isLabelsLoading && <DropdownMenu.Spinner />}
 
-            {!labelsListWithValues.length && (
+            {!isLabelsLoading &&
+              labelsListWithValues?.map((label, idx) => (
+                <DropdownMenu.Item
+                  key={`${label.id}-${idx}`}
+                  onSelect={handleOnSelect(label)}
+                  title={
+                    <Tag
+                      variant="secondary"
+                      size="sm"
+                      theme={label.color}
+                      label={label.key}
+                      value={(label.values?.length || '').toString()}
+                    />
+                  }
+                  description={<Text truncate>{label.description}</Text>}
+                  checkmark={label.isSelected}
+                />
+              ))}
+
+            {!labelsListWithValues.length && !isLabelsLoading && (
               <DropdownMenu.NoOptions>{t('views:pullRequests.noLabels', 'No labels found')}</DropdownMenu.NoOptions>
             )}
 

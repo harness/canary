@@ -95,6 +95,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   onGetFullDiff: (path?: string) => Promise<string | void>
   toRepoFileDetails?: ({ path }: { path: string }) => string
   sourceBranch?: string
+  isLabelsLoading?: boolean
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -139,7 +140,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   removeLabel,
   editLabelsProps,
   branchSelectorRenderer,
-  toPullRequestConversation
+  toPullRequestConversation,
+  isLabelsLoading
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
 
@@ -380,6 +382,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       </div>
                     </div>
                     <PullRequestSideBar
+                      isReviewersLoading={principalProps?.isPrincipalsLoading}
+                      isLabelsLoading={isLabelsLoading}
                       addReviewers={handleAddReviewer}
                       currentUserId={currentUser}
                       pullRequestMetadata={{ source_sha: '' }}

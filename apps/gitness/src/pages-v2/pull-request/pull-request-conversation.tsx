@@ -238,12 +238,20 @@ export default function PullRequestConversationPage() {
   /**
    * get all label-related data
    */
-  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } =
-    usePrConversationLabels({
-      repoRef,
-      prId,
-      refetchData: refetchActivities
-    })
+  const {
+    searchLabel,
+    changeSearchLabel,
+    labels,
+    isLabelsLoading,
+    labelsValues,
+    handleAddLabel,
+    handleRemoveLabel,
+    appliedLabels
+  } = usePrConversationLabels({
+    repoRef,
+    prId,
+    refetchData: refetchActivities
+  })
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
 
@@ -875,7 +883,7 @@ export default function PullRequestConversationPage() {
         // TODO: create useMemo of sideBarProps
         sideBarProps={{
           addReviewers: handleAddReviewer,
-
+          isLabelsLoading,
           currentUserId: currentUserData?.uid,
           pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
           processReviewDecision,

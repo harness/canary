@@ -1,6 +1,6 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, Button, IconV2, Input, Layout, MoreActionsTooltip, NodeGroup, Text } from '@/components'
+import { Avatar, Button, IconV2, Layout, MoreActionsTooltip, NodeGroup, Text, TextInput } from '@/components'
 import { HandleUploadType, PrincipalPropsType, PrincipalsMentionMap, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
@@ -333,16 +333,11 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   ) : (
                     <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
                       {!!currentUser && <Avatar name={currentUser} rounded />}
-                      <Input
-                        className="bg-cn-background-2"
+                      <TextInput
+                        wrapperClassName="flex-1"
                         placeholder="Reply here"
-                        size="md"
-                        onClick={() => {
-                          setHideReplyHere?.(true)
-                        }}
-                        onChange={e => {
-                          setComment(e.target.value)
-                        }}
+                        onClick={() => setHideReplyHere?.(true)}
+                        onChange={e => setComment(e.target.value)}
                       />
                     </div>
                   )}

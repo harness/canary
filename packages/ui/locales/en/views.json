@@ -551,6 +551,7 @@
     "changereq": "Changes Requested",
     "split": "Split",
     "unified": "Unified",
+    "searchUsers": "Search users",
     "searchLabels": "Search",
     "compareChangesFormDescriptionLabel": "Description",
     "selectUsersUGAndServiceAccounts": "Select users, user groups and service accounts",

@@ -36,14 +36,8 @@ const formSchema = z.object({
     .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
   description: z.string(),
   defaultBranch: z.string().min(1, { message: 'Please provide a name to initialize the default branch' }),
-  customBranchRadio: z
-    .string()
-    .min(1, { message: 'Please provide a name to initialize the default branch' })
-    .optional(),
-  customBranchInput: z
-    .string()
-    .min(1, { message: 'Please provide a name to initialize the default branch' })
-    .optional(),
+  customBranchRadio: z.string().optional(),
+  customBranchInput: z.string().optional(),
   gitignore: z.string().optional(),
   license: z.string().optional(),
   access: z.enum(['1', '2'], { errorMap: () => ({ message: 'Please select who has access' }) }),

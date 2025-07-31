@@ -82,7 +82,7 @@ export default {
           warning: 'var(--cn-border-warning)',
           danger: 'var(--cn-border-danger)',
           success: 'var(--cn-border-success)',
-          accent: 'var(--cn-border-accent)',
+          accent: 'var(--cn-border-brand)',
 
           // remove
           // update to focus, disabled, success, danger, warning

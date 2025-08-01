@@ -10,7 +10,7 @@ export default {
     borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
     fontSize: `var(--cn-font-size-0)`,
-    fontWeight: `var(--cn-font-weight-default-normal-400)`,
+    fontWeight: `var(--cn-font-weight-default-normal-500)`,
     '@apply shrink-0': '',
 
     '&:where(.cn-avatar-sm)': {
@@ -23,7 +23,8 @@ export default {
     '&:where(.cn-avatar-lg)': {
       height: `var(--cn-avatar-size-lg)`,
       width: `var(--cn-avatar-size-lg)`,
-      fontSize: `var(--cn-font-size-2)`
+      fontSize: `var(--cn-font-size-2)`,
+      fontWeight: `var(--cn-font-weight-default-normal-400)`,
     },
 
     '&:where(.cn-avatar-rounded)': {

@@ -87,7 +87,7 @@ function Content({ children, maxWidth, className }: ContentProps) {
   return (
     <div
       className={cn(
-        'px-5 pt-7 pb-11 flex flex-col grow w-full',
+        'cn-sandbox-layout-content',
         { [`max-w-${maxWidth} mx-auto`]: !!maxWidth },
         className
       )}

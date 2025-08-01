@@ -160,10 +160,13 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         currentBranch={fullGitRef || selectedBranchTag?.name || ''}
         isNew={false}
       />
-      <Tabs.Root value={view} onValueChange={onChangeView} className="flex flex-col h-full">
+      <Tabs.Root
+        className="flex flex-col h-full"
+        value={view as string}
+        onValueChange={val => onChangeView(val as ViewTypeValue)}
+      >
         <FileViewerControlBar
           view={view}
-          onChangeView={onChangeView}
           isMarkdown={getIsMarkdown(language)}
           fileBytesSize={formatBytes(repoContent?.content?.size || 0)}
           fileContent={fileContent}

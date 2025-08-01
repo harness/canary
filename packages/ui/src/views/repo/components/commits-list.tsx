@@ -67,11 +67,11 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start py-3 pl-5 pr-3"
+                      className="flex !cursor-default items-start p-layout-sm pl-layout-xs"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
-                      <Layout.Horizontal className="w-full">
+                      <Layout.Horizontal className="w-full pl-layout-md">
                         <Link
                           className="grow overflow-hidden"
                           onClick={e => {
@@ -104,7 +104,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                           </Layout.Vertical>
                         </Link>
                         {!!commit?.sha && (
-                          <Layout.Horizontal className="gap-2.5" align="center">
+                          <Layout.Horizontal gap="sm" align="center">
                             <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                             <Button
                               title="View repository at this point of history"

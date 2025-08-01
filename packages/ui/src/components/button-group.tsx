@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { ComponentProps, FC, ReactNode } from 'react'
 
 import { Button, ButtonProps, DropdownMenu, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
@@ -14,7 +14,7 @@ type ButtonWithTooltip = BaseButtonProps & {
 
 type DropdownPropsType = {
   content: ReactNode
-  contentProps?: typeof DropdownMenu.Content
+  contentProps?: ComponentProps<typeof DropdownMenu.Content>
 }
 
 type ButtonWithDropdown = BaseButtonProps & {

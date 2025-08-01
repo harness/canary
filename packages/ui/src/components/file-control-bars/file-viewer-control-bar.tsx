@@ -15,7 +15,6 @@ import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/typ
 
 export interface FileViewerControlBarProps {
   view: ViewTypeValue
-  onChangeView: (value: ViewTypeValue) => void
   isMarkdown: boolean
   fileBytesSize: string
   fileContent: string
@@ -28,7 +27,6 @@ export interface FileViewerControlBarProps {
 
 export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   view,
-  onChangeView,
   isMarkdown,
   fileBytesSize,
   fileContent,
@@ -81,7 +79,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   }
 
   return (
-    <StackedList.Root className="bg-cn-background-2" onlyTopRounded={view !== 'history'} borderBackground>
+    <StackedList.Root className="bg-cn-background-2" onlyTopRounded={view !== 'history'}>
       <StackedList.Item disableHover isHeader className="px-layout-md py-layout-2xs">
         <Tabs.List variant="ghost">
           {isMarkdown && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}

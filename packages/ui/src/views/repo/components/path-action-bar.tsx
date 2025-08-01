@@ -41,7 +41,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <div className="mb-4 flex items-center justify-between gap-8">
+    <div className="flex items-center justify-between gap-8">
       <PathBreadcrumbs
         isEdit={codeMode === CodeModes.EDIT}
         isNew={codeMode === CodeModes.NEW}

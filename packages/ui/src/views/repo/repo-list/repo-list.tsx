@@ -80,7 +80,7 @@ export function RepoList({
   handleResetFiltersQueryAndPages,
   isDirtyList,
   isLoading,
-  toRepository,
+  onClickRepo,
   toCreateRepo,
   toImportRepo,
   onFavoriteToggle,
@@ -162,7 +162,15 @@ export function RepoList({
             )
           }
         >
-          <Link to={toRepository?.(repo) || ''} className={cn({ 'pointer-events-none': repo.importing })}>
+          <Link
+            to="#"
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+              onClickRepo?.(repo)
+            }}
+            className={cn({ 'pointer-events-none': repo.importing })}
+          >
             <StackedList.Field
               primary
               description={repo.importing ? t('views:repos.importing', 'Importing…') : repo.description}

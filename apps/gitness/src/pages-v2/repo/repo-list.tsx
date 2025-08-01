@@ -18,6 +18,7 @@ import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
+import { getRepoUrl } from '../../utils/scope-url-utils'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
@@ -36,6 +37,8 @@ export default function ReposListPage() {
     setImportToastId
   } = useRepoStore()
   const { toast, dismiss } = useToast()
+  const { renderUrl } = useMFEContext()
+  const basename = `/ng${renderUrl}`
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -154,7 +157,23 @@ export default function ReposListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}
-      toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+      onClickRepo={(repo: RepositoryType) => {
+        const toRepository = getRepoUrl({
+          repo,
+          scope: {
+            accountId: accountId || '',
+            orgIdentifier,
+            projectIdentifier
+          },
+          toRepository: () => routes.toRepoSummary({ spaceId, repoId: repo.name })
+        })
+
+        const fullPath = `${basename}${toRepository}`
+        /**
+         * @todo fix this properly to avoid full page refresh. Currently, not able to navigate properly with react router.
+         */
+        window.location.href = fullPath
+      }}
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}

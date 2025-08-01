@@ -24,6 +24,10 @@ export const determineScope = ({
   }
 }
 
+/**
+ * Returns the scoped path for a repository, excluding the account ID and repository identifier.
+ * For "accountId/orgId/projectId/repoId" -> returns "orgId/projectId"
+ */
 export const getScopedPath = ({
   accountId,
   repoIdentifier,

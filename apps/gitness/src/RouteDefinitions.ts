@@ -12,6 +12,7 @@ export type PathParams = {
   labelId?: string
   branchId?: string
   tagId?: string
+  '*'?: string
 }
 
 export const PathProps = {

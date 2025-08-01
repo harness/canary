@@ -67,7 +67,9 @@ export const CreatePullRequest = () => {
   const [desc, setDesc] = useState('')
   const [prTemplate, setPrTemplate] = useState<string>()
   const createPullRequestMutation = useCreatePullReqMutation({})
-  const { repoId, spaceId, diffRefs } = useParams<PathParams>()
+  const params = useParams<PathParams>()
+  const { repoId, spaceId } = params
+  const diffRefs = params.diffRefs || params['*']
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]

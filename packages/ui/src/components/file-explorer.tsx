@@ -6,16 +6,17 @@ import { cn } from '@utils/cn'
 
 interface ItemProps extends GridProps {
   icon: NonNullable<IconPropsV2['name']>
+  isActive?: boolean
 }
 
-const Item = ({ className, children, icon, ...props }: ItemProps) => {
+const Item = ({ className, children, icon, isActive, ...props }: ItemProps) => {
   return (
     <Layout.Grid
       align="center"
       gap="2xs"
       flow="column"
       justify="start"
-      className={cn('py-layout-2xs pr-1.5 rounded', className)}
+      className={cn('py-layout-2xs pr-1.5 rounded', { 'bg-cn-background-hover': isActive }, className)}
       {...props}
     >
       <IconV2 className="text-cn-foreground-2" name={icon} />
@@ -26,23 +27,30 @@ const Item = ({ className, children, icon, ...props }: ItemProps) => {
 
 interface FolderItemProps {
   children: ReactNode
+  level: number
   value?: string
   isActive?: boolean
   content?: ReactNode
   link: string
 }
 
-function FolderItem({ children, value = '', content, link }: FolderItemProps) {
+function FolderItem({ children, value = '', isActive, content, link, level }: FolderItemProps) {
   const { Link } = useRouterContext()
 
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
-        className="p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        className="pl-layout-2xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
         <Link to={link}>
-          <Item icon="folder">{children}</Item>
+          <Item
+            icon="folder"
+            isActive={isActive}
+            style={{ marginLeft: `calc(-16px * ${level + 1} - 8px)`, paddingLeft: `calc(16px * ${level + 1} + 8px)` }}
+          >
+            {children}
+          </Item>
         </Link>
       </Accordion.Trigger>
 
@@ -70,8 +78,8 @@ function FileItem({ children, isActive, level, link }: FileItemProps) {
   const comp = (
     <Item
       icon="page"
-      className={cn({ 'bg-cn-background-hover': isActive })}
-      style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level} + 2px)` : '16px' }}
+      isActive={isActive}
+      style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level})` : '16px' }}
     >
       {children}
     </Item>

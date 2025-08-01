@@ -193,22 +193,22 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{blue.50}",
+          "$value": "{blue.100}",
           "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{blue.950}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.850}",
+          "$value": "{blue.900}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.850}",
+          "$value": "{blue.900}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },

@@ -161,7 +161,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.1}",
         "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}",
@@ -173,7 +173,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontWeight": "{fontWeight.default.normal.300}",
         "fontSize": "{fontSize.1}",
         "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}",
@@ -185,7 +185,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.1}",
         "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}",
@@ -197,7 +197,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"
@@ -208,7 +208,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontWeight": "{fontWeight.default.normal.300}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"
@@ -219,7 +219,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"

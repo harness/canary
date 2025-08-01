@@ -223,8 +223,8 @@
     },
     "1": {
       "$type": "fontSizes",
-      "$value": "0.75rem",
-      "$description": "12px"
+      "$value": "0.813rem",
+      "$description": "13px"
     },
     "2": {
       "$type": "fontSizes",
@@ -288,8 +288,8 @@
     },
     "min": {
       "$type": "fontSizes",
-      "$value": "0.5rem",
-      "$description": "8px"
+      "$value": "0.55rem",
+      "$description": "8.8px"
     }
   },
   "lineHeight": {

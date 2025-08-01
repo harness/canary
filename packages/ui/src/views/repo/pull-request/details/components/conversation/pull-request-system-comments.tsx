@@ -384,6 +384,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
     <PullRequestTimelineItem
       // System comments doesn't support mentions
       principalsMentionMap={{}}
+      payload={payloadMain}
       setPrincipalsMentionMap={noop}
       principalProps={principalProps}
       key={payloadMain.id}

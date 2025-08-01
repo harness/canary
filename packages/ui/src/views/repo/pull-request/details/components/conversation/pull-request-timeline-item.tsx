@@ -12,7 +12,13 @@ import {
   Text,
   TextInput
 } from '@/components'
-import { HandleUploadType, PrincipalPropsType, PrincipalsMentionMap, PullRequestCommentBox } from '@/views'
+import {
+  HandleUploadType,
+  PrincipalPropsType,
+  PrincipalsMentionMap,
+  PullRequestCommentBox,
+  TypesPullReqActivity
+} from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
@@ -180,6 +186,7 @@ export interface TimelineItemProps {
   mentions?: PrincipalsMentionMap
   isDeletingComment?: boolean
   isReply?: boolean
+  payload?: TypesPullReqActivity
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -221,7 +228,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   principalsMentionMap,
   setPrincipalsMentionMap,
   mentions,
-  isDeletingComment
+  isDeletingComment,
+  payload
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
@@ -398,11 +406,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       </Button>
 
                       {isResolved && (
-                        <span className="text-2 text-cn-foreground-2">
+                        <Text variant="body-normal" color="foreground-3">
                           {/* TODO: need to identify the author who resolved the conversation */}
-                          <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this
-                          conversation as resolved.
-                        </span>
+                          <Text as="span" variant="body-strong" color="foreground-1">
+                            {payload?.resolver?.display_name}
+                          </Text>
+                          &nbsp; marked this conversation as resolved.
+                        </Text>
                       )}
                     </div>
                   </>

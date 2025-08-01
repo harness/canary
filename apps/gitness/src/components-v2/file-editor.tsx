@@ -165,37 +165,6 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
-  // const renderFileView = () => {
-  //   switch (view) {
-  //     case 'preview':
-  //       if (getIsMarkdown(language)) {
-  //         return <MarkdownViewer source={contentRevision.code} withBorder className="max-h-screen overflow-auto" />
-  //       }
-  //
-  //       return (
-  //         <CodeDiffEditor
-  //           height="100%"
-  //           language={language}
-  //           original={originalFileContent}
-  //           modified={contentRevision.code}
-  //           themeConfig={themeConfig}
-  //           theme={monacoTheme}
-  //           options={{
-  //             readOnly: true
-  //           }}
-  //         />
-  //       )
-  //
-  //     case 'edit':
-  //       return (
-  //
-  //       )
-  //
-  //     default:
-  //       return null
-  //   }
-  // }
-
   return (
     <>
       <GitCommitDialog

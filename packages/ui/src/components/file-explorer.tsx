@@ -34,6 +34,7 @@ interface FolderItemProps {
 
 function FolderItem({ children, value = '', content, link }: FolderItemProps) {
   const { Link } = useRouterContext()
+
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
@@ -46,7 +47,10 @@ function FolderItem({ children, value = '', content, link }: FolderItemProps) {
       </Accordion.Trigger>
 
       {!!content && (
-        <Accordion.Content className="pl-layout-md pb-0" containerClassName="overflow-visible">
+        <Accordion.Content
+          containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+          className="pl-layout-md pb-0"
+        >
           {content}
         </Accordion.Content>
       )}

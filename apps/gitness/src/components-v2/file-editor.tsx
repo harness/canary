@@ -206,7 +206,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         value={view as string}
         onValueChange={val => onChangeView(val as EditViewTypeValue)}
       >
-        <FileEditorControlBar view={view} onChangeView={onChangeView} />
+        <FileEditorControlBar />
 
         <Tabs.Content value="edit" className="grow">
           <CodeEditor

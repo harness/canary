@@ -57,6 +57,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       return (
         <NoData
           withBorder
+          className="min-h-0 py-cn-xl"
           imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
@@ -71,6 +72,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     return (
       <NoData
         withBorder
+        className="min-h-0 py-cn-3xl"
         imageName="no-data-branches"
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}

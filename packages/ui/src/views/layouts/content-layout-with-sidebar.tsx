@@ -44,7 +44,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   const { NavLink } = useRouterContext()
 
   return (
-    <div className="relative mx-auto flex w-full items-start gap-x-20 pr-4">
+    <div className="relative mx-auto flex h-full w-full items-start gap-x-20 pr-4">
       <div
         className="sticky w-[220px]"
         style={{
@@ -91,9 +91,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
           ))}
         </ScrollArea>
       </div>
-      <div className="flex h-[fill-available] flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">
-        {children}
-      </div>
+      <div className="flex h-full flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">{children}</div>
     </div>
   )
 }

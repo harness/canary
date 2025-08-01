@@ -573,7 +573,7 @@ mark {
 
 /* .hidden extension */
 .diffViewBlock.hiddenDiff {
-  @apply invisible h-[var(--block-height)] [contain-intrinsic-size:auto_var(--block-height)] [content-visibility:auto];
+  @apply invisible h-[var(--block-height)] [contain-intrinsic-height:auto_var(--block-height)] [content-visibility:auto];
 }
 
 .diffViewBlock.hiddenDiff > * {

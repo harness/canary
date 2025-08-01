@@ -329,7 +329,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             )}
           </NodeGroup.Title>
           {!!content && (
-            <NodeGroup.Content className={contentWrapperClassName}>
+            <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
                   <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-background-2')}>

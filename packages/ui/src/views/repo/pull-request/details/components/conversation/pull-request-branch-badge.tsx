@@ -10,7 +10,7 @@ const PullRequestBranchBadge: React.FC<BranchBadgeProps> = ({ branchName, spaceI
   const { Link } = useRouterContext()
   return (
     <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}>
-      <Tag variant="secondary" theme="blue" icon="git-branch" value={branchName || ''} showIcon />
+      <Tag variant="secondary" theme="blue" icon="git-branch" value={branchName || ''} showIcon showCopyButton />
     </Link>
   )
 }

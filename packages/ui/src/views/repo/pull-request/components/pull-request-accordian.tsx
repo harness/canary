@@ -140,20 +140,22 @@ export const LineTitle: React.FC<LineTitleProps> = ({
       </div>
       <div className="inline-flex items-center gap-x-6">
         {showViewed ? (
-          <Checkbox
-            checked={viewed}
-            onCheckedChange={checked => {
-              setViewed(checked === true)
-              if (checked) {
-                setCollapsed(true)
-                markViewed(filePath, checksumAfter ?? 'unknown')
-              } else {
-                setCollapsed(false)
-                unmarkViewed(filePath)
-              }
-            }}
-            label={t('views:pullRequests.markViewed')}
-          />
+          <Button variant="ghost" size="sm" className="gap-x-2.5 px-2.5 py-1.5" onClick={e => e.stopPropagation()}>
+            <Checkbox
+              checked={viewed}
+              onCheckedChange={checked => {
+                setViewed(checked === true)
+                if (checked) {
+                  setCollapsed(true)
+                  markViewed(filePath, checksumAfter ?? 'unknown')
+                } else {
+                  setCollapsed(false)
+                  unmarkViewed(filePath)
+                }
+              }}
+              label={t('views:pullRequests.markViewed')}
+            />
+          </Button>
         ) : null}
       </div>
     </div>

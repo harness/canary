@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, IconV2, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, CopyButton, IconV2, Layout, TextInput, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -331,7 +331,12 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
-        contentHeader: <span className="font-medium text-cn-foreground-1">{payload?.code_comment?.path}</span>,
+        contentHeader: (
+          <Layout.Horizontal gap="sm">
+            <span className="font-medium text-cn-foreground-1">{payload?.code_comment?.path}</span>
+            <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />
+          </Layout.Horizontal>
+        ),
         content: (
           <div className="flex flex-col">
             {!!startingLine && (

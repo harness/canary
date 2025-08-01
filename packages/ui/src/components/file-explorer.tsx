@@ -17,7 +17,7 @@ const Item = ({ className, children, icon, isActive, ...props }: ItemProps) => {
       flow="column"
       justify="start"
       className={cn(
-        'py-layout-2xs pr-1.5 rounded text-cn-foreground-2 hover:text-cn-foreground-1 hover:bg-cn-background-hover ',
+        'py-cn-2xs pr-1.5 rounded text-cn-foreground-2 hover:text-cn-foreground-1 hover:bg-cn-background-hover ',
         { 'bg-cn-background-selected text-cn-foreground-1': isActive },
         className
       )}
@@ -46,7 +46,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
-        className="pl-layout-2xs mb-layout-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        className="pl-cn-2xs mb-cn-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
         <Link to={link}>
@@ -63,7 +63,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
       {!!content && (
         <Accordion.Content
           containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-          className="pl-layout-md pb-0"
+          className="pl-cn-md pb-0"
         >
           {content}
         </Accordion.Content>
@@ -85,7 +85,7 @@ function FileItem({ children, isActive, level, link }: FileItemProps) {
     <Item
       icon="page"
       isActive={isActive}
-      className="mb-layout-4xs"
+      className="mb-cn-4xs"
       style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level})` : '16px' }}
     >
       {children}

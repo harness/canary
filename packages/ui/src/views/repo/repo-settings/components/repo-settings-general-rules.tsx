@@ -248,7 +248,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       ) : (
         <NoData
           withBorder
-          className="min-h-0 py-10"
+          className="min-h-0 py-cn-3xl"
           textWrapperClassName="max-w-[350px]"
           imageName={'no-data-cog'}
           title={t('views:noData.noRules', 'No rules yet')}

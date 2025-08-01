@@ -55,6 +55,7 @@ export function RepoWebhookList({
     return (
       <NoData
         withBorder
+        className="min-h-0 py-cn-3xl"
         textWrapperClassName="max-w-[350px]"
         imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
         title={

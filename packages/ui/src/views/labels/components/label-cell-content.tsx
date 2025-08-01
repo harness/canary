@@ -14,11 +14,11 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
 
   return (
     <Accordion.Root collapsible type="single" indicatorPosition="left" className="min-w-0 overflow-hidden">
-      <Accordion.Item value={label.key} disabled={!isWithValues} className="border-none">
+      <Accordion.Item value={label.key} disabled={!isWithValues} className="border-none ml-6">
         <Accordion.Trigger className={cn('p-0', { '[&>.cn-accordion-trigger-indicator]:invisible': !isWithValues })}>
           <Tag
             variant="secondary"
-            size="sm"
+            size="md"
             theme={label.color}
             label={label.key}
             value={(values?.length || '').toString()}
@@ -31,7 +31,7 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
               <Tag
                 key={item.id}
                 variant="secondary"
-                size="sm"
+                size="md"
                 theme={item?.color || label.color}
                 label={label.key}
                 value={item.value}

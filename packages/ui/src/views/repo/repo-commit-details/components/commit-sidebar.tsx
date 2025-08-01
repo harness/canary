@@ -15,10 +15,10 @@ export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSi
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="h-full overflow-hidden pr-0">
           <div className="flex size-full flex-col gap-3">
-            <div className="pr-3">
+            <div className="pr-layout-sm">
               <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
             </div>
-            <ScrollArea className="grid-cols-[100%] pr-3">
+            <ScrollArea className="pr-layout-sm grid-cols-[100%]">
               {children}
               <Spacer size={7} />
             </ScrollArea>

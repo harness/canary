@@ -82,8 +82,8 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
                 onClick={() => setEditDialogOpen(true)}
                 title={
                   description?.length
-                    ? t('views:repos.summary.summaryPanel.editDescription', 'Edit Description')
-                    : t('views:repos.summary.summaryPanel.addDescription', 'Add Description')
+                    ? t('views:repos.summary.summaryPanel.editDescription', 'Edit description')
+                    : t('views:repos.summary.summaryPanel.addDescription', 'Add description')
                 }
               />
             </DropdownMenu.Content>

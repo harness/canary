@@ -24,7 +24,6 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentP
 
   return (
     <SandboxLayout.Content>
-      <Spacer size={7} />
       <Text as="h1" variant="heading-section">
         {t('views:userManagement.usersHeader', 'Users')} <Text as="span">({users?.length || 0})</Text>
       </Text>

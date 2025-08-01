@@ -57,7 +57,7 @@ const Title = ({
   const scopedPath = getScopedPath(repoScopeParams)
   return (
     <Layout.Flex gap="xs" align="center">
-      <Text variant="heading-base" className="max-w-[50%]" truncate>
+      <Text variant="heading-base" truncate>
         {repoName}
       </Text>
       <Layout.Flex align="center" gap="xs">
@@ -173,7 +173,9 @@ export function RepoList({
           >
             <StackedList.Field
               primary
-              description={repo.importing ? t('views:repos.importing', 'Importing…') : repo.description}
+              description={
+                repo.importing ? t('views:repos.importing', 'Importing…') : <Text truncate>{repo.description}</Text>
+              }
               title={
                 <Title
                   repoName={repo.name}
@@ -184,7 +186,7 @@ export function RepoList({
                   showScope={showScope}
                 />
               }
-              className="flex max-w-[80%] text-wrap"
+              className="grid justify-start"
             />
             {!repo.importing && (
               <StackedList.Field
@@ -195,6 +197,7 @@ export function RepoList({
                   </>
                 }
                 description={<Stats pulls={repo.pulls} />}
+                className="grow-0"
                 right
                 label
               />

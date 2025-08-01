@@ -211,7 +211,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   }
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-8">
+      <SandboxLayout.Content>
         <span className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>

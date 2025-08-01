@@ -1,8 +1,7 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import { Avatar, Button, DropdownMenu, IconV2, MarkdownViewer, Text, TimeAgoCard } from '@/components'
+import { Avatar, Button, DropdownMenu, IconV2, Layout, MarkdownViewer, Text, TimeAgoCard } from '@/components'
 import { HandleUploadType, PrincipalPropsType } from '@/views'
-import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
@@ -34,6 +33,12 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
 
+  useEffect(() => {
+    if (!comment) {
+      setComment(description || '')
+    }
+  }, [description])
+
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
@@ -43,8 +48,9 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="end">
-          <DropdownMenu.Item
-            title="Edit"
+          <DropdownMenu.IconItem
+            icon="edit-pencil"
+            title="Edit description"
             onClick={e => {
               setEdit(true)
               e.stopPropagation()
@@ -60,6 +66,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
       principalsMentionMap={{}}
       setPrincipalsMentionMap={noop}
       principalProps={principalProps}
+      titleClassName="w-full"
       icon={<IconV2 name="git-pull-request" size="2xs" />}
       isLast={isLast}
       header={[
@@ -68,54 +75,72 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           name: author,
           // TODO: pr number must be a link
           description: (
-            <>
-              <Text variant="body-single-line-normal" color="foreground-3">
-                created pull request
-              </Text>
-              <Text variant="body-single-line-normal" color="foreground-1">
-                {prNum}
-              </Text>
-              <TimeAgoCard timestamp={createdAt} />
-            </>
+            <Layout.Horizontal className="flex-1" align="center" justify="between">
+              <Layout.Horizontal gap="2xs" align="center">
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  created pull request
+                </Text>
+                <Text variant="body-single-line-normal" color="foreground-1">
+                  {prNum}
+                </Text>
+                <TimeAgoCard timestamp={createdAt} />
+              </Layout.Horizontal>
+              {moreTooltip()}
+            </Layout.Horizontal>
           )
         }
       ]}
       hideReplySection
       contentClassName="pb-0"
       content={
-        description && (
-          <div
-            className={cn('p-4', {
-              'flex justify-between': !edit
-            })}
-          >
-            {edit ? (
-              <PullRequestCommentBox
-                isEditMode
-                preserveCommentOnSave
-                principalProps={principalProps}
-                // PR Description feature doesn't support mentions
-                principalsMentionMap={{}}
-                setPrincipalsMentionMap={noop}
-                handleUpload={handleUpload}
-                onSaveComment={() => {
-                  if (title && description) {
-                    handleUpdateDescription(title, comment || '')
-                    setEdit(false)
-                  }
+        <div className="py-3 px-4">
+          {/* Edit mode */}
+          {edit ? (
+            <PullRequestCommentBox
+              allowEmptyValue
+              isEditMode
+              preserveCommentOnSave
+              principalProps={principalProps}
+              // PR Description feature doesn't support mentions
+              principalsMentionMap={{}}
+              setPrincipalsMentionMap={noop}
+              handleUpload={handleUpload}
+              onSaveComment={() => {
+                // Empty comment can be saved.
+                handleUpdateDescription(title || '', comment)
+                setEdit(false)
+              }}
+              onCancelClick={() => {
+                setEdit(false)
+              }}
+              comment={comment}
+              setComment={setComment}
+            />
+          ) : description ? (
+            /** View mode */
+            <Text className="flex-1" color="foreground-1">
+              {description && <MarkdownViewer source={description} />}
+            </Text>
+          ) : (
+            /** No description */
+            <Layout.Horizontal justify="between" align="center">
+              <Text variant="body-normal" color="foreground-3">
+                No description provided
+              </Text>
+              <Button
+                onClick={e => {
+                  e.stopPropagation()
+                  setEdit(true)
                 }}
-                onCancelClick={() => {
-                  setEdit(false)
-                }}
-                comment={comment}
-                setComment={setComment}
-              />
-            ) : (
-              <Text color="foreground-1">{description && <MarkdownViewer source={description} />}</Text>
-            )}
-            {!edit && <div className="float-right">{moreTooltip()}</div>}
-          </div>
-        )
+                iconOnly
+                size="sm"
+                variant="outline"
+              >
+                <IconV2 name="edit-pencil" size="xs" />
+              </Button>
+            </Layout.Horizontal>
+          )}
+        </div>
       }
       key={`description`}
     />

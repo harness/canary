@@ -93,7 +93,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
 
     return (
       <Layout.Horizontal className="flex-1" justify="between">
-        <Layout.Horizontal gap="2xs" align="center" wrap="wrap">
+        <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="wrap">
           {/**
            * ============
            * Avatar and Name

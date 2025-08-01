@@ -1,6 +1,16 @@
-import { ComponentProps, ReactNode, useMemo, useRef, useState } from 'react'
+import {
+  ComponentProps,
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  Ref,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
-import { ListActions, SearchInput } from '@/components'
+import { Layout, ListActions, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import { FilterOptionConfig } from '@components/filters/types'
@@ -21,21 +31,29 @@ interface FilterGroupProps<
   handleFilterOpen?: (filter: V, isOpen: boolean) => void
   multiSortConfig?: Omit<ComponentProps<typeof Sort.Root>, 'children'>
   simpleSortConfig?: ComponentProps<typeof SimpleSort>
+  searchValue?: string
   handleInputChange: (value: string) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
 }
 
-const FilterGroup = <
+export type FilterGroupRef = {
+  resetSearch?: () => void
+  resetFilters?: () => void
+}
+
+const FilterGroupInner = <
   T extends Record<string, unknown>,
   V extends Extract<keyof T, string>,
   CustomValue = Record<string, unknown>
 >(
-  props: FilterGroupProps<T, V, CustomValue>
+  props: FilterGroupProps<T, V, CustomValue>,
+  ref: Ref<FilterGroupRef>
 ) => {
   const {
     onFilterSelectionChange,
     onFilterValueChange,
+    searchValue,
     handleInputChange,
     filterOptions,
     multiSortConfig,
@@ -47,9 +65,25 @@ const FilterGroup = <
 
   const FilterHandler = useMemo(() => createFilters<T>(), [])
   const filtersRef = useRef<FilterRefType<T> | null>(null)
+  const searchRef = useRef<HTMLInputElement | null>(null)
   const [openedFilter, setOpenedFilter] = useState<V>()
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
   const [sortSelectionsCnt, setSortSelectionsCnt] = useState(0)
+
+  useImperativeHandle(ref, () => {
+    return {
+      resetSearch: () => {
+        if (searchRef.current) {
+          searchRef.current.value = ''
+        }
+      },
+      resetFilters: () => {
+        if (filtersRef.current) {
+          filtersRef.current.reset()
+        }
+      }
+    }
+  })
 
   // Create a wrapper function that matches the expected type
   const handleSetOpenedFilter = (filter: keyof T) => {
@@ -87,38 +121,43 @@ const FilterGroup = <
           <ListActions.Root>
             <ListActions.Left>
               <SearchInput
-                inputContainerClassName="max-w-80"
+                width="full"
+                inputContainerClassName="max-w-[360px]"
+                ref={searchRef}
+                defaultValue={searchValue || ''}
                 onChange={handleInputChange}
                 placeholder={t('views:search', 'Search')}
               />
             </ListActions.Left>
             <ListActions.Right>
-              <FilterHandler.Dropdown>
-                {(addFilter, availableFilters, resetFilters) => {
-                  return (
-                    <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
-                      options={filterOptions.filter(option => availableFilters.includes(option.value))}
-                      onChange={option => {
-                        addFilter(option.value)
-                        setOpenedFilter(option.value)
-                      }}
-                      onReset={() => resetFilters()}
-                      inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                      buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={renderFilterSelectLabel({
-                        selectedFilters: filterOptions.length - availableFilters.length,
-                        displayLabel: t('component:filter.defaultLabel', 'Filter')
-                      })}
-                    />
-                  )
-                }}
-              </FilterHandler.Dropdown>
-              {multiSortConfig && (
-                <Sort.Select
-                  displayLabel={t('component:sort.defaultLabel', 'Sort')}
-                  buttonLabel={t('component:sort.resetSort', 'Reset sort')}
-                />
-              )}
+              <Layout.Horizontal gap="md">
+                <FilterHandler.Dropdown>
+                  {(addFilter, availableFilters, resetFilters) => {
+                    return (
+                      <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
+                        options={filterOptions.filter(option => availableFilters.includes(option.value))}
+                        onChange={option => {
+                          addFilter(option.value)
+                          setOpenedFilter(option.value)
+                        }}
+                        onReset={() => resetFilters()}
+                        inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                        buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                        displayLabel={renderFilterSelectLabel({
+                          selectedFilters: filterOptions.length - availableFilters.length,
+                          displayLabel: t('component:filter.defaultLabel', 'Filter')
+                        })}
+                      />
+                    )
+                  }}
+                </FilterHandler.Dropdown>
+                {multiSortConfig && (
+                  <Sort.Select
+                    displayLabel={t('component:sort.defaultLabel', 'Sort')}
+                    buttonLabel={t('component:sort.resetSort', 'Reset sort')}
+                  />
+                )}
+              </Layout.Horizontal>
               {simpleSortConfig && <SimpleSort {...simpleSortConfig} />}
               {props.headerAction}
             </ListActions.Right>
@@ -172,5 +211,13 @@ const FilterGroup = <
     </FilterHandler>
   )
 }
+
+const FilterGroup = forwardRef(FilterGroupInner) as <
+  T extends Record<string, unknown>,
+  V extends Extract<keyof T, string>,
+  CustomValue = Record<string, unknown>
+>(
+  props: FilterGroupProps<T, V, CustomValue> & { ref?: Ref<FilterGroupRef> }
+) => ReactElement
 
 export default FilterGroup

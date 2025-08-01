@@ -12,7 +12,7 @@ export default {
       '@apply flex-row': '',
 
       '.cn-control-group-label': {
-        width: 'var(--cn-input-horizontal-label-max-width)',
+        width: 'var(--cn-input-horizontal-label-max-width)'
       },
 
       '.cn-control-group-input': {

@@ -17,7 +17,6 @@ export type FormFields = z.infer<typeof formSchemaCompare> // Automatically gene
 
 interface PullRequestFormProps {
   apiError: string | null
-  isLoading: boolean
   onFormDraftSubmit: (data: FormFields) => void
   onFormSubmit: (data: FormFields) => void
   handleUpload?: HandleUploadType
@@ -26,6 +25,7 @@ interface PullRequestFormProps {
   setDescription: (description: string) => void
   formMethods: UseFormReturn<FormFields>
   principalProps: PrincipalPropsType
+  isLoading: boolean
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
@@ -33,6 +33,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     {
       apiError,
       onFormSubmit,
+      isLoading,
       handleUpload,
       description,
       setDescription,
@@ -53,8 +54,6 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
       formState: { errors }
     } = formMethods
 
-    console.log('errors', errors)
-
     return (
       <FormWrapper {...formMethods} formRef={ref} onSubmit={handleSubmit(onSubmit)}>
         <Layout.Vertical gap="sm">
@@ -73,6 +72,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
 
           <PullRequestCommentBox
             preserveCommentOnSave
+            disableSubmit={isLoading}
             allowEmptyValue
             onSaveComment={newComment => {
               if (isEmpty(errors)) {

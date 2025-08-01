@@ -27,24 +27,13 @@ export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
   showScope?: boolean
 }
 
-const Stats = ({
-  pulls,
-  repoId,
-  onFavoriteToggle,
-  isFavorite
-}: {
-  pulls: number
-  repoId: number
-  onFavoriteToggle: RepoListProps['onFavoriteToggle']
-  isFavorite?: boolean
-}) => (
-  <div className="flex select-none items-center justify-end gap-2 font-medium">
-    <Favorite isFavorite={isFavorite} onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId, isFavorite })} />
-    <span className="flex items-center gap-1">
-      <IconV2 name="git-pull-request" className="text-icons-7" />
-      <span className="text-2 font-normal text-cn-foreground-1">{pulls || 0}</span>
-    </span>
-  </div>
+const Stats = ({ pulls }: { pulls: number }) => (
+  <Layout.Flex gap="3xs" align="center">
+    <IconV2 name="git-pull-request" />
+    <Text as="span" color="foreground-1">
+      {pulls || 0}
+    </Text>
+  </Layout.Flex>
 )
 
 const Title = ({
@@ -68,7 +57,9 @@ const Title = ({
   const scopedPath = getScopedPath(repoScopeParams)
   return (
     <Layout.Flex gap="xs" align="center">
-      <span className="max-w-full truncate font-medium">{repoName}</span>
+      <Text variant="heading-base" className="max-w-[50%]" truncate>
+        {repoName}
+      </Text>
       <Layout.Flex align="center" gap="xs">
         <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
           {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
@@ -114,13 +105,17 @@ export function RepoList({
           t('views:noData.changeSearch', 'or search for a different keyword.')
         ]}
         secondaryButton={{
-          label: t('views:noData.clearFilters', 'Clear filters'),
+          label: (
+            <>
+              <IconV2 name="trash" />
+              {t('views:noData.clearFilters', 'Clear filters')}
+            </>
+          ),
           onClick: handleResetFiltersQueryAndPages
         }}
       />
     ) : (
       <NoData
-        withBorder
         imageName="no-repository"
         title={t('views:noData.noRepos', 'No repositories yet')}
         description={[
@@ -128,10 +123,24 @@ export function RepoList({
           t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
         ]}
         primaryButton={{
-          label: t('views:repos.create-repository', 'Create Repository'),
+          label: (
+            <>
+              <IconV2 name="plus" />
+              {t('views:repos.new-repository', 'New repository')}
+            </>
+          ),
           to: toCreateRepo?.()
         }}
-        secondaryButton={{ label: t('views:repos.import-repository', 'Import Repository'), to: toImportRepo?.() }}
+        secondaryButton={{
+          label: (
+            <>
+              <IconV2 name="import" />
+              {t('views:repos.import-repository', 'Import Repository')}
+            </>
+          ),
+          to: toImportRepo?.(),
+          props: { variant: 'outline' }
+        }}
       />
     )
   }
@@ -139,17 +148,24 @@ export function RepoList({
   return (
     <StackedList.Root>
       {repos.map((repo, repo_idx) => (
-        <StackedList.Item key={repo.name} asChild className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+        <StackedList.Item
+          key={repo.name}
+          asChild
+          className="py-3"
+          isLast={repos.length - 1 === repo_idx}
+          actions={
+            !repo.importing && (
+              <Favorite
+                isFavorite={repo.favorite}
+                onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId: repo.id, isFavorite })}
+              />
+            )
+          }
+        >
           <Link to={toRepository?.(repo) || ''} className={cn({ 'pointer-events-none': repo.importing })}>
             <StackedList.Field
               primary
-              description={
-                repo.importing ? (
-                  t('views:repos.importing', 'Importing…')
-                ) : (
-                  <span className="max-w-full truncate">{repo.description}</span>
-                )
-              }
+              description={repo.importing ? t('views:repos.importing', 'Importing…') : repo.description}
               title={
                 <Title
                   repoName={repo.name}
@@ -160,27 +176,19 @@ export function RepoList({
                   showScope={showScope}
                 />
               }
-              className="flex max-w-[80%] gap-1.5 text-wrap"
+              className="flex max-w-[80%] text-wrap"
             />
             {!repo.importing && (
               <StackedList.Field
                 title={
-                  <Text as="span">
+                  <>
                     {t('views:repos.updated', 'Updated')}{' '}
                     <TimeAgoCard timestamp={repo.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-                  </Text>
+                  </>
                 }
-                description={
-                  <Stats
-                    pulls={repo.pulls}
-                    repoId={repo.id}
-                    isFavorite={repo.favorite}
-                    onFavoriteToggle={onFavoriteToggle}
-                  />
-                }
+                description={<Stats pulls={repo.pulls} />}
                 right
                 label
-                secondary
               />
             )}
           </Link>

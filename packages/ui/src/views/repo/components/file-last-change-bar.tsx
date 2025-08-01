@@ -11,7 +11,7 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
       <Text variant="body-single-line-normal" color="foreground-1" wrap="nowrap">
         {user?.name || ''}
       </Text>
-      <Text variant="body-single-line-normal" className="line-clamp-1">
+      <Text variant="body-single-line-normal" className="line-clamp-1" truncate>
         {lastCommitMessage}
       </Text>
       <IconV2 className="text-icons-success" name="check" size="xs" />
@@ -52,7 +52,7 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
       <StackedList.Item disableHover isHeader className="gap-4 px-4 py-2">
         {props ? (
           <>
-            <StackedList.Field title={<TopTitle {...props} />} />
+            <StackedList.Field className="grid" title={<TopTitle {...props} />} />
             <StackedList.Field
               className="flex-none"
               right

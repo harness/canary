@@ -155,10 +155,29 @@
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",
+    "createNewRepoForm": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter repository name"
+      },
+      "description": {
+        "placeholder": "Enter a short description for the repository",
+        "label": "Description"
+      },
+      "gitignore": {
+        "placeholder": "Select",
+        "label": "Add a .gitignore",
+        "caption": "Choose which files not to track from a list of templates."
+      },
+      "defaultBranchDialog": {
+        "startLabel": "Your repository will be initialized with a",
+        "endLabel": "branch."
+      }
+    },
     "repositories": "Repositories",
-    "import-repository": "Import Repository",
-    "import-repositories": "Import Repositories",
-    "create-repository": "Create Repository",
+    "new-repository": "New repository",
+    "import-repository": "Import repository",
+    "import-repositories": "Import repositories",
     "importing": "Importing…",
     "updated": "Updated",
     "unarchiveRepo": "Unarchive this repository",
@@ -572,6 +591,7 @@
     "addValue": "Add new value",
     "labelNotFound": "Label not found",
     "labels": "Labels",
+    "searchLabels": "Search",
     "noLabels": "No labels found",
     "editLabels": "Edit labels",
     "markViewed": "Mark Viewed",
@@ -585,7 +605,6 @@
     "unified": "Unified",
     "deleted": "Deleted",
     "searchUsers": "Search users",
-    "searchLabels": "Search",
     "compareChangesFormDescriptionLabel": "Description",
     "selectUsersUGAndServiceAccounts": "Select users, user groups and service accounts",
     "viewed": "Viewed",

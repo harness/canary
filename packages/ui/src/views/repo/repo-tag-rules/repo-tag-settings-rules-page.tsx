@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Fieldset, FormSeparator, FormWrapper, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -118,8 +118,8 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
 
   return (
-    <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
-      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-10">
+    <SandboxLayout.Content className={`max-w-[612px] ml-3 ${projectScope ? 'mx-auto' : ''}`}>
+      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-4">
         {presetRuleData
           ? t('views:repos.updateTagRule', 'Update tag rule')
           : t('views:repos.CreateTagRule', 'Create a tag rule')}
@@ -127,12 +127,13 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <TagSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
+        <FormSeparator />
 
         <TagSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
 
         <TagSettingsRuleDescriptionField register={register} errors={errors} />
 
-        <div className="flex flex-col gap-y-11">
+        <div className="flex flex-col gap-y-10">
           <TagSettingsRuleTargetPatternsField watch={watch} setValue={setValue} register={register} errors={errors} />
 
           <TagSettingsRuleBypassListField

@@ -10,15 +10,15 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   return (
     <div className="flex items-center gap-1.5">
       <ExecutionStatusIcon status={status} />
-      <span className="truncate text-3 font-medium leading-snug">{title}</span>
+      <span className="text-3 truncate font-medium leading-snug">{title}</span>
     </div>
   )
 }
 
 const Description = ({ sha, description, version }: { sha?: string; description?: string; version?: string }) => {
   return (
-    <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] text-2 leading-tight">
-      {description && <span className="w-full overflow-hidden break-words text-cn-foreground-3">{description}</span>}
+    <div className="text-2 inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] leading-tight">
+      {description && <span className="text-cn-foreground-3 w-full overflow-hidden break-words">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <IconV2 size="2xs" name="version" />
@@ -26,7 +26,7 @@ const Description = ({ sha, description, version }: { sha?: string; description?
         </div>
       )}
       {sha && (
-        <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-1 text-cn-foreground-1">
+        <div className="bg-cn-background-8 text-1 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
           <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
@@ -93,7 +93,7 @@ export const PipelineList = ({
                 <Description sha={pipeline.sha} description={pipeline.description} version={pipeline.version} />
               }
             />
-            <StackedList.Field title={<Meter data={pipeline.meter} />} label secondary right />
+            <StackedList.Field title={<Meter data={pipeline.meter} />} label right />
           </StackedList.Item>
         </LinkComponent>
       ))}

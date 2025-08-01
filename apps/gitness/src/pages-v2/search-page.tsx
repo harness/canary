@@ -161,7 +161,7 @@ export default function SearchPage() {
       semanticEnabled={semanticEnabled}
       setSemanticEnabled={setSemanticEnabled}
       stats={stats}
-      isProjectScope={!!scope.projectIdentifier}
+      isRepoScope={!!repoId}
       useSearchResultsStore={() => {
         return {
           results: searchResults,

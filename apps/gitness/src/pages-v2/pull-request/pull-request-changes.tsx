@@ -487,7 +487,7 @@ export default function PullRequestChanges() {
         jumpToDiff={jumpToDiff}
         setJumpToDiff={setJumpToDiff}
         toRepoFileDetails={({ path }: { path: string }) =>
-          isMfe ? `${window.apiUrl || ''}/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
+          isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
         }
       />
     </>

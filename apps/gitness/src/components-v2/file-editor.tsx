@@ -49,7 +49,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     [monacoTheme]
   )
 
-  const isNew = useMemo(() => repoDetails && repoDetails.type === 'dir', [repoDetails])
+  const isNew = useMemo(() => !repoDetails || repoDetails?.type === 'dir', [repoDetails])
   const [parentPath, setParentPath] = useState(
     isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   )
@@ -57,6 +57,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
     [parentPath, fileName]
   )
+
   const pathToSplit = useMemo(() => {
     if (isNew) {
       // When in new file mode, use fullResourcePath to ensure we maintain the directory structure

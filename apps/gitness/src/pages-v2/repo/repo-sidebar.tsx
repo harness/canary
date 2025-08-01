@@ -181,27 +181,25 @@ export const RepoSidebar = () => {
   return (
     <>
       <div className="flex flex-1">
-        {!repoData?.is_empty && (
-          <RepoSidebarView
-            navigateToNewFile={navigateToNewFile}
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            branchSelectorRenderer={
-              <BranchSelectorContainer
-                onSelectBranchorTag={selectBranchOrTag}
-                selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
-                preSelectedTab={preSelectedTab}
-                isFilesPage
-                setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-                onBranchQueryChange={setBranchQueryForNewBranch}
-              />
-            }
-          >
-            {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
-            )}
-          </RepoSidebarView>
-        )}
+        <RepoSidebarView
+          navigateToNewFile={navigateToNewFile}
+          navigateToFile={navigateToFile}
+          filesList={filesList}
+          branchSelectorRenderer={
+            <BranchSelectorContainer
+              onSelectBranchorTag={selectBranchOrTag}
+              selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
+              preSelectedTab={preSelectedTab}
+              isFilesPage
+              setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+              onBranchQueryChange={setBranchQueryForNewBranch}
+            />
+          }
+        >
+          {!!repoDetails?.body?.content?.entries?.length && (
+            <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
+          )}
+        </RepoSidebarView>
 
         <Outlet />
       </div>

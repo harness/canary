@@ -14,7 +14,6 @@ import {
   MultiSelect,
   MultiSelectOption,
   SplitButton,
-  StackedList,
   Switch
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -39,29 +38,13 @@ import { getIcon } from '../utils'
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()
   return (
-    <StackedList.Root className="overflow-hidden" borderBackground>
-      <StackedList.Item
-        className="!rounded px-5 py-3"
-        disableHover
-        isHeader
-        isLast
-        actions={
-          <Switch
-            {...register!('state')}
-            checked={watch!('state')}
-            onCheckedChange={() => setValue!('state', !watch!('state'))}
-          />
-        }
-      >
-        <StackedList.Field
-          title={t('views:repos.enableRule', 'Enable the rule')}
-          description={t(
-            'views:repos.enableRuleDescription',
-            'By enabling the toggle, the branch rule will be enforced.'
-          )}
-        />
-      </StackedList.Item>
-    </StackedList.Root>
+    <Switch
+      {...register!('state')}
+      checked={watch!('state')}
+      onCheckedChange={() => setValue!('state', !watch!('state'))}
+      label={t('views:repos.enableRule', 'Enable the rule')}
+      caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the branch rule will be enforced.')}
+    />
   )
 }
 
@@ -87,6 +70,7 @@ export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register })
       id="description"
       {...register!('description')}
       placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
+      className="h-[136px]"
     />
   )
 }
@@ -114,10 +98,8 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
   return (
     <Fieldset className="gap-y-4">
       <ControlGroup>
-        <Label htmlFor="target-patterns" className="mb-2">
-          {t('views:repos.targetPatterns', 'Target patterns')}
-        </Label>
-        <div className="grid grid-cols-[1fr_112px] items-start gap-x-3.5">
+        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
+        <div className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
           <FormInput.Text
             id="pattern"
             {...register!('pattern')}
@@ -128,7 +110,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
           />
           <SplitButton<PatternsButtonType>
-            buttonClassName="px-0 w-full"
+            // buttonClassName="px-0 w-full"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
@@ -322,9 +304,9 @@ export const BranchSettingsRuleListField: FC<{
   const { t } = useTranslation()
   const branchRules = getBranchRules(t)
   return (
-    <ControlGroup className="max-w-[476px]">
-      <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      <Fieldset className="gap-y-5">
+    <ControlGroup>
+      <Label className="mb-4">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Fieldset className="gap-y-4">
         {branchRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)
           const {

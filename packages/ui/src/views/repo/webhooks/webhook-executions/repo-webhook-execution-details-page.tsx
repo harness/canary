@@ -86,8 +86,8 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
   }
 
   return (
-    <SandboxLayout.Main className="mx-0">
-      <SandboxLayout.Content className="pl-0">
+    <SandboxLayout.Main className="ml-3">
+      <SandboxLayout.Content>
         <ListActions.Root>
           <ListActions.Left>
             <Text variant="heading-section">#{executionId}</Text>
@@ -115,24 +115,33 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
           </ListActions.Right>
         </ListActions.Root>
 
-        <Spacer size={6} />
+        <Spacer size={5} />
         <div className="flex items-center gap-10">
-          <div className="flex gap-1">
-            <Text color="foreground-3">Triggered Event:</Text>
-            <Text> {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}</Text>
+          <div className="flex items-center gap-1">
+            <Text variant="body-single-line-normal" className="text-cn-foreground-3">
+              Trigger Event:
+            </Text>
+            <Text className="text-cn-foreground-1" variant="body-single-line-normal">
+              {' '}
+              {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}
+            </Text>
           </div>
           <div className="flex items-center gap-1">
-            <Text color="foreground-3" className="flex items-center">
-              At:
+            <Text className="flex items-center text-cn-foreground-3" variant="body-single-line-normal">
+              Time:
             </Text>
             <TimeAgoCard timestamp={execution?.created} />
           </div>
-          <div className="flex gap-1">
-            <Text color="foreground-3">Duration:</Text>
-            <Text>{formatDuration(execution?.duration ?? 0, 'ns')}</Text>
+          <div className="flex items-center gap-1">
+            <Text className="text-cn-foreground-3" variant="body-single-line-normal">
+              Duration:
+            </Text>
+            <Text className="text-cn-foreground-1" variant="body-single-line-normal">
+              {formatDuration(execution?.duration ?? 0, 'ns')}
+            </Text>
           </div>
         </div>
-        <Spacer size={6} />
+        <Spacer size={8} />
         <WebhookExecutionEditorControlBar view={view} onChangeView={onChangeView} />
         <CodeEditor
           height="500px"

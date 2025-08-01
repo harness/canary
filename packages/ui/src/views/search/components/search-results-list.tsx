@@ -4,6 +4,8 @@ import { Alert, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/co
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
+const DEFAULT_NUM_ITEMS_TO_SHOW = 1
+
 interface SearchResultsListProps {
   isLoading: boolean
   isDirtyList: boolean
@@ -12,6 +14,7 @@ interface SearchResultsListProps {
   }
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
   searchError?: string
+  isRepoScope: boolean
 }
 
 export interface SearchResultItem {
@@ -36,7 +39,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   isDirtyList,
   useSearchResultsStore,
   toRepoFileDetails,
-  searchError
+  searchError,
+  isRepoScope
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
@@ -77,26 +81,36 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   return (
     <Layout.Vertical gap="md">
       {results.map(item => (
-        <Card.Root key={`${item.repo_path}/${item.file_name}`} tabIndex={0}>
-          <Layout.Vertical gap="sm">
-            <Layout.Horizontal gap="xs">
-              <Tag value={item.repo_path} icon="repository" showIcon={true} size={'sm'} />
+        <Card.Root key={`${item.repo_path}/${item.file_name}`} tabIndex={0} wrapperClassname="!p-0">
+          <Card.Content>
+            <Layout.Horizontal
+              gap="xs"
+              className={cn('p-4', { 'border-b border-cn-border-2': item.matches && item.matches.length > 1 })}
+            >
+              {!isRepoScope ? <Tag value={item.repo_path} icon="repository" showIcon={true} size={'sm'} /> : null}
               <Link
-                to={toRepoFileDetails({ repoPath: item.repo_path, filePath: item.file_name, branch: item.repo_branch })}
+                to={toRepoFileDetails({
+                  repoPath: item.repo_path,
+                  filePath: item.file_name,
+                  branch: item.repo_branch
+                })}
               >
                 <Text variant="body-strong">{item.file_name}</Text>
               </Link>
             </Layout.Horizontal>
 
             {item.matches && item.matches.length > 1 && (
-              <Layout.Vertical gap="sm">
+              <Layout.Vertical gap="none">
                 {item.matches
-                  .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : 3)
+                  .slice(
+                    0,
+                    expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW
+                  )
                   .map(match => (
                     <div
                       key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
                     >
-                      <pre className={cn('bg-cn-background-1 p-1 mt-1 rounded')}>
+                      <pre className={cn('bg-cn-background-1 px-4 py-1 border-b border-cn-border-2')}>
                         <code className="monospace">
                           {match.before.trim().length > 0 && (
                             <>
@@ -122,10 +136,10 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                       </pre>
                     </div>
                   ))}
-                {item.matches?.length > 3 && (
+                {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
                   <Text
                     variant="body-normal"
-                    className="text-cn-primary cursor-pointer hover:underline"
+                    className="text-cn-primary cursor-pointer px-4 py-2 hover:underline"
                     onClick={() => {
                       const key = `${item.repo_path}/${item.file_name}`
                       setExpandedItems(prev => ({
@@ -136,12 +150,15 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                   >
                     {expandedItems[`${item.repo_path}/${item.file_name}`]
                       ? t('views:search.showLess', '- Show Less')
-                      : t('views:search.showMore', `+${item.matches.length - 3} more`)}
+                      : t(
+                          'views:search.showMore',
+                          `+ Show ${item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW} more matches`
+                        )}
                   </Text>
                 )}
               </Layout.Vertical>
             )}
-          </Layout.Vertical>
+          </Card.Content>
         </Card.Root>
       ))}
     </Layout.Vertical>

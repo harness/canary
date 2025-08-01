@@ -86,6 +86,7 @@ export default {
     paddingInline: 'var(--cn-btn-px-md)',
     height: 'var(--cn-btn-size-md)',
     gap: 'var(--cn-btn-gap-md)',
+    flexShrink: '0',
     border: 'var(--cn-btn-border) solid var(--cn-set-gray-surface-border)',
     '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
@@ -94,7 +95,7 @@ export default {
       height: 'var(--cn-btn-size-md)',
       width: 'var(--cn-btn-size-md)',
       position: 'relative',
-      '@apply rounded-l-none border-l-0': '',
+      '@apply rounded-l-none border-l-0 p-0': '',
 
       '&::before': {
         content: '""',

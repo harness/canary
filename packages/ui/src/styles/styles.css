@@ -548,6 +548,15 @@ mark {
 }
 
 /*  MONACO EDITOR  */
+.monaco-editor.monaco-editor {
+  --vscode-editorGutter-background: transparent;
+  --vscode-editor-background: transparent;
+}
+
+.monaco-editor .overflow-guard {
+  @apply border-cn-borders-3 rounded-b-3 border border-t-0;
+}
+
 .monaco-scrollable-element > .scrollbar > .slider {
   border-radius: var(--cn-rounded-full, 0.25rem);
   --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));

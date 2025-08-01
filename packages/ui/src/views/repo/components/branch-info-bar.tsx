@@ -7,7 +7,7 @@ import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/view
 interface BranchInfoBarProps {
   defaultBranchName?: string
   repoId: string
-  spaceId: string
+  spaceId?: string
   selectedBranchTag?: BranchSelectorListItem
   currentBranchDivergence: {
     ahead: number

@@ -54,9 +54,11 @@ export default function PullRequestListPage() {
       ...(projectIdentifier && { projectIdentifier }),
       limit: pageSize,
       exclude_description: true,
-      query: query ?? ''
+      query: query ?? '',
+      sort: 'updated',
+      order: 'desc'
     }
-  }, [accountId, orgIdentifier, projectIdentifier, query, filterValues, prState, lastUpdatedPRFilter])
+  }, [accountId, orgIdentifier, projectIdentifier, query, filterValues, prState, lastUpdatedPRFilter, pageSize])
 
   const queryKey = ['pullRequests', queryParams, filterValues]
 
@@ -73,7 +75,13 @@ export default function PullRequestListPage() {
     const url = new URL(apiPath, window.location.origin)
 
     Object.entries(queryParams).forEach(([key, value]) => {
-      url.searchParams.set(key, String(value))
+      if (Array.isArray(value)) {
+        value.forEach(item => {
+          url.searchParams.append(key, String(item))
+        })
+      } else {
+        url.searchParams.set(key, String(value))
+      }
     })
 
     const response = await fetch(url.toString())

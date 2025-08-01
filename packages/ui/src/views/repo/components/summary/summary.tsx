@@ -85,15 +85,13 @@ export const Summary = ({
                           : 'folder'
                     }
                   />
-                  <Text variant="body-strong" color="foreground-1" truncate className="w-44">
+                  <Text color="foreground-1" truncate className="w-44">
                     {file.name}
                   </Text>
                 </div>
               </Table.Cell>
               <Table.Cell>
-                <Text color="foreground-2" className="line-clamp-1">
-                  {file.lastCommitMessage}
-                </Text>
+                <Text className="line-clamp-1">{file.lastCommitMessage}</Text>
               </Table.Cell>
               <Table.Cell className="text-right" disableLink>
                 <TimeAgoCard

@@ -10,7 +10,7 @@ export const CommitCopyActions = ({
   sha: string
   toCommitDetails?: ({ sha }: { sha: string }) => string
 }) => {
-  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha })
+  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs' })
   const { navigate } = useRouterContext()
 
   const handleNavigation = () => {
@@ -23,7 +23,7 @@ export const CommitCopyActions = ({
 
   return (
     <ButtonGroup
-      size="sm"
+      size="xs"
       buttonsProps={[
         {
           children: (

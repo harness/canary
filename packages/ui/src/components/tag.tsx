@@ -104,7 +104,8 @@ function Tag({
         tagVariants({ variant, size, theme, rounded }),
         {
           'text-cn-foreground-disabled cursor-not-allowed': disabled,
-          'cn-tag-hoverable': !disabled && (enableHover || !!onReset)
+          'cn-tag-hoverable': !disabled && (enableHover || !!onReset),
+          'pr-0': showCopyButton
         },
         className
       )}
@@ -134,6 +135,7 @@ function Tag({
           // @TODO: sync with design team to get the righ tokens for the copy button
           color={theme as CopyButtonProps['color']}
           size="xs"
+          iconSize="2xs"
         />
       ) : null}
     </div>

@@ -58,7 +58,6 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                 <ListActions.Left>
                   <SearchInput
                     id="search"
-                    size="sm"
                     defaultValue={searchQuery || ''}
                     inputContainerClassName="max-w-80"
                     placeholder={t('views:repos.search', 'Search')}

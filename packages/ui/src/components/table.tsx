@@ -15,6 +15,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { IconV2 } from './icon-v2'
 import { Layout } from './layout'
 import { Link, type LinkProps } from './link'
+import { Text } from './text'
 import { Tooltip, type TooltipProps } from './tooltip'
 
 export const tableVariants = cva('cn-table-v2', {
@@ -122,7 +123,9 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
         <span className="underline decoration-dashed">{children}</span>
       </Tooltip>
     ) : (
-      children
+      <Text variant="caption-strong" className="w-full">
+        {children}
+      </Text>
     )
 
     const contentElement = (

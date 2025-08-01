@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
@@ -15,23 +17,39 @@ interface SkeletonListProps {
   className?: string
 }
 
+interface RandomWidths {
+  titleWidth: string
+  descriptionWidth: string
+  secondaryTitleWidth: string
+  secondaryDescriptionWidth: string
+}
+
 export const SkeletonList = ({ className }: SkeletonListProps) => {
+  // Calculate random widths only once on mount
+  const randomWidths = useMemo<RandomWidths[]>(() => {
+    return listItems.map(() => ({
+      titleWidth: getRandomPercentageWidth(20, 60),
+      descriptionWidth: getRandomPercentageWidth(30, 80),
+      secondaryTitleWidth: getRandomPixelWidth(80, 150),
+      secondaryDescriptionWidth: getRandomPixelWidth(150, 250)
+    }))
+  }, []) // Empty dependency array ensures this runs only once on mount
+
   return (
     <div className={cn('relative h-full w-full transition-opacity delay-500 duration-500 ease-in-out', className)}>
       <StackedList.Root>
-        {listItems.map(itm => (
+        {listItems.map((itm, index) => (
           <StackedList.Item key={itm} className="py-4" isLast={listItems.length === itm}>
             <StackedList.Field
-              // Randomized percentage width for title skeleton
-              title={<Skeleton className="mb-2 h-2.5" style={{ width: getRandomPercentageWidth(20, 60) }} />}
-              // Randomized percentage width for description skeleton
-              description={<Skeleton className="h-2.5" style={{ width: getRandomPercentageWidth(30, 80) }} />}
+              // Use pre-calculated widths from the randomWidths array
+              title={<Skeleton className="mb-2 h-2.5" style={{ width: randomWidths[index].titleWidth }} />}
+              description={<Skeleton className="h-2.5" style={{ width: randomWidths[index].descriptionWidth }} />}
             />
             <StackedList.Field
-              // Randomized pixel width for secondary title skeleton
-              title={<Skeleton className="mb-2 h-2.5" style={{ width: getRandomPixelWidth(80, 150) }} />}
-              // Randomized pixel width for secondary description skeleton
-              description={<Skeleton className="h-2.5" style={{ width: getRandomPixelWidth(150, 250) }} />}
+              title={<Skeleton className="mb-2 h-2.5" style={{ width: randomWidths[index].secondaryTitleWidth }} />}
+              description={
+                <Skeleton className="h-2.5" style={{ width: randomWidths[index].secondaryDescriptionWidth }} />
+              }
               right
             />
           </StackedList.Item>

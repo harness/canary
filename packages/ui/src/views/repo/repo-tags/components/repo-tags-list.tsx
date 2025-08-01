@@ -114,16 +114,14 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha}>
             <Table.Cell>
-              <Text color="foreground-1" className="block" truncate title={tag.name}>
-                <Tag value={tag.name} theme="violet" rounded />
-              </Text>
+              <Tag value={tag.name} theme="violet" size="md" variant="secondary" showCopyButton />
             </Table.Cell>
             <Table.Cell>
-              <Text color="foreground-3" className="line-clamp-3">
+              <Text variant="body-normal" className="line-clamp-3">
                 {tag?.message}
               </Text>
             </Table.Cell>
-            <Table.Cell className="!py-2.5">
+            <Table.Cell>
               <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
             <Table.Cell>
@@ -131,7 +129,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
-                    <Text variant="body-single-line-normal" color="foreground-3" className="block" truncate>
+                    <Text variant="body-normal" className="block" truncate>
                       {tag.tagger?.identity.name}
                     </Text>
                   </>
@@ -143,13 +141,12 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 <TimeAgoCard
                   timestamp={new Date(tag.tagger?.when).getTime()}
                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                  textProps={{ color: 'foreground-3' }}
+                  textProps={{ variant: 'body-normal' }}
                 />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="w-[46px] !py-2.5 text-right">
+            <Table.Cell className="w-[46px] text-right">
               <MoreActionsTooltip
-                isInTable
                 actions={getTableActions(tag).map(action => ({
                   ...action,
                   to: action?.to?.replace('${tag.name}', tag.name)

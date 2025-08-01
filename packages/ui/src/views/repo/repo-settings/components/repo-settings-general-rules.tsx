@@ -106,7 +106,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               <ListActions.Left>
                 <SearchInput
                   id="search"
-                  size="md"
                   defaultValue={rulesSearchQuery}
                   inputContainerClassName="max-w-80"
                   placeholder={t('views:repos.search', 'Search')}
@@ -196,11 +195,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             actions={[
                               {
                                 title: t('views:rules.edit', 'Edit rule'),
+                                iconName: 'edit-pencil',
                                 onClick: () => handleRuleClick(rule.identifier!)
                               },
                               {
                                 isDanger: true,
                                 title: t('views:rules.delete', 'Delete rule'),
+                                iconName: 'trash',
                                 onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
                               }
                             ]}

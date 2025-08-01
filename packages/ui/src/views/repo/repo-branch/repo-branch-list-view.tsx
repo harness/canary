@@ -57,7 +57,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             <ListActions.Root>
               <ListActions.Left>
                 <SearchInput
-                  size="sm"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
                   inputContainerClassName="max-w-80"

@@ -113,7 +113,7 @@ export function RepoWebhookList({
               to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
-              <Table.Cell className="w-[50px] cursor-pointer flex items-start !pr-0" disableLink>
+              <Table.Cell className="flex w-[50px] cursor-pointer items-start !pr-0" disableLink>
                 <Switch
                   checked={webhook.enabled}
                   onClick={e => {
@@ -133,7 +133,7 @@ export function RepoWebhookList({
                   </Text>
                 </Layout.Flex>
               </Table.Cell>
-              <Table.Cell className="cursor-pointer content-center w-[136px]">
+              <Table.Cell className="w-[136px] cursor-pointer content-center">
                 <Tag
                   variant="outline"
                   theme={
@@ -162,6 +162,7 @@ export function RepoWebhookList({
                   actions={[
                     {
                       title: t('views:webhookData.edit', 'Edit webhook'),
+                      iconName: 'edit-pencil',
                       onClick: () =>
                         navigate(
                           toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`
@@ -169,6 +170,7 @@ export function RepoWebhookList({
                     },
                     {
                       isDanger: true,
+                      iconName: 'trash',
                       title: t('views:webhookData.delete', 'Delete webhook'),
                       onClick: () => openDeleteWebhookDialog(webhook.id)
                     }

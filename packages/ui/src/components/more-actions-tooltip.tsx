@@ -31,7 +31,6 @@ export interface MoreActionsTooltipProps {
  */
 export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   actions,
-  isInTable = false,
   iconName = 'more-vert',
   sideOffset = -6,
   alignOffset = 10,
@@ -44,9 +43,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2', {
-            '-mr-2.5 -my-0.5': isInTable
-          })}
+          className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
           variant="ghost"
           iconOnly
           size="sm"

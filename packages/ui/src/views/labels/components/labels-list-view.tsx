@@ -99,10 +99,10 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       <Table.Body>
         {labels.map(label => (
           <Table.Row key={label.id}>
-            <Table.Cell className={cn('w-[20%] !py-3', { 'w-4/12': isSmallWidth })}>
+            <Table.Cell className={cn('w-[20%]', { 'w-4/12': isSmallWidth })}>
               <LabelCellContent label={label} values={values?.[label.key]} />
             </Table.Cell>
-            <Table.Cell className="w-[30%] !py-3.5 leading-none">
+            <Table.Cell className="w-[30%].5 leading-none">
               <Tag
                 size="md"
                 theme="gray"
@@ -112,20 +112,23 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                 icon={label.scope === 0 ? 'repository' : 'folder'}
               />
             </Table.Cell>
-            <Table.Cell className={cn('w-[50%] !py-3', { 'w-5/12': isSmallWidth })}>
+            <Table.Cell className={cn('w-[50%]', { 'w-5/12': isSmallWidth })}>
               <span className="line-clamp-3 break-words text-sm text-cn-foreground-3">{label?.description || ''}</span>
             </Table.Cell>
-            <Table.Cell className="w-[54px] !py-2 ">
+            <Table.Cell className="w-[54px]">
               <MoreActionsTooltip
                 isInTable
+                iconName="more-horizontal"
                 actions={[
                   {
                     title: t('views:labelData.edit', 'Edit label'),
+                    iconName: 'edit-pencil',
                     onClick: () => handleEditLabel(label)
                   },
                   {
                     isDanger: true,
                     title: t('views:labelData.delete', 'Delete label'),
+                    iconName: 'trash',
                     onClick: () => handleDeleteLabel(label.key)
                   }
                 ]}

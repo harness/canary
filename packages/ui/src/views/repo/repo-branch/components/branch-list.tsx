@@ -1,11 +1,13 @@
 import { FC } from 'react'
 
 import {
+  ActionData,
   Avatar,
   IconPropsV2,
   IconV2,
   MoreActionsTooltip,
   NoData,
+  Separator,
   SkeletonTable,
   StatusBadge,
   Table,
@@ -102,13 +104,15 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-[11.71875rem]">
             <Text variant="caption-strong">{t('views:repos.update', 'Updated')}</Text>
           </Table.Head>
-          <Table.Head className="w-[11.71875rem]">
-            <Text variant="caption-strong">{t('views:repos.checkStatus', 'Check status')}</Text>
-          </Table.Head>
+          {branches[0]?.checks ? (
+            <Table.Head className="w-[11.71875rem]">
+              <Text variant="caption-strong">{t('views:repos.checkStatus', 'Check status')}</Text>
+            </Table.Head>
+          ) : null}
           <Table.Head className="w-[11.71875rem]">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <Text variant="caption-strong">{t('views:repos.behind', 'Behind')}</Text>
-              <div className="h-[1.125rem] w-px bg-cn-borders-2" aria-hidden />
+              <Separator orientation="vertical" />
               <Text variant="caption-strong" align="right">
                 {t('views:repos.ahead', 'Ahead')}
               </Text>
@@ -154,8 +158,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 </div>
               </Table.Cell>
               {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
-              <Table.Cell className="content-center">
-                {branch?.checks && (
+              {branch?.checks && (
+                <Table.Cell className="content-center">
                   <div className="flex items-center">
                     {checkState === 'running' ? (
                       <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
@@ -178,8 +182,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     <span className="mx-px">/</span>
                     <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
                   </div>
-                )}
-              </Table.Cell>
+                </Table.Cell>
+              )}
               {/* calculated divergence bar & default branch */}
               <Table.Cell className="content-center">
                 <div className="flex size-full items-center justify-center">
@@ -209,7 +213,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     <Link
                       to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                       onClick={e => e.stopPropagation()}
-                      className="flex w-full gap-2"
+                      className="flex w-full gap-1"
                     >
                       <IconV2
                         name={
@@ -233,18 +237,18 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   </StatusBadge>
                 )}
               </Table.Cell>
-              <Table.Cell className="text-right">
+              <Table.Cell className="text-right" disableLink>
                 <MoreActionsTooltip
                   iconName="more-horizontal"
-                  // isInTable
                   actions={[
                     // Don't show New Pull Request option for default branch
                     ...(!branch?.behindAhead?.default
                       ? [
                           {
                             title: t('views:repos.newPullReq', 'New pull request'),
-                            to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
-                          }
+                            to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
+                            iconName: 'git-pull-request'
+                          } as ActionData
                         ]
                       : []),
                     // {
@@ -253,12 +257,14 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     // },
                     {
                       title: t('views:repos.browse', 'Browse'),
-                      to: toCode?.({ branchName: branch.name }) || ''
+                      to: toCode?.({ branchName: branch.name }) || '',
+                      iconName: 'page'
                     },
                     {
                       isDanger: true,
                       title: t('views:repos.deleteBranch', 'Delete Branch'),
-                      onClick: () => onDeleteBranch(branch.name)
+                      onClick: () => onDeleteBranch(branch.name),
+                      iconName: 'trash'
                     }
                   ]}
                 />

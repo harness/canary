@@ -33,13 +33,7 @@ import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
-import {
-  decodeGitContent,
-  getTrimmedSha,
-  normalizeGitRef,
-  REFS_BRANCH_PREFIX,
-  REFS_TAGS_PREFIX
-} from '../../utils/git-utils'
+import { decodeGitContent, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -259,7 +253,7 @@ export default function RepoSummaryPage() {
       userName: author?.identity?.name || '',
       message: message || '',
       timestamp: author?.when ?? '',
-      sha: sha ? getTrimmedSha(sha) : null
+      sha: sha ?? null
     }
   }, [repoDetails?.latest_commit])
 

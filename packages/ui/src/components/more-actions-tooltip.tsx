@@ -51,7 +51,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           iconOnly
           size="sm"
         >
-          <IconV2 name={iconName} size="2xs" />
+          <IconV2 name={iconName} />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={className} align="end" sideOffset={sideOffset} alignOffset={alignOffset}>
@@ -67,7 +67,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
               <DropdownMenu.Item
                 title={
                   <Layout.Horizontal gap="xs" className="items-center">
-                    {action.iconName ? <IconV2 name={action.iconName} size="xs" /> : null}
+                    {action.iconName ? <IconV2 name={action.iconName} /> : null}
                     <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                       {action.title}
                     </Text>
@@ -80,11 +80,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
               title={
                 <Layout.Horizontal gap="xs" className="items-center">
                   {action.iconName ? (
-                    <IconV2
-                      className={cn({ 'text-cn-foreground-danger': action.isDanger })}
-                      name={action.iconName}
-                      size="xs"
-                    />
+                    <IconV2 className={cn({ 'text-cn-foreground-danger': action.isDanger })} name={action.iconName} />
                   ) : null}
                   <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                     {action.title}

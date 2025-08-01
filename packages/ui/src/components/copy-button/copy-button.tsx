@@ -7,6 +7,7 @@ export interface CopyButtonProps extends Omit<UseCopyButtonProps, 'copyData'> {
   className?: string
   buttonVariant?: ButtonVariants
   size?: ButtonSizes
+  iconOnly?: boolean
 }
 
 export const CopyButton: FC<CopyButtonProps> = ({
@@ -16,13 +17,22 @@ export const CopyButton: FC<CopyButtonProps> = ({
   iconSize = 'sm',
   size = 'sm',
   onClick,
-  color
+  color,
+  iconOnly = false
 }) => {
   const { copyButtonProps, CopyIcon } = useCopyButton({ onClick, copyData: name, iconSize, color })
 
   return (
-    <Button className={className} type="button" variant={buttonVariant} size={size} {...copyButtonProps}>
+    <Button
+      className={className}
+      type="button"
+      variant={buttonVariant}
+      size={size}
+      iconOnly={iconOnly}
+      {...copyButtonProps}
+    >
       {CopyIcon}
     </Button>
   )
 }
+CopyButton.displayName = 'CopyButton'

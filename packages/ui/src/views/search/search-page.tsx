@@ -39,7 +39,7 @@ export interface SearchPageViewProps {
   setRegexEnabled: (selected: boolean) => void
   semanticEnabled: boolean
   setSemanticEnabled: (selected: boolean) => void
-  isProjectScope: boolean
+  isRepoScope: boolean
   semanticSearchError?: string
   searchError?: string
   useSearchResultsStore: () => {
@@ -71,7 +71,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   setRegexEnabled,
   semanticEnabled,
   setSemanticEnabled,
-  isProjectScope,
+  isRepoScope,
   semanticSearchError,
   searchError,
   useSearchResultsStore,
@@ -116,51 +116,46 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           'h-full': !isLoading && !results?.length && !searchQuery
         })}
       >
-        <Text as="h1" variant="heading-section">
-          {t('views:search.title', 'Search')}
-        </Text>
-        <Spacer size={6} />
+        <div className="relative">
+          <SearchInput
+            defaultValue={searchQuery || ''}
+            onChange={handleSearchChange}
+            placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
+            autoFocus
+          />
 
-        <SearchInput
-          defaultValue={searchQuery || ''}
-          onChange={handleSearchChange}
-          placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
-          suffix={
-            <>
-              {isProjectScope ? (
-                <Toggle
-                  selected={semanticEnabled}
-                  onChange={setSemanticEnabled}
-                  iconOnly
-                  prefixIcon="sparks"
-                  prefixIconProps={{
-                    size: 'md'
-                  }}
-                  tooltipProps={{ content: 'Enable AI Semantic Search' }}
-                />
-              ) : null}
-              {!semanticEnabled ? (
-                <Toggle
-                  selected={regexEnabled}
-                  onChange={setRegexEnabled}
-                  iconOnly
-                  prefixIcon="regex"
-                  prefixIconProps={{
-                    size: 'md'
-                  }}
-                  tooltipProps={{ content: 'Enable Regex' }}
-                />
-              ) : null}
-            </>
-          }
-          autoFocus
-        />
+          <Layout.Horizontal className="absolute right-1 top-0 h-full items-center" gap="xs">
+            {isRepoScope ? (
+              <Toggle
+                selected={semanticEnabled}
+                onChange={setSemanticEnabled}
+                prefixIcon="sparks"
+                rounded
+                text="AI Search"
+                size="xs"
+                tooltipProps={{ content: 'Toggle AI Semantic Search' }}
+              />
+            ) : null}
+
+            {!semanticEnabled ? (
+              <Toggle
+                selected={regexEnabled}
+                onChange={setRegexEnabled}
+                iconOnly
+                variant="ghost"
+                prefixIcon="regex"
+                size="xs"
+                tooltipProps={{ content: 'Toggle Regex Search' }}
+              />
+            ) : null}
+          </Layout.Horizontal>
+        </div>
 
         {!semanticEnabled && ((results && results.length > 0) || selectedLanguage || selectedRepoId) ? (
           <>
             <Spacer size={5} />
             <Layout.Horizontal gap="sm">
-              {repos ? (
+              {!isRepoScope && repos ? (
                 <Select
                   isLoading={isReposListLoading}
                   onChange={value => onRepoSelect?.(value)}
@@ -185,19 +180,25 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         <Spacer size={5} />
 
         {!isLoading && !semanticEnabled && stats && results && results.length > 0 && (
-          <Text variant={'caption-normal'}>
-            {t('views:search.statsText', '{{matchCount}} matches found across {{fileCount}} files', {
-              matchCount: stats.total_matches,
-              fileCount: stats.total_files
-            })}
-          </Text>
+          <Layout.Horizontal gap="xs">
+            <Text variant={'caption-normal'}>Results:</Text>
+            <Text variant={'caption-normal'}>
+              {t('views:search.statsText', '{{matchCount}} matches found in {{fileCount}} file(s)', {
+                matchCount: stats.total_matches,
+                fileCount: stats.total_files
+              })}
+            </Text>
+          </Layout.Horizontal>
         )}
         {!isLoading && semanticEnabled && stats && semanticResults && semanticResults.length > 0 && (
-          <Text variant={'caption-normal'}>
-            {t('views:search.statsText', '{{fileCount}} files found', {
-              fileCount: stats.total_files
-            })}
-          </Text>
+          <Layout.Horizontal gap="xs">
+            <Text variant={'caption-normal'}>Results:</Text>
+            <Text variant={'caption-normal'}>
+              {t('views:search.statsText', '{{fileCount}} file(s)', {
+                fileCount: stats.total_files
+              })}
+            </Text>
+          </Layout.Horizontal>
         )}
 
         <Spacer size={5} />
@@ -217,12 +218,13 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
             useSearchResultsStore={useSearchResultsStore}
             toRepoFileDetails={toRepoFileDetails}
             searchError={searchError}
+            isRepoScope={isRepoScope}
           />
         )}
 
         <Spacer size={5} />
 
-        {!isLoading && (
+        {!isLoading && (results?.length || semanticResults?.length) ? (
           <Pagination
             indeterminate={true}
             hasNext={xNextPage > 0}
@@ -230,7 +232,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
             getNextPageLink={getNextPageLink}
             getPrevPageLink={getPrevPageLink}
           />
-        )}
+        ) : null}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

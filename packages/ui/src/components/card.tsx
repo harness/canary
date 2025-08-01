@@ -38,6 +38,7 @@ const cardVariants = cva('cn-card', {
 
 export interface CardRootProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
   children: ReactNode
+  wrapperClassname?: string
 }
 
 const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
@@ -50,6 +51,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
       orientation = 'vertical',
       position = 'start',
       children,
+      wrapperClassname,
       ...props
     },
     ref
@@ -85,7 +87,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
         {...props}
       >
         {imageContent}
-        <div className="cn-card-content-wrapper">{otherContent}</div>
+        <div className={cn('cn-card-content-wrapper', wrapperClassname)}>{otherContent}</div>
       </div>
     )
   }

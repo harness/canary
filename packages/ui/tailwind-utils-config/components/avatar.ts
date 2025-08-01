@@ -10,6 +10,7 @@ export default {
     borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
     fontSize: `var(--cn-font-size-0)`,
+    fontWeight: `var(--cn-font-weight-md-normal-400)`,
     '@apply shrink-0': '',
 
     '&:where(.cn-avatar-sm)': {

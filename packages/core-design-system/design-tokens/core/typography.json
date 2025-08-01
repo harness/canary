@@ -288,8 +288,8 @@
     },
     "min": {
       "$type": "fontSizes",
-      "$value": "0.5rem",
-      "$description": "8px"
+      "$value": "0.55rem",
+      "$description": "8.8px"
     }
   },
   "lineHeight": {

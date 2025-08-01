@@ -90,9 +90,9 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
       const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${itemPath}`
+      const level = (itemPath ?? '').split('/').length - 1
 
       if (item.type === 'file') {
-        const level = (itemPath ?? '').split('/').length - 1
         return (
           <FileExplorer.FileItem
             level={level}
@@ -107,6 +107,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
         return (
           <FileExplorer.FolderItem
             key={itemPath || idx.toString()}
+            level={level}
             value={itemPath}
             link={fullPath}
             isActive={itemPath === fullResourcePath}

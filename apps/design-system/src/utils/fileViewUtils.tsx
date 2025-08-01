@@ -18,9 +18,9 @@ export const renderEntries = (entries: OpenapiContentInfo[], parentPath: string 
   return sortedEntries.map((item, idx) => {
     const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
     const fullPath = ''
+    const level = (itemPath ?? '').split('/').length - 1
 
     if (item.type === 'file') {
-      const level = (itemPath ?? '').split('/').length - 1
       return (
         <FileExplorer.FileItem key={itemPath || idx.toString()} isActive={false} link={undefined} level={level}>
           {item.name}
@@ -28,7 +28,13 @@ export const renderEntries = (entries: OpenapiContentInfo[], parentPath: string 
       )
     } else {
       return (
-        <FileExplorer.FolderItem key={itemPath || idx.toString()} value={itemPath} link={fullPath} isActive={false}>
+        <FileExplorer.FolderItem
+          key={itemPath || idx.toString()}
+          value={itemPath}
+          link={fullPath}
+          isActive={false}
+          level={level}
+        >
           {item.name}
         </FileExplorer.FolderItem>
       )

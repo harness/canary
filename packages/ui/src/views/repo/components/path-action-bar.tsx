@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, Layout, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 
@@ -41,7 +41,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <div className="mb-4 flex items-center justify-between gap-8">
+    <Layout.Horizontal className="items-center justify-between">
       <PathBreadcrumbs
         isEdit={codeMode === CodeModes.EDIT}
         isNew={codeMode === CodeModes.NEW}
@@ -74,7 +74,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
           {!!handleOpenCommitDialog && <Button onClick={handleOpenCommitDialog}>Commit changes</Button>}
         </div>
       )}
-    </div>
+    </Layout.Horizontal>
   )
 }
 PathActionBar.displayName = 'PathActionBar'

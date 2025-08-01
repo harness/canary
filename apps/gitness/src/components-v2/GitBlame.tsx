@@ -73,7 +73,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
       blameData={blameBlocks}
       height={height ? height : undefined}
       theme={monacoTheme}
-      className={'grow'}
+      className="flex grow h-full"
     />
   ) : (
     <></>

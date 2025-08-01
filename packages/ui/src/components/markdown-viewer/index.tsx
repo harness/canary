@@ -191,7 +191,7 @@ export function MarkdownViewer({
               const hasLineNumbers = showLineNumbers && filteredLines.length > 1
 
               return (
-                <div className="mb-layout-md relative">
+                <div className="mb-cn-md relative">
                   <CopyButton
                     className="absolute right-3 top-3 z-10"
                     buttonVariant="outline"

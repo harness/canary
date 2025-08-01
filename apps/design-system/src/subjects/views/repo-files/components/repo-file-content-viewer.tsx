@@ -7,6 +7,7 @@ import {
   GitCommitDialog,
   GitCommitFormType,
   MarkdownViewer,
+  Tabs,
   ViewTypeValue
 } from '@harnessio/ui/components'
 import { BlameEditor, CodeEditor } from '@harnessio/yaml-editor'
@@ -48,47 +49,59 @@ export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boo
         setAllStates={noop}
         isSubmitting={false}
       />
-      <FileViewerControlBar
-        view={view}
-        onChangeView={onChangeView}
-        isMarkdown={isMarkdown}
-        fileBytesSize="100 KB"
-        fileContent={isMarkdown ? repoFilesStore.markdownFileContent : repoFilesStore.jsonFileContent}
-        url=""
-        handleDownloadFile={noop}
-        handleEditFile={noop}
-        handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
-      />
-      {isMarkdown && view === 'preview' ? (
-        <MarkdownViewer source={repoFilesStore.markdownFileContent} withBorder />
-      ) : view === 'code' ? (
-        <CodeEditor
-          language="json"
-          codeRevision={{
-            code: isMarkdown ? repoFilesStore.markdownFileContent : repoFilesStore.jsonFileContent
-          }}
-          onCodeRevisionChange={() => undefined}
-          themeConfig={{
-            defaultTheme: 'dark',
-            themes
-          }}
-          options={{
-            readOnly: true
-          }}
+      <Tabs.Root
+        className="flex flex-col h-full"
+        value={view as string}
+        onValueChange={val => onChangeView(val as ViewTypeValue)}
+      >
+        <FileViewerControlBar
+          view={view}
+          isMarkdown={isMarkdown}
+          fileBytesSize="100 KB"
+          fileContent={isMarkdown ? repoFilesStore.markdownFileContent : repoFilesStore.jsonFileContent}
+          url=""
+          handleDownloadFile={noop}
+          handleEditFile={noop}
+          handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
         />
-      ) : (
-        <BlameEditor
-          code={repoFilesStore.jsonFileContent}
-          language="json"
-          lineNumbersPosition="center"
-          blameData={repoFilesStore.blameJsonFileContent}
-          themeConfig={{
-            defaultTheme: 'dark',
-            themes
-          }}
-          className={'grow'}
-        />
-      )}
+
+        {isMarkdown && (
+          <Tabs.Content value="preview">
+            <MarkdownViewer source={repoFilesStore.markdownFileContent} withBorder /> :
+          </Tabs.Content>
+        )}
+
+        <Tabs.Content value="code">
+          <CodeEditor
+            language="json"
+            codeRevision={{
+              code: isMarkdown ? repoFilesStore.markdownFileContent : repoFilesStore.jsonFileContent
+            }}
+            onCodeRevisionChange={() => undefined}
+            themeConfig={{
+              defaultTheme: 'dark',
+              themes
+            }}
+            options={{
+              readOnly: true
+            }}
+          />
+        </Tabs.Content>
+
+        <Tabs.Content value="blame">
+          <BlameEditor
+            code={repoFilesStore.jsonFileContent}
+            language="json"
+            lineNumbersPosition="center"
+            blameData={repoFilesStore.blameJsonFileContent}
+            themeConfig={{
+              defaultTheme: 'dark',
+              themes
+            }}
+            className={'grow'}
+          />
+        </Tabs.Content>
+      </Tabs.Root>
     </>
   )
 }

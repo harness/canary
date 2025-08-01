@@ -8,6 +8,7 @@ import {
   MarkdownViewer,
   Pagination,
   SkeletonList,
+  Tabs,
   ViewTypeValue
 } from '@harnessio/ui/components'
 import { CommitsList, monacoThemes } from '@harnessio/ui/views'
@@ -135,86 +136,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     navigate(`${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
-  const renderFileView = () => {
-    switch (view) {
-      case 'preview':
-        if (getIsMarkdown(language)) {
-          return (
-            <div className="pb-11">
-              <MarkdownViewer source={fileContent} withBorder />
-            </div>
-          )
-        }
-
-        return (
-          <CodeEditor
-            className="overflow-hidden"
-            height="100%"
-            language={language}
-            codeRevision={{ code: fileContent }}
-            onCodeRevisionChange={() => undefined}
-            themeConfig={themeConfig}
-            options={{
-              readOnly: true
-            }}
-            theme={monacoTheme}
-          />
-        )
-
-      case 'code':
-        return (
-          <CodeEditor
-            className="overflow-hidden"
-            height="100%"
-            language={language}
-            codeRevision={{ code: fileContent }}
-            onCodeRevisionChange={() => undefined}
-            themeConfig={themeConfig}
-            options={{
-              readOnly: true
-            }}
-            theme={monacoTheme}
-          />
-        )
-
-      case 'blame':
-        return <GitBlame height="100%" themeConfig={themeConfig} codeContent={fileContent} language={language} />
-
-      case 'history':
-        if (isFetchingCommits) {
-          return <SkeletonList />
-        }
-        return (
-          <div className="pb-11">
-            <CommitsList
-              className="rounded-b-md border-x border-b bg-cn-background-1 p-6"
-              toCommitDetails={({ sha }: { sha: string }) =>
-                routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
-              }
-              toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
-              data={commitData?.commits?.map((item: TypesCommit) => ({
-                sha: item.sha,
-                parent_shas: item.parent_shas,
-                title: item.title,
-                message: item.message,
-                author: item.author,
-                committer: item.committer
-              }))}
-            />
-            <Pagination
-              indeterminate
-              hasNext={xNextPage > 0}
-              hasPrevious={xPrevPage > 0}
-              getPrevPageLink={getPrevPageLink}
-              getNextPageLink={getNextPageLink}
-            />
-          </div>
-        )
-      default:
-        return null
-    }
-  }
-
   return (
     <>
       <GitCommitDialog
@@ -239,19 +160,92 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         currentBranch={fullGitRef || selectedBranchTag?.name || ''}
         isNew={false}
       />
-      <FileViewerControlBar
-        view={view}
-        onChangeView={onChangeView}
-        isMarkdown={getIsMarkdown(language)}
-        fileBytesSize={formatBytes(repoContent?.content?.size || 0)}
-        fileContent={fileContent}
-        url={rawURL}
-        handleDownloadFile={handleDownloadFile}
-        handleEditFile={handleEditFile}
-        handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
-        refType={selectedRefType}
-      />
-      {renderFileView()}
+      <Tabs.Root
+        className="flex flex-col h-full"
+        value={view as string}
+        onValueChange={val => onChangeView(val as ViewTypeValue)}
+      >
+        <FileViewerControlBar
+          view={view}
+          isMarkdown={getIsMarkdown(language)}
+          fileBytesSize={formatBytes(repoContent?.content?.size || 0)}
+          fileContent={fileContent}
+          url={rawURL}
+          handleDownloadFile={handleDownloadFile}
+          handleEditFile={handleEditFile}
+          handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
+          refType={selectedRefType}
+        />
+
+        <Tabs.Content value="preview">
+          {getIsMarkdown(language) ? (
+            <MarkdownViewer source={fileContent} withBorder />
+          ) : (
+            <CodeEditor
+              className="overflow-hidden"
+              height="100%"
+              language={language}
+              codeRevision={{ code: fileContent }}
+              onCodeRevisionChange={() => undefined}
+              themeConfig={themeConfig}
+              options={{
+                readOnly: true
+              }}
+              theme={monacoTheme}
+            />
+          )}
+        </Tabs.Content>
+
+        <Tabs.Content value="code" className="grow">
+          <CodeEditor
+            className="overflow-hidden"
+            height="100%"
+            language={language}
+            codeRevision={{ code: fileContent }}
+            onCodeRevisionChange={() => undefined}
+            themeConfig={themeConfig}
+            options={{
+              readOnly: true
+            }}
+            theme={monacoTheme}
+          />
+        </Tabs.Content>
+
+        <Tabs.Content value="blame" className="grow">
+          <GitBlame height="100%" themeConfig={themeConfig} codeContent={fileContent} language={language} />
+        </Tabs.Content>
+
+        <Tabs.Content value="history">
+          {isFetchingCommits ? (
+            <SkeletonList />
+          ) : (
+            <>
+              <CommitsList
+                className="mt-cn-md"
+                toCommitDetails={({ sha }: { sha: string }) =>
+                  routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+                }
+                toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+                data={commitData?.commits?.map((item: TypesCommit) => ({
+                  sha: item.sha,
+                  parent_shas: item.parent_shas,
+                  title: item.title,
+                  message: item.message,
+                  author: item.author,
+                  committer: item.committer
+                }))}
+              />
+              <Pagination
+                indeterminate
+                hasNext={xNextPage > 0}
+                hasPrevious={xPrevPage > 0}
+                getPrevPageLink={getPrevPageLink}
+                getNextPageLink={getNextPageLink}
+              />
+            </>
+          )}
+        </Tabs.Content>
+      </Tabs.Root>
     </>
   )
 }

@@ -38,7 +38,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       gapX="xs"
     >
       <Text color="foreground-1">
-        <span className="mr-[var(--cn-layout-2xs)]">
+        <span className="mr-cn-2xs">
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
           {hasAhead && (
             <>

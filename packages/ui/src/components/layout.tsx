@@ -129,15 +129,15 @@ interface LayoutProps {
   as?: ElementType
 }
 
-interface FlexProps extends LayoutProps, VariantProps<typeof flexVariants> {}
+interface FlexProps extends LayoutProps, HTMLAttributes<HTMLDivElement>, VariantProps<typeof flexVariants> {}
 
-interface GridProps extends LayoutProps, VariantProps<typeof gridVariants> {
+interface GridProps extends LayoutProps, HTMLAttributes<HTMLDivElement>, VariantProps<typeof gridVariants> {
   columns?: string | number
   rows?: string | number
   flow?: 'row' | 'column' | 'dense' | 'row dense' | 'column dense'
 }
 
-const Flex = forwardRef<HTMLDivElement, FlexProps & HTMLAttributes<HTMLDivElement>>(
+const Flex = forwardRef<HTMLDivElement, FlexProps>(
   ({ children, className, direction, align, justify, gap, gapX, gapY, wrap, as: Comp = 'div', ...props }, ref) => {
     return (
       <Comp
@@ -152,7 +152,7 @@ const Flex = forwardRef<HTMLDivElement, FlexProps & HTMLAttributes<HTMLDivElemen
 )
 Flex.displayName = 'LayoutFlex'
 
-const Grid = forwardRef<HTMLDivElement, GridProps & HTMLAttributes<HTMLDivElement>>(
+const Grid = forwardRef<HTMLDivElement, GridProps>(
   (
     { children, className, columns, rows, flow, align, justify, gap, gapX, gapY, as: Comp = 'div', style, ...props },
     ref
@@ -212,3 +212,5 @@ export const Layout = {
   Horizontal,
   Vertical
 }
+
+export type { FlexProps, GridProps }

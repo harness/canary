@@ -126,11 +126,17 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
 )
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-type AccordionContentProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+type AccordionContentProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Content> & {
+  containerClassName?: string
+}
 
 const AccordionContent = forwardRef<ElementRef<typeof AccordionPrimitive.Content>, AccordionContentProps>(
-  ({ className, children, ...props }, ref) => (
-    <AccordionPrimitive.Content ref={ref} className="cn-accordion-content-container" {...props}>
+  ({ className, children, containerClassName, ...props }, ref) => (
+    <AccordionPrimitive.Content
+      ref={ref}
+      className={cn('cn-accordion-content-container', containerClassName)}
+      {...props}
+    >
       <div className={cn('cn-accordion-content', className)}>{children}</div>
     </AccordionPrimitive.Content>
   )

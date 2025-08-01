@@ -16,7 +16,11 @@ export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSi
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
           <div className="flex size-full flex-col gap-3 pt-5">
             <div className="px-5">
-              <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
+              <SearchFiles
+                navigateToFile={navigateToFile}
+                filesList={filesList}
+                contentClassName="width-popover-width"
+              />
             </div>
             <ScrollArea className="grid-cols-[100%] px-5 pr-3.5">
               {children}

@@ -13,8 +13,10 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2 } from './icon-v2'
-import { Layout } from './layout'
+import { FlexProps, Layout } from './layout'
 import { Link, type LinkProps } from './link'
+import { Separator } from './separator'
+import { Text } from './text'
 import { Tooltip, type TooltipProps } from './tooltip'
 
 export const tableVariants = cva('cn-table-v2', {
@@ -113,21 +115,33 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
    * Props for the tooltip component
    */
   tooltipProps?: Omit<TooltipProps, 'children'>
+  containerProps?: FlexProps
+  withDivider?: boolean
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
+  ({ className, sortDirection, sortable, children, tooltipProps, withDivider, containerProps, ...props }, ref) => {
+    const Title = () => (
+      <Text
+        variant="caption-strong"
+        color="foreground-1"
+        className={cn({ 'underline decoration-dashed': !!tooltipProps?.content })}
+      >
+        {children}
+      </Text>
+    )
+
     const childrenWithTooltip = tooltipProps?.content ? (
       <Tooltip {...tooltipProps}>
-        <span className="underline decoration-dashed">{children}</span>
+        <Title />
       </Tooltip>
     ) : (
-      children
+      <Title />
     )
 
     const contentElement = (
-      // <div className="flex items-center gap-1">
-      <Layout.Flex direction="row" gap="xs" align="center">
+      <Layout.Horizontal gap="xs" align="center" className="relative" {...containerProps}>
+        {withDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
         {childrenWithTooltip}
         {sortable && (
           <span className="ml-1">
@@ -136,8 +150,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
             {!sortDirection && <IconV2 name="up-down" />}
           </span>
         )}
-      </Layout.Flex>
-      // </div>
+      </Layout.Horizontal>
     )
 
     return (

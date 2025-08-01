@@ -17,7 +17,6 @@ import {
   Radio,
   Select,
   SelectValueOption,
-  Spacer,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -121,8 +120,7 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[610px] pb-20 pt-1">
-        <Spacer size={7} />
+      <SandboxLayout.Content className="mx-auto w-[610px]">
         <Layout.Vertical gap="xl">
           <Layout.Vertical gap="md">
             <Text variant="heading-section">{t('views:repos.createNewRepo', 'Create a new repository')}</Text>

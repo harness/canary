@@ -221,7 +221,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           ) : (
             <>
               <CommitsList
-                className="mt-layout-md"
+                className="mt-cn-md"
                 toCommitDetails={({ sha }: { sha: string }) =>
                   routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
                 }

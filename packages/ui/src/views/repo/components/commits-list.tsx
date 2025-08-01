@@ -67,11 +67,11 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start p-layout-sm pl-layout-xs"
+                      className="flex !cursor-default items-start p-cn-sm pl-cn-xs"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
-                      <Layout.Horizontal className="w-full pl-layout-md">
+                      <Layout.Horizontal className="w-full pl-cn-md">
                         <Link
                           className="grow overflow-hidden"
                           onClick={e => {

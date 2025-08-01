@@ -24,17 +24,17 @@ export default {
         code: ['JetBrains Mono', 'monospace']
       },
       spacing: {
-        'layout-4xs': 'var(--cn-layout-4xs)',
-        'layout-3xs': 'var(--cn-layout-3xs)',
-        'layout-2xs': 'var(--cn-layout-2xs)',
-        'layout-xs': 'var(--cn-layout-xs)',
-        'layout-sm': 'var(--cn-layout-sm)',
-        'layout-md': 'var(--cn-layout-md)',
-        'layout-lg': 'var(--cn-layout-lg)',
-        'layout-xl': 'var(--cn-layout-xl)',
-        'layout-2xl': 'var(--cn-layout-2xl)',
-        'layout-3xl': 'var(--cn-layout-3xl)',
-        'layout-4xl': 'var(--cn-layout-4xl)'
+        'cn-4xs': 'var(--cn-layout-4xs)',
+        'cn-3xs': 'var(--cn-layout-3xs)',
+        'cn-2xs': 'var(--cn-layout-2xs)',
+        'cn-xs': 'var(--cn-layout-xs)',
+        'cn-sm': 'var(--cn-layout-sm)',
+        'cn-md': 'var(--cn-layout-md)',
+        'cn-lg': 'var(--cn-layout-lg)',
+        'cn-xl': 'var(--cn-layout-xl)',
+        'cn-2xl': 'var(--cn-layout-2xl)',
+        'cn-3xl': 'var(--cn-layout-3xl)',
+        'cn-4xl': 'var(--cn-layout-4xl)'
       },
       colors: {
         /* New colors design variables */
@@ -514,6 +514,6 @@ export default {
     'stroke-borders-2',
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },
-    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr)-layout-.+$/ }
+    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }
   ]
 } satisfies TailwindConfig

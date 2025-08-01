@@ -80,7 +80,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
 
   return (
     <StackedList.Root className="bg-cn-background-2" onlyTopRounded={view !== 'history'}>
-      <StackedList.Item disableHover isHeader className="px-layout-md py-layout-2xs">
+      <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs">
         <Tabs.List variant="ghost">
           {isMarkdown && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}
           <Tabs.Trigger value="code">Code</Tabs.Trigger>

@@ -163,7 +163,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               label={t('component:commitDialog.form.description.label', 'Extended description')}
             />
 
-            <ControlGroup className="gap-layout-sm">
+            <ControlGroup className="gap-cn-sm">
               <FormInput.Radio id="commitToGitRef" {...register('commitToGitRef')}>
                 <Radio.Item
                   id={CommitToGitRefOption.DIRECTLY}

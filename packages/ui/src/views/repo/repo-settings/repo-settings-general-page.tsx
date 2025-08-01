@@ -54,7 +54,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
     useRepoRulesStore()
 
   return (
-    <SandboxLayout.Content className="max-w-[570px] px-0">
+    <SandboxLayout.Content className="max-w-[635px]">
       <Layout.Vertical gap="xl">
         <Text as="h1" variant="heading-section">
           {t('views:repos.generalSettings', 'General settings')}

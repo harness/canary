@@ -173,10 +173,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                             {rule.type && (
                               <Tag
+                                showIcon
                                 variant="outline"
                                 size="sm"
-                                theme={rule.type === 'branch' ? 'blue' : 'green'}
-                                value={rule.type}
+                                theme={rule.type === 'branch' ? 'blue' : 'purple'}
+                                value={rule.type === 'branch' ? 'Branch Rule' : 'Tag Rule'}
+                                icon={rule.type === 'branch' ? 'git-branch' : 'tag'}
+                                rounded={rule.type === 'tag'}
                               />
                             )}
                           </div>

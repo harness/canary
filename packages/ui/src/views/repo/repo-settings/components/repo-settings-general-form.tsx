@@ -128,6 +128,7 @@ export const RepoSettingsGeneralForm: FC<{
               label={t('views:repos.description', 'Description')}
               optional
               resizable
+              className="min-h-[136px]"
             />
           </Fieldset>
 

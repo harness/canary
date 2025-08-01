@@ -23,6 +23,7 @@ import paginationStyles from './pagination'
 import popoverStyles from './popover'
 import progressStyles from './progress'
 import radioStyles from './radio'
+import repoLayout from './repo-layout'
 import sandboxLayout from './sandbox-layout'
 import scrollAreaStyles from './scroll-area'
 import selectStyles from './select'
@@ -57,6 +58,7 @@ export const ComponentStyles = [
   buttonLayoutStyles,
   tabsStyles,
   dialogStyles,
+  repoLayout,
   sandboxLayout,
   scrollAreaStyles,
   popoverStyles,

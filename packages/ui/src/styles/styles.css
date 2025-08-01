@@ -586,3 +586,8 @@ mark {
 .nested-sidebar-height {
   height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent-with-borders));
 }
+
+.branch-selector-trigger-as-input {
+  background-color: var(--cn-comp-input-bg);
+  padding-inline: var(--cn-input-md-pl) var(--cn-input-md-pr);
+}

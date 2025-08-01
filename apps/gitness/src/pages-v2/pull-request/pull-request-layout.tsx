@@ -70,7 +70,7 @@ const PullRequestLayout = () => {
     setPullReqLoading
   ])
 
-  const handleUpdateTitle = (title: string, description: string) => {
+  const handleUpdateTitleAndDescription = (title: string, description: string) => {
     updateTitle({ body: { title, description } })
   }
 
@@ -85,7 +85,7 @@ const PullRequestLayout = () => {
       usePullRequestStore={usePullRequestStore}
       spaceId={spaceId || ''}
       repoId={repoId}
-      updateTitle={handleUpdateTitle}
+      updateTitleAndDescription={handleUpdateTitleAndDescription}
       updateTargetBranch={handleUpdateTargetBranch}
       branchSelectorRenderer={BranchSelectorContainer}
     />

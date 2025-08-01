@@ -45,4 +45,5 @@ export interface BranchSelectorContainerProps {
   isBranchOnly?: boolean
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
+  className?: string
 }

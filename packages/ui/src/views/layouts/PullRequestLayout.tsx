@@ -11,7 +11,7 @@ interface PullRequestLayoutProps {
   usePullRequestStore: () => IPullRequestStore
   spaceId?: string
   repoId?: string
-  updateTitle: (title: string, description: string) => void
+  updateTitleAndDescription: (title: string, description: string) => void
   updateTargetBranch: (branchName: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
@@ -26,7 +26,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   usePullRequestStore,
   spaceId,
   repoId,
-  updateTitle,
+  updateTitleAndDescription,
   updateTargetBranch,
   branchSelectorRenderer
 }) => {
@@ -40,7 +40,9 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         {pullRequest && (
           <PullRequestHeader
             className="mb-6"
-            updateTitle={updateTitle}
+            updateTitle={(title: string) => {
+              updateTitleAndDescription(title, pullRequest.description ?? '')
+            }}
             updateTargetBranch={updateTargetBranch}
             data={{ ...pullRequest, spaceId, repoId }}
             branchSelectorRenderer={branchSelectorRenderer}

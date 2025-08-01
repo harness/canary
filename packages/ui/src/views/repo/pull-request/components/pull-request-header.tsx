@@ -25,7 +25,7 @@ interface PullRequestTitleProps {
     repoId?: string
     description?: string
   }
-  updateTitle: (title: string, description: string) => void
+  updateTitle: (title: string) => void
   updateTargetBranch: (branchName: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
 }
@@ -44,8 +44,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     is_draft,
     state,
     spaceId,
-    repoId,
-    description
+    repoId
   },
   updateTitle,
   updateTargetBranch,
@@ -54,8 +53,8 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   const stateObject = getPrState(is_draft, merged, state)
 
   const handleSubmit = useCallback(
-    async (newTitle: string, newDescription: string, newBranch: string) => {
-      await updateTitle(newTitle, newDescription)
+    async (newTitle: string, newBranch: string) => {
+      await updateTitle(newTitle)
       await updateTargetBranch(newBranch)
     },
     [updateTitle, updateTargetBranch]
@@ -119,7 +118,6 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         onClose={() => setIsEditing(false)}
         onSubmit={handleSubmit}
         initialTitle={title || ''}
-        initialDescription={description || ''}
         branchSelectorRenderer={branchSelectorRenderer}
         sourceBranch={source_branch}
         targetBranch={target_branch}

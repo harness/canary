@@ -24,7 +24,7 @@ const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLEl
             usePullRequestStore={usePullRequestStore}
             spaceId={''}
             repoId={''}
-            updateTitle={() => {
+            updateTitleAndDescription={() => {
               return Promise.resolve()
             }}
             updateTargetBranch={() => {

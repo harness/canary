@@ -9,9 +9,8 @@ import { z } from 'zod'
 interface PullRequestHeaderEditDialogProps {
   open: boolean
   onClose: () => void
-  onSubmit: (newTitle: string, newDescription: string, branch: string) => void
+  onSubmit: (newTitle: string, newBranch: string) => void
   initialTitle: string
-  initialDescription?: string
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
   sourceBranch?: string
   targetBranch?: string
@@ -19,14 +18,12 @@ interface PullRequestHeaderEditDialogProps {
 
 // Field names as constants to avoid lint warnings with string literals
 const FIELD_TITLE = 'title'
-const FIELD_DESCRIPTION = 'description'
 const FIELD_BRANCH = 'branch'
 
 const createFormSchema = (sourceBranch?: string) =>
   z
     .object({
       [FIELD_TITLE]: z.string().min(1, { message: 'Title is required' }),
-      [FIELD_DESCRIPTION]: z.string().optional(),
       [FIELD_BRANCH]: z.string().optional()
     })
     .refine(data => data[FIELD_BRANCH] !== sourceBranch, {
@@ -41,7 +38,6 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   onClose,
   onSubmit,
   initialTitle,
-  initialDescription = '',
   branchSelectorRenderer,
   sourceBranch,
   targetBranch
@@ -55,7 +51,6 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
     mode: 'onChange',
     defaultValues: {
       title: initialTitle,
-      description: initialDescription,
       branch: targetBranch || ''
     }
   })
@@ -77,7 +72,7 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
     setIsLoading(true)
 
     try {
-      await onSubmit(data.title, data.description || '', data.branch || '')
+      await onSubmit(data.title, data.branch || '')
       onClose()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred')
@@ -91,15 +86,13 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   useEffect(() => {
     reset({
       title: initialTitle,
-      description: initialDescription,
       branch: targetBranch || ''
     })
-  }, [initialTitle, initialDescription, reset])
+  }, [initialTitle, reset])
 
   const handleDialogClose = () => {
     reset({
       title: initialTitle,
-      description: initialDescription,
       branch: targetBranch || ''
     })
     onClose()
@@ -115,11 +108,11 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           className="block"
         >
           <Dialog.Header>
-            <Dialog.Title>Edit Pull Request</Dialog.Title>
+            <Dialog.Title>Edit PR title</Dialog.Title>
           </Dialog.Header>
 
           <Dialog.Body>
-            <div className="my-7 space-y-7">
+            <div className="my-3 space-y-6">
               <FormInput.Text
                 id={FIELD_TITLE}
                 {...register(FIELD_TITLE)}
@@ -133,19 +126,13 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
                 <Label>Target Branch</Label>
                 <BranchSelector
                   {...register(FIELD_BRANCH)}
+                  className={'branch-selector-trigger-as-input'}
                   onSelectBranchorTag={value => setValue(FIELD_BRANCH, value.name)}
                   isBranchOnly={true}
                   dynamicWidth={true}
                   selectedBranch={{ name: branchValue || targetBranch || '', sha: '' }}
                 />
               </ControlGroup>
-
-              <FormInput.Textarea
-                {...register(FIELD_DESCRIPTION)}
-                placeholder="Enter pull request description"
-                label="Description"
-                rows={5}
-              />
 
               {errors[FIELD_BRANCH] && (
                 <Alert.Root theme="danger">

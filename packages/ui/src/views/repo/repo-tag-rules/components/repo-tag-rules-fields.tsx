@@ -10,7 +10,6 @@ import {
   Label,
   MultiSelectOption,
   SplitButton,
-  StackedList,
   Switch
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -25,29 +24,13 @@ import { getTagRules } from './repo-tag-rules-data'
 export const TagSettingsRuleToggleField: FC<TagFieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()
   return (
-    <StackedList.Root className="overflow-hidden" borderBackground>
-      <StackedList.Item
-        className="!rounded px-5 py-3"
-        disableHover
-        isHeader
-        isLast
-        actions={
-          <Switch
-            {...register!('state')}
-            checked={watch!('state')}
-            onCheckedChange={() => setValue!('state', !watch!('state'))}
-          />
-        }
-      >
-        <StackedList.Field
-          title={t('views:repos.enableRule', 'Enable the rule')}
-          description={t(
-            'views:repos.enableRuleDescription',
-            'By enabling the toggle, the branch rule will be enforced.'
-          )}
-        />
-      </StackedList.Item>
-    </StackedList.Root>
+    <Switch
+      {...register!('state')}
+      checked={watch!('state')}
+      onCheckedChange={() => setValue!('state', !watch!('state'))}
+      label={t('views:repos.enableRule', 'Enable the rule')}
+      caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the branch rule will be enforced.')}
+    />
   )
 }
 
@@ -73,6 +56,7 @@ export const TagSettingsRuleDescriptionField: FC<TagFieldProps> = ({ register })
       id="description"
       {...register!('description')}
       placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
+      className="h-[136px]"
     />
   )
 }
@@ -100,10 +84,8 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
   return (
     <Fieldset className="gap-y-4">
       <ControlGroup>
-        <Label htmlFor="target-patterns" className="mb-2">
-          {t('views:repos.targetPatterns', 'Target patterns')}
-        </Label>
-        <div className="grid grid-cols-[1fr_112px] items-start gap-x-3.5">
+        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
+        <div className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
           <FormInput.Text
             id="pattern"
             {...register!('pattern')}
@@ -114,7 +96,6 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
           />
           <SplitButton<PatternsButtonType>
-            buttonClassName="px-0 w-full"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
@@ -228,9 +209,9 @@ export const TagSettingsRuleListField: FC<{
   const tagRules = getTagRules(t)
 
   return (
-    <ControlGroup className="max-w-[476px]">
-      <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      <Fieldset className="gap-y-5">
+    <ControlGroup>
+      <Label className="mb-4">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Fieldset className="gap-y-4">
         {tagRules.map(rule => {
           const matchingRule = rules.find(r => r.id === rule.id)
           const { checked: isChecked = false, disabled: isDisabled = false } = matchingRule || {}

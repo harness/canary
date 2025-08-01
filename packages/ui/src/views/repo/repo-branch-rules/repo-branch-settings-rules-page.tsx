@@ -1,7 +1,16 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormWrapper, MultiSelectOption, Text } from '@/components'
+import {
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Fieldset,
+  FormSeparator,
+  FormWrapper,
+  MultiSelectOption,
+  Text
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -126,8 +135,8 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
 
   return (
-    <SandboxLayout.Content className={`max-w-[570px] px-0 ${projectScope ? 'mx-auto' : ''}`}>
-      <Text as="h1" variant="heading-section" className="mb-10">
+    <SandboxLayout.Content className={`max-w-[612px] ml-3 ${projectScope ? 'mx-auto' : ''}`}>
+      <Text as="h1" variant="heading-section" className="mb-4">
         {presetRuleData
           ? t('views:repos.updateBranchRule', 'Update branch rule')
           : t('views:repos.CreateRule', 'Create a branch rule')}
@@ -135,12 +144,13 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
         <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
+        <FormSeparator />
 
         <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
 
         <BranchSettingsRuleDescriptionField register={register} errors={errors} />
 
-        <div className="flex flex-col gap-y-11">
+        <div className="flex flex-col gap-y-10">
           <BranchSettingsRuleTargetPatternsField
             watch={watch}
             setValue={setValue}

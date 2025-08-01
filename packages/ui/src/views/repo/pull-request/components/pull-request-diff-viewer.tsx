@@ -450,12 +450,12 @@ const PullRequestDiffViewer = ({
                 quoteReplyText={quoteReplies[parent.id]?.text || ''}
                 contentHeader={
                   !!parent.payload?.resolved && (
-                    <div className="flex items-center gap-x-1">
-                      <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
-                      <Text variant="body-normal" color="foreground-3">
-                        marked this conversation as resolved
+                    <Text variant="body-normal" color="foreground-3">
+                      <Text as="span" variant="body-strong" color="foreground-1">
+                        {parent.payload?.resolver?.display_name}
                       </Text>
-                    </div>
+                      &nbsp; marked this conversation as resolved.
+                    </Text>
                   )
                 }
                 content={

@@ -510,8 +510,9 @@ export default {
     { pattern: /^hover:bg-topbar-background-/ },
     { pattern: /^hover:text-topbar-foreground-/ },
     { pattern: /^hover:text-topbar-icon-/ },
-    // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
+    { pattern: /rounded-./ },
+    { pattern: /border-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },
     { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }

@@ -12,5 +12,6 @@
   "prettier.trailingComma": "none",
   "workbench.editorAssociations": {
     "*.svg": "default"
-  }
+  },
+  "editor.dropIntoEditor.preferences": []
 }

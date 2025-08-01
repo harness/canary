@@ -114,7 +114,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...pro
 
       {(isNew || isEdit) && renderInput()}
 
-      <CopyButton name={fullResourcePath || 'Copy path'} className="ml-layout-2xs" />
+      <CopyButton name={fullResourcePath || 'Copy path'} className="ml-cn-2xs" />
     </Layout.Flex>
   )
 }

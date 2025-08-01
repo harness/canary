@@ -136,7 +136,7 @@ const DropdownBaseItem = ({
 }: DropdownBaseItemProps) => (
   <div className={cn('cn-dropdown-menu-base-item', className)}>
     {children}
-    <Layout.Grid gap="2xs" className="w-fit">
+    <Layout.Grid gapX="2xs" className="w-fit">
       {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
       {typeof description === 'string' ? <Text>{description}</Text> : description}
     </Layout.Grid>

@@ -93,7 +93,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <Layout.Grid gapY="sm">
             <Separator />
-            <Text lineClamp={6} color="foreground-1">
+            <Text variant="body-normal" lineClamp={6} color="foreground-1">
               {description}
             </Text>
             <Separator />

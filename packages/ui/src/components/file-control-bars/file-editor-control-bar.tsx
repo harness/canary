@@ -1,6 +1,6 @@
 import { StackedList, Tabs } from '@/components'
 
-export const FileEditorControlBar= () => {
+export const FileEditorControlBar = () => {
   return (
     <StackedList.Root className="bg-cn-background-2" onlyTopRounded>
       <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs">

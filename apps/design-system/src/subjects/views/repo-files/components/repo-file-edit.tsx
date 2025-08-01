@@ -8,7 +8,8 @@ import {
   getIsMarkdown,
   GitCommitDialog,
   GitCommitFormType,
-  MarkdownViewer
+  MarkdownViewer,
+  Tabs
 } from '@harnessio/ui/components'
 import { BranchSelectorTab, CodeModes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
@@ -44,49 +45,6 @@ export const RepoFileEdit = () => {
     })
   }, [show])
 
-  const renderFileView = () => {
-    switch (view) {
-      case 'preview':
-        if (getIsMarkdown(language)) {
-          return (
-            <MarkdownViewer source={repoFilesStore.mdFileContent} withBorder className="max-h-screen overflow-auto" />
-          )
-        }
-
-        return (
-          <CodeDiffEditor
-            language={language}
-            original={repoFilesStore.mdFileContent}
-            modified={repoFilesStore.mdFileContent}
-            themeConfig={{
-              defaultTheme: 'dark'
-            }}
-            options={{
-              readOnly: true
-            }}
-          />
-        )
-
-      case 'edit':
-        return (
-          <CodeEditor
-            language={language}
-            codeRevision={{ code: repoFilesStore.mdFileContent }}
-            themeConfig={{
-              defaultTheme: 'dark'
-            }}
-            onCodeRevisionChange={() => undefined}
-            options={{
-              readOnly: false
-            }}
-          />
-        )
-
-      default:
-        return null
-    }
-  }
-
   return (
     <>
       <GitCommitDialog
@@ -114,9 +72,45 @@ export const RepoFileEdit = () => {
         selectedRefType={BranchSelectorTab.BRANCHES}
       />
 
-      <FileEditorControlBar view={view} onChangeView={onChangeView} />
+      <Tabs.Root
+        className="flex flex-col h-full"
+        value={view as string}
+        onValueChange={val => onChangeView(val as EditViewTypeValue)}
+      >
+        <FileEditorControlBar view={view} onChangeView={onChangeView} />
 
-      {renderFileView()}
+        <Tabs.Content value="edit" className="grow">
+          <CodeEditor
+            language={language}
+            codeRevision={{ code: repoFilesStore.mdFileContent }}
+            themeConfig={{
+              defaultTheme: 'dark'
+            }}
+            onCodeRevisionChange={() => undefined}
+            options={{
+              readOnly: false
+            }}
+          />
+        </Tabs.Content>
+
+        <Tabs.Content value="preview" className="grow">
+          {getIsMarkdown(language) ? (
+            <MarkdownViewer source={repoFilesStore.mdFileContent} withBorder className="max-h-screen overflow-auto" />
+          ) : (
+            <CodeDiffEditor
+              language={language}
+              original={repoFilesStore.mdFileContent}
+              modified={repoFilesStore.mdFileContent}
+              themeConfig={{
+                defaultTheme: 'dark'
+              }}
+              options={{
+                readOnly: true
+              }}
+            />
+          )}
+        </Tabs.Content>
+      </Tabs.Root>
     </>
   )
 }

@@ -4,9 +4,8 @@ import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from 
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
-import { DiffModeOptions, TypesCommit } from '@/views'
+import { TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 
 import {
   EnumPullReqReviewDecision,
@@ -62,8 +61,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   reviewers,
   submitReview,
   refetchReviewers,
-  diffMode,
-  setDiffMode,
+  // diffMode,
+  // setDiffMode,
   pullReqCommits,
   defaultCommitFilter,
   selectedCommits,
@@ -184,9 +183,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
   const commitDropdownItems = renderCommitDropdownItems(commitFilterOptions)
   const itemsToRender = getApprovalItems(approveState, approvalItems)
-  const handleDiffModeChange = (value: string) => {
-    setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
-  }
+  // const handleDiffModeChange = (value: string) => {
+  //   setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+  // }
 
   return (
     <Layout.Horizontal align="center" justify="between" className="gap-x-5">
@@ -213,7 +212,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 
-        <DropdownMenu.Root>
+        {/* <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
@@ -233,7 +232,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               />
             ))}
           </DropdownMenu.Content>
-        </DropdownMenu.Root>
+        </DropdownMenu.Root> */}
 
         <DropdownMenu.Root>
           <Layout.Horizontal align="center">

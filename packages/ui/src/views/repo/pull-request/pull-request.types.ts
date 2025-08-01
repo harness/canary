@@ -1,5 +1,5 @@
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, ILabelsStore, LabelType, Scope, TypesBranchTable } from '@/views'
+import { ColorsEnum, ILabelsStore, LabelType, RepositoryType, Scope, TypesBranchTable } from '@/views'
 import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
@@ -235,6 +235,7 @@ export interface PRListLabelType {
 
 interface RoutingProps {
   toPullRequest: ({ prNumber, repoId }: { prNumber: number; repoId?: string }) => string
+  onClickPullRequest: ({ prNumber, repo }: { prNumber?: number; repo: Pick<RepositoryType, 'name' | 'path'> }) => void
 }
 
 export interface PullRequestPageProps extends Partial<RoutingProps> {

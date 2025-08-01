@@ -60,8 +60,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   searchQuery,
   setSearchQuery,
   onLabelClick,
-  toPullRequest,
-  scope
+  scope,
+  ...routingProps
 }) => {
   const [showScope, setShowScope] = useState(false)
   const { Link, useSearchParams, location } = useRouterContext()
@@ -266,10 +266,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         openPRs={!isProjectLevel ? openPullReqs : undefined}
         headerFilter={prState}
         setHeaderFilter={setPrState}
-        toPullRequest={toPullRequest}
         onLabelClick={onLabelClick}
         scope={scope}
         showScope={showScope}
+        {...routingProps}
       />
     )
   }

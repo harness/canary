@@ -47,3 +47,21 @@ export const getRepoUrl = ({
   const url = toRepository?.() ?? ''
   return prependScopeToUrl({ url, scope, orgId, projectId })
 }
+
+export const getPullRequestUrl = ({
+  repo,
+  scope,
+  pullRequestSubPath
+}: {
+  repo: Pick<RepositoryType, 'name' | 'path'>
+  scope: Scope
+  pullRequestSubPath: string
+}): string => {
+  const scopedPath = getScopedPath({
+    accountId: scope.accountId,
+    repoIdentifier: repo.name,
+    repoPath: repo.path
+  }).split('/')
+  const [orgId, projectId] = scopedPath
+  return prependScopeToUrl({ url: pullRequestSubPath, scope, orgId, projectId })
+}

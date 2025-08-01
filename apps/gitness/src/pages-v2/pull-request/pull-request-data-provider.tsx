@@ -170,10 +170,13 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
   ])
 
   useEffect(() => {
+    if (!pullReqMetadata?.source_sha || pullRequestTab !== PullRequestTab.CONVERSATION || !repoRef) return
+
+    // Immediate call
+    dryMerge()
+
     const intervalId = setInterval(() => {
-      if (pullReqMetadata?.source_sha && pullRequestTab === PullRequestTab.CONVERSATION && repoRef) {
-        dryMerge()
-      }
+      dryMerge()
     }, POLLING_INTERVAL)
 
     return () => clearInterval(intervalId)

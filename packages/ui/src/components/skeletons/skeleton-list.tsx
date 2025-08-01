@@ -33,7 +33,6 @@ export const SkeletonList = ({ className }: SkeletonListProps) => {
               // Randomized pixel width for secondary description skeleton
               description={<Skeleton className="h-2.5" style={{ width: getRandomPixelWidth(150, 250) }} />}
               right
-              secondary
             />
           </StackedList.Item>
         ))}

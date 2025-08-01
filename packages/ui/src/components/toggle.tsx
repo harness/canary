@@ -103,6 +103,12 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       [isControlled, onChange]
     )
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+      e.stopPropagation()
+      handleChange(!selected)
+    }
+
     const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
 
     const renderContent = () => {
@@ -125,7 +131,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
 
     return (
       <TooltipWrapper tooltipProps={tooltipProps}>
-        <TogglePrimitive.Root ref={ref} asChild pressed={selected} onPressedChange={handleChange} disabled={disabled}>
+        <TogglePrimitive.Root ref={ref} asChild pressed={selected} onClick={handleClick} disabled={disabled}>
           <Button
             className={cn(className, toggleVariants({ size, variant, iconOnly }))}
             variant={selected ? selectedVariant : variant}

@@ -79,7 +79,7 @@ export default {
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
-          selected: 'lch(from var(--cn-state-selected) l c h / <alpha-value>)',
+          selected: 'var(--cn-state-selected)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',

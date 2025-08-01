@@ -16,11 +16,17 @@ const Item = ({ className, children, icon, isActive, ...props }: ItemProps) => {
       gap="2xs"
       flow="column"
       justify="start"
-      className={cn('py-layout-2xs pr-1.5 rounded', { 'bg-cn-background-hover': isActive }, className)}
+      className={cn(
+        'py-layout-2xs pr-1.5 rounded text-cn-foreground-2 hover:text-cn-foreground-1 hover:bg-cn-background-hover ',
+        { 'bg-cn-background-selected text-cn-foreground-1': isActive },
+        className
+      )}
       {...props}
     >
-      <IconV2 className="text-cn-foreground-2" name={icon} />
-      <Text truncate>{children}</Text>
+      <IconV2 className="text-inherit" name={icon} size="md" />
+      <Text className="text-inherit" truncate>
+        {children}
+      </Text>
     </Layout.Grid>
   )
 }
@@ -40,7 +46,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
-        className="pl-layout-2xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        className="pl-layout-2xs mb-layout-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
         <Link to={link}>
@@ -79,6 +85,7 @@ function FileItem({ children, isActive, level, link }: FileItemProps) {
     <Item
       icon="page"
       isActive={isActive}
+      className="mb-layout-4xs"
       style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level})` : '16px' }}
     >
       {children}

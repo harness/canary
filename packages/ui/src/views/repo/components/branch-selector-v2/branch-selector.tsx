@@ -24,6 +24,7 @@ interface BranchSelectorProps {
   isFilesPage?: boolean
   setCreateBranchDialogOpen?: (open: boolean) => void
   className?: string
+  disabled?: boolean
 }
 export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   repoId,
@@ -43,7 +44,8 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   preSelectedTab,
   isFilesPage = false,
   setCreateBranchDialogOpen,
-  className
+  className,
+  disabled
 }) => {
   const isTag = selectedBranchorTag
     ? tagList?.some(tag => tag.name === selectedBranchorTag.name && tag.sha === selectedBranchorTag.sha)
@@ -52,7 +54,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button className={className} variant="outline" size={buttonSize}>
+        <Button className={className} variant="outline" size={buttonSize} disabled={disabled}>
           {!hideIcon && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
           <Text className="truncate">
             {branchPrefix
@@ -76,6 +78,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         preSelectedTab={preSelectedTab}
         isFilesPage={isFilesPage}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+        disabled={disabled}
       />
     </DropdownMenu.Root>
   )

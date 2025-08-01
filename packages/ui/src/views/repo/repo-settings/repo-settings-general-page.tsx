@@ -18,6 +18,7 @@ interface ILoadingStates {
   isUpdatingSecuritySettings: boolean
   isLoadingFeaturesSettings: boolean
   isUpdatingFeaturesSettings: boolean
+  isUpdatingArchive?: boolean
 }
 
 interface RepoSettingsGeneralPageProps {
@@ -95,6 +96,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
               apiError={apiError}
               openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
               openRepoArchiveDialog={openRepoArchiveDialog}
+              isUpdatingArchive={loadingStates.isUpdatingArchive}
             />
           </Layout.Vertical>
         </Fieldset>

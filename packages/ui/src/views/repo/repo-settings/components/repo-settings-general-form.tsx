@@ -55,13 +55,29 @@ export const RepoSettingsGeneralForm: FC<{
   const { register, handleSubmit, setValue, watch, reset } = formMethods
 
   useEffect(() => {
-    reset({
-      name: repoData.name || '',
-      description: repoData.description || '',
-      branch: repoData.defaultBranch,
-      access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
-    })
-  }, [repoData, isLoadingRepoData, reset])
+    // Don't reset the form during updates to prevent UI flakiness
+    // Only reset when not updating and when repoData changes
+    if (!isUpdatingRepoData) {
+      reset({
+        name: repoData.name || '',
+        description: repoData.description || '',
+        branch: repoData.defaultBranch,
+        access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
+      })
+    }
+  }, [repoData, reset, isUpdatingRepoData])
+
+  // Reset form after successful update to ensure we have the latest data from server
+  useEffect(() => {
+    if (isRepoUpdateSuccess && !isUpdatingRepoData) {
+      reset({
+        name: repoData.name || '',
+        description: repoData.description || '',
+        branch: repoData.defaultBranch,
+        access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
+      })
+    }
+  }, [isRepoUpdateSuccess, isUpdatingRepoData, repoData, reset])
 
   const branchValue = watch('branch')
 
@@ -127,6 +143,8 @@ export const RepoSettingsGeneralForm: FC<{
                   isBranchOnly={true}
                   dynamicWidth={true}
                   selectedBranch={{ name: branchValue, sha: '' }}
+                  isUpdating={isUpdatingRepoData}
+                  disabled={isUpdatingRepoData}
                 />
               </Layout.Vertical>
             </ControlGroup>

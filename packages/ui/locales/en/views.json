@@ -184,6 +184,8 @@
     "archiveRepo": "Archive this repository",
     "unarchiveRepoDescription": "Unarchive this repository to make it read-write.",
     "archiveRepoDescription": "Set this repository to archived and restrict it to read-only access.",
+    "unarchiving": "Unarchiving...",
+    "archiving": "Archiving...",
     "unarchiveRepoButton": "Unarchive repository",
     "archiveRepoButton": "Archive repository",
     "deleteRepo": "Delete this repository",

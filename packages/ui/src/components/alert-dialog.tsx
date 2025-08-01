@@ -105,7 +105,7 @@ const Cancel = ({ children = 'Cancel', ...props }: { children?: ReactNode }) => 
 
   return (
     <Dialog.Close asChild>
-      <Button variant="secondary" loading={context.loading} onClick={context.onCancel} {...props}>
+      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} {...props}>
         {children}
       </Button>
     </Dialog.Close>

@@ -21,7 +21,7 @@ export const RepoSidebar = ({
     <>
       <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
         <Layout.Flex direction="column" className="max-h-full overflow-hidden px-5 pt-7" gapY="sm">
-          <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs" className="">
+          <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs" className="max-w-[210px]">
             {branchSelectorRenderer}
             <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
               <IconV2 name="plus" className="text-icons-3" />
@@ -32,7 +32,7 @@ export const RepoSidebar = ({
             navigateToFile={navigateToFile}
             filesList={filesList}
             searchInputSize="md"
-            inputContainerClassName=""
+            contentClassName="w-[280px]"
           />
 
           <ScrollArea className="-mr-5 grid-cols-[100%] pr-5" classNameContent="w-[210px]">

@@ -107,6 +107,13 @@ export default {
       backgroundColor: 'var(--cn-state-hover)'
     },
 
+    '&-head-divider': {
+      position: 'absolute',
+      top: '0',
+      left: 'calc(-1 * var(--cn-table-header-px))',
+      height: '100%'
+    },
+
     // Data cell
     '&-cell': {
       '@apply align-middle': '',

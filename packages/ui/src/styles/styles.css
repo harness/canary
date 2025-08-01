@@ -591,3 +591,7 @@ mark {
   background-color: var(--cn-comp-input-bg);
   padding-inline: var(--cn-input-md-pl) var(--cn-input-md-pr);
 }
+
+.width-popover-width {
+  width: var(--radix-popper-anchor-width);
+}

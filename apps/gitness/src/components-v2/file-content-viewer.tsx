@@ -11,7 +11,7 @@ import {
   Tabs,
   ViewTypeValue
 } from '@harnessio/ui/components'
-import { CommitsList, monacoThemes } from '@harnessio/ui/views'
+import { CommitsList, FileReviewError, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
@@ -67,6 +67,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const { theme } = useThemeStore()
 
   const { gitRefName } = useGitRef()
+
+  const fileError = !repoContent || !repoContent.content || !repoContent.content.data
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
@@ -161,7 +163,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         isNew={false}
       />
       <Tabs.Root
-        className="flex flex-col h-full"
+        className="flex h-full flex-col"
         value={view as string}
         onValueChange={val => onChangeView(val as ViewTypeValue)}
       >
@@ -178,9 +180,15 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         />
 
         <Tabs.Content value="preview">
-          {getIsMarkdown(language) ? (
-            <MarkdownViewer source={fileContent} withBorder />
-          ) : (
+          {fileError && (
+            <div className="flex h-full items-center justify-center">
+              <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-none border-t-0" />
+            </div>
+          )}
+
+          {!fileError && getIsMarkdown(language) && <MarkdownViewer source={fileContent} withBorder />}
+
+          {!fileError && !getIsMarkdown(language) && (
             <CodeEditor
               className="overflow-hidden"
               height="100%"

@@ -3,7 +3,7 @@
     "size": {
       "sm": {
         "$type": "sizing",
-        "$value": "{size.6}"
+        "$value": "{size.5}"
       },
       "md": {
         "$type": "sizing",

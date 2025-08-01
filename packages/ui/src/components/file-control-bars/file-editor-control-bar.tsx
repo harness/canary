@@ -1,13 +1,6 @@
-import { FC } from 'react'
+import { StackedList, Tabs } from '@/components'
 
-import { EditViewTypeValue, StackedList, Tabs } from '@/components'
-
-export interface FileEditorControlBarProps {
-  view: EditViewTypeValue
-  onChangeView: (value: EditViewTypeValue) => void
-}
-
-export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onChangeView }) => {
+export const FileEditorControlBar= () => {
   return (
     <StackedList.Root className="bg-cn-background-2" onlyTopRounded>
       <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs">

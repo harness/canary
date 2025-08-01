@@ -146,7 +146,7 @@ export function RepoSummaryView({
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 256px">
         <SandboxLayout.Column className="w-full min-w-0">
-          <SandboxLayout.Content className="pr-layout-xl">
+          <SandboxLayout.Content className="pr-cn-xl">
             {!isEmpty(prCandidateBranches) && (
               <>
                 <BranchCompareBannerList

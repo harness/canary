@@ -24,16 +24,16 @@ export const RepoSidebar = ({
         <SandboxLayout.LeftSubPanel className="w-[247px] border-none">
           <SandboxLayout.Content className="h-full overflow-hidden pr-0">
             <div className="flex size-full flex-col gap-3">
-              <div className="pr-layout-sm grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2">
+              <div className="pr-cn-sm grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2">
                 {branchSelectorRenderer}
                 <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
                   <IconV2 name="plus" className="text-icons-3" />
                 </Button>
               </div>
-              <div className="pr-layout-sm">
+              <div className="pr-cn-sm">
                 <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
               </div>
-              <ScrollArea className="pr-layout-sm grid-cols-[100%]">
+              <ScrollArea className="pr-cn-sm grid-cols-[100%]">
                 {children}
                 <Spacer size={7} />
               </ScrollArea>

@@ -9,11 +9,16 @@ type BaseButtonProps = Omit<ButtonProps, 'variant' | 'size' | 'theme' | 'asChild
 
 type ButtonWithTooltip = BaseButtonProps & {
   tooltipProps: ButtonGroupTooltipProps
-  dropdownContent?: undefined
+  dropdownProps?: undefined
+}
+
+type DropdownPropsType = {
+  content: ReactNode
+  contentProps?: typeof DropdownMenu.Content
 }
 
 type ButtonWithDropdown = BaseButtonProps & {
-  dropdownContent: ReactNode
+  dropdownProps: DropdownPropsType
   tooltipProps?: undefined
 }
 
@@ -28,11 +33,11 @@ export interface ButtonGroupProps extends Pick<ButtonProps, 'size' | 'iconOnly'>
 interface WrapperProps {
   children: ReactNode
   tooltipProps?: ButtonGroupTooltipProps
-  dropdownContent?: ReactNode
+  dropdownProps?: DropdownPropsType
   orientation: 'horizontal' | 'vertical'
 }
 
-const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownContent, orientation }) => {
+const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownProps, orientation }) => {
   if (tooltipProps) {
     return (
       <Tooltip side={orientation === 'vertical' ? 'right' : 'top'} {...tooltipProps}>
@@ -41,12 +46,12 @@ const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownContent, or
     )
   }
 
-  if (dropdownContent) {
+  if (dropdownProps) {
     return (
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger>
-        <DropdownMenu.Content side={orientation === 'vertical' ? 'right' : 'bottom'}>
-          {dropdownContent}
+        <DropdownMenu.Content side={orientation === 'vertical' ? 'right' : 'bottom'} {...dropdownProps?.contentProps}>
+          {dropdownProps.content}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     )
@@ -73,10 +78,10 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
       {buttonsProps.map((buttonProps, index) => {
         const { className, ...restButtonProps } = buttonProps
         const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
-        const dropdownContent = 'dropdownContent' in buttonProps ? buttonProps.dropdownContent : undefined
+        const dropdownProps = 'dropdownProps' in buttonProps ? buttonProps.dropdownProps : undefined
 
         return (
-          <Wrapper key={index} tooltipProps={tooltipProps} dropdownContent={dropdownContent} orientation={orientation}>
+          <Wrapper key={index} tooltipProps={tooltipProps} dropdownProps={dropdownProps} orientation={orientation}>
             <Button
               className={cn(
                 className,

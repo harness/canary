@@ -18,16 +18,21 @@ import { DocsPage } from "../../../components/docs-page";
       buttonsProps={[
         { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon') } },
         { children: <IconV2 name="key-back" />, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
-        { children: <IconV2 name="more-vert" />, dropdownContent: (
-          <>
-            <DropdownMenu.Item title="Item title" />
-            <DropdownMenu.Item title="With description" description="Item description" />
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item title="With label" label="Label" />
-            <DropdownMenu.Item title="With checkmark" checkmark />
-            <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
-          </>
-        )}
+        { children:
+          <IconV2 name="more-vert" />,
+          dropdownProps: {
+            content: (
+              <>
+                <DropdownMenu.Item title="Item title" />
+                <DropdownMenu.Item title="With description" description="Item description" />
+                <DropdownMenu.Separator />
+                <DropdownMenu.Item title="With label" label="Label" />
+                <DropdownMenu.Item title="With checkmark" checkmark />
+                <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+              </>
+            )
+          }
+        }
       ]}
     />
 `}
@@ -45,16 +50,21 @@ return (
       buttonsProps={[
         { children: <IconV2 name="info-circle" />, onClick: () => { console.log('Button icon') } },
         { children: <IconV2 name="key-back" />, tooltipProps: { title: 'Title', content: <p>This is a tooltip</p> }, onClick: () => { console.log('Button with tooltip') } },
-        { children: <IconV2 name="more-vert" />, dropdownContent: (
-          <>
-            <DropdownMenu.Item title="Item title" />
-            <DropdownMenu.Item title="With description" description="Item description" />
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item title="With label" label="Label" />
-            <DropdownMenu.Item title="With checkmark" checkmark />
-            <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
-          </>
-        )}
+        {
+            children: <IconV2 name="more-vert" />,
+            dropdownProps: {
+              content: (
+                <>
+                  <DropdownMenu.Item title="Item title" />
+                  <DropdownMenu.Item title="With description" description="Item description" />
+                  <DropdownMenu.Separator />
+                  <DropdownMenu.Item title="With label" label="Label" />
+                  <DropdownMenu.Item title="With checkmark" checkmark />
+                  <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+                </>
+              )
+          }
+        }
       ]}
     />
 )
@@ -165,9 +175,9 @@ Within `buttonsProps`, you can provide `tooltipProps` to define tooltip data for
   `}
 />
 
-## With Dropdown Content
+## With Dropdown
 
-Within `buttonsProps`, you can provide a `dropdownContent` property to define the dropdown content for a specific button.
+Within `buttonsProps`, you can provide a `dropdownProps` property to define the dropdown content for a specific button.
 
 <DocsPage.ComponentExample
   client:only
@@ -176,20 +186,34 @@ Within `buttonsProps`, you can provide a `dropdownContent` property to define th
       buttonsProps={[
         {
           children: 'Button',
-          dropdownContent: (
-            <>
-              <DropdownMenu.Item title="Item 1" />
-              <DropdownMenu.Item title="With description" description="Item description" />
-            </>
-        )},
+          dropdownProps: {
+              content: (
+                <>
+                  <DropdownMenu.Item title="Item title" />
+                  <DropdownMenu.Item title="With description" description="Item description" />
+                  <DropdownMenu.Separator />
+                  <DropdownMenu.Item title="With label" label="Label" />
+                  <DropdownMenu.Item title="With checkmark" checkmark />
+                  <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+                </>
+              )
+          }
+        },
         {
           children: 'Button',
-          dropdownContent: (
-            <>
-              <DropdownMenu.Item title="Item 1" />
-              <DropdownMenu.Item title="Item 2" />
-            </>
-        )}
+          dropdownProps: {
+              content: (
+                <>
+                  <DropdownMenu.Item title="Item title" />
+                  <DropdownMenu.Item title="With description" description="Item description" />
+                  <DropdownMenu.Separator />
+                  <DropdownMenu.Item title="With label" label="Label" />
+                  <DropdownMenu.Item title="With checkmark" checkmark />
+                  <DropdownMenu.Item title="With shortcut" shortcut="⇧⌘P" />
+                </>
+              )
+          }
+        }
       ]}
     />
   `}
@@ -210,13 +234,18 @@ type BaseButtonProps = Omit<
   "variant" | "size" | "theme" | "asChild" | "iconOnly" | "rounded" | "type"
 >;
 
+type DropdownPropsType = {
+  content: ReactNode;
+  contentProps?: typeof DropdownMenu.Content;
+};
+
 type ButtonWithTooltip = BaseButtonProps & {
   tooltipProps: ButtonGroupTooltipProps;
-  dropdownContent?: undefined;
+  dropdownProps?: undefined;
 };
 
 type ButtonWithDropdown = BaseButtonProps & {
-  dropdownContent: ReactNode;
+  dropdownProps: DropdownPropsType;
   tooltipProps?: undefined;
 };
 
@@ -248,7 +277,7 @@ type ButtonGroupButtonProps = ButtonWithTooltip | ButtonWithDropdown;
     {
       name: "buttonsProps",
       description:
-        "Contains an array of button data, with support for either tooltipProps or dropdownContent for each button.",
+        "Contains an array of button data, with support for either tooltipProps or dropdownProps for each button.",
       required: true,
       value: "ButtonGroupButtonProps[]",
     },

@@ -10,7 +10,6 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
-  IconV2,
   Layout,
   Link,
   Message,

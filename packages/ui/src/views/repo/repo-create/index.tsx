@@ -225,26 +225,29 @@ export function RepoCreatePage({
                     <Layout.Vertical gap="xl">
                       <Text variant="body-strong">Initialize this repository with</Text>
 
-                      <Checkbox
-                        id="readme"
-                        checked={readmeValue}
-                        onCheckedChange={handleReadmeChange}
-                        label="Add a README file"
-                        caption="This is where you can write a long description for your project."
-                      />
-                      <Link
-                        to="https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files"
-                        onClick={e => {
-                          e.preventDefault()
-                          window.open(
-                            'https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files',
-                            '_blank'
-                          )
-                        }}
-                        suffixIcon={true}
-                      >
-                        Learn more about README
-                      </Link>
+                      <Layout.Vertical gap="xs">
+                        <Checkbox
+                          id="readme"
+                          checked={readmeValue}
+                          onCheckedChange={handleReadmeChange}
+                          label="Add a README file"
+                          caption="This is where you can write a long description for your project."
+                        />
+                        <Link
+                          to="https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files"
+                          onClick={e => {
+                            e.preventDefault()
+                            window.open(
+                              'https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files',
+                              '_blank'
+                            )
+                          }}
+                          suffixIcon={true}
+                          className="ml-7"
+                        >
+                          {t('views:repos.learnMoreAboutReadme', 'Learn more about README')}
+                        </Link>
+                      </Layout.Vertical>
                     </Layout.Vertical>
                     {errors.readme && <Message theme={MessageTheme.ERROR}>{errors.readme.message?.toString()}</Message>}
                   </ControlGroup>

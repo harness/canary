@@ -8,11 +8,13 @@ import {
   MoreActionsTooltip,
   NoData,
   SearchInput,
+  Separator,
   SkeletonList,
   Spacer,
   SplitButton,
   StackedList,
-  Tag
+  Tag,
+  Text
 } from '@/components'
 import { Select } from '@/components/form-primitives/select'
 import { useRouterContext, useTranslation } from '@/context'
@@ -27,21 +29,27 @@ interface DescriptionProps {
 const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
   const { t } = useTranslation()
   return (
-    <div className="flex items-center gap-1.5 pl-6 text-sm">
-      {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
-      <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden />
-      {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
-      <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden />
+    <div className="flex items-center gap-1.5 pl-7 text-sm">
+      <Text variant="body-normal">
+        {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
+      </Text>
+      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
+      <Separator orientation="vertical" className="h-3" />
+      <Text variant="body-normal">
+        {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
+      </Text>
+      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
+      <Separator orientation="vertical" className="h-3" />
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
             <IconV2 className="text-icons-success" name="check" size="2xs" />
-            <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
+            <Text variant="body-normal"> {t('views:repos.bypassAllowed', 'bypass allowed')}</Text>
           </>
         ) : (
           <>
             <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
-            <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
+            <Text variant="body-normal">{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</Text>
           </>
         )}
       </span>
@@ -102,7 +110,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       {isShowRulesContent ? (
         <>
           <>
-            <ListActions.Root>
+            <ListActions.Root className="mt-1">
               <ListActions.Left>
                 <SearchInput
                   id="search"
@@ -144,7 +152,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               </ListActions.Right>
             </ListActions.Root>
 
-            <Spacer size={4} />
+            <Spacer size={3} />
           </>
           {isLoading ? (
             <>
@@ -160,7 +168,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                     key={rule.identifier}
                     target="_blank"
                   >
-                    <StackedList.Item className="cursor-pointer py-3 pr-1.5">
+                    <StackedList.Item className="cursor-pointer py-4 pr-1.5">
                       <StackedList.Field
                         className="gap-1.5"
                         title={

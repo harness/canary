@@ -10,6 +10,7 @@ import {
   Fieldset,
   FormInput,
   FormWrapper,
+  IconV2,
   Layout,
   Link,
   Message,
@@ -120,11 +121,11 @@ export function RepoCreatePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[610px]">
+      <SandboxLayout.Content className="mx-auto w-[635px]">
         <Layout.Vertical gap="xl">
           <Layout.Vertical gap="md">
             <Text variant="heading-section">{t('views:repos.createNewRepo', 'Create a new repository')}</Text>
-            <Text className="max-w-[476px]">
+            <Text className="max-w-[500px]">
               {t(
                 'views:repos.repoContains',
                 'A repository contains all project files, including the revision history. Already have a project repository elsewhere?'
@@ -146,6 +147,7 @@ export function RepoCreatePage({
                     {...register('name')}
                     placeholder={t('views:repos.createNewRepoForm.name.placeholder', 'Enter repository name')}
                     autoFocus
+                    wrapperClassName="w-full"
                   />
                   {/* DESCRIPTION */}
                   <FormInput.Textarea
@@ -157,6 +159,9 @@ export function RepoCreatePage({
                     )}
                     label={t('views:repos.createNewRepoForm.description.label', 'Description')}
                     optional
+                    resizable
+                    rows={6}
+                    wrapperClassName="w-full"
                   />
 
                   <DefaultBranchDialog formMethods={formMethods} />
@@ -174,7 +179,8 @@ export function RepoCreatePage({
                     'views:repos.createNewRepoForm.gitignore.caption',
                     'Choose which files not to track from a list of templates.'
                   )}
-                  contentWidth="triggerWidth"
+                  contentWidth="auto"
+                  wrapperClassName="w-full"
                 />
 
                 {/* LICENSE */}
@@ -186,7 +192,8 @@ export function RepoCreatePage({
                   label="Choose a license"
                   error={errors.license?.message?.toString()}
                   caption="A license tells others what they can and can't do with your code."
-                  contentWidth="triggerWidth"
+                  contentWidth="auto"
+                  wrapperClassName="w-full"
                 />
               </Layout.Vertical>
 
@@ -194,7 +201,7 @@ export function RepoCreatePage({
               <Fieldset>
                 <Layout.Vertical gap="xl">
                   <Text variant="body-strong">Who has access</Text>
-                  <FormInput.Radio id="access" {...register('access')}>
+                  <FormInput.Radio id="access" {...register('access')} wrapperClassName="w-full">
                     <Radio.Item
                       id="access-public"
                       value="1"
@@ -225,6 +232,19 @@ export function RepoCreatePage({
                         label="Add a README file"
                         caption="This is where you can write a long description for your project."
                       />
+                      <Link
+                        to="https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files"
+                        onClick={e => {
+                          e.preventDefault()
+                          window.open(
+                            'https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files',
+                            '_blank'
+                          )
+                        }}
+                        suffixIcon={true}
+                      >
+                        Learn more about README
+                      </Link>
                     </Layout.Vertical>
                     {errors.readme && <Message theme={MessageTheme.ERROR}>{errors.readme.message?.toString()}</Message>}
                   </ControlGroup>

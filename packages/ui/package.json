@@ -30,7 +30,7 @@
     "build:ci": "NODE_OPTIONS=--max-old-space-size=8192 vite build --config ./vite-base.config.ts",
     "build:analyse": "NODE_OPTIONS=--max-old-space-size=8192 vite build --config ./vite-analyse.config.ts",
     "build:watch": "NODE_OPTIONS=--max-old-space-size=8192 vite build --watch --emptyOutDir=false",
-    "lint": "eslint ./src",
+    "lint": "eslint ./src --quiet",
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
     "prepublishOnly": "pnpm build",

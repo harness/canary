@@ -67,13 +67,13 @@ export const RepoLabelsList = () => {
   return (
     <>
       <LabelsListPage
-        className="max-w-[910px] pl-0 pr-4"
+        // className="max-w-[772px] px-0"
         useLabelsStore={useLabelsStore}
         createdIn={repo_ref}
         searchQuery={query}
         setSearchQuery={setQuery}
         isRepository
-        labelsListViewProps={{ widthType: 'small', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
+        labelsListViewProps={{ widthType: 'default', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

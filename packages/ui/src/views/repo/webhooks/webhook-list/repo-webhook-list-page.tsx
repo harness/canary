@@ -42,7 +42,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className="ml-3">
+    <SandboxLayout.Content>
       <Text as="h1" variant="heading-section">
         Webhooks
       </Text>
@@ -66,7 +66,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                 </ListActions.Left>
                 <ListActions.Right>
                   <Button asChild>
-                    <Link to="create">New webhook</Link>
+                    <Link to="create">Create webhook</Link>
                   </Button>
                 </ListActions.Right>
               </ListActions.Root>

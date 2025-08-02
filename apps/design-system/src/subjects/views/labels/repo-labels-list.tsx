@@ -12,7 +12,6 @@ export const RepoLabelsList = () => {
   return (
     <>
       <LabelsListPage
-        className="max-w-[772px] px-0"
         useLabelsStore={LabelsListStore.useLabelsStore}
         createdIn={''}
         searchQuery={''}

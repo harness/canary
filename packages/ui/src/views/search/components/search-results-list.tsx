@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
-import { Alert, Card, Layout, Link, SkeletonList, Spacer, Tag, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Alert, Card, Layout, SkeletonList, Spacer, Tag, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 const DEFAULT_NUM_ITEMS_TO_SHOW = 1
@@ -45,6 +45,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
+  const { Link } = useRouterContext()
 
   if (isLoading) {
     return <SkeletonList />
@@ -78,89 +79,103 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
     )
   }
 
+  const CardContent = ({ item }: { item: SearchResultItem }) => (
+    <Card.Content>
+      <Layout.Horizontal
+        gap="xs"
+        className={cn('py-3 px-5', { 'border-b border-cn-border-2': item.matches && item.matches.length > 1 })}
+      >
+        {!isRepoScope ? <Tag value={item.repo_path} icon="repository" showIcon={true} /> : null}
+        <Link
+          to={toRepoFileDetails({
+            repoPath: item.repo_path,
+            filePath: item.file_name,
+            branch: item.repo_branch
+          })}
+        >
+          <Text variant="body-strong">{item.file_name}</Text>
+        </Link>
+      </Layout.Horizontal>
+
+      {item.matches && item.matches.length > 1 && (
+        <Layout.Vertical gap="none">
+          {item.matches
+            .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW)
+            .map(match => (
+              <div
+                key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
+              >
+                <pre className={cn('bg-cn-background-1 px-4 py-1 border-b border-cn-border-2')}>
+                  <code className="monospace">
+                    {match.before.trim().length > 0 && (
+                      <>
+                        {match.line_num - 1} {match.before}
+                        <br />
+                      </>
+                    )}
+                    {match.line_num}{' '}
+                    {match.fragments?.map((segment, segIndex) => (
+                      <span key={`seg-${segIndex}`}>
+                        {segment.pre}
+                        <mark>{segment.match}</mark>
+                        {segment.post}
+                      </span>
+                    ))}
+                    {match.after.trim().length > 0 && (
+                      <>
+                        <br />
+                        {match.line_num + 1} {match.after}
+                      </>
+                    )}
+                  </code>
+                </pre>
+              </div>
+            ))}
+          {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
+            <Text
+              variant="body-normal"
+              className="text-cn-primary cursor-pointer px-4 py-2 hover:underline"
+              tabIndex={0}
+              onClick={() => {
+                const key = `${item.repo_path}/${item.file_name}`
+                setExpandedItems(prev => ({
+                  ...prev,
+                  [key]: !prev[key]
+                }))
+              }}
+            >
+              {expandedItems[`${item.repo_path}/${item.file_name}`]
+                ? t('views:search.showLess', '- Show Less')
+                : t('views:search.showMore', `+ Show ${item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW} more matches`)}
+            </Text>
+          )}
+        </Layout.Vertical>
+      )}
+    </Card.Content>
+  )
+
   return (
     <Layout.Vertical gap="md">
-      {results.map(item => (
-        <Card.Root key={`${item.repo_path}/${item.file_name}`} tabIndex={0} wrapperClassname="!p-0">
-          <Card.Content>
-            <Layout.Horizontal
-              gap="xs"
-              className={cn('p-4', { 'border-b border-cn-border-2': item.matches && item.matches.length > 1 })}
-            >
-              {!isRepoScope ? <Tag value={item.repo_path} icon="repository" showIcon={true} size={'sm'} /> : null}
-              <Link
-                to={toRepoFileDetails({
-                  repoPath: item.repo_path,
-                  filePath: item.file_name,
-                  branch: item.repo_branch
-                })}
-              >
-                <Text variant="body-strong">{item.file_name}</Text>
-              </Link>
-            </Layout.Horizontal>
-
-            {item.matches && item.matches.length > 1 && (
-              <Layout.Vertical gap="none">
-                {item.matches
-                  .slice(
-                    0,
-                    expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW
-                  )
-                  .map(match => (
-                    <div
-                      key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
-                    >
-                      <pre className={cn('bg-cn-background-1 px-4 py-1 border-b border-cn-border-2')}>
-                        <code className="monospace">
-                          {match.before.trim().length > 0 && (
-                            <>
-                              {match.line_num - 1} {match.before}
-                              <br />
-                            </>
-                          )}
-                          {match.line_num}{' '}
-                          {match.fragments?.map((segment, segIndex) => (
-                            <span key={`seg-${segIndex}`}>
-                              {segment.pre}
-                              <mark>{segment.match}</mark>
-                              {segment.post}
-                            </span>
-                          ))}
-                          {match.after.trim().length > 0 && (
-                            <>
-                              <br />
-                              {match.line_num + 1} {match.after}
-                            </>
-                          )}
-                        </code>
-                      </pre>
-                    </div>
-                  ))}
-                {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
-                  <Text
-                    variant="body-normal"
-                    className="text-cn-primary cursor-pointer px-4 py-2 hover:underline"
-                    onClick={() => {
-                      const key = `${item.repo_path}/${item.file_name}`
-                      setExpandedItems(prev => ({
-                        ...prev,
-                        [key]: !prev[key]
-                      }))
-                    }}
-                  >
-                    {expandedItems[`${item.repo_path}/${item.file_name}`]
-                      ? t('views:search.showLess', '- Show Less')
-                      : t(
-                          'views:search.showMore',
-                          `+ Show ${item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW} more matches`
-                        )}
-                  </Text>
-                )}
-              </Layout.Vertical>
-            )}
-          </Card.Content>
-        </Card.Root>
-      ))}
+      {results.map(item =>
+        item.matches.length == 0 ? (
+          <Link
+            key={`${item.repo_path}/${item.file_name}`}
+            to={toRepoFileDetails({
+              repoPath: item.repo_path,
+              filePath: item.file_name,
+              branch: item.repo_branch
+            })}
+          >
+            <Card.Root tabIndex={-1} wrapperClassname="!p-0">
+              <CardContent item={item} />
+            </Card.Root>
+          </Link>
+        ) : (
+          <Card.Root key={`${item.repo_path}/${item.file_name}`} tabIndex={-1} wrapperClassname="!p-0">
+            <CardContent item={item} />
+          </Card.Root>
+        )
+      )}
     </Layout.Vertical>
   )
 }

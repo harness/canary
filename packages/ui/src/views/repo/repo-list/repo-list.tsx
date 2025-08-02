@@ -69,7 +69,7 @@ const Title = ({
             {t('views:repos.archived', 'Archived')}
           </StatusBadge>
         )}
-        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
+        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} size="sm" /> : null}
       </Layout.Flex>
     </Layout.Flex>
   )

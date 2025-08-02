@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { MoreActionsTooltip, NoData, Table, Tag } from '@/components'
+import { MoreActionsTooltip, NoData, Table, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelValuesType } from '@/views'
@@ -87,24 +87,28 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     <Table.Root tableClassName="table-fixed" className="mb-8 mt-4">
       <Table.Header>
         <Table.Row>
-          <Table.Head className={cn('w-[25%]', { 'w-4/12': isSmallWidth })}>
-            <span className="pl-[45px]">{t('views:labelData.table.name', 'Name')}</span>
+          <Table.Head className={cn('w-[304px]', { 'w-4/12': isSmallWidth })}>
+            <Text variant="caption-strong" className="pl-[45px]">
+              {t('views:labelData.table.name', 'Name')}
+            </Text>
           </Table.Head>
-          <Table.Head className="w-[25%]">{t('views:labelData.table.created', 'Created in')}</Table.Head>
-          <Table.Head className={cn('w-[50%]', { 'w-5/12': isSmallWidth })}>
-            {t('views:labelData.table.description', 'Description')}
+          <Table.Head className="w-[240px]">
+            <Text variant="caption-strong">{t('views:labelData.table.created', 'Created in')}</Text>
           </Table.Head>
-          <Table.Head className="w-[54px]" />
+          <Table.Head className={cn('w-[298px]', { 'w-5/12': isSmallWidth })}>
+            <Text variant="caption-strong">{t('views:labelData.table.description', 'Description')}</Text>
+          </Table.Head>
+          <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {labels.map(label => (
           <Table.Row key={label.id}>
-            <Table.Cell className={cn('w-[20%]', { 'w-4/12': isSmallWidth })}>
+            <Table.Cell className={cn('w-[304px] !py-3', { 'w-4/12': isSmallWidth })}>
               <LabelCellContent label={label} values={values?.[label.key]} />
             </Table.Cell>
-            <Table.Cell className="w-[30%].5 leading-none">
+            <Table.Cell className="w-[240px] !py-3.5 leading-none">
               <Tag
                 size="md"
                 theme="gray"
@@ -114,10 +118,10 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                 icon={label.scope === 0 ? 'repository' : 'folder'}
               />
             </Table.Cell>
-            <Table.Cell className={cn('w-[50%]', { 'w-5/12': isSmallWidth })}>
+            <Table.Cell className={cn('w-[298px] !py-3', { 'w-5/12': isSmallWidth })}>
               <span className="line-clamp-3 break-words text-sm text-cn-foreground-3">{label?.description || ''}</span>
             </Table.Cell>
-            <Table.Cell className="w-[54px]">
+            <Table.Cell className="w-[68px] !py-2">
               <MoreActionsTooltip
                 isInTable
                 iconName="more-horizontal"

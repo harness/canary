@@ -46,7 +46,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   const { t } = useTranslation()
 
   return (
-    <SandboxLayout.Content className="ml-3">
+    <SandboxLayout.Content>
       <Text as="h1" variant="heading-section" className="mb-2">
         Rules
       </Text>
@@ -65,7 +65,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
             checked={parentScopeLabelsChecked}
             onCheckedChange={onParentScopeLabelsChange}
             label={t('views:rules.showParentRules', 'Show rules from parent scopes')}
-            className="mt-7"
+            className="mt-6"
           />
         </div>
       )}

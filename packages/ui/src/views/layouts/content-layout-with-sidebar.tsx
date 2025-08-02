@@ -44,9 +44,9 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   const { NavLink } = useRouterContext()
 
   return (
-    <div className="relative mx-auto flex h-full w-full items-start gap-x-20 pr-4">
+    <div className="relative mx-auto flex w-full items-start gap-x-[28px] pr-4 ml-2">
       <div
-        className="sticky w-[220px]"
+        className="sticky w-[270px]"
         style={{
           top: `${sidebarOffsetTop}px`,
           height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${INSET_LAYOUT_INDENT}px)`
@@ -61,10 +61,10 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
         <ScrollArea className={cn('pb-11 !px-5 h-full', sidebarViewportClassName)}>
           {sidebarMenu.map((group, group_idx) => (
             <Fragment key={group.groupId}>
-              {group_idx > 0 && <Separator />}
-              <Layout.Grid className="w-full px-0 pb-2.5" gapY="4xs">
+              {group_idx > 0 && <Separator className="mb-2" />}
+              <Layout.Grid className="w-full px-0 pb-1.5" gapY="sm">
                 {group?.title && (
-                  <Text className="my-[4px] px-2.5" color="foreground-3">
+                  <Text className="mt-2 px-2.5" variant="caption-single-line-normal">
                     {group?.title}
                   </Text>
                 )}
@@ -74,8 +74,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
                     {({ isActive }) => (
                       <Text
                         truncate
-                        variant="body-strong"
-                        color={isActive ? 'foreground-1' : 'foreground-2'}
+                        variant={isActive ? 'body-single-line-strong' : 'body-single-line-normal'}
                         className={cn(
                           'hover:bg-cn-background-hover hover:text-cn-foreground-1 z-10 w-full rounded-md px-3 py-2 duration-0 ease-in-out bg-transparent transition-colors select-none',
                           { 'bg-cn-background-hover': isActive }
@@ -91,7 +90,9 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
           ))}
         </ScrollArea>
       </div>
-      <div className="flex h-full flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">{children}</div>
+      <div className="flex h-[fill-available] flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">
+        {children}
+      </div>
     </div>
   )
 }

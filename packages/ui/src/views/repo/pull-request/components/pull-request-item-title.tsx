@@ -42,7 +42,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
       />
 
       <Layout.Flex gap="xs" align="center">
-        {repoId && <Tag value={repoId} />}
+        {repoId && <Tag value={repoId} showIcon icon="repository" theme="gray" />}
         <Text variant="heading-base">{name}</Text>
         {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
       </Layout.Flex>

@@ -153,7 +153,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
 
         {!semanticEnabled && ((results && results.length > 0) || selectedLanguage || selectedRepoId) ? (
           <>
-            <Spacer size={5} />
+            <Spacer size={7} />
             <Layout.Horizontal gap="sm">
               {!isRepoScope && repos ? (
                 <Select
@@ -177,11 +177,11 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           </>
         ) : null}
 
-        <Spacer size={5} />
+        <Spacer size={6} />
 
         {!isLoading && !semanticEnabled && stats && results && results.length > 0 && (
           <Layout.Horizontal gap="xs">
-            <Text variant={'caption-normal'}>Results:</Text>
+            <Text variant={'body-normal'}>Results:</Text>
             <Text variant={'caption-normal'}>
               {t('views:search.statsText', '{{matchCount}} matches found in {{fileCount}} file(s)', {
                 matchCount: stats.total_matches,
@@ -192,7 +192,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         )}
         {!isLoading && semanticEnabled && stats && semanticResults && semanticResults.length > 0 && (
           <Layout.Horizontal gap="xs">
-            <Text variant={'caption-normal'}>Results:</Text>
+            <Text variant={'body-normal'}>Results:</Text>
             <Text variant={'caption-normal'}>
               {t('views:search.statsText', '{{fileCount}} file(s)', {
                 fileCount: stats.total_files
@@ -201,7 +201,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           </Layout.Horizontal>
         )}
 
-        <Spacer size={5} />
+        <Spacer size={4} />
 
         {semanticEnabled ? (
           <SemanticSearchResultsList
@@ -222,7 +222,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           />
         )}
 
-        <Spacer size={5} />
+        <Spacer size={6} />
 
         {!isLoading && (results?.length || semanticResults?.length) ? (
           <Pagination

@@ -72,12 +72,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 onClick: handleResetFiltersAndPages
               }
             : {
-                label: (
-                  <>
-                    <IconV2 name="plus" size="sm" />
-                    {t('views:repos.newBranch', 'New branch')}
-                  </>
-                ),
+                label: t('views:repos.createBranch', 'Create branch'),
                 onClick: () => {
                   setCreateBranchDialogOpen(true)
                 }
@@ -92,10 +87,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      size="compact"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[25rem]">
@@ -111,11 +103,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
           ) : null}
           <Table.Head className="w-[11.71875rem]">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
-              <Text variant="caption-strong">{t('views:repos.behind', 'Behind')}</Text>
-              <Separator orientation="vertical" />
               <Text variant="caption-strong" align="right">
-                {t('views:repos.ahead', 'Ahead')}
+                {t('views:repos.behind', 'Behind')}
               </Text>
+              <Separator orientation="vertical" />
+              <Text variant="caption-strong">{t('views:repos.ahead', 'Ahead')}</Text>
             </div>
           </Table.Head>
           <Table.Head className="w-[11.71875rem] whitespace-nowrap">

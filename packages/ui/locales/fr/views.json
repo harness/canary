@@ -132,7 +132,7 @@
     "createRuleButton": "Créer la règle",
     "updatingRule": "Mise à jour de la règle...",
     "creatingRuleButton": "Création de la règle...",
-    "newBranch": "Nouvelle branche",
+    "createBranch": "Create branch",
     "branch": "Branche",
     "update": "Mettre à jour",
     "checkStatus": "Vérifier le statut",
@@ -281,7 +281,6 @@
         "target": "Base branch is required"
       }
     },
-    "createBranch": "Create branch",
     "viewFiles": "View Files",
     "deleteTag": "Delete tag",
     "tag": "Tag",
@@ -308,6 +307,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "newBranch": "Nouvelle branche",
     "emptyRepo": "Ce référentiel est vide.",
     "afterComparingOpenPullRequest": "Après avoir comparé les modifications, vous pouvez ouvrir une demande d'extraction pour contribuer à vos modifications en amont.",
     "defaultReviewers": "Default reviewers",

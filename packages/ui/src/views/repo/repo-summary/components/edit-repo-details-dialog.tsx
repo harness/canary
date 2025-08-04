@@ -34,8 +34,10 @@ export const EditRepoDetails = ({
         <Dialog.Body>
           <Textarea
             label="Description"
-            className="text-cn-foreground-1 h-24"
             value={newDesc}
+            resizable
+            rows={6}
+            autoFocus
             defaultValue={description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setNewDesc(e?.target?.value)

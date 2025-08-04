@@ -37,9 +37,9 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
         <CheckboxPrimitive.Root id={checkboxId} ref={ref} className={checkboxVariants({ error })} {...props}>
           <CheckboxPrimitive.Indicator className="cn-checkbox-indicator">
             {props.checked === 'indeterminate' ? (
-              <IconV2 name="minus" className="cn-checkbox-icon" skipSize />
+              <IconV2 name="minus" className="cn-icon cn-icon-2xs" skipSize />
             ) : (
-              <IconV2 name="check" className="cn-checkbox-icon" skipSize />
+              <IconV2 name="check" className="cn-icon cn-icon-2xs" skipSize />
             )}
           </CheckboxPrimitive.Indicator>
         </CheckboxPrimitive.Root>

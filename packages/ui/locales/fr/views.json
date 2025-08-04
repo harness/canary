@@ -175,6 +175,11 @@
       }
     },
     "learnMoreAboutReadme": "En savoir plus sur README",
+    "fileContent": {
+      "noData": {
+        "tryAgain": "Try again"
+      }
+    },
     "repositories": "Dépôts",
     "new-repository": "Créer un dépôt",
     "import-repository": "Importer un dépôt",

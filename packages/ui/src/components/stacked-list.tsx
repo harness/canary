@@ -63,12 +63,12 @@ const List: React.FC<ListProps> = ({
     className={cn(
       'w-full bg-cn-background-1',
       'border [&>div:last-child]:border-0',
-      '[&>*:first-child_>.stacked-list-item]:rounded-t-md [&>.stacked-list-item:first-child]:rounded-t-lg',
+      '[&>*:first-child_>.stacked-list-item]:rounded-t-3 [&>.stacked-list-item:first-child]:rounded-t-3',
       {
-        '[&>*:last-child_>.stacked-list-item]:rounded-b-md [&>.stacked-list-item:last-child]:rounded-b-lg':
+        '[&>*:last-child_>.stacked-list-item]:rounded-b-3 [&>.stacked-list-item:last-child]:rounded-b-3':
           !onlyTopRounded
       },
-      onlyTopRounded ? 'rounded-t-md' : 'rounded-md',
+      onlyTopRounded ? 'rounded-t-3' : 'rounded-3',
       withoutBorder ? 'border-none' : '',
       borderBackground ? 'border-cn-borders-2' : '',
       className

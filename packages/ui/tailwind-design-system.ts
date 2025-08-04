@@ -79,7 +79,7 @@ export default {
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
-          selected: 'lch(from var(--cn-state-selected) l c h / <alpha-value>)',
+          selected: 'var(--cn-state-selected)',
           primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
@@ -510,8 +510,9 @@ export default {
     { pattern: /^hover:bg-topbar-background-/ },
     { pattern: /^hover:text-topbar-foreground-/ },
     { pattern: /^hover:text-topbar-icon-/ },
-    // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
+    { pattern: /rounded-./ },
+    { pattern: /border-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },
     { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }

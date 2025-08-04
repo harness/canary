@@ -1,87 +1,95 @@
 import { ReactNode } from 'react'
 
-import { Accordion, IconV2, Text } from '@/components'
+import { Accordion, GridProps, IconPropsV2, IconV2, Layout, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
+interface ItemProps extends GridProps {
+  icon: NonNullable<IconPropsV2['name']>
+  isActive?: boolean
+}
+
+const Item = ({ className, children, icon, isActive, ...props }: ItemProps) => {
+  return (
+    <Layout.Grid
+      align="center"
+      gap="2xs"
+      flow="column"
+      justify="start"
+      className={cn(
+        'py-cn-2xs pr-1.5 rounded text-cn-foreground-2 hover:text-cn-foreground-1 hover:bg-cn-background-hover ',
+        { 'bg-cn-background-selected text-cn-foreground-1': isActive },
+        className
+      )}
+      {...props}
+    >
+      <IconV2 className="text-inherit" name={icon} size="md" />
+      <Text className="text-inherit" truncate>
+        {children}
+      </Text>
+    </Layout.Grid>
+  )
+}
+
 interface FolderItemProps {
   children: ReactNode
+  level: number
   value?: string
   isActive?: boolean
   content?: ReactNode
   link: string
 }
 
-function FolderItem({ children, value = '', isActive, content, link }: FolderItemProps) {
+function FolderItem({ children, value = '', isActive, content, link, level }: FolderItemProps) {
   const { Link } = useRouterContext()
+
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
-        className="relative w-full p-0 pr-1.5 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        className="pl-cn-2xs mb-cn-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
-        <div
-          className={cn(
-            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-cn-foreground-2
-            group-hover:text-cn-foreground-1
-            group-data-[state=open]:text-cn-foreground-1`,
-            {
-              'text-cn-foreground-1 ': isActive
-            }
-          )}
-        >
-          <div className="flex w-full items-center gap-1.5 py-1.5">
-            <IconV2
-              className={cn(
-                'min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
-                { 'text-icons-2': isActive }
-              )}
-              name="folder"
-            />
-            <Link to={link} className="overflow-hidden">
-              <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" as="p" truncate>
-                {children}
-              </Text>
-            </Link>
-          </div>
-        </div>
+        <Link to={link}>
+          <Item
+            icon="folder"
+            isActive={isActive}
+            style={{ marginLeft: `calc(-16px * ${level + 1} - 8px)`, paddingLeft: `calc(16px * ${level + 1} + 8px)` }}
+          >
+            {children}
+          </Item>
+        </Link>
       </Accordion.Trigger>
+
       {!!content && (
-        <Accordion.Content className="flex w-full items-center gap-2 pb-0 pl-4">{content}</Accordion.Content>
+        <Accordion.Content
+          containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+          className="pl-cn-md pb-0"
+        >
+          {content}
+        </Accordion.Content>
       )}
     </Accordion.Item>
   )
 }
 
 interface FileItemProps {
+  level: number
   children: ReactNode
   isActive?: boolean
   link?: string
 }
 
-function FileItem({ children, isActive, link }: FileItemProps) {
+function FileItem({ children, isActive, level, link }: FileItemProps) {
   const { Link } = useRouterContext()
   const comp = (
-    <div
-      className={cn(
-        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-cn-foreground-2
-        hover:text-cn-foreground-1
-        before:absolute before:z-[-1] before:top-0 before:left-2.5 before:right-0 before:h-full before:rounded`,
-        {
-          'text-cn-foreground-1 before:bg-cn-background-hover': isActive
-        }
-      )}
+    <Item
+      icon="page"
+      isActive={isActive}
+      className="mb-cn-4xs"
+      style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level})` : '16px' }}
     >
-      <IconV2
-        className={cn('min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2', {
-          'text-icons-2': isActive
-        })}
-        name="page"
-      />
-      <Text variant="body-strong" className="duration-100 ease-in-out" color="inherit" truncate>
-        {children}
-      </Text>
-    </div>
+      {children}
+    </Item>
   )
 
   return link ? <Link to={link}>{comp}</Link> : comp
@@ -97,7 +105,7 @@ function Root({ children, onValueChange, value }: RootProps) {
   return (
     <Accordion.Root
       type="multiple"
-      className="w-full min-w-0"
+      className="min-w-0"
       onValueChange={onValueChange}
       value={value}
       indicatorPosition="left"

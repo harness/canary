@@ -13,8 +13,9 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2 } from './icon-v2'
-import { Layout } from './layout'
+import { FlexProps, Layout } from './layout'
 import { Link, type LinkProps } from './link'
+import { Separator } from './separator'
 import { Text } from './text'
 import { Tooltip, type TooltipProps } from './tooltip'
 
@@ -76,22 +77,40 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
   let rowChildren = props.children
-  if (props.to || props.linkProps) {
-    rowChildren = Children.map(rowChildren, (child, index) => {
-      if (isValidElement(child)) {
+  rowChildren = Children.map(rowChildren, (_child, index) => {
+    if (isValidElement(_child)) {
+      let child = _child
+
+      if ((_child.type as any).displayName === 'TableHead') {
+        if (index === 0) {
+          child = cloneElement(child, {
+            hideDivider: true
+          } as TableHeadProps)
+        }
+
+        if (index > 0 && _child.props.hideDivider === undefined) {
+          child = cloneElement(child, {
+            hideDivider: false
+          } as TableHeadProps)
+        }
+      }
+
+      if (props.to || props.linkProps) {
         // Don't add link props if the cell already has its own link props or if disableLink is true
         if (child.props.to || child.props.linkProps || child.props.disableLink) {
           return child
         }
+
         return cloneElement(child, {
           to: props.to,
           linkProps: props.linkProps,
           tableLinkChildrenIndex: index + 1
         } as any)
       }
+
       return child
-    })
-  }
+    }
+  })
 
   return (
     <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props}>
@@ -114,23 +133,33 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
    * Props for the tooltip component
    */
   tooltipProps?: Omit<TooltipProps, 'children'>
+  containerProps?: FlexProps
+  hideDivider?: boolean
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, sortable, children, tooltipProps, ...props }, ref) => {
-    const childrenWithTooltip = tooltipProps?.content ? (
-      <Tooltip {...tooltipProps}>
-        <span className="underline decoration-dashed">{children}</span>
-      </Tooltip>
-    ) : (
-      <Text variant="caption-strong" className="w-full">
+  ({ className, sortDirection, sortable, children, tooltipProps, hideDivider, containerProps, ...props }, ref) => {
+    const Title = () => (
+      <Text
+        variant="caption-strong"
+        color="foreground-1"
+        className={cn({ 'underline decoration-dashed': !!tooltipProps?.content })}
+      >
         {children}
       </Text>
     )
 
+    const childrenWithTooltip = tooltipProps?.content ? (
+      <Tooltip {...tooltipProps}>
+        <Title />
+      </Tooltip>
+    ) : (
+      <Title />
+    )
+
     const contentElement = (
-      // <div className="flex items-center gap-1">
-      <Layout.Flex direction="row" gap="xs" align="center">
+      <Layout.Horizontal gap="xs" align="center" className="relative" {...containerProps}>
+        {!hideDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
         {childrenWithTooltip}
         {sortable && (
           <span className="ml-1">
@@ -139,8 +168,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
             {!sortDirection && <IconV2 name="up-down" />}
           </span>
         )}
-      </Layout.Flex>
-      // </div>
+      </Layout.Horizontal>
     )
 
     return (

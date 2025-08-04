@@ -163,12 +163,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             <StackedList.Root>
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
-                  <Link
-                    to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''}
-                    key={rule.identifier}
-                    target="_blank"
-                  >
-                    <StackedList.Item className="cursor-pointer py-4 pr-1.5">
+                  <StackedList.Item className="py-4 pr-1.5" key={rule.identifier} asChild>
+                    <Link to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''} target="_blank">
                       <StackedList.Field
                         className="gap-1.5"
                         title={
@@ -200,29 +196,23 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                           />
                         }
                       />
-                      <StackedList.Field
-                        title={
-                          <MoreActionsTooltip
-                            actions={[
-                              {
-                                title: t('views:rules.edit', 'Edit rule'),
-                                iconName: 'edit-pencil',
-                                onClick: () => handleRuleClick(rule.identifier!)
-                              },
-                              {
-                                isDanger: true,
-                                title: t('views:rules.delete', 'Delete rule'),
-                                iconName: 'trash',
-                                onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
-                              }
-                            ]}
-                          />
-                        }
-                        right
-                        label
+                      <MoreActionsTooltip
+                        actions={[
+                          {
+                            title: t('views:rules.edit', 'Edit rule'),
+                            iconName: 'edit-pencil',
+                            onClick: () => handleRuleClick(rule.identifier!)
+                          },
+                          {
+                            isDanger: true,
+                            title: t('views:rules.delete', 'Delete rule'),
+                            iconName: 'trash',
+                            onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                          }
+                        ]}
                       />
-                    </StackedList.Item>
-                  </Link>
+                    </Link>
+                  </StackedList.Item>
                 ) : (
                   <Fragment key={idx} />
                 )

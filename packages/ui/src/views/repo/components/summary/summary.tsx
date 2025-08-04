@@ -33,7 +33,7 @@ export const Summary = ({
             <Table.Row>
               <Table.Head>{t('views:repos.name', 'Name')}</Table.Head>
               <Table.Head>{t('views:repos.lastCommit', 'Last commit message')}</Table.Head>
-              <Table.Head className="text-right">{t('views:repos.date', 'Date')}</Table.Head>
+              <Table.Head containerProps={{ justify: 'end' }}>{t('views:repos.date', 'Date')}</Table.Head>
             </Table.Row>
           </Table.Header>
         )}
@@ -52,10 +52,10 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'absolute left-0 top-1/2 -translate-y-1/2 border-l-2 border-cn-borders-warning'
+                        ? 'border-cn-borders-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
                         : file.status === FileStatus.MEDIUM_RISK
-                          ? 'absolute left-0 top-1/2 -translate-y-1/2 border-l-2 border-cn-borders-warning'
-                          : 'absolute left-0 top-1/2 -translate-y-1/2 border-l-2 border-cn-borders-danger'
+                          ? 'border-cn-borders-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
+                          : 'border-cn-borders-danger absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
                       : ''
                   }`}
                 >
@@ -65,10 +65,10 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'ml-3 text-cn-foreground-warning'
+                            ? 'text-cn-foreground-warning ml-3'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'ml-3 text-cn-foreground-warning'
-                              : 'ml-3 text-cn-foreground-danger'
+                              ? 'text-cn-foreground-warning ml-3'
+                              : 'text-cn-foreground-danger ml-3'
                         : 'text-cn-foreground-2'
                     }
                     name={
@@ -83,15 +83,13 @@ export const Summary = ({
                           : 'folder'
                     }
                   />
-                  <Text variant="body-strong" color="foreground-1" truncate className="w-44">
+                  <Text color="foreground-1" truncate className="w-44">
                     {file.name}
                   </Text>
                 </div>
               </Table.Cell>
               <Table.Cell>
-                <Text color="foreground-2" className="line-clamp-1">
-                  {file.lastCommitMessage}
-                </Text>
+                <Text className="line-clamp-1">{file.lastCommitMessage}</Text>
               </Table.Cell>
               <Table.Cell className="text-right" disableLink>
                 <TimeAgoCard

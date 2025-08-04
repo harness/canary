@@ -49,7 +49,7 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
 
   return (
     <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>
-      <StackedList.Item disableHover isHeader className="gap-4 px-4 py-2">
+      <StackedList.Item disableHover isHeader className="gap-cn-md px-cn-md py-cn-xs">
         {props ? (
           <>
             <StackedList.Field className="grid justify-start" title={<TopTitle {...props} />} />

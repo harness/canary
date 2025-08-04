@@ -112,11 +112,9 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...pro
         </Breadcrumb.List>
       </Breadcrumb.Root>
 
-      <Layout.Flex gap="2xs" align="center">
-        {(isNew || isEdit) && renderInput()}
+      {(isNew || isEdit) && renderInput()}
 
-        <CopyButton name={fullResourcePath || 'Copy path'} />
-      </Layout.Flex>
+      <CopyButton name={fullResourcePath || 'Copy path'} className="ml-cn-2xs" />
     </Layout.Flex>
   )
 }

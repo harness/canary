@@ -29,7 +29,7 @@ function Icon({
   className?: string
 }) {
   return (
-    <div className="col-start-1 row-start-1 flex size-full items-center justify-center self-start">
+    <div className="col-start-1 row-start-1 flex size-full justify-center self-start">
       <div
         className={cn(
           {

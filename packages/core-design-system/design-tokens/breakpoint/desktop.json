@@ -192,6 +192,17 @@
         "paragraphSpacing": "0.375rem"
       }
     },
+    "code": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.mono}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.snug}",
+        "letterSpacing": "{tracking.normal}",
+        "paragraphSpacing": "0.375rem"
+      }
+    },
     "single-line": {
       "normal": {
         "$type": "typography",
@@ -220,6 +231,16 @@
         "$value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.none}",
+          "letterSpacing": "{tracking.normal}"
+        }
+      },
+      "code": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.mono}",
+          "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"

@@ -94,6 +94,24 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
+  // Separate mutation for archive operations to avoid affecting general settings form
+  const { mutateAsync: updateRepoForArchive, isLoading: updatingArchive } = useUpdateRepositoryMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: newData => {
+        setApiError(null)
+        setRepoArchiveDialogOpen(false)
+        setRepoData(newData.body)
+      },
+      onError: (error: UpdateRepositoryErrorResponse) => {
+        queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
+
+        const message = error.message || 'Error archiving repository'
+        setApiError({ type: ErrorTypes.ARCHIVE_REPO, message })
+      }
+    }
+  )
+
   const {
     mutateAsync: updateBranch,
     isLoading: updatingBranch,
@@ -214,9 +232,9 @@ export const RepoSettingsGeneralPageContainer = () => {
   const handleArchiveRepository = async () => {
     try {
       if (repoDataStore?.archived) {
-        await updateRepo({ body: { state: 0 } })
+        await updateRepoForArchive({ body: { state: 0 } })
       } else {
-        await updateRepo({ body: { state: 4 } })
+        await updateRepoForArchive({ body: { state: 4 } })
       }
     } catch (error: unknown) {
       // Handle error with proper type checking
@@ -267,7 +285,8 @@ export const RepoSettingsGeneralPageContainer = () => {
     isLoadingFeaturesSettings,
     isLoadingSecuritySettings,
     isUpdatingSecuritySettings,
-    isUpdatingFeaturesSettings
+    isUpdatingFeaturesSettings,
+    isUpdatingArchive: updatingArchive
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Progress } from '@/components'
+import { Progress, Separator } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils/cn'
 
@@ -34,7 +34,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
             {t('views:repos.behind', 'behind')}
           </span>
         </span>
-        <div className="h-[1.125rem] w-px bg-cn-borders-3" aria-hidden />
+        <Separator orientation="vertical" />
         <span className="truncate text-2 leading-none text-cn-foreground-3">
           {behindAhead.ahead ?? 0}
           <span className="sr-only">
@@ -46,11 +46,11 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {/* TODO: replace with meter component when available */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
-        <div className="mx-auto w-28 flex items-center justify-center">
-          <div className="flex flex-row-reverse w-1/2 justify-start">
+        <div className="mx-auto flex w-28 items-center justify-center">
+          <div className="flex w-1/2 flex-row-reverse justify-start">
             <div style={{ width: `${adjustedBehindPercentage}%` }}>
               <Progress
-                className={`rotate-180 [&_.cn-progress-root]:rounded-l-none [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-8 [&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-8`}
+                className={`rotate-180 [&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-8 [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-8 [&_.cn-progress-root]:rounded-l-none`}
                 value={adjustedBehindPercentage / 100}
                 size="sm"
                 hideIcon
@@ -62,7 +62,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
           <div className="flex w-1/2 justify-start">
             <div style={{ width: `${adjustedAheadPercentage}%` }}>
               <Progress
-                className={`[&_.cn-progress-root]:rounded-l-none [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-13 [&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-13`}
+                className={`[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-13 [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-13 [&_.cn-progress-root]:rounded-l-none`}
                 value={adjustedAheadPercentage / 100}
                 size="sm"
                 hideIcon

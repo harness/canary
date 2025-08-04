@@ -11,6 +11,7 @@ import {
 } from 'react'
 
 import {
+  Alert,
   Avatar,
   Button,
   ButtonVariants,
@@ -31,6 +32,7 @@ import {
   type PrincipalPropsType
 } from '@/views'
 import { cn } from '@utils/cn'
+import { getErrorMessage } from '@utils/utils'
 import { isEmpty, isUndefined } from 'lodash-es'
 
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
@@ -82,7 +84,7 @@ export interface PullRequestCommentBoxProps {
   onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
-  onSaveComment?: (comment: string) => void
+  onSaveComment?: (comment: string) => Promise<void> | void
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
   handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
@@ -94,7 +96,7 @@ export interface PullRequestCommentBoxProps {
   textareaPlaceholder?: string
   allowEmptyValue?: boolean
   hideAvatar?: boolean
-  disableSubmit?: boolean
+  isLoading?: boolean
 }
 
 const TABS_KEYS = {
@@ -127,7 +129,8 @@ export const PullRequestCommentBox = ({
   textareaPlaceholder,
   allowEmptyValue = false,
   hideAvatar = false,
-  disableSubmit = false
+
+  isLoading: parentIsLoading = false
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -137,6 +140,10 @@ export const PullRequestCommentBox = ({
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
+
+  const [commentError, setCommentError] = useState<string | null>(null)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const [localPrincipalsMentionMap, setLocalPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
 
@@ -157,13 +164,32 @@ export const PullRequestCommentBox = ({
     setActiveTab(tab)
   }
 
+  const clearComment = () => {
+    if (!preserveCommentOnSave) {
+      setComment('') // Clear the comment box after saving
+    }
+  }
+
   const handleSaveComment = () => {
     if (onSaveComment && (allowEmptyValue || comment.trim())) {
+      setCommentError(null)
       const formattedComment = replaceMentionEmailWithId(comment, principalsMentionMap)
-      onSaveComment(formattedComment)
+      const onSaveCommentReturn = onSaveComment(formattedComment)
 
-      if (!preserveCommentOnSave) {
-        setComment('') // Clear the comment box after saving
+      if (onSaveCommentReturn instanceof Promise) {
+        setIsLoading(true)
+        onSaveCommentReturn
+          .then(() => {
+            clearComment()
+          })
+          .catch(e => {
+            setCommentError(getErrorMessage(e, 'Failed to save comment'))
+          })
+          .finally(() => {
+            setIsLoading(false)
+          })
+      } else {
+        clearComment()
       }
     }
   }
@@ -483,10 +509,11 @@ export const PullRequestCommentBox = ({
   }
 
   return (
-    <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
+    <Layout.Horizontal align="start" className={cn('gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
-      <div
-        className={cn('p-4 pt-3 flex-1  border-cn-borders-3', {
+      <Layout.Vertical
+        gap="md"
+        className={cn('p-4 pt-3 flex-1', {
           'border rounded-md': !inReplyMode || isEditMode,
           'bg-cn-background-1': !inReplyMode,
           'bg-cn-background-2 border-t': inReplyMode
@@ -494,7 +521,7 @@ export const PullRequestCommentBox = ({
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
           <Tabs.List
-            className="-mx-4 px-4"
+            className="-mx-4 px-4 mb-cn-md"
             activeClassName={inReplyMode ? 'bg-cn-background-2' : 'bg-cn-background-1'}
             variant="overlined"
           >
@@ -502,7 +529,7 @@ export const PullRequestCommentBox = ({
             <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
           </Tabs.List>
 
-          <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
+          <Tabs.Content value={TABS_KEYS.WRITE}>
             <div
               className="relative"
               onDrop={handleDrop}
@@ -564,7 +591,7 @@ export const PullRequestCommentBox = ({
               </Layout.Flex>
             </div>
           </Tabs.Content>
-          <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
+          <Tabs.Content className="w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
                 <MarkdownViewer
@@ -580,9 +607,9 @@ export const PullRequestCommentBox = ({
           </Tabs.Content>
         </Tabs.Root>
 
-        <div className="mt-3 flex items-center justify-between">
+        <Layout.Flex align="center" justify="between">
           {activeTab === TABS_KEYS.WRITE && (
-            <div>
+            <>
               <input
                 type="file"
                 accept="image/*,video/*"
@@ -594,11 +621,11 @@ export const PullRequestCommentBox = ({
                 <IconV2 name="attachment-image" />
                 Drag & drop, select, or paste to attach files
               </Button>
-            </div>
+            </>
           )}
 
           {onSaveComment ? (
-            <div className="ml-auto flex gap-x-3">
+            <Layout.Flex align="center" justify="end" gap="sm" className="ml-auto">
               {(inReplyMode || isEditMode) && (
                 <Button variant="secondary" onClick={onCancelClick}>
                   Cancel
@@ -606,19 +633,26 @@ export const PullRequestCommentBox = ({
               )}
 
               {isEditMode ? (
-                <Button disabled={disableSubmit} onClick={handleSaveComment}>
+                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
                   {buttonTitle || 'Save'}
                 </Button>
               ) : (
-                <Button disabled={disableSubmit} onClick={handleSaveComment}>
+                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
                   {buttonTitle || 'Comment'}
                 </Button>
               )}
-            </div>
-          ) : undefined}
-        </div>
-      </div>
-    </div>
+            </Layout.Flex>
+          ) : null}
+        </Layout.Flex>
+
+        {commentError && (
+          <Alert.Root theme="danger">
+            <Alert.Title>Failed to perform comment operation</Alert.Title>
+            <Alert.Description>{commentError}</Alert.Description>
+          </Alert.Root>
+        )}
+      </Layout.Vertical>
+    </Layout.Horizontal>
   )
 }
 PullRequestCommentBox.displayName = 'PullRequestCommentBox'

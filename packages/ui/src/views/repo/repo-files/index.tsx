@@ -1,6 +1,6 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
+import { NoData, PathParts, SkeletonList } from '@/components'
 import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
@@ -77,12 +77,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     if (!isRepoEmpty && !isDir) {
       return (
         <>
-          {!isLoadingRepoDetails && (
-            <>
-              <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />
-              <Spacer size={4} />
-            </>
-          )}
+          {!isLoadingRepoDetails && <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />}
           {children}
         </>
       )
@@ -92,20 +87,17 @@ export const RepoFiles: FC<RepoFilesProps> = ({
       return (
         <>
           {selectedBranchTag?.name !== defaultBranchName && (
-            <>
-              <BranchInfoBar
-                repoId={repoId}
-                spaceId={spaceId}
-                defaultBranchName={defaultBranchName}
-                selectedBranchTag={selectedBranchTag || { name: '', sha: '' }}
-                currentBranchDivergence={{
-                  ahead: currentBranchDivergence.ahead || 0,
-                  behind: currentBranchDivergence.behind || 0
-                }}
-                refType={selectedRefType}
-              />
-              <Spacer size={4} />
-            </>
+            <BranchInfoBar
+              repoId={repoId}
+              spaceId={spaceId}
+              defaultBranchName={defaultBranchName}
+              selectedBranchTag={selectedBranchTag || { name: '', sha: '' }}
+              currentBranchDivergence={{
+                ahead: currentBranchDivergence.ahead || 0,
+                behind: currentBranchDivergence.behind || 0
+              }}
+              refType={selectedRefType}
+            />
           )}
           <Summary
             toCommitDetails={toCommitDetails}
@@ -148,7 +140,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
   return (
     <SandboxLayout.Main className="bg-transparent" fullWidth>
-      <SandboxLayout.Content className="flex h-full flex-col pt-4">
+      <SandboxLayout.Content className="flex h-full flex-col pl-cn-xl gap-y-cn-md">
         {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}

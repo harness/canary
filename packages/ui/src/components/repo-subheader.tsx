@@ -40,7 +40,7 @@ export const RepoSubheader = ({
   return (
     <SandboxLayout.SubHeader className={className}>
       <Tabs.NavRoot>
-        <Tabs.List className="px-6">
+        <Tabs.List className="cn-repo-subheader-tabs">
           <Tabs.Trigger value={summaryPath || RepoTabsKeys.SUMMARY}>{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
           <Tabs.Trigger value={filesPath || RepoTabsKeys.CODE} disabled={isRepoEmpty}>
             {t('views:repos.files', 'Files')}
@@ -55,7 +55,7 @@ export const RepoSubheader = ({
             {t('views:repos.tags', 'Tags')}
           </Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.PULLS} disabled={isRepoEmpty}>
-            {t('views:repos.pull-requests', 'Pull Requests')}
+            {t('views:repos.pull-requests', 'Pull requests')}
           </Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.BRANCHES} disabled={isRepoEmpty}>
             {t('views:repos.branches', 'Branches')}

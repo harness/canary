@@ -104,7 +104,8 @@ function Tag({
         tagVariants({ variant, size, theme, rounded }),
         {
           'text-cn-foreground-disabled cursor-not-allowed': disabled,
-          'cn-tag-hoverable': !disabled && (enableHover || !!onReset)
+          'cn-tag-hoverable': !disabled && (enableHover || !!onReset),
+          'pr-0': showCopyButton
         },
         className
       )}
@@ -128,12 +129,13 @@ function Tag({
       {showCopyButton ? (
         <CopyButton
           name={value || label || ''}
-          buttonVariant="ghost"
-          // @TODO: add disable hover styles on base button as prop
-          className="cn-tag-icon [&:hover]:[background:transparent_!important]"
+          iconOnly
+          buttonVariant="transparent"
+          className="cn-tag-icon"
           // @TODO: sync with design team to get the righ tokens for the copy button
           color={theme as CopyButtonProps['color']}
           size="xs"
+          iconSize="2xs"
         />
       ) : null}
     </div>

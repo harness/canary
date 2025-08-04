@@ -12,7 +12,13 @@ import {
   Text,
   TextInput
 } from '@/components'
-import { HandleUploadType, PrincipalPropsType, PrincipalsMentionMap, PullRequestCommentBox } from '@/views'
+import {
+  HandleUploadType,
+  PrincipalPropsType,
+  PrincipalsMentionMap,
+  PullRequestCommentBox,
+  TypesPullReqActivity
+} from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
@@ -119,13 +125,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </Text>
         </Layout.Horizontal>
         {isComment && !isDeleted && !isResolved && (
-          <MoreActionsTooltip
-            className="w-[200px]"
-            iconName="more-horizontal"
-            sideOffset={-8}
-            alignOffset={2}
-            actions={actions}
-          />
+          <MoreActionsTooltip iconName="more-horizontal" sideOffset={-8} alignOffset={2} actions={actions} />
         )}
       </Layout.Horizontal>
     )
@@ -157,11 +157,11 @@ export interface TimelineItemProps {
   replyBoxClassName?: string
   wrapperClassName?: string
   titleClassName?: string
-  handleSaveComment?: (comment: string, parentId?: number) => void
+  handleSaveComment?: (comment: string, parentId?: number) => Promise<void>
   onEditClick?: () => void
   onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
   isEditMode?: boolean
-  handleDeleteComment?: () => void
+  handleDeleteComment?: () => Promise<void>
   isDeleted?: boolean
   isNotCodeComment?: boolean
   hideReplyHere?: boolean
@@ -178,8 +178,8 @@ export interface TimelineItemProps {
   principalsMentionMap: PrincipalsMentionMap
   setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   mentions?: PrincipalsMentionMap
-  isDeletingComment?: boolean
   isReply?: boolean
+  payload?: TypesPullReqActivity
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -221,12 +221,18 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   principalsMentionMap,
   setPrincipalsMentionMap,
   mentions,
-  isDeletingComment
+  payload
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isDeletingComment, setIsDeletingComment] = useState(false)
+  const [isDeletingError, setIsDeletingError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    if (!isDeleteDialogOpen) setIsDeletingError(null)
+  }, [isDeleteDialogOpen])
 
   useEffect(() => {
     if (!isEmpty(mentions)) {
@@ -250,8 +256,18 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   }, [])
 
   const handleConfirmDeleteComment = () => {
-    setIsDeleteDialogOpen(false)
+    setIsDeletingComment(true)
+    setIsDeletingError(null)
     handleDeleteComment?.()
+      .then(() => {
+        setIsDeleteDialogOpen(false)
+      })
+      .catch(error => {
+        setIsDeletingError(error)
+      })
+      .finally(() => {
+        setIsDeletingComment(false)
+      })
   }
 
   const renderContent = () => {
@@ -321,7 +337,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             )}
           </NodeGroup.Title>
           {!!content && (
-            <NodeGroup.Content className={contentWrapperClassName}>
+            <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
                   <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-background-2')}>
@@ -344,8 +360,12 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     isEditMode
                     currentUser={currentUser}
                     onSaveComment={() => {
-                      handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
-                      setComment('')
+                      return handleSaveComment?.(
+                        replaceMentionEmailWithId(comment, principalsMentionMap),
+                        parentCommentId
+                      ).then(() => {
+                        setComment('')
+                      })
                     }}
                     onCancelClick={() => {
                       setComment('')
@@ -361,14 +381,23 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   <>
                     {hideReplyHere ? (
                       <PullRequestCommentBox
+                        buttonTitle="Reply"
                         principalsMentionMap={principalsMentionMap}
                         setPrincipalsMentionMap={setPrincipalsMentionMap}
                         principalProps={principalProps}
                         handleUpload={handleUpload}
                         inReplyMode
                         onSaveComment={() => {
-                          handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
-                          setHideReplyHere?.(false)
+                          return handleSaveComment?.(
+                            replaceMentionEmailWithId(comment, principalsMentionMap),
+                            parentCommentId
+                          )
+                            .then(() => {
+                              setHideReplyHere?.(false)
+                            })
+                            .catch(e => {
+                              throw e
+                            })
                         }}
                         onCancelClick={() => {
                           setHideReplyHere?.(false)
@@ -398,11 +427,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       </Button>
 
                       {isResolved && (
-                        <span className="text-2 text-cn-foreground-2">
+                        <Text variant="body-normal" color="foreground-3">
                           {/* TODO: need to identify the author who resolved the conversation */}
-                          <span className="font-medium text-cn-foreground-1">{currentUser}</span> marked this
-                          conversation as resolved.
-                        </span>
+                          <Text as="span" variant="body-strong" color="foreground-1">
+                            {payload?.resolver?.display_name}
+                          </Text>
+                          &nbsp; marked this conversation as resolved.
+                        </Text>
                       )}
                     </div>
                   </>
@@ -410,15 +441,17 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               </div>
             </NodeGroup.Content>
           )}
-          {!isLast && <NodeGroup.Connector />}
+          {!isLast && <NodeGroup.Connector className="left-[0.8rem]" />}
         </NodeGroup.Root>
       </div>
 
       <DeleteAlertDialog
         open={isDeleteDialogOpen}
-        onClose={() => setIsDeleteDialogOpen(false)}
+        onClose={() => {
+          setIsDeleteDialogOpen(false)
+        }}
         deleteFn={handleConfirmDeleteComment}
-        error={null}
+        error={isDeletingError}
         message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
         type={isReply ? 'reply' : 'comment'}
         identifier={String(commentId) ?? undefined}

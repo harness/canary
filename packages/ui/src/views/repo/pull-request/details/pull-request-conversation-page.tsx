@@ -39,7 +39,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
   return (
     <SandboxLayout.Columns columnWidths="minmax(calc(100% - 288px), 1fr) 288px">
       <SandboxLayout.Column>
-        <SandboxLayout.Content className="pl-0 pr-8 pt-0">
+        <SandboxLayout.Content className="pl-0 pt-0">
           {/*TODO: update with design  */}
           {!!rebaseErrorMessage && (
             <Alert.Root theme="danger" className="mb-5" dismissible>
@@ -57,7 +57,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
           <Spacer size={6} />
 
           <PullRequestOverview {...overviewProps} principalProps={principalProps} />
-          <Spacer size={20} />
+          <Spacer size={10} />
 
           <PullRequestCommentBox {...commentBoxProps} principalProps={principalProps} />
         </SandboxLayout.Content>

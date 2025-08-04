@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -57,7 +57,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             <ListActions.Root>
               <ListActions.Left>
                 <SearchInput
-                  size="sm"
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
                   inputContainerClassName="max-w-80"
@@ -74,8 +73,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                   variant="primary"
                   theme="default"
                 >
-                  <IconV2 name="plus" size="sm" />
-                  {t('views:repos.newBranch', 'New branch')}
+                  {t('views:repos.createBranch', 'Create branch')}
                 </Button>
               </ListActions.Right>
             </ListActions.Root>

@@ -29,11 +29,11 @@ interface RepoPullRequestChangesPageProps {
   setDiffMode: (value: DiffModeEnum) => void
   loadingReviewers?: boolean
   loadingRawDiff?: boolean
-  handleSaveComment: (comment: string, parentId?: number) => void
+  handleSaveComment: (comment: string, parentId?: number) => Promise<void>
   activities?: TypesPullReqActivity[]
   pullReqCommits?: TypesCommit[]
-  deleteComment: (id: number) => void
-  updateComment: (id: number, comment: string) => void
+  deleteComment: (id: number) => Promise<void>
+  updateComment: (id: number, comment: string) => Promise<void>
   defaultCommitFilter: CommitFilterItemProps
   selectedCommits: CommitFilterItemProps[]
   setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>

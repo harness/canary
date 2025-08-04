@@ -39,6 +39,11 @@ interface RoutingProps {
   navigateToProfileKeys: () => void
 }
 
+const README_PATH = 'README.md'
+const doesReadmeExistInFiles = (files: RepoFile[]) => {
+  return files.some(file => file.id === README_PATH)
+}
+
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   repoId: string
   spaceId: string
@@ -146,7 +151,7 @@ export function RepoSummaryView({
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 256px">
         <SandboxLayout.Column className="w-full min-w-0">
-          <SandboxLayout.Content className="pl-6">
+          <SandboxLayout.Content className="pr-cn-xl">
             {!isEmpty(prCandidateBranches) && (
               <>
                 <BranchCompareBannerList
@@ -236,7 +241,7 @@ export function RepoSummaryView({
                   title={
                     <Button variant="outline" iconOnly asChild>
                       <Link
-                        to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchOrTag?.name}/~/README.md`}
+                        to={`${toRepoFiles?.()}/${doesReadmeExistInFiles(files) ? 'edit' : 'new'}/${gitRef || selectedBranchOrTag?.name}/~/${README_PATH}`}
                         aria-label={t('views:repos.editReadme', 'Edit README.md')}
                       >
                         <IconV2 name="edit-pencil" className="text-icons-3" />

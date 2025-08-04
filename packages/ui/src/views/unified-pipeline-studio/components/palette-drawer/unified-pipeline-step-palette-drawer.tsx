@@ -90,7 +90,6 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
       <Header>
         <Title>Add Step</Title>
         <SearchInput
-          size="sm"
           autoFocus
           id="search"
           defaultValue={searchQuery}

@@ -32,15 +32,18 @@ function Icon({
   className?: string
 }) {
   return (
-    <div className="col-start-1 row-start-1 flex size-full items-start justify-center self-start">
+    <div className="col-start-1 row-start-1 flex size-full items-center justify-center self-start">
       <div
         className={cn(
-          'border-cn-borders-4 bg-cn-background-2 text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium',
-          { 'bg-transparent border-none size-1 p-0 mt-2 shadow-commit-list-bullet': simpleNodeIcon },
+          {
+            'text-icons-8 shadow-commit-list-bullet': simpleNodeIcon,
+            'border-cn-borders-4 bg-cn-background-2 text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
+              !simpleNodeIcon
+          },
           className
         )}
       >
-        {simpleNodeIcon ? <IconV2 name="circle" size="xs" /> : <>{children}</>}
+        {simpleNodeIcon ? <IconV2 name="circle" size="2xs" /> : <>{children}</>}
       </div>
     </div>
   )
@@ -58,14 +61,12 @@ function Content({ children, className }: { children: ReactNode; className?: str
   return <div className={cn('col-start-2 row-start-2', className)}>{children}</div>
 }
 
-function Connector({ first, last, className }: { first?: boolean; last?: boolean; className?: string }) {
+function Connector({ className }: { className?: string }) {
   return (
     <div
-      className={cn('absolute bottom-0 left-2.5 top-0 z-10 w-1', { 'top-3': first }, { 'bottom-8': last }, className)}
+      className={cn('absolute bottom-0 left-[4px] top-5 z-10 w-1 border-l border-cn-borders-4', className)}
       data-connector
-    >
-      <span className="border-cn-borders-4 absolute inset-y-0 left-1/2 w-px -translate-x-1/2 border-l" />
-    </div>
+    />
   )
 }
 

@@ -13,8 +13,8 @@ export interface LabelsListPageProps {
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
   isRepository?: boolean
-  className?: string
   labelsListViewProps: Pick<LabelsListViewProps, 'handleDeleteLabel' | 'handleEditLabel' | 'widthType'>
+  className?: string
 }
 
 export const LabelsListPage: FC<LabelsListPageProps> = ({
@@ -22,9 +22,9 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   searchQuery,
   setSearchQuery,
   isRepository = false,
-  className,
   labelsListViewProps,
-  createdIn
+  createdIn,
+  className
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -54,57 +54,56 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content className={className}>
-        <Text as="h1" variant="heading-section" className="mb-6">
-          {t('views:labelData.title', 'Labels')}
-        </Text>
+    // <SandboxLayout.Main>
+    <SandboxLayout.Content className={className}>
+      <Text as="h1" variant="heading-section" className="mb-6">
+        {t('views:labelData.title', 'Labels')}
+      </Text>
 
-        {isRepository && (
-          <div className="mb-[18px]">
-            <Checkbox
-              id="parent-labels"
-              checked={getParentScopeLabels}
-              onCheckedChange={setGetParentScopeLabels}
-              label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
-            />
-          </div>
-        )}
-
-        {(!!spaceLabels.length || isDirtyList) && (
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchInput
-                inputContainerClassName="max-w-96"
-                defaultValue={searchQuery || ''}
-                onChange={handleSearchChange}
-                placeholder={t('views:repos.search', 'Search')}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <Button asChild>
-                <Link to="create">{t('views:labelData.newLabel', 'New label')}</Link>
-              </Button>
-            </ListActions.Right>
-          </ListActions.Root>
-        )}
-
-        {isLoading && <SkeletonList className="mb-8 mt-5" />}
-
-        {!isLoading && (
-          <LabelsListView
-            {...labelsListViewProps}
-            labels={spaceLabels}
-            labelContext={{ space: space_ref, repo: repo_ref }}
-            createdIn={createdIn}
-            handleResetQueryAndPages={handleResetQueryAndPages}
-            searchQuery={searchQuery}
-            values={spaceValues}
+      {isRepository && (
+        <div className="mb-[18px]">
+          <Checkbox
+            id="parent-labels"
+            checked={getParentScopeLabels}
+            onCheckedChange={setGetParentScopeLabels}
+            label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
           />
-        )}
+        </div>
+      )}
 
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      {(!!spaceLabels.length || isDirtyList) && (
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchInput
+              inputContainerClassName="max-w-80"
+              defaultValue={searchQuery || ''}
+              onChange={handleSearchChange}
+              placeholder={t('views:repos.search', 'Search')}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button asChild>
+              <Link to="create">{t('views:labelData.newLabel', 'New label')}</Link>
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+      )}
+
+      {isLoading && <SkeletonList className="mb-8 mt-5" />}
+
+      {!isLoading && (
+        <LabelsListView
+          {...labelsListViewProps}
+          labels={spaceLabels}
+          labelContext={{ space: space_ref, repo: repo_ref }}
+          createdIn={createdIn}
+          handleResetQueryAndPages={handleResetQueryAndPages}
+          searchQuery={searchQuery}
+          values={spaceValues}
+        />
+      )}
+
+      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+    </SandboxLayout.Content>
   )
 }

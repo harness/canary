@@ -669,7 +669,6 @@ export default function PullRequestConversationPage() {
     handleSaveComment,
     updateComment,
     deleteComment,
-    isDeletingComment,
     onCommitSuggestion,
     onCommitSuggestionSuccess,
     addSuggestionToBatch,
@@ -686,8 +685,6 @@ export default function PullRequestConversationPage() {
     prId,
     refetchActivities,
     updateCommentStatus,
-    currentUserName: currentUserData?.display_name,
-    setActivities, // pass setActivities if you want ephemeral logic
     dryMerge
   })
 
@@ -728,7 +725,6 @@ export default function PullRequestConversationPage() {
       toCommitDetails: ({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
       handleUpdateDescription,
       handleDeleteComment: deleteComment,
-      isDeletingComment,
       handleUpdateComment: updateComment,
       data: activities,
       pullReqMetadata,

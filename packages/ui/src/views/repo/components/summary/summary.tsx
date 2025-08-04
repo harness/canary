@@ -1,4 +1,4 @@
-import { IconV2, Spacer, Table, Text, TimeAgoCard } from '@/components'
+import { IconV2, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
@@ -25,12 +25,7 @@ export const Summary = ({
 
   return (
     <>
-      {!hideHeader && (
-        <>
-          <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />
-          <Spacer size={4} />
-        </>
-      )}
+      {!hideHeader && <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />}
 
       <Table.Root>
         {!hideHeader && (

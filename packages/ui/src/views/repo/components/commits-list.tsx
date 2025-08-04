@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
 import {
   Avatar,
@@ -29,7 +29,7 @@ interface CommitProps extends Partial<RoutingProps> {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequest, toCode, className }) => {
-  const { Link, navigate } = useRouterContext()
+  const { Link } = useRouterContext()
 
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
@@ -43,44 +43,30 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
     return Object.entries(commitsGroupedByDate)
   }, [data])
 
-  const totalNodes = entries.length
-
   return (
     <div className={className}>
-      {entries.map(([date, commitData], node_idx) => (
-        <NodeGroup.Root className="grid-cols-[4px_1fr] gap-4 pb-6 last:pb-0" key={date}>
+      {entries.map(([date, commitData]) => (
+        <NodeGroup.Root className="grid-cols-[9px_1fr] gap-4 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
-          <NodeGroup.Title>
-            {date && (
-              <Text variant="body-single-line-normal" color="foreground-3">
-                Commits on {date}
-              </Text>
-            )}
-          </NodeGroup.Title>
+          <NodeGroup.Title>{date && <Text variant="body-single-line-normal">Commits on {date}</Text>}</NodeGroup.Title>
           <NodeGroup.Content className="overflow-hidden">
             {!!commitData.length && (
               <StackedList.Root>
-                {commitData.map((commit, repo_idx) => {
+                {commitData.map((commit, idx) => {
                   const authorName = commit.author?.identity?.name
                   const avatarUrl = commit.author?.identity?.avatarUrl
                   const when = commit.committer?.when ?? ''
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start py-3 pl-5 pr-3"
-                      key={commit?.sha || repo_idx}
-                      isLast={commitData.length - 1 === repo_idx}
+                      className="flex items-start p-cn-sm pl-cn-xs"
+                      key={commit?.sha || idx}
+                      isLast={commitData.length - 1 === idx}
+                      asChild
                     >
-                      <Layout.Horizontal className="w-full">
-                        <Link
-                          className="grow overflow-hidden"
-                          onClick={e => {
-                            e.stopPropagation()
-                          }}
-                          key={commit?.sha}
-                          to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
-                        >
-                          <Layout.Vertical gap="2xs">
+                      <Link className="grow overflow-hidden" to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
+                        <Layout.Horizontal className="w-full pl-cn-md">
+                          <Layout.Vertical gap="2xs" className="grow">
                             {renderCommitTitle({
                               commitMessage: commit.title,
                               title: commit.message || commit.title,
@@ -102,66 +88,42 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                               </Text>
                             </div>
                           </Layout.Vertical>
-                        </Link>
-                        {!!commit?.sha && (
-                          <Layout.Horizontal className="gap-2.5" align="center">
-                            <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
-                            <Button
-                              title="View repository at this point of history"
-                              variant="outline"
-                              size="sm"
-                              iconOnly
-                              onClick={() => {
-                                navigate(toCode?.({ sha: commit?.sha || '' }) || '')
-                              }}
-                            >
-                              <IconV2 name="code" />
-                            </Button>
-                          </Layout.Horizontal>
-                        )}
-                      </Layout.Horizontal>
+
+                          {!!commit?.sha && (
+                            <Layout.Horizontal gap="sm" align="center">
+                              <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} size="sm" />
+                              <Button
+                                title="View repository at this point of history"
+                                variant="outline"
+                                size="sm"
+                                asChild
+                                iconOnly
+                              >
+                                <Link to={toCode?.({ sha: commit?.sha || '' }) || ''}>
+                                  <IconV2 name="code" />
+                                </Link>
+                              </Button>
+                            </Layout.Horizontal>
+                          )}
+                        </Layout.Horizontal>
+                      </Link>
                     </StackedList.Item>
                   )
                 })}
               </StackedList.Root>
             )}
           </NodeGroup.Content>
-          <NodeGroup.Connector first={node_idx === 0} last={node_idx === totalNodes - 1} className="!bottom-0 left-0" />
+          <NodeGroup.Connector />
         </NodeGroup.Root>
       ))}
     </div>
   )
 }
 
-function renderCommitLink({
-  commitMessage = '',
-  title = '',
-  sha = '',
-  toCommitDetails,
-  Link
-}: {
-  commitMessage?: string
-  title?: string
-  sha?: string
-  toCommitDetails: RoutingProps['toCommitDetails']
-  Link: React.ComponentType<LinkProps>
-}) {
-  return (
-    <Link
-      className="flex overflow-hidden text-sm font-medium leading-snug hover:underline"
-      to={`${toCommitDetails?.({ sha })}`}
-    >
-      <Text variant="heading-base" truncate title={title}>
-        {commitMessage}
-      </Text>
-    </Link>
-  )
-}
-
 function renderCommitTitle({
   commitMessage = '',
   title = '',
-  sha = '',
+  // sha = '',
   toPullRequest,
   toCommitDetails,
   Link
@@ -187,17 +149,15 @@ function renderCommitTitle({
     const pullRequestId = match[0].replace('(#', '').replace(')', '').replace('\n', '')
     const pullRequestIdInt = parseInt(pullRequestId)
     if (!isNaN(pullRequestIdInt)) {
-      const peaces = commitMessage.split(match[0])
-      const peacesEls = peaces.map(peace => {
-        return renderCommitLink({
-          commitMessage: peace,
-          title,
-          sha,
-          toCommitDetails,
-          Link
-        })
+      const pieces = commitMessage.split(match[0])
+      const piecesEls = pieces.map(piece => {
+        return (
+          <Text variant="heading-base" truncate title={title} key={piece}>
+            {piece}
+          </Text>
+        )
       })
-      peacesEls.splice(
+      piecesEls.splice(
         1,
         0,
         <Text variant="heading-base">
@@ -215,15 +175,13 @@ function renderCommitTitle({
         </Text>
       )
 
-      return <Layout.Flex>{peacesEls}</Layout.Flex>
+      return <Layout.Flex>{piecesEls}</Layout.Flex>
     }
   }
 
-  return renderCommitLink({
-    commitMessage,
-    title,
-    sha,
-    toCommitDetails,
-    Link
-  })
+  return (
+    <Text variant="heading-base" truncate title={title}>
+      {commitMessage}
+    </Text>
+  )
 }

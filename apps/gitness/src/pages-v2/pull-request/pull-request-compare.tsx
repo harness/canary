@@ -130,8 +130,7 @@ export const CreatePullRequest = () => {
     repoRef,
     prId: -1,
     refetchActivities: noop,
-    updateCommentStatus: noop,
-    currentUserName: currentUser?.display_name
+    updateCommentStatus: noop
   })
 
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
@@ -244,7 +243,7 @@ export const CreatePullRequest = () => {
   useEffect(() => {
     if (repoMetadata?.default_branch) {
       setSelectedTargetBranch({ name: diffTargetBranch || repoMetadata.default_branch, sha: '' })
-      setSelectedSourceBranch({ name: diffSourceBranch || repoMetadata.default_branch, sha: '' })
+      setSelectedSourceBranch({ name: diffSourceBranch || '', sha: '' })
     }
   }, [repoMetadata, diffTargetBranch, diffSourceBranch])
 
@@ -599,7 +598,7 @@ export const CreatePullRequest = () => {
               selectedBranch={selectedTargetBranch}
               branchPrefix="base"
             />
-            <IconV2 name="arrow-long-left" />
+            <IconV2 name="arrow-left" />
             <BranchSelectorContainer
               onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
               selectedBranch={selectedSourceBranch}

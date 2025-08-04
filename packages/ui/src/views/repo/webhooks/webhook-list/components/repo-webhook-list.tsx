@@ -1,4 +1,4 @@
-import { Layout, MoreActionsTooltip, NoData, Pagination, Spacer, Switch, Table, Tag, Text } from '@/components'
+import { Layout, MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Table, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { WebhookType } from '@/views'
 
@@ -55,6 +55,7 @@ export function RepoWebhookList({
     return (
       <NoData
         withBorder
+        className="min-h-0 py-cn-3xl"
         textWrapperClassName="max-w-[350px]"
         imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
         title={
@@ -94,10 +95,10 @@ export function RepoWebhookList({
   return (
     <>
       {/* add props so table respects sizes you give */}
-      <Table.Root className="table-fixed">
+      <Table.Root className="table-fixed" size="compact">
         <Table.Header>
           <Table.Row>
-            <Table.Head className="w-[50px] !pr-0"></Table.Head>
+            <Table.Head className="w-[45px] !pr-0"></Table.Head>
             <Table.Head className="w-auto">
               <Text variant="caption-strong">Name</Text>
             </Table.Head>
@@ -113,7 +114,7 @@ export function RepoWebhookList({
               to={toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`}
               key={webhook.id}
             >
-              <Table.Cell className="w-[50px] cursor-pointer flex items-start !pr-0" disableLink>
+              <Table.Cell className="flex w-[45px] cursor-pointer items-start !pr-0" disableLink>
                 <Switch
                   checked={webhook.enabled}
                   onClick={e => {
@@ -124,7 +125,7 @@ export function RepoWebhookList({
                 />
               </Table.Cell>
               <Table.Cell className="w-auto max-w-0">
-                <Layout.Flex className="w-full" direction="column" gap="none">
+                <Layout.Flex className="w-full" direction="column" gap="3xs">
                   <Text variant="body-strong" className="truncate">
                     {webhook.display_name}
                   </Text>
@@ -133,27 +134,25 @@ export function RepoWebhookList({
                   </Text>
                 </Layout.Flex>
               </Table.Cell>
-              <Table.Cell className="cursor-pointer content-center w-[136px]">
-                <Tag
-                  variant="outline"
+              <Table.Cell className="w-[136px] cursor-pointer content-center">
+                <StatusBadge
+                  variant="status"
                   theme={
                     webhook.latest_execution_result === 'success'
-                      ? 'green'
+                      ? 'success'
                       : webhook.latest_execution_result === 'fatal_error' ||
                           webhook.latest_execution_result === 'retriable_error'
-                        ? 'red'
-                        : 'gray'
+                        ? 'danger'
+                        : 'muted'
                   }
-                  value={
-                    webhook.latest_execution_result === 'success'
-                      ? 'Success'
-                      : webhook.latest_execution_result === 'fatal_error' ||
-                          webhook.latest_execution_result === 'retriable_error'
-                        ? 'Failed'
-                        : 'Invalid'
-                  }
-                  rounded
-                />
+                >
+                  {webhook.latest_execution_result === 'success'
+                    ? 'Success'
+                    : webhook.latest_execution_result === 'fatal_error' ||
+                        webhook.latest_execution_result === 'retriable_error'
+                      ? 'Failed'
+                      : 'Waiting'}
+                </StatusBadge>
               </Table.Cell>
 
               <Table.Cell className="cursor-pointer content-center text-right">
@@ -162,6 +161,7 @@ export function RepoWebhookList({
                   actions={[
                     {
                       title: t('views:webhookData.edit', 'Edit webhook'),
+                      iconName: 'edit-pencil',
                       onClick: () =>
                         navigate(
                           toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`
@@ -169,6 +169,7 @@ export function RepoWebhookList({
                     },
                     {
                       isDanger: true,
+                      iconName: 'trash',
                       title: t('views:webhookData.delete', 'Delete webhook'),
                       onClick: () => openDeleteWebhookDialog(webhook.id)
                     }

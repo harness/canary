@@ -6,7 +6,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
   const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
     switch (decision) {
       case PullReqReviewDecision.outdated:
-        return <IconV2 name="message" className="text-cn-foreground-warning" />
+        return <IconV2 name="refresh-circle-solid" className="text-cn-foreground-disabled" />
       case PullReqReviewDecision.approved:
         return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
       case PullReqReviewDecision.changeReq:

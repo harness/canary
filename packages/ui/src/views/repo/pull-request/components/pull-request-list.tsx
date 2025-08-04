@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { NoData, StackedList } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PullRequestListProps } from '@/views'
+import { noop } from 'lodash-es'
 
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'
@@ -20,6 +21,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   setHeaderFilter,
   onLabelClick,
   toPullRequest,
+  onClickPullRequest,
   scope,
   showScope = false
 }) => {
@@ -134,12 +136,24 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         <Link
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
           to={
-            pullRequest?.number
-              ? (toPullRequest?.({
-                  prNumber: pullRequest.number,
-                  repoId: pullRequest?.repo?.identifier
-                }) ?? '')
+            toPullRequest && pullRequest.number
+              ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
               : ''
+          }
+          onClick={
+            /**
+             * Prioritize the `toPullRequest` prop if provided, otherwise use the on click handler.
+             */
+            toPullRequest
+              ? noop
+              : (e: React.MouseEvent) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  onClickPullRequest?.({
+                    prNumber: pullRequest.number,
+                    repo: { name: pullRequest.repo?.identifier || '', path: pullRequest.repo?.path || '' }
+                  })
+                }
           }
         >
           <StackedList.Item className="px-4 py-3" isLast={pullRequests.length - 1 === pullRequest_idx}>

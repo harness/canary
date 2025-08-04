@@ -12,7 +12,6 @@ export const ProjectLabelsList = () => {
   return (
     <>
       <LabelsListPage
-        className="mx-auto max-w-[1040px]"
         useLabelsStore={LabelsListStore.useLabelsStore}
         createdIn={''}
         searchQuery={''}

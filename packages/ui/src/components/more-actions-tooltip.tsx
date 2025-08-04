@@ -31,7 +31,6 @@ export interface MoreActionsTooltipProps {
  */
 export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   actions,
-  isInTable = false,
   iconName = 'more-vert',
   sideOffset = -6,
   alignOffset = 10,
@@ -44,14 +43,12 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2', {
-            '-mr-2.5 -my-0.5': isInTable
-          })}
+          className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
           variant="ghost"
           iconOnly
           size="sm"
         >
-          <IconV2 name={iconName} size="2xs" />
+          <IconV2 name={iconName} />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={className} align="end" sideOffset={sideOffset} alignOffset={alignOffset}>
@@ -67,7 +64,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
               <DropdownMenu.Item
                 title={
                   <Layout.Horizontal gap="xs" className="items-center">
-                    {action.iconName ? <IconV2 name={action.iconName} size="xs" /> : null}
+                    {action.iconName ? <IconV2 name={action.iconName} /> : null}
                     <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                       {action.title}
                     </Text>
@@ -80,11 +77,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
               title={
                 <Layout.Horizontal gap="xs" className="items-center">
                   {action.iconName ? (
-                    <IconV2
-                      className={cn({ 'text-cn-foreground-danger': action.isDanger })}
-                      name={action.iconName}
-                      size="xs"
-                    />
+                    <IconV2 className={cn({ 'text-cn-foreground-danger': action.isDanger })} name={action.iconName} />
                   ) : null}
                   <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                     {action.title}

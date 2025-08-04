@@ -14,7 +14,7 @@ export default {
   '.cn-switch-root': {
     display: 'inline-flex',
     position: 'relative',
-    width: 'var(--cn-size-9)',
+    minWidth: 'var(--cn-size-9)',
     height: 'var(--cn-size-5)',
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: 'var(--cn-rounded-full)',

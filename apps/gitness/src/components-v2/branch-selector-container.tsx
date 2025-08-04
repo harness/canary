@@ -20,6 +20,8 @@ interface BranchSelectorContainerProps {
   onBranchQueryChange?: (query: string) => void
   className?: string
   branchPrefix?: string
+  isUpdating?: boolean
+  disabled?: boolean
 }
 export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
   selectedBranch,
@@ -31,7 +33,9 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   isFilesPage = false,
   onBranchQueryChange,
   branchPrefix,
-  className
+  className,
+  isUpdating,
+  disabled
 }) => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -65,7 +69,9 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   })
 
   useEffect(() => {
-    if (repository && !selectedBranch) {
+    // Only auto-select default branch if no branch is currently selected
+    // This prevents the flakiness when the form is being updated
+    if (repository && !selectedBranch?.name && !isUpdating) {
       const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
 
       onSelectBranchorTag(
@@ -73,7 +79,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
         BranchSelectorTab.BRANCHES
       )
     }
-  }, [branches, repository])
+  }, [repository, selectedBranch?.name, branches, onSelectBranchorTag, isUpdating])
 
   useEffect(() => {
     refetchBranches()
@@ -118,6 +124,7 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       isFilesPage={isFilesPage}
       setCreateBranchDialogOpen={setCreateBranchDialogOpen}
       branchPrefix={branchPrefix}
+      disabled={disabled}
     />
   )
 }

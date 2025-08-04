@@ -96,8 +96,16 @@ export const getPRListFilterOptions = ({
               allowSearch: false
             },
             parser: {
-              parse: (value: string): ComboBoxOptions =>
-                scopeFilterOptions.find(scope => scope.value === value) || { label: '', value },
+              parse: (value: string): ComboBoxOptions => {
+                let selectedValue: string
+                if (accountId && orgIdentifier) {
+                  selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
+                } else if (accountId) {
+                  selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
+                }
+
+                return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+              },
               serialize: (value: ComboBoxOptions): string => {
                 const selected = value?.value
 

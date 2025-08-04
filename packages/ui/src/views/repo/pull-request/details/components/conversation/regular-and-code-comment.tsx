@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, IconV2, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, CopyButton, IconV2, Layout, TextInput, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -72,7 +72,6 @@ interface BaseCompProps {
   principalProps: PrincipalPropsType
   principalsMentionMap: PrincipalsMentionMap
   setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
-  isDeletingComment?: boolean
   isReply?: boolean
 }
 
@@ -91,7 +90,6 @@ const BaseComp: FC<BaseCompProps> = ({
   principalProps,
   principalsMentionMap,
   setPrincipalsMentionMap,
-  isDeletingComment,
   isReply
 }) => {
   if (!payload?.id) return null
@@ -99,7 +97,6 @@ const BaseComp: FC<BaseCompProps> = ({
   return (
     <PullRequestTimelineItem
       isReply={isReply}
-      isDeletingComment={isDeletingComment}
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       principalProps={principalProps}
@@ -117,6 +114,7 @@ const BaseComp: FC<BaseCompProps> = ({
       toggleConversationStatus={toggleConversationStatus}
       parentCommentId={payload?.id}
       hideEditDelete={payload?.author?.uid !== currentUser?.uid}
+      payload={payload}
       header={[
         {
           ...headerData,
@@ -142,7 +140,6 @@ export interface PullRequestRegularAndCodeCommentProps
     | 'handleUpdateComment'
   > {
   commentItems: CommentItem<TypesPullReqActivity>[]
-  isDeletingComment: boolean
   parentItem?: CommentItem<TypesPullReqActivity>
   isLast: boolean
   componentViewBase: FC<{
@@ -154,7 +151,6 @@ export interface PullRequestRegularAndCodeCommentProps
 
 const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeCommentProps> = ({
   commentItems,
-  isDeletingComment,
   parentItem,
   handleUpload,
   currentUser,
@@ -225,7 +221,6 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
         return (
           <BaseComp
-            isDeletingComment={isDeletingComment}
             isReply={parentItem?.id !== commentItem.id}
             key={`${commentItem.id}-${commentItem.author}-pr-comment`}
             principalProps={principalProps}
@@ -269,11 +264,12 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   isEditMode
                   onSaveComment={() => {
                     if (commentItem.id) {
-                      handleUpdateComment?.(
+                      return handleUpdateComment?.(
                         commentItem.id,
                         replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
-                      )
-                      toggleEditMode(componentId, '')
+                      ).then(() => {
+                        toggleEditMode(componentId, '')
+                      })
                     }
                   }}
                   currentUser={currentUser?.display_name}
@@ -298,7 +294,6 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
   return isCode ? (
     <BaseComp
-      isDeletingComment={isDeletingComment}
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       payload={payload}
@@ -330,7 +325,12 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
-        contentHeader: <span className="font-medium text-cn-foreground-1">{payload?.code_comment?.path}</span>,
+        contentHeader: (
+          <Layout.Horizontal gap="sm">
+            <span className="font-medium text-cn-foreground-1">{payload?.code_comment?.path}</span>
+            <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />
+          </Layout.Horizontal>
+        ),
         content: (
           <div className="flex flex-col">
             {!!startingLine && (

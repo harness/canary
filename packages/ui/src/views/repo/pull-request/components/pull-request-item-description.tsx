@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, Separator, Tag, Text, TimeAgoCard } from '@/components'
+import { IconV2, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -25,6 +25,14 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const { Link, location } = useRouterContext()
   const fullPath = location.pathname
   const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
+
+  const branchTagProps: Omit<TagProps, 'value'> = {
+    variant: 'secondary',
+    icon: 'git-branch',
+    showIcon: true,
+    enableHover: true,
+    theme: 'blue'
+  }
 
   return (
     <div className="text-2 text-cn-foreground-2 inline-flex max-w-full items-center gap-1.5 pl-[22px]">
@@ -51,12 +59,12 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {sourceBranch && (
         <>
           <Link to={`${relativePath}/files/${targetBranch}`}>
-            <Tag variant="secondary" icon="git-branch" value={targetBranch} showIcon enableHover />
+            <Tag value={targetBranch} {...branchTagProps} />
           </Link>
 
           <span>&larr;</span>
           <Link to={`${relativePath}/files/${sourceBranch}`}>
-            <Tag variant="secondary" icon="git-branch" value={sourceBranch} showIcon enableHover />
+            <Tag value={sourceBranch} {...branchTagProps} />
           </Link>
         </>
       )}

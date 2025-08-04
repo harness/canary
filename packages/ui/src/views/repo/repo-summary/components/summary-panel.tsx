@@ -82,8 +82,8 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
                 onClick={() => setEditDialogOpen(true)}
                 title={
                   description?.length
-                    ? t('views:repos.summary.summaryPanel.editDescription', 'Edit Description')
-                    : t('views:repos.summary.summaryPanel.addDescription', 'Add Description')
+                    ? t('views:repos.summary.summaryPanel.editDescription', 'Edit description')
+                    : t('views:repos.summary.summaryPanel.addDescription', 'Add description')
                 }
               />
             </DropdownMenu.Content>
@@ -93,7 +93,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <Layout.Grid gapY="sm">
             <Separator />
-            <Text lineClamp={6} color="foreground-1">
+            <Text variant="body-normal" lineClamp={6} color="foreground-1">
               {description}
             </Text>
             <Separator />

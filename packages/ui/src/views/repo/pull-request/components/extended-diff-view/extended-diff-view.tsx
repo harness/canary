@@ -18,7 +18,9 @@ export const ExtendedDiffView = forwardRef(
       getDiffFileInstance: () => DiffFile
     }>
   ) => {
-    const { extendData, renderWidgetLine } = props
+    const { extendData, renderWidgetLine, diffViewAddWidget } = props
+
+    const enableMultiSelect = !!diffViewAddWidget
 
     const containerRef = useRef<HTMLDivElement>(null)
 
@@ -39,6 +41,8 @@ export const ExtendedDiffView = forwardRef(
 
     // handle user selection
     useEffect(() => {
+      if (!enableMultiSelect) return
+
       const container = containerRef.current
       if (!container) return
 
@@ -100,7 +104,7 @@ export const ExtendedDiffView = forwardRef(
         container.removeEventListener('mouseover', handleMouseOver)
         document.removeEventListener('mouseup', handleDocumentMouseUp)
       }
-    }, [isSelectingRef, selectedRangeRef])
+    }, [isSelectingRef, selectedRangeRef, enableMultiSelect])
 
     return (
       <div ref={containerRef}>

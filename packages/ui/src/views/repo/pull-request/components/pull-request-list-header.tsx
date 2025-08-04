@@ -33,7 +33,6 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
             'text-cn-foreground-success': headerFilter.includes('open'),
             'text-cn-foreground-4': !headerFilter.includes('open')
           })}
-          size="xs"
           name="git-pull-request"
         />
         <Text
@@ -49,7 +48,6 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
             'text-cn-foreground-success': headerFilter.includes('closed'),
             'text-cn-foreground-4': !headerFilter.includes('closed')
           })}
-          size="xs"
           name="check"
         />
         <Text

@@ -11,6 +11,7 @@ import {
   FormWrapper,
   IconV2,
   Label,
+  Layout,
   SkeletonForm,
   Tag,
   Text
@@ -142,7 +143,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
   return (
     <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <Text as="h1" variant="heading-section" className="mb-10">
+      <Text as="h1" variant="heading-section" className="mb-6">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
@@ -152,11 +153,9 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
       {!isLoading && (
         <FormWrapper {...formMethods} className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
+          <Fieldset className="gap-y-6">
             <ControlGroup>
-              <Label className="mb-2" htmlFor="label-name">
-                {t('views:labelData.form.labelName', 'Label name')}
-              </Label>
+              <Label htmlFor="label-name">{t('views:labelData.form.labelName', 'Label name')}</Label>
 
               <LabelFormColorAndNameGroup
                 selectProps={{ ...register('color') }}
@@ -179,34 +178,32 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                 <LabelFormColorAndNameGroup
                   isValue
                   key={idx}
-                  className="mt-5 first-of-type:mt-0"
+                  className=" first-of-type:mt-0"
                   handleDeleteValue={() => handleDeleteValue(idx)}
                   selectProps={{ ...register(`values.${idx}.color`) }}
                   inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
                 />
               ))}
 
-              <Button className="mt-3.5 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
+              <Button className="mt-1 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
                 <IconV2 name="plus" size="2xs" />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>
             </ControlGroup>
 
-            <div className="mt-5">
-              <FormInput.Checkbox
-                id="isDynamic"
-                label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}
-                {...register('isDynamic')}
-              />
-            </div>
+            <FormInput.Checkbox
+              id="isDynamic"
+              label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}
+              {...register('isDynamic')}
+            />
           </Fieldset>
 
-          <section className="mt-1 flex flex-col gap-y-5">
+          <Layout.Vertical className="mt-1 " gap="lg">
             <Text as="h3" variant="body-single-line-normal">
               {t('views:labelData.form.previewLabel', 'Label preview')}
             </Text>
 
-            <div className="flex flex-col items-start gap-y-2.5">
+            <Layout.Vertical gap="xs" align="start">
               <Tag
                 variant="secondary"
                 size="sm"
@@ -223,8 +220,8 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                   value={value.value.length ? value.value : t('views:labelData.form.valueName', 'Label value')}
                 />
               ))}
-            </div>
-          </section>
+            </Layout.Vertical>
+          </Layout.Vertical>
 
           {!!error?.length && (
             <Alert.Root theme="danger">

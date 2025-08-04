@@ -7,13 +7,15 @@ export interface FileToolbarActionsProps {
   onEditClick: () => void
   copyContent: string
   showEdit?: boolean
+  additionalButtonsProps?: ButtonGroupButtonProps[]
 }
 
 export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   onDownloadClick,
   onEditClick,
   copyContent,
-  showEdit = false
+  showEdit = false,
+  additionalButtonsProps = []
 }) => {
   const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: copyContent })
   return (
@@ -28,17 +30,18 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
         ...(showEdit
           ? [
               {
-                children: <IconV2 name="edit-pencil" className="text-icons-3" />,
+                children: <IconV2 name="edit-pencil" />,
                 'aria-label': 'Edit',
                 onClick: onEditClick
               }
             ]
           : []),
         {
-          children: <IconV2 name="download" className="text-icons-3" />,
+          children: <IconV2 name="download" />,
           'aria-label': 'Download',
           onClick: onDownloadClick
-        }
+        },
+        ...additionalButtonsProps
       ]}
     />
   )

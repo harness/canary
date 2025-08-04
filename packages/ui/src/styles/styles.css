@@ -557,6 +557,18 @@ mark {
   @apply border-cn-borders-3 rounded-b-3 border border-t-0;
 }
 
+.monaco-diff-editor .monaco-editor .overflow-guard {
+  @apply border-0;
+}
+
+.monaco-diff-editor .diffOverview .diffViewport {
+  background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
+
+  &:hover {
+    background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
+  }
+}
+
 .monaco-scrollable-element > .scrollbar > .slider {
   border-radius: var(--cn-rounded-full, 0.25rem);
   --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
@@ -573,7 +585,7 @@ mark {
 
 /* .hidden extension */
 .diffViewBlock.hiddenDiff {
-  @apply invisible h-[var(--block-height)] [contain-intrinsic-size:auto_var(--block-height)] [content-visibility:auto];
+  @apply invisible h-[var(--block-height)] [contain-intrinsic-height:auto_var(--block-height)] [content-visibility:auto];
 }
 
 .diffViewBlock.hiddenDiff > * {
@@ -585,4 +597,9 @@ mark {
 
 .nested-sidebar-height {
   height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent-with-borders));
+}
+
+.branch-selector-trigger-as-input {
+  background-color: var(--cn-comp-input-bg);
+  padding-inline: var(--cn-input-md-pl) var(--cn-input-md-pr);
 }

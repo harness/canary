@@ -10,6 +10,7 @@ export interface ExitConfirmOptions {
   onConfirm: () => void
   onCancel?: () => void
   error?: string
+  isLoading?: boolean
 }
 
 export type ExitConfirmDialogProps = ExitConfirmOptions & { open: boolean }
@@ -22,7 +23,8 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
   subtitle = 'Are you sure you want to leave this page without saving?',
   confirmText = 'Leave',
   cancelText = 'Stay',
-  error
+  error,
+  isLoading = false
 }) => {
   return (
     <Dialog.Root
@@ -38,8 +40,12 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
         </Dialog.Header>
         <Dialog.Footer>
           <ButtonLayout>
-            <Dialog.Close onClick={() => onCancel?.()}>{cancelText}</Dialog.Close>
-            <Button onClick={onConfirm}>{confirmText}</Button>
+            <Dialog.Close onClick={() => onCancel?.()} disabled={isLoading}>
+              {cancelText}
+            </Dialog.Close>
+            <Button onClick={onConfirm} disabled={isLoading}>
+              {isLoading ? 'Loading...' : confirmText}
+            </Button>
           </ButtonLayout>
           {error && (
             <Alert.Root>

@@ -61,9 +61,9 @@ interface PullRequestDiffviewerProps {
   blocks?: DiffBlock[]
   currentUser?: string
   comments?: CommentItem<TypesPullReqActivity>[][]
-  handleSaveComment?: (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => void
-  deleteComment?: (id: number) => void
-  updateComment?: (id: number, comment: string) => void
+  handleSaveComment?: (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => Promise<void>
+  deleteComment?: (id: number) => Promise<void>
+  updateComment?: (id: number, comment: string) => Promise<void>
   onCopyClick?: (commentId?: number) => void
   suggestionsBatch?: CommitSuggestion[]
   onCommitSuggestion?: (suggestion: CommitSuggestion) => void
@@ -377,18 +377,19 @@ const PullRequestDiffViewer = ({
             isEditMode
             principalProps={principalProps}
             onSaveComment={() => {
-              onClose()
               const trimmedComment = commentText.trim()
               if (trimmedComment && handleSaveComment) {
-                handleSaveComment(replaceMentionEmailWithId(trimmedComment, principalsMentionMap), undefined, {
+                return handleSaveComment(replaceMentionEmailWithId(trimmedComment, principalsMentionMap), undefined, {
                   line_end: lineNumber,
                   line_end_new: sideKey === 'newFile',
                   line_start: lineFromNumber,
                   line_start_new: sideKey === 'newFile',
                   path: fileName
+                }).then(() => {
+                  onClose()
+                  setNewComments(prev => ({ ...prev, [commentKey]: '' }))
                 })
               }
-              setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
             currentUser={currentUser}
             onCancelClick={() => {
@@ -427,6 +428,7 @@ const PullRequestDiffViewer = ({
                 principalsMentionMap={principalsMentionMap}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
                 mentions={parent?.payload?.mentions}
+                payload={parent?.payload}
                 wrapperClassName="pb-3"
                 key={parent.id}
                 id={parentIdAttr}
@@ -449,12 +451,12 @@ const PullRequestDiffViewer = ({
                 quoteReplyText={quoteReplies[parent.id]?.text || ''}
                 contentHeader={
                   !!parent.payload?.resolved && (
-                    <div className="flex items-center gap-x-1">
-                      <span className="font-medium text-cn-foreground-1">{parent.payload?.resolver?.display_name}</span>
-                      <Text variant="body-normal" color="foreground-3">
-                        marked this conversation as resolved
+                    <Text variant="body-normal" color="foreground-3">
+                      <Text as="span" variant="body-strong" color="foreground-1">
+                        {parent.payload?.resolver?.display_name}
                       </Text>
-                    </div>
+                      &nbsp; marked this conversation as resolved.
+                    </Text>
                   )
                 }
                 content={
@@ -462,6 +464,7 @@ const PullRequestDiffViewer = ({
                     <PullRequestTimelineItem
                       isReply={false}
                       mentions={parent?.payload?.mentions}
+                      payload={parent?.payload}
                       principalsMentionMap={principalsMentionMap}
                       setPrincipalsMentionMap={setPrincipalsMentionMap}
                       titleClassName="w-full"
@@ -473,7 +476,7 @@ const PullRequestDiffViewer = ({
                       isResolved={!!parent.payload?.resolved}
                       isComment
                       replyBoxClassName=""
-                      handleDeleteComment={() => deleteComment?.(parent?.id)}
+                      handleDeleteComment={() => deleteComment?.(parent?.id) || Promise.resolve()}
                       onEditClick={() => toggleEditMode(componentId, parent?.payload?.payload?.text || '')}
                       data={parent?.payload?.payload?.text}
                       contentClassName="border-transparent"
@@ -502,11 +505,12 @@ const PullRequestDiffViewer = ({
                             isEditMode
                             onSaveComment={() => {
                               if (parent?.id) {
-                                updateComment?.(
+                                return updateComment?.(
                                   parent?.id,
                                   replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
-                                )
-                                toggleEditMode(componentId, '')
+                                ).then(() => {
+                                  toggleEditMode(componentId, '')
+                                })
                               }
                             }}
                             currentUser={currentUser}
@@ -546,6 +550,7 @@ const PullRequestDiffViewer = ({
                               principalsMentionMap={principalsMentionMap}
                               setPrincipalsMentionMap={setPrincipalsMentionMap}
                               key={reply.id}
+                              payload={parent?.payload}
                               id={replyIdAttr}
                               principalProps={principalProps}
                               parentCommentId={parent?.id}
@@ -553,10 +558,11 @@ const PullRequestDiffViewer = ({
                               handleSaveComment={handleSaveComment}
                               hideReplySection
                               isComment
+                              isResolved={!!parent?.payload?.resolved}
                               onCopyClick={onCopyClick}
                               commentId={reply.id}
                               isDeleted={!!reply?.deleted}
-                              handleDeleteComment={() => deleteComment?.(reply?.id)}
+                              handleDeleteComment={() => deleteComment?.(reply?.id) || Promise.resolve()}
                               onEditClick={() => toggleEditMode(replyComponentId, reply?.payload?.payload?.text || '')}
                               data={reply?.payload?.payload?.text}
                               contentClassName="border-transparent"
@@ -584,14 +590,15 @@ const PullRequestDiffViewer = ({
                                     isEditMode
                                     onSaveComment={() => {
                                       if (reply?.id) {
-                                        updateComment?.(
+                                        return updateComment?.(
                                           reply?.id,
                                           replaceMentionEmailWithId(
                                             editComments[replyComponentId],
                                             principalsMentionMap
                                           )
-                                        )
-                                        toggleEditMode(replyComponentId, '')
+                                        ).then(() => {
+                                          toggleEditMode(replyComponentId, '')
+                                        })
                                       }
                                     }}
                                     currentUser={currentUser}

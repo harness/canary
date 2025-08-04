@@ -31,6 +31,7 @@ export interface BranchSelectorDropdownProps {
   preSelectedTab?: BranchSelectorTab
   setCreateBranchDialogOpen?: (open: boolean) => void
   isFilesPage?: boolean
+  disabled?: boolean
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {
@@ -45,4 +46,7 @@ export interface BranchSelectorContainerProps {
   isBranchOnly?: boolean
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
+  className?: string
+  isUpdating?: boolean
+  disabled?: boolean
 }

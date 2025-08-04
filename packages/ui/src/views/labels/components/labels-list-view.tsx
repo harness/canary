@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, NoData, Table } from '@/components'
+import { MoreActionsTooltip, NoData, Table, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelValuesType } from '@/views'
@@ -57,6 +57,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       return (
         <NoData
           withBorder
+          className="min-h-0 py-cn-xl"
           imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
@@ -71,6 +72,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     return (
       <NoData
         withBorder
+        className="min-h-0 py-cn-3xl"
         imageName="no-data-branches"
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
@@ -82,53 +84,57 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed" className="mb-8 mt-5">
+    <Table.Root tableClassName="table-fixed" className="mb-8 mt-4">
       <Table.Header>
         <Table.Row>
-          <Table.Head className={cn('w-1/4', { 'w-4/12': isSmallWidth })}>
-            <span className="pl-[22px]">{t('views:labelData.table.name', 'Name')}</span>
+          <Table.Head className={cn('w-[304px]', { 'w-4/12': isSmallWidth })}>
+            <Text variant="caption-strong" className="pl-[45px]">
+              {t('views:labelData.table.name', 'Name')}
+            </Text>
           </Table.Head>
-          <Table.Head className="w-1/4">{t('views:labelData.table.created', 'Created in')}</Table.Head>
-          <Table.Head className={cn('w-1/2', { 'w-5/12': isSmallWidth })}>
-            {t('views:labelData.table.description', 'Description')}
+          <Table.Head className="w-[240px]">
+            <Text variant="caption-strong">{t('views:labelData.table.created', 'Created in')}</Text>
           </Table.Head>
-          <Table.Head className="w-[54px]" />
+          <Table.Head className={cn('w-[298px]', { 'w-5/12': isSmallWidth })}>
+            <Text variant="caption-strong">{t('views:labelData.table.description', 'Description')}</Text>
+          </Table.Head>
+          <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {labels.map(label => (
           <Table.Row key={label.id}>
-            <Table.Cell className={cn('w-1/4 !py-3', { 'w-4/12': isSmallWidth })}>
+            <Table.Cell className={cn('w-[304px] !py-3', { 'w-4/12': isSmallWidth })}>
               <LabelCellContent label={label} values={values?.[label.key]} />
             </Table.Cell>
-            <Table.Cell className="w-1/4 !py-3.5 leading-none">
-              <span className="inline-flex h-4 max-w-full items-center gap-x-1 rounded bg-cn-background-8 px-1.5 text-1 leading-4 text-cn-foreground-1">
-                <IconV2
-                  className="flex-none text-icons-9"
-                  name={label.scope === 0 ? 'repository' : 'folder'}
-                  size="2xs"
-                />
-
-                <span className="truncate" title={getDisplayPath(label.scope, createdIn)}>
-                  {getDisplayPath(label.scope, createdIn)}
-                </span>
-              </span>
+            <Table.Cell className="w-[240px] !py-3.5 leading-none">
+              <Tag
+                size="md"
+                theme="gray"
+                variant="secondary"
+                value={getDisplayPath(label.scope, createdIn)}
+                showIcon
+                icon={label.scope === 0 ? 'repository' : 'folder'}
+              />
             </Table.Cell>
-            <Table.Cell className={cn('w-1/2 !py-3', { 'w-5/12': isSmallWidth })}>
+            <Table.Cell className={cn('w-[298px] !py-3', { 'w-5/12': isSmallWidth })}>
               <span className="line-clamp-3 break-words text-sm text-cn-foreground-3">{label?.description || ''}</span>
             </Table.Cell>
-            <Table.Cell className="w-[54px] !py-2 text-right">
+            <Table.Cell className="w-[68px] !py-2">
               <MoreActionsTooltip
                 isInTable
+                iconName="more-horizontal"
                 actions={[
                   {
                     title: t('views:labelData.edit', 'Edit label'),
+                    iconName: 'edit-pencil',
                     onClick: () => handleEditLabel(label)
                   },
                   {
                     isDanger: true,
                     title: t('views:labelData.delete', 'Delete label'),
+                    iconName: 'trash',
                     onClick: () => handleDeleteLabel(label.key)
                   }
                 ]}

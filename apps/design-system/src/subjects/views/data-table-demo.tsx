@@ -157,7 +157,7 @@ export const DataTableDemo: React.FC = () => {
 
   return (
     <SandboxLayout.Main className="flex justify-center items-center">
-      <SandboxLayout.Content className="w-[900px] flex justify-center">
+      <SandboxLayout.Content className="w-[900px] justify-center">
         <DataTable<User>
           columns={columns}
           data={sortedData}

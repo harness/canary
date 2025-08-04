@@ -8,11 +8,13 @@ import {
   MoreActionsTooltip,
   NoData,
   SearchInput,
+  Separator,
   SkeletonList,
   Spacer,
   SplitButton,
   StackedList,
-  Tag
+  Tag,
+  Text
 } from '@/components'
 import { Select } from '@/components/form-primitives/select'
 import { useRouterContext, useTranslation } from '@/context'
@@ -27,21 +29,27 @@ interface DescriptionProps {
 const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
   const { t } = useTranslation()
   return (
-    <div className="flex items-center gap-1.5 pl-6 text-sm">
-      {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
-      <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden />
-      {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
-      <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden />
+    <div className="flex items-center gap-1.5 pl-7 text-sm">
+      <Text variant="body-normal">
+        {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
+      </Text>
+      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
+      <Separator orientation="vertical" className="h-3" />
+      <Text variant="body-normal">
+        {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
+      </Text>
+      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
+      <Separator orientation="vertical" className="h-3" />
       <span className="flex items-center gap-1">
         {bypassAllowed ? (
           <>
             <IconV2 className="text-icons-success" name="check" size="2xs" />
-            <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
+            <Text variant="body-normal"> {t('views:repos.bypassAllowed', 'bypass allowed')}</Text>
           </>
         ) : (
           <>
             <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
-            <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
+            <Text variant="body-normal">{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</Text>
           </>
         )}
       </span>
@@ -102,11 +110,10 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       {isShowRulesContent ? (
         <>
           <>
-            <ListActions.Root>
+            <ListActions.Root className="mt-1">
               <ListActions.Left>
                 <SearchInput
                   id="search"
-                  size="md"
                   defaultValue={rulesSearchQuery}
                   inputContainerClassName="max-w-80"
                   placeholder={t('views:repos.search', 'Search')}
@@ -145,7 +152,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               </ListActions.Right>
             </ListActions.Root>
 
-            <Spacer size={4} />
+            <Spacer size={3} />
           </>
           {isLoading ? (
             <>
@@ -156,12 +163,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             <StackedList.Root>
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
-                  <Link
-                    to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''}
-                    key={rule.identifier}
-                    target="_blank"
-                  >
-                    <StackedList.Item className="cursor-pointer py-3 pr-1.5">
+                  <StackedList.Item className="py-4 pr-1.5" key={rule.identifier} asChild>
+                    <Link to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''} target="_blank">
                       <StackedList.Field
                         className="gap-1.5"
                         title={
@@ -174,10 +177,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
                             {rule.type && (
                               <Tag
+                                showIcon
                                 variant="outline"
                                 size="sm"
-                                theme={rule.type === 'branch' ? 'blue' : 'green'}
-                                value={rule.type}
+                                theme={rule.type === 'branch' ? 'blue' : 'purple'}
+                                value={rule.type === 'branch' ? 'Branch Rule' : 'Tag Rule'}
+                                icon={rule.type === 'branch' ? 'git-branch' : 'tag'}
+                                rounded={rule.type === 'tag'}
                               />
                             )}
                           </div>
@@ -190,27 +196,23 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                           />
                         }
                       />
-                      <StackedList.Field
-                        title={
-                          <MoreActionsTooltip
-                            actions={[
-                              {
-                                title: t('views:rules.edit', 'Edit rule'),
-                                onClick: () => handleRuleClick(rule.identifier!)
-                              },
-                              {
-                                isDanger: true,
-                                title: t('views:rules.delete', 'Delete rule'),
-                                onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
-                              }
-                            ]}
-                          />
-                        }
-                        right
-                        label
+                      <MoreActionsTooltip
+                        actions={[
+                          {
+                            title: t('views:rules.edit', 'Edit rule'),
+                            iconName: 'edit-pencil',
+                            onClick: () => handleRuleClick(rule.identifier!)
+                          },
+                          {
+                            isDanger: true,
+                            title: t('views:rules.delete', 'Delete rule'),
+                            iconName: 'trash',
+                            onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                          }
+                        ]}
                       />
-                    </StackedList.Item>
-                  </Link>
+                    </Link>
+                  </StackedList.Item>
                 ) : (
                   <Fragment key={idx} />
                 )
@@ -247,7 +249,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       ) : (
         <NoData
           withBorder
-          className="min-h-0 py-10"
+          className="min-h-0 py-cn-3xl"
           textWrapperClassName="max-w-[350px]"
           imageName={'no-data-cog'}
           title={t('views:noData.noRules', 'No rules yet')}

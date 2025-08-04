@@ -1,24 +1,30 @@
 import { ScopeType } from '@views/common'
 
-import { Tag } from '../tag'
+import { Tag, TagProps } from '../tag'
 
-interface ScopeTagProps {
+interface ScopeTagProps extends Pick<TagProps, 'size'> {
   scopeType: ScopeType
   scopedPath?: string
 }
 
-const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath }) => {
+const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath, size }) => {
+  const tagProps: TagProps = {
+    variant: 'secondary',
+    theme: 'gray',
+    size,
+    value: scopedPath || '',
+    showIcon: true
+  }
+
   switch (scopeType) {
     case ScopeType.Account:
-      return <Tag value={scopeType} theme="lime" size="sm" />
-
+      return <Tag {...tagProps} icon="account" value="Account" />
     case ScopeType.Organization:
-      return <Tag label={scopeType} value={scopedPath || ''} variant="secondary" theme="pink" size="sm" />
-
+      return <Tag {...tagProps} icon="organizations" />
     case ScopeType.Project:
-      return <Tag label={scopeType} value={scopedPath || ''} variant="secondary" theme="blue" size="sm" />
+      return <Tag {...tagProps} icon="project" />
     default:
-      return <></>
+      return null
   }
 }
 

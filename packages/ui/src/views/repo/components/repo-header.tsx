@@ -29,7 +29,7 @@ export const RepoHeader = ({
   const formattedDate = archivedDate ? formatDate(archivedDate) : ''
 
   return (
-    <div className={cn('px-6 pb-2 pt-7', className)}>
+    <div className={cn('cn-repo-header', className)}>
       <div className="grid grid-cols-[auto,1fr] items-center gap-2">
         {isLoading ? (
           <>

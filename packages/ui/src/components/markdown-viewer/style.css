@@ -165,36 +165,36 @@
 
     h1 {
       font: var(--cn-comp-markdown-title-h1);
-      @apply my-layout-xl;
+      @apply my-cn-xl;
     }
 
     h2 {
       font: var(--cn-comp-markdown-title-h2);
-      @apply my-layout-lg;
+      @apply my-cn-lg;
     }
 
     h3 {
       font: var(--cn-comp-markdown-title-h3);
-      @apply my-layout-md;
+      @apply my-cn-md;
     }
 
     h4 {
       font: var(--cn-heading-base);
-      @apply my-layout-sm;
+      @apply my-cn-sm;
     }
 
     h5 {
       font: var(--cn-heading-small);
-      @apply my-layout-xs;
+      @apply my-cn-xs;
     }
 
     p {
-      @apply my-layout-sm;
+      @apply my-cn-sm;
     }
 
     ul,
     ol {
-      @apply my-layout-md pl-6 pr-0;
+      @apply my-cn-md pl-6 pr-0;
 
       & :is(ul, ol) {
         @apply my-0;
@@ -202,7 +202,7 @@
     }
 
     li {
-      @apply marker:text-cn-foreground-1 my-layout-2xs ps-0;
+      @apply marker:text-cn-foreground-1 my-cn-2xs ps-0;
     }
 
     ol {
@@ -218,7 +218,7 @@
           top: 0;
         }
 
-        @apply my-layout-xs relative;
+        @apply my-cn-xs relative;
       }
     }
 
@@ -245,21 +245,21 @@
     }
 
     blockquote {
-      @apply border-cn-borders-1 my-layout-md border-l-4 pl-4 pr-0;
+      @apply border-cn-borders-1 my-cn-md border-l-4 pl-4 pr-0;
     }
 
     table {
-      @apply my-layout-md;
+      @apply my-cn-md;
 
       th {
         @apply text-cn-foreground-1 font-heading-small border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10;
       }
 
       td {
-        @apply py-layout-sm border-l-0 border-r-0 px-0;
+        @apply py-cn-sm border-l-0 border-r-0 px-0;
 
         &:not(:last-child) {
-          @apply pr-layout-3xl;
+          @apply pr-cn-3xl;
         }
       }
 
@@ -281,6 +281,10 @@
 
   &.comment {
     @apply !bg-transparent;
+
+    pre code {
+      @apply bg-transparent;
+    }
 
     blockquote {
       @apply before:bg-cn-background-softgray relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;

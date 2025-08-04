@@ -10,7 +10,8 @@ export const RepoSettingsGeneralDelete: FC<{
   apiError: { type: ErrorTypes; message: string } | null
   openRepoAlertDeleteDialog: () => void
   openRepoArchiveDialog: () => void
-}> = ({ openRepoAlertDeleteDialog, apiError, openRepoArchiveDialog, archived }) => {
+  isUpdatingArchive?: boolean
+}> = ({ openRepoAlertDeleteDialog, apiError, openRepoArchiveDialog, archived, isUpdatingArchive }) => {
   const { t } = useTranslation()
   return (
     <Layout.Flex direction="column" gap="xl">
@@ -31,10 +32,21 @@ export const RepoSettingsGeneralDelete: FC<{
           </Text>
         </Layout.Vertical>
         <ButtonLayout horizontalAlign="start">
-          <Button type="button" variant="secondary" onClick={openRepoArchiveDialog}>
-            {archived
-              ? t('views:repos.unarchiveRepoButton', 'Unarchive repository')
-              : t('views:repos.archiveRepoButton', 'Archive repository')}
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => {
+              openRepoArchiveDialog()
+            }}
+            disabled={isUpdatingArchive}
+          >
+            {isUpdatingArchive
+              ? archived
+                ? t('views:repos.unarchiving', 'Unarchiving...')
+                : t('views:repos.archiving', 'Archiving...')
+              : archived
+                ? t('views:repos.unarchiveRepoButton', 'Unarchive repository')
+                : t('views:repos.archiveRepoButton', 'Archive repository')}
           </Button>
         </ButtonLayout>
         {apiError && apiError.type === ErrorTypes.ARCHIVE_REPO && (

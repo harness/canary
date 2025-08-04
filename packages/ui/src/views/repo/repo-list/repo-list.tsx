@@ -57,7 +57,7 @@ const Title = ({
   const scopedPath = getScopedPath(repoScopeParams)
   return (
     <Layout.Flex gap="xs" align="center">
-      <Text variant="heading-base" className="max-w-[50%]" truncate>
+      <Text variant="heading-base" truncate>
         {repoName}
       </Text>
       <Layout.Flex align="center" gap="xs">
@@ -69,7 +69,7 @@ const Title = ({
             {t('views:repos.archived', 'Archived')}
           </StatusBadge>
         )}
-        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
+        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} size="sm" /> : null}
       </Layout.Flex>
     </Layout.Flex>
   )
@@ -80,7 +80,7 @@ export function RepoList({
   handleResetFiltersQueryAndPages,
   isDirtyList,
   isLoading,
-  toRepository,
+  onClickRepo,
   toCreateRepo,
   toImportRepo,
   onFavoriteToggle,
@@ -162,10 +162,20 @@ export function RepoList({
             )
           }
         >
-          <Link to={toRepository?.(repo) || ''} className={cn({ 'pointer-events-none': repo.importing })}>
+          <Link
+            to="#"
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+              onClickRepo?.(repo)
+            }}
+            className={cn({ 'pointer-events-none': repo.importing })}
+          >
             <StackedList.Field
               primary
-              description={repo.importing ? t('views:repos.importing', 'Importing…') : repo.description}
+              description={
+                repo.importing ? t('views:repos.importing', 'Importing…') : <Text truncate>{repo.description}</Text>
+              }
               title={
                 <Title
                   repoName={repo.name}
@@ -176,7 +186,7 @@ export function RepoList({
                   showScope={showScope}
                 />
               }
-              className="flex max-w-[80%] text-wrap"
+              className="grid justify-start"
             />
             {!repo.importing && (
               <StackedList.Field
@@ -187,6 +197,7 @@ export function RepoList({
                   </>
                 }
                 description={<Stats pulls={repo.pulls} />}
+                className="grow-0"
                 right
                 label
               />

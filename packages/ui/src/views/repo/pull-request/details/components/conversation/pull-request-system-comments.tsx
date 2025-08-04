@@ -127,7 +127,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       new: newData,
       decision,
       forced,
-      commit_title,
       merge_method,
       merge_sha,
       reviewer_type,
@@ -195,11 +194,14 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       case CommentType.BRANCH_UPDATE:
         return {
           header: {
-            name: !forced
-              ? String(commit_title) || `${author?.display_name} pushed a new commit`
-              : author?.display_name,
+            name: !forced ? `${author?.display_name}` : author?.display_name,
             description: !forced ? (
-              <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  pushed a new commit
+                </Text>
+                <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
+              </>
             ) : (
               <>
                 <Text variant="body-single-line-normal" color="foreground-3">
@@ -384,6 +386,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
     <PullRequestTimelineItem
       // System comments doesn't support mentions
       principalsMentionMap={{}}
+      payload={payloadMain}
       setPrincipalsMentionMap={noop}
       principalProps={principalProps}
       key={payloadMain.id}

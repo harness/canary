@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { EditViewTypeValue, FileEditorControlBar, getIsMarkdown, MarkdownViewer } from '@harnessio/ui/components'
+import { EditViewTypeValue, FileEditorControlBar, getIsMarkdown, MarkdownViewer, Tabs } from '@harnessio/ui/components'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -165,47 +165,6 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
-  const renderFileView = () => {
-    switch (view) {
-      case 'preview':
-        if (getIsMarkdown(language)) {
-          return <MarkdownViewer source={contentRevision.code} withBorder className="max-h-screen overflow-auto" />
-        }
-
-        return (
-          <CodeDiffEditor
-            height="100%"
-            language={language}
-            original={originalFileContent}
-            modified={contentRevision.code}
-            themeConfig={themeConfig}
-            theme={monacoTheme}
-            options={{
-              readOnly: true
-            }}
-          />
-        )
-
-      case 'edit':
-        return (
-          <CodeEditor
-            height="100%"
-            language={language}
-            codeRevision={contentRevision}
-            onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
-            themeConfig={themeConfig}
-            theme={monacoTheme}
-            options={{
-              readOnly: false
-            }}
-          />
-        )
-
-      default:
-        return null
-    }
-  }
-
   return (
     <>
       <GitCommitDialog
@@ -242,9 +201,45 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         selectedRefType={selectedRefType}
       />
 
-      <FileEditorControlBar view={view} onChangeView={onChangeView} />
+      <Tabs.Root
+        className="flex flex-col h-full"
+        value={view as string}
+        onValueChange={val => onChangeView(val as EditViewTypeValue)}
+      >
+        <FileEditorControlBar />
 
-      {renderFileView()}
+        <Tabs.Content value="edit" className="grow">
+          <CodeEditor
+            height="100%"
+            language={language}
+            codeRevision={contentRevision}
+            onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
+            themeConfig={themeConfig}
+            theme={monacoTheme}
+            options={{
+              readOnly: false
+            }}
+          />
+        </Tabs.Content>
+
+        <Tabs.Content value="preview" className="grow">
+          {getIsMarkdown(language) ? (
+            <MarkdownViewer className="max-h-screen overflow-auto" source={contentRevision.code} withBorder />
+          ) : (
+            <CodeDiffEditor
+              height="100%"
+              language={language}
+              original={originalFileContent}
+              modified={contentRevision.code}
+              themeConfig={themeConfig}
+              theme={monacoTheme}
+              options={{
+                readOnly: true
+              }}
+            />
+          )}
+        </Tabs.Content>
+      </Tabs.Root>
     </>
   )
 }

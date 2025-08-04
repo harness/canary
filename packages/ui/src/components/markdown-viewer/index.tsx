@@ -170,11 +170,26 @@ export function MarkdownViewer({
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
-            rehypeSanitize,
+            [rehypeSanitize],
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
             [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
           ]}
           components={{
+            input: ({ type, checked, ...props }) => {
+              // checkbox inputs
+              if (type === 'checkbox') {
+                return (
+                  <input
+                    type="checkbox"
+                    defaultChecked={checked}
+                    {...props}
+                    // Removed disabled to make checkbox interactive
+                    disabled={undefined}
+                  />
+                )
+              }
+              return <input type={type} checked={checked} {...props} />
+            },
             pre: ({ children, node }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)
 

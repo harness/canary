@@ -36,10 +36,10 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-6">
+      <SandboxLayout.Content className="px-cn-2xl">
         {pullRequest && (
           <PullRequestHeader
-            className="mb-6"
+            className="mb-cn-3xl"
             updateTitle={(title: string) => {
               updateTitleAndDescription(title, pullRequest.description ?? '')
             }}
@@ -50,7 +50,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         )}
 
         <Tabs.NavRoot>
-          <Tabs.List className="-mx-6 mb-5 px-6" variant="overlined">
+          <Tabs.List className="-mx-6 mb-cn-3xl px-6" variant="overlined">
             <Tabs.Trigger
               value={PullRequestTabsKeys.CONVERSATION}
               icon="message"

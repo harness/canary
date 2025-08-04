@@ -169,7 +169,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="git-merge" size="2xs" />
+          icon: <IconV2 name="git-merge" size="xs" />
         }
 
       case CommentType.REVIEW_SUBMIT:
@@ -263,7 +263,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Text>
             )
           },
-          icon: <IconV2 name={iconName} size="2xs" />
+          icon: <IconV2 name={iconName} size="xs" />
         }
       }
 

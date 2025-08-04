@@ -120,10 +120,11 @@ const PullRequestMergeSection = ({
                 }
                 icon={
                   unchecked ? (
-                    <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
+                    <IconV2 size="md" name="clock-solid" className="text-cn-foreground-warning" />
                   ) : (
                     <IconV2
-                      className={mergeable ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                      size="md"
+                      className={mergeable ? 'text-cn-icon-success' : 'text-cn-foreground-danger'}
                       name={mergeable ? 'check-circle-solid' : 'warning-triangle-solid'}
                     />
                   )
@@ -193,7 +194,7 @@ const PullRequestMergeSection = ({
               <div className="mt-1">
                 {conflictingFiles?.map(file => (
                   <div className="flex items-center gap-x-2 py-1.5" key={file}>
-                    <IconV2 className="text-icons-1" name="page" />
+                    <IconV2 size="md" className="text-icons-1" name="page" />
                     <Text as="span" color="foreground-1">
                       {file}
                     </Text>

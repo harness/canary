@@ -12,6 +12,7 @@ import {
   PrincipalPropsType,
   TypesPullReqActivity
 } from '@/views'
+import { Layout } from '@components/layout'
 import { PullRequestRegularAndCodeComment } from '@views/repo/pull-request/details/components/conversation/regular-and-code-comment'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { orderBy } from 'lodash-es'
@@ -158,7 +159,8 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
 
   return (
     <div className="flex flex-col">
-      <div>
+      {/* ADD PROPER GAP */}
+      <Layout.Vertical>
         {activityFilter.value === PRCommentFilterType.SHOW_EVERYTHING && (
           <PullRequestDescBox
             principalProps={principalProps}
@@ -210,7 +212,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
             />
           )
         })}
-      </div>
+      </Layout.Vertical>
     </div>
   )
 }

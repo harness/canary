@@ -13,13 +13,13 @@ import { LineDescription, LineTitle } from './pull-request-line-title'
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'pending':
-      return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
+      return <IconV2 size="md" name="clock-solid" className="text-cn-foreground-warning" />
     case 'warning':
-      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />
+      return <IconV2 size="md" name="warning-triangle-solid" className="text-cn-foreground-warning" />
     case 'error':
-      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
+      return <IconV2 size="md" name="warning-triangle-solid" className="text-cn-foreground-danger" />
     default:
-      return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
+      return <IconV2 size="md" name="check-circle-solid" className="text-cn-icon-success" />
   }
 }
 
@@ -80,7 +80,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="ml-6 flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
+                  <IconV2 size="md" name="check-circle-solid" className="text-cn-icon-success" />
                   <Text variant="body-single-line-normal" color="foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </Text>
@@ -88,13 +88,14 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               ) : (
                 <div className="flex items-center gap-x-2">
                   <IconV2
+                    size="md"
                     name={
                       Number(approvedEvaluations?.length) >= Number(minApproval)
                         ? 'check-circle-solid'
                         : 'warning-triangle-solid'
                     }
                     className={cn({
-                      'text-cn-foreground-success': Number(approvedEvaluations?.length) >= Number(minApproval),
+                      'text-cn-icon-success': Number(approvedEvaluations?.length) >= Number(minApproval),
                       'text-cn-foreground-warning': Number(approvedEvaluations?.length) < Number(minApproval)
                     })}
                   />
@@ -113,12 +114,12 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="clock-solid" className="text-cn-foreground-success" />
+                  <IconV2 size="md" name="clock-solid" className="text-cn-icon-success" />
                   <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 name="circle" className="fill-transparent text-icons-7" />
+                  <IconV2 size="md" name="circle" className="fill-transparent text-icons-7" />
                   <span className="text-2 text-cn-foreground-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>
@@ -132,6 +133,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="ml-6 flex items-center justify-between">
               <div className="flex items-center gap-x-2">
                 <IconV2
+                  size="md"
                   name="warning-triangle-solid"
                   className={cn({
                     'text-cn-foreground-danger': reqNoChangeReq,

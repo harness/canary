@@ -321,7 +321,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       }
       customProps={{
         isResolved: !!payload?.resolved,
-        icon: <IconV2 name="eye" size="2xs" />,
+        icon: <IconV2 name="eye" size="xs" />,
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
@@ -385,7 +385,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
       customProps={{
         titleClassName: '!flex max-w-full',
         isResolved: !!payload?.resolved,
-        icon: <IconV2 name="pr-comment" size="2xs" />,
+        icon: <IconV2 name="pr-comment" size="xs" />,
         isLast,
         handleSaveComment,
         content: renderContentItemsBlock()

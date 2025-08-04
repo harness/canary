@@ -233,7 +233,7 @@ export function RepoCreatePage({
                           caption="This is where you can write a long description for your project."
                         />
                         <Link
-                          to="https://developer.harness.io/docs/code-repository/repository-management/create-repository#readme-files"
+                          to="https://developer.harness.io/docs/code-repository/config-repos/create-repo/"
                           target="_blank"
                           suffixIcon={true}
                           className="ml-7"

@@ -32,10 +32,8 @@ export const Summary = ({
           <Table.Header>
             <Table.Row>
               <Table.Head>{t('views:repos.name', 'Name')}</Table.Head>
-              <Table.Head withDivider>{t('views:repos.lastCommit', 'Last commit message')}</Table.Head>
-              <Table.Head withDivider containerProps={{ justify: 'end' }}>
-                {t('views:repos.date', 'Date')}
-              </Table.Head>
+              <Table.Head>{t('views:repos.lastCommit', 'Last commit message')}</Table.Head>
+              <Table.Head containerProps={{ justify: 'end' }}>{t('views:repos.date', 'Date')}</Table.Head>
             </Table.Row>
           </Table.Header>
         )}

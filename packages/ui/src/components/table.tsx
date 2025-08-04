@@ -77,22 +77,40 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
   let rowChildren = props.children
-  if (props.to || props.linkProps) {
-    rowChildren = Children.map(rowChildren, (child, index) => {
-      if (isValidElement(child)) {
+  rowChildren = Children.map(rowChildren, (_child, index) => {
+    if (isValidElement(_child)) {
+      let child = _child
+
+      if ((_child.type as any).displayName === 'TableHead') {
+        if (index === 0) {
+          child = cloneElement(child, {
+            hideDivider: true
+          } as TableHeadProps)
+        }
+
+        if (index > 0 && _child.props.hideDivider === undefined) {
+          child = cloneElement(child, {
+            hideDivider: false
+          } as TableHeadProps)
+        }
+      }
+
+      if (props.to || props.linkProps) {
         // Don't add link props if the cell already has its own link props or if disableLink is true
         if (child.props.to || child.props.linkProps || child.props.disableLink) {
           return child
         }
+
         return cloneElement(child, {
           to: props.to,
           linkProps: props.linkProps,
           tableLinkChildrenIndex: index + 1
         } as any)
       }
+
       return child
-    })
-  }
+    }
+  })
 
   return (
     <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props}>
@@ -116,11 +134,11 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
    */
   tooltipProps?: Omit<TooltipProps, 'children'>
   containerProps?: FlexProps
-  withDivider?: boolean
+  hideDivider?: boolean
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, sortable, children, tooltipProps, withDivider, containerProps, ...props }, ref) => {
+  ({ className, sortDirection, sortable, children, tooltipProps, hideDivider, containerProps, ...props }, ref) => {
     const Title = () => (
       <Text
         variant="caption-strong"
@@ -141,7 +159,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
 
     const contentElement = (
       <Layout.Horizontal gap="xs" align="center" className="relative" {...containerProps}>
-        {withDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
+        {!hideDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
         {childrenWithTooltip}
         {sortable && (
           <span className="ml-1">

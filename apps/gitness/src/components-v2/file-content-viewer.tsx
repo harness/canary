@@ -179,7 +179,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           refType={selectedRefType}
         />
 
-        <Tabs.Content value="preview">
+        <Tabs.Content value="preview" className="grow">
           {fileError && (
             <div className="flex h-full items-center justify-center">
               <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-none border-t-0" />

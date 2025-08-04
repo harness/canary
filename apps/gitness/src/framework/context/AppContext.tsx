@@ -52,7 +52,10 @@ const AppContext = createContext<AppContextType>({
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   usePageTitle()
   const isMFE = useIsMFE()
-  const { customPromises, scope } = useMFEContext()
+  const {
+    parentContextObj: { appStoreContext }
+  } = useMFEContext()
+  const parentAppStoreContext = useContext(appStoreContext)
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
@@ -64,22 +67,10 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   } | null>(null)
 
   const fetchUser = async (): Promise<void> => {
-    setIsLoadingUser(true)
-    setUpdateUserError(null)
     try {
-      if (isMFE && customPromises?.getCurrentUser) {
-        const { data } = await customPromises.getCurrentUser({
-          queryParams: { accountIdentifier: scope.accountId }
-        })
-        setCurrentUser({
-          admin: data.admin,
-          created: data.createdAt,
-          display_name: data.name,
-          email: data.email,
-          uid: data.uuid,
-          updated: data.lastUpdatedAt
-        })
-      } else {
+      if (!isMFE) {
+        setIsLoadingUser(true)
+        setUpdateUserError(null)
         const userResponse = await getUser({})
         setCurrentUser(userResponse.body)
       }
@@ -121,7 +112,7 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
             queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
           })
 
-        const promises = isMFE ? [fetchUser()] : [fetchSpaces(), fetchUser()]
+        const promises = isMFE ? [] : [fetchSpaces(), fetchUser()]
         const [results] = await Promise.allSettled(promises)
 
         if (!isMFE && results.status === 'fulfilled' && results.value?.body) {
@@ -138,6 +129,14 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
       }
     }
 
+    if (isMFE) {
+      const currentUserInfo = parentAppStoreContext.currentUserInfo
+      setCurrentUser({
+        uid: currentUserInfo.userEmail,
+        email: currentUserInfo.userEmail,
+        display_name: currentUserInfo.firstName + ' ' + currentUserInfo.lastName
+      })
+    }
     fetchSpacesAndUser()
   }, [isMFE])
 

@@ -10,7 +10,7 @@ import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { Hooks, MFEContext, Scope, Unknown } from './framework/context/MFEContext'
+import { IMFEContext, MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -69,28 +69,11 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
   return null
 }
 
-interface AppMFEProps {
-  scope: Scope
-  renderUrl: string
+interface AppMFEProps extends IMFEContext {
   on401?: () => void
   useMFEThemeContext: () => { theme: string; setTheme: (newTheme: string) => void }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
-  customHooks: Partial<{
-    useGenerateToken: Unknown
-  }>
-  customUtils: Partial<{
-    navigateToUserProfile: Unknown
-  }>
-  customPromises: Partial<{
-    getCurrentUser: Promise<Unknown>
-  }>
-  routes: Partial<{
-    toAccountSettings: () => string
-    toOrgSettings: () => string
-    toProjectSettings: () => string
-  }>
-  hooks: Hooks
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -100,13 +83,13 @@ function decode<T = unknown>(arg: string): T {
 export default function AppMFE({
   scope,
   renderUrl,
+  parentContextObj,
   on401,
   useMFEThemeContext,
   parentLocationPath,
   onRouteChange,
   customHooks,
   customUtils,
-  customPromises,
   routes,
   hooks
 }: AppMFEProps) {
@@ -176,9 +159,9 @@ export default function AppMFE({
                 value={{
                   scope,
                   renderUrl,
+                  parentContextObj,
                   customHooks,
                   customUtils,
-                  customPromises,
                   routes,
                   hooks,
                   setMFETheme

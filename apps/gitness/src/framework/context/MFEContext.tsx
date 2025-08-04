@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { Context, createContext } from 'react'
 
 import { noop } from 'lodash-es'
 
@@ -10,6 +10,21 @@ export interface Scope {
   accountId?: string
   orgIdentifier?: string
   projectIdentifier?: string
+}
+
+export interface UserInfo {
+  companyName?: string
+  country?: string
+  firstName?: string
+  jobTitle?: string
+  lastName?: string
+  phoneNumber?: string
+  state?: string
+  userEmail?: string
+}
+
+export interface ParentAppStoreContextProps {
+  currentUserInfo: UserInfo
 }
 
 export interface UseLogoutReturn {
@@ -26,20 +41,20 @@ export interface Hooks {
 
 export type Unknown = any
 
-interface IMFEContext {
+export interface IMFEContext {
   /**
    * Scope will be later referred from "Scope" from @harness/microfrontends
    *  */
   scope: Scope
   renderUrl: string
+  parentContextObj: {
+    appStoreContext: Context<ParentAppStoreContextProps>
+  }
   customHooks: Partial<{
     useGenerateToken: Unknown
   }>
   customUtils: Partial<{
     navigateToUserProfile: Unknown
-  }>
-  customPromises: Partial<{
-    getCurrentUser: Unknown
   }>
   routes: Partial<{
     toAccountSettings: () => string
@@ -52,10 +67,14 @@ interface IMFEContext {
 
 export const MFEContext = createContext<IMFEContext>({
   scope: {},
+  parentContextObj: {
+    appStoreContext: createContext({
+      currentUserInfo: {}
+    })
+  },
   renderUrl: '',
   customHooks: {},
   customUtils: {},
-  customPromises: {},
   routes: {},
   hooks: {},
   setMFETheme: noop

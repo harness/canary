@@ -73,11 +73,11 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
       </Accordion.Trigger>
 
       <Accordion.Content>
-        <Layout.Vertical gap="xs">
+        <Layout.Vertical gap="xs" className="ml-7">
           {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
             (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (
-            <div className="ml-6 flex items-center justify-between">
+            <div className="ml-7 flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
                   <IconV2 size="md" name="check-circle-solid" className="text-cn-icon-success" />
@@ -109,7 +109,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           )}
 
           {(minReqLatestApproval ?? 0) > 0 && (
-            <div className="ml-6 flex items-center justify-between">
+            <div className="ml-7 flex items-center justify-between">
               {latestApprovalArr !== undefined &&
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
@@ -130,7 +130,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           )}
 
           {!isEmpty(changeReqEvaluations) && (
-            <div className="ml-6 flex items-center justify-between">
+            <div className="ml-7 flex items-center justify-between">
               <div className="flex items-center gap-x-2">
                 <IconV2
                   size="md"

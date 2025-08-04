@@ -84,12 +84,12 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
   return (
     <>
       {(defReviewerApprovalRequiredByRule || defReviewerLatestApprovalRequiredByRule) && (
-        <div className="ml-6 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           {defaultReviewerStatus}
           <StatusBadge variant="outline">Required</StatusBadge>
         </div>
       )}
-      <div className="ml-6 bg-inherit">
+      <div className="bg-inherit">
         <Table.Root>
           <Table.Header>
             <Table.Row>

@@ -135,27 +135,29 @@ const PullRequestMergeSection = ({
               <>
                 {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
                 {isConflicted && (
-                  <Layout.Vertical className="ml-6">
-                    <Text>
-                      Use the&nbsp;
-                      <Button variant="link" onClick={handleCommandLineClick} asChild>
-                        <span
-                          role="button"
-                          tabIndex={0}
-                          aria-label="Open command line"
-                          onKeyDown={e => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.stopPropagation()
-                              handleCommandLineClick()
-                            }
-                          }}
-                        >
-                          command line
-                        </span>
-                      </Button>
-                      &nbsp;to resolve conflicts
-                    </Text>
-                  </Layout.Vertical>
+                  <LineDescription
+                    text={
+                      <>
+                        Use the&nbsp;
+                        <Button variant="link" onClick={handleCommandLineClick} asChild className="h-4">
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            aria-label="Open command line"
+                            onKeyDown={e => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.stopPropagation()
+                                handleCommandLineClick()
+                              }
+                            }}
+                          >
+                            command line
+                          </span>
+                        </Button>
+                        &nbsp;to resolve conflicts
+                      </>
+                    }
+                  />
                 )}
               </>
             }
@@ -168,7 +170,7 @@ const PullRequestMergeSection = ({
         </Layout.Flex>
       </Accordion.Trigger>
       {isConflicted && (
-        <Accordion.Content className="ml-6">
+        <Accordion.Content className="ml-7">
           <>
             {showCommandLineInfo && (
               <div className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2">

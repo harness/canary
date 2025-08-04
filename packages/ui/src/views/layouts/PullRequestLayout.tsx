@@ -50,7 +50,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         )}
 
         <Tabs.NavRoot>
-          <Tabs.List className="-mx-6 mb-cn-3xl px-6" variant="overlined">
+          <Tabs.List className="-mx-6 mb-cn-xl px-6" variant="overlined">
             <Tabs.Trigger
               value={PullRequestTabsKeys.CONVERSATION}
               icon="message"

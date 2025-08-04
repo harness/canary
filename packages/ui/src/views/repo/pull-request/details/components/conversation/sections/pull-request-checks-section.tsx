@@ -21,19 +21,25 @@ const PullRequestCheckSection = ({
   // toPRCheck, TODO: add back when checks page is implemented
   accordionValues
 }: PullRequestMergeSectionProps) => {
-  const getStatusIcon = (status: EnumCheckStatus) => {
+  const getStatusIcon = (status: EnumCheckStatus, isTitle: boolean = true) => {
     switch (status) {
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <IconV2 name="clock-solid" className="text-cn-foreground-warning" />
+        return <IconV2 size="md" name="clock-solid" className="text-cn-foreground-warning" />
       case ExecutionState.RUNNING:
-        return <IconV2 className="text-cn-foreground-warning animate-spin" name="loader" />
+        return <IconV2 size="md" className="text-cn-foreground-warning animate-spin" name="loader" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
-        return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-danger" />
+        return (
+          <IconV2
+            size="md"
+            name={isTitle ? 'warning-triangle-solid' : 'xmark-circle-solid'}
+            className="text-cn-foreground-danger"
+          />
+        )
       default:
-        return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
+        return <IconV2 size="md" name="check-circle-solid" className="text-cn-foreground-success" />
     }
   }
 
@@ -43,28 +49,28 @@ const PullRequestCheckSection = ({
         <Layout.Flex>
           <StackedList.Field
             className="flex gap-y-1"
-            title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
+            title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status, true)} />}
             description={<LineDescription text={checksInfo.content} />}
           />
           <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
         </Layout.Flex>
       </Accordion.Trigger>
-      <Accordion.Content className="pl-6">
-        <Table.Root>
+      <Accordion.Content className="pl-3">
+        <Table.Root className="rounded-none border-0 border-t ml-4">
           <Table.Body>
             {checkData.map(check => {
               const time = timeDistance(check?.check?.created, check?.check?.updated)
               return (
                 <Table.Row key={check.check?.id}>
-                  <Table.Cell>
-                    <Layout.Horizontal align="center" className="gap-2">
+                  <Table.Cell className="pl-0 w-80">
+                    <Layout.Horizontal align="center" gap="xs">
                       {getStatusIcon(check?.check?.status as EnumCheckStatus)}
                       <Text color="foreground-1" truncate className="overflow-hidden pl-2">
                         {check?.check?.identifier}
                       </Text>
                     </Layout.Horizontal>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className="w-72">
                     <Text color="foreground-3">
                       {check?.check?.status === ExecutionState.SUCCESS ||
                       check?.check?.status === ExecutionState.FAILURE_IGNORED
@@ -78,14 +84,14 @@ const PullRequestCheckSection = ({
                               : `Errored in ${time}`}
                     </Text>
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className="w-16">
                     {check?.check?.status !== ExecutionState.PENDING && (
                       <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
                         Details
                       </Link>
                     )}
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell className="w-20">
                     {check?.required && (
                       <StatusBadge variant="outline" size="sm">
                         <Text color="foreground-3">Required</Text>

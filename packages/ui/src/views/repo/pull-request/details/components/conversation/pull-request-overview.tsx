@@ -160,7 +160,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   return (
     <div className="flex flex-col">
       {/* ADD PROPER GAP */}
-      <Layout.Vertical>
+      <Layout.Vertical gap="none">
         {activityFilter.value === PRCommentFilterType.SHOW_EVERYTHING && (
           <PullRequestDescBox
             principalProps={principalProps}

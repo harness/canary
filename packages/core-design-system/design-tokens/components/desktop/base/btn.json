@@ -71,6 +71,12 @@
         "$type": "spacing",
         "$value": "{spacing.2}"
       }
+    },
+    "commit": {
+      "width": {
+        "$type": "sizing",
+        "$value": "{size.20}"
+      }
     }
   },
   "link": {

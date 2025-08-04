@@ -31,7 +31,6 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   return (
     <Layout.Horizontal gap="xs" align="center" justify="start">
       <IconV2
-        size="xs"
         className={cn({
           'text-icons-success': state === 'open' && !isDraft,
           'text-icons-1': state === 'open' && isDraft,
@@ -43,21 +42,25 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
 
       <Layout.Flex gap="xs" align="center">
         {repoId && <Tag value={repoId} showIcon icon="repository" theme="gray" />}
-        <Text variant="heading-base">{name}</Text>
+        <Text className="truncate" variant="heading-base">
+          {name}
+        </Text>
         {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
       </Layout.Flex>
 
       {!!labels.length && (
         <LabelsList
           labels={labels}
-          className="max-h-5 overflow-hidden"
+          className="overflow-hidden flex-nowrap"
           onClick={label => onLabelClick?.(label.id || 0)}
         />
       )}
       {!!comments && (
         <Layout.Horizontal gap="2xs" className="ml-auto" align="center">
-          <IconV2 className="text-icons-7" name="message" />
-          <Text variant="body-single-line-normal">{comments}</Text>
+          <IconV2 className="text-cn-foreground-2" name="pr-comment" />
+          <Text variant="body-single-line-normal" color="foreground-1">
+            {comments}
+          </Text>
         </Layout.Horizontal>
       )}
     </Layout.Horizontal>

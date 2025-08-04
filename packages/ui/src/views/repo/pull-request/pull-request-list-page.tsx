@@ -239,7 +239,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           description={
             repoId
               ? [
-                  t('views:noData.noPullRequestsInRepo', `There are no pull requests in this repo yet.`),
+                  t(
+                    'views:noData.noPullRequestsInRepo',
+                    `Start your contribution journey by creating a new pull request draft.`
+                  ),
                   t('views:noData.createNewPullRequest', 'Create a new pull request.')
                 ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
@@ -359,7 +362,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             view="dropdown"
           >
             <Text as="h1" variant="heading-section" className="mb-6">
-              Pull Requests
+              Pull requests
             </Text>
 
             {!isEmpty(prCandidateBranches) && (

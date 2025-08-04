@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { LinkProps } from '@/components'
+import { Layout, LinkProps } from '@/components'
 import { PrincipalType } from '@/types'
 import {
   EnumPullReqReviewDecision,
@@ -73,8 +73,8 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   isLabelsLoading = false
 }) => {
   return (
-    <>
-      <div className="flex flex-col gap-4">
+    <Layout.Vertical gap="md">
+      <Layout.Vertical gap="md">
         <ReviewersHeader
           currentUserId={currentUserId}
           usersList={usersList}
@@ -93,9 +93,9 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
           addReviewerError={addReviewerError}
           removeReviewerError={removeReviewerError}
         />
-      </div>
+      </Layout.Vertical>
       {!isCreatingPr ? (
-        <div className="mt-4 flex flex-col gap-4">
+        <Layout.Vertical gap="md">
           <LabelsHeader
             labelsList={labelsList}
             labelsValues={labelsValues}
@@ -117,9 +117,9 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
               value: label?.assigned_value?.value || undefined
             }))}
           />
-        </div>
+        </Layout.Vertical>
       ) : null}
-    </>
+    </Layout.Vertical>
   )
 }
 

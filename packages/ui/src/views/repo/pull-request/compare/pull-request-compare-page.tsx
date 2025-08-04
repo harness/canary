@@ -212,9 +212,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
-        <span className="text-6 font-medium leading-snug tracking-tight text-cn-foreground-1">
-          {t('views:pullRequests.compareChanges', 'Comparing changes')}
-        </span>
+        <Text variant="heading-section">{t('views:pullRequests.compareChanges', 'Comparing changes')}</Text>
         <Layout.Vertical className="mt-2.5">
           <Text className="max-w-xl">
             {t(
@@ -277,9 +275,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-4 rounded-md border border-cn-borders-2 bg-cn-background-2 p-4"
+            className="mt-5 rounded-md border border-cn-borders-2 bg-cn-background-2 py-3 px-4"
           >
-            <p className="text-2 leading-none">
+            <Text variant="body-normal" color="foreground-1">
               {isBranchSelected ? (
                 <>
                   {t(
@@ -300,7 +298,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   'Choose different branches above to discuss and review changes.'
                 )
               )}
-            </p>
+            </Text>
             <PullRequestCompareButton
               isSubmitted={isSubmitted}
               isValid={isValid}
@@ -359,11 +357,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               </Tabs.List>
               {!prBranchCombinationExists && (
                 <Tabs.Content className="pt-7" value="overview">
-                  <div className="grid grid-cols-[1fr_288px] gap-x-8">
-                    <div className="flex gap-x-3">
+                  <Layout.Flex gap="xl">
+                    <Layout.Horizontal className="flex-1" gap="sm">
                       {currentUser && <Avatar name={currentUser} rounded />}
-                      <div className="w-full">
-                        <Spacer size={1} />
+                      <div className="flex-1">
                         <PullRequestCompareForm
                           principalProps={principalProps}
                           description={desc}
@@ -378,31 +375,33 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                           handleAiPullRequestSummary={handleAiPullRequestSummary}
                         />
                       </div>
+                    </Layout.Horizontal>
+                    <div className="w-[344px]">
+                      <PullRequestSideBar
+                        isReviewersLoading={principalProps?.isPrincipalsLoading}
+                        isLabelsLoading={isLabelsLoading}
+                        addReviewers={handleAddReviewer}
+                        currentUserId={currentUser}
+                        pullRequestMetadata={{ source_sha: '' }}
+                        processReviewDecision={mockProcessReviewDecision}
+                        refetchReviewers={noop}
+                        handleDelete={handleDeleteReviewer}
+                        reviewers={reviewers ?? []}
+                        searchQuery={principalProps?.searchPrincipalsQuery || ''}
+                        setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
+                        usersList={principalProps?.principals}
+                        labelsList={labelsList}
+                        labelsValues={labelsValues}
+                        PRLabels={PRLabels}
+                        addLabel={addLabel}
+                        removeLabel={removeLabel}
+                        editLabelsProps={editLabelsProps}
+                        searchLabelQuery={searchLabelQuery}
+                        setSearchLabelQuery={setSearchLabelQuery}
+                        isCreatingPr
+                      />
                     </div>
-                    <PullRequestSideBar
-                      isReviewersLoading={principalProps?.isPrincipalsLoading}
-                      isLabelsLoading={isLabelsLoading}
-                      addReviewers={handleAddReviewer}
-                      currentUserId={currentUser}
-                      pullRequestMetadata={{ source_sha: '' }}
-                      processReviewDecision={mockProcessReviewDecision}
-                      refetchReviewers={noop}
-                      handleDelete={handleDeleteReviewer}
-                      reviewers={reviewers ?? []}
-                      searchQuery={principalProps?.searchPrincipalsQuery || ''}
-                      setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
-                      usersList={principalProps?.principals}
-                      labelsList={labelsList}
-                      labelsValues={labelsValues}
-                      PRLabels={PRLabels}
-                      addLabel={addLabel}
-                      removeLabel={removeLabel}
-                      editLabelsProps={editLabelsProps}
-                      searchLabelQuery={searchLabelQuery}
-                      setSearchLabelQuery={setSearchLabelQuery}
-                      isCreatingPr
-                    />
-                  </div>
+                  </Layout.Flex>
                 </Tabs.Content>
               )}
               <Tabs.Content className="pt-7" value="commits">

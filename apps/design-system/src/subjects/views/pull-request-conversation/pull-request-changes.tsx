@@ -66,10 +66,10 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         currentUser={currentUser}
         pullReqMetadata={pullRequestStore.pullRequest}
         loadingRawDiff={false}
-        handleSaveComment={noop}
+        handleSaveComment={Promise.resolve}
         pullReqCommits={commitData as unknown as TypesCommit[]}
-        deleteComment={noop}
-        updateComment={noop}
+        deleteComment={Promise.resolve}
+        updateComment={Promise.resolve}
         defaultCommitFilter={{
           name: 'All Commits',
           count: 2,

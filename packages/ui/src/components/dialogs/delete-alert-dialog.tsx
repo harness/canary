@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { AlertDialog, Fieldset, Input, Text } from '@/components'
+import { Alert, AlertDialog, Fieldset, Input } from '@/components'
 import { useTranslation } from '@/context'
+import { getErrorMessage } from '@utils/utils'
 
 const DELETION_KEYWORD = 'DELETE'
 
@@ -77,7 +78,14 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           </Fieldset>
         )}
 
-        {!!error && error.message && <Text color="danger">{error.message}</Text>}
+        {!!error && (
+          <Alert.Root className="mt-4" theme="danger">
+            <Alert.Title>Failed to perform delete operation</Alert.Title>
+            <Alert.Description>
+              {getErrorMessage(error as Error, 'Failed to perform delete operation')}
+            </Alert.Description>
+          </Alert.Root>
+        )}
 
         <AlertDialog.Cancel />
         <AlertDialog.Confirm>Yes, delete {type}</AlertDialog.Confirm>

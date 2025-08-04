@@ -157,11 +157,11 @@ export interface TimelineItemProps {
   replyBoxClassName?: string
   wrapperClassName?: string
   titleClassName?: string
-  handleSaveComment?: (comment: string, parentId?: number) => void
+  handleSaveComment?: (comment: string, parentId?: number) => Promise<void>
   onEditClick?: () => void
   onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
   isEditMode?: boolean
-  handleDeleteComment?: () => void
+  handleDeleteComment?: () => Promise<void>
   isDeleted?: boolean
   isNotCodeComment?: boolean
   hideReplyHere?: boolean
@@ -178,7 +178,6 @@ export interface TimelineItemProps {
   principalsMentionMap: PrincipalsMentionMap
   setPrincipalsMentionMap: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   mentions?: PrincipalsMentionMap
-  isDeletingComment?: boolean
   isReply?: boolean
   payload?: TypesPullReqActivity
 }
@@ -222,13 +221,18 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   principalsMentionMap,
   setPrincipalsMentionMap,
   mentions,
-  isDeletingComment,
   payload
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isDeletingComment, setIsDeletingComment] = useState(false)
+  const [isDeletingError, setIsDeletingError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    if (!isDeleteDialogOpen) setIsDeletingError(null)
+  }, [isDeleteDialogOpen])
 
   useEffect(() => {
     if (!isEmpty(mentions)) {
@@ -252,8 +256,18 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   }, [])
 
   const handleConfirmDeleteComment = () => {
-    setIsDeleteDialogOpen(false)
+    setIsDeletingComment(true)
+    setIsDeletingError(null)
     handleDeleteComment?.()
+      .then(() => {
+        setIsDeleteDialogOpen(false)
+      })
+      .catch(error => {
+        setIsDeletingError(error)
+      })
+      .finally(() => {
+        setIsDeletingComment(false)
+      })
   }
 
   const renderContent = () => {
@@ -346,8 +360,12 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     isEditMode
                     currentUser={currentUser}
                     onSaveComment={() => {
-                      handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
-                      setComment('')
+                      return handleSaveComment?.(
+                        replaceMentionEmailWithId(comment, principalsMentionMap),
+                        parentCommentId
+                      ).then(() => {
+                        setComment('')
+                      })
                     }}
                     onCancelClick={() => {
                       setComment('')
@@ -363,14 +381,23 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   <>
                     {hideReplyHere ? (
                       <PullRequestCommentBox
+                        buttonTitle="Reply"
                         principalsMentionMap={principalsMentionMap}
                         setPrincipalsMentionMap={setPrincipalsMentionMap}
                         principalProps={principalProps}
                         handleUpload={handleUpload}
                         inReplyMode
                         onSaveComment={() => {
-                          handleSaveComment?.(replaceMentionEmailWithId(comment, principalsMentionMap), parentCommentId)
-                          setHideReplyHere?.(false)
+                          return handleSaveComment?.(
+                            replaceMentionEmailWithId(comment, principalsMentionMap),
+                            parentCommentId
+                          )
+                            .then(() => {
+                              setHideReplyHere?.(false)
+                            })
+                            .catch(e => {
+                              throw e
+                            })
                         }}
                         onCancelClick={() => {
                           setHideReplyHere?.(false)
@@ -420,9 +447,11 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
 
       <DeleteAlertDialog
         open={isDeleteDialogOpen}
-        onClose={() => setIsDeleteDialogOpen(false)}
+        onClose={() => {
+          setIsDeleteDialogOpen(false)
+        }}
         deleteFn={handleConfirmDeleteComment}
-        error={null}
+        error={isDeletingError}
         message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
         type={isReply ? 'reply' : 'comment'}
         identifier={String(commentId) ?? undefined}

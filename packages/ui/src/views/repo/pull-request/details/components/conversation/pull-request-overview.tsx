@@ -44,9 +44,8 @@ export interface PullRequestOverviewProps
   handleUpdateDescription: (title: string, description: string) => void
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }
-  handleUpdateComment: (id: number, comment: string) => void
-  handleDeleteComment: (id: number) => void
-  isDeletingComment: boolean
+  handleUpdateComment: (id: number, comment: string) => Promise<void>
+  handleDeleteComment: (id: number) => Promise<void>
   pullReqMetadata?: TypesPullReq
   activityFilter: { label: string; value: string }
   dateOrderSort: { label: string; value: string }
@@ -68,7 +67,6 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   handleSaveComment,
   currentUser,
   handleDeleteComment,
-  isDeletingComment,
   handleUpdateComment,
   onCopyClick,
   handleUpload,
@@ -207,7 +205,6 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
               handleSaveComment={handleSaveComment}
               onCopyClick={onCopyClick}
               handleDeleteComment={handleDeleteComment}
-              isDeletingComment={isDeletingComment}
               handleUpdateComment={handleUpdateComment}
               componentViewBase={PRCommentViewBase}
             />

@@ -386,7 +386,7 @@
     "createNewPullRequest": "Créez une nouvelle demande de tirage.",
     "noClosedPullRequests": "Il n'y a pas encore de demandes de tirage fermées dans ce projet.",
     "clearFilters": "Effacer les filtres",
-    "noPullRequestsInRepo": "There are no pull requests in this repo yet.",
+    "noPullRequestsInRepo": "Commencez votre parcours de contribution en créant un brouillon de demande de tirage.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "Pas encore de branches",
     "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",

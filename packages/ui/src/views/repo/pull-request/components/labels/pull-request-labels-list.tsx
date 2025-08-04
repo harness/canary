@@ -24,7 +24,6 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
         <Tag
           key={label.key}
           variant="secondary"
-          size="sm"
           label={label.key}
           value={label.value || ''}
           theme={label.color}

@@ -1,13 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 
-import {
-  commentCreatePullReq,
-  commentDeletePullReq,
-  commentUpdatePullReq,
-  ListPullReqActivitiesOkResponse,
-  // repoArtifactUpload,
-  TypesPullReqActivity
-} from '@harnessio/code-service-client'
+import { commentCreatePullReq, commentDeletePullReq, commentUpdatePullReq } from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import { CommitSuggestion } from '@harnessio/ui/views'
 
@@ -19,8 +12,6 @@ interface usePRCommonInteractionsProps {
   prId: number
   refetchActivities: () => void
   updateCommentStatus: (repoRef: string, prId: number, commentId: number, status: string, done: () => void) => void
-  currentUserName?: string
-  setActivities?: React.Dispatch<React.SetStateAction<ListPullReqActivitiesOkResponse | undefined>>
   dryMerge?: () => void
 }
 
@@ -29,15 +20,11 @@ export function usePRCommonInteractions({
   prId,
   refetchActivities,
   updateCommentStatus,
-  currentUserName,
-  setActivities,
   dryMerge
 }: usePRCommonInteractionsProps) {
   const apiPath = useAPIPath()
   const count = useRef(generateAlphaNumericHash(5))
   const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
-
-  const [isDeletingComment, setIsDeletingComment] = useState(false)
 
   const uploadImage = useCallback(
     async (
@@ -104,38 +91,7 @@ export function usePRCommonInteractions({
 
   const handleSaveComment = useCallback(
     async (text: string, parentId?: number) => {
-      // Optionally replicate ephemeral logic from conversation page:
-      const newComment: TypesPullReqActivity = {
-        id: parentId ?? 0, // Temporary ID or fallback
-        author: { display_name: currentUserName ?? '' },
-        created: Date.now(),
-        edited: Date.now(),
-        updated: Date.now(),
-        deleted: 0,
-        code_comment: undefined,
-        text,
-        payload: {
-          message: text,
-          parent_id: parentId,
-          author: { display_name: currentUserName ?? '' },
-          id: count.current, // ephemeral ID
-          created: Date.now(),
-          edited: Date.now(),
-          updated: Date.now(),
-          deleted: 0,
-          code_comment: undefined,
-          text
-        }
-      }
-
       count.current += 1 // increment ephemeral ID
-
-      if (setActivities) {
-        setActivities(prev => {
-          if (!prev) return prev
-          return [...prev, newComment]
-        })
-      }
 
       // Persist the new comment
       return commentCreatePullReq({
@@ -147,13 +103,11 @@ export function usePRCommonInteractions({
           refetchActivities()
         })
         .catch(error => {
-          if (setActivities) {
-            setActivities(prev => prev?.filter(item => item.id !== newComment.id))
-          }
-          console.error('Failed to create comment:', error)
+          console.warn('Failed to create comment:', error)
+          throw error
         })
     },
-    [repoRef, prId, refetchActivities, setActivities, currentUserName]
+    [repoRef, prId, refetchActivities]
   )
 
   const updateComment = useCallback(
@@ -166,7 +120,8 @@ export function usePRCommonInteractions({
       })
         .then(() => refetchActivities())
         .catch(error => {
-          console.error('Failed to update comment:', error)
+          console.warn('Failed to update comment:', error)
+          throw error
         })
     },
     [repoRef, prId, refetchActivities]
@@ -174,7 +129,6 @@ export function usePRCommonInteractions({
 
   const deleteComment = useCallback(
     async (commentId: number) => {
-      setIsDeletingComment(true)
       return commentDeletePullReq({
         repo_ref: repoRef,
         pullreq_number: prId,
@@ -182,11 +136,10 @@ export function usePRCommonInteractions({
       })
         .then(() => {
           refetchActivities()
-          setIsDeletingComment(false)
         })
         .catch(error => {
-          console.error('Failed to delete comment:', error)
-          setIsDeletingComment(false)
+          console.warn('Failed to delete comment:', error)
+          throw error
         })
     },
     [repoRef, prId, refetchActivities]
@@ -242,7 +195,6 @@ export function usePRCommonInteractions({
     handleSaveComment,
     updateComment,
     deleteComment,
-    isDeletingComment,
 
     // suggestions
     isCommitDialogOpen,

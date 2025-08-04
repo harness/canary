@@ -183,3 +183,5 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode }) => {
     </div>
   )
 }
+
+CommitChanges.displayName = 'CommitChanges'

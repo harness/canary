@@ -167,9 +167,9 @@ export const PullRequestAccordion: React.FC<{
   diffMode: DiffModeEnum
   currentUser?: string
   comments?: CommentItem<TypesPullReqActivity>[][]
-  handleSaveComment?: (comment: string, parentId?: number) => void
-  deleteComment?: (id: number) => void
-  updateComment?: (id: number, comment: string) => void
+  handleSaveComment?: (comment: string, parentId?: number) => Promise<void>
+  deleteComment?: (id: number) => Promise<void>
+  updateComment?: (id: number, comment: string) => Promise<void>
   defaultCommitFilter?: CommitFilterItemProps
   selectedCommits?: CommitFilterItemProps[]
   markViewed?: (filePath: string, checksumAfter: string) => void

@@ -377,8 +377,8 @@ export default function PullRequestChanges() {
         refetchActivities()
       })
       .catch(error => {
-        // TODO Handle error (e.g., remove the temporary comment or show an error message)
-        console.error('Failed to save comment:', error)
+        console.warn('Failed to save comment:', error)
+        throw error
       })
   }
 

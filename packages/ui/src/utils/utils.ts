@@ -1,5 +1,7 @@
 import { Children, isValidElement, ReactElement, ReactNode } from 'react'
 
+import { get } from 'lodash-es'
+
 export const INITIAL_ZOOM_LEVEL = 1
 export const ZOOM_INC_DEC_LEVEL = 0.1
 
@@ -37,4 +39,18 @@ export const filterChildrenByDisplayNames = (
     const childDisplayName = (child.type as any).displayName
     return exclude ? !displayNames.includes(childDisplayName) : displayNames.includes(childDisplayName)
   })
+}
+
+export const getErrorMessage = (error: Error | string | null, defaultMessage: string): string => {
+  if (!error) {
+    return defaultMessage
+  }
+
+  if (typeof error === 'string' && error.length > 0) {
+    return error
+  }
+
+  return (
+    (get(error, 'data.error', get(error, 'data.message', get(error, 'message', error))) as string) || defaultMessage
+  )
 }

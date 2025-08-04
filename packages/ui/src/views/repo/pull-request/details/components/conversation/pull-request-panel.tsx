@@ -361,13 +361,16 @@ const PullRequestPanel = ({
     getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
-    const firstEnabledAction = actions.find(action => !action.disabled)
-    if (firstEnabledAction) {
-      setMergeButtonValue(firstEnabledAction.id)
-    } else {
-      setMergeButtonValue(actions[0].id)
+    // Only set initial mergeButtonValue if it hasn't been set yet or if actions change
+    if (!mergeButtonValue || !actions.find(action => action.id === mergeButtonValue)) {
+      const firstEnabledAction = actions.find(action => !action.disabled)
+      if (firstEnabledAction) {
+        setMergeButtonValue(firstEnabledAction.id)
+      } else {
+        setMergeButtonValue(actions[0].id)
+      }
     }
-  }, [actions])
+  }, [actions, mergeButtonValue])
 
   useEffect(() => {
     const ruleViolationArr = prPanelData?.ruleViolationArr

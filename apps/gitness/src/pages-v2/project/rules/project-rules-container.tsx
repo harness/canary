@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { OpenapiRule, useSpaceRuleGetQuery } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
@@ -43,7 +43,7 @@ export const ProjectRulesContainer = () => {
 
   // Show loading state while fetching rule data
   if (fetchRuleIsLoading) {
-    return <SkeletonForm className="mt-7" />
+    return <Skeleton.Form className="mt-7" />
   }
 
   // Show error page if rule not found

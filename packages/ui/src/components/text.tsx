@@ -35,7 +35,7 @@ type TextElement =
   | 'dt'
   | 'dd'
 
-const textVariants = cva('', {
+export const textVariants = cva('', {
   variants: {
     variant: {
       'heading-hero': 'font-heading-hero',

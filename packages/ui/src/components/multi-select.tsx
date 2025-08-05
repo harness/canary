@@ -20,7 +20,7 @@ import {
   IconV2NamesType,
   Label,
   Layout,
-  SkeletonList,
+  Skeleton,
   Tag
 } from '@/components'
 import { generateAlphaNumericHash } from '@/utils'
@@ -387,7 +387,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                     }}
                   >
                     {isLoading ? (
-                      <SkeletonList />
+                      <Skeleton.List />
                     ) : availableOptions?.length === 0 ? (
                       disallowCreation ? (
                         <Command.Item value="-" disabled>

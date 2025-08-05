@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { SkeletonList } from '@/components'
+import { Skeleton } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
@@ -124,7 +124,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
 
   const renderContent = () => {
     if (loadingRawDiff) {
-      return <SkeletonList />
+      return <Skeleton.List />
     }
     return (
       <PullRequestChanges

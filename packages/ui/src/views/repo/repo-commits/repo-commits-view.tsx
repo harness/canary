@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, Layout, NoData, Pagination, SkeletonList, Text } from '@/components'
+import { IconV2, Layout, NoData, Pagination, Skeleton, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
@@ -58,7 +58,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
               <BranchSelectorContainer />
             </div>
 
-            {isFetchingCommits && <SkeletonList />}
+            {isFetchingCommits && <Skeleton.List />}
 
             {!isFetchingCommits && (
               <>

@@ -29,7 +29,7 @@ import {
   useReviewerListPullReqQuery,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import {
   CodeOwnersData,
   DefaultReviewersDataProps,
@@ -910,7 +910,7 @@ export default function PullRequestConversationPage() {
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
   return (
     <>

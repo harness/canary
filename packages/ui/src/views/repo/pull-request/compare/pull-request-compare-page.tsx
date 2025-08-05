@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs, Text } from '@/components'
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Spacer, Tabs, Text } from '@/components'
 import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
 import { TypesDiffStats } from '@/types'
 import {
@@ -420,7 +420,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               <Tabs.Content className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 {isFetchingCommits ? (
-                  <SkeletonList />
+                  <Skeleton.List />
                 ) : (commitData ?? []).length > 0 ? (
                   <CommitsList
                     toCode={toCode}

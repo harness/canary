@@ -8,7 +8,7 @@ import {
   Layout,
   Message,
   MessageTheme,
-  SkeletonForm,
+  Skeleton,
   Spacer,
   Text
 } from '@/components'
@@ -76,7 +76,7 @@ export const RepoSettingsFeaturesForm: FC<RepoSettingsFeaturesFormProps> = ({
       <Layout.Vertical gap="xl">
         <Text variant="heading-subsection">{t('views:repos.features', 'Features')}</Text>
         {isLoadingFeaturesSettings ? (
-          <SkeletonForm linesCount={2} />
+          <Skeleton.Form linesCount={2} />
         ) : (
           <ControlGroup>
             <Checkbox

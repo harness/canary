@@ -1,4 +1,4 @@
-import { IconV2, NoData, SkeletonList, StackedList, TimeAgoCard } from '@/components'
+import { IconV2, NoData, Skeleton, StackedList, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
@@ -56,7 +56,7 @@ export const ExecutionList = ({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (noData) {

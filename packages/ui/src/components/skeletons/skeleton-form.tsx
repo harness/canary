@@ -1,33 +1,84 @@
+import { FC } from 'react'
+
+import { ControlGroup, Fieldset, InputOrientationProp } from '@components/form-primitives'
 import { cn } from '@utils/cn'
+import { cva, VariantProps } from 'class-variance-authority'
 
-import { Skeleton } from './components/skeleton'
+import { SkeletonTypography } from './skeleton-typography'
 
-const listItems = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const skeletonFormVariants = cva('cn-skeleton-form-item', {
+  variants: {
+    size: {
+      sm: 'cn-skeleton-form-item-sm',
+      md: 'cn-skeleton-form-item-md'
+    }
+  },
+  defaultVariants: {
+    size: 'md'
+  }
+})
 
-const SkeletonFormItem = () => {
+export interface SkeletonFormItemProps extends InputOrientationProp {
+  withLabel?: boolean
+  className?: string
+  labelClassName?: string
+  inputClassName?: string
+  size?: VariantProps<typeof skeletonFormVariants>['size']
+}
+
+export const SkeletonFormItem: FC<SkeletonFormItemProps> = ({
+  orientation,
+  withLabel,
+  labelClassName,
+  inputClassName,
+  size
+}) => {
   return (
-    <div className="flex flex-col gap-y-2.5">
-      <Skeleton className="h-2.5 w-[24%]" />
-      <div className="border-cn-borders-4 rounded border px-3 py-3.5">
-        <Skeleton className="h-2.5 w-[41%]" />
-      </div>
-    </div>
+    <ControlGroup.Root orientation={orientation}>
+      {withLabel && (
+        <ControlGroup.LabelWrapper className={labelClassName}>
+          <SkeletonTypography className="w-[71px]" />
+        </ControlGroup.LabelWrapper>
+      )}
+
+      <ControlGroup.InputWrapper className={cn(skeletonFormVariants({ size }), inputClassName)}>
+        <SkeletonTypography className="w-[162px]" />
+      </ControlGroup.InputWrapper>
+    </ControlGroup.Root>
   )
 }
 
-export const SkeletonForm = ({
-  className,
-  linesCount = 9
-}: {
+SkeletonFormItem.displayName = 'SkeletonFormItem'
+
+export interface SkeletonFormProps {
   className?: string
   linesCount?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  itemProps?: SkeletonFormItemProps
+}
+
+export const SkeletonForm: FC<SkeletonFormProps> = ({
+  className,
+  linesCount = 9,
+  itemProps: {
+    withLabel = true,
+    labelClassName: itemLabelClassName,
+    inputClassName: itemInputClassName,
+    size = 'md',
+    orientation = 'vertical'
+  } = {}
 }) => {
   return (
-    <div className={cn('relative flex flex-col gap-y-7', className)}>
-      {listItems.slice(0, linesCount).map(item => (
-        <SkeletonFormItem key={item} />
+    <Fieldset className={cn('cn-skeleton-form-field', className)}>
+      {Array.from({ length: linesCount }).map((_, index) => (
+        <SkeletonFormItem
+          key={index}
+          withLabel={withLabel}
+          labelClassName={itemLabelClassName}
+          inputClassName={itemInputClassName}
+          size={size as VariantProps<typeof skeletonFormVariants>['size']}
+          orientation={orientation as InputOrientationProp['orientation']}
+        />
       ))}
-      <div className="to-background absolute bottom-0 z-10 size-full bg-gradient-to-b from-transparent" />
-    </div>
+    </Fieldset>
   )
 }

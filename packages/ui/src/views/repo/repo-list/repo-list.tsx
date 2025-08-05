@@ -4,7 +4,7 @@ import {
   Layout,
   NoData,
   ScopeTag,
-  SkeletonList,
+  Skeleton,
   StackedList,
   StatusBadge,
   Text,
@@ -91,7 +91,7 @@ export function RepoList({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!repos.length) {

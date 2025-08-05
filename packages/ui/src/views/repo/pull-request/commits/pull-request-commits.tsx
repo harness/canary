@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { NoData, Pagination, SkeletonList } from '@/components'
+import { NoData, Pagination, Skeleton } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitsList, IPullRequestCommitsStore, TypesCommit } from '@/views'
 
@@ -29,7 +29,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   }, [xNextPage])
 
   if (isFetchingCommits) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   return (

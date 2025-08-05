@@ -1,4 +1,4 @@
-import { NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
+import { NoData, Skeleton, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/index'
@@ -34,7 +34,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
   const { t } = useTranslation()
   const content = activities?.content
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!content.length) {
@@ -60,7 +60,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
+        <Skeleton.Table countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
           {content.map(({ referredEntity, activityTime, description, activityStatus }: ConnectorActivityItem) => {

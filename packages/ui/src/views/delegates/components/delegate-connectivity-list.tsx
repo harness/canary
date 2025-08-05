@@ -1,4 +1,4 @@
-import { IconV2, NoData, SkeletonList, SkeletonTable, StatusBadge, Table, TimeAgoCard } from '@/components'
+import { IconV2, NoData, Skeleton, StatusBadge, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { defaultTo } from 'lodash-es'
@@ -18,7 +18,7 @@ export function DelegateConnectivityList({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!delegates.length) {
@@ -47,7 +47,7 @@ export function DelegateConnectivityList({
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
+        <Skeleton.Table countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
           {delegates.map(

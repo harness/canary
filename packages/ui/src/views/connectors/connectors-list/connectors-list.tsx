@@ -7,8 +7,7 @@ import {
   LogoV2,
   MoreActionsTooltip,
   NoData,
-  SkeletonList,
-  SkeletonTable,
+  Skeleton,
   Table,
   Text,
   TimeAgoCard,
@@ -84,7 +83,7 @@ export function ConnectorsList({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!connectors.length) {
@@ -119,7 +118,7 @@ export function ConnectorsList({
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
+        <Skeleton.Table countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
           {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, isFavorite }) => {

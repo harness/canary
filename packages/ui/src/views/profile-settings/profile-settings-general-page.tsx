@@ -13,9 +13,9 @@ import {
   FormWrapper,
   IconV2,
   Legend,
+  Skeleton,
   Text
 } from '@/components'
-import { SkeletonForm } from '@/components/skeletons'
 import { TFunctionWithFallback, useTranslation } from '@/context'
 import { IProfileSettingsStore, ProfileSettingsErrorType, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -185,7 +185,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
         {t('views:profileSettings.accountSettings', 'Account settings')}
       </Text>
 
-      {isLoadingUser && <SkeletonForm />}
+      {isLoadingUser && <Skeleton.Form />}
 
       {!isLoadingUser && (
         <>

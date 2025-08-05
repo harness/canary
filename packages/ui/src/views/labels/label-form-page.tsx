@@ -12,7 +12,7 @@ import {
   IconV2,
   Label,
   Layout,
-  SkeletonForm,
+  Skeleton,
   Tag,
   Text
 } from '@/components'
@@ -149,7 +149,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
           : t('views:labelData.form.createTitle', 'Create a label')}
       </Text>
 
-      {isLoading && <SkeletonForm />}
+      {isLoading && <Skeleton.Form />}
 
       {!isLoading && (
         <FormWrapper {...formMethods} className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>

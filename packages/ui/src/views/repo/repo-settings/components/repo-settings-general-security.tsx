@@ -8,7 +8,7 @@ import {
   Layout,
   Message,
   MessageTheme,
-  SkeletonForm,
+  Skeleton,
   Spacer,
   Text
 } from '@/components'
@@ -99,7 +99,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
       <Layout.Vertical gap="xl">
         <Text variant="heading-subsection">{t('views:repos.security', 'Security')}</Text>
         {isLoadingSecuritySettings ? (
-          <SkeletonForm linesCount={2} />
+          <Skeleton.Form linesCount={2} />
         ) : (
           <ControlGroup>
             <Layout.Vertical gap="sm">

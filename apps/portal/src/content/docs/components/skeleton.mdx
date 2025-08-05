@@ -1,0 +1,131 @@
+---
+title: Skeleton
+description: Skeleton component for displaying loading states
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Skeleton` component is a placeholder UI element that represents the loading state of a component. It can be used to indicate that content is being loaded or processed, providing a visual cue to users.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] h-[3800px] grid gap-4">
+  <div className="flex items-start gap-2">
+    Avatar
+    <div className="flex items-start gap-2">
+      <Skeleton.Avatar size="sm" />
+      <Skeleton.Avatar size="sm" rounded />
+    </div>
+    <div className="flex items-start gap-2">
+      <Skeleton.Avatar />
+      <Skeleton.Avatar rounded />
+    </div>
+    <div className="flex items-start gap-2">
+      <Skeleton.Avatar size="lg" />
+      <Skeleton.Avatar size="lg" rounded />
+    </div>
+  </div>
+
+  <div className="flex items-start gap-2">
+    Icon
+      <Skeleton.Icon size="2xs" />
+      <Skeleton.Icon size="xs" />
+      <Skeleton.Icon size="sm" />
+      <Skeleton.Icon size="md" />
+      <Skeleton.Icon size="lg" />
+      <Skeleton.Icon size="xl" />
+  </div>
+  <div className="flex items-start gap-2">
+    Logo
+      <Skeleton.Logo size="sm" />
+      <Skeleton.Logo size="md" />
+      <Skeleton.Logo size="lg" />
+  </div>
+
+  <div>
+    Typography
+    <div className="flex items-end gap-4">
+      Heading
+      <div>
+        <Skeleton.Typography variant="heading-hero" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-section" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-subsection" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-base" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-small" />
+      </div>
+    </div>
+
+    <div className="flex items-end gap-4">
+      Body
+      <div>
+        <Skeleton.Typography variant="body-normal" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-single-line-normal" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-strong" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-single-line-strong" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-code" />
+      </div>
+    </div>
+
+    <div className="flex items-end gap-4">
+      Caption
+      <div>
+        <Skeleton.Typography variant="caption-normal" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="caption-soft" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="caption-strong" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="caption-single-line-normal" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="caption-single-line-soft" />
+      </div>
+    </div>
+  </div>
+
+  <div className="grid grid-cols-1 gap-4">
+    Form
+    <div>
+      <Skeleton.Form />
+    </div>
+    <div>
+      <Skeleton.Form itemProps={{ withLabel: false }} linesCount={2} />
+    </div>
+    <div>
+      <Skeleton.Form itemProps={{ withLabel: false, size: 'sm' }} linesCount={2} />
+    </div>
+    <div>
+      <Skeleton.Form itemProps={{ orientation: 'horizontal' }} />
+    </div>
+  </div>
+
+  <div>
+    List
+    <Skeleton.List hasActions />
+  </div>
+  
+  <div>
+    <Skeleton.Table countColumns={1} countRows={2} showHeader />
+  </div>
+    
+</div>`}
+/>

@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, ListActions, Pagination, SearchInput, SkeletonList, Text } from '@/components'
+import { Button, Checkbox, ListActions, Pagination, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ILabelsStore, SandboxLayout } from '@/views'
 
@@ -89,7 +89,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         </ListActions.Root>
       )}
 
-      {isLoading && <SkeletonList className="mb-8 mt-5" />}
+      {isLoading && <Skeleton.List className="mb-8 mt-5" />}
 
       {!isLoading && (
         <LabelsListView

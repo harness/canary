@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Alert, Card, Layout, Link, SkeletonList, Spacer, Text } from '@/components'
+import { Alert, Card, Layout, Link, Skeleton, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -37,7 +37,7 @@ export const SemanticSearchResultsList: FC<SemanticSearchResultsListProps> = ({
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!semanticResults?.length) {

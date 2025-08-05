@@ -7,7 +7,7 @@ import {
   getIsMarkdown,
   MarkdownViewer,
   Pagination,
-  SkeletonList,
+  Skeleton,
   Tabs,
   ViewTypeValue
 } from '@harnessio/ui/components'
@@ -225,7 +225,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
 
         <Tabs.Content value="history">
           {isFetchingCommits ? (
-            <SkeletonList />
+            <Skeleton.List />
           ) : (
             <>
               <CommitsList

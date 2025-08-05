@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, SearchInput, SkeletonList, Spacer, Text } from '@/components'
+import { Button, ListActions, SearchInput, Skeleton, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -75,7 +75,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
           )}
 
           {webhookLoading ? (
-            <SkeletonList />
+            <Skeleton.List />
           ) : (
             <RepoWebhookList
               error={error}

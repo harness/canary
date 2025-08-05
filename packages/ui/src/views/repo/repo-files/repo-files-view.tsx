@@ -1,6 +1,6 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { NoData, PathParts, SkeletonList } from '@/components'
+import { NoData, PathParts, Skeleton } from '@/components'
 import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
@@ -72,7 +72,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
-    if (loading || isLoadingRepoDetails) return <SkeletonList />
+    if (loading || isLoadingRepoDetails) return <Skeleton.List />
 
     if (!isView) return children
 

@@ -8,7 +8,7 @@ import {
   Layout,
   Pagination,
   SearchInput,
-  SkeletonList,
+  Skeleton,
   Spacer,
   Text
 } from '@/components'
@@ -132,7 +132,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
           {templatesError ? (
             <Text color="danger">{templatesError.message}</Text>
           ) : isFetchingTemplates ? (
-            <SkeletonList />
+            <Skeleton.List />
           ) : (
             <>
               <StepPaletteSection

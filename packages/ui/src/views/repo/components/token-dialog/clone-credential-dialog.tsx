@@ -44,39 +44,28 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
           <Dialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
-          <div className="flex flex-col gap-y-7">
-            {/* NAME */}
+          <TextInput
+            className="truncate"
+            id="identifier"
+            label={t('views:repos.name')}
+            value={tokenData?.identifier}
+            readOnly
+            suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={tokenData?.identifier} />}
+          />
 
-            <TextInput
-              className="truncate py-px"
-              id="identifier"
-              label={t('views:repos.name')}
-              value={tokenData?.identifier}
-              readOnly
-              suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={tokenData?.identifier} />}
-            />
+          <TextInput id="lifetime" label={t('views:repos.expiration')} value={tokenData?.lifetime} readOnly />
 
-            <TextInput
-              className="py-px"
-              id="lifetime"
-              label={t('views:repos.expiration')}
-              value={tokenData?.lifetime}
-              readOnly
-            />
+          <TextInput
+            className="truncate"
+            id="token"
+            label={t('views:repos.token')}
+            value={tokenData?.token}
+            readOnly
+            suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={tokenData?.token} />}
+            autoFocus
+          />
 
-            {/* Expiration Info */}
-            <TextInput
-              className="truncate py-px"
-              id="token"
-              label={t('views:repos.token')}
-              value={tokenData?.token}
-              readOnly
-              suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={tokenData?.token} />}
-              autoFocus
-            />
-
-            <span>{t('views:repos.cloneCredGenerated')}</span>
-          </div>
+          <span>{t('views:repos.cloneCredGenerated')}</span>
         </Dialog.Body>
         <Dialog.Footer>
           <ButtonLayout>

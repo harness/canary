@@ -99,42 +99,40 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
           <Dialog.Body>
-            <div className="mb-7 space-y-7">
-              <Fieldset>
-                <Input
-                  id="name"
-                  label="Pipeline name"
-                  {...register('name')}
-                  size="md"
-                  error={errors.name?.message?.toString()}
-                />
-              </Fieldset>
-
-              <Fieldset>
-                <Input
-                  id="yamlPath"
-                  label="Yaml path"
-                  {...register('yamlPath')}
-                  size="md"
-                  error={errors.yamlPath?.message?.toString()}
-                />
-              </Fieldset>
-
-              <Select
-                label="Branch"
-                placeholder="Select"
-                options={branchOptions}
-                value={branch}
-                onChange={value => handleSelectChange('branch', value)}
-                disabled={isLoadingBranchNames}
+            <Fieldset>
+              <Input
+                id="name"
+                label="Pipeline name"
+                {...register('name')}
+                size="md"
+                error={errors.name?.message?.toString()}
               />
+            </Fieldset>
 
-              {errorMessage && (
-                <Alert.Root theme="danger">
-                  <Alert.Title>{errorMessage}</Alert.Title>
-                </Alert.Root>
-              )}
-            </div>
+            <Fieldset>
+              <Input
+                id="yamlPath"
+                label="Yaml path"
+                {...register('yamlPath')}
+                size="md"
+                error={errors.yamlPath?.message?.toString()}
+              />
+            </Fieldset>
+
+            <Select
+              label="Branch"
+              placeholder="Select"
+              options={branchOptions}
+              value={branch}
+              onChange={value => handleSelectChange('branch', value)}
+              disabled={isLoadingBranchNames}
+            />
+
+            {errorMessage && (
+              <Alert.Root theme="danger">
+                <Alert.Title>{errorMessage}</Alert.Title>
+              </Alert.Root>
+            )}
           </Dialog.Body>
 
           <Dialog.Footer>

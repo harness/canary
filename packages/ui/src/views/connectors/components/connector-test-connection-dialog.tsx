@@ -74,86 +74,80 @@ export const ConnectorTestConnectionDialog = ({
         <Dialog.Header>
           <Dialog.Title>{title}</Dialog.Title>
           <Dialog.Body>
-            <div className="gap-y-0.5">
-              <div className="text-sm font-normal text-cn-foreground-4">
-                <Layout.Horizontal gap="xs" align="center">
-                  <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
-                  <span className="text-cn-foreground-1">{apiUrl}</span>
+            <div className="text-cn-foreground-4 text-sm font-normal">
+              <Layout.Horizontal gap="xs" align="center">
+                <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
+                <span className="text-cn-foreground-1">{apiUrl}</span>
 
-                  {status === 'error' && (
-                    <Button type="button" variant="outline" className="ml-auto">
-                      {t('views:connectors.viewConnectorDetails', 'View Connector Details')}
-                    </Button>
-                  )}
-                </Layout.Horizontal>
-                <Layout.Horizontal gap="xs">
-                  <span>{t('views:connectors.status', 'Status') + ':'}</span>
-
-                  <div className="text-cn-foreground-1">
-                    <ConnectivityStatus status={status as ExecutionState} />
-                  </div>
-                </Layout.Horizontal>
-              </div>
-
-              <div className="mb-2 mt-4 gap-y-3">
-                <Layout.Horizontal gap="xs" align="center" className="text-center">
-                  {(status === 'success' || status === 'error') && (
-                    <IconV2
-                      className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
-                      name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
-                      size="xs"
-                    />
-                  )}
-                  <div className="letter-spacing-1 text-base font-medium text-cn-foreground-1">{description}</div>
-                </Layout.Horizontal>
-
-                {status === 'running' && (
-                  <div className="mb-1 mt-4">
-                    <Progress value={percentageFilled / 100} state="processing" size="sm" hideIcon hidePercentage />
-                  </div>
-                )}
                 {status === 'error' && (
-                  <>
-                    {errorMessage && (
-                      <div className="mb-1 mt-2">
-                        <div className="gap-x-0 space-x-2">
-                          <span className="text-sm font-normal text-cn-foreground-4">
-                            {errorMessage}
-                            {viewDocClick && (
-                              <span className="ml-1 text-cn-foreground-accent">
-                                <Button
-                                  variant="link"
-                                  onClick={viewDocClick}
-                                  className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
-                                >
-                                  {t('views:connectors.viewDocumentation', 'View Documentation')}
-                                  <IconV2
-                                    name="open-new-window"
-                                    className="ml-1 text-cn-foreground-accent"
-                                    size="2xs"
-                                  />
-                                </Button>
-                              </span>
-                            )}
-                          </span>
-                        </div>
+                  <Button type="button" variant="outline" className="ml-auto">
+                    {t('views:connectors.viewConnectorDetails', 'View Connector Details')}
+                  </Button>
+                )}
+              </Layout.Horizontal>
+              <Layout.Horizontal gap="xs">
+                <span>{t('views:connectors.status', 'Status') + ':'}</span>
+
+                <div className="text-cn-foreground-1">
+                  <ConnectivityStatus status={status as ExecutionState} />
+                </div>
+              </Layout.Horizontal>
+            </div>
+
+            <div>
+              <Layout.Horizontal gap="xs" align="center" className="text-center">
+                {(status === 'success' || status === 'error') && (
+                  <IconV2
+                    className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                    name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
+                    size="xs"
+                  />
+                )}
+                <div className="letter-spacing-1 text-cn-foreground-1 text-base font-medium">{description}</div>
+              </Layout.Horizontal>
+
+              {status === 'running' && (
+                <div className="mb-1 mt-4">
+                  <Progress value={percentageFilled / 100} state="processing" size="sm" hideIcon hidePercentage />
+                </div>
+              )}
+              {status === 'error' && (
+                <>
+                  {errorMessage && (
+                    <div className="mb-1 mt-2">
+                      <div className="gap-x-0 space-x-2">
+                        <span className="text-cn-foreground-4 text-sm font-normal">
+                          {errorMessage}
+                          {viewDocClick && (
+                            <span className="text-cn-foreground-accent ml-1">
+                              <Button
+                                variant="link"
+                                onClick={viewDocClick}
+                                className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
+                              >
+                                {t('views:connectors.viewDocumentation', 'View Documentation')}
+                                <IconV2 name="open-new-window" className="text-cn-foreground-accent ml-1" size="2xs" />
+                              </Button>
+                            </span>
+                          )}
+                        </span>
                       </div>
-                    )}
-                    {errorData && (
-                      <div className="mb-1 mt-2">
-                        <MarkdownViewer
-                          source={`
+                    </div>
+                  )}
+                  {errorData && (
+                    <div className="mb-1 mt-2">
+                      <MarkdownViewer
+                        source={`
 \`\`\`text
 ${JSON.stringify(errorData, null, 2)}
 \`\`\`
 `}
-                          showLineNumbers
-                        />
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
+                        showLineNumbers
+                      />
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </Dialog.Body>
         </Dialog.Header>

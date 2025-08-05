@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, ControlGroup, Dialog, Fieldset } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Dialog, Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
@@ -43,29 +43,27 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
               Check whether form is required or not
          */}
         <Dialog.Body>
-          <form className="flex flex-col gap-y-7" onSubmit={handleSubmit} id="remove-admin-form">
-            <Fieldset>
-              <ControlGroup>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: isAdmin
-                      ? t(
-                          'views:userManagement.removeAdmin.message',
-                          'This will remove the admin tag for <strong>"{{name}}"</strong> from the system.',
-                          { name: user?.display_name }
-                        )
-                      : t(
-                          'views:userManagement.grantAdmin.message',
-                          'This will grant admin privileges to <strong>"{{name}}"</strong> from the system.',
-                          { name: user?.display_name }
-                        )
-                  }}
-                />
-              </ControlGroup>
-            </Fieldset>
+          <Layout.Flex direction="column" gapY="xl" onSubmit={handleSubmit} id="remove-admin-form">
+            <ControlGroup>
+              <Text
+                dangerouslySetInnerHTML={{
+                  __html: isAdmin
+                    ? t(
+                        'views:userManagement.removeAdmin.message',
+                        'This will remove the admin tag for <strong>"{{name}}"</strong> from the system.',
+                        { name: user?.display_name }
+                      )
+                    : t(
+                        'views:userManagement.grantAdmin.message',
+                        'This will grant admin privileges to <strong>"{{name}}"</strong> from the system.',
+                        { name: user?.display_name }
+                      )
+                }}
+              />
+            </ControlGroup>
 
             {updateUserAdminError && <span className="text-2 text-cn-foreground-danger">{updateUserAdminError}</span>}
-          </form>
+          </Layout.Flex>
         </Dialog.Body>
 
         <Dialog.Footer>

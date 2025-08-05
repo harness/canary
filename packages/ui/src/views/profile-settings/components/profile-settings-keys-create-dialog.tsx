@@ -58,27 +58,25 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
         </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
           <Dialog.Body>
-            <div className="mb-7 space-y-7">
-              <FormInput.Text
-                id="identifier"
-                value={identifier}
-                {...register('identifier')}
-                placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
-                label={t('views:profileSettings.newSshKey', 'New SSH key')}
-                autoFocus
-              />
-              <FormInput.Textarea
-                id="content"
-                value={content}
-                {...register('content')}
-                label={t('views:profileSettings.publicKey', 'Public key')}
-              />
-              {error?.type === ApiErrorType.KeyCreate && (
-                <Alert.Root theme="danger">
-                  <Alert.Title>{error.message}</Alert.Title>
-                </Alert.Root>
-              )}
-            </div>
+            <FormInput.Text
+              id="identifier"
+              value={identifier}
+              {...register('identifier')}
+              placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
+              label={t('views:profileSettings.newSshKey', 'New SSH key')}
+              autoFocus
+            />
+            <FormInput.Textarea
+              id="content"
+              value={content}
+              {...register('content')}
+              label={t('views:profileSettings.publicKey', 'Public key')}
+            />
+            {error?.type === ApiErrorType.KeyCreate && (
+              <Alert.Root theme="danger">
+                <Alert.Title>{error.message}</Alert.Title>
+              </Alert.Root>
+            )}
           </Dialog.Body>
           <Dialog.Footer>
             <ButtonLayout>

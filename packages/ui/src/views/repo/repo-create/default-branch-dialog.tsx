@@ -63,23 +63,21 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
           </Dialog.Header>
 
           <Dialog.Body>
-            <Layout.Vertical gap="xl">
-              <FormInput.Radio label="Select branch" id="default-branch-radio" {...register('customBranchRadio')}>
-                <Radio.Item id="default-branch-main" value="main" label="main" />
-                <Radio.Item id="default-branch-master" value="master" label="master" />
-                <Radio.Item id="default-branch-custom" value="custom" label="custom" />
-              </FormInput.Radio>
+            <FormInput.Radio label="Select branch" id="default-branch-radio" {...register('customBranchRadio')}>
+              <Radio.Item id="default-branch-main" value="main" label="main" />
+              <Radio.Item id="default-branch-master" value="master" label="master" />
+              <Radio.Item id="default-branch-custom" value="custom" label="custom" />
+            </FormInput.Radio>
 
-              {customBranchRadio === 'custom' && (
-                <FormInput.Text
-                  id="default-branch-text"
-                  label="Branch name"
-                  {...register('customBranchInput')}
-                  placeholder="Enter name to initialize default branch"
-                  autoFocus
-                />
-              )}
-            </Layout.Vertical>
+            {customBranchRadio === 'custom' && (
+              <FormInput.Text
+                id="default-branch-text"
+                label="Branch name"
+                {...register('customBranchInput')}
+                placeholder="Enter name to initialize default branch"
+                autoFocus
+              />
+            )}
           </Dialog.Body>
 
           <Dialog.Footer>

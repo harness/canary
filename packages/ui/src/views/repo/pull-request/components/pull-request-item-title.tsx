@@ -40,9 +40,9 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
         name={getPrState(isDraft, merged, state).icon}
       />
 
-      <Layout.Flex gap="xs" align="center">
+      <Layout.Flex gap="xs" align="center" className="min-w-0">
         {repoId && <Tag value={repoId} showIcon icon="repository" theme="gray" />}
-        <Text className="truncate" variant="heading-base">
+        <Text variant="heading-base" truncate>
           {name}
         </Text>
         {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}

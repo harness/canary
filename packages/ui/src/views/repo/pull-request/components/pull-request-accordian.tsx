@@ -330,7 +330,7 @@ export const PullRequestAccordion: React.FC<{
           indicatorPosition="left"
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="bg-cn-background-2 px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
+            <Accordion.Trigger className="bg-cn-background-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
               <StackedList.Field
                 title={
                   <LineTitle

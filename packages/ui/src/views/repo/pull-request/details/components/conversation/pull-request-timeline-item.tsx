@@ -299,8 +299,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
         <NodeGroup.Root
           className={cn(
             {
-              'pb-8': !isLast,
-              'pb-4': isLast
+              'pb-cn-lg': !isLast,
+              'pb-cn-md': isLast
             },
             wrapperClassName
           )}

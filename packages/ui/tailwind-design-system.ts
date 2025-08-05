@@ -105,7 +105,8 @@ export default {
           risk: 'var(--cn-icon-risk)'
         },
         'cn-icon': {
-          yellow: 'var(--cn-set-yellow-solid-bg)'
+          yellow: 'var(--cn-set-yellow-solid-bg)',
+          success: 'var(--cn-set-green-soft-text)'
         },
         toast: {
           background: {

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 
 import { Layout } from '@components/layout'
 import { Text } from '@components/text'
@@ -11,7 +11,7 @@ interface LineTitleProps {
 }
 
 interface LineDescriptionProps {
-  text?: string
+  text?: string | ReactNode
 }
 
 export const LineTitle = ({ ...props }: LineTitleProps) => {
@@ -27,7 +27,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {
 
 export const LineDescription = ({ ...props }: LineDescriptionProps) => {
   return (
-    <Text className="ml-6" variant="body-normal" color="foreground-3">
+    <Text className="ml-7" variant="body-normal" color="foreground-3">
       {props.text}
     </Text>
   )

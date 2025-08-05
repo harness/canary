@@ -110,7 +110,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
 
   return (
     <>
-      <div className="ml-6 flex items-center justify-between">
+      <div className="flex items-center justify-between">
         {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
           <div className="flex items-center gap-x-2">
             <IconV2
@@ -127,7 +127,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
         )}
         {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && <StatusBadge variant="outline">Required</StatusBadge>}
       </div>
-      <div className="ml-6 bg-inherit">
+      <div className="bg-inherit">
         <Table.Root>
           <Table.Header>
             <Table.Row>

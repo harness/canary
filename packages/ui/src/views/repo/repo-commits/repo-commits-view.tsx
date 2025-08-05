@@ -64,7 +64,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
               <>
                 {!commitsList?.length ? (
                   <NoData
-                    withBorder
+                    withBorder={isDirtyList}
                     textWrapperClassName="max-w-[350px]"
                     imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
                     title={

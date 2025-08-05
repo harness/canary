@@ -1,7 +1,13 @@
 import { getScopedPath } from '@harnessio/ui/components'
-import { RepositoryType, Scope } from '@harnessio/ui/views'
+import { RepositoryType, Scope, ScopeType } from '@harnessio/ui/views'
 
 import { RouteFunctionMap } from '../framework/routing/types'
+
+export const getScopeType = ({ accountId, orgIdentifier, projectIdentifier }: Scope): ScopeType => {
+  if (accountId && orgIdentifier && projectIdentifier) return ScopeType.Project
+  if (accountId && orgIdentifier) return ScopeType.Organization
+  return ScopeType.Account
+}
 
 export const prependScopeToUrl = ({
   url,

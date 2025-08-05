@@ -8,7 +8,7 @@ import {
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { Toast, useToast } from '@harnessio/ui/components'
+import { determineScope, Toast, useToast } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -20,7 +20,7 @@ import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { getRepoUrl } from '../../utils/scope-url-utils'
+import { getRepoUrl, getScopeType } from '../../utils/scope-url-utils'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
@@ -147,13 +147,37 @@ export default function ReposListPage() {
 
   const { accountId, orgIdentifier, projectIdentifier } = scope
 
+  const handleOnClickRepo = (repo: RepositoryType) => {
+    /** Scope where the repo is currently displayed */
+    const currentRepoScopeType = getScopeType(scope)
+    /** Scope where the repo actually belongs to */
+    const actualRepoScopeType = determineScope({
+      accountId: accountId || '',
+      repoIdentifier: repo.name,
+      repoPath: repo.path
+    })
+
+    const isSameScope = currentRepoScopeType === actualRepoScopeType
+    const repoSummaryUrl = routes.toRepoSummary({ spaceId, repoId: repo.name })
+
+    if (!isMFE || isSameScope) {
+      navigate(repoSummaryUrl)
+    } else {
+      const fullPath = `${basename}${getRepoUrl({
+        repo,
+        scope,
+        toRepository: () => repoSummaryUrl
+      })}`
+
+      // TODO: Fix this properly to avoid full page refresh.
+      // Currently, not able to navigate properly with React Router.
+      window.location.href = fullPath
+    }
+  }
+
   return (
     <SandboxRepoListPage
-      scope={{
-        accountId: accountId || '',
-        orgIdentifier,
-        projectIdentifier
-      }}
+      scope={scope}
       useRepoStore={useRepoStore}
       isLoading={isFetching}
       isError={isError}
@@ -161,27 +185,7 @@ export default function ReposListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}
-      onClickRepo={(repo: RepositoryType) => {
-        const repoSummaryUrl = routes.toRepoSummary({ spaceId, repoId: repo.name })
-        if (isMFE) {
-          const fullPath = `${basename}${getRepoUrl({
-            repo,
-            scope: {
-              accountId: accountId || '',
-              orgIdentifier,
-              projectIdentifier
-            },
-            toRepository: () => repoSummaryUrl
-          })}`
-
-          /**
-           * @todo fix this properly to avoid full page refresh. Currently, not able to navigate properly with react router.
-           */
-          window.location.href = fullPath
-        } else {
-          navigate(repoSummaryUrl)
-        }
-      }}
+      onClickRepo={handleOnClickRepo}
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}

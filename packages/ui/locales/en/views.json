@@ -224,9 +224,9 @@
     "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
     "generalSettings": "General settings",
     "general": "General",
+    "labels": "Labels",
     "rules": "Rules",
     "webhooks": "Webhooks",
-    "labels": "Labels",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "cloneRepo": "Clone Repository",
     "cloneHttps": "HTTPS",
@@ -752,7 +752,6 @@
     "browseFiles": "Browse files",
     "createNewCommit": "Create new commit"
   },
-  "code": "Code",
   "createTagDialog": {
     "validation": {
       "message": "Description is required"
@@ -868,5 +867,6 @@
       "editUser": "Edit user",
       "deleteUser": "Delete user"
     }
-  }
+  },
+  "code": "Code"
 }

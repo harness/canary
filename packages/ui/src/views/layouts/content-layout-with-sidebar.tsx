@@ -59,7 +59,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
           {sidebarMenu.map((group, group_idx) => (
             <Fragment key={group.groupId}>
               {group_idx > 0 && <Separator className="mb-2" />}
-              <Layout.Grid className="w-full px-0 pb-1.5" gapY="sm">
+              <Layout.Grid className="w-full px-0 pb-1.5" gapY="3xs">
                 {group?.title && (
                   <Text className="mt-2 px-2.5" variant="caption-single-line-normal">
                     {group?.title}

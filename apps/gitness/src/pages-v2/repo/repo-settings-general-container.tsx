@@ -330,7 +330,9 @@ export const RepoSettingsGeneralPageContainer = () => {
             deleteFn: handleDeleteRepository,
             isLoading: isDeletingRepo,
             error: apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null,
-            type: 'repository'
+            type: 'repository',
+            withForm: true,
+            deletionKeyword: repoDataStore?.name
           },
           isRepoAlertDeleteDialogOpen
         )}

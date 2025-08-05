@@ -4,9 +4,14 @@ import { ContentLayoutWithSidebar } from '@/views'
 const getNavItems = (t: TFunctionWithFallback) => [
   {
     groupId: 0,
-    title: t('views:repos.general', 'General'),
-    items: [{ id: 0, title: t('views:repos.generalSettings', 'General settings'), to: 'general' }]
-  },
+    // title: t('views:repos.general', 'General'),
+    items: [
+      { id: 0, title: t('views:repos.general', 'General'), to: 'general' },
+      { id: 1, title: t('views:repos.labels', 'Labels'), to: 'labels' },
+      { id: 2, title: t('views:repos.rules', 'Rules'), to: 'rules' },
+      { id: 3, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' }
+    ]
+  }
   // {
   //   groupId: 1,
   //   title: 'Access',
@@ -15,21 +20,21 @@ const getNavItems = (t: TFunctionWithFallback) => [
   //     { id: 1, title: 'Moderation options', to: 'moderation' }
   //   ]
   // },
-  {
-    groupId: 2,
-    title: t('views:code', 'Code'),
-    items: [
-      // { id: 0, text: 'Branches', to: 'branches' },
-      // { id: 1, text: 'Tags', to: 'tags' },
-      { id: 0, title: t('views:repos.rules', 'Rules'), to: 'rules' },
-      // { id: 3, text: 'Actions', to: 'actions' },
-      { id: 1, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' },
-      { id: 2, title: t('views:repos.labels', 'Labels'), to: 'labels' }
-      // { id: 5, text: 'Environments', to: 'environments' },
-      // { id: 6, text: 'Codespaces', to: 'codespaces' },
-      // { id: 7, text: 'Pages', to: 'pages' }
-    ]
-  }
+  // {
+  //   groupId: 2,
+  //   title: t('views:code', 'Code'),
+  //   items: [
+  //     // { id: 0, text: 'Branches', to: 'branches' },
+  //     // { id: 1, text: 'Tags', to: 'tags' },
+  //     { id: 0, title: t('views:repos.rules', 'Rules'), to: 'rules' },
+  //     // { id: 3, text: 'Actions', to: 'actions' },
+  //     { id: 1, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' },
+  //     { id: 2, title: t('views:repos.labels', 'Labels'), to: 'labels' }
+  //     // { id: 5, text: 'Environments', to: 'environments' },
+  //     // { id: 6, text: 'Codespaces', to: 'codespaces' },
+  //     // { id: 7, text: 'Pages', to: 'pages' }
+  //   ]
+  // }
   // {
   //   groupId: 3,
   //   groupTitle: 'Security',

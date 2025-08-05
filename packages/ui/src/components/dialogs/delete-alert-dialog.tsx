@@ -4,8 +4,6 @@ import { Alert, AlertDialog, Fieldset, Input } from '@/components'
 import { useTranslation } from '@/context'
 import { getErrorMessage } from '@utils/utils'
 
-const DELETION_KEYWORD = 'DELETE'
-
 export interface DeleteAlertDialogProps {
   open: boolean
   onClose: () => void
@@ -16,6 +14,7 @@ export interface DeleteAlertDialogProps {
   error?: { type?: string; message: string } | null
   withForm?: boolean
   message?: string
+  deletionKeyword?: string
 }
 
 export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
@@ -27,7 +26,8 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   isLoading = false,
   error,
   withForm = false,
-  message
+  message,
+  deletionKeyword = 'DELETE'
 }) => {
   const { t } = useTranslation()
   const [verification, setVerification] = useState('')
@@ -36,7 +36,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
     setVerification(event.target.value)
   }
 
-  const isDisabled = isLoading || (withForm && verification !== DELETION_KEYWORD)
+  const isDisabled = isLoading || (withForm && verification !== deletionKeyword)
 
   const handleDelete = () => {
     if (isDisabled) return
@@ -71,7 +71,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
               value={verification}
               placeholder=""
               onChange={handleChangeVerification}
-              label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} “${DELETION_KEYWORD}”`}
+              label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} "${deletionKeyword}"`}
               disabled={isLoading}
               autoFocus
             />

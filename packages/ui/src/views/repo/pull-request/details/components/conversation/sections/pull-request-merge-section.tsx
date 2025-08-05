@@ -101,7 +101,7 @@ const PullRequestMergeSection = ({
   }
 
   return (
-    <Accordion.Item value={ACCORDION_VALUE}>
+    <Accordion.Item value={ACCORDION_VALUE} className="border-0">
       <Accordion.Trigger
         className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': mergeable || unchecked })}
       >

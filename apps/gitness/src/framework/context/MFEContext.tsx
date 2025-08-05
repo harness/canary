@@ -13,15 +13,33 @@ export interface Scope {
 }
 
 export interface UserInfo {
-  companyName?: string
-  country?: string
-  firstName?: string
-  jobTitle?: string
-  lastName?: string
-  phoneNumber?: string
-  state?: string
-  userEmail?: string
+  admin?: boolean
+  billingFrequency?: string
+  createdAt?: number
+  defaultAccountId?: string
+  disabled?: boolean
+  edition?: string
+  email?: string
+  emailVerified?: boolean
+  externalId?: string
+  externallyManaged?: boolean
+  familyName?: string
+  givenName?: string
+  intent?: string
+  isEnrichedInfoCollected?: boolean
+  lastLogin?: number
+  lastUpdatedAt?: number
+  locked?: boolean
+  name?: string
+  signupAction?: string
+  token?: string
+  twoFactorAuthenticationEnabled?: boolean
+  userPreferences?: {
+    [key: string]: string
+  }
+  uuid: string
 }
+// removed utmInfo and accounts from the above type
 
 export interface ParentAppStoreContextProps {
   currentUserInfo: UserInfo
@@ -69,7 +87,9 @@ export const MFEContext = createContext<IMFEContext>({
   scope: {},
   parentContextObj: {
     appStoreContext: createContext({
-      currentUserInfo: {}
+      currentUserInfo: {
+        uuid: ''
+      }
     })
   },
   renderUrl: '',

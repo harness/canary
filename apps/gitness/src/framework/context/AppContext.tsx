@@ -132,9 +132,9 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     if (isMFE) {
       const currentUserInfo = parentAppStoreContext.currentUserInfo
       setCurrentUser({
-        uid: currentUserInfo.userEmail,
-        email: currentUserInfo.userEmail,
-        display_name: currentUserInfo.firstName + ' ' + currentUserInfo.lastName
+        uid: currentUserInfo.uuid,
+        email: currentUserInfo.email,
+        display_name: currentUserInfo.name
       })
     }
     fetchSpacesAndUser()

@@ -58,11 +58,11 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
               <BranchSelectorContainer />
             </div>
 
-            {isFetchingCommits ? (
-              <SkeletonList />
-            ) : (
+            {isFetchingCommits && <SkeletonList />}
+
+            {!isFetchingCommits && (
               <>
-                {!commitsList?.length ? (
+                {!commitsList?.length && (
                   <NoData
                     withBorder={isDirtyList}
                     textWrapperClassName="max-w-[350px]"
@@ -100,28 +100,31 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                           }
                     }
                   />
-                ) : (
-                  <>
-                    <CommitsList
-                      data={commitsList}
-                      toCode={toCode}
-                      toCommitDetails={toCommitDetails}
-                      toPullRequest={toPullRequest}
-                      className="ml-1"
-                    />
-                    <Pagination
-                      className="pl-[26px]"
-                      indeterminate
-                      hasNext={xNextPage > 0}
-                      hasPrevious={xPrevPage > 0}
-                      getPrevPageLink={getPrevPageLink}
-                      getNextPageLink={getNextPageLink}
-                    />
-                  </>
+                )}
+
+                {commitsList?.length && (
+                  <CommitsList
+                    data={commitsList}
+                    toCode={toCode}
+                    toCommitDetails={toCommitDetails}
+                    toPullRequest={toPullRequest}
+                    className="ml-1"
+                  />
                 )}
               </>
             )}
           </Layout.Flex>
+
+          {commitsList?.length && (
+            <Pagination
+              className="!mt-0"
+              indeterminate
+              hasNext={xNextPage > 0}
+              hasPrevious={xPrevPage > 0}
+              getPrevPageLink={getPrevPageLink}
+              getNextPageLink={getNextPageLink}
+            />
+          )}
         </Layout.Flex>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

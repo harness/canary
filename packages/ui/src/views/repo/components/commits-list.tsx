@@ -4,9 +4,9 @@ import {
   Avatar,
   Button,
   CommitCopyActions,
+  Link as DSLink,
   IconV2,
   Layout,
-  LinkProps,
   NodeGroup,
   StackedList,
   Text,
@@ -71,7 +71,6 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                               commitMessage: commit.title,
                               title: commit.message || commit.title,
                               sha: commit.sha,
-                              Link,
                               toPullRequest,
                               toCommitDetails
                             })}
@@ -125,15 +124,13 @@ function renderCommitTitle({
   title = '',
   // sha = '',
   toPullRequest,
-  toCommitDetails,
-  Link
+  toCommitDetails
 }: {
   commitMessage?: string
   title?: string
   sha?: string
   toCommitDetails: RoutingProps['toCommitDetails']
   toPullRequest: RoutingProps['toPullRequest']
-  Link: React.ComponentType<LinkProps>
 }) {
   if (!toCommitDetails) {
     return (
@@ -160,19 +157,17 @@ function renderCommitTitle({
       piecesEls.splice(
         1,
         0,
-        <Text variant="heading-base">
-          <Layout.Flex as="span">
-            &nbsp;(
-            <Link
-              className="hover:underline"
-              title={title}
-              to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
-            >
-              #{pullRequestId}
-            </Link>
-            )&nbsp;
-          </Layout.Flex>
-        </Text>
+        <>
+          &nbsp;(
+          <DSLink
+            className="font-heading-base hover:underline"
+            title={title}
+            to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
+          >
+            #{pullRequestId}
+          </DSLink>
+          )&nbsp;
+        </>
       )
 
       return <Layout.Flex>{piecesEls}</Layout.Flex>

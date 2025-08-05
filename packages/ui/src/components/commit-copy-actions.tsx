@@ -10,7 +10,7 @@ interface CommitCopyActionsProps {
 }
 
 export const CommitCopyActions = ({ sha, toCommitDetails, size = 'xs' }: CommitCopyActionsProps) => {
-  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs' })
+  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs', color: 'surfaceGray' })
   const { navigate } = useRouterContext()
 
   const handleNavigation = (ev: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent) => {

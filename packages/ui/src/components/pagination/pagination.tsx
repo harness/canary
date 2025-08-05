@@ -1,6 +1,5 @@
 import { FC, MouseEvent, ReactElement } from 'react'
 
-import { Spacer } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PaginationPrimitive } from './pagination-primitive'
@@ -175,8 +174,7 @@ export const Pagination: FC<PaginationProps> = ({
 
   return (
     <>
-      <Spacer size={6} />
-      <PaginationPrimitive.Root className={className}>
+      <PaginationPrimitive.Root className={cn('mt-cn-xl', className)}>
         {!indeterminate && totalPages && currentPage ? (
           <PaginationPrimitive.Content
             className={cn({

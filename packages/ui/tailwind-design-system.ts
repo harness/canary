@@ -47,6 +47,9 @@ export default {
           warning: 'var(--cn-text-warning)',
           accent: 'var(--cn-comp-link-text)',
           disabled: 'var(--cn-state-disabled-text)',
+          surface: {
+            gray: 'var(--cn-set-gray-surface-text)'
+          },
           multitype: {
             codebrackets: 'var(--cn-set-blue-surface-text)',
             code: 'var(--cn-set-purple-surface-text)',

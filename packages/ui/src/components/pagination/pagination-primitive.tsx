@@ -110,7 +110,7 @@ const PaginationPrimitivePrevious = ({
       {...props}
     >
       <IconV2 name="nav-arrow-left" />
-      <span>{t('component:pagination.previous', 'Previous')}</span>
+      <span>{t('component:pagination.previous', 'Prev')}</span>
     </PaginationPrimitiveLink>
   )
 }

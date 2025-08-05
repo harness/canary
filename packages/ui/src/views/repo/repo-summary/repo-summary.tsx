@@ -86,6 +86,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   tokenGenerationError?: string | null
   refType?: BranchSelectorTab
   prCandidateBranches?: TypesBranchTable[]
+  showContributeBtn?: boolean
 }
 
 export function RepoSummaryView({
@@ -117,6 +118,7 @@ export function RepoSummaryView({
   toRepoFileDetails,
   tokenGenerationError,
   refType = BranchSelectorTab.BRANCHES,
+  showContributeBtn,
   ...props
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
@@ -175,6 +177,7 @@ export function RepoSummaryView({
                     behind: currentBranchDivergence?.behind || 0
                   }}
                   refType={refType}
+                  showContributeBtn={showContributeBtn}
                 />
                 <Spacer size={4} />
               </>

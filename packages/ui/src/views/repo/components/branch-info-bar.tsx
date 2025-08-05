@@ -14,6 +14,7 @@ interface BranchInfoBarProps {
     behind: number
   }
   refType?: BranchSelectorTab
+  showContributeBtn?: boolean
 }
 
 export const BranchInfoBar: FC<BranchInfoBarProps> = ({
@@ -22,7 +23,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   spaceId,
   selectedBranchTag,
   currentBranchDivergence,
-  refType = BranchSelectorTab.BRANCHES
+  refType = BranchSelectorTab.BRANCHES,
+  showContributeBtn
 }) => {
   const { t } = useTranslation()
   const { Link } = useRouterContext()
@@ -67,7 +69,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         />
       </Text>
 
-      {refType === BranchSelectorTab.BRANCHES && (
+      {showContributeBtn && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button

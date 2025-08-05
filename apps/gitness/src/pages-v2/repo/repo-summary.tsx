@@ -33,7 +33,14 @@ import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
-import { decodeGitContent, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import {
+  decodeGitContent,
+  isRefACommitSHA,
+  isRefATag,
+  normalizeGitRef,
+  REFS_BRANCH_PREFIX,
+  REFS_TAGS_PREFIX
+} from '../../utils/git-utils'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -214,6 +221,10 @@ export default function RepoSummaryPage() {
     }
   }, [MFEtokenData, tokenHash])
 
+  const showContributeBtn = useMemo(() => {
+    return gitRefName !== repoData?.default_branch && !isRefACommitSHA(fullGitRef) && !isRefATag(fullGitRef)
+  }, [repoData?.default_branch, gitRefName])
+
   const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
     const entries = repoDetails?.content?.entries
 
@@ -312,6 +323,7 @@ export default function RepoSummaryPage() {
         toRepoBranches={() => routes.toRepoBranches({ spaceId, repoId })}
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
+        showContributeBtn={showContributeBtn}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

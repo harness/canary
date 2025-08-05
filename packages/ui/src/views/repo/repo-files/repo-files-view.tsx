@@ -39,6 +39,7 @@ interface RepoFilesProps {
   gitRef: string
   selectedRefType: BranchSelectorTab
   fullResourcePath?: string
+  showContributeBtn?: boolean
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -63,7 +64,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   spaceId,
   gitRef,
   selectedRefType,
-  fullResourcePath
+  fullResourcePath,
+  showContributeBtn
 }) => {
   const { t } = useTranslation()
 
@@ -97,6 +99,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                 behind: currentBranchDivergence.behind || 0
               }}
               refType={selectedRefType}
+              showContributeBtn={showContributeBtn}
             />
           )}
           <Summary

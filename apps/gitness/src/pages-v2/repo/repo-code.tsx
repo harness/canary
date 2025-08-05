@@ -16,7 +16,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
-import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { FILE_SEPERATOR, isRefACommitSHA, isRefATag, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 
 /**
@@ -127,6 +127,10 @@ export const RepoCode = () => {
     refetchRepoContent()
   }, [codeMode, refetchRepoContent])
 
+  const showContributeBtn = useMemo(() => {
+    return gitRefName !== repoData?.default_branch && !isRefACommitSHA(fullGitRef) && !isRefATag(fullGitRef)
+  }, [repoData?.default_branch, gitRefName])
+
   /**
    * Render File content view or Edit file view
    */
@@ -167,6 +171,7 @@ export const RepoCode = () => {
       currentBranchDivergence={currBranchDivergence}
       isLoadingRepoDetails={isLoadingRepoDetails}
       toRepoFileDetails={({ path }: { path: string }) => `../${path}`}
+      showContributeBtn={showContributeBtn}
     >
       {renderCodeView}
     </RepoFiles>

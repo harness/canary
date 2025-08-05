@@ -113,7 +113,20 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   }, [refetchReviewers])
   useEffect(() => {
     if (reviewers) {
-      const currentUserData = reviewers.filter(val => val?.reviewer?.uid === currentUser?.uid)
+      // Try to find current user by email first (most reliable in MFE mode where UID is email)
+      let currentUserData = reviewers.filter(
+        val =>
+          val?.reviewer?.email === currentUser?.email ||
+          val?.reviewer?.uid === currentUser?.uid ||
+          val?.reviewer?.uid === currentUser?.email // Handle case where UID is set to email
+      )
+
+      // Fallback: use most recent review if no match found
+      if (currentUserData.length === 0 && reviewers.length > 0) {
+        const sortedReviewers = [...reviewers].sort((a, b) => (b.updated || 0) - (a.updated || 0))
+        currentUserData = [sortedReviewers[0]]
+      }
+
       if (currentUserData[0] && currentUserData[0].sha) {
         setCommitSha(currentUserData[0].sha)
       }

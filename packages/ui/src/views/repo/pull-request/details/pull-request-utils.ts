@@ -31,8 +31,20 @@ export const determineOverallDecision = (data: ReviewerListPullReqOkResponse | u
   if (data === null || isEmpty(data)) {
     return PullReqReviewDecision.approve // Default case
   }
-  // Check if the current user is among the reviewers
-  const currentUserReviews = data?.filter(val => val?.reviewer?.uid === currentUser.uid)
+
+  // Try to find current user by email first (most reliable in MFE mode where UID is email)
+  let currentUserReviews = data?.filter(
+    val =>
+      val?.reviewer?.email === currentUser?.email ||
+      val?.reviewer?.uid === currentUser?.uid ||
+      val?.reviewer?.uid === currentUser?.email // Handle case where UID is set to email
+  )
+
+  // Fallback: use most recent review if no match found
+  if (currentUserReviews?.length === 0 && data && data.length > 0) {
+    const sortedReviewers = [...data].sort((a, b) => (b.updated || 0) - (a.updated || 0))
+    currentUserReviews = [sortedReviewers[0]]
+  }
   if (currentUserReviews?.length === 0) {
     // Current user not found among reviewers, return default approval state
     return PullReqReviewDecision.approve

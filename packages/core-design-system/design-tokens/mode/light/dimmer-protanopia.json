@@ -1108,18 +1108,18 @@
       }
     },
     "avatar": {
-      "border": {
+      "shadow": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.3",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.500}",
+        "$value": "{chrome.200}",
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
@@ -1830,7 +1830,7 @@
             "y": "0",
             "blur": "0",
             "spread": "0.6",
-            "color": "{comp.avatar.border}",
+            "color": "{comp.avatar.shadow}",
             "type": "innerShadow"
           }
         }

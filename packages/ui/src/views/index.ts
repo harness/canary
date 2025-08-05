@@ -13,6 +13,7 @@ export * from './layouts/main-content-layout'
 // components
 export * from './components/RadioSelect'
 export * from './components/page'
+export * from './components/contributors'
 
 // Account
 export * from './account'

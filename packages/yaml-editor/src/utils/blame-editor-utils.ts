@@ -81,11 +81,15 @@ export function getMonacoEditorCommitCss({
             border-radius: 50%;
             padding: 4px;
             text-align: center;
-            background: var(--cn-set-gray-soft-bg);
             line-height: 17px;
             left: ${dateWidth + 10}px;
-            top: -4px;
-            color: var(--cn-text-3);
+            top: -2px;
+            box-shadow: var(--cn-shadow-comp-avatar-inner);
+            font-size: var(--cn-font-size-0);
+            font-weight: var(--cn-font-weight-default-normal-500);
+            background-color: var(--cn-set-brand-soft-bg);
+            color: var(--cn-set-brand-soft-text);
+            font-family: var(--font-family);
             width: ${avatarSize}px;
             height: ${avatarSize}px;
             ${avatarBackgroundCss}

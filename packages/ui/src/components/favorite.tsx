@@ -18,7 +18,7 @@ const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle 
       className: isFavorite ? 'text-cn-icon-yellow' : 'text-cn-foreground-2',
       size: '2xs'
     }}
-    onChange={onFavoriteToggle}
+    onChange={(selected: boolean) => onFavoriteToggle(!selected)}
   />
 )
 

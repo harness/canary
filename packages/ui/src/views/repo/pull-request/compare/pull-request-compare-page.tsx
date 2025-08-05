@@ -2,7 +2,7 @@ import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
 import { TypesDiffStats } from '@/types'
 import {
   CommitSelectorListItem,
@@ -33,12 +33,18 @@ import {
 import PullRequestCompareDiffList from './components/pull-request-compare-diff-list'
 import { HeaderProps } from './pull-request-compare.types'
 
-export const pullRequestFormSchema = z.object({
-  title: z.string().min(1, { message: 'Please provide a pull request title' }),
-  description: z.string().optional()
-})
+export const getPullRequestFormSchema = (t: TFunctionWithFallback) =>
+  z.object({
+    title: z
+      .string()
+      .min(1, { message: t('views:pullRequests.validation.titleMin', 'Title is required') })
+      .max(256, {
+        message: t('views:pullRequests.validation.titleMax', 'Title must be no longer than 256 characters')
+      }),
+    description: z.string().optional()
+  })
 
-export type CompareFormFields = z.infer<typeof pullRequestFormSchema>
+export type CompareFormFields = z.infer<ReturnType<typeof getPullRequestFormSchema>>
 
 export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
@@ -151,7 +157,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const { t } = useTranslation()
 
   const formMethods = useForm<CompareFormFields>({
-    resolver: zodResolver(pullRequestFormSchema),
+    resolver: zodResolver(getPullRequestFormSchema(t)),
     mode: 'onChange',
     defaultValues: {
       title: '',

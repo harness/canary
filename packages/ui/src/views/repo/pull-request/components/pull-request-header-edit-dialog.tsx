@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
+import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelectorContainerProps } from '@views/repo/components'
 import { z } from 'zod'
@@ -20,14 +21,22 @@ interface PullRequestHeaderEditDialogProps {
 const FIELD_TITLE = 'title'
 const FIELD_BRANCH = 'branch'
 
-const createFormSchema = (sourceBranch?: string) =>
+const createFormSchema = (t: TFunctionWithFallback, sourceBranch?: string) =>
   z
     .object({
-      [FIELD_TITLE]: z.string().min(1, { message: 'Title is required' }),
+      [FIELD_TITLE]: z
+        .string()
+        .min(1, { message: t('views:pullRequests.validation.titleMin', 'Title is required') })
+        .max(256, {
+          message: t('views:pullRequests.validation.titleMax', 'Title must be no longer than 256 characters')
+        }),
       [FIELD_BRANCH]: z.string().optional()
     })
     .refine(data => data[FIELD_BRANCH] !== sourceBranch, {
-      message: 'Target branch cannot be the same as source branch',
+      message: t(
+        'views:pullRequests.validation.branchSameAsSource',
+        'Target branch cannot be the same as source branch'
+      ),
       path: [FIELD_BRANCH]
     })
 
@@ -46,8 +55,10 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   const [error, setError] = useState('')
   const BranchSelector = branchSelectorRenderer
 
+  const { t } = useTranslation()
+
   const formMethods = useForm<FormFields>({
-    resolver: zodResolver(createFormSchema(sourceBranch)),
+    resolver: zodResolver(createFormSchema(t, sourceBranch)),
     mode: 'onChange',
     defaultValues: {
       title: initialTitle,
@@ -155,3 +166,4 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
     </Dialog.Root>
   )
 }
+PullRequestHeaderEditDialog.displayName = 'PullRequestHeaderEditDialog'

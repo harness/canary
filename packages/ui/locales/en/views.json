@@ -579,6 +579,11 @@
     "compareChangesFormTitlePlaceholder": "Enter pull request title",
     "compareChangesFormDescriptionHeading": "Add a description",
     "compareChangesFormDescriptionPlaceholder": "Add Pull Request description here.",
+    "validation": {
+      "titleMin": "Title is required",
+      "titleMax": "Title must be no longer than 256 characters",
+      "branchSameAsSource": "Target branch cannot be the same as source branch"
+    },
     "compareChanges": "Comparing changes",
     "compareChangesDescription": "Choose two branches to see what’s changed or to start a new pull request.",
     "compareChangesAbleToMerge": "Able to merge.",

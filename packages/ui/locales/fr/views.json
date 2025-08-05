@@ -571,6 +571,11 @@
     "compareChangesFormTitlePlaceholder": "Saisissez le titre de la pull request",
     "compareChangesFormDescriptionHeading": "Add a description",
     "compareChangesFormDescriptionPlaceholder": "Ajoutez la description de la pull request ici.",
+    "validation": {
+      "titleMin": "Le titre est requis",
+      "titleMax": "Le titre doit faire moins de 256 caractères",
+      "branchSameAsSource": "La branche cible ne peut pas être la même que la branche source"
+    },
     "compareChanges": "Comparaison des modifications",
     "compareChangesDescription": "Choisissez deux branches pour voir les modifications ou pour créer une nouvelle pull request. Si nécessaire, vous pouvez aussi",
     "compareChangesAbleToMerge": "Fusion possible.",

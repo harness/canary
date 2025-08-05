@@ -9,10 +9,12 @@ import {
   useListReposQuery
 } from '@harnessio/code-service-client'
 import { Toast, useToast } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -39,6 +41,8 @@ export default function ReposListPage() {
   const { toast, dismiss } = useToast()
   const { renderUrl } = useMFEContext()
   const basename = `/ng${renderUrl}`
+  const isMFE = useIsMFE()
+  const { navigate } = useRouterContext()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -158,21 +162,25 @@ export default function ReposListPage() {
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}
       onClickRepo={(repo: RepositoryType) => {
-        const toRepository = getRepoUrl({
-          repo,
-          scope: {
-            accountId: accountId || '',
-            orgIdentifier,
-            projectIdentifier
-          },
-          toRepository: () => routes.toRepoSummary({ spaceId, repoId: repo.name })
-        })
+        const repoSummaryUrl = routes.toRepoSummary({ spaceId, repoId: repo.name })
+        if (isMFE) {
+          const fullPath = `${basename}${getRepoUrl({
+            repo,
+            scope: {
+              accountId: accountId || '',
+              orgIdentifier,
+              projectIdentifier
+            },
+            toRepository: () => repoSummaryUrl
+          })}`
 
-        const fullPath = `${basename}${toRepository}`
-        /**
-         * @todo fix this properly to avoid full page refresh. Currently, not able to navigate properly with react router.
-         */
-        window.location.href = fullPath
+          /**
+           * @todo fix this properly to avoid full page refresh. Currently, not able to navigate properly with react router.
+           */
+          window.location.href = fullPath
+        } else {
+          navigate(repoSummaryUrl)
+        }
       }}
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}

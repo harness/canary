@@ -69,7 +69,8 @@ const getMockPullRequestActions = (
   handlePrState: (data: string) => void,
   handleMerge: (data: EnumMergeMethod) => void,
   pullReqMetadata?: TypesPullReq,
-  prPanelData?: PRPanelData
+  prPanelData?: PRPanelData,
+  isMerging?: boolean
 ) => {
   return [
     ...(pullReqMetadata?.closed
@@ -110,6 +111,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('squash')
               },
+              loading: isMerging,
               disabled: !prPanelData?.allowedMethods?.includes('squash')
             },
             {
@@ -119,6 +121,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('merge')
               },
+              loading: isMerging,
               disabled: !prPanelData?.allowedMethods?.includes('merge')
             },
             {
@@ -128,6 +131,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('rebase')
               },
+              loading: isMerging,
               disabled: !prPanelData?.allowedMethods?.includes('rebase')
             },
             {
@@ -138,6 +142,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('fast-forward')
               },
+              loading: isMerging,
               disabled: !prPanelData?.allowedMethods?.includes('fast-forward')
             }
           ])
@@ -608,19 +613,25 @@ export default function PullRequestConversationPage() {
 
   const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
   const [mergeMessage, setMergeMessage] = useState('')
+  const [isMerging, setIsMerging] = useState(false)
 
   const handleMerge = useCallback(
     (method: EnumMergeMethod) => {
+      setIsMerging(true)
       const payload: OpenapiMergePullReq = {
         method: method,
         source_sha: pullReqMetadata?.source_sha,
         bypass_rules: checkboxBypass,
-        dry_run: false,
-        title: mergeTitle,
-        message: mergeMessage
+        dry_run: false
       }
+
+      if (method === 'merge' || method === 'squash') {
+        payload.title = mergeTitle
+        payload.message = mergeMessage
+      }
+
       mergePullReqOp({ body: payload, repo_ref: repoRef, pullreq_number: prId })
-        .then(_res => {
+        .then((_res: any) => {
           handleRefetchData()
           setRuleViolationArr(undefined)
           refetchBranch()
@@ -632,9 +643,12 @@ export default function PullRequestConversationPage() {
           //   setShowRestoreBranchButton(false)
           // }
         })
-        .catch(error => setMergeErrorMessage(error.message))
-      //todo: add catch to show errors
-      // .catch(exception => showError(getErrorMessage(exception)))
+        .catch((error: any) => {
+          setMergeErrorMessage(error.message)
+        })
+        .finally(() => {
+          setIsMerging(false)
+        })
     },
     [
       pullReqMetadata?.source_sha,
@@ -799,7 +813,7 @@ export default function PullRequestConversationPage() {
       changeReqReviewer,
       defaultReviewersData,
       codeOwnersData,
-      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData),
+      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData, isMerging),
       checkboxBypass,
       setCheckboxBypass,
       onRestoreBranch,
@@ -817,7 +831,8 @@ export default function PullRequestConversationPage() {
       mergeTitle,
       mergeMessage,
       setMergeTitle,
-      setMergeMessage
+      setMergeMessage,
+      isMerging
     }
   }, [
     handleRebaseBranch,
@@ -854,7 +869,8 @@ export default function PullRequestConversationPage() {
     repoId,
     mergeTitle,
     mergeMessage,
-    routes
+    routes,
+    isMerging
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

@@ -261,6 +261,7 @@ export interface PullRequestPanelProps
   mergeMessage: string
   setMergeTitle: (title: string) => void
   setMergeMessage: (message: string) => void
+  isMerging?: boolean
 }
 
 const PullRequestPanel = ({
@@ -296,6 +297,7 @@ const PullRequestPanel = ({
   mergeMessage,
   setMergeTitle,
   setMergeMessage,
+  isMerging,
   ...routingProps
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
@@ -304,6 +306,8 @@ const PullRequestPanel = ({
   const [accordionValues, setAccordionValues] = useState<string[]>([])
   const [showMergeInputs, setShowMergeInputs] = useState(false)
   const [showActionBtn, setShowActionBtn] = useState(false)
+  const [mergeInitiated, setMergeInitiated] = useState(false)
+  const [cancelInitiated, setCancelInitiated] = useState(false)
 
   useEffect(() => {
     setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
@@ -333,13 +337,16 @@ const PullRequestPanel = ({
   }
 
   const handleCancelMerge = () => {
+    setCancelInitiated(true)
     setShowMergeInputs(false)
     setShowActionBtn(false)
+    setMergeInitiated(false)
   }
 
   const handleConfirmMerge = () => {
     setShowMergeInputs(false)
     setShowActionBtn(false)
+    setMergeInitiated(true)
     const actionIdx = actions.findIndex(action => action.id === mergeButtonValue)
     if (actionIdx !== -1) {
       actions[actionIdx]?.action?.()
@@ -356,13 +363,16 @@ const PullRequestPanel = ({
     getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
-    const firstEnabledAction = actions.find(action => !action.disabled)
-    if (firstEnabledAction) {
-      setMergeButtonValue(firstEnabledAction.id)
-    } else {
-      setMergeButtonValue(actions[0].id)
+    // Only set initial mergeButtonValue if it hasn't been set yet or if actions change
+    if (!mergeButtonValue || !actions.find(action => action.id === mergeButtonValue)) {
+      const firstEnabledAction = actions.find(action => !action.disabled)
+      if (firstEnabledAction) {
+        setMergeButtonValue(firstEnabledAction.id)
+      } else {
+        setMergeButtonValue(actions[0].id)
+      }
     }
-  }, [actions])
+  }, [actions, mergeButtonValue])
 
   useEffect(() => {
     const ruleViolationArr = prPanelData?.ruleViolationArr
@@ -372,6 +382,28 @@ const PullRequestPanel = ({
       setNotBypassable(checkIfBypassAllowed)
     }
   }, [prPanelData?.ruleViolationArr, isDraft])
+
+  // Reset mergeInitiated only when PR metadata shows it's merged
+  useEffect(() => {
+    if (pullReqMetadata?.merged && mergeInitiated) {
+      setMergeInitiated(false)
+    }
+  }, [pullReqMetadata?.merged, mergeInitiated])
+
+  // Reset cancelInitiated when showActionBtn becomes false (cancel operation completes)
+  useEffect(() => {
+    if (!showActionBtn && cancelInitiated) {
+      setCancelInitiated(false)
+    }
+  }, [showActionBtn, cancelInitiated])
+
+  // Reset mergeInitiated when there's a merge error
+  useEffect(() => {
+    if (error && mergeInitiated) {
+      setMergeInitiated(false)
+      setShowActionBtn(false)
+    }
+  }, [error, mergeInitiated])
 
   const buttonState = getButtonState({
     isMergeable,
@@ -442,40 +474,65 @@ const PullRequestPanel = ({
                         truncateLabel={false}
                       />
                     )}
-                    {actions && !pullReqMetadata?.closed && !showActionBtn ? (
-                      <SplitButton
-                        // because of the complex SplitButtonProps type, we need to cast the theme and variant to const
-                        {...(buttonState.variant === 'primary'
-                          ? { theme: 'default' as const, variant: 'primary' as const }
-                          : {
-                              theme: (buttonState.theme || 'default') as 'success' | 'danger' | 'default',
-                              variant: 'outline' as const
-                            })}
-                        disabled={buttonState.disabled}
-                        selectedValue={mergeButtonValue}
-                        handleOptionChange={handleMergeTypeSelect}
-                        options={actions.map(action => ({
-                          value: action.id,
-                          label: action.title,
-                          description: action.description,
-                          disabled: action.disabled
-                        }))}
-                        handleButtonClick={() => handleMergeTypeSelect(mergeButtonValue)}
-                      >
-                        {actions[parseInt(mergeButtonValue)].title}
-                      </SplitButton>
-                    ) : null}
-                    {/* When in merge input mode, replace dropdown with Cancel/Confirm buttons, keep status/tooltip untouched */}
-                    {actions && !pullReqMetadata?.closed && showActionBtn ? (
-                      <ButtonLayout>
-                        <Button variant="outline" onClick={handleCancelMerge}>
-                          Cancel
-                        </Button>
-                        <Button theme="success" onClick={handleConfirmMerge}>
-                          Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
-                        </Button>
-                      </ButtonLayout>
-                    ) : null}
+                    {(() => {
+                      // Only show SplitButton if we're not in any merge-related state
+                      const shouldShowSplitButton =
+                        actions &&
+                        !pullReqMetadata?.closed &&
+                        !showActionBtn &&
+                        !isMerging &&
+                        !pullReqMetadata?.merged &&
+                        !mergeInitiated
+                      return shouldShowSplitButton ? (
+                        <SplitButton
+                          // because of the complex SplitButtonProps type, we need to cast the theme and variant to const
+                          {...(buttonState.variant === 'primary'
+                            ? { theme: 'default' as const, variant: 'primary' as const }
+                            : {
+                                theme: (buttonState.theme || 'default') as 'success' | 'danger' | 'default',
+                                variant: 'outline' as const
+                              })}
+                          disabled={buttonState.disabled}
+                          loading={actions[parseInt(mergeButtonValue)]?.loading}
+                          selectedValue={mergeButtonValue}
+                          handleOptionChange={handleMergeTypeSelect}
+                          options={actions.map(action => ({
+                            value: action.id,
+                            label: action.title,
+                            description: action.description,
+                            disabled: action.disabled
+                          }))}
+                          handleButtonClick={() => handleMergeTypeSelect(mergeButtonValue)}
+                        >
+                          {actions[parseInt(mergeButtonValue)].title}
+                        </SplitButton>
+                      ) : null
+                    })()}
+                    {/* When in merge input mode or merging, show Cancel/Confirm buttons */}
+                    {(() => {
+                      const shouldShowButtonLayout =
+                        actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
+                      return shouldShowButtonLayout ? (
+                        <ButtonLayout>
+                          <Button
+                            variant="outline"
+                            onClick={handleCancelMerge}
+                            loading={cancelInitiated}
+                            disabled={isMerging || mergeInitiated}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            theme="success"
+                            onClick={handleConfirmMerge}
+                            loading={isMerging || mergeInitiated}
+                            disabled={cancelInitiated}
+                          >
+                            Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
+                          </Button>
+                        </ButtonLayout>
+                      ) : null
+                    })()}
                     {actions && pullReqMetadata?.closed ? (
                       <Button variant="primary" theme="default" onClick={actions[0].action}>
                         {actions[0].title}

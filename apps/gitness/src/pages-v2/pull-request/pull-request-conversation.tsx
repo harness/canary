@@ -70,7 +70,8 @@ const getMockPullRequestActions = (
   handleMerge: (data: EnumMergeMethod) => void,
   pullReqMetadata?: TypesPullReq,
   prPanelData?: PRPanelData,
-  isMerging?: boolean
+  isMerging?: boolean,
+  setSelectedMergeMethod?: (method: EnumMergeMethod) => void
 ) => {
   return [
     ...(pullReqMetadata?.closed
@@ -109,6 +110,7 @@ const getMockPullRequestActions = (
               title: 'Squash and merge',
               description: 'All commits from this branch will be combined into one commit in the base branch.',
               action: () => {
+                setSelectedMergeMethod?.('squash')
                 handleMerge('squash')
               },
               loading: isMerging,
@@ -119,6 +121,7 @@ const getMockPullRequestActions = (
               title: 'Merge pull request',
               description: 'All commits from this branch will be added to the base branch via a merge commit.',
               action: () => {
+                setSelectedMergeMethod?.('merge')
                 handleMerge('merge')
               },
               loading: isMerging,
@@ -129,6 +132,7 @@ const getMockPullRequestActions = (
               title: 'Rebase and merge',
               description: 'All commits from this branch will be rebased and added to the base branch.',
               action: () => {
+                setSelectedMergeMethod?.('rebase')
                 handleMerge('rebase')
               },
               loading: isMerging,
@@ -140,6 +144,7 @@ const getMockPullRequestActions = (
               description:
                 'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
               action: () => {
+                setSelectedMergeMethod?.('fast-forward')
                 handleMerge('fast-forward')
               },
               loading: isMerging,
@@ -617,6 +622,24 @@ export default function PullRequestConversationPage() {
   const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
   const [mergeMessage, setMergeMessage] = useState('')
   const [isMerging, setIsMerging] = useState(false)
+  const [selectedMergeMethod, setSelectedMergeMethod] = useState<EnumMergeMethod | null>(null)
+
+  // Update merge title based on selected merge method
+  useEffect(() => {
+    if (selectedMergeMethod && pullReqMetadata && repoMetadata) {
+      if (selectedMergeMethod === 'squash') {
+        setMergeTitle(`${pullReqMetadata.title} (#${pullReqMetadata.number})`)
+      } else if (selectedMergeMethod === 'merge') {
+        setMergeTitle(
+          `Merge branch ${pullReqMetadata.source_branch} of ${repoMetadata.path} (#${pullReqMetadata.number})`
+        )
+      }
+    }
+  }, [selectedMergeMethod, pullReqMetadata, repoMetadata])
+
+  const handleMergeMethodSelect = useCallback((method: string) => {
+    setSelectedMergeMethod(method as EnumMergeMethod)
+  }, [])
 
   const handleMerge = useCallback(
     (method: EnumMergeMethod) => {
@@ -816,7 +839,14 @@ export default function PullRequestConversationPage() {
       changeReqReviewer,
       defaultReviewersData,
       codeOwnersData,
-      actions: getMockPullRequestActions(handlePrState, handleMerge, pullReqMetadata, prPanelData, isMerging),
+      actions: getMockPullRequestActions(
+        handlePrState,
+        handleMerge,
+        pullReqMetadata,
+        prPanelData,
+        isMerging,
+        setSelectedMergeMethod
+      ),
       checkboxBypass,
       setCheckboxBypass,
       onRestoreBranch,
@@ -835,7 +865,8 @@ export default function PullRequestConversationPage() {
       mergeMessage,
       setMergeTitle,
       setMergeMessage,
-      isMerging
+      isMerging,
+      onMergeMethodSelect: handleMergeMethodSelect
     }
   }, [
     handleRebaseBranch,
@@ -873,7 +904,9 @@ export default function PullRequestConversationPage() {
     mergeTitle,
     mergeMessage,
     routes,
-    isMerging
+    isMerging,
+    setSelectedMergeMethod,
+    handleMergeMethodSelect
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

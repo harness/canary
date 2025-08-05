@@ -25,6 +25,7 @@ interface RepoPullRequestChangesPageProps {
   submitReview?: (decision: PullReqReviewDecision) => void
   refetchReviewers?: () => void
   loading?: boolean
+  isApproving?: boolean
   diffMode: DiffModeEnum
   setDiffMode: (value: DiffModeEnum) => void
   loadingReviewers?: boolean
@@ -60,7 +61,7 @@ interface RepoPullRequestChangesPageProps {
   principalProps: PrincipalPropsType
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
-  loadingReviewers,
+  loadingReviewers: _loadingReviewers,
   usePullRequestProviderStore,
   diffMode,
   reviewers,
@@ -68,6 +69,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   submitReview,
   currentUser,
   setDiffMode,
+  isApproving,
   pullReqMetadata,
   loadingRawDiff,
   handleSaveComment,
@@ -179,7 +181,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     <>
       <PullRequestChangesFilter
         active={''}
-        loading={loadingReviewers}
+        isApproving={isApproving}
         currentUser={currentUser ?? {}}
         pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
         reviewers={reviewers}

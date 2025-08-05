@@ -36,7 +36,7 @@ export interface PullRequestChangesFilterProps {
   reviewers?: ReviewerListPullReqOkResponse
   submitReview?: (decision: PullReqReviewDecision) => void
   refetchReviewers?: () => void
-  loading?: boolean
+  isApproving?: boolean
   diffMode: DiffModeEnum
   setDiffMode: (value: DiffModeEnum) => void
   pullReqCommits?: TypesCommit[]
@@ -61,6 +61,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   reviewers,
   submitReview,
   refetchReviewers,
+  isApproving,
   // diffMode,
   // setDiffMode,
   pullReqCommits,
@@ -311,6 +312,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <SplitButton
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
+              loading={isApproving}
               variant="outline"
               handleOptionChange={selectedMethod => {
                 submitReview?.(selectedMethod as PullReqReviewDecision)

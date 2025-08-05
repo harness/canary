@@ -86,6 +86,7 @@ export default function PullRequestChanges() {
   const [scrolledToComment, setScrolledToComment] = useState(false)
   const [searchPrincipalsQuery, setSearchPrincipalsQuery] = useState('')
   const [jumpToDiff, setJumpToDiff] = useState('')
+  const [isApproving, setIsApproving] = useState(false)
   const isMfe = useIsMFE()
 
   const {
@@ -112,6 +113,7 @@ export default function PullRequestChanges() {
 
   const submitReview = useCallback(
     (decision: PullReqReviewDecision) => {
+      setIsApproving(true)
       reviewSubmitPullReq({
         repo_ref: repoRef,
         pullreq_number: prId,
@@ -126,6 +128,9 @@ export default function PullRequestChanges() {
         .catch((exception: string) => {
           console.warn(exception)
           refetchReviewers()
+        })
+        .finally(() => {
+          setIsApproving(false)
         })
     },
     [refetchActivities, refetchPullReq, pullReqMetadata?.source_sha, refetchReviewers, repoRef, prId]
@@ -506,6 +511,7 @@ export default function PullRequestChanges() {
         toRepoFileDetails={({ path }: { path: string }) =>
           isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
         }
+        isApproving={isApproving}
       />
     </>
   )

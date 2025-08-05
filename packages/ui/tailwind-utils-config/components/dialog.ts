@@ -102,9 +102,11 @@ export default {
     marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
     marginBottom: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
     marginTop: 'var(--cn-dialog-gap)',
+    height: '100%',
 
     '&-content': {
       display: 'grid',
+      alignContent: 'start',
       gap: 'var(--cn-layout-xl)'
     }
   },

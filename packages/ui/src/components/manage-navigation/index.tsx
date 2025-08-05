@@ -115,13 +115,9 @@ export const ManageNavigation = ({
 
   return (
     <Dialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
-      <Dialog.Content className="h-[574px] max-h-[70vh]">
+      <Dialog.Content className="max-h-[70vh]">
         <Dialog.Header>
           <Dialog.Title>Manage navigation</Dialog.Title>
-          <ManageNavigationSearch
-            navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
-            addToPinnedItems={addToPinnedItems}
-          />
         </Dialog.Header>
 
         <Dialog.Body>

@@ -139,7 +139,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 </div>
               </Table.Cell>
               {/* user avatar and timestamp */}
-              <Table.Cell className="content-center">
+              <Table.Cell className="content-center" disableLink>
                 <div className="flex items-center gap-2">
                   <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
                   <TimeAgoCard
@@ -188,7 +188,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               </Table.Cell>
 
               {/* PR link */}
-              <Table.Cell className="max-w-20 content-center">
+              <Table.Cell className="max-w-20 content-center" disableLink>
                 {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                   <StatusBadge
                     variant="outline"

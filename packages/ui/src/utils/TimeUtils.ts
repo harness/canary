@@ -136,5 +136,5 @@ export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = fal
  * @returns Formatted string.
  */
 export function formatNumber(num: number | bigint): string {
-  return num ? new Intl.NumberFormat(LOCALE).format(num) : ''
+  return new Intl.NumberFormat(LOCALE).format(num)
 }

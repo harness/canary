@@ -102,42 +102,45 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     }
   }
 
-  useEffect(() => {
-    const fetchSpacesAndUser = async () => {
-      setSpacesIsLoading(true)
+  const fetchSpacesAndUser = async () => {
+    setSpacesIsLoading(true)
 
-      try {
-        const fetchSpaces = () =>
-          membershipSpaces({
-            queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
-          })
+    try {
+      const fetchSpaces = () =>
+        membershipSpaces({
+          queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+        })
 
-        const promises = isMFE ? [] : [fetchSpaces(), fetchUser()]
-        const [results] = await Promise.allSettled(promises)
+      const promises = isMFE ? [] : [fetchSpaces(), fetchUser()]
+      const [results] = await Promise.allSettled(promises)
 
-        if (!isMFE && results.status === 'fulfilled' && results.value?.body) {
-          const spaces = results.value.body
-            .filter((item: { space?: TypesSpace }) => item.space)
-            .map((item: { space?: TypesSpace }) => item.space as TypesSpace)
+      if (!isMFE && results.status === 'fulfilled' && results.value?.body) {
+        const spaces = results.value.body
+          .filter((item: { space?: TypesSpace }) => item.space)
+          .map((item: { space?: TypesSpace }) => item.space as TypesSpace)
 
-          setSpaces(spaces)
-        }
-      } catch (e) {
-        // Optionally handle error or show toast
-      } finally {
-        setSpacesIsLoading(false)
+        setSpaces(spaces)
       }
+    } catch (e) {
+      // Optionally handle error or show toast
+    } finally {
+      setSpacesIsLoading(false)
     }
+  }
 
+  useEffect(() => {
     if (isMFE) {
       const currentUserInfo = parentAppStoreContext.currentUserInfo
       setCurrentUser({
         uid: currentUserInfo.uuid,
         email: currentUserInfo.email,
-        display_name: currentUserInfo.name
+        display_name: currentUserInfo.name,
+        created: currentUserInfo.createdAt,
+        updated: currentUserInfo.lastUpdatedAt
       })
+    } else {
+      fetchSpacesAndUser()
     }
-    fetchSpacesAndUser()
   }, [isMFE])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {

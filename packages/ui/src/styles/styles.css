@@ -69,7 +69,10 @@
   --cn-breadcrumbs-height: 55px;
   --cn-tabs-nav-height: 45px;
   --cn-repo-header-height: 71px;
-  --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height));
+  --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height));
+  --cn-page-nav-full-height: calc(
+    var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height)
+  );
 }
 
 .border-linear {
@@ -596,6 +599,12 @@ mark {
 
 .nested-sidebar-height {
   height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
+}
+
+.repo-files-height {
+  height: calc(
+    100vh - var(--cn-page-nav-full-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2
+  );
 }
 
 .branch-selector-trigger-as-input {

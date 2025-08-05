@@ -17,7 +17,11 @@ export function ProfileSettingsLayout() {
   const { t } = useTranslation()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={55} sidebarViewportClassName="pt-7">
+    <ContentLayoutWithSidebar
+      sidebarMenu={getNavItems(t)}
+      sidebarViewportClassName="pt-7"
+      sidebarContainerClassName="top-[var(--cn-breadcrumbs-height)]"
+    >
       <Outlet />
     </ContentLayoutWithSidebar>
   )

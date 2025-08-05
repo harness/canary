@@ -19,7 +19,6 @@ export function WebhookSettingsLayout() {
   return (
     <ContentLayoutWithSidebar
       sidebarMenu={getNavItems(t)}
-      sidebarOffsetTop={116}
       sidebarViewportClassName="pt-5"
       showBackButton
       backButtonLabel="Back to webhooks"

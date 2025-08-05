@@ -54,7 +54,7 @@ export const AppShell: FC = () => {
      * Logic for setting initial pinned links
      *
      * setting initial pinned link only if no pinned links are stored in local storage.
-     * Pinned links cannot be empty as we will have some links permanantly.
+     * Pinned links cannot be empty as we will have some links permanently.
      */
     if (parsedLinksFromStorage && !parsedLinksFromStorage?.state?.pinned?.length) {
       const pinnedItems = pinnedMenu.filter(
@@ -70,7 +70,7 @@ export const AppShell: FC = () => {
     <>
       <AppSideBar>
         <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} withMobileSidebarToggle />
-        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0} enableInset={false}>
+        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0} enableInset>
           <Outlet />
         </MainContentLayout>
       </AppSideBar>

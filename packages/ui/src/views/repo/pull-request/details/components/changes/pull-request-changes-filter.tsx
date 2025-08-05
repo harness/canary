@@ -342,3 +342,4 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     </Layout.Horizontal>
   )
 }
+PullRequestChangesFilter.displayName = 'PullRequestChangesFilter'

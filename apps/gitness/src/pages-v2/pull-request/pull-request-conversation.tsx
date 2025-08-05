@@ -344,10 +344,13 @@ export default function PullRequestConversationPage() {
 
   const handleUpdateDescription = useCallback(
     (title: string, description: string) => {
-      updateTitle({ body: { title, description } }).catch(err => {
-        setErrorMsg(err.message)
-      })
-      refetchPullReq()
+      return updateTitle({ body: { title, description } })
+        .then(() => {
+          refetchPullReq()
+        })
+        .catch(err => {
+          throw err
+        })
     },
     [updateTitle, refetchPullReq]
   )

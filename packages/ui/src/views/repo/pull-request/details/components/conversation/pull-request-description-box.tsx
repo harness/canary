@@ -14,7 +14,7 @@ export interface PullRequestDescBoxProps {
   prNum?: string
   createdAt?: number
   description?: string
-  handleUpdateDescription: (title: string, description: string) => void
+  handleUpdateDescription: (title: string, description: string) => Promise<void>
   handleUpload: HandleUploadType
   principalProps: PrincipalPropsType
 }
@@ -106,9 +106,13 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
               setPrincipalsMentionMap={noop}
               handleUpload={handleUpload}
               onSaveComment={() => {
-                // Empty comment can be saved.
-                handleUpdateDescription(title || '', comment)
-                setEdit(false)
+                return handleUpdateDescription(title || '', comment)
+                  .then(() => {
+                    setEdit(false)
+                  })
+                  .catch(err => {
+                    throw err
+                  })
               }}
               onCancelClick={() => {
                 setEdit(false)

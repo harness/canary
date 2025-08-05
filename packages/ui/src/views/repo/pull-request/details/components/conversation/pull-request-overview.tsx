@@ -42,7 +42,7 @@ export interface PullRequestOverviewProps
   extends RoutingProps,
     Pick<TimelineItemProps, 'toggleConversationStatus' | 'onCopyClick' | 'handleSaveComment'>,
     Required<Omit<PRCommentViewProps, 'commentItem' | 'parentItem'>> {
-  handleUpdateDescription: (title: string, description: string) => void
+  handleUpdateDescription: (title: string, description: string) => Promise<void>
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }
   handleUpdateComment: (id: number, comment: string) => Promise<void>

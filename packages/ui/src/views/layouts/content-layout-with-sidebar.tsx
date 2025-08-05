@@ -1,10 +1,8 @@
 import { FC, Fragment, ReactNode } from 'react'
 
 import { Layout, Link, ScrollArea, Separator, Text } from '@/components'
-import { INSET_LAYOUT_INDENT, useRouterContext } from '@/context'
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
-
-const BREADCRUMBS_HEIGHT = 55
 
 export interface SidebarMenuItemSubItem {
   id: string | number
@@ -22,7 +20,7 @@ export interface SidebarMenuItem {
 export interface ContentLayoutWithSidebarProps {
   children: ReactNode
   sidebarMenu: SidebarMenuItem[]
-  sidebarOffsetTop?: number
+  sidebarContainerClassName?: string
   // You need to pass the padding-top value, which is the initial offset of the sidebar from the top of the visible area.
   // This is required to ensure that scrolling within the block goes beyond the boundary
   // while the block maintains the correct top padding according to the design.
@@ -35,7 +33,7 @@ export interface ContentLayoutWithSidebarProps {
 export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   children,
   sidebarMenu,
-  sidebarOffsetTop = 0,
+  sidebarContainerClassName,
   sidebarViewportClassName,
   showBackButton = false,
   backButtonLabel = 'Back',
@@ -44,16 +42,15 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   const { NavLink } = useRouterContext()
 
   return (
-    <div className="relative mx-auto flex w-full items-start gap-x-[28px] pr-4 ml-2">
+    <div className="relative mx-auto ml-2 flex w-full items-start gap-x-[28px] pr-4">
       <div
-        className="sticky w-[270px]"
-        style={{
-          top: `${sidebarOffsetTop}px`,
-          height: `calc(100svh - ${sidebarOffsetTop + BREADCRUMBS_HEIGHT}px - ${INSET_LAYOUT_INDENT}px)`
-        }}
+        className={cn(
+          'nested-sidebar-height top-[var(--cn-page-nav-height)] sticky w-[270px]',
+          sidebarContainerClassName
+        )}
       >
         {showBackButton && (
-          <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''} className="px-5 mt-7">
+          <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''} className="mt-7 px-5">
             {backButtonLabel}
           </Link>
         )}

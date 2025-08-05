@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { UseSidebarSignature } from '@/components'
+import { Layout, UseSidebarSignature } from '@/components'
 import { cn } from '@/utils'
 
 /**
@@ -36,30 +36,39 @@ export function MainContentLayout({
   const isMobile = sidebarData?.isMobile
 
   return (
-    <div
+    <Layout.Flex
+      direction="column"
       className={cn(
-        'flex flex-col min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] my-[var(--cn-inset-layout-indent)] border rounded-md min-w-fit bg-cn-background-1',
+        'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] mx-[var(--cn-inset-layout-indent)] my-[var(--cn-inset-layout-indent)] border-[var(--cn-inset-border-width)] min-w-fit bg-cn-background-1',
         {
-          'mx-[var(--cn-inset-layout-indent)]': isMobile || enableInset,
+          'rounded-md': isMobile || enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs
         },
         className
       )}
+      style={
+        {
+          '--cn-inset-layout-indent': enableInset ? '6px' : '0px',
+          '--cn-inset-border-width': enableInset ? '1px' : '0px'
+        } as React.CSSProperties
+      }
     >
-      <div
-        aria-hidden
-        role="presentation"
-        className={cn(
-          'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)] z-20',
-          { 'top-[var(--cn-breadcrumbs-height)]': withBreadcrumbs }
-        )}
-      >
-        <HalfArch className="left-0" />
-        <div className="w-full border-t" />
-        <HalfArch className="right-0" />
-      </div>
+      {enableInset && (
+        <div
+          aria-hidden
+          role="presentation"
+          className={cn(
+            'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)] z-20',
+            { 'top-[var(--cn-breadcrumbs-height)]': withBreadcrumbs }
+          )}
+        >
+          <HalfArch className="left-0" />
+          <div className="w-full border-t" />
+          <HalfArch className="right-0" />
+        </div>
+      )}
       {children}
-    </div>
+    </Layout.Flex>
   )
 }

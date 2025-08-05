@@ -51,7 +51,7 @@ export function RepoSettingsLayout() {
   const { t } = useTranslation()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={120} sidebarViewportClassName="pt-7">
+    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarViewportClassName="pt-7">
       <Outlet />
     </ContentLayoutWithSidebar>
   )

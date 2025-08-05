@@ -84,6 +84,7 @@ export interface PullRequestCommentBoxProps {
   onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
+  autofocus?: boolean
   onSaveComment?: (comment: string) => Promise<void> | void
   onCancelClick?: () => void
   handleUpload?: HandleUploadType
@@ -110,6 +111,7 @@ export const PullRequestCommentBox = ({
   onSaveComment,
   currentUser,
   inReplyMode = false,
+  autofocus = false,
   onCancelClick,
   diff = '',
   lang = '',
@@ -543,7 +545,7 @@ export const PullRequestCommentBox = ({
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
                 className="text-cn-foreground-1 min-h-24 pb-8"
-                autoFocus={!!inReplyMode}
+                autoFocus={!!autofocus || !!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
                 value={comment}

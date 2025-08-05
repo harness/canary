@@ -371,6 +371,7 @@ const PullRequestDiffViewer = ({
       return (
         <div className="flex w-full flex-col bg-cn-background-1 p-4">
           <PullRequestCommentBox
+            autofocus
             handleUpload={handleUpload}
             principalsMentionMap={principalsMentionMap}
             setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -498,6 +499,7 @@ const PullRequestDiffViewer = ({
                           <TextInput value={t('views:pullRequests.deletedComment')} disabled />
                         ) : editModes[componentId] ? (
                           <PullRequestCommentBox
+                            autofocus
                             principalsMentionMap={principalsMentionMap}
                             setPrincipalsMentionMap={setPrincipalsMentionMap}
                             principalProps={principalProps}
@@ -583,6 +585,7 @@ const PullRequestDiffViewer = ({
                                   <TextInput value={t('views:pullRequests.deletedComment')} disabled />
                                 ) : editModes[replyComponentId] ? (
                                   <PullRequestCommentBox
+                                    autofocus
                                     principalsMentionMap={principalsMentionMap}
                                     setPrincipalsMentionMap={setPrincipalsMentionMap}
                                     principalProps={principalProps}

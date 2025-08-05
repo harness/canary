@@ -257,6 +257,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                 <TextInput value={t('views:pullRequests.deletedComment')} disabled />
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
+                  autofocus
                   principalsMentionMap={principalsMentionMap}
                   setPrincipalsMentionMap={setPrincipalsMentionMap}
                   principalProps={principalProps}

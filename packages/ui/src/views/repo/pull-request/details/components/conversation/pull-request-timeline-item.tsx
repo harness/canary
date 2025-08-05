@@ -353,6 +353,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
 
                 {isEditMode ? (
                   <PullRequestCommentBox
+                    autofocus
                     principalsMentionMap={principalsMentionMap}
                     setPrincipalsMentionMap={setPrincipalsMentionMap}
                     principalProps={principalProps}

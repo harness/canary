@@ -211,8 +211,9 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       <div className="relative w-full">
         <Textarea
           {...textareaProps}
-          className={cn('field-sizing-content max-h-96', className)}
+          className={cn('field-sizing-content', className)}
           resizable
+          rows={7}
           value={value}
           onChange={e => {
             onTextValueChange(e)

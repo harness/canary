@@ -521,7 +521,7 @@ export const PullRequestCommentBox = ({
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
           <Tabs.List
-            className="-mx-4 px-4 mb-cn-md"
+            className="-mx-4 mb-cn-md px-4"
             activeClassName={inReplyMode ? 'bg-cn-background-2' : 'bg-cn-background-1'}
             variant="overlined"
           >
@@ -542,7 +542,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="text-cn-foreground-1 min-h-24 pb-8"
+                className="min-h-24 pb-9 text-cn-foreground-1"
                 autoFocus={!!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -567,10 +567,7 @@ export const PullRequestCommentBox = ({
                 <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
               )}
 
-              <Layout.Flex
-                align="center"
-                className="bg-cn-background-1 absolute bottom-[1px] left-[1px] w-[calc(100%-2px)] rounded"
-              >
+              <Layout.Flex align="center" className="absolute bottom-px left-px w-min rounded bg-cn-background-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (

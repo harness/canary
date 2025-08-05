@@ -51,7 +51,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
       {!!labels.length && (
         <LabelsList
           labels={labels}
-          className="overflow-hidden flex-nowrap"
+          className="overflow-hidden flex-nowrap flex-none"
           onClick={label => onLabelClick?.(label.id || 0)}
         />
       )}

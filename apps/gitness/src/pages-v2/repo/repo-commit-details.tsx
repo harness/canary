@@ -9,7 +9,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import { useCommitDetailsStore } from './stores/commit-details-store'
 
-export default function RepoCommitDetailsPage({ showSidebar = true }: { showSidebar?: boolean }) {
+export default function RepoCommitDetailsPage() {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
   const { setCommitData } = useCommitDetailsStore()
@@ -34,7 +34,6 @@ export default function RepoCommitDetailsPage({ showSidebar = true }: { showSide
         routes.toPullRequest({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
       }
       useCommitDetailsStore={useCommitDetailsStore}
-      showSidebar={showSidebar}
       loadingCommitDetails={loadingCommitDetails}
     />
   )

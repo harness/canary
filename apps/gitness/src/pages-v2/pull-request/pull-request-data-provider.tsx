@@ -28,7 +28,14 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery(
+    { repo_ref: repoRef },
+    {
+      onSuccess: data => {
+        setRepoMetadata(data.body)
+      }
+    }
+  )
   const store = usePullRequestProviderStore()
   const {
     pullReqMetadata,
@@ -92,25 +99,18 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     onEvent: handleEvent,
     shouldRun: !!(spaceURL && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
   })
-  useEffect(() => {
-    if (repoMetadata) {
-      setRepoMetadata(repoMetadata as RepoRepositoryOutput)
-    }
-  }, [repoMetadata, setRepoMetadata])
-  useEffect(() => {
-    if (pullReqData && !isEqual(pullReqMetadata, pullReqData)) {
-      if (
-        !pullReqMetadata ||
-        (pullReqMetadata &&
-          (pullReqMetadata.merge_base_sha !== pullReqData.merge_base_sha ||
-            pullReqMetadata.source_sha !== pullReqData.source_sha))
-      ) {
-        refetchCommits()
-      }
 
-      setPullReqMetadata(pullReqData)
+  useEffect(() => {
+    if (!pullReqData || isEqual(pullReqMetadata, pullReqData)) return
+    setPullReqMetadata(pullReqData)
+
+    const mergeBaseChanged = pullReqMetadata?.merge_base_sha !== pullReqData.merge_base_sha
+    const sourceShaChanged = pullReqMetadata?.source_sha !== pullReqData.source_sha
+
+    if (mergeBaseChanged || sourceShaChanged) {
+      refetchCommits()
     }
-  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchActivities, refetchCommits])
+  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchCommits])
 
   useEffect(() => {
     const hasChanges =
@@ -175,21 +175,11 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     // Immediate call
     dryMerge()
 
-    const intervalId = setInterval(() => {
-      dryMerge()
-    }, POLLING_INTERVAL)
+    const intervalId = setInterval(dryMerge, POLLING_INTERVAL)
 
     return () => clearInterval(intervalId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pullReqMetadata?.source_sha, pullRequestTab, repoRef])
-
-  useEffect(() => {
-    if (repoRef && pullReqData?.source_sha) {
-      // store.updateState({ prPanelData: { ...prPanelData, PRStateLoading: true } })
-      dryMerge()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [repoRef, pullReqData?.source_sha, pullRequestTab])
+  }, [pullReqMetadata?.state, pullReqMetadata?.source_sha, repoMetadata?.path, pullRequestTab, repoRef])
 
   useEffect(() => {
     setCommentsInfoData(

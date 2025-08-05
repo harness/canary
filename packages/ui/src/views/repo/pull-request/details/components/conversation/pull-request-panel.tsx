@@ -304,7 +304,10 @@ const PullRequestPanel = ({
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
   const [notBypassable, setNotBypassable] = useState(false)
-  const [mergeButtonValue, setMergeButtonValue] = useState(actions[0].id)
+  const [mergeButtonValue, setMergeButtonValue] = useState<string>(() => {
+    const firstEnabledAction = actions.find(action => !action.disabled)
+    return firstEnabledAction?.id || actions[0]?.id || ''
+  })
   const [accordionValues, setAccordionValues] = useState<string[]>([])
   const [showMergeInputs, setShowMergeInputs] = useState(false)
   const [showActionBtn, setShowActionBtn] = useState(false)
@@ -372,12 +375,13 @@ const PullRequestPanel = ({
     getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
-    // Only set initial mergeButtonValue if it hasn't been set yet or if actions change
-    if (!mergeButtonValue || !actions.find(action => action.id === mergeButtonValue)) {
+    // Update mergeButtonValue if current selection is no longer valid or if actions change
+    const currentAction = actions.find(action => action.id === mergeButtonValue)
+    if (!currentAction || currentAction.disabled) {
       const firstEnabledAction = actions.find(action => !action.disabled)
       if (firstEnabledAction) {
         setMergeButtonValue(firstEnabledAction.id)
-      } else {
+      } else if (actions.length > 0) {
         setMergeButtonValue(actions[0].id)
       }
     }
@@ -511,7 +515,12 @@ const PullRequestPanel = ({
                             description: action.description,
                             disabled: action.disabled
                           }))}
-                          handleButtonClick={() => handleMergeTypeSelect(mergeButtonValue)}
+                          handleButtonClick={() => {
+                            const selectedAction = actions[parseInt(mergeButtonValue)]
+                            if (!selectedAction.disabled) {
+                              handleMergeTypeSelect(mergeButtonValue)
+                            }
+                          }}
                         >
                           {actions[parseInt(mergeButtonValue)].title}
                         </SplitButton>

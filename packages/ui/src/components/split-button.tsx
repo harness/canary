@@ -98,7 +98,11 @@ export const SplitButton = <T extends string>({
                   description={option?.description}
                   value={String(option.value)}
                   key={String(option.value)}
-                  onClick={() => handleOptionChange(option.value)}
+                  onClick={() => {
+                    if (!loading && !option.disabled) {
+                      handleOptionChange(option.value)
+                    }
+                  }}
                   disabled={loading || option.disabled}
                 />
               ))}
@@ -110,7 +114,11 @@ export const SplitButton = <T extends string>({
                   title={option.label}
                   description={option.description}
                   key={String(option.value)}
-                  onClick={() => handleOptionChange(option.value)}
+                  onClick={() => {
+                    if (!loading && !option.disabled) {
+                      handleOptionChange(option.value)
+                    }
+                  }}
                   disabled={loading || option.disabled}
                 />
               ))}

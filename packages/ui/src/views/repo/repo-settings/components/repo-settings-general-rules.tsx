@@ -166,7 +166,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   <StackedList.Item className="py-4 pr-1.5" key={rule.identifier} asChild>
                     <Link to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''} target="_blank">
                       <StackedList.Field
-                        className="gap-1.5"
+                        className="grid gap-1.5"
                         title={
                           <div className="flex items-center gap-2">
                             {rule.state === 'active' ? (
@@ -174,7 +174,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             ) : (
                               <IconV2 className="text-icons-9" name="minus-circle" size="md" />
                             )}
-                            <span className="text-3 font-medium leading-snug">{rule.identifier}</span>
+                            <Text variant="heading-base" truncate>
+                              {rule.identifier}
+                            </Text>
                             {rule.type && (
                               <Tag
                                 showIcon

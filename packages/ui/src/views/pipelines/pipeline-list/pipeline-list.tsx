@@ -87,7 +87,7 @@ export const PipelineList = ({
         <LinkComponent key={pipeline.id} to={toPipelineDetails?.(pipeline) || ''}>
           <StackedList.Item className="py-3" key={pipeline.name} isLast={pipelines.length - 1 === idx}>
             <StackedList.Field
-              className="gap-y-1.5"
+              className="grid gap-y-1.5"
               title={<Title status={pipeline.status} title={pipeline.name || ''} />}
               description={
                 <Description sha={pipeline.sha} description={pipeline.description} version={pipeline.version} />

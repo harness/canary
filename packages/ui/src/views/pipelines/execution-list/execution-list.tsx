@@ -94,7 +94,7 @@ export const ExecutionList = ({
         <LinkComponent key={execution.id} to={execution.id}>
           <StackedList.Item className="py-3" key={execution.name} isLast={executions.length - 1 === idx}>
             <StackedList.Field
-              className="gap-y-1.5"
+              className="grid gap-y-1.5"
               title={<Title status={execution.status} title={execution.name || ''} />}
               description={
                 <Description sha={execution.sha} description={execution.description} version={execution.version} />

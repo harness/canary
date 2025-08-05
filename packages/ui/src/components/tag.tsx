@@ -123,7 +123,7 @@ function Tag({
       </span>
       {showReset && !disabled && (
         <button onClick={onReset}>
-          <IconV2 size="xs" name="xmark" className="cn-tag-icon" />
+          <IconV2 size="2xs" name="xmark" className="cn-tag-icon" />
         </button>
       )}
       {showCopyButton ? (

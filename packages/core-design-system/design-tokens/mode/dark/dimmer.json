@@ -1090,7 +1090,7 @@
       }
     },
     "avatar": {
-      "border": {
+      "shadow": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
@@ -1812,7 +1812,7 @@
             "y": "0",
             "blur": "0",
             "spread": "0.6",
-            "color": "{comp.avatar.border}",
+            "color": "{comp.avatar.shadow}",
             "type": "innerShadow"
           }
         }

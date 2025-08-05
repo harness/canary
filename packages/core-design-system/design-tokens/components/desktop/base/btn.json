@@ -1,6 +1,14 @@
 {
   "btn": {
     "size": {
+      "3xs": {
+        "$type": "sizing",
+        "$value": "{size.5}"
+      },
+      "2xs": {
+        "$type": "sizing",
+        "$value": "{size.6}"
+      },
       "xs": {
         "$type": "sizing",
         "$value": "{size.7}"
@@ -15,6 +23,14 @@
       }
     },
     "gap": {
+      "3xs": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
+      "2xs": {
+        "$type": "spacing",
+        "$value": "{spacing.1}"
+      },
       "xs": {
         "$type": "spacing",
         "$value": "{spacing.1}"
@@ -45,20 +61,36 @@
       "$value": "{borderWidth.1}"
     },
     "px": {
+      "3xs": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "2xs": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
       "xs": {
         "$type": "spacing",
         "$value": "{spacing.3}"
       },
       "sm": {
         "$type": "spacing",
-        "$value": "{spacing.4}"
+        "$value": "{spacing.3-half}"
       },
       "md": {
         "$type": "spacing",
-        "$value": "{spacing.5}"
+        "$value": "{spacing.4}"
       }
     },
     "py": {
+      "2xs": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
+      "3xs": {
+        "$type": "spacing",
+        "$value": "{spacing.half}"
+      },
       "xs": {
         "$type": "spacing",
         "$value": "{spacing.1}"
@@ -70,12 +102,6 @@
       "md": {
         "$type": "spacing",
         "$value": "{spacing.2}"
-      }
-    },
-    "commit": {
-      "width": {
-        "$type": "sizing",
-        "$value": "{size.20}"
       }
     }
   },

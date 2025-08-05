@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchFiles, Spacer } from '@/components'
+import { Button, IconV2, Layout, ScrollArea, SearchFiles } from '@/components'
 
 interface RepoSidebarProps {
   navigateToNewFile: () => void
@@ -35,10 +35,7 @@ export const RepoSidebar = ({
             contentClassName="w-[800px]"
           />
 
-          <ScrollArea className="-mr-5 grid-cols-[100%] pr-5">
-            {children}
-            <Spacer size={10} />
-          </ScrollArea>
+          <ScrollArea className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5">{children}</ScrollArea>
         </Layout.Flex>
       </div>
     </>

@@ -19,7 +19,6 @@ export interface RepoCommitDetailsViewProps extends RoutingProps {
 
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
-  showSidebar = true,
   toCommitDetails,
   toPullRequest,
   toCode,
@@ -29,62 +28,69 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   const { t } = useTranslation()
   const { commitData } = useCommitDetailsStore()
 
-  return (
-    <SandboxLayout.Main className="overflow-visible" fullWidth>
-      {loadingCommitDetails ? (
+  if (loadingCommitDetails) {
+    return (
+      <SandboxLayout.Main fullWidth>
         <SandboxLayout.Content>
           <Skeleton.List />
         </SandboxLayout.Content>
-      ) : (
-        <SandboxLayout.Content>
-          <Layout.Horizontal gap="3xs">
-            <Text variant="heading-section">{t('views:commits.commitDetailsTitle', 'Commit')}</Text>
-            <Text variant="heading-section" color="foreground-2">
-              {commitData?.sha?.slice(0, 7)}
-            </Text>
-          </Layout.Horizontal>
+      </SandboxLayout.Main>
+    )
+  }
 
-          <div className="mt-4 rounded-md border border-cn-borders-2">
-            <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
-              <CommitTitleWithPRLink
-                toPullRequest={toPullRequest}
-                commitMessage={commitData?.title}
-                title={commitData?.title}
-                textProps={{ variant: 'body-code' }}
-              />
-              <Button variant="outline" asChild>
-                <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
-                  <IconV2 name="folder" />
-                  {t('views:commits.browseFiles', 'Browse Files')}
-                </Link>
-              </Button>
-            </div>
-            <div className="flex items-center justify-between px-4 py-2.5">
-              <div className="gap-cn-2xs flex items-center">
-                {commitData?.author?.identity?.name && (
-                  <Avatar name={commitData?.author?.identity?.name} size="md" rounded />
-                )}
-                <Text variant="body-single-line-strong">{commitData?.author?.identity?.name || ''}</Text>
-                <Text variant="body-single-line-normal" color="foreground-3">
-                  committed on{' '}
-                  <TimeAgoCard
-                    timestamp={commitData?.author?.when}
-                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                    textProps={{ color: 'foreground-4' }}
-                  />
+  return (
+    <SandboxLayout.Main fullWidth>
+      <SandboxLayout.Content className="gap-y-cn-md pb-0">
+        <Text variant="heading-section" as="h2">
+          {t('views:commits.commitDetailsTitle', 'Commit')}&nbsp;
+          <Text variant="heading-section" color="foreground-3" as="span">
+            {commitData?.sha?.substring(0, 7)}
+          </Text>
+        </Text>
+
+        <div className="border-cn-borders-3 rounded-3 overflow-hidden border">
+          <Layout.Grid
+            flow="column"
+            justify="between"
+            align="center"
+            className="border-cn-borders-3 bg-cn-background-2 px-cn-md py-cn-sm border-b"
+            gapX="md"
+          >
+            <CommitTitleWithPRLink
+              toPullRequest={toPullRequest}
+              commitMessage={commitData?.title}
+              title={commitData?.title}
+              textProps={{ variant: 'body-code' }}
+            />
+
+            <Button variant="outline" asChild>
+              <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
+                <IconV2 name="folder" />
+                {t('views:commits.browseFiles', 'Browse Files')}
+              </Link>
+            </Button>
+          </Layout.Grid>
+
+          <Layout.Flex align="center" justify="between" className="px-cn-md py-cn-sm">
+            {commitData?.author?.identity?.name && commitData?.author?.when && (
+              <Layout.Flex align="center" gapX="2xs">
+                <Avatar name={commitData.author.identity.name} rounded />
+                <Text variant="body-single-line-strong" color="foreground-1">
+                  {commitData.author.identity.name}
                 </Text>
-              </div>
-              <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
-            </div>
-          </div>
-          {!showSidebar && <Outlet />}
-        </SandboxLayout.Content>
-      )}
-      {showSidebar && (
-        <SandboxLayout.Content className="border-cn-borders-4 mt-5 grid grid-cols-[auto_1fr] border-t py-0 pl-0 pr-5">
-          <Outlet />
-        </SandboxLayout.Content>
-      )}
+                <Text variant="body-single-line-normal">
+                  {t('views:commits.commitDetailsAuthored', 'authored')}{' '}
+                  <TimeAgoCard timestamp={new Date(commitData.author.when).getTime()} />
+                </Text>
+              </Layout.Flex>
+            )}
+
+            <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
+          </Layout.Flex>
+        </div>
+
+        <Outlet />
+      </SandboxLayout.Content>
     </SandboxLayout.Main>
   )
 }

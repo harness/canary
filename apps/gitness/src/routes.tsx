@@ -413,6 +413,19 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   },
                   {
+                    path: 'changes/:commitSHA',
+                    element: (
+                      <PullRequestDataProvider>
+                        <PullRequestChanges />
+                      </PullRequestDataProvider>
+                    ),
+                    handle: {
+                      breadcrumb: () => <span>{Page.Changes}</span>,
+                      routeName: RouteConstants.toPullRequestChanges,
+                      pageTitle: Page.Changes
+                    }
+                  },
+                  {
                     path: 'checks',
                     element: <EmptyPage pathName="PR Checks" />,
                     handle: {

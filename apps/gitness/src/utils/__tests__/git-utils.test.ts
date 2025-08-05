@@ -1,6 +1,7 @@
 import langMap from 'lang-map'
 
 import {
+  createCommitFilterFromSHA,
   decodeGitContent,
   filenameToLanguage,
   formatBytes,
@@ -181,5 +182,92 @@ describe('GitCommitAction enum', () => {
     expect(GitCommitAction.CREATE).toBe('CREATE')
     expect(GitCommitAction.UPDATE).toBe('UPDATE')
     expect(GitCommitAction.MOVE).toBe('MOVE')
+  })
+})
+
+describe('createCommitFilterFromSHA', () => {
+  const mockDefaultFilter = {
+    name: 'All Commits',
+    count: 5,
+    value: 'ALL'
+  }
+
+  const mockCommits = [
+    {
+      sha: 'abc1234567890def',
+      title: 'Fix bug in authentication',
+      message: 'Fix bug in authentication\n\nThis commit fixes...'
+    },
+    {
+      sha: 'def5678901234abc',
+      title: 'Add new feature',
+      message: 'Add new feature\n\nImplements...'
+    },
+    {
+      sha: 'xyz9876543210fed',
+      title: '', // Empty title
+      message: 'No title commit'
+    }
+  ]
+
+  it('should return commit filter when matching commit is found with title', () => {
+    const result = createCommitFilterFromSHA('abc1234567890def', mockCommits, mockDefaultFilter)
+
+    expect(result).toEqual([
+      {
+        name: 'Fix bug in authentication',
+        count: 1,
+        value: 'abc1234567890def'
+      }
+    ])
+  })
+
+  it('should return commit filter with truncated SHA when matching commit has no title', () => {
+    const result = createCommitFilterFromSHA('xyz9876543210fed', mockCommits, mockDefaultFilter)
+
+    expect(result).toEqual([
+      {
+        name: 'Commit xyz9876',
+        count: 1,
+        value: 'xyz9876543210fed'
+      }
+    ])
+  })
+
+  it('should return default filter when commitSHA is not found in commits', () => {
+    const result = createCommitFilterFromSHA('nonexistent123', mockCommits, mockDefaultFilter)
+
+    expect(result).toEqual([mockDefaultFilter])
+  })
+
+  it('should return default filter when commitSHA is undefined', () => {
+    const result = createCommitFilterFromSHA(undefined, mockCommits, mockDefaultFilter)
+
+    expect(result).toEqual([mockDefaultFilter])
+  })
+
+  it('should return default filter when commits array is undefined', () => {
+    const result = createCommitFilterFromSHA('abc1234567890def', undefined, mockDefaultFilter)
+
+    expect(result).toEqual([mockDefaultFilter])
+  })
+
+  it('should return default filter when both commitSHA and commits are undefined', () => {
+    const result = createCommitFilterFromSHA(undefined, undefined, mockDefaultFilter)
+
+    expect(result).toEqual([mockDefaultFilter])
+  })
+
+  it('should return default filter when commits array is empty', () => {
+    const result = createCommitFilterFromSHA('abc1234567890def', [], mockDefaultFilter)
+
+    expect(result).toEqual([mockDefaultFilter])
+  })
+
+  it('should handle partial SHA matches correctly', () => {
+    // Should only match exact SHA, not partial
+    const result = createCommitFilterFromSHA('abc123', mockCommits, mockDefaultFilter)
+
+    expect(result).toEqual([mockDefaultFilter])
   })
 })

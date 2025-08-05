@@ -36,7 +36,7 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
-import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
+import { createCommitFilterFromSHA, filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
 import { parseSpecificDiff } from './diff-utils'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
@@ -70,7 +70,7 @@ export default function PullRequestChanges() {
     setPullReqStats,
     dryMerge
   } = usePullRequestProviderStore()
-  const { spaceId, repoId, pullRequestId } = useParams<PathParams>()
+  const { spaceId, repoId, pullRequestId, commitSHA } = useParams<PathParams>()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
   const [commitRange, setCommitRange] = useState<string[]>()
@@ -382,13 +382,30 @@ export default function PullRequestChanges() {
       })
   }
 
-  const defaultCommitFilter: CommitFilterItemProps = {
-    name: 'All Commits',
-    count: pullReqCommits?.commits?.length || 0,
-    value: 'ALL'
-  }
+  const defaultCommitFilter: CommitFilterItemProps = useMemo(
+    () => ({
+      name: 'All Commits',
+      count: pullReqCommits?.commits?.length || 0,
+      value: 'ALL'
+    }),
+    [pullReqCommits?.commits?.length]
+  )
 
-  const [selectedCommits, setSelectedCommits] = useState<CommitFilterItemProps[]>([defaultCommitFilter])
+  const [selectedCommits, setSelectedCommits] = useState<CommitFilterItemProps[]>(() => {
+    if (commitSHA && pullReqCommits?.commits) {
+      return createCommitFilterFromSHA(commitSHA, pullReqCommits.commits, defaultCommitFilter)
+    }
+    return [defaultCommitFilter]
+  })
+
+  useEffect(() => {
+    if (commitSHA && pullReqCommits?.commits) {
+      setSelectedCommits(createCommitFilterFromSHA(commitSHA, pullReqCommits.commits, defaultCommitFilter))
+    } else if (!commitSHA) {
+      // Reset to default when no commitSHA in URL
+      setSelectedCommits([defaultCommitFilter])
+    }
+  }, [commitSHA, pullReqCommits?.commits, defaultCommitFilter])
 
   const onCopyClick = (commentId?: number) => {
     if (commentId) {

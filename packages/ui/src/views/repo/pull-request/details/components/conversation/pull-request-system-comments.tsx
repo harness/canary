@@ -178,9 +178,12 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           // TODO: fix timeline item to handle commit update as rn it doesnt work
           header: {
             description: (
-              <Text variant="body-single-line-normal" color="foreground-3">
-                {decision === 'approved' ? 'approved these changes' : 'requested changes to this pull request'}
-              </Text>
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {decision === 'approved' ? 'approved these changes' : 'requested changes to this pull request'}
+                </Text>
+                <TimeAgoCard timestamp={created} />
+              </>
             )
           },
           icon:
@@ -201,6 +204,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   pushed a new commit
                 </Text>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
+                <TimeAgoCard timestamp={created} />
               </>
             ) : (
               <>
@@ -212,6 +216,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   to
                 </Text>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
+                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -236,6 +241,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   branch
                 </Text>
+                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -256,11 +262,14 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text variant="body-single-line-normal" color="foreground-3">
-                {!!changedToDraft && 'This pull request is now a draft'}
-                {!!openFromDraft && 'This pull request is no longer a draft'}
-                {!changedToDraft && !openFromDraft && `changed pull request state from ${old} to ${newData}`}
-              </Text>
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {!!changedToDraft && 'marked pull request as draft'}
+                  {!!openFromDraft && 'marked pull request as ready for review'}
+                  {!changedToDraft && !openFromDraft && `changed pull request state from ${old} to ${newData}`}
+                </Text>
+                <TimeAgoCard timestamp={created} />
+              </>
             )
           },
           icon: <IconV2 name={iconName} size="xs" />
@@ -271,16 +280,19 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text variant="body-single-line-normal" color="foreground-3">
-                changed title from &nbsp;
-                <Text className="line-through" as="span" variant="body-single-line-normal" color="foreground-1">
-                  {String(old)}
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  changed title from &nbsp;
+                  <Text className="line-through" as="span" variant="body-single-line-normal" color="foreground-1">
+                    {String(old)}
+                  </Text>
+                  &nbsp; to &nbsp;
+                  <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                    {String(newData)}
+                  </Text>
                 </Text>
-                &nbsp; to &nbsp;
-                <Text as="span" variant="body-single-line-normal" color="foreground-1">
-                  {String(newData)}
-                </Text>
-              </Text>
+                <TimeAgoCard timestamp={created} />
+              </>
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
@@ -293,18 +305,21 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text variant="body-single-line-normal" color="foreground-3">
-                {author?.id === mentionId ? (
-                  'removed their request for review'
-                ) : (
-                  <>
-                    removed the request for review from &nbsp;
-                    <Text as="span" variant="body-single-line-normal" color="foreground-1">
-                      {mentionDisplayName}
-                    </Text>
-                  </>
-                )}
-              </Text>
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {author?.id === mentionId ? (
+                    'removed their request for review'
+                  ) : (
+                    <>
+                      removed the request for review from &nbsp;
+                      <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                        {mentionDisplayName}
+                      </Text>
+                    </>
+                  )}
+                </Text>
+                <TimeAgoCard timestamp={created} />
+              </>
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
@@ -362,6 +377,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   label
                 </Text>
+                <TimeAgoCard timestamp={created} />
               </>
             )
           },

@@ -112,36 +112,34 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
           </Dialog.Header>
 
           <Dialog.Body>
-            <div className="my-3 space-y-6">
-              <FormInput.Text
-                id={FIELD_TITLE}
-                {...register(FIELD_TITLE)}
-                placeholder="Enter pull request title"
-                label="Title"
-                onFocus={event => event.target.select()}
-                autoFocus
+            <FormInput.Text
+              id={FIELD_TITLE}
+              {...register(FIELD_TITLE)}
+              placeholder="Enter pull request title"
+              label="Title"
+              onFocus={event => event.target.select()}
+              autoFocus
+            />
+
+            <ControlGroup>
+              <Label>Target Branch</Label>
+              <BranchSelector
+                {...register(FIELD_BRANCH)}
+                className={'branch-selector-trigger-as-input'}
+                onSelectBranchorTag={value => setValue(FIELD_BRANCH, value.name)}
+                isBranchOnly={true}
+                dynamicWidth={true}
+                selectedBranch={{ name: branchValue || targetBranch || '', sha: '' }}
               />
+            </ControlGroup>
 
-              <ControlGroup>
-                <Label>Target Branch</Label>
-                <BranchSelector
-                  {...register(FIELD_BRANCH)}
-                  className={'branch-selector-trigger-as-input'}
-                  onSelectBranchorTag={value => setValue(FIELD_BRANCH, value.name)}
-                  isBranchOnly={true}
-                  dynamicWidth={true}
-                  selectedBranch={{ name: branchValue || targetBranch || '', sha: '' }}
-                />
-              </ControlGroup>
+            {errors[FIELD_BRANCH] && (
+              <Alert.Root theme="danger">
+                <Alert.Description>{errors[FIELD_BRANCH]?.message}</Alert.Description>
+              </Alert.Root>
+            )}
 
-              {errors[FIELD_BRANCH] && (
-                <Alert.Root theme="danger">
-                  <Alert.Description>{errors[FIELD_BRANCH]?.message}</Alert.Description>
-                </Alert.Root>
-              )}
-
-              {error && <p className="text-cn-foreground-danger">{error}</p>}
-            </div>
+            {error && <p className="text-cn-foreground-danger">{error}</p>}
           </Dialog.Body>
 
           <Dialog.Footer>

@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, CopyButton, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Alert, Button, ButtonLayout, CopyButton, Dialog, FormInput, FormWrapper, Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -103,80 +103,70 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
         </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
           <Dialog.Body>
-            <div className="mb-7 space-y-7">
-              <Fieldset>
+            <FormInput.Text
+              id="identifier"
+              value={identifier}
+              {...register('identifier')}
+              placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
+              label={t('views:profileSettings.name', 'Name')}
+              error={errors.identifier?.message?.toString()}
+              suffix={createdTokenData && <CopyButton iconSize="xs" name={createdTokenData.identifier || ''} />}
+              readOnly={!!createdTokenData}
+              autoFocus
+            />
+            {createdTokenData ? (
+              <>
                 <FormInput.Text
-                  id="identifier"
-                  value={identifier}
-                  {...register('identifier')}
-                  placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
-                  label={t('views:profileSettings.name', 'Name')}
-                  error={errors.identifier?.message?.toString()}
-                  suffix={createdTokenData && <CopyButton iconSize="xs" name={createdTokenData.identifier || ''} />}
-                  readOnly={!!createdTokenData}
-                  autoFocus
+                  id="lifetime"
+                  {...register('lifetime')}
+                  defaultValue={createdTokenData?.lifetime}
+                  label={t('views:profileSettings.expiration', 'Expiration')}
+                  readOnly
                 />
-              </Fieldset>
-              {createdTokenData ? (
-                <>
-                  <Fieldset>
-                    <FormInput.Text
-                      id="lifetime"
-                      {...register('lifetime')}
-                      defaultValue={createdTokenData?.lifetime}
-                      label={t('views:profileSettings.expiration', 'Expiration')}
-                      readOnly
-                    />
-                  </Fieldset>
-                  <Fieldset>
-                    <FormInput.Text
-                      className="truncate"
-                      id="token"
-                      {...register('token')}
-                      defaultValue={createdTokenData?.token}
-                      readOnly
-                      label={t('views:profileSettings.token', 'Token')}
-                      suffix={
-                        <CopyButton buttonVariant="transparent" iconSize="xs" name={createdTokenData?.token || ''} />
-                      }
-                    />
-                  </Fieldset>
-                  <span className="text-2 text-cn-foreground-1">
-                    {t(
-                      'views:profileSettings.tokenSuccessDescription',
-                      'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t beable to see it again.'
+                <FormInput.Text
+                  className="truncate"
+                  id="token"
+                  {...register('token')}
+                  defaultValue={createdTokenData?.token}
+                  readOnly
+                  label={t('views:profileSettings.token', 'Token')}
+                  suffix={<CopyButton buttonVariant="transparent" iconSize="xs" name={createdTokenData?.token || ''} />}
+                />
+                <Text color="foreground-1">
+                  {t(
+                    'views:profileSettings.tokenSuccessDescription',
+                    'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be able to see it again.'
+                  )}
+                </Text>
+              </>
+            ) : (
+              <Layout.Flex direction="column" gap="2xs">
+                <FormInput.Select
+                  options={expirationOptions}
+                  {...register('lifetime')}
+                  label={t('views:profileSettings.expiration', 'Expiration')}
+                  placeholder={t('views:profileSettings.select', 'Select')}
+                />
+
+                {isValid && (
+                  <span className="text-2 text-cn-foreground-3">
+                    {watch('lifetime') === 'never' ? (
+                      <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
+                    ) : (
+                      <span>
+                        {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
+                        {calculateExpirationDate(watch('lifetime'))}
+                      </span>
                     )}
                   </span>
-                </>
-              ) : (
-                <Fieldset className="gap-y-0">
-                  <FormInput.Select
-                    options={expirationOptions}
-                    {...register('lifetime')}
-                    label={t('views:profileSettings.expiration', 'Expiration')}
-                    placeholder={t('views:profileSettings.select', 'Select')}
-                  />
-
-                  {isValid && (
-                    <span className="mt-1.5 text-2 text-cn-foreground-3">
-                      {watch('lifetime') === 'never' ? (
-                        <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
-                      ) : (
-                        <span>
-                          {t('views:profileSettings.tokenExpiryDate', 'Token will expire on')}{' '}
-                          {calculateExpirationDate(watch('lifetime'))}
-                        </span>
-                      )}
-                    </span>
-                  )}
-                </Fieldset>
-              )}
-              {error?.type === ApiErrorType.TokenCreate && (
-                <Alert.Root theme="danger">
-                  <Alert.Title>{error.message}</Alert.Title>
-                </Alert.Root>
-              )}
-            </div>
+                )}
+              </Layout.Flex>
+            )}
+            {error?.type === ApiErrorType.TokenCreate && (
+              <Alert.Root theme="danger">
+                <Alert.Title>{error.message}</Alert.Title>
+              </Alert.Root>
+            )}
           </Dialog.Body>
           <Dialog.Footer>
             <ButtonLayout>

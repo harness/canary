@@ -20,35 +20,33 @@ import { Aside } from "@astrojs/starlight/components";
           <Dialog.Title>Generate Clone Credential</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
-          <div className="flex flex-col gap-y-7">
-            <TextInput
-              className="py-px truncate"
-              id="identifier"
-              label="Name"
-              value="code_token_yuiq6"
-              readOnly
-              suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name="code_token_yuiq6" />}
-            />
+          <TextInput
+            className="py-px truncate"
+            id="identifier"
+            label="Name"
+            value="code_token_yuiq6"
+            readOnly
+            suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name="code_token_yuiq6" />}
+          />
 
-            <TextInput
-              className="py-px"
-              id="lifetime"
-              label="Expiration"
-              value="1 year"
-              readOnly
-            />
+          <TextInput
+            className="py-px"
+            id="lifetime"
+            label="Expiration"
+            value="1 year"
+            readOnly
+          />
 
-            <TextInput
-              className="truncate py-px"
-              id="token"
-              label="Token"
-              value="bGciOiJSUzI1NiIsImtpZCI6IjZCQ0Q.yMzYyRTdFODQyODcyNTlCREYyMzY3RjUxM0I.2IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2OTc0NjY2Mzk1OTIsImV4cCI6MTY5NzQ2NzI0MDAwMCwiaXNzIjoiaHR0cHM6Ly9hcHAuaGFybmVzcy5pbyJ9"
-              readOnly
-              suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name="bGciOiJSUzI1NiIsImtpZCI6IjZCQ0QyMzYyRTdFODQyODcyNTlCREYyMzY3RjUxM0I6IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2OTc0NjY2Mzk1OTIsImV4cCI6MTY5NzQ2NzI0MDAwMCwiaXNzIjoiaHR0cHM6Ly9hcHAuaGFybmVzcy5pbyJ9" />}
-            />
+          <TextInput
+            className="truncate py-px"
+            id="token"
+            label="Token"
+            value="bGciOiJSUzI1NiIsImtpZCI6IjZCQ0Q.yMzYyRTdFODQyODcyNTlCREYyMzY3RjUxM0I.2IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2OTc0NjY2Mzk1OTIsImV4cCI6MTY5NzQ2NzI0MDAwMCwiaXNzIjoiaHR0cHM6Ly9hcHAuaGFybmVzcy5pbyJ9"
+            readOnly
+            suffix={<CopyButton buttonVariant="transparent" iconSize="sm" name="bGciOiJSUzI1NiIsImtpZCI6IjZCQ0QyMzYyRTdFODQyODcyNTlCREYyMzY3RjUxM0I6IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2OTc0NjY2Mzk1OTIsImV4cCI6MTY5NzQ2NzI0MDAwMCwiaXNzIjoiaHR0cHM6Ly9hcHAuaGFybmVzcy5pbyJ9" />}
+          />
 
-            <span>Token generated</span>
-          </div>
+          <span>Token generated</span>
         </Dialog.Body>
         <Dialog.Footer>
           <ButtonLayout>
@@ -215,8 +213,10 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
           <Dialog.Description>Danger theme for destructive actions</Dialog.Description>
         </Dialog.Header>
         <Dialog.Footer>
-          <Dialog.Close>Cancel</Dialog.Close>
-          <Button variant="primary" theme="danger">Delete</Button>
+          <ButtonLayout>
+            <Dialog.Close>Cancel</Dialog.Close>
+            <Button variant="primary" theme="danger">Delete</Button>
+          </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
@@ -241,8 +241,10 @@ Headers can display a logo or an icon:
         <Dialog.Description>Set up your Jira integration</Dialog.Description>
       </Dialog.Header>
       <Dialog.Footer>
-        <Dialog.Close>Cancel</Dialog.Close>
-        <Button variant="primary">Connect</Button>
+        <ButtonLayout>
+          <Dialog.Close>Cancel</Dialog.Close>
+          <Button variant="primary">Connect</Button>
+        </ButtonLayout>
       </Dialog.Footer>
     </Dialog.Content>
   </Dialog.Root>
@@ -257,8 +259,10 @@ Headers can display a logo or an icon:
         <Dialog.Description>Create a new Git branch from main</Dialog.Description>
       </Dialog.Header>
       <Dialog.Footer>
-        <Dialog.Close>Cancel</Dialog.Close>
-        <Button variant="primary">Create Branch</Button>
+        <ButtonLayout>
+          <Dialog.Close>Cancel</Dialog.Close>
+          <Button variant="primary">Create Branch</Button>
+        </ButtonLayout>
       </Dialog.Footer>
     </Dialog.Content>
   </Dialog.Root>

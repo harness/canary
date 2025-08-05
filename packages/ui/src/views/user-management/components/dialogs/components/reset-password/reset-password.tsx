@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, CopyButton, Dialog, Input } from '@/components'
+import { Button, ButtonLayout, CopyButton, Dialog, Input, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { useStates } from '@views/user-management/providers/state-provider'
@@ -36,14 +36,14 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
 
         <Dialog.Body>
           {generatePassword ? (
-            <span>
+            <Text>
               {t(
                 'views:userManagement.resetPassword.passwordGeneratedMessage',
                 "Your password has been generated. Please make sure to copy and store your password somewhere safe, you won't be able to see it again."
               )}
-            </span>
+            </Text>
           ) : (
-            <span
+            <Text
               dangerouslySetInnerHTML={{
                 __html: t(
                   'views:userManagement.resetPassword.message',

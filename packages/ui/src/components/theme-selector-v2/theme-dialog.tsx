@@ -70,168 +70,166 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           <Dialog.Title>Appearance settings</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
-          <div className="mt-1 flex flex-col gap-y-5">
-            <div className="flex flex-col">
-              <Text variant="heading-base">Mode</Text>
-              <Text className="mt-1.5" color="foreground-3">
-                Choose Dark mode for low light or Light mode for bright spaces.
-              </Text>
-              <div className="mt-[18px] grid grid-cols-2 gap-4">
-                {Object.entries(ModeType).map(([key, value]) => {
-                  if (!showSystemMode && value === ModeType.System) return null
-                  const valueMode = value === ModeType.System ? systemMode : value
-                  // TODO: Design system: Update buttons here.
-                  return (
-                    <button
-                      className="flex flex-col gap-y-2 focus-visible:outline-none"
-                      key={key}
-                      onClick={() => {
-                        setTheme(`${value}-${colorAdjustment}-${contrast}`)
-                      }}
-                    >
-                      <div className="relative">
-                        <img
-                          src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
-                          alt=""
-                          className={cn(
-                            'w-full h-auto rounded border',
-                            mode === value ? 'border-cn-borders-accent' : 'border-cn-borders-4'
-                          )}
-                        />
-                        {mode === value && (
-                          <IconV2 className="absolute bottom-2 left-2 text-cn-foreground-1" name="check-circle-solid" />
+          <div className="flex flex-col">
+            <Text variant="heading-base">Mode</Text>
+            <Text className="mt-1.5" color="foreground-3">
+              Choose Dark mode for low light or Light mode for bright spaces.
+            </Text>
+            <div className="mt-[18px] grid grid-cols-2 gap-4">
+              {Object.entries(ModeType).map(([key, value]) => {
+                if (!showSystemMode && value === ModeType.System) return null
+                const valueMode = value === ModeType.System ? systemMode : value
+                // TODO: Design system: Update buttons here.
+                return (
+                  <button
+                    className="flex flex-col gap-y-2 focus-visible:outline-none"
+                    key={key}
+                    onClick={() => {
+                      setTheme(`${value}-${colorAdjustment}-${contrast}`)
+                    }}
+                  >
+                    <div className="relative">
+                      <img
+                        src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
+                        alt=""
+                        className={cn(
+                          'w-full h-auto rounded border',
+                          mode === value ? 'border-cn-borders-accent' : 'border-cn-borders-4'
                         )}
-                        <div
-                          className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
-                          style={{
-                            backgroundColor:
-                              accentColor === AccentColor.White
-                                ? value === ModeType.Light
-                                  ? 'hsla(240, 6%, 40%, 1)'
-                                  : 'hsla(240, 9%, 67%, 1)'
-                                : accentColor
-                          }}
-                          aria-hidden
-                        />
-                      </div>
-                      <span className="text-2 leading-tight text-cn-foreground-1">{key}</span>
-                    </button>
-                  )
-                })}
-              </div>
+                      />
+                      {mode === value && (
+                        <IconV2 className="text-cn-foreground-1 absolute bottom-2 left-2" name="check-circle-solid" />
+                      )}
+                      <div
+                        className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
+                        style={{
+                          backgroundColor:
+                            accentColor === AccentColor.White
+                              ? value === ModeType.Light
+                                ? 'hsla(240, 6%, 40%, 1)'
+                                : 'hsla(240, 9%, 67%, 1)'
+                              : accentColor
+                        }}
+                        aria-hidden
+                      />
+                    </div>
+                    <span className="text-2 text-cn-foreground-1 leading-tight">{key}</span>
+                  </button>
+                )
+              })}
             </div>
-            {isAccessibilityThemeEnabled && (
-              <>
-                <Separator className="h-px bg-cn-background-2" />
-
-                {/* Contrast */}
-                <div className="grid grid-cols-[246px_1fr] gap-x-8">
-                  <div>
-                    <Text variant="heading-base">Contrast</Text>
-                    <Text className="mt-1.5" color="foreground-3">
-                      High contrast improves readability, Dimmer mode reduces glare.
-                    </Text>
-                  </div>
-
-                  <Select
-                    value={contrast}
-                    options={contrastOptions}
-                    onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
-                    placeholder="Select"
-                  />
-                </div>
-
-                <Separator className="h-px bg-cn-background-2" />
-
-                {/* Color Adjustment */}
-                <div className="grid grid-cols-[246px_1fr] gap-x-8">
-                  <div>
-                    <Text variant="heading-base">Color adjustment</Text>
-                    <Text className="mt-1.5" color="foreground-3">
-                      Adjust colors for different types of color blindness.
-                    </Text>
-                  </div>
-
-                  <Select
-                    value={colorAdjustment}
-                    options={colorOptions}
-                    onChange={(value: ColorType) => setTheme(`${mode}-${value}-${contrast}`)}
-                    placeholder="Select"
-                  />
-                </div>
-
-                <Separator className="h-px bg-cn-background-2" />
-
-                {/* Accent Color */}
-                {showAccentColor ? (
-                  <>
-                    <Separator className="h-px bg-cn-background-2" />
-                    <div className="grid grid-cols-[246px_1fr] gap-x-8">
-                      <div>
-                        <Text variant="heading-base">Accent color</Text>
-                        <Text className="mt-1.5" color="foreground-3">
-                          Select your application accent color.
-                        </Text>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {Object.values(AccentColor).map(item => (
-                          <button
-                            key={item}
-                            className={cn(
-                              'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                              accentColor === item && 'border border-cn-borders-8'
-                            )}
-                            onClick={() => {
-                              setAccentColor(item)
-                            }}
-                          >
-                            <span
-                              style={{
-                                backgroundColor:
-                                  item === AccentColor.White && mode === ModeType.Light ? 'hsla(240, 6%, 40%, 1)' : item
-                              }}
-                              className="m-auto block size-[18px] rounded-full"
-                            />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : null}
-
-                {/* Gray Color */}
-                {showGrayColor ? (
-                  <>
-                    <Separator className="h-px bg-cn-background-2" />
-                    <div className="grid grid-cols-[246px_1fr] gap-x-8">
-                      <div>
-                        <Text variant="heading-base">Gray color</Text>
-                        <Text className="mt-1.5" color="foreground-3">
-                          Select your application gray color.
-                        </Text>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {Object.values(GrayColor).map(item => (
-                          <button
-                            key={item}
-                            className={cn(
-                              'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                              grayColor === item && 'border border-cn-borders-8'
-                            )}
-                            onClick={() => {
-                              setGrayColor(item)
-                            }}
-                          >
-                            <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : null}
-              </>
-            )}
           </div>
+          {isAccessibilityThemeEnabled && (
+            <>
+              <Separator className="bg-cn-background-2 h-px" />
+
+              {/* Contrast */}
+              <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                <div>
+                  <Text variant="heading-base">Contrast</Text>
+                  <Text className="mt-1.5" color="foreground-3">
+                    High contrast improves readability, Dimmer mode reduces glare.
+                  </Text>
+                </div>
+
+                <Select
+                  value={contrast}
+                  options={contrastOptions}
+                  onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
+                  placeholder="Select"
+                />
+              </div>
+
+              <Separator className="bg-cn-background-2 h-px" />
+
+              {/* Color Adjustment */}
+              <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                <div>
+                  <Text variant="heading-base">Color adjustment</Text>
+                  <Text className="mt-1.5" color="foreground-3">
+                    Adjust colors for different types of color blindness.
+                  </Text>
+                </div>
+
+                <Select
+                  value={colorAdjustment}
+                  options={colorOptions}
+                  onChange={(value: ColorType) => setTheme(`${mode}-${value}-${contrast}`)}
+                  placeholder="Select"
+                />
+              </div>
+
+              <Separator className="bg-cn-background-2 h-px" />
+
+              {/* Accent Color */}
+              {showAccentColor ? (
+                <>
+                  <Separator className="bg-cn-background-2 h-px" />
+                  <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                    <div>
+                      <Text variant="heading-base">Accent color</Text>
+                      <Text className="mt-1.5" color="foreground-3">
+                        Select your application accent color.
+                      </Text>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.values(AccentColor).map(item => (
+                        <button
+                          key={item}
+                          className={cn(
+                            'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                            accentColor === item && 'border border-cn-borders-8'
+                          )}
+                          onClick={() => {
+                            setAccentColor(item)
+                          }}
+                        >
+                          <span
+                            style={{
+                              backgroundColor:
+                                item === AccentColor.White && mode === ModeType.Light ? 'hsla(240, 6%, 40%, 1)' : item
+                            }}
+                            className="m-auto block size-[18px] rounded-full"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : null}
+
+              {/* Gray Color */}
+              {showGrayColor ? (
+                <>
+                  <Separator className="bg-cn-background-2 h-px" />
+                  <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                    <div>
+                      <Text variant="heading-base">Gray color</Text>
+                      <Text className="mt-1.5" color="foreground-3">
+                        Select your application gray color.
+                      </Text>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.values(GrayColor).map(item => (
+                        <button
+                          key={item}
+                          className={cn(
+                            'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                            grayColor === item && 'border border-cn-borders-8'
+                          )}
+                          onClick={() => {
+                            setGrayColor(item)
+                          }}
+                        >
+                          <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : null}
+            </>
+          )}
         </Dialog.Body>
       </Dialog.Content>
     </Dialog.Root>

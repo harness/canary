@@ -71,37 +71,35 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
         <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
           <Dialog.Body>
-            <div className="mb-7 space-y-7">
-              <FormInput.Text
-                id="name"
-                label={t('views:forms.tagName', 'Name')}
-                name="name"
-                maxLength={250}
-                placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
-                disabled={isLoading}
-              />
+            <FormInput.Text
+              id="name"
+              label={t('views:forms.tagName', 'Name')}
+              name="name"
+              maxLength={250}
+              placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
+              disabled={isLoading}
+            />
 
-              <ControlGroup>
-                <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
-                <BranchSelectorContainer />
-              </ControlGroup>
+            <ControlGroup>
+              <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
+              <BranchSelectorContainer />
+            </ControlGroup>
 
-              <FormInput.Textarea
-                id="description"
-                {...register('message')}
-                placeholder={t('views:repos.repoTagDescriptionPlaceholder', 'Enter tag description here')}
-                label={t('views:repos.description', 'Description')}
-                disabled={isLoading}
-              />
+            <FormInput.Textarea
+              id="description"
+              {...register('message')}
+              placeholder={t('views:repos.repoTagDescriptionPlaceholder', 'Enter tag description here')}
+              label={t('views:repos.description', 'Description')}
+              disabled={isLoading}
+            />
 
-              {error && (
-                <Alert.Root theme="danger">
-                  <Alert.Title>
-                    {t('views:repos.error', 'Error:')} {error}
-                  </Alert.Title>
-                </Alert.Root>
-              )}
-            </div>
+            {error && (
+              <Alert.Root theme="danger">
+                <Alert.Title>
+                  {t('views:repos.error', 'Error:')} {error}
+                </Alert.Title>
+              </Alert.Root>
+            )}
           </Dialog.Body>
 
           <Dialog.Footer>

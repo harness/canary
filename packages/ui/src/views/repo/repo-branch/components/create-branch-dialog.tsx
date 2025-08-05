@@ -1,17 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ButtonLayout,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormInput,
-  FormWrapper,
-  Label
-} from '@/components'
+import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
 import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -96,32 +86,26 @@ export function CreateBranchDialog({
         </Dialog.Header>
         <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
           <Dialog.Body>
-            <div className="mb-7 space-y-7">
-              <Fieldset>
-                <FormInput.Text
-                  id="name"
-                  label="Branch name"
-                  {...register('name')}
-                  maxLength={250}
-                  placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
-                />
-              </Fieldset>
+            <FormInput.Text
+              id="name"
+              label="Branch name"
+              {...register('name')}
+              maxLength={250}
+              placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+            />
 
-              <Fieldset>
-                <ControlGroup>
-                  <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
-                  {branchSelectorContainer}
-                </ControlGroup>
-              </Fieldset>
+            <ControlGroup>
+              <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
+              {branchSelectorContainer}
+            </ControlGroup>
 
-              {error ? (
-                <Alert.Root theme="danger">
-                  <Alert.Title>
-                    {t('views:repos.error', 'Error:')} {error}
-                  </Alert.Title>
-                </Alert.Root>
-              ) : null}
-            </div>
+            {error && (
+              <Alert.Root theme="danger">
+                <Alert.Title>
+                  {t('views:repos.error', 'Error:')} {error}
+                </Alert.Title>
+              </Alert.Root>
+            )}
           </Dialog.Body>
 
           <Dialog.Footer>

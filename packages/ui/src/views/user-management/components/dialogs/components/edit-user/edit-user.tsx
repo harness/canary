@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, FormInput, FormWrapper, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   createEditUserSchema,
@@ -51,7 +51,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
         </Dialog.Header>
 
         <Dialog.Body>
-          <span
+          <Text
             dangerouslySetInnerHTML={{
               __html: t(
                 'views:userManagement.editUser.message',
@@ -63,33 +63,27 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
             }}
           />
           <FormWrapper {...formMethods} onSubmit={handleSubmit(handleUpdateUser)} id="edit-user-form">
-            <Fieldset>
-              <FormInput.Text
-                id="userID"
-                disabled
-                {...register('userID')}
-                className="cursor-not-allowed"
-                label={t('views:userManagement.userId', 'User ID')}
-                caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
-              />
-            </Fieldset>
+            <FormInput.Text
+              id="userID"
+              disabled
+              {...register('userID')}
+              className="cursor-not-allowed"
+              label={t('views:userManagement.userId', 'User ID')}
+              caption={t('views:userManagement.userIdHint', 'User ID cannot be changed once created')}
+            />
 
-            <Fieldset>
-              <FormInput.Text
-                id="email"
-                type="email"
-                {...register('email')}
-                label={t('views:userManagement.editUser.email', 'Email')}
-              />
-            </Fieldset>
+            <FormInput.Text
+              id="email"
+              type="email"
+              {...register('email')}
+              label={t('views:userManagement.editUser.email', 'Email')}
+            />
 
-            <Fieldset>
-              <FormInput.Text
-                id="displayName"
-                {...register('displayName')}
-                label={t('views:userManagement.displayName', 'Display name')}
-              />
-            </Fieldset>
+            <FormInput.Text
+              id="displayName"
+              {...register('displayName')}
+              label={t('views:userManagement.displayName', 'Display name')}
+            />
 
             {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
           </FormWrapper>

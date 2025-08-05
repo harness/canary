@@ -2,7 +2,7 @@ export default {
   '.cn-breadcrumb': {
     '@apply flex flex-wrap items-center break-words select-none': '',
     gap: 'var(--cn-spacing-1)',
-    color: 'var(--cn-text-2)'
+    color: 'var(--cn-set-brand-solid-bg)'
   },
 
   '.cn-breadcrumb-default': {
@@ -14,7 +14,7 @@ export default {
     '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-body-strong': '',
       borderRadius: '0',
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-set-brand-solid-bg)'
     }
   },
 
@@ -27,7 +27,7 @@ export default {
     '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-caption-soft': '',
       borderRadius: 'var(--cn-size-5)',
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-set-brand-solid-bg)'
     }
   },
 
@@ -43,7 +43,7 @@ export default {
   '.cn-breadcrumb-item': {
     '@apply inline-flex items-center': '',
     '&:hover': {
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-set-brand-solid-bg)'
     },
     gap: 'var(--cn-spacing-1)'
   },
@@ -62,7 +62,7 @@ export default {
   },
 
   '.cn-breadcrumb-ellipsis': {
-    color: `var(--cn-text-3)`,
+    color: `var(--cn-set-brand-solid-bg)`,
     '& > svg': {
       width: 'var(--cn-icon-size-sm)',
       height: 'var(--cn-icon-size-sm)'

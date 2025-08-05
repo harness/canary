@@ -42,16 +42,12 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     return (
       <StackedList.Root className="grid grow grid-rows-[auto,1fr]">
         <StackedList.Item disableHover>
-          <StackedList.Field
-            title={
-              <PullRequestListHeader
-                headerFilter={headerFilter}
-                onOpenClick={onOpenClick}
-                onCloseClick={onCloseClick}
-                openPRs={openPRs}
-                closedPRs={closedPRs}
-              />
-            }
+          <PullRequestListHeader
+            headerFilter={headerFilter}
+            onOpenClick={onOpenClick}
+            onCloseClick={onCloseClick}
+            openPRs={openPRs}
+            closedPRs={closedPRs}
           />
         </StackedList.Item>
         <NoData
@@ -82,16 +78,12 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     return (
       <StackedList.Root className="grid grow grid-rows-[auto,1fr]">
         <StackedList.Item disableHover>
-          <StackedList.Field
-            title={
-              <PullRequestListHeader
-                headerFilter={headerFilter}
-                onOpenClick={onOpenClick}
-                onCloseClick={onCloseClick}
-                openPRs={openPRs}
-                closedPRs={closedPRs}
-              />
-            }
+          <PullRequestListHeader
+            headerFilter={headerFilter}
+            onOpenClick={onOpenClick}
+            onCloseClick={onCloseClick}
+            openPRs={openPRs}
+            closedPRs={closedPRs}
           />
         </StackedList.Item>
 
@@ -120,46 +112,46 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   return (
     <StackedList.Root>
       <StackedList.Item disableHover>
-        <StackedList.Field
-          title={
-            <PullRequestListHeader
-              headerFilter={headerFilter}
-              onOpenClick={onOpenClick}
-              onCloseClick={onCloseClick}
-              openPRs={openPRs}
-              closedPRs={closedPRs}
-            />
-          }
+        <PullRequestListHeader
+          headerFilter={headerFilter}
+          onOpenClick={onOpenClick}
+          onCloseClick={onCloseClick}
+          openPRs={openPRs}
+          closedPRs={closedPRs}
         />
       </StackedList.Item>
       {pullRequests.map((pullRequest, pullRequest_idx) => (
-        <Link
+        <StackedList.Item
+          className="px-4 py-3"
+          isLast={pullRequests.length - 1 === pullRequest_idx}
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
-          to={
-            toPullRequest && pullRequest.number
-              ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
-              : ''
-          }
-          onClick={
-            /**
-             * Prioritize the `toPullRequest` prop if provided, otherwise use the on click handler.
-             */
-            toPullRequest
-              ? noop
-              : (e: React.MouseEvent) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  onClickPullRequest?.({
-                    prNumber: pullRequest.number,
-                    repo: { name: pullRequest.repo?.identifier || '', path: pullRequest.repo?.path || '' }
-                  })
-                }
-          }
+          asChild
         >
-          <StackedList.Item className="px-4 py-3" isLast={pullRequests.length - 1 === pullRequest_idx}>
+          <Link
+            to={
+              toPullRequest && pullRequest.number
+                ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
+                : ''
+            }
+            onClick={
+              /**
+               * Prioritize the `toPullRequest` prop if provided, otherwise use the on click handler.
+               */
+              toPullRequest
+                ? noop
+                : (e: React.MouseEvent) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    onClickPullRequest?.({
+                      prNumber: pullRequest.number,
+                      repo: { name: pullRequest.repo?.identifier || '', path: pullRequest.repo?.path || '' }
+                    })
+                  }
+            }
+          >
             {!!pullRequest.number && (
               <StackedList.Field
-                className="grid gap-1.5"
+                className="grid gap-1.5 !overflow-visible"
                 title={
                   pullRequest.name && (
                     <PullRequestItemTitle
@@ -186,8 +178,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                 }
               />
             )}
-          </StackedList.Item>
-        </Link>
+          </Link>
+        </StackedList.Item>
       ))}
     </StackedList.Root>
   )

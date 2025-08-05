@@ -470,6 +470,10 @@
     "90": {
       "$type": "opacity",
       "$value": "0.9"
+    },
+    "100": {
+      "$type": "opacity",
+      "$value": "1"
     }
   },
   "logoSize": {

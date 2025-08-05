@@ -46,7 +46,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
   return (
     <div className={className}>
       {entries.map(([date, commitData]) => (
-        <NodeGroup.Root className="grid-cols-[9px_1fr] gap-4 pb-6 last:pb-0" key={date}>
+        <NodeGroup.Root className="pb-cn-xl grid-cols-[9px_1fr] gap-4 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
           <NodeGroup.Title>{date && <Text variant="body-single-line-normal">Commits on {date}</Text>}</NodeGroup.Title>
           <NodeGroup.Content className="overflow-hidden">
@@ -59,14 +59,14 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="flex items-start p-cn-sm pl-cn-xs"
+                      className="p-cn-sm pl-cn-xs flex items-start"
                       key={commit?.sha || idx}
                       isLast={commitData.length - 1 === idx}
                       asChild
                     >
                       <Link className="grow overflow-hidden" to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
-                        <Layout.Horizontal className="w-full pl-cn-md">
-                          <Layout.Vertical gap="2xs" className="grow">
+                        <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
+                          <Layout.Vertical gap="2xs" className="truncate">
                             {renderCommitTitle({
                               commitMessage: commit.title,
                               title: commit.message || commit.title,
@@ -75,7 +75,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                               toPullRequest,
                               toCommitDetails
                             })}
-                            <div className="flex items-center gap-x-1.5">
+                            <div className="gap-cn-2xs flex items-center">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
                               <Text variant="body-single-line-strong">{authorName || ''}</Text>
                               <Text variant="body-single-line-normal" color="foreground-3">
@@ -90,7 +90,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                           </Layout.Vertical>
 
                           {!!commit?.sha && (
-                            <Layout.Horizontal gap="sm" align="center">
+                            <Layout.Horizontal gap="xs" align="center">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} size="sm" />
                               <Button
                                 title="View repository at this point of history"
@@ -105,7 +105,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                               </Button>
                             </Layout.Horizontal>
                           )}
-                        </Layout.Horizontal>
+                        </Layout.Grid>
                       </Link>
                     </StackedList.Item>
                   )
@@ -161,7 +161,7 @@ function renderCommitTitle({
         1,
         0,
         <Text variant="heading-base">
-          <Layout.Flex>
+          <Layout.Flex as="span">
             &nbsp;(
             <Link
               className="hover:underline"

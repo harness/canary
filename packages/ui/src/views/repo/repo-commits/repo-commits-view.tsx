@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
+import { IconV2, Layout, NoData, Pagination, SkeletonList, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
@@ -48,72 +48,81 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Text variant="heading-section">Commits</Text>
-        <Spacer size={6} />
-        <div className="flex justify-between gap-5">
-          <BranchSelectorContainer />
-        </div>
+        <Layout.Flex direction="column" gapY="xl" className="grow">
+          <Text variant="heading-section" as="h2">
+            Commits
+          </Text>
 
-        <Spacer size={3} />
+          <Layout.Flex direction="column" gapY="md" className="grow">
+            <div>
+              <BranchSelectorContainer />
+            </div>
 
-        {isFetchingCommits ? (
-          <SkeletonList />
-        ) : (
-          <>
-            {!commitsList?.length ? (
-              <NoData
-                withBorder
-                textWrapperClassName="max-w-[350px]"
-                imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
-                title={
-                  isDirtyList
-                    ? t('views:noData.noCommitsHistory', 'No commits history')
-                    : t('views:noData.noCommitsYet', 'No commits yet')
-                }
-                description={[
-                  isDirtyList
-                    ? t(
-                        'views:noData.noCommitsHistoryDescription',
-                        "There isn't any commit history to show here for the selected user, time range, or current page."
-                      )
-                    : t(
-                        'views:noData.noCommitsYetDescription',
-                        "Your commits will appear here once they're made. Start committing to see your changes reflected."
-                      )
-                ]}
-                primaryButton={
-                  isDirtyList
-                    ? {
-                        label: t('views:noData.clearFilters', 'Clear filters'),
-                        onClick: handleResetFiltersAndPages
-                      }
-                    : // TODO: add onClick for Creating new commit
-                      {
-                        label: t('views:commits.createNewCommit', 'Create new commit')
-                      }
-                }
-              />
+            {isFetchingCommits ? (
+              <SkeletonList />
             ) : (
               <>
-                <CommitsList
-                  data={commitsList}
-                  toCode={toCode}
-                  toCommitDetails={toCommitDetails}
-                  toPullRequest={toPullRequest}
-                  className="ml-1"
-                />
-                <Pagination
-                  className="pl-[26px]"
-                  indeterminate
-                  hasNext={xNextPage > 0}
-                  hasPrevious={xPrevPage > 0}
-                  getPrevPageLink={getPrevPageLink}
-                  getNextPageLink={getNextPageLink}
-                />
+                {!commitsList?.length ? (
+                  <NoData
+                    withBorder
+                    textWrapperClassName="max-w-[350px]"
+                    imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
+                    title={
+                      isDirtyList
+                        ? t('views:noData.noCommitsHistory', 'No commits history')
+                        : t('views:noData.noCommitsYet', 'No commits yet')
+                    }
+                    description={[
+                      isDirtyList
+                        ? t(
+                            'views:noData.noCommitsHistoryDescription',
+                            "There isn't any commit history to show here for the selected user, time range, or current page."
+                          )
+                        : t(
+                            'views:noData.noCommitsYetDescription',
+                            "Your commits will appear here once they're made. Start committing to see your changes reflected."
+                          )
+                    ]}
+                    primaryButton={
+                      isDirtyList
+                        ? {
+                            label: t('views:noData.clearFilters', 'Clear filters'),
+                            onClick: handleResetFiltersAndPages
+                          }
+                        : // TODO: add onClick for Creating new commit
+                          {
+                            label: (
+                              <>
+                                <IconV2 name="plus" />
+                                {t('views:commits.createNewCommit', 'Make commit')}
+                              </>
+                            )
+                          }
+                    }
+                  />
+                ) : (
+                  <>
+                    <CommitsList
+                      data={commitsList}
+                      toCode={toCode}
+                      toCommitDetails={toCommitDetails}
+                      toPullRequest={toPullRequest}
+                      className="ml-1"
+                    />
+                    <Pagination
+                      className="pl-[26px]"
+                      indeterminate
+                      hasNext={xNextPage > 0}
+                      hasPrevious={xPrevPage > 0}
+                      getPrevPageLink={getPrevPageLink}
+                      getNextPageLink={getNextPageLink}
+                    />
+                  </>
+                )}
               </>
             )}
-          </>
-        )}
+          </Layout.Flex>
+        </Layout.Flex>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

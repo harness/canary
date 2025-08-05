@@ -111,7 +111,8 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('squash')
               },
-              loading: isMerging || !prPanelData?.allowedMethods?.includes('squash')
+              loading: isMerging,
+              disabled: !prPanelData?.allowedMethods?.includes('squash')
             },
             {
               id: '1',
@@ -120,7 +121,8 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('merge')
               },
-              loading: isMerging || !prPanelData?.allowedMethods?.includes('merge')
+              loading: isMerging,
+              disabled: !prPanelData?.allowedMethods?.includes('merge')
             },
             {
               id: '2',
@@ -129,7 +131,8 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('rebase')
               },
-              loading: isMerging || !prPanelData?.allowedMethods?.includes('rebase')
+              loading: isMerging,
+              disabled: !prPanelData?.allowedMethods?.includes('rebase')
             },
             {
               id: '3',
@@ -139,7 +142,8 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('fast-forward')
               },
-              loading: isMerging || !prPanelData?.allowedMethods?.includes('fast-forward')
+              loading: isMerging,
+              disabled: !prPanelData?.allowedMethods?.includes('fast-forward')
             }
           ])
   ]

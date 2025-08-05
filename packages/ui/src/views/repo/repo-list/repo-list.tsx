@@ -172,6 +172,7 @@ export function RepoList({
             className={cn({ 'pointer-events-none': repo.importing })}
           >
             <StackedList.Field
+              className="grid"
               primary
               description={
                 repo.importing ? t('views:repos.importing', 'Importing…') : <Text truncate>{repo.description}</Text>
@@ -186,7 +187,6 @@ export function RepoList({
                   showScope={showScope}
                 />
               }
-              className="grid justify-start"
             />
             {!repo.importing && (
               <StackedList.Field

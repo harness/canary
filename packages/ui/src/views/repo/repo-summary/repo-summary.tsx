@@ -234,6 +234,7 @@ export function RepoSummaryView({
             <StackedList.Root onlyTopRounded borderBackground>
               <StackedList.Item className="py-2" isHeader disableHover>
                 <StackedList.Field
+                  className="grid"
                   title={
                     <Text variant="caption-single-line-normal" color="foreground-1">
                       {t('views:repos.readme', 'README.md')}

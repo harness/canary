@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, Layout, StackedList, StatusBadge } from '@/components'
+import { Accordion, Button, CopyButton, Layout, StackedList, StatusBadge, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
@@ -36,8 +36,10 @@ const LineTitle: FC<LineTitleProps> = ({ header }) => {
   const { text, numAdditions, numDeletions } = header
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="inline-flex items-center gap-2">
-        <span className="text-3 font-medium">{text}</span>
+      <div className="inline-flex items-center gap-2 overflow-hidden">
+        <Text className="flex-1" variant="body-strong" truncate>
+          {text}
+        </Text>
         <CopyButton name={text} color="gray" />
         {!!numAdditions && (
           <StatusBadge variant="outline" size="sm" theme="success">
@@ -91,7 +93,7 @@ const CommitsAccordion: FC<{
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
             <Accordion.Trigger className="px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
-              <StackedList.Field title={<LineTitle header={header} />} />
+              <StackedList.Field className="grid" title={<LineTitle header={header} />} />
             </Accordion.Trigger>
             <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">

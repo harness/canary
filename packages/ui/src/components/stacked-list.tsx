@@ -21,10 +21,10 @@ const listItemVariants = cva(
   }
 )
 
-const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-[0.3125rem]', {
+const listFieldVariants = cva('flex flex-1 flex-col items-stretch gap-[0.3125rem] justify-start', {
   variants: {
     right: {
-      true: 'items-end'
+      true: 'justify-end items-end'
     }
   }
 })

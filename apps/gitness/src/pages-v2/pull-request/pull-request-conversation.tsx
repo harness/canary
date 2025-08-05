@@ -111,7 +111,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('squash')
               },
-              disabled: isMerging || !prPanelData?.allowedMethods?.includes('squash')
+              loading: isMerging || !prPanelData?.allowedMethods?.includes('squash')
             },
             {
               id: '1',
@@ -120,7 +120,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('merge')
               },
-              disabled: isMerging || !prPanelData?.allowedMethods?.includes('merge')
+              loading: isMerging || !prPanelData?.allowedMethods?.includes('merge')
             },
             {
               id: '2',
@@ -129,7 +129,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('rebase')
               },
-              disabled: isMerging || !prPanelData?.allowedMethods?.includes('rebase')
+              loading: isMerging || !prPanelData?.allowedMethods?.includes('rebase')
             },
             {
               id: '3',
@@ -139,7 +139,7 @@ const getMockPullRequestActions = (
               action: () => {
                 handleMerge('fast-forward')
               },
-              disabled: isMerging || !prPanelData?.allowedMethods?.includes('fast-forward')
+              loading: isMerging || !prPanelData?.allowedMethods?.includes('fast-forward')
             }
           ])
   ]
@@ -631,7 +631,6 @@ export default function PullRequestConversationPage() {
           handleRefetchData()
           setRuleViolationArr(undefined)
           refetchBranch()
-          setIsMerging(false)
           // if (res.body.branch_deleted) {
           //   setShowDeleteBranchButton(false)
           //   setShowRestoreBranchButton(true)
@@ -642,10 +641,10 @@ export default function PullRequestConversationPage() {
         })
         .catch((error: any) => {
           setMergeErrorMessage(error.message)
+        })
+        .finally(() => {
           setIsMerging(false)
         })
-      //todo: add catch to show errors
-      // .catch(exception => showError(getErrorMessage(exception)))
     },
     [
       pullReqMetadata?.source_sha,

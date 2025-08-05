@@ -30,6 +30,7 @@ export interface PullRequestAction {
   description?: string
   action?: () => void
   disabled?: boolean
+  loading?: boolean
 }
 
 export enum CodeCommentState {

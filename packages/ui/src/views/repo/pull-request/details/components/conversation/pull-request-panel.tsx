@@ -307,6 +307,7 @@ const PullRequestPanel = ({
   const [showMergeInputs, setShowMergeInputs] = useState(false)
   const [showActionBtn, setShowActionBtn] = useState(false)
   const [mergeInitiated, setMergeInitiated] = useState(false)
+  const [cancelInitiated, setCancelInitiated] = useState(false)
 
   useEffect(() => {
     setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
@@ -336,6 +337,7 @@ const PullRequestPanel = ({
   }
 
   const handleCancelMerge = () => {
+    setCancelInitiated(true)
     setShowMergeInputs(false)
     setShowActionBtn(false)
     setMergeInitiated(false)
@@ -387,6 +389,21 @@ const PullRequestPanel = ({
       setMergeInitiated(false)
     }
   }, [pullReqMetadata?.merged, mergeInitiated])
+
+  // Reset cancelInitiated when showActionBtn becomes false (cancel operation completes)
+  useEffect(() => {
+    if (!showActionBtn && cancelInitiated) {
+      setCancelInitiated(false)
+    }
+  }, [showActionBtn, cancelInitiated])
+
+  // Reset mergeInitiated when there's a merge error
+  useEffect(() => {
+    if (error && mergeInitiated) {
+      setMergeInitiated(false)
+      setShowActionBtn(false)
+    }
+  }, [error, mergeInitiated])
 
   const buttonState = getButtonState({
     isMergeable,
@@ -476,6 +493,7 @@ const PullRequestPanel = ({
                                 variant: 'outline' as const
                               })}
                           disabled={buttonState.disabled}
+                          loading={actions[parseInt(mergeButtonValue)]?.loading}
                           selectedValue={mergeButtonValue}
                           handleOptionChange={handleMergeTypeSelect}
                           options={actions.map(action => ({
@@ -496,10 +514,20 @@ const PullRequestPanel = ({
                         actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
                       return shouldShowButtonLayout ? (
                         <ButtonLayout>
-                          <Button variant="outline" onClick={handleCancelMerge} disabled={isMerging}>
+                          <Button
+                            variant="outline"
+                            onClick={handleCancelMerge}
+                            loading={cancelInitiated}
+                            disabled={isMerging || mergeInitiated}
+                          >
                             Cancel
                           </Button>
-                          <Button theme="success" onClick={handleConfirmMerge} disabled={isMerging || mergeInitiated}>
+                          <Button
+                            theme="success"
+                            onClick={handleConfirmMerge}
+                            loading={isMerging || mergeInitiated}
+                            disabled={cancelInitiated}
+                          >
                             Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
                           </Button>
                         </ButtonLayout>

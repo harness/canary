@@ -262,6 +262,7 @@ export interface PullRequestPanelProps
   setMergeTitle: (title: string) => void
   setMergeMessage: (message: string) => void
   isMerging?: boolean
+  onMergeMethodSelect?: (method: string) => void
 }
 
 const PullRequestPanel = ({
@@ -298,6 +299,7 @@ const PullRequestPanel = ({
   setMergeTitle,
   setMergeMessage,
   isMerging,
+  onMergeMethodSelect,
   ...routingProps
 }: PullRequestPanelProps) => {
   const { Link } = useRouterContext()
@@ -314,22 +316,29 @@ const PullRequestPanel = ({
   }, [pullReqMetadata?.title])
 
   const handleMergeTypeSelect = (value: string) => {
-    if (actions[parseInt(value)].title === 'Squash and merge') {
+    const selectedAction = actions[parseInt(value)]
+    if (selectedAction.title === 'Squash and merge') {
       setMergeMessage(
         pullReqCommits?.commits
           ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
           .join('\n\n')
           ?.slice(0, 1000) ?? ''
       )
-    } else {
+      onMergeMethodSelect?.('squash')
+    } else if (selectedAction.title === 'Merge pull request') {
       setMergeMessage('')
+      onMergeMethodSelect?.('merge')
+    } else if (selectedAction.title === 'Rebase and merge') {
+      setMergeMessage('')
+      onMergeMethodSelect?.('rebase')
+    } else if (selectedAction.title === 'Fast-forward merge') {
+      setMergeMessage('')
+      onMergeMethodSelect?.('fast-forward')
     }
+
     setShowActionBtn(true)
     setMergeButtonValue(value)
-    if (
-      actions[parseInt(value)].title === 'Merge pull request' ||
-      actions[parseInt(value)].title === 'Squash and merge'
-    ) {
+    if (selectedAction.title === 'Merge pull request' || selectedAction.title === 'Squash and merge') {
       setShowMergeInputs(true)
     } else {
       setShowMergeInputs(false)
@@ -575,21 +584,21 @@ const PullRequestPanel = ({
                   <Layout.Vertical className="w-full gap-4">
                     <Input
                       id="merge-title"
-                      label="Pull Request Title"
+                      label="Commit Message"
                       className="w-full bg-cn-background-1"
                       value={mergeTitle}
                       onChange={e => setMergeTitle(e.target.value)}
                       optional
-                      placeholder="Enter pull request title (optional)"
+                      placeholder="Enter commit message (optional)"
                     />
                     <Textarea
                       id="merge-message"
-                      label="Commit Message"
+                      label="Commit Description"
                       className="w-full"
                       value={mergeMessage}
                       onChange={e => setMergeMessage(e.target.value)}
                       optional
-                      placeholder="Enter commit message (optional)"
+                      placeholder="Enter commit description (optional)"
                     />
                   </Layout.Vertical>
                 </Layout.Vertical>

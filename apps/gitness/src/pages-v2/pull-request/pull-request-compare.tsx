@@ -67,7 +67,9 @@ export const CreatePullRequest = () => {
   const [desc, setDesc] = useState('')
   const [prTemplate, setPrTemplate] = useState<string>()
   const createPullRequestMutation = useCreatePullReqMutation({})
-  const { repoId, spaceId, diffRefs } = useParams<PathParams>()
+  const params = useParams<PathParams>()
+  const { repoId, spaceId } = params
+  const diffRefs = params.diffRefs || params['*']
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
@@ -396,8 +398,35 @@ export const CreatePullRequest = () => {
           setSelectedTargetBranch(branchTagName)
         }
       }
+
+      // Update URL when either branch changes - use branchTagName directly
+      const targetName = sourceBranch ? selectedTargetBranch?.name || diffTargetBranch : branchTagName.name
+
+      const sourceName = sourceBranch ? branchTagName.name : selectedSourceBranch?.name || diffSourceBranch
+
+      if (targetName && sourceName) {
+        navigate(
+          routes.toPullRequestCompare({
+            spaceId,
+            repoId,
+            diffRefs: `${targetName}...${sourceName}`
+          }),
+          { replace: true }
+        )
+      }
     },
-    [setSelectedSourceBranch, setSelectedTargetBranch]
+    [
+      setSelectedSourceBranch,
+      setSelectedTargetBranch,
+      selectedSourceBranch,
+      selectedTargetBranch,
+      diffTargetBranch,
+      diffSourceBranch,
+      navigate,
+      routes,
+      spaceId,
+      repoId
+    ]
   )
 
   const handleAddReviewer = (id?: number) => {

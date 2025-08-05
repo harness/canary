@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router-dom'
+import { Outlet, useMatches, useParams } from 'react-router-dom'
 
 import { createFavorite, deleteFavorite, EnumResourceType } from '@harnessio/code-service-client'
 import { RepoSubheader } from '@harnessio/ui/components'
@@ -15,7 +15,7 @@ const RepoLayout = () => {
   const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
   const { toRepoCommits } = useRepoCommits()
-  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo } = useGitRef()
+  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo, defaultBranch } = useGitRef()
 
   const onFavoriteToggle = async (isFavorite: boolean) => {
     try {
@@ -34,6 +34,14 @@ const RepoLayout = () => {
     }
   }
 
+  // Removing gitRef from summary, files and commits path when navigating from compare page
+  const matches = useMatches()
+  const isComparePage = matches.some(match => match.pathname.includes('/pulls/compare/'))
+
+  const summaryPathRef = isComparePage ? defaultBranch : gitRefPath
+  const filesPathRef = isComparePage ? defaultBranch : gitRefPath
+  const commitsPathRef = isComparePage ? defaultBranch : gitRefName
+
   return (
     <>
       <RepoHeader
@@ -49,9 +57,9 @@ const RepoLayout = () => {
         <RepoSubheader
           showPipelinesTab={!isMFE}
           showSearchTab={isMFE}
-          summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': gitRefPath })}
-          filesPath={routes.toRepoFiles({ spaceId, repoId, '*': gitRefPath })}
-          commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName })}
+          summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': summaryPathRef })}
+          filesPath={routes.toRepoFiles({ spaceId, repoId, '*': filesPathRef })}
+          commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName: commitsPathRef })}
           isRepoEmpty={!!repoData?.is_empty}
         />
       </SubHeaderWrapper>

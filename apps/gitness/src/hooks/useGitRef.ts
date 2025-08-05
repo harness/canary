@@ -44,6 +44,7 @@ export function useGitRef() {
     codeMode,
     preSelectedTab,
     setPreSelectedTab,
-    prefixedDefaultBranch
+    prefixedDefaultBranch,
+    defaultBranch: repoData?.default_branch ?? ''
   }
 }

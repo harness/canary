@@ -37,6 +37,7 @@ export const getPullRequestFormSchema = (t: TFunctionWithFallback) =>
   z.object({
     title: z
       .string()
+      .trim()
       .min(1, { message: t('views:pullRequests.validation.titleMin', 'Title is required') })
       .max(256, {
         message: t('views:pullRequests.validation.titleMax', 'Title must be no longer than 256 characters')

@@ -75,11 +75,11 @@
       },
       "sm": {
         "$type": "spacing",
-        "$value": "{spacing.4}"
+        "$value": "{spacing.3-half}"
       },
       "md": {
         "$type": "spacing",
-        "$value": "{spacing.5}"
+        "$value": "{spacing.4}"
       }
     },
     "py": {
@@ -102,6 +102,14 @@
       "md": {
         "$type": "spacing",
         "$value": "{spacing.2}"
+      }
+    },
+    "chevron": {
+      "pr": {
+        "md": {
+          "$type": "spacing",
+          "$value": "{spacing.3-half}"
+        }
       }
     }
   },

@@ -72,7 +72,7 @@ export interface PathBreadcrumbsInputProps {
 
 export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
 
-export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...props }: PathBreadcrumbsProps) => {
+export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcrumbsProps) => {
   const { Link } = useRouterContext()
 
   const renderInput = () => {
@@ -114,7 +114,9 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, fullResourcePath, ...pro
 
       {(isNew || isEdit) && renderInput()}
 
-      <CopyButton name={fullResourcePath || 'Copy path'} className="ml-cn-2xs" />
+      {items.length > 0 && !(isNew || isEdit) && (
+        <CopyButton name={items.map(item => item.path).join('/')} className="ml-cn-2xs" />
+      )}
     </Layout.Flex>
   )
 }

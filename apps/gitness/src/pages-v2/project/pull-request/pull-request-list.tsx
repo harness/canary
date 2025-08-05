@@ -210,7 +210,7 @@ export default function PullRequestListPage() {
         const toPullRequest = getPullRequestUrl({
           repo,
           scope: {
-            accountId: accountId || '',
+            accountId,
             orgIdentifier,
             projectIdentifier
           },

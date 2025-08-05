@@ -23,6 +23,7 @@ import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get } from 'lodash-es'
 
+import { CommentData } from './index'
 import { replaceEmailAsKey, replaceMentionEmailWithId, replaceMentionIdWithEmail } from './utils'
 
 const getAvatar = (name?: string) => <Avatar name={name} rounded />
@@ -93,6 +94,17 @@ const BaseComp: FC<BaseCompProps> = ({
   isReply
 }) => {
   if (!payload?.id) return null
+
+  const commentData: CommentData = {
+    id: payload.id,
+    author: payload.author?.display_name,
+    text: payload.text,
+    created: payload.created,
+    isDeleted: !!payload.deleted,
+    canEdit: payload.author?.uid === currentUser?.uid,
+    canDelete: payload.author?.uid === currentUser?.uid,
+    mentions: payload.mentions
+  }
 
   return (
     <PullRequestTimelineItem

@@ -18,6 +18,7 @@ import { noop } from 'lodash-es'
 
 import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestTimelineItem, { TimelineItemProps } from './pull-request-timeline-item'
+import { SystemCommentItem } from './system-comment-item'
 
 const labelActivityToTitleDict: Record<LabelActivity, string> = {
   assign: 'added',

@@ -423,32 +423,27 @@ const PullRequestDiffViewer = ({
             const parentIdAttr = `comment-${parent?.id}`
             const replies = thread.replies
             const parentInitials = getInitials(parent.author ?? '', 2)
+
+            const parentCommentData: CommentData = {
+              id: parent.id,
+              author: parent.author,
+              text: parent?.payload?.payload?.text,
+              created: parent?.created,
+              isDeleted: !!parent?.deleted,
+              canEdit: true, // You might want to add proper permission checks
+              canDelete: true,
+              mentions: parent?.payload?.mentions
+            }
+
             return (
               <PullRequestTimelineItem
-                principalsMentionMap={principalsMentionMap}
-                setPrincipalsMentionMap={setPrincipalsMentionMap}
-                mentions={parent?.payload?.mentions}
-                payload={parent?.payload}
-                wrapperClassName="pb-3"
                 key={parent.id}
                 id={parentIdAttr}
-                principalProps={principalProps}
-                parentCommentId={parent.id}
-                handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pt-4 pb-1"
-                header={[]}
-                currentUser={currentUser}
-                isComment
-                replyBoxClassName="p-4"
-                hideReplyHere={hideReplyHeres[parent?.id]}
-                setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
+                className="pb-3"
+                parentComment={parentCommentData}
                 isResolved={!!parent.payload?.resolved}
-                toggleConversationStatus={toggleConversationStatus}
-                onQuoteReply={(parentId: number, originalText: string) =>
-                  handleQuoteReply(parentId, originalText, parent?.payload?.mentions || {})
-                }
-                quoteReplyText={quoteReplies[parent.id]?.text || ''}
+                resolvedBy={parent.payload?.resolver?.display_name}
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <Text variant="body-normal" color="foreground-3">
@@ -461,71 +456,21 @@ const PullRequestDiffViewer = ({
                 }
                 content={
                   <div className="px-4 pt-4">
+                    {/* Parent comment content */}
                     <PullRequestTimelineItem
-                      isReply={false}
-                      mentions={parent?.payload?.mentions}
-                      payload={parent?.payload}
-                      principalsMentionMap={principalsMentionMap}
-                      setPrincipalsMentionMap={setPrincipalsMentionMap}
-                      titleClassName="w-full"
-                      parentCommentId={parent.id}
-                      principalProps={principalProps}
-                      handleSaveComment={handleSaveComment}
-                      isLast={replies.length === 0}
-                      hideReplySection
-                      isResolved={!!parent.payload?.resolved}
-                      isComment
-                      replyBoxClassName=""
-                      handleDeleteComment={() => deleteComment?.(parent?.id) || Promise.resolve()}
-                      onEditClick={() => toggleEditMode(componentId, parent?.payload?.payload?.text || '')}
-                      data={parent?.payload?.payload?.text}
-                      contentClassName="border-transparent"
-                      onCopyClick={onCopyClick}
-                      commentId={parent.id}
-                      setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
-                      onQuoteReply={(parentId: number, rawText: string) =>
-                        handleQuoteReply(parentId, rawText, parent?.payload?.mentions || {})
-                      }
                       icon={<Avatar name={parentInitials} rounded />}
-                      header={[
-                        {
-                          name: parent.author,
-                          description: <TimeAgoCard timestamp={parent?.created} />
-                        }
-                      ]}
-                      content={
-                        parent?.deleted ? (
-                          <TextInput value={t('views:pullRequests.deletedComment')} disabled />
-                        ) : editModes[componentId] ? (
-                          <PullRequestCommentBox
-                            principalsMentionMap={principalsMentionMap}
-                            setPrincipalsMentionMap={setPrincipalsMentionMap}
-                            principalProps={principalProps}
-                            handleUpload={handleUpload}
-                            isEditMode
-                            onSaveComment={() => {
-                              if (parent?.id) {
-                                return updateComment?.(
-                                  parent?.id,
-                                  replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
-                                ).then(() => {
-                                  toggleEditMode(componentId, '')
-                                })
-                              }
-                            }}
-                            currentUser={currentUser}
-                            onCancelClick={() => {
-                              toggleEditMode(componentId, '')
-                            }}
-                            diff={data}
-                            lang={lang}
-                            comment={replaceMentionIdWithEmail(
-                              editComments[componentId],
-                              parent?.payload?.mentions || {}
-                            )}
-                            setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
-                          />
-                        ) : (
+                      isLast={replies.length === 0}
+                    >
+                      <div className="flex w-full items-center justify-between gap-x-2">
+                        <CommentHeader
+                          name={parent.author}
+                          description={<TimeAgoCard timestamp={parent?.created} />}
+                          showActions={true}
+                          isDeleted={!!parent?.deleted}
+                        />
+                      </div>
+                      <CommentContent
+                        content={
                           <PRCommentView
                             commentItem={parent}
                             filenameToLanguage={filenameToLanguage}
@@ -534,105 +479,110 @@ const PullRequestDiffViewer = ({
                             addSuggestionToBatch={addSuggestionToBatch}
                             removeSuggestionFromBatch={removeSuggestionFromBatch}
                           />
-                        )
-                      }
-                    />
-                    {replies?.length > 0
-                      ? replies.map((reply, idx) => {
-                          const replyInitials = getInitials(reply.author ?? '', 2)
-                          const isLastComment = idx === replies.length - 1
-                          const replyComponentId = `activity-code-${reply?.id}`
-                          const replyIdAttr = `comment-${reply?.id}`
+                        }
+                        isEditMode={editModes[componentId]}
+                        isDeleted={!!parent?.deleted}
+                        comment={replaceMentionIdWithEmail(editComments[componentId], parent?.payload?.mentions || {})}
+                        setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                        onSaveComment={() => {
+                          if (parent?.id) {
+                            return updateComment?.(
+                              parent?.id,
+                              replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
+                            ).then(() => {
+                              toggleEditMode(componentId, '')
+                            })
+                          }
+                        }}
+                        onCancelEdit={() => {
+                          toggleEditMode(componentId, '')
+                        }}
+                        currentUser={currentUser}
+                        handleUpload={handleUpload}
+                        principalProps={principalProps}
+                        principalsMentionMap={principalsMentionMap}
+                        setPrincipalsMentionMap={setPrincipalsMentionMap}
+                      />
+                    </PullRequestTimelineItem>
 
-                          return (
-                            <PullRequestTimelineItem
-                              isReply
+                    {/* Replies */}
+                    {replies?.length > 0 &&
+                      replies.map((reply, idx) => {
+                        const replyInitials = getInitials(reply.author ?? '', 2)
+                        const isLastComment = idx === replies.length - 1
+                        const replyComponentId = `activity-code-${reply?.id}`
+
+                        return (
+                          <PullRequestTimelineItem
+                            key={reply.id}
+                            icon={<Avatar name={replyInitials} rounded />}
+                            isLast={isLastComment}
+                          >
+                            <div className="flex w-full items-center justify-between gap-x-2">
+                              <CommentHeader
+                                name={reply.author}
+                                description={<TimeAgoCard timestamp={reply?.created} />}
+                                showActions={true}
+                                isDeleted={!!reply?.deleted}
+                              />
+                            </div>
+                            <CommentContent
+                              content={
+                                <PRCommentView
+                                  parentItem={parent as CommentItem<TypesPullReqActivity>}
+                                  commentItem={reply}
+                                  filenameToLanguage={filenameToLanguage}
+                                  suggestionsBatch={suggestionsBatch}
+                                  onCommitSuggestion={onCommitSuggestion}
+                                  addSuggestionToBatch={addSuggestionToBatch}
+                                  removeSuggestionFromBatch={removeSuggestionFromBatch}
+                                />
+                              }
+                              isEditMode={editModes[replyComponentId]}
+                              isDeleted={!!reply?.deleted}
+                              comment={replaceMentionIdWithEmail(
+                                editComments[replyComponentId],
+                                reply?.payload?.mentions || {}
+                              )}
+                              setComment={text => setEditComments(prev => ({ ...prev, [replyComponentId]: text }))}
+                              onSaveComment={() => {
+                                if (reply?.id) {
+                                  return updateComment?.(
+                                    reply?.id,
+                                    replaceMentionEmailWithId(editComments[replyComponentId], principalsMentionMap)
+                                  ).then(() => {
+                                    toggleEditMode(replyComponentId, '')
+                                  })
+                                }
+                              }}
+                              onCancelEdit={() => {
+                                toggleEditMode(replyComponentId, '')
+                              }}
+                              currentUser={currentUser}
+                              handleUpload={handleUpload}
+                              principalProps={principalProps}
                               principalsMentionMap={principalsMentionMap}
                               setPrincipalsMentionMap={setPrincipalsMentionMap}
-                              key={reply.id}
-                              payload={parent?.payload}
-                              id={replyIdAttr}
-                              principalProps={principalProps}
-                              parentCommentId={parent?.id}
-                              isLast={isLastComment}
-                              handleSaveComment={handleSaveComment}
-                              hideReplySection
-                              isComment
-                              isResolved={!!parent?.payload?.resolved}
-                              onCopyClick={onCopyClick}
-                              commentId={reply.id}
-                              isDeleted={!!reply?.deleted}
-                              handleDeleteComment={() => deleteComment?.(reply?.id) || Promise.resolve()}
-                              onEditClick={() => toggleEditMode(replyComponentId, reply?.payload?.payload?.text || '')}
-                              data={reply?.payload?.payload?.text}
-                              contentClassName="border-transparent"
-                              titleClassName="!flex max-w-full"
-                              setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
-                              onQuoteReply={(parentId: number, rawText: string) =>
-                                handleQuoteReply(parentId, rawText, reply?.payload?.mentions || {})
-                              }
-                              icon={<Avatar name={replyInitials} rounded />}
-                              header={[
-                                {
-                                  name: reply.author,
-                                  description: <TimeAgoCard timestamp={reply?.created} />
-                                }
-                              ]}
-                              content={
-                                reply?.deleted ? (
-                                  <TextInput value={t('views:pullRequests.deletedComment')} disabled />
-                                ) : editModes[replyComponentId] ? (
-                                  <PullRequestCommentBox
-                                    principalsMentionMap={principalsMentionMap}
-                                    setPrincipalsMentionMap={setPrincipalsMentionMap}
-                                    principalProps={principalProps}
-                                    handleUpload={handleUpload}
-                                    isEditMode
-                                    onSaveComment={() => {
-                                      if (reply?.id) {
-                                        return updateComment?.(
-                                          reply?.id,
-                                          replaceMentionEmailWithId(
-                                            editComments[replyComponentId],
-                                            principalsMentionMap
-                                          )
-                                        ).then(() => {
-                                          toggleEditMode(replyComponentId, '')
-                                        })
-                                      }
-                                    }}
-                                    currentUser={currentUser}
-                                    onCancelClick={() => {
-                                      toggleEditMode(replyComponentId, '')
-                                    }}
-                                    diff={data}
-                                    lang={lang}
-                                    comment={replaceMentionIdWithEmail(
-                                      editComments[replyComponentId],
-                                      reply?.payload?.mentions || {}
-                                    )}
-                                    setComment={text =>
-                                      setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
-                                    }
-                                  />
-                                ) : (
-                                  <PRCommentView
-                                    parentItem={parent as CommentItem<TypesPullReqActivity>}
-                                    commentItem={reply}
-                                    filenameToLanguage={filenameToLanguage}
-                                    suggestionsBatch={suggestionsBatch}
-                                    onCommitSuggestion={onCommitSuggestion}
-                                    addSuggestionToBatch={addSuggestionToBatch}
-                                    removeSuggestionFromBatch={removeSuggestionFromBatch}
-                                  />
-                                )
-                              }
                             />
-                          )
-                        })
-                      : null}
+                          </PullRequestTimelineItem>
+                        )
+                      })}
                   </div>
                 }
+                currentUser={currentUser}
+                onSaveComment={handleSaveComment}
+                onCopyClick={onCopyClick}
+                onQuoteReply={(parentId: number, originalText: string) =>
+                  handleQuoteReply(parentId, originalText, parent?.payload?.mentions || {})
+                }
+                onToggleConversationStatus={toggleConversationStatus}
+                quoteReplyText={quoteReplies[parent.id]?.text || ''}
+                handleUpload={handleUpload}
+                principalProps={principalProps}
+                principalsMentionMap={principalsMentionMap}
+                setPrincipalsMentionMap={setPrincipalsMentionMap}
+                contentClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pt-4 pb-1"
+                replyBoxClassName="p-4"
               />
             )
           })}
@@ -649,7 +599,10 @@ const PullRequestDiffViewer = ({
       editModes,
       editComments,
       t,
-      principalProps
+      principalProps,
+      principalsMentionMap,
+      setPrincipalsMentionMap,
+      handleUpload
     ]
   )
 

@@ -15,7 +15,7 @@ export default function RepoCommitDetailsPage({ showSidebar = true }: { showSide
   const { setCommitData } = useCommitDetailsStore()
   const routes = useRoutes()
   const { repoId, spaceId } = useParams<PathParams>()
-  const { data: { body: commitData } = {} } = useGetCommitQuery({
+  const { data: { body: commitData } = {}, isLoading: loadingCommitDetails } = useGetCommitQuery({
     repo_ref: repoRef,
     commit_sha: commitSHA || ''
   })
@@ -35,6 +35,7 @@ export default function RepoCommitDetailsPage({ showSidebar = true }: { showSide
       }
       useCommitDetailsStore={useCommitDetailsStore}
       showSidebar={showSidebar}
+      loadingCommitDetails={loadingCommitDetails}
     />
   )
 }

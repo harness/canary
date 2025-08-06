@@ -257,28 +257,28 @@ export const repoRoutes: CustomRouteObject[] = [
                   pageTitle: Page.Commits,
                   routeName: RouteConstants.toRepoTagCommits
                 }
-              },
+              }
+            ]
+          },
+          {
+            path: 'commit/:commitSHA',
+            element: <RepoCommitDetailsPage showSidebar={false} />,
+            handle: {
+              breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
+                <>
+                  <span>{commitSHA.substring(0, 7)}</span>
+                </>
+              ),
+              routeName: RouteConstants.toRepoCommitDetails
+            },
+            children: [
               {
-                path: 'commit/:commitSHA',
-                element: <RepoCommitDetailsPage showSidebar={false} />,
-                handle: {
-                  breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
-                    <>
-                      <span>{commitSHA.substring(0, 7)}</span>
-                    </>
-                  ),
-                  routeName: RouteConstants.toRepoCommitDetails
-                },
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <ExplorerPathsProvider>
-                        <CommitDiffContainer showSidebar={false} />
-                      </ExplorerPathsProvider>
-                    )
-                  }
-                ]
+                index: true,
+                element: (
+                  <ExplorerPathsProvider>
+                    <CommitDiffContainer showSidebar={false} />
+                  </ExplorerPathsProvider>
+                )
               }
             ]
           },

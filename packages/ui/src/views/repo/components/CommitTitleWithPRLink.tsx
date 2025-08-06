@@ -36,9 +36,10 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
           <Layout.Flex>
             &nbsp;(
             <Link
-              className="hover:underline"
+              // className="hover:underline"
               title={title}
               to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
+              variant="secondary"
             >
               #{pullRequestId}
             </Link>

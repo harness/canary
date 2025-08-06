@@ -4,8 +4,11 @@ import { Avatar, Button, CommitCopyActions, Text, TimeAgoCard } from '@/componen
 import { useRouterContext, useTranslation } from '@/context'
 import { ICommitDetailsStore, SandboxLayout } from '@/views'
 
+import { CommitTitleWithPRLink } from '../components/CommitTitleWithPRLink'
+
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
   toCode?: ({ sha }: { sha: string }) => string
 }
 export interface RepoCommitDetailsViewProps extends RoutingProps {
@@ -17,6 +20,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
   showSidebar = true,
   toCommitDetails,
+  toPullRequest,
   toCode
 }) => {
   const { Outlet, Link } = useRouterContext()
@@ -31,7 +35,14 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         </Text>
         <div className="mt-5 rounded-md border border-cn-borders-2">
           <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
-            <span className="text-14 font-mono font-medium leading-snug text-cn-foreground-1">{commitData?.title}</span>
+            <CommitTitleWithPRLink
+              Link={Link}
+              toPullRequest={toPullRequest}
+              commitMessage={commitData?.title}
+              title={commitData?.title}
+              textClassName={'text-14 font-mono font-medium leading-snug text-cn-foreground-1'}
+              textVariant={'body-normal'}
+            />
             <Button variant="outline" asChild>
               <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
                 {t('views:commits.browseFiles', 'Browse files')}

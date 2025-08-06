@@ -15,7 +15,7 @@ const Topbar = {
     return (
       <div
         className={cn(
-          `grid w-full grid-cols-[1fr_auto] font-regular h-[var(--cn-breadcrumbs-height)] items-center gap-6 px-5 text-sm`,
+          `grid w-full grid-cols-[1fr_auto] font-regular h-[var(--cn-breadcrumbs-height)] items-center gap-6 px-cn-2xl text-sm`,
           { 'grid-cols-[auto_1fr_auto]': hasCenter },
           className
         )}

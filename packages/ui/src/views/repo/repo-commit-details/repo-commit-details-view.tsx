@@ -50,8 +50,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
                 toPullRequest={toPullRequest}
                 commitMessage={commitData?.title}
                 title={commitData?.title}
-                textClassName={'text-14 font-medium leading-snug'}
-                // textVariant={'body-normal'}
+                textProps={{ variant: 'body-code' }}
               />
               <Button variant="outline" asChild>
                 <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>

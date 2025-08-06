@@ -113,6 +113,20 @@
     "fade-height": {
       "$type": "sizing",
       "$value": "{size.15}"
+    },
+    "group-label": {
+      "px": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.1-half}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { Alert, AlertDialog, Fieldset, Input, Message, MessageTheme } from '@/components'
+import { Alert, AlertDialog, Input, Message, MessageTheme } from '@/components'
 import { useTranslation } from '@/context'
 import { getErrorMessage } from '@utils/utils'
 
@@ -69,17 +69,15 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
       <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
         <div className="overflow-hidden break-words text-wrap">{displayMessageContent}</div>
         {withForm && (
-          <Fieldset>
-            <Input
-              id="verification"
-              value={verification}
-              placeholder=""
-              onChange={handleChangeVerification}
-              label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} "${deletionKeyword}"`}
-              disabled={isLoading}
-              autoFocus
-            />
-          </Fieldset>
+          <Input
+            id="verification"
+            value={verification}
+            placeholder=""
+            onChange={handleChangeVerification}
+            label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} "${deletionKeyword}"`}
+            disabled={isLoading}
+            autoFocus
+          />
         )}
 
         {violation && (
@@ -97,7 +95,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
         )}
 
         {!!error && (
-          <Alert.Root className="mt-4" theme="danger">
+          <Alert.Root theme="danger">
             <Alert.Title>Failed to perform delete operation</Alert.Title>
             <Alert.Description>
               {getErrorMessage(error as Error, 'Failed to perform delete operation')}

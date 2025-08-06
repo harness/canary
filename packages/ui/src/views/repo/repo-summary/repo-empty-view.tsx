@@ -83,12 +83,8 @@ ${sshUrl}
               t('views:repos.emptyRepoPage.noData.description.1', 'README, LICENSE, and .gitignrore')
             ]}
             primaryButton={{
-              label: (
-                <>
-                  <IconV2 name="plus" />
-                  {t('views:repos.emptyRepoPage.noData.createFile', 'Create File')}
-                </>
-              ),
+              icon: 'plus',
+              label: t('views:repos.emptyRepoPage.noData.createFile', 'Create File'),
               to: `${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/`
             }}
             className="py-cn-3xl"

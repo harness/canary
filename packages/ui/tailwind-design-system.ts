@@ -77,19 +77,15 @@ export default {
           backdrop: 'var(--cn-comp-dialog-backdrop)',
           'diff-success': 'var(--cn-comp-diff-add-content)',
           'diff-danger': 'var(--cn-comp-diff-del-content)',
-
-          // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           selected: 'var(--cn-state-selected)',
-          primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
-          8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
-          9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           // avatar - remove once avatar component is completed
-          11: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
-          12: 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)',
-          13: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
+          surface: {
+            'gray-hover': 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)'
+          },
+          solidgray: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
         },
         'cn-borders': {
           1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',

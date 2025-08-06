@@ -24114,8 +24114,6 @@
       "accordion.md.py": "882ea499eec2854c4f95b4c7438e724e0a9be714",
       "accordion.md.gap": "afe0296acda984b0340365a5ae573c9b8db97923",
       "accordion.md.min-width": "0669681056a00edb7d903f7d42c2e41f7499fb44",
-      "avatar.size.sm": "491c03b5d68bac356e67e3684c051e76c8560b14",
-      "avatar.size.md": "7b046bf651050b3e221d1ab9afa5c0e3f55fdfed",
       "avatar.size.lg": "7aac98b22787eae34b30ed66ca66cf75d8e8fb87",
       "avatar.radius.default": "d2c45a724879986dffe6e7b8e6aecae3777c9d12",
       "avatar.radius.rounded": "d961edfa4631b6266db41f340dfc91cc6c46adb8",
@@ -24335,7 +24333,9 @@
       "sidebar.sub-group.px": "5006092a42bb07d1e40ae23b2baec1ee97f03ffd",
       "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352",
       "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6",
-      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d"
+      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d",
+      "avatar.size.xs": "491c03b5d68bac356e67e3684c051e76c8560b14",
+      "avatar.size.sm": "7b046bf651050b3e221d1ab9afa5c0e3f55fdfed"
     },
     "group": "breakpoint"
   }

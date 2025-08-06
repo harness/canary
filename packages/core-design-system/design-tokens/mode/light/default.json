@@ -2,7 +2,7 @@
   "bg": {
     "0": {
       "$type": "color",
-      "$value": "{chrome.50}",
+      "$value": "{chrome.25}",
       "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
     },
     "1": {

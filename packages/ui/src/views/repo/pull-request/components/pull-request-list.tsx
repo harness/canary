@@ -159,7 +159,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           <StackedList.Item className="px-4 py-3" isLast={pullRequests.length - 1 === pullRequest_idx}>
             {!!pullRequest.number && (
               <StackedList.Field
-                className="grid gap-1.5 justify-normal"
+                className="grid gap-cn-2xs justify-normal"
+                disableTruncate
                 title={
                   pullRequest.name && (
                     <PullRequestItemTitle

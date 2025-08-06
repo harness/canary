@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, Layout, ScopeTag, Tag, Text } from '@/components'
+import { IconV2, Layout, ScopeTag, Separator, Tag, Text } from '@/components'
 import { PullRequest, Scope } from '@/views'
 import { determineScope, getScopedPath } from '@components/scope/utils'
 import { cn } from '@utils/cn'
@@ -29,9 +29,9 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   const scopedPath = getScopedPath(repoScopeParams)
 
   return (
-    <Layout.Horizontal gap="xs" align="center" justify="start">
+    <Layout.Horizontal gap="xs" justify="start" align="baseline">
       <IconV2
-        className={cn({
+        className={cn('translate-y-0.5', {
           'text-icons-success': state === 'open' && !isDraft,
           'text-icons-1': state === 'open' && isDraft,
           'text-icons-danger': state === 'closed',
@@ -40,23 +40,27 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
         name={getPrState(isDraft, merged, state).icon}
       />
 
-      <Layout.Flex gap="xs" align="center" className="min-w-0">
-        {repoId && <Tag value={repoId} showIcon icon="repository" theme="gray" />}
-        <Text variant="heading-base" truncate>
+      <div className="[&>*:not(:last-child)]:mr-cn-xs">
+        {repoId && <Tag className="align-bottom" value={repoId} showIcon icon="repository" theme="gray" />}
+
+        <Text as="span" variant="heading-base">
           {name}
         </Text>
-        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} /> : null}
-      </Layout.Flex>
 
-      {!!labels.length && (
-        <LabelsList
-          labels={labels}
-          className="overflow-hidden flex-nowrap flex-none"
-          onClick={label => onLabelClick?.(label.id || 0)}
-        />
-      )}
+        {!!showScope && !!scopeType && (
+          <>
+            <ScopeTag className="align-bottom" scopeType={scopeType} scopedPath={scopedPath} />
+            {!!labels.length && <Separator className="h-3.5 inline-flex align-middle" orientation="vertical" />}
+          </>
+        )}
+
+        {!!labels.length && (
+          <LabelsList labels={labels} className="!inline-flex" onClick={label => onLabelClick?.(label.id || 0)} />
+        )}
+      </div>
+
       {!!comments && (
-        <Layout.Horizontal gap="2xs" className="ml-auto" align="center">
+        <Layout.Horizontal gap="3xs" className="ml-auto translate-y-0.5">
           <IconV2 className="text-cn-foreground-2" name="pr-comment" />
           <Text variant="body-single-line-normal" color="foreground-1">
             {comments}

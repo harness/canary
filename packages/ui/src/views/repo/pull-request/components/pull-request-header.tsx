@@ -65,15 +65,13 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <>
       <Layout.Vertical gap="md" className={cn(className)}>
-        <Layout.Horizontal gap="xs" align="center">
-          <Layout.Horizontal gap="xs" align="center">
-            <Text as="h1" className="max-w-[95%] truncate" variant="heading-section" color="foreground-1">
-              {title}
-            </Text>
-            <Text as="h1" className="max-w-[95%] truncate" variant="heading-section" color="foreground-2">
+        <Layout.Horizontal gap="3xl" align="end">
+          <Text as="h1" variant="heading-section" className="[&>*]:ml-cn-xs">
+            {title}
+            <Text as="span" variant="heading-section" color="foreground-2">
               #{number}
             </Text>
-          </Layout.Horizontal>
+          </Text>
 
           <Button
             className="group"

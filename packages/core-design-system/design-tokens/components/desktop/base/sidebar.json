@@ -119,7 +119,11 @@
         "$type": "spacing",
         "$value": "{spacing.2-half}"
       },
-      "py": {
+      "pt": {
+        "$type": "spacing",
+        "$value": "{spacing.3-half}"
+      },
+      "pb": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
       },

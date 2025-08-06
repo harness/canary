@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import {
@@ -69,8 +69,8 @@ export default function PullRequestListPage() {
     { retry: false }
   )
 
-  // Make separate API calls to get open and closed PR counts for the filtered author
-  const { data: { body: openPRData } = {} } = useListPullReqQuery(
+  // Dynamic counter queries that respect filters
+  const { data: { body: openPRData, headers: openHeaders } = {} } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
@@ -87,12 +87,11 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false,
-      enabled: !!defaultAuthorId // Only make this call when author filter is applied
+      retry: false
     }
   )
 
-  const { data: { body: closedPRData } = {} } = useListPullReqQuery(
+  const { data: { body: closedPRData, headers: closedHeaders } = {} } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
@@ -109,8 +108,7 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false,
-      enabled: !!defaultAuthorId // Only make this call when author filter is applied
+      retry: false
     }
   )
 
@@ -180,33 +178,110 @@ export default function PullRequestListPage() {
     })
   }
 
-  useEffect(() => {
-    if (pullRequestData) {
-      const validPullRequests = Array.isArray(pullRequestData) ? pullRequestData.filter(pr => pr !== null) : []
-      setPullRequests(validPullRequests, headers)
+  const HEADER_TOTAL_KEY = 'x-total'
+  const DATE_FILTER_KEYS = ['created_gt', 'created_lt', 'updated_gt', 'updated_lt'] as const
+  const DEFAULT_COUNT = 0
+
+  /**
+   * Extracts the count from API response, prioritizing x-total header over array length
+   * @param data - The API response data
+   * @param headers - Response headers containing x-total count
+   * @returns The count as a number
+   */
+  const extractCountFromResponse = (data: unknown, headers: Headers | undefined): number => {
+    const headerCount = headers?.get(HEADER_TOTAL_KEY)
+    if (headerCount) {
+      const parsed = parseInt(headerCount, 10)
+      return isNaN(parsed) ? DEFAULT_COUNT : parsed
     }
+    return Array.isArray(data) ? data.length : DEFAULT_COUNT
+  }
+
+  /**
+   * Checks if a value is considered "empty" for filter purposes
+   * Simplified logic for better performance and readability
+   * @param value - The value to check
+   * @returns True if the value is empty
+   */
+  const isEmptyValue = (value: unknown): boolean => {
+    if (!value) return true
+    if (Array.isArray(value)) return value.length === 0
+    if (typeof value === 'object' && !(value instanceof Date)) {
+      return Object.keys(value as Record<string, unknown>).length === 0
+    }
+    if (typeof value === 'string') return value.trim() === ''
+    if (typeof value === 'number') return value === 0
+    return false
+  }
+
+  /**
+   * Determines if any filters are currently active
+   * Optimized for performance with early returns and simplified logic
+   * @returns True if any filters are active
+   */
+  const hasActiveFilters = useMemo(() => {
+    if (query?.trim() || defaultAuthorId || labelBy) return true
+    if (filterValues && Object.keys(filterValues).length > 0) {
+      return Object.values(filterValues).some(value => !isEmptyValue(value))
+    }
+    const urlParams = new URLSearchParams(searchParams)
+    return DATE_FILTER_KEYS.some(key => urlParams.get(key))
+  }, [query, filterValues, defaultAuthorId, labelBy, searchParams, isEmptyValue])
+
+  /**
+   * Updates pull request data in the store
+   */
+  useEffect(() => {
+    if (!pullRequestData) return
+
+    const validPullRequests = Array.isArray(pullRequestData) ? pullRequestData.filter(pr => pr !== null) : []
+    setPullRequests(validPullRequests, headers)
   }, [pullRequestData, headers, setPullRequests])
 
+  /**
+   * Updates counters based on filtered data and handles auto-switching logic
+   */
   useEffect(() => {
-    if (defaultAuthorId && openPRData && closedPRData) {
-      const openCount = Array.isArray(openPRData) ? openPRData.length : 0
-      const closedCount = Array.isArray(closedPRData) ? closedPRData.length : 0
+    if (!openPRData || !closedPRData) return
 
+    const openCount = extractCountFromResponse(openPRData, openHeaders)
+    const closedCount = extractCountFromResponse(closedPRData, closedHeaders)
+
+    // Handle auto-switching to closed tab when author filter is applied and no open PRs
+    if (defaultAuthorId) {
       const shouldSwitch = shouldSwitchToClosedTab(!!defaultAuthorId, openCount, closedCount)
-
       if (shouldSwitch && !shouldSwitchToClosed) {
         setShouldSwitchToClosed(true)
         setPrState(['closed', 'merged'])
       }
-
-      setOpenClosePullRequests(openCount, closedCount)
     }
-  }, [defaultAuthorId, openPRData, closedPRData, shouldSwitchToClosed, shouldSwitchToClosedTab])
 
+    setOpenClosePullRequests(openCount, closedCount)
+  }, [
+    openPRData,
+    closedPRData,
+    openHeaders,
+    closedHeaders,
+    defaultAuthorId,
+    shouldSwitchToClosed,
+    shouldSwitchToClosedTab,
+    setOpenClosePullRequests,
+    setPrState
+  ])
+
+  /**
+   * Uses static counters when no filters are applied
+   */
   useEffect(() => {
-    const { num_open_pulls = 0, num_closed_pulls = 0, num_merged_pulls = 0 } = repoData || {}
-    setOpenClosePullRequests(num_open_pulls, num_closed_pulls + num_merged_pulls)
-  }, [repoData, setOpenClosePullRequests])
+    if (!hasActiveFilters && repoData) {
+      const {
+        num_open_pulls = DEFAULT_COUNT,
+        num_closed_pulls = DEFAULT_COUNT,
+        num_merged_pulls = DEFAULT_COUNT
+      } = repoData
+      setOpenClosePullRequests(num_open_pulls, num_closed_pulls + num_merged_pulls)
+    }
+  }, [hasActiveFilters, repoData, setOpenClosePullRequests])
 
   useEffect(() => {
     setQueryPage(page)

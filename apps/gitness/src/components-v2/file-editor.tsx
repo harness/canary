@@ -36,9 +36,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   })
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
-  useExitPrompt({ isDirty: dirty })
-
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
+  useExitPrompt({ isDirty: dirty && !isCommitDialogOpen })
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const { theme } = useThemeStore()
   // TODO: temporary solution for matching themes

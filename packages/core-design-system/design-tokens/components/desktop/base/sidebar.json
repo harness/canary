@@ -33,9 +33,13 @@
       }
     },
     "container": {
-      "py": {
+      "pt": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
+      },
+      "pb": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       },
       "px": {
         "$type": "spacing",

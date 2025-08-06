@@ -24317,7 +24317,6 @@
       "sidebar.item.min": "f18236d17dda45406b50a1a536b242422d3023c8",
       "sidebar.group.py": "bc1e42fd4d4c503adc5968d2e6ea5d5a0ba5316f",
       "sidebar.group.gap": "f80e4907b1c8a148bfd7bcf49d44922d7ccb2593",
-      "sidebar.container.py": "04a8b9015ddccc3594809fe182a8893d89039b05",
       "sidebar.container.px": "488b7d5620b509629101b088ad9c1a9f3320ed2b",
       "sidebar.container.full-width": "1eea22521ac284a32ae50b1b0661212781661cdf",
       "sidebar.header.pt": "1c1380d37078561ea6f205e96178ae42375d7474",
@@ -24335,7 +24334,8 @@
       "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6",
       "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d",
       "avatar.size.xs": "491c03b5d68bac356e67e3684c051e76c8560b14",
-      "avatar.size.sm": "7b046bf651050b3e221d1ab9afa5c0e3f55fdfed"
+      "avatar.size.sm": "7b046bf651050b3e221d1ab9afa5c0e3f55fdfed",
+      "sidebar.container.pt": "04a8b9015ddccc3594809fe182a8893d89039b05"
     },
     "group": "breakpoint"
   }

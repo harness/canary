@@ -86,24 +86,21 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
-          <Text className="space-x-1" variant="body-single-line-strong" as="h2" color="foreground-1">
+          <Text className="flex items-center space-x-1" variant="body-single-line-strong" as="h2" color="foreground-1">
             <span>{props?.pullReqMetadata?.merger?.display_name}</span>
-            <span>
-              {areRulesBypassed ? `bypassed branch rules and ${mergeMethod} branch` : `${mergeMethod} branch`}
-            </span>
-
-            <PullRequestBranchBadge
-              branchName={pullReqMetadata?.source_branch || ''}
-              spaceId={spaceId}
-              repoId={repoId}
-            />
+            <span>{areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`}</span>
             <span>into</span>
             <PullRequestBranchBadge
               branchName={pullReqMetadata?.target_branch || ''}
               spaceId={spaceId}
               repoId={repoId}
             />
-
+            <span>from</span>
+            <PullRequestBranchBadge
+              branchName={pullReqMetadata?.source_branch || ''}
+              spaceId={spaceId}
+              repoId={repoId}
+            />
             <TimeAgoCard timestamp={pullReqMetadata?.merged} />
           </Text>
           <Layout.Horizontal>

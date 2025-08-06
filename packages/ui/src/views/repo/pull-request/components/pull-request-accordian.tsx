@@ -1,17 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import {
-  Accordion,
-  Button,
-  Checkbox,
-  CopyButton,
-  CounterBadge,
-  IconV2,
-  Layout,
-  Link,
-  StackedList,
-  Text
-} from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   CommentItem,
@@ -320,99 +309,94 @@ export const PullRequestAccordion: React.FC<{
   }, [selectedCommits, defaultCommitFilter, header.filePath, header.checksumAfter, header.fileViews])
 
   return (
-    <StackedList.Root>
-      <StackedList.Item className="overflow-hidden p-0" disableHover>
-        <Accordion.Root
-          type="multiple"
-          className="w-full"
-          value={openItems}
-          onValueChange={onToggle}
-          indicatorPosition="left"
+    <Accordion.Root
+      type="multiple"
+      className="w-full"
+      value={openItems}
+      onValueChange={onToggle}
+      indicatorPosition="left"
+    >
+      <Accordion.Item value={header?.text ?? ''} className="border-cn-borders-2 rounded-3 border">
+        <Accordion.Trigger
+          className="bg-cn-background-2 rounded-tl-3 rounded-tr-3 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
+          headerClassName="sticky top-[99px] z-10 border-cn-borders-2 border-b"
         >
-          <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="bg-cn-background-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
-              <StackedList.Field
-                title={
-                  <LineTitle
-                    header={header}
-                    viewed={viewed}
-                    setViewed={setViewed}
-                    showViewed={showViewedCheckbox && !hideViewedCheckbox}
-                    markViewed={markViewed ?? (() => {})}
-                    unmarkViewed={unmarkViewed ?? (() => {})}
-                    setCollapsed={setCollapsed}
-                    toggleFullDiff={toggleFullDiff}
-                    useFullDiff={useFullDiff}
-                    toRepoFileDetails={toRepoFileDetails}
-                    sourceBranch={sourceBranch}
-                  />
-                }
-              />
-            </Accordion.Trigger>
-            <Accordion.Content className="pb-0">
-              <div className="border-t bg-transparent">
-                {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical align="center" className="py-5">
-                    <Button
-                      className="text-cn-foreground-accent"
-                      variant="link"
-                      size="sm"
-                      aria-label="show diff"
-                      onClick={() => setShowHiddenDiff(true)}
-                    >
-                      {_ts('views:pullRequests.showDiff')}
-                    </Button>
-                    <Text variant="body-strong">
-                      {fileDeleted
-                        ? _ts('views:pullRequests.deletedFileDiff')
-                        : isDiffTooLarge
-                          ? _ts('views:pullRequests.largeDiff')
-                          : header?.isBinary
-                            ? _ts('views:pullRequests.binaryNotShown')
-                            : _ts('views:pullRequests.fileNoChanges')}
-                    </Text>
-                  </Layout.Vertical>
-                ) : (
-                  <>
-                    {startingLine ? (
-                      <div className="bg-[--diff-hunk-lineNumber--]">
-                        <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
-                      </div>
-                    ) : null}
-                    <PullRequestDiffViewer
-                      principalProps={principalProps}
-                      handleUpload={handleUpload}
-                      data={rawDiffData}
-                      fontsize={fontsize}
-                      highlight={highlight}
-                      mode={diffMode}
-                      wrap={wrap}
-                      addWidget={addWidget}
-                      fileName={header?.title ?? ''}
-                      lang={header?.lang ?? ''}
-                      currentUser={currentUser}
-                      comments={comments}
-                      handleSaveComment={handleSaveComment}
-                      deleteComment={deleteComment}
-                      updateComment={updateComment}
-                      onCopyClick={onCopyClick}
-                      onCommitSuggestion={onCommitSuggestion}
-                      addSuggestionToBatch={addSuggestionToBatch}
-                      suggestionsBatch={suggestionsBatch}
-                      removeSuggestionFromBatch={removeSuggestionFromBatch}
-                      filenameToLanguage={filenameToLanguage}
-                      toggleConversationStatus={toggleConversationStatus}
-                      scrolledToComment={scrolledToComment}
-                      setScrolledToComment={setScrolledToComment}
-                      collapseDiff={() => setCollapsed(true)}
-                    />
-                  </>
-                )}
-              </div>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion.Root>
-      </StackedList.Item>
-    </StackedList.Root>
+          <LineTitle
+            header={header}
+            viewed={viewed}
+            setViewed={setViewed}
+            showViewed={showViewedCheckbox && !hideViewedCheckbox}
+            markViewed={markViewed ?? (() => {})}
+            unmarkViewed={unmarkViewed ?? (() => {})}
+            setCollapsed={setCollapsed}
+            toggleFullDiff={toggleFullDiff}
+            useFullDiff={useFullDiff}
+            toRepoFileDetails={toRepoFileDetails}
+            sourceBranch={sourceBranch}
+          />
+        </Accordion.Trigger>
+        <Accordion.Content className="pb-0" containerClassName="rounded-bl-3 rounded-br-3">
+          <div className="bg-transparent">
+            {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
+              <Layout.Vertical align="center" className="py-5">
+                <Button
+                  className="text-cn-foreground-accent"
+                  variant="link"
+                  size="sm"
+                  aria-label="show diff"
+                  onClick={() => setShowHiddenDiff(true)}
+                >
+                  {_ts('views:pullRequests.showDiff')}
+                </Button>
+                <Text variant="body-strong">
+                  {fileDeleted
+                    ? _ts('views:pullRequests.deletedFileDiff')
+                    : isDiffTooLarge
+                      ? _ts('views:pullRequests.largeDiff')
+                      : header?.isBinary
+                        ? _ts('views:pullRequests.binaryNotShown')
+                        : _ts('views:pullRequests.fileNoChanges')}
+                </Text>
+              </Layout.Vertical>
+            ) : (
+              <>
+                {startingLine ? (
+                  <div className="bg-[--diff-hunk-lineNumber--]">
+                    <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
+                  </div>
+                ) : null}
+                <PullRequestDiffViewer
+                  principalProps={principalProps}
+                  handleUpload={handleUpload}
+                  data={rawDiffData}
+                  fontsize={fontsize}
+                  highlight={highlight}
+                  mode={diffMode}
+                  wrap={wrap}
+                  addWidget={addWidget}
+                  fileName={header?.title ?? ''}
+                  lang={header?.lang ?? ''}
+                  currentUser={currentUser}
+                  comments={comments}
+                  handleSaveComment={handleSaveComment}
+                  deleteComment={deleteComment}
+                  updateComment={updateComment}
+                  onCopyClick={onCopyClick}
+                  onCommitSuggestion={onCommitSuggestion}
+                  addSuggestionToBatch={addSuggestionToBatch}
+                  suggestionsBatch={suggestionsBatch}
+                  removeSuggestionFromBatch={removeSuggestionFromBatch}
+                  filenameToLanguage={filenameToLanguage}
+                  toggleConversationStatus={toggleConversationStatus}
+                  scrolledToComment={scrolledToComment}
+                  setScrolledToComment={setScrolledToComment}
+                  collapseDiff={() => setCollapsed(true)}
+                />
+              </>
+            )}
+          </div>
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion.Root>
   )
 }

@@ -31,7 +31,7 @@ export const Summary = ({
         {!hideHeader && (
           <Table.Header>
             <Table.Row>
-              <Table.Head>{t('views:repos.name', 'Name')}</Table.Head>
+              <Table.Head className="w-[300px]">{t('views:repos.name', 'Name')}</Table.Head>
               <Table.Head>{t('views:repos.lastCommit', 'Last commit message')}</Table.Head>
               <Table.Head containerProps={{ justify: 'end' }}>{t('views:repos.date', 'Date')}</Table.Head>
             </Table.Row>
@@ -83,7 +83,7 @@ export const Summary = ({
                           : 'folder'
                     }
                   />
-                  <Text color="foreground-1" truncate className="w-44">
+                  <Text color="foreground-1" truncate className="w-[300px]">
                     {file.name}
                   </Text>
                 </div>

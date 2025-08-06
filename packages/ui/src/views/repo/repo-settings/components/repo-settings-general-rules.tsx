@@ -7,6 +7,7 @@ import {
   ListActions,
   MoreActionsTooltip,
   NoData,
+  ScopeTag,
   SearchInput,
   Separator,
   SkeletonList,
@@ -18,7 +19,21 @@ import {
 } from '@/components'
 import { Select } from '@/components/form-primitives/select'
 import { useRouterContext, useTranslation } from '@/context'
-import { ErrorTypes, RuleDataType } from '@/views'
+import { ErrorTypes, RuleDataType, ScopeType } from '@/views'
+
+// Utility function to map numeric scope to ScopeType enum
+const getScopeType = (scope: number): ScopeType => {
+  switch (scope) {
+    case 0:
+      return ScopeType.Repository
+    case 3:
+      return ScopeType.Project
+    case 2:
+      return ScopeType.Organization
+    default:
+      return ScopeType.Account
+  }
+}
 
 interface DescriptionProps {
   targetPatternsCount: number
@@ -188,6 +203,11 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                                 rounded={rule.type === 'tag'}
                               />
                             )}
+                            <ScopeTag
+                              scopeType={getScopeType(rule.scope ?? 0)}
+                              scopedPath={getScopeType(rule.scope ?? 0)}
+                              size="sm"
+                            />
                           </div>
                         }
                         description={

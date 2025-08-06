@@ -23,8 +23,10 @@ const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath, size }) => {
       return <Tag {...tagProps} icon="organizations" />
     case ScopeType.Project:
       return <Tag {...tagProps} icon="project" />
+    case ScopeType.Repository:
+      return <Tag {...tagProps} icon="repository" />
     default:
-      return null
+      return <Tag {...tagProps} />
   }
 }
 

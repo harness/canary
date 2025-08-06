@@ -52,7 +52,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content maxWidth="3xl">
+      <SandboxLayout.Content>
         <Text as="h1" variant="heading-section" className="mb-6">
           {t('views:projectSettings.rules', 'Rules')}
         </Text>

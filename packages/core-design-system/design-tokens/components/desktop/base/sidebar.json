@@ -19,7 +19,7 @@
       },
       "min": {
         "$type": "sizing",
-        "$value": "{size.8}"
+        "$value": "{size.9}"
       }
     },
     "group": {

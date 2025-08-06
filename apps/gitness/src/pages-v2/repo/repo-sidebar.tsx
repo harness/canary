@@ -21,6 +21,9 @@ import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 
+const SIDEBAR_MIN_WIDTH = 210
+const SIDEBAR_MAX_WIDTH = 700
+
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
@@ -32,6 +35,7 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
+  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
 
   const {
     fullGitRef,
@@ -175,31 +179,95 @@ export const RepoSidebar = () => {
     [fullGitRef, navigate, repoId]
   )
 
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      const startX = e.clientX
+      const startWidth = sidebarWidth
+
+      const handleMouseMove = (e: MouseEvent) => {
+        const newWidth = startWidth + (e.clientX - startX)
+        setSidebarWidth(Math.max(SIDEBAR_MIN_WIDTH, Math.min(SIDEBAR_MAX_WIDTH, newWidth)))
+      }
+
+      const handleMouseUp = () => {
+        document.removeEventListener('mousemove', handleMouseMove)
+        document.removeEventListener('mouseup', handleMouseUp)
+      }
+
+      document.addEventListener('mousemove', handleMouseMove)
+      document.addEventListener('mouseup', handleMouseUp)
+    },
+    [sidebarWidth]
+  )
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    const step = e.shiftKey ? 50 : 10 // Larger steps with Shift key
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault()
+        setSidebarWidth(prev => Math.max(SIDEBAR_MIN_WIDTH, prev - step))
+        break
+      case 'ArrowRight':
+        e.preventDefault()
+        setSidebarWidth(prev => Math.min(SIDEBAR_MAX_WIDTH, prev + step))
+        break
+      case 'Home':
+        e.preventDefault()
+        setSidebarWidth(SIDEBAR_MIN_WIDTH) // Minimum width
+        break
+      case 'End':
+        e.preventDefault()
+        setSidebarWidth(SIDEBAR_MAX_WIDTH) // Maximum width
+        break
+    }
+  }, [])
+
   // TODO: repoId and spaceId must be defined
   if (!repoId) return <></>
 
   return (
     <>
       <div className="flex flex-1">
-        <RepoSidebarView
-          navigateToNewFile={navigateToNewFile}
-          navigateToFile={navigateToFile}
-          filesList={filesList}
-          branchSelectorRenderer={
-            <BranchSelectorContainer
-              onSelectBranchorTag={selectBranchOrTag}
-              selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
-              preSelectedTab={preSelectedTab}
-              isFilesPage
-              setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-              onBranchQueryChange={setBranchQueryForNewBranch}
-            />
-          }
+        <div
+          className={`shrink-0 overflow-hidden min-w-[${SIDEBAR_MIN_WIDTH}px] max-w-[${SIDEBAR_MAX_WIDTH}px]`}
+          style={{
+            width: `${sidebarWidth}px`
+          }}
         >
-          {!!repoDetails?.body?.content?.entries?.length && (
-            <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
-          )}
-        </RepoSidebarView>
+          <RepoSidebarView
+            navigateToNewFile={navigateToNewFile}
+            navigateToFile={navigateToFile}
+            filesList={filesList}
+            branchSelectorRenderer={
+              <BranchSelectorContainer
+                onSelectBranchorTag={selectBranchOrTag}
+                selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
+                preSelectedTab={preSelectedTab}
+                isFilesPage
+                setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+                onBranchQueryChange={setBranchQueryForNewBranch}
+              />
+            }
+          >
+            {!!repoDetails?.body?.content?.entries?.length && (
+              <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
+            )}
+          </RepoSidebarView>
+        </div>
+
+        {/* Resizable Divider */}
+        <div
+          onMouseDown={handleMouseDown}
+          onKeyDown={handleKeyDown}
+          className="border-cn-borders-2 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 w-1 shrink-0 cursor-col-resize select-none border-r transition-colors"
+          role="slider"
+          aria-valuenow={sidebarWidth}
+          aria-valuemax={SIDEBAR_MAX_WIDTH}
+          aria-valuemin={SIDEBAR_MIN_WIDTH}
+          tabIndex={0}
+          aria-label="Resize panel by dragging or using arrow keys (with shift for larger steps)"
+        />
 
         <Outlet />
       </div>

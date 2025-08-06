@@ -24,9 +24,7 @@ const Item = ({ className, children, icon, isActive, ...props }: ItemProps) => {
       {...props}
     >
       <IconV2 className="text-inherit" name={icon} size="md" />
-      <Text className="text-inherit" truncate>
-        {children}
-      </Text>
+      <Text className="line-clamp-1 overflow-hidden text-inherit">{children}</Text>
     </Layout.Grid>
   )
 }
@@ -53,7 +51,10 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
           <Item
             icon="folder"
             isActive={isActive}
-            style={{ marginLeft: `calc(-16px * ${level + 1} - 8px)`, paddingLeft: `calc(16px * ${level + 1} + 8px)` }}
+            style={{
+              marginLeft: `calc(-16px * ${level + 1} - 8px)`,
+              paddingLeft: `calc(16px * ${level + 1} + 8px)`
+            }}
           >
             {children}
           </Item>
@@ -86,7 +87,10 @@ function FileItem({ children, isActive, level, link }: FileItemProps) {
       icon="page"
       isActive={isActive}
       className="mb-cn-4xs"
-      style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level})` : '16px' }}
+      style={{
+        marginLeft: `calc(-16px * ${level})`,
+        paddingLeft: `calc(16px * ${level + 1} + 8px)`
+      }}
     >
       {children}
     </Item>

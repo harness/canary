@@ -81,7 +81,6 @@ export interface PullRequestCommentBoxProps {
   onItalicClick?: () => void
   onLinkClick?: () => void
   onCodeClick?: () => void
-  onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
   autofocus?: boolean
@@ -502,6 +501,12 @@ export const PullRequestCommentBox = ({
     }
   }
 
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && e.metaKey) {
+      handleSaveComment()
+    }
+  }
+
   const isListString = (line: string): boolean => {
     return line.startsWith('- ')
   }
@@ -552,6 +557,7 @@ export const PullRequestCommentBox = ({
                 setValue={setComment}
                 onChange={e => onCommentChange(e)}
                 onKeyUp={e => onKeyUp(e)}
+                onKeyDown={e => onKeyDown(e)}
                 onMouseUp={() => onMouseUp()}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {

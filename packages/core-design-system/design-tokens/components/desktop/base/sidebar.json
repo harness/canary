@@ -35,7 +35,7 @@
     "container": {
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "$value": "{spacing.1-half}"
       },
       "px": {
         "$type": "spacing",
@@ -43,7 +43,7 @@
       },
       "full-width": {
         "$type": "sizing",
-        "$value": "{size.56}"
+        "$value": "{size.58}"
       }
     },
     "header": {

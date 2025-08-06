@@ -739,10 +739,10 @@
     "commitDetailsDiffAdditionsAnd": "ajouts et",
     "commitDetailsDiffDeletions": "suppressions",
     "commitDetailsTitle": "Commit",
-    "commitDetailsAuthored": "créé par",
-    "verified": "Vérifié",
     "browseFiles": "Parcourir les fichiers",
-    "createNewCommit": "Créer un nouveau commit"
+    "createNewCommit": "Créer un nouveau commit",
+    "commitDetailsAuthored": "créé par",
+    "verified": "Vérifié"
   },
   "createTagDialog": {
     "validation": {

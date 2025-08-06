@@ -43,7 +43,6 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   vulnerabilityScanning,
   handleUpdateSecuritySettings,
   apiError,
-  isUpdatingSecuritySettings,
   isLoadingSecuritySettings,
   showVulnerabilityScanning = false
 }) => {
@@ -90,10 +89,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
     setValue('vulnerabilityScanning', vulnerabilityScanning)
   }, [securityScanning, verifyCommitterIdentity, vulnerabilityScanning, setValue])
 
-  const isDisabled =
-    (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
-    isUpdatingSecuritySettings
-
+  const isDisabled = apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')
   const tooltipMessage = isDisabled
     ? t('views:repos.settingsToolTip', 'Cannot change settings while loading or updating.')
     : ''
@@ -111,7 +107,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
                 checked={watch('secretScanning')}
                 id="secret-scanning"
                 onCheckedChange={onSecurityScanningCheckboxChange}
-                disabled={isDisabled}
+                disabled={isDisabled ?? false}
                 title={tooltipMessage}
                 label={t('views:repos.secretScanning', 'Secret scanning')}
                 caption={t(
@@ -129,7 +125,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
                     checked={watch('vulnerabilityScanning')}
                     id="vulnerability-scanning"
                     onCheckedChange={onVulnerabilityScanningCheckboxChange}
-                    disabled={isDisabled}
+                    disabled={isDisabled ?? false}
                     title={tooltipMessage}
                     label={t('views:repos.vulnerabilityScanning', 'Vulnerability scanning')}
                     caption={t(
@@ -147,7 +143,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
                 checked={watch('verifyCommitterIdentity')}
                 id="verify-committer-identity"
                 onCheckedChange={onVerifyCommitterIdentityCheckboxChange}
-                disabled={isDisabled}
+                disabled={isDisabled ?? false}
                 title={tooltipMessage}
                 label={t('views:repos.verifyCommitterIdentity', 'Verify committer identity')}
                 caption={t(

@@ -752,10 +752,10 @@
     "commitDetailsDiffAdditionsAnd": "additions and",
     "commitDetailsDiffDeletions": "deletions",
     "commitDetailsTitle": "Commit",
-    "commitDetailsAuthored": "authored",
-    "verified": "Verified",
     "browseFiles": "Browse files",
-    "createNewCommit": "Create new commit"
+    "createNewCommit": "Create new commit",
+    "commitDetailsAuthored": "authored",
+    "verified": "Verified"
   },
   "createTagDialog": {
     "validation": {

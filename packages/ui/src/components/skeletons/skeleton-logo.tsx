@@ -1,11 +1,12 @@
 import { forwardRef } from 'react'
 
+import { logoVariants } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
 import { SkeletonBase } from './components/skeleton'
 
-const skeletonLogoVariants = cva('cn-skeleton-logo', {
+const skeletonLogoVariants: typeof logoVariants = cva('cn-skeleton-logo', {
   variants: {
     size: {
       sm: 'cn-skeleton-logo-sm',

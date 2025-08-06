@@ -1,11 +1,12 @@
 import { forwardRef } from 'react'
 
+import { iconVariants } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
 import { SkeletonBase } from './components/skeleton'
 
-const skeletonIconVariants = cva('cn-skeleton-icon', {
+const skeletonIconVariants: typeof iconVariants = cva('cn-skeleton-icon', {
   variants: {
     size: {
       '2xs': 'cn-skeleton-icon-2xs',

@@ -7,7 +7,7 @@ import { IconNameMapV2 } from './icon-name-map'
 
 export type IconV2NamesType = keyof typeof IconNameMapV2
 
-const iconVariants = cva('cn-icon', {
+export const iconVariants = cva('cn-icon', {
   variants: {
     size: {
       '2xs': 'cn-icon-2xs',

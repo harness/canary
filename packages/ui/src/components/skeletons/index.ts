@@ -1,4 +1,5 @@
 import { SkeletonBase } from './components/skeleton'
+import { SkeletonAvatar } from './skeleton-avatar'
 import { SkeletonForm } from './skeleton-form'
 import { SkeletonIcon } from './skeleton-icon'
 import { SkeletonList } from './skeleton-list'
@@ -12,9 +13,11 @@ export type { SkeletonListProps } from './skeleton-list'
 export type { SkeletonLogoProps } from './skeleton-logo'
 export type { SkeletonTableProps } from './skeleton-table'
 export type { SkeletonTypographyProps } from './skeleton-typography'
+export type { SkeletonAvatarProps } from './skeleton-avatar'
 
 const Skeleton = {
   Box: SkeletonBase,
+  Avatar: SkeletonAvatar,
   List: SkeletonList,
   Form: SkeletonForm,
   Table: SkeletonTable,

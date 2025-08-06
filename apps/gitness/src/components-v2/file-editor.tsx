@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
 import { EditViewTypeValue, FileEditorControlBar, getIsMarkdown, MarkdownViewer, Tabs } from '@harnessio/ui/components'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
-import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
+import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
-import { useExitConfirm } from '../framework/hooks/useExitConfirm'
+import { useExitPrompt } from '../framework/hooks/useExitPrompt'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
@@ -26,15 +26,18 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const { repoId, spaceId } = useParams<PathParams>()
-  const { show } = useExitConfirm()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   const [fileName, setFileName] = useState('')
   const [language, setLanguage] = useState('')
   const [originalFileContent, setOriginalFileContent] = useState('')
-  const [contentRevision, setContentRevision] = useState({ code: originalFileContent })
+  const [contentRevision, setContentRevision] = useState<CodeEditorProps<unknown>['codeRevision']>({
+    code: originalFileContent
+  })
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
+  useExitPrompt({ isDirty: dirty })
+
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const { theme } = useThemeStore()
@@ -137,25 +140,10 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   /**
    * Navigate to file view route
    */
-  const onExitConfirm = useCallback(() => {
+  const handleCancelFileEdit = useCallback(() => {
     const navigateTo = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
   }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, routes])
-
-  /**
-   * Cancel edit handler
-   * - if dirty - open confirm exit dialog via context
-   * - if !dirty - call navigate fnc
-   */
-  const handleCancelFileEdit = useCallback(() => {
-    if (dirty) {
-      show({
-        onConfirm: () => onExitConfirm()
-      })
-    } else {
-      onExitConfirm()
-    }
-  }, [dirty, onExitConfirm, show])
 
   /**
    * Change view handler
@@ -202,7 +190,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
       />
 
       <Tabs.Root
-        className="flex flex-col h-full"
+        className="flex h-full flex-col"
         value={view as string}
         onValueChange={val => onChangeView(val as EditViewTypeValue)}
       >

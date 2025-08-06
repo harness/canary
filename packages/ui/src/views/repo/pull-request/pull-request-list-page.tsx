@@ -260,12 +260,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               t('views:noData.changeSearch', 'or search for a different keyword.')
             ]}
             secondaryButton={{
-              label: (
-                <>
-                  <IconV2 name="trash" />
-                  <Text>{t('views:noData.clearFilters', 'Clear filters')}</Text>
-                </>
-              ),
+              icon: 'trash',
+              label: t('views:noData.clearSearch', 'Clear filters'),
               onClick: () => {
                 filtersRef.current?.reset()
                 handleResetQuery()
@@ -290,12 +286,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           primaryButton={
             repoId
               ? {
-                  label: (
-                    <>
-                      <IconV2 name="plus" />
-                      {t('views:noData.button.createPullRequest', 'Create Pull Request')}
-                    </>
-                  ),
+                  icon: 'plus',
+                  label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
                   to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
                 }
               : undefined

@@ -26,7 +26,7 @@ const Description = ({ sha, description, version }: { sha?: string; description?
         </div>
       )}
       {sha && (
-        <div className="bg-cn-background-8 text-1 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
+        <div className="bg-cn-background-softgray text-1 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
           <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>

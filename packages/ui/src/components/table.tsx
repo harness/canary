@@ -137,15 +137,29 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
   tooltipProps?: Omit<TooltipProps, 'children'>
   containerProps?: FlexProps
   hideDivider?: boolean
+  contentClassName?: string
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, sortable, children, tooltipProps, hideDivider, containerProps, ...props }, ref) => {
+  (
+    {
+      className,
+      sortDirection,
+      sortable,
+      children,
+      tooltipProps,
+      hideDivider,
+      containerProps,
+      contentClassName,
+      ...props
+    },
+    ref
+  ) => {
     const Title = () => (
       <Text
         variant="caption-strong"
         color="foreground-1"
-        className={cn({ 'underline decoration-dashed': !!tooltipProps?.content })}
+        className={cn({ 'underline decoration-dashed': !!tooltipProps?.content }, contentClassName)}
       >
         {children}
       </Text>

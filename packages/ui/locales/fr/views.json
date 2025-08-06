@@ -7,8 +7,13 @@
     "pipelines": "Pipelines",
     "commits": "Commits",
     "tags": "Étiquettes",
-    "pullRequests": "Requêtes de tirage",
-    "branches": "Branches",
+    "pullRequests": "Pull requests",
+    "branches": {
+      "title": "Branches",
+      "commitsBehind": "commits en retard",
+      "commitsAhead": "commits en avance",
+      "createBranch": "Create Branch"
+    },
     "search": "Rechercher",
     "settings": "Paramètres",
     "descriptionPlaceholder": "Enter a description",
@@ -134,15 +139,13 @@
     "createRuleButton": "Créer une règle de branche",
     "updatingRuleButton": "Mise à jour de la règle...",
     "creatingRuleButton": "Création de la règle...",
-    "createBranch": "Create Branch",
     "branch": "Branche",
     "update": "Mettre à jour",
     "checkStatus": "Vérifier le statut",
-    "behind": "En retard",
+    "behind": "Behind",
     "ahead": "En avance",
     "pullRequest": "Pull Request",
     "compare": "Compare",
-    "viewRules": "Voir les règles",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
     "createBranchDialog": {
@@ -316,6 +319,7 @@
     "createWebhook": "Create webhook",
     "newPullReq": "Nouvelle requête de tirage",
     "createBranchButton": "Créer une branche",
+    "viewRules": "Voir les règles",
     "newBranch": "Nouvelle branche",
     "emptyRepo": "Ce référentiel est vide.",
     "afterComparingOpenPullRequest": "Après avoir comparé les modifications, vous pouvez ouvrir une demande d'extraction pour contribuer à vos modifications en amont.",
@@ -401,7 +405,6 @@
     "button": {
       "createPullRequest": "Créer une demande de tirage"
     },
-    "clearFilters": "Effacer les filtres",
     "noPullRequestsInRepo": "Commencez votre parcours de contribution en créant un brouillon de demande de tirage.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "Pas encore de branches",
@@ -409,6 +412,7 @@
     "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "clearFilters": "Effacer les filtres",
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
@@ -520,6 +524,7 @@
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
     "createLabel": "Create label",
+    "newLabel": "Create Label",
     "create": "Create labels"
   },
   "projectSettings": {

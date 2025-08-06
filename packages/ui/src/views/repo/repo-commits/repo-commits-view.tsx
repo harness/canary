@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, Layout, NoData, Pagination, Skeleton, Text } from '@/components'
+import { Layout, NoData, Pagination, Skeleton, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
@@ -91,12 +91,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                     secondaryButton={
                       isDirtyList
                         ? {
-                            label: (
-                              <>
-                                <IconV2 name="trash" />
-                                {t('views:noData.clearFilters', 'Clear Filters')}
-                              </>
-                            ),
+                            icon: 'trash',
+                            label: t('views:noData.clearFilters', 'Clear filters'),
                             onClick: handleResetFiltersAndPages
                           }
                         : // TODO: add onClick for Creating new commit
@@ -105,7 +101,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                             /**
                              * To make the first commit, redirect to the files page so a new file can be created.
                              */
-                            to: toFiles?.() || ''
+                            to: toFiles?.() || '',
+                            icon: 'plus'
                           }
                     }
                   />

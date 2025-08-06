@@ -8,7 +8,7 @@ export enum BranchSelectorTab {
 
 export const getBranchSelectorLabels = (t: TFunctionWithFallback) => ({
   [BranchSelectorTab.BRANCHES]: {
-    label: t('views:repos.branches', 'Branches'),
+    label: t('views:repos.branches.title', 'Branches'),
     searchPlaceholder: t('views:repos.findBranch', 'Find a branch')
   },
   [BranchSelectorTab.TAGS]: {

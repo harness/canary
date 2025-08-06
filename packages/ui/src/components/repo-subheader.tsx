@@ -58,7 +58,7 @@ export const RepoSubheader = ({
             {t('views:repos.pullRequests', 'Pull requests')}
           </Tabs.Trigger>
           <Tabs.Trigger value={RepoTabsKeys.BRANCHES} disabled={isRepoEmpty}>
-            {t('views:repos.branches', 'Branches')}
+            {t('views:repos.branches.title', 'Branches')}
           </Tabs.Trigger>
           {showSearchTab && (
             <Tabs.Trigger value={RepoTabsKeys.SEARCH} disabled={isRepoEmpty}>

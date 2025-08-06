@@ -158,15 +158,15 @@ export default function ReposListPage() {
     })
 
     const isSameScope = currentRepoScopeType === actualRepoScopeType
-    const repoSummaryUrl = routes.toRepoSummary({ spaceId, repoId: repo.name })
+    const repoSummaryPath = routes.toRepoSummary({ spaceId, repoId: repo.name })
 
     if (!isMFE || isSameScope) {
-      navigate(repoSummaryUrl)
+      navigate(repoSummaryPath)
     } else {
       const fullPath = `${basename}${getRepoUrl({
         repo,
         scope,
-        toRepository: () => repoSummaryUrl
+        repoSubPath: repoSummaryPath
       })}`
 
       // TODO: Fix this properly to avoid full page refresh.

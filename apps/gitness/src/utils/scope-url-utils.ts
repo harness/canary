@@ -1,8 +1,6 @@
 import { getScopedPath } from '@harnessio/ui/components'
 import { RepositoryType, Scope, ScopeType } from '@harnessio/ui/views'
 
-import { RouteFunctionMap } from '../framework/routing/types'
-
 export const getScopeType = ({ accountId, orgIdentifier, projectIdentifier }: Scope): ScopeType => {
   if (accountId && orgIdentifier && projectIdentifier) return ScopeType.Project
   if (accountId && orgIdentifier) return ScopeType.Organization
@@ -38,11 +36,11 @@ export const prependScopeToUrl = ({
 export const getRepoUrl = ({
   repo,
   scope,
-  toRepository
+  repoSubPath
 }: {
   repo: RepositoryType
   scope: Scope
-  toRepository: RouteFunctionMap['toRepoSummary']
+  repoSubPath: string
 }): string => {
   const scopedPath = getScopedPath({
     accountId: scope.accountId,
@@ -50,8 +48,7 @@ export const getRepoUrl = ({
     repoPath: repo.path
   }).split('/')
   const [orgId, projectId] = scopedPath
-  const url = toRepository?.() ?? ''
-  return prependScopeToUrl({ url, scope, orgId, projectId })
+  return prependScopeToUrl({ url: repoSubPath, scope, orgId, projectId })
 }
 
 export const getPullRequestUrl = ({

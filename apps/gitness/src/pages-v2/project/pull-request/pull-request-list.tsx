@@ -10,14 +10,21 @@ import {
   useGetUserQuery,
   useListPrincipalsQuery
 } from '@harnessio/code-service-client'
-import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
+import { determineScope } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
+import {
+  RepositoryType,
+  PullRequestListPage as SandboxPullRequestListPage,
+  type PRListFilters
+} from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
-import { getPullRequestUrl } from '../../../utils/scope-url-utils'
+import { getPullRequestUrl, getScopeType } from '../../../utils/scope-url-utils'
 import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
@@ -41,12 +48,14 @@ export default function PullRequestListPage() {
   const oldPageRef = useRef(page)
   const [lastUpdatedPRFilter, setLastUpdatedPRFilter] = useState<{ updated_lt?: number; updated_gt?: number }>({})
 
-  const mfeContext = useMFEContext()
-  const basename = `/ng${mfeContext.renderUrl}`
+  const { scope, renderUrl } = useMFEContext()
+  const basename = `/ng${renderUrl}`
+  const isMFE = useIsMFE()
+  const { navigate } = useRouterContext()
+
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
   const getApiPath = useAPIPath()
-
-  const { accountId = '', orgIdentifier, projectIdentifier } = mfeContext.scope || {}
+  const { accountId, orgIdentifier, projectIdentifier } = scope
 
   const queryParams: ListSpacePullReqQueryQueryParams = useMemo(() => {
     return {
@@ -173,6 +182,48 @@ export default function PullRequestListPage() {
     }
   }, [labelBy])
 
+  const handleOnClickPullRequest = ({
+    prNumber,
+    repo
+  }: {
+    prNumber?: number
+    repo: Pick<RepositoryType, 'name' | 'path'>
+  }) => {
+    /** Scope where the pull request is currently displayed */
+    const currentScopeType = getScopeType(scope)
+    /** Scope where the pull request actually belongs to */
+    const actualScopeType = determineScope({
+      accountId,
+      repoIdentifier: repo.name,
+      repoPath: repo.path
+    })
+
+    const isSameScope = currentScopeType === actualScopeType
+    const pullRequestPath = routes.toPullRequest({
+      spaceId,
+      repoId: repo.name,
+      pullRequestId: prNumber?.toString()
+    })
+
+    if (!isMFE || isSameScope) {
+      navigate(pullRequestPath)
+    } else {
+      const fullPath = `${basename}${getPullRequestUrl({
+        repo,
+        scope: {
+          accountId,
+          orgIdentifier,
+          projectIdentifier
+        },
+        pullRequestSubPath: pullRequestPath
+      })}`
+
+      // TODO: Fix this properly to avoid full page refresh.
+      // Currently, not able to navigate properly with React Router.
+      window.location.href = fullPath
+    }
+  }
+
   return (
     <SandboxPullRequestListPage
       spaceId={spaceId || ''}
@@ -195,43 +246,15 @@ export default function PullRequestListPage() {
         setFilterValues(
           buildPRFilters({
             filterData,
-            scope: {
-              accountId,
-              orgIdentifier,
-              projectIdentifier
-            },
+            scope,
             reviewerId: currentUser?.id
           })
         )
       }
       searchQuery={query}
       setSearchQuery={setQuery}
-      onClickPullRequest={({ prNumber, repo }) => {
-        const toPullRequest = getPullRequestUrl({
-          repo,
-          scope: {
-            accountId,
-            orgIdentifier,
-            projectIdentifier
-          },
-          pullRequestSubPath: routes.toPullRequest({
-            spaceId,
-            repoId: repo.name,
-            pullRequestId: prNumber?.toString()
-          })
-        })
-
-        const fullPath = `${basename}${toPullRequest}`
-        /**
-         * @todo fix this properly to avoid full page refresh. Currently, not able to navigate properly with react router.
-         */
-        window.location.href = fullPath
-      }}
-      scope={{
-        accountId,
-        orgIdentifier,
-        projectIdentifier
-      }}
+      onClickPullRequest={handleOnClickPullRequest}
+      scope={scope}
     />
   )
 }

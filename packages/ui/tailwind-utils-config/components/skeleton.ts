@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const sizesAvatar = ['sm', 'lg'] as const
+const sizesAvatar = ['sm', 'md', 'lg'] as const
 const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'] as const
 const logoSizes = ['sm', 'md', 'lg'] as const
 const inputSizes = ['sm'] as const
@@ -59,8 +59,6 @@ export default {
 
     '&-avatar': {
       display: 'inline-block',
-      height: `var(--cn-avatar-size-md)`,
-      width: `var(--cn-avatar-size-md)`,
       borderRadius: `var(--cn-avatar-radius-default)`,
 
       '&:where(.cn-skeleton-avatar-rounded)': {
@@ -83,13 +81,13 @@ export default {
       },
       '&-child': {
         '&::before': {
-          content: '"\u200B"'
+          content: '"\u200B"' // Zero-width space to ensure the element has a width
         },
 
         display: 'inline-block',
         minWidth: '45px',
         lineHeight: '1',
-        verticalAlign: 'text-bottom'
+        verticalAlign: 'middle'
       }
     },
 

@@ -9,7 +9,7 @@ const skeletonAvatarVariants = cva('cn-skeleton-avatar', {
   variants: {
     size: {
       sm: 'cn-skeleton-avatar-sm',
-      md: '',
+      md: 'cn-skeleton-avatar-md',
       lg: 'cn-skeleton-avatar-lg'
     },
     rounded: {

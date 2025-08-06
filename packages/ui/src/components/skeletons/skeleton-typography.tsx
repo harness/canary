@@ -35,8 +35,8 @@ export interface SkeletonTypographyProps {
 export const SkeletonTypography = forwardRef<HTMLDivElement, SkeletonTypographyProps>(
   ({ variant, className, wrapperClassName, ...props }, ref) => {
     return (
-      <div className={cn(skeletonTypographyVariants({ variant }), wrapperClassName)}>
-        <SkeletonBase className={cn('cn-skeleton-typography-child', className)} ref={ref} {...props} />
+      <div className={cn(skeletonTypographyVariants({ variant }), wrapperClassName)} ref={ref} {...props}>
+        <SkeletonBase className={cn('cn-skeleton-typography-child', className)} />
       </div>
     )
   }

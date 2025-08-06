@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
-import { ControlGroup, Fieldset, InputOrientationProp } from '@components/form-primitives'
+import { ControlGroup, InputOrientationProp } from '@components/form-primitives'
+import { Layout } from '@components/layout'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
@@ -68,7 +69,7 @@ export const SkeletonForm: FC<SkeletonFormProps> = ({
   } = {}
 }) => {
   return (
-    <Fieldset className={cn('cn-skeleton-form-field', className)}>
+    <Layout.Grid gap="xl" className={cn('cn-skeleton-form-field', className)}>
       {Array.from({ length: linesCount }).map((_, index) => (
         <SkeletonFormItem
           key={index}
@@ -79,6 +80,6 @@ export const SkeletonForm: FC<SkeletonFormProps> = ({
           orientation={orientation as InputOrientationProp['orientation']}
         />
       ))}
-    </Fieldset>
+    </Layout.Grid>
   )
 }

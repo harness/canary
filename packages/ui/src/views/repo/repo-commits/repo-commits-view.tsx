@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, Layout, NoData, Pagination, Skeleton, Text } from '@/components'
+import { Layout, NoData, Pagination, Skeleton, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
@@ -86,17 +86,14 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                     primaryButton={
                       isDirtyList
                         ? {
+                            icon: 'trash',
                             label: t('views:noData.clearFilters', 'Clear filters'),
                             onClick: handleResetFiltersAndPages
                           }
                         : // TODO: add onClick for Creating new commit
                           {
-                            label: (
-                              <>
-                                <IconV2 name="plus" />
-                                {t('views:commits.createNewCommit', 'Make commit')}
-                              </>
-                            )
+                            icon: 'plus',
+                            label: t('views:commits.createNewCommit', 'Make commit')
                           }
                     }
                   />

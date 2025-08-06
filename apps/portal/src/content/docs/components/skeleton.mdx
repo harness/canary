@@ -95,7 +95,6 @@ The `Skeleton.Logo` component is a placeholder for logos. It can be used to indi
   </div>`}
 />
 
-
 ### Skeleton Typography
 
 The `Skeleton.Typography` component is a placeholder for text elements. It can be used to indicate loading states for text content. Variants include different text styles such as headings, body text, and captions.
@@ -244,7 +243,7 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       description: "Custom class name",
       required: false,
       value: "string",
-    }
+    },
   ]}
 />
 
@@ -264,7 +263,7 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       description: "Custom class name",
       required: false,
       value: "string",
-    }
+    },
   ]}
 />
 
@@ -284,7 +283,7 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       description: "Custom class name",
       required: false,
       value: "string",
-    }
+    },
   ]}
 />
 
@@ -296,7 +295,8 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       name: "variant",
       description: "Variant of the skeleton text",
       required: false,
-      value: "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body' | 'body-code' | 'body-single-line' | 'body-single-line-code' | 'caption' | 'caption-single-line'",
+      value:
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body' | 'body-code' | 'body-single-line' | 'body-single-line-code' | 'caption' | 'caption-single-line'",
       defaultValue: "'body'",
     },
     {
@@ -304,7 +304,7 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       description: "Custom class name",
       required: false,
       value: "string",
-    }
+    },
   ]}
 />
 
@@ -329,9 +329,11 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       name: "itemProps",
       description: "Props for the skeleton form item",
       required: false,
-      value: "{ withLabel?: boolean; orientation?: 'vertical' | 'horizontal'; size?: 'sm' | 'md'; labelClassName?: string, inputClassName?: string }",
-      defaultValue: "{ withLabel: true, orientation: 'vertical', size: 'md', linesCount: 3 }",
-    }
+      value:
+        "{ withLabel?: boolean; orientation?: 'vertical' | 'horizontal'; size?: 'sm' | 'md'; labelClassName?: string, inputClassName?: string }",
+      defaultValue:
+        "{ withLabel: true, orientation: 'vertical', size: 'md', linesCount: 3 }",
+    },
   ]}
 />
 
@@ -354,7 +356,8 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
     },
     {
       name: "hasActions",
-      description: "Defines whether the skeleton list has right skeleton square",
+      description:
+        "Defines whether the skeleton list has right skeleton square",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -363,8 +366,9 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       name: "classNames",
       description: "Defines the custom class names for the skeleton list items",
       required: false,
-      value: "{ item?: string; leftTitle?: string; leftDescription?: string, rightTitle?: string, rightDescription?: string, actions?: string }",
-    }
+      value:
+        "{ item?: string; leftTitle?: string; leftDescription?: string, rightTitle?: string, rightDescription?: string, actions?: string }",
+    },
   ]}
 />
 
@@ -410,6 +414,6 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       description: "Custom class name for the skeleton table body element",
       required: false,
       value: "string",
-    }
+    },
   ]}
 />

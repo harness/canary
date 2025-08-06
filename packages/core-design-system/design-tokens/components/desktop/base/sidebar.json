@@ -15,7 +15,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "$value": "{rounded.3}"
       },
       "min": {
         "$type": "sizing",

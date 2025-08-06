@@ -156,7 +156,7 @@ ${sshUrl}
               </Button>{' '}
               {t(
                 'views:repos.emptyRepoPage.cloneInstructions.pushRepository.2',
-                'In order to pull from or push into this repository'
+                'in order to pull from or push into this repository.'
               )}
             </Text>
           </Layout.Grid>

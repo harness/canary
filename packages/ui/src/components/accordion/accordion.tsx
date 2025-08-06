@@ -94,10 +94,11 @@ type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.
   prefix?: ReactNode
   suffix?: ReactNode
   indicatorProps?: Omit<IconPropsV2, 'name' | 'fallback'>
+  headerClassName?: string
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, children, suffix, prefix, indicatorProps, ...props }, ref) => {
+  ({ className, children, suffix, prefix, indicatorProps, headerClassName, ...props }, ref) => {
     const { indicatorPosition } = useContext(AccordionContext)
 
     const Indicator = () => (
@@ -110,7 +111,7 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
     )
 
     return (
-      <AccordionPrimitive.Header>
+      <AccordionPrimitive.Header className={headerClassName}>
         <AccordionPrimitive.Trigger ref={ref} className={cn('cn-accordion-trigger', className)} {...props}>
           {indicatorPosition === 'left' && <Indicator />}
 

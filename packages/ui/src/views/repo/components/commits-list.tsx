@@ -4,7 +4,6 @@ import {
   Avatar,
   Button,
   CommitCopyActions,
-  Link as DSLink,
   IconV2,
   Layout,
   NodeGroup,
@@ -15,6 +14,8 @@ import {
 import { useRouterContext } from '@/context'
 import { formatDate } from '@/utils'
 import { TypesCommit } from '@/views'
+
+import { CommitTitleWithPRLink } from './CommitTitleWithPRLink'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
@@ -46,7 +47,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
   return (
     <div className={className}>
       {entries.map(([date, commitData]) => (
-        <NodeGroup.Root className="pb-cn-xl grid-cols-[9px_1fr] gap-4 last:pb-0" key={date}>
+        <NodeGroup.Root className="grid-cols-[9px_1fr] gap-4 pb-cn-xl last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
           <NodeGroup.Title>{date && <Text variant="body-single-line-normal">Commits on {date}</Text>}</NodeGroup.Title>
           <NodeGroup.Content className="overflow-hidden">
@@ -59,22 +60,22 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="p-cn-sm pl-cn-xs flex items-start"
+                      className="flex items-start p-cn-sm pl-cn-xs"
                       key={commit?.sha || idx}
                       isLast={commitData.length - 1 === idx}
                       asChild
                     >
                       <Link className="grow overflow-hidden" to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
-                        <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
+                        <Layout.Grid flow="column" className="w-full pl-cn-md" columns="1fr auto" gap="md">
                           <Layout.Vertical gap="2xs" className="truncate">
-                            {renderCommitTitle({
-                              commitMessage: commit.title,
-                              title: commit.message || commit.title,
-                              sha: commit.sha,
-                              toPullRequest,
-                              toCommitDetails
-                            })}
-                            <div className="gap-cn-2xs flex items-center">
+                            <CommitTitleWithPRLink
+                              Link={Link}
+                              toPullRequest={toPullRequest}
+                              commitMessage={commit.title}
+                              title={commit.message || commit.title}
+                              textVariant={'heading-base'}
+                            />
+                            <div className="flex items-center gap-cn-2xs">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
                               <Text variant="body-single-line-strong">{authorName || ''}</Text>
                               <Text variant="body-single-line-normal" color="foreground-3">
@@ -116,67 +117,5 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
         </NodeGroup.Root>
       ))}
     </div>
-  )
-}
-
-function renderCommitTitle({
-  commitMessage = '',
-  title = '',
-  // sha = '',
-  toPullRequest,
-  toCommitDetails
-}: {
-  commitMessage?: string
-  title?: string
-  sha?: string
-  toCommitDetails: RoutingProps['toCommitDetails']
-  toPullRequest: RoutingProps['toPullRequest']
-}) {
-  if (!toCommitDetails) {
-    return (
-      <Text variant="heading-base" truncate title={title}>
-        {commitMessage}
-      </Text>
-    )
-  }
-
-  const match = commitMessage.match(/\(#\d+\)(\n|$)/)
-
-  if (match?.length && toPullRequest) {
-    const pullRequestId = match[0].replace('(#', '').replace(')', '').replace('\n', '')
-    const pullRequestIdInt = parseInt(pullRequestId)
-    if (!isNaN(pullRequestIdInt)) {
-      const pieces = commitMessage.split(match[0])
-      const piecesEls = pieces.map(piece => {
-        return (
-          <Text variant="heading-base" truncate title={title} key={piece}>
-            {piece}
-          </Text>
-        )
-      })
-      piecesEls.splice(
-        1,
-        0,
-        <>
-          &nbsp;(
-          <DSLink
-            className="font-heading-base hover:underline"
-            title={title}
-            to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
-          >
-            #{pullRequestId}
-          </DSLink>
-          )&nbsp;
-        </>
-      )
-
-      return <Layout.Flex>{piecesEls}</Layout.Flex>
-    }
-  }
-
-  return (
-    <Text variant="heading-base" truncate title={title}>
-      {commitMessage}
-    </Text>
   )
 }

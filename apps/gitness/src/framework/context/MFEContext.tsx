@@ -7,7 +7,8 @@ import { noop } from 'lodash-es'
  * Currently, unable to do so due to npm access issues.
  */
 export interface Scope {
-  accountId?: string
+  /** Account Id should always be available */
+  accountId: string
   orgIdentifier?: string
   projectIdentifier?: string
 }
@@ -84,7 +85,7 @@ export interface IMFEContext {
 }
 
 export const MFEContext = createContext<IMFEContext>({
-  scope: {},
+  scope: { accountId: '' },
   parentContextObj: {
     appStoreContext: createContext({
       currentUserInfo: {

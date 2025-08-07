@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton, Text } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
-import { formatNumber } from '@/utils'
-import { TypesCommit } from '@/views'
+import { ChangedFilesShortInfo, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 
 import {
@@ -239,54 +238,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           </DropdownMenu.Content>
         </DropdownMenu.Root> */}
 
-        <DropdownMenu.Root>
-          <Layout.Horizontal align="center">
-            <p className="text-2 leading-tight text-cn-foreground-2">
-              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
-              <DropdownMenu.Trigger className="group">
-                <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
-                  {formatNumber(pullReqStats?.files_changed || 0)}{' '}
-                  {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-                </span>
-              </DropdownMenu.Trigger>{' '}
-              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
-              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
-              {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-            </p>
-          </Layout.Horizontal>
-          <DropdownMenu.Content className="max-h-[360px] max-w-[800px]" align="start">
-            {diffData?.map(diff => (
-              <DropdownMenu.Item
-                key={diff.filePath}
-                onClick={() => {
-                  setJumpToDiff(diff.filePath)
-                }}
-                title={
-                  <Layout.Horizontal align="center" className="min-w-0 gap-x-3">
-                    <Layout.Horizontal align="center" justify="start" className="min-w-0 flex-1 gap-x-1.5">
-                      <IconV2 name="page" className="shrink-0 text-icons-1" />
-                      <Text className="min-w-0 break-words">{diff.filePath}</Text>
-                    </Layout.Horizontal>
-                  </Layout.Horizontal>
-                }
-                label={
-                  <Layout.Horizontal className="shrink-0 text-2" gap="none">
-                    {diff.addedLines != null && diff.addedLines > 0 && (
-                      <span className="text-cn-foreground-success">+{diff.addedLines}</span>
-                    )}
-                    {diff.addedLines != null &&
-                      diff.addedLines > 0 &&
-                      diff.deletedLines != null &&
-                      diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
-                    {diff.deletedLines != null && diff.deletedLines > 0 && (
-                      <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
-                    )}
-                  </Layout.Horizontal>
-                }
-              />
-            ))}
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
+        <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={setJumpToDiff} />
       </Layout.Horizontal>
 
       <Layout.Horizontal className="gap-x-7">

@@ -744,17 +744,26 @@
     "label": "Périmètre",
     "account": "Compte"
   },
+  "repo": {
+    "components": {
+      "commitDetailsDiffShowing": "Showing",
+      "commitDetailsDiffChangedFiles": "changed files",
+      "commitDetailsDiffWith": "with",
+      "commitDetailsDiffAdditionsAnd": "additions and",
+      "commitDetailsDiffDeletions": "deletions"
+    }
+  },
   "commits": {
+    "commitDetailsTitle": "Commit",
+    "browseFiles": "Parcourir les fichiers",
+    "commitDetailsAuthored": "créé par",
+    "createNewCommit": "Créer un commit",
     "commitDetailsDiffShowing": "Affichage de",
     "commitDetailsDiffChangedFiles": "fichiers modifiés",
     "commitDetailsDiffWith": "avec",
     "commitDetailsDiffAdditionsAnd": "ajouts et",
     "commitDetailsDiffDeletions": "suppressions",
-    "commitDetailsTitle": "Commit",
-    "browseFiles": "Parcourir les fichiers",
     "createCommit": "Créer un commit",
-    "commitDetailsAuthored": "créé par",
-    "createNewCommit": "Créer un nouveau commit",
     "verified": "Vérifié"
   },
   "createTagDialog": {

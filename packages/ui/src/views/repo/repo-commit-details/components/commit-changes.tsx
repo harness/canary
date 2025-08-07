@@ -75,7 +75,7 @@ const CommitsAccordion: FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item disableHover isHeader className="cursor-default overflow-hidden p-0 hover:bg-transparent">
+      <StackedList.Item disableHover isHeader className="cursor-default overflow-hidden p-0">
         <Accordion.Root
           type="multiple"
           className="w-full"
@@ -84,7 +84,11 @@ const CommitsAccordion: FC<{
           indicatorPosition="left"
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
+            <Accordion.Trigger
+              className="py-cn-xs px-cn-sm [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center hover:cursor-pointer"
+              // This improves accessibility by allowing use buttons inside the trigger
+              asChild
+            >
               <StackedList.Field className="grid" title={<LineTitle {...header} />} />
             </Accordion.Trigger>
             <Accordion.Content className="pb-0">

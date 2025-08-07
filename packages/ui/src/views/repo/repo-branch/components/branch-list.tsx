@@ -216,13 +216,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           ).icon
                         }
                         size="xs"
-                        className={cn({
-                          'text-icons-success':
-                            branch.pullRequests[0].state === 'open' && !branch.pullRequests[0].is_draft,
-                          'text-icons-1': branch.pullRequests[0].state === 'open' && branch.pullRequests[0].is_draft,
-                          'text-icons-danger': branch.pullRequests[0].state === 'closed',
-                          'text-icons-merged': branch.pullRequests[0].merged
-                        })}
                       />
                       #{branch.pullRequests[0].number}
                     </Link>

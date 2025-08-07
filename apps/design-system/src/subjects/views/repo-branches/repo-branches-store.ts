@@ -73,7 +73,19 @@ export const repoBranchesStore: IBranchSelectorStore = {
           running: 1,
           success: 1
         }
-      }
+      },
+      pullRequests: [
+        {
+          number: 3,
+          updated: 1737045212396,
+          state: 'merged',
+          is_draft: false,
+          merged: 1737045212397,
+          timestamp: 'Jan 13, 2025',
+          reviewRequired: false,
+          labels: []
+        }
+      ]
     },
     {
       id: 2,

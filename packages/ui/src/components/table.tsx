@@ -54,7 +54,9 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
 TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <thead ref={ref} className={cn('cn-table-v2-header', className)} {...props} />
+  ({ className, ...props }, ref) => (
+    <thead ref={ref} className={cn('cn-table-v2-header pointer-events-none select-none', className)} {...props} />
+  )
 )
 TableHeader.displayName = 'TableHeader'
 

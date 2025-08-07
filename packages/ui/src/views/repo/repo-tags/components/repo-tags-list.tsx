@@ -94,25 +94,25 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   if (isLoading) {
-    return <Skeleton.Table countRows={12} countColumns={5} />
+    return <Skeleton.Table countRows={10} countColumns={5} />
   }
 
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
+    <Table.Root tableClassName="table-fixed">
       <Table.Header>
-        <Table.Row className="pointer-events-none select-none">
-          <Table.Head className="w-[17%]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[30%]">{t('views:repos.description', 'Description')}</Table.Head>
-          <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
-          <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
+        <Table.Row>
+          <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>
+          <Table.Head className="w-[32%]">{t('views:repos.description', 'Description')}</Table.Head>
+          <Table.Head className="w-[10%]">{t('views:repos.commit', 'Commit')}</Table.Head>
+          <Table.Head className="w-1/5">{t('views:repos.tagger', 'Tagger')}</Table.Head>
           <Table.Head className="w-[16%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
-          <Table.Head className="w-[7%]" />
+          <Table.Head className="w-[46px]" />
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {tagsList.map(tag => (
-          <Table.Row key={tag.sha}>
+          <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
             <Table.Cell>
               <Tag value={tag.name} theme="violet" size="md" variant="secondary" showCopyButton />
             </Table.Cell>
@@ -121,7 +121,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 {tag?.message}
               </Text>
             </Table.Cell>
-            <Table.Cell>
+            <Table.Cell disableLink>
               <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
             <Table.Cell>
@@ -145,7 +145,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="w-[46px] text-right">
+            <Table.Cell className="w-[46px] text-right" disableLink>
               <MoreActionsTooltip
                 actions={getTableActions(tag).map(action => ({
                   ...action,

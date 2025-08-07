@@ -53,32 +53,30 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           'h-full': !isLoading && !tagsList.length && !searchQuery
         })}
       >
-        {!isLoading && (!!tagsList.length || isDirtyList) && (
-          <>
-            <Text as="h1" variant="heading-section">
-              {t('views:repos.tags', 'Tags')}
-            </Text>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchInput
-                  inputContainerClassName="max-w-80"
-                  defaultValue={searchQuery || ''}
-                  onChange={handleSearchChange}
-                  placeholder={t('views:repos.search', 'Search')}
-                  autoFocus
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Button onClick={openCreateTagDialog}>
-                  <span>{t('views:repos.createTag', 'Create Tag')}</span>
-                </Button>
-              </ListActions.Right>
-            </ListActions.Root>
+        <Text as="h1" variant="heading-section">
+          {t('views:repos.tags', 'Tags')}
+        </Text>
 
-            <Spacer size={4.5} />
-          </>
-        )}
+        <Spacer size={6} />
+
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchInput
+              inputContainerClassName="max-w-80"
+              defaultValue={searchQuery || ''}
+              onChange={handleSearchChange}
+              placeholder={t('views:repos.search', 'Search')}
+              autoFocus
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button onClick={openCreateTagDialog}>
+              <span>{t('views:repos.createTag', 'Create Tag')}</span>
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+
+        <Spacer size={5} />
 
         <RepoTagsList
           onDeleteTag={onDeleteTag}

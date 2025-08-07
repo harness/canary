@@ -15,7 +15,6 @@ export const createWebhookFormSchema = z
   })
   .refine(
     data => {
-      // If trigger is SELECTED_EVENTS, at least one event must be selected
       if (data.trigger === TriggerEventsEnum.SELECTED_EVENTS) {
         return data.triggers && data.triggers.length > 0
       }
@@ -23,6 +22,6 @@ export const createWebhookFormSchema = z
     },
     {
       message: 'At least one event must be selected',
-      path: ['triggers'] // This specifies which field the error belongs to
+      path: ['triggers']
     }
   )

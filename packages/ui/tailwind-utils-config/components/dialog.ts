@@ -97,16 +97,21 @@ export default {
   // Body Component
   '.cn-modal-dialog-body': {
     '--cn-modal-dialog-scroll-compensation': '4px',
+    marginTop: 'var(--cn-dialog-gap)',
     paddingInline: 'var(--cn-modal-dialog-scroll-compensation)',
     paddingBottom: 'var(--cn-modal-dialog-scroll-compensation)',
     marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
     marginBottom: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
-    marginTop: 'var(--cn-dialog-gap)',
     height: '100%',
 
     '&-content': {
-      display: 'grid',
-      alignContent: 'start',
+      display: 'flex',
+      flexDirection: 'column',
+      maxWidth: 'calc(100% + var(--cn-modal-dialog-scroll-compensation)*2)',
+      overflowY: 'auto',
+      overflowX: 'hidden',
+      paddingInline: 'var(--cn-modal-dialog-scroll-compensation)',
+      marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
       gap: 'var(--cn-layout-xl)'
     }
   },

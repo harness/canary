@@ -32,8 +32,8 @@ export interface MoreActionsTooltipProps {
 export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   actions,
   iconName = 'more-vert',
-  sideOffset = -6,
-  alignOffset = 10,
+  sideOffset = 2,
+  alignOffset = 0,
   className
 }) => {
   const { Link } = useRouterContext()

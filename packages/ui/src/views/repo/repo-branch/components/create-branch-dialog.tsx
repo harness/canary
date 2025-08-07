@@ -113,6 +113,7 @@ export function CreateBranchDialog({
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+              autoFocus
             />
 
             <ControlGroup>

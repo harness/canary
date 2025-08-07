@@ -6,7 +6,7 @@ import {
   CommitCopyActions,
   MoreActionsTooltip,
   NoData,
-  SkeletonTable,
+  Skeleton,
   Table,
   Tag,
   Text,
@@ -94,7 +94,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   if (isLoading) {
-    return <SkeletonTable countRows={12} countColumns={5} />
+    return <Skeleton.Table countRows={12} countColumns={5} />
   }
 
   return (

@@ -8,7 +8,7 @@ import {
   NoData,
   Pagination,
   SearchInput,
-  SkeletonList,
+  Skeleton,
   Spacer,
   StackedList,
   Text
@@ -212,7 +212,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const renderListContent = () => {
     if (isLoading) {
-      return <SkeletonList />
+      return <Skeleton.List />
     }
 
     if (noData) {

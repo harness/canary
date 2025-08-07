@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Checkbox, IconV2, ListActions, SearchBox, SkeletonList, StackedList } from '@/components'
+import { Checkbox, IconV2, ListActions, SearchBox, Skeleton, StackedList } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 
@@ -192,7 +192,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
           </ListActions.Root>
         )}
         {isLoading ? (
-          <SkeletonList />
+          <Skeleton.List />
         ) : (
           <EntityReferenceList<T, S, F>
             entities={entities}

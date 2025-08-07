@@ -12,7 +12,7 @@ import {
   FormWrapper,
   IconV2,
   Legend,
-  SkeletonForm,
+  Skeleton,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -106,7 +106,7 @@ export const ProjectSettingsGeneralPage = ({
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
         </Text>
 
-        {isLoading && <SkeletonForm />}
+        {isLoading && <Skeleton.Form />}
 
         {!isLoading && (
           <>

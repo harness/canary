@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { LogoNameMapV2 } from './logo-name-map'
 
-const logoVariants = cva('cn-logo', {
+export const logoVariants = cva('cn-logo', {
   variants: {
     size: {
       sm: 'cn-logo-sm',

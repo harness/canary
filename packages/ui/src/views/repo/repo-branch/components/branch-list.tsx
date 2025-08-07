@@ -8,7 +8,7 @@ import {
   MoreActionsTooltip,
   NoData,
   Separator,
-  SkeletonTable,
+  Skeleton,
   StatusBadge,
   Table,
   Tag,
@@ -83,7 +83,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
   }
 
   if (isLoading) {
-    return <SkeletonTable countRows={12} countColumns={6} />
+    return <Skeleton.Table countRows={12} countColumns={6} />
   }
 
   return (

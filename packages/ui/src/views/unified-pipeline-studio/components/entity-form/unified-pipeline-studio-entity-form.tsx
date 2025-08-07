@@ -1,6 +1,6 @@
 import { ElementType, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, SkeletonList, Text } from '@/components'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, Skeleton, Text } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
@@ -256,7 +256,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
                 {error?.message ? (
                   <Text color="danger">{error.message}</Text>
                 ) : loading ? (
-                  <SkeletonList />
+                  <Skeleton.List />
                 ) : (
                   <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
                 )}

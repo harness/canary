@@ -10,7 +10,7 @@ import {
   ScopeTag,
   SearchInput,
   Separator,
-  SkeletonList,
+  Skeleton,
   Spacer,
   SplitButton,
   StackedList,
@@ -172,7 +172,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           {isLoading ? (
             <>
               <Spacer size={7} />
-              <SkeletonList />
+              <Skeleton.List />
             </>
           ) : rules?.length !== 0 ? (
             <StackedList.Root>
@@ -271,7 +271,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       ) : (
         <NoData
           withBorder
-          className="min-h-0 py-cn-3xl"
+          className="py-cn-3xl min-h-0"
           textWrapperClassName="max-w-[350px]"
           imageName={'no-data-cog'}
           title={t('views:noData.noRules', 'No rules yet')}

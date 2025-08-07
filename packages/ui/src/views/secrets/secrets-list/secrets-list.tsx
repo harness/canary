@@ -1,4 +1,4 @@
-import { IconV2, MoreActionsTooltip, NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, Skeleton, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { SecretListProps } from './types'
@@ -11,7 +11,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!secrets.length) {
@@ -39,7 +39,7 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
+        <Skeleton.Table countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
           {secrets.map(secret => (

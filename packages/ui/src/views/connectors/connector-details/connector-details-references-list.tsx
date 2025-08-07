@@ -1,4 +1,4 @@
-import { NoData, SkeletonList, SkeletonTable, Table, TimeAgoCard } from '@/components'
+import { NoData, Skeleton, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { ConnectorReferenceItem, ConnectorReferenceListProps } from './types'
@@ -23,7 +23,7 @@ const ConnectorDetailsReferenceList = ({
   const { t } = useTranslation()
   const content = entities?.content
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!content.length) {
@@ -52,7 +52,7 @@ const ConnectorDetailsReferenceList = ({
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
+        <Skeleton.Table countRows={12} countColumns={5} />
       ) : (
         <Table.Body>
           {content.map(({ referredByEntity, createdAt }: ConnectorReferenceItem) => {

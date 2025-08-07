@@ -6,7 +6,7 @@ import {
   useGetRepoWebhookQuery,
   useUpdateRepoWebhookMutation
 } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import {
   CreateWebhookFormFields,
   NotFoundPage,
@@ -128,7 +128,7 @@ export const CreateWebhookContainer = () => {
   const apiError = createWebHookError?.message || updateWebhookError?.message || null
 
   if (!!webhookId && getWebhookIsLoading) {
-    return <SkeletonForm className="mt-7" />
+    return <Skeleton.Form className="mt-7" />
   }
 
   if (!!webhookId && !webhookData) return <NotFoundPage pageTypeText="webhooks" />

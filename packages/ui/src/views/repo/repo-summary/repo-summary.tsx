@@ -7,7 +7,7 @@ import {
   ListActions,
   MarkdownViewer,
   SearchFiles,
-  SkeletonList,
+  Skeleton,
   Spacer,
   StackedList,
   Text
@@ -128,7 +128,7 @@ export function RepoSummaryView({
     return (
       <SandboxLayout.Main fullWidth>
         <SandboxLayout.Content>
-          <SkeletonList />
+          <Skeleton.Table countColumns={3} countRows={10} showHeader />
         </SandboxLayout.Content>
       </SandboxLayout.Main>
     )

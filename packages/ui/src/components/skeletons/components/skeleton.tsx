@@ -1,9 +1,11 @@
-import { HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 
-function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('bg-[image:var(--cn-comp-skeleton-bg)] animate-pulse rounded-3xl', className)} {...props} />
-}
+const SkeletonBase = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
+  return <div className={cn('cn-skeleton-base', className)} ref={ref} {...props} />
+})
 
-export { Skeleton }
+SkeletonBase.displayName = 'SkeletonBase'
+
+export { SkeletonBase }

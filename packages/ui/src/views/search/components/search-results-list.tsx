@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Alert, Card, Layout, SkeletonList, Spacer, Tag, Text } from '@/components'
+import { Alert, Card, Layout, Skeleton, Spacer, Tag, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -48,7 +48,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   const { Link } = useRouterContext()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!results?.length) {

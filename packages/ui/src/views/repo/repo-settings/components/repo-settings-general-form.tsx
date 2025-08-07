@@ -12,7 +12,7 @@ import {
   Label,
   Layout,
   Radio,
-  SkeletonForm,
+  Skeleton,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -105,7 +105,7 @@ export const RepoSettingsGeneralForm: FC<{
   return (
     <Fieldset>
       {isLoadingRepoData ? (
-        <SkeletonForm />
+        <Skeleton.Form />
       ) : (
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}

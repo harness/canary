@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, SkeletonList } from '@/components'
+import { Button, ButtonLayout, Drawer, Skeleton } from '@/components'
 import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
@@ -71,7 +71,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
 
       <Drawer.Body className={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
         {loading ? (
-          <SkeletonList className="p-5" />
+          <Skeleton.List className="p-5" />
         ) : (
           <div className="flex grow flex-col">
             <RunPipelineFormInputs

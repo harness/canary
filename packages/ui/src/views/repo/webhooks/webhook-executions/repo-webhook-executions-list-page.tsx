@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
+import { FormSeparator, NoData, Pagination, Skeleton, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout, WebhookStore } from '@/views'
 
@@ -47,7 +47,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           Executions
         </Text>
         {isLoading ? (
-          <SkeletonList />
+          <Skeleton.List />
         ) : executions && executions.length > 0 ? (
           <>
             <Table.Root disableHighlightOnHover>

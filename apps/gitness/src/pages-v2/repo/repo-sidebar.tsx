@@ -9,6 +9,7 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
+import { SkeletonFileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
@@ -45,7 +46,8 @@ export const RepoSidebar = () => {
     preSelectedTab,
     setPreSelectedTab,
     prefixedDefaultBranch,
-    fullGitRefWoDefault
+    fullGitRefWoDefault,
+    isLoading
   } = useGitRef()
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
@@ -250,8 +252,9 @@ export const RepoSidebar = () => {
               />
             }
           >
+            {isLoading && <SkeletonFileExplorer linesCount={12} />}
             {!!repoDetails?.body?.content?.entries?.length && (
-              <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
+              <Explorer isLoading={isLoading} repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
             )}
           </RepoSidebarView>
         </div>

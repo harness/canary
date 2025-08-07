@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, Layout, SkeletonList, Text, TimeAgoCard } from '@/components'
+import { Avatar, Button, CommitCopyActions, Layout, Skeleton, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ICommitDetailsStore, SandboxLayout } from '@/views'
 
@@ -33,7 +33,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
     <SandboxLayout.Main className="overflow-visible" fullWidth>
       {loadingCommitDetails ? (
         <SandboxLayout.Content>
-          <SkeletonList />
+          <Skeleton.List />
         </SandboxLayout.Content>
       ) : (
         <SandboxLayout.Content>

@@ -1,17 +1,7 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Checkbox,
-  ControlGroup,
-  Fieldset,
-  Layout,
-  Message,
-  MessageTheme,
-  SkeletonForm,
-  Spacer,
-  Text
-} from '@/components'
+import { Checkbox, ControlGroup, Fieldset, Layout, Message, MessageTheme, Skeleton, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -76,7 +66,7 @@ export const RepoSettingsFeaturesForm: FC<RepoSettingsFeaturesFormProps> = ({
       <Layout.Vertical gap="xl">
         <Text variant="heading-subsection">{t('views:repos.features', 'Features')}</Text>
         {isLoadingFeaturesSettings ? (
-          <SkeletonForm linesCount={2} />
+          <Skeleton.Form linesCount={2} />
         ) : (
           <ControlGroup>
             <Checkbox

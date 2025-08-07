@@ -1,6 +1,6 @@
 import { useTranslation } from '@/context'
 
-import { IconV2, NoData, SkeletonList, StackedList } from '../../../components'
+import { IconV2, NoData, Skeleton, StackedList } from '../../../components'
 import { Meter } from '../../../components/meter'
 import { PipelineExecutionStatus } from '../common/execution-types'
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
@@ -49,7 +49,7 @@ export const PipelineList = ({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (noData) {

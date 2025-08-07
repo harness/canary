@@ -35,25 +35,27 @@ type TextElement =
   | 'dt'
   | 'dd'
 
-const textVariants = cva('', {
+export const typographyVariantConfig = {
+  'heading-hero': 'font-heading-hero',
+  'heading-section': 'font-heading-section',
+  'heading-subsection': 'font-heading-subsection',
+  'heading-base': 'font-heading-base',
+  'heading-small': 'font-heading-small',
+  'body-normal': 'font-body-normal',
+  'body-single-line-normal': 'font-body-single-line-normal',
+  'body-strong': 'font-body-strong',
+  'body-single-line-strong': 'font-body-single-line-strong',
+  'body-code': 'font-body-code',
+  'caption-normal': 'font-caption-normal',
+  'caption-soft': 'font-caption-soft',
+  'caption-strong': 'font-caption-strong',
+  'caption-single-line-normal': 'font-caption-single-line-normal',
+  'caption-single-line-soft': 'font-caption-single-line-soft'
+}
+
+export const textVariants = cva('', {
   variants: {
-    variant: {
-      'heading-hero': 'font-heading-hero',
-      'heading-section': 'font-heading-section',
-      'heading-subsection': 'font-heading-subsection',
-      'heading-base': 'font-heading-base',
-      'heading-small': 'font-heading-small',
-      'body-normal': 'font-body-normal',
-      'body-single-line-normal': 'font-body-single-line-normal',
-      'body-strong': 'font-body-strong',
-      'body-single-line-strong': 'font-body-single-line-strong',
-      'body-code': 'font-body-code',
-      'caption-normal': 'font-caption-normal',
-      'caption-soft': 'font-caption-soft',
-      'caption-strong': 'font-caption-strong',
-      'caption-single-line-normal': 'font-caption-single-line-normal',
-      'caption-single-line-soft': 'font-caption-single-line-soft'
-    },
+    variant: typographyVariantConfig,
     align: {
       left: 'text-left',
       center: 'text-center',

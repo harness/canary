@@ -29,6 +29,7 @@ import scrollAreaStyles from './scroll-area'
 import selectStyles from './select'
 import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
+import skeletonStyles from './skeleton'
 import switchStyles from './switch'
 import tableV2Styles from './table-v2'
 import tabsStyles from './tabs'
@@ -71,6 +72,7 @@ export const ComponentStyles = [
   toggleStyles,
   toggleGroupStyles,
   buttonGroupStyle,
+  skeletonStyles,
 
   // Form styles
   selectStyles,

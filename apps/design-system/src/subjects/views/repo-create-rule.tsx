@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
 
-import { SkeletonForm } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import { RepoBranchSettingsRulesPage } from '@harnessio/ui/views'
 
 const errors = {
@@ -36,7 +36,7 @@ export const RepoCreateRule = () => {
   }, [])
 
   if (!loaded) {
-    return <SkeletonForm className="mt-7" />
+    return <Skeleton.Form className="mt-7" />
   }
 
   return (

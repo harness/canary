@@ -1,10 +1,10 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 
 import { commentCreatePullReq, commentDeletePullReq, commentUpdatePullReq } from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
-import { CommitSuggestion } from '@harnessio/ui/views'
 
 import { useAPIPath } from '../../../hooks/useAPIPath'
+import { usePRSuggestions } from '../contexts/PRSuggestionsContext'
 import { getErrorMessage } from '../pull-request-utils'
 
 interface usePRCommonInteractionsProps {
@@ -145,30 +145,17 @@ export function usePRCommonInteractions({
     [repoRef, prId, refetchActivities]
   )
 
-  const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const [suggestionsBatch, setSuggestionsBatch] = useState<CommitSuggestion[]>([])
-  const [suggestionToCommit, setSuggestionToCommit] = useState<CommitSuggestion>()
-
-  const onCommitSuggestion = useCallback((suggestion: CommitSuggestion) => {
-    setSuggestionToCommit(suggestion)
-    setIsCommitDialogOpen(true)
-  }, [])
-
-  const onCommitSuggestionSuccess = useCallback(() => {
-    setIsCommitDialogOpen(false)
-    setSuggestionsBatch([])
-    refetchActivities()
-  }, [refetchActivities])
-
-  const addSuggestionToBatch = useCallback((suggestion: CommitSuggestion) => {
-    setSuggestionsBatch(prev => [...prev, suggestion])
-  }, [])
-
-  const removeSuggestionFromBatch = useCallback((commentId: number) => {
-    setSuggestionsBatch(prev => prev.filter(s => s.comment_id !== commentId))
-  }, [])
-
-  const onCommitSuggestionsBatch = useCallback(() => setIsCommitDialogOpen(true), [])
+  const {
+    isCommitDialogOpen,
+    setIsCommitDialogOpen,
+    suggestionsBatch,
+    suggestionToCommit,
+    onCommitSuggestionsBatch,
+    onCommitSuggestionSuccess,
+    addSuggestionToBatch,
+    removeSuggestionFromBatch,
+    onCommitSuggestion
+  } = usePRSuggestions()
 
   const onCommentSaveAndStatusChange = useCallback(
     async (commentText: string, status: string, parentId?: number) => {

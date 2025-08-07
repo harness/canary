@@ -19,6 +19,7 @@ import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequ
 import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
+import { PRSuggestionsProvider } from './contexts/PRSuggestionsContext'
 import { usePRChecksDecision } from './hooks/usePRChecksDecision'
 import { extractSpecificViolations, getCommentsInfoData } from './pull-request-utils'
 import { POLLING_INTERVAL, PR_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
@@ -210,7 +211,7 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prPanelData.ruleViolationArr, pullReqMetadata, repoMetadata, prPanelData.ruleViolation])
 
-  return <>{children}</>
+  return <PRSuggestionsProvider>{children}</PRSuggestionsProvider>
 }
 
 export default PullRequestDataProvider

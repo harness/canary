@@ -82,12 +82,12 @@ const PRCommentView: FC<PRCommentViewProps> = ({
           ) : (
             <Button
               variant="outline"
-              onClick={() =>
-                addSuggestionToBatch?.({
+              onClick={() => {
+                return addSuggestionToBatch?.({
                   check_sum: checkSums?.[0] || '',
                   comment_id: commentItem.id
                 })
-              }
+              }}
             >
               Add suggestion to batch
             </Button>

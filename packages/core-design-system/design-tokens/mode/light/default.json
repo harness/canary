@@ -1835,7 +1835,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1849,7 +1849,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Light shadow color. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -1863,7 +1863,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -1877,7 +1877,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Medium shadow color. Creates moderate depth for elevated components."
     },
     "4": {
@@ -1891,7 +1891,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Deep shadow color. Provides significant depth for floating elements."
     },
     "5": {
@@ -1899,13 +1899,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.1",
+            "value": "0.07",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -1919,7 +1919,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     },
     "inner": {
@@ -1933,7 +1933,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Subtle inner shadow color. Creates inset effect for pressed or focused states."
     }
   },

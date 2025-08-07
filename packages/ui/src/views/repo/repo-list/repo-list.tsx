@@ -91,7 +91,7 @@ export function RepoList({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <Skeleton.List linesCount={6} />
+    return <Skeleton.List linesCount={8} hasActions />
   }
 
   if (!repos.length) {

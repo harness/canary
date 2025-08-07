@@ -67,7 +67,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   return (
     <AlertDialog.Root theme="danger" open={open} onOpenChange={onClose} onConfirm={handleDelete} loading={isLoading}>
       <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
-        {displayMessageContent}
+        <div className="overflow-hidden break-words text-wrap">{displayMessageContent}</div>
         {withForm && (
           <Fieldset>
             <Input

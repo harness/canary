@@ -165,9 +165,9 @@
         "label": "Description"
       },
       "gitignore": {
-        "placeholder": "Select",
         "label": "Add a .gitignore",
-        "caption": "Choose which files not to track from a list of templates."
+        "caption": "Choose which files not to track from a list of templates.",
+        "placeholder": "Select"
       },
       "defaultBranchDialog": {
         "startLabel": "Your repository will be initialized with a",

@@ -12,16 +12,12 @@ import {
 
 interface RepoWebhookExecutionsPageProps {
   useWebhookStore: () => WebhookStore
-  toRepoWebhooks: (repoRef?: string) => string
-  repo_ref: string
   isLoading: boolean
   toRepoWebhookExecutionDetails: (executionId: string) => string
 }
 
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
-  toRepoWebhooks,
-  repo_ref,
   isLoading,
   toRepoWebhookExecutionDetails
 }) => {
@@ -124,10 +120,6 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                 "Your webhook executions will appear here once they're completed. Trigger your webhook to see results."
               )
             ]}
-            primaryButton={{
-              label: t('views:webhookData.create', 'Create webhook'),
-              to: `${toRepoWebhooks(repo_ref)}/create`
-            }}
           />
         )}
       </SandboxLayout.Content>

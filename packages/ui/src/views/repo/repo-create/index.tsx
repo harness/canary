@@ -171,7 +171,7 @@ export function RepoCreatePage({
                   value={gitignoreValue}
                   options={gitIgnoreOptions}
                   onChange={value => handleSelectChange('gitignore', value)}
-                  placeholder={t('views:repos.createNewRepoForm.gitignore.placeholder', 'Select')}
+                  placeholder="None"
                   label={t('views:repos.createNewRepoForm.gitignore.label', 'Add a .gitignore')}
                   error={errors.gitignore?.message?.toString()}
                   caption={t(
@@ -187,7 +187,7 @@ export function RepoCreatePage({
                   value={licenseValue}
                   options={licenseOptions}
                   onChange={value => handleSelectChange('license', value)}
-                  placeholder="Select"
+                  placeholder="None"
                   label="Choose a license"
                   error={errors.license?.message?.toString()}
                   caption="A license tells others what they can and can't do with your code."

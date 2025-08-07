@@ -10,6 +10,7 @@ import {
   useGetContentQuery,
   useListPathsQuery
 } from '@harnessio/code-service-client'
+import { Layout } from '@harnessio/ui/components'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
 import Explorer from '../../components-v2/FileExplorer'
@@ -98,7 +99,7 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   const filesList = filesData?.body?.files || []
 
   return (
-    <>
+    <Layout.Flex gapX="xl">
       {showSidebar && (
         <CommitSidebar navigateToFile={() => {}} filesList={filesList}>
           {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
@@ -106,6 +107,6 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
       )}
 
       <CommitDiff useCommitDetailsStore={useCommitDetailsStore} />
-    </>
+    </Layout.Flex>
   )
 }

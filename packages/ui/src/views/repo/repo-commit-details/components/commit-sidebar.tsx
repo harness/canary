@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
-import { ScrollArea, SearchFiles, Spacer } from '@/components'
-import { SandboxLayout } from '@/views'
+import { Layout, ScrollArea, SearchFiles } from '@/components'
 
 interface CommitsSidebarProps {
   navigateToFile: (file: string) => void
@@ -11,24 +10,14 @@ interface CommitsSidebarProps {
 
 export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSidebarProps) => {
   return (
-    <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
-      <SandboxLayout.LeftSubPanel className="w-[248px]">
-        <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
-          <div className="flex size-full flex-col gap-3 pt-5">
-            <div className="px-5">
-              <SearchFiles
-                navigateToFile={navigateToFile}
-                filesList={filesList}
-                contentClassName="width-popover-max-width"
-              />
-            </div>
-            <ScrollArea className="pr-cn-sm grid-cols-[100%]">
-              {children}
-              <Spacer size={7} />
-            </ScrollArea>
-          </div>
-        </SandboxLayout.Content>
-      </SandboxLayout.LeftSubPanel>
+    <div className="nested-sidebar-height pt-cn-md -mt-cn-md sticky top-[var(--cn-page-nav-height)]">
+      <Layout.Flex direction="column" className="max-h-full overflow-hidden" gapY="sm">
+        <SearchFiles navigateToFile={navigateToFile} filesList={filesList} contentClassName="width-popover-max-width" />
+
+        <ScrollArea className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5" classNameContent="w-[248px]">
+          {children}
+        </ScrollArea>
+      </Layout.Flex>
     </div>
   )
 }

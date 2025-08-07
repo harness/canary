@@ -1,6 +1,5 @@
-import { useTranslation } from '@/context'
-import { formatNumber } from '@/utils'
-import { ICommitDetailsStore } from '@/views'
+import { ChangedFilesShortInfo, ICommitDetailsStore } from '@/views'
+import { Layout } from '@components/layout'
 
 import { CommitChanges } from './commit-changes'
 
@@ -9,21 +8,13 @@ export interface CommitDiffsViewProps {
 }
 
 export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore }) => {
-  const { t } = useTranslation()
   const { diffs, diffStats } = useCommitDetailsStore()
 
   return (
-    <div className="min-h-[calc(100vh-var(--cn-page-nav-height))] pt-4">
-      <p className="mb-3 text-2 leading-tight text-cn-foreground-2">
-        {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
-        <span className="text-cn-foreground-accent">
-          {formatNumber(diffStats?.files_changed ?? 0)}{' '}
-          {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-        </span>{' '}
-        {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions ?? 0)}{' '}
-        {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {formatNumber(diffStats?.deletions ?? 0)}{' '}
-        {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-      </p>
+    <Layout.Flex direction="column" className="w-full pb-cn-xl min-h-[calc(100vh-var(--cn-page-nav-height))]" gapY="sm">
+      {/* TODO: add goToDiff handler */}
+      <ChangedFilesShortInfo diffData={diffs} diffStats={diffStats} goToDiff={() => {}} />
+
       <CommitChanges
         data={diffs.map(item => ({
           text: item.filePath,
@@ -41,6 +32,6 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
         }))}
         diffMode={2}
       />
-    </div>
+    </Layout.Flex>
   )
 }

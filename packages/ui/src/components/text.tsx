@@ -73,7 +73,8 @@ export const textVariants = cva('', {
       disabled: 'text-cn-foreground-disabled',
       success: 'text-cn-foreground-success',
       warning: 'text-cn-foreground-warning',
-      danger: 'text-cn-foreground-danger'
+      danger: 'text-cn-foreground-danger',
+      accent: 'text-cn-foreground-accent'
     },
     lineClamp: {
       default: '',

@@ -151,14 +151,14 @@ function PullRequestChangesInternal({
 
   useEffect(() => {
     if (jumpToDiff) {
-      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
+      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff, undefined, diffsContainerRef)
     }
     if (commentId) {
       data.map(diffItem => {
         const fileComments = getFileComments(diffItem)
         const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
         if (commentId && diffHasComment) {
-          jumpToFile(diffItem.text, diffBlocks, setJumpToDiff, commentId)
+          jumpToFile(diffItem.text, diffBlocks, setJumpToDiff, commentId, diffsContainerRef)
         }
       })
     }
@@ -186,7 +186,7 @@ function PullRequestChangesInternal({
                 ) || []
 
               return (
-                <div className="pt-4" key={item.filePath}>
+                <div className={`${blockIndex === 0 ? 'pt-2' : 'pt-4'}`} key={item.filePath}>
                   <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}

@@ -277,6 +277,9 @@ export default function PullRequestChanges() {
     if (loadingRawDiff || cachedDiff.path !== path || typeof cachedDiff.raw !== 'string') {
       return
     }
+
+    let processTimeoutId: NodeJS.Timeout | null = null
+
     if (cachedDiff.raw) {
       const parsed = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
       let currentIndex = 0
@@ -313,12 +316,22 @@ export default function PullRequestChanges() {
 
         currentIndex = endIndex
         if (currentIndex < parsed.length) {
-          setTimeout(processNextChunk, 0)
+          processTimeoutId = setTimeout(processNextChunk, 0)
+        } else {
+          processTimeoutId = null
         }
       }
       processNextChunk()
     } else {
       setDiffs([])
+    }
+
+    // Cleanup function to clear any pending timeouts
+    return () => {
+      if (processTimeoutId) {
+        clearTimeout(processTimeoutId)
+        processTimeoutId = null
+      }
     }
   }, [loadingRawDiff, path, cachedDiff])
 

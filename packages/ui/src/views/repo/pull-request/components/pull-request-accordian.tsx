@@ -319,7 +319,7 @@ export const PullRequestAccordion: React.FC<{
       <Accordion.Item value={header?.text ?? ''} className="border-cn-borders-2 rounded-3 border">
         <Accordion.Trigger
           className="bg-cn-background-2 rounded-tl-3 rounded-tr-3 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="sticky top-[136px] z-10 border-cn-borders-2 border-b"
+          headerClassName="sticky top-[138px] z-10 border-cn-borders-2 border-b"
         >
           <LineTitle
             header={header}

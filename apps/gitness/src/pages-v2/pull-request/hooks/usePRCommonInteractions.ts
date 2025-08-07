@@ -72,7 +72,7 @@ export function usePRCommonInteractions({
       const reader = new FileReader()
 
       // Set up a function to be called when the load event is triggered
-      reader.onload = async function () {
+      const handleLoad = async function () {
         if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
           const markdown = await uploadImage(reader.result)
 
@@ -82,7 +82,32 @@ export function usePRCommonInteractions({
             setMarkdownContent(`${currentComment} \n ${markdown}`) // Set the markdown content
           }
         }
+
+        // Clean up event handlers after processing
+        reader.onload = null
+        reader.onerror = null
+        reader.onabort = null
       }
+
+      const handleError = function () {
+        console.error('FileReader error occurred')
+        // Clean up event handlers on error
+        reader.onload = null
+        reader.onerror = null
+        reader.onabort = null
+      }
+
+      const handleAbort = function () {
+        console.log('FileReader operation was aborted')
+        // Clean up event handlers on abort
+        reader.onload = null
+        reader.onerror = null
+        reader.onabort = null
+      }
+
+      reader.onload = handleLoad
+      reader.onerror = handleError
+      reader.onabort = handleAbort
 
       reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
     },

@@ -68,7 +68,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   )
   useEffect(() => {
     if (!jumpToDiff) return
-    jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
+    jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff, undefined, diffsContainerRef)
   }, [jumpToDiff, diffBlocks, setJumpToDiff])
 
   const setCollapsed = useCallback(

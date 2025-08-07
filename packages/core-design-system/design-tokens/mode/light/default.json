@@ -2270,11 +2270,11 @@
         "bg": {
           "from": {
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{chrome.25}"
           },
           "to": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{pure.white}"
           }
         },
         "item": {
@@ -2284,7 +2284,7 @@
           },
           "to": {
             "$type": "color",
-            "$value": "{tuna.800}"
+            "$value": "{tuna.850}"
           }
         }
       },

@@ -110,6 +110,25 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
 
+  const userSelectOptions = useMemo(() => {
+    const otherUserOptions = computedPrincipalData
+      .filter(user => !currentUser?.id || String(user?.id) !== String(currentUser?.id))
+      .map(user => ({
+        label: user?.display_name || '',
+        value: String(user?.id)
+      }))
+
+    if (currentUser?.id && !principalsSearchQuery) {
+      const currentUserOption = {
+        label: currentUser.display_name || '',
+        value: String(currentUser.id)
+      }
+      return [currentUserOption, ...otherUserOptions]
+    }
+
+    return otherUserOptions
+  }, [computedPrincipalData, currentUser, principalsSearchQuery])
+
   const labelsFilterConfig: CustomFilterOptionConfig<keyof PRListFilters, LabelsValue> = {
     label: t('views:repos.prListFilterOptions.labels.label', 'Label'),
     value: 'label_by',
@@ -169,10 +188,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     isProjectLevel,
     isPrincipalsLoading,
     customFilterOptions,
-    principalData: computedPrincipalData.map(userInfo => ({
-      label: userInfo?.display_name || '',
-      value: String(userInfo?.id)
-    })),
+    principalData: userSelectOptions,
     scope
   })
 

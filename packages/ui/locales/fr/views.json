@@ -70,6 +70,7 @@
         "label": "Label by"
       }
     },
+    "createPullReq": "Créer une requête de tirage.",
     "BlockBranchCreation": "Bloquer la création de branches",
     "BlockBranchCreationDescription": "Autoriser uniquement les utilisateurs ayant des permissions spécifiques à créer ces branches",
     "BlockBranchDeletion": "Bloquer la suppression de branches",
@@ -180,7 +181,7 @@
       }
     },
     "repositories": "Dépôts",
-    "new-repository": "Créer un dépôt",
+    "createRepository": "Créer un dépôt",
     "import-repository": "Importer un dépôt",
     "import-repositories": "Import repositories",
     "importing": "Importing…",
@@ -292,7 +293,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New Tag",
+    "createTag": "Créer une balise",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
     "urlPlaceholder": "https://example.com/harness",
@@ -387,9 +388,17 @@
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "compareChanges": "Comparez et révisez pratiquement tout",
     "compareChangesDescription": "Branches, tags, plages de commits et périodes. Dans le même dépôt et entre les forks.",
+    "title": {
+      "noOpenPullRequests": "Il n'y a pas encore de demandes de tirage ouvertes",
+      "noClosedPullRequests": "Il n'y a pas encore de demandes de tirage fermées",
+      "noMergedPullRequests": "Il n'y a pas encore de demandes de tirage fusionnées"
+    },
     "noOpenPullRequests": "Il n'y a pas encore de demandes de tirage ouvertes dans ce projet.",
-    "createNewPullRequest": "Créez une nouvelle demande de tirage.",
     "noClosedPullRequests": "Il n'y a pas encore de demandes de tirage fermées dans ce projet.",
+    "noMergedPullRequests": "Il n'y a pas encore de demandes de tirage fusionnées dans ce projet.",
+    "button": {
+      "createPullRequest": "Créer une demande de tirage"
+    },
     "clearFilters": "Effacer les filtres",
     "noPullRequestsInRepo": "Commencez votre parcours de contribution en créant un brouillon de demande de tirage.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",

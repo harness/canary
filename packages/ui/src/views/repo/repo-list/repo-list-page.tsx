@@ -95,7 +95,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
   const FilterSortOptions = [
-    { label: 'Name', value: RepoSortMethod.Identifier },
+    { label: 'Name (A->Z, 0->9)', value: RepoSortMethod.Identifier_Asc },
+    { label: 'Name (Z->A, 9->0)', value: RepoSortMethod.Identifier_Desc },
     { label: 'Newest', value: RepoSortMethod.Newest },
     { label: 'Oldest', value: RepoSortMethod.Oldest },
     { label: 'Last push', value: RepoSortMethod.LastPush }
@@ -186,7 +187,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 options={[
                   {
                     value: 'new',
-                    label: t('views:repos.new-repository', 'New repository')
+                    label: t('views:repos.createRepository', 'Create repository')
                   },
                   {
                     value: 'import',
@@ -198,8 +199,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                   }
                 ]}
               >
-                <IconV2 name="plus" size="sm" />
-                {t('views:repos.new-repository', 'New Repository')}
+                {t('views:repos.createRepository', 'Create repository')}
               </SplitButton>
             }
             filterOptions={filterOptions}

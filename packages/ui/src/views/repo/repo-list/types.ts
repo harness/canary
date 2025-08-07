@@ -58,7 +58,8 @@ export interface RepoListPageProps extends Partial<RoutingProps>, FavoriteProps,
 }
 
 export enum RepoSortMethod {
-  Identifier = 'identifier,desc',
+  Identifier_Desc = 'identifier,desc',
+  Identifier_Asc = 'identifier,asc',
   Newest = 'created,desc',
   Oldest = 'created,asc',
   LastPush = 'last_git_push,desc'

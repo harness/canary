@@ -70,6 +70,7 @@
         "label": "Label by"
       }
     },
+    "createPullReq": "Create Pull request",
     "BlockBranchCreation": "Block branch creation",
     "BlockBranchCreationDescription": "Only allow users with bypass permission to create matching branches",
     "BlockBranchDeletion": "Block branch deletion",
@@ -180,7 +181,7 @@
       }
     },
     "repositories": "Repositories",
-    "new-repository": "New repository",
+    "createRepository": "Create repository",
     "import-repository": "Import repository",
     "import-repositories": "Import repositories",
     "importing": "Importing…",
@@ -298,7 +299,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New Tag",
+    "createTag": "Create Tag",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
     "urlPlaceholder": "https://example.com/harness",
@@ -395,9 +396,17 @@
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "compareChanges": "Compare and review just about anything",
     "compareChangesDescription": "Branches and commit ranges can be reviewed within the same repository.",
+    "title": {
+      "noOpenPullRequests": "No open pull requests yet",
+      "noClosedPullRequests": "No closed pull requests yet",
+      "noMergedPullRequests": "No merged pull requests yet"
+    },
     "noOpenPullRequests": "There are no open pull requests in this project yet.",
-    "createNewPullRequest": "Create a new pull request.",
     "noClosedPullRequests": "There are no closed pull requests in this project yet.",
+    "noMergedPullRequests": "There are no merged pull requests in this project yet.",
+    "button": {
+      "createPullRequest": "Create pull request"
+    },
     "clearFilters": "Clear filters",
     "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request draft.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",

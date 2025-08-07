@@ -250,7 +250,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     'views:noData.noPullRequestsInRepo',
                     `Start your contribution journey by creating a new pull request draft.`
                   ),
-                  t('views:noData.createNewPullRequest', 'Create a new pull request.')
+                  t('views:repos.createPullReq', 'Create Pull request.')
                 ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
           }
@@ -442,7 +442,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                  */}
                 {repoId ? (
                   <Button asChild>
-                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
+                      {t('views:repos.createPullReq', 'Create Pull request.')}
+                    </Link>
                   </Button>
                 ) : null}
               </ListActions.Right>

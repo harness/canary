@@ -122,53 +122,51 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   return (
     <>
+      <ListActions.Root className="mt-1">
+        <ListActions.Left>
+          <SearchInput
+            id="search"
+            defaultValue={rulesSearchQuery}
+            inputContainerClassName="max-w-80"
+            placeholder={t('views:repos.search', 'Search')}
+            onChange={handleSearchChange}
+          />
+        </ListActions.Left>
+        <ListActions.Right>
+          <Select
+            options={[
+              { label: t('views:repos.allRules', 'All Rules'), value: null },
+              { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
+              { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' }
+            ]}
+            value={ruleTypeFilter}
+            onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
+            size="md"
+            triggerClassName="min-w-[150px]"
+          />
+          <SplitButton<string>
+            dropdownContentClassName="mt-0 min-w-[170px]"
+            handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
+            handleOptionChange={option => {
+              if (option === 'tag-rule') {
+                navigate(toRepoTagRuleCreate?.() || '')
+              }
+            }}
+            options={[
+              {
+                value: 'tag-rule',
+                label: t('views:repos.newTagRule', 'New tag rule')
+              }
+            ]}
+          >
+            {t('views:repos.createBranchRule', 'New branch rule')}
+          </SplitButton>
+        </ListActions.Right>
+      </ListActions.Root>
+
       {isShowRulesContent ? (
         <>
-          <>
-            <ListActions.Root className="mt-1">
-              <ListActions.Left>
-                <SearchInput
-                  id="search"
-                  defaultValue={rulesSearchQuery}
-                  inputContainerClassName="max-w-80"
-                  placeholder={t('views:repos.search', 'Search')}
-                  onChange={handleSearchChange}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Select
-                  options={[
-                    { label: t('views:repos.allRules', 'All Rules'), value: null },
-                    { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
-                    { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' }
-                  ]}
-                  value={ruleTypeFilter}
-                  onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
-                  size="md"
-                  triggerClassName="min-w-[150px]"
-                />
-                <SplitButton<string>
-                  dropdownContentClassName="mt-0 min-w-[170px]"
-                  handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
-                  handleOptionChange={option => {
-                    if (option === 'tag-rule') {
-                      navigate(toRepoTagRuleCreate?.() || '')
-                    }
-                  }}
-                  options={[
-                    {
-                      value: 'tag-rule',
-                      label: t('views:repos.newTagRule', 'New tag rule')
-                    }
-                  ]}
-                >
-                  {t('views:repos.createBranchRule', 'New branch rule')}
-                </SplitButton>
-              </ListActions.Right>
-            </ListActions.Root>
-
-            <Spacer size={3} />
-          </>
+          <Spacer size={3} />
           {isLoading ? (
             <>
               <Spacer size={7} />

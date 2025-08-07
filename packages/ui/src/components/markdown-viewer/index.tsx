@@ -31,6 +31,7 @@ type MarkdownViewerProps = {
   isSuggestion?: boolean
   markdownClassName?: string
   showLineNumbers?: boolean
+  onCheckboxChange?: (source: string) => void
 }
 
 export function MarkdownViewer({
@@ -42,11 +43,18 @@ export function MarkdownViewer({
   suggestionCheckSum,
   isSuggestion,
   markdownClassName,
-  showLineNumbers = false
+  showLineNumbers = false,
+  onCheckboxChange
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
+
+  // Track checkbox indices and set to data-checkbox-index
+  const checkboxCounter = useRef<number>(0)
+
+  // Reset checkbox counter at the start of each render
+  checkboxCounter.current = 0
 
   const styles: CSSProperties = maxHeight ? { maxHeight } : {}
 
@@ -130,6 +138,36 @@ export function MarkdownViewer({
     [navigate]
   )
 
+  // Handle checkbox state changes
+  const handleCheckboxChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onCheckboxChange) {
+        const TODO_LIST_ITEM_CLASS = 'task-list-item'
+        const targetIsListItem = (event.target as HTMLElement).classList.contains(TODO_LIST_ITEM_CLASS)
+        const target = (event.target as HTMLElement)?.closest?.(`.${TODO_LIST_ITEM_CLASS}`)
+        const input = target?.firstElementChild as HTMLInputElement
+        const checked = targetIsListItem ? !input?.checked : input?.checked
+        const checkboxIndex = parseInt(event.target.getAttribute('data-checkbox-index') || '0', 10)
+        let currentCheckboxIndex = 0
+        const newContent = source
+          .split('\n')
+          .map(line => {
+            if (line.startsWith('- [ ]') || line.startsWith('- [x]')) {
+              currentCheckboxIndex++
+
+              if (checkboxIndex === currentCheckboxIndex) {
+                return checked ? line.replace('- [ ]', '- [x]') : line.replace('- [x]', '- [ ]')
+              }
+            }
+            return line
+          })
+          .join('\n')
+        onCheckboxChange(newContent)
+      }
+    },
+    [onCheckboxChange, source]
+  )
+
   useEffect(() => {
     const container = ref.current
 
@@ -173,11 +211,14 @@ export function MarkdownViewer({
             input: ({ type, checked, ...props }) => {
               // checkbox inputs
               if (type === 'checkbox') {
+                checkboxCounter.current++
                 return (
                   <input
                     type="checkbox"
                     defaultChecked={checked}
                     {...props}
+                    data-checkbox-index={checkboxCounter.current}
+                    onChange={handleCheckboxChange}
                     // Removed disabled to make checkbox interactive
                     disabled={undefined}
                   />

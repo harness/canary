@@ -123,7 +123,15 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           ) : description ? (
             /** View mode */
             <Text className="flex-1" color="foreground-1">
-              {description && <MarkdownViewer source={description} />}
+              {description && (
+                <MarkdownViewer
+                  source={comment}
+                  onCheckboxChange={updatedDescription => {
+                    setComment(updatedDescription)
+                    handleUpdateDescription(title || '', updatedDescription)
+                  }}
+                />
+              )}
             </Text>
           ) : (
             /** No description */

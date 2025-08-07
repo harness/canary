@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, HTMLAttributes, useMemo } from 'react'
 
 import { cn } from '@/utils/cn'
 import { Text } from '@components/text'
@@ -35,7 +35,7 @@ const getIconName = (state: VariantProps<typeof progressVariants>['state']): Ico
   return 'clock'
 }
 
-interface CommonProgressProps extends VariantProps<typeof progressVariants> {
+interface CommonProgressProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof progressVariants> {
   id?: string
   label?: string
   description?: string
@@ -70,7 +70,8 @@ const Progress: FC<ProgressProps> = ({
   hidePercentage = false,
   value = 0,
   className,
-  hideContainer = false
+  hideContainer = false,
+  ...props
 }) => {
   const percentageValue = Math.min(Math.max(0, value), 1) * 100 || 0
 
@@ -120,7 +121,7 @@ const Progress: FC<ProgressProps> = ({
   }
 
   return (
-    <div className={cn(progressVariants({ size, state }), className)}>
+    <div className={cn(progressVariants({ size, state }), className)} {...props}>
       {(label || !hidePercentage || !hideIcon) && (
         <label className="cn-progress-header" htmlFor={id}>
           <div className="cn-progress-header-left">

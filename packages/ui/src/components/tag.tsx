@@ -132,9 +132,9 @@ function Tag({
           iconOnly
           buttonVariant="transparent"
           className="cn-tag-icon"
-          // @TODO: sync with design team to get the righ tokens for the copy button
+          // @TODO: sync with design team to get the right tokens for the copy button
           color={theme as CopyButtonProps['color']}
-          size="xs"
+          size="2xs"
           iconSize="2xs"
         />
       ) : null}

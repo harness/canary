@@ -3,7 +3,6 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Button,
   ButtonGroup,
-  IconV2,
   ListActions,
   NoData,
   Pagination,
@@ -242,12 +241,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               t('views:noData.changeSearch', 'or search for a different keyword.')
             ]}
             secondaryButton={{
-              label: (
-                <>
-                  <IconV2 name="trash" />
-                  <Text>{t('views:noData.clearFilters', 'Clear filters')}</Text>
-                </>
-              ),
+              icon: 'trash',
+              label: t('views:noData.clearSearch', 'Clear search'),
               onClick: () => {
                 filtersRef.current?.reset()
                 handleResetQuery()
@@ -372,7 +367,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     onFilterChange?.(_filterValues)
   }
 
-  const activeClass = 'bg-cn-background-primary text-cn-foreground-primary'
+  const activeClass = 'bg-cn-background-accent text-cn-foreground-primary'
   const inactiveClass = ''
 
   return (

@@ -119,6 +119,14 @@ export default {
       gap: 'var(--cn-btn-gap-xs)',
       '@apply font-caption-single-line-normal': ''
     },
+    '&:where(.cn-button-2xs)': {
+      height: 'var(--cn-btn-size-2xs)',
+      padding: 'var(--cn-btn-py-2xs) var(--cn-btn-px-2xs)'
+    },
+    '&:where(.cn-button-3xs)': {
+      height: 'var(--cn-btn-size-3xs)',
+      padding: 'var(--cn-btn-py-3xs) var(--cn-btn-px-3xs)'
+    },
 
     // AI button
     '&:where(.cn-button-ai)': {
@@ -178,6 +186,22 @@ export default {
       '& > svg': {
         width: 'var(--cn-icon-size-sm)',
         height: 'var(--cn-icon-size-sm)'
+      }
+    },
+    '&:where(.cn-button-icon-only.cn-button-2xs)': {
+      width: 'var(--cn-btn-size-2xs)',
+      height: 'var(--cn-btn-size-2xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)'
+      }
+    },
+    '&:where(.cn-button-icon-only.cn-button-3xs)': {
+      width: 'var(--cn-btn-size-3xs)',
+      height: 'var(--cn-btn-size-3xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)'
       }
     },
 

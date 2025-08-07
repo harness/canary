@@ -109,10 +109,11 @@ export function CreateBranchDialog({
           <Dialog.Body>
             <FormInput.Text
               id="name"
-              label="Branch name"
+              label="Name"
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+              autoFocus
             />
 
             <ControlGroup>

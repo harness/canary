@@ -105,12 +105,8 @@ export function RepoList({
           t('views:noData.changeSearch', 'or search for a different keyword.')
         ]}
         secondaryButton={{
-          label: (
-            <>
-              <IconV2 name="trash" />
-              {t('views:noData.clearFilters', 'Clear filters')}
-            </>
-          ),
+          icon: 'trash',
+          label: t('views:noData.clearFilters', 'Clear filters'),
           onClick: handleResetFiltersQueryAndPages
         }}
       />
@@ -123,18 +119,15 @@ export function RepoList({
           t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
         ]}
         primaryButton={{
-          label: <>{t('views:repos.createRepository', 'Create repository')}</>,
+          icon: 'plus',
+          label: t('views:repos.createRepository', 'Create repository'),
           to: toCreateRepo?.()
         }}
         secondaryButton={{
-          label: (
-            <>
-              <IconV2 name="import" />
-              {t('views:repos.import-repository', 'Import Repository')}
-            </>
-          ),
+          icon: 'import',
+          label: t('views:repos.import-repository', 'Import Repository'),
           to: toImportRepo?.(),
-          props: { variant: 'outline' }
+          variant: 'outline'
         }}
       />
     )

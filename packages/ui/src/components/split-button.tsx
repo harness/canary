@@ -27,6 +27,7 @@ interface SplitButtonBaseProps<T extends string> {
   disableDropdown?: boolean
   children: ReactNode
   dropdownContentClassName?: string
+  size?: 'sm' | 'md' | 'xs'
 }
 
 // For solid variant with primary theme
@@ -67,7 +68,8 @@ export const SplitButton = <T extends string>({
   disableDropdown = false,
   disableButton = false,
   children,
-  dropdownContentClassName
+  dropdownContentClassName,
+  size = 'md'
 }: SplitButtonProps<T>) => {
   return (
     <div className={cn('flex', className)}>
@@ -75,6 +77,7 @@ export const SplitButton = <T extends string>({
         className={cn('rounded-r-none border-r-0', buttonClassName)}
         theme={theme}
         variant={variant}
+        size={size}
         onClick={handleButtonClick}
         type="button"
         disabled={disabled || disableButton}
@@ -84,7 +87,7 @@ export const SplitButton = <T extends string>({
       </Button>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger
-          className={cn(buttonVariants({ theme, variant }), 'cn-button-split-dropdown')}
+          className={cn(buttonVariants({ theme, variant, size }), 'cn-button-split-dropdown')}
           disabled={disabled || loading || disableDropdown}
         >
           <IconV2 name="nav-arrow-down" />

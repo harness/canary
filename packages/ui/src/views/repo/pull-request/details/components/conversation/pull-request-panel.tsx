@@ -8,7 +8,6 @@ import {
   Checkbox,
   CounterBadge,
   IconV2,
-  Input,
   Layout,
   MoreActionsTooltip,
   SplitButton,
@@ -16,6 +15,7 @@ import {
   StatusBadge,
   Text,
   Textarea,
+  TextInput,
   TimeAgoCard,
   type ButtonThemes
 } from '@/components'
@@ -518,6 +518,7 @@ const PullRequestPanel = ({
                               handleMergeTypeSelect(mergeButtonValue)
                             }
                           }}
+                          size="md"
                         >
                           {actions[parseInt(mergeButtonValue)].title}
                         </SplitButton>
@@ -586,14 +587,14 @@ const PullRequestPanel = ({
                 }
               />
               {showMergeInputs && (
-                <Layout.Vertical className="mt-4 w-full items-center">
-                  <Layout.Vertical className="w-full gap-4">
-                    <Input
+                <Layout.Vertical className="mt-2 w-full items-center pr-cn-xs pb-cn-xs">
+                  <Layout.Vertical className="w-full gap-1">
+                    <TextInput
                       id="merge-title"
                       label="Commit Message"
                       className="w-full bg-cn-background-1"
                       value={mergeTitle}
-                      onChange={e => setMergeTitle(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMergeTitle(e.target.value)}
                       optional
                       placeholder="Enter commit message (optional)"
                     />
@@ -602,8 +603,10 @@ const PullRequestPanel = ({
                       label="Commit Description"
                       className="w-full"
                       value={mergeMessage}
-                      onChange={e => setMergeMessage(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
                       optional
+                      resizable
+                      rows={5}
                       placeholder="Enter commit description (optional)"
                     />
                   </Layout.Vertical>

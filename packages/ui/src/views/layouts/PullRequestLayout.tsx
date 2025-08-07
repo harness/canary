@@ -53,7 +53,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
           <Tabs.List className="-mx-6 mb-cn-xl px-6" variant="overlined">
             <Tabs.Trigger
               value={PullRequestTabsKeys.CONVERSATION}
-              icon="message"
+              icon="chat-bubble-empty"
               counter={pullRequest?.stats?.conversations}
             >
               {t('views:pullRequests.conversation', 'Conversation')}
@@ -63,11 +63,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               {t('views:pullRequests.commits', 'Commits')}
             </Tabs.Trigger>
 
-            <Tabs.Trigger
-              value={PullRequestTabsKeys.CHANGES}
-              counter={pullRequest?.stats?.files_changed}
-              icon="page-edit"
-            >
+            <Tabs.Trigger value={PullRequestTabsKeys.CHANGES} counter={pullRequest?.stats?.files_changed} icon="page">
               {t('views:pullRequests.changes', 'Changes')}
             </Tabs.Trigger>
           </Tabs.List>

@@ -157,6 +157,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const { navigate } = useRouterContext()
   const { t } = useTranslation()
 
+  const [activeTab, setActiveTab] = useState(prBranchCombinationExists ? 'commits' : 'overview')
+
+  useEffect(() => {
+    setActiveTab(prBranchCombinationExists ? 'commits' : 'overview')
+  }, [prBranchCombinationExists])
+
   const formMethods = useForm<CompareFormFields>({
     resolver: zodResolver(getPullRequestFormSchema(t)),
     mode: 'onChange',
@@ -216,13 +222,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     // Return a default value
     return review_decision
   }
-
-  const [activeTab, setActiveTab] = useState(prBranchCombinationExists ? 'commits' : 'overview')
-
-  useEffect(() => {
-    setActiveTab(prBranchCombinationExists ? 'commits' : 'overview')
-  }, [prBranchCombinationExists])
-
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
@@ -355,7 +354,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs.Root value={activeTab}>
+            <Tabs.Root value={activeTab} onValueChange={val => setActiveTab(val)}>
               <Tabs.List variant="overlined" className="-mx-8 px-8">
                 {!prBranchCombinationExists && (
                   <Tabs.Trigger value="overview" icon="info-circle">

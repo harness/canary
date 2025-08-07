@@ -29,23 +29,21 @@ interface DataProps {
 
 const LineTitle: FC<HeaderProps> = ({ text, numAdditions, numDeletions }) => {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="inline-flex items-center gap-2 overflow-hidden">
-        <Text className="flex-1" variant="body-strong" truncate>
-          {text}
-        </Text>
-        <CopyButton name={text} color="gray" buttonVariant="ghost" />
-        {!!numAdditions && (
-          <StatusBadge variant="outline" size="sm" theme="success">
-            +{numAdditions}
-          </StatusBadge>
-        )}
-        {!!numDeletions && (
-          <StatusBadge variant="outline" size="sm" theme="danger">
-            -{numDeletions}
-          </StatusBadge>
-        )}
-      </div>
+    <div className="flex items-center gap-2 overflow-hidden max-w-full w-full">
+      <Text variant="body-strong" truncate color="foreground-1">
+        {text}
+      </Text>
+      <CopyButton name={text} color="gray" buttonVariant="ghost" />
+      {!!numAdditions && (
+        <StatusBadge variant="outline" size="sm" theme="success">
+          +{numAdditions}
+        </StatusBadge>
+      )}
+      {!!numDeletions && (
+        <StatusBadge variant="outline" size="sm" theme="danger">
+          -{numDeletions}
+        </StatusBadge>
+      )}
     </div>
   )
 }

@@ -1,16 +1,14 @@
-import { Layout, LinkProps, Text, TextProps } from '@/components'
+import { Layout, Link, LinkProps, Text, TextProps } from '@/components'
 
 interface CommitTitleWithPRLinkProps {
   commitMessage?: string
   title?: string
   toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
-  Link: React.ComponentType<LinkProps>
-  textVariant?: TextProps['variant']
-  textClassName?: string
+  textProps?: Omit<TextProps, 'ref'>
 }
 
 export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
-  const { Link, textVariant, commitMessage, textClassName, title, toPullRequest } = props
+  const { textProps, commitMessage, title, toPullRequest } = props
 
   if (!commitMessage) return null
 
@@ -24,7 +22,7 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
       const pieces = commitMessage.split(match[0])
       const piecesEls = pieces.map(piece => {
         return (
-          <Text variant={textVariant} className={textClassName} truncate title={title} key={piece}>
+          <Text {...textProps} truncate title={title} key={piece}>
             {piece}
           </Text>
         )
@@ -32,19 +30,12 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
       piecesEls.splice(
         1,
         0,
-        <Text variant={textVariant} className={textClassName}>
-          <Layout.Flex>
-            &nbsp;(
-            <Link
-              // className="hover:underline"
-              title={title}
-              to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
-              variant="secondary"
-            >
-              #{pullRequestId}
-            </Link>
-            )&nbsp;
-          </Layout.Flex>
+        <Text {...textProps}>
+          &nbsp;(
+          <Link title={title} to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`} className="[font:inherit]">
+            #{pullRequestId}
+          </Link>
+          )&nbsp;
         </Text>
       )
 
@@ -53,7 +44,7 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
   }
 
   return (
-    <Text variant={textVariant} className={textClassName} truncate title={title}>
+    <Text {...textProps} truncate title={title}>
       {commitMessage}
     </Text>
   )

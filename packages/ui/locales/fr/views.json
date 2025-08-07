@@ -749,8 +749,8 @@
     "commitDetailsDiffDeletions": "suppressions",
     "commitDetailsTitle": "Commit",
     "browseFiles": "Parcourir les fichiers",
-    "createNewCommit": "Créer un nouveau commit",
     "commitDetailsAuthored": "créé par",
+    "createNewCommit": "Créer un nouveau commit",
     "verified": "Vérifié"
   },
   "createTagDialog": {

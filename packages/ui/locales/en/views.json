@@ -762,8 +762,8 @@
     "commitDetailsDiffDeletions": "deletions",
     "commitDetailsTitle": "Commit",
     "browseFiles": "Browse files",
-    "createNewCommit": "Create new commit",
     "commitDetailsAuthored": "authored",
+    "createNewCommit": "Create new commit",
     "verified": "Verified"
   },
   "createTagDialog": {

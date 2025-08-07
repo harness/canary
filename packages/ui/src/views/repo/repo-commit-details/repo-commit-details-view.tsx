@@ -57,12 +57,10 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             gapX="md"
           >
             <CommitTitleWithPRLink
-              Link={Link}
               toPullRequest={toPullRequest}
               commitMessage={commitData?.title}
               title={commitData?.title}
-              textClassName={'text-14 font-mono font-medium leading-snug text-cn-foreground-1'}
-              textVariant={'body-normal'}
+              textProps={{ variant: 'body-code' }}
             />
 
             <Button variant="outline" asChild>

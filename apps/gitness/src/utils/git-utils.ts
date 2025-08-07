@@ -189,6 +189,20 @@ export const normalizeGitRef = (gitRef: string | undefined) => {
   }
 }
 
+export const deNormalizeGitRef = (gitRef: string | undefined) => {
+  if (isRefATag(gitRef)) {
+    return gitRef?.replace('refs/tags/', '')
+  } else if (isRefABranch(gitRef)) {
+    return gitRef?.replace('refs/heads/', '')
+  } else if (gitRef === '') {
+    return ''
+  } else if (gitRef && isRefACommitSHA(gitRef)) {
+    return gitRef
+  } else {
+    return gitRef
+  }
+}
+
 const TRIMMED_SHA_LIMIT = 7
 
 export const getTrimmedSha = (sha: string): string => {

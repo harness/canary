@@ -16,7 +16,7 @@ import {
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
-import { GitCommitAction } from '../utils/git-utils'
+import { deNormalizeGitRef, GitCommitAction } from '../utils/git-utils'
 
 export type CommitDialogOnSuccess = (
   response: TypesCommitFilesResponse,
@@ -133,7 +133,7 @@ export default function GitCommitDialog({
               sha
             }
           ],
-          branch: gitRef,
+          branch: deNormalizeGitRef(gitRef),
           new_branch: '',
           title: '',
           message: '',

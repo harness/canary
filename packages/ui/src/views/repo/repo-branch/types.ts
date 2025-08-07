@@ -68,6 +68,8 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
 
 export interface CreateBranchDialogProps {
   open: boolean
+  violation: boolean
+  bypassable: boolean
   onClose: () => void
   onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
   error?: string
@@ -75,4 +77,5 @@ export interface CreateBranchDialogProps {
   selectedBranchOrTag: BranchSelectorListItem | null
   renderProp: React.ReactNode
   prefilledName?: string
+  resetViolation: () => void
 }

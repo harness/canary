@@ -151,7 +151,6 @@
       }
     },
     "createBranchTitle": "Create a branch",
-    "createBranchButton": "Create branch",
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",
@@ -319,6 +318,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "createBranchButton": "Create branch",
     "newBranch": "New branch",
     "emptyRepo": "This repository is empty.",
     "afterComparingOpenPullRequest": "After comparing changes, you may open a pull request to contribute your changes upstream.",

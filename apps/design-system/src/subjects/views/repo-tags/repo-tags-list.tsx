@@ -98,6 +98,9 @@ export const RepoTagsList = () => {
             preSelectedTab={preSelectedTab}
           />
         )}
+        violation={false}
+        bypassable={false}
+        resetViolation={noop}
       />
       <DeleteAlertDialog
         open={openDeleteTagDialog}

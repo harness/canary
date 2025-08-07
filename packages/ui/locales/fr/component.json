@@ -77,10 +77,14 @@
     "account": "Compte"
   },
   "deleteDialog": {
-    "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
+    "descriptionWithType": "This will permanently delete your {{type}} {{identifier}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",
     "title": "Êtes-vous sûr ?",
     "inputLabel": "To confirm, type",
+    "violationMessages": {
+      "bypassed": "",
+      "notAllow": ""
+    },
     "cancel": "Annuler"
   },
   "dropdownMenu": {
@@ -196,6 +200,26 @@
     "forks": "Bifurcations",
     "pullRequests": "Demandes de fusion",
     "title": "Titre"
+  },
+  "branchDialog": {
+    "violationMessages": {
+      "bypassed": "Some rules will be bypassed while creating branch",
+      "notAllow": "Some rules don't allow creating branch "
+    },
+    "loading": "Creating branch...",
+    "default": "Create branch",
+    "bypassButton": "Bypass rules and create branch",
+    "title": "Create a branch",
+    "form": {
+      "name": {
+        "label": "Branch name",
+        "placeholder": "Add a branch name"
+      },
+      "target": {
+        "label": "Based on",
+        "placeholder": "Add a branch name"
+      }
+    }
   },
   "layout": {
     "table": "Table",

@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { Alert, AlertDialog, Fieldset, Input } from '@/components'
+import { Alert, AlertDialog, Fieldset, Input, Message, MessageTheme } from '@/components'
 import { useTranslation } from '@/context'
 import { getErrorMessage } from '@utils/utils'
 
@@ -15,6 +15,8 @@ export interface DeleteAlertDialogProps {
   withForm?: boolean
   message?: string
   deletionKeyword?: string
+  violation?: boolean
+  bypassable?: boolean
 }
 
 export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
@@ -27,7 +29,9 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   error,
   withForm = false,
   message,
-  deletionKeyword = 'DELETE'
+  deletionKeyword = 'DELETE',
+  violation = false,
+  bypassable = false
 }) => {
   const { t } = useTranslation()
   const [verification, setVerification] = useState('')
@@ -50,15 +54,15 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
     if (type) {
       return t(
         'component:deleteDialog.descriptionWithType',
-        `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
-        { type: type }
+        `This will permanently delete your ${type} ${identifier} and remove all data. This action cannot be undone.`,
+        { type: type, identifier: identifier }
       )
     }
     return t(
       'component:deleteDialog.description',
       `This will permanently remove all data. This action cannot be undone.`
     )
-  }, [type, t, message])
+  }, [type, t, message, identifier])
 
   return (
     <AlertDialog.Root theme="danger" open={open} onOpenChange={onClose} onConfirm={handleDelete} loading={isLoading}>
@@ -78,6 +82,20 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
           </Fieldset>
         )}
 
+        {violation && (
+          <Message theme={MessageTheme.ERROR}>
+            {bypassable
+              ? t(
+                  'component:deleteDialog.violationMessages.bypassed',
+                  `Some rules will be bypassed while deleting ${type}`,
+                  { type: type }
+                )
+              : t('component:deleteDialog.violationMessages.notAllow', `Some rules don't allow you to delete ${type}`, {
+                  type: type
+                })}
+          </Message>
+        )}
+
         {!!error && (
           <Alert.Root className="mt-4" theme="danger">
             <Alert.Title>Failed to perform delete operation</Alert.Title>
@@ -88,7 +106,9 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
         )}
 
         <AlertDialog.Cancel />
-        <AlertDialog.Confirm>Yes, delete {type}</AlertDialog.Confirm>
+        <AlertDialog.Confirm disabled={violation && !bypassable}>
+          {violation && bypassable ? `Bypass rules and delete ${type}` : `Yes, delete ${type}`}
+        </AlertDialog.Confirm>
       </AlertDialog.Content>
     </AlertDialog.Root>
   )

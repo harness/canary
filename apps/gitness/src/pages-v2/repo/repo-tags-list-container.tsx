@@ -161,6 +161,7 @@ export const RepoTagsListContainer = () => {
         selectedBranchOrTag={selectedBranchOrTag}
         branchSelectorRenderer={() => (
           <BranchSelectorContainer
+            className={'branch-selector-trigger-as-input'}
             onSelectBranchorTag={selectBranchOrTag}
             selectedBranch={selectedBranchOrTag}
             dynamicWidth

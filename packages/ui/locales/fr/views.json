@@ -151,7 +151,6 @@
       }
     },
     "createBranchTitle": "Créer une branche",
-    "createBranchButton": "Créer une branche",
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",
@@ -313,6 +312,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "createBranchButton": "Créer une branche",
     "newBranch": "Nouvelle branche",
     "emptyRepo": "Ce référentiel est vide.",
     "afterComparingOpenPullRequest": "Après avoir comparé les modifications, vous pouvez ouvrir une demande d'extraction pour contribuer à vos modifications en amont.",

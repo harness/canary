@@ -113,7 +113,7 @@ const Cancel = ({ children = 'Cancel', ...props }: { children?: ReactNode }) => 
 }
 Cancel.displayName = 'AlertDialog.Cancel'
 
-const Confirm = ({ children = 'Confirm', ...props }: { children?: ReactNode }) => {
+const Confirm = ({ children = 'Confirm', ...props }: { children?: ReactNode; disabled?: boolean }) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Confirm must be used within AlertDialog.Root')
 

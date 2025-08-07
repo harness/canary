@@ -1,7 +1,18 @@
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Dialog,
+  FormInput,
+  FormWrapper,
+  Label,
+  Message,
+  MessageTheme
+} from '@/components'
 import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -32,6 +43,9 @@ export function CreateBranchDialog({
   onClose,
   onSubmit,
   isCreatingBranch,
+  violation,
+  bypassable,
+  resetViolation,
   error,
   selectedBranchOrTag,
   renderProp: branchSelectorContainer,
@@ -45,7 +59,7 @@ export function CreateBranchDialog({
     defaultValues: INITIAL_FORM_VALUES
   })
 
-  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
+  const { register, handleSubmit, setValue, reset, clearErrors, watch } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -65,6 +79,7 @@ export function CreateBranchDialog({
       name: prefilledName || '',
       target: selectedBranchOrTag?.name
     })
+    resetViolation()
   }, [open, prefilledName, reset])
 
   useEffect(() => {
@@ -72,6 +87,12 @@ export function CreateBranchDialog({
       setValue('target', selectedBranchOrTag.name)
     }
   }, [selectedBranchOrTag, setValue])
+
+  const branchName = watch('name')
+
+  useEffect(() => {
+    resetViolation()
+  }, [branchName])
 
   const handleClose = () => {
     resetForm()
@@ -99,6 +120,20 @@ export function CreateBranchDialog({
               {branchSelectorContainer}
             </ControlGroup>
 
+            {violation && (
+              <Message theme={MessageTheme.ERROR}>
+                {bypassable
+                  ? t(
+                      'component:branchDialog.violationMessages.bypassed',
+                      'Some rules will be bypassed while creating branch'
+                    )
+                  : t(
+                      'component:branchDialog.violationMessages.notAllow',
+                      "Some rules don't allow you to create branch"
+                    )}
+              </Message>
+            )}
+
             {error && (
               <Alert.Root theme="danger">
                 <Alert.Title>
@@ -113,9 +148,19 @@ export function CreateBranchDialog({
               <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
                 {t('views:repos.cancel', 'Cancel')}
               </Dialog.Close>
-              <Button type="submit" disabled={isCreatingBranch}>
-                {t('views:repos.createBranchButton', 'Create branch')}
-              </Button>
+              {!bypassable ? (
+                <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isCreatingBranch}>
+                  {isCreatingBranch
+                    ? t('component:branchDialog.loading', 'Creating branch...')
+                    : t('component:branchDialog.default', 'Create branch')}
+                </Button>
+              ) : (
+                <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
+                  {isCreatingBranch
+                    ? t('component:branchDialog.loading', 'Creating branch...')
+                    : t('component:branchDialog.bypassButton', 'Bypass rules and create branch')}
+                </Button>
+              )}
             </ButtonLayout>
           </Dialog.Footer>
         </FormWrapper>

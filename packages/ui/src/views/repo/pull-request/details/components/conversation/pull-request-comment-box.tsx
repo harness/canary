@@ -28,6 +28,7 @@ import {
   handlePaste,
   HandleUploadType,
   PrincipalsMentionMap,
+  TextSelection,
   ToolbarAction,
   type PrincipalPropsType
 } from '@/views'
@@ -37,11 +38,6 @@ import { isEmpty, isUndefined } from 'lodash-es'
 
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
-
-interface TextSelection {
-  start: number
-  end: number
-}
 
 interface ParsedSelection extends TextSelection {
   text: string
@@ -207,7 +203,7 @@ export const PullRequestCommentBox = ({
   const handleUploadCallback = (file: File) => {
     setFile(file)
 
-    handleUpload?.(file, setComment, comment)
+    handleUpload?.(file, setComment, comment, textSelection)
   }
 
   const handleFileSelect = () => {

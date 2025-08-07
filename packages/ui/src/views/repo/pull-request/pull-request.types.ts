@@ -297,5 +297,15 @@ export enum PRFilterGroupTogglerOptions {
   ReviewRequested = 'ReviewRequested'
 }
 
-export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void
+export interface TextSelection {
+  start: number
+  end: number
+}
+
+export type HandleUploadType = (
+  blob: File,
+  setMarkdownContent: (data: string) => void,
+  currentComment?: string,
+  textSelection?: TextSelection
+) => void
 export type HandleAiPullRequestSummaryType = () => Promise<{ summary: string }>

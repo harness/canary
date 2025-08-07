@@ -1127,13 +1127,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.55",
+              "value": "0.2",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{tuna.800}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "backdrop-nested": {
@@ -1141,13 +1141,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.15",
+              "value": "0.1",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{tuna.800}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "fade-start": {

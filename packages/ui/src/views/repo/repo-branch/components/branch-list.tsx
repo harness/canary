@@ -88,7 +88,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               </Table.Cell>
 
               <Table.Cell disableLink>
-                <Layout.Flex align="center" gapX="sm">
+                <Layout.Flex align="center" gapX="xs">
                   <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
                   <TimeAgoCard
                     timestamp={branch?.timestamp}
@@ -139,6 +139,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <Link
                     to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                     onClick={e => e.stopPropagation()}
+                    className="inline-flex focus-visible:shadow-ring-focus rounded-2"
                   >
                     {/* TODO: Merged state is not shown in the branch list, because the PR gets removed from 'branch.pullRequests' */}
                     <StatusBadge

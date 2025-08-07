@@ -221,22 +221,6 @@ export default {
         strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
       }
     },
-    '&:where(.cn-button-icon-only.cn-button-2xs)': {
-      width: 'var(--cn-btn-size-2xs)',
-      height: 'var(--cn-btn-size-2xs)',
-      '& > svg': {
-        width: 'var(--cn-icon-size-2xs)',
-        height: 'var(--cn-icon-size-2xs)'
-      }
-    },
-    '&:where(.cn-button-icon-only.cn-button-3xs)': {
-      width: 'var(--cn-btn-size-3xs)',
-      height: 'var(--cn-btn-size-3xs)',
-      '& > svg': {
-        width: 'var(--cn-icon-size-2xs)',
-        height: 'var(--cn-icon-size-2xs)'
-      }
-    },
 
     // Focus
     '&:where(:focus-visible)': {

@@ -7,7 +7,7 @@
     "pipelines": "Pipelines",
     "commits": "Commits",
     "tags": "Étiquettes",
-    "pull-requests": "Requêtes de tirage",
+    "pullRequests": "Pull requests",
     "branches": {
       "title": "Branches",
       "commitsBehind": "commits en retard",
@@ -317,6 +317,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "pull-requests": "Requêtes de tirage",
     "createBranchButton": "Créer une branche",
     "viewRules": "Voir les règles",
     "newBranch": "Nouvelle branche",
@@ -523,6 +524,7 @@
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
     "createLabel": "Create label",
+    "newLabel": "Create Label",
     "create": "Create labels"
   },
   "projectSettings": {

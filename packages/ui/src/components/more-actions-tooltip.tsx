@@ -31,7 +31,7 @@ export interface MoreActionsTooltipProps {
 export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   actions,
   iconName = 'more-vert',
-  sideOffset = 7,
+  sideOffset = 2,
   alignOffset = 0,
   className
 }) => {

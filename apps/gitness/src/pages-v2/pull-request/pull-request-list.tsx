@@ -53,7 +53,7 @@ export default function PullRequestListPage() {
         state: prState,
         query: query ?? '',
         exclude_description: true,
-        sort: 'updated',
+        sort: 'number',
         order: 'desc',
         ...filterValues
       },

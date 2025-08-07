@@ -767,6 +767,7 @@
     "browseFiles": "Browse Files",
     "createCommit": "Create commit",
     "commitDetailsAuthored": "authored",
+    "createNewCommit": "Create new commit",
     "verified": "Verified"
   },
   "createTagDialog": {

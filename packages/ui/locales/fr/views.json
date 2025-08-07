@@ -754,6 +754,7 @@
     "browseFiles": "Parcourir les fichiers",
     "createCommit": "Créer un commit",
     "commitDetailsAuthored": "créé par",
+    "createNewCommit": "Créer un nouveau commit",
     "verified": "Vérifié"
   },
   "createTagDialog": {

@@ -224,7 +224,7 @@ export function RepoBranchesListPage() {
         onClose={handleResetDeleteBranch}
         deleteFn={handleDeleteBranch}
         error={deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}
-        type={`branch ${deleteBranchName}`}
+        type="branch"
         identifier={deleteBranchName ?? undefined}
         isLoading={isDeletingBranch}
         violation={violation}

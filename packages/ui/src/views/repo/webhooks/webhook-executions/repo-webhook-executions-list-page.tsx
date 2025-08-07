@@ -50,7 +50,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           <Skeleton.List />
         ) : executions && executions.length > 0 ? (
           <>
-            <Table.Root disableHighlightOnHover size="compact">
+            <Table.Root size="compact">
               <Table.Header>
                 <Table.Row>
                   <Table.Head className="w-[136px]">

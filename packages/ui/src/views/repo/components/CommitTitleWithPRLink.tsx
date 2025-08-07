@@ -1,16 +1,15 @@
-import { Layout, LinkProps, Text, TextProps } from '@/components'
+import { Layout, Link, Text, TextProps } from '@/components'
 
 interface CommitTitleWithPRLinkProps {
   commitMessage?: string
   title?: string
   toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
-  Link: React.ComponentType<LinkProps>
   textVariant?: TextProps['variant']
   textClassName?: string
 }
 
 export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
-  const { Link, textVariant, commitMessage, textClassName, title, toPullRequest } = props
+  const { textVariant, commitMessage, textClassName, title, toPullRequest } = props
 
   if (!commitMessage) return null
 
@@ -35,12 +34,7 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
         <Text variant={textVariant} className={textClassName}>
           <Layout.Flex>
             &nbsp;(
-            <Link
-              // className="hover:underline"
-              title={title}
-              to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
-              variant="secondary"
-            >
+            <Link title={title} to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}>
               #{pullRequestId}
             </Link>
             )&nbsp;

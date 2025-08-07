@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Fieldset, FormSeparator, FormWrapper, Text } from '@/components'
+import { Alert, Button, ButtonLayout, Fieldset, FormSeparator, FormWrapper, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -88,6 +88,13 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   ]
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
+    if (data.trigger === TriggerEventsEnum.SELECTED_EVENTS && (!data.triggers || data.triggers.length === 0)) {
+      formMethods.setError('triggers', {
+        type: 'manual',
+        message: 'At least one event must be selected'
+      })
+      return
+    }
     onFormSubmit(data)
   }
 
@@ -158,7 +165,11 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           </ButtonLayout>
         </Fieldset>
 
-        {!!apiError && <span className="text-2 text-cn-foreground-danger">{apiError?.toString()}</span>}
+        {!!apiError && (
+          <Alert.Root theme="danger">
+            <Alert.Title>{apiError?.toString()}</Alert.Title>
+          </Alert.Root>
+        )}
       </FormWrapper>
     </SandboxLayout.Content>
   )

@@ -47,12 +47,11 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
           <div className="mt-4 rounded-md border border-cn-borders-2">
             <div className="flex items-center justify-between rounded-t-md border-b border-cn-borders-2 bg-cn-background-2 px-4 py-3">
               <CommitTitleWithPRLink
-                Link={Link}
                 toPullRequest={toPullRequest}
                 commitMessage={commitData?.title}
                 title={commitData?.title}
-                textClassName={'text-14 font-mono font-medium leading-snug text-cn-foreground-1'}
-                textVariant={'body-normal'}
+                textClassName={'text-14 font-medium leading-snug'}
+                // textVariant={'body-normal'}
               />
               <Button variant="outline" asChild>
                 <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>

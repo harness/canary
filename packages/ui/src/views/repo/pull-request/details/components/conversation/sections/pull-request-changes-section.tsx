@@ -64,7 +64,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
       >
         <Layout.Flex>
           <StackedList.Field
-            className="flex gap-y-1"
+            className="flex"
             title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
             description={<LineDescription text={changesInfo.content} />}
           />

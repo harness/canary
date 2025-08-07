@@ -69,7 +69,6 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                         <Layout.Grid flow="column" className="w-full pl-cn-md" columns="1fr auto" gap="md">
                           <Layout.Vertical gap="2xs" className="truncate">
                             <CommitTitleWithPRLink
-                              Link={Link}
                               toPullRequest={toPullRequest}
                               commitMessage={commit.title}
                               title={commit.message || commit.title}

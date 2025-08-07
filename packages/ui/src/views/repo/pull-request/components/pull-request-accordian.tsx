@@ -80,6 +80,7 @@ interface LineTitleProps {
   useFullDiff?: boolean
   toRepoFileDetails?: ({ path }: { path: string }) => string
   sourceBranch?: string
+  currentRefForDiff?: string
 }
 
 export const LineTitle: React.FC<LineTitleProps> = ({
@@ -93,7 +94,8 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   toggleFullDiff,
   useFullDiff,
   toRepoFileDetails,
-  sourceBranch
+  sourceBranch,
+  currentRefForDiff
 }) => {
   const { t } = useTranslation()
   const { text, addedLines, deletedLines, filePath, checksumAfter } = header
@@ -114,7 +116,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
             <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <Link
-            to={toRepoFileDetails?.({ path: `files/${sourceBranch}/~/${filePath}` }) ?? ''}
+            to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${filePath}` }) ?? ''}
             className="font-medium leading-tight text-cn-foreground-1"
           >
             {text}
@@ -185,6 +187,7 @@ export const PullRequestAccordion: React.FC<{
   principalProps: PrincipalPropsType
   hideViewedCheckbox?: boolean
   addWidget?: boolean
+  currentRefForDiff?: string
 }> = ({
   header,
   diffMode,
@@ -217,7 +220,8 @@ export const PullRequestAccordion: React.FC<{
   sourceBranch,
   principalProps,
   hideViewedCheckbox = false,
-  addWidget = true
+  addWidget = true,
+  currentRefForDiff
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -333,6 +337,7 @@ export const PullRequestAccordion: React.FC<{
             useFullDiff={useFullDiff}
             toRepoFileDetails={toRepoFileDetails}
             sourceBranch={sourceBranch}
+            currentRefForDiff={currentRefForDiff}
           />
         </Accordion.Trigger>
         <Accordion.Content className="pb-0" containerClassName="rounded-bl-3 rounded-br-3">

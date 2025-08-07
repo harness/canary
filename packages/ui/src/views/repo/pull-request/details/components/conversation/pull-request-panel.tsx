@@ -79,15 +79,31 @@ interface ButtonStateProps {
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
-  const { pullReqMetadata, spaceId, repoId } = props
+  const {
+    pullReqMetadata,
+    spaceId,
+    repoId,
+    onRevertPR,
+    onDeleteBranch,
+    onRestoreBranch,
+    headerMsg,
+    showDeleteBranchButton,
+    showRestoreBranchButton,
+    isDraft,
+    isClosed,
+    unchecked,
+    mergeable,
+    isOpen,
+    ruleViolation
+  } = props
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
-  if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
+  if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
           <Text className="flex items-center space-x-1" variant="body-single-line-strong" as="h2" color="foreground-1">
-            <span>{props?.pullReqMetadata?.merger?.display_name}</span>
+            <span>{pullReqMetadata?.merger?.display_name}</span>
             <span>{areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`}</span>
             <span>into</span>
             <PullRequestBranchBadge
@@ -104,23 +120,23 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             <TimeAgoCard timestamp={pullReqMetadata?.merged} />
           </Text>
           <Layout.Horizontal>
-            <Button variant="secondary" onClick={props.onRevertPR}>
+            <Button variant="secondary" onClick={onRevertPR}>
               Revert
             </Button>
-            {props.showDeleteBranchButton ? (
-              <Button variant="primary" theme="danger" onClick={props.onDeleteBranch}>
+            {showDeleteBranchButton ? (
+              <Button variant="primary" theme="danger" onClick={onDeleteBranch}>
                 Delete Branch
               </Button>
-            ) : props.showRestoreBranchButton ? (
-              <Button variant="outline" onClick={props.onRestoreBranch}>
+            ) : showRestoreBranchButton ? (
+              <Button variant="outline" onClick={onRestoreBranch}>
                 Restore Branch
               </Button>
             ) : null}
           </Layout.Horizontal>
         </div>
-        {props.headerMsg && (
+        {headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-1 text-cn-foreground-danger">{props.headerMsg}</span>
+            <span className="text-1 text-cn-foreground-danger">{headerMsg}</span>
           </div>
         )}
       </>
@@ -130,15 +146,15 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   return (
     <div className="inline-flex items-center gap-2">
       <Text variant="body-single-line-strong" as="h2" color="foreground-1">
-        {props.isDraft
+        {isDraft
           ? 'This pull request is still a work in progress'
-          : props.isClosed
+          : isClosed
             ? 'This pull request is closed'
-            : props.unchecked
+            : unchecked
               ? 'Checking for ability to merge automatically...'
-              : props.mergeable === false && props.isOpen
+              : mergeable === false && isOpen
                 ? 'Cannot merge pull request'
-                : props.ruleViolation
+                : ruleViolation
                   ? 'Cannot merge pull request'
                   : `Pull request can be merged`}
       </Text>

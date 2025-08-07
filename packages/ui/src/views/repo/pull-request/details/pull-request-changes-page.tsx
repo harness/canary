@@ -58,6 +58,7 @@ interface RepoPullRequestChangesPageProps {
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  currentRefForDiff?: string
   principalProps: PrincipalPropsType
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
@@ -100,7 +101,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   jumpToDiff,
   setJumpToDiff,
   toRepoFileDetails,
-  principalProps
+  principalProps,
+  currentRefForDiff
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
 
@@ -173,6 +175,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         setJumpToDiff={setJumpToDiff}
         toRepoFileDetails={toRepoFileDetails}
         pullReqMetadata={pullReqMetadata}
+        currentRefForDiff={currentRefForDiff}
       />
     )
   }

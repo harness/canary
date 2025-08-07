@@ -16,6 +16,7 @@ import {
   useFileViewAddPullReqMutation,
   useFileViewDeletePullReqMutation,
   useFileViewListPullReqQuery,
+  useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useRawDiffQuery,
@@ -170,6 +171,31 @@ export default function PullRequestChanges() {
     { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
     { enabled: !!repoRef && !!diffApiPath }
   )
+
+  const { error: sourceBranchError } = useGetBranchQuery(
+    {
+      repo_ref: repoRef,
+      branch_name: pullReqMetadata?.source_branch || '',
+      queryParams: { include_checks: true, include_rules: true }
+    },
+    {
+      // Don't cache the result to ensure we always get fresh data
+      cacheTime: 0,
+      staleTime: 0
+    }
+  )
+
+  const currentRefForDiff = useMemo(() => {
+    if (sourceBranchError) {
+      return pullReqMetadata?.source_sha
+    }
+
+    if (!sourceBranchError && pullReqMetadata?.source_branch) {
+      return pullReqMetadata.source_branch
+    } else if (!sourceBranchError && sourceRef) {
+      return sourceRef
+    } else return commitSHA
+  }, [sourceBranchError, pullReqMetadata?.source_branch, pullReqMetadata?.source_sha, sourceRef, commitSHA])
 
   useEffect(() => {
     if (PRDiffStats) {
@@ -525,6 +551,7 @@ export default function PullRequestChanges() {
           isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
         }
         isApproving={isApproving}
+        currentRefForDiff={currentRefForDiff}
       />
     </>
   )

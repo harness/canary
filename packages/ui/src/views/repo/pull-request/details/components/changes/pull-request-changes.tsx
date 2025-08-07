@@ -55,6 +55,7 @@ interface DataProps {
   toRepoFileDetails?: ({ path }: { path: string }) => string
   pullReqMetadata?: TypesPullReq
   principalProps: PrincipalPropsType
+  currentRefForDiff?: string
 }
 
 function PullRequestChangesInternal({
@@ -86,7 +87,8 @@ function PullRequestChangesInternal({
   setJumpToDiff,
   toRepoFileDetails,
   pullReqMetadata,
-  principalProps
+  principalProps,
+  currentRefForDiff
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
@@ -227,6 +229,7 @@ function PullRequestChangesInternal({
                       setCollapsed={val => setCollapsed(item.text, val)}
                       toRepoFileDetails={toRepoFileDetails}
                       sourceBranch={pullReqMetadata?.source_branch}
+                      currentRefForDiff={currentRefForDiff}
                     />
                   </InViewDiffRenderer>
                 </div>

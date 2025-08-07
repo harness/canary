@@ -280,7 +280,7 @@
   }
 
   &.comment {
-    @apply !bg-transparent;
+    @apply font-body-normal !bg-transparent;
 
     pre code {
       @apply bg-transparent;

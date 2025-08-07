@@ -1,4 +1,4 @@
-import { Layout, Link, LinkProps, Text, TextProps } from '@/components'
+import { Layout, Link, Text, TextProps } from '@/components'
 
 interface CommitTitleWithPRLinkProps {
   commitMessage?: string

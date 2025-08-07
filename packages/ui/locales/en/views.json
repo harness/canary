@@ -754,16 +754,25 @@
     "accountOnly": "Account only",
     "label": "Scope"
   },
+  "repo": {
+    "components": {
+      "commitDetailsDiffShowing": "Showing",
+      "commitDetailsDiffChangedFiles": "changed files",
+      "commitDetailsDiffWith": "with",
+      "commitDetailsDiffAdditionsAnd": "additions and",
+      "commitDetailsDiffDeletions": "deletions"
+    }
+  },
   "commits": {
+    "commitDetailsTitle": "Commit",
+    "browseFiles": "Browse files",
+    "commitDetailsAuthored": "authored",
+    "createNewCommit": "Create new commit",
     "commitDetailsDiffShowing": "Showing",
     "commitDetailsDiffChangedFiles": "changed files",
     "commitDetailsDiffWith": "with",
     "commitDetailsDiffAdditionsAnd": "additions and",
     "commitDetailsDiffDeletions": "deletions",
-    "commitDetailsTitle": "Commit",
-    "browseFiles": "Browse files",
-    "commitDetailsAuthored": "authored",
-    "createNewCommit": "Create new commit",
     "verified": "Verified"
   },
   "createTagDialog": {

@@ -59,7 +59,7 @@ export default {
     paddingBlock: 'var(--cn-badge-md-py)',
     paddingInline: 'var(--cn-badge-md-px)',
     gap: 'var(--cn-badge-md-gap)',
-    flexShrink: 0,
+    flexShrink: '0',
     '@apply select-none font-body-single-line-normal truncate': '',
 
     /** Size */

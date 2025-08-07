@@ -1,9 +1,14 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { DropdownMenu, IconV2, Layout, ListActions, StatusBadge, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { formatNumber } from '@/utils'
-import { DiffModeOptions, InViewDiffRenderer, jumpToFile, PrincipalPropsType, TypesDiffStats } from '@/views'
+import { ListActions } from '@/components'
+import {
+  ChangedFilesShortInfo,
+  DiffModeOptions,
+  InViewDiffRenderer,
+  jumpToFile,
+  PrincipalPropsType,
+  TypesDiffStats
+} from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { chunk } from 'lodash-es'
 
@@ -40,8 +45,6 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   onGetFullDiff,
   toRepoFileDetails
 }) => {
-  const { t } = useTranslation()
-
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -84,65 +87,11 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     [setOpenItems]
   )
 
-  const changedFilesCount = diffStats.files_changed || 0
-
   return (
     <>
       <ListActions.Root>
         <ListActions.Left>
-          <DropdownMenu.Root>
-            <Text as="p" variant="body-single-line-normal" className="text-2 leading-tight text-cn-foreground-2 pt-1.5">
-              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
-              <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
-                <Text
-                  as="span"
-                  variant="body-single-line-normal"
-                  className="cursor-pointer text-cn-foreground-accent ease-in-out"
-                >
-                  {formatNumber(changedFilesCount)} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-                </Text>
-              </FilesChangedCount>{' '}
-              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions || 0)}{' '}
-              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
-              {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-            </Text>
-            <DropdownMenu.Content className="max-h-[360px] max-w-[800px]" align="start">
-              {diffData?.map(diff => (
-                <DropdownMenu.Item
-                  key={diff.filePath}
-                  onClick={() => {
-                    if (diff.filePath) {
-                      setJumpToDiff(diff.filePath)
-                    }
-                  }}
-                  title={
-                    <Layout.Flex direction="row" align="center" className=" min-w-0 gap-x-3">
-                      <Layout.Flex direction="row" align="center" justify="start" className=" min-w-0 flex-1 gap-x-1.5">
-                        <IconV2 name="page" className="shrink-0 text-icons-1" />
-                        <Text className="min-w-0 break-words">{diff.filePath}</Text>
-                      </Layout.Flex>
-                      <Layout.Flex direction="row" align="center" justify="center" className=" shrink-0 text-2">
-                        {diff.addedLines != null && diff.addedLines > 0 && (
-                          <StatusBadge variant="outline" size="sm" theme="success">
-                            +{diff.addedLines}
-                          </StatusBadge>
-                        )}
-                        {diff.addedLines != null &&
-                          diff.addedLines > 0 &&
-                          diff.deletedLines != null &&
-                          diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
-                        {diff.deletedLines != null && diff.deletedLines > 0 && (
-                          <StatusBadge variant="outline" size="sm" theme="danger">
-                            -{diff.deletedLines}
-                          </StatusBadge>
-                        )}
-                      </Layout.Flex>
-                    </Layout.Flex>
-                  }
-                />
-              ))}
-            </DropdownMenu.Content>
-          </DropdownMenu.Root>
+          <ChangedFilesShortInfo diffData={diffData} diffStats={diffStats} goToDiff={setJumpToDiff} />
         </ListActions.Left>
         <ListActions.Right>
           <ListActions.Dropdown
@@ -196,16 +145,6 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       </div>
     </>
   )
-}
-
-function FilesChangedCount({
-  children,
-  showAsDropdown = false
-}: {
-  children: React.ReactNode
-  showAsDropdown: boolean
-}) {
-  return showAsDropdown ? <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger> : <>{children}</>
 }
 
 export default PullRequestCompareDiffList

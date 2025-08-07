@@ -6,6 +6,7 @@ import { SkeletonList } from './skeleton-list'
 import { SkeletonLogo } from './skeleton-logo'
 import { SkeletonTable } from './skeleton-table'
 import { SkeletonTypography } from './skeleton-typography'
+import { SkeletonFileExplorer } from './skeloton-file-explorer'
 
 export type { SkeletonFormProps } from './skeleton-form'
 export type { SkeletonIconProps } from './skeleton-icon'
@@ -26,4 +27,4 @@ const Skeleton = {
   Typography: SkeletonTypography
 }
 
-export { Skeleton }
+export { Skeleton, SkeletonFileExplorer }

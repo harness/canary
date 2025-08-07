@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -32,7 +32,7 @@ export interface SkeletonTypographyProps {
   className?: string
 }
 
-export const SkeletonTypography = forwardRef<HTMLDivElement, SkeletonTypographyProps>(
+export const SkeletonTypography = forwardRef<HTMLDivElement, SkeletonTypographyProps & HTMLAttributes<HTMLDivElement>>(
   ({ variant, className, wrapperClassName, ...props }, ref) => {
     return (
       <div className={cn(skeletonTypographyVariants({ variant }), wrapperClassName)} ref={ref} {...props}>

@@ -116,6 +116,10 @@ export default {
       '&-actions': {
         '@apply size-9': ''
       }
+    },
+
+    '&-file-explorer': {
+      maskImage: 'var(--cn-comp-skeleton-mask)'
     }
   }
 }

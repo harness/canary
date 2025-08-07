@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { getContent, OpenapiContentInfo, OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { Alert, FileExplorer, IconV2 } from '@harnessio/ui/components'
+import { Alert, FileExplorer, SkeletonFileExplorer } from '@harnessio/ui/components'
 
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
 import { useRoutes } from '../framework/context/NavigationContext'
@@ -148,7 +148,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     }
 
     if (isLoading) {
-      return <IconV2 name="loader" className="animate-spin" />
+      return <SkeletonFileExplorer />
     }
 
     if (error) {
@@ -241,7 +241,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       value={openFolderPaths}
     >
       {isRootLoading ? (
-        <IconV2 name="loader" className="animate-spin" />
+        <SkeletonFileExplorer linesCount={12} />
       ) : rootError ? (
         <Alert.Root theme="danger">
           <Alert.Title>Error loading root folder</Alert.Title>

@@ -4,7 +4,7 @@ import { ContentLayoutWithSidebar } from '@/views'
 const getNavItems = (t: TFunctionWithFallback) => [
   {
     groupId: 0,
-    title: t('views:repos.webhookSettings', 'Webhook Settings'),
+    // title: t('views:repos.webhookSettings', 'Webhook Settings'),
     items: [
       { id: 0, title: t('views:repos.details', 'Details'), to: 'details' },
       { id: 1, title: t('views:repos.executions', 'Executions'), to: 'executions' }

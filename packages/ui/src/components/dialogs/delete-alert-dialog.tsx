@@ -67,7 +67,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   return (
     <AlertDialog.Root theme="danger" open={open} onOpenChange={onClose} onConfirm={handleDelete} loading={isLoading}>
       <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
-        {displayMessageContent}
+        <div className="overflow-hidden break-words text-wrap">{displayMessageContent}</div>
         {withForm && (
           <Fieldset>
             <Input
@@ -107,7 +107,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
 
         <AlertDialog.Cancel />
         <AlertDialog.Confirm disabled={violation && !bypassable}>
-          {violation && bypassable ? `Bypass rules and delete ${type}` : `Yes, delete ${type}`}
+          {violation && bypassable ? `Bypass rules and delete` : `Yes`}
         </AlertDialog.Confirm>
       </AlertDialog.Content>
     </AlertDialog.Root>

@@ -566,7 +566,7 @@ const PullRequestPanel = ({
                       ) : null
                     })()}
                     {actions && pullReqMetadata?.closed ? (
-                      <Button variant="primary" theme="default" onClick={actions[0].action}>
+                      <Button variant="primary" theme="default" size="sm" onClick={actions[0].action}>
                         {actions[0].title}
                       </Button>
                     ) : null}
@@ -607,7 +607,7 @@ const PullRequestPanel = ({
                   <Layout.Vertical className="w-full gap-1">
                     <TextInput
                       id="merge-title"
-                      label="Commit Message"
+                      label="Commit message"
                       className="w-full bg-cn-background-1"
                       value={mergeTitle}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMergeTitle(e.target.value)}
@@ -616,7 +616,7 @@ const PullRequestPanel = ({
                     />
                     <Textarea
                       id="merge-message"
-                      label="Commit Description"
+                      label="Commit description"
                       className="w-full"
                       value={mergeMessage}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
@@ -691,12 +691,14 @@ const PullRequestPanel = ({
                 <span className="text-2 text-cn-foreground-1"> branch has unmerged changes.</span>
               </Layout.Horizontal>
               {showDeleteBranchButton && (
-                <Button theme="danger" onClick={onDeleteBranch}>
+                <Button theme="danger" size="sm" onClick={onDeleteBranch}>
                   Delete Branch
                 </Button>
               )}
               {!showDeleteBranchButton && showRestoreBranchButton && (
-                <Button onClick={onRestoreBranch}>Restore Branch</Button>
+                <Button size="sm" onClick={onRestoreBranch}>
+                  Restore Branch
+                </Button>
               )}
             </Layout.Horizontal>
           )}

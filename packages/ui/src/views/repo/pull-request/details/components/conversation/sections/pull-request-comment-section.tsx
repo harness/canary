@@ -20,6 +20,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
               text={commentsInfo.header}
               icon={
                 <IconV2
+                  size="md"
                   className={isSuccess ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
                   name={isSuccess ? 'check-circle-solid' : 'warning-triangle'}
                 />

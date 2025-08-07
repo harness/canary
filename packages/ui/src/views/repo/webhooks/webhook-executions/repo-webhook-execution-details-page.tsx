@@ -86,8 +86,8 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
   }
 
   return (
-    <SandboxLayout.Main className="ml-3">
-      <SandboxLayout.Content>
+    <SandboxLayout.Main>
+      <SandboxLayout.Content maxWidth="5xl" className="ml-0.5">
         <ListActions.Root>
           <ListActions.Left>
             <Text variant="heading-section">#{executionId}</Text>
@@ -143,6 +143,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
         </div>
         <Spacer size={8} />
         <WebhookExecutionEditorControlBar view={view} onChangeView={onChangeView} />
+        {/* <div className="rounded-b-3 border-cn-borders-3 border-x border-b"> */}
         <CodeEditor
           height="500px"
           language={view === 'payload' ? 'json' : 'html'}
@@ -153,7 +154,9 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
           options={{
             readOnly: true
           }}
+          className="rounded-b-3 border-cn-borders-3 max-w-full"
         />
+        {/* </div> */}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

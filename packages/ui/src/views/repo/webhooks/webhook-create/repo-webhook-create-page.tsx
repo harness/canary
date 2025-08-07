@@ -92,8 +92,8 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className="max-w-[570px] ml-3">
-      <Text as="h1" variant="heading-section" className="mb-4">
+    <SandboxLayout.Content className="max-w-[632px]">
+      <Text as="h1" variant="heading-section" className="mb-2">
         {preSetWebhookData
           ? t('views:repos.editWebhookTitle', 'Order Status Update Webhook')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}

@@ -33,7 +33,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   }, [t])
 
   return (
-    <SandboxLayout.Main className="ml-3">
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <Text as="h1" variant="heading-section" className="mb-2">
           Order Status Update Webhook
@@ -50,7 +50,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
           <Skeleton.List />
         ) : executions && executions.length > 0 ? (
           <>
-            <Table.Root disableHighlightOnHover>
+            <Table.Root disableHighlightOnHover size="compact">
               <Table.Header>
                 <Table.Row>
                   <Table.Head className="w-[136px]">

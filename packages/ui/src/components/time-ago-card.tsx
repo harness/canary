@@ -1,4 +1,4 @@
-import { FC, forwardRef, Fragment, memo, Ref, useState } from 'react'
+import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useState } from 'react'
 
 import { Popover, StatusBadge, Text, TextProps } from '@/components'
 import { LOCALE } from '@utils/TimeUtils'
@@ -153,12 +153,13 @@ export const TimeAgoCard = memo(
         )
       }
 
-      const handleClick = (event: React.MouseEvent) => {
+      const handleClick = (event: MouseEvent) => {
         event.preventDefault()
+        event.stopPropagation()
         setIsOpen(prev => !prev)
       }
 
-      const handleClickContent = (event: React.MouseEvent) => {
+      const handleClickContent = (event: MouseEvent) => {
         event.stopPropagation()
       }
 

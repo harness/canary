@@ -48,8 +48,8 @@ export const NoData: FC<NoDataProps> = ({
       align="center"
       justify="center"
       className={cn(
-        'h-full w-full my-auto',
-        { 'h-auto grow border border-cn-borders-4 rounded-md': withBorder },
+        'h-full w-full my-auto py-cn-4xl',
+        { 'h-auto grow border border-cn-borders-3 rounded-md': withBorder },
         className
       )}
     >
@@ -57,15 +57,12 @@ export const NoData: FC<NoDataProps> = ({
       <Layout.Vertical gap="xl" align="center" justify="center">
         <Layout.Vertical gap="xs" align="center" justify="center" className={textWrapperClassName}>
           <Text variant="heading-section">{title}</Text>
-          {description && (
-            <div className="flex flex-col">
-              {description.map((line, index) => (
-                <Text key={index} align="center" color="foreground-3">
-                  {line}
-                </Text>
-              ))}
-            </div>
-          )}
+          {!!description &&
+            description.map((line, index) => (
+              <Text key={index} align="center">
+                {line}
+              </Text>
+            ))}
         </Layout.Vertical>
         {(primaryButton || secondaryButton) && (
           <Layout.Horizontal gap="sm">
@@ -82,7 +79,7 @@ export const NoData: FC<NoDataProps> = ({
             {secondaryButton &&
               (secondaryButton.to ? (
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   asChild
                   onClick={() => secondaryButton?.onClick?.()}
                   {...secondaryButton.props}
@@ -90,7 +87,7 @@ export const NoData: FC<NoDataProps> = ({
                   <NavLink to={secondaryButton.to}>{secondaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button variant="secondary" onClick={() => secondaryButton?.onClick?.()} {...secondaryButton.props}>
+                <Button variant="outline" onClick={() => secondaryButton?.onClick?.()} {...secondaryButton.props}>
                   {secondaryButton.label}
                 </Button>
               ))}

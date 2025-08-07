@@ -2280,11 +2280,11 @@
         "item": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.400}"
+            "$value": "{tuna.500}"
           },
           "to": {
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{tuna.800}"
           }
         }
       },

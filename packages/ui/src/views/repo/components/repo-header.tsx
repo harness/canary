@@ -34,10 +34,10 @@ export const RepoHeader = ({
         {isLoading ? (
           <>
             <Layout.Flex gap="xs" justify="start" align="center">
-              <Skeleton.Box className="bg-cn-background-0 h-[var(--cn-line-height-7-tight)] w-28" />
-              <Skeleton.Box className="bg-cn-background-0 h-6 w-14" />
+              <Skeleton.Box className="h-[var(--cn-line-height-7-tight)] w-28" />
+              <Skeleton.Box className="h-6 w-14" />
             </Layout.Flex>
-            <Skeleton.Box className="bg-cn-background-0 h-6 w-14" />
+            <Skeleton.Box className="h-6 w-14" />
           </>
         ) : (
           <>

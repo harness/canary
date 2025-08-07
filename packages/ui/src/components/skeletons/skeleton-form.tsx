@@ -1,23 +1,27 @@
 import { FC } from 'react'
 
 import { ControlGroup, InputOrientationProp } from '@components/form-primitives'
+import { inputVariants } from '@components/inputs/base-input'
 import { Layout } from '@components/layout'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
 import { SkeletonTypography } from './skeleton-typography'
 
-const skeletonFormVariants = cva('cn-skeleton-form-item', {
-  variants: {
-    size: {
-      sm: 'cn-skeleton-form-item-sm',
-      md: 'cn-skeleton-form-item-md'
+const skeletonFormVariants: (props?: Pick<VariantProps<typeof inputVariants>, 'size'>) => string = cva(
+  'cn-skeleton-form-item',
+  {
+    variants: {
+      size: {
+        sm: 'cn-skeleton-form-item-sm',
+        md: 'cn-skeleton-form-item-md'
+      }
+    },
+    defaultVariants: {
+      size: 'md'
     }
-  },
-  defaultVariants: {
-    size: 'md'
   }
-})
+)
 
 export interface SkeletonFormItemProps extends InputOrientationProp {
   withLabel?: boolean
@@ -43,7 +47,7 @@ export const SkeletonFormItem: FC<SkeletonFormItemProps> = ({
       )}
 
       <ControlGroup.InputWrapper className={cn(skeletonFormVariants({ size }), inputClassName)}>
-        <SkeletonTypography className="w-[162px]" />
+        <SkeletonTypography className="w-1/3" />
       </ControlGroup.InputWrapper>
     </ControlGroup.Root>
   )
@@ -59,7 +63,7 @@ export interface SkeletonFormProps {
 
 export const SkeletonForm: FC<SkeletonFormProps> = ({
   className,
-  linesCount = 9,
+  linesCount = 2,
   itemProps: {
     withLabel = true,
     labelClassName: itemLabelClassName,

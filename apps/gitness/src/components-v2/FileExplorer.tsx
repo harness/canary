@@ -16,6 +16,7 @@ import { normalizeGitRef } from '../utils/git-utils'
 interface ExplorerProps {
   selectedBranch?: string
   repoDetails: OpenapiGetContentOutput
+  isLoading?: boolean
 }
 
 const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] => {
@@ -32,7 +33,7 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
+export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoadingProp }: ExplorerProps) {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
@@ -240,7 +241,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       }}
       value={openFolderPaths}
     >
-      {isRootLoading ? (
+      {isRootLoading || isLoadingProp ? (
         <SkeletonFileExplorer linesCount={12} />
       ) : rootError ? (
         <Alert.Root theme="danger">

@@ -30,15 +30,15 @@ export const SkeletonList: FC<SkeletonListProps> = ({ classNames = {}, linesCoun
           disableHover
         >
           <StackedList.Field
-            title={<Skeleton.Typography variant="body-single-line" className={cn('w-[129px]', leftTitle)} />}
+            title={<Skeleton.Typography variant="body-single-line-normal" className={cn('w-[129px]', leftTitle)} />}
             description={
-              <Skeleton.Typography variant="body-single-line" className={cn('w-[240px]', leftDescription)} />
+              <Skeleton.Typography variant="body-single-line-normal" className={cn('w-[240px]', leftDescription)} />
             }
           />
           <StackedList.Field
-            title={<Skeleton.Typography variant="body-single-line" className={cn('w-[147px]', rightTitle)} />}
+            title={<Skeleton.Typography variant="body-single-line-normal" className={cn('w-[147px]', rightTitle)} />}
             description={
-              <Skeleton.Typography variant="body-single-line" className={cn('w-[68px]', rightDescription)} />
+              <Skeleton.Typography variant="body-single-line-normal" className={cn('w-[68px]', rightDescription)} />
             }
             right
           />

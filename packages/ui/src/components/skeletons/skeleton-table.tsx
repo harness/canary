@@ -25,7 +25,7 @@ export const SkeletonTable = ({
           <Table.Row>
             {Array.from({ length: countColumns }).map((_, columnIndex) => (
               <Table.Head key={`header-cell-${columnIndex}`}>
-                <Skeleton.Typography variant="caption" className="w-[65px]" />
+                <Skeleton.Typography variant="caption-normal" className="w-[65px]" />
               </Table.Head>
             ))}
           </Table.Row>
@@ -36,7 +36,7 @@ export const SkeletonTable = ({
           <Table.Row key={`row-${rowIndex}`}>
             {Array.from({ length: countColumns }).map((_, columnIndex) => (
               <Table.Cell key={`cell-${rowIndex}-${columnIndex}`}>
-                <Skeleton.Typography variant="body" className="w-full" />
+                <Skeleton.Typography className="w-full" />
               </Table.Cell>
             ))}
           </Table.Row>

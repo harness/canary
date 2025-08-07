@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
 
+import { typographyVariantConfig } from '@components/text'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
@@ -7,22 +8,10 @@ import { SkeletonBase } from './components/skeleton'
 
 const skeletonTypographyVariants = cva('cn-skeleton-typography-wrapper', {
   variants: {
-    variant: {
-      'heading-hero': 'font-heading-hero',
-      'heading-section': 'font-heading-section',
-      'heading-subsection': 'font-heading-subsection',
-      'heading-base': 'font-heading-base',
-      'heading-small': 'font-heading-small',
-      body: 'font-body-normal',
-      'body-code': 'font-body-code',
-      'body-single-line': 'font-body-single-line-normal',
-      'body-single-line-code': 'font-body-single-line-normal',
-      caption: 'font-caption-normal',
-      'caption-single-line': 'font-caption-single-line-normal'
-    }
+    variant: typographyVariantConfig
   },
   defaultVariants: {
-    variant: 'body'
+    variant: 'body-normal'
   }
 })
 

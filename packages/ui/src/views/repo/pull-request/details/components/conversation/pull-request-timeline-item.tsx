@@ -412,6 +412,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         <TextInput
                           wrapperClassName="flex-1"
                           placeholder="Reply here"
+                          onFocus={() => setHideReplyHere?.(true)}
                           onClick={() => setHideReplyHere?.(true)}
                           onChange={e => setComment(e.target.value)}
                         />

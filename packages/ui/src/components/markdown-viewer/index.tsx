@@ -1,6 +1,6 @@
-import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { CSSProperties, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { CopyButton, ImageCarousel } from '@/components'
+import { CopyButton } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
 import rehypeExternalLinks from 'rehype-external-links'
 import { getCodeString, RehypeRewriteOptions } from 'rehype-rewrite'
@@ -45,11 +45,8 @@ export function MarkdownViewer({
   showLineNumbers = false
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
-  const [isOpen, setIsOpen] = useState(false)
-  const [imgEvent, setImageEvent] = useState<string[]>([])
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
-  const [initialSlide, setInitialSlide] = useState<number>(0)
 
   const styles: CSSProperties = maxHeight ? { maxHeight } : {}
 
@@ -106,16 +103,14 @@ export function MarkdownViewer({
     (event: MouseEvent) => {
       const { target } = event
 
-      const imgTags = ref.current?.querySelectorAll<HTMLImageElement>('.wmde-markdown img') || []
-
-      if (target instanceof HTMLImageElement && !!imgTags.length) {
-        const imgsArr: string[] = Array.from(imgTags).map(img => img.src)
-        const dataSrc = target.getAttribute('src')
-        const index = imgsArr.findIndex(val => val === dataSrc)
-
-        setImageEvent(imgsArr)
-        setInitialSlide(index > -1 ? index : 0)
-        setIsOpen(true)
+      // Handle image clicks - open in new tab
+      if (target instanceof HTMLImageElement) {
+        event.preventDefault()
+        const imageSrc = target.getAttribute('src')
+        if (imageSrc) {
+          window.open(imageSrc, '_blank', 'noopener,noreferrer')
+        }
+        return
       }
 
       if (target instanceof HTMLAnchorElement) {
@@ -248,13 +243,6 @@ export function MarkdownViewer({
               return <code className={String(_className)}>{children}</code>
             }
           }}
-        />
-
-        <ImageCarousel
-          isOpen={isOpen && !!imgEvent.length}
-          setIsOpen={setIsOpen}
-          imgEvent={imgEvent}
-          initialSlide={initialSlide}
         />
       </div>
     </div>

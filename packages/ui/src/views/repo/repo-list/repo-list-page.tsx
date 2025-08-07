@@ -101,12 +101,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     { label: 'Last push', value: RepoSortMethod.LastPush }
   ]
 
-  const scopeFilterOptions = getFilterScopeOptions({ t, scope })
+  const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
   const filterOptions: FilterOptionConfig<keyof RepoListFilters>[] = [
     {
       label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
+      sticky: true,
       filterFieldConfig: {
         label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
       },
@@ -119,6 +120,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
       label: t('views:scope.label', 'Scope'),
       value: 'recursive',
       type: FilterFieldTypes.ComboBox,
+      defaultValue: scopeFilterDefaultValue,
       filterFieldConfig: {
         options: scopeFilterOptions,
         placeholder: 'Select scope',
@@ -159,7 +161,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           <FilterGroup<RepoListFilters, keyof RepoListFilters>
             simpleSortConfig={{
               sortOptions: FilterSortOptions,
-              defaultSort: RepoSortMethod.Identifier,
+              defaultSort: RepoSortMethod.LastPush,
               onSortChange
             }}
             onFilterValueChange={onFilterValueChange}

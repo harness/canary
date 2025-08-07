@@ -19,7 +19,7 @@ export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSi
               <SearchFiles
                 navigateToFile={navigateToFile}
                 filesList={filesList}
-                contentClassName="width-popover-width"
+                contentClassName="width-popover-max-width"
               />
             </div>
             <ScrollArea className="pr-cn-sm grid-cols-[100%]">

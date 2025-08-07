@@ -15,6 +15,7 @@ interface PullRequestListStore {
   totalItems: number
   pageSize: number
   openPullReqs: number
+  mergedPullReqs: number
   closedPullReqs: number
   page: number
   prState: Array<PRState>
@@ -22,7 +23,7 @@ interface PullRequestListStore {
   setPage: (page: number) => void
   setLabelsQuery: (query: string) => void
   setPullRequests: (data: PullRequestInterface[], headers?: Headers) => void
-  setOpenClosePullRequests: (openPullReqs: number, closedPullReqs: number) => void
+  setOpenClosePullRequests: (openPullReqs: number, closedPullReqs: number, mergedPullReqs: number) => void
 }
 
 export const usePullRequestListStore = create<PullRequestListStore>(set => ({
@@ -33,6 +34,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   prState: ['open'],
   openPullReqs: 0,
   closedPullReqs: 0,
+  mergedPullReqs: 0,
   labels: [],
   labelsQuery: '',
   setPage: page => set({ page }),
@@ -68,13 +70,14 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
     set({
       pullRequests: transformedPullRequests,
       totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) || '0'),
-      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '30')
     })
   },
-  setOpenClosePullRequests: (openPullReqs, closedPullReqs) => {
+  setOpenClosePullRequests: (openPullReqs, closedPullReqs, mergedPullReqs) => {
     set({
       openPullReqs,
-      closedPullReqs
+      closedPullReqs,
+      mergedPullReqs
     })
   },
 

@@ -57,6 +57,7 @@ export interface PullRequestListStore {
   setLabelsQuery: (query: string) => void
   openPullReqs: number
   closedPullReqs: number
+  mergedPullReqs: number
 }
 
 export interface RepoRepositoryOutput {
@@ -267,6 +268,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   hasActiveFilters?: boolean
   query?: string
   openPRs?: number
+  mergedPRs?: number
   handleOpenClick?: () => void
   closedPRs?: number
   handleCloseClick?: () => void

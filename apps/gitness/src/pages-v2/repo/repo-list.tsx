@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -49,8 +49,8 @@ export default function ReposListPage() {
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
   const { scope } = useMFEContext()
-  const [sort, setSort] = useQueryState<ListReposQueryQueryParams['sort']>('sort')
-  const [order, setOrder] = useQueryState<ListReposQueryQueryParams['order']>('order')
+  const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
+  const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
 
   const {
     data: { body: repoData, headers } = {},
@@ -204,11 +204,11 @@ export default function ReposListPage() {
       }}
       onSortChange={(sortValues: string) => {
         const [type, direction] = sortValues?.split(',') || []
-        const sortKey = type as ListReposQueryQueryParams['sort'] | undefined
-        const orderKey = direction as ListReposQueryQueryParams['order'] | undefined
+        const sortKey = type as ListReposQueryQueryParams['sort']
+        const orderKey = direction as ListReposQueryQueryParams['order']
 
-        setSort(sortKey ?? null)
-        setOrder(orderKey ?? null)
+        setSort(sortKey)
+        setOrder(orderKey)
       }}
     />
   )

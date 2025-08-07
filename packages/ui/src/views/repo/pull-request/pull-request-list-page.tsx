@@ -73,6 +73,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     page,
     setPage,
     openPullReqs,
+    mergedPullReqs,
     closedPullReqs,
     setLabelsQuery,
     setPrState,
@@ -165,6 +166,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
+    isProjectLevel,
     isPrincipalsLoading,
     customFilterOptions,
     principalData: computedPrincipalData.map(userInfo => ({
@@ -193,13 +195,18 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
-  const noData = !(pullRequests && pullRequests.length > 0) && closedPullReqs === 0 && openPullReqs === 0
+  const noData =
+    !(pullRequests && pullRequests.length > 0) &&
+    closedPullReqs === 0 &&
+    openPullReqs === 0 &&
+    mergedPullReqs === 0 &&
+    !isProjectLevel
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
 
-  const hasActiveFilters = selectedFiltersCnt > 0 || searchQuery || !!defaultSelectedAuthor
+  const hasActiveFilters = selectedFiltersCnt > 0 || searchQuery
 
   const showTopBar = !noData || hasActiveFilters
 
@@ -266,6 +273,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         pullRequests={pullRequests || []}
         // Do not show Open and close count if project level
         closedPRs={!isProjectLevel ? closedPullReqs : undefined}
+        mergedPRs={!isProjectLevel ? mergedPullReqs : undefined}
         openPRs={!isProjectLevel ? openPullReqs : undefined}
         headerFilter={prState}
         setHeaderFilter={setPrState}
@@ -447,6 +455,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                       <PRListFilterHandler.Component
                         parser={filterOption.parser}
                         filterKey={filterOption.value}
+                        sticky={filterOption.sticky}
+                        defaultValue={filterOption.defaultValue}
                         key={filterOption.value}
                       >
                         {({ onChange, removeFilter, value }) =>
@@ -484,13 +494,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         )}
         {renderListContent()}
         {isProjectLevel ? (
-          <Pagination
-            indeterminate={true}
-            hasPrevious={page > 1}
-            hasNext={(pullRequests?.length || 0) === pageSize}
-            onPrevious={() => setPage(page - 1)}
-            onNext={() => setPage(page + 1)}
-          />
+          !!pullRequests?.length && (
+            <Pagination
+              indeterminate={true}
+              hasPrevious={page > 1}
+              hasNext={(pullRequests.length || 0) === pageSize}
+              onPrevious={() => setPage(page - 1)}
+              onNext={() => setPage(page + 1)}
+            />
+          )
         ) : (
           <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
         )}

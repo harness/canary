@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
+import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { formatNumber } from '@/utils'
@@ -250,7 +250,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </p>
           </Layout.Horizontal>
-          <DropdownMenu.Content className="max-w-[396px]" align="start">
+          <DropdownMenu.Content className="max-h-[360px] max-w-[800px]" align="start">
             {diffData?.map(diff => (
               <DropdownMenu.Item
                 key={diff.filePath}
@@ -261,9 +261,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   <Layout.Horizontal align="center" className="min-w-0 gap-x-3">
                     <Layout.Horizontal align="center" justify="start" className="min-w-0 flex-1 gap-x-1.5">
                       <IconV2 name="page" className="shrink-0 text-icons-1" />
-                      <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
-                        {diff.filePath}
-                      </span>
+                      <Text className="min-w-0 break-words">{diff.filePath}</Text>
                     </Layout.Horizontal>
                   </Layout.Horizontal>
                 }

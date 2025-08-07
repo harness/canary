@@ -1,10 +1,11 @@
-import { ReactNode, useCallback, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 
 import { Command, Popover, SearchInput, SearchInputProps, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
+const MAX_FILES = 50
 
 /**
  * Get marked file component with query
@@ -26,7 +27,7 @@ const getMarkedFileElement = (file: string, query: string, matchIndex: number): 
   const endText = file.slice(matchIndex + query.length)
 
   return (
-    <Text className={markedFileClassName} truncate>
+    <Text className={cn(markedFileClassName, 'break-words')}>
       {startText && <span>{startText}</span>}
       {matchedText && <mark>{matchedText}</mark>}
       {endText && <span>{endText}</span>}
@@ -56,43 +57,42 @@ export const SearchFiles = ({
 }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
+  const [currentQuery, setCurrentQuery] = useState('')
   const { t } = useTranslation()
 
-  const filterQuery = useCallback(
-    (query: string) => {
-      if (!filesList) {
-        setFilteredFiles([])
-        return
+  useEffect(() => {
+    if (!filesList || !currentQuery) {
+      setFilteredFiles([])
+      return
+    }
+
+    const lowerCaseQuery = currentQuery.toLowerCase()
+    const filteredFiles: FilteredFile[] = []
+
+    for (const file of filesList) {
+      const lowerCaseFile = file.toLowerCase()
+      const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+
+      if (matchIndex > -1) {
+        filteredFiles.push({
+          file,
+          element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
+        })
       }
 
-      const lowerCaseQuery = query.toLowerCase()
+      // Limiting the result to 50, refactor this once backend supports pagination
+      if (filteredFiles.length === MAX_FILES) {
+        break
+      }
+    }
 
-      const filtered = filesList.reduce<FilteredFile[]>((acc, file) => {
-        const lowerCaseFile = file.toLowerCase()
-        const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+    setFilteredFiles(filteredFiles)
+  }, [filesList, currentQuery])
 
-        if (matchIndex > -1) {
-          acc.push({
-            file,
-            element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
-          })
-        }
-
-        return acc
-      }, [])
-
-      setFilteredFiles(filtered)
-    },
-    [filesList]
-  )
-
-  const handleInputChange = useCallback(
-    (searchQuery: string) => {
-      setIsOpen(searchQuery !== '')
-      filterQuery(searchQuery)
-    },
-    [filterQuery]
-  )
+  const handleInputChange = useCallback((searchQuery: string) => {
+    setIsOpen(searchQuery !== '')
+    setCurrentQuery(searchQuery)
+  }, [])
 
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -107,11 +107,11 @@ export const SearchFiles = ({
         onOpenAutoFocus={event => {
           event.preventDefault()
         }}
-        className={cn('!p-1', contentClassName)}
+        className={cn('!p-1', 'width-popover-max-width', contentClassName)}
       >
         <Command.Root className="bg-transparent">
           <Command.List
-            scrollAreaProps={{ className: 'max-h-60', classNameContent: 'overflow-hidden [&>[cmdk-group]]:!p-0' }}
+            scrollAreaProps={{ className: 'max-h-96', classNameContent: 'overflow-hidden [&>[cmdk-group]]:!p-0' }}
           >
             {filteredFiles.length ? (
               <Command.Group>

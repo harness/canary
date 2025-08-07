@@ -106,7 +106,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
               {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
               {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </Text>
-            <DropdownMenu.Content className="max-h-[360px] max-w-[396px]" align="start">
+            <DropdownMenu.Content className="max-h-[360px] max-w-[800px]" align="start">
               {diffData?.map(diff => (
                 <DropdownMenu.Item
                   key={diff.filePath}
@@ -119,9 +119,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     <Layout.Flex direction="row" align="center" className=" min-w-0 gap-x-3">
                       <Layout.Flex direction="row" align="center" justify="start" className=" min-w-0 flex-1 gap-x-1.5">
                         <IconV2 name="page" className="shrink-0 text-icons-1" />
-                        <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
-                          {diff.filePath}
-                        </span>
+                        <Text className="min-w-0 break-words">{diff.filePath}</Text>
                       </Layout.Flex>
                       <Layout.Flex direction="row" align="center" justify="center" className=" shrink-0 text-2">
                         {diff.addedLines != null && diff.addedLines > 0 && (

@@ -28,6 +28,8 @@ interface FilterOptionConfigBase<Key extends string, V = undefined> {
   // filter-key with which the filter is identified
   value: Key
   parser?: Parser<V>
+  defaultValue?: V
+  sticky?: boolean
 }
 
 interface ComboBoxFilterOptionConfig<Key extends string = string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
@@ -84,6 +86,7 @@ type FilterOptionConfig<T extends string = string, V = Record<string, unknown>> 
   | CheckboxFilterOptionConfig<T>
   | MultiSelectFilterOptionConfig<T>
   | CustomFilterOptionConfig<T, V>
+
 type FilterValueTypes = string | number | unknown
 
 export type {

@@ -32,7 +32,7 @@ export const RepoSidebar = ({
             navigateToFile={navigateToFile}
             filesList={filesList}
             searchInputSize="md"
-            contentClassName="w-[280px]"
+            contentClassName="w-[800px]"
           />
 
           <ScrollArea className="-mr-5 grid-cols-[100%] pr-5">

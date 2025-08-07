@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
 import {
@@ -9,13 +9,18 @@ import {
   useListPullReqQuery,
   usePrCandidatesQuery
 } from '@harnessio/code-service-client'
-import { PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
+import {
+  EnumPullReqState,
+  PullRequestListPage as SandboxPullRequestListPage,
+  type PRListFilters
+} from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
+import { PageResponseHeader } from '../../types'
 import { useLabelsStore } from '../project/stores/labels-store'
 import { usePopulateLabelStore } from '../repo/labels/hooks/use-populate-label-store'
 import { buildPRFilters } from './pull-request-utils'
@@ -41,15 +46,6 @@ export default function PullRequestListPage() {
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
-  const [shouldSwitchToClosed, setShouldSwitchToClosed] = useState(false)
-
-  const shouldSwitchToClosedTab = useCallback(
-    (hasAuthorFilter: boolean, openCount: number, closedCount: number): boolean => {
-      return hasAuthorFilter && openCount === 0 && closedCount > 0
-    },
-    []
-  )
-
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
       queryParams: {
@@ -70,15 +66,14 @@ export default function PullRequestListPage() {
   )
 
   // Make separate API calls to get open and closed PR counts for the filtered author
-  const { data: { body: openPRData } = {} } = useListPullReqQuery(
+  const { data: { headers: openHeaders } = {}, isLoading: isLoadingOpen } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
         state: ['open'],
         query: query ?? '',
+        limit: 0,
         exclude_description: true,
-        sort: 'updated',
-        order: 'desc',
         ...filterValues
       },
       repo_ref: repoRef,
@@ -87,20 +82,18 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false,
-      enabled: !!defaultAuthorId // Only make this call when author filter is applied
+      retry: false
     }
   )
 
-  const { data: { body: closedPRData } = {} } = useListPullReqQuery(
+  const { data: { headers: closedHeaders } = {}, isLoading: isLoadingClosed } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
-        state: ['closed', 'merged'],
+        state: ['closed'],
         query: query ?? '',
+        limit: 0,
         exclude_description: true,
-        sort: 'updated',
-        order: 'desc',
         ...filterValues
       },
       repo_ref: repoRef,
@@ -109,8 +102,27 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false,
-      enabled: !!defaultAuthorId // Only make this call when author filter is applied
+      retry: false
+    }
+  )
+
+  const { data: { headers: mergedHeaders } = {}, isLoading: isLoadingMerged } = useListPullReqQuery(
+    {
+      queryParams: {
+        page: 1,
+        state: ['merged'],
+        query: query ?? '',
+        limit: 0,
+        exclude_description: true,
+        ...filterValues
+      },
+      repo_ref: repoRef,
+      stringifyQueryParamsOptions: {
+        arrayFormat: 'repeat'
+      }
+    },
+    {
+      retry: false
     }
   )
 
@@ -188,25 +200,35 @@ export default function PullRequestListPage() {
   }, [pullRequestData, headers, setPullRequests])
 
   useEffect(() => {
-    if (defaultAuthorId && openPRData && closedPRData) {
-      const openCount = Array.isArray(openPRData) ? openPRData.length : 0
-      const closedCount = Array.isArray(closedPRData) ? closedPRData.length : 0
+    if (openHeaders && closedHeaders && mergedHeaders) {
+      const openCount = parseInt(openHeaders?.get(PageResponseHeader.xTotal) || '0')
+      const closedCount = parseInt(closedHeaders?.get(PageResponseHeader.xTotal) || '0')
+      const mergedCount = parseInt(mergedHeaders?.get(PageResponseHeader.xTotal) || '0')
 
-      const shouldSwitch = shouldSwitchToClosedTab(!!defaultAuthorId, openCount, closedCount)
+      const [currState] = prState
 
-      if (shouldSwitch && !shouldSwitchToClosed) {
-        setShouldSwitchToClosed(true)
-        setPrState(['closed', 'merged'])
+      const determineState = (): EnumPullReqState[] => {
+        // If current state has PRs, maintain it
+        if (currState === 'open' && openCount > 0) return ['open']
+        if (currState === 'merged' && mergedCount > 0) return ['merged']
+        if (currState === 'closed' && closedCount > 0) return ['closed']
+
+        // Otherwise follow priority: open > merged > closed
+        if (openCount > 0) return ['open']
+        if (mergedCount > 0) return ['merged']
+        if (closedCount > 0) return ['closed']
+
+        return ['open']
       }
 
-      setOpenClosePullRequests(openCount, closedCount)
-    }
-  }, [defaultAuthorId, openPRData, closedPRData, shouldSwitchToClosed, shouldSwitchToClosedTab])
+      const [newState] = determineState()
+      if (newState !== currState) {
+        setPrState([newState])
+      }
 
-  useEffect(() => {
-    const { num_open_pulls = 0, num_closed_pulls = 0, num_merged_pulls = 0 } = repoData || {}
-    setOpenClosePullRequests(num_open_pulls, num_closed_pulls + num_merged_pulls)
-  }, [repoData, setOpenClosePullRequests])
+      setOpenClosePullRequests(openCount, closedCount, mergedCount)
+    }
+  }, [openHeaders, closedHeaders, mergedHeaders, setOpenClosePullRequests, setPrState])
 
   useEffect(() => {
     setQueryPage(page)
@@ -223,7 +245,7 @@ export default function PullRequestListPage() {
     <SandboxPullRequestListPage
       repoId={repoId}
       spaceId={spaceId || ''}
-      isLoading={fetchingPullReqData}
+      isLoading={fetchingPullReqData || isLoadingOpen || isLoadingClosed || isLoadingMerged}
       isPrincipalsLoading={fetchingPrincipalData}
       prCandidateBranches={prCandidateBranches}
       principalsSearchQuery={principalsSearchQuery}

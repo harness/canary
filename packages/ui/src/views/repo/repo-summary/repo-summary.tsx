@@ -192,7 +192,7 @@ export function RepoSummaryView({
                     filesList={filesList}
                     searchInputSize="md"
                     inputContainerClassName="max-w-80 min-w-40 w-full"
-                    contentClassName="width-popover-width"
+                    contentClassName="w-[800px]"
                   />
                 </ButtonLayout>
               </ListActions.Left>

@@ -1,6 +1,6 @@
 import { Dispatch, FC, ReactNode, SetStateAction } from 'react'
 
-import { Button, ButtonProps, Illustration, IllustrationsNameType, Layout, Text } from '@/components'
+import { Button, ButtonProps, Illustration, IllustrationsNameType, Layout, SplitButton, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -26,6 +26,13 @@ export interface NoDataProps {
   setLoadState?: Dispatch<SetStateAction<string>>
   textWrapperClassName?: string
   className?: string
+  splitButton?: {
+    label: ReactNode | string
+    options: { value: string; label: string }[]
+    handleOptionChange: (option: string) => void
+    handleButtonClick: () => void
+    props?: ButtonProps
+  }
 }
 
 export const NoData: FC<NoDataProps> = ({
@@ -38,7 +45,8 @@ export const NoData: FC<NoDataProps> = ({
   secondaryButton,
   withBorder = false,
   textWrapperClassName,
-  className
+  className,
+  splitButton
 }) => {
   const { NavLink } = useRouterContext()
 
@@ -64,7 +72,7 @@ export const NoData: FC<NoDataProps> = ({
               </Text>
             ))}
         </Layout.Vertical>
-        {(primaryButton || secondaryButton) && (
+        {(primaryButton || secondaryButton || splitButton) && (
           <Layout.Horizontal gap="sm">
             {primaryButton &&
               (primaryButton.to ? (
@@ -91,6 +99,20 @@ export const NoData: FC<NoDataProps> = ({
                   {secondaryButton.label}
                 </Button>
               ))}
+            {splitButton && (
+              <SplitButton<string>
+                dropdownContentClassName="mt-0 min-w-[170px]"
+                handleButtonClick={() => splitButton.handleButtonClick()}
+                handleOptionChange={option => {
+                  if (option === 'tag-rule') {
+                    splitButton.handleOptionChange(option)
+                  }
+                }}
+                options={splitButton.options}
+              >
+                {splitButton.label}
+              </SplitButton>
+            )}
           </Layout.Horizontal>
         )}
       </Layout.Vertical>

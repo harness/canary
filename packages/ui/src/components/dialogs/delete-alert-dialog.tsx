@@ -107,7 +107,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
 
         <AlertDialog.Cancel />
         <AlertDialog.Confirm disabled={violation && !bypassable}>
-          {violation && bypassable ? `Bypass rules and delete ${type}` : `Yes, delete ${type}`}
+          {violation && bypassable ? `Bypass rules and delete` : `Yes`}
         </AlertDialog.Confirm>
       </AlertDialog.Content>
     </AlertDialog.Root>

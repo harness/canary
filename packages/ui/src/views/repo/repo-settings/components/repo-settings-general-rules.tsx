@@ -267,23 +267,37 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           )}
         </>
       ) : (
-        <NoData
-          withBorder
-          className="py-cn-3xl min-h-0"
-          textWrapperClassName="max-w-[350px]"
-          imageName={'no-data-cog'}
-          title={t('views:noData.noRules', 'No rules yet')}
-          description={[
-            t(
-              'views:noData.noRulesDescription',
-              'There are no rules in this project. Click on the button below to start adding rules.'
-            )
-          ]}
-          primaryButton={{
-            label: t('views:repos.createRuleButton', 'Create rule'),
-            to: toRepoBranchRuleCreate?.() ?? ''
-          }}
-        />
+        <>
+          <Spacer size={3} />
+          <NoData
+            withBorder
+            className="py-cn-3xl min-h-0"
+            textWrapperClassName="max-w-[350px]"
+            imageName={'no-data-cog'}
+            title={t('views:noData.noRules', 'No rules yet')}
+            description={[
+              t(
+                'views:noData.noRulesDescription',
+                'There are no rules in this project. Click on the button below to start adding rules.'
+              )
+            ]}
+            splitButton={{
+              label: t('views:repos.createBranchRuleButton', 'Create Branch rule'),
+              options: [
+                {
+                  value: 'tag-rule',
+                  label: t('views:repos.createTagRuleButton', 'Create tag rule')
+                }
+              ],
+              handleOptionChange: option => {
+                if (option === 'tag-rule') {
+                  navigate(toRepoTagRuleCreate?.() || '')
+                }
+              },
+              handleButtonClick: () => navigate(toRepoBranchRuleCreate?.() || '')
+            }}
+          />
+        </>
       )}
     </>
   )

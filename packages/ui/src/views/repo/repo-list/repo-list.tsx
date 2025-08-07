@@ -170,7 +170,11 @@ export function RepoList({
               className="grid"
               primary
               description={
-                repo.importing ? t('views:repos.importing', 'Importing…') : <Text truncate>{repo.description}</Text>
+                repo.importing ? (
+                  t('views:repos.importing', 'Importing…')
+                ) : repo?.description ? (
+                  <Text truncate>{repo.description}</Text>
+                ) : undefined
               }
               title={
                 <Title

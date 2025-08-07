@@ -86,8 +86,8 @@ export function RepoBranchesListPage() {
   }
 
   const handleResetDeleteBranch = () => {
-    setDeleteBranchName(null)
     setIsDeleteDialogOpen(false)
+    setDeleteBranchName(null)
     if (deleteBranchError) {
       resetDeleteBranch()
     }
@@ -224,7 +224,7 @@ export function RepoBranchesListPage() {
         onClose={handleResetDeleteBranch}
         deleteFn={handleDeleteBranch}
         error={deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}
-        type="branch"
+        type={`branch ${deleteBranchName}`}
         identifier={deleteBranchName ?? undefined}
         isLoading={isDeletingBranch}
         violation={violation}

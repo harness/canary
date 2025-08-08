@@ -605,7 +605,7 @@ export const PullRequestCommentBox = ({
 
               <Layout.Flex
                 align="center"
-                className="bg-cn-background-1 absolute bottom-[1px] left-[1px] w-[calc(100%-2px)] rounded"
+                className="bg-cn-background-1 absolute bottom-[1px] left-[1px] w-[calc(100%-20px)] rounded"
               >
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0

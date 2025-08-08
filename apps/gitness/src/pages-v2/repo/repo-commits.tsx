@@ -78,6 +78,7 @@ export default function RepoCommitsPage() {
           className="min-w-[120px]"
         />
       )}
+      toFiles={() => routes.toRepoFiles({ spaceId, repoId, '*': gitRefName })}
     />
   )
 }

@@ -243,7 +243,7 @@
           "0": "We recommend every repository include a",
           "1": "README, LICENSE, and .gitignrore."
         },
-        "createFile": "Create file"
+        "createFile": "Créer un fichier"
       },
       "cloneInstructions": {
         "title": "Please generate git credentials if it’s your first time cloning the repository",
@@ -258,7 +258,7 @@
         "pushRepository": {
           "0": "You might need to",
           "1": "create an API token",
-          "2": "In order to pull from or push into this repository"
+          "2": "pour pouvoir tirer ou pousser dans ce dépôt"
         }
       },
       "initialCommit": "Then push some content into it",
@@ -752,7 +752,7 @@
     "commitDetailsDiffDeletions": "suppressions",
     "commitDetailsTitle": "Commit",
     "browseFiles": "Parcourir les fichiers",
-    "createNewCommit": "Créer un nouveau commit",
+    "createCommit": "Créer un commit",
     "commitDetailsAuthored": "créé par",
     "verified": "Vérifié"
   },

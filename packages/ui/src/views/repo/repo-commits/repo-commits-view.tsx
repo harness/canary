@@ -4,16 +4,20 @@ import { IconV2, Layout, NoData, Pagination, Skeleton, Text } from '@/components
 import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
-export interface RepoCommitsViewProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
+  toFiles?: () => string
+  toCode?: ({ sha }: { sha: string }) => string
+}
+
+export interface RepoCommitsViewProps extends Partial<RoutingProps> {
   isFetchingCommits: boolean
   commitsList?: TypesCommit[] | null
   xNextPage: number
   xPrevPage: number
   page: number
   setPage: (page: number) => void
-  toCommitDetails?: ({ sha }: { sha: string }) => string
-  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
-  toCode?: ({ sha }: { sha: string }) => string
   renderProp: () => JSX.Element | null
 }
 
@@ -27,7 +31,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   toCommitDetails,
   toCode,
   renderProp: BranchSelectorContainer,
-  toPullRequest
+  toPullRequest,
+  toFiles
 }) => {
   const { t } = useTranslation()
 
@@ -96,12 +101,11 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                           }
                         : // TODO: add onClick for Creating new commit
                           {
-                            label: (
-                              <>
-                                <IconV2 name="plus" />
-                                {t('views:commits.createNewCommit', 'Create New Commit')}
-                              </>
-                            )
+                            label: t('views:commits.createNewCommit', 'Create commit'),
+                            /**
+                             * To make the first commit, redirect to the files page so a new file can be created.
+                             */
+                            to: toFiles?.() || ''
                           }
                     }
                   />

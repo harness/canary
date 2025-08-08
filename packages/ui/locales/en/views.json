@@ -258,7 +258,7 @@
         "pushRepository": {
           "0": "You might need to",
           "1": "create an API token",
-          "2": "In order to pull from or push into this repository"
+          "2": "in order to pull from or push into this repository"
         }
       },
       "initialCommit": "Then push some content into it",
@@ -765,7 +765,7 @@
     "commitDetailsDiffDeletions": "deletions",
     "commitDetailsTitle": "Commit",
     "browseFiles": "Browse Files",
-    "createNewCommit": "Create New Commit",
+    "createCommit": "Create commit",
     "commitDetailsAuthored": "authored",
     "verified": "Verified"
   },

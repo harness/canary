@@ -50,7 +50,8 @@ export const RepoCode = () => {
   const {
     data: { body: repoDetails } = {},
     refetch: refetchRepoContent,
-    isLoading: isLoadingRepoDetails
+    isLoading: isLoadingRepoDetails,
+    error: repoDetailsError
   } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
@@ -172,6 +173,7 @@ export const RepoCode = () => {
       isLoadingRepoDetails={isLoadingRepoDetails}
       toRepoFileDetails={({ path }: { path: string }) => `../${path}`}
       showContributeBtn={showContributeBtn}
+      repoDetailsError={repoDetailsError}
     >
       {renderCodeView}
     </RepoFiles>

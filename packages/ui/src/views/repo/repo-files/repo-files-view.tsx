@@ -2,6 +2,7 @@ import { FC, ReactNode, useMemo } from 'react'
 
 import { IconV2, NoData, PathParts, Skeleton } from '@/components'
 import { useTranslation } from '@/context'
+import { UsererrorError } from '@/types'
 import {
   BranchInfoBar,
   BranchSelectorListItem,
@@ -10,6 +11,7 @@ import {
   CommitDivergenceType,
   FileLastChangeBar,
   LatestFileTypes,
+  NotFoundPage,
   PathActionBar,
   RepoFile,
   SandboxLayout,
@@ -40,6 +42,7 @@ interface RepoFilesProps {
   selectedRefType: BranchSelectorTab
   fullResourcePath?: string
   showContributeBtn?: boolean
+  repoDetailsError?: UsererrorError | null
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -65,7 +68,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   gitRef,
   selectedRefType,
   fullResourcePath,
-  showContributeBtn
+  showContributeBtn,
+  repoDetailsError
 }) => {
   const { t } = useTranslation()
 
@@ -76,7 +80,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
     if (!isView) return children
 
-    if (!isRepoEmpty && !isDir) {
+    if (!isRepoEmpty && !isDir && !repoDetailsError) {
       return (
         <>
           {!isLoadingRepoDetails && <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />}
@@ -85,7 +89,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
       )
     }
 
-    if (isShowSummary && files.length)
+    if (isShowSummary && files.length && !repoDetailsError)
       return (
         <>
           {selectedBranchTag?.name !== defaultBranchName && (
@@ -110,6 +114,10 @@ export const RepoFiles: FC<RepoFilesProps> = ({
           />
         </>
       )
+
+    if (repoDetailsError) {
+      return <NotFoundPage errorMessage={repoDetailsError.message} />
+    }
 
     return (
       <NoData

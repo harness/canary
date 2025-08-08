@@ -143,10 +143,14 @@ export const RepoSidebar = () => {
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
         setPreSelectedTab(type)
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}`)
+        navigate(
+          `${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}/~/${fullResourcePath}`
+        )
       } else if (type === BranchSelectorTab.TAGS) {
         setPreSelectedTab(type)
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)
+        navigate(
+          `${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}/~/${fullResourcePath}`
+        )
       }
     },
     [navigate, repoId, spaceId]

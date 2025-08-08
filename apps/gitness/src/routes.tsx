@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, redirect } from 'react-router-dom'
 
 import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import {
@@ -215,6 +215,17 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'summary',
+            loader: ({ params }) => {
+              const wildcard = params['*'] || ''
+              if (wildcard.startsWith('edit/')) {
+                const cleanPath = wildcard.substring(5)
+                return redirect(`./${cleanPath}`)
+              } else if (wildcard.startsWith('new/')) {
+                const cleanPath = wildcard.substring(4)
+                return redirect(`./${cleanPath}`)
+              }
+              return null
+            },
             element: <RepoSummaryPage />,
             handle: {
               breadcrumb: () => <span>{Page.Summary}</span>,
@@ -289,6 +300,22 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <span>{Page.Branches}</span>,
               routeName: RouteConstants.toRepoBranches,
               pageTitle: Page.Branches
+            }
+          },
+          {
+            path: 'edit/*',
+            loader: ({ params }) => {
+              const wildcard = params['*'] || ''
+              return redirect(`../files/edit/${wildcard}`)
+            },
+            element: (
+              <ExplorerPathsProvider>
+                <RepoSidebar />
+              </ExplorerPathsProvider>
+            ),
+            handle: {
+              breadcrumb: () => <span>{Page.Files}</span>,
+              routeName: RouteConstants.toRepoFiles
             }
           },
           {

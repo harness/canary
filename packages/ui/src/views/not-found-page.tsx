@@ -6,9 +6,10 @@ import { SandboxLayout } from '@/views'
 
 export interface NotFoundPageProps {
   pageTypeText?: string
+  errorMessage?: string
 }
 
-export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
+export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText, errorMessage }) => {
   const { t } = useTranslation()
 
   const handleReload = () => {
@@ -29,7 +30,7 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
                 `The requested page is not found. You can go back to view all ${pageTypeText} and manage your settings.`,
                 { type: pageTypeText }
               )
-            : t('views:notFound.description', 'The requested page is not found.')}
+            : errorMessage || t('views:notFound.description', 'The requested page is not found.')}
         </span>
         <Button variant="outline" type="button" onClick={handleReload}>
           <IconV2 name="refresh" />

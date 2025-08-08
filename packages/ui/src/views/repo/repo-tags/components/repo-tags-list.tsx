@@ -6,6 +6,7 @@ import {
   CommitCopyActions,
   CopyTag,
   IconV2,
+  Layout,
   MoreActionsTooltip,
   NoData,
   Skeleton,
@@ -43,7 +44,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
-      title: t('views:repos.createBranch', 'Create Branch'),
+      title: t('views:repos.createBranch', 'Create branch'),
       onClick: () => onOpenCreateBranchDialog(tag)
     },
     {
@@ -118,11 +119,11 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[32%]">{t('views:repos.description', 'Description')}</Table.Head>
-          <Table.Head className="w-[10%]">{t('views:repos.commit', 'Commit')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:repos.tagger', 'Tagger')}</Table.Head>
-          <Table.Head className="w-[16%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
-          <Table.Head className="w-[46px]" />
+          <Table.Head className="w-[33%]">{t('views:repos.description', 'Description')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
+          <Table.Head className="w-[7%]" />
         </Table.Row>
       </Table.Header>
 
@@ -140,8 +141,8 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
             <Table.Cell disableLink>
               <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
-            <Table.Cell>
-              <div className="flex items-center gap-2">
+            <Table.Cell disableLink>
+              <Layout.Horizontal gap="xs">
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
@@ -150,7 +151,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                     </Text>
                   </>
                 ) : null}
-              </div>
+              </Layout.Horizontal>
             </Table.Cell>
             <Table.Cell>
               {tag.tagger?.when ? (
@@ -161,7 +162,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="w-[46px] text-right" disableLink>
+            <Table.Cell className="text-right" disableLink>
               <MoreActionsTooltip
                 actions={getTableActions(tag).map(action => ({
                   ...action,

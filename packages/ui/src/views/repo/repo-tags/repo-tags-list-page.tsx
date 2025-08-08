@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, Pagination, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -30,7 +30,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
   const handleResetFiltersAndPages = useCallback(() => {
     setPage(1)
-    setSearchQuery(null)
+    setSearchQuery('')
   }, [setPage, setSearchQuery])
 
   const isDirtyList = useMemo(() => {
@@ -57,54 +57,55 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           'h-full': !isLoading && !tagsList.length && !searchQuery
         })}
       >
-        <Text as="h1" variant="heading-section">
-          {t('views:repos.tags', 'Tags')}
-        </Text>
+        <Layout.Vertical gap="xl">
+          {(!!tagsList?.length || !!searchQuery) && (
+            <Text as="h1" variant="heading-section">
+              {t('views:repos.tags', 'Tags')}
+            </Text>
+          )}
+          <Layout.Vertical gap="md">
+            {(!!tagsList?.length || !!searchQuery) && (
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchInput
+                    inputContainerClassName="max-w-80"
+                    defaultValue={searchQuery || ''}
+                    onChange={handleSearchChange}
+                    placeholder={t('views:repos.search', 'Search')}
+                    autoFocus
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <Button onClick={openCreateTagDialog}>
+                    <IconV2 name="plus" />
+                    <span>{t('views:repos.createTag', 'Create Tag')}</span>
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
+            )}
 
-        <Spacer size={6} />
-
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchInput
-              inputContainerClassName="max-w-80"
-              defaultValue={searchQuery || ''}
-              onChange={handleSearchChange}
-              placeholder={t('views:repos.search', 'Search')}
-              autoFocus
+            <RepoTagsList
+              onDeleteTag={onDeleteTag}
+              useRepoTagsStore={useRepoTagsStore}
+              toCommitDetails={toCommitDetails}
+              onOpenCreateBranchDialog={openCreateBranchDialog}
+              isLoading={isLoading}
+              isDirtyList={isDirtyList}
+              onResetFiltersAndPages={handleResetFiltersAndPages}
+              onOpenCreateTagDialog={openCreateTagDialog}
             />
-          </ListActions.Left>
-          <ListActions.Right>
-            <Button onClick={openCreateTagDialog}>
-              <IconV2 name="plus" />
-              <span>{t('views:repos.createTag', 'Create Tag')}</span>
-            </Button>
-          </ListActions.Right>
-        </ListActions.Root>
+          </Layout.Vertical>
 
-        <Spacer size={5} />
-
-        <RepoTagsList
-          onDeleteTag={onDeleteTag}
-          useRepoTagsStore={useRepoTagsStore}
-          toCommitDetails={toCommitDetails}
-          onOpenCreateBranchDialog={openCreateBranchDialog}
-          isLoading={isLoading}
-          isDirtyList={isDirtyList}
-          onResetFiltersAndPages={handleResetFiltersAndPages}
-          onOpenCreateTagDialog={openCreateTagDialog}
-        />
-
-        <Spacer size={5} />
-
-        {canShowPagination && (
-          <Pagination
-            indeterminate
-            hasNext={xNextPage > 0}
-            hasPrevious={xPrevPage > 0}
-            getNextPageLink={getNextPageLink}
-            getPrevPageLink={getPrevPageLink}
-          />
-        )}
+          {canShowPagination && (
+            <Pagination
+              indeterminate
+              hasNext={xNextPage > 0}
+              hasPrevious={xPrevPage > 0}
+              getNextPageLink={getNextPageLink}
+              getPrevPageLink={getPrevPageLink}
+            />
+          )}
+        </Layout.Vertical>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

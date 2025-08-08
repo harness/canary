@@ -100,7 +100,7 @@ const BaseComp: FC<BaseCompProps> = ({
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       principalProps={principalProps}
-      replyBoxClassName="p-4"
+      replyBoxClassName="p-2"
       id={`comment-${payload?.id}`}
       handleUpload={handleUpload}
       data={payload?.text}
@@ -206,7 +206,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   }, [])
 
   const renderContentItemsBlock = () => (
-    <div className="px-4 pt-4">
+    <div className="px-2 pt-2">
       {commentItems?.map((commentItem, idx) => {
         const componentId = `activity-comment-${commentItem.id}`
         const commentIdAttr = `comment-${commentItem.id}`

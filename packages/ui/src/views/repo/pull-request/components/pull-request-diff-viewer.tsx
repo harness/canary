@@ -498,7 +498,7 @@ const PullRequestDiffViewer = ({
                               {parent?.payload?.payload?.code_comment?.outdated && (
                                 <>
                                   <Separator orientation="vertical" className="h-3.5" />
-                                  <Tag key={'outdated'} value="OUTDATED" theme="orange" />
+                                  <Tag key={'outdated'} value="Outdated" theme="orange" />
                                 </>
                               )}
                             </Layout.Horizontal>

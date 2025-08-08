@@ -319,7 +319,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   {payload?.code_comment?.outdated && (
                     <>
                       <Separator orientation="vertical" className="h-3.5 mx-1" />
-                      <Tag key={'outdated'} value="OUTDATED" theme="orange" />
+                      <Tag key={'outdated'} value="Outdated" theme="orange" />
                     </>
                   )}
                 </Layout.Horizontal>

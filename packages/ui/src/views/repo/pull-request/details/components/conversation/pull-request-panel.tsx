@@ -67,6 +67,8 @@ interface HeaderProps {
   headerMsg?: string
   spaceId?: string
   repoId?: string
+  actions?: PullRequestAction[]
+  mergeButtonValue?: string
 }
 
 interface ButtonStateProps {
@@ -94,10 +96,27 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
     unchecked,
     mergeable,
     isOpen,
-    ruleViolation
+    ruleViolation,
+    actions,
+    mergeButtonValue
   } = props
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
+  const isRebasable = pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
+
+  // Get the current selected merge method
+  const getCurrentMergeMethod = () => {
+    const selectedAction = actions?.[parseInt(mergeButtonValue || '0')]
+    if (selectedAction?.title === 'Fast-forward merge') return 'fast-forward'
+    if (selectedAction?.title === 'Squash and merge') return 'squash'
+    if (selectedAction?.title === 'Merge pull request') return 'merge'
+    if (selectedAction?.title === 'Rebase and merge') return 'rebase'
+    return undefined
+  }
+
+  const currentMergeMethod = getCurrentMergeMethod()
+  const isFastForwardNotPossible = isRebasable && currentMergeMethod === 'fast-forward'
+
   if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
@@ -156,7 +175,9 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
                 ? 'Cannot merge pull request'
                 : ruleViolation
                   ? 'Cannot merge pull request'
-                  : `Pull request can be merged`}
+                  : isFastForwardNotPossible
+                    ? 'Cannot merge pull request'
+                    : `Pull request can be merged`}
       </Text>
     </div>
   )
@@ -369,13 +390,43 @@ const PullRequestPanel = ({
   }
 
   const handleConfirmMerge = () => {
+    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
+    // Check if this is a merge action
+    const isMergeAction = ['Squash and merge', 'Merge pull request', 'Rebase and merge', 'Fast-forward merge'].includes(
+      selectedAction?.title || ''
+    )
+
     setShowMergeInputs(false)
     setShowActionBtn(false)
-    setMergeInitiated(true)
+
+    // Only set mergeInitiated for actual merge actions
+    if (isMergeAction) {
+      setMergeInitiated(true)
+    }
+
     const actionIdx = actions.findIndex(action => action.id === mergeButtonValue)
     if (actionIdx !== -1) {
       actions[actionIdx]?.action?.()
     }
+  }
+
+  // Check if Fast-Forward merge should be disabled
+  const shouldDisableFastForwardMerge = () => {
+    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
+    const isRebasable =
+      pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
+    const isFastForwardSelected = selectedAction?.title === 'Fast-forward merge'
+    return isFastForwardSelected && isRebasable
+  }
+
+  // To get the selected merge method
+  const getSelectedMergeMethod = () => {
+    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
+    if (selectedAction?.title === 'Fast-forward merge') return 'fast-forward'
+    if (selectedAction?.title === 'Squash and merge') return 'squash'
+    if (selectedAction?.title === 'Merge pull request') return 'merge'
+    if (selectedAction?.title === 'Rebase and merge') return 'rebase'
+    return undefined
   }
 
   const handleAccordionValuesChange = useCallback((data: string | string[]) => {
@@ -431,6 +482,15 @@ const PullRequestPanel = ({
     }
   }, [error, mergeInitiated])
 
+  // Reset mergeInitiated when PR state changes (e.g., from draft to open)
+  useEffect(() => {
+    if (mergeInitiated && !isMerging && !pullReqMetadata?.is_draft) {
+      // Reset loading state when PR changes from draft to open (API success)
+      setMergeInitiated(false)
+      setShowActionBtn(false)
+    }
+  }, [mergeInitiated, isMerging, pullReqMetadata?.is_draft])
+
   const buttonState = getButtonState({
     isMergeable,
     ruleViolation: prPanelData.ruleViolation,
@@ -468,6 +528,8 @@ const PullRequestPanel = ({
                 headerMsg={headerMsg}
                 spaceId={spaceId}
                 repoId={repoId}
+                actions={actions}
+                mergeButtonValue={mergeButtonValue}
               />
             }
           />
@@ -522,12 +584,14 @@ const PullRequestPanel = ({
                           loading={actions[parseInt(mergeButtonValue)]?.loading}
                           selectedValue={mergeButtonValue}
                           handleOptionChange={handleMergeTypeSelect}
-                          options={actions.map(action => ({
-                            value: action.id,
-                            label: action.title,
-                            description: action.description,
-                            disabled: action.disabled
-                          }))}
+                          options={actions.map(action => {
+                            return {
+                              value: action.id,
+                              label: action.title,
+                              description: action.description,
+                              disabled: action.disabled
+                            }
+                          })}
                           handleButtonClick={() => {
                             const selectedAction = actions[parseInt(mergeButtonValue)]
                             if (!selectedAction.disabled) {
@@ -558,7 +622,7 @@ const PullRequestPanel = ({
                             theme="success"
                             onClick={handleConfirmMerge}
                             loading={isMerging || mergeInitiated}
-                            disabled={cancelInitiated}
+                            disabled={cancelInitiated || shouldDisableFastForwardMerge()}
                           >
                             Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
                           </Button>
@@ -673,6 +737,8 @@ const PullRequestPanel = ({
                   conflictingFiles={prPanelData.conflictingFiles}
                   accordionValues={accordionValues}
                   setAccordionValues={setAccordionValues}
+                  handleRebaseBranch={handleRebaseBranch}
+                  selectedMergeMethod={getSelectedMergeMethod()}
                 />
               )}
             </Accordion.Root>

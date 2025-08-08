@@ -23,7 +23,7 @@ export const EmptyState = () => {
         label: (
           <>
             <IconV2 name="plus" />
-            {t('views:userManagement.newUserButton', 'Add User')}
+            {t('views:userManagement.newUserButton', 'Create User')}
           </>
         ),
         onClick: () => handleDialogOpen(null, DialogLabels.CREATE_USER)

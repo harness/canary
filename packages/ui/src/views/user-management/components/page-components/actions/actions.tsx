@@ -24,7 +24,7 @@ export const Actions = () => {
       <ListActions.Right>
         <Button onClick={() => handleDialogOpen(null, DialogLabels.CREATE_USER)}>
           <IconV2 name="plus" />
-          {t('views:userManagement.newUserButton', 'Add User')}
+          {t('views:userManagement.newUserButton', 'Create User')}
         </Button>
       </ListActions.Right>
     </ListActions.Root>

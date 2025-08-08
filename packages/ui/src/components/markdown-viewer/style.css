@@ -202,7 +202,7 @@
     }
 
     li {
-      @apply marker:text-cn-foreground-1 my-cn-2xs ps-0;
+      @apply marker:text-cn-foreground-2 my-cn-2xs ps-0;
     }
 
     ol {
@@ -228,12 +228,14 @@
     }
 
     code {
-      @apply font-body-code border-cn-borders-2 text-nowrap rounded border bg-[var(--cn-set-brand-surface-bg)] px-1 !text-[var(--cn-set-brand-surface-text)] before:hidden after:hidden;
+      @apply font-body-code px-cn-2xs py-cn-4xs text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] !text-[var(--cn-set-blue-soft-text)] before:hidden after:hidden;
+      font-size: inherit;
+      line-height: inherit;
     }
 
     strong {
       font: var(--cn-comp-markdown-content-emphasized);
-      @apply text-cn-foreground-1;
+      @apply text-cn-foreground-2;
     }
 
     pre {
@@ -245,7 +247,8 @@
     }
 
     blockquote {
-      @apply border-cn-borders-1 my-cn-md border-l-4 pl-4 pr-0;
+      font: var(--cn-comp-markdown-content-paragraph);
+      @apply text-cn-foreground-3 my-cn-md relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm before:bg-[var(--cn-border-2)];
     }
 
     table {
@@ -286,8 +289,13 @@
       @apply bg-transparent;
     }
 
+    a,
     blockquote {
-      @apply before:bg-cn-background-softgray relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;
+      @apply font-body-normal;
+    }
+
+    strong {
+      @apply font-body-strong;
     }
   }
 }

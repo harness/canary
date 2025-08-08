@@ -76,7 +76,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
-    if (loading || isLoadingRepoDetails) return <Skeleton.Table countColumns={3} countRows={8} showHeader />
+    if (loading || isLoadingRepoDetails) return <Skeleton.Table countColumns={3} countRows={8} />
 
     if (!isView) return children
 

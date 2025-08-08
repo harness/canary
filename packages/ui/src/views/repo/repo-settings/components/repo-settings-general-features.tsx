@@ -66,7 +66,7 @@ export const RepoSettingsFeaturesForm: FC<RepoSettingsFeaturesFormProps> = ({
       <Layout.Vertical gap="xl">
         <Text variant="heading-subsection">{t('views:repos.features', 'Features')}</Text>
         {isLoadingFeaturesSettings ? (
-          <Skeleton.Form linesCount={2} />
+          <Skeleton.Form />
         ) : (
           <ControlGroup>
             <Checkbox

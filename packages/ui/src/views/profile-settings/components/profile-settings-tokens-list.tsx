@@ -29,7 +29,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <Skeleton.Table countRows={5} />
+        <Skeleton.Table countRows={5} countColumns={5} hideHeader />
       ) : (
         <Table.Body>
           {tokens.length ? (

@@ -7,7 +7,7 @@ export interface SkeletonTableProps {
   classNameBody?: string
   countRows?: number
   countColumns?: number
-  showHeader?: boolean
+  hideHeader?: boolean
 }
 
 export const SkeletonTable = ({
@@ -16,11 +16,11 @@ export const SkeletonTable = ({
   classNameBody,
   countRows = 12,
   countColumns = 5,
-  showHeader = false
+  hideHeader = false
 }: SkeletonTableProps) => {
   return (
     <Table.Root className={cn('cn-skeleton-table', className)} disableHighlightOnHover>
-      {showHeader && (
+      {!hideHeader && (
         <Table.Header className={classNameHeader}>
           <Table.Row>
             {Array.from({ length: countColumns }).map((_, columnIndex) => (

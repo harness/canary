@@ -128,7 +128,7 @@ export function RepoSummaryView({
     return (
       <SandboxLayout.Main fullWidth>
         <SandboxLayout.Content>
-          <Skeleton.Table countColumns={3} countRows={10} showHeader />
+          <Skeleton.Table countColumns={3} countRows={10} />
         </SandboxLayout.Content>
       </SandboxLayout.Main>
     )

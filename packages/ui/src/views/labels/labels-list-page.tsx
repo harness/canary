@@ -92,7 +92,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         </ListActions.Root>
       )}
 
-      {isLoading && <Skeleton.List className="mb-8 mt-5" />}
+      {isLoading && <Skeleton.Table countRows={5} countColumns={3} />}
 
       {!isLoading && (
         <LabelsListView

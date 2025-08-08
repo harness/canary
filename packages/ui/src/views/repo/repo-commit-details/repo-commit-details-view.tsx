@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, Layout, Skeleton, Text, TimeAgoCard } from '@/components'
+import { Avatar, Button, CommitCopyActions, IconV2, Layout, Skeleton, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ICommitDetailsStore, SandboxLayout } from '@/views'
 
@@ -55,7 +55,8 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               />
               <Button variant="outline" asChild>
                 <Link to={toCode?.({ sha: commitData?.sha || '' }) || ''}>
-                  {t('views:commits.browseFiles', 'Browse files')}
+                  <IconV2 name="folder" />
+                  {t('views:commits.browseFiles', 'Browse Files')}
                 </Link>
               </Button>
             </div>

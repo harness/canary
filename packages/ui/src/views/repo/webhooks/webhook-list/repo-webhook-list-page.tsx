@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, SearchInput, Skeleton, Spacer, Text } from '@/components'
+import { Button, IconV2, ListActions, SearchInput, Skeleton, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -66,7 +66,10 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                 </ListActions.Left>
                 <ListActions.Right>
                   <Button asChild>
-                    <Link to="create">Create webhook</Link>
+                    <Link to="create">
+                      <IconV2 name="plus" />
+                      {t('views:webhookData.create', 'Create Webhook')}
+                    </Link>
                   </Button>
                 </ListActions.Right>
               </ListActions.Root>

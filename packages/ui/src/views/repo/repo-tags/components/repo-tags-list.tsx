@@ -4,6 +4,7 @@ import {
   ActionData,
   Avatar,
   CommitCopyActions,
+  IconV2,
   MoreActionsTooltip,
   NoData,
   Skeleton,
@@ -42,7 +43,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
-      title: t('views:repos.createBranch', 'Create branch'),
+      title: t('views:repos.createBranch', 'Create Branch'),
       onClick: () => onOpenCreateBranchDialog(tag)
     },
     {
@@ -53,7 +54,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     {
       iconName: 'trash',
       isDanger: true,
-      title: t('views:repos.deleteTag', 'Delete tag'),
+      title: t('views:repos.deleteTag', 'Delete Tag'),
       onClick: () => onDeleteTag(tag.name)
     }
   ]
@@ -81,11 +82,21 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         primaryButton={
           isDirtyList
             ? {
-                label: t('views:noData.clearSearch', 'Clear search'),
+                label: (
+                  <>
+                    <IconV2 name="trash" />
+                    {t('views:noData.clearSearch', 'Clear Search')}
+                  </>
+                ),
                 onClick: onResetFiltersAndPages
               }
             : {
-                label: t('views:noData.createNewTag', 'Create tag'),
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:noData.createNewTag', 'Create Tag')}
+                  </>
+                ),
                 onClick: onOpenCreateTagDialog
               }
         }

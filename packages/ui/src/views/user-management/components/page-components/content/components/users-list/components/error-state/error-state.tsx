@@ -1,4 +1,4 @@
-import { NoData } from '@/components'
+import { IconV2, NoData } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 
@@ -21,7 +21,12 @@ export const ErrorState = () => {
           )
       ]}
       primaryButton={{
-        label: t('views:notFound.button', 'Reload page'),
+        label: (
+          <>
+            <IconV2 name="refresh" />
+            {t('views:notFound.button', 'Reload Page')}
+          </>
+        ),
         onClick: () => {
           window.location.reload()
         }

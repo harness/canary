@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { MoreActionsTooltip, NoData, Table, Tag, Text } from '@/components'
+import { IconV2, MoreActionsTooltip, NoData, Table, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelValuesType } from '@/views'
@@ -64,7 +64,15 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
-          primaryButton={{ label: t('views:noData.clearSearch', 'Clear search'), onClick: handleResetQueryAndPages }}
+          primaryButton={{
+            label: (
+              <>
+                <IconV2 name="trash" />
+                {t('views:noData.clearSearch', 'Clear search')}
+              </>
+            ),
+            onClick: handleResetQueryAndPages
+          }}
         />
       )
     }
@@ -76,7 +84,15 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
         imageName="no-data-branches"
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
-        primaryButton={{ label: t('views:projectSettings.newLabels', 'Create label'), to: 'create' }}
+        primaryButton={{
+          label: (
+            <>
+              <IconV2 name="plus" />
+              {t('views:projectSettings.newLabels', 'Create Label')}
+            </>
+          ),
+          to: 'create'
+        }}
       />
     )
   }

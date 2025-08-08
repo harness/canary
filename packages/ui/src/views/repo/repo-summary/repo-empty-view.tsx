@@ -86,7 +86,7 @@ ${sshUrl}
               label: (
                 <>
                   <IconV2 name="plus" />
-                  {t('views:repos.emptyRepoPage.noData.createFile', 'New file')}
+                  {t('views:repos.emptyRepoPage.noData.createFile', 'Create File')}
                 </>
               ),
               to: `${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/`
@@ -114,7 +114,7 @@ ${sshUrl}
 
           <Layout.Grid gapY="sm" as="section">
             <Button onClick={handleCreateToken} className="w-fit">
-              {t('views:repos.emptyRepoPage.cloneInstructions.generateButton', 'Generate clone credential')}
+              {t('views:repos.emptyRepoPage.cloneInstructions.generateButton', 'Generate Clone Credential')}
             </Button>
 
             {tokenGenerationError && (

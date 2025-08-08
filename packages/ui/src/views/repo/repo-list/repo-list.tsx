@@ -123,14 +123,19 @@ export function RepoList({
           t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
         ]}
         primaryButton={{
-          label: <>{t('views:repos.createRepository', 'Create repository')}</>,
+          label: (
+            <>
+              <IconV2 name="plus" />
+              {t('views:repos.createRepository', 'Create Repository')}
+            </>
+          ),
           to: toCreateRepo?.()
         }}
         secondaryButton={{
           label: (
             <>
               <IconV2 name="import" />
-              {t('views:repos.import-repository', 'Import Repository')}
+              {t('views:repos.importRepository', 'Import Repository')}
             </>
           ),
           to: toImportRepo?.(),

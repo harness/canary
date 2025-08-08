@@ -122,7 +122,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
       <Text as="h1" variant="heading-section" color="foreground-1" className="mb-4">
         {presetRuleData
           ? t('views:repos.updateTagRule', 'Update tag rule')
-          : t('views:repos.CreateTagRule', 'Create a tag rule')}
+          : t('views:repos.createTagRule', 'Create tag rule')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
@@ -155,11 +155,11 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
               <Button type="submit" disabled={isLoading}>
                 {!isLoading
                   ? presetRuleData
-                    ? t('views:repos.updateRule', 'Update rule')
-                    : t('views:repos.createRuleButton', 'Create rule')
+                    ? t('views:repos.updateRuleButton', 'Update Rule')
+                    : t('views:repos.createRuleButton', 'Create Rule')
                   : presetRuleData
-                    ? t('views:repos.updatingRule', 'Updating rule...')
-                    : t('views:repos.creatingRuleButton', 'Creating rule...')}
+                    ? t('views:repos.updatingRuleButton', 'Updating Rule...')
+                    : t('views:repos.creatingRuleButton', 'Creating Rule...')}
               </Button>
               <Button type="button" variant="outline" asChild>
                 <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>

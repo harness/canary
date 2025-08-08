@@ -1,4 +1,15 @@
-import { Layout, MoreActionsTooltip, NoData, Pagination, Spacer, StatusBadge, Switch, Table, Text } from '@/components'
+import {
+  IconV2,
+  Layout,
+  MoreActionsTooltip,
+  NoData,
+  Pagination,
+  Spacer,
+  StatusBadge,
+  Switch,
+  Table,
+  Text
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { WebhookType } from '@/views'
 
@@ -80,11 +91,21 @@ export function RepoWebhookList({
         primaryButton={
           isDirtyList
             ? {
-                label: t('views:noData.clearFilters', 'Clear filters'),
+                label: (
+                  <>
+                    <IconV2 name="trash" />
+                    {t('views:noData.clearFilters', 'Clear Filters')}
+                  </>
+                ),
                 onClick: handleReset
               }
             : {
-                label: t('views:webhookData.create', 'Create webhook'),
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:webhookData.create', 'Create Webhook')}
+                  </>
+                ),
                 onClick: handleNavigate
               }
         }
@@ -160,7 +181,7 @@ export function RepoWebhookList({
                   iconName="more-horizontal"
                   actions={[
                     {
-                      title: t('views:webhookData.edit', 'Edit webhook'),
+                      title: t('views:webhookData.edit', 'Edit Webhook'),
                       iconName: 'edit-pencil',
                       onClick: () =>
                         navigate(
@@ -170,7 +191,7 @@ export function RepoWebhookList({
                     {
                       isDanger: true,
                       iconName: 'trash',
-                      title: t('views:webhookData.delete', 'Delete webhook'),
+                      title: t('views:webhookData.delete', 'Delete Webhook'),
                       onClick: () => openDeleteWebhookDialog(webhook.id)
                     }
                   ]}

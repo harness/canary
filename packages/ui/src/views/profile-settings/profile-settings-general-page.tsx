@@ -236,7 +236,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
                   >
                     {isUpdatingUser
                       ? t('views:profileSettings.updatingProfileButton', 'Updating...')
-                      : t('views:profileSettings.updateProfileButton', 'Update profile')}
+                      : t('views:profileSettings.updateProfileButton', 'Update Profile')}
                   </Button>
                 ) : (
                   <Button className="pointer-events-none" variant="ghost" type="button" theme="success">

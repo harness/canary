@@ -273,7 +273,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           primaryButton={
             repoId
               ? {
-                  label: 'Create pull request',
+                  label: (
+                    <>
+                      <IconV2 name="plus" />
+                      {t('views:noData.button.createPullRequest', 'Create Pull Request')}
+                    </>
+                  ),
                   to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
                 }
               : undefined
@@ -459,7 +464,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 {repoId ? (
                   <Button asChild>
                     <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
-                      {t('views:repos.createPullReq', 'Create Pull request.')}
+                      <IconV2 name="plus" />
+                      {t('views:repos.createPullReq', 'Create Pull Request.')}
                     </Link>
                   </Button>
                 ) : null}

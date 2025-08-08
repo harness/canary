@@ -155,11 +155,12 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             options={[
               {
                 value: 'tag-rule',
-                label: t('views:repos.newTagRule', 'New tag rule')
+                label: t('views:repos.createTagRuleButton', 'Create Tag Rule')
               }
             ]}
           >
-            {t('views:repos.createBranchRule', 'New branch rule')}
+            <IconV2 name="plus" />
+            {t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
           </SplitButton>
         </ListActions.Right>
       </ListActions.Root>
@@ -219,13 +220,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                       <MoreActionsTooltip
                         actions={[
                           {
-                            title: t('views:rules.edit', 'Edit rule'),
+                            title: t('views:rules.edit', 'Edit Rule'),
                             iconName: 'edit-pencil',
                             onClick: () => handleRuleClick(rule.identifier!)
                           },
                           {
                             isDanger: true,
-                            title: t('views:rules.delete', 'Delete rule'),
+                            title: t('views:rules.delete', 'Delete Rule'),
                             iconName: 'trash',
                             onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
                           }
@@ -282,11 +283,16 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               )
             ]}
             splitButton={{
-              label: t('views:repos.createBranchRuleButton', 'Create Branch rule'),
+              label: (
+                <>
+                  <IconV2 name="plus" />
+                  {t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+                </>
+              ),
               options: [
                 {
                   value: 'tag-rule',
-                  label: t('views:repos.createTagRuleButton', 'Create tag rule')
+                  label: t('views:repos.createTagRuleButton', 'Create Tag Rule')
                 }
               ],
               handleOptionChange: option => {

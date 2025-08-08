@@ -45,8 +45,8 @@ export const RepoSettingsGeneralDelete: FC<{
                 ? t('views:repos.unarchiving', 'Unarchiving...')
                 : t('views:repos.archiving', 'Archiving...')
               : archived
-                ? t('views:repos.unarchiveRepoButton', 'Unarchive repository')
-                : t('views:repos.archiveRepoButton', 'Archive repository')}
+                ? t('views:repos.unarchiveRepoButton', 'Unarchive Repository')
+                : t('views:repos.archiveRepoButton', 'Archive Repository')}
           </Button>
         </ButtonLayout>
         {apiError && apiError.type === ErrorTypes.ARCHIVE_REPO && (
@@ -69,7 +69,7 @@ export const RepoSettingsGeneralDelete: FC<{
         </Layout.Vertical>
         <ButtonLayout horizontalAlign="start">
           <Button type="button" variant="primary" theme="danger" onClick={openRepoAlertDeleteDialog}>
-            {t('views:repos.deleteRepoButton', 'Delete this repository')}
+            {t('views:repos.deleteRepoButton', 'Delete Repository')}
           </Button>
         </ButtonLayout>
         {apiError && apiError.type === ErrorTypes.DELETE_REPO && (

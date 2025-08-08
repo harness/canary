@@ -139,7 +139,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
       <Text as="h1" variant="heading-section" className="mb-4">
         {presetRuleData
           ? t('views:repos.updateBranchRule', 'Update branch rule')
-          : t('views:repos.CreateRule', 'Create a branch rule')}
+          : t('views:repos.createBranchRule', 'Create a branch rule')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
@@ -187,11 +187,11 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
               <Button type="submit" disabled={isLoading}>
                 {!isLoading
                   ? presetRuleData
-                    ? t('views:repos.updateRule', 'Update rule')
-                    : t('views:repos.createRuleButton', 'Create rule')
+                    ? t('views:repos.updateRuleButton', 'Update Rule')
+                    : t('views:repos.createRuleButton', 'Create Rule')
                   : presetRuleData
-                    ? t('views:repos.updatingRule', 'Updating rule...')
-                    : t('views:repos.creatingRuleButton', 'Creating rule...')}
+                    ? t('views:repos.updatingRuleButton', 'Updating Rule...')
+                    : t('views:repos.creatingRuleButton', 'Creating Rule...')}
               </Button>
               <Button type="button" variant="outline" asChild>
                 <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>

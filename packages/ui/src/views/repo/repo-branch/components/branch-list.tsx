@@ -65,14 +65,24 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
               ]
         }
-        secondaryButton={
+        primaryButton={
           isDirtyList
             ? {
-                label: t('views:noData.clearSearch', 'Clear search'),
+                label: (
+                  <>
+                    <IconV2 name="trash" />
+                    {t('views:noData.clearSearch', 'Clear Search')}
+                  </>
+                ),
                 onClick: handleResetFiltersAndPages
               }
             : {
-                label: t('views:repos.createBranch', 'Create branch'),
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:repos.createBranch', 'Create Branch')}
+                  </>
+                ),
                 onClick: () => {
                   setCreateBranchDialogOpen(true)
                 }

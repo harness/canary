@@ -109,8 +109,8 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               </Dialog.Close>
               <Button type="submit" disabled={isLoading} loading={isLoading}>
                 {isLoading
-                  ? t('views:repos.creatingTagButton', 'Creating tag...')
-                  : t('views:repos.createTagButton', 'Create tag')}
+                  ? t('views:repos.creatingTagButton', 'Creating Tag...')
+                  : t('views:repos.createTagButton', 'Create Tag')}
               </Button>
             </ButtonLayout>
           </Dialog.Footer>

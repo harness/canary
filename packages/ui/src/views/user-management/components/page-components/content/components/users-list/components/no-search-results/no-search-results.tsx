@@ -1,4 +1,4 @@
-import { NoData } from '@/components'
+import { IconV2, NoData } from '@/components'
 import { useTranslation } from '@/context'
 import { useSearch } from '@/views/user-management/providers/search-provider'
 
@@ -19,7 +19,12 @@ export const NoSearchResults = () => {
         })
       ]}
       primaryButton={{
-        label: t('views:noData.clearFilters', 'Clear filters'),
+        label: (
+          <>
+            <IconV2 name="trash" />
+            {t('views:noData.clearFilters', 'Clear Filters')}
+          </>
+        ),
         onClick: handleResetSearch
       }}
     />

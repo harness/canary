@@ -68,7 +68,12 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             )
         ]}
         primaryButton={{
-          label: t('views:notFound.button', 'Reload page'),
+          label: (
+            <>
+              <IconV2 name="refresh" />
+              {t('views:notFound.button', 'Reload Page')}
+            </>
+          ),
           onClick: () => {
             navigate(0) // Reload the page
           }
@@ -187,19 +192,20 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 options={[
                   {
                     value: 'new',
-                    label: t('views:repos.createRepository', 'Create repository')
+                    label: t('views:repos.createRepository', 'Create Repository')
                   },
                   {
                     value: 'import',
-                    label: t('views:repos.import-repository', 'Import repository')
+                    label: t('views:repos.importRepository', 'Import Repository')
                   },
                   {
                     value: 'import-multiple',
-                    label: t('views:repos.import-repositories', 'Import repositories')
+                    label: t('views:repos.importRepositories', 'Import Repositories')
                   }
                 ]}
               >
-                {t('views:repos.createRepository', 'Create repository')}
+                <IconV2 name="plus" />
+                {t('views:repos.createRepository', 'Create Repository')}
               </SplitButton>
             }
             filterOptions={filterOptions}

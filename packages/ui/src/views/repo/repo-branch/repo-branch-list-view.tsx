@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, IconV2, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -73,7 +73,8 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                   variant="primary"
                   theme="default"
                 >
-                  {t('views:repos.createBranch', 'Create branch')}
+                  <IconV2 name="plus" />
+                  {t('views:repos.createBranch', 'Create Branch')}
                 </Button>
               </ListActions.Right>
             </ListActions.Root>

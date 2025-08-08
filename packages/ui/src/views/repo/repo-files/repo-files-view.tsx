@@ -1,6 +1,6 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { NoData, PathParts, Skeleton } from '@/components'
+import { IconV2, NoData, PathParts, Skeleton } from '@/components'
 import { useTranslation } from '@/context'
 import {
   BranchInfoBar,
@@ -118,7 +118,12 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         title="No files yet"
         description={['There are no files in this repository yet.']}
         primaryButton={{
-          label: 'Create file',
+          label: (
+            <>
+              <IconV2 name="plus" />
+              {t('views:repos.createFile', 'Create File')}
+            </>
+          ),
           to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`
         }}
       />

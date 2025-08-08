@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, IconV2, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -71,6 +71,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           </ListActions.Left>
           <ListActions.Right>
             <Button onClick={openCreateTagDialog}>
+              <IconV2 name="plus" />
               <span>{t('views:repos.createTag', 'Create Tag')}</span>
             </Button>
           </ListActions.Right>

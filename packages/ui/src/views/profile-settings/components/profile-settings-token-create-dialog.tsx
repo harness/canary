@@ -172,14 +172,14 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
             <ButtonLayout>
               <Dialog.Close onClick={onClose}>
                 {createdTokenData
-                  ? t('views:profileSettings.gotItButton', 'Got it')
+                  ? t('views:profileSettings.gotItButton', 'Got It')
                   : t('views:profileSettings.cancel', 'Cancel')}
               </Dialog.Close>
               {!createdTokenData && (
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading
-                    ? t('views:profileSettings.generateTokenButton', 'Generate token')
-                    : t('views:profileSettings.generatingTokenButton', 'Generating token...')}
+                    ? t('views:profileSettings.generateTokenButton', 'Generate Token')
+                    : t('views:profileSettings.generatingTokenButton', 'Generating Token...')}
                 </Button>
               )}
             </ButtonLayout>

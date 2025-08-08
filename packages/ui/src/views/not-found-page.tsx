@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -32,7 +32,8 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
             : t('views:notFound.description', 'The requested page is not found.')}
         </span>
         <Button variant="outline" type="button" onClick={handleReload}>
-          {t('views:notFound.button', 'Reload page')}
+          <IconV2 name="refresh" />
+          {t('views:notFound.button', 'Reload Page')}
         </Button>
       </div>
     </SandboxLayout.Main>

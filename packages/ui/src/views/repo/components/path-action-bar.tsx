@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Layout, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, IconV2, Layout, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 
@@ -60,7 +60,8 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         selectedRefType === BranchSelectorTab.BRANCHES && (
           <Button asChild>
             <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
-              <span className="truncate">{t('views:repos.create-file', 'Create file')}</span>
+              <IconV2 name="plus" />
+              <span className="truncate">{t('views:repos.createFile', 'Create File')}</span>
             </Link>
           </Button>
         )}
@@ -68,10 +69,15 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         <div className="flex gap-2.5">
           {!!handleCancelFileEdit && (
             <Button variant="outline" onClick={handleCancelFileEdit}>
-              Cancel changes
+              Cancel Changes
             </Button>
           )}
-          {!!handleOpenCommitDialog && <Button onClick={handleOpenCommitDialog}>Commit changes</Button>}
+          {!!handleOpenCommitDialog && (
+            <Button onClick={handleOpenCommitDialog}>
+              <IconV2 name="git-commit" />
+              Commit Changes
+            </Button>
+          )}
         </div>
       )}
     </Layout.Horizontal>

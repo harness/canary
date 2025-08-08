@@ -86,7 +86,12 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                     primaryButton={
                       isDirtyList
                         ? {
-                            label: t('views:noData.clearFilters', 'Clear filters'),
+                            label: (
+                              <>
+                                <IconV2 name="trash" />
+                                {t('views:noData.clearFilters', 'Clear Filters')}
+                              </>
+                            ),
                             onClick: handleResetFiltersAndPages
                           }
                         : // TODO: add onClick for Creating new commit
@@ -94,7 +99,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                             label: (
                               <>
                                 <IconV2 name="plus" />
-                                {t('views:commits.createNewCommit', 'Make commit')}
+                                {t('views:commits.createNewCommit', 'Create New Commit')}
                               </>
                             )
                           }

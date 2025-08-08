@@ -160,11 +160,11 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
             <Button type="submit" disabled={isLoading}>
               {isLoading
                 ? preSetWebhookData
-                  ? t('views:repos.updatingWebhook', 'Updating webhook...')
-                  : t('views:repos.creatingWebhook', 'Creating webhook...')
+                  ? t('views:repos.updatingWebhook', 'Updating Webhook...')
+                  : t('views:repos.creatingWebhook', 'Creating Webhook...')
                 : preSetWebhookData
-                  ? t('views:repos.updateWebhook', 'Update webhook')
-                  : t('views:repos.createWebhook', 'Create webhook')}
+                  ? t('views:repos.updateWebhook', 'Update Webhook')
+                  : t('views:repos.createWebhook', 'Create Webhook')}
             </Button>
             <Button type="button" variant="outline" onClick={onFormCancel}>
               {t('views:repos.cancel', 'Cancel')}

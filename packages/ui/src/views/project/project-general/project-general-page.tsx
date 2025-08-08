@@ -145,7 +145,7 @@ export const ProjectSettingsGeneralPage = ({
                         <Button type="submit">
                           {isUpdating
                             ? t('views:projectSettings.general.formSubmitButton.savingState', 'Saving...')
-                            : t('views:projectSettings.general.formSubmitButton.defaultState', 'Save changes')}
+                            : t('views:projectSettings.general.formSubmitButton.defaultState', 'Save Changes')}
                         </Button>
                         <Button variant="outline" type="button" onClick={handleReset}>
                           {t('views:projectSettings.general.formCancelButton', 'Cancel')}

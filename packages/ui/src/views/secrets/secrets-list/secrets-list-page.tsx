@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ListActions, NoData, Pagination, SearchBox, Spacer, Text } from '@/components'
+import { Button, IconV2, ListActions, NoData, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
@@ -48,7 +48,12 @@ const SecretListPage: FC<SecretListPageProps> = ({
             )
         ]}
         primaryButton={{
-          label: t('views:notFound.button', 'Reload page'),
+          label: (
+            <>
+              <IconV2 name="refresh" />
+              {t('views:notFound.button', 'Reload Page')}
+            </>
+          ),
           onClick: () => {
             navigate(0) // Reload the page
           }
@@ -75,7 +80,10 @@ const SecretListPage: FC<SecretListPageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button onClick={onCreate}>{t('views:secrets.createNew', 'New secret')}</Button>
+            <Button onClick={onCreate}>
+              <IconV2 name="plus" />
+              {t('views:secrets.createNew', 'New Secret')}
+            </Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={4} />

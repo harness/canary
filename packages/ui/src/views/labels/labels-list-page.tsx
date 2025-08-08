@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, ListActions, Pagination, SearchInput, Skeleton, Text } from '@/components'
+import { Button, Checkbox, IconV2, ListActions, Pagination, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ILabelsStore, SandboxLayout } from '@/views'
 
@@ -83,7 +83,10 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           </ListActions.Left>
           <ListActions.Right>
             <Button asChild>
-              <Link to="create">{t('views:labelData.newLabel', 'New label')}</Link>
+              <Link to="create">
+                <IconV2 name="plus" />
+                {t('views:labelData.newLabel', 'New Label')}
+              </Link>
             </Button>
           </ListActions.Right>
         </ListActions.Root>

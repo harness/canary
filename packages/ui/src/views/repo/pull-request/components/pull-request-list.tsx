@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NoData, StackedList } from '@/components'
+import { IconV2, NoData, StackedList } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { PRState, PullRequestListProps } from '@/views'
 import { noop } from 'lodash-es'
@@ -53,7 +53,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({
               'views:noData.noOpenPullRequests',
               `There are no open pull requests in this ${repoId ? 'repo' : 'project'} yet.`
             ),
-            t('views:repos.createPullReq', 'Create Pull request.')
+            t('views:repos.createPullReq', 'Create Pull Request.')
           ]
         }
       case PR_STATE.CLOSED:
@@ -61,7 +61,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({
           title: t('views:noData.title.noClosedPullRequests', 'No closed pull requests yet'),
           description: [
             t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),
-            t('views:repos.createPullReq', 'Create Pull request.')
+            t('views:repos.createPullReq', 'Create Pull Request.')
           ]
         }
       case PR_STATE.MERGED:
@@ -69,7 +69,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({
           title: t('views:noData.title.noMergedPullRequests', 'No merged pull requests yet'),
           description: [
             t('views:noData.noMergedPullRequests', 'There are no merged pull requests in this project yet.'),
-            t('views:repos.createPullReq', 'Create Pull request.')
+            t('views:repos.createPullReq', 'Create Pull Request.')
           ]
         }
       default:
@@ -106,7 +106,12 @@ const EmptyStateView: FC<EmptyStateProps> = ({
         primaryButton={
           repoId
             ? {
-                label: t('views:noData.button.createPullRequest', 'Create pull request'),
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:noData.button.createPullRequest', 'Create Pull Request')}
+                  </>
+                ),
                 to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
               }
             : undefined

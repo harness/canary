@@ -144,7 +144,7 @@
       },
       "radioGroup": {
         "directly": {
-          "labelFirst": "Commit directly to the",
+          "labelFirst": "Commit directly to",
           "labelSecond": "branch"
         },
         "new": {

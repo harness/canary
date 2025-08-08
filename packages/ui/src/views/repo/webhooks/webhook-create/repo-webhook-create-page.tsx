@@ -133,18 +133,25 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
         <Fieldset className="mt-5">
           <WebhookTriggerField register={register} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
-            <div className="flex justify-between">
-              {eventSettingsComponents.map(component => (
-                <div key={component.fieldName} className="flex flex-col">
-                  <WebhookEventSettingsFieldset
-                    register={register}
-                    setValue={setValue}
-                    watch={watch}
-                    eventList={component.events}
-                  />
-                </div>
-              ))}
-            </div>
+            <>
+              <div className="flex justify-between">
+                {eventSettingsComponents.map(component => (
+                  <div key={component.fieldName} className="flex flex-col">
+                    <WebhookEventSettingsFieldset
+                      register={register}
+                      setValue={setValue}
+                      watch={watch}
+                      eventList={component.events}
+                    />
+                  </div>
+                ))}
+              </div>
+              {formMethods.formState.errors.triggers && (
+                <Alert.Root theme="danger">
+                  <Alert.Title>{formMethods.formState.errors.triggers.message}</Alert.Title>
+                </Alert.Root>
+              )}
+            </>
           )}
         </Fieldset>
 

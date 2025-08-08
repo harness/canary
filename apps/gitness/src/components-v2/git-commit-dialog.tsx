@@ -182,7 +182,7 @@ export default function GitCommitDialog({
       dryRun={dryRun}
       violation={violation}
       bypassable={bypassable}
-      currentBranch={currentBranch || 'Master'}
+      currentBranch={currentBranch.replace('refs/heads/', '')}
       isFileNameRequired={isNew && resourcePath?.length < 1}
       setAllStates={setAllStates}
       // TODO: Add a loading state for submission

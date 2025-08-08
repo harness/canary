@@ -42,8 +42,6 @@ export const WebhookExecutionsContainer = () => {
   return (
     <RepoWebhookExecutionsPage
       useWebhookStore={useWebhookStore}
-      toRepoWebhooks={() => routes.toRepoWebhooks({ webhookId })}
-      repo_ref={repo_ref}
       isLoading={isLoading}
       toRepoWebhookExecutionDetails={(executionId: string) =>
         routes.toRepoWebhookExecutionDetails({ spaceId, repoId, webhookId, executionId })

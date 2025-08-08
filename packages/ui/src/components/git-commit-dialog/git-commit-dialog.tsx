@@ -171,7 +171,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   value={CommitToGitRefOption.DIRECTLY}
                   label={
                     <>
-                      {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to the')}
+                      {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to')}
                       <Tag
                         className="-mt-0.5 mx-1.5 align-sub"
                         variant="secondary"
@@ -181,7 +181,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                         icon="git-branch"
                         showIcon
                       />
-                      {t('component:commitDialog.form.radioGroup.directly.labelSecond', 'branch')}
                     </>
                   }
                 />

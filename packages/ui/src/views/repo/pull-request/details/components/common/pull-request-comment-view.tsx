@@ -61,7 +61,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
 
       {/* Only show the suggestion buttons if the suggestion is not yet applied */}
       {isSuggestion && !isApplied && (
-        <Layout.Horizontal align="center" justify="end" gap="sm" className="pt-4">
+        <Layout.Horizontal align="center" justify="end" gap="sm" className="pt-3">
           <Button
             className="gap-x-2"
             variant="outline"

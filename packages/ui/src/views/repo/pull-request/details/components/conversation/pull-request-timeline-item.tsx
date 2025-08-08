@@ -286,7 +286,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     if (contentElement.props?.children?.length) {
       // If content is an array of comments, take the first one
       const [firstComment] = Children.toArray(contentElement.props.children)
-      return <div className="px-4 pt-4 [&_[data-connector]]:hidden">{firstComment}</div>
+      return <div className="px-2 pt-2 [&_[data-connector]]:hidden">{firstComment}</div>
     }
 
     // If content is a single element, return as is
@@ -296,15 +296,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   return (
     <>
       <div id={id}>
-        <NodeGroup.Root
-          className={cn(
-            {
-              'pb-cn-lg': !isLast,
-              'pb-cn-md': isLast
-            },
-            wrapperClassName
-          )}
-        >
+        <NodeGroup.Root className={cn('pb-cn-sm', wrapperClassName)}>
           {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
@@ -407,7 +399,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         setComment={setComment}
                       />
                     ) : (
-                      <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
+                      <div className={cn('flex items-center gap-2 border-t bg-cn-background-2', replyBoxClassName)}>
                         {!!currentUser && <Avatar name={currentUser} rounded />}
                         <TextInput
                           wrapperClassName="flex-1"

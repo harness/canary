@@ -437,11 +437,11 @@ const PullRequestDiffViewer = ({
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pt-4 pb-1"
+                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-2 pt-2"
                 header={[]}
                 currentUser={currentUser}
                 isComment
-                replyBoxClassName="p-4"
+                replyBoxClassName="p-2"
                 hideReplyHere={hideReplyHeres[parent?.id]}
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
@@ -461,7 +461,7 @@ const PullRequestDiffViewer = ({
                   )
                 }
                 content={
-                  <div className="px-4 pt-4">
+                  <div className="px-2 pt-2">
                     <PullRequestTimelineItem
                       isReply={false}
                       mentions={parent?.payload?.mentions}

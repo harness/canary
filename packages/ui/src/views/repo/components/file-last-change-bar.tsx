@@ -57,6 +57,7 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
               className="flex-none"
               right
               title={<TopDetails toCommitDetails={toCommitDetails} {...props} />}
+              disableTruncate
             />
           </>
         ) : (

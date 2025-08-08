@@ -56,7 +56,12 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
     return (
       <DialogPrimitive.Portal container={portalContainer}>
         <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
-        <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
+        <DialogPrimitive.Content
+          ref={ref}
+          className={cn(contentVariants({ size }), className)}
+          onOpenAutoFocus={event => event.preventDefault()}
+          {...props}
+        >
           {!hideClose && (
             <DialogPrimitive.Close asChild>
               <Button variant="transparent" className="cn-modal-dialog-close" iconOnly>

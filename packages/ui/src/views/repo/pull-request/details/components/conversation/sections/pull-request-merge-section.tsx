@@ -17,23 +17,30 @@ interface StepInfoProps {
 const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
-      <Layout.Horizontal gap="3xs">
+      <Layout.Horizontal gap="2xs">
         <Text as="h3" variant="body-strong" color="foreground-1" className="flex-none">
           {item.step}
         </Text>
-        <Layout.Vertical className="w-[90%] max-w-full">
-          <Text>{item.description}</Text>
-          <div
-            className={cn('text-2 text-cn-foreground-2', {
-              'border border-cn-borders-2 rounded-md px-2 py-1 !my-2': item.code,
-              '!my-1': item.comment
-            })}
-          >
-            <Layout.Horizontal align="center" justify="between">
-              <Text>{item.code ? item.code : item.comment}</Text>
-              {!!item.code && <CopyButton name={item.code} />}
+        <Layout.Vertical className="w-[90%] max-w-full" gap="xs">
+          <Text variant="body-normal" color="foreground-2">
+            {item.description}
+          </Text>
+          {item.code ? (
+            <Layout.Horizontal
+              align="center"
+              justify="between"
+              className="border border-cn-borders-2 rounded-md px-2 py-1 mt-0 mb-1"
+            >
+              <Text variant="body-normal" color="foreground-2" className="font-mono">
+                {item.code}
+              </Text>
+              <CopyButton name={item.code} />
             </Layout.Horizontal>
-          </div>
+          ) : item.comment ? (
+            <Text variant="body-normal" color="foreground-2" className="my-1">
+              {item.comment}
+            </Text>
+          ) : null}
         </Layout.Vertical>
       </Layout.Horizontal>
     </li>
@@ -60,6 +67,7 @@ interface PullRequestMergeSectionProps {
   accordionValues: string[]
   setAccordionValues: Dispatch<SetStateAction<string[]>>
   handleRebaseBranch?: () => void
+  isRebasing?: boolean
   selectedMergeMethod?: string
 }
 const PullRequestMergeSection = ({
@@ -70,6 +78,7 @@ const PullRequestMergeSection = ({
   accordionValues,
   setAccordionValues,
   handleRebaseBranch,
+  isRebasing,
   selectedMergeMethod
 }: PullRequestMergeSectionProps) => {
   const [showCommandLineInfo, setShowCommandLineInfo] = useState(false)
@@ -210,32 +219,32 @@ const PullRequestMergeSection = ({
           <Accordion.Content className="ml-7">
             <>
               {showCommandLineInfo && (
-                <div className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2">
+                <Layout.Vertical className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2" gap="sm">
                   <Text variant="heading-small" color="foreground-1">
                     Resolve conflicts via command line
                   </Text>
-                  <ol className="flex flex-col gap-y-3">
+                  <ol className="flex flex-col gap-y-0.5">
                     {stepMap.map(item => (
                       <StepInfo key={item.step} {...item} />
                     ))}
                   </ol>
-                </div>
+                </Layout.Vertical>
               )}
-              <Text as="span">
-                Conflicting files <Text as="span">{conflictingFiles?.length || 0}</Text>
+              <Text variant="body-normal" color="foreground-1">
+                Conflicting files {conflictingFiles?.length || 0}
               </Text>
 
               {!isEmpty(conflictingFiles) && (
-                <div className="mt-1">
+                <Layout.Vertical gap="xs" className="mt-1">
                   {conflictingFiles?.map(file => (
-                    <div className="flex items-center gap-x-2 py-1.5" key={file}>
+                    <Layout.Horizontal key={file} align="center" gap="xs" className="py-1.5">
                       <IconV2 size="md" className="text-icons-1" name="page" />
-                      <Text as="span" color="foreground-1">
+                      <Text variant="body-normal" color="foreground-1">
                         {file}
                       </Text>
-                    </div>
+                    </Layout.Horizontal>
                   ))}
-                </div>
+                </Layout.Vertical>
               )}
             </>
           </Accordion.Content>
@@ -257,7 +266,14 @@ const PullRequestMergeSection = ({
             description={<LineDescription text={renderBranchTags()} />}
           />
           {handleRebaseBranch && (
-            <Button theme="default" variant="primary" onClick={handleRebaseBranch} size="md">
+            <Button
+              theme="default"
+              variant="primary"
+              onClick={handleRebaseBranch}
+              loading={isRebasing}
+              disabled={isRebasing}
+              size="md"
+            >
               Update with rebase
             </Button>
           )}

@@ -107,11 +107,18 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   // Get the current selected merge method
   const getCurrentMergeMethod = () => {
     const selectedAction = actions?.[parseInt(mergeButtonValue || '0')]
-    if (selectedAction?.title === 'Fast-forward merge') return 'fast-forward'
-    if (selectedAction?.title === 'Squash and merge') return 'squash'
-    if (selectedAction?.title === 'Merge pull request') return 'merge'
-    if (selectedAction?.title === 'Rebase and merge') return 'rebase'
-    return undefined
+    switch (selectedAction?.title) {
+      case 'Fast-forward merge':
+        return 'fast-forward'
+      case 'Squash and merge':
+        return 'squash'
+      case 'Merge pull request':
+        return 'merge'
+      case 'Rebase and merge':
+        return 'rebase'
+      default:
+        return undefined
+    }
   }
 
   const currentMergeMethod = getCurrentMergeMethod()
@@ -288,6 +295,7 @@ export interface PullRequestPanelProps
   setMergeTitle: (title: string) => void
   setMergeMessage: (message: string) => void
   isMerging?: boolean
+  isRebasing?: boolean
   onMergeMethodSelect?: (method: string) => void
 }
 
@@ -325,6 +333,7 @@ const PullRequestPanel = ({
   setMergeTitle,
   setMergeMessage,
   isMerging,
+  isRebasing,
   onMergeMethodSelect,
   ...routingProps
 }: PullRequestPanelProps) => {
@@ -346,23 +355,28 @@ const PullRequestPanel = ({
 
   const handleMergeTypeSelect = (value: string) => {
     const selectedAction = actions[parseInt(value)]
-    if (selectedAction.title === 'Squash and merge') {
-      setMergeMessage(
-        pullReqCommits?.commits
-          ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
-          .join('\n\n')
-          ?.slice(0, 1000) ?? ''
-      )
-      onMergeMethodSelect?.('squash')
-    } else if (selectedAction.title === 'Merge pull request') {
-      setMergeMessage('')
-      onMergeMethodSelect?.('merge')
-    } else if (selectedAction.title === 'Rebase and merge') {
-      setMergeMessage('')
-      onMergeMethodSelect?.('rebase')
-    } else if (selectedAction.title === 'Fast-forward merge') {
-      setMergeMessage('')
-      onMergeMethodSelect?.('fast-forward')
+    switch (selectedAction.title) {
+      case 'Squash and merge':
+        setMergeMessage(
+          pullReqCommits?.commits
+            ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
+            .join('\n\n')
+            ?.slice(0, 1000) ?? ''
+        )
+        onMergeMethodSelect?.('squash')
+        break
+      case 'Merge pull request':
+        setMergeMessage('')
+        onMergeMethodSelect?.('merge')
+        break
+      case 'Rebase and merge':
+        setMergeMessage('')
+        onMergeMethodSelect?.('rebase')
+        break
+      case 'Fast-forward merge':
+        setMergeMessage('')
+        onMergeMethodSelect?.('fast-forward')
+        break
     }
 
     setShowActionBtn(true)
@@ -384,9 +398,8 @@ const PullRequestPanel = ({
   const handleConfirmMerge = () => {
     const selectedAction = actions[parseInt(mergeButtonValue || '0')]
     // Check if this is a merge action
-    const isMergeAction = ['Squash and merge', 'Merge pull request', 'Rebase and merge', 'Fast-forward merge'].includes(
-      selectedAction?.title || ''
-    )
+    const mergeActionTitles = ['Squash and merge', 'Merge pull request', 'Rebase and merge', 'Fast-forward merge']
+    const isMergeAction = mergeActionTitles.includes(selectedAction?.title || '')
 
     setShowMergeInputs(false)
     setShowActionBtn(false)
@@ -414,11 +427,18 @@ const PullRequestPanel = ({
   // To get the selected merge method
   const getSelectedMergeMethod = () => {
     const selectedAction = actions[parseInt(mergeButtonValue || '0')]
-    if (selectedAction?.title === 'Fast-forward merge') return 'fast-forward'
-    if (selectedAction?.title === 'Squash and merge') return 'squash'
-    if (selectedAction?.title === 'Merge pull request') return 'merge'
-    if (selectedAction?.title === 'Rebase and merge') return 'rebase'
-    return undefined
+    switch (selectedAction?.title) {
+      case 'Fast-forward merge':
+        return 'fast-forward'
+      case 'Squash and merge':
+        return 'squash'
+      case 'Merge pull request':
+        return 'merge'
+      case 'Rebase and merge':
+        return 'rebase'
+      default:
+        return undefined
+    }
   }
 
   const handleAccordionValuesChange = useCallback((data: string | string[]) => {
@@ -730,6 +750,7 @@ const PullRequestPanel = ({
                   accordionValues={accordionValues}
                   setAccordionValues={setAccordionValues}
                   handleRebaseBranch={handleRebaseBranch}
+                  isRebasing={isRebasing}
                   selectedMergeMethod={getSelectedMergeMethod()}
                 />
               )}

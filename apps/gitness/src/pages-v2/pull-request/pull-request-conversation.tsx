@@ -622,6 +622,7 @@ export default function PullRequestConversationPage() {
   const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
   const [mergeMessage, setMergeMessage] = useState('')
   const [isMerging, setIsMerging] = useState(false)
+  const [isRebasing, setIsRebasing] = useState(false)
   const [selectedMergeMethod, setSelectedMergeMethod] = useState<EnumMergeMethod | null>(null)
 
   // Update merge title based on selected merge method
@@ -749,12 +750,16 @@ export default function PullRequestConversationPage() {
         : {})
     }
 
+    setIsRebasing(true)
     rebaseBranch({ body: payload, repo_ref: repoRef })
       .then(() => {
         handleRefetchData()
         setRuleViolationArr(undefined)
       })
       .catch(error => setRebaseErrorMessage(error.message))
+      .finally(() => {
+        setIsRebasing(false)
+      })
   }, [pullReqMetadata, handleRefetchData, setRuleViolationArr, repoRef])
 
   /**
@@ -866,6 +871,7 @@ export default function PullRequestConversationPage() {
       setMergeTitle,
       setMergeMessage,
       isMerging,
+      isRebasing,
       onMergeMethodSelect: handleMergeMethodSelect
     }
   }, [
@@ -905,6 +911,7 @@ export default function PullRequestConversationPage() {
     mergeMessage,
     routes,
     isMerging,
+    isRebasing,
     setSelectedMergeMethod,
     handleMergeMethodSelect
   ])

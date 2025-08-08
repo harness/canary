@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Text, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTheme, useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -491,7 +491,18 @@ const PullRequestDiffViewer = ({
                       header={[
                         {
                           name: parent.author,
-                          description: <TimeAgoCard timestamp={parent?.created} />
+                          description: (
+                            <Layout.Horizontal align="center" gap="xs">
+                              <TimeAgoCard timestamp={parent?.created} />
+
+                              {parent?.payload?.payload?.code_comment?.outdated && (
+                                <>
+                                  <Separator orientation="vertical" className="h-3.5" />
+                                  <Tag key={'outdated'} value="OUTDATED" theme="orange" />
+                                </>
+                              )}
+                            </Layout.Horizontal>
+                          )
                         }
                       ]}
                       content={

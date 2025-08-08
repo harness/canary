@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, CopyButton, IconV2, Layout, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, CopyButton, IconV2, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -313,9 +313,16 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         payload?.created
           ? {
               description: (
-                <div className="flex gap-x-1">
-                  reviewed <TimeAgoCard timestamp={payload.created} />
-                </div>
+                <Layout.Horizontal align="center" gap="3xs">
+                  <Text variant="body-single-line-normal">reviewed</Text>
+                  <TimeAgoCard timestamp={payload.created} />
+                  {payload?.code_comment?.outdated && (
+                    <>
+                      <Separator orientation="vertical" className="h-3.5 mx-1" />
+                      <Tag key={'outdated'} value="OUTDATED" theme="orange" />
+                    </>
+                  )}
+                </Layout.Horizontal>
               )
             }
           : {}
@@ -327,8 +334,8 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         handleSaveComment,
         isNotCodeComment: true,
         contentHeader: (
-          <Layout.Horizontal gap="sm">
-            <span className="font-medium text-cn-foreground-1">{payload?.code_comment?.path}</span>
+          <Layout.Horizontal gap="sm" align="center">
+            <Text variant="body-single-line-normal">{payload?.code_comment?.path}</Text>
             <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />
           </Layout.Horizontal>
         ),
@@ -376,9 +383,10 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         payload?.created
           ? {
               description: (
-                <div className="flex gap-x-1">
-                  commented <TimeAgoCard timestamp={payload.created} />
-                </div>
+                <Layout.Horizontal align="center" gap="3xs">
+                  <Text variant="body-normal">commented</Text>
+                  <TimeAgoCard timestamp={payload.created} />
+                </Layout.Horizontal>
               )
             }
           : {}

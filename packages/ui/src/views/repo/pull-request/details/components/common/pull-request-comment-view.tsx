@@ -2,7 +2,7 @@
 
 import { FC } from 'react'
 
-import { Button, CounterBadge, MarkdownViewer } from '@/components'
+import { Button, CounterBadge, Layout, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
@@ -61,7 +61,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
 
       {/* Only show the suggestion buttons if the suggestion is not yet applied */}
       {isSuggestion && !isApplied && (
-        <div className="flex justify-end gap-x-2.5">
+        <Layout.Horizontal align="center" justify="end" gap="sm" className="pt-4">
           <Button
             className="gap-x-2"
             variant="outline"
@@ -92,7 +92,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
               Add suggestion to batch
             </Button>
           )}
-        </div>
+        </Layout.Horizontal>
       )}
     </>
   )

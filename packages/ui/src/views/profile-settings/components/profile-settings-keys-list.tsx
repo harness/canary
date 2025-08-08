@@ -29,7 +29,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
       </Table.Header>
 
       {isLoading ? (
-        <Skeleton.Table countRows={4} countColumns={4} />
+        <Skeleton.Table countRows={4} countColumns={4} hideHeader />
       ) : (
         <Table.Body>
           {publicKeys.length ? (

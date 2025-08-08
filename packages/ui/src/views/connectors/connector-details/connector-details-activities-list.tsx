@@ -34,7 +34,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
   const { t } = useTranslation()
   const content = activities?.content
   if (isLoading) {
-    return <Skeleton.List />
+    return <Skeleton.Table countRows={12} countColumns={3} />
   }
 
   if (!content.length) {
@@ -59,35 +59,32 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
           <Table.Head className="w-44 text-cn-foreground-4">{t('views:connectors.status', 'Status')}</Table.Head>
         </Table.Row>
       </Table.Header>
-      {isLoading ? (
-        <Skeleton.Table countRows={12} countColumns={5} />
-      ) : (
-        <Table.Body>
-          {content.map(({ referredEntity, activityTime, description, activityStatus }: ConnectorActivityItem) => {
-            const { name, entityRef } = referredEntity
-            const identifier = entityRef?.identifier || name
-            return (
-              <Table.Row key={identifier} className="cursor-pointer">
-                <Table.Cell className="max-w-80 content-center items-center truncate">
-                  <Activity activity={description} />
-                </Table.Cell>
-                <Table.Cell className="my-2 block max-w-80 content-center items-center p-2.5">
-                  {activityTime ? (
-                    <TimeAgoCard
-                      timestamp={activityTime}
-                      textProps={{ variant: 'body-strong', color: 'foreground-3', truncate: true }}
-                    />
-                  ) : null}
-                </Table.Cell>
 
-                <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">
-                  <ConnectivityStatus status={activityStatus.toLowerCase()} />
-                </Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      )}
+      <Table.Body>
+        {content.map(({ referredEntity, activityTime, description, activityStatus }: ConnectorActivityItem) => {
+          const { name, entityRef } = referredEntity
+          const identifier = entityRef?.identifier || name
+          return (
+            <Table.Row key={identifier} className="cursor-pointer">
+              <Table.Cell className="max-w-80 content-center items-center truncate">
+                <Activity activity={description} />
+              </Table.Cell>
+              <Table.Cell className="my-2 block max-w-80 content-center items-center p-2.5">
+                {activityTime ? (
+                  <TimeAgoCard
+                    timestamp={activityTime}
+                    textProps={{ variant: 'body-strong', color: 'foreground-3', truncate: true }}
+                  />
+                ) : null}
+              </Table.Cell>
+
+              <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">
+                <ConnectivityStatus status={activityStatus.toLowerCase()} />
+              </Table.Cell>
+            </Table.Row>
+          )
+        })}
+      </Table.Body>
     </Table.Root>
   )
 }

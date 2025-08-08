@@ -82,7 +82,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
           <ListActions.Right>
             <Button onClick={onCreate}>
               <IconV2 name="plus" />
-              {t('views:secrets.createNew', 'New Secret')}
+              {t('views:secrets.createNew', 'Create Secret')}
             </Button>
           </ListActions.Right>
         </ListActions.Root>

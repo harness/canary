@@ -97,7 +97,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           headerAction={
             <Button onClick={onCreate}>
               <IconV2 name="plus" />
-              {t('views:connectors.createNew', 'New Connector')}
+              {t('views:connectors.createNew', 'Create Connector')}
             </Button>
           }
           filterOptions={CONNECTOR_FILTER_OPTIONS}

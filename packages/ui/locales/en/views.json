@@ -357,7 +357,7 @@
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
-    "createNew": "Create New Connector",
+    "createNew": "Create Connector",
     "errorEncountered": "Error Encountered",
     "viewDetails": "View Details",
     "id": "Connector ID",
@@ -526,7 +526,7 @@
     "delete": "Delete Label",
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
-    "newLabel": "New Label",
+    "createLabel": "Create Label",
     "create": "Create Labels"
   },
   "projectSettings": {
@@ -797,7 +797,7 @@
     "delete": "Delete Webhook"
   },
   "secrets": {
-    "createNew": "Create New Secret",
+    "createNew": "Create Secret",
     "delete": "Delete Secret",
     "secretsTitle": "Secrets"
   },
@@ -861,7 +861,7 @@
       "confirm": "Confirm"
     },
     "close": "Close",
-    "newUserButton": "New User",
+    "newUserButton": "Add User",
     "searchPlaceholder": "Search",
     "usersHeader": "Users",
     "tabs": {

@@ -529,7 +529,7 @@ mark {
 }
 
 [data-radix-select-viewport]::-webkit-scrollbar-thumb {
-  background-color: var(--cn-bg-2);
+  background-color: var(--cn-comp-scrollbar-thumb);
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;

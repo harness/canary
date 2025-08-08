@@ -85,7 +85,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
         gap="xs"
         className={cn('py-3 px-5', { 'border-b border-cn-border-2': item.matches && item.matches.length > 1 })}
       >
-        {!isRepoScope ? <Tag value={item.repo_path} icon="repository" showIcon={true} /> : null}
+        {!isRepoScope ? <Tag value={item.repo_path} icon="repository" /> : null}
         <Link
           to={toRepoFileDetails({
             repoPath: item.repo_path,

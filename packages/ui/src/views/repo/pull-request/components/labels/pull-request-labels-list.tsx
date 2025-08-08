@@ -28,13 +28,17 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
           label={label.key}
           value={label.value || ''}
           theme={label.color}
-          onReset={label.onDelete}
-          showReset={showReset}
-          onClick={e => {
-            e.stopPropagation()
-            e.preventDefault()
-            onClick?.(label)
-          }}
+          onActionClick={label.onDelete}
+          actionIcon={showReset ? 'xmark' : undefined}
+          onClick={
+            onClick
+              ? e => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  onClick?.(label)
+                }
+              : undefined
+          }
         />
       ))}
     </div>

@@ -29,9 +29,8 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const branchTagProps: Omit<TagProps, 'value'> = {
     variant: 'secondary',
     icon: 'git-branch',
-    showIcon: true,
     enableHover: true,
-    theme: 'blue'
+    theme: 'gray'
   }
 
   return (
@@ -57,12 +56,12 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       <Separator orientation="vertical" className="h-3.5" />
 
       {sourceBranch && (
-        <Layout.Horizontal gap="2xs">
+        <Layout.Horizontal align="center" gap="2xs">
           <Link to={`${relativePath}/files/${targetBranch}`}>
             <Tag value={targetBranch} {...branchTagProps} />
           </Link>
 
-          <span>&larr;</span>
+          <IconV2 className="text-cn-foreground-3" name="arrow-long-left" />
 
           <Link to={`${relativePath}/files/${sourceBranch}`}>
             <Tag value={sourceBranch} {...branchTagProps} />

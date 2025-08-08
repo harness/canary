@@ -3,6 +3,7 @@ import { FC } from 'react'
 import {
   ActionData,
   Avatar,
+  CopyTag,
   IconPropsV2,
   IconV2,
   MoreActionsTooltip,
@@ -136,16 +137,12 @@ export const BranchesList: FC<BranchListPageProps> = ({
               {/* branch name */}
               <Table.Cell className="content-center">
                 <div className="flex items-center">
-                  <Tag
+                  <CopyTag
                     variant="secondary"
-                    size="md"
                     value={branch?.name}
-                    icon="lock"
-                    theme="blue"
-                    showIcon={defaultBranch === branch?.name}
-                    showCopyButton
+                    icon={defaultBranch === branch?.name ? 'lock' : undefined}
+                    theme="gray"
                   />
-                  {/* <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} /> */}
                 </div>
               </Table.Cell>
               {/* user avatar and timestamp */}

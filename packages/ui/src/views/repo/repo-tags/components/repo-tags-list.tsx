@@ -4,12 +4,12 @@ import {
   ActionData,
   Avatar,
   CommitCopyActions,
+  CopyTag,
   IconV2,
   MoreActionsTooltip,
   NoData,
   Skeleton,
   Table,
-  Tag,
   Text,
   TimeAgoCard
 } from '@/components'
@@ -125,7 +125,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
             <Table.Cell>
-              <Tag value={tag.name} theme="violet" size="md" variant="secondary" showCopyButton />
+              <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" />
             </Table.Cell>
             <Table.Cell>
               <Text variant="body-normal" className="line-clamp-3">

@@ -12,16 +12,7 @@ import {
   useState
 } from 'react'
 
-import {
-  Button,
-  ButtonSizes,
-  IconPropsV2,
-  IconV2,
-  IconV2NamesType,
-  toggleVariants,
-  Tooltip,
-  TooltipProps
-} from '@/components'
+import { Button, IconPropsV2, IconV2, IconV2NamesType, toggleVariants, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@/utils'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
 import { VariantProps } from 'class-variance-authority'
@@ -53,7 +44,7 @@ export interface ToggleGroupProps
   type?: ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>['type']
   variant?: ToggleGroupVariant
   selectedVariant?: ToggleGroupSelectedVariant
-  size?: ButtonSizes
+  size?: VariantProps<typeof toggleVariants>['size']
   disabled?: boolean
   className?: string
   unselectable?: boolean

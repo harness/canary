@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   Accordion,
   Alert,
+  BranchTag,
   Button,
   ButtonLayout,
   Checkbox,
@@ -41,7 +42,6 @@ import {
   MergeStrategy,
   PullRequestRoutingProps
 } from '../../pull-request-details-types'
-import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
@@ -125,17 +125,9 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             <span>{pullReqMetadata?.merger?.display_name}</span>
             <span>{areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`}</span>
             <span>into</span>
-            <PullRequestBranchBadge
-              branchName={pullReqMetadata?.target_branch || ''}
-              spaceId={spaceId}
-              repoId={repoId}
-            />
+            <BranchTag branchName={pullReqMetadata?.target_branch || ''} spaceId={spaceId} repoId={repoId} />
             <span>from</span>
-            <PullRequestBranchBadge
-              branchName={pullReqMetadata?.source_branch || ''}
-              spaceId={spaceId}
-              repoId={repoId}
-            />
+            <BranchTag branchName={pullReqMetadata?.source_branch || ''} spaceId={spaceId} repoId={repoId} />
             <TimeAgoCard timestamp={pullReqMetadata?.merged} />
           </Text>
           <Layout.Horizontal>

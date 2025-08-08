@@ -44,7 +44,7 @@ const InputPathBreadcrumbItem = ({
       <Text variant="body-single-line-normal" color="foreground-3">
         in
       </Text>
-      <Tag value={gitRefName} icon="git-branch" showIcon />
+      <Tag variant="secondary" theme="gray" value={gitRefName} icon="git-branch" />
     </Layout.Flex>
   )
 }

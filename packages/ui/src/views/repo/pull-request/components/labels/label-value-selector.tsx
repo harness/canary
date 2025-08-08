@@ -99,8 +99,8 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           hasSearchIcon={false}
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         >
-          <div className="max-w-20 pr-2">
-            <Tag variant="secondary" size="sm" theme={label.color} value={label.key ?? ''} />
+          <div className="pr-2">
+            <Tag className="max-w-20" variant="secondary" size="sm" theme={label.color} value={label.key ?? ''} />
           </div>
         </SearchBox.Root>
 

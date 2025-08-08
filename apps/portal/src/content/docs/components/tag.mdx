@@ -59,6 +59,15 @@ import { DocsPage } from "@/components/docs-page";
   <div className="flex flex-wrap items-end gap-3">
     <Tag value="Default Size" theme="blue" />
     <Tag value="Small Size" size="sm" theme="blue" />
+    <Tag value="Small Size" size="sm" theme="blue" icon="label" />
+    <Tag
+      value="Small Size"
+      size="sm"
+      theme="blue"
+      icon="label"
+      actionIcon="xmark"
+      onActionClick={() => alert("Reset clicked")}
+    />
   </div>
 </div>
 
@@ -90,8 +99,8 @@ import { DocsPage } from "@/components/docs-page";
       value="Reset"
       variant="secondary"
       theme="orange"
-      showReset
-      onReset={() => alert("Reset clicked")}
+      actionIcon="xmark"
+      onActionClick={() => alert("Reset clicked")}
     />
   </div>
 </div>
@@ -166,31 +175,32 @@ import { DocsPage } from "@/components/docs-page";
     <Tag
       value="Outline Reset"
       variant="outline"
-      showReset
-      onReset={() => alert("Reset clicked")}
+      actionIcon="xmark"
+      onActionClick={() => alert("Reset clicked")}
       theme="blue"
     />
     <Tag
       value="Secondary Reset"
       variant="secondary"
-      showReset
-      onReset={() => alert("Reset clicked")}
+      icon="label"
+      actionIcon="xmark"
+      onActionClick={() => alert("Reset clicked")}
       theme="green"
     />
     <Tag
       value="Rounded Outline Reset"
       variant="outline"
       rounded
-      showReset
-      onReset={() => alert("Reset clicked")}
+      actionIcon="xmark"
+      onActionClick={() => alert("Reset clicked")}
       theme="purple"
     />
     <Tag
       value="Rounded Secondary Reset"
       variant="secondary"
       rounded
-      showReset
-      onReset={() => alert("Reset clicked")}
+      actionIcon="xmark"
+      onActionClick={() => alert("Reset clicked")}
       theme="red"
     />
   </div>
@@ -205,16 +215,16 @@ import { DocsPage } from "@/components/docs-page";
         value="Outline Icon Reset"
         variant="outline"
         showIcon
-        showReset
-        onReset={() => alert("Reset clicked")}
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
         theme="yellow"
       />
       <Tag
         value="Secondary Icon Reset"
         variant="secondary"
         showIcon
-        showReset
-        onReset={() => alert("Reset clicked")}
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
         theme="violet"
       />
       <Tag
@@ -222,8 +232,8 @@ import { DocsPage } from "@/components/docs-page";
         variant="outline"
         rounded
         showIcon
-        showReset
-        onReset={() => alert("Reset clicked")}
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
         theme="brown"
       />
       <Tag
@@ -231,8 +241,9 @@ import { DocsPage } from "@/components/docs-page";
         variant="secondary"
         rounded
         showIcon
-        showReset
-        onReset={() => alert("Reset clicked")}
+        onClick={() => alert("Tag clicked")}
+        actionIcon="xmark"
+        onActionClick={() => alert("Reset clicked")}
         theme="indigo"
       />
     </div>
@@ -291,8 +302,8 @@ import { Tag } from '@harnessio/ui/components'
 <Tag
   value="Outline Reset"
   variant="outline"
-  showReset
-  onReset={() => alert('Reset clicked')}
+  actionIcon="xmark"
+  onActionClick={() => alert('Reset clicked')}
   theme="blue"
 />
 
@@ -301,8 +312,8 @@ import { Tag } from '@harnessio/ui/components'
   value="Outline Icon Reset"
   variant="outline"
   showIcon
-  showReset
-  onReset={() => alert('Reset clicked')}
+  actionIcon="xmark"
+  onActionClick={() => alert('Reset clicked')}
   theme="yellow"
 />
 ```
@@ -346,21 +357,14 @@ import { Tag } from '@harnessio/ui/components'
       value: "string",
     },
     {
-      name: "showIcon",
-      description: "If true, displays the icon.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
-      name: "showReset",
+      name: "actionIcon",
       description: "If true, displays a reset (close) icon.",
       required: false,
-      value: "boolean",
+      value: "IconV2Name",
       defaultValue: "false",
     },
     {
-      name: "onReset",
+      name: "onActionClick",
       description:
         "Callback function triggered when the reset icon is clicked.",
       required: false,

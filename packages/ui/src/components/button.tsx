@@ -18,9 +18,11 @@ const buttonVariants = cva('cn-button', {
       transparent: 'cn-button-transparent'
     },
     size: {
-      md: '',
+      '3xs': 'cn-button-3xs',
+      '2xs': 'cn-button-2xs',
       xs: 'cn-button-xs',
-      sm: 'cn-button-sm'
+      sm: 'cn-button-sm',
+      md: ''
     },
     rounded: {
       true: 'cn-button-rounded'

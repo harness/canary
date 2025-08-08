@@ -1,10 +1,9 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
+import { BranchTag, Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
-import PullRequestBranchBadge from '../details/components/conversation/pull-request-branch-badge'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
@@ -100,11 +99,11 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               into
             </Text>
 
-            <PullRequestBranchBadge branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+            <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
             <Text variant="body-single-line-normal" color="foreground-2">
               from
             </Text>
-            <PullRequestBranchBadge branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+            <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
             <span className="mx-1.5 h-4 w-px bg-cn-borders-3" />
             <TimeAgoCard timestamp={created} />
           </Layout.Horizontal>

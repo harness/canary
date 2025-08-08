@@ -335,12 +335,11 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                         theme={option?.theme}
                         label={option.key}
                         value={option?.value || ''}
-                        showReset={!disabled}
-                        onReset={() => handleUnselect(option)}
+                        actionIcon={disabled ? undefined : 'xmark'}
+                        onActionClick={() => handleUnselect(option)}
                         disabled={disabled}
                         title={option.title}
                         icon={option.icon}
-                        showIcon={Boolean(option.icon)}
                       />
                     )
                   })}

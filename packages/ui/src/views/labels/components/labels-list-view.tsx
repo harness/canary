@@ -126,11 +126,9 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             </Table.Cell>
             <Table.Cell className="w-[240px] !py-3.5 leading-none">
               <Tag
-                size="md"
                 theme="gray"
                 variant="secondary"
                 value={getDisplayPath(label.scope, createdIn)}
-                showIcon
                 icon={label.scope === 0 ? 'repository' : 'folder'}
               />
             </Table.Cell>

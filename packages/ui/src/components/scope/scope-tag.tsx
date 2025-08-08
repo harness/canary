@@ -13,7 +13,6 @@ const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath, size, classN
     theme: 'gray',
     size,
     value: scopedPath || '',
-    showIcon: true,
     className
   }
 

@@ -5,6 +5,8 @@ const variants = ['solid', 'soft', 'surface', 'ghost'] as const
 
 const themes = ['success', 'danger', 'muted', 'primary'] as const
 
+const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
+
 const themeStyleMapper: Record<(typeof themes)[number], string> = {
   success: 'green',
   danger: 'red',
@@ -78,6 +80,21 @@ function createButtonVariantStyles() {
   return { ...combinationStyles, ...separatorStyles }
 }
 
+function createButtonSizeStyles() {
+  const styles: CSSRuleObject = {}
+
+  sizes.forEach(size => {
+    styles[`&:where(.cn-button-${size})`] = {
+      height: `var(--cn-btn-size-${size})`,
+      paddingBlock: `var(--cn-btn-py-${size})`,
+      paddingInline: `var(--cn-btn-px-${size})`,
+      gap: `var(--cn-btn-gap-${size})`
+    }
+  })
+
+  return styles
+}
+
 export default {
   '.cn-button': {
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
@@ -107,16 +124,8 @@ export default {
     },
 
     // sizes
-    '&:where(.cn-button-sm)': {
-      height: 'var(--cn-btn-size-sm)',
-      padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
-      gap: 'var(--cn-btn-gap-sm)'
-    },
-    '&:where(.cn-button-xs)': {
-      height: 'var(--cn-btn-size-xs)',
-      paddingBlock: 'var(--cn-btn-py-xs)',
-      paddingInline: 'var(--cn-btn-px-xs)',
-      gap: 'var(--cn-btn-gap-xs)',
+    ...createButtonSizeStyles(),
+    '&:where(.cn-button-xs, .cn-button-3xs, .cn-button-2xs)': {
       '@apply font-caption-single-line-normal': ''
     },
 
@@ -149,6 +158,7 @@ export default {
       }
     },
 
+    // variant styles
     ...createButtonVariantStyles(),
 
     // Rounded
@@ -170,14 +180,36 @@ export default {
     // Icon Only sizing
     '&:where(.cn-button-icon-only.cn-button-sm)': {
       width: 'var(--cn-btn-size-sm)',
-      height: 'var(--cn-btn-size-sm)'
+      height: 'var(--cn-btn-size-sm)',
+      '& > svg': {
+        strokeWidth: 'var(--cn-icon-stroke-width-sm)'
+      }
     },
     '&:where(.cn-button-icon-only.cn-button-xs)': {
       width: 'var(--cn-btn-size-xs)',
       height: 'var(--cn-btn-size-xs)',
       '& > svg': {
         width: 'var(--cn-icon-size-sm)',
-        height: 'var(--cn-icon-size-sm)'
+        height: 'var(--cn-icon-size-sm)',
+        strokeWidth: 'var(--cn-icon-stroke-width-xs)'
+      }
+    },
+    '&:where(.cn-button-icon-only.cn-button-2xs)': {
+      width: 'var(--cn-btn-size-2xs)',
+      height: 'var(--cn-btn-size-2xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)',
+        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
+      }
+    },
+    '&:where(.cn-button-icon-only.cn-button-3xs)': {
+      width: 'var(--cn-btn-size-3xs)',
+      height: 'var(--cn-btn-size-3xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)',
+        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
       }
     },
 

@@ -175,11 +175,9 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                       <Tag
                         className="-mt-0.5 mx-1.5 align-sub"
                         variant="secondary"
-                        theme="blue"
-                        size="md"
+                        theme="gray"
                         value={currentBranch}
                         icon="git-branch"
-                        showIcon
                       />
                     </>
                   }

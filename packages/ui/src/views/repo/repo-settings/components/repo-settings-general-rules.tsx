@@ -193,7 +193,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             </Text>
                             {rule.type && (
                               <Tag
-                                showIcon
                                 variant="outline"
                                 size="sm"
                                 theme={rule.type === 'branch' ? 'blue' : 'purple'}

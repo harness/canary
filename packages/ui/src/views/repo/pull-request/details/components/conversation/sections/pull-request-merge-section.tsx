@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, IconV2, Layout, StackedList, Tag, Text } from '@/components'
+import { Accordion, Button, CopyButton, CopyTag, IconV2, Layout, StackedList, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -130,23 +130,9 @@ const PullRequestMergeSection = ({
   const renderBranchTags = () => (
     <span className="inline-flex items-center gap-1">
       <span>Merge the latest changes from</span>
-      <Tag
-        variant="secondary"
-        theme="blue"
-        icon="git-branch"
-        value={pullReqMetadata?.target_branch || ''}
-        showIcon
-        showCopyButton
-      />
+      <CopyTag variant="secondary" theme="gray" icon="git-branch" value={pullReqMetadata?.target_branch || ''} />
       <span>into</span>
-      <Tag
-        variant="secondary"
-        theme="blue"
-        icon="git-branch"
-        value={pullReqMetadata?.source_branch || ''}
-        showIcon
-        showCopyButton
-      />
+      <CopyTag variant="secondary" theme="gray" icon="git-branch" value={pullReqMetadata?.source_branch || ''} />
     </span>
   )
 

@@ -58,15 +58,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           {!hasAhead && !hasBehind && 'up to date with'}
         </span>
 
-        <Tag
-          variant="secondary"
-          theme="blue"
-          size="md"
-          icon="git-branch"
-          showIcon
-          value={defaultBranchName}
-          className="align-middle"
-        />
+        <Tag variant="secondary" theme="gray" icon="git-branch" value={defaultBranchName} className="align-middle" />
       </Text>
 
       {showContributeBtn && (
@@ -98,11 +90,9 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                       <Tag
                         className="mt-0.5 align-sub"
                         variant="secondary"
-                        theme="blue"
-                        size="md"
+                        theme="gray"
                         value={defaultBranchName}
                         icon="git-branch"
-                        showIcon
                       />
                     </Text>
 

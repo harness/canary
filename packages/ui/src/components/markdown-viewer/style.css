@@ -6,7 +6,7 @@
       color-scheme: dark;
 
       --color-fg-default: #dedede;
-      --color-fg-muted: #969896;
+      --color-fg-muted: var(--cn-text-3);
       --color-fg-subtle: #7aa6da;
 
       --color-canvas-default: var(--cn-bg-1);
@@ -72,7 +72,7 @@
       color-scheme: light;
 
       --color-fg-default: #353535;
-      --color-fg-muted: #10a567;
+      --color-fg-muted: var(--cn-text-3);
       --color-fg-subtle: #386ac3;
 
       --color-canvas-default: var(--cn-bg-1);
@@ -154,6 +154,10 @@
     font: var(--cn-comp-markdown-content-paragraph);
     @apply text-cn-foreground-2 !max-w-full;
 
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--cn-comp-scrollbar-thumb);
+    }
+
     h1,
     h2,
     h3,
@@ -229,6 +233,9 @@
 
     code {
       @apply font-body-code px-cn-2xs py-cn-4xs text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] !text-[var(--cn-set-blue-soft-text)] before:hidden after:hidden;
+    }
+
+    :not(p) > code {
       font-size: inherit;
       line-height: inherit;
     }
@@ -242,7 +249,7 @@
       @apply font-body-code bg-cn-background-1 border-cn-borders-3 text-cn-foreground-1 mb-0 rounded border py-3 pl-4 pr-3;
 
       code {
-        @apply bg-cn-background-1 !text-cn-foreground-1 mr-7 p-0;
+        @apply bg-cn-background-1 !text-cn-foreground-1 mr-cn-3xl p-0;
       }
     }
 

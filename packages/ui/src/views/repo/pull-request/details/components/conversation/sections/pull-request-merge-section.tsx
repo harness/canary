@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, CopyTag, IconV2, Layout, StackedList, Text } from '@/components'
+import { Accordion, Button, CopyButton, CopyTag, IconV2, Layout, Link, StackedList, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -11,7 +11,7 @@ interface StepInfoProps {
   step: string
   description: string
   code?: string
-  comment?: string
+  comment?: string | React.ReactElement
 }
 
 const StepInfo: FC<StepInfoProps> = item => {
@@ -29,12 +29,12 @@ const StepInfo: FC<StepInfoProps> = item => {
             <Layout.Horizontal
               align="center"
               justify="between"
-              className="border border-cn-borders-2 rounded-md px-2 py-1 mt-0 mb-1"
+              className="border border-cn-borders-2 rounded-md px-1.5 py-1.5 mt-0 mb-1"
             >
               <Text variant="body-normal" color="foreground-2" className="font-mono">
                 {item.code}
               </Text>
-              <CopyButton name={item.code} />
+              <CopyButton name={item.code} size="xs" />
             </Layout.Horizontal>
           ) : item.comment ? (
             <Text variant="body-normal" color="foreground-2" className="my-1">
@@ -117,9 +117,16 @@ const PullRequestMergeSection = ({
     },
     {
       step: 'Step 4',
-      description: ' Fix the conflicts and commit the result',
-      comment:
-        'See Resolving a merge conflict using the command line for step-by-step instruction on resolving merge conflicts'
+      description: ' Fix the conflicts and commit the results',
+      comment: (
+        <>
+          See{' '}
+          <Link to="https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging.html#_merge_conflicts" target="_blank">
+            Resolving a merge conflict using the command line
+          </Link>{' '}
+          for step-by-step instructions on resolving merge conflicts
+        </>
+      )
     },
     {
       step: 'Step 5',

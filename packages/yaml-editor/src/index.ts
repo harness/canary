@@ -1,4 +1,5 @@
 import { BlameEditor, BlameEditorProps } from './components/BlameEditor'
+import { BlameEditorV2, BlameEditorV2Props } from './components/BlameEditorV2'
 import { CodeEditor, CodeEditorProps } from './components/CodeEditor'
 import { CodeDiffEditor, DiffEditorProps } from './components/DiffEditor'
 import { YamlEditor, YamlEditorProps, type YamlRevision } from './components/YamlEditor'
@@ -34,6 +35,9 @@ export type { CodeEditorProps }
 
 export { BlameEditor }
 export type { BlameEditorProps }
+
+export { BlameEditorV2 }
+export type { BlameEditorV2Props }
 
 export { CodeDiffEditor }
 export type { DiffEditorProps }

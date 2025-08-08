@@ -256,6 +256,8 @@ function optimizedRender(el: HTMLDivElement, comp: JSX.Element) {
         obs.disconnect()
 
         const holder = document.createElement('div')
+        holder.style.position = 'absolute'
+        holder.style.top = '-2px'
         el.appendChild(holder)
 
         render(comp, holder)

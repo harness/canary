@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { uniqWith } from 'lodash-es'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
-import { Avatar, formatDistanceToNow, Layout, Text } from '@harnessio/ui/components'
+import { Avatar, Layout, Text } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
-import { getInitials } from '@harnessio/ui/utils'
+import { formatDistanceToNow, getInitials } from '@harnessio/ui/utils'
 import { Contributors } from '@harnessio/ui/views'
 import { BlameEditorV2, BlameEditorV2Props, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
@@ -67,11 +67,11 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
           commitInfo: commitInfo,
           infoContent: (
             /* IMPORTANT: itemContent accepts only atomic component that are not depends on external state (e.g. context provider) */
-            <div className="flex gap-4 pl-4">
+            <div className="flex items-center gap-4 pl-4">
               <Text style={{ width: '125px' }} truncate>
                 {formatDistanceToNow(commitInfo.author?.when)}
               </Text>
-              <Avatar name={name} size="sm" rounded title={name + '\n' + email} />
+              <Avatar name={name} rounded title={name + '\n' + email} />
               <Text
                 style={{ width: '250px' }}
                 className="cursor-pointer text-2 leading-snug hover:underline"

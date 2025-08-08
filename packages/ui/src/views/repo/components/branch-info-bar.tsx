@@ -34,7 +34,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-borders-2 bg-cn-background-2 min-h-9 rounded-md border px-4 py-2"
+      className="border-cn-borders-2 bg-cn-background-2 min-h-[3.25rem] rounded-md border px-4 py-2"
       align="center"
       justify="between"
       gapX="xs"
@@ -65,7 +65,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="group/contribute data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1"
+              className="group/contribute data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1 py-2"
               variant="outline"
             >
               <IconV2 name="git-pull-request" size="xs" />
@@ -86,7 +86,10 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                   </div>
                   <Layout.Grid gapY="xs">
                     <Text variant="body-single-line-strong" color="foreground-1">
-                      This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
+                      {hasAhead
+                        ? `This branch is ${ahead} ${easyPluralize(ahead, 'commit', 'commits')} ahead of`
+                        : 'This branch is not ahead of'}
+                      &nbsp;
                       <Tag
                         className="mt-0.5 align-sub"
                         variant="secondary"
@@ -97,23 +100,27 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                     </Text>
 
                     <Text color="foreground-3">
-                      {t(
-                        'views:repos.compareBranchesToSeeChanges',
-                        'Open a pull request to contribute your changes upstream.'
-                      )}
+                      {hasAhead
+                        ? t(
+                            'views:repos.compareBranchesToSeeChanges',
+                            'Open a pull request to contribute your changes upstream.'
+                          )
+                        : t('views:repos.noNewCommits', 'No new commits yet.')}
                     </Text>
                   </Layout.Grid>
                 </Layout.Grid>
 
-                <ButtonLayout>
-                  <Button className="w-full" variant="outline" asChild>
-                    <Link
-                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-                    >
-                      Compare
-                    </Link>
-                  </Button>
-                </ButtonLayout>
+                {hasAhead && (
+                  <ButtonLayout>
+                    <Button className="w-full" variant="outline" asChild>
+                      <Link
+                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                      >
+                        Compare
+                      </Link>
+                    </Button>
+                  </ButtonLayout>
+                )}
               </Layout.Grid>
             </DropdownMenu.Slot>
           </DropdownMenu.Content>

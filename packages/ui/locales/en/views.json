@@ -26,6 +26,7 @@
     "compareAndPullRequest": "Compare & pull request",
     "dismiss": "Dismiss",
     "compareBranchesToSeeChanges": "Compare branches to see your changes.",
+    "noNewCommits": "No new commits yet",
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",

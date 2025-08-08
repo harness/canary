@@ -26,6 +26,7 @@
     "compareAndPullRequest": "Comparez et ouvrez une requête de tirage",
     "dismiss": "Dismiss",
     "compareBranchesToSeeChanges": "Comparez les branches pour voir vos changements.",
+    "noNewCommits": "Pas encore de nouveaux commits",
     "default": "Par défaut",
     "viewAll": "Voir tous les {{type}}",
     "branchesLowercase": "branches",

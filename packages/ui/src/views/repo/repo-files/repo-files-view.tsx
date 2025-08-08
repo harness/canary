@@ -43,6 +43,7 @@ interface RepoFilesProps {
   fullResourcePath?: string
   showContributeBtn?: boolean
   repoDetailsError?: UsererrorError | null
+  loadMetadataForPaths?: (paths: string[]) => Promise<void>
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -69,7 +70,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   selectedRefType,
   fullResourcePath,
   showContributeBtn,
-  repoDetailsError
+  repoDetailsError,
+  loadMetadataForPaths
 }) => {
   const { t } = useTranslation()
 
@@ -111,6 +113,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             latestFile={latestFile}
             files={files}
             toRepoFileDetails={toRepoFileDetails}
+            loadMetadataForPaths={loadMetadataForPaths}
           />
         </>
       )
@@ -155,7 +158,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   ])
 
   return (
-    <SandboxLayout.Main className="repo-files-height bg-transparent" fullWidth>
+    <SandboxLayout.Main className="repo-files-height bg-transparent">
       <SandboxLayout.Content className="flex h-full flex-col pl-cn-xl gap-y-cn-md">
         {isView && !isRepoEmpty && (
           <PathActionBar

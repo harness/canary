@@ -22,7 +22,7 @@ import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 
-const SIDEBAR_MIN_WIDTH = 210
+const SIDEBAR_MIN_WIDTH = 264
 const SIDEBAR_MAX_WIDTH = 700
 
 /**

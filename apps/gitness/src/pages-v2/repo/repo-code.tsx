@@ -79,9 +79,10 @@ export const RepoCode = () => {
     return new Map(nonEmptyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
   }, [repoDetails])
 
-  const { files, loading } = useRepoFileContentDetails({
+  const { files, loading, loadMetadataForPaths } = useRepoFileContentDetails({
     repoRef,
     fullGitRef,
+    fullResourcePath,
     pathToTypeMap: repoEntryPathToFileTypeMap,
     spaceId,
     repoId
@@ -174,6 +175,7 @@ export const RepoCode = () => {
       toRepoFileDetails={({ path }: { path: string }) => `../${path}`}
       showContributeBtn={showContributeBtn}
       repoDetailsError={repoDetailsError}
+      loadMetadataForPaths={loadMetadataForPaths}
     >
       {renderCodeView}
     </RepoFiles>

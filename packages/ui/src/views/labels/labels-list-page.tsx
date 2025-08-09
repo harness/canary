@@ -85,7 +85,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
             <Button asChild>
               <Link to="create">
                 <IconV2 name="plus" />
-                {t('views:labelData.newLabel', 'Create Label')}
+                {t('views:labelData.createLabel', 'Create Label')}
               </Link>
             </Button>
           </ListActions.Right>

@@ -11,7 +11,6 @@ import {
   mergePullReqOp,
   OpenapiMergePullReq,
   OpenapiStatePullReqRequest,
-  rebaseBranch,
   RebaseBranchRequestBody,
   reviewerAddPullReq,
   reviewerDeletePullReq,
@@ -24,6 +23,7 @@ import {
   useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
+  useRebaseBranchMutation,
   useRestorePullReqSourceBranchMutation,
   useRevertPullReqOpMutation,
   useReviewerListPullReqQuery,
@@ -622,7 +622,18 @@ export default function PullRequestConversationPage() {
   const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
   const [mergeMessage, setMergeMessage] = useState('')
   const [isMerging, setIsMerging] = useState(false)
-  const [isRebasing, setIsRebasing] = useState(false)
+  const { mutateAsync: performRebase, isLoading: isRebasing } = useRebaseBranchMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: () => {
+        handleRefetchData()
+        setRuleViolationArr(undefined)
+      },
+      onError: (error: any) => {
+        setRebaseErrorMessage(error.message || 'Failed to rebase branch. Please try again.')
+      }
+    }
+  )
   const [selectedMergeMethod, setSelectedMergeMethod] = useState<EnumMergeMethod | null>(null)
 
   // Update merge title based on selected merge method
@@ -729,7 +740,7 @@ export default function PullRequestConversationPage() {
     dryMerge
   })
 
-  const handleRebaseBranch = useCallback(() => {
+  const handleRebaseBranch = useCallback(async () => {
     const payload: RebaseBranchRequestBody = {
       ...(pullReqMetadata?.target_branch
         ? {
@@ -750,17 +761,8 @@ export default function PullRequestConversationPage() {
         : {})
     }
 
-    setIsRebasing(true)
-    rebaseBranch({ body: payload, repo_ref: repoRef })
-      .then(() => {
-        handleRefetchData()
-        setRuleViolationArr(undefined)
-      })
-      .catch(error => setRebaseErrorMessage(error.message))
-      .finally(() => {
-        setIsRebasing(false)
-      })
-  }, [pullReqMetadata, handleRefetchData, setRuleViolationArr, repoRef])
+    await performRebase({ body: payload })
+  }, [pullReqMetadata, performRebase])
 
   /**
    * Memoize overviewProps

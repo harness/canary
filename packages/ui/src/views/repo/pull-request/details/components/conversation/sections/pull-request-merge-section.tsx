@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, CopyTag, IconV2, Layout, Link, StackedList, Text } from '@/components'
+import { Accordion, Button, Card, CopyButton, CopyTag, IconV2, Layout, Link, StackedList, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -18,26 +18,24 @@ const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
       <Layout.Horizontal gap="2xs">
-        <Text as="h3" variant="body-strong" color="foreground-1" className="flex-none">
+        <Text as="h3" variant="body-strong" className="flex-none">
           {item.step}
         </Text>
         <Layout.Vertical className="w-[90%] max-w-full" gap="xs">
-          <Text variant="body-normal" color="foreground-2">
-            {item.description}
-          </Text>
+          <Text variant="body-normal">{item.description}</Text>
           {item.code ? (
             <Layout.Horizontal
               align="center"
               justify="between"
               className="border border-cn-borders-2 rounded-md px-1.5 py-1.5 mt-0 mb-1"
             >
-              <Text variant="body-normal" color="foreground-2" className="font-mono">
+              <Text variant="body-normal" className="font-mono">
                 {item.code}
               </Text>
               <CopyButton name={item.code} size="xs" />
             </Layout.Horizontal>
           ) : item.comment ? (
-            <Text variant="body-normal" color="foreground-2" className="my-1">
+            <Text variant="body-normal" className="my-1">
               {item.comment}
             </Text>
           ) : null}
@@ -117,7 +115,7 @@ const PullRequestMergeSection = ({
     },
     {
       step: 'Step 4',
-      description: ' Fix the conflicts and commit the results',
+      description: 'Fix the conflicts and commit the results',
       comment: (
         <>
           See{' '}
@@ -226,29 +224,27 @@ const PullRequestMergeSection = ({
           <Accordion.Content className="ml-7">
             <>
               {showCommandLineInfo && (
-                <Layout.Vertical className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2" gap="sm">
-                  <Text variant="heading-small" color="foreground-1">
-                    Resolve conflicts via command line
-                  </Text>
-                  <ol className="flex flex-col gap-y-0.5">
-                    {stepMap.map(item => (
-                      <StepInfo key={item.step} {...item} />
-                    ))}
-                  </ol>
-                </Layout.Vertical>
+                <Card.Root className="mb-3.5" size="sm">
+                  <Card.Content className="px-4 py-2">
+                    <Layout.Vertical gap="sm">
+                      <Text variant="heading-small">Resolve conflicts via command line</Text>
+                      <ol className="flex flex-col gap-y-0.5">
+                        {stepMap.map(item => (
+                          <StepInfo key={item.step} {...item} />
+                        ))}
+                      </ol>
+                    </Layout.Vertical>
+                  </Card.Content>
+                </Card.Root>
               )}
-              <Text variant="body-normal" color="foreground-1">
-                Conflicting files {conflictingFiles?.length || 0}
-              </Text>
+              <Text variant="body-normal">Conflicting files {conflictingFiles?.length || 0}</Text>
 
               {!isEmpty(conflictingFiles) && (
                 <Layout.Vertical gap="xs" className="mt-1">
                   {conflictingFiles?.map(file => (
                     <Layout.Horizontal key={file} align="center" gap="xs" className="py-1.5">
                       <IconV2 size="md" className="text-icons-1" name="page" />
-                      <Text variant="body-normal" color="foreground-1">
-                        {file}
-                      </Text>
+                      <Text variant="body-normal">{file}</Text>
                     </Layout.Horizontal>
                   ))}
                 </Layout.Vertical>
@@ -278,7 +274,6 @@ const PullRequestMergeSection = ({
               variant="primary"
               onClick={handleRebaseBranch}
               loading={isRebasing}
-              disabled={isRebasing}
               size="md"
             >
               Update with rebase

@@ -526,7 +526,6 @@
     "delete": "Delete Label",
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
-    "newLabel": "Create Label",
     "createLabel": "Create Label",
     "create": "Create Labels"
   },
@@ -766,7 +765,6 @@
     "commitDetailsDiffDeletions": "deletions",
     "commitDetailsTitle": "Commit",
     "browseFiles": "Browse Files",
-    "createNewCommit": "Create commit",
     "createCommit": "Create commit",
     "commitDetailsAuthored": "authored",
     "verified": "Verified"

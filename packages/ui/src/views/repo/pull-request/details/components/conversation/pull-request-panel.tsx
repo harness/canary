@@ -47,6 +47,19 @@ import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
 
+const MERGE_METHOD_TITLES: Record<MergeStrategy, string> = {
+  [MergeStrategy.FAST_FORWARD]: 'Fast-forward merge',
+  [MergeStrategy.SQUASH]: 'Squash and merge',
+  [MergeStrategy.MERGE]: 'Merge pull request',
+  [MergeStrategy.REBASE]: 'Rebase and merge'
+}
+
+const getMergeStrategyFromTitle = (title?: string): MergeStrategy | undefined => {
+  if (!title) return undefined
+  const entry = Object.entries(MERGE_METHOD_TITLES).find(([, display]) => display === title)
+  return entry ? (entry[0] as MergeStrategy) : undefined
+}
+
 export const getMergeMethodDisplay = (mergeMethodType: MergeStrategy): string => {
   return mergeMethodMapping[mergeMethodType]
 }
@@ -107,22 +120,22 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   // Get the current selected merge method
   const getCurrentMergeMethod = () => {
     const selectedAction = actions?.[parseInt(mergeButtonValue || '0')]
-    switch (selectedAction?.title) {
-      case 'Fast-forward merge':
-        return 'fast-forward'
-      case 'Squash and merge':
-        return 'squash'
-      case 'Merge pull request':
-        return 'merge'
-      case 'Rebase and merge':
-        return 'rebase'
+    switch (getMergeStrategyFromTitle(selectedAction?.title)) {
+      case MergeStrategy.FAST_FORWARD:
+        return MergeStrategy.FAST_FORWARD
+      case MergeStrategy.SQUASH:
+        return MergeStrategy.SQUASH
+      case MergeStrategy.MERGE:
+        return MergeStrategy.MERGE
+      case MergeStrategy.REBASE:
+        return MergeStrategy.REBASE
       default:
         return undefined
     }
   }
 
   const currentMergeMethod = getCurrentMergeMethod()
-  const isFastForwardNotPossible = isRebasable && currentMergeMethod === 'fast-forward'
+  const isFastForwardNotPossible = isRebasable && currentMergeMethod === MergeStrategy.FAST_FORWARD
 
   if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
@@ -355,37 +368,37 @@ const PullRequestPanel = ({
 
   const handleMergeTypeSelect = (value: string) => {
     const selectedAction = actions[parseInt(value)]
-    switch (selectedAction.title) {
-      case 'Squash and merge':
+    const strategy = getMergeStrategyFromTitle(selectedAction.title)
+    switch (strategy) {
+      case MergeStrategy.SQUASH:
         setMergeMessage(
           pullReqCommits?.commits
             ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
             .join('\n\n')
             ?.slice(0, 1000) ?? ''
         )
-        onMergeMethodSelect?.('squash')
+        onMergeMethodSelect?.(MergeStrategy.SQUASH)
         break
-      case 'Merge pull request':
+      case MergeStrategy.MERGE:
         setMergeMessage('')
-        onMergeMethodSelect?.('merge')
+        onMergeMethodSelect?.(MergeStrategy.MERGE)
         break
-      case 'Rebase and merge':
+      case MergeStrategy.REBASE:
         setMergeMessage('')
-        onMergeMethodSelect?.('rebase')
+        onMergeMethodSelect?.(MergeStrategy.REBASE)
         break
-      case 'Fast-forward merge':
+      case MergeStrategy.FAST_FORWARD:
         setMergeMessage('')
-        onMergeMethodSelect?.('fast-forward')
+        onMergeMethodSelect?.(MergeStrategy.FAST_FORWARD)
+        break
+      default:
         break
     }
 
     setShowActionBtn(true)
     setMergeButtonValue(value)
-    if (selectedAction.title === 'Merge pull request' || selectedAction.title === 'Squash and merge') {
-      setShowMergeInputs(true)
-    } else {
-      setShowMergeInputs(false)
-    }
+    const showInputs = strategy === MergeStrategy.MERGE || strategy === MergeStrategy.SQUASH
+    setShowMergeInputs(!!showInputs)
   }
 
   const handleCancelMerge = () => {
@@ -398,8 +411,8 @@ const PullRequestPanel = ({
   const handleConfirmMerge = () => {
     const selectedAction = actions[parseInt(mergeButtonValue || '0')]
     // Check if this is a merge action
-    const mergeActionTitles = ['Squash and merge', 'Merge pull request', 'Rebase and merge', 'Fast-forward merge']
-    const isMergeAction = mergeActionTitles.includes(selectedAction?.title || '')
+    const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+    const isMergeAction = mergeActionTitles.has(selectedAction?.title || '')
 
     setShowMergeInputs(false)
     setShowActionBtn(false)
@@ -420,25 +433,14 @@ const PullRequestPanel = ({
     const selectedAction = actions[parseInt(mergeButtonValue || '0')]
     const isRebasable =
       pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
-    const isFastForwardSelected = selectedAction?.title === 'Fast-forward merge'
+    const isFastForwardSelected = getMergeStrategyFromTitle(selectedAction?.title) === MergeStrategy.FAST_FORWARD
     return isFastForwardSelected && isRebasable
   }
 
   // To get the selected merge method
   const getSelectedMergeMethod = () => {
     const selectedAction = actions[parseInt(mergeButtonValue || '0')]
-    switch (selectedAction?.title) {
-      case 'Fast-forward merge':
-        return 'fast-forward'
-      case 'Squash and merge':
-        return 'squash'
-      case 'Merge pull request':
-        return 'merge'
-      case 'Rebase and merge':
-        return 'rebase'
-      default:
-        return undefined
-    }
+    return getMergeStrategyFromTitle(selectedAction?.title)
   }
 
   const handleAccordionValuesChange = useCallback((data: string | string[]) => {

@@ -269,13 +269,7 @@ const PullRequestMergeSection = ({
             description={<LineDescription text={renderBranchTags()} />}
           />
           {handleRebaseBranch && (
-            <Button
-              theme="default"
-              variant="primary"
-              onClick={handleRebaseBranch}
-              loading={isRebasing}
-              size="md"
-            >
+            <Button theme="default" variant="primary" onClick={handleRebaseBranch} loading={isRebasing} size="md">
               Update with rebase
             </Button>
           )}

@@ -134,7 +134,7 @@
     "createRuleButton": "Create Rule",
     "updatingRuleButton": "Updating Rule...",
     "creatingRuleButton": "Creating Rule...",
-    "createBranch": "Create Branch",
+    "createBranch": "Create branch",
     "branch": "Branch",
     "update": "Updated",
     "checkStatus": "Check status",
@@ -279,8 +279,8 @@
     "createTagRule": "Create tag rule",
     "createTagTitle": "Create a tag",
     "repoTagDescriptionPlaceholder": "Enter tag description here",
-    "creatingTagButton": "Creating Tag...",
-    "createTagButton": "Create Tag",
+    "creatingTagButton": "Creating tag...",
+    "createTagButton": "Create tag",
     "createTagDialog": {
       "validation": {
         "name": "Tag name is required",

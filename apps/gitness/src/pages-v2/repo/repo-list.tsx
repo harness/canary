@@ -20,7 +20,7 @@ import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { getRepoUrl, getScopeType } from '../../utils/scope-url-utils'
+import { getScopeType } from '../../utils/scope-url-utils'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
@@ -39,8 +39,6 @@ export default function ReposListPage() {
     setImportToastId
   } = useRepoStore()
   const { toast, dismiss } = useToast()
-  const { renderUrl } = useMFEContext()
-  const basename = `/ng${renderUrl}`
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
 
@@ -48,7 +46,7 @@ export default function ReposListPage() {
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
-  const { scope } = useMFEContext()
+  const { scope, routeUtils } = useMFEContext()
   const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
   const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
 
@@ -163,15 +161,8 @@ export default function ReposListPage() {
     if (!isMFE || isSameScope) {
       navigate(repoSummaryPath)
     } else {
-      const fullPath = `${basename}${getRepoUrl({
-        repo,
-        scope,
-        repoSubPath: repoSummaryPath
-      })}`
-
-      // TODO: Fix this properly to avoid full page refresh.
-      // Currently, not able to navigate properly with React Router.
-      window.location.href = fullPath
+      // Navigate properly with parent app's React Router.
+      routeUtils.toCODERepository?.({ repoPath: repo.path })
     }
   }
 

@@ -24,7 +24,7 @@ import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
-import { getPullRequestUrl, getScopeType } from '../../../utils/scope-url-utils'
+import { getScopeType } from '../../../utils/scope-url-utils'
 import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
@@ -48,8 +48,7 @@ export default function PullRequestListPage() {
   const oldPageRef = useRef(page)
   const [lastUpdatedPRFilter, setLastUpdatedPRFilter] = useState<{ updated_lt?: number; updated_gt?: number }>({})
 
-  const { scope, renderUrl } = useMFEContext()
-  const basename = `/ng${renderUrl}`
+  const { scope, routeUtils } = useMFEContext()
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
 
@@ -208,19 +207,8 @@ export default function PullRequestListPage() {
     if (!isMFE || isSameScope) {
       navigate(pullRequestPath)
     } else {
-      const fullPath = `${basename}${getPullRequestUrl({
-        repo,
-        scope: {
-          accountId,
-          orgIdentifier,
-          projectIdentifier
-        },
-        pullRequestSubPath: pullRequestPath
-      })}`
-
-      // TODO: Fix this properly to avoid full page refresh.
-      // Currently, not able to navigate properly with React Router.
-      window.location.href = fullPath
+      // Navigate properly with parent app's React Router.
+      routeUtils.toCODEPullRequest?.({ repoPath: repo.path, pullRequestId: prNumber?.toString() || '' })
     }
   }
 

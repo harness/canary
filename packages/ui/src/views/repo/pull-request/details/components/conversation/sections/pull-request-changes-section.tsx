@@ -125,7 +125,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   </span>
                 </div>
               )}
-              <StatusBadge variant="secondary">Required</StatusBadge>
+              <StatusBadge variant="outline">Required</StatusBadge>
             </div>
           )}
 
@@ -142,7 +142,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 />
                 <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
-              {reqNoChangeReq && <StatusBadge variant="secondary">Required</StatusBadge>}
+              {reqNoChangeReq && <StatusBadge variant="outline">Required</StatusBadge>}
             </div>
           )}
 

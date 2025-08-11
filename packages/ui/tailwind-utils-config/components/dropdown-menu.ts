@@ -34,7 +34,7 @@ export default {
     zIndex: '50',
     minWidth: 'var(--cn-dropdown-min-width)',
     maxHeight: '80vh',
-    overflow: 'auto',
+    overflowY: 'auto',
     border: 'var(--cn-dropdown-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-dropdown-radius)',
     backgroundColor: 'var(--cn-bg-3)',

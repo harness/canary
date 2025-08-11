@@ -564,14 +564,6 @@
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
-    /* Topbar */
-    --canary-topbar-background-01: var(--canary-pure-white);
-    --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-topbar-foreground-02: 240 5% 15%;
-    --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 5% 25%;
-    --canary-topbar-icon-01: 240 4% 40%;
-
     /* Tags */
     /* --gray */
     --canary-tag-foreground-gray-01: var(--canary-base-chrome-800);
@@ -846,14 +838,6 @@
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
-    /* Topbar */
-    --canary-topbar-background-01: var(--canary-pure-white);
-    --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-topbar-foreground-02: 240 5% 15%;
-    --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 5% 25%;
-    --canary-topbar-icon-01: 240 4% 40%;
-
     /* Tags */
     /* --gray */
     --canary-tag-foreground-gray-01: 240 5% 25%;
@@ -1127,14 +1111,6 @@
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
-    /* Topbar */
-    --canary-topbar-background-01: var(--canary-pure-white);
-    --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-topbar-foreground-02: 240 5% 15%;
-    --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 5% 25%;
-    --canary-topbar-icon-01: 240 4% 40%;
-
     /* Tags */
     /* --gray */
     --canary-tag-foreground-gray-01: 240 5% 25%;
@@ -1407,14 +1383,6 @@
     --canary-toast-foreground-danger: var(--canary-pure-white);
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
-
-    /* Topbar */
-    --canary-topbar-background-01: var(--canary-pure-white);
-    --canary-topbar-foreground-01: var(--canary-base-chrome-1000);
-    --canary-topbar-foreground-02: 240 5% 15%;
-    --canary-topbar-foreground-03: 240 4% 40%;
-    --canary-topbar-foreground-04: 240 5% 25%;
-    --canary-topbar-icon-01: 240 4% 40%;
 
     /* Tags */
     /* --gray */
@@ -1709,14 +1677,6 @@
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
-    /* Topbar */
-    --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: 240 6% 90%;
-    --canary-topbar-foreground-02: var(--canary-grey-80);
-    --canary-topbar-foreground-03: 240 6% 60%;
-    --canary-topbar-foreground-04: var(--canary-grey-94);
-    --canary-topbar-icon-01: 240 6% 60%;
-
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -1971,14 +1931,6 @@
     --canary-toast-foreground-danger: var(--canary-pure-white);
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
-
-    /* Topbar */
-    --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: 240 6% 90%;
-    --canary-topbar-foreground-02: var(--canary-grey-80);
-    --canary-topbar-foreground-03: 240 6% 60%;
-    --canary-topbar-foreground-04: var(--canary-grey-94);
-    --canary-topbar-icon-01: 240 6% 60%;
 
     /* Tags */
     /* --gray */
@@ -2254,14 +2206,6 @@
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
-    /* Topbar */
-    --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: 240 6% 90%;
-    --canary-topbar-foreground-02: var(--canary-grey-80);
-    --canary-topbar-foreground-03: 240 6% 60%;
-    --canary-topbar-foreground-04: var(--canary-grey-94);
-    --canary-topbar-icon-01: 240 6% 60%;
-
     /* Tags */
     /* --gray */
     --canary-tag-foreground-gray-01: var(--canary-base-chrome-200);
@@ -2534,14 +2478,6 @@
     --canary-toast-foreground-danger: var(--canary-pure-white);
     --canary-toast-icon-danger-default: var(--canary-pure-white);
     --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
-
-    /* Topbar */
-    --canary-topbar-background-01: 240 6% 6%;
-    --canary-topbar-foreground-01: 240 6% 90%;
-    --canary-topbar-foreground-02: var(--canary-grey-80);
-    --canary-topbar-foreground-03: 240 6% 60%;
-    --canary-topbar-foreground-04: var(--canary-grey-94);
-    --canary-topbar-icon-01: 240 6% 60%;
 
     /* Tags */
     /* --gray */

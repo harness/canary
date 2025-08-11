@@ -33,12 +33,13 @@ export default {
   '.cn-dropdown-menu': {
     zIndex: '50',
     minWidth: 'var(--cn-dropdown-min-width)',
-    maxHeight: 'calc(var(--radix-dropdown-menu-content-available-height) - 4px)',
+    maxHeight: '80vh',
+    overflow: 'auto',
     border: 'var(--cn-dropdown-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-dropdown-radius)',
     backgroundColor: 'var(--cn-bg-3)',
     boxShadow: 'var(--cn-shadow-4)',
-    '@apply flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2':
+    '@apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2':
       '',
 
     '&-container': {

@@ -227,9 +227,9 @@ const DropdownMenuCheckboxItem = forwardRef<
           {checked && (
             <div className="cn-checkbox-indicator" {...{ 'data-state': checkedDataState }}>
               {checked === 'indeterminate' ? (
-                <IconV2 name="minus" className="cn-checkbox-icon" skipSize />
+                <IconV2 name="minus" className="cn-checkbox-icon" size="2xs" />
               ) : (
-                <IconV2 name="check" className="cn-checkbox-icon" skipSize />
+                <IconV2 name="check" className="cn-checkbox-icon" size="2xs" />
               )}
             </div>
           )}

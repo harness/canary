@@ -52,6 +52,10 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   label?: string
   value: string
   disabled?: boolean
+  title?: string
+  enableHover?: boolean
+  actionIcon?: IconV2NamesType
+  onActionClick?: () => void
 }
 
 const Tag = forwardRef<HTMLDivElement, TagProps>(
@@ -62,13 +66,14 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
       theme,
       rounded,
       icon,
-      onReset,
       label,
       value,
       className,
-      showReset = false,
-      showIcon = false,
       disabled = false,
+      enableHover = false,
+      title,
+      actionIcon,
+      onActionClick,
       ...props
     },
     ref
@@ -83,13 +88,13 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
             theme,
             rounded,
             icon,
-            showIcon,
-            showReset,
-            onReset,
+            actionIcon,
+            onActionClick,
             label: label,
             value,
             disabled,
-            ...props
+            enableHover: Boolean(props.onClick),
+            onClick: props.onClick
           }}
         />
       )
@@ -101,25 +106,45 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
         tabIndex={-1}
         className={cn(
           tagVariants({ variant, size, theme, rounded }),
-          { 'text-cn-foreground-disabled cursor-not-allowed': disabled },
+          {
+            'text-cn-foreground-disabled cursor-not-allowed': disabled,
+            'cn-tag-hoverable': !disabled && (enableHover || props.onClick),
+            'cursor-pointer': !disabled && props.onClick
+          },
           className
         )}
         {...props}
       >
         {icon && (
-          <IconV2
-            skipSize
-            name={icon || 'label'}
-            className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
-          />
+          <IconV2 size="xs" name={icon} className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })} />
         )}
-        <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={value || label}>
+        <span
+          className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })}
+          title={title || value || label}
+        >
           {value || label}
         </span>
-        {showReset && !disabled && (
-          <button onClick={onReset}>
-            <IconV2 skipSize name="xmark" className="cn-tag-reset-icon" />
-          </button>
+
+        {actionIcon && (
+          <Button
+            iconOnly
+            disabled={disabled}
+            rounded={rounded}
+            className="cn-tag-action-icon-button"
+            variant="transparent"
+            size={size === 'sm' ? '3xs' : '2xs'}
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              onActionClick?.()
+            }}
+          >
+            <IconV2
+              skipSize
+              name={actionIcon}
+              className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
+            />
+          </Button>
         )}
       </div>
     )
@@ -135,34 +160,40 @@ const TagSplit = forwardRef<HTMLDivElement, TagProps>(
       theme,
       rounded,
       icon,
-      showIcon,
-      showReset,
+      actionIcon,
+      onActionClick,
       value,
       label = '',
-      onReset,
       disabled = false,
-      className,
+      enableHover = false,
+      onClick,
       ...props
     },
     ref
   ) => {
-    const sharedProps = { variant, size, theme, rounded, icon, disabled }
+    const sharedProps = { variant, size, theme, rounded, icon, disabled, onClick }
 
     return (
       <div
-        className={cn(
-          'cn-tag-split flex w-fit items-center justify-center',
-          { 'cursor-not-allowed': disabled },
-          className
-        )}
+        className={cn('cn-tag-split flex w-fit items-center justify-center', {
+          'cursor-not-allowed': disabled,
+          'cn-tag-split-hoverable': !disabled && enableHover
+        })}
         ref={ref}
         {...props}
       >
         {/* LEFT TAG - should never have a Reset Icon */}
-        <Tag {...sharedProps} showIcon={showIcon} value={label} className="cn-tag-split-left" />
+        <Tag {...sharedProps} icon={icon} value={label} className="cn-tag-split-left" />
 
         {/* RIGHT TAG - should never have a tag Icon */}
-        <Tag {...sharedProps} showReset={showReset} onReset={onReset} value={value} className="cn-tag-split-right" />
+        <Tag
+          {...sharedProps}
+          icon={icon}
+          actionIcon={actionIcon}
+          onActionClick={onActionClick}
+          value={value}
+          className="cn-tag-split-right"
+        />
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useState } from 'react'
 
 import { Popover, StatusBadge, Text, TextProps } from '@/components'
+import { cn } from '@utils/cn'
 import { LOCALE } from '@utils/TimeUtils'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -140,11 +141,25 @@ interface TimeAgoCardProps {
   textProps?: TextProps<'time' | 'span'> & {
     ref?: Ref<HTMLSpanElement | HTMLTimeElement>
   }
+  classNameTrigger?: string
+  classNameContent?: string
 }
 
 export const TimeAgoCard = memo(
   forwardRef<HTMLButtonElement, TimeAgoCardProps>(
-    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, beforeCutoffPrefix, afterCutoffPrefix, textProps }, ref) => {
+    (
+      {
+        timestamp,
+        cutoffDays = 8,
+        dateTimeFormatOptions,
+        beforeCutoffPrefix,
+        afterCutoffPrefix,
+        textProps,
+        classNameTrigger,
+        classNameContent
+      },
+      ref
+    ) => {
       const [isOpen, setIsOpen] = useState(false)
       const { formattedShort, formattedFull, isBeyondCutoff } = useFormattedTime(
         timestamp,
@@ -174,12 +189,12 @@ export const TimeAgoCard = memo(
 
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-          <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick} ref={ref}>
+          <Popover.Trigger className={cn('cn-time-ago-card-trigger', classNameTrigger)} onClick={handleClick} ref={ref}>
             <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
               {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
           </Popover.Trigger>
-          <Popover.Content onClick={handleClickContent} side="top">
+          <Popover.Content onClick={handleClickContent} side="top" className={classNameContent}>
             <TimeAgoContent formattedFullArray={formattedFull} />
           </Popover.Content>
         </Popover.Root>

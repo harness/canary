@@ -57,13 +57,13 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           'h-full': !isLoading && !tagsList.length && !searchQuery
         })}
       >
-        <Layout.Vertical gap="xl">
+        <Layout.Vertical gap="xl" className="flex-1">
           {(!!tagsList?.length || !!searchQuery) && (
             <Text as="h1" variant="heading-section">
               {t('views:repos.tags', 'Tags')}
             </Text>
           )}
-          <Layout.Vertical gap="md">
+          <Layout.Vertical gap="md" className="flex-1">
             {(!!tagsList?.length || !!searchQuery) && (
               <ListActions.Root>
                 <ListActions.Left>
@@ -98,6 +98,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
           {canShowPagination && (
             <Pagination
+              className="mt-0"
               indeterminate
               hasNext={xNextPage > 0}
               hasPrevious={xPrevPage > 0}

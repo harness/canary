@@ -80,6 +80,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               ]
         }
         textWrapperClassName={isDirtyList ? '' : 'max-w-[360px]'}
+        className="flex-1"
         secondaryButton={
           isDirtyList
             ? {
@@ -115,7 +116,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root tableClassName="table-fixed">
+    <Table.Root tableClassName="table-fixed" size="compact">
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>
@@ -131,7 +132,13 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
             <Table.Cell>
-              <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" />
+              <CopyTag
+                value={tag.name}
+                theme="violet"
+                size="md"
+                variant="secondary"
+                className="max-w-full items-start"
+              />
             </Table.Cell>
             <Table.Cell>
               <Text variant="body-normal" className="line-clamp-3">
@@ -159,6 +166,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                   timestamp={new Date(tag.tagger?.when).getTime()}
                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
                   textProps={{ variant: 'body-normal' }}
+                  classNameTrigger="text-left"
                 />
               ) : null}
             </Table.Cell>

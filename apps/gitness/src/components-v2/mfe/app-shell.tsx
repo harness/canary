@@ -14,7 +14,7 @@ export const AppShellMFE = memo(() => {
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={breadcrumbs} breadcrumbClassName="ml-6" />
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       <MainContentLayout className="text-cn-foreground-2" withBreadcrumbs={breadcrumbs.length > 0}>
         <Outlet />
       </MainContentLayout>

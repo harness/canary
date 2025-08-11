@@ -91,6 +91,7 @@ export default function AppMFE({
   customHooks,
   customUtils,
   routes,
+  routeUtils,
   hooks
 }: AppMFEProps) {
   new CodeServiceAPIClient({
@@ -163,6 +164,7 @@ export default function AppMFE({
                   customHooks,
                   customUtils,
                   routes,
+                  routeUtils,
                   hooks,
                   setMFETheme
                 }}

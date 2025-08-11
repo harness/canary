@@ -48,7 +48,7 @@ export default function PullRequestListPage() {
   const oldPageRef = useRef(page)
   const [lastUpdatedPRFilter, setLastUpdatedPRFilter] = useState<{ updated_lt?: number; updated_gt?: number }>({})
 
-  const { scope, renderUrl } = useMFEContext()
+  const { scope, renderUrl, routeUtils } = useMFEContext()
   const basename = `/ng${renderUrl}`
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
@@ -208,19 +208,18 @@ export default function PullRequestListPage() {
     if (!isMFE || isSameScope) {
       navigate(pullRequestPath)
     } else {
-      const fullPath = `${basename}${getPullRequestUrl({
-        repo,
-        scope: {
-          accountId,
-          orgIdentifier,
-          projectIdentifier
-        },
-        pullRequestSubPath: pullRequestPath
-      })}`
-
-      // TODO: Fix this properly to avoid full page refresh.
-      // Currently, not able to navigate properly with React Router.
-      window.location.href = fullPath
+      if (routeUtils?.toCODEPullRequest) {
+        // Navigate with parent app's React Router
+        routeUtils.toCODEPullRequest({ repoPath: repo.path, pullRequestId: prNumber?.toString() || '' })
+      } else {
+        // TODO: Remove this fallback once the routeUtils is available in all release branches
+        const fullPath = `${basename}${getPullRequestUrl({
+          repo,
+          scope: { accountId, orgIdentifier, projectIdentifier },
+          pullRequestSubPath: pullRequestPath
+        })}`
+        window.location.href = fullPath
+      }
     }
   }
 

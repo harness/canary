@@ -39,8 +39,6 @@ export default function ReposListPage() {
     setImportToastId
   } = useRepoStore()
   const { toast, dismiss } = useToast()
-  const { renderUrl } = useMFEContext()
-  const basename = `/ng${renderUrl}`
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
 
@@ -48,7 +46,8 @@ export default function ReposListPage() {
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
-  const { scope } = useMFEContext()
+  const { scope, renderUrl, routeUtils } = useMFEContext()
+  const basename = `/ng${renderUrl}`
   const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
   const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
 
@@ -163,15 +162,18 @@ export default function ReposListPage() {
     if (!isMFE || isSameScope) {
       navigate(repoSummaryPath)
     } else {
-      const fullPath = `${basename}${getRepoUrl({
-        repo,
-        scope,
-        repoSubPath: repoSummaryPath
-      })}`
-
-      // TODO: Fix this properly to avoid full page refresh.
-      // Currently, not able to navigate properly with React Router.
-      window.location.href = fullPath
+      if (routeUtils?.toCODERepository) {
+        // Navigate with parent app's React Router
+        routeUtils.toCODERepository?.({ repoPath: repo.path })
+      } else {
+        // TODO: Remove this fallback once the routeUtils is available in all release branches
+        const fullPath = `${basename}${getRepoUrl({
+          repo,
+          scope,
+          repoSubPath: repoSummaryPath
+        })}`
+        window.location.href = fullPath
+      }
     }
   }
 

@@ -80,6 +80,10 @@ export interface IMFEContext {
     toOrgSettings: () => string
     toProjectSettings: () => string
   }>
+  routeUtils: Partial<{
+    toCODERepository: ({ repoPath }: { repoPath: string }) => void
+    toCODEPullRequest: ({ repoPath, pullRequestId }: { repoPath: string; pullRequestId: string }) => void
+  }>
   hooks: Hooks
   setMFETheme: (newTheme: string) => void
 }
@@ -97,6 +101,7 @@ export const MFEContext = createContext<IMFEContext>({
   customHooks: {},
   customUtils: {},
   routes: {},
+  routeUtils: {},
   hooks: {},
   setMFETheme: noop
 })

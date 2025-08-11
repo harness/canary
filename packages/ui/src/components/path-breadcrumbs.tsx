@@ -87,20 +87,19 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
     }
 
     return (
-      <>
-        <Breadcrumb.Separator />
-        <InputPathBreadcrumbItem
-          path={fileName}
-          changeFileName={changeFileName}
-          gitRefName={gitRefName}
-          handleOnBlur={handleOnBlur}
-          isNew={isNew}
-          parentPath={parentPath}
-          setParentPath={setParentPath}
-        />
-      </>
+      <InputPathBreadcrumbItem
+        path={fileName}
+        changeFileName={changeFileName}
+        gitRefName={gitRefName}
+        handleOnBlur={handleOnBlur}
+        isNew={isNew}
+        parentPath={parentPath}
+        setParentPath={setParentPath}
+      />
     )
   }
+
+  const isRenderInput = isNew || isEdit
 
   return (
     <Layout.Flex gap="2xs" align="center" wrap="wrap">
@@ -116,12 +115,13 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
               {idx < items.length - 1 && <Breadcrumb.Separator />}
             </Fragment>
           ))}
+          {isRenderInput && <Breadcrumb.Separator />}
         </Breadcrumb.List>
       </Breadcrumb.Root>
 
-      {(isNew || isEdit) && renderInput()}
+      {isRenderInput && renderInput()}
 
-      {items.length > 0 && !(isNew || isEdit) && (
+      {items.length > 0 && !isRenderInput && (
         <CopyButton name={items.map(item => item.path).join('/')} className="ml-cn-2xs" />
       )}
     </Layout.Flex>

@@ -5,6 +5,7 @@ import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harn
 import {
   FileViewerControlBar,
   getIsMarkdown,
+  IconV2,
   MarkdownViewer,
   Pagination,
   ScrollArea,
@@ -36,12 +37,13 @@ const getDefaultView = (language?: string): ViewTypeValue => {
 
 interface FileContentViewerProps {
   repoContent?: OpenapiGetContentOutput
+  loading?: boolean
 }
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
+export default function FileContentViewer({ repoContent, loading }: FileContentViewerProps) {
   const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
   const fileName = repoContent?.name || ''
@@ -131,6 +133,12 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     navigate(`${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
+  const Loader = () => (
+    <div className="rounded-b-3 flex h-full items-center justify-center rounded-t-none border border-t-0">
+      <IconV2 className="animate-spin" name="loader" size="lg" />
+    </div>
+  )
+
   return (
     <>
       <GitCommitDialog
@@ -157,7 +165,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         isNew={false}
       />
       <Tabs.Root
-        className="flex flex-col repo-files-height overflow-hidden"
+        className="repo-files-height flex flex-col overflow-hidden"
         value={view as string}
         onValueChange={val => onChangeView(val as ViewTypeValue)}
       >
@@ -173,62 +181,64 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           refType={selectedRefType}
         />
 
-        <Tabs.Content value="preview" className="grow overflow-hidden">
-          {fileError && (
-            <div className="flex h-full items-center justify-center">
-              <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-none border-t-0" />
-            </div>
-          )}
+        <Tabs.Content value="preview" className="grow">
+          {loading && <Loader />}
 
-          {!fileError && getIsMarkdown(language) && (
-            <ScrollArea className="h-full grid-cols-[100%]">
-              <MarkdownViewer source={fileContent} withBorder />
-            </ScrollArea>
-          )}
+          {!loading && (
+            <>
+              {fileError && (
+                <div className="flex h-full items-center justify-center">
+                  <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-none border-t-0" />
+                </div>
+              )}
 
-          {!fileError && !getIsMarkdown(language) && (
-            <ScrollArea className="h-full grid-cols-[100%]">
-              <CodeEditor
-                className="overflow-hidden"
-                height="100%"
-                language={language}
-                codeRevision={{ code: fileContent }}
-                onCodeRevisionChange={() => undefined}
-                themeConfig={themeConfig}
-                options={{
-                  readOnly: true
-                }}
-                theme={monacoTheme}
-              />
-            </ScrollArea>
+              {!fileError && getIsMarkdown(language) && <MarkdownViewer source={fileContent} withBorder />}
+
+              {!fileError && !getIsMarkdown(language) && (
+                <CodeEditor
+                  className="overflow-hidden"
+                  height="100%"
+                  language={language}
+                  codeRevision={{ code: fileContent }}
+                  themeConfig={themeConfig}
+                  options={{ readOnly: true }}
+                  theme={monacoTheme}
+                />
+              )}
+            </>
           )}
         </Tabs.Content>
 
         <Tabs.Content value="code" className="grow">
-          <CodeEditor
-            className="overflow-hidden"
-            height="100%"
-            language={language}
-            codeRevision={{ code: fileContent }}
-            onCodeRevisionChange={() => undefined}
-            themeConfig={themeConfig}
-            options={{
-              readOnly: true
-            }}
-            theme={monacoTheme}
-          />
+          {loading && <Loader />}
+
+          {!loading && (
+            <CodeEditor
+              className="overflow-hidden"
+              height="100%"
+              language={language}
+              codeRevision={{ code: fileContent }}
+              themeConfig={themeConfig}
+              options={{ readOnly: true }}
+              theme={monacoTheme}
+            />
+          )}
         </Tabs.Content>
 
         <Tabs.Content value="blame" className="grow">
-          <GitBlame
-            height="100%"
-            themeConfig={themeConfig}
-            codeContent={fileContent}
-            language={language}
-            toCommitDetails={({ sha }: { sha: string }) => {
-              return routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
-            }}
-          />
+          {loading && <Loader />}
+
+          {!loading && (
+            <GitBlame
+              height="100%"
+              themeConfig={themeConfig}
+              codeContent={fileContent}
+              language={language}
+              toCommitDetails={({ sha }: { sha: string }) => {
+                return routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+              }}
+            />
+          )}
         </Tabs.Content>
 
         <Tabs.Content value="history" className="grow overflow-hidden">

@@ -137,7 +137,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 theme="violet"
                 size="md"
                 variant="secondary"
-                className="max-w-full items-start"
+                className="max-w-full"
               />
             </Table.Cell>
             <Table.Cell>

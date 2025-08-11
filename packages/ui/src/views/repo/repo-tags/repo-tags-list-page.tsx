@@ -95,18 +95,16 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
               onOpenCreateTagDialog={openCreateTagDialog}
             />
           </Layout.Vertical>
-
-          {canShowPagination && (
-            <Pagination
-              className="mt-0"
-              indeterminate
-              hasNext={xNextPage > 0}
-              hasPrevious={xPrevPage > 0}
-              getNextPageLink={getNextPageLink}
-              getPrevPageLink={getPrevPageLink}
-            />
-          )}
         </Layout.Vertical>
+        {canShowPagination && (
+          <Pagination
+            indeterminate
+            hasNext={xNextPage > 0}
+            hasPrevious={xPrevPage > 0}
+            getNextPageLink={getNextPageLink}
+            getPrevPageLink={getPrevPageLink}
+          />
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

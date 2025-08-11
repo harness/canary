@@ -5,7 +5,14 @@ import { DiffFile, DiffView, SplitSide } from '@git-diff-view/react'
 import './extended-diff-view-style.css'
 
 import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view-types'
-import { getLineFromEl, getPreselectState, getSide, orderRange, updateSelection } from './extended-diff-view-utils'
+import {
+  getLineFromEl,
+  getNumberHolder,
+  getPreselectState,
+  getSide,
+  orderRange,
+  updateSelection
+} from './extended-diff-view-utils'
 
 /**
  * ExtendedDiffView is a extended/patched version of DiffView.
@@ -47,19 +54,18 @@ export const ExtendedDiffView = forwardRef(
       if (!container) return
 
       const handleMouseDown = (e: MouseEvent) => {
-        if (!(e.target instanceof HTMLElement)) return
-        if (!e.target.classList.contains('diff-line-new-num') && !e.target.classList.contains('diff-line-old-num'))
-          return
+        const numberHolder = getNumberHolder(e.target as HTMLElement, true)
+        if (!numberHolder) return
 
-        const line = getLineFromEl(e.target)
-        if (line == null) return
+        const line = getLineFromEl(numberHolder)
+        if (!line) return
 
         isSelectingRef.current = true
 
         selectedRangeRef.current = {
           start: line,
           end: line,
-          side: getSide(e.target) ?? 'new'
+          side: getSide(numberHolder) ?? 'new'
         }
 
         updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
@@ -67,11 +73,12 @@ export const ExtendedDiffView = forwardRef(
 
       const handleMouseOver = (e: MouseEvent) => {
         if (!isSelectingRef.current) return
-        if (!(e.target instanceof HTMLElement)) return
-        if (!e.target.classList.contains('diff-line-new-num') && !e.target.classList.contains('diff-line-old-num'))
-          return
 
-        const line = getLineFromEl(e.target)
+        const numberHolder = getNumberHolder(e.target as HTMLElement)
+        if (!numberHolder) return
+
+        const line = getLineFromEl(numberHolder)
+        if (!line) return
 
         if (line !== null && selectedRangeRef.current) {
           selectedRangeRef.current = { ...selectedRangeRef.current, end: line }

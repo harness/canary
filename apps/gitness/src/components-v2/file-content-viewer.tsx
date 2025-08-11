@@ -26,14 +26,7 @@ import { useGitRef } from '../hooks/useGitRef'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
-import {
-  decodeGitContent,
-  FILE_SEPERATOR,
-  filenameToLanguage,
-  formatBytes,
-  GitCommitAction,
-  normalizeGitRef
-} from '../utils/git-utils'
+import { decodeGitContent, filenameToLanguage, formatBytes, GitCommitAction, normalizeGitRef } from '../utils/git-utils'
 import GitBlame from './GitBlame'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
@@ -55,7 +48,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const fileContent = decodeGitContent(repoContent?.content?.data)
   const repoRef = useGetRepoRef()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
-  const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
   const apiPath = useAPIPath()
@@ -148,7 +140,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
+            // Navigate to files view in the same branch after deletion
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`)
           } else {
             navigate(
               routes.toPullRequestCompare({

@@ -34,10 +34,14 @@ const InputPathBreadcrumbItem = ({
           changeFileName(event.currentTarget.value)
         }}
         onBlur={handleOnBlur}
-        onFocus={() => {
+        onFocus={({ target }) => {
           const value = (parentPath ? parentPath + '/' : '') + path
           changeFileName(value)
           setParentPath?.('')
+          setTimeout(() => {
+            target.setSelectionRange(value.length, value.length)
+            target.scrollLeft = Number.MAX_SAFE_INTEGER
+          }, 0)
         }}
         autoFocus={!!isNew}
       />
@@ -83,15 +87,18 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
     }
 
     return (
-      <InputPathBreadcrumbItem
-        path={fileName}
-        changeFileName={changeFileName}
-        gitRefName={gitRefName}
-        handleOnBlur={handleOnBlur}
-        isNew={isNew}
-        parentPath={parentPath}
-        setParentPath={setParentPath}
-      />
+      <>
+        <Breadcrumb.Separator />
+        <InputPathBreadcrumbItem
+          path={fileName}
+          changeFileName={changeFileName}
+          gitRefName={gitRefName}
+          handleOnBlur={handleOnBlur}
+          isNew={isNew}
+          parentPath={parentPath}
+          setParentPath={setParentPath}
+        />
+      </>
     )
   }
 

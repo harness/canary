@@ -62,17 +62,18 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
   const pathToSplit = useMemo(() => {
     if (isNew) {
-      // When in new file mode, use fullResourcePath to ensure we maintain the directory structure
-      if (fullResourcePath && parentPath !== fullResourcePath) {
-        // Update parentPath to match fullResourcePath when in new file mode
-        setParentPath(fullResourcePath)
-      }
       return fullResourcePath || parentPath
     } else if (parentPath?.length && fileName.length) {
       return [parentPath, fileName].join(FILE_SEPERATOR)
     }
     return parentPath?.length ? parentPath : fileName
-  }, [isNew, parentPath, fileName, fullResourcePath, setParentPath])
+  }, [isNew, parentPath, fileName, fullResourcePath])
+
+  useEffect(() => {
+    if (isNew && fullResourcePath && parentPath !== fullResourcePath) {
+      setParentPath(fullResourcePath)
+    }
+  }, [isNew, fullResourcePath, parentPath])
 
   const pathParts = useMemo(
     () => [
@@ -111,11 +112,10 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   }
 
   const rebuildPaths = useCallback(() => {
-    const _tokens = fileName?.split(FILE_SEPERATOR).filter(part => !!part.trim())
-    const _fileName = ((_tokens?.pop() as string) || '').trim()
-    const _parentPath = parentPath
-      ?.split(FILE_SEPERATOR)
-      .concat(_tokens || '')
+    const _tokens = fileName?.split(FILE_SEPERATOR).filter(part => !!part.trim()) || []
+    const _fileName = (_tokens.pop() || '').trim()
+    const _parentPath = (parentPath?.split(FILE_SEPERATOR) || [])
+      .concat(_tokens)
       .map(p => p.trim())
       .filter(part => !!part.trim())
       .join(FILE_SEPERATOR)

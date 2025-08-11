@@ -2,6 +2,7 @@ export interface BlameItem {
   fromLineNumber: number
   toLineNumber: number
   commitInfo?: BlameItemCommit
+  infoContent?: JSX.Element
 }
 
 export interface BlameItemCommit {

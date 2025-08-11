@@ -213,7 +213,15 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         </Tabs.Content>
 
         <Tabs.Content value="blame" className="grow">
-          <GitBlame height="100%" themeConfig={themeConfig} codeContent={fileContent} language={language} />
+          <GitBlame
+            height="100%"
+            themeConfig={themeConfig}
+            codeContent={fileContent}
+            language={language}
+            toCommitDetails={({ sha }: { sha: string }) => {
+              return routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+            }}
+          />
         </Tabs.Content>
 
         <Tabs.Content value="history">

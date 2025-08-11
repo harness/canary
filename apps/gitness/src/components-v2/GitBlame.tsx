@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 import { uniqWith } from 'lodash-es'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
-import { Layout } from '@harnessio/ui/components'
-import { getInitials } from '@harnessio/ui/utils'
+import { Avatar, Layout, Text } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
+import { formatDistanceToNow, getInitials } from '@harnessio/ui/utils'
 import { Contributors } from '@harnessio/ui/views'
-import { BlameEditor, BlameEditorProps, ThemeDefinition } from '@harnessio/yaml-editor'
+import { BlameEditorV2, BlameEditorV2Props, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 import { useThemeStore } from '../framework/context/ThemeContext'
@@ -18,11 +19,14 @@ interface GitBlameProps {
   themeConfig: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   codeContent: string
   language: string
-  height?: BlameEditorProps['height']
+  height?: BlameEditorV2Props['height']
+  toCommitDetails: ({ sha }: { sha: string }) => string
 }
 
-export default function GitBlame({ themeConfig, codeContent, language, height }: GitBlameProps) {
+export default function GitBlame({ themeConfig, codeContent, language, height, toCommitDetails }: GitBlameProps) {
   const repoRef = useGetRepoRef()
+  const { navigate } = useRouterContext()
+
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const [blameBlocks, setBlameBlocks] = useState<BlameItem[]>([])
 
@@ -55,10 +59,32 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
           author: authorInfo || {}
         }
 
+        const { name, email } = commitInfo.author?.identity || { name: '', email: '' }
+
         blameData.push({
           fromLineNumber,
           toLineNumber,
-          commitInfo: commitInfo
+          commitInfo: commitInfo,
+          infoContent: (
+            /* IMPORTANT: itemContent accepts only atomic component that are not depends on external state (e.g. context provider) */
+            <div className="flex items-center gap-4 pl-4">
+              <Text style={{ width: '125px' }} truncate>
+                {formatDistanceToNow(commitInfo.author?.when)}
+              </Text>
+              <Avatar name={name} rounded title={name + '\n' + email} />
+              <Text
+                style={{ width: '250px' }}
+                className="cursor-pointer text-2 leading-snug hover:underline"
+                truncate
+                title={commitInfo.title}
+                onClick={() => {
+                  navigate(toCommitDetails({ sha: commitInfo.sha }))
+                }}
+              >
+                {commitInfo.title}
+              </Text>
+            </div>
+          )
         })
 
         fromLineNumber = toLineNumber + 1
@@ -71,7 +97,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
       setBlameBlocks(blameData)
       setContributors(uniqWith(authors, (a, b) => a.email === b.email))
     }
-  }, [gitBlame])
+  }, [gitBlame, toCommitDetails, navigate])
 
   const { theme } = useThemeStore()
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -81,7 +107,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height }:
       <div className="flex items-center border-x border-b px-cn-md py-cn-sm">
         <Contributors contributors={contributors} />
       </div>
-      <BlameEditor
+      <BlameEditorV2
         code={codeContent}
         language={language}
         themeConfig={themeConfig}

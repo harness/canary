@@ -5,3 +5,5 @@ export * from './typeUtils'
 export * from './mergeUtils'
 export * from './TimeUtils'
 export * from './getComponentDisplayName'
+
+export { formatDistanceToNow } from 'date-fns'

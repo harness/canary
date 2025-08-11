@@ -746,11 +746,11 @@
   },
   "repo": {
     "components": {
-      "commitDetailsDiffShowing": "Showing",
-      "commitDetailsDiffChangedFiles": "changed files",
-      "commitDetailsDiffWith": "with",
-      "commitDetailsDiffAdditionsAnd": "additions and",
-      "commitDetailsDiffDeletions": "deletions"
+      "commitDetailsDiffShowing": "Affichage de",
+      "commitDetailsDiffChangedFiles": "fichiers modifiés",
+      "commitDetailsDiffWith": "avec",
+      "commitDetailsDiffAdditionsAnd": "ajouts et",
+      "commitDetailsDiffDeletions": "suppressions"
     }
   },
   "commits": {

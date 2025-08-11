@@ -1,8 +1,9 @@
 import { useTranslation } from '@/context'
 import { DiffFileEntry, TypesDiffStats } from '@/views'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { IconV2 } from '@components/icon-v2'
 import { Layout } from '@components/layout'
+import { Link } from '@components/link'
+import { StatusBadge } from '@components/status-badge/status-badge'
 import { Text } from '@components/text'
 import { formatNumber } from '@utils/TimeUtils'
 
@@ -20,10 +21,10 @@ export const ChangedFilesShortInfo = ({ diffData, diffStats, goToDiff }: Changed
       <Text variant="body-single-line-normal">
         {t('views:repo.components.commitDetailsDiffShowing', 'Showing')}{' '}
         <DropdownMenu.Trigger asChild>
-          <Text color="accent" as="span" className="cursor-pointer">
+          <Link to="">
             {formatNumber(diffStats?.files_changed ?? 0)}{' '}
             {t('views:repo.components.commitDetailsDiffChangedFiles', 'changed files')}
-          </Text>
+          </Link>
         </DropdownMenu.Trigger>{' '}
         {t('views:repo.components.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions ?? 0)}{' '}
         {t('views:repo.components.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
@@ -32,28 +33,22 @@ export const ChangedFilesShortInfo = ({ diffData, diffStats, goToDiff }: Changed
 
       <DropdownMenu.Content className="max-h-[360px] max-w-[800px]" align="start">
         {diffData?.map(diff => (
-          <DropdownMenu.Item
+          <DropdownMenu.IconItem
             key={diff.filePath}
             onClick={() => goToDiff(diff.filePath ?? '')}
-            title={
-              <Layout.Horizontal align="center" className="min-w-0 gap-x-3">
-                <Layout.Horizontal align="center" justify="start" className="min-w-0 flex-1 gap-x-1.5">
-                  <IconV2 name="page" className="shrink-0 text-icons-1" />
-                  <Text className="min-w-0 break-words">{diff.filePath}</Text>
-                </Layout.Horizontal>
-              </Layout.Horizontal>
-            }
+            icon="page"
+            title={diff.filePath}
             label={
-              <Layout.Horizontal className="shrink-0 text-2" gap="none">
+              <Layout.Horizontal gap="2xs" align="center">
                 {diff.addedLines != null && diff.addedLines > 0 && (
-                  <span className="text-cn-foreground-success">+{diff.addedLines}</span>
+                  <StatusBadge variant="outline" size="sm" theme="success">
+                    +{diff.addedLines}
+                  </StatusBadge>
                 )}
-                {diff.addedLines != null &&
-                  diff.addedLines > 0 &&
-                  diff.deletedLines != null &&
-                  diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
                 {diff.deletedLines != null && diff.deletedLines > 0 && (
-                  <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
+                  <StatusBadge variant="outline" size="sm" theme="danger">
+                    -{diff.deletedLines}
+                  </StatusBadge>
                 )}
               </Layout.Horizontal>
             }

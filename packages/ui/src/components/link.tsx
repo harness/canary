@@ -1,4 +1,4 @@
-import { MouseEvent, RefAttributes } from 'react'
+import { forwardRef, MouseEvent, RefAttributes } from 'react'
 import type { LinkProps as LinkBaseProps } from 'react-router-dom'
 
 import { useRouterContext } from '@/context'
@@ -42,42 +42,38 @@ interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, Var
   disabled?: boolean
 }
 
-const Link = ({
-  className,
-  variant = 'default',
-  children,
-  prefixIcon,
-  suffixIcon,
-  disabled = false,
-  size,
-  onClick,
-  ...props
-}: LinkProps) => {
-  const { Link: LinkBase } = useRouterContext()
+const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+  (
+    { className, variant = 'default', children, prefixIcon, suffixIcon, disabled = false, size, onClick, ...props },
+    ref
+  ) => {
+    const { Link: LinkBase } = useRouterContext()
 
-  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (disabled) {
-      e.preventDefault()
-      e.stopPropagation()
-    } else {
-      onClick?.(e)
+    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+      if (disabled) {
+        e.preventDefault()
+        e.stopPropagation()
+      } else {
+        onClick?.(e)
+      }
     }
-  }
 
-  return (
-    <LinkBase
-      {...props}
-      className={cn(linkVariants({ variant, size }), className)}
-      onClick={handleClick}
-      data-disabled={disabled}
-      aria-disabled={disabled}
-    >
-      {!!prefixIcon && <IconV2 name={typeof prefixIcon === 'string' ? prefixIcon : 'nav-arrow-left'} size="2xs" />}
-      {children}
-      {!!suffixIcon && <IconV2 name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-up-right'} size="2xs" />}
-    </LinkBase>
-  )
-}
+    return (
+      <LinkBase
+        {...props}
+        className={cn(linkVariants({ variant, size }), className)}
+        onClick={handleClick}
+        data-disabled={disabled}
+        aria-disabled={disabled}
+        ref={ref}
+      >
+        {!!prefixIcon && <IconV2 name={typeof prefixIcon === 'string' ? prefixIcon : 'nav-arrow-left'} size="2xs" />}
+        {children}
+        {!!suffixIcon && <IconV2 name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-up-right'} size="2xs" />}
+      </LinkBase>
+    )
+  }
+)
 
 Link.displayName = 'Link'
 

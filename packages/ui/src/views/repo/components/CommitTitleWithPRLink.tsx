@@ -19,27 +19,34 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
     const pullRequestIdInt = parseInt(pullRequestId)
 
     if (!isNaN(pullRequestIdInt)) {
-      const pieces = commitMessage.split(match[0])
-      const piecesEls = pieces.map(piece => {
-        return (
-          <Text {...textProps} truncate title={title} key={piece}>
-            {piece}
-          </Text>
-        )
-      })
-      piecesEls.splice(
-        1,
-        0,
-        <Text {...textProps}>
-          &nbsp;(
-          <Link title={title} to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`} className="[font:inherit]">
-            #{pullRequestId}
-          </Link>
-          )&nbsp;
-        </Text>
-      )
+      const pieces = commitMessage
+        .split(match[0])
+        .filter(el => el.trim() !== '')
+        .map((piece, index) => {
+          if (index === 0) {
+            return (
+              <Text {...textProps} truncate title={title} key={piece}>
+                {piece}
+              </Text>
+            )
+          }
 
-      return <Layout.Flex>{piecesEls}</Layout.Flex>
+          return (
+            <Text {...textProps} key={piece}>
+              &nbsp;(
+              <Link
+                title={title}
+                to={`${toPullRequest?.({ pullRequestId: pullRequestIdInt })}`}
+                className="[font:inherit]"
+              >
+                #{pullRequestId}
+              </Link>
+              )&nbsp;
+            </Text>
+          )
+        })
+
+      return <Layout.Flex className="min-w-0">{pieces}</Layout.Flex>
     }
   }
 

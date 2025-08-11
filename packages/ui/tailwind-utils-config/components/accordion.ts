@@ -36,6 +36,11 @@ export default {
         }
       },
 
+      '&:where(:focus-visible:not([data-disabled]))': {
+        boxShadow: 'var(--cn-ring-focus)',
+        outline: 'none'
+      },
+
       '&:where([data-state="open"])': {
         '.cn-accordion-trigger-indicator': {
           '@apply rotate-180': ''

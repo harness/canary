@@ -117,6 +117,11 @@ export default {
     color: `var(--cn-set-red-solid-text)`
   },
 
+  '.cn-checkbox-icon': {
+    width: 'var(--cn-icon-size-2xs)',
+    height: 'var(--cn-icon-size-2xs)'
+  },
+
   '.cn-checkbox-label': {
     font: 'var(--cn-body-strong) !important',
     color: 'var(--cn-text-1) !important',

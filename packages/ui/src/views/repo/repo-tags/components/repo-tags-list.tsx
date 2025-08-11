@@ -132,13 +132,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
             <Table.Cell>
-              <CopyTag
-                value={tag.name}
-                theme="violet"
-                size="md"
-                variant="secondary"
-                className="max-w-full"
-              />
+              <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" className="max-w-full" />
             </Table.Cell>
             <Table.Cell>
               <Text variant="body-normal" className="line-clamp-3">

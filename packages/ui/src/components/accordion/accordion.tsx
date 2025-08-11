@@ -78,7 +78,7 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 
     if (variant === 'card') {
       return (
-        <Card.Root size={cardSize} className="mb-2 w-full">
+        <Card.Root size={cardSize} className="mb-2 w-full" wrapperClassname="!p-0">
           <AccordionPrimitive.Item ref={ref} className="w-full" {...props} />
         </Card.Root>
       )

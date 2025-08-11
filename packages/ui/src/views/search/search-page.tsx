@@ -115,6 +115,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           'mx-auto': isLoading || results?.length || searchQuery,
           'h-full': !isLoading && !results?.length && !searchQuery
         })}
+        // maxWidth="7xl"
       >
         <div className="relative">
           <SearchInput

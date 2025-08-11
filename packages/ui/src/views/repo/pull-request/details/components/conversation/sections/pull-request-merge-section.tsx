@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, CopyTag, IconV2, Layout, StackedList, Text } from '@/components'
+import { Accordion, Button, Card, CopyButton, CopyTag, IconV2, Layout, Link, StackedList, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -11,29 +11,34 @@ interface StepInfoProps {
   step: string
   description: string
   code?: string
-  comment?: string
+  comment?: string | React.ReactElement
 }
 
 const StepInfo: FC<StepInfoProps> = item => {
   return (
     <li>
-      <Layout.Horizontal gap="3xs">
-        <Text as="h3" variant="body-strong" color="foreground-1" className="flex-none">
+      <Layout.Horizontal gap="2xs">
+        <Text as="h3" variant="body-strong" className="flex-none">
           {item.step}
         </Text>
-        <Layout.Vertical className="w-[90%] max-w-full">
-          <Text>{item.description}</Text>
-          <div
-            className={cn('text-2 text-cn-foreground-2', {
-              'border border-cn-borders-2 rounded-md px-2 py-1 !my-2': item.code,
-              '!my-1': item.comment
-            })}
-          >
-            <Layout.Horizontal align="center" justify="between">
-              <Text>{item.code ? item.code : item.comment}</Text>
-              {!!item.code && <CopyButton name={item.code} />}
+        <Layout.Vertical className="w-[90%] max-w-full" gap="xs">
+          <Text variant="body-normal">{item.description}</Text>
+          {item.code ? (
+            <Layout.Horizontal
+              align="center"
+              justify="between"
+              className="border border-cn-borders-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
+            >
+              <Text variant="body-normal" className="font-mono">
+                {item.code}
+              </Text>
+              <CopyButton name={item.code} size="xs" />
             </Layout.Horizontal>
-          </div>
+          ) : item.comment ? (
+            <Text variant="body-normal" className="my-1">
+              {item.comment}
+            </Text>
+          ) : null}
         </Layout.Vertical>
       </Layout.Horizontal>
     </li>
@@ -60,6 +65,7 @@ interface PullRequestMergeSectionProps {
   accordionValues: string[]
   setAccordionValues: Dispatch<SetStateAction<string[]>>
   handleRebaseBranch?: () => void
+  isRebasing?: boolean
   selectedMergeMethod?: string
 }
 const PullRequestMergeSection = ({
@@ -70,6 +76,7 @@ const PullRequestMergeSection = ({
   accordionValues,
   setAccordionValues,
   handleRebaseBranch,
+  isRebasing,
   selectedMergeMethod
 }: PullRequestMergeSectionProps) => {
   const [showCommandLineInfo, setShowCommandLineInfo] = useState(false)
@@ -108,9 +115,16 @@ const PullRequestMergeSection = ({
     },
     {
       step: 'Step 4',
-      description: ' Fix the conflicts and commit the result',
-      comment:
-        'See Resolving a merge conflict using the command line for step-by-step instruction on resolving merge conflicts'
+      description: 'Fix the conflicts and commit the results',
+      comment: (
+        <>
+          See{' '}
+          <Link to="https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging.html#_merge_conflicts" target="_blank">
+            Resolving a merge conflict using the command line
+          </Link>{' '}
+          for step-by-step instructions on resolving merge conflicts
+        </>
+      )
     },
     {
       step: 'Step 5',
@@ -210,32 +224,30 @@ const PullRequestMergeSection = ({
           <Accordion.Content className="ml-7">
             <>
               {showCommandLineInfo && (
-                <div className="mb-3.5 rounded-md border border-cn-borders-2 p-1 px-4 py-2">
-                  <Text variant="heading-small" color="foreground-1">
-                    Resolve conflicts via command line
-                  </Text>
-                  <ol className="flex flex-col gap-y-3">
-                    {stepMap.map(item => (
-                      <StepInfo key={item.step} {...item} />
-                    ))}
-                  </ol>
-                </div>
+                <Card.Root className="mb-3.5 bg-transparent border-cn-borders-3" size="sm">
+                  <Card.Content className="px-4 py-2">
+                    <Layout.Vertical gap="sm">
+                      <Text variant="heading-small">Resolve conflicts via command line</Text>
+                      <ol className="flex flex-col gap-y-0.5">
+                        {stepMap.map(item => (
+                          <StepInfo key={item.step} {...item} />
+                        ))}
+                      </ol>
+                    </Layout.Vertical>
+                  </Card.Content>
+                </Card.Root>
               )}
-              <Text as="span">
-                Conflicting files <Text as="span">{conflictingFiles?.length || 0}</Text>
-              </Text>
+              <Text variant="body-normal">Conflicting files {conflictingFiles?.length || 0}</Text>
 
               {!isEmpty(conflictingFiles) && (
-                <div className="mt-1">
+                <Layout.Vertical gap="xs" className="mt-1">
                   {conflictingFiles?.map(file => (
-                    <div className="flex items-center gap-x-2 py-1.5" key={file}>
+                    <Layout.Horizontal key={file} align="center" gap="xs" className="py-1.5">
                       <IconV2 size="md" className="text-icons-1" name="page" />
-                      <Text as="span" color="foreground-1">
-                        {file}
-                      </Text>
-                    </div>
+                      <Text variant="body-normal">{file}</Text>
+                    </Layout.Horizontal>
                   ))}
-                </div>
+                </Layout.Vertical>
               )}
             </>
           </Accordion.Content>
@@ -257,7 +269,7 @@ const PullRequestMergeSection = ({
             description={<LineDescription text={renderBranchTags()} />}
           />
           {handleRebaseBranch && (
-            <Button theme="default" variant="primary" onClick={handleRebaseBranch} size="md">
+            <Button theme="default" variant="primary" onClick={handleRebaseBranch} loading={isRebasing} size="md">
               Update with rebase
             </Button>
           )}

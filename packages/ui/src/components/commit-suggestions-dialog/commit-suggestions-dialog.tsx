@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
+import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -32,6 +32,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
   isOpen,
   onClose,
   commitTitlePlaceHolder,
+  error,
   onFormSubmit,
   isSubmitting
 }) => {
@@ -44,7 +45,14 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
     }
   })
 
-  const { register, handleSubmit } = formMethods
+  const { register, handleSubmit, reset } = formMethods
+  // Reset form when dialog opens or closes
+  useEffect(() => {
+    reset({
+      message: '',
+      title: commitTitlePlaceHolder
+    })
+  }, [isOpen, reset, commitTitlePlaceHolder])
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
@@ -70,6 +78,14 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
               className="h-44"
             />
           </Dialog.Body>
+
+          {error && (
+            <Alert.Root theme="danger" className="mt-4">
+              <Alert.Title>
+                {error.message || 'An error occurred while applying suggestions. Please try again.'}
+              </Alert.Title>
+            </Alert.Root>
+          )}
 
           <Dialog.Footer>
             <ButtonLayout>

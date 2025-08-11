@@ -101,7 +101,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                           }
                         : // TODO: add onClick for Creating new commit
                           {
-                            label: t('views:commits.createNewCommit', 'Create commit'),
+                            label: t('views:commits.createCommit', 'Create commit'),
                             /**
                              * To make the first commit, redirect to the files page so a new file can be created.
                              */

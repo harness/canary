@@ -770,13 +770,13 @@
     "commitDetailsTitle": "Commit",
     "browseFiles": "Browse Files",
     "commitDetailsAuthored": "authored",
+    "createCommit": "Create commit",
     "createNewCommit": "Create commit",
     "commitDetailsDiffShowing": "Showing",
     "commitDetailsDiffChangedFiles": "changed files",
     "commitDetailsDiffWith": "with",
     "commitDetailsDiffAdditionsAnd": "additions and",
     "commitDetailsDiffDeletions": "deletions",
-    "createCommit": "Create commit",
     "verified": "Verified"
   },
   "createTagDialog": {

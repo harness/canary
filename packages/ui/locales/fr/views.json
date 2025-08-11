@@ -757,13 +757,13 @@
     "commitDetailsTitle": "Commit",
     "browseFiles": "Parcourir les fichiers",
     "commitDetailsAuthored": "créé par",
+    "createCommit": "Créer un commit",
     "createNewCommit": "Créer un commit",
     "commitDetailsDiffShowing": "Affichage de",
     "commitDetailsDiffChangedFiles": "fichiers modifiés",
     "commitDetailsDiffWith": "avec",
     "commitDetailsDiffAdditionsAnd": "ajouts et",
     "commitDetailsDiffDeletions": "suppressions",
-    "createCommit": "Créer un commit",
     "verified": "Vérifié"
   },
   "createTagDialog": {

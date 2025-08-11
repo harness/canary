@@ -29,11 +29,11 @@ interface DataProps {
 
 const LineTitle: FC<HeaderProps> = ({ text, numAdditions, numDeletions }) => {
   return (
-    <div className="flex w-full max-w-full items-center gap-2 overflow-hidden">
+    <div className="flex w-full max-w-full items-center gap-2">
       <Text variant="body-strong" truncate color="foreground-1">
         {text}
       </Text>
-      <CopyButton name={text} color="gray" buttonVariant="ghost" />
+      <CopyButton name={text} color="gray" buttonVariant="ghost" className="relative z-10" />
       {!!numAdditions && (
         <StatusBadge variant="outline" size="sm" theme="success">
           +{numAdditions}
@@ -85,8 +85,8 @@ const CommitsAccordion: FC<{
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
             <div className="py-cn-xs px-cn-sm relative">
-              <Accordion.Trigger className="py-cn-xs px-cn-sm absolute inset-0 hover:cursor-pointer [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center" />
-              <StackedList.Field className="grid pl-5" title={<LineTitle {...header} />} />
+              <Accordion.Trigger className="py-cn-xs px-cn-sm rounded-t-3 absolute inset-0 z-0 hover:cursor-pointer [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center" />
+              <StackedList.Field className="grid pl-5" title={<LineTitle {...header} />} disableTruncate />
             </div>
             <Accordion.Content className="pb-0">
               <div className="rounded-b-3 overflow-hidden border-t bg-transparent">

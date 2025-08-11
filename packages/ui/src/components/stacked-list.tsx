@@ -21,10 +21,10 @@ const listItemVariants = cva(
   }
 )
 
-const listFieldVariants = cva('flex flex-1 flex-col items-stretch gap-cn-2xs justify-start', {
+const listFieldVariants = cva('gap-cn-2xs flex flex-1 flex-col items-stretch justify-start', {
   variants: {
     right: {
-      true: 'justify-end items-end'
+      true: 'items-end justify-end'
     }
   }
 })
@@ -135,6 +135,7 @@ const ListField = ({
         variant={primary ? 'heading-base' : 'body-normal'}
         color={label ? 'foreground-2' : 'foreground-1'}
         truncate={!disableTruncate}
+        className="min-w-0"
       >
         {title}
       </Text>

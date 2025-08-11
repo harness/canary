@@ -129,14 +129,6 @@ export default {
     '&:where(.cn-button-xs, .cn-button-3xs, .cn-button-2xs)': {
       '@apply font-caption-single-line-normal': ''
     },
-    '&:where(.cn-button-2xs)': {
-      height: 'var(--cn-btn-size-2xs)',
-      padding: 'var(--cn-btn-py-2xs) var(--cn-btn-px-2xs)'
-    },
-    '&:where(.cn-button-3xs)': {
-      height: 'var(--cn-btn-size-3xs)',
-      padding: 'var(--cn-btn-py-3xs) var(--cn-btn-px-3xs)'
-    },
 
     // AI button
     '&:where(.cn-button-ai)': {

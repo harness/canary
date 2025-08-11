@@ -120,7 +120,7 @@ export function RepoList({
         ]}
         primaryButton={{
           icon: 'plus',
-          label: t('views:repos.createRepository', 'Create repository'),
+          label: t('views:repos.createRepository', 'Create Repository'),
           to: toCreateRepo?.()
         }}
         secondaryButton={{

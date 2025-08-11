@@ -141,7 +141,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
               ]}
               secondaryButton={{
                 icon: 'trash',
-                label: t('views:noData.clearSearch', 'Clear search'),
+                label: t('views:noData.clearSearch', 'Clear filters'),
                 onClick: handleResetFiltersAndPages
               }}
             />

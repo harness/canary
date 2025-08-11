@@ -83,7 +83,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   variant="secondary"
                   value={branch?.name}
                   icon={defaultBranch === branch?.name ? 'lock' : undefined}
-                  theme="blue"
+                  theme="gray"
                 />
               </Table.Cell>
 
@@ -139,7 +139,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <Link
                     to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                     onClick={e => e.stopPropagation()}
-                    className="inline-flex focus-visible:shadow-ring-focus rounded-2"
+                    className="focus-visible:shadow-ring-focus rounded-2 inline-flex"
                   >
                     {/* TODO: Merged state is not shown in the branch list, because the PR gets removed from 'branch.pullRequests' */}
                     <StatusBadge

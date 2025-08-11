@@ -52,8 +52,7 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
 
       // ICON STYLES
       '.cn-tag-icon': {
-        color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`,
-        opacity: 'var(--cn-opacity-70)'
+        color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
       }
     }
 

@@ -22,6 +22,7 @@ import { useRuleViolationCheck } from '../../framework/hooks/useRuleViolationChe
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate, PageResponseHeader } from '../../types'
+import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
@@ -167,7 +168,13 @@ export function RepoBranchesListPage() {
     }
 
     calculateBranchDivergence({
-      body: { requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || [] }
+      body: {
+        requests:
+          branches?.map(branch => ({
+            from: normalizeGitRef(branch.name),
+            to: normalizeGitRef(repoMetadata?.default_branch)
+          })) || []
+      }
     })
   }, [calculateBranchDivergence, branches, repoMetadata?.default_branch])
 

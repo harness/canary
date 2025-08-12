@@ -134,7 +134,7 @@ export function usePRChecksDecision({
         setMessage(`${_count.success}/${total} ${pluralize('check', _count.success)} succeeded.`)
       }
 
-      setComplete(!_count.pending && !_count.running)
+      setComplete(!_count.pending && !_count.running && !!pullReqMetadata?.merged)
     } else {
       setComplete(false)
     }

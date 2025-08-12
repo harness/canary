@@ -150,7 +150,7 @@ export default function RepoSummaryPage() {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: fullGitRefWoDefault, to: repoData?.default_branch }]
+          requests: [{ from: normalizeGitRef(fullGitRefWoDefault), to: normalizeGitRef(repoData?.default_branch) }]
         }
       })
     }

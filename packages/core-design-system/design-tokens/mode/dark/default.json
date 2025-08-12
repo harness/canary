@@ -186,7 +186,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{blue.700}",
           "$description": "Selected state background color for active brand items."
         }
       },

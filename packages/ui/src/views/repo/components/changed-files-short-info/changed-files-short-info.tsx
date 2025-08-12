@@ -1,8 +1,8 @@
 import { useTranslation } from '@/context'
 import { DiffFileEntry, TypesDiffStats } from '@/views'
+import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { Layout } from '@components/layout'
-import { Link } from '@components/link'
 import { StatusBadge } from '@components/status-badge/status-badge'
 import { Text } from '@components/text'
 import { formatNumber } from '@utils/TimeUtils'
@@ -21,10 +21,10 @@ export const ChangedFilesShortInfo = ({ diffData, diffStats, goToDiff }: Changed
       <Text variant="body-single-line-normal">
         {t('views:repo.components.commitDetailsDiffShowing', 'Showing')}{' '}
         <DropdownMenu.Trigger asChild>
-          <Link to="">
+          <Button variant="link" className="inline-flex h-auto p-0">
             {formatNumber(diffStats?.files_changed ?? 0)}{' '}
             {t('views:repo.components.commitDetailsDiffChangedFiles', 'changed files')}
-          </Link>
+          </Button>
         </DropdownMenu.Trigger>{' '}
         {t('views:repo.components.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions ?? 0)}{' '}
         {t('views:repo.components.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}

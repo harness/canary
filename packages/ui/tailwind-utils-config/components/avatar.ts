@@ -38,8 +38,8 @@ export default {
     },
 
     '.cn-avatar-fallback': {
-      backgroundColor: `var(--cn-set-brand-soft-bg)`,
-      color: `var(--cn-set-brand-soft-text)`,
+      backgroundColor: `var(--cn-set-gray-solid-bg)`,
+      color: `var(--cn-set-gray-solid-text)`,
       fontSize: 'inherit',
       borderRadius: 'inherit',
       boxShadow: 'inherit',

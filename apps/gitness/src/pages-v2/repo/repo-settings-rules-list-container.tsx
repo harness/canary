@@ -19,7 +19,7 @@ import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
-import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
+import { getScopedRuleUrl } from '../../utils/rule-url-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsRulesListContainer = () => {
@@ -46,7 +46,9 @@ export const RepoSettingsRulesListContainer = () => {
   }
 
   const {
-    routes: { toAccountSettings, toOrgSettings, toProjectSettings }
+    routes: { toAccountSettings, toOrgSettings, toProjectSettings },
+    routeUtils,
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const {
@@ -123,15 +125,20 @@ export const RepoSettingsRulesListContainer = () => {
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
         toProjectRuleDetails={(identifier, scope) => {
-          return generateRuleDetailsUrl({
+          return getScopedRuleUrl({
             scope,
             identifier,
+            toCODEManageRepositories: routeUtils.toCODEManageRepositories,
+            toCODERule: routeUtils.toCODERule,
             toAccountSettings,
             toOrgSettings,
             toProjectSettings,
             toRepoBranchRule: routes.toRepoBranchRule,
             spaceId,
-            repoId: repoName
+            repoId: repoName,
+            accountId,
+            orgIdentifier,
+            projectIdentifier
           })
         }}
       />

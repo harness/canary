@@ -106,7 +106,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
           </Layout.Horizontal>
         </Accordion.Trigger>
         <Accordion.Content className="pb-0 bg-cn-background-1 border-t">
-          {item.matches && item.matches.length > 1 && (
+          {item.matches && item.matches.length >= 1 && (
             <Layout.Vertical gap="none" className="mt-1">
               {item.matches
                 .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW)

@@ -85,7 +85,7 @@ export interface RepoSettingsGeneralRulesProps {
   toRepoTagRuleCreate?: () => string
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
-  toProjectRuleDetails?: (identifier: string, scope: number) => string
+  toProjectRuleDetails?: (identifier: string, scope: number) => void
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -178,7 +178,14 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
                   <StackedList.Item className="py-4 pr-1.5" key={rule.identifier} asChild>
-                    <Link to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''} target="_blank">
+                    <Link
+                      to="#"
+                      onClick={e => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
+                      }}
+                    >
                       <StackedList.Field
                         className="grid gap-1.5"
                         title={

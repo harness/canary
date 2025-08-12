@@ -83,6 +83,16 @@ export interface IMFEContext {
   routeUtils: Partial<{
     toCODERepository: ({ repoPath }: { repoPath: string }) => void
     toCODEPullRequest: ({ repoPath, pullRequestId }: { repoPath: string; pullRequestId: string }) => void
+    toCODERule: ({ repoPath, ruleId }: { repoPath: string; ruleId: string }) => void
+    toCODEManageRepositories: ({
+      space,
+      ruleId,
+      settingSection
+    }: {
+      space: string
+      ruleId: string
+      settingSection: string
+    }) => void
   }>
   hooks: Hooks
   setMFETheme: (newTheme: string) => void

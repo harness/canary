@@ -21,7 +21,7 @@ interface RepoSettingsRulesPageProps {
   onParentScopeLabelsChange?: (checked: boolean) => void
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
-  toProjectRuleDetails?: (identifier: string, scope: number) => string
+  toProjectRuleDetails?: (identifier: string, scope: number) => void
 }
 
 export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({

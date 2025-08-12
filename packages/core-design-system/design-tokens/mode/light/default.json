@@ -24,17 +24,17 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.1000}",
+      "$value": "{pure.black}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.800}",
+      "$value": "{tuna.800}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.700}",
+      "$value": "{tuna.700}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "success": {
@@ -96,13 +96,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.16",
+            "value": "0.2",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{tuna.300}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -110,13 +110,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.22",
+            "value": "0.17",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{tuna.300}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     },
     "disabled": {
@@ -259,12 +259,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.50}",
+          "$value": "{orange.25}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.50}",
+          "$value": "{pink.50}",
           "$description": "Selected state background color for active AI items."
         }
       }
@@ -278,51 +278,51 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{tuna.200}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.400}",
+          "$value": "{tuna.300}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.400}",
+          "$value": "{tuna.300}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{tuna.850}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{tuna.50}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{tuna.100}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{tuna.150}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{tuna.850}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.25}",
+          "$value": "{tuna.25}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
@@ -332,12 +332,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.50}",
+          "$value": "{tuna.50}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{tuna.100}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -1123,13 +1123,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.55",
+              "value": "0.2",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{tuna.800}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "backdrop-nested": {
@@ -1137,13 +1137,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.15",
+              "value": "0.1",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{tuna.800}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "fade-start": {
@@ -1831,7 +1831,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1845,7 +1845,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Light shadow color. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -1859,7 +1859,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -1873,7 +1873,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Medium shadow color. Creates moderate depth for elevated components."
     },
     "4": {
@@ -1887,7 +1887,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Deep shadow color. Provides significant depth for floating elements."
     },
     "5": {
@@ -1895,13 +1895,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.1",
+            "value": "0.07",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -1915,7 +1915,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     },
     "inner": {
@@ -1929,7 +1929,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{tuna.800}",
       "$description": "Subtle inner shadow color. Creates inset effect for pressed or focused states."
     }
   },

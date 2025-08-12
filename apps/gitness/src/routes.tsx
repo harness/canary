@@ -273,13 +273,9 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'commit/:commitSHA',
-            element: <RepoCommitDetailsPage showSidebar={false} />,
+            element: <RepoCommitDetailsPage />,
             handle: {
-              breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
-                <>
-                  <span>{commitSHA.substring(0, 7)}</span>
-                </>
-              ),
+              breadcrumb: ({ commitSHA }: { commitSHA: string }) => <span>{commitSHA.substring(0, 7)}</span>,
               routeName: RouteConstants.toRepoCommitDetails
             },
             children: [

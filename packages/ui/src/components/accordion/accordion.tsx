@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, ReactNode, useContext } from 'react'
+import { ComponentPropsWithoutRef, createContext, ElementRef, forwardRef, Fragment, ReactNode, useContext } from 'react'
 
 import { Card } from '@components/card'
 import { IconPropsV2, IconV2 } from '@components/icon-v2'
@@ -98,7 +98,7 @@ type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, children, suffix, prefix, indicatorProps, headerClassName, ...props }, ref) => {
+  ({ className, children, suffix, prefix, indicatorProps, headerClassName, asChild, ...props }, ref) => {
     const { indicatorPosition } = useContext(AccordionContext)
 
     const Indicator = () => (
@@ -110,16 +110,25 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
       />
     )
 
+    const Wrapper = asChild ? 'div' : Fragment
+
     return (
       <AccordionPrimitive.Header className={headerClassName}>
-        <AccordionPrimitive.Trigger ref={ref} className={cn('cn-accordion-trigger', className)} {...props}>
-          {indicatorPosition === 'left' && <Indicator />}
+        <AccordionPrimitive.Trigger
+          ref={ref}
+          className={cn('cn-accordion-trigger', className)}
+          asChild={asChild}
+          {...props}
+        >
+          <Wrapper>
+            {indicatorPosition === 'left' && <Indicator />}
 
-          {!!prefix && <span className="cn-accordion-trigger-prefix">{prefix}</span>}
-          <span className="cn-accordion-trigger-text">{children}</span>
-          {!!suffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
+            {!!prefix && <span className="cn-accordion-trigger-prefix">{prefix}</span>}
+            <span className="cn-accordion-trigger-text">{children}</span>
+            {!!suffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
 
-          {indicatorPosition === 'right' && <Indicator />}
+            {indicatorPosition === 'right' && <Indicator />}
+          </Wrapper>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Header>
     )

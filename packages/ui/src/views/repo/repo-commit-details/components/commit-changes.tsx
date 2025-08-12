@@ -22,36 +22,28 @@ interface HeaderProps {
   isBinary?: boolean
 }
 
-interface LineTitleProps {
-  header: HeaderProps
-}
-
 interface DataProps {
   data: HeaderProps[]
   diffMode: DiffModeEnum
 }
 
-const LineTitle: FC<LineTitleProps> = ({ header }) => {
-  const { t: _t } = useTranslation()
-  const { text, numAdditions, numDeletions } = header
+const LineTitle: FC<HeaderProps> = ({ text, numAdditions, numDeletions }) => {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="inline-flex items-center gap-2 overflow-hidden">
-        <Text className="flex-1" variant="body-strong" truncate>
-          {text}
-        </Text>
-        <CopyButton name={text} color="gray" />
-        {!!numAdditions && (
-          <StatusBadge variant="outline" size="sm" theme="success">
-            +{numAdditions}
-          </StatusBadge>
-        )}
-        {!!numDeletions && (
-          <StatusBadge variant="outline" size="sm" theme="danger">
-            -{numDeletions}
-          </StatusBadge>
-        )}
-      </div>
+    <div className="flex w-full max-w-full items-center gap-2">
+      <Text variant="body-strong" truncate color="foreground-1">
+        {text}
+      </Text>
+      <CopyButton name={text} color="gray" buttonVariant="ghost" className="relative z-10" />
+      {!!numAdditions && (
+        <StatusBadge variant="outline" size="sm" theme="success">
+          +{numAdditions}
+        </StatusBadge>
+      )}
+      {!!numDeletions && (
+        <StatusBadge variant="outline" size="sm" theme="danger">
+          -{numDeletions}
+        </StatusBadge>
+      )}
     </div>
   )
 }
@@ -83,7 +75,7 @@ const CommitsAccordion: FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
+      <StackedList.Item disableHover isHeader className="cursor-default p-0">
         <Accordion.Root
           type="multiple"
           className="w-full"
@@ -92,11 +84,12 @@ const CommitsAccordion: FC<{
           indicatorPosition="left"
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="px-4 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
-              <StackedList.Field className="grid" title={<LineTitle header={header} />} />
-            </Accordion.Trigger>
+            <div className="py-cn-xs px-cn-sm relative">
+              <Accordion.Trigger className="py-cn-xs px-cn-sm rounded-t-3 absolute inset-0 z-0 hover:cursor-pointer [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center" />
+              <StackedList.Field className="grid pl-5" title={<LineTitle {...header} />} disableTruncate />
+            </div>
             <Accordion.Content className="pb-0">
-              <div className="border-t bg-transparent">
+              <div className="rounded-b-3 overflow-hidden border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical align="center" className="w-full py-5">
                     <Button
@@ -120,11 +113,11 @@ const CommitsAccordion: FC<{
                   </Layout.Vertical>
                 ) : (
                   <>
-                    {startingLine ? (
+                    {startingLine && (
                       <div className="bg-[--diff-hunk-lineNumber--]">
                         <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
                       </div>
-                    ) : null}
+                    )}
                     <PullRequestDiffViewer
                       /**
                        * In commit changes we don't need principal props as we don't have any comments.
@@ -170,7 +163,7 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode }) => {
     [setOpenItems]
   )
   return (
-    <div className="flex flex-col gap-4">
+    <Layout.Grid gapY="md">
       {data.map((item, index) => {
         return (
           <CommitsAccordion
@@ -182,7 +175,7 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode }) => {
           />
         )
       })}
-    </div>
+    </Layout.Grid>
   )
 }
 

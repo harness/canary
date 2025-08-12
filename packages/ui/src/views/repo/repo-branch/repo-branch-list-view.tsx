@@ -45,6 +45,10 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
     return `?page=${xNextPage}`
   }, [xNextPage])
 
+  const canShowPagination = useMemo(() => {
+    return !isLoading && !!branchList.length
+  }, [isLoading, branchList.length])
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
@@ -92,7 +96,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           isDirtyList={isDirtyList}
           {...routingProps}
         />
-        {!isLoading && (
+        {canShowPagination && (
           <Pagination
             indeterminate
             hasNext={xNextPage > 0}

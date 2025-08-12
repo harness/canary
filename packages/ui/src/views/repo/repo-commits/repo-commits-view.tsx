@@ -88,7 +88,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                             "Your commits will appear here once they're made. Start committing to see your changes reflected."
                           )
                     ]}
-                    primaryButton={
+                    secondaryButton={
                       isDirtyList
                         ? {
                             label: (

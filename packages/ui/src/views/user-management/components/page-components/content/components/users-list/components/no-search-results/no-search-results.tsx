@@ -18,7 +18,7 @@ export const NoSearchResults = () => {
           type: 'users'
         })
       ]}
-      primaryButton={{
+      secondaryButton={{
         label: (
           <>
             <IconV2 name="trash" />

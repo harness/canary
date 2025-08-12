@@ -64,7 +64,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
-          primaryButton={{
+          secondaryButton={{
             label: (
               <>
                 <IconV2 name="trash" />

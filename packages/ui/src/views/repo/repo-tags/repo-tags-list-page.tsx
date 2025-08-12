@@ -45,6 +45,10 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     return `?page=${xNextPage}`
   }, [xNextPage])
 
+  const canShowPagination = useMemo(() => {
+    return !isLoading && !!tagsList.length
+  }, [isLoading, tagsList.length])
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content
@@ -92,7 +96,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
         <Spacer size={5} />
 
-        {!isLoading && (
+        {canShowPagination && (
           <Pagination
             indeterminate
             hasNext={xNextPage > 0}

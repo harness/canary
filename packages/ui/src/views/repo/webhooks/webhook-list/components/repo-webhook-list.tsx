@@ -88,17 +88,22 @@ export function RepoWebhookList({
                 'Add or manage webhooks to automate tasks and connect external services to your project.'
               )
         ]}
-        primaryButton={
+        secondaryButton={
           isDirtyList
             ? {
                 label: (
                   <>
                     <IconV2 name="trash" />
-                    {t('views:noData.clearFilters', 'Clear Filters')}
+                    {t('views:noData.clearSearch', 'Clear Search')}
                   </>
                 ),
                 onClick: handleReset
               }
+            : undefined
+        }
+        primaryButton={
+          isDirtyList
+            ? undefined
             : {
                 label: (
                   <>

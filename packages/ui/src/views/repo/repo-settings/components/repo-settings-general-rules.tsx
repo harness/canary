@@ -260,7 +260,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   }
                 )
               ]}
-              primaryButton={{
+              secondaryButton={{
                 label: t('views:noData.clearSearch', 'Clear search'),
                 onClick: resetSearch
               }}

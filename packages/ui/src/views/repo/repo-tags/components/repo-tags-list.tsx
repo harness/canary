@@ -79,7 +79,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               ]
         }
         textWrapperClassName={isDirtyList ? '' : 'max-w-[360px]'}
-        primaryButton={
+        secondaryButton={
           isDirtyList
             ? {
                 label: (
@@ -90,6 +90,11 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 ),
                 onClick: onResetFiltersAndPages
               }
+            : undefined
+        }
+        primaryButton={
+          isDirtyList
+            ? undefined
             : {
                 label: (
                   <>

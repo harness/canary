@@ -66,7 +66,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
               ]
         }
-        primaryButton={
+        secondaryButton={
           isDirtyList
             ? {
                 label: (
@@ -77,6 +77,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 ),
                 onClick: handleResetFiltersAndPages
               }
+            : undefined
+        }
+        primaryButton={
+          isDirtyList
+            ? undefined
             : {
                 label: (
                   <>

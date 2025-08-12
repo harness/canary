@@ -18,9 +18,13 @@
     },
     "lg": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "xl": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
+    "2xl": {
       "$type": "borderWidth",
       "$value": "1"
     }

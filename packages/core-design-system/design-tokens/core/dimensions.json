@@ -419,13 +419,17 @@
     },
     "md": {
       "$type": "sizing",
-      "$value": "{size.5}"
+      "$value": "{size.4-half}"
     },
     "lg": {
       "$type": "sizing",
-      "$value": "{size.8}"
+      "$value": "{size.6}"
     },
     "xl": {
+      "$type": "sizing",
+      "$value": "{size.8}"
+    },
+    "2xl": {
       "$type": "sizing",
       "$value": "{size.10}"
     }

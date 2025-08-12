@@ -23,6 +23,10 @@
     "xl": {
       "$type": "borderWidth",
       "$value": "1"
+    },
+    "2xl": {
+      "$type": "borderWidth",
+      "$value": "1"
     }
   }
 }

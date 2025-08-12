@@ -17,7 +17,7 @@ export default {
   '.cn-radio-item-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--cn-spacing-1)'
+    gap: 'var(--cn-layout-4xs)'
   },
 
   '.cn-radio-item': {

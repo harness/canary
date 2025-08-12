@@ -105,7 +105,7 @@ export default {
     gap: 'var(--cn-btn-gap-md)',
     flexShrink: '0',
     border: 'var(--cn-btn-border) solid var(--cn-set-gray-surface-border)',
-    '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
+    '@apply font-body-single-line-normal select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
 
     '&:where(.cn-button-split-dropdown)': {

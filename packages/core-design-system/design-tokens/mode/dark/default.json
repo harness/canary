@@ -2786,5 +2786,27 @@
         }
       }
     }
+  },
+  "icon": {
+    "devops": {
+      "$type": "color",
+      "$value": "{lime.200}"
+    },
+    "testing": {
+      "$type": "color",
+      "$value": "{orange.200}"
+    },
+    "security": {
+      "$type": "color",
+      "$value": "{blue.400}"
+    },
+    "efficiency": {
+      "$type": "color",
+      "$value": "{cyan.200}"
+    },
+    "platform": {
+      "$type": "color",
+      "$value": "{purple.300}"
+    }
   }
 }

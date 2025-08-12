@@ -320,10 +320,10 @@ export const PullRequestAccordion: React.FC<{
       onValueChange={onToggle}
       indicatorPosition="left"
     >
-      <Accordion.Item value={header?.text ?? ''} className="border-cn-borders-2 rounded-3 border">
+      <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
-          className="bg-cn-background-2 rounded-tl-3 rounded-tr-3 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="sticky top-[138px] z-10 border-cn-borders-2 border-b"
+          className="rounded-t-3 bg-cn-background-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
+          headerClassName="z-[18] sticky top-[107px] border-cn-borders-2 border rounded-t-3"
         >
           <LineTitle
             header={header}
@@ -340,7 +340,7 @@ export const PullRequestAccordion: React.FC<{
             currentRefForDiff={currentRefForDiff}
           />
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0" containerClassName="rounded-bl-3 rounded-br-3">
+        <Accordion.Content className="pb-0" containerClassName="rounded-b-3 border-x border-b border-cn-borders-2">
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">

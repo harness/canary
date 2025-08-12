@@ -191,7 +191,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     <Layout.Horizontal
       align="center"
       justify="between"
-      className="gap-x-5 sticky top-[100px] z-20 bg-cn-background-1 pb-2 pt-1"
+      className="layer-high sticky top-[55px] gap-x-5 bg-cn-background-1 py-2"
     >
       <Layout.Horizontal className="grow gap-x-5">
         <DropdownMenu.Root>

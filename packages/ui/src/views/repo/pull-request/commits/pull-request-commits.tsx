@@ -46,6 +46,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         <CommitsList
           toCode={toCode}
           toCommitDetails={toCommitDetails}
+          className="mt-cn-sm"
           data={commitsList.map((item: TypesCommit) => ({
             sha: item.sha,
             parent_shas: item.parent_shas,

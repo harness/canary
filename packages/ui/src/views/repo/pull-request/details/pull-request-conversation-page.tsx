@@ -37,9 +37,9 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
   principalProps
 }) => {
   return (
-    <SandboxLayout.Columns columnWidths="minmax(calc(100% - 334px), 1fr) 334px">
+    <SandboxLayout.Columns columnWidths="minmax(calc(100% - 334px), 1fr) 334px" className="mt-cn-sm">
       <SandboxLayout.Column>
-        <SandboxLayout.Content className="pr-cn-xl pl-0 pt-0">
+        <SandboxLayout.Content className="pl-0 pr-cn-xl pt-0">
           {/*TODO: update with design  */}
           {!!rebaseErrorMessage && (
             <Alert.Root theme="danger" className="mb-5" dismissible>

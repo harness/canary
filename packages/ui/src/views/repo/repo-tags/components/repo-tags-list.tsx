@@ -160,7 +160,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                   timestamp={new Date(tag.tagger?.when).getTime()}
                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
                   textProps={{ variant: 'body-normal' }}
-                  classNameTrigger="text-left"
+                  triggerClassName="text-left"
                 />
               ) : null}
             </Table.Cell>

@@ -84,27 +84,30 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
               </ListActions.Root>
             )}
 
-            <RepoTagsList
-              onDeleteTag={onDeleteTag}
-              useRepoTagsStore={useRepoTagsStore}
-              toCommitDetails={toCommitDetails}
-              onOpenCreateBranchDialog={openCreateBranchDialog}
-              isLoading={isLoading}
-              isDirtyList={isDirtyList}
-              onResetFiltersAndPages={handleResetFiltersAndPages}
-              onOpenCreateTagDialog={openCreateTagDialog}
-            />
+            <Layout.Vertical gap="none" className="flex-1">
+              <RepoTagsList
+                onDeleteTag={onDeleteTag}
+                useRepoTagsStore={useRepoTagsStore}
+                toCommitDetails={toCommitDetails}
+                onOpenCreateBranchDialog={openCreateBranchDialog}
+                isLoading={isLoading}
+                isDirtyList={isDirtyList}
+                onResetFiltersAndPages={handleResetFiltersAndPages}
+                onOpenCreateTagDialog={openCreateTagDialog}
+              />
+
+              {canShowPagination && (
+                <Pagination
+                  indeterminate
+                  hasNext={xNextPage > 0}
+                  hasPrevious={xPrevPage > 0}
+                  getNextPageLink={getNextPageLink}
+                  getPrevPageLink={getPrevPageLink}
+                />
+              )}
+            </Layout.Vertical>
           </Layout.Vertical>
         </Layout.Vertical>
-        {canShowPagination && (
-          <Pagination
-            indeterminate
-            hasNext={xNextPage > 0}
-            hasPrevious={xPrevPage > 0}
-            getNextPageLink={getNextPageLink}
-            getPrevPageLink={getPrevPageLink}
-          />
-        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

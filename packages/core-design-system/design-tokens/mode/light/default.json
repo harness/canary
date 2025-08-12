@@ -1941,16 +1941,16 @@
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "0.8",
-          "color": "{bg.1}",
+          "spread": "1",
+          "color": "{border.brand}",
           "type": "dropShadow"
         },
         {
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "2",
-          "color": "{border.brand}",
+          "spread": "4",
+          "color": "{set.brand.surface.bg}",
           "type": "dropShadow"
         }
       ],

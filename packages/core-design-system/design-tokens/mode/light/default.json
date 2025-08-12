@@ -506,7 +506,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.800}",
+          "$value": "{yellow.700}",
           "$description": "Standard text color for yellow surfaces with balanced readability."
         },
         "bg": {

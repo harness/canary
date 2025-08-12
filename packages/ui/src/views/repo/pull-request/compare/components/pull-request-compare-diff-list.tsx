@@ -88,7 +88,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
 
   return (
     <>
-      <ListActions.Root>
+      <ListActions.Root className="sticky top-[100px] z-20 bg-cn-background-1 py-2">
         <ListActions.Left>
           <DropdownMenu.Root>
             <Text as="p" variant="body-single-line-normal" className="text-2 leading-tight text-cn-foreground-2 pt-1.5">

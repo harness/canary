@@ -7,6 +7,7 @@ import {
   getIsMarkdown,
   MarkdownViewer,
   Pagination,
+  ScrollArea,
   Skeleton,
   Tabs,
   ViewTypeValue
@@ -156,7 +157,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         isNew={false}
       />
       <Tabs.Root
-        className="flex h-full flex-col"
+        className="flex flex-col repo-files-height overflow-hidden"
         value={view as string}
         onValueChange={val => onChangeView(val as ViewTypeValue)}
       >
@@ -172,28 +173,34 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           refType={selectedRefType}
         />
 
-        <Tabs.Content value="preview" className="grow">
+        <Tabs.Content value="preview" className="grow overflow-hidden">
           {fileError && (
             <div className="flex h-full items-center justify-center">
               <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-none border-t-0" />
             </div>
           )}
 
-          {!fileError && getIsMarkdown(language) && <MarkdownViewer source={fileContent} withBorder />}
+          {!fileError && getIsMarkdown(language) && (
+            <ScrollArea className="h-full grid-cols-[100%]">
+              <MarkdownViewer source={fileContent} withBorder />
+            </ScrollArea>
+          )}
 
           {!fileError && !getIsMarkdown(language) && (
-            <CodeEditor
-              className="overflow-hidden"
-              height="100%"
-              language={language}
-              codeRevision={{ code: fileContent }}
-              onCodeRevisionChange={() => undefined}
-              themeConfig={themeConfig}
-              options={{
-                readOnly: true
-              }}
-              theme={monacoTheme}
-            />
+            <ScrollArea className="h-full grid-cols-[100%]">
+              <CodeEditor
+                className="overflow-hidden"
+                height="100%"
+                language={language}
+                codeRevision={{ code: fileContent }}
+                onCodeRevisionChange={() => undefined}
+                themeConfig={themeConfig}
+                options={{
+                  readOnly: true
+                }}
+                theme={monacoTheme}
+              />
+            </ScrollArea>
           )}
         </Tabs.Content>
 
@@ -224,11 +231,11 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           />
         </Tabs.Content>
 
-        <Tabs.Content value="history">
+        <Tabs.Content value="history" className="grow overflow-hidden">
           {isFetchingCommits ? (
             <Skeleton.List />
           ) : (
-            <>
+            <ScrollArea className="h-full grid-cols-[100%]">
               <CommitsList
                 className="mt-cn-md"
                 toCommitDetails={({ sha }: { sha: string }) =>
@@ -251,7 +258,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
                 getPrevPageLink={getPrevPageLink}
                 getNextPageLink={getNextPageLink}
               />
-            </>
+            </ScrollArea>
           )}
         </Tabs.Content>
       </Tabs.Root>

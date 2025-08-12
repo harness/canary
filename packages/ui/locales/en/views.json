@@ -410,7 +410,6 @@
     "button": {
       "createPullRequest": "Create Pull Request"
     },
-    "clearFilters": "Clear Filters",
     "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "No branches yet",
@@ -418,6 +417,7 @@
     "startBranchDescription": "Start branching to see your work organized.",
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "clearFilters": "Clear Filters",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",

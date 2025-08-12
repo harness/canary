@@ -1,4 +1,4 @@
-import { Alert, Button, IconV2, Layout, MarkdownViewer, NoData, Text } from '@/components'
+import { Alert, Button, Layout, MarkdownViewer, NoData, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 

@@ -42,34 +42,24 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {/* TODO: replace with meter component when available */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
-        <Layout.Grid columns="50% 50%" align="center" justify="center" className="mx-auto w-20">
+        <Layout.Grid columns={2} align="center" justify="center" className="mx-auto w-20">
           <Progress
-            className="rotate-180 [&_.cn-progress-root]:rounded-l-none justify-self-end"
+            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-softgray [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-softgray rotate-180 justify-self-end [&_.cn-progress-root]:rounded-l-none"
             value={adjustedBehindPercentage / 100}
             size="sm"
             hideIcon
             hidePercentage
             hideContainer
-            style={
-              {
-                width: `${adjustedBehindPercentage}%`,
-                '--cn-progress-bar-bg-color': 'var(--cn-set-gray-soft-bg)'
-              } as CSSProperties
-            }
+            style={{ width: `${adjustedBehindPercentage}%` } as CSSProperties}
           />
           <Progress
-            className="[&_.cn-progress-root]:rounded-l-none"
+            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-solidgray [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-solidgray [&_.cn-progress-root]:rounded-l-none"
             value={adjustedAheadPercentage / 100}
             size="sm"
             hideIcon
             hidePercentage
             hideContainer
-            style={
-              {
-                width: `${adjustedAheadPercentage}%`,
-                '--cn-progress-bar-bg-color': 'var(--cn-set-gray-solid-bg)'
-              } as CSSProperties
-            }
+            style={{ width: `${adjustedAheadPercentage}%` } as CSSProperties}
           />
         </Layout.Grid>
       )}

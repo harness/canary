@@ -92,8 +92,6 @@ function createProgressVariantStyles() {
 
 export default {
   '.cn-progress': {
-    '--cn-progress-bar-bg-color': 'var(--cn-comp-slider-track-progress)',
-
     '&-container': {
       position: 'relative'
     },
@@ -149,11 +147,11 @@ export default {
       },
       '&::-webkit-progress-value': {
         border: 'none',
-        'background-color': 'var(--cn-progress-bar-bg-color)'
+        'background-color': 'var(--cn-comp-slider-track-progress)'
       },
       '&::-moz-progress-bar': {
         border: 'none',
-        'background-color': 'var(--cn-progress-bar-bg-color)'
+        'background-color': 'var(--cn-comp-slider-track-progress)'
       },
       '&:indeterminate::-moz-progress-bar': {
         width: '0'

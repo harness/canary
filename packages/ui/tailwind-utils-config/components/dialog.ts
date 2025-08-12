@@ -116,7 +116,9 @@ export default {
       overflowY: 'auto',
       overflowX: 'hidden',
       paddingInline: 'var(--cn-modal-dialog-scroll-compensation)',
+      paddingBottom: 'var(--cn-modal-dialog-scroll-compensation)',
       marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
+      marginBottom: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
       gap: 'var(--cn-layout-xl)'
     }
   },

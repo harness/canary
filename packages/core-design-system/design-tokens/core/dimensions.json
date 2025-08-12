@@ -339,6 +339,10 @@
       "$type": "sizing",
       "$value": "384px"
     },
+    "5-half": {
+      "$type": "sizing",
+      "$value": "22px"
+    },
     "6-half": {
       "$type": "sizing",
       "$value": "26px"
@@ -423,7 +427,7 @@
     },
     "lg": {
       "$type": "sizing",
-      "$value": "{size.6}"
+      "$value": "{size.5-half}"
     },
     "xl": {
       "$type": "sizing",

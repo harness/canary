@@ -428,10 +428,6 @@
     "xl": {
       "$type": "sizing",
       "$value": "{size.8}"
-    },
-    "2xl": {
-      "$type": "sizing",
-      "$value": "{size.10}"
     }
   },
   "opacity": {

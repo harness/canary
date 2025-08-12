@@ -85,7 +85,7 @@ export default {
   },
 
   '.cn-switch-label': {
-    font: 'var(--cn-body-strong) !important',
+    font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
     '&:where([disabled])': {
       color: 'var(--cn-state-disabled-text) !important'

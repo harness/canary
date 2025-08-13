@@ -310,7 +310,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{tuna.150}",
+          "$value": "{tuna.100}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
@@ -337,7 +337,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{tuna.100}",
+          "$value": "{tuna.50}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -400,7 +400,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{mint.100}",
+          "$value": "{mint.50}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -463,7 +463,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.100}",
+          "$value": "{red.50}",
           "$description": "Selected state background color for active red items."
         }
       }

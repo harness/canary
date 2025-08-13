@@ -180,7 +180,7 @@ describe('findChangeReqDecisions', () => {
 
 describe('findWaitingDecisions', () => {
   it('should find waiting decisions from entries', () => {
-    const result = findWaitingDecisions(mockEntriesForWaitingDecisions)
+    const result = findWaitingDecisions(mockEntriesForWaitingDecisions, '', true)
     expect(result).toEqual([
       {
         pattern: '**',

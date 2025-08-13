@@ -730,6 +730,7 @@ const PullRequestPanel = ({
                   changeReqReviewer={changeReqReviewer}
                   codeOwnersData={codeOwnersData}
                   defaultReviewersData={defaultReviewersData}
+                  pullReqMetadata={pullReqMetadata}
                 />
               )}
 

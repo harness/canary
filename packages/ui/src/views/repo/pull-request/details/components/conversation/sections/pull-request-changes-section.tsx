@@ -36,7 +36,8 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   changeReqReviewer,
   codeOwnersData,
   accordionValues,
-  defaultReviewersData
+  defaultReviewersData,
+  pullReqMetadata
 }) => {
   const {
     codeOwners,
@@ -150,6 +151,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
 
           <CodeOwnersSection
             codeOwners={codeOwners}
+            pullReqMetadata={pullReqMetadata}
             reqCodeOwnerApproval={reqCodeOwnerApproval}
             reqCodeOwnerLatestApproval={reqCodeOwnerLatestApproval}
             codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}

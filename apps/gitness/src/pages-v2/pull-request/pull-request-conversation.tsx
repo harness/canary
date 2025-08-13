@@ -501,7 +501,11 @@ export default function PullRequestConversationPage() {
     return {
       codeOwners: codeOwners,
       codeOwnerChangeReqEntries: findChangeReqDecisions(data, CodeOwnerReqDecision.CHANGEREQ),
-      codeOwnerPendingEntries: findWaitingDecisions(data),
+      codeOwnerPendingEntries: findWaitingDecisions(
+        data,
+        pullReqMetadata?.source_sha ?? '',
+        prPanelData?.reqCodeOwnerLatestApproval
+      ),
       codeOwnerApprovalEntries,
       latestCodeOwnerApprovalArr,
       reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,

@@ -1,18 +1,21 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { ListActions } from '@/components'
+import { Button, IconV2, Layout, ListActions } from '@/components'
 import {
-  ChangedFilesShortInfo,
   DiffModeOptions,
+  DraggableSidebarDivider,
   InViewDiffRenderer,
   jumpToFile,
   PrincipalPropsType,
+  SIDEBAR_MIN_WIDTH,
   TypesDiffStats
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/cn'
 import { chunk } from 'lodash-es'
 
 import { HeaderProps, PullRequestAccordion } from '../../components/pull-request-accordian'
+import { PullRequestDiffSidebar } from '../../components/pull-request-diff-sidebar'
 import {
   calculateDetectionMargin,
   IN_VIEWPORT_DETECTION_MARGIN,
@@ -23,7 +26,7 @@ import {
 } from '../../utils'
 
 interface PullRequestCompareDiffListProps {
-  diffStats: TypesDiffStats
+  diffStats?: TypesDiffStats
   diffData: HeaderProps[]
   currentUser?: string
   sourceBranch?: string
@@ -35,7 +38,6 @@ interface PullRequestCompareDiffListProps {
 }
 
 const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
-  diffStats,
   diffData,
   currentUser,
   jumpToDiff,
@@ -50,8 +52,11 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
   const [openItems, setOpenItems] = useState<string[]>([])
+  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
   const diffBlocks = useMemo(() => chunk(diffData, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [diffData])
   const diffsContainerRef = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [showExplorer, setShowExplorer] = useState(true)
 
   useEffect(() => {
     if (diffData.length > 0) {
@@ -88,62 +93,91 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   )
 
   return (
-    <>
-      <ListActions.Root className="sticky top-[100px] z-20 bg-cn-background-1 py-2">
-        <ListActions.Left>
-          <ChangedFilesShortInfo diffData={diffData} diffStats={diffStats} goToDiff={setJumpToDiff} />
-        </ListActions.Left>
-        <ListActions.Right>
-          <ListActions.Dropdown
-            selectedValue={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
-            onChange={handleDiffModeChange}
-            title={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
-            items={DiffModeOptions}
+    <Layout.Flex className="flex-1" ref={containerRef}>
+      {showExplorer && (
+        <>
+          <PullRequestDiffSidebar
+            sidebarWidth={sidebarWidth}
+            filePaths={diffData?.map(diff => diff.filePath) || []}
+            setJumpToDiff={setJumpToDiff}
+            diffsData={
+              diffData?.map(item => ({
+                addedLines: item.addedLines || 0,
+                deletedLines: item.deletedLines || 0,
+                lang: item.filePath.split('.')[1],
+                filePath: item.filePath,
+                isDeleted: !!item.isDeleted,
+                unchangedPercentage: item.unchangedPercentage || 0
+              })) || []
+            }
           />
-        </ListActions.Right>
-      </ListActions.Root>
-      <div className="flex flex-col" ref={diffsContainerRef}>
-        {diffBlocks?.map((diffsBlock, blockIndex) => {
-          return (
-            <InViewDiffRenderer
-              key={blockIndex}
-              blockName={outterBlockName(blockIndex)}
-              root={document as unknown as RefObject<Element>}
-              shouldRetainChildren={shouldRetainDiffChildren}
-              detectionMargin={calculateDetectionMargin(diffData?.length)}
+          <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
+        </>
+      )}
+      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-xl' : '')} direction="column">
+        <ListActions.Root className="layer-high bg-cn-background-1 sticky top-[55px] py-2">
+          <ListActions.Left>
+            <Button
+              size="md"
+              title={showExplorer ? 'Collapse Sidebar' : 'Expand Sidebar'}
+              variant="transparent"
+              onClick={() => setShowExplorer(!showExplorer)}
             >
-              {diffsBlock?.map((item, index) => (
-                <div className="pt-4" key={item.filePath}>
-                  <InViewDiffRenderer
-                    key={item.filePath}
-                    blockName={innerBlockName(item?.filePath ?? (blockIndex + index).toString())}
-                    root={diffsContainerRef}
-                    shouldRetainChildren={shouldRetainDiffChildren}
-                    detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
-                  >
-                    <PullRequestAccordion
-                      principalProps={principalProps}
-                      key={`item?.title ? ${item?.title}-${index} : ${index}`}
-                      header={item}
-                      currentUser={currentUser}
-                      diffMode={diffMode}
-                      openItems={openItems}
-                      onToggle={() => toggleOpen(item.text)}
-                      setCollapsed={val => setCollapsed(item.text, val)}
-                      onGetFullDiff={onGetFullDiff}
-                      toRepoFileDetails={toRepoFileDetails}
-                      sourceBranch={sourceBranch}
-                      hideViewedCheckbox
-                      addWidget={false}
-                    />
-                  </InViewDiffRenderer>
-                </div>
-              ))}
-            </InViewDiffRenderer>
-          )
-        })}
-      </div>
-    </>
+              <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
+            </Button>
+          </ListActions.Left>
+          <ListActions.Right>
+            <ListActions.Dropdown
+              selectedValue={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
+              onChange={handleDiffModeChange}
+              title={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
+              items={DiffModeOptions}
+            />
+          </ListActions.Right>
+        </ListActions.Root>
+        <div className="flex flex-col" ref={diffsContainerRef}>
+          {diffBlocks?.map((diffsBlock, blockIndex) => {
+            return (
+              <InViewDiffRenderer
+                key={blockIndex}
+                blockName={outterBlockName(blockIndex)}
+                root={document as unknown as RefObject<Element>}
+                shouldRetainChildren={shouldRetainDiffChildren}
+                detectionMargin={calculateDetectionMargin(diffData?.length)}
+              >
+                {diffsBlock?.map((item, index) => (
+                  <div className="pt-4" key={item.filePath}>
+                    <InViewDiffRenderer
+                      key={item.filePath}
+                      blockName={innerBlockName(item?.filePath ?? (blockIndex + index).toString())}
+                      root={diffsContainerRef}
+                      shouldRetainChildren={shouldRetainDiffChildren}
+                      detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
+                    >
+                      <PullRequestAccordion
+                        principalProps={principalProps}
+                        key={`item?.title ? ${item?.title}-${index} : ${index}`}
+                        header={item}
+                        currentUser={currentUser}
+                        diffMode={diffMode}
+                        openItems={openItems}
+                        onToggle={() => toggleOpen(item.text)}
+                        setCollapsed={val => setCollapsed(item.text, val)}
+                        onGetFullDiff={onGetFullDiff}
+                        toRepoFileDetails={toRepoFileDetails}
+                        sourceBranch={sourceBranch}
+                        hideViewedCheckbox
+                        addWidget={false}
+                      />
+                    </InViewDiffRenderer>
+                  </div>
+                ))}
+              </InViewDiffRenderer>
+            )
+          })}
+        </div>
+      </Layout.Flex>
+    </Layout.Flex>
   )
 }
 

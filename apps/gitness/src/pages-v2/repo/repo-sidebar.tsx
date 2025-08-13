@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -9,8 +9,15 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { SkeletonFileExplorer } from '@harnessio/ui/components'
-import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
+import { Layout, SkeletonFileExplorer } from '@harnessio/ui/components'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  DraggableSidebarDivider,
+  RepoSidebar as RepoSidebarView,
+  SIDEBAR_MAX_WIDTH,
+  SIDEBAR_MIN_WIDTH
+} from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
@@ -21,9 +28,6 @@ import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
-
-const SIDEBAR_MIN_WIDTH = 264
-const SIDEBAR_MAX_WIDTH = 700
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -37,6 +41,7 @@ export const RepoSidebar = () => {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const {
     fullGitRef,
@@ -185,56 +190,12 @@ export const RepoSidebar = () => {
     [fullGitRef, navigate, repoId]
   )
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      const startX = e.clientX
-      const startWidth = sidebarWidth
-
-      const handleMouseMove = (e: MouseEvent) => {
-        const newWidth = startWidth + (e.clientX - startX)
-        setSidebarWidth(Math.max(SIDEBAR_MIN_WIDTH, Math.min(SIDEBAR_MAX_WIDTH, newWidth)))
-      }
-
-      const handleMouseUp = () => {
-        document.removeEventListener('mousemove', handleMouseMove)
-        document.removeEventListener('mouseup', handleMouseUp)
-      }
-
-      document.addEventListener('mousemove', handleMouseMove)
-      document.addEventListener('mouseup', handleMouseUp)
-    },
-    [sidebarWidth]
-  )
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
-    const step = e.shiftKey ? 50 : 10 // Larger steps with Shift key
-
-    switch (e.key) {
-      case 'ArrowLeft':
-        e.preventDefault()
-        setSidebarWidth(prev => Math.max(SIDEBAR_MIN_WIDTH, prev - step))
-        break
-      case 'ArrowRight':
-        e.preventDefault()
-        setSidebarWidth(prev => Math.min(SIDEBAR_MAX_WIDTH, prev + step))
-        break
-      case 'Home':
-        e.preventDefault()
-        setSidebarWidth(SIDEBAR_MIN_WIDTH) // Minimum width
-        break
-      case 'End':
-        e.preventDefault()
-        setSidebarWidth(SIDEBAR_MAX_WIDTH) // Maximum width
-        break
-    }
-  }, [])
-
   // TODO: repoId and spaceId must be defined
   if (!repoId) return <></>
 
   return (
     <>
-      <div className="flex flex-1">
+      <Layout.Flex className="flex-1" ref={containerRef}>
         <div
           className={`shrink-0 overflow-hidden min-w-[${SIDEBAR_MIN_WIDTH}px] max-w-[${SIDEBAR_MAX_WIDTH}px]`}
           style={{
@@ -263,21 +224,10 @@ export const RepoSidebar = () => {
           </RepoSidebarView>
         </div>
 
-        {/* Resizable Divider */}
-        <div
-          onMouseDown={handleMouseDown}
-          onKeyDown={handleKeyDown}
-          className="border-cn-borders-2 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 w-1 shrink-0 cursor-col-resize select-none border-r transition-colors"
-          role="slider"
-          aria-valuenow={sidebarWidth}
-          aria-valuemax={SIDEBAR_MAX_WIDTH}
-          aria-valuemin={SIDEBAR_MIN_WIDTH}
-          tabIndex={0}
-          aria-label="Resize panel by dragging or using arrow keys (with shift for larger steps)"
-        />
+        <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
 
         <Outlet />
-      </div>
+      </Layout.Flex>
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}
         onClose={() => setCreateBranchDialogOpen(false)}

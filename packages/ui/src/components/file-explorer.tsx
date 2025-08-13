@@ -35,7 +35,7 @@ interface FolderItemProps {
   value?: string
   isActive?: boolean
   content?: ReactNode
-  link: string
+  link?: string
 }
 
 function FolderItem({ children, value = '', isActive, content, link, level }: FolderItemProps) {
@@ -47,7 +47,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
         className="pl-cn-2xs mb-cn-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
-        <Link to={link}>
+        <Link to={link || ''}>
           <Item
             icon="folder"
             isActive={isActive}
@@ -78,9 +78,10 @@ interface FileItemProps {
   children: ReactNode
   isActive?: boolean
   link?: string
+  onClick?: () => void
 }
 
-function FileItem({ children, isActive, level, link }: FileItemProps) {
+function FileItem({ children, isActive, level, link, onClick }: FileItemProps) {
   const { Link } = useRouterContext()
   const comp = (
     <Item
@@ -91,6 +92,7 @@ function FileItem({ children, isActive, level, link }: FileItemProps) {
         marginLeft: `calc(-16px * ${level})`,
         paddingLeft: `calc(16px * ${level + 1} + 8px)`
       }}
+      onClick={onClick}
     >
       {children}
     </Item>

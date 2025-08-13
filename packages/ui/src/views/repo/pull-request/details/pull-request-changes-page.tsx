@@ -1,11 +1,14 @@
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useRef, useState } from 'react'
 
-import { Skeleton } from '@/components'
+import { Layout, Skeleton } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
+import { cn } from '@utils/cn'
+import { activityToCommentItem, HandleUploadType, SandboxLayout, TypesCommit } from '@views/index'
 import { orderBy } from 'lodash-es'
 
+import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
+import { PullRequestDiffSidebar } from '../components/pull-request-diff-sidebar'
 import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
 import { PullRequestChanges } from './components/changes/pull-request-changes'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
@@ -105,6 +108,9 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   currentRefForDiff
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
+  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [showExplorer, setShowExplorer] = useState(true)
 
   // Convert activities to comment threads
   const activityBlocks = useMemo(() => {
@@ -181,34 +187,54 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   }
 
   return (
-    <>
-      <PullRequestChangesFilter
-        active={''}
-        isApproving={isApproving}
-        currentUser={currentUser ?? {}}
-        pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
-        reviewers={reviewers}
-        submitReview={submitReview}
-        refetchReviewers={refetchReviewers}
-        diffMode={diffMode}
-        setDiffMode={setDiffMode}
-        pullReqCommits={pullReqCommits}
-        defaultCommitFilter={defaultCommitFilter}
-        selectedCommits={selectedCommits}
-        setSelectedCommits={setSelectedCommits}
-        viewedFiles={diffs?.[0]?.fileViews?.size || 0}
-        pullReqStats={pullReqStats}
-        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
-        commitSuggestionsBatchCount={commitSuggestionsBatchCount}
-        diffData={diffs?.map(diff => ({
-          filePath: diff.filePath,
-          addedLines: diff.addedLines,
-          deletedLines: diff.deletedLines
-        }))}
-        setJumpToDiff={setJumpToDiff}
-      />
-      {renderContent()}
-    </>
+    <Layout.Flex className="flex-1" ref={containerRef}>
+      {showExplorer && (
+        <>
+          <PullRequestDiffSidebar
+            sidebarWidth={sidebarWidth}
+            filePaths={diffs?.map(diff => diff.filePath) || []}
+            setJumpToDiff={setJumpToDiff}
+            diffsData={
+              diffs?.map(item => ({
+                addedLines: item.addedLines,
+                deletedLines: item.deletedLines,
+                lang: item.filePath.split('.')[1],
+                filePath: item.filePath,
+                isDeleted: !!item.isDeleted,
+                unchangedPercentage: item.unchangedPercentage || 0
+              })) || []
+            }
+          />
+          <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
+        </>
+      )}
+      <SandboxLayout.Main>
+        <SandboxLayout.Content className={cn('flex flex-col p-0', showExplorer ? 'pl-cn-xl' : '')}>
+          <PullRequestChangesFilter
+            active={''}
+            isApproving={isApproving}
+            currentUser={currentUser ?? {}}
+            pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
+            reviewers={reviewers}
+            submitReview={submitReview}
+            refetchReviewers={refetchReviewers}
+            diffMode={diffMode}
+            setDiffMode={setDiffMode}
+            pullReqCommits={pullReqCommits}
+            defaultCommitFilter={defaultCommitFilter}
+            selectedCommits={selectedCommits}
+            setSelectedCommits={setSelectedCommits}
+            viewedFiles={diffs?.[0]?.fileViews?.size || 0}
+            pullReqStats={pullReqStats}
+            onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+            commitSuggestionsBatchCount={commitSuggestionsBatchCount}
+            showExplorer={showExplorer}
+            setShowExplorer={setShowExplorer}
+          />
+          {renderContent()}
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    </Layout.Flex>
   )
 }
 

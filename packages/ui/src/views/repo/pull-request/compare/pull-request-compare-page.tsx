@@ -222,6 +222,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     // Return a default value
     return review_decision
   }
+
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>

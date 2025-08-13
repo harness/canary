@@ -652,8 +652,8 @@ const PullRequestPanel = ({
                       <MoreActionsTooltip
                         className="!ml-2"
                         iconName="more-horizontal"
-                        sideOffset={-8}
-                        alignOffset={2}
+                        sideOffset={4}
+                        alignOffset={0}
                         actions={[
                           {
                             title: 'Mark as draft',

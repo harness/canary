@@ -25,7 +25,7 @@ export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = (
   className
 }) => {
   const handleMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       const startX = e.clientX
       const startWidth = width
       const container = containerRef?.current || document
@@ -48,7 +48,7 @@ export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = (
   )
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
+    (e: React.KeyboardEvent<HTMLButtonElement>) => {
       const step = e.shiftKey ? 50 : 10 // Larger steps with Shift key
 
       switch (e.key) {
@@ -74,18 +74,17 @@ export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = (
   )
 
   return (
-    <div
+    <button
       onMouseDown={handleMouseDown}
       onKeyDown={handleKeyDown}
       className={cn(
-        'border-cn-borders-3 focus-within:border-cn-borders-1 focus-visible:border-cn-borders-1 w-1 shrink-0 cursor-col-resize select-none border-r transition-colors',
+        'after:bg-cn-borders-3 focus:after:bg-cn-borders-accent relative w-px shrink-0 cursor-col-resize select-none after:transition-[width,background,left] before:absolute before:left-[-150%] before:top-0 before:h-full before:w-1 after:absolute after:top-0 after:left-0 after:h-full after:w-px hover:after:left-[-150%] hover:after:w-1 focus:after:left-[-150%] focus:after:w-1',
         className
       )}
       role="slider"
       aria-valuenow={width}
       aria-valuemax={maxWidth}
       aria-valuemin={minWidth}
-      tabIndex={0}
       aria-label={ariaLabel}
     />
   )

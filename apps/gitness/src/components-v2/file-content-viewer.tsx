@@ -13,6 +13,7 @@ import {
   Tabs,
   ViewTypeValue
 } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 import { CommitsList, FileReviewError, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -181,7 +182,10 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
           refType={selectedRefType}
         />
 
-        <Tabs.Content value="preview" className="grow">
+        <Tabs.Content
+          value="preview"
+          className={cn('grow overflow-hidden', { 'border border-t-0 rounded-b-3': getIsMarkdown(language) })}
+        >
           {loading && <Loader />}
 
           {!loading && (
@@ -192,18 +196,24 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
                 </div>
               )}
 
-              {!fileError && getIsMarkdown(language) && <MarkdownViewer source={fileContent} withBorder />}
+              {!fileError && getIsMarkdown(language) && (
+                <ScrollArea className="h-full grid-cols-[100%]">
+                  <MarkdownViewer source={fileContent} withBorder className="border-x-0 border-b-0" />
+                </ScrollArea>
+              )}
 
               {!fileError && !getIsMarkdown(language) && (
-                <CodeEditor
-                  className="overflow-hidden"
-                  height="100%"
-                  language={language}
-                  codeRevision={{ code: fileContent }}
-                  themeConfig={themeConfig}
-                  options={{ readOnly: true }}
-                  theme={monacoTheme}
-                />
+                <ScrollArea className="h-full grid-cols-[100%]">
+                  <CodeEditor
+                    className="overflow-hidden"
+                    height="100%"
+                    language={language}
+                    codeRevision={{ code: fileContent }}
+                    themeConfig={themeConfig}
+                    options={{ readOnly: true }}
+                    theme={monacoTheme}
+                  />
+                </ScrollArea>
               )}
             </>
           )}

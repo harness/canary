@@ -197,9 +197,11 @@ export const RepoSidebar = () => {
     <>
       <Layout.Flex className="flex-1" ref={containerRef}>
         <div
-          className={`shrink-0 overflow-hidden min-w-[${SIDEBAR_MIN_WIDTH}px] max-w-[${SIDEBAR_MAX_WIDTH}px]`}
+          className="shrink-0 overflow-hidden"
           style={{
-            width: `${sidebarWidth}px`
+            width: `${sidebarWidth}px`,
+            minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+            maxWidth: `${SIDEBAR_MAX_WIDTH}px`
           }}
         >
           <RepoSidebarView

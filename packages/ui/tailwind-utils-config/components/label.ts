@@ -1,6 +1,6 @@
 export default {
   '.cn-label': {
-    '@apply font-body-strong': '',
+    '@apply font-body-normal': '',
     display: 'grid',
     gridTemplateColumns: 'auto auto',
     justifyContent: 'start',

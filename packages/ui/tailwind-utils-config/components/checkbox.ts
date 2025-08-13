@@ -17,7 +17,7 @@ export default {
   '.cn-checkbox-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--cn-spacing-1)'
+    gap: 'var(--cn-layout-4xs)'
   },
 
   '.cn-checkbox-root': {
@@ -118,7 +118,7 @@ export default {
   },
 
   '.cn-checkbox-label': {
-    font: 'var(--cn-body-strong) !important',
+    font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
     '&:where(.disabled)': {
       color: 'var(--cn-state-disabled-text) !important'

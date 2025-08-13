@@ -2822,5 +2822,27 @@
         }
       }
     }
+  },
+  "icon": {
+    "devops": {
+      "$type": "color",
+      "$value": "{lime.500}"
+    },
+    "testing": {
+      "$type": "color",
+      "$value": "{orange.400}"
+    },
+    "security": {
+      "$type": "color",
+      "$value": "{blue.500}"
+    },
+    "efficiency": {
+      "$type": "color",
+      "$value": "{cyan.400}"
+    },
+    "platform": {
+      "$type": "color",
+      "$value": "{purple.500}"
+    }
   }
 }

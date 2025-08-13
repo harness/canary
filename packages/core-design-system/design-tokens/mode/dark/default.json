@@ -186,7 +186,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{blue.700}",
           "$description": "Selected state background color for active brand items."
         }
       },
@@ -2785,6 +2785,28 @@
           "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
         }
       }
+    }
+  },
+  "icon": {
+    "devops": {
+      "$type": "color",
+      "$value": "{lime.200}"
+    },
+    "testing": {
+      "$type": "color",
+      "$value": "{orange.200}"
+    },
+    "security": {
+      "$type": "color",
+      "$value": "{blue.400}"
+    },
+    "efficiency": {
+      "$type": "color",
+      "$value": "{cyan.200}"
+    },
+    "platform": {
+      "$type": "color",
+      "$value": "{purple.300}"
     }
   }
 }

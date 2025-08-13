@@ -243,7 +243,7 @@
           "0": "We recommend every repository include a",
           "1": "README, LICENSE, and .gitignrore."
         },
-        "createFile": "Create file"
+        "createFile": "Create File"
       },
       "cloneInstructions": {
         "title": "Please generate git credentials if it’s your first time cloning the repository",

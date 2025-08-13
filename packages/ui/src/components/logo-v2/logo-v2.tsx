@@ -37,26 +37,24 @@ interface LogoFallbackPropsV2 extends BaseLogoPropsV2 {
 
 export type LogoPropsV2 = LogoDefaultPropsV2 | LogoFallbackPropsV2
 
-const LogoV2 = forwardRef<SVGSVGElement, LogoPropsV2>(
-  ({ name, size, className, skipSize = false, fallback, ...props }, ref) => {
-    const Component = name ? LogoNameMapV2[name] : undefined
-    const sizeClasses = skipSize ? '' : logoVariants({ size })
+const LogoV2 = forwardRef<SVGSVGElement, LogoPropsV2>(({ name, size, className, skipSize = false, fallback }, ref) => {
+  const Component = name ? LogoNameMapV2[name] : undefined
+  const sizeClasses = skipSize ? '' : logoVariants({ size })
 
-    if (!Component && fallback) {
-      console.warn(`Logo "${name}" not found, falling back to "${fallback}".`)
-      const FallbackComponent = LogoNameMapV2[fallback]
+  if (!Component && fallback) {
+    console.warn(`Logo "${name}" not found, falling back to "${fallback}".`)
+    const FallbackComponent = LogoNameMapV2[fallback]
 
-      return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} {...props} />
-    }
-
-    if (!Component) {
-      console.warn(`Logo "${name}" not found in LogoNameMapV2.`)
-      return null
-    }
-
-    return <Component className={cn(sizeClasses, className)} ref={ref} {...props} />
+    return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} />
   }
-)
+
+  if (!Component) {
+    console.warn(`Logo "${name}" not found in LogoNameMapV2.`)
+    return null
+  }
+
+  return <Component className={cn(sizeClasses, className)} ref={ref} />
+})
 
 export { LogoV2 }
 

@@ -45,7 +45,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             side={side}
             align={align}
             sideOffset={4}
-            {...props}
           >
             {!!title && <span className="cn-tooltip-title">{title}</span>}
             <div>{content}</div>

@@ -42,7 +42,7 @@ interface IconFallbackPropsV2 extends BaseIconPropsV2 {
 export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
 
 const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
-  ({ name, size = 'sm', className, skipSize = false, fallback, ...props }, ref) => {
+  ({ name, size = 'sm', className, skipSize = false, fallback }, ref) => {
     const Component = name ? IconNameMapV2[name] : undefined
     const sizeClasses = skipSize ? '' : iconVariants({ size })
 
@@ -50,7 +50,7 @@ const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
       console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
       const FallbackComponent = IconNameMapV2[fallback]
 
-      return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} {...props} />
+      return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} />
     }
 
     if (!Component) {
@@ -58,7 +58,7 @@ const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
       return null
     }
 
-    return <Component className={cn(sizeClasses, className)} ref={ref} {...props} />
+    return <Component className={cn(sizeClasses, className)} ref={ref} />
   }
 )
 

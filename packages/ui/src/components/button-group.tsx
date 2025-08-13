@@ -62,7 +62,7 @@ const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownProps, orie
 }
 
 export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
-  ({ orientation = 'horizontal', buttonsProps, size = 'md', iconOnly, className, ...props }, ref) => {
+  ({ orientation = 'horizontal', buttonsProps, size = 'md', iconOnly, className }, ref) => {
     return (
       <div
         className={cn(
@@ -71,7 +71,6 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
           className
         )}
         ref={ref}
-        {...props}
       >
         {buttonsProps.map((buttonProps, index) => {
           const { className, ...restButtonProps } = buttonProps

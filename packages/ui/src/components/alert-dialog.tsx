@@ -53,7 +53,7 @@ interface ContentProps {
   children?: ReactNode
 }
 
-const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...props }, ref) => {
+const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Content must be used within AlertDialog.Root')
 
@@ -77,7 +77,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...
   })
 
   return (
-    <Dialog.Content onOpenAutoFocus={event => event.preventDefault()} ref={ref} {...props}>
+    <Dialog.Content onOpenAutoFocus={event => event.preventDefault()} ref={ref}>
       <Dialog.Header
         icon={
           context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
@@ -100,13 +100,13 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children, ...
 })
 Content.displayName = 'AlertDialog.Content'
 
-const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ children = 'Cancel', ...props }, ref) => {
+const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ children = 'Cancel' }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
 
   return (
     <Dialog.Close asChild>
-      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} ref={ref} {...props}>
+      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} ref={ref}>
         {children}
       </Button>
     </Dialog.Close>

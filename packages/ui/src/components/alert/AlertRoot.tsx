@@ -36,7 +36,7 @@ export interface AlertRootProps extends PropsWithChildren<VariantProps<typeof al
 }
 
 export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
-  ({ className, theme, children, dismissible, onDismiss, expandable, ...props }, ref) => {
+  ({ className, theme, children, dismissible, onDismiss, expandable }, ref) => {
     const { t } = useTranslation()
     const [isVisible, setIsVisible] = useState(true)
     const [isExpanded, setIsExpanded] = useState(false)
@@ -78,7 +78,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
     if (!isVisible) return null
 
     return (
-      <div ref={ref} {...props} role="alert" className={cn(alertVariants({ theme }), className)} style={alertStyle}>
+      <div ref={ref} role="alert" className={cn(alertVariants({ theme }), className)} style={alertStyle}>
         {dismissible && (
           <Button
             className="cn-alert-close-button"

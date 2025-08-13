@@ -12,17 +12,7 @@ export interface CopyButtonProps extends Omit<UseCopyButtonProps, 'copyData'> {
 
 export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
   (
-    {
-      name,
-      className,
-      buttonVariant = 'outline',
-      iconSize = 'sm',
-      size = 'sm',
-      onClick,
-      color,
-      iconOnly = false,
-      ...props
-    },
+    { name, className, buttonVariant = 'outline', iconSize = 'sm', size = 'sm', onClick, color, iconOnly = false },
     ref
   ) => {
     const { copyButtonProps, CopyIcon } = useCopyButton({ onClick, copyData: name, iconSize, color })
@@ -36,7 +26,6 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
         iconOnly={iconOnly}
         {...copyButtonProps}
         ref={ref}
-        {...props}
       >
         {CopyIcon}
       </Button>

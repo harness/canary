@@ -166,8 +166,7 @@ const TagSplit = forwardRef<HTMLDivElement, TagProps>(
       label = '',
       disabled = false,
       enableHover = false,
-      onClick,
-      ...props
+      onClick
     },
     ref
   ) => {
@@ -180,7 +179,6 @@ const TagSplit = forwardRef<HTMLDivElement, TagProps>(
           'cn-tag-split-hoverable': !disabled && enableHover
         })}
         ref={ref}
-        {...props}
       >
         {/* LEFT TAG - should never have a Reset Icon */}
         <Tag {...sharedProps} icon={icon} value={label} className="cn-tag-split-left" />

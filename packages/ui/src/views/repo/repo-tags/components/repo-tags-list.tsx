@@ -6,6 +6,7 @@ import {
   CommitCopyActions,
   CopyTag,
   IconV2,
+  Layout,
   MoreActionsTooltip,
   NoData,
   Skeleton,
@@ -43,7 +44,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
-      title: t('views:repos.createBranch', 'Create Branch'),
+      title: t('views:repos.createBranch', 'Create branch'),
       onClick: () => onOpenCreateBranchDialog(tag)
     },
     {
@@ -79,6 +80,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               ]
         }
         textWrapperClassName={isDirtyList ? '' : 'max-w-[360px]'}
+        className="flex-1"
         secondaryButton={
           isDirtyList
             ? {
@@ -114,15 +116,15 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root tableClassName="table-fixed">
+    <Table.Root tableClassName="table-fixed" size="compact">
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[32%]">{t('views:repos.description', 'Description')}</Table.Head>
-          <Table.Head className="w-[10%]">{t('views:repos.commit', 'Commit')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:repos.tagger', 'Tagger')}</Table.Head>
-          <Table.Head className="w-[16%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
-          <Table.Head className="w-[46px]" />
+          <Table.Head className="w-[33%]">{t('views:repos.description', 'Description')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
+          <Table.Head className="w-[7%]" />
         </Table.Row>
       </Table.Header>
 
@@ -130,7 +132,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
         {tagsList.map(tag => (
           <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
             <Table.Cell>
-              <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" />
+              <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" className="max-w-full" />
             </Table.Cell>
             <Table.Cell>
               <Text variant="body-normal" className="line-clamp-3">
@@ -140,8 +142,8 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
             <Table.Cell disableLink>
               <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
-            <Table.Cell>
-              <div className="flex items-center gap-2">
+            <Table.Cell disableLink>
+              <Layout.Horizontal gap="xs">
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
@@ -150,7 +152,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                     </Text>
                   </>
                 ) : null}
-              </div>
+              </Layout.Horizontal>
             </Table.Cell>
             <Table.Cell>
               {tag.tagger?.when ? (
@@ -158,10 +160,11 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                   timestamp={new Date(tag.tagger?.when).getTime()}
                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
                   textProps={{ variant: 'body-normal' }}
+                  triggerClassName="text-left"
                 />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="w-[46px] text-right" disableLink>
+            <Table.Cell className="text-right" disableLink>
               <MoreActionsTooltip
                 actions={getTableActions(tag).map(action => ({
                   ...action,

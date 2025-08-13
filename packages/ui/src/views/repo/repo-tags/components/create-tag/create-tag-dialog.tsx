@@ -48,14 +48,16 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   }, [clearErrors, reset])
 
   useEffect(() => {
-    if (open) {
-      resetForm()
-
-      if (selectedBranchOrTag) {
-        setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
-      }
+    if (open && selectedBranchOrTag) {
+      setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
     }
   }, [open, resetForm, selectedBranchOrTag, setValue])
+
+  useEffect(() => {
+    if (!open) {
+      resetForm()
+    }
+  }, [open, resetForm])
 
   const handleClose = () => {
     resetForm()
@@ -78,6 +80,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               maxLength={250}
               placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
               disabled={isLoading}
+              autoFocus
             />
 
             <ControlGroup>
@@ -109,8 +112,8 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               </Dialog.Close>
               <Button type="submit" disabled={isLoading} loading={isLoading}>
                 {isLoading
-                  ? t('views:repos.creatingTagButton', 'Creating Tag...')
-                  : t('views:repos.createTagButton', 'Create Tag')}
+                  ? t('views:repos.creatingTagButton', 'Creating tag...')
+                  : t('views:repos.createTagButton', 'Create tag')}
               </Button>
             </ButtonLayout>
           </Dialog.Footer>

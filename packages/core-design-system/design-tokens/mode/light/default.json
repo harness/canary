@@ -1556,7 +1556,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{tuna.50}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {

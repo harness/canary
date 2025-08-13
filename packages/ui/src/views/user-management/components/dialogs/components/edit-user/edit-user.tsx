@@ -94,7 +94,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
             <Dialog.Close onClick={onClose} disabled={isUpdatingUser}>
               {t('views:userManagement.cancel', 'Cancel')}
             </Dialog.Close>
-            <Button type="submit" disabled={isUpdatingUser} form="edit-user-form">
+            <Button type="submit" form="edit-user-form" disabled={isUpdatingUser}>
               {isUpdatingUser
                 ? t('views:userManagement.editUser.pending', 'Saving...')
                 : t('views:userManagement.editUser.save', 'Save')}

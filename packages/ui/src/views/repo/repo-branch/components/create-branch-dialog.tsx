@@ -105,8 +105,8 @@ export function CreateBranchDialog({
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper id="create-branch-form" {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
             <FormInput.Text
               id="name"
               label="Branch name"
@@ -142,29 +142,29 @@ export function CreateBranchDialog({
                 </Alert.Title>
               </Alert.Root>
             )}
-          </Dialog.Body>
+          </FormWrapper>
+        </Dialog.Body>
 
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
-                {t('views:repos.cancel', 'Cancel')}
-              </Dialog.Close>
-              {!bypassable ? (
-                <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isCreatingBranch}>
-                  {isCreatingBranch
-                    ? t('component:branchDialog.loading', 'Creating branch...')
-                    : t('component:branchDialog.default', 'Create branch')}
-                </Button>
-              ) : (
-                <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
-                  {isCreatingBranch
-                    ? t('component:branchDialog.loading', 'Creating branch...')
-                    : t('component:branchDialog.bypassButton', 'Bypass rules and create branch')}
-                </Button>
-              )}
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Dialog.Close>
+            {!bypassable ? (
+              <Button type="submit" form="create-branch-form" disabled={isCreatingBranch}>
+                {isCreatingBranch
+                  ? t('component:branchDialog.loading', 'Creating branch...')
+                  : t('component:branchDialog.default', 'Create branch')}
+              </Button>
+            ) : (
+              <Button type="submit" form="create-branch-form" variant="outline" theme="danger">
+                {isCreatingBranch
+                  ? t('component:branchDialog.loading', 'Creating branch...')
+                  : t('component:branchDialog.bypassButton', 'Bypass rules and create branch')}
+              </Button>
+            )}
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

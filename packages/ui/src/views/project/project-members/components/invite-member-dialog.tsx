@@ -79,7 +79,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         </Dialog.Header>
 
         <Dialog.Body>
-          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+          <FormWrapper id="new-member-form" {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             <Select
               options={memberOptions}
               value={invitedMember}
@@ -130,7 +130,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
             <Dialog.Close onClick={onClose} loading={isInvitingMember}>
               {t('views:repos.cancel', 'Cancel')}
             </Dialog.Close>
-            <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
+            <Button type="submit" form="new-member-form" disabled={isInvitingMember || !isValid}>
               {t('views:projectSettings.addMember', 'Add member to this project')}
             </Button>
           </ButtonLayout>

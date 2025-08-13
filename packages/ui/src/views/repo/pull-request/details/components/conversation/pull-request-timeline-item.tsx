@@ -24,6 +24,25 @@ import { isEmpty } from 'lodash-es'
 
 import { replaceEmailAsKey, replaceMentionEmailWithId } from './utils'
 
+//Utility function to calculate thread spacing based on position
+const getThreadSpacingClasses = (threadIndex?: number, totalThreads?: number, isLast?: boolean) => {
+  if (threadIndex === undefined || totalThreads === undefined) {
+    return {
+      'pb-cn-sm': !isLast,
+      'pb-cn-md': isLast
+    }
+  }
+  const isFirstThread = threadIndex === 0
+  const isLastThread = threadIndex === totalThreads - 1
+  const isSingleThread = totalThreads === 1
+  return {
+    'pt-4 pb-2': isSingleThread, // Single conversation: lines to conversation to lines
+    'pt-4 pb-1': isFirstThread && !isSingleThread, // First: lines to conversation
+    'pt-1 pb-1': !isFirstThread && !isLastThread, // Middle: conversation to conversation
+    'pt-1 pb-2': isLastThread && !isSingleThread // Last: conversation to lines
+  }
+}
+
 interface ItemHeaderProps {
   avatar?: ReactNode
   name?: string
@@ -180,6 +199,8 @@ export interface TimelineItemProps {
   mentions?: PrincipalsMentionMap
   isReply?: boolean
   payload?: TypesPullReqActivity
+  threadIndex?: number
+  totalThreads?: number
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -221,7 +242,9 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   principalsMentionMap,
   setPrincipalsMentionMap,
   mentions,
-  payload
+  payload,
+  threadIndex,
+  totalThreads
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
@@ -296,15 +319,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   return (
     <>
       <div id={id}>
-        <NodeGroup.Root
-          className={cn(
-            {
-              'pb-cn-lg': !isLast,
-              'pb-cn-md': isLast
-            },
-            wrapperClassName
-          )}
-        >
+        <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
           {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}

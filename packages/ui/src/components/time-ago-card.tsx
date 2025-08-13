@@ -68,7 +68,7 @@ export const useFormattedTime = (
   const isValidTime = !isNaN(time.getTime())
   const now = new Date()
   const diff = now.getTime() - time.getTime()
-  const isBeyondCutoff = diff > cutoffDays * 24 * 60 * 60 * 1000
+  const isBeyondCutoff = isValidTime && diff > cutoffDays * 24 * 60 * 60 * 1000
 
   const formattedShort = () => {
     if (!isValidTime) return 'Unknown time'
@@ -100,7 +100,8 @@ export const useFormattedTime = (
       .replace(/^about\s+/i, '')
       .replace(/less than\s+/i, ''),
     formattedFull,
-    time
+    time,
+    isBeyondCutoff
   }
 }
 
@@ -134,6 +135,8 @@ interface TimeAgoCardProps {
   timestamp?: string | number | null
   dateTimeFormatOptions?: Intl.DateTimeFormatOptions
   cutoffDays?: number
+  beforeCutoffPrefix?: string
+  afterCutoffPrefix?: string
   textProps?: TextProps<'time' | 'span'> & {
     ref?: Ref<HTMLSpanElement | HTMLTimeElement>
   }
@@ -141,9 +144,13 @@ interface TimeAgoCardProps {
 
 export const TimeAgoCard = memo(
   forwardRef<HTMLButtonElement, TimeAgoCardProps>(
-    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, textProps }, ref) => {
+    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, beforeCutoffPrefix, afterCutoffPrefix, textProps }, ref) => {
       const [isOpen, setIsOpen] = useState(false)
-      const { formattedShort, formattedFull } = useFormattedTime(timestamp, cutoffDays, dateTimeFormatOptions)
+      const { formattedShort, formattedFull, isBeyondCutoff } = useFormattedTime(
+        timestamp,
+        cutoffDays,
+        dateTimeFormatOptions
+      )
 
       if (timestamp === null || timestamp === undefined) {
         return (
@@ -162,12 +169,14 @@ export const TimeAgoCard = memo(
       const handleClickContent = (event: MouseEvent) => {
         event.stopPropagation()
       }
+      const hasPrefix = beforeCutoffPrefix || afterCutoffPrefix
+      const prefix = hasPrefix ? (isBeyondCutoff ? afterCutoffPrefix : beforeCutoffPrefix) : undefined
 
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
           <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick} ref={ref}>
             <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
-              {formattedShort}
+              {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
           </Popover.Trigger>
           <Popover.Content onClick={handleClickContent} side="top">

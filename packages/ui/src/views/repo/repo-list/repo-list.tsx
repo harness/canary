@@ -197,7 +197,13 @@ export function RepoList({
                 title={
                   <>
                     {t('views:repos.updated', 'Updated')}{' '}
-                    <TimeAgoCard timestamp={repo.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                    <TimeAgoCard
+                      timestamp={repo.timestamp}
+                      cutoffDays={3}
+                      beforeCutoffPrefix=""
+                      afterCutoffPrefix="on"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                    />
                   </>
                 }
                 description={<Stats pulls={repo.pulls} />}

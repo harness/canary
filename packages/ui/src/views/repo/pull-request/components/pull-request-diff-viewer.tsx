@@ -418,7 +418,7 @@ const PullRequestDiffViewer = ({
 
       return (
         <div className="bg-cn-background-1">
-          {threads.map(thread => {
+          {threads.map((thread, idx) => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
             const parentIdAttr = `comment-${parent?.id}`
@@ -430,14 +430,15 @@ const PullRequestDiffViewer = ({
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
                 mentions={parent?.payload?.mentions}
                 payload={parent?.payload}
-                wrapperClassName="pb-3"
+                threadIndex={idx}
+                totalThreads={threads.length}
                 key={parent.id}
                 id={parentIdAttr}
                 principalProps={principalProps}
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pt-4 pb-1"
+                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pb-2"
                 header={[]}
                 currentUser={currentUser}
                 isComment

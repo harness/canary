@@ -67,7 +67,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         <Layout.Horizontal gap="sm" align="end">
           <Text as="h1" variant="heading-section" className="[&>*]:ml-cn-xs">
             {title}
-            <Text as="span" variant="heading-section" color="foreground-2">
+            <Text as="span" variant="heading-section" color="foreground-3">
               #{number}
             </Text>
           </Text>

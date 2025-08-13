@@ -5,11 +5,11 @@ export default {
     '@apply fixed inset-0 z-50': '',
 
     '&[data-state="open"]': {
-      animation: 'cnOverlayFadeIn 0.2s ease-out forwards',
+      animation: 'cn-overlay-fadeIn 0.2s ease-out forwards',
     },
 
     '&[data-state="closed"]': {
-      animation: 'cnOverlayFadeOut 0.2s ease forwards',
+      animation: 'cn-overlay-fadeOut 0.2s ease forwards',
       'animation-delay': '0.2s'
     }
   },
@@ -31,10 +31,10 @@ export default {
     '@apply duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95':
       '',
     '&[data-state="open"]': {
-      animation: 'cnDialogSlideIn 0.2s ease-out forwards'
+      animation: 'cn-dialog-slideIn 0.2s ease-out forwards'
     },
     '&[data-state="closed"]': {
-      animation: 'cnDialogSlideOut 0.2s ease-in forwards'
+      animation: 'cn-dialog-slideOut 0.2s ease-in forwards'
     },
 
     '&.cn-modal-dialog-sm': {
@@ -145,17 +145,17 @@ export default {
     }
   },
 
-  '@keyframes cnOverlayFadeIn': {
+  '@keyframes cn-overlay-fadeIn': {
     '0%': { opacity: '0' },
     '100%': { opacity: '1' }
   },
-  '@keyframes cnOverlayFadeOut': {
+  '@keyframes cn-overlay-fadeOut': {
     '0%': { opacity: '1' },
     '100%': { opacity: '0' }
   },
 
   // Slide in and slide out animations
-  '@keyframes cnDialogSlideIn': {
+  '@keyframes cn-dialog-slideIn': {
     '0%': {
       transform: 'translate(-50%, -48%)',
       opacity: '0'
@@ -165,7 +165,7 @@ export default {
       opacity: '1'
     }
   },
-  '@keyframes cnDialogSlideOut': {
+  '@keyframes cn-dialog-slideOut': {
     '0%': {
       transform: 'translate(-50%, -50%)',
       opacity: '1'

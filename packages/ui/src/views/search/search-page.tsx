@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Layout, Pagination, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
+import { Button, Layout, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { RepositoryType, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -86,7 +86,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   onClearFilters
 }) => {
   const { t } = useTranslation()
-  const { results, semanticResults, page, xNextPage, xPrevPage, setPage } = useSearchResultsStore()
+  const { results, semanticResults, page, setPage } = useSearchResultsStore()
 
   const handleSearchChange = useCallback(
     (value: string) => {
@@ -99,14 +99,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
-
-  const getPrevPageLink = useCallback(() => {
-    return `?page=${xPrevPage}`
-  }, [xPrevPage])
-
-  const getNextPageLink = useCallback(() => {
-    return `?page=${xNextPage}`
-  }, [xNextPage])
 
   return (
     <SandboxLayout.Main>
@@ -224,16 +216,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         )}
 
         <Spacer size={6} />
-
-        {!isLoading && (results?.length || semanticResults?.length) ? (
-          <Pagination
-            indeterminate={true}
-            hasNext={xNextPage > 0}
-            hasPrevious={xPrevPage > 0}
-            getNextPageLink={getNextPageLink}
-            getPrevPageLink={getPrevPageLink}
-          />
-        ) : null}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

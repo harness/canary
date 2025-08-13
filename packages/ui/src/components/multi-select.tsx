@@ -363,7 +363,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                       setOpen(true)
                       inputProps?.onFocus?.(event)
                     }}
-                    placeholder={disabled ? '' : placeholder}
+                    placeholder={disabled || getSelectedOptions().length > 0 ? '' : placeholder}
                     className={cn('cn-multi-select-input', inputProps?.className)}
                     asChild
                   >

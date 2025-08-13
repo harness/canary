@@ -784,7 +784,9 @@ export const routes: CustomRouteObject[] = [
       <AppRouterProvider>
         <AppProvider>
           <Sidebar.Provider className="min-h-svh">
-            <AppShell />
+            <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+              <AppShell />
+            </ComponentProvider>
           </Sidebar.Provider>
         </AppProvider>
       </AppRouterProvider>

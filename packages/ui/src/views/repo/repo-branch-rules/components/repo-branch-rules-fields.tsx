@@ -332,8 +332,8 @@ export const BranchSettingsRuleListField: FC<{
                   <Fieldset className="gap-y-4 pl-[26px]">
                     {rule.submenuOptions.map(subOption => (
                       <Checkbox
-                        key={subOption.id}
-                        id={subOption.id}
+                        key={`${rule.id}-${subOption.id}`}
+                        id={`${rule.id}-${subOption.id}`}
                         checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
                         onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
                         label={subOption.label}

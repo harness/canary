@@ -96,3 +96,4 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
     </DropdownMenu.Root>
   )
 }
+MoreActionsTooltip.displayName = 'MoreActionsTooltip'

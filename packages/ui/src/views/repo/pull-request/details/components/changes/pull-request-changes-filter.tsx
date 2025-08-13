@@ -18,6 +18,7 @@ import {
   determineOverallDecision,
   getApprovalItems,
   getApprovalStateTheme,
+  getApprovalStateVariant,
   processReviewDecision
 } from '../../pull-request-utils'
 import * as FileViewGauge from './file-viewed-gauge'
@@ -269,7 +270,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
               loading={isApproving}
-              variant="outline"
+              variant={getApprovalStateVariant(approveState)}
               handleOptionChange={selectedMethod => {
                 submitReview?.(selectedMethod as PullReqReviewDecision)
               }}

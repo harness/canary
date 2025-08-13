@@ -33,7 +33,7 @@ interface SplitButtonBaseProps<T extends string> {
 // For solid variant with primary theme
 interface SplitButtonSolidProps<T extends string> extends SplitButtonBaseProps<T> {
   variant?: 'primary'
-  theme?: 'default'
+  theme?: 'success' | 'danger' | 'default'
 }
 
 // For surface variant with success or danger theme

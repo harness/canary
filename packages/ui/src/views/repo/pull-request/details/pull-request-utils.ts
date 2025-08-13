@@ -58,16 +58,31 @@ export function getApprovalItems(approveState: PullReqReviewDecision, approvalIt
   }
   return []
 }
+
 export const getApprovalStateTheme = (state: PullReqReviewDecision) => {
   switch (state) {
     case PullReqReviewDecision.approved:
     case PullReqReviewDecision.approve:
       return 'success'
     case PullReqReviewDecision.changeReq:
+      return 'danger'
     default:
       return 'default'
   }
 }
+
+export const getApprovalStateVariant = (state: PullReqReviewDecision) => {
+  switch (state) {
+    case PullReqReviewDecision.approved:
+    case PullReqReviewDecision.changeReq:
+      return 'primary'
+    case PullReqReviewDecision.approve:
+      return 'outline'
+    default:
+      return 'outline'
+  }
+}
+
 export const approvalItems = [
   {
     id: 0,

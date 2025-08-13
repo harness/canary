@@ -34,7 +34,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-borders-2 bg-cn-background-2 min-h-[3.25rem] rounded-md border px-4 py-2"
+      className="min-h-[3.25rem] rounded-md border border-cn-borders-2 bg-cn-background-2 py-2 pl-4 pr-2"
       align="center"
       justify="between"
       gapX="xs"
@@ -65,7 +65,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="group/contribute data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1 py-2"
+              className="group/contribute data-[state=open]:border-cn-borders-9 py-2 data-[state=open]:text-cn-foreground-1"
               variant="outline"
             >
               <IconV2 name="git-pull-request" size="xs" />
@@ -77,11 +77,11 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content align="end" className="w-60">
+          <DropdownMenu.Content align="end" className="w-80">
             <DropdownMenu.Slot>
               <Layout.Grid gapY="xs" className="p-2">
                 <Layout.Grid flow="column" gapX="xs">
-                  <div className="border-cn-borders-4 rounded-2 flex size-8 shrink-0 items-center justify-center border">
+                  <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
                     <IconV2 name="git-pull-request" size="md" />
                   </div>
                   <Layout.Grid gapY="xs">

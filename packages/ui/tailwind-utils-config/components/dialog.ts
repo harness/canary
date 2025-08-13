@@ -2,7 +2,16 @@ export default {
   '.cn-modal-dialog-overlay': {
     backgroundColor: 'var(--cn-comp-dialog-backdrop)',
     padding: 'var(--cn-dialog-safezone)',
-    '@apply fixed inset-0 z-50': ''
+    '@apply fixed inset-0 z-50': '',
+
+    '&[data-state="open"]': {
+      animation: 'cnOverlayFadeIn 0.2s ease-out forwards',
+    },
+
+    '&[data-state="closed"]': {
+      animation: 'cnOverlayFadeOut 0.2s ease forwards',
+      'animation-delay': '0.2s'
+    }
   },
 
   '.cn-modal-dialog-content': {
@@ -134,6 +143,15 @@ export default {
     '&-backdrop': {
       backgroundColor: 'var(--cn-comp-dialog-backdrop)'
     }
+  },
+
+  '@keyframes cnOverlayFadeIn': {
+    '0%': { opacity: '0' },
+    '100%': { opacity: '1' }
+  },
+  '@keyframes cnOverlayFadeOut': {
+    '0%': { opacity: '1' },
+    '100%': { opacity: '0' }
   },
 
   // Slide in and slide out animations

@@ -101,8 +101,8 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper id="create-token-form" {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
             <FormInput.Text
               id="identifier"
               value={identifier}
@@ -167,24 +167,24 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 <Alert.Title>{error.message}</Alert.Title>
               </Alert.Root>
             )}
-          </Dialog.Body>
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={onClose}>
-                {createdTokenData
-                  ? t('views:profileSettings.gotItButton', 'Got It')
-                  : t('views:profileSettings.cancel', 'Cancel')}
-              </Dialog.Close>
-              {!createdTokenData && (
-                <Button type="submit" disabled={isLoading}>
-                  {!isLoading
-                    ? t('views:profileSettings.generateTokenButton', 'Generate Token')
-                    : t('views:profileSettings.generatingTokenButton', 'Generating Token...')}
-                </Button>
-              )}
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+          </FormWrapper>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose}>
+              {createdTokenData
+                ? t('views:profileSettings.gotItButton', 'Got It')
+                : t('views:profileSettings.cancel', 'Cancel')}
+            </Dialog.Close>
+            {!createdTokenData && (
+              <Button type="submit" form="create-token-form" disabled={isLoading}>
+                {!isLoading
+                  ? t('views:profileSettings.generateTokenButton', 'Generate Token')
+                  : t('views:profileSettings.generatingTokenButton', 'Generating Token...')}
+              </Button>
+            )}
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

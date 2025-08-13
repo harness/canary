@@ -37,12 +37,13 @@ export function FormWrapper<T extends FieldValues>({
   control,
   onSubmit,
   orientation = 'vertical',
+  id,
   ...props
 }: FormWrapperProps<T>) {
   return (
     <FormProvider {...props} formState={formState} control={control}>
       <FormWrapperContext.Provider value={{ orientation }}>
-        <form className={cn('cn-form', className)} ref={formRef} onSubmit={onSubmit} noValidate>
+        <form ref={formRef} className={cn('cn-form', className)} onSubmit={onSubmit} noValidate id={id}>
           {children}
         </form>
       </FormWrapperContext.Provider>

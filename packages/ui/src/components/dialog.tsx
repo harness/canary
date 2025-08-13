@@ -55,22 +55,26 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     return (
       <DialogPrimitive.Portal container={portalContainer}>
-        <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
-        <DialogPrimitive.Content
-          ref={ref}
-          className={cn(contentVariants({ size }), className)}
-          onOpenAutoFocus={event => event.preventDefault()}
-          {...props}
-        >
-          {!hideClose && (
-            <DialogPrimitive.Close asChild>
-              <Button variant="transparent" className="cn-modal-dialog-close" iconOnly>
-                <IconV2 name="xmark" />
-              </Button>
-            </DialogPrimitive.Close>
-          )}
-          {children}
-        </DialogPrimitive.Content>
+        {/* !!! */}
+        {/* For the scroll to work when using the dialog in Shadow DOM, the Overlay needs to wrap the Content */}
+        {/* Here’s the issue for the scroll bug in Shadow DOM - https://github.com/radix-ui/primitives/issues/3353 */}
+        <DialogPrimitive.Overlay className="cn-modal-dialog-overlay">
+          <DialogPrimitive.Content
+            ref={ref}
+            className={cn(contentVariants({ size }), className)}
+            onOpenAutoFocus={event => event.preventDefault()}
+            {...props}
+          >
+            {!hideClose && (
+              <DialogPrimitive.Close asChild>
+                <Button variant="transparent" className="cn-modal-dialog-close" iconOnly>
+                  <IconV2 name="xmark" />
+                </Button>
+              </DialogPrimitive.Close>
+            )}
+            {children}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Overlay>
       </DialogPrimitive.Portal>
     )
   }

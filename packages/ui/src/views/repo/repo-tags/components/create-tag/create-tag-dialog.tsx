@@ -71,8 +71,8 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
           <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper<CreateTagFormFields> id="create-tag-form" {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             <FormInput.Text
               id="name"
               label={t('views:forms.tagName', 'Name')}
@@ -103,21 +103,21 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
                 </Alert.Title>
               </Alert.Root>
             )}
-          </Dialog.Body>
+          </FormWrapper>
+        </Dialog.Body>
 
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
-                {t('views:repos.cancel', 'Cancel')}
-              </Dialog.Close>
-              <Button type="submit" disabled={isLoading} loading={isLoading}>
-                {isLoading
-                  ? t('views:repos.creatingTagButton', 'Creating tag...')
-                  : t('views:repos.createTagButton', 'Create tag')}
-              </Button>
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Dialog.Close>
+            <Button type="submit" form="create-tag-form" disabled={isLoading} loading={isLoading}>
+              {isLoading
+                ? t('views:repos.creatingTagButton', 'Creating tag...')
+                : t('views:repos.createTagButton', 'Create tag')}
+            </Button>
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

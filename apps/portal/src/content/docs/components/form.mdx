@@ -176,3 +176,74 @@ function FormWithZodAndReactHookForm() {
   );
 }
 ```
+
+### Form in Dialog
+
+The `FormWrapper` should be placed inside the `Dialog.Body` and contain an `id`.
+The submit button should be in the `Dialog.Footer` with `type="submit"` and a `form` attribute set to the form’s `id`.
+
+```typescript jsx
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button, FormInput, FormWrapper, Dialog } from "@harnessio/ui/components";
+
+// ...
+
+/**
+ * 1️⃣ Define the validation schema with zod
+ */
+const formSchema = z.object({
+  /** 💡 As a best practice, use trim() to remove whitespace from the input */
+  name: z.string().trim().min(3, "Input must be at least 3 characters"),
+});
+
+// ...
+
+/** 2️⃣ Infer the type from the schema */
+const FormValuesType = z.infer<typeof formSchema>;
+
+function FormWithZodAndReactHookForm() {
+  /** 3️⃣ Initialize react-hook-form with zod resolver */
+  const formMethods = useForm<FormValuesType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "John doe"
+    },
+  });
+
+  /** 4️⃣ Extract register and handleSubmit from formMethods */
+  const { register, handleSubmit } = formMethods;
+
+  /** 6️⃣ Handle form submission */
+  const onSubmit = (data: FormValuesType) => {
+    // ...
+  };
+
+  /** 5️⃣ Use FormWrapper with formMethods and onSubmit */
+  return (
+    <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Open Dialog with Form</Button>
+    </Dialog.Trigger>
+
+    <Dialog.Content>
+      <Dialog.Header>
+        <Dialog.Title>Form</Dialog.Title>
+      </Dialog.Header>
+
+      <Dialog.Body>
+        <FormWrapper id="id-form" {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+          <FormInput.Text {...register("name")} label="Name" />
+        </FormWrapper>
+      </Dialog.Body>
+
+      <Dialog.Footer>
+        <Dialog.Close>Cancel</Dialog.Close>
+        <Button type="submit" form="id-form" variant="primary">Submit</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+  );
+}
+```

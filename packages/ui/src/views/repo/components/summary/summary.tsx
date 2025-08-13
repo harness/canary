@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import { IconV2, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
@@ -15,7 +15,7 @@ interface SummaryProps extends RoutingProps {
   hideHeader?: boolean
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toRepoFileDetails?: ({ path }: { path: string }) => string
-  loadMetadataForPaths?: (paths: string[]) => Promise<void>
+  scheduleFileMetaFetch?: (paths: string[]) => void
 }
 
 export const Summary = ({
@@ -24,7 +24,7 @@ export const Summary = ({
   hideHeader = false,
   toCommitDetails,
   toRepoFileDetails,
-  loadMetadataForPaths
+  scheduleFileMetaFetch
 }: SummaryProps) => {
   const { t } = useTranslation()
 
@@ -35,7 +35,7 @@ export const Summary = ({
 
   // Initialize intersection observer for lazy metadata loading
   useEffect(() => {
-    if (!loadMetadataForPaths) return
+    if (!scheduleFileMetaFetch) return
 
     // Disconnect existing observer
     if (intersectionObserverRef.current) {
@@ -57,11 +57,9 @@ export const Summary = ({
           }
         })
 
-        // Load metadata for newly visible files
+        // Report visible files to hook for batched processing
         if (visiblePaths.length > 0) {
-          loadMetadataForPaths(visiblePaths).catch(error => {
-            console.error('Failed to load metadata for visible files:', error)
-          })
+          scheduleFileMetaFetch(visiblePaths)
         }
       },
       {
@@ -83,13 +81,26 @@ export const Summary = ({
         intersectionObserverRef.current.disconnect()
       }
     }
-  }, [loadMetadataForPaths, files])
+  }, [scheduleFileMetaFetch, files])
 
   // Reset observed files and table row refs when files list changes
   useEffect(() => {
     observedFilesRef.current.clear()
     tableRowsRef.current.clear()
   }, [files])
+
+  // Set table row ref for intersection observer
+  const setTableRowRef = useCallback((element: HTMLTableRowElement | null, fileId: string) => {
+    if (element) {
+      tableRowsRef.current.set(fileId, element)
+      // Observe new elements immediately
+      if (intersectionObserverRef.current) {
+        intersectionObserverRef.current.observe(element)
+      }
+    } else {
+      tableRowsRef.current.delete(fileId)
+    }
+  }, [])
 
   return (
     <>
@@ -118,16 +129,7 @@ export const Summary = ({
               key={file.id}
               to={toRepoFileDetails?.({ path: file.path }) ?? ''}
               data-file-id={file.id}
-              ref={el => {
-                // Store table row ref
-                if (el) {
-                  tableRowsRef.current.set(file.id, el)
-                }
-                // Observe each table row for intersection
-                if (el && intersectionObserverRef.current) {
-                  intersectionObserverRef.current.observe(el)
-                }
-              }}
+              ref={element => setTableRowRef(element, file.id)}
             >
               <Table.Cell className="relative">
                 <div

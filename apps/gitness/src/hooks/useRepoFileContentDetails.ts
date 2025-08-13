@@ -22,7 +22,11 @@ interface UseRepoContentDetailsResult {
   files: RepoFile[]
   loading: boolean
   loadMetadataForPaths: (paths: string[]) => Promise<void>
+  scheduleFileMetaFetch: (paths: string[]) => void
 }
+
+export const BATCH_OVERFLOW_TIMEOUT_DELAY = 200
+export const METADETA_FETCH_DELAY = 500
 
 /**
  * show files immediately and load metadata lazily
@@ -41,6 +45,10 @@ export const useRepoFileContentDetails = ({
 
   // files that already have metadata loaded
   const metadataLoadedRef = useRef(new Set<string>())
+
+  // Batching and throttling refs
+  const pendingPathsRef = useRef(new Set<string>())
+  const throttleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // convert content type to summary item type
   const getSummaryItemType = useCallback((type: OpenapiGetContentOutput['type']): SummaryItemType => {
@@ -144,6 +152,56 @@ export const useRepoFileContentDetails = ({
     [repoRef, fullGitRef, createFileObjectWithMetadata]
   )
 
+  // Batch and throttle metadata loading
+  const scheduleFileMetaFetch = useCallback(
+    (newPaths: string[]) => {
+      if (!loadMetadataForPaths || newPaths.length === 0) return
+
+      // Add new paths to pending set
+      newPaths.forEach(path => pendingPathsRef.current.add(path))
+
+      // Clear existing timeout
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current)
+      }
+
+      const currentPendingCount = pendingPathsRef.current.size
+      const batchSize = 20
+
+      // If full batch (20 files), process immediately otherwise, throttle with 500ms delay
+      const throttleDelay = currentPendingCount >= batchSize ? 0 : METADETA_FETCH_DELAY
+
+      // Schedule batched load after throttle delay
+      throttleTimeoutRef.current = setTimeout(() => {
+        const pathsToLoad = Array.from(pendingPathsRef.current)
+        pendingPathsRef.current.clear()
+
+        if (pathsToLoad.length === 0) return
+
+        // Process in batches of 20 (API limit)
+        const processBatch = async (startIndex: number) => {
+          if (startIndex >= pathsToLoad.length) return
+
+          const batch = pathsToLoad.slice(startIndex, startIndex + batchSize)
+
+          try {
+            await loadMetadataForPaths(batch)
+          } catch (error) {
+            console.error('Failed to load metadata batch:', error)
+          }
+
+          // Process next batch with a small delay to avoid overwhelming the API
+          if (startIndex + batchSize < pathsToLoad.length) {
+            setTimeout(() => processBatch(startIndex + batchSize), BATCH_OVERFLOW_TIMEOUT_DELAY)
+          }
+        }
+
+        processBatch(0)
+      }, throttleDelay)
+    },
+    [loadMetadataForPaths]
+  )
+
   // Initialize files immediately when pathToTypeMap changes
   useEffect(() => {
     const shouldUpdateFiles = pathToTypeMap.size > 0
@@ -166,11 +224,19 @@ export const useRepoFileContentDetails = ({
       setLoading(false)
       metadataLoadedRef.current.clear()
     }
+
+    return () => {
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current)
+      }
+      pendingPathsRef.current.clear()
+    }
   }, [pathToTypeMap, allPaths, createBasicFileObject, repoRef, fullGitRef, fullResourcePath])
 
   return {
     files,
     loading,
-    loadMetadataForPaths
+    loadMetadataForPaths,
+    scheduleFileMetaFetch
   }
 }

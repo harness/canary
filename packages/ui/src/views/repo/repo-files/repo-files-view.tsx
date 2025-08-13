@@ -43,7 +43,7 @@ interface RepoFilesProps {
   fullResourcePath?: string
   showContributeBtn?: boolean
   repoDetailsError?: UsererrorError | null
-  loadMetadataForPaths?: (paths: string[]) => Promise<void>
+  scheduleFileMetaFetch?: (paths: string[]) => void
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -71,7 +71,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   fullResourcePath,
   showContributeBtn,
   repoDetailsError,
-  loadMetadataForPaths
+  scheduleFileMetaFetch
 }) => {
   const { t } = useTranslation()
 
@@ -113,7 +113,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             latestFile={latestFile}
             files={files}
             toRepoFileDetails={toRepoFileDetails}
-            loadMetadataForPaths={loadMetadataForPaths}
+            scheduleFileMetaFetch={scheduleFileMetaFetch}
           />
         </>
       )

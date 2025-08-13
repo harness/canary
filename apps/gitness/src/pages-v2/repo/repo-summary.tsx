@@ -236,7 +236,7 @@ export default function RepoSummaryPage() {
     return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry.path, entry.type]))
   }, [repoDetails?.content?.entries])
 
-  const { files, loading, loadMetadataForPaths } = useRepoFileContentDetails({
+  const { files, loading, scheduleFileMetaFetch } = useRepoFileContentDetails({
     repoRef,
     fullGitRef,
     fullResourcePath: '',
@@ -325,7 +325,7 @@ export default function RepoSummaryPage() {
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
         showContributeBtn={showContributeBtn}
-        loadMetadataForPaths={loadMetadataForPaths}
+        scheduleFileMetaFetch={scheduleFileMetaFetch}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

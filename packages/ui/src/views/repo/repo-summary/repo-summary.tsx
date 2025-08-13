@@ -87,7 +87,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   refType?: BranchSelectorTab
   prCandidateBranches?: TypesBranchTable[]
   showContributeBtn?: boolean
-  loadMetadataForPaths?: (paths: string[]) => Promise<void>
+  scheduleFileMetaFetch?: (paths: string[]) => void
 }
 
 export function RepoSummaryView({
@@ -120,7 +120,7 @@ export function RepoSummaryView({
   tokenGenerationError,
   refType = BranchSelectorTab.BRANCHES,
   showContributeBtn,
-  loadMetadataForPaths,
+  scheduleFileMetaFetch,
   ...props
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
@@ -232,7 +232,7 @@ export function RepoSummaryView({
               files={files}
               toRepoFileDetails={toRepoFileDetails}
               hideHeader
-              loadMetadataForPaths={loadMetadataForPaths}
+              scheduleFileMetaFetch={scheduleFileMetaFetch}
             />
             <Spacer size={5} />
             <StackedList.Root onlyTopRounded borderBackground>

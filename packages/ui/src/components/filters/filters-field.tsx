@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
+import { cn } from '@utils/cn'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
@@ -26,6 +27,7 @@ export interface FiltersFieldProps<
   filterOption: FilterOptionConfig<T, CustomValue>
   removeFilter: () => void
   valueLabel?: string
+  dropdownContentClassName?: string
   shouldOpenFilter: boolean
   onOpenChange?: (open: boolean) => void
   onChange: (selectedValues: V) => void
@@ -122,6 +124,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
   filterOption,
   removeFilter,
   shouldOpenFilter,
+  dropdownContentClassName,
   onOpenChange,
   onChange,
   value
@@ -149,7 +152,10 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
 
   return (
     <FilterBoxWrapper
-      contentClassName={filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : ''}
+      contentClassName={cn(
+        filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : '',
+        dropdownContentClassName
+      )}
       handleRemoveFilter={() => removeFilter()}
       isOpen={isOpen}
       setIsOpen={setIsOpen}

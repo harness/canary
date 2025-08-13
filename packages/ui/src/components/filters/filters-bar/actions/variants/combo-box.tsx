@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { DropdownMenu, ScrollArea, SearchInput } from '@components/index'
 
 export interface ComboBoxOptions {
-  label: string
+  label: string | ReactNode
   value: string
 }
 

@@ -4,6 +4,7 @@ import {
   Button,
   ButtonGroup,
   IconV2,
+  Layout,
   ListActions,
   NoData,
   Pagination,
@@ -14,6 +15,7 @@ import {
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { PrincipalType } from '@/types'
 import { ExtendedScope, SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import {
@@ -110,17 +112,32 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
 
+  const generateAuthorLabel = ({
+    display_name,
+    email
+  }: Pick<PrincipalType, 'display_name' | 'email'>): React.ReactNode =>
+    display_name !== email ? (
+      <Layout.Flex align="center" className="gap-x-1">
+        <Text wrap="nowrap">{display_name}</Text>
+        <Text color="foreground-4" variant="body-single-line-normal" lineClamp={1}>
+          ({email})
+        </Text>
+      </Layout.Flex>
+    ) : (
+      <Text lineClamp={1}>{display_name}</Text>
+    )
+
   const userSelectOptions = useMemo(() => {
     const otherUserOptions = computedPrincipalData
       .filter(user => !currentUser?.id || String(user?.id) !== String(currentUser?.id))
       .map(user => ({
-        label: user?.display_name || '',
+        label: generateAuthorLabel(user),
         value: String(user?.id)
       }))
 
     if (currentUser?.id && !principalsSearchQuery) {
       const currentUserOption = {
-        label: currentUser.display_name || '',
+        label: generateAuthorLabel(currentUser),
         value: String(currentUser.id)
       }
       return [currentUserOption, ...otherUserOptions]
@@ -488,6 +505,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                             filterOption,
                             onChange,
                             removeFilter,
+                            // Increase width for Author filter to accomodate name and email as label
+                            dropdownContentClassName: filterOption.value === 'created_by' ? 'w-[445px]' : '',
                             value: value,
                             onOpenChange: isOpen => {
                               handleFilterOpen(filterOption.value, isOpen)

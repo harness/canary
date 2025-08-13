@@ -35,7 +35,7 @@ interface FilterOptionConfigBase<Key extends string, V = undefined> {
 interface ComboBoxFilterOptionConfig<Key extends string = string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {
   type: FilterFieldTypes.ComboBox
   filterFieldConfig: {
-    options: Array<{ label: string; value: string }>
+    options: Array<{ label: string | React.ReactNode; value: string }>
     onSearch?: (query: string) => void
     noResultsMessage?: string
     loadingMessage?: string

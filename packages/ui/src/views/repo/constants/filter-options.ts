@@ -37,7 +37,7 @@ interface PRListFilterOptions {
   onAuthorSearch: (name: string) => void
   isPrincipalsLoading?: boolean
   isProjectLevel?: boolean
-  principalData: { label: string; value: string }[]
+  principalData: { label: string | React.ReactNode; value: string }[]
   customFilterOptions?: PRListFilterOptionConfig
 }
 

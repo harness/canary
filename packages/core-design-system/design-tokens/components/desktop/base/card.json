@@ -11,7 +11,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.4}"
+        "$value": "{rounded.5}"
       }
     },
     "md": {

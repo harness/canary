@@ -2,7 +2,7 @@
   "tooltip": {
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "$value": "{rounded.3}"
     },
     "py": {
       "$type": "spacing",

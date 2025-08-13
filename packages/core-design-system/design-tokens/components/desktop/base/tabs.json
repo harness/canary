@@ -27,7 +27,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "$value": "{rounded.3}"
       }
     },
     "item-overlined": {
@@ -53,7 +53,7 @@
       },
       "rt": {
         "$type": "borderRadius",
-        "$value": "{rounded.3}"
+        "$value": "{rounded.4}"
       },
       "rb": {
         "$type": "borderRadius",
@@ -94,7 +94,7 @@
     },
     "container-radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "$value": "{rounded.4}"
     }
   }
 }

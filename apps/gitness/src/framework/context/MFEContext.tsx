@@ -2,6 +2,8 @@ import { Context, createContext } from 'react'
 
 import { noop } from 'lodash-es'
 
+import { PermissionsRequest } from '@harnessio/ui/components'
+
 /**
  * @todo import from '@harness/microfrontends'
  * Currently, unable to do so due to npm access issues.
@@ -52,8 +54,11 @@ export interface UseLogoutReturn {
 
 export declare const useLogout: () => UseLogoutReturn
 
+export declare const usePermission: (permissionsRequest?: PermissionsRequest, deps?: Array<any>) => Array<boolean>
+
 export interface Hooks {
   useLogout?: typeof useLogout
+  usePermission?: typeof usePermission
 }
 
 /**************/

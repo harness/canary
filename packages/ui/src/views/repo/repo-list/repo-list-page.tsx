@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { IconV2, NoData, Pagination, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
+import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
@@ -31,6 +31,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   scope,
   ...routingProps
 }) => {
+  const { RbacSplitButton } = useComponents()
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const [showScope, setShowScope] = useState(false)
@@ -175,7 +176,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             ref={filterRef}
             handleInputChange={handleSearch}
             headerAction={
-              <SplitButton<string>
+              <RbacSplitButton<string>
                 dropdownContentClassName="mt-0 min-w-[208px]"
                 handleButtonClick={() => navigate(toCreateRepo?.() || '')}
                 handleOptionChange={option => {
@@ -203,10 +204,16 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                     label: t('views:repos.importRepositories', 'Import Repositories')
                   }
                 ]}
+                rbac={{
+                  resource: {
+                    resourceType: ResourceType.CODE_REPOSITORY
+                  },
+                  permissions: [PermissionIdentifier.CODE_REPO_CREATE]
+                }}
               >
                 <IconV2 name="plus" />
                 {t('views:repos.createRepository', 'Create Repository')}
-              </SplitButton>
+              </RbacSplitButton>
             }
             filterOptions={filterOptions}
           />

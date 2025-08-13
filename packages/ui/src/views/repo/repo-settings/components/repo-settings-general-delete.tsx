@@ -1,7 +1,16 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, FormSeparator, Layout, Spacer, Text } from '@/components'
-import { useTranslation } from '@/context'
+import {
+  Button,
+  ButtonLayout,
+  FormSeparator,
+  Layout,
+  PermissionIdentifier,
+  ResourceType,
+  Spacer,
+  Text
+} from '@/components'
+import { useComponents, useTranslation } from '@/context'
 import { ErrorTypes } from '@/views'
 
 export const RepoSettingsGeneralDelete: FC<{
@@ -12,6 +21,7 @@ export const RepoSettingsGeneralDelete: FC<{
   openRepoArchiveDialog: () => void
   isUpdatingArchive?: boolean
 }> = ({ openRepoAlertDeleteDialog, apiError, openRepoArchiveDialog, archived, isUpdatingArchive }) => {
+  const { RbacButton } = useComponents()
   const { t } = useTranslation()
   return (
     <Layout.Flex direction="column" gap="xl">
@@ -68,9 +78,18 @@ export const RepoSettingsGeneralDelete: FC<{
           </Text>
         </Layout.Vertical>
         <ButtonLayout horizontalAlign="start">
-          <Button type="button" variant="primary" theme="danger" onClick={openRepoAlertDeleteDialog}>
+          <RbacButton
+            type="button"
+            variant="primary"
+            theme="danger"
+            onClick={openRepoAlertDeleteDialog}
+            rbac={{
+              resource: { resourceType: ResourceType.CODE_REPOSITORY },
+              permissions: [PermissionIdentifier.CODE_REPO_DELETE]
+            }}
+          >
             {t('views:repos.deleteRepoButton', 'Delete Repository')}
-          </Button>
+          </RbacButton>
         </ButtonLayout>
         {apiError && apiError.type === ErrorTypes.DELETE_REPO && (
           <>

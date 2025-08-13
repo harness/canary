@@ -1,6 +1,7 @@
 import { Navigate, redirect } from 'react-router-dom'
 
 import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
+import { ComponentProvider } from '@harnessio/ui/context'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -15,6 +16,8 @@ import { AppShell } from './components-v2/standalone/app-shell'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { RbacButton } from './framework/rbac/rbac-button'
+import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
@@ -1248,8 +1251,10 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
     element: (
       <AppRouterProvider>
         <AppProvider>
-          {mfeRouteRenderer}
-          <AppShellMFE />
+          <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+            {mfeRouteRenderer}
+            <AppShellMFE />
+          </ComponentProvider>
         </AppProvider>
       </AppRouterProvider>
     ),

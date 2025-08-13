@@ -37,8 +37,10 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   selectedRefType,
   fullResourcePath
 }) => {
-  const { Link } = useRouterContext()
+  const { Link, useSearchParams } = useRouterContext()
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+  const newFileName = searchParams.get('name') ?? ''
 
   return (
     <Layout.Horizontal className="items-center justify-between">
@@ -49,7 +51,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         changeFileName={changeFileName}
         handleOnBlur={onBlurFileName}
         gitRefName={gitRefName}
-        fileName={fileName}
+        fileName={fileName || newFileName}
         parentPath={parentPath}
         setParentPath={setParentPath}
         fullResourcePath={fullResourcePath}

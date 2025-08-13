@@ -240,8 +240,10 @@
       "noData": {
         "title": "This repository is empty.",
         "description": {
-          "0": "We recommend every repository include a",
-          "1": "README, LICENSE, and .gitignrore."
+          "0": "We recommend every repository include a ",
+          "2": "README",
+          "3": "LICENSE",
+          "4": ".gitignore"
         },
         "createFile": "Create File"
       },

@@ -1,4 +1,4 @@
-import { Dispatch, FC, ReactNode, SetStateAction } from 'react'
+import { Dispatch, FC, Fragment, ReactNode, SetStateAction } from 'react'
 
 import { Button, ButtonProps, Illustration, IllustrationsNameType, Layout, SplitButton, Text } from '@/components'
 import { useRouterContext } from '@/context'
@@ -8,7 +8,7 @@ export interface NoDataProps {
   title: string
   imageName?: IllustrationsNameType
   imageSize?: number
-  description: string[]
+  description: string[] | ReactNode
   primaryButton?: {
     label: ReactNode | string
     onClick?: () => void
@@ -41,7 +41,6 @@ export const NoData: FC<NoDataProps> = ({
   title,
   description,
   primaryButton,
-
   secondaryButton,
   withBorder = false,
   textWrapperClassName,
@@ -66,11 +65,13 @@ export const NoData: FC<NoDataProps> = ({
         <Layout.Vertical gap="xs" align="center" justify="center" className={textWrapperClassName}>
           <Text variant="heading-section">{title}</Text>
           {!!description &&
-            description.map((line, index) => (
-              <Text key={index} align="center">
-                {line}
-              </Text>
-            ))}
+            (Array.isArray(description)
+              ? description.map((line, index) => (
+                  <Text key={index} align="center">
+                    {line}
+                  </Text>
+                ))
+              : description)}
         </Layout.Vertical>
         {(primaryButton || secondaryButton || splitButton) && (
           <Layout.Horizontal gap="sm">

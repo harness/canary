@@ -1,5 +1,5 @@
-import { Alert, Button, IconV2, Layout, MarkdownViewer, NoData, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Alert, Button, IconV2, Layout, Link, MarkdownViewer, NoData, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 interface RepoEmptyViewProps {
@@ -62,7 +62,7 @@ ${sshUrl}
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto max-w-[772px]">
+      <SandboxLayout.Content className="mx-auto max-w-[900px]">
         <Layout.Grid gapY="xl">
           <Layout.Grid gapY="md">
             <Text variant="heading-section">{t('views:repos.emptyRepoPage.title', 'Repository')}</Text>
@@ -78,10 +78,23 @@ ${sshUrl}
             withBorder
             imageName="no-repository"
             title={t('views:repos.emptyRepoPage.noData.title', 'This repository is empty')}
-            description={[
-              t('views:repos.emptyRepoPage.noData.description.0', 'We recommend every repository include a'),
-              t('views:repos.emptyRepoPage.noData.description.1', 'README, LICENSE, and .gitignrore')
-            ]}
+            description={
+              <span>
+                {t('views:repos.emptyRepoPage.noData.description.0', 'We recommend every repository include a ')}
+                <Link to={`${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/?name=README.md`}>
+                  {t('views:repos.emptyRepoPage.noData.description.2', 'README')}
+                </Link>
+                {', '}
+                <Link to={`${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/?name=LICENSE.md`}>
+                  {t('views:repos.emptyRepoPage.noData.description.3', 'LICENSE')}
+                </Link>
+                {' and '}
+                <Link to={`${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/?name=.gitignore`}>
+                  {t('views:repos.emptyRepoPage.noData.description.4', '.gitignore')}
+                </Link>
+                {'.'}
+              </span>
+            }
             primaryButton={{
               label: (
                 <>

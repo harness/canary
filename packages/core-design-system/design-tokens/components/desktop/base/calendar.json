@@ -8,7 +8,7 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "$value": "{rounded.3}"
     },
     "padding": {
       "$type": "spacing",

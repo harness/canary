@@ -284,7 +284,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" />
         }
 
       case CommentType.REVIEW_DELETE: {
@@ -311,7 +311,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" />
         }
       }
 
@@ -341,7 +341,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Text>
             )
           },
-          icon: <IconV2 name="eye" size="xs" className="p-0.5" />
+          icon: <IconV2 name="eye" size="xs" />
         }
       }
 
@@ -370,7 +370,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" />
         }
       }
 

@@ -29,7 +29,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{tuna.850}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
@@ -1556,7 +1556,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{tuna.50}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {
@@ -2239,11 +2239,11 @@
     "card": {
       "from": {
         "$type": "color",
-        "$value": "{blue.25}"
+        "$value": "{blue.50}"
       },
       "to": {
         "$type": "color",
-        "$value": "{blue.50}"
+        "$value": "{blue.25}"
       }
     },
     "dialog": {
@@ -2808,7 +2808,7 @@
   "icon": {
     "devops": {
       "$type": "color",
-      "$value": "{lime.500}"
+      "$value": "{mint.400}"
     },
     "testing": {
       "$type": "color",
@@ -2824,7 +2824,7 @@
     },
     "platform": {
       "$type": "color",
-      "$value": "{purple.500}"
+      "$value": "{purple.400}"
     }
   }
 }

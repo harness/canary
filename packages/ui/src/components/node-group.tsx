@@ -33,14 +33,14 @@ function Icon({
       <div
         className={cn(
           {
-            'text-icons-8 shadow-commit-list-bullet': simpleNodeIcon,
-            'border-cn-borders-4 bg-cn-background-2 text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
+            'text-cn-foreground-1 shadow-commit-list-bullet': simpleNodeIcon,
+            'border-cn-borders-3 bg-cn-background-2 text-cn-foreground-1 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
               !simpleNodeIcon
           },
           className
         )}
       >
-        {simpleNodeIcon ? <IconV2 name="circle" size="2xs" /> : <>{children}</>}
+        {simpleNodeIcon ? <IconV2 name="circle" size="xs" /> : <>{children}</>}
       </div>
     </div>
   )

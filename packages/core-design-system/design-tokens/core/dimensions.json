@@ -315,6 +315,10 @@
       "$type": "sizing",
       "$value": "224px"
     },
+    "58": {
+      "$type": "sizing",
+      "$value": "230px"
+    },
     "60": {
       "$type": "sizing",
       "$value": "240px"

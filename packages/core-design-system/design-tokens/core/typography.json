@@ -44,7 +44,7 @@
         },
         "300": {
           "$type": "fontWeights",
-          "$value": "Light"
+          "$value": "350"
         },
         "400": {
           "$type": "fontWeights",

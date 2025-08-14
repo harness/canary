@@ -15,7 +15,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.1}"
+        "$value": "{rounded.2}"
       }
     },
     "container": {
@@ -25,7 +25,7 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.2}"
+      "$value": "{rounded.4}"
     },
     "min-width": {
       "$type": "sizing",

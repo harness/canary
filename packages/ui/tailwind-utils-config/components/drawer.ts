@@ -2,7 +2,7 @@ export default {
   '.cn-drawer': {
     '&-content': {
       userSelect: 'auto !important',
-      backgroundColor: 'var(--cn-bg-2)',
+      backgroundColor: 'var(--cn-bg-1)',
       borderColor: 'var(--cn-border-3)',
       borderRadius: 'var(--cn-drawer-radius)',
       boxShadow: 'var(--cn-shadow-5)',

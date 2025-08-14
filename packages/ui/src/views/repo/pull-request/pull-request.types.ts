@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { PrincipalType, UsererrorError } from '@/types'
 import { ColorsEnum, ILabelsStore, LabelType, RepositoryType, Scope, TypesBranchTable } from '@/views'
 import { CheckboxOptions } from '@components/filters'
@@ -279,9 +281,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   query?: string
   openPRs?: number
   mergedPRs?: number
-  handleOpenClick?: () => void
   closedPRs?: number
-  handleCloseClick?: () => void
   repo?: RepoRepositoryOutput
   spaceId?: string
   headerFilter: Array<PRState>
@@ -289,6 +289,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   onLabelClick?: (labelId: number) => void
   scope: Scope
   showScope?: boolean
+  dirtyNoDataContent?: ReactNode
 }
 
 export type PRListFilters = {

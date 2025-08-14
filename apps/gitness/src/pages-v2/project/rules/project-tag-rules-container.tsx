@@ -121,7 +121,9 @@ export const ProjectTagRulesContainer = () => {
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
     space_ref: `${spaceRef}/+`,
-    queryParams: {}
+    queryParams: {
+      recursive: true
+    }
   })
 
   const {

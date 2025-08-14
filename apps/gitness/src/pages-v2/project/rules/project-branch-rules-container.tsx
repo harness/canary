@@ -127,9 +127,12 @@ export const ProjectBranchRulesContainer = () => {
       }
     }
   )
+
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
     space_ref: `${spaceURL}/+`,
-    queryParams: {}
+    queryParams: {
+      recursive: true
+    }
   })
 
   const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {

@@ -6,6 +6,7 @@ import {
   FileViewerControlBar,
   getIsMarkdown,
   IconV2,
+  Layout,
   MarkdownViewer,
   Pagination,
   ScrollArea,
@@ -135,9 +136,9 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   }
 
   const Loader = () => (
-    <div className="rounded-b-3 flex h-full items-center justify-center rounded-t-none border border-t-0">
+    <Layout.Flex align="center" justify="center" className="rounded-b-3 flex h-full rounded-t-none border border-t-0">
       <IconV2 className="animate-spin" name="loader" size="lg" />
-    </div>
+    </Layout.Flex>
   )
 
   return (

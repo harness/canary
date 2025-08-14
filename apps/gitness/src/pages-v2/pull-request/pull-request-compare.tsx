@@ -46,6 +46,7 @@ import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { useGitRef } from '../../hooks/useGitRef.ts'
 import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
+import { getFileExtension } from '../../utils/path-utils.ts'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { parseSpecificDiff } from './diff-utils'
@@ -577,7 +578,7 @@ export const CreatePullRequest = () => {
                 text: item.filePath,
                 data: item.raw,
                 title: item.filePath,
-                lang: item.filePath.split('.')?.[1],
+                lang: getFileExtension(item.filePath),
                 addedLines: item.addedLines,
                 deletedLines: item.deletedLines,
                 isBinary: item.isBinary,

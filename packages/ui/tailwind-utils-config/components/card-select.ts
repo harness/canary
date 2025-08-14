@@ -41,7 +41,7 @@ export default {
     gap: 'var(--cn-card-check-md-gap)',
 
     '&:hover:not([data-disabled])': {
-      borderColor: 'var(--cn-border-1)'
+      borderColor: 'var(--cn-border-brand)'
     },
 
     '&:where([data-disabled])': {

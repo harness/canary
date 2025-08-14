@@ -80,8 +80,8 @@ export default {
   '.cn-modal-dialog-header-icon': {
     '@apply flex items-center justify-center': '',
     color: 'var(--cn-text-2)',
-    width: `var(--cn-icon-size-lg)`,
-    height: `var(--cn-icon-size-lg)`,
+    width: `var(--cn-icon-size-xl)`,
+    height: `var(--cn-icon-size-xl)`,
     flexShrink: '0'
   },
   '.cn-modal-dialog-header-logo': {

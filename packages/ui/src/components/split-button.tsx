@@ -1,4 +1,4 @@
-import React, { forwardRef, MouseEvent, ReactNode } from 'react'
+import React, { forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -30,20 +30,11 @@ interface SplitButtonBaseProps<T extends string> {
   size?: 'sm' | 'md' | 'xs'
 }
 
-// For solid variant with primary theme
-interface SplitButtonSolidProps<T extends string> extends SplitButtonBaseProps<T> {
-  variant?: 'primary'
-  theme?: 'success' | 'danger' | 'default'
+// Base props with all possible variants and themes
+export interface SplitButtonProps<T extends string> extends SplitButtonBaseProps<T> {
+  variant?: 'primary' | 'outline'
+  theme?: 'default' | 'success' | 'danger'
 }
-
-// For surface variant with success or danger theme
-interface SplitButtonSurfaceProps<T extends string> extends SplitButtonBaseProps<T> {
-  variant?: 'outline'
-  theme?: 'success' | 'danger' | 'default'
-}
-
-// Combined discriminated union
-export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | SplitButtonSurfaceProps<T>
 
 /**
  * Button with options
@@ -75,6 +66,19 @@ const SplitButtonInner = forwardRef(
     }: SplitButtonProps<T>,
     ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const handleOptionSelect = useCallback(
+      (optionValue: T) => {
+        const option = options.find(opt => opt.value === optionValue)
+        if (!loading && option && !option.disabled) {
+          handleOptionChange(optionValue)
+          setIsOpen(false) // Close dropdown after selection
+        }
+      },
+      [loading, options, handleOptionChange]
+    )
+
     return (
       <div className={cn('flex', className)}>
         <Button
@@ -90,7 +94,7 @@ const SplitButtonInner = forwardRef(
         >
           {children}
         </Button>
-        <DropdownMenu.Root>
+        <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenu.Trigger
             className={cn(buttonVariants({ theme, variant, size }), 'cn-button-split-dropdown')}
             disabled={disabled || loading || disableDropdown}
@@ -99,18 +103,21 @@ const SplitButtonInner = forwardRef(
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
             {selectedValue ? (
-              <DropdownMenu.RadioGroup value={String(selectedValue)}>
+              <DropdownMenu.RadioGroup
+                value={String(selectedValue)}
+                onValueChange={value => {
+                  const option = options.find(opt => String(opt.value) === value)
+                  if (option) {
+                    handleOptionSelect(option.value)
+                  }
+                }}
+              >
                 {options.map(option => (
                   <DropdownMenu.RadioItem
                     title={option.label}
                     description={option?.description}
                     value={String(option.value)}
                     key={String(option.value)}
-                    onClick={() => {
-                      if (!loading && !option.disabled) {
-                        handleOptionChange(option.value)
-                      }
-                    }}
                     disabled={loading || option.disabled}
                   />
                 ))}
@@ -122,11 +129,7 @@ const SplitButtonInner = forwardRef(
                     title={option.label}
                     description={option.description}
                     key={String(option.value)}
-                    onClick={() => {
-                      if (!loading && !option.disabled) {
-                        handleOptionChange(option.value)
-                      }
-                    }}
+                    onSelect={() => handleOptionSelect(option.value)}
                     disabled={loading || option.disabled}
                   />
                 ))}

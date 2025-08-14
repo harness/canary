@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { BranchTag, Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
+import { Avatar, BranchTag, Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
@@ -91,6 +91,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </StatusBadge>
 
           <Layout.Horizontal gap="3xs" align="center" wrap="wrap">
+            <Avatar name={author?.display_name || author?.email || ''} rounded />
             <Text variant="body-single-line-strong" color="foreground-1">
               {author?.display_name || author?.email || ''}
             </Text>

@@ -14,7 +14,6 @@ interface PullRequestItemDescriptionProps {
 }
 
 export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = ({
-  reviewRequired,
   number,
   tasks,
   author,
@@ -39,10 +38,6 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
         {`#${number}`} opened <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
         <span className="inline-block max-w-[200px] truncate align-text-bottom">{author}</span>
       </Text>
-
-      <Separator orientation="vertical" className="h-3.5" />
-
-      <Text variant="body-single-line-normal">{reviewRequired ? 'Review required' : 'Draft'}</Text>
 
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (

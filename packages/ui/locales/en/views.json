@@ -409,7 +409,7 @@
       "createPullRequest": "Create Pull Request"
     },
     "clearFilters": "Clear Filters",
-    "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request draft.",
+    "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",

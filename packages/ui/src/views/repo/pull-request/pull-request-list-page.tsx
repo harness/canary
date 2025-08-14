@@ -274,16 +274,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         </StackedList.Root>
       ) : (
         <NoData
-          imageName="no-data-folder"
+          imageName="no-data-pr"
           title="No pull requests yet"
           description={
             repoId
               ? [
                   t(
                     'views:noData.noPullRequestsInRepo',
-                    `Start your contribution journey by creating a new pull request draft.`
-                  ),
-                  t('views:repos.createPullReq', 'Create Pull request.')
+                    `Start your contribution journey by creating a new pull request.`
+                  )
                 ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
           }

@@ -100,7 +100,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({
         />
       </StackedList.Item>
       <NoData
-        imageName="no-data-folder"
+        imageName="no-data-pr"
         title={title}
         description={description}
         primaryButton={

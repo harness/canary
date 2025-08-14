@@ -2239,11 +2239,11 @@
     "card": {
       "from": {
         "$type": "color",
-        "$value": "{blue.25}"
+        "$value": "{blue.50}"
       },
       "to": {
         "$type": "color",
-        "$value": "{blue.50}"
+        "$value": "{blue.25}"
       }
     },
     "dialog": {

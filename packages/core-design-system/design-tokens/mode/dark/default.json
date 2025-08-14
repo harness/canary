@@ -2221,11 +2221,11 @@
     "card": {
       "from": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{chrome.1000}"
       },
       "to": {
         "$type": "color",
-        "$value": "{blue.1000}"
+        "$value": "{blue.950}"
       }
     },
     "dialog": {

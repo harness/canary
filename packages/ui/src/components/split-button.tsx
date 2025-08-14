@@ -28,7 +28,6 @@ interface SplitButtonBaseProps<T extends string> {
   children: ReactNode
   dropdownContentClassName?: string
   size?: 'sm' | 'md' | 'xs'
-  triggerRef?: ForwardedRef<HTMLButtonElement>
 }
 
 // Base props with all possible variants and themes

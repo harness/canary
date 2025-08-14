@@ -181,6 +181,7 @@ export default function SearchPage() {
           : // TODO: get default branch
             `/repos/${repoRef}/files/refs/heads/main/~/${filePath}`
       }
+      toRepo={({ repoPath }) => `/repos/${repoPath}`}
       // language filter props
       selectedLanguage={selectedLanguage}
       onLanguageSelect={language => {

@@ -13,6 +13,7 @@ export const SearchPagePreview = () => {
   return (
     <SearchPageView
       isLoading={false}
+      toRepo={() => '#'}
       searchQuery={searchQuery}
       regexEnabled={regexEnabled}
       setRegexEnabled={setRegexEnabled}

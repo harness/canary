@@ -283,6 +283,7 @@ export interface PullRequestPanelProps
     Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
+  handleViewUnresolvedComments: () => void
   pullReqMetadata?: TypesPullReq
   checks?: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
@@ -336,6 +337,7 @@ const PullRequestPanel = ({
   onCommitSuggestions,
   handlePrState,
   handleRebaseBranch,
+  handleViewUnresolvedComments,
   prPanelData,
   spaceId,
   repoId,
@@ -735,7 +737,12 @@ const PullRequestPanel = ({
               )}
 
               {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) &&
-                !pullReqMetadata?.merged && <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />}
+                !pullReqMetadata?.merged && (
+                  <PullRequestCommentSection
+                    commentsInfo={prPanelData.commentsInfoData}
+                    handleAction={handleViewUnresolvedComments}
+                  />
+                )}
 
               <PullRequestCheckSection
                 {...routingProps}

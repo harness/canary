@@ -52,6 +52,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
   const fileContent = decodeGitContent(repoContent?.content?.data)
+  const isGitLfsObject = repoContent?.content?.lfs_object_id !== undefined
   const repoRef = useGetRepoRef()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const downloadFile = useDownloadRawFile()
@@ -193,6 +194,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
           handleEditFile={handleEditFile}
           handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
           refType={selectedRefType}
+          isGitLfsObject={isGitLfsObject}
         />
 
         <Tabs.Content

@@ -34,6 +34,7 @@ import {
   CodeOwnersData,
   DefaultReviewersDataProps,
   LatestCodeOwnerApprovalArrType,
+  PRCommentFilterType,
   PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
   PullRequestPanelProps,
@@ -768,6 +769,27 @@ export default function PullRequestConversationPage() {
     await performRebase({ body: payload })
   }, [pullReqMetadata, performRebase])
 
+  const handleViewUnresolvedComments = useCallback(() => {
+    const shadowRoot = document.activeElement?.shadowRoot as ShadowRoot
+
+    filtersData.setActivityFilter({
+      label: 'Unresolved comments',
+      value: PRCommentFilterType.UNRESOLVED_COMMENTS
+    })
+    const unresolvedComments = activities?.filter(
+      activity => !activity.resolved && (activity.type === 'comment' || activity.code_comment)
+    )
+    if (unresolvedComments && unresolvedComments.length > 0) {
+      const firstUnresolvedCommentId = unresolvedComments[0].id
+      const firstUnresolvedCommentDiv = shadowRoot?.getElementById
+        ? shadowRoot.getElementById(`comment-${firstUnresolvedCommentId}`)
+        : document.getElementById(`comment-${firstUnresolvedCommentId}`)
+      if (firstUnresolvedCommentDiv) {
+        firstUnresolvedCommentDiv.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }
+  }, [filtersData, activities])
+
   /**
    * Memoize overviewProps
    */
@@ -826,6 +848,7 @@ export default function PullRequestConversationPage() {
     return {
       handleRebaseBranch,
       handlePrState,
+      handleViewUnresolvedComments,
       changesInfo: {
         header: changesInfo.title,
         content: changesInfo.statusMessage,
@@ -919,7 +942,8 @@ export default function PullRequestConversationPage() {
     isMerging,
     isRebasing,
     setSelectedMergeMethod,
-    handleMergeMethodSelect
+    handleMergeMethodSelect,
+    handleViewUnresolvedComments
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

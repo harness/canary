@@ -60,7 +60,9 @@ export interface SearchPageViewProps {
   selectedLanguage?: string
   onLanguageSelect: (language: string) => void
   onClearFilters: () => void
+  // routing paths
   toRepoFileDetails: (params: { repoPath?: string; filePath: string; branch?: string }) => string
+  toRepo: (params: { repoPath?: string }) => string
 }
 
 export const SearchPageView: FC<SearchPageViewProps> = ({
@@ -83,7 +85,8 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   selectedLanguage,
   onLanguageSelect,
   onRepoSelect,
-  onClearFilters
+  onClearFilters,
+  toRepo
 }) => {
   const { t } = useTranslation()
   const { results, semanticResults, page, setPage } = useSearchResultsStore()
@@ -173,7 +176,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         <Spacer size={6} />
 
         {!isLoading && !semanticEnabled && stats && results && results.length > 0 && (
-          <Layout.Horizontal gap="xs">
+          <Layout.Horizontal gap="xs" align="center">
             <Text variant={'body-normal'}>Results:</Text>
             <Text variant={'caption-normal'}>
               {t('views:search.statsText', '{{matchCount}} matches found in {{fileCount}} file(s)', {
@@ -184,7 +187,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           </Layout.Horizontal>
         )}
         {!isLoading && semanticEnabled && stats && semanticResults && semanticResults.length > 0 && (
-          <Layout.Horizontal gap="xs">
+          <Layout.Horizontal gap="xs" align="center">
             <Text variant={'body-normal'}>Results:</Text>
             <Text variant={'caption-normal'}>
               {t('views:search.statsText', '{{fileCount}} file(s)', {
@@ -210,6 +213,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
             isDirtyList={isDirtyList}
             useSearchResultsStore={useSearchResultsStore}
             toRepoFileDetails={toRepoFileDetails}
+            toRepo={toRepo}
             searchError={searchError}
             isRepoScope={isRepoScope}
           />

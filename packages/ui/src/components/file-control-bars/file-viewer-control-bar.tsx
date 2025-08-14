@@ -8,6 +8,7 @@ import {
   Separator,
   StackedList,
   Tabs,
+  Tag,
   Text,
   ViewTypeValue
 } from '@/components'
@@ -23,6 +24,7 @@ export interface FileViewerControlBarProps {
   handleEditFile: () => void
   handleOpenDeleteDialog: () => void
   refType?: BranchSelectorTab
+  isGitLfsObject?: boolean
 }
 
 export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
@@ -31,6 +33,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   fileBytesSize,
   fileContent,
   url,
+  isGitLfsObject,
   handleDownloadFile,
   handleEditFile,
   handleOpenDeleteDialog,
@@ -43,6 +46,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   const RightDetails = () => {
     return (
       <Layout.Horizontal gap="xl" align="center">
+        {isGitLfsObject && <Tag value="Stored with Git LFS" icon="info-circle" />}
         <Layout.Horizontal gap="2xs" align="center">
           <Text color="foreground-3">{`${fileContent?.split('\n').length || 0} lines`}</Text>
           <Separator orientation="vertical" className="h-3" />

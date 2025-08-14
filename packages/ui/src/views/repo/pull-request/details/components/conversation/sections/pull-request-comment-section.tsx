@@ -1,4 +1,4 @@
-import { Accordion, IconV2, StackedList, Text } from '@/components'
+import { Accordion, IconV2, Layout, StackedList, Text } from '@/components'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
@@ -11,29 +11,27 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
 
   return (
     <Accordion.Item value="item-2">
-      <Accordion.Trigger className="py-3 [&>.cn-accordion-trigger-indicator]:hidden">
-        <StackedList.Field
-          className="flex gap-y-1"
-          title={
-            <LineTitle
-              textClassName={isSuccess ? '' : 'text-cn-foreground-danger'}
-              text={commentsInfo.header}
-              icon={
-                <IconV2
-                  size="md"
-                  className={isSuccess ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
-                  name={isSuccess ? 'check-circle-solid' : 'warning-triangle'}
-                />
-              }
-            />
-          }
-          description={!!commentsInfo?.content && <LineDescription text={commentsInfo.content} />}
-        />
-        {commentsInfo.status === 'failed' && !!handleAction && (
-          <Text className="pr-2" onClick={() => handleAction()}>
-            View
-          </Text>
-        )}
+      <Accordion.Trigger className="py-3 [&>.cn-accordion-trigger-indicator]:hidden" onClick={handleAction}>
+        <Layout.Flex>
+          <StackedList.Field
+            className="flex gap-y-1"
+            title={
+              <LineTitle
+                textClassName={isSuccess ? '' : 'text-cn-foreground-danger'}
+                text={commentsInfo.header}
+                icon={
+                  <IconV2
+                    size="md"
+                    className={isSuccess ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                    name={isSuccess ? 'check-circle-solid' : 'warning-triangle'}
+                  />
+                }
+              />
+            }
+            description={!!commentsInfo?.content && <LineDescription text={commentsInfo.content} />}
+          />
+          {commentsInfo.status === 'failed' && !!handleAction && <Text className="pr-2">View</Text>}
+        </Layout.Flex>
       </Accordion.Trigger>
     </Accordion.Item>
   )

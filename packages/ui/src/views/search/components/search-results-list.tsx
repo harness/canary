@@ -15,6 +15,7 @@ interface SearchResultsListProps {
   toRepoFileDetails: (params: { repoPath: string; filePath: string; branch: string }) => string
   searchError?: string
   isRepoScope: boolean
+  toRepo: (params: { repoPath?: string }) => string
 }
 
 export interface SearchResultItem {
@@ -40,7 +41,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   useSearchResultsStore,
   toRepoFileDetails,
   searchError,
-  isRepoScope
+  isRepoScope,
+  toRepo
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
@@ -90,9 +92,13 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
       disabled={item.matches.length === 0}
     >
       <Accordion.Item value={item.file_name}>
-        <Accordion.Trigger className="py-3 px-4 gap-4">
+        <Accordion.Trigger className="gap-4 px-4 py-3">
           <Layout.Horizontal className="w-full" gap="md">
-            {!isRepoScope ? <Tag value={item.repo_path} icon="repository" /> : null}
+            {!isRepoScope ? (
+              <Link to={toRepo({ repoPath: item.repo_path })}>
+                <Tag value={item.repo_path} icon="repository" />
+              </Link>
+            ) : null}
             <Link
               to={toRepoFileDetails({
                 repoPath: item.repo_path,
@@ -105,7 +111,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             </Link>
           </Layout.Horizontal>
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0 bg-cn-background-1 border-t">
+        <Accordion.Content className="border-t bg-cn-background-1 pb-0">
           {item.matches && item.matches.length >= 1 && (
             <Layout.Vertical gap="none" className="mt-1">
               {item.matches
@@ -144,7 +150,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
               {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
                 <Text
                   variant="caption-single-line-normal"
-                  className="hover:underline bg-cn-background-0 mt-2 pl-4 py-1.5 cursor-pointer"
+                  className="mt-2 cursor-pointer bg-cn-background-0 py-1.5 pl-4 hover:underline"
                   tabIndex={0}
                   onMouseDown={e => {
                     e.preventDefault()

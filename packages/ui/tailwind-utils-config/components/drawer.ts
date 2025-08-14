@@ -91,8 +91,6 @@ export default {
 
       '&-icon': {
         flexShrink: '0',
-        width: 'var(--cn-icon-size-xl)',
-        height: 'var(--cn-icon-size-xl)'
       },
 
       '&-icon-color': {

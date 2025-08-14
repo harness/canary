@@ -2808,7 +2808,7 @@
   "icon": {
     "devops": {
       "$type": "color",
-      "$value": "{lime.500}"
+      "$value": "{mint.400}"
     },
     "testing": {
       "$type": "color",
@@ -2824,7 +2824,7 @@
     },
     "platform": {
       "$type": "color",
-      "$value": "{purple.500}"
+      "$value": "{purple.400}"
     }
   }
 }

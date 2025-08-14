@@ -2790,7 +2790,7 @@
   "icon": {
     "devops": {
       "$type": "color",
-      "$value": "{lime.200}"
+      "$value": "{mint.200}"
     },
     "testing": {
       "$type": "color",

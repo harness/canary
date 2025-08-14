@@ -5,7 +5,7 @@ export default {
     '@apply fixed inset-0 z-50': '',
 
     '&[data-state="open"]': {
-      animation: 'cn-overlay-fadeIn 0.2s ease-out forwards',
+      animation: 'cn-overlay-fadeIn 0.2s ease-out forwards'
     },
 
     '&[data-state="closed"]': {

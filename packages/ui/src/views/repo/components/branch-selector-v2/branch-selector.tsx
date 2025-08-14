@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Button, DropdownMenu, IconV2, Text, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
+import { cn } from '@utils/cn'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
@@ -54,7 +55,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button className={className} variant="outline" size={buttonSize} disabled={disabled}>
+        <Button className={cn('min-w-0', className)} variant="outline" size={buttonSize} disabled={disabled}>
           {!hideIcon && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
           <Text className="truncate">
             {branchPrefix

@@ -81,6 +81,9 @@
     "description": "This will permanently remove all data. This action cannot be undone.",
     "title": "Êtes-vous sûr ?",
     "inputLabel": "To confirm, type",
+    "validation": {
+      "mismatch": ""
+    },
     "violationMessages": {
       "bypassed": "",
       "notAllow": ""

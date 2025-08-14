@@ -50,7 +50,14 @@ export const RepoSettingsGeneralForm: FC<{
     }
   })
 
-  const { register, handleSubmit, setValue, watch, reset } = formMethods
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { isDirty }
+  } = formMethods
 
   useEffect(() => {
     // Don't reset the form during updates to prevent UI flakiness
@@ -96,6 +103,8 @@ export const RepoSettingsGeneralForm: FC<{
   }
 
   const onSubmit: SubmitHandler<RepoUpdateData> = data => {
+    if (!isDirty && branchValue === repoData.defaultBranch) return
+
     setIsSubmitted(true)
     handleRepoUpdate(data)
   }
@@ -134,7 +143,7 @@ export const RepoSettingsGeneralForm: FC<{
           selectedBranch={{ name: branchValue, sha: '' }}
           isUpdating={isUpdatingRepoData}
           disabled={isUpdatingRepoData}
-          className="w-fit"
+          className="w-fit max-w-full"
         />
       </ControlGroup>
 

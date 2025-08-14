@@ -15,17 +15,17 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "$value": "{rounded.4}"
       },
       "min": {
         "$type": "sizing",
-        "$value": "{size.8}"
+        "$value": "{size.9}"
       }
     },
     "group": {
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "$value": "{spacing.1-half}"
       },
       "gap": {
         "$type": "spacing",
@@ -33,17 +33,21 @@
       }
     },
     "container": {
-      "py": {
+      "pt": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "$value": "{spacing.1-half}"
+      },
+      "pb": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
       },
       "px": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
+        "$value": "{spacing.3}"
       },
       "full-width": {
         "$type": "sizing",
-        "$value": "{size.56}"
+        "$value": "{size.58}"
       }
     },
     "header": {

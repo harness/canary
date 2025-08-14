@@ -1,8 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, ListActions, SearchInput, Skeleton, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { RepoWebhookListPageProps } from './types'
@@ -42,16 +41,15 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content>
+    <Layout.Vertical gap="xl" className="grow">
       <Text as="h1" variant="heading-section">
         Webhooks
       </Text>
-      <Spacer size={6} />
 
       {error ? (
-        <span className="text-2 text-cn-foreground-danger">{error || 'Something went wrong'}</span>
+        <Text color="danger">{error || 'Something went wrong'}</Text>
       ) : (
-        <>
+        <Layout.Grid gap="md">
           {(!!webhooks?.length || (!webhooks?.length && isDirtyList)) && (
             <>
               <ListActions.Root>
@@ -59,7 +57,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                   <SearchInput
                     id="search"
                     defaultValue={searchQuery || ''}
-                    inputContainerClassName="max-w-80"
+                    inputContainerClassName="w-80"
                     placeholder={t('views:repos.search', 'Search')}
                     onChange={handleSearchChange}
                   />
@@ -73,7 +71,6 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                   </Button>
                 </ListActions.Right>
               </ListActions.Root>
-              <Spacer size={4.5} />
             </>
           )}
 
@@ -95,9 +92,9 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               toRepoWebhookCreate={toRepoWebhookCreate}
             />
           )}
-        </>
+        </Layout.Grid>
       )}
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }
 

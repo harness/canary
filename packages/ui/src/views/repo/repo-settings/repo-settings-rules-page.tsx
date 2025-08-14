@@ -1,6 +1,5 @@
-import { Checkbox, Spacer, Text } from '@/components'
+import { Checkbox, Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
 import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 import { ErrorTypes, IRepoStore } from './types'
@@ -46,46 +45,47 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   const { t } = useTranslation()
 
   return (
-    <SandboxLayout.Content>
-      <Text as="h1" variant="heading-section" className="mb-2">
-        Rules
-      </Text>
-      {!projectScope ? (
-        <Text className="max-w-[570px]">
-          {t(
-            'views:repos.rulesDescription',
-            'Define standards and automate workflows to ensure better collaboration and control in your repository.'
-          )}
+    <Layout.Vertical gap="xl" className="grow">
+      <Layout.Grid gapY="xs">
+        <Text as="h1" variant="heading-section">
+          Rules
         </Text>
-      ) : null}
-      {showParentScopeLabelsCheckbox && (
-        <div>
+        {!projectScope && (
+          <Text className="settings-form-width">
+            {t(
+              'views:repos.rulesDescription',
+              'Define standards and automate workflows to ensure better collaboration and control in your repository.'
+            )}
+          </Text>
+        )}
+      </Layout.Grid>
+
+      <Layout.Grid gapY="md">
+        {showParentScopeLabelsCheckbox && (
           <Checkbox
             id="parent-labels"
             checked={parentScopeLabelsChecked}
             onCheckedChange={onParentScopeLabelsChange}
             label={t('views:rules.showParentRules', 'Show rules from parent scopes')}
-            className="mt-6"
           />
-        </div>
-      )}
-      <Spacer size={3} />
+        )}
 
-      <RepoSettingsGeneralRules
-        isLoading={isRulesLoading}
-        rules={rules}
-        apiError={apiError}
-        handleRuleClick={handleRuleClick}
-        openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-        rulesSearchQuery={rulesSearchQuery}
-        setRulesSearchQuery={setRulesSearchQuery}
-        projectScope={projectScope}
-        toRepoBranchRuleCreate={toRepoBranchRuleCreate}
-        toRepoTagRuleCreate={toRepoTagRuleCreate}
-        ruleTypeFilter={ruleTypeFilter}
-        setRuleTypeFilter={setRuleTypeFilter}
-        toProjectRuleDetails={toProjectRuleDetails}
-      />
-    </SandboxLayout.Content>
+        <RepoSettingsGeneralRules
+          isLoading={isRulesLoading}
+          rules={rules}
+          apiError={apiError}
+          handleRuleClick={handleRuleClick}
+          openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+          rulesSearchQuery={rulesSearchQuery}
+          setRulesSearchQuery={setRulesSearchQuery}
+          projectScope={projectScope}
+          toRepoBranchRuleCreate={toRepoBranchRuleCreate}
+          toRepoTagRuleCreate={toRepoTagRuleCreate}
+          ruleTypeFilter={ruleTypeFilter}
+          setRuleTypeFilter={setRuleTypeFilter}
+          toProjectRuleDetails={toProjectRuleDetails}
+        />
+      </Layout.Grid>
+    </Layout.Vertical>
   )
 }

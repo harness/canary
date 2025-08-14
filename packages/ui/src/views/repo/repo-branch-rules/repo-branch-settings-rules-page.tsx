@@ -8,12 +8,14 @@ import {
   Fieldset,
   FormSeparator,
   FormWrapper,
+  Layout,
   MultiSelectOption,
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema, SandboxLayout } from '@/views'
+import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { cn } from '@utils/index'
 
 import {
   BranchSettingsRuleBypassListField,
@@ -135,11 +137,11 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
 
   return (
-    <SandboxLayout.Content className={`max-w-[612px] ml-3 ${projectScope ? 'mx-auto' : ''}`}>
-      <Text as="h1" variant="heading-section" className="mb-4">
+    <Layout.Vertical className={cn('settings-form-width', { 'mx-auto': projectScope })} gapY="md">
+      <Text as="h1" variant="heading-section">
         {presetRuleData
           ? t('views:repos.updateBranchRule', 'Update branch rule')
-          : t('views:repos.createBranchRule', 'Create a branch rule')}
+          : t('views:repos.createBranchRule', 'Create branch rule')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
@@ -202,6 +204,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
         {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
       </FormWrapper>
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }

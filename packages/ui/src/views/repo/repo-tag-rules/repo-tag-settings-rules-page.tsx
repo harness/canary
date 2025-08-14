@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormSeparator, FormWrapper, Text } from '@/components'
+import { Button, ButtonLayout, ControlGroup, Fieldset, FormSeparator, FormWrapper, Layout, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { IProjectRulesStore, IRepoStore, SandboxLayout } from '@/views'
+import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { cn } from '@utils/cn'
 
 import { combineAndNormalizePrincipalsAndGroups } from '../repo-branch-rules/utils'
 import {
@@ -118,8 +119,8 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
 
   return (
-    <SandboxLayout.Content className={`max-w-[612px] ml-3 ${projectScope ? 'mx-auto' : ''}`}>
-      <Text as="h1" variant="heading-section" color="foreground-1" className="mb-4">
+    <Layout.Vertical className={cn('settings-form-width', { 'mx-auto': projectScope })} gapY="md">
+      <Text as="h1" variant="heading-section">
         {presetRuleData
           ? t('views:repos.updateTagRule', 'Update tag rule')
           : t('views:repos.createTagRule', 'Create tag rule')}
@@ -170,6 +171,6 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
 
         {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
       </FormWrapper>
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }

@@ -50,7 +50,7 @@ export default {
     },
 
     '&:where([data-state="checked"])': {
-      borderColor: 'var(--cn-border-accent)',
+      borderColor: 'var(--cn-border-brand)',
       backgroundImage: 'var(--cn-comp-card-gradient)'
     },
 

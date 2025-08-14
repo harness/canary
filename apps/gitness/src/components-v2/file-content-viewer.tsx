@@ -25,6 +25,7 @@ import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
+import { useCodeEditorSelectionState } from '../hooks/useCodeEditorSelectionState'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useGitRef } from '../hooks/useGitRef'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
@@ -62,6 +63,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
+  const { selectedLine, setSelectedLine } = useCodeEditorSelectionState()
 
   const { gitRefName } = useGitRef()
 
@@ -108,6 +110,13 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
       monacoThemes
     }),
     [monacoTheme]
+  )
+
+  const codeRevision = useMemo(
+    () => ({
+      code: fileContent
+    }),
+    [fileContent]
   )
 
   const handleDownloadFile = () => {
@@ -169,7 +178,10 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
       <Tabs.Root
         className="repo-files-height flex flex-col overflow-hidden"
         value={view as string}
-        onValueChange={val => onChangeView(val as ViewTypeValue)}
+        onValueChange={val => {
+          setSelectedLine(undefined)
+          onChangeView(val as ViewTypeValue)
+        }}
       >
         <FileViewerControlBar
           view={view}
@@ -228,10 +240,13 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
               className="overflow-hidden"
               height="100%"
               language={language}
-              codeRevision={{ code: fileContent }}
+              codeRevision={codeRevision}
               themeConfig={themeConfig}
               options={{ readOnly: true }}
               theme={monacoTheme}
+              enableLinesSelection={true}
+              onSelectedLineChange={setSelectedLine}
+              selectedLine={selectedLine}
             />
           )}
         </Tabs.Content>

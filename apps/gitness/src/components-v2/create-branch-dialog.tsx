@@ -36,52 +36,61 @@ export const CreateBranchDialog = ({
   const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
   const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
 
-  const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem) => {
+  const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem, _type: BranchSelectorTab) => {
     setSelectedBranchOrTag(branchTagName)
   }, [])
+
+  const handleMutationSuccess = useCallback(() => {
+    setError(undefined)
+    resetViolation()
+    onClose()
+    onSuccess?.()
+  }, [onClose, onSuccess, resetViolation])
+
+  const handleMutationError = useCallback(
+    (err: any) => {
+      if (err?.violations?.length > 0) {
+        setAllStates({
+          violation: true,
+          bypassed: true,
+          bypassable: err?.violations[0]?.bypassable
+        })
+      } else {
+        setError(err as UsererrorError)
+      }
+    },
+    [setAllStates]
+  )
 
   const {
     mutateAsync: createBranch,
     isLoading: isCreatingBranch,
     reset: resetBranchMutation
-  } = useCreateBranchMutation(
-    {},
-    {
-      onSuccess: () => {
-        onClose()
-        onSuccess?.()
-      }
-    }
-  )
+  } = useCreateBranchMutation({}, { onSuccess: handleMutationSuccess, onError: handleMutationError })
 
   const handleCreateBranch = async (data: CreateBranchFormFields) => {
     onBranchQueryChange?.(data.name)
-    try {
-      await createBranch({
-        repo_ref,
-        body: {
-          ...data,
-          bypass_rules: bypassed
-        }
-      })
-    } catch (_error: any) {
-      if (_error?.violations?.length > 0) {
-        setAllStates({
-          violation: true,
-          bypassed: true,
-          bypassable: _error?.violations[0]?.bypassable
-        })
-      } else {
-        setError(_error as UsererrorError)
+    setError(undefined)
+    resetViolation()
+    await createBranch({
+      repo_ref,
+      body: {
+        ...data,
+        bypass_rules: bypassed
       }
-    }
+    })
   }
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      setError(undefined)
+      resetViolation()
+    } else {
       resetBranchMutation()
+      setError(undefined)
+      resetViolation()
     }
-  }, [open, resetBranchMutation])
+  }, [open])
 
   useEffect(() => {
     if (preselectedBranchOrTag) {

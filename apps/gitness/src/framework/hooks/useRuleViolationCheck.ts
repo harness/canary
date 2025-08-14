@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useCallback, useReducer } from 'react'
 
 enum ActionTypes {
   SET_VIOLATION = 'SET_VIOLATION',
@@ -30,9 +30,9 @@ const reducer = (state: ViolationState, action: ViolationAction): ViolationState
     case ActionTypes.SET_VIOLATION:
       return { ...state, violation: action.payload }
     case ActionTypes.SET_BYPASSABLE:
-      return { ...state, bypassed: action.payload }
-    case ActionTypes.SET_BYPASSED:
       return { ...state, bypassable: action.payload }
+    case ActionTypes.SET_BYPASSED:
+      return { ...state, bypassed: action.payload }
     case ActionTypes.SET_ALL_STATES:
       return {
         ...state,
@@ -47,13 +47,37 @@ const reducer = (state: ViolationState, action: ViolationAction): ViolationState
 
 export const useRuleViolationCheck = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const setViolation = (value: boolean) => dispatch({ type: ActionTypes.SET_VIOLATION, payload: value })
-  const setBypassable = (value: boolean) => dispatch({ type: ActionTypes.SET_BYPASSABLE, payload: value })
-  const setBypassed = (value: boolean) => dispatch({ type: ActionTypes.SET_BYPASSED, payload: value })
-  const setAllStates = (payload: Partial<ViolationState>) => {
-    dispatch({ type: ActionTypes.SET_ALL_STATES, payload })
-  }
-  const resetViolation = () => setAllStates({ violation: false, bypassable: false, bypassed: false })
+  const setViolation = useCallback(
+    (value: boolean) => {
+      dispatch({ type: ActionTypes.SET_VIOLATION, payload: value })
+    },
+    [dispatch]
+  )
+
+  const setBypassable = useCallback(
+    (value: boolean) => {
+      dispatch({ type: ActionTypes.SET_BYPASSABLE, payload: value })
+    },
+    [dispatch]
+  )
+
+  const setBypassed = useCallback(
+    (value: boolean) => {
+      dispatch({ type: ActionTypes.SET_BYPASSED, payload: value })
+    },
+    [dispatch]
+  )
+
+  const setAllStates = useCallback(
+    (payload: Partial<ViolationState>) => {
+      dispatch({ type: ActionTypes.SET_ALL_STATES, payload })
+    },
+    [dispatch]
+  )
+
+  const resetViolation = useCallback(() => {
+    dispatch({ type: ActionTypes.SET_ALL_STATES, payload: { violation: false, bypassable: false, bypassed: false } })
+  }, [dispatch])
 
   return {
     violation: state.violation,

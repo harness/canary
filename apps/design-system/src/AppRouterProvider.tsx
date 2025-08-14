@@ -10,7 +10,8 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { RouterContextProvider } from '@harnessio/ui/context'
+import { Button, SplitButton } from '@harnessio/ui/components'
+import { ComponentProvider, RouterContextProvider } from '@harnessio/ui/context'
 
 const AppRouterProvider: FC = () => {
   const navigate = useNavigate()
@@ -27,7 +28,9 @@ const AppRouterProvider: FC = () => {
       useMatches={useMatches}
       useParams={useParams}
     >
-      <Outlet />
+      <ComponentProvider components={{ RbacButton: Button, RbacSplitButton: SplitButton }}>
+        <Outlet />
+      </ComponentProvider>
     </RouterContextProvider>
   )
 }

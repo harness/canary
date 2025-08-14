@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from 'react'
+import React, { forwardRef, MouseEvent, ReactNode } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -54,83 +54,93 @@ export type SplitButtonProps<T extends string> = SplitButtonSolidProps<T> | Spli
  * - variant=solid with theme=primary (default)
  * - variant=surface with theme=success|danger|muted
  */
-export const SplitButton = <T extends string>({
-  handleButtonClick,
-  loading = false,
-  selectedValue,
-  options,
-  handleOptionChange,
-  className,
-  buttonClassName,
-  theme = 'default',
-  variant = 'primary',
-  disabled = false,
-  disableDropdown = false,
-  disableButton = false,
-  children,
-  dropdownContentClassName,
-  size = 'md'
-}: SplitButtonProps<T>) => {
-  return (
-    <div className={cn('flex', className)}>
-      <Button
-        className={cn('rounded-r-none border-r-0', buttonClassName)}
-        theme={theme}
-        variant={variant}
-        size={size}
-        onClick={handleButtonClick}
-        type="button"
-        disabled={disabled || disableButton}
-        loading={loading}
-      >
-        {children}
-      </Button>
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger
-          className={cn(buttonVariants({ theme, variant, size }), 'cn-button-split-dropdown')}
-          disabled={disabled || loading || disableDropdown}
+const SplitButtonInner = forwardRef(
+  <T extends string>(
+    {
+      handleButtonClick,
+      loading = false,
+      selectedValue,
+      options,
+      handleOptionChange,
+      className,
+      buttonClassName,
+      theme = 'default',
+      variant = 'primary',
+      disabled = false,
+      disableDropdown = false,
+      disableButton = false,
+      children,
+      dropdownContentClassName,
+      size = 'md'
+    }: SplitButtonProps<T>,
+    ref: React.ForwardedRef<HTMLButtonElement>
+  ) => {
+    return (
+      <div className={cn('flex', className)}>
+        <Button
+          ref={ref}
+          className={cn('rounded-r-none border-r-0', buttonClassName)}
+          theme={theme}
+          variant={variant}
+          size={size}
+          onClick={handleButtonClick}
+          type="button"
+          disabled={disabled || disableButton}
+          loading={loading}
         >
-          <IconV2 name="nav-arrow-down" />
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
-          {selectedValue ? (
-            <DropdownMenu.RadioGroup value={String(selectedValue)}>
-              {options.map(option => (
-                <DropdownMenu.RadioItem
-                  title={option.label}
-                  description={option?.description}
-                  value={String(option.value)}
-                  key={String(option.value)}
-                  onClick={() => {
-                    if (!loading && !option.disabled) {
-                      handleOptionChange(option.value)
-                    }
-                  }}
-                  disabled={loading || option.disabled}
-                />
-              ))}
-            </DropdownMenu.RadioGroup>
-          ) : (
-            <DropdownMenu.Group>
-              {options.map(option => (
-                <DropdownMenu.Item
-                  title={option.label}
-                  description={option.description}
-                  key={String(option.value)}
-                  onClick={() => {
-                    if (!loading && !option.disabled) {
-                      handleOptionChange(option.value)
-                    }
-                  }}
-                  disabled={loading || option.disabled}
-                />
-              ))}
-            </DropdownMenu.Group>
-          )}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    </div>
-  )
-}
+          {children}
+        </Button>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger
+            className={cn(buttonVariants({ theme, variant, size }), 'cn-button-split-dropdown')}
+            disabled={disabled || loading || disableDropdown}
+          >
+            <IconV2 name="nav-arrow-down" />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
+            {selectedValue ? (
+              <DropdownMenu.RadioGroup value={String(selectedValue)}>
+                {options.map(option => (
+                  <DropdownMenu.RadioItem
+                    title={option.label}
+                    description={option?.description}
+                    value={String(option.value)}
+                    key={String(option.value)}
+                    onClick={() => {
+                      if (!loading && !option.disabled) {
+                        handleOptionChange(option.value)
+                      }
+                    }}
+                    disabled={loading || option.disabled}
+                  />
+                ))}
+              </DropdownMenu.RadioGroup>
+            ) : (
+              <DropdownMenu.Group>
+                {options.map(option => (
+                  <DropdownMenu.Item
+                    title={option.label}
+                    description={option.description}
+                    key={String(option.value)}
+                    onClick={() => {
+                      if (!loading && !option.disabled) {
+                        handleOptionChange(option.value)
+                      }
+                    }}
+                    disabled={loading || option.disabled}
+                  />
+                ))}
+              </DropdownMenu.Group>
+            )}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </div>
+    )
+  }
+)
 
-SplitButton.displayName = 'SplitButton'
+SplitButtonInner.displayName = 'SplitButton'
+
+export const SplitButton = SplitButtonInner as <T extends string>(
+  props: SplitButtonProps<T> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+) => JSX.Element

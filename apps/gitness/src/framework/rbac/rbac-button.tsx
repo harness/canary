@@ -1,8 +1,8 @@
-import { Button, RbacButtonProps, Resource } from '@harnessio/ui/components'
+import { Button, RbacButtonProps, Resource, Tooltip } from '@harnessio/ui/components'
 
 import { useMFEContext } from '../hooks/useMFEContext'
 
-export const RbacButton = ({ rbac, ...rest }: RbacButtonProps) => {
+export const RbacButton = ({ rbac, tooltip, ...rest }: RbacButtonProps) => {
   const { hooks } = useMFEContext()
 
   /**
@@ -16,5 +16,13 @@ export const RbacButton = ({ rbac, ...rest }: RbacButtonProps) => {
       })
       ?.some(Boolean) ?? true
 
-  return <Button {...rest} disabled={!hasPermission} />
+  const button = <Button {...rest} disabled={!hasPermission} />
+
+  return !hasPermission ? (
+    <Tooltip title={tooltip?.title ?? 'You are missing the permission for this action.'} content={tooltip?.content}>
+      {button}
+    </Tooltip>
+  ) : (
+    button
+  )
 }

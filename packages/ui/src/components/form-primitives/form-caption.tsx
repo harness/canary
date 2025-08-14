@@ -14,7 +14,7 @@ type FormCaptionProps = {
 }
 
 export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<FormCaptionProps>>(
-  ({ theme = 'default', className, disabled, children, ...props }, ref) => {
+  ({ theme = 'default', className, disabled, children }, ref) => {
     /**
      * Return null if no message, errorMessage, or warningMessage is provided
      */
@@ -42,7 +42,7 @@ export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<Fo
     }
 
     return (
-      <Text color={getColor(theme, disabled)} className={className} ref={ref} {...props}>
+      <Text color={getColor(theme, disabled)} className={className} ref={ref}>
         {canShowIcon && <IconV2 name={effectiveIconName} size="md" />}
         <span>{children}</span>
       </Text>

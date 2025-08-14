@@ -78,15 +78,12 @@ const Content = ({ title, children }: ContentProps) => {
 
   return (
     <Dialog.Content onOpenAutoFocus={event => event.preventDefault()}>
-     <Dialog.Header
-  icon={
-    <IconV2
-      name={context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined}
-      size="xl"
-    />
-  }
-  theme={context.theme}
->
+    <Dialog.Header
+        icon={
+          context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined
+        }
+        theme={context.theme}
+      >
         <Dialog.Title>{title}</Dialog.Title>
       </Dialog.Header>
 

@@ -59,6 +59,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
     [parentPath, fileName]
   )
+  const isShowPreview = () => !isNew || getIsMarkdown(language)
+  const [showPreview, setShowPreview] = useState(isShowPreview())
 
   const pathToSplit = useMemo(() => {
     if (isNew) {
@@ -74,6 +76,11 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
       setParentPath(fullResourcePath)
     }
   }, [isNew, fullResourcePath, parentPath])
+
+  useEffect(() => {
+    setLanguage(filenameToLanguage(fileName) || '')
+    setShowPreview(isShowPreview())
+  }, [fileName, isNew, language])
 
   const pathParts = useMemo(
     () => [
@@ -193,7 +200,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         value={view as string}
         onValueChange={val => onChangeView(val as EditViewTypeValue)}
       >
-        <FileEditorControlBar />
+        <FileEditorControlBar showPreview={showPreview} />
 
         <Tabs.Content value="edit" className="grow">
           <CodeEditor

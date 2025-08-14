@@ -100,13 +100,13 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children }, r
 })
 Content.displayName = 'AlertDialog.Content'
 
-const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ children = 'Cancel' }, ref) => {
+const Cancel = forwardRef<HTMLButtonElement, { children?: ReactNode }>(({ children = 'Cancel', ...props }, ref) => {
   const context = useContext(AlertDialogContext)
   if (!context) throw new Error('AlertDialog.Cancel must be used within AlertDialog.Root')
 
   return (
     <Dialog.Close asChild>
-      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} ref={ref}>
+      <Button variant="secondary" disabled={context.loading} onClick={context.onCancel} ref={ref} {...props}>
         {children}
       </Button>
     </Dialog.Close>

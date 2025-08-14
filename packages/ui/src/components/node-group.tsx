@@ -40,7 +40,7 @@ function Icon({
           className
         )}
       >
-        {simpleNodeIcon ? <IconV2 name="circle" size="2xs" /> : <>{children}</>}
+        {simpleNodeIcon ? <IconV2 name="circle" size="xs" /> : <>{children}</>}
       </div>
     </div>
   )

@@ -26,7 +26,7 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
-import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { FILE_SEPARATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
@@ -174,7 +174,7 @@ export const RepoSidebar = () => {
         if (response.body.type === 'dir') {
           navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/${fullResourcePath}` }))
         } else {
-          const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+          const parentDirPath = fullResourcePath?.split(FILE_SEPARATOR).slice(0, -1).join(FILE_SEPARATOR)
           navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/${parentDirPath}` }))
         }
       })
@@ -197,9 +197,11 @@ export const RepoSidebar = () => {
     <>
       <Layout.Flex className="flex-1" ref={containerRef}>
         <div
-          className={`shrink-0 overflow-hidden min-w-[${SIDEBAR_MIN_WIDTH}px] max-w-[${SIDEBAR_MAX_WIDTH}px]`}
+          className="shrink-0 overflow-hidden"
           style={{
-            width: `${sidebarWidth}px`
+            width: `${sidebarWidth}px`,
+            minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+            maxWidth: `${SIDEBAR_MAX_WIDTH}px`
           }}
         >
           <RepoSidebarView

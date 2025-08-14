@@ -553,6 +553,8 @@ mark {
 .monaco-editor.monaco-editor {
   --vscode-editorGutter-background: transparent;
   --vscode-editor-background: transparent;
+  --vscode-editorLineNumber-foreground: var(--cn-text-3);
+  --vscode-editorLineNumber-activeForeground: var(--cn-text-1);
   outline-color: transparent !important;
 }
 

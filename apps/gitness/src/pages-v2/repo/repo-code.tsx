@@ -16,7 +16,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
-import { FILE_SEPERATOR, isRefACommitSHA, isRefATag, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { FILE_SEPARATOR, isRefACommitSHA, isRefATag, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 
 /**
@@ -107,7 +107,7 @@ export const RepoCode = () => {
         return `new/${fullGitRef}/~/${fullResourcePath}`
       }
 
-      const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+      const parentDirPath = fullResourcePath?.split(FILE_SEPARATOR).slice(0, -1).join(FILE_SEPARATOR)
       return `new/${fullGitRef}/~/${parentDirPath}`
     }
 
@@ -137,16 +137,18 @@ export const RepoCode = () => {
    * Render File content view or Edit file view
    */
   const renderCodeView = useMemo(() => {
+    const isLoading = [isLoadingRepoDetails, loading].some(Boolean)
+
     if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
-      return <FileContentViewer repoContent={repoDetails} />
+      return <FileContentViewer repoContent={repoDetails} loading={isLoading} />
     }
 
     if (codeMode !== CodeModes.VIEW) {
-      return <FileEditor repoDetails={repoDetails} defaultBranch={repoData?.default_branch || ''} />
+      return <FileEditor repoDetails={repoDetails} defaultBranch={repoData?.default_branch || ''} loading={isLoading} />
     }
 
     return <></>
-  }, [codeMode, repoDetails, repoData?.default_branch])
+  }, [codeMode, repoDetails, repoData?.default_branch, loading, isLoadingRepoDetails])
 
   if (!repoId) return <></>
 
@@ -154,7 +156,6 @@ export const RepoCode = () => {
     <RepoFiles
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       pathParts={pathParts}
-      loading={loading}
       files={files}
       fullResourcePath={fullResourcePath}
       isRepoEmpty={repoData?.is_empty}

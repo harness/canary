@@ -41,7 +41,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <Layout.Horizontal className="items-center justify-between">
+    <Layout.Horizontal align="center" justify="between">
       <PathBreadcrumbs
         isEdit={codeMode === CodeModes.EDIT}
         isNew={codeMode === CodeModes.NEW}
@@ -59,14 +59,14 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         pathUploadFiles &&
         selectedRefType === BranchSelectorTab.BRANCHES && (
           <Button asChild>
-            <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
+            <Link to={pathNewFile}>
               <IconV2 name="plus" />
-              <span className="truncate">{t('views:repos.createFile', 'Create File')}</span>
+              {t('views:repos.createFile', 'Create File')}
             </Link>
           </Button>
         )}
       {codeMode !== CodeModes.VIEW && (
-        <div className="flex gap-2.5">
+        <Layout.Flex gapX="sm">
           {!!handleCancelFileEdit && (
             <Button variant="outline" onClick={handleCancelFileEdit}>
               Cancel Changes
@@ -74,11 +74,11 @@ export const PathActionBar: FC<PathActionBarProps> = ({
           )}
           {!!handleOpenCommitDialog && (
             <Button onClick={handleOpenCommitDialog}>
-              <IconV2 name="git-commit" />
+              <IconV2 name="upload" />
               Commit Changes
             </Button>
           )}
-        </div>
+        </Layout.Flex>
       )}
     </Layout.Horizontal>
   )

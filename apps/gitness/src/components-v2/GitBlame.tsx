@@ -67,23 +67,25 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
           commitInfo: commitInfo,
           infoContent: (
             /* IMPORTANT: itemContent accepts only atomic component that are not depends on external state (e.g. context provider) */
-            <div className="flex items-center gap-4 pl-4">
+            <Layout.Flex align="center" gapX="lg" className="pl-4">
               <Text style={{ width: '125px' }} truncate>
                 {formatDistanceToNow(commitInfo.author?.when)}
               </Text>
-              <Avatar name={name} rounded title={name + '\n' + email} />
-              <Text
-                style={{ width: '250px' }}
-                className="cursor-pointer text-2 leading-snug hover:underline"
-                truncate
-                title={commitInfo.title}
-                onClick={() => {
-                  navigate(toCommitDetails({ sha: commitInfo.sha }))
-                }}
-              >
-                {commitInfo.title}
-              </Text>
-            </div>
+              <Layout.Flex align="center" gapX="xs">
+                <Avatar name={name} rounded title={name + '\n' + email} />
+                <Text
+                  style={{ width: '250px' }}
+                  className="cursor-pointer hover:underline"
+                  truncate
+                  title={commitInfo.title}
+                  onClick={() => {
+                    navigate(toCommitDetails({ sha: commitInfo.sha }))
+                  }}
+                >
+                  {commitInfo.title}
+                </Text>
+              </Layout.Flex>
+            </Layout.Flex>
           )
         })
 
@@ -102,11 +104,13 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
   const { theme } = useThemeStore()
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
-  return !isFetching && blameBlocks.length ? (
+  if (isFetching || !blameBlocks.length) return null
+
+  return (
     <Layout.Vertical className="h-full" gap="none">
-      <div className="flex items-center border-x border-b px-cn-md py-cn-sm">
+      <Layout.Flex align="center" className="px-cn-md py-cn-sm border-x border-b">
         <Contributors contributors={contributors} />
-      </div>
+      </Layout.Flex>
       <BlameEditorV2
         code={codeContent}
         language={language}
@@ -118,7 +122,5 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
         className="flex h-full grow"
       />
     </Layout.Vertical>
-  ) : (
-    <></>
   )
 }

@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 
-import { Command, Popover, SearchInput, SearchInputProps, Text } from '@/components'
+import { DropdownMenu, SearchInput, SearchInputProps, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -67,26 +67,26 @@ export const SearchFiles = ({
     }
 
     const lowerCaseQuery = currentQuery.toLowerCase()
-    const filteredFiles: FilteredFile[] = []
+    const _filteredFiles: FilteredFile[] = []
 
     for (const file of filesList) {
       const lowerCaseFile = file.toLowerCase()
       const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
 
       if (matchIndex > -1) {
-        filteredFiles.push({
+        _filteredFiles.push({
           file,
           element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
         })
       }
 
       // Limiting the result to 50, refactor this once backend supports pagination
-      if (filteredFiles.length === MAX_FILES) {
+      if (_filteredFiles.length === MAX_FILES) {
         break
       }
     }
 
-    setFilteredFiles(filteredFiles)
+    setFilteredFiles(_filteredFiles)
   }, [filesList, currentQuery])
 
   const handleInputChange = useCallback((searchQuery: string) => {
@@ -95,46 +95,29 @@ export const SearchFiles = ({
   }, [])
 
   return (
-    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Popover.Anchor asChild>
-        <div className={inputContainerClassName}>
-          <SearchInput size={searchInputSize} onChange={handleInputChange} />
-        </div>
-      </Popover.Anchor>
-      <Popover.Content
-        align="start"
-        hideArrow
-        onOpenAutoFocus={event => {
-          event.preventDefault()
-        }}
-        className={cn('!p-1', 'width-popover-max-width', contentClassName)}
-      >
-        <Command.Root className="bg-transparent">
-          <Command.List
-            scrollAreaProps={{ className: 'max-h-96', classNameContent: 'overflow-hidden [&>[cmdk-group]]:!p-0' }}
-          >
-            {filteredFiles.length ? (
-              <Command.Group>
-                {filteredFiles?.map(({ file, element }) => (
-                  <Command.Item
-                    key={file}
-                    className="!cn-dropdown-menu-item"
-                    value={file}
-                    onSelect={() => {
-                      navigateToFile(file)
-                      setIsOpen(false)
-                    }}
-                  >
-                    {element}
-                  </Command.Item>
-                ))}
-              </Command.Group>
-            ) : (
-              <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>
-            )}
-          </Command.List>
-        </Command.Root>
-      </Popover.Content>
-    </Popover.Root>
+    <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>
+      <div className={cn('relative', inputContainerClassName)}>
+        <DropdownMenu.Trigger className="pointer-events-none absolute inset-0 -z-0" tabIndex={-1} />
+        <SearchInput size={searchInputSize} onChange={handleInputChange} />
+      </div>
+
+      <DropdownMenu.Content align="start" className={cn('max-h-96', 'width-popover-max-width', contentClassName)}>
+        {filteredFiles.length ? (
+          filteredFiles?.map(({ file, element }) => (
+            <DropdownMenu.IconItem
+              key={file}
+              onSelect={() => {
+                navigateToFile(file)
+                setIsOpen(false)
+              }}
+              title={element}
+              icon="page"
+            />
+          ))
+        ) : (
+          <DropdownMenu.NoOptions>{t('component:searchFile.noFile', 'No file found.')}</DropdownMenu.NoOptions>
+        )}
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

@@ -1,6 +1,6 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { IconV2, NoData, PathParts, Skeleton } from '@/components'
+import { IconV2, NoData, PathParts } from '@/components'
 import { useTranslation } from '@/context'
 import { UsererrorError } from '@/types'
 import {
@@ -20,7 +20,6 @@ import {
 
 interface RepoFilesProps {
   pathParts: PathParts[]
-  loading: boolean
   files: RepoFile[]
   isDir: boolean
   isRepoEmpty?: boolean
@@ -48,7 +47,6 @@ interface RepoFilesProps {
 
 export const RepoFiles: FC<RepoFilesProps> = ({
   pathParts,
-  loading,
   files,
   isDir,
   isShowSummary,
@@ -78,8 +76,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
-    if (loading || isLoadingRepoDetails) return <Skeleton.Table countColumns={3} countRows={8} />
-
     if (!isView) return children
 
     if (!isRepoEmpty && !isDir && !repoDetailsError) {
@@ -144,7 +140,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     children,
     isDir,
     latestFile,
-    loading,
     isShowSummary,
     files,
     selectedBranchTag?.name,
@@ -159,7 +154,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
   return (
     <SandboxLayout.Main className="repo-files-height bg-transparent">
-      <SandboxLayout.Content className="flex h-full flex-col pl-cn-xl gap-y-cn-md">
+      <SandboxLayout.Content className="pl-cn-xl gap-y-cn-md flex h-full flex-col">
         {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}

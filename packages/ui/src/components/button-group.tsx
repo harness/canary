@@ -2,6 +2,7 @@ import { ComponentProps, FC, ReactNode } from 'react'
 
 import { Button, ButtonProps, DropdownMenu, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
+import omit from 'lodash-es/omit'
 
 type ButtonGroupTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
@@ -91,7 +92,7 @@ export const ButtonGroup: FC<ButtonGroupProps> = ({
               variant="outline"
               size={size}
               iconOnly={iconOnly}
-              {...restButtonProps}
+              {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
             />
           </Wrapper>
         )

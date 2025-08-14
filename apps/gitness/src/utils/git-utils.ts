@@ -94,7 +94,7 @@ const MONACO_SUPPORTED_LANGUAGES = [
   'yaml'
 ]
 
-export const FILE_SEPERATOR = '/'
+export const FILE_SEPARATOR = '/'
 
 export const PLAIN_TEXT = 'plaintext'
 

@@ -20,7 +20,7 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
 
 export interface CodeEditorProps<_> {
   codeRevision: CodeRevision
-  onCodeRevisionChange: (codeRevision: CodeRevision | undefined, ev: monaco.editor.IModelContentChangedEvent) => void
+  onCodeRevisionChange?: (codeRevision: CodeRevision | undefined, ev: monaco.editor.IModelContentChangedEvent) => void
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
@@ -105,7 +105,7 @@ export function CodeEditor<T>({
         height={height}
         onChange={(value, data) => {
           currentRevisionRef.current = { code: value ?? '', revisionId: data.versionId }
-          onCodeRevisionChange({ ...currentRevisionRef.current }, data)
+          onCodeRevisionChange?.({ ...currentRevisionRef.current }, data)
         }}
         language={language}
         theme={theme}

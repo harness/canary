@@ -14,7 +14,12 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
 
-  const { register, watch, setValue } = formMethods
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors }
+  } = formMethods
   const branchValue = watch('defaultBranch')
   const customBranchRadio = watch('customBranchRadio')
   const customBranchInput = watch('customBranchInput')
@@ -36,10 +41,12 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
   }
 
   const handleConfirm = () => {
-    const value = (customBranchRadio === 'custom' ? customBranchInput : customBranchRadio) || 'main'
-    setValue('defaultBranch', value)
-    setValue('customBranchInput', customBranchRadio === 'custom' ? value : '')
-    handleClose()
+    const value = customBranchRadio === 'custom' ? customBranchInput : customBranchRadio
+    setValue('defaultBranch', value || '', { shouldValidate: true })
+    setValue('customBranchInput', customBranchRadio === 'custom' ? value : '', { shouldValidate: true })
+    if (value) {
+      handleClose()
+    }
   }
 
   return (
@@ -63,7 +70,7 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
           </Dialog.Header>
 
           <Dialog.Body>
-            <FormInput.Radio label="Select branch" id="default-branch-radio" {...register('customBranchRadio')}>
+            <FormInput.Radio id="default-branch-radio" {...register('customBranchRadio')}>
               <Radio.Item id="default-branch-main" value="main" label="main" />
               <Radio.Item id="default-branch-master" value="master" label="master" />
               <Radio.Item id="default-branch-custom" value="custom" label="custom" />
@@ -75,6 +82,12 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
                 label="Branch name"
                 {...register('customBranchInput')}
                 placeholder="Enter name to initialize default branch"
+                required
+                error={
+                  customBranchRadio === 'custom' && !customBranchInput
+                    ? errors.defaultBranch?.message?.toString()
+                    : undefined
+                }
                 autoFocus
               />
             )}

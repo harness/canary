@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
+import { useMFEContext } from '../../../framework/hooks/useMFEContext.ts'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
+import { PathParams } from '../../../RouteDefinitions.ts'
+import { getScopedRuleUrl } from '../../../utils/rule-url-utils.ts'
 import { useLabelsStore } from '../stores/labels-store'
 import { useFillLabelStoreWithProjectLabelValuesData } from './hooks/use-fill-label-store-with-project-label-values-data.ts'
 
@@ -17,6 +20,11 @@ export const ProjectLabelsList = () => {
 
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
+  const { repoId, spaceId } = useParams<PathParams>()
+  const {
+    scope: { accountId, orgIdentifier, projectIdentifier },
+    routeUtils
+  } = useMFEContext()
 
   const { page, setPage, deleteLabel: deleteStoreLabel } = useLabelsStore()
 
@@ -54,11 +62,25 @@ export const ProjectLabelsList = () => {
       <LabelsListPage
         className="mx-auto max-w-[1040px]"
         useLabelsStore={useLabelsStore}
-        createdIn={space_ref}
         searchQuery={query}
         setSearchQuery={setQuery}
         labelsListViewProps={{ handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
         isRepository={space_ref?.includes('/')}
+        toRepoLabelDetails={({ labelId, scope }: { labelId: string; scope: number }) => {
+          getScopedRuleUrl({
+            scope,
+            identifier: labelId,
+            settingSection: 'labels',
+            toCODERule: routeUtils?.toCODERule,
+            toCODEManageRepositories: routeUtils?.toCODEManageRepositories,
+            accountId,
+            orgIdentifier,
+            projectIdentifier,
+            repoId,
+            spaceId
+          })
+          return ''
+        }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

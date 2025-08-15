@@ -8,13 +8,13 @@ import { LabelsListView, LabelsListViewProps } from './components/labels-list-vi
 
 export interface LabelsListPageProps {
   useLabelsStore: () => ILabelsStore
-  createdIn?: string
   showSpacer?: boolean
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
   isRepository?: boolean
   labelsListViewProps: Pick<LabelsListViewProps, 'handleDeleteLabel' | 'handleEditLabel' | 'widthType'>
   className?: string
+  toRepoLabelDetails?: ({ labelId, scope }: { labelId: string; scope: number }) => string
 }
 
 export const LabelsListPage: FC<LabelsListPageProps> = ({
@@ -23,8 +23,8 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   setSearchQuery,
   isRepository = false,
   labelsListViewProps,
-  createdIn,
-  className
+  className,
+  toRepoLabelDetails
 }) => {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
@@ -99,10 +99,10 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           {...labelsListViewProps}
           labels={spaceLabels}
           labelContext={{ space: space_ref, repo: repo_ref }}
-          createdIn={createdIn}
           handleResetQueryAndPages={handleResetQueryAndPages}
           searchQuery={searchQuery}
           values={spaceValues}
+          toRepoLabelDetails={toRepoLabelDetails}
         />
       )}
 

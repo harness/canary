@@ -45,11 +45,14 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
   const { t } = useTranslation()
   return (
     <div className="flex items-center gap-1.5 pl-7 text-sm">
-      <Text variant="body-normal">
-        {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
-      </Text>
-      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
-      <Separator orientation="vertical" className="h-3" />
+      {targetPatternsCount !== 0 ? (
+        <>
+          <Text variant="body-normal">
+            {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
+          </Text>
+          <Separator orientation="vertical" className="h-3" />
+        </>
+      ) : null}
       <Text variant="body-normal">
         {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
       </Text>

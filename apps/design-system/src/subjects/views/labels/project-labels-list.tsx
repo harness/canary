@@ -13,7 +13,6 @@ export const ProjectLabelsList = () => {
     <>
       <LabelsListPage
         useLabelsStore={LabelsListStore.useLabelsStore}
-        createdIn={''}
         searchQuery={''}
         setSearchQuery={noop}
         labelsListViewProps={{ handleEditLabel: noop, handleDeleteLabel: () => setOpenAlertDeleteDialog(true) }}

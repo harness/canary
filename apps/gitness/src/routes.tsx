@@ -629,7 +629,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: ':labelId',
                     element: <RepoLabelFormContainer />,
                     handle: {
-                      breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
+                      breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>,
+                      routeName: RouteConstants.toRepoLabelDetails
                     }
                   }
                 ]

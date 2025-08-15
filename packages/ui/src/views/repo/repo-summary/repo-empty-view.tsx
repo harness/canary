@@ -1,4 +1,4 @@
-import { Alert, Button, IconV2, Layout, MarkdownViewer, NoData, Text } from '@/components'
+import { Alert, Button, Layout, MarkdownViewer, NoData, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -83,12 +83,8 @@ ${sshUrl}
               t('views:repos.emptyRepoPage.noData.description.1', 'README, LICENSE, and .gitignrore')
             ]}
             primaryButton={{
-              label: (
-                <>
-                  <IconV2 name="plus" />
-                  {t('views:repos.emptyRepoPage.noData.createFile', 'Create File')}
-                </>
-              ),
+              icon: 'plus',
+              label: t('views:repos.emptyRepoPage.noData.createFile', 'Create File'),
               to: `${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/`
             }}
             className="py-cn-3xl"

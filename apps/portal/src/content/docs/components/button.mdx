@@ -371,11 +371,17 @@ Transparent buttons have no background or border and don't accept theme props.
   <Button variant="secondary" size="sm" iconOnly>
     <IconV2 name="git-branch" skipSize />
   </Button>
+  <Button variant="transparent" size="sm" iconOnly>
+    <IconV2 name="xmark" skipSize />
+  </Button>
   <Button variant="outline" size="xs" iconOnly>
     <IconV2 name="check" skipSize />
   </Button>
-  <Button variant="transparent" size="sm" iconOnly>
-    <IconV2 name="xmark" skipSize />
+  <Button variant="outline" size="2xs" iconOnly>
+    <IconV2 name="check" skipSize />
+  </Button>
+  <Button variant="outline" size="3xs" iconOnly>
+    <IconV2 name="check" skipSize />
   </Button>
   <Button variant="outline" size="2xs" iconOnly>
     <IconV2 name="xmark" skipSize />
@@ -490,9 +496,10 @@ This ensures type safety and provides proper development-time feedback on invali
     },
     {
       name: "size",
-      description: "Size of the button.",
+      description:
+        "Size of the button. '2xs' and '3xs' set iconOnly props to true.",
       required: false,
-      value: "'md' | 'sm' | 'xs'",
+      value: "'md' | 'sm' | 'xs' | '2xs' | '3xs'",
       defaultValue: "'md'",
     },
     {

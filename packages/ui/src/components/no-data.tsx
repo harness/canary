@@ -1,25 +1,34 @@
 import { Dispatch, FC, ReactNode, SetStateAction } from 'react'
 
-import { Button, ButtonProps, Illustration, IllustrationsNameType, Layout, SplitButton, Text } from '@/components'
+import {
+  Button,
+  ButtonProps,
+  IconPropsV2,
+  IconV2,
+  Illustration,
+  IllustrationsNameType,
+  Layout,
+  SplitButton,
+  Text
+} from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+import omit from 'lodash-es/omit'
 
 export interface NoDataProps {
   title: string
   imageName?: IllustrationsNameType
   imageSize?: number
   description: string[]
-  primaryButton?: {
+  primaryButton?: ButtonProps & {
+    icon?: IconPropsV2['name']
     label: ReactNode | string
-    onClick?: () => void
     to?: string
-    props?: ButtonProps
   }
-  secondaryButton?: {
+  secondaryButton?: ButtonProps & {
+    icon?: IconPropsV2['name']
     label: ReactNode | string
     to?: string
-    onClick?: () => void
-    props?: ButtonProps
   }
   withBorder?: boolean
   loadState?: string
@@ -41,7 +50,6 @@ export const NoData: FC<NoDataProps> = ({
   title,
   description,
   primaryButton,
-
   secondaryButton,
   withBorder = false,
   textWrapperClassName,
@@ -76,26 +84,29 @@ export const NoData: FC<NoDataProps> = ({
           <Layout.Horizontal gap="sm">
             {primaryButton &&
               (primaryButton.to ? (
-                <Button asChild onClick={() => primaryButton?.onClick?.()} {...primaryButton.props}>
-                  <NavLink to={primaryButton.to}>{primaryButton.label}</NavLink>
+                <Button asChild {...omit(primaryButton, ['to', 'label', 'icon'])}>
+                  <NavLink to={primaryButton.to}>
+                    {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
+                    {primaryButton.label}
+                  </NavLink>
                 </Button>
               ) : (
-                <Button onClick={() => primaryButton?.onClick?.()} {...primaryButton.props}>
+                <Button {...omit(primaryButton, ['label', 'icon'])}>
+                  {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                   {primaryButton.label}
                 </Button>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button
-                  variant="outline"
-                  asChild
-                  onClick={() => secondaryButton?.onClick?.()}
-                  {...secondaryButton.props}
-                >
-                  <NavLink to={secondaryButton.to}>{secondaryButton.label}</NavLink>
+                <Button variant="outline" asChild {...omit(secondaryButton, ['to', 'label', 'icon'])}>
+                  <NavLink to={secondaryButton.to}>
+                    {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
+                    {secondaryButton.label}
+                  </NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" onClick={() => secondaryButton?.onClick?.()} {...secondaryButton.props}>
+                <Button variant="outline" {...omit(secondaryButton, ['label', 'icon'])}>
+                  {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                   {secondaryButton.label}
                 </Button>
               ))}

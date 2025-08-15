@@ -45,7 +45,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   const { t } = useTranslation()
 
   return (
-    <Layout.Vertical gap="xl" className="grow">
+    <Layout.Vertical gap="xl" grow>
       <Layout.Grid gapY="xs">
         <Text as="h1" variant="heading-section">
           Rules
@@ -60,7 +60,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
         )}
       </Layout.Grid>
 
-      <Layout.Grid gapY="md">
+      <Layout.Vertical grow>
         {showParentScopeLabelsCheckbox && (
           <Checkbox
             id="parent-labels"
@@ -85,7 +85,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
           setRuleTypeFilter={setRuleTypeFilter}
           toProjectRuleDetails={toProjectRuleDetails}
         />
-      </Layout.Grid>
+      </Layout.Vertical>
     </Layout.Vertical>
   )
 }

@@ -86,7 +86,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
   }
 
   return (
-    <Layout.Vertical gap="xl" className="grow">
+    <Layout.Vertical gap="xl" grow>
       <ListActions.Root>
         <ListActions.Left>
           <Text as="h1" variant="heading-section">

@@ -3,6 +3,7 @@ import { FC, useCallback, useMemo } from 'react'
 import { Button, Checkbox, IconV2, Layout, ListActions, Pagination, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ILabelsStore } from '@/views'
+import { cn } from '@utils/cn'
 
 import { LabelsListView, LabelsListViewProps } from './components/labels-list-view'
 
@@ -54,12 +55,12 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   }
 
   return (
-    <Layout.Vertical className={className} gapY="xl">
+    <Layout.Vertical className={cn('grow', className)} gapY="xl">
       <Text as="h1" variant="heading-section">
         {t('views:labelData.title', 'Labels')}
       </Text>
 
-      <Layout.Grid className={className} gapY="md">
+      <Layout.Vertical grow gapY="md">
         {isRepository && (
           <Checkbox
             id="parent-labels"
@@ -103,7 +104,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
             toRepoLabelDetails={toRepoLabelDetails}
           />
         )}
-      </Layout.Grid>
+      </Layout.Vertical>
 
       <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
     </Layout.Vertical>

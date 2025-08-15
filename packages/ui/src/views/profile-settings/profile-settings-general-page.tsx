@@ -239,7 +239,7 @@ export const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = (
             </ButtonLayout>
           </FormWrapper>
 
-          <FormSeparator className="border-cn-borders-4 my-7" />
+          <FormSeparator />
 
           <FormWrapper {...passwordFormMethods} onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
             <Legend

@@ -124,7 +124,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   }, [rulesSearchQuery, rules])
 
   return (
-    <Layout.Grid gapY="sm" className="grow">
+    <Layout.Vertical gapY="sm" grow>
       <ListActions.Root>
         <ListActions.Left>
           <SearchInput
@@ -309,6 +309,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           />
         </>
       )}
-    </Layout.Grid>
+    </Layout.Vertical>
   )
 }

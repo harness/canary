@@ -42,7 +42,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   const { t } = useTranslation()
 
   return (
-    <Layout.Vertical gap="xl" className="grow">
+    <Layout.Vertical gap="xl" grow>
       <Text as="h1" variant="heading-section">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </Text>

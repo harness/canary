@@ -53,12 +53,12 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Layout.Flex direction="column" gapY="xl" className="grow">
+        <Layout.Flex direction="column" gapY="xl" grow>
           <Text variant="heading-section" as="h2">
             Commits
           </Text>
 
-          <Layout.Flex direction="column" gapY="md" className="grow">
+          <Layout.Flex direction="column" gapY="md" grow>
             <div>
               <BranchSelectorContainer />
             </div>

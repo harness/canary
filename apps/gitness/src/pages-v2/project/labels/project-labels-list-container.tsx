@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
+import { ILabelType, LabelsListPage, SandboxLayout } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext.ts'
@@ -58,9 +58,8 @@ export const ProjectLabelsList = () => {
   }
 
   return (
-    <>
+    <SandboxLayout.Content>
       <LabelsListPage
-        className="mx-auto max-w-[1040px]"
         useLabelsStore={useLabelsStore}
         searchQuery={query}
         setSearchQuery={setQuery}
@@ -90,6 +89,6 @@ export const ProjectLabelsList = () => {
         deleteFn={handleDeleteLabel}
         isLoading={isDeletingSpaceLabel}
       />
-    </>
+    </SandboxLayout.Content>
   )
 }

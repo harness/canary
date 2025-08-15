@@ -41,7 +41,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   }
 
   return (
-    <Layout.Vertical gap="xl" className="grow">
+    <Layout.Vertical gap="xl" grow>
       <Text as="h1" variant="heading-section">
         Webhooks
       </Text>
@@ -49,29 +49,27 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
       {error ? (
         <Text color="danger">{error || 'Something went wrong'}</Text>
       ) : (
-        <Layout.Grid gap="md">
+        <Layout.Vertical grow>
           {(!!webhooks?.length || (!webhooks?.length && isDirtyList)) && (
-            <>
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchInput
-                    id="search"
-                    defaultValue={searchQuery || ''}
-                    inputContainerClassName="w-80"
-                    placeholder={t('views:repos.search', 'Search')}
-                    onChange={handleSearchChange}
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <Button asChild>
-                    <Link to="create">
-                      <IconV2 name="plus" />
-                      {t('views:webhookData.create', 'Create Webhook')}
-                    </Link>
-                  </Button>
-                </ListActions.Right>
-              </ListActions.Root>
-            </>
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchInput
+                  id="search"
+                  defaultValue={searchQuery || ''}
+                  inputContainerClassName="w-80"
+                  placeholder={t('views:repos.search', 'Search')}
+                  onChange={handleSearchChange}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <Button asChild>
+                  <Link to="create">
+                    <IconV2 name="plus" />
+                    {t('views:webhookData.create', 'Create Webhook')}
+                  </Link>
+                </Button>
+              </ListActions.Right>
+            </ListActions.Root>
           )}
 
           {webhookLoading ? (
@@ -92,7 +90,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               toRepoWebhookCreate={toRepoWebhookCreate}
             />
           )}
-        </Layout.Grid>
+        </Layout.Vertical>
       )}
     </Layout.Vertical>
   )

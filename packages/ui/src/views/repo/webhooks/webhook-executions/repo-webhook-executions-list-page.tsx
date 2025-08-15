@@ -39,7 +39,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   }, [t])
 
   return (
-    <Layout.Vertical gap="xl" className="grow">
+    <Layout.Vertical gap="xl" grow>
       <Layout.Grid gap="xs">
         <Text as="h1" variant="heading-section">
           Order Status Update Webhook
@@ -50,8 +50,8 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
         </Text>
       </Layout.Grid>
       <FormSeparator />
-      <Layout.Grid gap="md">
-        <Text as="h2" variant="heading-subsection" className="mb-4">
+      <Layout.Vertical grow>
+        <Text as="h2" variant="heading-subsection">
           Executions
         </Text>
         {isLoading ? (
@@ -134,7 +134,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
             ]}
           />
         )}
-      </Layout.Grid>
+      </Layout.Vertical>
     </Layout.Vertical>
   )
 }

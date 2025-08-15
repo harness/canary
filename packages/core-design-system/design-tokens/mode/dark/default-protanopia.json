@@ -178,20 +178,6 @@
           "$value": "{chrome.50}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
-        "separator": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{chrome.1000}",
-          "$description": "Separator color for dividing brand areas."
-        },
         "bg-hover": {
           "$type": "color",
           "$value": "{chrome.150}",

@@ -169,20 +169,6 @@
           "$value": "{blue.600}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
-        "separator": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{pure.white}",
-          "$description": "Separator color for dividing brand areas."
-        },
         "bg-hover": {
           "$type": "color",
           "$value": "{blue.700}",
@@ -1174,7 +1160,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{mint.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1188,7 +1174,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{mint.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1202,7 +1188,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{mint.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1334,7 +1320,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.700}"
+        "$value": "{mint.700}"
       },
       "hljs-title-function": {
         "$type": "color",

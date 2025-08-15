@@ -28,6 +28,7 @@ import { getPullRequestUrl, getScopeType } from '../../../utils/scope-url-utils'
 import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
+import { useFillLabelStoreWithProjectLabelValuesData } from '../labels/hooks/use-fill-label-store-with-project-label-values-data'
 import { useLabelsStore } from '../stores/labels-store'
 
 export default function PullRequestListPage() {
@@ -54,6 +55,7 @@ export default function PullRequestListPage() {
   const { navigate } = useRouterContext()
 
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
+  useFillLabelStoreWithProjectLabelValuesData({ queryPage, query: labelsQuery, inherited: true })
   const getApiPath = useAPIPath()
   const { accountId, orgIdentifier, projectIdentifier } = scope
 

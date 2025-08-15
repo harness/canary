@@ -51,6 +51,10 @@
       "$type": "color",
       "$value": "{set.yellow.soft.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
+    },
+    "brand": {
+      "$type": "color",
+      "$value": "{blue.300}"
     }
   },
   "border": {

@@ -56,8 +56,10 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   }
 
   const handleOpenChange = () => {
-    setVerification('')
-    setValidationError(false)
+    setTimeout(() => {
+      setVerification('')
+      setValidationError(false)
+    }, 300)
     onClose()
   }
 

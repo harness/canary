@@ -144,11 +144,18 @@ export function CreateBranchDialog({
             <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
               {t('views:repos.cancel', 'Cancel')}
             </Dialog.Close>
-            {!bypassable ? (
-              <Button type="submit" form="create-branch-form" disabled={isCreatingBranch}>
+            {!bypassable || !violation ? (
+              <Button
+                type="submit"
+                form="create-branch-form"
+                disabled={isCreatingBranch || (!bypassable && violation)}
+                loading={isCreatingBranch}
+              >
                 {isCreatingBranch
                   ? t('component:branchDialog.loading', 'Creating branch...')
-                  : t('component:branchDialog.default', 'Create branch')}
+                  : !bypassable && violation
+                    ? t('component:branchDialog.notAllowed', 'Cannot create branch')
+                    : t('component:branchDialog.default', 'Create branch')}
               </Button>
             ) : (
               <Button type="submit" form="create-branch-form" variant="outline" theme="danger">

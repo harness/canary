@@ -207,6 +207,7 @@
       "notAllow": "Some rules don't allow creating branch "
     },
     "loading": "Creating branch...",
+    "notAllowed": "Cannot create branch",
     "default": "Create branch",
     "bypassButton": "Bypass rules and create branch",
     "title": "Create a branch",
@@ -220,6 +221,14 @@
         "placeholder": "Add a branch name"
       }
     }
+  },
+  "tagDialog": {
+    "violationMessages": {
+      "bypassed": "Some rules will be bypassed while creating tag",
+      "notAllow": "Some rules don't allow you to create tag"
+    },
+    "notAllowed": "Cannot create tag",
+    "bypassButton": "Bypass rules and create tag"
   },
   "layout": {
     "table": "Table",

@@ -21,6 +21,9 @@ interface CreateTagDialogProps {
   isLoading?: boolean
   selectedBranchOrTag: BranchSelectorListItem | null
   branchSelectorRenderer: () => JSX.Element | null
+  violation?: boolean
+  bypassable?: boolean
+  resetViolation: () => void
 }
 
 export const CreateTagDialog: FC<CreateTagDialogProps> = ({
@@ -30,7 +33,10 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   error,
   isLoading = false,
   selectedBranchOrTag,
-  branchSelectorRenderer: BranchSelectorContainer
+  branchSelectorRenderer: BranchSelectorContainer,
+  violation = false,
+  bypassable = false,
+  resetViolation
 }) => {
   const { t } = useTranslation()
 
@@ -40,12 +46,18 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
     defaultValues: INITIAL_FORM_VALUES
   })
 
-  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
+  const { register, handleSubmit, setValue, reset, clearErrors, watch } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
     reset(INITIAL_FORM_VALUES)
   }, [clearErrors, reset])
+
+  const tagName = watch('name')
+
+  useEffect(() => {
+    resetViolation()
+  }, [tagName, resetViolation])
 
   useEffect(() => {
     if (open && selectedBranchOrTag) {
@@ -61,6 +73,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
   const handleClose = () => {
     resetForm()
+    resetViolation()
     onClose()
   }
 
@@ -95,6 +108,18 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               label={t('views:repos.description', 'Description')}
               disabled={isLoading}
             />
+            {violation && (
+              <Alert.Root theme="warning">
+                <Alert.Description>
+                  {bypassable
+                    ? t(
+                        'component:tagDialog.violationMessages.bypassed',
+                        'Some rules will be bypassed while creating tag'
+                      )
+                    : t('component:tagDialog.violationMessages.notAllow', "Some rules don't allow you to create tag")}
+                </Alert.Description>
+              </Alert.Root>
+            )}
 
             {error && (
               <Alert.Root theme="danger">
@@ -111,11 +136,26 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
             <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
               {t('views:repos.cancel', 'Cancel')}
             </Dialog.Close>
-            <Button type="submit" form="create-tag-form" disabled={isLoading} loading={isLoading}>
-              {isLoading
-                ? t('views:repos.creatingTagButton', 'Creating tag...')
-                : t('views:repos.createTagButton', 'Create tag')}
-            </Button>
+            {!bypassable || !violation ? (
+              <Button
+                type="submit"
+                form="create-tag-form"
+                disabled={isLoading || (!bypassable && violation)}
+                loading={isLoading}
+              >
+                {isLoading
+                  ? t('views:repos.creatingTagButton', 'Creating tag...')
+                  : !bypassable && violation
+                    ? t('component:tagDialog.notAllowed', 'Cannot create tag')
+                    : t('views:repos.createTagButton', 'Create tag')}
+              </Button>
+            ) : (
+              <Button type="submit" form="create-tag-form" variant="outline" theme="danger">
+                {isLoading
+                  ? t('views:repos.creatingTagButton', 'Creating tag...')
+                  : t('component:tagDialog.bypassButton', 'Bypass rules and create tag')}
+              </Button>
+            )}
           </ButtonLayout>
         </Dialog.Footer>
       </Dialog.Content>

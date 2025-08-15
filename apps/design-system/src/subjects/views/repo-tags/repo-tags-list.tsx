@@ -61,6 +61,9 @@ export const RepoTagsList = () => {
         isLoading={false}
         error=""
         selectedBranchOrTag={null}
+        violation={false}
+        bypassable={false}
+        resetViolation={noop}
         branchSelectorRenderer={() => (
           <BranchSelectorV2
             branchList={branches}

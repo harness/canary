@@ -23,6 +23,7 @@ import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useRuleViolationCheck } from '../../framework/hooks/useRuleViolationCheck'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -48,6 +49,7 @@ export const RepoTagsListContainer = () => {
   const [deleteTagName, setDeleteTagName] = useState<string | null>(null)
 
   const [deleteError, setDeleteError] = useState<DeleteAlertDialogProps['error']>(null)
+  const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
 
   const {
     data: { body: tagsList, headers } = {},
@@ -76,6 +78,16 @@ export const RepoTagsListContainer = () => {
       onSuccess: () => {
         setOpenCreateTagDialog(false)
         refetchTags()
+      },
+      onError: (err: any) => {
+        if (err?.violations?.length > 0) {
+          const violation = err.violations[0]
+          setAllStates({
+            violation: true,
+            bypassed: true,
+            bypassable: violation.bypassable || false
+          })
+        }
       }
     }
   )
@@ -111,7 +123,8 @@ export const RepoTagsListContainer = () => {
   const onSubmit = (data: CreateTagFormFields) => {
     createTag({
       body: {
-        ...data
+        ...data,
+        bypass_rules: bypassed
       }
     })
   }
@@ -130,8 +143,11 @@ export const RepoTagsListContainer = () => {
   useEffect(() => {
     if (!openCreateTagDialog) {
       resetCreateTagMutation()
+      resetViolation()
+    } else {
+      resetViolation()
     }
-  }, [openCreateTagDialog, resetCreateTagMutation])
+  }, [openCreateTagDialog, resetCreateTagMutation, resetViolation])
 
   return (
     <>
@@ -157,8 +173,11 @@ export const RepoTagsListContainer = () => {
         onClose={() => setOpenCreateTagDialog(false)}
         onSubmit={onSubmit}
         isLoading={isCreatingTag}
-        error={createTagError?.message}
+        error={violation ? undefined : createTagError?.message}
         selectedBranchOrTag={selectedBranchOrTag}
+        violation={violation}
+        bypassable={bypassable}
+        resetViolation={resetViolation}
         branchSelectorRenderer={() => (
           <BranchSelectorContainer
             className={'branch-selector-trigger-as-input'}

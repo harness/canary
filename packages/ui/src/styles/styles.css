@@ -618,3 +618,7 @@ mark {
 .width-popover-max-width {
   max-width: var(--radix-popover-content-available-width);
 }
+
+.settings-form-width {
+  width: 570px;
+}

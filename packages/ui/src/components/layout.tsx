@@ -46,6 +46,10 @@ const flexVariants = cva('flex', {
       nowrap: 'flex-nowrap',
       wrap: 'flex-wrap',
       'wrap-reverse': 'flex-wrap-reverse'
+    },
+    grow: {
+      true: 'flex-grow',
+      false: 'flex-grow-0'
     }
   },
   defaultVariants: {
@@ -129,7 +133,9 @@ interface LayoutProps {
   as?: ElementType
 }
 
-interface FlexProps extends LayoutProps, HTMLAttributes<HTMLDivElement>, VariantProps<typeof flexVariants> {}
+interface FlexProps extends LayoutProps, HTMLAttributes<HTMLDivElement>, VariantProps<typeof flexVariants> {
+  grow?: boolean
+}
 
 interface GridProps extends LayoutProps, HTMLAttributes<HTMLDivElement>, VariantProps<typeof gridVariants> {
   columns?: string | number
@@ -138,11 +144,18 @@ interface GridProps extends LayoutProps, HTMLAttributes<HTMLDivElement>, Variant
 }
 
 const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  ({ children, className, direction, align, justify, gap, gapX, gapY, wrap, as: Comp = 'div', ...props }, ref) => {
+  (
+    { children, className, direction, align, justify, gap, gapX, gapY, wrap, grow, as: Comp = 'div', ...props },
+    ref
+  ) => {
     return (
       <Comp
         ref={ref}
-        className={cn(flexVariants({ direction, align, justify, wrap }), gapVariants({ gap, gapX, gapY }), className)}
+        className={cn(
+          flexVariants({ direction, align, justify, wrap, grow }),
+          gapVariants({ gap, gapX, gapY }),
+          className
+        )}
         {...props}
       >
         {children}

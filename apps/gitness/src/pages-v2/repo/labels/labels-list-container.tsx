@@ -73,7 +73,6 @@ export const RepoLabelsList = () => {
   return (
     <>
       <LabelsListPage
-        // className="max-w-[772px] px-0"
         useLabelsStore={useLabelsStore}
         searchQuery={query}
         setSearchQuery={setQuery}

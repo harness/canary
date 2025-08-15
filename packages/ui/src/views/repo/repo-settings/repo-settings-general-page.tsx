@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { FormSeparator, Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
@@ -54,51 +53,49 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
     useRepoRulesStore()
 
   return (
-    <SandboxLayout.Content className="max-w-[635px]">
-      <Layout.Vertical gap="xl">
-        <Text as="h2" variant="heading-section">
-          {t('views:repos.generalSettings', 'General settings')}
-        </Text>
+    <Layout.Vertical className="settings-form-width" gap="xl">
+      <Text as="h1" variant="heading-section">
+        {t('views:repos.generalSettings', 'General settings')}
+      </Text>
 
-        <Layout.Vertical gap="xl">
-          <RepoSettingsGeneralForm
-            repoData={repoData}
-            handleRepoUpdate={handleRepoUpdate}
-            apiError={apiError}
-            isLoadingRepoData={loadingStates.isLoadingRepoData}
-            isUpdatingRepoData={loadingStates.isUpdatingRepoData}
-            isRepoUpdateSuccess={isRepoUpdateSuccess}
-            branchSelectorRenderer={branchSelectorRenderer}
-          />
-          <FormSeparator />
-          <RepoSettingsSecurityForm
-            showVulnerabilityScanning={showVulnerabilityScanning}
-            securityScanning={securityScanning}
-            verifyCommitterIdentity={verifyCommitterIdentity}
-            vulnerabilityScanning={vulnerabilityScanning === 'detect'}
-            handleUpdateSecuritySettings={handleUpdateSecuritySettings}
-            apiError={apiError}
-            isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
-            isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
-          />
-          <FormSeparator />
-          <RepoSettingsFeaturesForm
-            gitLfsEnabled={gitLfsEnabled}
-            handleUpdateFeaturesSettings={handleUpdateFeaturesSettings}
-            apiError={apiError}
-            isUpdatingFeaturesSettings={loadingStates.isUpdatingFeaturesSettings}
-            isLoadingFeaturesSettings={loadingStates.isLoadingFeaturesSettings}
-          />
-          <FormSeparator />
-          <RepoSettingsGeneralDelete
-            archived={repoData?.archived}
-            apiError={apiError}
-            openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-            openRepoArchiveDialog={openRepoArchiveDialog}
-            isUpdatingArchive={loadingStates.isUpdatingArchive}
-          />
-        </Layout.Vertical>
+      <Layout.Vertical gap="xl">
+        <RepoSettingsGeneralForm
+          repoData={repoData}
+          handleRepoUpdate={handleRepoUpdate}
+          apiError={apiError}
+          isLoadingRepoData={loadingStates.isLoadingRepoData}
+          isUpdatingRepoData={loadingStates.isUpdatingRepoData}
+          isRepoUpdateSuccess={isRepoUpdateSuccess}
+          branchSelectorRenderer={branchSelectorRenderer}
+        />
+        <FormSeparator />
+        <RepoSettingsSecurityForm
+          showVulnerabilityScanning={showVulnerabilityScanning}
+          securityScanning={securityScanning}
+          verifyCommitterIdentity={verifyCommitterIdentity}
+          vulnerabilityScanning={vulnerabilityScanning === 'detect'}
+          handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+          apiError={apiError}
+          isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
+          isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+        />
+        <FormSeparator />
+        <RepoSettingsFeaturesForm
+          gitLfsEnabled={gitLfsEnabled}
+          handleUpdateFeaturesSettings={handleUpdateFeaturesSettings}
+          apiError={apiError}
+          isUpdatingFeaturesSettings={loadingStates.isUpdatingFeaturesSettings}
+          isLoadingFeaturesSettings={loadingStates.isLoadingFeaturesSettings}
+        />
+        <FormSeparator />
+        <RepoSettingsGeneralDelete
+          archived={repoData?.archived}
+          apiError={apiError}
+          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+          openRepoArchiveDialog={openRepoArchiveDialog}
+          isUpdatingArchive={loadingStates.isUpdatingArchive}
+        />
       </Layout.Vertical>
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }

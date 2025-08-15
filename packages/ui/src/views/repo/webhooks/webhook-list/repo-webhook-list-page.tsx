@@ -1,8 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, ListActions, SearchInput, Skeleton, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { RepoWebhookListPageProps } from './types'
@@ -42,39 +41,35 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content>
+    <Layout.Vertical gap="xl" grow>
       <Text as="h1" variant="heading-section">
         Webhooks
       </Text>
-      <Spacer size={6} />
 
       {error ? (
-        <span className="text-2 text-cn-foreground-danger">{error || 'Something went wrong'}</span>
+        <Text color="danger">{error || 'Something went wrong'}</Text>
       ) : (
-        <>
+        <Layout.Vertical grow>
           {(!!webhooks?.length || (!webhooks?.length && isDirtyList)) && (
-            <>
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchInput
-                    id="search"
-                    defaultValue={searchQuery || ''}
-                    inputContainerClassName="max-w-80"
-                    placeholder={t('views:repos.search', 'Search')}
-                    onChange={handleSearchChange}
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <Button asChild>
-                    <Link to="create">
-                      <IconV2 name="plus" />
-                      {t('views:webhookData.create', 'Create Webhook')}
-                    </Link>
-                  </Button>
-                </ListActions.Right>
-              </ListActions.Root>
-              <Spacer size={4.5} />
-            </>
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchInput
+                  id="search"
+                  defaultValue={searchQuery || ''}
+                  inputContainerClassName="w-80"
+                  placeholder={t('views:repos.search', 'Search')}
+                  onChange={handleSearchChange}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <Button asChild>
+                  <Link to="create">
+                    <IconV2 name="plus" />
+                    {t('views:webhookData.create', 'Create Webhook')}
+                  </Link>
+                </Button>
+              </ListActions.Right>
+            </ListActions.Root>
           )}
 
           {webhookLoading ? (
@@ -95,9 +90,9 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               toRepoWebhookCreate={toRepoWebhookCreate}
             />
           )}
-        </>
+        </Layout.Vertical>
       )}
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }
 

@@ -4,6 +4,7 @@ import { Fragment } from 'react/jsx-runtime'
 import {
   Alert,
   IconV2,
+  Layout,
   ListActions,
   MoreActionsTooltip,
   NoData,
@@ -11,7 +12,6 @@ import {
   SearchInput,
   Separator,
   Skeleton,
-  Spacer,
   SplitButton,
   StackedList,
   Tag,
@@ -124,13 +124,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   }, [rulesSearchQuery, rules])
 
   return (
-    <>
-      <ListActions.Root className="mt-1">
+    <Layout.Vertical gapY="sm" grow>
+      <ListActions.Root>
         <ListActions.Left>
           <SearchInput
             id="search"
             defaultValue={rulesSearchQuery}
-            inputContainerClassName="max-w-80"
+            inputContainerClassName="w-80"
             placeholder={t('views:repos.search', 'Search')}
             onChange={handleSearchChange}
           />
@@ -170,12 +170,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
       {isShowRulesContent ? (
         <>
-          <Spacer size={3} />
           {isLoading ? (
-            <>
-              <Spacer size={7} />
-              <Skeleton.List />
-            </>
+            <Skeleton.List />
           ) : rules?.length !== 0 ? (
             <StackedList.Root>
               {rules?.map((rule, idx) =>
@@ -278,7 +274,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
         </>
       ) : (
         <>
-          <Spacer size={3} />
           <NoData
             withBorder
             className="py-cn-3xl min-h-0"
@@ -314,6 +309,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           />
         </>
       )}
-    </>
+    </Layout.Vertical>
   )
 }

@@ -1,8 +1,18 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, NoData, Pagination, Skeleton, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
+import {
+  FormSeparator,
+  Layout,
+  NoData,
+  Pagination,
+  Skeleton,
+  StatusBadge,
+  Table,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout, WebhookStore } from '@/views'
+import { WebhookStore } from '@/views'
 
 import {
   getBranchAndTagEvents,
@@ -29,17 +39,19 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   }, [t])
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content>
-        <Text as="h1" variant="heading-section" className="mb-2">
+    <Layout.Vertical gap="xl" grow>
+      <Layout.Grid gap="xs">
+        <Text as="h1" variant="heading-section">
           Order Status Update Webhook
         </Text>
-        <Text className="max-w-[570px]">
+        <Text className="settings-form-width">
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
-        <FormSeparator className="my-6" />
-        <Text as="h2" variant="heading-subsection" className="mb-4">
+      </Layout.Grid>
+      <FormSeparator />
+      <Layout.Vertical grow>
+        <Text as="h2" variant="heading-subsection">
           Executions
         </Text>
         {isLoading ? (
@@ -58,7 +70,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                   <Table.Head className="w-[136px]">
                     <Text variant="caption-strong">Status</Text>
                   </Table.Head>
-                  <Table.Head className="flex justify-end w-[176px]">
+                  <Table.Head className="flex w-[176px] justify-end">
                     <Text variant="caption-strong">Last triggered at</Text>
                   </Table.Head>
                 </Table.Row>
@@ -122,8 +134,8 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
             ]}
           />
         )}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Layout.Vertical>
+    </Layout.Vertical>
   )
 }
 

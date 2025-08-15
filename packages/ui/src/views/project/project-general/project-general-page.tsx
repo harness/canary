@@ -101,7 +101,7 @@ export const ProjectSettingsGeneralPage = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
+      <SandboxLayout.Content className="mx-auto max-w-[38.125rem]">
         <Text as="h2" variant="heading-section" className="mb-10">
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
         </Text>

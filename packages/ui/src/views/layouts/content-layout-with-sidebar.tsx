@@ -4,6 +4,8 @@ import { Layout, Link, ScrollArea, Separator, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
+import { SandboxLayout } from './SandboxLayout'
+
 export interface SidebarMenuItemSubItem {
   id: string | number
   title: string
@@ -33,8 +35,6 @@ export interface ContentLayoutWithSidebarProps {
 export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   children,
   sidebarMenu,
-  sidebarContainerClassName,
-  sidebarViewportClassName,
   showBackButton = false,
   backButtonLabel = 'Back',
   backButtonTo
@@ -42,20 +42,18 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
   const { NavLink } = useRouterContext()
 
   return (
-    <div className="relative mx-auto ml-2 flex w-full items-start gap-x-[28px] pr-4">
-      <div
-        className={cn(
-          'nested-sidebar-height top-[var(--cn-page-nav-height)] sticky w-[270px]',
-          sidebarContainerClassName
-        )}
+    <SandboxLayout.Content className="gap-x-cn-4xl relative flex-row">
+      <Layout.Grid
+        className={cn('top-[var(--cn-breadcrumbs-height)] sticky w-[228px] h-fit -mt-7 pt-7 shrink-0')}
+        gapY="lg"
       >
         {showBackButton && (
-          <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''} className="mt-7 px-5">
+          <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''}>
             {backButtonLabel}
           </Link>
         )}
 
-        <ScrollArea className={cn('pb-11 !px-5 h-full', sidebarViewportClassName)}>
+        <ScrollArea className="h-full pb-11">
           {sidebarMenu.map((group, group_idx) => (
             <Fragment key={group.groupId}>
               {group_idx > 0 && <Separator className="mb-2" />}
@@ -86,10 +84,9 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
             </Fragment>
           ))}
         </ScrollArea>
-      </div>
-      <div className="flex h-[fill-available] flex-1 [&:has(>:first-child.peer)]:self-center [&>*]:flex-1">
-        {children}
-      </div>
-    </div>
+      </Layout.Grid>
+
+      {children}
+    </SandboxLayout.Content>
   )
 }

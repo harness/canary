@@ -190,7 +190,7 @@ export const TagSettingsRuleBypassListField: FC<
       <ControlGroup>
         <FormInput.Checkbox
           {...register!('repo_owners')}
-          id="edit-permissons"
+          id="edit-permissions"
           label={t(
             'views:repos.editPermissionsCheckboxDescription',
             'Allow users with edit permission on the repository to bypass'

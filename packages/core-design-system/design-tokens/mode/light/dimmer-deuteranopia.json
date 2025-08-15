@@ -1952,28 +1952,6 @@
     }
   },
   "ring": {
-    "focus": {
-      "$type": "boxShadow",
-      "$value": [
-        {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "0.8",
-          "color": "{bg.1}",
-          "type": "dropShadow"
-        },
-        {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "2",
-          "color": "{border.brand}",
-          "type": "dropShadow"
-        }
-      ],
-      "$description": "Focus ring effect with background offset and accent border."
-    },
     "danger": {
       "$type": "boxShadow",
       "$value": {

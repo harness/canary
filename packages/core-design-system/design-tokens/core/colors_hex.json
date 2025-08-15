@@ -109,16 +109,16 @@
       "$value": "#f9faff"
     },
     "50": {
-      "$value": "#e8ebff"
+      "$value": "#e9edff"
     },
     "100": {
-      "$value": "#c7cffa"
+      "$value": "#c5cffa"
     },
     "150": {
-      "$value": "#b6c2fb"
+      "$value": "#b3c2fc"
     },
     "200": {
-      "$value": "#9daff8"
+      "$value": "#99aff8"
     },
     "300": {
       "$value": "#7a9afe"
@@ -145,7 +145,7 @@
       "$value": "#272f4f"
     },
     "950": {
-      "$value": "#1d2540"
+      "$value": "#1d233a"
     },
     "1000": {
       "$value": "#151929"

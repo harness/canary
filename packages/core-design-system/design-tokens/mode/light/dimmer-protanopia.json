@@ -1104,6 +1104,10 @@
         "warning": {
           "$type": "color",
           "$value": "linear-gradient(0deg, {set.yellow.soft.bg} 42%, {gradient.alert.fade-warning} 100%)"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.green.soft.bg} 42%, {gradient.alert.fade-success} 100%)"
         }
       }
     },
@@ -2102,6 +2106,19 @@
         },
         "$type": "color",
         "$value": "{set.yellow.soft.bg}"
+      },
+      "fade-success": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.green.soft.bg}"
       }
     },
     "skeleton": {

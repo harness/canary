@@ -1934,28 +1934,6 @@
     }
   },
   "ring": {
-    "focus": {
-      "$type": "boxShadow",
-      "$value": [
-        {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "0.7",
-          "color": "{border.brand}",
-          "type": "dropShadow"
-        },
-        {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.brand.surface.bg}",
-          "type": "dropShadow"
-        }
-      ],
-      "$description": "Focus ring effect with background offset and accent border."
-    },
     "danger": {
       "$type": "boxShadow",
       "$value": {

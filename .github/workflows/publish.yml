@@ -9,18 +9,35 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+
+      - name: Setup Git identity
+        run: |
+          git config user.name "bot-harness"
+          git config user.email "bot@harness.io"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install and build dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Bump version for packages/ui
         run: |
-          pnpm install
-          pnpm build
+          cd packages/ui
+          pnpm version patch --no-git-tag-version
+          cd ../..
+          git add packages/ui/package.json
+          git commit -m "chore(ui): bump version"
+          git push origin main
+
+      - name: Build packages
+        run: pnpm build
 
       - name: Authenticate to npm
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
 
       - name: Publish packages to npm
         run: pnpm publish:all

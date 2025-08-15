@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 
-import { Alert, AlertDialog, Fieldset, Input, Message, MessageTheme } from '@/components'
+import { Alert, AlertDialog, Message, MessageTheme, Text, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 import { getErrorMessage } from '@utils/utils'
 
@@ -35,17 +35,32 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
 }) => {
   const { t } = useTranslation()
   const [verification, setVerification] = useState('')
+  const [validationError, setValidationError] = useState(false)
 
   const handleChangeVerification = (event: ChangeEvent<HTMLInputElement>) => {
     setVerification(event.target.value)
+    if (validationError) {
+      setValidationError(false)
+    }
   }
 
-  const isDisabled = isLoading || (withForm && verification !== deletionKeyword)
-
   const handleDelete = () => {
-    if (isDisabled) return
+    if (withForm && verification !== deletionKeyword) {
+      setValidationError(true)
+    }
 
+    if (isLoading || (withForm && verification !== deletionKeyword)) return
+
+    setValidationError(false)
     deleteFn(identifier!)
+  }
+
+  const handleOpenChange = () => {
+    setTimeout(() => {
+      setVerification('')
+      setValidationError(false)
+    }, 300)
+    onClose()
   }
 
   const displayMessageContent = useMemo(() => {
@@ -65,21 +80,35 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   }, [type, t, message, identifier])
 
   return (
-    <AlertDialog.Root theme="danger" open={open} onOpenChange={onClose} onConfirm={handleDelete} loading={isLoading}>
+    <AlertDialog.Root
+      theme="danger"
+      open={open}
+      onOpenChange={handleOpenChange}
+      onConfirm={handleDelete}
+      loading={isLoading}
+    >
       <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
-        <div className="overflow-hidden break-words text-wrap">{displayMessageContent}</div>
+        <Text className="break-words" wrap="wrap">
+          {displayMessageContent}
+        </Text>
+
         {withForm && (
-          <Fieldset>
-            <Input
-              id="verification"
-              value={verification}
-              placeholder=""
-              onChange={handleChangeVerification}
-              label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} "${deletionKeyword}"`}
-              disabled={isLoading}
-              autoFocus
-            />
-          </Fieldset>
+          <TextInput
+            id="verification"
+            value={verification}
+            placeholder=""
+            onChange={handleChangeVerification}
+            label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} "${deletionKeyword}"`}
+            disabled={isLoading}
+            autoFocus
+            error={
+              validationError
+                ? t('component:deleteDialog.validation.mismatch', `Please type "${deletionKeyword}" to confirm`, {
+                    deletionKeyword
+                  })
+                : ''
+            }
+          />
         )}
 
         {violation && (
@@ -97,7 +126,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
         )}
 
         {!!error && (
-          <Alert.Root className="mt-4" theme="danger">
+          <Alert.Root theme="danger">
             <Alert.Title>Failed to perform delete operation</Alert.Title>
             <Alert.Description>
               {getErrorMessage(error as Error, 'Failed to perform delete operation')}

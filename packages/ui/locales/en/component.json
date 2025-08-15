@@ -81,6 +81,9 @@
     "description": "This will permanently remove all data. This action cannot be undone.",
     "title": "Are you sure?",
     "inputLabel": "To confirm, type",
+    "validation": {
+      "mismatch": ""
+    },
     "violationMessages": {
       "bypassed": "Some rules will be bypassed while deleting {{type}}",
       "notAllow": "Some rules don't allow you to delete {{type}}"

@@ -22,7 +22,6 @@ import {
   useUpdateSecuritySettingsMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog, ExitConfirmDialog } from '@harnessio/ui/components'
-import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import {
   AccessLevel,
   ErrorTypes,
@@ -324,18 +323,13 @@ export const RepoSettingsGeneralPageContainer = () => {
       <DeleteAlertDialog
         open={isRepoAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        {...wrapConditionalObjectElement(
-          {
-            identifier: repoRef,
-            deleteFn: handleDeleteRepository,
-            isLoading: isDeletingRepo,
-            error: apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null,
-            type: 'repository',
-            withForm: true,
-            deletionKeyword: repoDataStore?.name
-          },
-          isRepoAlertDeleteDialogOpen
-        )}
+        withForm
+        identifier={repoRef}
+        deleteFn={handleDeleteRepository}
+        isLoading={isDeletingRepo}
+        error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null}
+        type="repository"
+        deletionKeyword={repoDataStore?.name}
       />
     </>
   )

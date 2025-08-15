@@ -142,6 +142,7 @@
     "ahead": "Ahead",
     "pullRequest": "Pull Request",
     "newPullReq": "New pull request",
+    "compare": "Compare",
     "viewRules": "View Rules",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",

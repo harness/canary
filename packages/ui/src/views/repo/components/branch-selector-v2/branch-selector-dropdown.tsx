@@ -64,7 +64,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               value={activeTab}
               onValueChange={value => {
                 setActiveTab(value as BranchSelectorTab)
-                setSearchQuery('')
               }}
             >
               <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">

@@ -26,7 +26,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
 
   return (
     <div className={cn('flex w-full flex-col gap-[4px]', className)}>
-      <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
+      <div className="grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-start gap-x-1.5">
         <span className="truncate text-right text-2 leading-none text-cn-foreground-3">
           {behindAhead.behind ?? 0}
           <span className="sr-only">
@@ -45,8 +45,8 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
       </div>
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {/* TODO: replace with meter component when available */}
-      {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
-        <div className="mx-auto flex w-28 items-center justify-center">
+      {behindAhead?.behind === 0 && behindAhead?.ahead === 0 ? null : (
+        <div className="flex w-28 items-center justify-start">
           <div className="flex w-1/2 flex-row-reverse justify-start">
             <div style={{ width: `${adjustedBehindPercentage}%` }}>
               <Progress

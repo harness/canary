@@ -190,7 +190,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               )}
               {/* calculated divergence bar & default branch */}
               <Table.Cell className="content-center">
-                <div className="flex size-full items-center justify-center">
+                <div className="flex size-full items-center justify-start">
                   {branch?.behindAhead?.default ? (
                     <Tag variant="outline" size="md" value={t('views:repos.default', 'Default')} theme="gray" rounded />
                   ) : (

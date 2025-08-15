@@ -84,7 +84,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children }, r
         }
         theme={context.theme}
       >
-        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Title className="!pt-0">{title}</Dialog.Title>
       </Dialog.Header>
 
       <Dialog.Body>{otherChildren}</Dialog.Body>

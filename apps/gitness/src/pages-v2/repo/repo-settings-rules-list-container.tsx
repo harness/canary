@@ -11,7 +11,6 @@ import {
   useRepoRuleListQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -146,16 +145,11 @@ export const RepoSettingsRulesListContainer = () => {
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        {...wrapConditionalObjectElement(
-          {
-            identifier: alertDeleteParams,
-            deleteFn: handleDeleteRule,
-            isLoading: isDeletingRule,
-            error: apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null,
-            type: 'rule'
-          },
-          isRuleAlertDeleteDialogOpen
-        )}
+        identifier={alertDeleteParams}
+        deleteFn={handleDeleteRule}
+        isLoading={isDeletingRule}
+        error={apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null}
+        type="rule"
       />
     </>
   )

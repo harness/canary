@@ -1,10 +1,9 @@
-import { FC, HTMLAttributes, PropsWithChildren, useCallback, useEffect } from 'react'
+import { FC, HTMLAttributes, PropsWithChildren, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { isEqual } from 'lodash-es'
 
 import {
-  TypesPullReq,
   useFindRepositoryQuery,
   useGetPullReqQuery,
   useListCommitsQuery,
@@ -13,18 +12,14 @@ import {
 import { RepoRepositoryOutput } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
 import { PathParams } from '../../RouteDefinitions'
-import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { usePRChecksDecision } from './hooks/usePRChecksDecision'
 import { extractSpecificViolations, getCommentsInfoData } from './pull-request-utils'
 import { POLLING_INTERVAL, PR_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
@@ -85,20 +80,23 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
   })
   const pullReqChecksDecision = usePRChecksDecision({ repoMetadata, pullReqMetadata: pullReqData })
 
-  const handleEvent = useCallback(
-    (data: TypesPullReq) => {
-      if (data && String(data?.number) === pullRequestId) {
-        refetchPullReq()
-      }
-    },
-    [pullRequestId, refetchPullReq]
-  )
-  useSpaceSSE({
-    space: spaceURL,
-    events: [SSEEvent.PULLREQ_UPDATED],
-    onEvent: handleEvent,
-    shouldRun: !!(spaceURL && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
-  })
+  /**
+   * @todo enable it with proper implementation
+   */
+  // const handleEvent = useCallback(
+  //   (data: TypesPullReq) => {
+  //     if (data && String(data?.number) === pullRequestId) {
+  //       refetchPullReq()
+  //     }
+  //   },
+  //   [pullRequestId, refetchPullReq]
+  // )
+  // useSpaceSSE({
+  //   space: spaceURL,
+  //   events: [SSEEvent.PULLREQ_UPDATED],
+  //   onEvent: handleEvent,
+  //   shouldRun: !!(spaceURL && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
+  // })
 
   useEffect(() => {
     if (!pullReqData || isEqual(pullReqMetadata, pullReqData)) return

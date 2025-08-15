@@ -147,7 +147,7 @@ export default function AppMFE({
   const { t } = useTranslationStore()
 
   return (
-    <div ref={shadowRef}>
+    <div ref={shadowRef} id="code-mfe-root">
       <ShadowRootWrapper>
         {/* Radix UI elements need to be rendered inside the following div with the theme class */}
         <div className={theme.toLowerCase()} ref={portalRef}>

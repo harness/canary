@@ -531,7 +531,11 @@ export default function PullRequestConversationPage() {
     if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
     // Slight timeout so the UI has time to expand/hydrate
     const timeoutId = setTimeout(() => {
-      const elem = document.getElementById(`comment-${commentId}`)
+      const mfeRoot = document.getElementById('code-mfe-root')
+      const shadowRoot = mfeRoot?.shadowRoot as ShadowRoot
+      const elem = mfeRoot
+        ? shadowRoot?.getElementById(`comment-${commentId}`)
+        : document.getElementById(`comment-${commentId}`)
       if (!elem) return
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
       setIsScrolledToComment(true)

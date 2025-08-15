@@ -113,16 +113,14 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
     const currentFileName = isNew ? '' : repoDetails?.name || ''
     setFileName(currentFileName)
     setLanguage(filenameToLanguage(currentFileName) || '')
-    setOriginalFileContent(decodeGitContent(repoDetails?.content?.data))
+    const decodedContent = decodeGitContent(repoDetails?.content?.data)
+    setOriginalFileContent(decodedContent)
+    setContentRevision({ code: decodedContent })
   }, [isNew, repoDetails])
 
   useEffect(() => {
     setDirty(!(!fileName || (isUpdate && contentRevision.code === originalFileContent)))
   }, [fileName, isUpdate, contentRevision, originalFileContent])
-
-  useEffect(() => {
-    setContentRevision({ code: originalFileContent })
-  }, [originalFileContent])
 
   const toggleOpenCommitDialog = (value: boolean) => {
     setIsCommitDialogOpen(value)
@@ -221,7 +219,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
         <Tabs.Content value="edit" className="grow">
           {loading && <Loader />}
 
-          {!loading && (
+          {!loading && !isNew && !contentRevision.code && <Loader />}
+          {!loading && (isNew || contentRevision.code) && (
             <CodeEditor
               height="100%"
               language={language}

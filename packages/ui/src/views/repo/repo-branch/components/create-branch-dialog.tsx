@@ -93,7 +93,7 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content aria-describedby={undefined}>
+      <Dialog.Content aria-describedby={undefined} className="max-w-2xl">
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
@@ -115,7 +115,7 @@ export function CreateBranchDialog({
 
             {violation && (
               <Alert.Root theme="warning">
-                <Alert.Description>
+                <Alert.Description className="break-all overflow-hidden">
                   {bypassable
                     ? t(
                         'component:branchDialog.violationMessages.bypassed',
@@ -131,9 +131,9 @@ export function CreateBranchDialog({
 
             {error && (
               <Alert.Root theme="danger">
-                <Alert.Title>
+                <Alert.Description className="break-all overflow-hidden">
                   {t('views:repos.error', 'Error:')} {error}
-                </Alert.Title>
+                </Alert.Description>
               </Alert.Root>
             )}
           </FormWrapper>

@@ -79,7 +79,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content>
+      <Dialog.Content className="max-w-2xl">
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
@@ -110,7 +110,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
             />
             {violation && (
               <Alert.Root theme="warning">
-                <Alert.Description>
+                <Alert.Description className="break-all overflow-hidden">
                   {bypassable
                     ? t(
                         'component:tagDialog.violationMessages.bypassed',
@@ -123,9 +123,9 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
             {error && (
               <Alert.Root theme="danger">
-                <Alert.Title>
+                <Alert.Description className="break-all overflow-hidden">
                   {t('views:repos.error', 'Error:')} {error}
-                </Alert.Title>
+                </Alert.Description>
               </Alert.Root>
             )}
           </FormWrapper>

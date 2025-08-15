@@ -238,11 +238,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <MoreActionsTooltip
                   iconName="more-horizontal"
                   actions={[
-                    // Don't show New Pull Request option for default branch
+                    // Don't show Compare option for default branch
                     ...(!branch?.behindAhead?.default
                       ? [
                           {
-                            title: t('views:repos.newPullReq', 'New pull request'),
+                            title: t('views:repos.compare', 'Compare'),
                             to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
                             iconName: 'git-pull-request'
                           } as ActionData

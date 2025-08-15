@@ -13,11 +13,8 @@ export function useHighlight(props: UseHighlightProps) {
   useEffect(() => {
     if (!editor || !keyword) return
 
-    console.log('keyword')
-
-    console.log(keyword)
     const editorModel = editor.getModel() as monaco.editor.ITextModel
-    const keywordMatches: monaco.editor.FindMatch[] = editorModel.findMatches(keyword, false, true, false, null, false)
+    const keywordMatches: monaco.editor.FindMatch[] = editorModel.findMatches(keyword, false, false, false, null, false)
 
     if (keywordMatches.length > 0) {
       keywordMatches.forEach((match: monaco.editor.FindMatch): void => {

@@ -88,23 +88,36 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   const mappedData: CommentItem<TypesPullReqActivity>[][] = useMemo(() => {
     if (!data) return []
 
-    const sortedData: TypesPullReqActivity[] = orderBy(data, 'created', dateOrderSort.value as orderSortDate)
+    // Separate parent comments and child comments
+    const parentComments = data.filter(activity => !activity.parent_id)
+    const childComments = data.filter(activity => activity.parent_id)
 
-    return Array.from(
-      sortedData
-        .reduce<Map<number, CommentItem<TypesPullReqActivity>[]>>((acc, activity) => {
-          const parentId = activity.parent_id || activity.id
+    // Sort parent comments by the chosen order
+    const sortedParentComments = orderBy(parentComments, 'created', dateOrderSort.value as orderSortDate)
 
-          if (!parentId) return acc
+    // Sort child comments always in ascending order (oldest first)
+    const sortedChildComments = orderBy(childComments, 'created', orderSortDate.ASC)
 
-          if (!acc.has(parentId)) acc.set(parentId, [])
+    // Group comments into threads
+    const threadMap = new Map<number, CommentItem<TypesPullReqActivity>[]>()
 
-          acc.get(parentId)?.push(activityToCommentItem(activity))
+    // Add parent comments first
+    sortedParentComments.forEach(activity => {
+      const parentId = activity.id
+      if (parentId) {
+        threadMap.set(parentId, [activityToCommentItem(activity)])
+      }
+    })
 
-          return acc
-        }, new Map())
-        .values()
-    )
+    // Add child comments to their respective parent threads
+    sortedChildComments.forEach(activity => {
+      const parentId = activity.parent_id
+      if (parentId && threadMap.has(parentId)) {
+        threadMap.get(parentId)?.push(activityToCommentItem(activity))
+      }
+    })
+
+    return Array.from(threadMap.values())
   }, [data, dateOrderSort])
 
   /**

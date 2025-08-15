@@ -169,7 +169,7 @@ export const TimeAgoCard = memo(
 
       if (timestamp === null || timestamp === undefined) {
         return (
-          <Text as="span" {...textProps}>
+          <Text as="span" {...textProps} ref={ref}>
             Unknown time
           </Text>
         )

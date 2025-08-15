@@ -1,4 +1,4 @@
-import { ComponentProps, FC, ReactNode } from 'react'
+import { ComponentProps, FC, forwardRef, ReactNode } from 'react'
 
 import { Button, ButtonProps, DropdownMenu, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
@@ -61,42 +61,40 @@ const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownProps, orie
   return <>{children}</>
 }
 
-export const ButtonGroup: FC<ButtonGroupProps> = ({
-  orientation = 'horizontal',
-  buttonsProps,
-  size = 'md',
-  iconOnly,
-  className
-}) => {
-  return (
-    <div
-      className={cn(
-        'cn-button-group',
-        orientation === 'vertical' ? 'cn-button-group-vertical' : 'cn-button-group-horizontal',
-        className
-      )}
-    >
-      {buttonsProps.map((buttonProps, index) => {
-        const { className, ...restButtonProps } = buttonProps
-        const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
-        const dropdownProps = 'dropdownProps' in buttonProps ? buttonProps.dropdownProps : undefined
+export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
+  ({ orientation = 'horizontal', buttonsProps, size = 'md', iconOnly, className }, ref) => {
+    return (
+      <div
+        className={cn(
+          'cn-button-group',
+          orientation === 'vertical' ? 'cn-button-group-vertical' : 'cn-button-group-horizontal',
+          className
+        )}
+        ref={ref}
+      >
+        {buttonsProps.map((buttonProps, index) => {
+          const { className, ...restButtonProps } = buttonProps
+          const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
+          const dropdownProps = 'dropdownProps' in buttonProps ? buttonProps.dropdownProps : undefined
 
-        return (
-          <Wrapper key={index} tooltipProps={tooltipProps} dropdownProps={dropdownProps} orientation={orientation}>
-            <Button
-              className={cn(
-                className,
-                { 'cn-button-group-first': !index },
-                { 'cn-button-group-last': index === buttonsProps.length - 1 }
-              )}
-              variant="outline"
-              size={size}
-              iconOnly={iconOnly}
-              {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
-            />
-          </Wrapper>
-        )
-      })}
-    </div>
-  )
-}
+          return (
+            <Wrapper key={index} tooltipProps={tooltipProps} dropdownProps={dropdownProps} orientation={orientation}>
+              <Button
+                className={cn(
+                  className,
+                  { 'cn-button-group-first': !index },
+                  { 'cn-button-group-last': index === buttonsProps.length - 1 }
+                )}
+                variant="outline"
+                size={size}
+                iconOnly={iconOnly}
+                {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
+              />
+            </Wrapper>
+          )
+        })}
+      </div>
+    )
+  }
+)
+ButtonGroup.displayName = 'ButtonGroup'

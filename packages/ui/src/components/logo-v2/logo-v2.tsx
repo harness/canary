@@ -1,4 +1,4 @@
-import { FC, SVGProps } from 'react'
+import { forwardRef, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -37,7 +37,7 @@ interface LogoFallbackPropsV2 extends BaseLogoPropsV2 {
 
 export type LogoPropsV2 = LogoDefaultPropsV2 | LogoFallbackPropsV2
 
-const LogoV2: FC<LogoPropsV2> = ({ name, size, className, skipSize = false, fallback }) => {
+const LogoV2 = forwardRef<SVGSVGElement, LogoPropsV2>(({ name, size, className, skipSize = false, fallback }, ref) => {
   const Component = name ? LogoNameMapV2[name] : undefined
   const sizeClasses = skipSize ? '' : logoVariants({ size })
 
@@ -45,7 +45,7 @@ const LogoV2: FC<LogoPropsV2> = ({ name, size, className, skipSize = false, fall
     console.warn(`Logo "${name}" not found, falling back to "${fallback}".`)
     const FallbackComponent = LogoNameMapV2[fallback]
 
-    return <FallbackComponent className={cn(sizeClasses, className)} />
+    return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} />
   }
 
   if (!Component) {
@@ -53,8 +53,8 @@ const LogoV2: FC<LogoPropsV2> = ({ name, size, className, skipSize = false, fall
     return null
   }
 
-  return <Component className={cn(sizeClasses, className)} />
-}
+  return <Component className={cn(sizeClasses, className)} ref={ref} />
+})
 
 export { LogoV2 }
 

@@ -16,7 +16,7 @@ import { DocsPage } from "../../../components/docs-page";
         content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
     >
         <Button>Trigger</Button>
-    </Tooltip.Root>
+    </Tooltip>
 </TooltipProvider>`}
 />
 
@@ -158,6 +158,12 @@ The provider component that manages tooltips. Typically wrapped around the entir
       description: "Content to display in the tooltip.",
       required: true,
       value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the tooltip content.",
+      required: false,
+      value: "string",
     },
     {
       name: "title",

@@ -1,4 +1,4 @@
-import React, { forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
+import { ForwardedRef, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -64,7 +64,7 @@ const SplitButtonInner = forwardRef(
       dropdownContentClassName,
       size = 'md'
     }: SplitButtonProps<T>,
-    ref: React.ForwardedRef<HTMLButtonElement>
+    ref: ForwardedRef<HTMLButtonElement>
   ) => {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -145,5 +145,5 @@ const SplitButtonInner = forwardRef(
 SplitButtonInner.displayName = 'SplitButton'
 
 export const SplitButton = SplitButtonInner as <T extends string>(
-  props: SplitButtonProps<T> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: SplitButtonProps<T> & { ref?: ForwardedRef<HTMLButtonElement> }
 ) => JSX.Element

@@ -4,6 +4,7 @@ import {
   ElementRef,
   FC,
   forwardRef,
+  PropsWithoutRef,
   ReactNode,
   useCallback,
   useContext,
@@ -56,14 +57,14 @@ export type ToggleGroupItemPropsBase = {
   tooltipProps?: ToggleTooltipProps
   disabled?: boolean
   suffixIcon?: IconV2NamesType
-  suffixIconProps?: IconPropsV2
+  suffixIconProps?: PropsWithoutRef<IconPropsV2>
   text?: string
 }
 
 type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
   iconOnly: true
   prefixIcon: IconV2NamesType
-  prefixIconProps: IconPropsV2
+  prefixIconProps: PropsWithoutRef<IconPropsV2>
   suffixIcon: never
   suffixIconProps: never
 }
@@ -71,7 +72,7 @@ type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
 type TogglePropsNotIconOnly = ToggleGroupItemPropsBase & {
   iconOnly?: false
   prefixIcon?: IconV2NamesType
-  prefixIconProps?: IconPropsV2
+  prefixIconProps?: PropsWithoutRef<IconPropsV2>
 }
 
 export type ToggleGroupItemProps = TogglePropsIconOnly | TogglePropsNotIconOnly

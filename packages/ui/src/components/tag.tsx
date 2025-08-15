@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -56,126 +58,144 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   onActionClick?: () => void
 }
 
-function Tag({
-  variant,
-  size,
-  theme,
-  rounded,
-  icon,
-  label,
-  value,
-  className,
-  disabled = false,
-  enableHover = false,
-  title,
-  actionIcon,
-  onActionClick,
-  ...props
-}: TagProps) {
-  if (label && value) {
+const Tag = forwardRef<HTMLDivElement, TagProps>(
+  (
+    {
+      variant,
+      size,
+      theme,
+      rounded,
+      icon,
+      label,
+      value,
+      className,
+      disabled = false,
+      enableHover = false,
+      title,
+      actionIcon,
+      onActionClick,
+      ...props
+    },
+    ref
+  ) => {
+    if (label && value) {
+      return (
+        <TagSplit
+          ref={ref}
+          {...{
+            variant,
+            size,
+            theme,
+            rounded,
+            icon,
+            actionIcon,
+            onActionClick,
+            label: label,
+            value,
+            disabled,
+            enableHover: Boolean(props.onClick),
+            onClick: props.onClick
+          }}
+        />
+      )
+    }
+
     return (
-      <TagSplit
-        {...{
-          variant,
-          size,
-          theme,
-          rounded,
-          icon,
-          actionIcon,
-          onActionClick,
-          label: label,
-          value,
-          disabled,
-          enableHover: Boolean(props.onClick),
-          onClick: props.onClick
-        }}
-      />
+      <div
+        ref={ref}
+        tabIndex={-1}
+        className={cn(
+          tagVariants({ variant, size, theme, rounded }),
+          {
+            'text-cn-foreground-disabled cursor-not-allowed': disabled,
+            'cn-tag-hoverable': !disabled && (enableHover || props.onClick),
+            'cursor-pointer': !disabled && props.onClick
+          },
+          className
+        )}
+        {...props}
+      >
+        {icon && (
+          <IconV2 size="xs" name={icon} className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })} />
+        )}
+        <span
+          className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })}
+          title={title || value || label}
+        >
+          {value || label}
+        </span>
+
+        {actionIcon && (
+          <Button
+            iconOnly
+            disabled={disabled}
+            rounded={rounded}
+            className="cn-tag-action-icon-button"
+            variant="transparent"
+            size={size === 'sm' ? '3xs' : '2xs'}
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+              onActionClick?.()
+            }}
+          >
+            <IconV2
+              skipSize
+              name={actionIcon}
+              className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
+            />
+          </Button>
+        )}
+      </div>
     )
   }
+)
+Tag.displayName = 'Tag'
 
-  return (
-    <div
-      tabIndex={-1}
-      className={cn(
-        tagVariants({ variant, size, theme, rounded }),
-        {
-          'text-cn-foreground-disabled cursor-not-allowed': disabled,
-          'cn-tag-hoverable': !disabled && (enableHover || props.onClick),
-          'cursor-pointer': !disabled && props.onClick
-        },
-        className
-      )}
-      {...props}
-    >
-      {icon && (
-        <IconV2 size="xs" name={icon} className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })} />
-      )}
-      <span className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })} title={title || value || label}>
-        {value || label}
-      </span>
+const TagSplit = forwardRef<HTMLDivElement, TagProps>(
+  (
+    {
+      variant,
+      size,
+      theme,
+      rounded,
+      icon,
+      actionIcon,
+      onActionClick,
+      value,
+      label = '',
+      disabled = false,
+      enableHover = false,
+      onClick
+    },
+    ref
+  ) => {
+    const sharedProps = { variant, size, theme, rounded, icon, disabled, onClick }
 
-      {actionIcon && (
-        <Button
-          iconOnly
-          disabled={disabled}
-          rounded={rounded}
-          className="cn-tag-action-icon-button"
-          variant="transparent"
-          size={size === 'sm' ? '3xs' : '2xs'}
-          onClick={e => {
-            e.stopPropagation()
-            e.preventDefault()
-            onActionClick?.()
-          }}
-        >
-          <IconV2
-            skipSize
-            name={actionIcon}
-            className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
-          />
-        </Button>
-      )}
-    </div>
-  )
-}
+    return (
+      <div
+        className={cn('cn-tag-split flex w-fit items-center justify-center', {
+          'cursor-not-allowed': disabled,
+          'cn-tag-split-hoverable': !disabled && enableHover
+        })}
+        ref={ref}
+      >
+        {/* LEFT TAG - should never have a Reset Icon */}
+        <Tag {...sharedProps} icon={icon} value={label} className="cn-tag-split-left" />
 
-function TagSplit({
-  variant,
-  size,
-  theme,
-  rounded,
-  icon,
-  actionIcon,
-  onActionClick,
-  value,
-  label = '',
-  disabled = false,
-  enableHover = false,
-  onClick
-}: TagProps) {
-  const sharedProps = { variant, size, theme, rounded, icon, disabled, onClick }
-
-  return (
-    <div
-      className={cn('cn-tag-split flex w-fit items-center justify-center', {
-        'cursor-not-allowed': disabled,
-        'cn-tag-split-hoverable': !disabled && enableHover
-      })}
-    >
-      {/* LEFT TAG - should never have a Reset Icon */}
-      <Tag {...sharedProps} icon={icon} value={label} className="cn-tag-split-left" />
-
-      {/* RIGHT TAG - should never have a tag Icon */}
-      <Tag
-        {...sharedProps}
-        icon={icon}
-        actionIcon={actionIcon}
-        onActionClick={onActionClick}
-        value={value}
-        className="cn-tag-split-right"
-      />
-    </div>
-  )
-}
+        {/* RIGHT TAG - should never have a tag Icon */}
+        <Tag
+          {...sharedProps}
+          icon={icon}
+          actionIcon={actionIcon}
+          onActionClick={onActionClick}
+          value={value}
+          className="cn-tag-split-right"
+        />
+      </div>
+    )
+  }
+)
+TagSplit.displayName = 'TagSplit'
 
 export { Tag, type TagProps }

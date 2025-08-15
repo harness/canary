@@ -382,21 +382,29 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 }) as SidebarItemComponent
 SidebarItem.displayName = 'SidebarItem'
 
-export const SidebarMenuSubItem = ({ title, className, ...props }: NavLinkProps & { title: string }) => {
-  const { NavLink } = useRouterContext()
+export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & { title: string }>(
+  ({ title, className, ...props }, ref) => {
+    const { NavLink } = useRouterContext()
 
-  return (
-    <NavLink
-      className={({ isActive }) =>
-        cn('cn-sidebar-submenu-item', { 'cn-sidebar-submenu-item-active': isActive }, className)
-      }
-      role="menuitem"
-      {...props}
-    >
-      <Text className="cn-sidebar-submenu-item-content" variant="body-single-line-normal" color="foreground-2" truncate>
-        {title}
-      </Text>
-    </NavLink>
-  )
-}
+    return (
+      <NavLink
+        className={({ isActive }) =>
+          cn('cn-sidebar-submenu-item', { 'cn-sidebar-submenu-item-active': isActive }, className)
+        }
+        role="menuitem"
+        {...props}
+        ref={ref}
+      >
+        <Text
+          className="cn-sidebar-submenu-item-content"
+          variant="body-single-line-normal"
+          color="foreground-2"
+          truncate
+        >
+          {title}
+        </Text>
+      </NavLink>
+    )
+  }
+)
 SidebarMenuSubItem.displayName = SUBMENU_ITEM_DISPLAY_NAME

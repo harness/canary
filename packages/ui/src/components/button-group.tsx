@@ -77,22 +77,24 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
           const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
           const dropdownProps = 'dropdownProps' in buttonProps ? buttonProps.dropdownProps : undefined
 
-        return (
-          <Wrapper key={index} tooltipProps={tooltipProps} dropdownProps={dropdownProps} orientation={orientation}>
-            <Button
-              className={cn(
-                className,
-                { 'cn-button-group-first': !index },
-                { 'cn-button-group-last': index === buttonsProps.length - 1 }
-              )}
-              variant="outline"
-              size={size}
-              iconOnly={iconOnly}
-              {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
-            />
-          </Wrapper>
-        )
-      })}
-    </div>
-  )
-}
+          return (
+            <Wrapper key={index} tooltipProps={tooltipProps} dropdownProps={dropdownProps} orientation={orientation}>
+              <Button
+                className={cn(
+                  className,
+                  { 'cn-button-group-first': !index },
+                  { 'cn-button-group-last': index === buttonsProps.length - 1 }
+                )}
+                variant="outline"
+                size={size}
+                iconOnly={iconOnly}
+                {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
+              />
+            </Wrapper>
+          )
+        })}
+      </div>
+    )
+  }
+)
+ButtonGroup.displayName = 'ButtonGroup'

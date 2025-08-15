@@ -62,7 +62,7 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
   // Notify parent about route change
   useEffect(() => {
     if (canNavigate) {
-      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}`))
+      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}${location.search}`))
     }
   }, [location.pathname])
 

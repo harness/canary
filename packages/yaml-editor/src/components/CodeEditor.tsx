@@ -4,6 +4,7 @@ import Editor, { EditorProps, loader, Monaco, useMonaco } from '@monaco-editor/r
 import * as monaco from 'monaco-editor'
 
 import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
+import { useHighlight } from '../hooks/useHighlight'
 import { useLinesSelection } from '../hooks/useLinesSelection'
 import { useTheme } from '../hooks/useTheme'
 import { ThemeDefinition } from '../types/themes'
@@ -34,6 +35,7 @@ export interface CodeEditorProps<_> {
   selectedLine?: number
   onSelectedLineChange?: (line: number | undefined) => void
   onSelectedLineButtonClick?: (ev: HTMLDivElement | undefined) => void
+  highlightKeyword?: string
 }
 
 export function CodeEditor<T>({
@@ -47,6 +49,7 @@ export function CodeEditor<T>({
   selectedLine,
   onSelectedLineChange,
   onSelectedLineButtonClick,
+  highlightKeyword,
   height = '75vh',
   className
 }: CodeEditorProps<T>): JSX.Element {
@@ -114,6 +117,8 @@ export function CodeEditor<T>({
     onSelectedLineChange,
     onSelectedLineButtonClick
   })
+
+  useHighlight({ editor, keyword: highlightKeyword })
 
   const mergedOptions = useMemo(() => {
     return {

@@ -14,6 +14,7 @@ import {
   Tabs,
   ViewTypeValue
 } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 import { CommitsList, FileReviewError, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
@@ -67,6 +68,10 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   const { selectedLine, setSelectedLine } = useCodeEditorSelectionState()
 
   const { gitRefName } = useGitRef()
+
+  const { useSearchParams } = useRouterContext()
+  const [searchParams] = useSearchParams()
+  const keyword = searchParams.get('keyword')
 
   const fileError = !repoContent || !repoContent.content || !repoContent.content.data
 
@@ -146,7 +151,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   }
 
   const Loader = () => (
-    <Layout.Flex align="center" justify="center" className="rounded-b-3 flex h-full rounded-t-none border border-t-0">
+    <Layout.Flex align="center" justify="center" className="flex h-full rounded-b-3 rounded-t-none border border-t-0">
       <IconV2 className="animate-spin" name="loader" size="lg" />
     </Layout.Flex>
   )
@@ -249,6 +254,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
               enableLinesSelection={true}
               onSelectedLineChange={setSelectedLine}
               selectedLine={selectedLine}
+              highlightKeyword={keyword ?? undefined}
             />
           )}
         </Tabs.Content>

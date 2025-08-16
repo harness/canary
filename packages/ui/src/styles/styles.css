@@ -601,7 +601,7 @@ mark {
 }
 
 .nested-sidebar-height {
-  height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
+  height: calc(100vh - var(--cn-breadcrumbs-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
 }
 
 .repo-files-height {

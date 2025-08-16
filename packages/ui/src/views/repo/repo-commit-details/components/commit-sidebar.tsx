@@ -10,7 +10,7 @@ interface CommitsSidebarProps {
 
 export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSidebarProps) => {
   return (
-    <div className="nested-sidebar-height pt-cn-md -mt-cn-md sticky top-[var(--cn-page-nav-height)]">
+    <div className="nested-sidebar-height pt-cn-md -mt-cn-md sticky top-[var(--cn-breadcrumbs-height)]">
       <Layout.Flex direction="column" className="max-h-full overflow-hidden" gapY="sm">
         <SearchFiles navigateToFile={navigateToFile} filesList={filesList} contentClassName="width-popover-max-width" />
 

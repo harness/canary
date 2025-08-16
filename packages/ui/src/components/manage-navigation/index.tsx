@@ -165,14 +165,10 @@ export const ManageNavigation = ({
                             <Layout.Flex
                               justify="between"
                               gapX="xs"
+                              align="center"
                               className="hover:bg-cn-background-3 w-full grow cursor-grab rounded active:cursor-grabbing"
                             >
-                              <Button
-                                {...attributes}
-                                {...listeners}
-                                variant="transparent"
-                                className="w-full justify-start"
-                              >
+                              <Button {...attributes} {...listeners} variant="transparent" className="justify-start">
                                 <IconV2 name="grip-dots" size="xs" />
                                 <Text color="inherit">{item.title}</Text>
                               </Button>

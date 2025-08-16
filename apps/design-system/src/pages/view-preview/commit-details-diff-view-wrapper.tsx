@@ -5,20 +5,20 @@ import { repoFilesStore } from '@subjects/views/repo-files/components/repo-files
 import { renderEntries } from '@utils/fileViewUtils'
 import { noop } from '@utils/viewUtils'
 
-import { FileExplorer } from '@harnessio/ui/components'
+import { FileExplorer, Layout } from '@harnessio/ui/components'
 import { CommitDiff, CommitSidebar, ICommitDetailsStore } from '@harnessio/ui/views'
 
 export const CommitDetailsDiffViewWrapper: FC = () => {
   const useCommitDetailsStore = useCallback((): ICommitDetailsStore => commitDetailsStore, [])
 
   return (
-    <>
+    <Layout.Flex gapX="xl">
       <CommitSidebar navigateToFile={() => {}} filesList={repoFilesStore.filesList}>
         <FileExplorer.Root onValueChange={noop} value={[]}>
           {renderEntries(repoFilesStore.filesTreeData, '')}
         </FileExplorer.Root>
       </CommitSidebar>
       <CommitDiff useCommitDetailsStore={useCommitDetailsStore} />
-    </>
+    </Layout.Flex>
   )
 }

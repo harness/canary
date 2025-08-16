@@ -11,7 +11,11 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
   const { diffs, diffStats } = useCommitDetailsStore()
 
   return (
-    <Layout.Flex direction="column" className="w-full pb-cn-xl min-h-[calc(100vh-var(--cn-page-nav-height))]" gapY="sm">
+    <Layout.Flex
+      direction="column"
+      className="pb-cn-xl min-h-[calc(100vh-var(--cn-page-nav-full-height))] w-full"
+      gapY="sm"
+    >
       {/* TODO: add goToDiff handler */}
       <ChangedFilesShortInfo diffData={diffs} diffStats={diffStats} goToDiff={() => {}} />
 

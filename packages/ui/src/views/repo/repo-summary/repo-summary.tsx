@@ -186,8 +186,8 @@ export function RepoSummaryView({
             )}
 
             <ListActions.Root className="flex-wrap gap-y-2">
-              <ListActions.Left>
-                <ButtonLayout className="w-full " horizontalAlign="start">
+              <ListActions.Left className="max-w-full">
+                <ButtonLayout className="grid w-full grid-cols-[auto,1fr]" horizontalAlign="start">
                   {cloneElement(branchSelectorRenderer, { className: 'w-full max-w-fit' })}
                   <SearchFiles
                     navigateToFile={navigateToFile}

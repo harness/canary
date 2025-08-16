@@ -39,7 +39,7 @@ export const RepoTagsListContainer = () => {
 
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem>()
   const [selectedTagInList, setSelectedTagInList] = useState<BranchSelectorListItem | null>(null)
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 

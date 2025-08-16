@@ -19,7 +19,7 @@ interface CreateTagDialogProps {
   onSubmit: (data: CreateTagFormFields) => void
   error?: string
   isLoading?: boolean
-  selectedBranchOrTag: BranchSelectorListItem | null
+  selectedBranchOrTag?: BranchSelectorListItem
   branchSelectorRenderer: () => JSX.Element | null
   violation?: boolean
   bypassable?: boolean
@@ -110,7 +110,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
             />
             {violation && (
               <Alert.Root theme="warning">
-                <Alert.Description className="break-all overflow-hidden">
+                <Alert.Description className="overflow-hidden break-all">
                   {bypassable
                     ? t(
                         'component:tagDialog.violationMessages.bypassed',
@@ -123,7 +123,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
             {error && (
               <Alert.Root theme="danger">
-                <Alert.Description className="break-all overflow-hidden">
+                <Alert.Description className="overflow-hidden break-all">
                   {t('views:repos.error', 'Error:')} {error}
                 </Alert.Description>
               </Alert.Root>

@@ -9,7 +9,7 @@ import { BranchSelectorDropdown } from './branch-selector-dropdown'
 interface BranchSelectorProps {
   branchList: BranchData[]
   tagList: BranchSelectorListItem[]
-  selectedBranchorTag: BranchSelectorListItem
+  selectedBranchorTag?: BranchSelectorListItem
   repoId: string
   spaceId: string
   branchPrefix?: string
@@ -57,11 +57,15 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button className={cn('min-w-0', className)} variant="outline" size={buttonSize} disabled={disabled}>
           {!hideIcon && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
-          <Text className="truncate">
-            {branchPrefix
-              ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag.name}`
-              : selectedBranch?.name || selectedBranchorTag.name}
-          </Text>
+          {selectedBranch || selectedBranchorTag ? (
+            <Text className="truncate">
+              {branchPrefix
+                ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchorTag?.name}`
+                : selectedBranch?.name || selectedBranchorTag?.name}
+            </Text>
+          ) : (
+            <Text className="truncate">Select a branch or tag</Text>
+          )}
           <IconV2 name="nav-arrow-down" size="xs" className="ml-auto" />
         </Button>
       </DropdownMenu.Trigger>

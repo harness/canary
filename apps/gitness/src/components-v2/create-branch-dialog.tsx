@@ -33,7 +33,7 @@ export const CreateBranchDialog = ({
 }: CreateBranchDialogProps) => {
   const repo_ref = useGetRepoRef()
   const [error, setError] = useState<UsererrorError>()
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem>()
   const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
 
   const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem, _type: BranchSelectorTab) => {

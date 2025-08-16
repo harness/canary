@@ -74,7 +74,7 @@ export interface CreateBranchDialogProps {
   onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
   error?: string
   isCreatingBranch?: boolean
-  selectedBranchOrTag: BranchSelectorListItem | null
+  selectedBranchOrTag?: BranchSelectorListItem
   renderProp: React.ReactNode
   prefilledName?: string
   resetViolation: () => void

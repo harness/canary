@@ -111,7 +111,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isLoading,
   isSuccess,
   onFormDraftSubmit,
-  mergeability = false,
+  mergeability,
   handleAiPullRequestSummary,
 
   diffData,
@@ -237,59 +237,59 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal align="center" gap="xs">
             {branchSelectorRenderer}
 
-            {isBranchSelected &&
-              !isLoading && ( // Only render this block if isBranchSelected is true
-                <Layout.Horizontal gap="xs" align="center">
-                  {mergeability ? (
-                    <>
-                      <IconV2 className="text-icons-success" name="check" size="2xs" />
-                      <Text variant="body-single-line-normal" color="success">
-                        {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <Text variant="body-single-line-normal" as="span" color="foreground-2">
+            {mergeability !== undefined && !isLoading && (
+              <Layout.Horizontal gap="xs" align="center">
+                {mergeability === true ? (
+                  <>
+                    <IconV2 className="text-icons-success" name="check" size="2xs" />
+                    <Text variant="body-single-line-normal" color="success">
+                      {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
+                      <Text variant="body-single-line-normal" as="span" color="foreground-2">
+                        {t(
+                          'views:pullRequests.compareChangesAbleToMergeDescription',
+                          'These branches can be automatically merged.'
+                        )}
+                      </Text>
+                    </Text>
+                  </>
+                ) : null}
+                {mergeability === false ? (
+                  <>
+                    {apiError === "head branch doesn't contain any new commits." ? (
+                      <>
+                        <IconV2 name="xmark" size="2xs" className="text-icons-1" />
+                        <Text variant="body-single-line-normal">
                           {t(
-                            'views:pullRequests.compareChangesAbleToMergeDescription',
-                            'These branches can be automatically merged.'
+                            'views:pullRequests.compareChangesApiError',
+                            'Head branch doesn’t contain any new commits.'
                           )}
                         </Text>
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      {apiError === "head branch doesn't contain any new commits." ? (
-                        <>
-                          <IconV2 name="xmark" size="2xs" className="text-icons-1" />
-                          <Text variant="body-single-line-normal">
+                      </>
+                    ) : (
+                      <>
+                        <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
+                        <Text variant="body-single-line-normal" color="danger">
+                          {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
+                          <span className="text-cn-foreground-2">
                             {t(
-                              'views:pullRequests.compareChangesApiError',
-                              'Head branch doesn’t contain any new commits.'
+                              'views:pullRequests.compareChangesCantMergeDescription',
+                              'You can still create the pull request.'
                             )}
-                          </Text>
-                        </>
-                      ) : (
-                        <>
-                          <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
-                          <Text variant="body-single-line-normal" color="danger">
-                            {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                            <span className="text-cn-foreground-2">
-                              {t(
-                                'views:pullRequests.compareChangesCantMergeDescription',
-                                'You can still create the pull request.'
-                              )}
-                            </span>
-                          </Text>
-                        </>
-                      )}
-                    </>
-                  )}
-                </Layout.Horizontal>
-              )}
+                          </span>
+                        </Text>
+                      </>
+                    )}
+                  </>
+                ) : null}
+              </Layout.Horizontal>
+            )}
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-5 rounded-md border border-cn-borders-2 bg-cn-background-2 py-3 px-4"
+            className="mt-5 rounded-md border border-cn-borders-2 bg-cn-background-2 px-4 py-3"
           >
             <Text variant="body-normal" color="foreground-1">
               {isBranchSelected ? (

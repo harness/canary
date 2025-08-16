@@ -44,7 +44,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
-      title: t('views:repos.createBranch', 'Create branch'),
+      title: t('views:repos.createBranch', 'Create Branch'),
       onClick: () => onOpenCreateBranchDialog(tag)
     },
     {

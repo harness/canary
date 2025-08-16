@@ -68,6 +68,11 @@ interface ToolbarItem {
   size?: number
 }
 
+interface CommentHistory {
+  comment: string
+  selection: TextSelection
+}
+
 export interface PullRequestCommentBoxProps {
   className?: string
   comment: string
@@ -142,12 +147,16 @@ export const PullRequestCommentBox = ({
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
-
-  const [commentError, setCommentError] = useState<string | null>(null)
-
   const [isLoading, setIsLoading] = useState(false)
-
+  const [commentError, setCommentError] = useState<string | null>(null)
   const [localPrincipalsMentionMap, setLocalPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
+
+  const initialCommentHistory: CommentHistory = {
+    comment: comment,
+    selection: { start: 0, end: 0 }
+  }
+  const [commentHistory, setCommentHistory] = useState<CommentHistory[]>([initialCommentHistory])
+  const [commentFuture, setCommentFuture] = useState<CommentHistory[]>([])
 
   const {
     principalsMentionMap,
@@ -168,7 +177,7 @@ export const PullRequestCommentBox = ({
 
   const clearComment = () => {
     if (!preserveCommentOnSave) {
-      setComment('') // Clear the comment box after saving
+      setCommentAndTextSelection('', { start: 0, end: 0 }) // Clear the comment box after saving
     }
   }
 
@@ -477,16 +486,57 @@ export const PullRequestCommentBox = ({
     textAreaRef.current && textAreaRef.current.focus()
   }
 
-  const setCommentAndTextSelection = (comment: string, textSelection: TextSelection) => {
-    setTextSelection(textSelection)
-    setComment(comment)
+  const handleUndo = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
+    e.preventDefault()
+
+    if (commentHistory.length === 1) {
+      return
+    }
+
+    const current = commentHistory.pop() ?? initialCommentHistory
+    const undo = commentHistory.pop() ?? current
+
+    !isUndefined(undo) &&
+      !isUndefined(current) &&
+      setCommentAndTextSelection(undo.comment, undo.selection, [...commentHistory, undo], [...commentFuture, current])
   }
 
-  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleRedo = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
+    e.preventDefault()
+
+    if (commentFuture.length === 0) {
+      return
+    }
+
+    const redo = commentFuture.pop()
+
+    !isUndefined(redo) &&
+      setCommentAndTextSelection(redo.comment, redo.selection, [...commentHistory, redo], commentFuture)
+  }
+
+  const setCommentAndTextSelection = (
+    comment: string,
+    textSelection: TextSelection,
+    replaceHistory?: CommentHistory[],
+    replaceFuture?: CommentHistory[]
+  ): void => {
+    setTextSelection(textSelection)
+    setComment(comment)
+
+    const current = {
+      comment: comment,
+      selection: textSelection
+    }
+
+    setCommentHistory(replaceHistory ?? [...commentHistory, current])
+    setCommentFuture(replaceFuture ? replaceFuture : [])
+  }
+
+  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setCommentAndTextSelection(e.target.value, { start: e.target.selectionStart, end: e.target.selectionEnd })
   }
 
-  const onCommentSelect = () => {
+  const onCommentSelect = (): void => {
     if (textAreaRef.current) {
       const target = textAreaRef.current
 
@@ -494,7 +544,7 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onMouseUp = () => {
+  const onMouseUp = (): void => {
     if (textAreaRef.current) {
       const target = textAreaRef.current
 
@@ -502,7 +552,7 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     switch (e.code) {
       case 'ArrowUp':
       case 'ArrowDown':
@@ -529,9 +579,15 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     if (e.key === 'Enter' && e.metaKey) {
-      handleSaveComment()
+      return handleSaveComment()
+    }
+    if (e.key === 'z' && e.metaKey && e.shiftKey) {
+      return handleRedo(e)
+    }
+    if (e.key === 'z' && e.metaKey) {
+      return handleUndo(e)
     }
   }
 

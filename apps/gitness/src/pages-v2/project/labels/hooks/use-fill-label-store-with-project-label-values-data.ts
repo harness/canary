@@ -18,12 +18,14 @@ export interface UseFillLabelStoreWithProjectLabelValuesDataProps {
   queryPage?: number
   query?: string
   enabled?: boolean
+  inherited?: boolean
 }
 
 export const useFillLabelStoreWithProjectLabelValuesData = ({
   queryPage,
   query,
-  enabled = true
+  enabled = true,
+  inherited = false
 }: UseFillLabelStoreWithProjectLabelValuesDataProps) => {
   const space_ref = useGetSpaceURLParam()
   const [isLoadingValues, setIsLoadingValues] = useState(false)
@@ -34,7 +36,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
   const { data: { body: labels, headers } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
     {
       space_ref: `${space_ref}/+`,
-      queryParams: { page: queryPage || 1, limit: 10, query: query ?? '', inherited: getParentScopeLabels }
+      queryParams: { page: queryPage || 1, limit: 10, query: query ?? '', inherited: inherited || getParentScopeLabels }
     },
     { enabled }
   )

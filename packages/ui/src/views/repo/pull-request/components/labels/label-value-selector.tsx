@@ -4,7 +4,7 @@ import { Button, DropdownMenu, IconV2, SearchBox, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
-import { HandleAddLabelType, TypesLabelValueInfo } from '@/views'
+import { EnumLabelColor, HandleAddLabelType, TypesLabelValueInfo } from '@/views'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 
@@ -119,7 +119,12 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         <DropdownMenu.Item
           key={value.id}
           onSelect={handleOnSelect(value)}
-          tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: value.value ?? '' }}
+          tag={{
+            variant: 'secondary',
+            size: 'sm',
+            theme: value.color as EnumLabelColor,
+            value: value.value ?? ''
+          }}
           checkmark={label.selectedValueId === value.id}
         />
       ))}

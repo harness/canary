@@ -122,7 +122,13 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
       {isRenderInput && renderInput()}
 
       {items.length > 0 && !isRenderInput && (
-        <CopyButton name={items.map(item => item.path).join('/')} className="ml-cn-2xs" />
+        <CopyButton
+          name={items
+            .slice(1)
+            .map(item => item.path)
+            .join('/')}
+          className="ml-cn-2xs"
+        />
       )}
     </Layout.Flex>
   )

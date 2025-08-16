@@ -15,6 +15,7 @@ import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
 import Explorer from '../../components-v2/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
@@ -28,9 +29,10 @@ import { useCommitDetailsStore } from './stores/commit-details-store'
  */
 export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: boolean }) => {
   const repoRef = useGetRepoRef()
-  const { commitSHA } = useParams<PathParams>()
+  const { repoId, spaceId, commitSHA } = useParams<PathParams>()
+  const isMfe = useIsMFE()
   const { fullGitRef } = useCodePathDetails()
-  const { setDiffs, setDiffStats } = useCommitDetailsStore()
+  const { setDiffs, setDiffStats, setCommitSHA } = useCommitDetailsStore()
 
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const diffApiPath = `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
@@ -45,6 +47,12 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
       setDiffStats(diffStats)
     }
   }, [diffStats, setDiffStats])
+
+  useEffect(() => {
+    if (commitSHA) {
+      setCommitSHA(commitSHA)
+    }
+  }, [commitSHA, setCommitSHA])
 
   const { data: currentCommitDiffData } = useGetCommitDiffQuery({
     repo_ref: repoRef,
@@ -106,7 +114,12 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
         </CommitSidebar>
       )}
 
-      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} />
+      <CommitDiff
+        useCommitDetailsStore={useCommitDetailsStore}
+        toRepoFileDetails={({ path }: { path: string }) => {
+          return isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
+        }}
+      />
     </Layout.Flex>
   )
 }

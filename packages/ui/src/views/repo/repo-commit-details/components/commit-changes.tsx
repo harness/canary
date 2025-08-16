@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, Layout, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, Button, CopyButton, Layout, Link, StackedList, StatusBadge } from '@/components'
 import { useTranslation } from '@/context'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
@@ -25,14 +25,18 @@ interface HeaderProps {
 interface DataProps {
   data: HeaderProps[]
   diffMode: DiffModeEnum
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  commitSHA: string
 }
 
-const LineTitle: FC<HeaderProps> = ({ text, numAdditions, numDeletions }) => {
+const LineTitle: FC<
+  HeaderProps & { toRepoFileDetails?: ({ path }: { path: string }) => string; commitSHA: string }
+> = ({ text, numAdditions, numDeletions, toRepoFileDetails, commitSHA }) => {
   return (
     <div className="flex w-full max-w-full items-center gap-2">
-      <Text variant="body-strong" truncate color="foreground-1">
+      <Link to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${text}` }) ?? ''} variant="secondary">
         {text}
-      </Text>
+      </Link>
       <CopyButton name={text} color="gray" buttonVariant="ghost" className="relative z-10" />
       {!!numAdditions && (
         <StatusBadge variant="outline" size="sm" theme="success">
@@ -54,7 +58,9 @@ const CommitsAccordion: FC<{
   diffMode: DiffModeEnum
   openItems: string[]
   onToggle: () => void
-}> = ({ header, diffMode, openItems, onToggle }) => {
+  toRepoFileDetails?: ({ path }: { path: string }) => string
+  commitSHA: string
+}> = ({ header, diffMode, openItems, onToggle, toRepoFileDetails, commitSHA }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
 
@@ -84,10 +90,12 @@ const CommitsAccordion: FC<{
           indicatorPosition="left"
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <div className="py-cn-xs px-cn-sm relative">
-              <Accordion.Trigger className="py-cn-xs px-cn-sm rounded-t-3 absolute inset-0 z-0 hover:cursor-pointer [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center" />
-              <StackedList.Field className="grid pl-5" title={<LineTitle {...header} />} disableTruncate />
-            </div>
+            <Accordion.Trigger className="[&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center !py-cn-xs !px-cn-sm hover:cursor-pointer">
+              <StackedList.Field
+                title={<LineTitle {...header} toRepoFileDetails={toRepoFileDetails} commitSHA={commitSHA} />}
+                disableTruncate
+              />
+            </Accordion.Trigger>
             <Accordion.Content className="pb-0">
               <div className="rounded-b-3 overflow-hidden border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
@@ -143,7 +151,7 @@ const CommitsAccordion: FC<{
   )
 }
 
-export const CommitChanges: FC<DataProps> = ({ data, diffMode }) => {
+export const CommitChanges: FC<DataProps> = ({ data, diffMode, commitSHA, toRepoFileDetails }) => {
   const [openItems, setOpenItems] = useState<string[]>([])
 
   useEffect(() => {
@@ -172,6 +180,8 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode }) => {
             diffMode={diffMode}
             openItems={openItems}
             onToggle={() => toggleOpen(item.text)}
+            toRepoFileDetails={toRepoFileDetails}
+            commitSHA={commitSHA}
           />
         )
       })}

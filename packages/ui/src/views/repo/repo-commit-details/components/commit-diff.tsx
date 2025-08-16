@@ -5,10 +5,11 @@ import { CommitChanges } from './commit-changes'
 
 export interface CommitDiffsViewProps {
   useCommitDetailsStore: () => ICommitDetailsStore
+  toRepoFileDetails?: ({ path }: { path: string }) => string
 }
 
-export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore }) => {
-  const { diffs, diffStats } = useCommitDetailsStore()
+export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore, toRepoFileDetails }) => {
+  const { diffs, diffStats, commitSHA } = useCommitDetailsStore()
 
   return (
     <Layout.Flex direction="column" className="w-full pb-cn-xl min-h-[calc(100vh-var(--cn-page-nav-height))]" gapY="sm">
@@ -31,6 +32,8 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
           isBinary: item.isBinary
         }))}
         diffMode={2}
+        toRepoFileDetails={toRepoFileDetails}
+        commitSHA={commitSHA}
       />
     </Layout.Flex>
   )

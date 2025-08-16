@@ -8,6 +8,7 @@ import {
   useListCommitsQuery
 } from '@harnessio/code-service-client'
 import {
+  Accordion,
   FileViewerControlBar,
   getIsMarkdown,
   IconV2,
@@ -61,7 +62,7 @@ const RenameHistorySection: React.FC<RenameHistorySectionProps> = ({
   routes,
   gitRef
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [accordionValue, setAccordionValue] = useState<string | undefined>(undefined)
   const { data, isFetching } = useListCommitsQuery(
     {
       repo_ref: repoRef,
@@ -71,54 +72,57 @@ const RenameHistorySection: React.FC<RenameHistorySectionProps> = ({
         limit: 20
       }
     },
-    { enabled: isExpanded }
+    { enabled: true }
   )
-
-  const toggleExpanded = () => setIsExpanded(prev => !prev)
 
   return (
     <div className="space-y-cn-sm">
-      <button
-        className="flex items-center gap-cn-xs p-cn-sm w-full text-left hover:bg-cn-background-2 rounded pl-0"
-        aria-expanded={isExpanded}
-        onClick={toggleExpanded}
+      <Accordion.Root
+        type="single"
+        collapsible
+        onValueChange={value => setAccordionValue(Array.isArray(value) ? value[0] : value)}
       >
-        <IconV2 name={isExpanded ? 'nav-arrow-up' : 'nav-arrow-down'} size="xs" className="text-cn-foreground-3" />
-        <IconV2 name="git-commit" size="xs" className="text-cn-foreground-3" />
-        <Text variant="body-single-line-normal" color="foreground-2">
-          Renamed from {titlePath} - {isExpanded ? 'Hide History' : 'Show History'}
-        </Text>
-      </button>
-
-      {isExpanded && (
-        <div className="mt-cn-md">
-          {isFetching ? (
-            <Skeleton.List />
-          ) : data?.body?.commits?.length ? (
-            <CommitsList
-              className="mt-cn-md"
-              toCommitDetails={({ sha }: { sha: string }) =>
-                routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
-              }
-              toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
-              data={data.body.commits.map((item: TypesCommit) => ({
-                sha: item.sha,
-                parent_shas: item.parent_shas,
-                title: item.title,
-                message: item.message,
-                author: item.author,
-                committer: item.committer
-              }))}
-            />
-          ) : (
-            <Layout.Vertical className="mt-cn-md p-cn-sm">
-              <Text variant="body-single-line-normal" color="foreground-3">
-                No previous commits found
+        <Accordion.Item value="rename-history" style={{ border: 'none' }}>
+          <Accordion.Trigger indicatorProps={{ className: 'hidden' }}>
+            <div className="flex items-center gap-cn-xs">
+              <IconV2 name="nav-arrow-down" size="xs" className="text-cn-foreground-3" />
+              <IconV2 name="git-commit" size="xs" className="text-cn-foreground-3" />
+              <Text variant="body-single-line-normal" color="foreground-2">
+                Renamed from {titlePath} - {accordionValue ? 'Hide History' : 'Show History'}
               </Text>
-            </Layout.Vertical>
-          )}
-        </div>
-      )}
+            </div>
+          </Accordion.Trigger>
+          <Accordion.Content>
+            <div className="mt-cn-md">
+              {isFetching ? (
+                <Skeleton.List />
+              ) : data?.body?.commits?.length ? (
+                <CommitsList
+                  className="mt-cn-md"
+                  toCommitDetails={({ sha }: { sha: string }) =>
+                    routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+                  }
+                  toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+                  data={data.body.commits.map((item: TypesCommit) => ({
+                    sha: item.sha,
+                    parent_shas: item.parent_shas,
+                    title: item.title,
+                    message: item.message,
+                    author: item.author,
+                    committer: item.committer
+                  }))}
+                />
+              ) : (
+                <Layout.Vertical className="mt-cn-md p-cn-sm">
+                  <Text variant="body-single-line-normal" color="foreground-3">
+                    No previous commits found
+                  </Text>
+                </Layout.Vertical>
+              )}
+            </div>
+          </Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>
     </div>
   )
 }

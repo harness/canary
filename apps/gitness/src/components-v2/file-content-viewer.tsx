@@ -1,8 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
 import {
+  OpenapiGetContentOutput,
+  TypesCommit,
+  TypesRenameDetails,
+  useListCommitsQuery
+} from '@harnessio/code-service-client'
+import {
+  Accordion,
   FileViewerControlBar,
   getIsMarkdown,
   IconV2,
@@ -12,6 +18,7 @@ import {
   ScrollArea,
   Skeleton,
   Tabs,
+  Text,
   ViewTypeValue
 } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/utils'
@@ -36,6 +43,149 @@ import GitBlame from './GitBlame'
 
 const getDefaultView = (language?: string): ViewTypeValue => {
   return getIsMarkdown(language) ? 'preview' : 'code'
+}
+
+type RenameHistorySectionProps = {
+  titlePath: string
+  repoRef: string
+  spaceId: string
+  repoId: string
+  routes: any
+  gitRef: string
+}
+
+const RenameHistorySection: React.FC<RenameHistorySectionProps> = ({
+  titlePath,
+  repoRef,
+  spaceId,
+  repoId,
+  routes,
+  gitRef
+}) => {
+  const [accordionValue, setAccordionValue] = useState<string | undefined>(undefined)
+  const { data, isFetching } = useListCommitsQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      git_ref: gitRef,
+      path: titlePath || '',
+      limit: 20
+    }
+  })
+
+  return (
+    <div className="space-y-cn-sm">
+      <Accordion.Root
+        type="single"
+        collapsible
+        onValueChange={value => setAccordionValue(Array.isArray(value) ? value[0] : value)}
+      >
+        <Accordion.Item value="rename-history" style={{ border: 'none' }}>
+          <Accordion.Trigger indicatorProps={{ className: 'hidden' }}>
+            <div className="flex items-center gap-cn-xs">
+              <IconV2 name="nav-arrow-down" size="xs" className="text-cn-foreground-3" />
+              <IconV2 name="git-commit" size="xs" className="text-cn-foreground-3" />
+              <Text variant="body-single-line-normal" color="foreground-2">
+                Renamed from {titlePath} - {accordionValue ? 'Hide History' : 'Show History'}
+              </Text>
+            </div>
+          </Accordion.Trigger>
+          <Accordion.Content>
+            <div className="mt-cn-md">
+              {isFetching ? (
+                <Skeleton.List />
+              ) : data?.body?.commits?.length ? (
+                <CommitsList
+                  className="mt-cn-md"
+                  toCommitDetails={({ sha }: { sha: string }) =>
+                    routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+                  }
+                  toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+                  data={data.body.commits.map((item: TypesCommit) => ({
+                    sha: item.sha,
+                    parent_shas: item.parent_shas,
+                    title: item.title,
+                    message: item.message,
+                    author: item.author,
+                    committer: item.committer
+                  }))}
+                />
+              ) : (
+                <Layout.Vertical className="mt-cn-md p-cn-sm">
+                  <Text variant="body-single-line-normal" color="foreground-3">
+                    No previous commits found
+                  </Text>
+                </Layout.Vertical>
+              )}
+            </div>
+          </Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>
+    </div>
+  )
+}
+
+interface RenameHistoryDetectorProps {
+  repoRef: string
+  spaceId: string
+  repoId: string
+  routes: any
+  currentPath: string
+  gitRef: string
+}
+
+const RenameHistoryDetector: React.FC<RenameHistoryDetectorProps> = ({
+  repoRef,
+  spaceId,
+  repoId,
+  routes,
+  currentPath,
+  gitRef
+}) => {
+  const [oldPath, setOldPath] = useState<string | null>(null)
+
+  // Try to detect if this file was renamed by looking at the first commit
+  const { data: firstCommit } = useListCommitsQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      git_ref: gitRef,
+      path: currentPath,
+      limit: 1
+    }
+  })
+
+  const { data: renameInfo } = useListCommitsQuery(
+    {
+      repo_ref: repoRef,
+      queryParams: {
+        git_ref: firstCommit?.body?.commits?.[0]?.sha || '',
+        path: currentPath,
+        limit: 1
+      }
+    },
+    { enabled: !!firstCommit?.body?.commits?.[0]?.sha }
+  )
+
+  useEffect(() => {
+    if (renameInfo?.body?.rename_details && renameInfo.body.rename_details.length > 0) {
+      const renameDetail = renameInfo.body.rename_details[0]
+      if (renameDetail.old_path && renameDetail.commit_sha_before) {
+        setOldPath(renameDetail.old_path)
+      }
+    }
+  }, [renameInfo])
+
+  if (!oldPath) return null
+
+  return (
+    <RenameHistorySection
+      titlePath={oldPath}
+      repoRef={repoRef}
+      spaceId={spaceId}
+      repoId={repoId}
+      routes={routes}
+      gitRef={gitRef}
+    />
+  )
 }
 
 interface FileContentViewerProps {
@@ -78,6 +228,19 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
       path: fullResourcePath
     }
   })
+
+  const [cachedRenameDetails, setCachedRenameDetails] = useState<TypesRenameDetails[] | null>(null)
+
+  useEffect(() => {
+    if (commitData?.rename_details && commitData.rename_details.length > 0) {
+      setCachedRenameDetails(commitData.rename_details)
+    }
+  }, [commitData?.rename_details])
+
+  const renameDetailsToRender = useMemo(() => {
+    if (commitData?.rename_details && commitData.rename_details.length > 0) return commitData.rename_details
+    return cachedRenameDetails || null
+  }, [commitData?.rename_details, cachedRenameDetails])
 
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -289,6 +452,41 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
                   committer: item.committer
                 }))}
               />
+
+              {/* Show rename history if available */}
+              {renameDetailsToRender && renameDetailsToRender.length > 0 && (
+                <Layout.Vertical className="mt-cn-md">
+                  {renameDetailsToRender.map((detail, index) => {
+                    if (!detail.old_path) return null
+                    return (
+                      <RenameHistorySection
+                        key={index}
+                        titlePath={detail.old_path}
+                        repoRef={repoRef}
+                        spaceId={spaceId || ''}
+                        repoId={repoId || ''}
+                        routes={routes}
+                        gitRef={fullGitRef}
+                      />
+                    )
+                  })}
+                </Layout.Vertical>
+              )}
+
+              {/* Always show rename history if we know the file was renamed, even without rename_details */}
+              {!renameDetailsToRender && fullResourcePath && (
+                <Layout.Vertical className="mt-cn-md">
+                  <RenameHistoryDetector
+                    repoRef={repoRef}
+                    spaceId={spaceId || ''}
+                    repoId={repoId || ''}
+                    routes={routes}
+                    currentPath={fullResourcePath}
+                    gitRef={fullGitRef}
+                  />
+                </Layout.Vertical>
+              )}
+
               <Pagination
                 indeterminate
                 hasNext={xNextPage > 0}

@@ -397,7 +397,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const getToggleCommonProps = (filterGroup: PRFilterGroupTogglerOptions): ButtonGroupBaseButtonProps => {
     return {
       onClick: () => onFilterGroupChange(filterGroup),
-      className: 'border-cn-borders-surface-gray',
+      className: activeFilterGrp === filterGroup ? 'z-[2]' : '',
       variant: activeFilterGrp === filterGroup ? 'primary' : 'outline'
     }
   }

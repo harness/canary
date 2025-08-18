@@ -47,11 +47,5 @@ export default {
                 }
             }
         },
-
-        '& .cn-button': {
-            '&:hover, &:focus': {
-                'z-index': '1',
-            }
-        }
     }
 }

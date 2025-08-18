@@ -80,6 +80,7 @@ export const DemoCodeEditorShadowDom: React.FC<React.PropsWithChildren<React.HTM
                     setBounds(undefined)
                   }
                 }}
+                highlightKeyword="Services"
               />
             </div>
           )}

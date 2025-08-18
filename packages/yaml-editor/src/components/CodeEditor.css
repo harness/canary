@@ -1,6 +1,10 @@
 .CodeEditor_HighlightedLine {
   opacity: 0.1;
-  background-color: var(--cn-yellow-300) !important;
+  background-color: var(--cn-yellow-300, orange) !important;
+}
+
+.CodeEditor_HighlightedText {
+  background-color: var(--cn-yellow-100, orange) !important;
 }
 
 .CodeEditor_HighlightedGlyphMargin {

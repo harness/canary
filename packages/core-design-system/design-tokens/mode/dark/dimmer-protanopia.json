@@ -249,7 +249,7 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.900}",
+          "$value": "{purple.950}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
@@ -1801,19 +1801,6 @@
             "blur": "0",
             "spread": "0.6",
             "color": "{comp.avatar.shadow}",
-            "type": "innerShadow"
-          }
-        }
-      },
-      "ai": {
-        "inner": {
-          "$type": "boxShadow",
-          "$value": {
-            "x": "0",
-            "y": "7",
-            "blur": "16",
-            "spread": "0",
-            "color": "{set.ai.surface.inner-shadow}",
             "type": "innerShadow"
           }
         }

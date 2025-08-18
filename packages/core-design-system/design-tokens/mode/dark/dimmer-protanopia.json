@@ -261,13 +261,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.5",
+                "value": "0.35",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{blue.850}"
+          "$value": "{blue.600}"
         }
       }
     },
@@ -1804,6 +1804,19 @@
             "type": "innerShadow"
           }
         }
+      },
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "7",
+            "blur": "16",
+            "spread": "0",
+            "color": "{set.ai.surface.inner-shadow}",
+            "type": "innerShadow"
+          }
+        }
       }
     }
   },
@@ -2668,15 +2681,15 @@
     "ai-subtle": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{orange.850}"
+        "$value": "{orange.800}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pink.900}"
+        "$value": "{purple.850}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{purple.900}"
+        "$value": "{violet.900}"
       },
       "gradient-stop-4": {
         "$type": "color",

@@ -21,12 +21,14 @@ export const pullRequestListStore: PullRequestListStore = {
         {
           color: ColorsEnum.CYAN,
           key: 'label-1',
-          value: 'value-1'
+          value: 'value-1',
+          scope: 0
         },
         {
           color: ColorsEnum.RED,
           key: 'label-2',
-          value: 'value-2'
+          value: 'value-2',
+          scope: 1
         }
       ]
     }

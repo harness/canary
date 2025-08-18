@@ -21,12 +21,14 @@ import {
   getApprovalStateVariant,
   processReviewDecision
 } from '../../pull-request-utils'
+import { ChainedCommitsDropdown } from './chained-commits-dropdown'
 import * as FileViewGauge from './file-viewed-gauge'
 
 export interface CommitFilterItemProps {
   name: string
   count: number
   value: string
+  datetime?: string
 }
 
 export interface PullRequestChangesFilterProps {
@@ -96,7 +98,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         commitsList.push({
           name: commitInfo.message || '',
           count: 0,
-          value: commitInfo.sha || ''
+          value: commitInfo.sha || '',
+          datetime: commitInfo.committer?.when || ''
         })
       })
       setCommitFilterOptions(commitsList)
@@ -139,46 +142,6 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     }
   }
 
-  /** Click handler to manage multi-selection of commits */
-  const handleCommitCheck = (item: CommitFilterItemProps, checked: boolean): void => {
-    // If user clicked on 'All Commits', reset selection to just the default commit filter
-    if (item.value === defaultCommitFilter.value) {
-      setSelectedCommits([defaultCommitFilter])
-      return
-    }
-
-    setSelectedCommits((prev: CommitFilterItemProps[]) => {
-      // Remove the 'All' option if it exists in the selection
-      const withoutDefault = prev.filter(sel => sel.value !== defaultCommitFilter.value)
-
-      if (checked) {
-        // Add the item to selection
-        return [...withoutDefault, item]
-      } else {
-        // Remove the item from selection, but ensure at least one item remains selected
-        const filtered = withoutDefault.filter(sel => sel.value !== item.value)
-        return filtered.length > 0 ? filtered : withoutDefault
-      }
-    })
-  }
-
-  function renderCommitDropdownItems(items: CommitFilterItemProps[]): JSX.Element[] {
-    return items.map((item, idx) => {
-      const isSelected = selectedCommits.some(sel => sel.value === item.value)
-
-      return (
-        <DropdownMenu.CheckboxItem
-          title={item.name}
-          checked={isSelected}
-          key={idx}
-          onCheckedChange={checked => handleCommitCheck(item, checked)}
-          className="flex cursor-pointer items-center"
-        />
-      )
-    })
-  }
-
-  const commitDropdownItems = renderCommitDropdownItems(commitFilterOptions)
   const itemsToRender = getApprovalItems(approveState, approvalItems)
   // const handleDiffModeChange = (value: string) => {
   //   setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -216,9 +179,12 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               <IconV2 name="nav-solid-arrow-down" size="2xs" />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="w-96" align="start">
-            {commitDropdownItems}
-          </DropdownMenu.Content>
+          <ChainedCommitsDropdown
+            commitFilterOptions={commitFilterOptions}
+            defaultCommitFilter={defaultCommitFilter}
+            selectedCommits={selectedCommits}
+            setSelectedCommits={setSelectedCommits}
+          />
         </DropdownMenu.Root>
 
         {/* <DropdownMenu.Root>

@@ -99,6 +99,9 @@ export default {
           danger: 'var(--cn-border-danger)',
           success: 'var(--cn-border-success)',
           accent: 'var(--cn-border-brand)',
+          surface: {
+            gray: 'lch(from var(--cn-set-gray-surface-border) l c h / <alpha-value>)'
+          },
 
           // remove
           // update to focus, disabled, success, danger, warning

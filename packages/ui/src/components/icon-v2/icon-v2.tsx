@@ -5,6 +5,8 @@ import { cva, VariantProps } from 'class-variance-authority'
 
 import { IconNameMapV2 } from './icon-name-map'
 
+export const IconV2DisplayName = 'IconV2'
+
 export type IconV2NamesType = keyof typeof IconNameMapV2
 
 export const iconVariants = cva('cn-icon', {
@@ -64,4 +66,4 @@ const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
 
 export { IconV2 }
 
-IconV2.displayName = 'IconV2'
+IconV2.displayName = IconV2DisplayName

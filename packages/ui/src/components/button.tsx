@@ -2,9 +2,10 @@ import { ButtonHTMLAttributes, forwardRef } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
+import { filterChildrenByDisplayNames } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { IconV2 } from './icon-v2'
+import { IconV2, IconV2DisplayName } from './icon-v2'
 
 const buttonVariants = cva('cn-button', {
   variants: {
@@ -18,11 +19,11 @@ const buttonVariants = cva('cn-button', {
       transparent: 'cn-button-transparent'
     },
     size: {
-      '3xs': 'cn-button-3xs',
-      '2xs': 'cn-button-2xs',
-      xs: 'cn-button-xs',
+      md: '',
       sm: 'cn-button-sm',
-      md: ''
+      xs: 'cn-button-xs',
+      '2xs': 'cn-button-2xs',
+      '3xs': 'cn-button-3xs'
     },
     rounded: {
       true: 'cn-button-rounded'
@@ -105,45 +106,41 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       theme = 'default',
       rounded,
-      iconOnly,
+      iconOnly: _iconOnly = false,
       asChild = false,
       loading,
       disabled,
-      children,
+      children: _children,
       type = 'button',
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button'
+    const microSize = size === '2xs' || size === '3xs'
+    const iconOnly = _iconOnly || microSize
 
-    const _children = loading ? (
+    const filteredChildren = iconOnly ? filterChildrenByDisplayNames(_children, [IconV2DisplayName])[0] : _children
+
+    const children = loading ? (
       <>
-        {loading && <IconV2 className="animate-spin" name="loader" />}
-        {children}
+        <IconV2 className="animate-spin" name="loader" />
+        {/* When button state is 'loading' and iconOnly is true, we show only 1 icon */}
+        {!iconOnly && filteredChildren}
       </>
     ) : (
-      children
+      filteredChildren
     )
 
     return (
       <Comp
-        className={cn(
-          buttonVariants({
-            variant: variant || 'primary',
-            size: size || 'md',
-            theme: theme || 'default',
-            rounded,
-            iconOnly,
-            className
-          })
-        )}
+        className={cn(buttonVariants({ variant, size, theme, rounded, iconOnly, className }))}
         ref={ref}
         disabled={disabled || loading}
         type={type}
         {...props}
       >
-        {_children}
+        {children}
       </Comp>
     )
   }

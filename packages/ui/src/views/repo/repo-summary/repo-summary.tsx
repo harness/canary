@@ -277,7 +277,7 @@ export function RepoSummaryView({
                 },
                 {
                   id: '1',
-                  name: t('views:repos.branches', 'Branches'),
+                  name: t('views:repos.branches.title', 'Branches'),
                   count: branch_count,
                   iconName: 'git-branch',
                   to: props.toRepoBranches?.() ?? '#'

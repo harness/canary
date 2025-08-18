@@ -115,7 +115,7 @@ export function CreateBranchDialog({
           <FormWrapper id="create-branch-form" {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
             <FormInput.Text
               id="name"
-              label="Branch name"
+              label="Name"
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}

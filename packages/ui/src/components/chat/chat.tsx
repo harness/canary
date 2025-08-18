@@ -28,7 +28,7 @@ const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 }
 
 const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="sticky bottom-0 bg-cn-background-1 px-6 py-3">{children}</div>
+  return <div className="sticky bottom-0 z-10 bg-cn-background-1 px-6 py-3">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {

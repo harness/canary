@@ -15,12 +15,13 @@ export default {
   },
 
   '.cn-modal-dialog-content': {
+    '--cn-dialog-width': 'min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-sm))',
     backgroundColor: 'var(--cn-bg-2)',
     borderRadius: 'var(--cn-dialog-radius)',
     border: '1px solid var(--cn-border-3)',
     borderWidth: 'var(--cn-dialog-border)',
     boxShadow: 'var(--cn-shadow-5)',
-    width: 'var(--cn-modal-width-sm)',
+    width: 'var(--cn-dialog-width)',
     maxWidth: 'calc(100vw - (var(--cn-dialog-safezone) * 2))',
     maxHeight: 'calc(100vh - (var(--cn-dialog-safezone) * 2))',
     paddingTop: 'var(--cn-dialog-px)',
@@ -37,14 +38,11 @@ export default {
       animation: 'cn-dialog-slideOut 0.2s ease-in forwards'
     },
 
-    '&.cn-modal-dialog-sm': {
-      width: `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-sm))`
-    },
     '&.cn-modal-dialog-md': {
-      width: `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-md))`
+      '--cn-dialog-width': `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-md))`
     },
     '&.cn-modal-dialog-lg': {
-      width: `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-lg))`
+      '--cn-dialog-width': `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-lg))`
     }
   },
 
@@ -102,6 +100,8 @@ export default {
   // Body Component
   '.cn-modal-dialog-body': {
     '--cn-modal-dialog-scroll-compensation': '4px',
+    display: 'grid',
+    gridTemplateColumns: 'calc(var(--cn-dialog-width) - var(--cn-dialog-px)*2)',
     paddingInline: 'var(--cn-modal-dialog-scroll-compensation)',
     paddingBottom: 'var(--cn-modal-dialog-scroll-compensation)',
     marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
@@ -110,8 +110,8 @@ export default {
     height: '100%',
 
     '&-content': {
-      display: 'grid',
-      alignContent: 'start',
+      display: 'flex',
+      flexDirection: 'column',
       gap: 'var(--cn-layout-xl)'
     }
   },

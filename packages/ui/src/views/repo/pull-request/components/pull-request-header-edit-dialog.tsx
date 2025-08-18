@@ -152,7 +152,9 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
 
         <Dialog.Footer>
           <ButtonLayout>
-            <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
+            <Dialog.Close onClick={handleDialogClose} disabled={isDisabled}>
+              Cancel
+            </Dialog.Close>
             <Button type="submit" form="edit-pr-title-form" disabled={isDisabled}>
               {isLoading ? 'Saving...' : 'Save'}
             </Button>

@@ -171,7 +171,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
         </Dialog.Body>
         <Dialog.Footer>
           <ButtonLayout>
-            <Dialog.Close onClick={onClose}>
+            <Dialog.Close onClick={onClose} disabled={isLoading}>
               {createdTokenData
                 ? t('views:profileSettings.gotItButton', 'Got It')
                 : t('views:profileSettings.cancel', 'Cancel')}

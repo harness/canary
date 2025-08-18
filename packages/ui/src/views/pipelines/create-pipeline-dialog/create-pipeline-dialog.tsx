@@ -144,6 +144,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 onCancel()
                 reset()
               }}
+              disabled={isLoadingBranchNames}
             >
               Cancel
             </Dialog.Close>

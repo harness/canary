@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
 import { z } from 'zod'
 
 import { PullRequestType } from '../pull-request/pull-request.types'
@@ -55,15 +53,10 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
-  isCreateBranchDialogOpen: boolean
   setCreateBranchDialogOpen: (isOpen: boolean) => void
-  onSubmit: (formValues: CreateBranchFormFields) => Promise<void>
-  isCreatingBranch: boolean
-  createBranchError?: string
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
   onDeleteBranch: (branchName: string) => void
-  setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>
 }
 
 export interface CreateBranchDialogProps {

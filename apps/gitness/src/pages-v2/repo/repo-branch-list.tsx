@@ -6,13 +6,12 @@ import { isEmpty } from 'lodash-es'
 
 import {
   useCalculateCommitDivergenceMutation,
-  useCreateBranchMutation,
   useDeleteBranchMutation,
   useFindRepositoryQuery,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
+import { RepoBranchListView } from '@harnessio/ui/views'
 
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -44,7 +43,6 @@ export function RepoBranchesListPage() {
   } = useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')
-  const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
@@ -57,7 +55,7 @@ export function RepoBranchesListPage() {
     queryParams: {
       page: queryPage,
       limit: 10,
-      query: (createBranchSearchQuery || query) ?? '',
+      query: query ?? '',
       order: orderSortDate.DESC,
       sort: 'date',
       include_commit: true,
@@ -106,15 +104,6 @@ export function RepoBranchesListPage() {
     error: deleteBranchError,
     reset: resetDeleteBranch
   } = useDeleteBranchMutation({ repo_ref: repoRef })
-
-  const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
-
-  const onSubmit = async (formValues: CreateBranchFormFields) => {
-    const { name, target } = formValues
-    await saveBranch({ repo_ref: repoRef, body: { name, target, bypass_rules: false } })
-    handleInvalidateBranchList()
-    setCreateBranchDialogOpen(false)
-  }
 
   const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
 
@@ -200,14 +189,10 @@ export function RepoBranchesListPage() {
     <>
       <RepoBranchListView
         isLoading={isLoadingBranches || isLoadingDivergence}
-        isCreatingBranch={isCreatingBranch}
-        onSubmit={onSubmit}
         useRepoBranchesStore={useRepoBranchesStore}
-        isCreateBranchDialogOpen={isCreateBranchDialogOpen}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         searchQuery={query}
         setSearchQuery={setQuery}
-        createBranchError={createBranchError?.message}
         // toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
         toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
           routes.toPullRequestCompare({ spaceId, repoId, diffRefs })
@@ -217,7 +202,6 @@ export function RepoBranchesListPage() {
         }
         toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
         onDeleteBranch={handleSetDeleteBranch}
-        setCreateBranchSearchQuery={setCreateBranchSearchQuery}
       />
 
       <CreateBranchDialog

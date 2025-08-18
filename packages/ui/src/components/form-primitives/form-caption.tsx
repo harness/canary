@@ -1,5 +1,6 @@
 import { forwardRef, PropsWithChildren } from 'react'
 
+import { cn } from '@/utils'
 import { IconV2 } from '@components/icon-v2'
 import { Text, textVariants } from '@components/text'
 import { VariantProps } from 'class-variance-authority'
@@ -42,7 +43,7 @@ export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<Fo
     }
 
     return (
-      <Text color={getColor(theme, disabled)} className={className} ref={ref}>
+      <Text color={getColor(theme, disabled)} className={cn('cn-caption', className)} ref={ref}>
         {canShowIcon && <IconV2 name={effectiveIconName} size="md" />}
         <span>{children}</span>
       </Text>

@@ -133,7 +133,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
 
         <Dialog.Footer>
           <ButtonLayout>
-            <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
+            <Dialog.Close onClick={handleClose} disabled={isLoading}>
               {t('views:repos.cancel', 'Cancel')}
             </Dialog.Close>
             {!bypassable || !violation ? (

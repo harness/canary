@@ -3,6 +3,7 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Button,
   ButtonGroup,
+  ButtonGroupBaseButtonProps,
   IconV2,
   Layout,
   ListActions,
@@ -393,8 +394,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     onFilterChange?.(_filterValues)
   }
 
-  const activeClass = 'bg-cn-background-primary text-cn-foreground-primary'
-  const inactiveClass = ''
+  const getToggleCommonProps = (filterGroup: PRFilterGroupTogglerOptions): ButtonGroupBaseButtonProps => {
+    return {
+      onClick: () => onFilterGroupChange(filterGroup),
+      className: activeFilterGrp === filterGroup ? 'z-[2]' : '',
+      variant: activeFilterGrp === filterGroup ? 'primary' : 'outline'
+    }
+  }
 
   return (
     <SandboxLayout.Main>
@@ -435,21 +441,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 {isProjectLevel && (
                   <ButtonGroup
                     buttonsProps={[
-                      {
-                        children: 'All',
-                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.All),
-                        className: activeFilterGrp === PRFilterGroupTogglerOptions.All ? activeClass : inactiveClass
-                      },
-                      {
-                        children: 'Created',
-                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.Created),
-                        className: activeFilterGrp === PRFilterGroupTogglerOptions.Created ? activeClass : inactiveClass
-                      },
+                      { children: 'All', ...getToggleCommonProps(PRFilterGroupTogglerOptions.All) },
+                      { children: 'Created', ...getToggleCommonProps(PRFilterGroupTogglerOptions.Created) },
                       {
                         children: 'Review Requested',
-                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.ReviewRequested),
-                        className:
-                          activeFilterGrp === PRFilterGroupTogglerOptions.ReviewRequested ? activeClass : inactiveClass
+                        ...getToggleCommonProps(PRFilterGroupTogglerOptions.ReviewRequested)
                       }
                     ]}
                     size="sm"

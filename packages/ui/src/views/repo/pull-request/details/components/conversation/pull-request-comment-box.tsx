@@ -409,14 +409,19 @@ export const PullRequestCommentBox = ({
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {
-    const initial: ToolbarItem[] = handleAiPullRequestSummary
+    const aiButton: ToolbarItem[] = handleAiPullRequestSummary
       ? [{ icon: 'ai' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
       : []
 
+    const suggestionButton: ToolbarItem[] =
+      diff !== '' && lineNumber !== undefined && lineFromNumber !== undefined
+        ? [{ icon: 'suggestion', action: ToolbarAction.SUGGESTION }]
+        : []
+
     // TODO: Design system: Update icons once they are available in IconV2
     return [
-      ...initial,
-      { icon: 'suggestion', action: ToolbarAction.SUGGESTION },
+      ...aiButton,
+      ...suggestionButton,
       { icon: 'header', action: ToolbarAction.HEADER },
       { icon: 'bold', action: ToolbarAction.BOLD },
       { icon: 'italic', action: ToolbarAction.ITALIC },
@@ -425,7 +430,7 @@ export const PullRequestCommentBox = ({
       { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
       { icon: 'code', action: ToolbarAction.CODE_BLOCK }
     ]
-  }, [])
+  }, [diff, lineNumber, lineFromNumber, handleAiPullRequestSummary])
 
   const handleActionClick = (type: ToolbarAction, comment: string, textSelection: TextSelection) => {
     switch (type) {
@@ -612,7 +617,7 @@ export const PullRequestCommentBox = ({
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
           <Tabs.List
-            className="-mx-4 px-4 mb-cn-md"
+            className="-mx-4 mb-cn-md px-4"
             activeClassName={inReplyMode ? 'bg-cn-background-2' : 'bg-cn-background-1'}
             variant="overlined"
           >
@@ -633,7 +638,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="text-cn-foreground-1 min-h-24 pb-8"
+                className="min-h-24 pb-8 text-cn-foreground-1"
                 autoFocus={!!autofocus || !!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -661,7 +666,7 @@ export const PullRequestCommentBox = ({
 
               <Layout.Flex
                 align="center"
-                className="bg-cn-background-1 absolute bottom-[1px] left-[1px] w-[calc(100%-20px)] rounded"
+                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-background-1"
               >
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0

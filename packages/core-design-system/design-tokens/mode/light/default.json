@@ -271,17 +271,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{tuna.200}",
+          "$value": "{tuna.150}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "{tuna.200}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "{tuna.200}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },

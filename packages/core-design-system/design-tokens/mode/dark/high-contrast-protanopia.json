@@ -357,61 +357,71 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{blue.950}",
+          "$value": "{mint.1000}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.300}",
+          "$value": "{mint.300}",
+          "$description": "Background color for prominent green surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{mint.200}",
+          "$description": "Background color for prominent green surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{mint.200}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{mint.150}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{mint.950}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{mint.900}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{mint.900}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{blue.100}",
+          "$value": "{mint.150}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.950}",
+          "$value": "{mint.1000}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{mint.900}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{mint.950}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{mint.900}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -420,12 +430,22 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{red.950}",
+          "$value": "{red.1000}",
           "$description": "Text color for high-contrast red surfaces."
         },
         "bg": {
           "$type": "color",
           "$value": "{red.300}",
+          "$description": "Background color for prominent red surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{red.200}",
+          "$description": "Background color for prominent red surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{red.200}",
           "$description": "Background color for prominent red surfaces."
         }
       },

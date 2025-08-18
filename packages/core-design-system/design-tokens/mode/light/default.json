@@ -346,6 +346,16 @@
           "$type": "color",
           "$value": "{mint.600}",
           "$description": "Background color for prominent green surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{mint.600}",
+          "$description": "Background color for prominent green surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{mint.600}",
+          "$description": "Background color for prominent green surfaces."
         }
       },
       "soft": {
@@ -406,6 +416,16 @@
           "$description": "Text color for high-contrast red surfaces."
         },
         "bg": {
+          "$type": "color",
+          "$value": "{red.600}",
+          "$description": "Background color for prominent red surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{red.600}",
+          "$description": "Background color for prominent red surfaces."
+        },
+        "bg-selected": {
           "$type": "color",
           "$value": "{red.600}",
           "$description": "Background color for prominent red surfaces."

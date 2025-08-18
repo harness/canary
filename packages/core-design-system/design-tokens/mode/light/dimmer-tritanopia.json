@@ -272,8 +272,11 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.100}",
-          "$description": "Selected state background color for active AI items."
+          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
+        },
+        "inner-shadow": {
+          "$type": "color",
+          "$value": "{pure.white}"
         }
       }
     },
@@ -1797,18 +1800,6 @@
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
     },
-    "inner": {
-      "$type": "boxShadow",
-      "$value": {
-        "x": "0",
-        "y": "2",
-        "blur": "4",
-        "spread": "0",
-        "color": "{shadow-color.inner}",
-        "type": "innerShadow"
-      },
-      "$description": "Inner shadow. \nCommon uses: Pressed buttons, selected states, inset form fields."
-    },
     "comp": {
       "avatar": {
         "inner": {
@@ -1819,6 +1810,19 @@
             "blur": "0",
             "spread": "0.6",
             "color": "{comp.avatar.shadow}",
+            "type": "innerShadow"
+          }
+        }
+      },
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "7",
+            "blur": "16",
+            "spread": "0",
+            "color": "{set.ai.surface.inner-shadow}",
             "type": "innerShadow"
           }
         }
@@ -1923,20 +1927,6 @@
       "$type": "color",
       "$value": "{chrome.900}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
-    },
-    "inner": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.1",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{chrome.900}",
-      "$description": "Subtle inner shadow color. Creates inset effect for pressed or focused states."
     }
   },
   "ring": {
@@ -2695,6 +2685,24 @@
             }
           }
         }
+      }
+    },
+    "ai-subtle": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{yellow.25}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{pink.50}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{purple.50}"
+      },
+      "gradient-stop-4": {
+        "$type": "color",
+        "$value": "{cyan.50}"
       }
     }
   },

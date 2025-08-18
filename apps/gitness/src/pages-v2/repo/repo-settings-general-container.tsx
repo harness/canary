@@ -329,6 +329,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         isLoading={isDeletingRepo}
         error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null}
         type="repository"
+        deletionItemName={repoDataStore?.name}
         deletionKeyword={repoDataStore?.name}
       />
     </>

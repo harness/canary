@@ -14,6 +14,7 @@ export interface DeleteAlertDialogProps {
   error?: { type?: string; message: string } | null
   withForm?: boolean
   message?: string
+  deletionItemName?: string
   deletionKeyword?: string
   violation?: boolean
   bypassable?: boolean
@@ -29,6 +30,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   error,
   withForm = false,
   message,
+  deletionItemName,
   deletionKeyword = 'DELETE',
   violation = false,
   bypassable = false
@@ -80,9 +82,9 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
       return (
         <>
           {parts[0]}
-          {identifier && (
+          {(deletionItemName ?? identifier) && (
             <Text as="span" variant="body-strong">
-              {identifier}
+              {deletionItemName ?? identifier}
             </Text>
           )}
           {parts[1]}
@@ -94,7 +96,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
       'component:deleteDialog.description',
       `This will permanently remove all data. This action cannot be undone.`
     )
-  }, [type, t, message, identifier])
+  }, [type, t, message, identifier, deletionItemName])
 
   return (
     <AlertDialog.Root

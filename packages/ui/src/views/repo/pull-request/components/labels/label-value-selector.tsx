@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, getScopeType, IconV2, scopeTypeToIconMap, SearchBox, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
@@ -100,7 +100,14 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         >
           <div className="pr-2">
-            <Tag className="max-w-20" variant="secondary" size="sm" theme={label.color} value={label.key ?? ''} />
+            <Tag
+              icon={scopeTypeToIconMap[getScopeType(label.scope ?? 0)]}
+              className="max-w-20"
+              variant="secondary"
+              size="sm"
+              theme={label.color}
+              value={label.key ?? ''}
+            />
           </div>
         </SearchBox.Root>
 
@@ -135,7 +142,14 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
         <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
             onSelect={handleAddNewValue}
-            tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: searchState, label: label.key }}
+            tag={{
+              variant: 'secondary',
+              size: 'sm',
+              theme: label.color,
+              value: searchState,
+              label: label.key,
+              icon: scopeTypeToIconMap[getScopeType(label.scope ?? 0)]
+            }}
           />
         </DropdownMenu.Group>
       )}

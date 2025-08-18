@@ -90,7 +90,7 @@ export const RepoLabelsList = () => {
         searchQuery={query}
         setSearchQuery={setQuery}
         isRepository
-        labelsListViewProps={{ widthType: 'default', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
+        labelsListViewProps={{ widthType: 'small', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
         toRepoLabelDetails={({ labelId, scope }: { labelId: string; scope: number }) => {
           // routes.toRepoLabelDetails({ repoId: repoId ?? '', spaceId: spaceId ?? '', labelId })
           getScopedRuleUrl({

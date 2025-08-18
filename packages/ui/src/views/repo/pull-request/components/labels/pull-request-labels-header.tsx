@@ -1,6 +1,17 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Tag, Text } from '@/components'
+import {
+  Button,
+  DropdownMenu,
+  getScopeType,
+  IconV2,
+  Link,
+  LinkProps,
+  scopeTypeToIconMap,
+  SearchInput,
+  Tag,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
@@ -149,6 +160,7 @@ export const LabelsHeader = ({
                   onSelect={handleOnSelect(label)}
                   title={
                     <Tag
+                      icon={scopeTypeToIconMap[getScopeType(label.scope ?? 0)]}
                       variant="secondary"
                       size="sm"
                       theme={label.color}

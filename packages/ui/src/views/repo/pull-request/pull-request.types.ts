@@ -241,6 +241,7 @@ export interface PRListLabelType {
   key: string
   value?: string
   id?: number
+  scope: number
 }
 
 interface RoutingProps {

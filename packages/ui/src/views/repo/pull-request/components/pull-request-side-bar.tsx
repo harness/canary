@@ -114,7 +114,8 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
               onDelete: () => removeLabel?.(label.id),
               color: label?.assigned_value?.color || label.color,
               key: label.key,
-              value: label?.assigned_value?.value || undefined
+              value: label?.assigned_value?.value || undefined,
+              scope: label.scope
             }))}
           />
         </Layout.Vertical>

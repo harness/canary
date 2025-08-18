@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
+import { getScopeType, scopeTypeToIconMap, Tag, Text } from '@/components'
 import { LabelMarkerProps, PRListLabelType } from '@/views'
-import { Tag } from '@components/tag'
 import { cn } from '@utils/cn'
 
 type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
@@ -15,7 +15,11 @@ interface LabelsListProps {
 
 export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, onClick }) => {
   if (!labels.length) {
-    return <span className="text-2 font-medium text-cn-foreground-3">No labels</span>
+    return (
+      <Text variant="body-strong" color="foreground-3">
+        No labels
+      </Text>
+    )
   }
 
   return (
@@ -25,11 +29,15 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
           key={label.key}
           variant="secondary"
           size="sm"
+          icon={scopeTypeToIconMap[getScopeType(label.scope)]}
           label={label.key}
           value={label.value || ''}
           theme={label.color}
           onActionClick={label.onDelete}
           actionIcon={showReset ? 'xmark' : undefined}
+          className="grid max-w-full grid-cols-[auto_auto]"
+          labelClassName="grid grid-cols-[auto_auto]"
+          valueClassName="grid grid-cols-[auto_auto] content-center"
           onClick={
             onClick
               ? e => {

@@ -249,13 +249,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{orange.25}",
+          "$value": "{purple.50}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{pink.50}",
-          "$description": "Selected state background color for active AI items."
+          "$value": "linear-gradient(94deg, {gradient.ai-subtle.gradient-stop-1} 0%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 100%)"
         }
       }
     },
@@ -2677,6 +2676,24 @@
             }
           }
         }
+      }
+    },
+    "ai-subtle": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{yellow.25}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{pink.50}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{purple.50}"
+      },
+      "gradient-stop-4": {
+        "$type": "color",
+        "$value": "{cyan.50}"
       }
     }
   },

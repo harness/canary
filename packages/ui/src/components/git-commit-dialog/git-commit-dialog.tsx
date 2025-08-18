@@ -173,7 +173,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     <>
                       {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to')}
                       <Tag
-                        className="-mt-0.5 mx-1.5 align-sub"
+                        className="mx-1.5 -mt-0.5 align-sub"
                         variant="secondary"
                         theme="gray"
                         value={currentBranch}
@@ -191,8 +191,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     'Create a new branch for this commit and start a pull request'
                   )}
                   caption={
-                    // TODO: Add correct path
-                    <Link to="/">
+                    <Link to="https://developer.harness.io/docs/category/pull-requests" target="_blank">
                       {t('component:commitDialog.form.radioGroup.new.caption', 'Learn more about pull requests')}
                     </Link>
                   }

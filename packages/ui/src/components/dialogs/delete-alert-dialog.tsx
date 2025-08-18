@@ -66,13 +66,30 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   const displayMessageContent = useMemo(() => {
     if (message) return message
 
+    const replaceText = '__IDENTIFIER__'
+
     if (type) {
-      return t(
+      const text = t(
         'component:deleteDialog.descriptionWithType',
-        `This will permanently delete your ${type} ${identifier} and remove all data. This action cannot be undone.`,
-        { type: type, identifier: identifier }
+        `This will permanently delete your ${type} ${replaceText} and remove all data. This action cannot be undone.`,
+        { type: type, identifier: replaceText }
+      )
+
+      const parts = text.split(replaceText)
+
+      return (
+        <>
+          {parts[0]}
+          {identifier && (
+            <Text as="span" variant="body-strong">
+              {identifier}
+            </Text>
+          )}
+          {parts[1]}
+        </>
       )
     }
+
     return t(
       'component:deleteDialog.description',
       `This will permanently remove all data. This action cannot be undone.`

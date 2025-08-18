@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Text } from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   CommentItem,
@@ -17,6 +17,7 @@ import {
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
+import { FILE_VIEWED_OBSOLETE_SHA } from '@views/repo/pull-request/details/pull-request-utils'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
 
@@ -98,7 +99,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   currentRefForDiff
 }) => {
   const { t } = useTranslation()
-  const { text, addedLines, deletedLines, filePath, checksumAfter } = header
+  const { text, addedLines, deletedLines, filePath, checksumAfter, fileViews } = header
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">
@@ -129,7 +130,11 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           {deletedLines != null && deletedLines > 0 && <CounterBadge theme="danger">-{deletedLines}</CounterBadge>}
         </div>
       </div>
-      <div className="inline-flex items-center gap-x-6">
+      <div className="inline-flex items-center gap-x-2">
+        {/* Show "Changed since last viewed" tag when file is obsolete */}
+        {fileViews?.get(filePath) === FILE_VIEWED_OBSOLETE_SHA && (
+          <Tag value={t('views:pullRequests.changedSinceLastView')} theme="orange" />
+        )}
         {showViewed ? (
           <Button variant="ghost" size="sm" className="gap-x-2.5 px-2.5 py-1.5" onClick={e => e.stopPropagation()}>
             <Checkbox

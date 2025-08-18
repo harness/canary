@@ -620,6 +620,7 @@
     "searchLabels": "Search",
     "noLabels": "No labels found",
     "editLabels": "Edit labels",
+    "changedSinceLastView": "Changed since last viewed",
     "markViewed": "Viewed",
     "deletedComment": "This comment was deleted.",
     "reviewers": "Reviewers",

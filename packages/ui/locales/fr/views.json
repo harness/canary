@@ -612,6 +612,7 @@
     "searchLabels": "Rechercher des étiquettes..",
     "noLabels": "No labels found",
     "editLabels": "Edit labels",
+    "changedSinceLastView": "Modifié depuis la dernière consultation",
     "markViewed": "Vue",
     "deletedComment": "Ce commentaire a été supprimé.",
     "reviewers": "Réviseurs",

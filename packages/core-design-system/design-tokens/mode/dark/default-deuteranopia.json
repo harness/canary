@@ -1813,19 +1813,6 @@
             "type": "innerShadow"
           }
         }
-      },
-      "ai": {
-        "inner": {
-          "$type": "boxShadow",
-          "$value": {
-            "x": "0",
-            "y": "7",
-            "blur": "16",
-            "spread": "0",
-            "color": "{set.ai.surface.inner-shadow}",
-            "type": "innerShadow"
-          }
-        }
       }
     }
   },

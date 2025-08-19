@@ -16,6 +16,7 @@ import { AppShell } from './components-v2/standalone/app-shell'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { PageTitleProvider } from './framework/context/PageTitleContext'
 import { RbacButton } from './framework/rbac/rbac-button'
 import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
@@ -358,7 +359,8 @@ export const repoRoutes: CustomRouteObject[] = [
             element: <SearchPage />,
             handle: {
               breadcrumb: () => <span>{Page.Search}</span>,
-              routeName: RouteConstants.toRepoSearch
+              routeName: RouteConstants.toRepoSearch,
+              pageTitle: Page.Search
             }
           },
           {
@@ -447,7 +449,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     ),
                     handle: {
                       breadcrumb: () => <span>{Page.Changes}</span>,
-                      routeName: RouteConstants.toPullRequestChanges,
+                      routeName: RouteConstants.toPullRequestChange,
                       pageTitle: Page.Changes
                     }
                   },
@@ -783,13 +785,15 @@ export const routes: CustomRouteObject[] = [
     path: '/',
     element: (
       <AppRouterProvider>
-        <AppProvider>
-          <Sidebar.Provider className="min-h-svh">
-            <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
-              <AppShell />
-            </ComponentProvider>
-          </Sidebar.Provider>
-        </AppProvider>
+        <PageTitleProvider>
+          <AppProvider>
+            <Sidebar.Provider className="min-h-svh">
+              <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+                <AppShell />
+              </ComponentProvider>
+            </Sidebar.Provider>
+          </AppProvider>
+        </PageTitleProvider>
       </AppRouterProvider>
     ),
     handle: { routeName: 'toHome' },
@@ -1253,12 +1257,14 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
     path: '/',
     element: (
       <AppRouterProvider>
-        <AppProvider>
-          <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
-            {mfeRouteRenderer}
-            <AppShellMFE />
-          </ComponentProvider>
-        </AppProvider>
+        <PageTitleProvider>
+          <AppProvider>
+            <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+              {mfeRouteRenderer}
+              <AppShellMFE />
+            </ComponentProvider>
+          </AppProvider>
+        </PageTitleProvider>
       </AppRouterProvider>
     ),
     handle: { routeName: RouteConstants.toHome },

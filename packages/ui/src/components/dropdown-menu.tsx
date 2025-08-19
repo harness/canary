@@ -155,10 +155,14 @@ interface DropdownMenuItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
     Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>, 'title' | 'prefix'> {
   prefix?: ReactNode
+  subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
 }
 
 const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuItemProps>(
-  ({ className, children, title, description, label, shortcut, checkmark, prefix, tag, ...props }, ref) => {
+  (
+    { className, children, title, description, label, shortcut, checkmark, prefix, tag, subContentProps, ...props },
+    ref
+  ) => {
     const filteredChildren = filterChildrenByDisplayNames(children, innerComponentsDisplayNames)
     const withChildren = filteredChildren.length > 0
 
@@ -178,7 +182,9 @@ const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item
           >
             <ItemContent />
           </DropdownMenuSubTrigger>
-          <DropdownMenuContent isSubContent>{filteredChildren}</DropdownMenuContent>
+          <DropdownMenuContent isSubContent {...subContentProps}>
+            {filteredChildren}
+          </DropdownMenuContent>
         </DropdownMenuSub>
       )
     }
@@ -194,7 +200,9 @@ DropdownMenuItem.displayName = displayNames.item
 
 interface DropdownMenuCheckboxItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
-    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {}
+    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {
+  subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
+}
 
 const DropdownMenuCheckboxItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
@@ -213,6 +221,7 @@ const DropdownMenuCheckboxItem = forwardRef<
       tag,
       onCheckedChange,
       onClick,
+      subContentProps,
       ...props
     },
     ref
@@ -256,7 +265,9 @@ const DropdownMenuCheckboxItem = forwardRef<
           >
             <ItemContent />
           </DropdownMenuSubTrigger>
-          <DropdownMenuContent isSubContent>{filteredChildren}</DropdownMenuContent>
+          <DropdownMenuContent isSubContent {...subContentProps}>
+            {filteredChildren}
+          </DropdownMenuContent>
         </DropdownMenuSub>
       )
     }

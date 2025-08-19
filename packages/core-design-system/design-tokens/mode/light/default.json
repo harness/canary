@@ -54,7 +54,7 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{blue.300}"
+      "$value": "{blue.600}"
     }
   },
   "border": {
@@ -349,12 +349,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.600}",
+          "$value": "{mint.700}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{mint.600}",
+          "$value": "{mint.700}",
           "$description": "Background color for prominent green surfaces."
         }
       },
@@ -422,12 +422,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.600}",
+          "$value": "{red.700}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.600}",
+          "$value": "{red.700}",
           "$description": "Background color for prominent red surfaces."
         }
       },

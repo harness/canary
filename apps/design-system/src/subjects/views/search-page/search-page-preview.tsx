@@ -26,6 +26,8 @@ export const SearchPagePreview = () => {
       onLanguageSelect={() => {}}
       onClearFilters={() => {}}
       isRepoScope={true}
+      onRecursiveToggle={() => {}}
+      scope={{ accountId: '1', orgIdentifier: '2', projectIdentifier: '3' }}
     />
   )
 }

@@ -23,17 +23,19 @@ interface TVariables {
 type TError = Error | { message?: string }
 
 export default function SearchPage() {
+  const getApiPath = useAPIPath()
+  const { scope } = useMFEContext()
+  const { repoId } = useParams()
+
   const [searchQuery, setSearchQuery] = useQueryState('query')
   const [selectedRepoId, setSelectedRepoId] = useQueryState('repo')
   const [selectedLanguage, setSelectedLanguage] = useQueryState('language')
+  const [isRecursive, setIsRecursive] = useState<boolean>(false)
   const [regexEnabled, setRegexEnabled] = useQueryState<boolean>('regexEnabled', parseAsBoolean)
   const [semanticEnabled, setSemanticEnabled] = useQueryState<boolean>('semantic', parseAsBoolean)
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
   const [semanticSearchResults, setSemanticSearchResults] = useState<SemanticSearchResultItem[]>([])
   const [stats, setStats] = useState<Stats>()
-  const getApiPath = useAPIPath()
-  const { scope } = useMFEContext()
-  const { repoId } = useParams()
 
   const scopeRef = [scope.accountId, scope.orgIdentifier, scope.projectIdentifier].filter(Boolean).join('/')
   const repoRef = `${scopeRef}/${repoId || selectedRepoId}`
@@ -65,7 +67,7 @@ export default function SearchPage() {
           space_paths: repoId || selectedRepoId ? [] : [scopeRef],
           query: `( ${query} ) case:no${selectedLanguage ? ` lang:${selectedLanguage}` : ''}`,
           max_result_count: 50,
-          recursive: false,
+          recursive: isRecursive,
           enable_regex: regexEnabled
         })
       }).then(res => {
@@ -142,7 +144,8 @@ export default function SearchPage() {
     regexEnabled,
     selectedRepoId,
     selectedLanguage,
-    semanticEnabled
+    semanticEnabled,
+    isRecursive
   ])
 
   return (
@@ -162,6 +165,7 @@ export default function SearchPage() {
       setSemanticEnabled={setSemanticEnabled}
       stats={stats}
       isRepoScope={!!repoId}
+      scope={scope}
       useSearchResultsStore={() => {
         return {
           results: searchResults,
@@ -193,6 +197,9 @@ export default function SearchPage() {
       selectedRepoId={selectedRepoId}
       onRepoSelect={(repoName: string) => {
         setSelectedRepoId(repoName)
+      }}
+      onRecursiveToggle={(recursive: boolean) => {
+        setIsRecursive(recursive)
       }}
       onClearFilters={() => {
         setSelectedRepoId(null)

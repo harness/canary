@@ -7,6 +7,7 @@ import { cn } from '@utils/cn'
 
 import { SearchResultItem, SearchResultsList } from './components/search-results-list'
 import { SemanticSearchResultItem, SemanticSearchResultsList } from './components/semantic-search-results-list'
+import { getScopeOptions } from './utils/utils'
 
 const languageOptions = [
   { label: 'JavaScript', value: 'javascript' },
@@ -40,6 +41,7 @@ export interface SearchPageViewProps {
   semanticEnabled: boolean
   setSemanticEnabled: (selected: boolean) => void
   isRepoScope: boolean
+  onRecursiveToggle: (recursive: boolean) => void
   semanticSearchError?: string
   searchError?: string
   useSearchResultsStore: () => {
@@ -63,6 +65,7 @@ export interface SearchPageViewProps {
   // routing paths
   toRepoFileDetails: (params: { repoPath?: string; filePath: string; branch?: string }) => string
   toRepo: (params: { repoPath?: string }) => string
+  scope: { accountId: string; orgIdentifier?: string; projectIdentifier?: string }
 }
 
 export const SearchPageView: FC<SearchPageViewProps> = ({
@@ -81,12 +84,14 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   toRepoFileDetails,
   repos,
   selectedRepoId,
+  onRecursiveToggle,
   isReposListLoading,
   selectedLanguage,
   onLanguageSelect,
   onRepoSelect,
   onClearFilters,
-  toRepo
+  toRepo,
+  scope
 }) => {
   const { t } = useTranslation()
   const { results, semanticResults, page, setPage } = useSearchResultsStore()
@@ -151,6 +156,13 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           <>
             <Spacer size={7} />
             <Layout.Horizontal gap="sm">
+              {!scope.projectIdentifier ? (
+                <Select
+                  options={getScopeOptions(scope)}
+                  onChange={value => (value === 'all' ? onRecursiveToggle(true) : onRecursiveToggle(false))}
+                  placeholder={t('views:search.scopePlaceholder', 'Select a scope')}
+                />
+              ) : null}
               {!isRepoScope && repos ? (
                 <Select
                   isLoading={isReposListLoading}

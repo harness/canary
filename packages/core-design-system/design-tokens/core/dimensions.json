@@ -506,7 +506,7 @@
   "focus": {
     "offset": {
       "$type": "dimension",
-      "$value": "2px"
+      "$value": "1px"
     }
   }
 }

@@ -36,6 +36,7 @@ import { cn } from '@utils/cn'
 import { getErrorMessage } from '@utils/utils'
 import { isEmpty, isUndefined } from 'lodash-es'
 
+import { getDiffLinesRange, parseDiffToLines } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
@@ -376,36 +377,10 @@ export const PullRequestCommentBox = ({
     }
 
     const diffLines = diff.split('\n')
+    const lines = parseDiffToLines(diffLines)
+    const rangeArr = getDiffLinesRange(lines, sideKey === 'newFile' ? 'new' : 'old', lineFromNumber, lineNumber)
 
-    const sideChangedLineToken = sideKey === 'newFile' ? '+' : '-'
-    const otherSideChangedLineToken = sideKey === 'newFile' ? '-' : '+'
-
-    const sideDiffLines = diffLines.filter(diffLine => !diffLine.startsWith(otherSideChangedLineToken))
-
-    const found = sideDiffLines.reduce((previousValue, currentValue, currentIndex): string => {
-      if (isEmpty(previousValue) && currentValue.startsWith('@@')) {
-        const sectionInfoParts = currentValue.split(' ')
-
-        const sideHeader = sectionInfoParts.find(part => part.startsWith(sideChangedLineToken))
-
-        const fileLineNumber = +(sideHeader?.split(',')[0].substring(1) ?? '')
-
-        const fromOffset = lineFromNumber - fileLineNumber + 1
-        const toOffset = lineNumber - fileLineNumber + 1
-
-        const selectedLines = sideDiffLines.slice(currentIndex + fromOffset, currentIndex + toOffset + 1)
-
-        const cleanedLines = selectedLines.map(line =>
-          line.startsWith(sideChangedLineToken) ? ` ${line.substring(1)}` : line
-        )
-
-        return cleanedLines.join('\n')
-      }
-
-      return previousValue
-    }, '')
-
-    return found
+    return rangeArr.map(item => item.content).join('\n')
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {

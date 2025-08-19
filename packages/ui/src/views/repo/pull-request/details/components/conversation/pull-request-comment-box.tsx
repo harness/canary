@@ -692,7 +692,7 @@ export const PullRequestCommentBox = ({
             <div className="min-h-24 w-full">
               {comment ? (
                 <MarkdownViewer
-                  markdownClassName="bg-transparent w-full"
+                  markdownClassName="pr-section bg-transparent w-full"
                   source={replaceMentionEmailWithDisplayName(comment, principalsMentionMap)}
                 />
               ) : (

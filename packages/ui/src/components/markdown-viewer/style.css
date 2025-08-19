@@ -287,22 +287,22 @@
         @apply border-0;
       }
     }
-  }
 
-  &.comment {
-    @apply font-body-normal !bg-transparent;
+    &.pr-section {
+      @apply font-body-normal !bg-transparent;
 
-    pre code {
-      @apply bg-transparent;
-    }
+      pre code {
+        @apply bg-transparent;
+      }
 
-    a,
-    blockquote {
-      @apply font-body-normal;
-    }
+      a,
+      blockquote {
+        @apply font-body-normal;
+      }
 
-    strong {
-      @apply font-body-strong;
+      strong {
+        @apply font-body-strong;
+      }
     }
   }
 }

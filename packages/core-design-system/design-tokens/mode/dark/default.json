@@ -54,7 +54,7 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{cyan.300}"
+      "$value": "{cyan.200}"
     }
   },
   "border": {

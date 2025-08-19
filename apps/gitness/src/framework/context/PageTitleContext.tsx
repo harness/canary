@@ -1,17 +1,20 @@
 import { createContext, useContext, useState } from 'react'
 
+/**
+ * Context to manage the dynamic page title for the application.
+ */
 export const PageTitleContext = createContext<{
-  dynamicTitle?: string
-  setDynamicTitle: (title?: string) => void
+  pageTitle?: string
+  setPageTitle: (title?: string) => void
 }>({
-  dynamicTitle: undefined,
-  setDynamicTitle: () => {}
+  pageTitle: undefined,
+  setPageTitle: () => {}
 })
 
 export const PageTitleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [dynamicTitle, setDynamicTitle] = useState<string | undefined>()
+  const [pageTitle, setPageTitle] = useState<string | undefined>()
 
-  return <PageTitleContext.Provider value={{ dynamicTitle, setDynamicTitle }}>{children}</PageTitleContext.Provider>
+  return <PageTitleContext.Provider value={{ pageTitle, setPageTitle }}>{children}</PageTitleContext.Provider>
 }
 
 export const usePageTitleContext = () => useContext(PageTitleContext)

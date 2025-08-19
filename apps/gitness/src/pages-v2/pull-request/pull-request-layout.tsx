@@ -23,7 +23,7 @@ const PullRequestLayout = () => {
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
 
   const repoRef = useGetRepoRef()
-  const { setDynamicTitle } = usePageTitleContext()
+  const { setPageTitle } = usePageTitleContext()
 
   const {
     data: { body: pullReqData } = {},
@@ -45,7 +45,7 @@ const PullRequestLayout = () => {
     const pageTitle = [title, number ? `(#${number})` : null].filter(Boolean).join(' ')
     const finalTitle = [pageTitle, capitalize(pullRequestTab || '')].filter(Boolean).join(' | ')
 
-    setDynamicTitle(finalTitle)
+    setPageTitle(finalTitle)
   }, [pullReqData, pullRequestTab])
 
   const { mutateAsync: updateTitle } = useUpdatePullReqMutation(

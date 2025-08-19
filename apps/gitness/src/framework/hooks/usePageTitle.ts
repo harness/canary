@@ -9,7 +9,7 @@ import { CustomHandle } from '../routing/types'
 const usePageTitle = () => {
   const { t } = useTranslation()
   const matches = useMatches()
-  const { dynamicTitle } = usePageTitleContext()
+  const { pageTitle: dynamicTitle } = usePageTitleContext()
 
   useEffect(() => {
     const fullPageTitle = matches

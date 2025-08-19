@@ -49,12 +49,12 @@ const buttonVariants = cva('cn-button', {
     {
       variant: 'primary',
       theme: 'success',
-      class: 'cn-button-soft cn-button-success'
+      class: 'cn-button-solid cn-button-success'
     },
     {
       variant: 'primary',
       theme: 'danger',
-      class: 'cn-button-soft cn-button-danger'
+      class: 'cn-button-solid cn-button-danger'
     },
 
     // Secondary
@@ -62,6 +62,18 @@ const buttonVariants = cva('cn-button', {
       variant: 'secondary',
       theme: 'default',
       class: 'cn-button-muted cn-button-soft'
+    },
+    // Secondary
+    {
+      variant: 'secondary',
+      theme: 'success',
+      class: 'cn-button-success cn-button-soft'
+    },
+    // Secondary
+    {
+      variant: 'secondary',
+      theme: 'danger',
+      class: 'cn-button-danger cn-button-soft'
     },
 
     // Default Outline

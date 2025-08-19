@@ -20,11 +20,6 @@ function createButtonVariantStyles() {
 
   variants.forEach(variant => {
     themes.forEach(theme => {
-      // Skip solid variant for success and danger themes
-      if (variant === 'solid' && (theme === 'success' || theme === 'danger')) {
-        return
-      }
-
       const style: CSSRuleObject = {}
 
       const themeStyle = themeStyleMapper[theme as keyof typeof themeStyleMapper]
@@ -79,7 +74,8 @@ function createButtonVariantStyles() {
              * Some variants don't have separator
              * Hence adding border color for separator
              *  */
-            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-separator, var(--cn-set-${themeStyle}-${variant}-border))`
+            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-text)`,
+            opacity: 'var(--cn-opacity-20)'
           }
         }
       }
@@ -148,12 +144,13 @@ export default {
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
       border: 'var(--cn-badge-border) solid transparent',
+      boxShadow: 'var(--cn-shadow-comp-ai-inner)',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-hover), var(--cn-set-ai-surface-bg-hover)), var(--cn-set-ai-surface-border)`
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
-        backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-bg-selected)), var(--cn-set-ai-surface-border)`
+        backgroundImage: 'var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-border)'
       }
     },
 

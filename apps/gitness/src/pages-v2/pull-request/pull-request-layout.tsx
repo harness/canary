@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { capitalize, compact } from 'lodash-es'
+import { capitalize } from 'lodash-es'
 
 import {
   useChangeTargetBranchMutation,

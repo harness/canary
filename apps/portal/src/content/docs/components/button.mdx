@@ -123,6 +123,75 @@ Secondary buttons are less prominent than primary buttons.
 </div>`}
 />
 
+## Secondary Button with Themes
+
+Secondary buttons can be styled with different themes for various contexts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+  <div className="flex gap-3 items-center">
+    <Button variant="secondary" theme="default">Secondary Default</Button>
+    <Button variant="secondary" theme="success">Secondary Success</Button>
+    <Button variant="secondary" theme="danger">Secondary Danger</Button>
+  </div>
+
+<hr />
+
+<h4>Secondary Button Themes with Sizes</h4>
+
+<div className="flex flex-col gap-4">
+  <div className="flex gap-3 items-end">
+    <Button variant="secondary" theme="success">
+      Medium
+    </Button>
+    <Button variant="secondary" theme="success" size="sm">
+      Small
+    </Button>
+    <Button variant="secondary" theme="success" size="xs">
+      Extra Small
+    </Button>
+  </div>
+
+  <div className="flex gap-3 items-end">
+    <Button variant="secondary" theme="danger">
+      Medium
+    </Button>
+    <Button variant="secondary" theme="danger" size="sm">
+      Small
+    </Button>
+    <Button variant="secondary" theme="danger" size="xs">
+      Extra Small
+    </Button>
+  </div>
+</div>
+
+<hr />
+
+<h4>Secondary Button Themes with States</h4>
+
+<div className="flex flex-col gap-3">
+  <div className="flex gap-3">
+    <Button variant="secondary" theme="success" disabled>
+      Success Disabled
+    </Button>
+    <Button variant="secondary" theme="success" loading>
+      Success Loading
+    </Button>
+  </div>
+  
+  <div className="flex gap-3">
+    <Button variant="secondary" theme="danger" disabled>
+      Danger Disabled
+    </Button>
+    <Button variant="secondary" theme="danger" loading>
+      Danger Loading
+    </Button>
+  </div>
+</div>
+</div>`}
+/>
+
 ## Outline Button
 
 Outline buttons have a transparent background with a visible border.

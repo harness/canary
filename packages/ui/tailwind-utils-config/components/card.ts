@@ -76,7 +76,7 @@ export default {
     },
 
     '&:where(.cn-card-selected)': {
-      backgroundColor: 'var(--cn-comp-card-gradient)',
+      backgroundColor: 'var(--cn-set-brand-soft-bg)',
       borderColor: 'var(--cn-border-accent)'
     },
     '&:where(.cn-card-disabled)': {

@@ -72,10 +72,10 @@ const dataMock: ViewOnlyProps[] = [
         value: (
           <div className="flex flex-wrap items-center gap-4">
             <div className="inline-flex items-center gap-1">
-              <LogoV2 size="sm" name="app-dynamics" /> delegate-1
+              <LogoV2 size="xs" name="app-dynamics" /> delegate-1
             </div>
             <div className="inline-flex items-center gap-1">
-              <LogoV2 size="sm" name="katalon" /> delegate-2
+              <LogoV2 size="xs" name="katalon" /> delegate-2
             </div>
           </div>
         )

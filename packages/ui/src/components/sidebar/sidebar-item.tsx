@@ -192,7 +192,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           ))}
 
         {withLogo && props.logo && (
-          <LogoV2 name={props.logo} size={withDescription ? 'md' : 'sm'} className="cn-sidebar-item-content-icon" />
+          <LogoV2 name={props.logo} size={withDescription ? 'md' : 'xs'} className="cn-sidebar-item-content-icon" />
         )}
 
         {withAvatar && (

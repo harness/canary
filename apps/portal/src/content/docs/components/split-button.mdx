@@ -26,51 +26,149 @@ import { Aside } from "@astrojs/starlight/components";
   {/* Variants and Themes */}
   <div>
     <h5 className="text-lg font-semibold mb-3">Variants and Themes</h5>
-    <div className="flex flex-wrap items-end gap-4">
-      {/* Primary variant with Default theme */}
-      <SplitButton
-        id="primary-default"
-        variant="primary"
-        theme="default"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Primary + Default
-      </SplitButton>
+    
+    {/* Primary Variant */}
+    <div className="mb-6">
+      <h6 className="text-md font-medium mb-3 text-muted-foreground">Primary Variant</h6>
+      <div className="flex flex-wrap items-end gap-4">
+        <SplitButton
+          id="primary-default"
+          variant="primary"
+          theme="default"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Default
+        </SplitButton>
 
-      {/* Outline variant with Success theme */}
-      <SplitButton
-        id="outline-success"
-        variant="outline"
-        theme="success"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Outline + Success
-      </SplitButton>
+        <SplitButton
+          id="primary-success"
+          variant="primary"
+          theme="success"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Success
+        </SplitButton>
 
-      {/* Outline variant with Danger theme */}
-      <SplitButton
-        id="outline-danger"
-        variant="outline"
-        theme="danger"
-        handleButtonClick={() => {}}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={() => {}}
-      >
-        Outline + Danger
-      </SplitButton>
+        <SplitButton
+          id="primary-danger"
+          variant="primary"
+          theme="danger"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Danger
+        </SplitButton>
+      </div>
+    </div>
+
+    {/* Secondary Variant */}
+    <div className="mb-6">
+      <h6 className="text-md font-medium mb-3 text-muted-foreground">Secondary Variant</h6>
+      <div className="flex flex-wrap items-end gap-4">
+        <SplitButton
+          id="secondary-default"
+          variant="secondary"
+          theme="default"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Default
+        </SplitButton>
+
+        <SplitButton
+          id="secondary-success"
+          variant="secondary"
+          theme="success"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Success
+        </SplitButton>
+
+        <SplitButton
+          id="secondary-danger"
+          variant="secondary"
+          theme="danger"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Danger
+        </SplitButton>
+      </div>
+    </div>
+
+    {/* Outline Variant */}
+    <div className="mb-6">
+      <h6 className="text-md font-medium mb-3 text-muted-foreground">Outline Variant</h6>
+      <div className="flex flex-wrap items-end gap-4">
+        <SplitButton
+          id="outline-default"
+          variant="outline"
+          theme="default"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Default
+        </SplitButton>
+
+        <SplitButton
+          id="outline-success"
+          variant="outline"
+          theme="success"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Success
+        </SplitButton>
+
+        <SplitButton
+          id="outline-danger"
+          variant="outline"
+          theme="danger"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Danger
+        </SplitButton>
+      </div>
     </div>
 
   </div>
@@ -297,7 +395,7 @@ return (
       description:
         "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
       required: false,
-      value: "'primary' | 'outline'",
+      value: "'primary' | 'outline' | 'secondary'",
       defaultValue: "'primary'",
     },
     {

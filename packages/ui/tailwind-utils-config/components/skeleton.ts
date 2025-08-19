@@ -2,7 +2,7 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 
 const sizesAvatar = ['sm', 'md', 'lg'] as const
 const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'] as const
-const logoSizes = ['sm', 'md', 'lg'] as const
+const logoSizes = ['xs', 'sm', 'md', 'lg'] as const
 const inputSizes = ['sm'] as const
 
 function createSkeletonAvatarVariantStyles() {
@@ -18,6 +18,9 @@ function createSkeletonAvatarVariantStyles() {
   return styles
 }
 
+/**
+ * TODO: Design System: Reuse styles from icons-and-logo.ts
+ */
 function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
   const sizes = entity === 'icon' ? iconSizes : logoSizes
 

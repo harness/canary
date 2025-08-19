@@ -157,8 +157,8 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
   ) => {
     const Title = () => (
       <Text
-        variant="caption-strong"
-        color="foreground-1"
+        variant="caption-normal"
+        color="foreground-3"
         className={cn({ 'underline decoration-dashed': !!tooltipProps?.content }, contentClassName)}
       >
         {children}

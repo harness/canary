@@ -12,7 +12,8 @@ const alertVariants = cva('cn-alert', {
     theme: {
       info: 'cn-alert-info',
       danger: 'cn-alert-danger',
-      warning: 'cn-alert-warning'
+      warning: 'cn-alert-warning',
+      success: 'cn-alert-success'
     }
   },
   defaultVariants: {
@@ -23,7 +24,8 @@ const alertVariants = cva('cn-alert', {
 const iconMap: Record<NonNullable<VariantProps<typeof alertVariants>['theme']>, keyof typeof IconNameMapV2> = {
   info: 'info-circle',
   danger: 'xmark-circle',
-  warning: 'warning-triangle'
+  warning: 'warning-triangle',
+  success: 'check-circle'
 }
 
 const MAX_HEIGHT = 138

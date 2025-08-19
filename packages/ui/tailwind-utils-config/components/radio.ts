@@ -34,7 +34,7 @@ export default {
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
 
     '&:where(:not([disabled])):focus': {
-      boxShadow: 'var(--cn-ring-focus)'
+      outline: 'var(--cn-focus)'
     },
 
     '&:where(:not([disabled])):hover': {
@@ -65,7 +65,7 @@ export default {
   },
 
   '.cn-radio-error:not(:has(.cn-radio-item[data-state=checked])) .cn-radio-item': {
-    '&:where(:not([disabled]))' : {
+    '&:where(:not([disabled]))': {
       borderColor: 'var(--cn-border-danger)',
       boxShadow: `var(--cn-ring-danger)`,
       '&:where(:hover)': {

@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const themes = ['info', 'danger', 'warning'] as const
+const themes = ['info', 'danger', 'warning', 'success'] as const
 
 const themeStyleMapper: Record<
   (typeof themes)[number],
@@ -20,6 +20,11 @@ const themeStyleMapper: Record<
     backgroundColor: 'yellow-soft',
     color: 'text-warning',
     fadeBgColor: 'warning'
+  },
+  success: {
+    backgroundColor: 'green-soft',
+    color: 'text-success',
+    fadeBgColor: 'success'
   }
 }
 

@@ -9,6 +9,7 @@ import { SkeletonBase } from './components/skeleton'
 const skeletonLogoVariants: typeof logoVariants = cva('cn-skeleton-logo', {
   variants: {
     size: {
+      xs: 'cn-skeleton-logo-xs',
       sm: 'cn-skeleton-logo-sm',
       md: 'cn-skeleton-logo-md',
       lg: 'cn-skeleton-logo-lg'

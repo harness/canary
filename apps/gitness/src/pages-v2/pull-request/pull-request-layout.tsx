@@ -41,6 +41,10 @@ const PullRequestLayout = () => {
   useEffect(() => {
     if (!pullReqData && !pullRequestTab) return
 
+    /**
+     * Constructs document title in the format:
+     * "Pull Request Title (#123) | Conversation"
+     */
     const { title, number } = pullReqData ?? {}
     const pageTitle = [title, number ? `(#${number})` : null].filter(Boolean).join(' ')
     const finalTitle = [pageTitle, capitalize(pullRequestTab || '')].filter(Boolean).join(' | ')

@@ -449,7 +449,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     ),
                     handle: {
                       breadcrumb: () => <span>{Page.Changes}</span>,
-                      routeName: RouteConstants.toPullRequestChanges,
+                      routeName: RouteConstants.toPullRequestChange,
                       pageTitle: Page.Changes
                     }
                   },

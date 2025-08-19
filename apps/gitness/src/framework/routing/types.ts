@@ -24,6 +24,7 @@ export enum RouteConstants {
   toPullRequestConversation = 'toPullRequestConversation',
   toPullRequestCommits = 'toPullRequestCommits',
   toPullRequestChanges = 'toPullRequestChanges',
+  toPullRequestChange = 'toPullRequestChange',
   toPullRequestChecks = 'toPullRequestChecks',
   toPipelineEdit = 'toPipelineEdit',
   toPipelines = 'toPipelines',

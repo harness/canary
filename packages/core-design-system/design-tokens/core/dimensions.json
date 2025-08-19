@@ -502,5 +502,11 @@
       "$value": "{size.11}",
       "$description": "\n"
     }
+  },
+  "focus": {
+    "offset": {
+      "$type": "dimension",
+      "$value": "2px"
+    }
   }
 }

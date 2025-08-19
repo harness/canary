@@ -43,7 +43,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
       <div className="[&>*:not(:last-child)]:mr-cn-xs">
         {repoId && <Tag className="align-bottom" value={repoId} icon="repository" theme="gray" />}
 
-        <Text as="span" variant="heading-base">
+        <Text as="span" variant="heading-base" className="break-all">
           {name}
         </Text>
 

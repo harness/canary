@@ -2810,5 +2810,13 @@
       "$type": "color",
       "$value": "{purple.400}"
     }
+  },
+  "focus": {
+    "$type": "border",
+    "$value": {
+      "color": "{border.brand}",
+      "width": "{borderWidth.2}",
+      "style": "solid"
+    }
   }
 }

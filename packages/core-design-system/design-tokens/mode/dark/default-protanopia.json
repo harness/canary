@@ -2828,5 +2828,13 @@
       "$type": "color",
       "$value": "{purple.300}"
     }
+  },
+  "focus": {
+    "$type": "border",
+    "$value": {
+      "color": "{border.brand}",
+      "width": "{borderWidth.2}",
+      "style": "solid"
+    }
   }
 }

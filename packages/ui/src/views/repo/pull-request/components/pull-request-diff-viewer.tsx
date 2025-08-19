@@ -697,7 +697,7 @@ const PullRequestDiffViewer = ({
           {/* @ts-ignore */}
           <ExtendedDiffView<Thread[]>
             ref={ref}
-            className="bg-tr text-cn-foreground-1 w-full"
+            className="bg-tr w-full text-cn-foreground-1"
             renderWidgetLine={renderWidgetLine}
             renderExtendLine={renderExtendLine}
             diffFile={diffFileInstance}
@@ -707,7 +707,8 @@ const PullRequestDiffViewer = ({
             diffViewMode={mode}
             registerHighlighter={highlighter}
             diffViewWrap={wrap}
-            diffViewAddWidget={addWidget}
+            // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
+            diffViewAddWidget={addWidget && mode === DiffModeEnum.Split}
             diffViewTheme={isLightTheme ? 'light' : 'dark'}
           />
         </div>

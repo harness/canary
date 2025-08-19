@@ -3,8 +3,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
-import { TypesCommit } from '@/views'
+import { DiffModeOptions, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/index'
 
 import {
   EnumPullReqReviewDecision,
@@ -60,8 +61,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   submitReview,
   refetchReviewers,
   isApproving,
-  // diffMode,
-  // setDiffMode,
+  diffMode,
+  setDiffMode,
   pullReqCommits,
   defaultCommitFilter,
   selectedCommits,
@@ -143,9 +144,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   }
 
   const itemsToRender = getApprovalItems(approveState, approvalItems)
-  // const handleDiffModeChange = (value: string) => {
-  //   setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
-  // }
+  const handleDiffModeChange = (value: string) => {
+    setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+  }
 
   return (
     <Layout.Horizontal
@@ -187,7 +188,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           />
         </DropdownMenu.Root>
 
-        {/* <DropdownMenu.Root>
+        <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
@@ -207,7 +208,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               />
             ))}
           </DropdownMenu.Content>
-        </DropdownMenu.Root> */}
+        </DropdownMenu.Root>
       </Layout.Horizontal>
 
       <Layout.Horizontal className="gap-x-7">

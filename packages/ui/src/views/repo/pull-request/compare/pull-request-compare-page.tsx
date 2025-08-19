@@ -49,7 +49,7 @@ export type CompareFormFields = z.infer<ReturnType<typeof getPullRequestFormSche
 
 export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
-  { name: 'Unified', value: 'Unified' }
+  { name: 'Unified (Experimental - Read only mode)', value: 'Unified' }
 ]
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string

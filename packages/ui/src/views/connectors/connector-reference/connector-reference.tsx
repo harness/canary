@@ -71,7 +71,7 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={
           connectorLogo ? (
-            <LogoV2 name={connectorLogo} size="sm" />
+            <LogoV2 name={connectorLogo} size="xs" />
           ) : (
             <IconV2 name="connectors" size="xs" className="text-cn-foreground-3" />
           )

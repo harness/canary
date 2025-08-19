@@ -44,6 +44,11 @@ export default {
       borderColor: 'var(--cn-border-brand)'
     },
 
+    '&:where(:not([data-disabled])):focus': {
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'calc(var(--cn-size-px) * -2)'
+    },
+
     '&:where([data-disabled])': {
       opacity: 'var(--cn-disabled-opacity)',
       '@apply cursor-not-allowed': ''
@@ -51,7 +56,7 @@ export default {
 
     '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-brand)',
-      backgroundImage: 'var(--cn-comp-card-gradient)'
+      background: 'var(--cn-set-brand-soft-bg)'
     },
 
     '.cn-card-select-content': {
@@ -67,9 +72,7 @@ export default {
       right: 'var(--cn-spacing-4)',
       top: '50%',
       transform: 'translateY(-50%)',
-      width: '1rem',
-      height: '1rem',
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-text-brand)'
     },
 
     '.cn-card-select-title': {

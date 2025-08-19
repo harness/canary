@@ -24,7 +24,8 @@ export default {
     borderColor: `var(--cn-comp-selection-unselected-border)`,
 
     '&:where(:not([disabled])):focus': {
-      boxShadow: 'var(--cn-ring-focus)'
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'calc(var(--cn-size-px) * -2)'
     },
 
     '&:where(:not([disabled])):hover': {

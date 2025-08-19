@@ -33,7 +33,7 @@ export default {
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
 
     '&:where(:not([disabled])):focus': {
-      boxShadow: 'var(--cn-ring-focus)'
+      outline: 'var(--cn-focus)'
     },
 
     '&:where(:not([disabled])):hover': {

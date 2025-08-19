@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   Accordion,
   Alert,
+  Avatar,
   BranchTag,
   Button,
   ButtonLayout,
@@ -34,7 +35,7 @@ import {
   TypesPullReqCheck
 } from '@/views'
 import { cn } from '@utils/cn'
-import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+import { PrState, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import {
   DefaultReviewersDataProps,
@@ -137,17 +138,48 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   const currentMergeMethod = getCurrentMergeMethod()
   const isFastForwardNotPossible = isRebasable && currentMergeMethod === MergeStrategy.FAST_FORWARD
 
+  const getStatusTextColor = (): 'success' | 'danger' | 'foreground-1' => {
+    if (isDraft || isClosed) return 'foreground-1'
+
+    if (isOpen && (mergeable === false || ruleViolation || isFastForwardNotPossible)) {
+      return 'danger'
+    }
+
+    if (isOpen && !unchecked) {
+      return 'success'
+    }
+    return 'foreground-1'
+  }
+
   if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
-          <Text className="flex items-center space-x-1" variant="body-single-line-strong" as="h2" color="foreground-1">
+          <Text
+            className="flex items-center space-x-1 text-[var(--cn-set-purple-surface-text)]"
+            variant="body-single-line-strong"
+            as="h2"
+            color="inherit"
+          >
+            <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded size="sm" />
             <span>{pullReqMetadata?.merger?.display_name}</span>
             <span>{areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`}</span>
             <span>into</span>
-            <BranchTag branchName={pullReqMetadata?.target_branch || ''} spaceId={spaceId} repoId={repoId} />
+            <BranchTag
+              branchName={pullReqMetadata?.target_branch || ''}
+              spaceId={spaceId}
+              repoId={repoId}
+              theme="violet"
+              variant="secondary"
+            />
             <span>from</span>
-            <BranchTag branchName={pullReqMetadata?.source_branch || ''} spaceId={spaceId} repoId={repoId} />
+            <BranchTag
+              branchName={pullReqMetadata?.source_branch || ''}
+              spaceId={spaceId}
+              repoId={repoId}
+              theme="violet"
+              variant="secondary"
+            />
             <TimeAgoCard timestamp={pullReqMetadata?.merged} />
           </Text>
           <Layout.Horizontal>
@@ -176,7 +208,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <Text variant="body-single-line-strong" as="h2" color="foreground-1">
+      <Text variant="body-single-line-strong" as="h2" color={getStatusTextColor()}>
         {isDraft
           ? 'This pull request is still a work in progress'
           : isClosed
@@ -512,37 +544,74 @@ const PullRequestPanel = ({
     canBypass: !notBypassable
   })
 
+  const fastForwardDisabled = shouldDisableFastForwardMerge()
+  const getPrState = (): PrState => {
+    if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
+      return PrState.Merged
+    } else if (isClosed && !pullReqMetadata?.merged) {
+      return PrState.Closed
+    } else if (isOpen && isDraft) {
+      return PrState.Draft
+    } else if (isOpen && (!isMergeable || prPanelData.ruleViolation || fastForwardDisabled)) {
+      return PrState.Error
+    } else if (isOpen && !isDraft && !isClosed && isMergeable && !prPanelData.ruleViolation && !fastForwardDisabled) {
+      return PrState.Success
+    } else {
+      return PrState.Ready
+    }
+  }
+
+  const prState = getPrState()
+  const headerRowBgClass = cn({
+    'bg-[var(--cn-set-green-surface-bg)]': prState === PrState.Success,
+    'bg-cn-background-2': prState === PrState.Draft,
+    'bg-label-background-red': prState === PrState.Error,
+    'bg-cn-background-softgray': prState === PrState.Closed,
+    'bg-[var(--cn-set-purple-surface-bg)]': prState === PrState.Merged
+  })
+
+  const headerTitleColorClass = cn({
+    'text-cn-foreground-success': prState === PrState.Success,
+    'text-cn-foreground-danger': prState === PrState.Error
+  })
+
   return (
     <>
       <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
         <StackedList.Item
-          className={cn('items-center py-2 border-cn-borders-3', {
-            'pr-1.5': isShowMoreTooltip
-          })}
+          className={cn(
+            'items-center py-2 border-cn-borders-3',
+            {
+              'pr-1.5': isShowMoreTooltip
+            },
+            headerRowBgClass
+          )}
           disableHover
         >
           <StackedList.Field
             className={cn({ 'w-full': !pullReqMetadata?.merged })}
             title={
-              <HeaderTitle
-                isDraft={isDraft}
-                isClosed={isClosed}
-                unchecked={isUnchecked}
-                mergeable={isMergeable}
-                isOpen={isOpen}
-                ruleViolation={prPanelData.ruleViolation}
-                pullReqMetadata={pullReqMetadata}
-                onRestoreBranch={onRestoreBranch}
-                onDeleteBranch={onDeleteBranch}
-                onRevertPR={onRevertPR}
-                showRestoreBranchButton={showRestoreBranchButton}
-                showDeleteBranchButton={showDeleteBranchButton}
-                headerMsg={headerMsg}
-                spaceId={spaceId}
-                repoId={repoId}
-                actions={actions}
-                mergeButtonValue={mergeButtonValue}
-              />
+              <div className={headerTitleColorClass}>
+                <HeaderTitle
+                  isDraft={isDraft}
+                  isClosed={isClosed}
+                  unchecked={isUnchecked}
+                  mergeable={isMergeable}
+                  isOpen={isOpen}
+                  ruleViolation={prPanelData.ruleViolation}
+                  pullReqMetadata={pullReqMetadata}
+                  onRestoreBranch={onRestoreBranch}
+                  onDeleteBranch={onDeleteBranch}
+                  onRevertPR={onRevertPR}
+                  showRestoreBranchButton={showRestoreBranchButton}
+                  showDeleteBranchButton={showDeleteBranchButton}
+                  headerMsg={headerMsg}
+                  spaceId={spaceId}
+                  repoId={repoId}
+                  actions={actions}
+                  mergeButtonValue={mergeButtonValue}
+                />
+              </div>
             }
           />
 
@@ -690,7 +759,7 @@ const PullRequestPanel = ({
               />
               {showMergeInputs && (
                 <Layout.Vertical className="mt-2 w-full items-center pr-cn-xs pb-cn-xs">
-                  <Layout.Vertical className="w-full gap-1">
+                  <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-borders-3 bg-cn-background-1 p-3">
                     <TextInput
                       id="merge-title"
                       label="Commit message"
@@ -703,7 +772,7 @@ const PullRequestPanel = ({
                     <Textarea
                       id="merge-message"
                       label="Commit description"
-                      className="w-full"
+                      className="w-full bg-cn-background-1"
                       value={mergeMessage}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
                       optional

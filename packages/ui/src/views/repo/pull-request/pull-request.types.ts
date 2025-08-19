@@ -134,6 +134,15 @@ export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 
 export type EnumPullReqState = 'closed' | 'merged' | 'open'
 
+export enum PrState {
+  Draft = 'draft',
+  Ready = 'ready',
+  Success = 'success',
+  Error = 'error',
+  Closed = 'closed',
+  Merged = 'merged'
+}
+
 export declare type EnumPullReqReviewDecision = 'approved' | 'changereq' | 'pending' | 'reviewed'
 
 export enum PullReqReviewDecision {

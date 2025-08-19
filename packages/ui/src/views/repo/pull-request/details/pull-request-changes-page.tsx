@@ -4,7 +4,13 @@ import { Layout, Skeleton } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
-import { activityToCommentItem, HandleUploadType, SandboxLayout, TypesCommit } from '@views/index'
+import {
+  activityToCommentItem,
+  FILE_VIEWED_OBSOLETE_SHA,
+  HandleUploadType,
+  SandboxLayout,
+  TypesCommit
+} from '@views/index'
 import { orderBy } from 'lodash-es'
 
 import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
@@ -130,6 +136,15 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     return parentActivities.map(thread => thread.map(activityToCommentItem))
   }, [activities])
 
+  const viewedFileCount =
+    diffs?.reduce((count, currentDiff) => {
+      const isInFileViewsAndNotObsolete =
+        currentDiff.fileViews?.has(currentDiff.filePath) &&
+        currentDiff.fileViews?.get(currentDiff.filePath) !== FILE_VIEWED_OBSOLETE_SHA
+
+      return count + (isInFileViewsAndNotObsolete ? 1 : 0)
+    }, 0) ?? 0
+
   const renderContent = () => {
     if (loadingRawDiff) {
       return <Skeleton.List />
@@ -224,7 +239,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             defaultCommitFilter={defaultCommitFilter}
             selectedCommits={selectedCommits}
             setSelectedCommits={setSelectedCommits}
-            viewedFiles={diffs?.[0]?.fileViews?.size || 0}
+            viewedFiles={viewedFileCount}
             pullReqStats={pullReqStats}
             onCommitSuggestionsBatch={onCommitSuggestionsBatch}
             commitSuggestionsBatchCount={commitSuggestionsBatchCount}

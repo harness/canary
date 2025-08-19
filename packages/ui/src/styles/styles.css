@@ -73,6 +73,10 @@
   --cn-page-nav-full-height: calc(
     var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height)
   );
+
+  /* Padding variables - Used in tailwind-design-system.ts */
+  --cn-container-padding: var(--cn-container-spacing-py) var(--cn-container-spacing-px);
+  --cn-header-padding: var(--cn-layout-xs) var(--cn-layout-2xs) var(--cn-layout-xs) var(--cn-layout-lg);
 }
 
 .border-linear {

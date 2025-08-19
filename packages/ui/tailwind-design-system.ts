@@ -23,6 +23,21 @@ export default {
         sans: ['Inter', 'sans-serif'],
         code: ['JetBrains Mono', 'monospace']
       },
+      padding: {
+        'cn-container': 'var(--cn-container-padding)',
+        'cn-header': 'var(--cn-header-padding)'
+      },
+      width: {
+        // Default search input width
+        'cn-search-input-max-width': 'var(--cn-size-80)',
+
+        // TODO: Design system: can we rename it as expanded width?
+        'cn-sidebar-full-width': 'var(--cn-sidebar-container-full-width)',
+        'cn-sidebar-collapsed-width': 'var(--cn-size-14)'
+      },
+      zIndex: {
+        'cn-sidebar': '30'
+      },
       spacing: {
         'cn-4xs': 'var(--cn-layout-4xs)',
         'cn-3xs': 'var(--cn-layout-3xs)',
@@ -493,6 +508,6 @@ export default {
     { pattern: /border-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },
-    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }
+    { pattern: /^(w|z|p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }
   ]
 } satisfies TailwindConfig

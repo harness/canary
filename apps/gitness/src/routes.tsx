@@ -1,6 +1,6 @@
 import { Navigate, redirect } from 'react-router-dom'
 
-import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
+import { Breadcrumb, Button, Layout, Sidebar, SplitButton } from '@harnessio/ui/components'
 import { ComponentProvider } from '@harnessio/ui/context'
 import {
   EmptyPage,
@@ -17,8 +17,6 @@ import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { PageTitleProvider } from './framework/context/PageTitleContext'
-import { RbacButton } from './framework/rbac/rbac-button'
-import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
@@ -788,7 +786,7 @@ export const routes: CustomRouteObject[] = [
         <PageTitleProvider>
           <AppProvider>
             <Sidebar.Provider className="min-h-svh">
-              <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+              <ComponentProvider components={{ RbacButton: Button, RbacSplitButton: SplitButton }}>
                 <AppShell />
               </ComponentProvider>
             </Sidebar.Provider>
@@ -1259,10 +1257,8 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
       <AppRouterProvider>
         <PageTitleProvider>
           <AppProvider>
-            <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
-              {mfeRouteRenderer}
-              <AppShellMFE />
-            </ComponentProvider>
+            {mfeRouteRenderer}
+            <AppShellMFE />
           </AppProvider>
         </PageTitleProvider>
       </AppRouterProvider>

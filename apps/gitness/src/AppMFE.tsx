@@ -6,7 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Toast, TooltipProvider } from '@harnessio/ui/components'
-import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
+import { ComponentProvider, PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -14,6 +14,8 @@ import { IMFEContext, MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
+import { RbacButton } from './framework/rbac/rbac-button'
+import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
@@ -177,7 +179,9 @@ export default function AppMFE({
                           <TooltipProvider>
                             <ExitConfirmProvider>
                               <NavigationProvider routes={routesToRender}>
-                                <RouterProvider router={router} />
+                                <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+                                  <RouterProvider router={router} />
+                                </ComponentProvider>
                               </NavigationProvider>
                             </ExitConfirmProvider>
                           </TooltipProvider>

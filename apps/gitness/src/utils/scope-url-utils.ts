@@ -1,5 +1,5 @@
 import { getScopedPath } from '@harnessio/ui/components'
-import { RepositoryType, Scope, ScopeType } from '@harnessio/ui/views'
+import { RepositoryType, Scope, ScopeType, ScopeValue } from '@harnessio/ui/views'
 
 export const getScopeType = ({ accountId, orgIdentifier, projectIdentifier }: Scope): ScopeType => {
   if (accountId && orgIdentifier && projectIdentifier) return ScopeType.Project
@@ -49,6 +49,20 @@ export const getRepoUrl = ({
   }).split('/')
   const [orgId, projectId] = scopedPath
   return prependScopeToUrl({ url: repoSubPath, scope, orgId, projectId })
+}
+
+export const getSpaceRefByScope = (spaceRef: string, scopeType: ScopeValue): string => {
+  const [accountId, orgId, projectId] = spaceRef.split('/')
+  switch (scopeType) {
+    case ScopeValue.Account:
+      return accountId
+    case ScopeValue.Organization:
+      return [accountId, orgId].filter(Boolean).join('/')
+    case ScopeValue.Project:
+      return [accountId, orgId, projectId].filter(Boolean).join('/')
+    default:
+      return spaceRef
+  }
 }
 
 export const getPullRequestUrl = ({

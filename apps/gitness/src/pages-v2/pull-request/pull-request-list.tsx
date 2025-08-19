@@ -44,6 +44,8 @@ export default function PullRequestListPage() {
   const labelBy = searchParams.get('label_by')
   const { scope } = useMFEContext()
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
+  const filtersCnt = Object.keys(filterValues).length
+
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
@@ -66,7 +68,7 @@ export default function PullRequestListPage() {
   )
 
   // Make separate API calls to get open and closed PR counts for the filtered author
-  const { data: { headers: openHeaders } = {}, isLoading: isLoadingOpen } = useListPullReqQuery(
+  const { data: { headers: openHeaders } = {} } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
@@ -82,11 +84,11 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false
+      enabled: filtersCnt > 0
     }
   )
 
-  const { data: { headers: closedHeaders } = {}, isLoading: isLoadingClosed } = useListPullReqQuery(
+  const { data: { headers: closedHeaders } = {} } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
@@ -102,11 +104,11 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false
+      enabled: filtersCnt > 0
     }
   )
 
-  const { data: { headers: mergedHeaders } = {}, isLoading: isLoadingMerged } = useListPullReqQuery(
+  const { data: { headers: mergedHeaders } = {} } = useListPullReqQuery(
     {
       queryParams: {
         page: 1,
@@ -122,7 +124,7 @@ export default function PullRequestListPage() {
       }
     },
     {
-      retry: false
+      enabled: filtersCnt > 0
     }
   )
 
@@ -231,6 +233,12 @@ export default function PullRequestListPage() {
   }, [openHeaders, closedHeaders, mergedHeaders, setOpenClosePullRequests, setPrState])
 
   useEffect(() => {
+    if (filtersCnt !== 0) return
+    const { num_open_pulls = 0, num_closed_pulls = 0, num_merged_pulls = 0 } = repoData || {}
+    setOpenClosePullRequests(num_open_pulls, num_closed_pulls, num_merged_pulls)
+  }, [repoData, setOpenClosePullRequests, filtersCnt])
+
+  useEffect(() => {
     setQueryPage(page)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
@@ -245,7 +253,7 @@ export default function PullRequestListPage() {
     <SandboxPullRequestListPage
       repoId={repoId}
       spaceId={spaceId || ''}
-      isLoading={fetchingPullReqData || isLoadingOpen || isLoadingClosed || isLoadingMerged}
+      isLoading={fetchingPullReqData}
       isPrincipalsLoading={fetchingPrincipalData}
       prCandidateBranches={prCandidateBranches}
       principalsSearchQuery={principalsSearchQuery}

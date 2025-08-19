@@ -416,8 +416,6 @@ const PullRequestPanel = ({
   }
 
   const handleConfirmMerge = () => {
-    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
-
     setShowMergeInputs(false)
     setShowActionBtn(false)
     setMergeInitiated(true)

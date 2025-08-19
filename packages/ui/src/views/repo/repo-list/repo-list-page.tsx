@@ -111,6 +111,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
   const filterOptions: FilterOptionConfig<keyof RepoListFilters>[] = [
     {
+      defaultValue: false,
       label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,

@@ -22,6 +22,7 @@ import {
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
+import { useExpandedComments } from '../../context/pull-request-comments-context'
 import { replaceEmailAsKey, replaceMentionEmailWithId } from './utils'
 
 //Utility function to calculate thread spacing based on position
@@ -247,7 +248,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   totalThreads
 }) => {
   const [comment, setComment] = useState('')
-  const [isExpanded, setIsExpanded] = useState(!isResolved)
+  const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
+
+  const expandedKey = parentCommentId || commentId || 0
+  const isExpanded = !isResolved || getIsExpanded(expandedKey)
+
+  const handleToggleExpanded = useCallback(() => {
+    toggleExpanded(expandedKey)
+  }, [expandedKey, toggleExpanded])
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isDeletingComment, setIsDeletingComment] = useState(false)
@@ -267,12 +275,6 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   useEffect(() => {
     if (quoteReplyText) setComment(quoteReplyText)
   }, [quoteReplyText])
-
-  useEffect(() => {
-    if (isResolved) {
-      setIsExpanded(false)
-    }
-  }, [isResolved])
 
   const handleOpenDeleteDialog = useCallback(() => {
     setIsDeleteDialogOpen(true)
@@ -316,6 +318,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     return content
   }
 
+  const renderToggleButton = () => (
+    <Button variant="transparent" onClick={handleToggleExpanded}>
+      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
+      {isExpanded ? 'Hide resolved' : 'Show resolved'}
+    </Button>
+  )
+
   return (
     <>
       <div id={id}>
@@ -342,12 +351,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   }}
                   hideEditDelete={hideEditDelete}
                 />
-                {isResolved && !isComment && !contentHeader && (
-                  <Button variant="transparent" onClick={() => setIsExpanded(prev => !prev)}>
-                    <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
-                    {isExpanded ? 'Hide resolved' : 'Show resolved'}
-                  </Button>
-                )}
+                {isResolved && !isComment && !contentHeader && renderToggleButton()}
               </div>
             )}
           </NodeGroup.Title>
@@ -357,12 +361,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                 {!!contentHeader && (
                   <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-background-2')}>
                     {contentHeader}
-                    {isResolved && (
-                      <Button variant="transparent" onClick={() => setIsExpanded(prev => !prev)}>
-                        <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
-                        {isExpanded ? 'Hide resolved' : 'Show resolved'}
-                      </Button>
-                    )}
+                    {isResolved && renderToggleButton()}
                   </Layout.Horizontal>
                 )}
 
@@ -390,7 +389,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     setComment={setComment}
                   />
                 ) : (
-                  renderContent()
+                  <div className={cn(isExpanded ? '' : 'line-clamp-1')}>{renderContent()}</div>
                 )}
 
                 {!hideReplySection && (!isResolved || isExpanded) && (

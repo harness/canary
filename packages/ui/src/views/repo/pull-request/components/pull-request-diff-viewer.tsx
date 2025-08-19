@@ -24,6 +24,7 @@ import { OverlayScrollbars } from 'overlayscrollbars'
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
+import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
@@ -369,7 +370,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col bg-cn-background-1 p-4">
+        <div className="bg-cn-background-1 flex w-full flex-col p-4">
           <PullRequestCommentBox
             autofocus
             handleUpload={handleUpload}
@@ -689,31 +690,35 @@ const PullRequestDiffViewer = ({
     () => !!fileName
   )
 
+  const contextValue = useExpandedCommentsContext()
+
   return (
-    <div data-diff-file-path={fileName}>
-      {diffFileInstance && (
-        <div ref={diffInstanceRef}>
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore */}
-          <ExtendedDiffView<Thread[]>
-            ref={ref}
-            className="bg-tr w-full text-cn-foreground-1"
-            renderWidgetLine={renderWidgetLine}
-            renderExtendLine={renderExtendLine}
-            diffFile={diffFileInstance}
-            extendData={extend}
-            diffViewFontSize={fontsize}
-            diffViewHighlight={highlight}
-            diffViewMode={mode}
-            registerHighlighter={highlighter}
-            diffViewWrap={wrap}
-            // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
-            diffViewAddWidget={addWidget && mode === DiffModeEnum.Split}
-            diffViewTheme={isLightTheme ? 'light' : 'dark'}
-          />
-        </div>
-      )}
-    </div>
+    <ExpandedCommentsContext.Provider value={contextValue}>
+      <div data-diff-file-path={fileName}>
+        {diffFileInstance && (
+          <div ref={diffInstanceRef}>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
+            <ExtendedDiffView<Thread[]>
+              ref={ref}
+              className="bg-tr text-cn-foreground-1 w-full"
+              renderWidgetLine={renderWidgetLine}
+              renderExtendLine={renderExtendLine}
+              diffFile={diffFileInstance}
+              extendData={extend}
+              diffViewFontSize={fontsize}
+              diffViewHighlight={highlight}
+              diffViewMode={mode}
+              registerHighlighter={highlighter}
+              diffViewWrap={wrap}
+              // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
+              diffViewAddWidget={addWidget && mode === DiffModeEnum.Split}
+              diffViewTheme={isLightTheme ? 'light' : 'dark'}
+            />
+          </div>
+        )}
+      </div>
+    </ExpandedCommentsContext.Provider>
   )
 }
 

@@ -315,7 +315,7 @@ export const jumpToFile = (
     // Scroll them all in order outterBlock + innerBlock + the final diff
     outerDOM?.scrollIntoView(false)
     innerDOM?.scrollIntoView(false)
-    diffDOM?.scrollIntoView(true)
+    diffDOM?.scrollIntoView({ block: 'center', inline: 'center' })
 
     if (diffDOM && commentId) {
       dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {

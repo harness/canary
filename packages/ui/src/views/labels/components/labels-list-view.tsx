@@ -60,6 +60,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     if (searchQuery) {
       return (
         <NoData
+          withBorder
           className="min-h-0"
           imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}

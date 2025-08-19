@@ -54,7 +54,7 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{blue.300}"
+      "$value": "{cyan.300}"
     }
   },
   "border": {
@@ -1380,12 +1380,12 @@
     "link": {
       "text": {
         "$type": "color",
-        "$value": "{blue.300}",
+        "$value": "{cyan.200}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
       "text-hover": {
         "$type": "color",
-        "$value": "{blue.200}",
+        "$value": "{cyan.300}",
         "$description": "Hover color for text links. "
       }
     },

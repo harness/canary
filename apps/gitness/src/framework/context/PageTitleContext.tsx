@@ -1,7 +1,8 @@
 import { createContext, useContext, useState } from 'react'
 
 /**
- * Context to manage the dynamic page title for the application.
+ * Provides a context for managing the application's page title dynamically.
+ * This context takes precedence over titles defined in route configurations (routes.ts).
  */
 export const PageTitleContext = createContext<{
   pageTitle?: string

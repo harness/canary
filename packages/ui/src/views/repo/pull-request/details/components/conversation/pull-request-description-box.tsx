@@ -125,6 +125,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
             <Text className="flex-1" color="foreground-1">
               {description && (
                 <MarkdownViewer
+                  markdownClassName="pr-section"
                   source={comment}
                   onCheckboxChange={updatedDescription => {
                     setComment(updatedDescription)

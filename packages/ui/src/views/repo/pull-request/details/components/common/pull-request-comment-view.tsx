@@ -44,7 +44,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   return (
     <>
       <MarkdownViewer
-        markdownClassName="comment"
+        markdownClassName="pr-section"
         source={formattedComment || ''}
         suggestionBlock={{
           source:

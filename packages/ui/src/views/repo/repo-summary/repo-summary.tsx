@@ -260,7 +260,7 @@ export function RepoSummaryView({
                 />
               </StackedList.Item>
             </StackedList.Root>
-            <MarkdownViewer source={decodedReadmeContent || ''} withBorder />
+            <MarkdownViewer source={decodedReadmeContent || ''} withBorder className="text-wrap" />
           </SandboxLayout.Content>
         </SandboxLayout.Column>
         <SandboxLayout.Column>

@@ -281,7 +281,7 @@ export function MarkdownViewer({
                 return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
               }
 
-              return <code className={String(_className)}>{children}</code>
+              return <code className={`!whitespace-pre-wrap ${String(_className)}`}>{children}</code>
             }
           }}
         />

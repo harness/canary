@@ -663,7 +663,6 @@ const PullRequestPanel = ({
                               })}
                           disabled={buttonState.disabled}
                           loading={actions[parseInt(mergeButtonValue)]?.loading}
-                          selectedValue={mergeButtonValue}
                           handleOptionChange={handleMergeTypeSelect}
                           options={actions.map(action => {
                             return {

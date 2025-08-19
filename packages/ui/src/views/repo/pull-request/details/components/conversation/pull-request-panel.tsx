@@ -371,6 +371,14 @@ const PullRequestPanel = ({
   const handleMergeTypeSelect = (value: string) => {
     const selectedAction = actions[parseInt(value)]
     const strategy = getMergeStrategyFromTitle(selectedAction.title)
+    const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+    const isMergeAction = mergeActionTitles.has(selectedAction.title)
+    setMergeButtonValue(value)
+    if (!isMergeAction) {
+      return
+    }
+    setShowActionBtn(true)
+
     switch (strategy) {
       case MergeStrategy.SQUASH:
         setMergeMessage(
@@ -396,9 +404,6 @@ const PullRequestPanel = ({
       default:
         break
     }
-
-    setShowActionBtn(true)
-    setMergeButtonValue(value)
     const showInputs = strategy === MergeStrategy.MERGE || strategy === MergeStrategy.SQUASH
     setShowMergeInputs(!!showInputs)
   }
@@ -411,18 +416,9 @@ const PullRequestPanel = ({
   }
 
   const handleConfirmMerge = () => {
-    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
-    // Check if this is a merge action
-    const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
-    const isMergeAction = mergeActionTitles.has(selectedAction?.title || '')
-
     setShowMergeInputs(false)
     setShowActionBtn(false)
-
-    // Only set mergeInitiated for actual merge actions
-    if (isMergeAction) {
-      setMergeInitiated(true)
-    }
+    setMergeInitiated(true)
 
     const actionIdx = actions.findIndex(action => action.id === mergeButtonValue)
     if (actionIdx !== -1) {
@@ -611,7 +607,14 @@ const PullRequestPanel = ({
                           handleButtonClick={() => {
                             const selectedAction = actions[parseInt(mergeButtonValue)]
                             if (!selectedAction.disabled) {
-                              handleMergeTypeSelect(mergeButtonValue)
+                              const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+                              const isMergeAction = mergeActionTitles.has(selectedAction.title)
+
+                              if (!isMergeAction) {
+                                selectedAction.action?.()
+                              } else {
+                                handleMergeTypeSelect(mergeButtonValue)
+                              }
                             }
                           }}
                           size="md"
@@ -624,7 +627,10 @@ const PullRequestPanel = ({
                     {(() => {
                       const shouldShowButtonLayout =
                         actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
-                      return shouldShowButtonLayout ? (
+
+                      if (!shouldShowButtonLayout) return null
+                      const selectedAction = actions[parseInt(mergeButtonValue || '0')]
+                      return (
                         <ButtonLayout>
                           <Button
                             variant="outline"
@@ -640,10 +646,10 @@ const PullRequestPanel = ({
                             loading={isMerging || mergeInitiated}
                             disabled={cancelInitiated || shouldDisableFastForwardMerge()}
                           >
-                            Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
+                            Confirm {selectedAction?.title || 'Merge'}
                           </Button>
                         </ButtonLayout>
-                      ) : null
+                      )
                     })()}
                     {actions && pullReqMetadata?.closed ? (
                       <Button variant="primary" theme="default" size="sm" onClick={actions[0].action}>

@@ -100,14 +100,17 @@ export default {
   // Body Component
   '.cn-modal-dialog-body': {
     '--cn-modal-dialog-scroll-compensation': '4px',
-    display: 'grid',
-    gridTemplateColumns: 'calc(var(--cn-dialog-width) - var(--cn-dialog-px)*2)',
     paddingInline: 'var(--cn-modal-dialog-scroll-compensation)',
     paddingBottom: 'var(--cn-modal-dialog-scroll-compensation)',
     marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
     marginBottom: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
     marginTop: 'var(--cn-dialog-gap)',
     height: '100%',
+
+    '&.cn-scroll-area': {
+      display: 'flex',
+      flexDirection: 'column'
+    },
 
     '&-content': {
       display: 'flex',

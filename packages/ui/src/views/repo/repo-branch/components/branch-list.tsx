@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import {
   ActionData,
-  Avatar,
+  AvatarWithTooltip,
   CopyTag,
   IconPropsV2,
   IconV2,
@@ -89,7 +89,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
 
               <Table.Cell disableLink>
                 <Layout.Flex align="center" gapX="xs">
-                  <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
+                  <AvatarWithTooltip name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
                   <TimeAgoCard
                     timestamp={branch?.timestamp}
                     dateTimeFormatOptions={{ dateStyle: 'medium' }}

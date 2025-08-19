@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   getScopeType,
   IconV2,
+  Layout,
   Link,
   LinkProps,
   scopeTypeToIconMap,
@@ -159,14 +160,19 @@ export const LabelsHeader = ({
                   key={`${label.id}-${idx}`}
                   onSelect={handleOnSelect(label)}
                   title={
-                    <Tag
-                      icon={scopeTypeToIconMap[getScopeType(label.scope ?? 0)]}
-                      variant="secondary"
-                      size="sm"
-                      theme={label.color}
-                      label={label.key}
-                      value={(label.values?.length || '').toString()}
-                    />
+                    <Layout.Grid gapX="xs" align="center" className="grid-flow-col">
+                      <Tag
+                        icon={scopeTypeToIconMap[getScopeType(label.scope ?? 0)]}
+                        variant="secondary"
+                        size="sm"
+                        theme={label.color}
+                        label={label.key}
+                        value={(label.values?.length || '').toString()}
+                      />
+                      {label.type === 'dynamic' && (
+                        <IconV2 size="xs" name="plus-circle" className="text-cn-foreground-3" />
+                      )}
+                    </Layout.Grid>
                   }
                   // TODO: add description when it is available from PR Labels call
                   // description={<Text truncate>{label.description}</Text>}

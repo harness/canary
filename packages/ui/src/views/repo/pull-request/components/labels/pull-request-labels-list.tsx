@@ -35,9 +35,9 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
           theme={label.color}
           onActionClick={label.onDelete}
           actionIcon={showReset ? 'xmark' : undefined}
-          className="grid max-w-full grid-cols-[auto_auto]"
-          labelClassName="grid grid-cols-[auto_auto]"
-          valueClassName="grid grid-cols-[auto_auto] content-center"
+          className="grid max-w-full grid-flow-col content-center"
+          labelClassName="grid grid-flow-col content-center"
+          valueClassName="grid grid-flow-col content-center"
           onClick={
             onClick
               ? e => {

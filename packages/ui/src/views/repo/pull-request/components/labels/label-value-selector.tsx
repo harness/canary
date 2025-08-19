@@ -141,6 +141,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
       {isAllowAddNewValue && !!label?.isCustom && (
         <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
+            className="*:gap-0"
             onSelect={handleAddNewValue}
             tag={{
               variant: 'secondary',
@@ -148,7 +149,10 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
               theme: label.color,
               value: searchState,
               label: label.key,
-              icon: scopeTypeToIconMap[getScopeType(label.scope ?? 0)]
+              icon: scopeTypeToIconMap[getScopeType(label.scope ?? 0)],
+              className: 'grid grid-flow-col',
+              labelClassName: 'grid grid-flow-col',
+              valueClassName: 'grid grid-flow-col content-center'
             }}
           />
         </DropdownMenu.Group>

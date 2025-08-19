@@ -1385,7 +1385,7 @@
       },
       "text-hover": {
         "$type": "color",
-        "$value": "{cyan.300}",
+        "$value": "{cyan.150}",
         "$description": "Hover color for text links. "
       }
     },

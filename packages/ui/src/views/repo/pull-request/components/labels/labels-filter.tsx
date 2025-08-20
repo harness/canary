@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
@@ -30,6 +30,32 @@ export function LabelsFilter({
   const description =
     !isLabelsLoading && labelOptions.length === 0 ? 'No labels found' : isLabelsLoading ? 'Loading...' : ''
 
+  const [open, setOpen] = useState<Record<number, boolean>>({})
+  // Use refs to track focus state to ensure we always have the latest values
+  const focusStateRef = useRef<Record<number, { parent: boolean; subcontent: boolean }>>({})
+
+  // Common function to update focus state
+  const updateFocusState = (id: number, type: 'parent' | 'subcontent', isFocused: boolean) => {
+    focusStateRef.current = {
+      ...focusStateRef.current,
+      [id]: {
+        ...focusStateRef.current[id],
+        [type]: isFocused
+      }
+    }
+
+    // If focus is lost, check after a short delay if we should close the dropdown
+    if (!isFocused) {
+      setTimeout(() => {
+        const currentFocusState = focusStateRef.current[id] || { parent: false, subcontent: false }
+
+        if (!currentFocusState.parent && !currentFocusState.subcontent) {
+          setOpen(prev => ({ ...prev, [id]: false }))
+        }
+      }, 100) // Small timeout to ensure focus state is updated correctly
+    }
+  }
+
   useEffect(() => {
     // Resetting the search query so that on re-open of the filter,
     // all options will be shown in-spite of older search query
@@ -44,14 +70,25 @@ export function LabelsFilter({
         inputContainerClassName="w-auto mx-1.5 mt-2 mb-2.5"
         onChange={value => onInputChange(value)}
         placeholder="Search..."
+        onKeyDown={e => e.stopPropagation()}
       />
       {!isLabelsLoading &&
         labelOptions.map(option =>
           option.value_count > 0 ? (
             <DropdownMenu.CheckboxItem
               key={option.id}
+              onBlur={() => updateFocusState(option.id, 'parent', false)}
+              onFocus={() => updateFocusState(option.id, 'parent', true)}
               title={<LabelMarker color={option.color} label={option.key} value={String(option.value_count)} />}
               checked={value[option.id] ? value[option.id] === true || 'indeterminate' : false}
+              subMenuProps={{
+                open: open[option.id] as boolean,
+                onOpenChange: open => setOpen(prev => ({ ...prev, [option.id]: open }))
+              }}
+              subContentProps={{
+                onFocus: () => updateFocusState(option.id, 'subcontent', true),
+                onBlur: () => updateFocusState(option.id, 'subcontent', false)
+              }}
               onCheckedChange={() => {
                 const { [option.id]: selectedIdValue, ...rest } = value
                 const newValue = selectedIdValue ? rest : { ...value, [option.id]: true }

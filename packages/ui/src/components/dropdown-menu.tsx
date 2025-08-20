@@ -228,11 +228,25 @@ interface DropdownMenuItemProps
     Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>, 'title' | 'prefix'> {
   prefix?: ReactNode
   subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
+  subMenuProps?: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>
 }
 
 const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuItemProps>(
   (
-    { className, children, title, description, label, shortcut, checkmark, prefix, tag, subContentProps, ...props },
+    {
+      className,
+      children,
+      title,
+      description,
+      label,
+      shortcut,
+      checkmark,
+      prefix,
+      tag,
+      subContentProps,
+      subMenuProps,
+      ...props
+    },
     ref
   ) => {
     const filteredChildren = filterChildrenByDisplayNames(children, innerComponentsDisplayNames)
@@ -246,7 +260,7 @@ const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item
 
     if (withChildren) {
       return (
-        <DropdownMenuSub>
+        <DropdownMenuSub {...subMenuProps}>
           <DropdownMenuSubTrigger
             ref={ref}
             className={cn('cn-dropdown-menu-item cn-dropdown-menu-item-subtrigger', className)}
@@ -274,6 +288,7 @@ interface DropdownMenuCheckboxItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
     Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {
   subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
+  subMenuProps?: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>
 }
 
 const DropdownMenuCheckboxItem = forwardRef<
@@ -294,6 +309,7 @@ const DropdownMenuCheckboxItem = forwardRef<
       onCheckedChange,
       onClick,
       subContentProps,
+      subMenuProps,
       ...props
     },
     ref
@@ -320,7 +336,7 @@ const DropdownMenuCheckboxItem = forwardRef<
 
     if (withChildren) {
       return (
-        <DropdownMenuSub>
+        <DropdownMenuSub {...subMenuProps}>
           <DropdownMenuSubTrigger
             ref={ref}
             className={cn('cn-dropdown-menu-item cn-dropdown-menu-item-subtrigger', className)}

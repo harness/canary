@@ -1,6 +1,6 @@
 import { memo, useMemo, useRef, useState } from 'react'
 
-import { FileExplorer, StatusBadge } from '@/components'
+import { FileExplorer, Layout, StatusBadge } from '@/components'
 
 type TreeNode = FolderNode | FileNode
 
@@ -308,18 +308,18 @@ function renderTree(
           level={level}
           onClick={() => setJumpToDiff(node.path)}
           tooltip={
-            <>
+            <Layout.Flex gapX="3xs" align="center">
               {addedLines > 0 && (
-                <StatusBadge variant="outline" size="sm" theme="success">
+                <StatusBadge variant="secondary" size="sm" theme="success">
                   +{addedLines}
                 </StatusBadge>
               )}
               {deletedLines > 0 && (
-                <StatusBadge variant="outline" size="sm" theme="danger">
+                <StatusBadge variant="secondary" size="sm" theme="danger">
                   -{deletedLines}
                 </StatusBadge>
               )}
-            </>
+            </Layout.Flex>
           }
         >
           {node.name}

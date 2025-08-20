@@ -30,12 +30,7 @@ export const RepoSidebar = ({
             </Button>
           </Layout.Grid>
 
-          <SearchFiles
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            searchInputSize="md"
-            contentClassName="w-[800px]"
-          />
+          <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
 
           <ScrollArea
             className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5"

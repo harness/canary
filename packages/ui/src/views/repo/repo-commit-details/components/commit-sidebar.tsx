@@ -12,7 +12,7 @@ export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSi
   return (
     <div className="nested-sidebar-height pt-cn-md -mt-cn-md sticky top-[var(--cn-breadcrumbs-height)]">
       <Layout.Flex direction="column" className="max-h-full overflow-hidden" gapY="sm">
-        <SearchFiles navigateToFile={navigateToFile} filesList={filesList} contentClassName="width-popover-max-width" />
+        <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
 
         <ScrollArea className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5" classNameContent="w-[248px]">
           {children}

@@ -31,9 +31,9 @@ export const PullRequestDiffSidebar: React.FC<PullRequestDiffSidebarProps> = ({
       }}
     >
       <Layout.Flex direction="column" className="pt-cn-xl max-h-full pl-8" gapY="sm">
-        <SearchFiles navigateToFile={setJumpToDiff} filesList={filePaths} contentClassName="width-popover-max-width" />
+        <SearchFiles navigateToFile={setJumpToDiff} filesList={filePaths} />
 
-        <ScrollArea className="grid-cols-[100%] pb-7">
+        <ScrollArea className="pr-cn-lg -mr-cn-lg grid-cols-[100%] pb-7">
           <PullRequestChangesExplorer
             paths={filePaths}
             setJumpToDiff={setJumpToDiff}

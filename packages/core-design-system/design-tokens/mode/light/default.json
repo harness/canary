@@ -178,19 +178,6 @@
           "$type": "color",
           "$value": "{blue.700}",
           "$description": "Selected state background color for active brand items."
-        },
-        "inner": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.4",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{cyan.150}"
         }
       },
       "soft": {
@@ -1828,36 +1815,17 @@
             "type": "innerShadow"
           }
         }
-      }
-    },
-    "set": {
-      "ai": {
-        "surface": {
-          "inner": {
-            "$type": "boxShadow",
-            "$value": {
-              "x": "0",
-              "y": "7",
-              "blur": "16",
-              "spread": "0",
-              "color": "{set.ai.surface.inner}",
-              "type": "innerShadow"
-            }
-          }
-        }
       },
-      "brand": {
-        "solid": {
-          "inner": {
-            "$type": "boxShadow",
-            "$value": {
-              "x": "0",
-              "y": "7",
-              "blur": "16",
-              "spread": "0",
-              "color": "{set.brand.solid.inner}",
-              "type": "innerShadow"
-            }
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "7",
+            "blur": "16",
+            "spread": "0",
+            "color": "{set.ai.surface.inner}",
+            "type": "innerShadow"
           }
         }
       }

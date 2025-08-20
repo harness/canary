@@ -171,26 +171,13 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.700}",
+          "$value": "{blue.500}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.700}",
+          "$value": "{blue.500}",
           "$description": "Selected state background color for active brand items."
-        },
-        "inner": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.5",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{cyan.200}"
         }
       },
       "soft": {
@@ -1828,36 +1815,17 @@
             "type": "innerShadow"
           }
         }
-      }
-    },
-    "set": {
-      "ai": {
-        "surface": {
-          "inner": {
-            "$type": "boxShadow",
-            "$value": {
-              "x": "0",
-              "y": "7",
-              "blur": "16",
-              "spread": "0",
-              "color": "{set.ai.surface.inner}",
-              "type": "innerShadow"
-            }
-          }
-        }
       },
-      "brand": {
-        "solid": {
-          "inner": {
-            "$type": "boxShadow",
-            "$value": {
-              "x": "0",
-              "y": "7",
-              "blur": "16",
-              "spread": "0",
-              "color": "{set.brand.solid.inner}",
-              "type": "innerShadow"
-            }
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "7",
+            "blur": "16",
+            "spread": "0",
+            "color": "{set.ai.surface.inner}",
+            "type": "innerShadow"
           }
         }
       }

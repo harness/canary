@@ -361,7 +361,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{lime.600}",
+          "$value": "{lime.700}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {

@@ -234,7 +234,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.1000}",
+          "$value": "{pure.black}",
           "$description": "Primary text color for AI-related content with optimal readability."
         },
         "bg": {
@@ -388,22 +388,22 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.25}",
+          "$value": "{lime.25}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{mint.100}",
+          "$value": "{lime.150}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.50}",
+          "$value": "{lime.50}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{mint.50}",
+          "$value": "{lime.50}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -456,7 +456,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{red.800}",
+          "$value": "{red.700}",
           "$description": "Standard text color for red surfaces with balanced readability."
         },
         "bg": {
@@ -466,7 +466,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{red.100}",
+          "$value": "{red.150}",
           "$description": "Border color for standard red boundaries."
         },
         "bg-hover": {

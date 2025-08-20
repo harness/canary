@@ -24,7 +24,7 @@ export default {
       height: `var(--cn-avatar-size-lg)`,
       width: `var(--cn-avatar-size-lg)`,
       fontSize: `var(--cn-font-size-2)`,
-      fontWeight: `var(--cn-font-weight-default-normal-400)`,
+      fontWeight: `var(--cn-font-weight-default-normal-400)`
     },
 
     '&:where(.cn-avatar-rounded)': {

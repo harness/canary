@@ -256,7 +256,7 @@
           "$type": "color",
           "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
         },
-        "inner-shadow": {
+        "inner": {
           "$extensions": {
             "studio.tokens": {
               "modify": {

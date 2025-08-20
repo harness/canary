@@ -143,7 +143,7 @@ export default {
       backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg), var(--cn-set-ai-surface-bg)), var(--cn-set-ai-surface-border)`,
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
-      border: 'var(--cn-badge-border) solid transparent',
+      border: 'var(--cn-btn-border) solid transparent',
       boxShadow: 'var(--cn-shadow-comp-ai-inner)',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {

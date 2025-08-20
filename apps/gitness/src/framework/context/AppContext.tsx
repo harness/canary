@@ -52,10 +52,7 @@ const AppContext = createContext<AppContextType>({
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   usePageTitle()
   const isMFE = useIsMFE()
-  const {
-    parentContextObj: { appStoreContext }
-  } = useMFEContext()
-  const parentAppStoreContext = useContext(appStoreContext)
+  const { currentUserInfo } = useMFEContext()
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
@@ -130,7 +127,6 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
 
   useEffect(() => {
     if (isMFE) {
-      const currentUserInfo = parentAppStoreContext.currentUserInfo
       setCurrentUser({
         uid: currentUserInfo.uuid,
         email: currentUserInfo.email,

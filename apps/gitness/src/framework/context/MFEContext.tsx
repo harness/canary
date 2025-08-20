@@ -1,4 +1,5 @@
-import { Context, createContext } from 'react'
+import { createContext } from 'react'
+import { Location } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
 
@@ -44,10 +45,6 @@ export interface UserInfo {
 }
 // removed utmInfo and accounts from the above type
 
-export interface ParentAppStoreContextProps {
-  currentUserInfo: UserInfo
-}
-
 export interface UseLogoutReturn {
   forceLogout: () => void
 }
@@ -71,13 +68,13 @@ export interface IMFEContext {
    *  */
   scope: Scope
   renderUrl: string
-  parentContextObj: {
-    appStoreContext: Context<ParentAppStoreContextProps>
-  }
+  location: Location
+  currentUserInfo: UserInfo
   customHooks: Partial<{
     useGenerateToken: Unknown
   }>
   customUtils: Partial<{
+    navigate: Unknown
     navigateToUserProfile: Unknown
   }>
   routes: Partial<{
@@ -104,14 +101,15 @@ export interface IMFEContext {
 }
 
 export const MFEContext = createContext<IMFEContext>({
+  location: {
+    pathname: '',
+    search: '',
+    hash: '',
+    state: null,
+    key: ''
+  } as Location,
+  currentUserInfo: { uuid: '' },
   scope: { accountId: '' },
-  parentContextObj: {
-    appStoreContext: createContext({
-      currentUserInfo: {
-        uuid: ''
-      }
-    })
-  },
   renderUrl: '',
   customHooks: {},
   customUtils: {},

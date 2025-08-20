@@ -83,7 +83,6 @@ function decode<T = unknown>(arg: string): T {
 export default function AppMFE({
   scope,
   renderUrl,
-  parentContextObj,
   on401,
   useMFEThemeContext,
   parentLocationPath,
@@ -92,7 +91,9 @@ export default function AppMFE({
   customUtils,
   routes,
   routeUtils,
-  hooks
+  hooks,
+  location,
+  currentUserInfo
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -138,9 +139,13 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesToRender = mfeRoutes(
-    scope.projectIdentifier,
-    <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
+  const routesToRender = useMemo(
+    () =>
+      mfeRoutes(
+        scope.projectIdentifier,
+        <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
+      ),
+    [scope.projectIdentifier, renderUrl, onRouteChange, parentLocationPath]
   )
 
   const router = createBrowserRouter(routesToRender, { basename })
@@ -160,7 +165,8 @@ export default function AppMFE({
                 value={{
                   scope,
                   renderUrl,
-                  parentContextObj,
+                  location,
+                  currentUserInfo,
                   customHooks,
                   customUtils,
                   routes,

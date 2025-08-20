@@ -344,7 +344,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.600}",
+          "$value": "{lime.600}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {

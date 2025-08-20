@@ -96,7 +96,7 @@ function apiExecutions2Executions(data: ListExecutionsOkResponse): IExecution[] 
 const Branch = ({ children }: { children: React.ReactNode }): React.ReactElement => {
   return (
     <div className="flex items-center gap-1 rounded-md bg-cn-background-1/10 px-1.5 font-mono">
-      <IconV2 name="git-branch" size="2xs" className="text-cn-foreground-3" />
+      <IconV2 name="git-branch" size="xs" className="text-cn-foreground-3" />
       {children}
     </div>
   )

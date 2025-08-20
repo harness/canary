@@ -249,7 +249,7 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.100}",
+          "$value": "{orange.50}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {

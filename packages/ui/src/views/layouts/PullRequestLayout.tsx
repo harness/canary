@@ -63,7 +63,11 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
               {t('views:pullRequests.commits', 'Commits')}
             </Tabs.Trigger>
 
-            <Tabs.Trigger value={PullRequestTabsKeys.CHANGES} counter={pullRequest?.stats?.files_changed} icon="page">
+            <Tabs.Trigger
+              value={PullRequestTabsKeys.CHANGES}
+              counter={pullRequest?.stats?.files_changed}
+              icon="empty-page"
+            >
               {t('views:pullRequests.changes', 'Changes')}
             </Tabs.Trigger>
           </Tabs.List>

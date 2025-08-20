@@ -36,7 +36,7 @@ export const ChangedFilesShortInfo = ({ diffData, diffStats, goToDiff }: Changed
           <DropdownMenu.IconItem
             key={diff.filePath}
             onClick={() => goToDiff(diff.filePath ?? '')}
-            icon="page"
+            icon="empty-page"
             title={diff.filePath}
             label={
               <Layout.Horizontal gap="2xs" align="center">

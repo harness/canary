@@ -87,7 +87,7 @@ function FileItem({ children, isActive, level, link, onClick }: FileItemProps) {
   const { Link } = useRouterContext()
   const comp = (
     <Item
-      icon="page"
+      icon="empty-page"
       isActive={isActive}
       className="mb-cn-4xs"
       style={{

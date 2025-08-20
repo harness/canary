@@ -89,6 +89,7 @@ export interface DiffFileEntry extends DiffFile {
   containerId: string
   contentId: string
   fileViews?: Map<string, string>
+  isRename?: boolean
 }
 
 export const changesInfoAtom = atom<{ path?: string; raw?: string; fileViews?: Map<string, string> }>({})

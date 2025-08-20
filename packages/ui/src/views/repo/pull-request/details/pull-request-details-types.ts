@@ -405,11 +405,11 @@ export interface CommentItem<T = unknown> {
 }
 
 export interface DiffFileEntry extends DiffFile {
-  fileId: string
   filePath: string
   containerId: string
   contentId: string
   fileViews?: Map<string, string>
+  isRename?: boolean
 }
 
 export interface DiffFileName {

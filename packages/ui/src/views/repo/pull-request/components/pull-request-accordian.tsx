@@ -35,6 +35,9 @@ export interface HeaderProps {
   isDeleted: boolean
   unchangedPercentage?: number
   isBinary?: boolean
+  isRename?: boolean
+  oldName?: string
+  newName?: string
 }
 
 interface DataProps {
@@ -99,7 +102,13 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   currentRefForDiff
 }) => {
   const { t } = useTranslation()
-  const { text, addedLines, deletedLines, filePath, checksumAfter, fileViews } = header
+  const { text, addedLines, deletedLines, filePath, checksumAfter, fileViews, isRename, oldName, newName } = header
+
+  // Determine the display text and link path for renamed files
+  const displayText = isRename ? `${oldName} → ${newName}` : text
+  const linkPath = isRename ? newName : filePath
+  const copyText = isRename ? newName || text : text
+
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">
@@ -117,12 +126,12 @@ export const LineTitle: React.FC<LineTitleProps> = ({
             <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <Link
-            to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${filePath}` }) ?? ''}
+            to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
             className="font-medium leading-tight text-cn-foreground-1"
           >
-            {text}
+            {displayText}
           </Link>
-          <CopyButton name={text} size="xs" color="gray" />
+          <CopyButton name={copyText} size="xs" color="gray" />
         </div>
 
         <div className="flex items-center gap-x-1">

@@ -155,7 +155,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         principalProps={principalProps}
         data={
           diffs?.map(item => ({
-            text: item.filePath,
+            text: item.isRename ? `${item.oldName} → ${item.newName}` : item.filePath,
             addedLines: item.addedLines,
             deletedLines: item.deletedLines,
             data: item.raw,
@@ -167,7 +167,10 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             diffData: item,
             isDeleted: !!item.isDeleted,
             unchangedPercentage: item.unchangedPercentage,
-            isBinary: item.isBinary
+            isBinary: item.isBinary,
+            isRename: !!item.isRename,
+            oldName: item.oldName,
+            newName: item.newName
           })) || []
         }
         diffMode={diffMode}

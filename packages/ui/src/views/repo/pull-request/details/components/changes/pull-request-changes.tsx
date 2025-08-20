@@ -97,9 +97,16 @@ function PullRequestChangesInternal({
   const getFileComments = (diffItem: HeaderProps) => {
     return (
       comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-        thread.some(
-          (comment: CommentItem<TypesPullReqActivity>) => comment.payload?.payload?.code_comment?.path === diffItem.text
-        )
+        thread.some((comment: CommentItem<TypesPullReqActivity>) => {
+          const commentPath = comment.payload?.payload?.code_comment?.path
+          if (!commentPath) return false
+          // Handle renamed files: check both old and new paths
+          if (diffItem.isRename && diffItem.oldName && diffItem.newName) {
+            return commentPath === diffItem.oldName || commentPath === diffItem.newName
+          }
+          // For non-renamed files
+          return commentPath === diffItem.text
+        })
       ) || []
     )
   }
@@ -181,10 +188,16 @@ function PullRequestChangesInternal({
               // Filter activityBlocks that are relevant for this file
               const fileComments =
                 comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-                  thread.some(
-                    (comment: CommentItem<TypesPullReqActivity>) =>
-                      comment.payload?.payload?.code_comment?.path === item.text
-                  )
+                  thread.some((comment: CommentItem<TypesPullReqActivity>) => {
+                    const commentPath = comment.payload?.payload?.code_comment?.path
+                    if (!commentPath) return false
+                    // Handle renamed files: both old and new paths
+                    if (item.isRename && item.oldName && item.newName) {
+                      return commentPath === item.oldName || commentPath === item.newName
+                    }
+                    // For non-renamed files
+                    return commentPath === item.text
+                  })
                 ) || []
 
               return (

@@ -582,7 +582,10 @@ export const CreatePullRequest = () => {
                 unchangedPercentage: item.unchangedPercentage,
                 blocks: item.blocks,
                 filePath: item.filePath,
-                diffData: item
+                diffData: {
+                  ...item,
+                  filePath: item.filePath
+                }
               })) || []
             : []
         }

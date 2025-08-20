@@ -13,7 +13,7 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import { routes } from './routes'
+import { routes } from './routing/standalone/routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 

@@ -18,7 +18,8 @@ import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import { getMFERoutes, repoRoutes } from './routes'
+import { repoRoutes } from './routing/common-routes'
+import { getMFERoutes } from './routing/mfe/routes'
 import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export interface MFERouteRendererProps {

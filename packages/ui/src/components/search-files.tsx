@@ -128,17 +128,11 @@ export const SearchFiles = ({
     const last = items[items.length - 1]
     const activeElement = document.activeElement?.shadowRoot?.activeElement ?? document.activeElement
 
-    if (e.key === 'ArrowUp' && activeElement === first) {
+    if ((e.key === 'ArrowUp' && activeElement === first) || (e.key === 'ArrowDown' && activeElement === last)) {
       e.preventDefault()
       inputRef.current?.focus()
       setIsOpen(true)
       return
-    }
-
-    if (e.key === 'ArrowDown' && activeElement === last) {
-      e.preventDefault()
-      inputRef.current?.focus()
-      setIsOpen(true)
     }
   }
 

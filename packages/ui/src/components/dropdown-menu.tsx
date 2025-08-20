@@ -109,6 +109,13 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
      * This code is executed only when inside a ShadowRoot
      */
     const onKeyDownCaptureHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+      /**
+       * To block further code execution in onKeyDownCaptureHandler,
+       * need to call e.preventDefault() inside propOnKeyDownCapture.
+       */
+      propOnKeyDownCapture?.(e)
+      if (e.defaultPrevented || e.isDefaultPrevented?.()) return
+
       if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
 
       const rootEl = contentRef.current
@@ -118,13 +125,13 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
 
       if (!(rootNode instanceof ShadowRoot)) return
 
-      const activeEl = rootNode instanceof ShadowRoot ? rootNode.activeElement : document.activeElement
       const items = Array.from(
-        rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
+        rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])[role*="menuitem"]')
       )
 
       if (!items.length) return
 
+      const activeEl = rootNode instanceof ShadowRoot ? rootNode.activeElement : document.activeElement
       let idx = items.findIndex(el => el === activeEl || (activeEl instanceof Element && el.contains(activeEl)))
 
       if (idx === -1) {
@@ -133,13 +140,6 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
 
       const next =
         e.key === 'ArrowDown' ? (idx + 1 + items.length) % items.length : (idx - 1 + items.length) % items.length
-
-      /**
-       * To block further code execution in onKeyDownCaptureHandler,
-       * need to call e.preventDefault() inside propOnKeyDownCapture.
-       */
-      propOnKeyDownCapture?.(e)
-      if (e.defaultPrevented || e.isDefaultPrevented?.()) return
 
       e.preventDefault()
       e.stopPropagation()

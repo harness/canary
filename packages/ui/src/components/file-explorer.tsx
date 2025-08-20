@@ -1,6 +1,6 @@
-import { ReactNode } from 'react'
+import { forwardRef, ReactNode } from 'react'
 
-import { Accordion, GridProps, IconPropsV2, IconV2, Layout, Text } from '@/components'
+import { Accordion, GridProps, IconPropsV2, IconV2, Layout, Text, Tooltip, TooltipProps } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -9,27 +9,31 @@ interface ItemProps extends GridProps {
   isActive?: boolean
 }
 
-const Item = ({ className, children, icon, isActive, ...props }: ItemProps) => {
-  return (
-    <Layout.Grid
-      align="center"
-      gap="2xs"
-      flow="column"
-      justify="start"
-      className={cn(
-        'py-cn-2xs pr-1.5 rounded text-cn-foreground-2 hover:text-cn-foreground-1 hover:bg-cn-background-hover ',
-        { 'bg-cn-background-selected text-cn-foreground-1': isActive },
-        className
-      )}
-      {...props}
-    >
-      <IconV2 className="text-inherit" name={icon} size="md" />
-      <Text className="text-inherit" truncate>
-        {children}
-      </Text>
-    </Layout.Grid>
-  )
-}
+const Item = forwardRef<HTMLDivElement, ItemProps>(
+  ({ className, children, icon, isActive, ...props }: ItemProps, ref) => {
+    return (
+      <Layout.Grid
+        ref={ref}
+        align="center"
+        gap="2xs"
+        flow="column"
+        justify="start"
+        className={cn(
+          'py-cn-2xs pr-1.5 rounded text-cn-foreground-2 hover:text-cn-foreground-1 hover:bg-cn-background-hover cursor-pointer',
+          { 'bg-cn-background-selected text-cn-foreground-1': isActive },
+          className
+        )}
+        {...props}
+      >
+        <IconV2 className="text-inherit" name={icon} size="md" />
+        <Text className="text-inherit" truncate>
+          {children}
+        </Text>
+      </Layout.Grid>
+    )
+  }
+)
+Item.displayName = 'FileExplorerItem'
 
 interface FolderItemProps {
   children: ReactNode
@@ -83,9 +87,10 @@ interface FileItemProps {
   isActive?: boolean
   link?: string
   onClick?: () => void
+  tooltip?: TooltipProps['content']
 }
 
-function FileItem({ children, isActive, level, link, onClick }: FileItemProps) {
+function FileItem({ children, isActive, level, link, onClick, tooltip }: FileItemProps) {
   const { Link } = useRouterContext()
   const comp = (
     <Item
@@ -102,7 +107,9 @@ function FileItem({ children, isActive, level, link, onClick }: FileItemProps) {
     </Item>
   )
 
-  return link ? <Link to={link}>{comp}</Link> : comp
+  const compWithTooltip = tooltip ? <Tooltip content={tooltip}>{comp}</Tooltip> : comp
+
+  return link ? <Link to={link}>{compWithTooltip}</Link> : compWithTooltip
 }
 
 interface RootProps {

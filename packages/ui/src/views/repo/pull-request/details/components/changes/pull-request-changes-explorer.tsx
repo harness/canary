@@ -1,6 +1,6 @@
 import { memo, useMemo, useRef, useState } from 'react'
 
-import { FileExplorer, StatusBadge, Text, Tooltip } from '@/components'
+import { FileExplorer, StatusBadge } from '@/components'
 
 type TreeNode = FolderNode | FileNode
 
@@ -8,12 +8,14 @@ interface FileNode {
   type: 'file'
   name: string
   path: string
+  level: number
 }
 
 interface FolderNode {
   type: 'folder'
   name: string
   path: string
+  level: number
   children: TreeNode[]
 }
 
@@ -24,6 +26,29 @@ export interface ExplorerDiffData {
   filePath: string
   isDeleted: boolean
   unchangedPercentage: number
+}
+
+/**
+ * Assigns correct nesting levels to all nodes based on their position in the tree
+ * @param nodes - Tree nodes without level property
+ * @param currentLevel - Current nesting level (starts at 0)
+ * @returns Tree nodes with level property added
+ */
+function assignLevels(nodes: Omit<TreeNode, 'level'>[], currentLevel: number = 0): TreeNode[] {
+  return nodes.map(node => {
+    if (node.type === 'folder') {
+      return {
+        ...node,
+        level: currentLevel,
+        children: assignLevels((node as FolderNode).children, currentLevel + 1)
+      } as FolderNode
+    } else {
+      return {
+        ...node,
+        level: currentLevel
+      } as FileNode
+    }
+  })
 }
 
 /**
@@ -77,12 +102,14 @@ export function buildFileTree(rawPaths: string[]): FolderNode[] {
             type: 'folder' as const,
             name: node.name,
             path: node.path,
-            children: fileTreeToNodes(node.children)
+            children: fileTreeToNodes(node.children),
+            level: 0
           }
         : {
             type: 'file' as const,
             name: node.name,
-            path: node.path
+            path: node.path,
+            level: 0
           }
     )
   }
@@ -111,7 +138,8 @@ export function buildFileTree(rawPaths: string[]): FolderNode[] {
           type: 'folder' as const,
           name: mergedName,
           path: mergedPath,
-          children: kids
+          children: kids,
+          level: 0
         }
       } else {
         return node
@@ -120,7 +148,10 @@ export function buildFileTree(rawPaths: string[]): FolderNode[] {
   }
 
   const rawTree = fileTreeToNodes(root)
-  return flatten(rawTree) as FolderNode[]
+  const flattenedTree = flatten(rawTree)
+  const treeWithLevels = assignLevels(flattenedTree)
+
+  return treeWithLevels as FolderNode[]
 }
 
 /**
@@ -252,10 +283,7 @@ function renderTree(
   activePath?: string,
   diffsData?: ExplorerDiffData[]
 ): React.ReactNode[] {
-  return nodes.map(node => {
-    // Calculate level based on path depth
-    const level = (node.path ?? '').split('/').length - 1
-
+  return nodes.map(({ level, ...node }) => {
     if (node.type === 'folder') {
       const isActive = activePath?.startsWith(node.path)
       return (
@@ -279,25 +307,22 @@ function renderTree(
           isActive={isActive}
           level={level}
           onClick={() => setJumpToDiff(node.path)}
+          tooltip={
+            <>
+              {addedLines > 0 && (
+                <StatusBadge variant="outline" size="sm" theme="success">
+                  +{addedLines}
+                </StatusBadge>
+              )}
+              {deletedLines > 0 && (
+                <StatusBadge variant="outline" size="sm" theme="danger">
+                  -{deletedLines}
+                </StatusBadge>
+              )}
+            </>
+          }
         >
-          <Tooltip
-            content={
-              <>
-                {addedLines > 0 && (
-                  <StatusBadge variant="outline" size="sm" theme="success">
-                    +{addedLines}
-                  </StatusBadge>
-                )}
-                {deletedLines > 0 && (
-                  <StatusBadge variant="outline" size="sm" theme="danger">
-                    -{deletedLines}
-                  </StatusBadge>
-                )}
-              </>
-            }
-          >
-            <Text title="">{node.name}</Text>
-          </Tooltip>
+          {node.name}
         </FileExplorer.FileItem>
       )
     }

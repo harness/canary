@@ -29,13 +29,14 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   }, [xNextPage])
 
   if (isFetchingCommits) {
-    return <Skeleton.List />
+    return <Skeleton.List className="mt-cn-xl" />
   }
 
   return (
     <>
       {!commitsList?.length && (
         <NoData
+          className="mt-cn-xl"
           imageName="no-data-folder"
           title={t('views:pullRequests.noCommitsYet')}
           description={[t('views:pullRequests.noCommitDataDescription')]}
@@ -46,7 +47,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         <CommitsList
           toCode={toCode}
           toCommitDetails={toCommitDetails}
-          className="mt-cn-sm"
+          className="mt-cn-xl"
           data={commitsList.map((item: TypesCommit) => ({
             sha: item.sha,
             parent_shas: item.parent_shas,

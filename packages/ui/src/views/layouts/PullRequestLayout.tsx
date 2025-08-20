@@ -36,7 +36,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-cn-2xl">
+      <SandboxLayout.Content>
         {pullRequest && (
           <PullRequestHeader
             className="mb-cn-3xl"
@@ -50,7 +50,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         )}
 
         <Tabs.NavRoot>
-          <Tabs.List className="-mx-6 mb-cn-sm px-6" variant="overlined">
+          <Tabs.List className="-mx-6 px-6" variant="overlined">
             <Tabs.Trigger
               value={PullRequestTabsKeys.CONVERSATION}
               icon="chat-bubble-empty"

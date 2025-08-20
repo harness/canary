@@ -207,7 +207,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   return (
     <Layout.Flex className="flex-1" ref={containerRef}>
       {showExplorer && (
-        <>
+        <Layout.Flex className="-mb-7">
           <PullRequestDiffSidebar
             sidebarWidth={sidebarWidth}
             filePaths={diffs?.map(diff => diff.filePath) || []}
@@ -224,7 +224,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             }
           />
           <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
-        </>
+        </Layout.Flex>
       )}
       <SandboxLayout.Main>
         <SandboxLayout.Content className={cn('flex flex-col p-0', showExplorer ? 'pl-cn-xl' : '')}>

@@ -72,7 +72,6 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
 interface AppMFEProps extends IMFEContext {
   on401?: () => void
   useMFEThemeContext: () => { theme: string; setTheme: (newTheme: string) => void }
-  parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
 }
 
@@ -85,7 +84,6 @@ export default function AppMFE({
   renderUrl,
   on401,
   useMFEThemeContext,
-  parentLocationPath,
   onRouteChange,
   customHooks,
   customUtils,
@@ -143,9 +141,9 @@ export default function AppMFE({
     () =>
       mfeRoutes(
         scope.projectIdentifier,
-        <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
+        <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={location.pathname} />
       ),
-    [scope.projectIdentifier, renderUrl, onRouteChange, parentLocationPath]
+    [scope.projectIdentifier, renderUrl, onRouteChange, location.pathname]
   )
 
   const router = createBrowserRouter(routesToRender, { basename })

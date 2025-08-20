@@ -159,11 +159,11 @@ export const Summary = ({
                       file.status
                         ? file.status === FileStatus.SAFE
                           ? file.type === SummaryItemType.File
-                            ? 'page'
+                            ? 'empty-page'
                             : 'folder'
                           : 'warning-triangle-solid'
                         : file.type === SummaryItemType.File
-                          ? 'page'
+                          ? 'empty-page'
                           : 'folder'
                     }
                   />

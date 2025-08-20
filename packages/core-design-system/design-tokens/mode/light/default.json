@@ -239,7 +239,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{purple.50}",
           "$description": "Base background color for AI-related surfaces."
         },
         "border": {
@@ -249,7 +249,7 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.50}",
+          "$value": "{purple.100}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
@@ -349,41 +349,41 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.700}",
+          "$value": "{lime.700}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{mint.700}",
+          "$value": "{lime.700}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{mint.600}",
+          "$value": "{lime.600}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.50}",
+          "$value": "{lime.50}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.100}",
+          "$value": "{lime.100}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{mint.100}",
+          "$value": "{lime.100}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{mint.800}",
+          "$value": "{lime.700}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
@@ -2679,7 +2679,7 @@
     "ai-subtle": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{yellow.25}"
+        "$value": "{orange.50}"
       },
       "gradient-stop-2": {
         "$type": "color",

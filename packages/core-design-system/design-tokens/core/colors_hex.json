@@ -202,7 +202,7 @@
   },
   "red": {
     "25": {
-      "$value": "#fffafa"
+      "$value": "#fff5f5"
     },
     "50": {
       "$value": "#fee3e3"
@@ -211,7 +211,7 @@
       "$value": "#ffd5d5"
     },
     "150": {
-      "$value": "#fbb4b4"
+      "$value": "#ffc1c1"
     },
     "200": {
       "$value": "#ff9a99"
@@ -538,7 +538,7 @@
   },
   "lime": {
     "25": {
-      "$value": "#f6fcf3"
+      "$value": "#f0fde9"
     },
     "50": {
       "$value": "#d9f1cc"
@@ -547,7 +547,7 @@
       "$value": "#c3ebaf"
     },
     "150": {
-      "$value": "#84de60"
+      "$value": "#addf96"
     },
     "200": {
       "$value": "#67cc41"

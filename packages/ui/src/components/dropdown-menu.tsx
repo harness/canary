@@ -1,7 +1,15 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, ReactNode } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  forwardRef,
+  HTMLAttributes,
+  KeyboardEvent,
+  ReactNode,
+  useRef
+} from 'react'
 
 import { usePortal, useTranslation } from '@/context'
-import { cn, filterChildrenByDisplayNames } from '@/utils'
+import { cn, filterChildrenByDisplayNames, useMergeRefs } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
 import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
@@ -68,21 +76,84 @@ interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof Dropd
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(
-  ({ className, children: _children, sideOffset = 4, isSubContent, scrollAreaProps, ...props }, ref) => {
+  (
+    {
+      className,
+      children: _children,
+      sideOffset = 4,
+      isSubContent,
+      scrollAreaProps,
+      onKeyDownCapture: propOnKeyDownCapture,
+      ...props
+    },
+    ref
+  ) => {
     const { portalContainer } = usePortal()
+    const contentRef = useRef<HTMLDivElement | null>(null)
     const Primitive = isSubContent ? DropdownMenuPrimitive.SubContent : DropdownMenuPrimitive.Content
 
     const header = filterChildrenByDisplayNames(_children, [displayNames.header])[0]
     const footer = filterChildrenByDisplayNames(_children, [displayNames.footer])[0]
     const children = filterChildrenByDisplayNames(_children, [displayNames.header, displayNames.footer], true)
 
+    const mergedRef = useMergeRefs<HTMLDivElement>([
+      node => {
+        if (!node) return
+
+        contentRef.current = node
+      },
+      ref
+    ])
+
+    /**
+     * This code is executed only when inside a ShadowRoot
+     */
+    const onKeyDownCaptureHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+
+      const rootEl = contentRef.current
+      if (!rootEl) return
+
+      const rootNode = rootEl.getRootNode()
+
+      if (!(rootNode instanceof ShadowRoot)) return
+
+      const activeEl = rootNode instanceof ShadowRoot ? rootNode.activeElement : document.activeElement
+      const items = Array.from(
+        rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
+      )
+
+      if (!items.length) return
+
+      let idx = items.findIndex(el => el === activeEl || (activeEl instanceof Element && el.contains(activeEl)))
+
+      if (idx === -1) {
+        idx = e.key === 'ArrowDown' ? -1 : 0
+      }
+
+      const next =
+        e.key === 'ArrowDown' ? (idx + 1 + items.length) % items.length : (idx - 1 + items.length) % items.length
+
+      /**
+       * To block further code execution in onKeyDownCaptureHandler,
+       * need to call e.preventDefault() inside propOnKeyDownCapture.
+       */
+      propOnKeyDownCapture?.(e)
+      if (e.defaultPrevented || e.isDefaultPrevented?.()) return
+
+      e.preventDefault()
+      e.stopPropagation()
+      items[next]?.focus()
+    }
+
     return (
       <DropdownMenuPortal container={portalContainer}>
         <Primitive
-          ref={ref}
+          ref={mergedRef}
           sideOffset={sideOffset}
           className={cn('cn-dropdown-menu', className)}
           onCloseAutoFocus={event => event.preventDefault()}
+          onKeyDownCapture={onKeyDownCaptureHandler}
           {...props}
         >
           {!!header && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-header">{header}</div>}

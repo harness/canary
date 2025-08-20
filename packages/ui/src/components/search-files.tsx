@@ -170,7 +170,7 @@ export const SearchFiles = ({
                 setIsOpen(false)
               }}
               title={element}
-              icon="page"
+              icon="empty-page"
             />
           ))
         ) : (

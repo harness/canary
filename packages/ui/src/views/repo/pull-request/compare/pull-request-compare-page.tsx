@@ -365,7 +365,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Tabs.Trigger value="commits" icon="git-commit" counter={diffStats?.commits}>
                   {t('views:pullRequests.compareChangesTabCommits', 'Commits')}
                 </Tabs.Trigger>
-                <Tabs.Trigger value="changes" icon="page" counter={diffStats?.files_changed}>
+                <Tabs.Trigger value="changes" icon="empty-page" counter={diffStats?.files_changed}>
                   {t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                 </Tabs.Trigger>
               </Tabs.List>

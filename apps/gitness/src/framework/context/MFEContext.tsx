@@ -114,3 +114,7 @@ export const MFEContext = createContext<IMFEContext>({
   routeUtils: {},
   hooks: {}
 })
+
+export function MFEProvider({ children, value }: { children: React.ReactNode; value: IMFEContext }) {
+  return <MFEContext.Provider value={value}>{children}</MFEContext.Provider>
+}

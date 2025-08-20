@@ -10,7 +10,7 @@ import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { IMFEContext, MFEContext } from './framework/context/MFEContext'
+import { IMFEContext, MFEProvider } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -159,7 +159,7 @@ export default function AppMFE({
             <ShadowRootLoader theme={theme} />
           ) : (
             <PortalProvider portalContainer={portalContainer}>
-              <MFEContext.Provider
+              <MFEProvider
                 value={{
                   scope,
                   renderUrl,
@@ -189,7 +189,7 @@ export default function AppMFE({
                     </TranslationProvider>
                   </ThemeProvider>
                 </I18nextProvider>
-              </MFEContext.Provider>
+              </MFEProvider>
             </PortalProvider>
           )}
         </div>

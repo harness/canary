@@ -42,7 +42,6 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE.ts'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
-import { useGitRef } from '../../hooks/useGitRef.ts'
 import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
 import { getFileExtension } from '../../utils/path-utils.ts'
@@ -483,7 +482,6 @@ export const CreatePullRequest = () => {
   }
 
   const getApiPath = useAPIPath()
-  const { fullGitRef: baseRef } = useGitRef()
 
   const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
     return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
@@ -500,13 +498,11 @@ export const CreatePullRequest = () => {
   })
 
   const handleAiPullRequestSummary = useCallback(async () => {
-    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name) {
-      const headRef = `refs/heads/${selectedSourceBranch.name}`
-
+    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name && selectedTargetBranch?.name) {
       return await mutation.mutateAsync({
         repoMetadata,
-        baseRef,
-        headRef
+        baseRef: normalizeGitRef(selectedTargetBranch.name) || '',
+        headRef: normalizeGitRef(selectedSourceBranch.name) || ''
       })
     }
 

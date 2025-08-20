@@ -5,6 +5,8 @@ import { CodeModes } from '@harnessio/ui/views'
 import { isRefABranch, isRefATag, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
 import { removeLeadingSlash, removeTrailingSlash } from '../utils/path-utils'
 
+// NOTE: This hook is used to get the gitRef and resourcePath from the URL TO BE USED ONLY FOR REPO FILES / SUMMARY COMPONENTS
+
 const useCodePathDetails = () => {
   const params = useParams()
   const subCodePath = params['*'] || ''

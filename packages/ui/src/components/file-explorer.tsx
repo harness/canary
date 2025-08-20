@@ -61,9 +61,9 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
   )
 
   return (
-    <Accordion.Item value={value} className="border-none">
+    <Accordion.Item value={value} className="border-none ">
       <Accordion.Trigger
-        className="pl-cn-2xs mb-cn-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        className=" bg-cn-background-1 pl-cn-2xs mb-cn-4xs relative z-[1] p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
         {link ? <Link to={link}>{itemElement}</Link> : itemElement}
@@ -71,7 +71,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
 
       {!!content && (
         <Accordion.Content
-          containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+          containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 relative after:absolute after:left-3 after:top-0 after:block after:h-full after:border-l"
           className="pl-cn-md pb-0"
         >
           {content}

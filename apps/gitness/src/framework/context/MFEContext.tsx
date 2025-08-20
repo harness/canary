@@ -1,8 +1,6 @@
 import { createContext } from 'react'
 import { Location } from 'react-router-dom'
 
-import { noop } from 'lodash-es'
-
 import { PermissionsRequest } from '@harnessio/ui/components'
 
 /**
@@ -97,7 +95,6 @@ export interface IMFEContext {
     }) => void
   }>
   hooks: Hooks
-  setMFETheme: (newTheme: string) => void
 }
 
 export const MFEContext = createContext<IMFEContext>({
@@ -115,6 +112,5 @@ export const MFEContext = createContext<IMFEContext>({
   customUtils: {},
   routes: {},
   routeUtils: {},
-  hooks: {},
-  setMFETheme: noop
+  hooks: {}
 })

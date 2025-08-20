@@ -113,7 +113,7 @@ export default function AppMFE({
   })
 
   // Apply host theme to MFE
-  const { theme, setTheme: setMFETheme } = useMFEThemeContext()
+  const { theme } = useMFEThemeContext()
   const { setTheme } = useThemeStore()
 
   useEffect(() => {
@@ -169,8 +169,7 @@ export default function AppMFE({
                   customUtils,
                   routes,
                   routeUtils,
-                  hooks,
-                  setMFETheme
+                  hooks
                 }}
               >
                 <I18nextProvider i18n={i18n}>

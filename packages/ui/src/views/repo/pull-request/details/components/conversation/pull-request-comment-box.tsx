@@ -43,16 +43,26 @@ import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from '.
 interface ParsedSelection extends TextSelection {
   text: string
   textLines: string[]
+  textBefore: string
+  textAfter: string
 }
 
 interface ParsedComment {
-  originalComment: string
+  text: string
+  textLines: string[]
+  textLinesSelectionStartIndex: number
+  textLinesSelectionEndIndex: number
+}
+
+interface CommentAction {
   injectedPreString: string
   injectedPostString: string
-  beforeSelection: string
-  beforeSelectionLine: string
+}
+
+interface CommentMetadata {
+  action: CommentAction
+  comment: ParsedComment
   selection: ParsedSelection
-  afterSelection: string
 }
 
 enum BuildBehavior {
@@ -297,73 +307,124 @@ export const PullRequestCommentBox = ({
   }, [])
 
   useEffect(() => {
+    console.debug('textSelection', textSelection)
     if (textAreaRef.current) {
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
     }
   }, [comment, textSelection])
 
   const parseComment = (
-    comment: string,
+    originalComment: string,
     textSelection: TextSelection,
     injectedPreString: string = '',
     injectedPostString: string = ''
-  ): ParsedComment => {
-    const isStartOfLineSelected = textSelection.start === 0 || comment.substring(0, textSelection.start).endsWith('\n')
+  ): CommentMetadata => {
+    const action: CommentAction = {
+      injectedPreString: injectedPreString,
+      injectedPostString: injectedPostString
+    }
+
+    const isStartOfLineSelected =
+      textSelection.start === 0 || originalComment.substring(0, textSelection.start).endsWith('\n')
     const isEndOfLineSelected =
-      textSelection.end === comment.length || comment.substring(textSelection.end).startsWith('\n')
+      textSelection.end === originalComment.length || originalComment.substring(textSelection.end).startsWith('\n')
+
+    const commentLines = originalComment.split('\n')
+
+    const comment: ParsedComment = {
+      text: originalComment,
+      textLines: commentLines,
+      textLinesSelectionStartIndex: 0,
+      textLinesSelectionEndIndex: 0
+    }
+
+    commentLines.reduce((characterIndex, line, lineIndex): number => {
+      const lowerBound = lineIndex === 0 ? characterIndex : characterIndex + '\n'.length
+      const upperBound = lowerBound + line.length
+
+      const selectionStartHere = textSelection.start >= lowerBound && textSelection.start <= upperBound
+      const selectionEndHere = textSelection.end >= lowerBound && textSelection.end <= upperBound
+
+      if (selectionStartHere) {
+        comment.textLinesSelectionStartIndex = lineIndex
+      }
+
+      if (selectionEndHere) {
+        comment.textLinesSelectionEndIndex = lineIndex
+      }
+
+      return upperBound
+    }, 0)
 
     const injectNewline = !isStartOfLineSelected && isEndOfLineSelected && injectedPreString.includes('\n')
     const injectedNewline = injectNewline ? '\n' : ''
 
-    const beforeSelection = comment.substring(0, textSelection.start) + injectedNewline
-    const selection = comment.substring(textSelection.start, textSelection.end)
-    const afterSelection = comment.substring(textSelection.end)
-
-    const selectionLines = selection.split('\n')
-
-    const beforeSelectionParts = beforeSelection.split('\n')
-    const previousLine = beforeSelectionParts.at(beforeSelectionParts.length - 2) ?? ''
-
+    const selectionText = originalComment.substring(textSelection.start, textSelection.end)
+    const selectionTextLines = comment.textLines.slice(
+      comment.textLinesSelectionStartIndex,
+      comment.textLinesSelectionEndIndex + 1
+    )
+    const selectionTextBefore = originalComment.substring(0, textSelection.start) + injectedNewline
     const newTextSelectionStart = textSelection.start + injectedPreString.length + injectedNewline.length
     const newTextSelectionEnd =
       newTextSelectionStart + (textSelection.end - textSelection.start) + injectedNewline.length
 
+    const selection: ParsedSelection = {
+      text: selectionText,
+      textLines: selectionTextLines,
+      start: newTextSelectionStart,
+      end: newTextSelectionEnd,
+      textBefore: selectionTextBefore,
+      textAfter: originalComment.substring(textSelection.end)
+    }
+
     return {
-      originalComment: comment,
-      injectedPreString: injectedPreString,
-      injectedPostString: injectedPostString,
-      beforeSelection: beforeSelection,
-      beforeSelectionLine: previousLine,
-      selection: {
-        text: selection,
-        textLines: selectionLines,
-        start: newTextSelectionStart,
-        end: newTextSelectionEnd
-      },
-      afterSelection: afterSelection
+      action: action,
+      comment: comment,
+      selection: selection
     }
   }
 
-  const buildComment = (parsedComment: ParsedComment, buildBehavior: BuildBehavior): string => {
-    let injectedString = ''
-
+  const buildComment = (commentMetadata: CommentMetadata, buildBehavior: BuildBehavior): string => {
     switch (buildBehavior) {
-      case BuildBehavior.Capture:
-        injectedString = `${parsedComment.injectedPreString}${parsedComment.selection.text}${parsedComment.injectedPostString}`
-        break
-      case BuildBehavior.Split:
-        injectedString = parsedComment.selection.textLines.reduce((prev, selectionLine, currentIndex, array) => {
-          return `${prev}${parsedComment.injectedPreString}${selectionLine}${parsedComment.injectedPostString}${currentIndex < array.length - 1 ? '\n' : ''}`
-        }, '')
-        break
-      case BuildBehavior.Parse:
-        injectedString = isEmpty(parsedComment.selection.text)
-          ? `${parsedComment.injectedPreString}${parseDiff(diff, sideKey, lineNumber, lineFromNumber)}${parsedComment.injectedPostString}`
-          : `${parsedComment.injectedPreString}${parsedComment.selection.text}${parsedComment.injectedPostString}`
-        break
-    }
+      case BuildBehavior.Capture: {
+        const injectedCaptureString = `${commentMetadata.action.injectedPreString}${commentMetadata.selection.text}${commentMetadata.action.injectedPostString}`
 
-    return `${parsedComment.beforeSelection}${injectedString}${parsedComment.afterSelection}`
+        return `${commentMetadata.selection.textBefore}${injectedCaptureString}${commentMetadata.selection.textAfter}`
+      }
+      case BuildBehavior.Split: {
+        const injectedSplitString = commentMetadata.comment.textLines.reduce((prev, commentLine, commentLineIndex) => {
+          if (commentLineIndex > commentMetadata.comment.textLinesSelectionEndIndex) {
+            return `${prev}`
+          }
+
+          if (
+            commentLineIndex >= commentMetadata.comment.textLinesSelectionStartIndex &&
+            commentLineIndex <= commentMetadata.comment.textLinesSelectionEndIndex
+          ) {
+            const useNewline = commentLineIndex !== commentMetadata.comment.textLinesSelectionEndIndex
+
+            return `${prev}${commentMetadata.action.injectedPreString}${commentLine}${commentMetadata.action.injectedPostString}${useNewline ? '\n' : ''}`
+          }
+
+          return `${prev}${commentLine}\n`
+        }, '')
+
+        const remainingLines = commentMetadata.comment.textLines.slice(
+          commentMetadata.comment.textLinesSelectionEndIndex + 1
+        )
+        const injectNewLine = remainingLines.length > 0
+
+        return `${injectedSplitString}${injectNewLine ? '\n' : ''}${remainingLines.join('\n')}`
+      }
+      case BuildBehavior.Parse: {
+        const injectedParseString = isEmpty(commentMetadata.selection.text)
+          ? `${commentMetadata.action.injectedPreString}${parseDiff(diff, sideKey, lineNumber, lineFromNumber)}${commentMetadata.action.injectedPostString}`
+          : `${commentMetadata.action.injectedPreString}${commentMetadata.selection.text}${commentMetadata.action.injectedPostString}`
+
+        return `${commentMetadata.selection.textBefore}${injectedParseString}${commentMetadata.selection.textAfter}`
+      }
+    }
   }
 
   const parseDiff = (
@@ -546,12 +607,14 @@ export const PullRequestCommentBox = ({
         break
       }
       case 'Enter': {
-        const parsedComment = parseComment(comment, textSelection, '')
+        const commentMetadata = parseComment(comment, textSelection)
+        const textLinesSelectionStartIndexBeforeEnter = commentMetadata.comment.textLinesSelectionStartIndex - 1
+        const lineBeforeEnter = commentMetadata.comment.textLines.at(textLinesSelectionStartIndexBeforeEnter) ?? ''
 
-        if (isListString(parsedComment.beforeSelectionLine)) {
+        if (isListString(lineBeforeEnter)) {
           handleActionClick(ToolbarAction.UNORDERED_LIST, comment, textSelection)
         }
-        if (isListSelectString(parsedComment.beforeSelectionLine)) {
+        if (isListSelectString(lineBeforeEnter)) {
           handleActionClick(ToolbarAction.CHECK_LIST, comment, textSelection)
         }
         break

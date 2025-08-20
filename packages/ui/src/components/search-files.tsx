@@ -1,7 +1,8 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { KeyboardEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
 import { DropdownMenu, SearchInput, SearchInputProps, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { afterFrames } from '@/utils'
 import { cn } from '@utils/cn'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
@@ -58,6 +59,8 @@ export const SearchFiles = ({
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const [currentQuery, setCurrentQuery] = useState('')
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -94,14 +97,70 @@ export const SearchFiles = ({
     setCurrentQuery(searchQuery)
   }, [])
 
+  const getItems = useCallback(() => {
+    if (!contentRef.current) return []
+    return Array.from(
+      contentRef.current?.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
+    )
+  }, [])
+
+  const focusItem = useCallback(
+    (isFirst = true) => {
+      const items = getItems()
+      items[isFirst ? 0 : items.length - 1]?.focus()
+    },
+    [getItems]
+  )
+
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      afterFrames(() => focusItem(e.key === 'ArrowDown'))
+    }
+  }
+
+  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+    const items = getItems()
+
+    if (!items.length) return
+
+    const first = items[0]
+    const last = items[items.length - 1]
+    const activeElement = document.activeElement?.shadowRoot?.activeElement ?? document.activeElement
+
+    if (e.key === 'ArrowUp' && activeElement === first) {
+      e.preventDefault()
+      inputRef.current?.focus()
+      setIsOpen(true)
+      return
+    }
+
+    if (e.key === 'ArrowDown' && activeElement === last) {
+      e.preventDefault()
+      inputRef.current?.focus()
+      setIsOpen(true)
+    }
+  }
+
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>
       <div className={cn('relative', inputContainerClassName)}>
         <DropdownMenu.Trigger className="pointer-events-none absolute inset-0 -z-0" tabIndex={-1} />
-        <SearchInput size={searchInputSize} onChange={handleInputChange} />
+        <SearchInput
+          ref={inputRef}
+          size={searchInputSize}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        />
       </div>
 
-      <DropdownMenu.Content align="start" className={cn('max-h-96', 'width-popover-max-width', contentClassName)}>
+      <DropdownMenu.Content
+        ref={contentRef}
+        className={cn('max-h-96', 'width-popover-max-width', contentClassName)}
+        align="start"
+        onKeyDownCapture={handleContentKeyDownCapture}
+        onOpenAutoFocus={event => event.preventDefault()}
+      >
         {filteredFiles.length ? (
           filteredFiles?.map(({ file, element }) => (
             <DropdownMenu.IconItem

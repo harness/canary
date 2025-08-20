@@ -64,6 +64,7 @@ const innerComponentsDisplayNames = [
 interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
   isSubContent?: boolean
   scrollAreaProps?: Omit<ScrollAreaProps, 'children'>
+  onOpenAutoFocus?: (event: Event) => void
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(

@@ -115,7 +115,9 @@ export const SearchFiles = ({
             />
           ))
         ) : (
-          <DropdownMenu.NoOptions>{t('component:searchFile.noFile', 'No file found.')}</DropdownMenu.NoOptions>
+          <DropdownMenu.NoOptions className="!p-2">
+            {t('component:searchFile.noFile', 'No file found.')}
+          </DropdownMenu.NoOptions>
         )}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

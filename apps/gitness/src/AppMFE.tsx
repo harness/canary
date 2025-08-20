@@ -18,7 +18,7 @@ import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import { mfeRoutes, repoRoutes } from './routes'
+import { getMFERoutes, repoRoutes } from './routes'
 import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export interface MFERouteRendererProps {
@@ -139,7 +139,7 @@ export default function AppMFE({
 
   const routesToRender = useMemo(
     () =>
-      mfeRoutes(
+      getMFERoutes(
         scope.projectIdentifier,
         <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={location.pathname} />
       ),

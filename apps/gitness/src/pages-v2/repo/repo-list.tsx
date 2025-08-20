@@ -157,7 +157,7 @@ export default function ReposListPage() {
     })
 
     const isSameScope = currentRepoScopeType === actualRepoScopeType
-    const repoSummaryPath = routes.toRepoSummary({ spaceId, repoId: repo.name })
+    const repoSummaryPath = routes.toRepoSummary?.({ spaceId, repoId: repo.name })
 
     if (!isMFE || isSameScope) {
       navigate(repoSummaryPath)
@@ -188,9 +188,9 @@ export default function ReposListPage() {
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}
       onClickRepo={handleOnClickRepo}
-      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-      toImportRepo={() => routes.toImportRepo({ spaceId })}
-      toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      toCreateRepo={() => routes.toCreateRepo?.({ spaceId })}
+      toImportRepo={() => routes.toImportRepo?.({ spaceId })}
+      toImportMultipleRepos={() => routes.toImportMultipleRepos?.({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
       onFilterChange={({ favorite, recursive }: RepoListFilters) => {
         setFavorite(favorite ?? null)

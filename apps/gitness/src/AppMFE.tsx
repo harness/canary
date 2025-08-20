@@ -199,7 +199,7 @@ export default function AppMFE({
   )
 }
 
-function ShadowRootLoader({ theme }: { theme: string }) {
+export function ShadowRootLoader({ theme }: { theme: string }) {
   return (
     <>
       <div className="loading-container">

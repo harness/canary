@@ -42,7 +42,8 @@ module.exports = {
       name: 'codev2',
       filename: 'remoteEntry.js',
       exposes: {
-        './MicroFrontendApp': './src/AppMFE.tsx'
+        './MicroFrontendApp': './src/AppMFE.tsx',
+        './RepoListMFE': './src/pages-v2/repo/repo-list-mfe.tsx'
       },
       shared: {
         react: {

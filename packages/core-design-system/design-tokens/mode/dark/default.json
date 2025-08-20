@@ -178,6 +178,19 @@
           "$type": "color",
           "$value": "{blue.700}",
           "$description": "Selected state background color for active brand items."
+        },
+        "inner": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{cyan.200}"
         }
       },
       "soft": {
@@ -256,7 +269,7 @@
           "$type": "color",
           "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
         },
-        "inner-shadow": {
+        "inner": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -1815,17 +1828,36 @@
             "type": "innerShadow"
           }
         }
-      },
+      }
+    },
+    "set": {
       "ai": {
-        "inner": {
-          "$type": "boxShadow",
-          "$value": {
-            "x": "0",
-            "y": "7",
-            "blur": "16",
-            "spread": "0",
-            "color": "{set.ai.surface.inner-shadow}",
-            "type": "innerShadow"
+        "surface": {
+          "inner": {
+            "$type": "boxShadow",
+            "$value": {
+              "x": "0",
+              "y": "7",
+              "blur": "16",
+              "spread": "0",
+              "color": "{set.ai.surface.inner}",
+              "type": "innerShadow"
+            }
+          }
+        }
+      },
+      "brand": {
+        "solid": {
+          "inner": {
+            "$type": "boxShadow",
+            "$value": {
+              "x": "0",
+              "y": "7",
+              "blur": "16",
+              "spread": "0",
+              "color": "{set.brand.solid.inner}",
+              "type": "innerShadow"
+            }
           }
         }
       }

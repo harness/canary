@@ -137,7 +137,7 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesToRender = useMemo(
+  const mfeRoutes = useMemo(
     () =>
       getMFERoutes(
         scope.projectIdentifier,
@@ -146,7 +146,7 @@ export default function AppMFE({
     [scope.projectIdentifier, renderUrl, onRouteChange, location.pathname]
   )
 
-  const router = createBrowserRouter(routesToRender, { basename })
+  const router = createBrowserRouter(mfeRoutes, { basename })
   const { t } = useTranslationStore()
 
   return (
@@ -179,7 +179,7 @@ export default function AppMFE({
                         <Toast.Provider>
                           <TooltipProvider>
                             <ExitConfirmProvider>
-                              <NavigationProvider routes={routesToRender}>
+                              <NavigationProvider routes={mfeRoutes}>
                                 <RouterProvider router={router} />
                               </NavigationProvider>
                             </ExitConfirmProvider>

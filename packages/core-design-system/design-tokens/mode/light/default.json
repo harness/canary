@@ -1177,13 +1177,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.08",
+              "value": "0.15",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{mint.200}",
+        "$value": "{lime.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1191,13 +1191,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{mint.200}",
+        "$value": "{lime.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1205,13 +1205,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.16",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{mint.200}",
+        "$value": "{lime.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1229,7 +1229,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.08",
+              "value": "0.15",
               "space": "lch"
             }
           }
@@ -1243,7 +1243,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.4",
               "space": "lch"
             }
           }
@@ -1257,7 +1257,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.16",
+              "value": "0.4",
               "space": "lch"
             }
           }
@@ -1305,7 +1305,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.22",
+              "value": "0.4",
               "space": "lch"
             }
           }

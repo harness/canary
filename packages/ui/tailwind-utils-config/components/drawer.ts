@@ -90,7 +90,7 @@ export default {
       '@apply flex flex-col border-b': '',
 
       '&-icon': {
-        flexShrink: '0',
+        flexShrink: '0'
       },
 
       '&-icon-color': {

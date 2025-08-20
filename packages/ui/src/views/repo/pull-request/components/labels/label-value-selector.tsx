@@ -87,7 +87,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
   }
 
   return (
-    <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+    <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
       <DropdownMenu.Header className="relative">
         <SearchBox.Root
           className="w-full"
@@ -141,7 +141,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
       {isAllowAddNewValue && !!label?.isCustom && (
         <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
-            className="*:gap-0"
+            className="[&>.cn-dropdown-menu-base-item]:gap-0"
             onSelect={handleAddNewValue}
             tag={{
               variant: 'secondary',

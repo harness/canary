@@ -17,6 +17,7 @@ import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
   ILabelType,
+  LabelAddIndicator,
   LabelAssignmentType,
   LabelType,
   LabelValuesType,
@@ -139,7 +140,7 @@ export const LabelsHeader = ({
         )}
 
         {!labelWithValuesToShow && (
-          <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+          <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
             <DropdownMenu.Header>
               <SearchInput
                 size="sm"
@@ -169,9 +170,8 @@ export const LabelsHeader = ({
                         label={label.key}
                         value={(label.values?.length || '').toString()}
                       />
-                      {label.type === 'dynamic' && (
-                        <IconV2 size="xs" name="plus-circle" className="text-cn-foreground-3" />
-                      )}
+
+                      {label.type === 'dynamic' && <LabelAddIndicator />}
                     </Layout.Grid>
                   }
                   // TODO: add description when it is available from PR Labels call

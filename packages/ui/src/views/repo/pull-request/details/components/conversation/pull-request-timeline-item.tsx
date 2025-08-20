@@ -457,7 +457,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               </div>
             </NodeGroup.Content>
           )}
-          {!isLast && <NodeGroup.Connector className="left-[0.8rem]" />}
+          {!isLast && <NodeGroup.Connector className="left-[0.8rem] top-0" />}
         </NodeGroup.Root>
       </div>
 

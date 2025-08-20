@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { getScopeType, scopeTypeToIconMap, Tag, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { LabelMarkerProps, PRListLabelType } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -14,10 +15,12 @@ interface LabelsListProps {
 }
 
 export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, onClick }) => {
+  const { t } = useTranslation()
+
   if (!labels.length) {
     return (
       <Text variant="body-strong" color="foreground-3">
-        No labels
+        {t('views:pullRequests.noLabelsSidebar', 'No labels')}
       </Text>
     )
   }

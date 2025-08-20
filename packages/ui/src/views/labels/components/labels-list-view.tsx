@@ -15,7 +15,7 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ILabelType, LabelType, LabelValuesType } from '@/views'
+import { ILabelType, LabelAddIndicator, LabelType, LabelValuesType } from '@/views'
 
 export interface LabelsListViewProps {
   labels: ILabelType[]
@@ -133,16 +133,20 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
           >
             <Table.Cell className={cn('w-[44px] align-top', { 'w-4/12': isSmallWidth })}>
               {values?.[label.key]?.length > 0 ? (
-                <div className="pt-cn-2xs">
-                  <Button variant="ghost" size="2xs" iconOnly onClick={e => toggleRow(label.key, e)}>
-                    <IconV2 name={expandedRows[label.key] ? 'nav-arrow-up' : 'nav-arrow-down'} />
-                  </Button>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="2xs"
+                  iconOnly
+                  onClick={e => toggleRow(label.key, e)}
+                  className="mt-cn-2xs"
+                >
+                  <IconV2 name={expandedRows[label.key] ? 'nav-arrow-up' : 'nav-arrow-down'} />
+                </Button>
               ) : null}
             </Table.Cell>
             <Table.Cell className="align-top">
-              <Layout.Vertical align="start" className="pt-cn-2xs" gap="xs">
-                <div className="gap-cn-xs grid grid-cols-[auto_auto] items-center">
+              <Layout.Vertical align="start" gap="xs">
+                <Layout.Grid gap="xs" align="center" className="mt-cn-2xs grid-cols-[auto_auto]">
                   <Tag
                     icon={scopeTypeToIconMap[getScopeType(label.scope)]}
                     variant="secondary"
@@ -155,10 +159,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                     valueClassName="grid grid-cols-[auto]"
                   />
 
-                  {label.type === LabelType.DYNAMIC && (
-                    <IconV2 size="xs" name="plus-circle" className="text-cn-foreground-3" />
-                  )}
-                </div>
+                  {label.type === LabelType.DYNAMIC && <LabelAddIndicator />}
+                </Layout.Grid>
 
                 {!!values?.[label.key]?.length &&
                   expandedRows[label.key] &&
@@ -179,16 +181,14 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               </Layout.Vertical>
             </Table.Cell>
             <Table.Cell className="w-[240px] align-top leading-none">
-              <div className="pt-cn-2xs">
-                <ScopeTag
-                  className="grid max-w-full grid-cols-[auto_auto]"
-                  scopedPath={getScopeType(label.scope)}
-                  scopeType={getScopeType(label.scope)}
-                />
-              </div>
+              <ScopeTag
+                className="mt-cn-2xs grid max-w-full grid-cols-[auto_auto]"
+                scopedPath={getScopeType(label.scope)}
+                scopeType={getScopeType(label.scope)}
+              />
             </Table.Cell>
             <Table.Cell className={cn('align-top', { 'w-5/12': isSmallWidth })}>
-              <Text color="foreground-3" lineClamp={2} className="pt-cn-xs">
+              <Text color="foreground-3" lineClamp={2} className="mt-cn-xs">
                 {label?.description || ''}
               </Text>
             </Table.Cell>

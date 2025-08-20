@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, KeyboardEvent, useMemo, useRef, useState } from 'react'
 
 import { Button, DropdownMenu, Layout, Link, SearchInput, Tabs, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -22,6 +22,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(preSelectedTab)
   const { t } = useTranslation()
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null)
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
 
   const filteredItems = useMemo(() => {
@@ -32,6 +34,27 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
     setSearchQuery(query)
   }
 
+  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+    const rootEl = contentRef.current
+    if (!rootEl) return
+
+    const items = Array.from(
+      rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])[role*="menuitem"]')
+    )
+
+    if (!items.length) return
+
+    const first = items[0]
+    const last = items[items.length - 1]
+    const activeElement = document.activeElement?.shadowRoot?.activeElement ?? document.activeElement
+
+    if ((e.key === 'ArrowUp' && activeElement === first) || (e.key === 'ArrowDown' && activeElement === last)) {
+      e.preventDefault()
+      inputRef.current?.focus()
+      return
+    }
+  }
+
   const viewAllUrl =
     activeTab === BranchSelectorTab.BRANCHES
       ? `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/branches`
@@ -39,10 +62,12 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   return (
     <DropdownMenu.Content
+      ref={contentRef}
       className="[&>.cn-dropdown-menu-container-header]:border-b-0 [&>.cn-dropdown-menu-container-header]:pb-0"
       style={{ width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '358px' }}
       align="start"
       scrollAreaProps={{ className: 'max-h-[188px]' }}
+      onKeyDownCapture={handleContentKeyDownCapture}
     >
       <DropdownMenu.Header className="pb-0">
         <Layout.Grid gapY="sm">
@@ -51,6 +76,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           </Text>
 
           <SearchInput
+            ref={inputRef}
             autoFocus
             id="search"
             placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}

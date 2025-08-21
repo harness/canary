@@ -91,17 +91,17 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed" size="compact">
+    <Table.Root size="compact">
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[44px]" />
-          <Table.Head className={cn('w-[260px]', { 'w-4/12': isSmallWidth })} hideDivider>
+          <Table.Head className={cn('min-w-[150px] w-[25%]')} hideDivider>
             <Text variant="caption-strong">{t('views:labelData.table.name', 'Name')}</Text>
           </Table.Head>
-          <Table.Head className="w-[240px]">
+          <Table.Head className={cn('min-w-[150px] w-[25%]', { 'min-w-[100px]': isSmallWidth })}>
             <Text variant="caption-strong">{t('views:labelData.table.created', 'Created in')}</Text>
           </Table.Head>
-          <Table.Head className={cn({ 'w-5/12': isSmallWidth })}>
+          <Table.Head className={cn('min-w-[200px] w-[40%]', { 'min-w-[150px]': isSmallWidth })}>
             <Text variant="caption-strong">{t('views:labelData.table.description', 'Description')}</Text>
           </Table.Head>
           <Table.Head className="w-[68px]" hideDivider />
@@ -119,7 +119,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               }
             }}
           >
-            <Table.Cell className={cn('w-[44px] align-top', { 'w-4/12': isSmallWidth })}>
+            <Table.Cell className="align-top">
               {values?.[label.key]?.length > 0 ? (
                 <Button
                   variant="ghost"
@@ -157,19 +157,19 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                   ))}
               </Layout.Vertical>
             </Table.Cell>
-            <Table.Cell className="w-[240px] align-top leading-none">
+            <Table.Cell className="align-top leading-none">
               <ScopeTag
                 className="mt-cn-2xs grid max-w-full grid-cols-[auto_auto]"
                 scopedPath={getScopeType(label.scope)}
                 scopeType={getScopeType(label.scope)}
               />
             </Table.Cell>
-            <Table.Cell className={cn('align-top', { 'w-5/12': isSmallWidth })}>
-              <Text color="foreground-3" lineClamp={2} className="mt-cn-xs">
+            <Table.Cell className="align-top">
+              <Text lineClamp={2} className="mt-cn-xs">
                 {label?.description || ''}
               </Text>
             </Table.Cell>
-            <Table.Cell className="w-[68px] align-top">
+            <Table.Cell className="align-top">
               <MoreActionsTooltip
                 isInTable
                 iconName="more-horizontal"

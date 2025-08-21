@@ -68,11 +68,11 @@ const FilterBoxWrapper = ({
           <Layout.Flex align="center" justify="between">
             <Text as="span">{filterLabel}</Text>
             <Button
-                iconOnly
-                variant="outline"
-                size="2xs"
-                onClick={handleRemoveFilter}
-                aria-label={t('component:filter.delete', 'Delete filter')}
+              iconOnly
+              variant="outline"
+              size="2xs"
+              onClick={handleRemoveFilter}
+              aria-label={t('component:filter.delete', 'Delete filter')}
             >
               <IconV2 name="trash" skipSize />
             </Button>

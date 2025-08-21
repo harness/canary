@@ -574,6 +574,8 @@ const PullRequestPanel = ({
     'text-cn-foreground-danger': prState === PrState.Error
   })
 
+  const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
+
   const shouldShowSplitButton =
     actions?.length > 1 &&
     !pullReqMetadata?.closed &&
@@ -582,13 +584,13 @@ const PullRequestPanel = ({
     !pullReqMetadata?.merged &&
     !mergeInitiated
 
-  console.log(actions)
+  const shouldShowMoreActions = !shouldShowConfirmation && isOpen
 
   return (
     <>
       <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
         <StackedList.Item
-          className={cn('items-center py-2 border-cn-borders-3', { 'pr-1.5': isOpen }, headerRowBgClass)}
+          className={cn('items-center py-2 border-cn-borders-3', { 'pr-1.5': shouldShowMoreActions }, headerRowBgClass)}
           disableHover
         >
           <StackedList.Field
@@ -651,7 +653,7 @@ const PullRequestPanel = ({
                     {/*Only show SplitButton if we're not in any merge-related state*/}
                     {shouldShowSplitButton && (
                       <SplitButton
-                        theme={buttonState.variant === 'primary' ? 'default' : (buttonState.theme ?? 'outline')}
+                        theme={buttonState.variant === 'primary' ? 'default' : (buttonState.theme ?? 'default')}
                         variant={buttonState.variant}
                         disabled={buttonState.disabled}
                         loading={actions[parseInt(mergeButtonValue)]?.loading}
@@ -683,13 +685,35 @@ const PullRequestPanel = ({
                       </SplitButton>
                     )}
 
+                    {/* When in merge input mode or merging, show Cancel/Confirm buttons */}
+                    {shouldShowConfirmation && (
+                      <ButtonLayout>
+                        <Button
+                          variant="outline"
+                          onClick={handleCancelMerge}
+                          loading={cancelInitiated}
+                          disabled={isMerging || mergeInitiated}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          theme="success"
+                          onClick={handleConfirmMerge}
+                          loading={isMerging || mergeInitiated}
+                          disabled={cancelInitiated || shouldDisableFastForwardMerge()}
+                        >
+                          Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
+                        </Button>
+                      </ButtonLayout>
+                    )}
+
                     {actions?.length === 1 && (
                       <Button variant="primary" theme="default" onClick={actions[0].action}>
                         {actions[0].title}
                       </Button>
                     )}
 
-                    {isOpen && (
+                    {shouldShowMoreActions && (
                       <MoreActionsTooltip
                         className="!ml-2"
                         iconName="more-horizontal"
@@ -701,7 +725,7 @@ const PullRequestPanel = ({
                                 {
                                   title: 'Mark as draft',
                                   onClick: () => handlePrState('draft'),
-                                  iconName: 'page-edit'
+                                  iconName: 'page-edit' as const
                                 }
                               ]
                             : []),

@@ -3,7 +3,7 @@ export default {
     '&-trigger': {
       '@apply leading-snug': '',
       ':where(time)': {
-        '@apply data-[state=open]:text-cn-foreground-1': ''
+        '@apply data-[state=open]:text-cn-foreground-1 hover:text-cn-foreground-1': ''
       },
       '&:where(:focus-visible) time': {
         '@apply text-cn-foreground-1': ''

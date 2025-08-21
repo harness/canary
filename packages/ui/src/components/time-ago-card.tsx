@@ -1,4 +1,4 @@
-import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useState } from 'react'
+import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useCallback, useState } from 'react'
 
 import { Popover, StatusBadge, Text, TextProps } from '@/components'
 import { cn } from '@utils/cn'
@@ -167,6 +167,14 @@ export const TimeAgoCard = memo(
         dateTimeFormatOptions
       )
 
+      const handleMouseEnter = useCallback(() => {
+        setIsOpen(true)
+      }, [])
+
+      const handleMouseLeave = useCallback(() => {
+        setIsOpen(false)
+      }, [])
+
       if (timestamp === null || timestamp === undefined) {
         return (
           <Text as="span" {...textProps} ref={ref}>
@@ -175,27 +183,22 @@ export const TimeAgoCard = memo(
         )
       }
 
-      const handleClick = (event: MouseEvent) => {
-        event.preventDefault()
-        event.stopPropagation()
-        setIsOpen(prev => !prev)
-      }
-
       const handleClickContent = (event: MouseEvent) => {
         event.stopPropagation()
       }
+
       const hasPrefix = beforeCutoffPrefix || afterCutoffPrefix
       const prefix = hasPrefix ? (isBeyondCutoff ? afterCutoffPrefix : beforeCutoffPrefix) : undefined
 
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-          <Popover.Trigger className={cn('cn-time-ago-card-trigger', triggerClassName)} onClick={handleClick} ref={ref}>
-            <Text<'time'>
-              as="time"
-              {...textProps}
-              ref={textProps?.ref as Ref<HTMLTimeElement>}
-              className="text-cn-foreground-accent"
-            >
+          <Popover.Trigger
+            className={cn('cn-time-ago-card-trigger', triggerClassName)}
+            ref={ref}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
               {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
           </Popover.Trigger>

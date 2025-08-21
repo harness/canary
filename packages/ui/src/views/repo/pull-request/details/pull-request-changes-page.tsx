@@ -248,6 +248,12 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             commitSuggestionsBatchCount={commitSuggestionsBatchCount}
             showExplorer={showExplorer}
             setShowExplorer={setShowExplorer}
+            diffData={diffs?.map(diff => ({
+              filePath: diff.filePath,
+              addedLines: diff.addedLines,
+              deletedLines: diff.deletedLines
+            }))}
+            setJumpToDiff={setJumpToDiff}
           />
           {renderContent()}
         </SandboxLayout.Content>

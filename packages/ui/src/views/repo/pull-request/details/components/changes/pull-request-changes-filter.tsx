@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
-import { DiffModeOptions, TypesCommit } from '@/views'
+import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/index'
 
@@ -52,6 +52,12 @@ export interface PullRequestChangesFilterProps {
   pullReqStats?: TypesPullReqStats
   showExplorer: boolean
   setShowExplorer: (value: boolean) => void
+  diffData?: {
+    filePath: string
+    addedLines: number
+    deletedLines: number
+  }[]
+  setJumpToDiff: (fileName: string) => void
 }
 
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
@@ -72,7 +78,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   onCommitSuggestionsBatch,
   pullReqStats,
   showExplorer,
-  setShowExplorer
+  setShowExplorer,
+  diffData,
+  setJumpToDiff
 }) => {
   const { t } = useTranslation()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -169,12 +177,12 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
-                  <span className="text-cn-foreground-3">({defaultCommitFilter.count})</span>
+                  <CounterBadge>{defaultCommitFilter.count}</CounterBadge>
                 </>
               ) : (
                 <>
                   <span>Commits</span>
-                  <span className="text-cn-foreground-3">({selectedCommits?.length})</span>
+                  <CounterBadge>{selectedCommits?.length}</CounterBadge>
                 </>
               )}
               <IconV2 name="nav-solid-arrow-down" size="2xs" />
@@ -209,6 +217,10 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
+
+        <div className="mt-2.5">
+          <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={setJumpToDiff} />
+        </div>
       </Layout.Horizontal>
 
       <Layout.Horizontal className="gap-x-7">

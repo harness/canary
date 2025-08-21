@@ -28,14 +28,14 @@ export const PullRequestDiffSidebar: React.FC<PullRequestDiffSidebarProps> = ({
         width: `${sidebarWidth}px`
       }}
     >
-      <div className="flex h-full flex-col gap-3 pt-1.5">
+      <div className="flex h-[calc(100vh-55px)] flex-col gap-3 pt-1.5">
         <SearchFiles
           navigateToFile={file => {
             setJumpToDiff(file)
           }}
           filesList={filePaths}
         />
-        <ScrollArea className="pb-cn-xl -mr-cn-xs pr-cn-xs flex-1">
+        <ScrollArea className="pb-cn-xl -mr-cn-xs pr-cn-xs">
           <PullRequestChangesExplorer
             paths={filePaths}
             setJumpToDiff={setJumpToDiff}

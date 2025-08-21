@@ -43,24 +43,26 @@ interface FolderItemProps {
 function FolderItem({ children, value = '', isActive, content, link, level }: FolderItemProps) {
   const { Link } = useRouterContext()
 
+  const itemElement = (
+    <Item
+      icon="folder"
+      isActive={isActive}
+      style={{
+        marginLeft: `calc(-16px * ${level + 1} - 8px)`,
+        paddingLeft: `calc(16px * ${level + 1} + 8px)`
+      }}
+    >
+      {children}
+    </Item>
+  )
+
   return (
     <Accordion.Item value={value} className="border-none">
       <Accordion.Trigger
         className="pl-cn-2xs mb-cn-4xs p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
       >
-        <Link to={link || ''}>
-          <Item
-            icon="folder"
-            isActive={isActive}
-            style={{
-              marginLeft: `calc(-16px * ${level + 1} - 8px)`,
-              paddingLeft: `calc(16px * ${level + 1} + 8px)`
-            }}
-          >
-            {children}
-          </Item>
-        </Link>
+        {link ? <Link to={link}>{itemElement}</Link> : itemElement}
       </Accordion.Trigger>
 
       {!!content && (

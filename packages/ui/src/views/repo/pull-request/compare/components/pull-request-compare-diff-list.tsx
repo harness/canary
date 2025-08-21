@@ -2,6 +2,7 @@ import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from
 
 import { Button, IconV2, Layout, ListActions } from '@/components'
 import {
+  ChangedFilesShortInfo,
   DiffModeOptions,
   DraggableSidebarDivider,
   InViewDiffRenderer,
@@ -26,7 +27,7 @@ import {
 } from '../../utils'
 
 interface PullRequestCompareDiffListProps {
-  diffStats?: TypesDiffStats
+  diffStats: TypesDiffStats
   diffData: HeaderProps[]
   currentUser?: string
   sourceBranch?: string
@@ -38,6 +39,7 @@ interface PullRequestCompareDiffListProps {
 }
 
 const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
+  diffStats,
   diffData,
   currentUser,
   jumpToDiff,
@@ -125,6 +127,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
             >
               <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
             </Button>
+            <ChangedFilesShortInfo diffData={diffData} diffStats={diffStats} goToDiff={setJumpToDiff} />
           </ListActions.Left>
           <ListActions.Right>
             <ListActions.Dropdown

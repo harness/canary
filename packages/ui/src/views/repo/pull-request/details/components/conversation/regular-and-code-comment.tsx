@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, CopyButton, IconV2, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, CopyButton, IconV2, Layout, Link, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -335,7 +335,12 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isNotCodeComment: true,
         contentHeader: (
           <Layout.Horizontal gap="sm" align="center">
-            <Text variant="body-single-line-normal">{payload?.code_comment?.path}</Text>
+            <Link
+              to={`../changes?path=${encodeURIComponent(payload?.code_comment?.path || '')}&commentId=${payload?.id}`}
+              className="font-medium leading-tight text-cn-foreground-1"
+            >
+              {payload?.code_comment?.path}
+            </Link>
             <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />
           </Layout.Horizontal>
         ),

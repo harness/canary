@@ -771,15 +771,9 @@ export const PullRequestCommentBox = ({
                 </Button>
               )}
 
-              {isEditMode ? (
-                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
-                  {buttonTitle || 'Save'}
-                </Button>
-              ) : (
-                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
-                  {buttonTitle || 'Comment'}
-                </Button>
-              )}
+              <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
+                {buttonTitle || 'Comment'}
+              </Button>
             </Layout.Flex>
           ) : null}
         </Layout.Flex>

@@ -448,7 +448,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   />
                 )}
               </Tabs.Content>
-              <Tabs.Content className="pt-5" value="changes">
+              <Tabs.Content value="changes">
                 {/* Content for Changes */}
                 {(diffData ?? []).length > 0 ? (
                   <PullRequestCompareDiffList

@@ -97,7 +97,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   return (
     <Layout.Flex className="flex-1" ref={containerRef}>
       {showExplorer && (
-        <>
+        <Layout.Flex className="-mb-7">
           <PullRequestDiffSidebar
             sidebarWidth={sidebarWidth}
             filePaths={diffData?.map(diff => diff.filePath) || []}
@@ -114,10 +114,10 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
             }
           />
           <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
-        </>
+        </Layout.Flex>
       )}
-      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-xl' : '')} direction="column">
-        <ListActions.Root className="layer-high bg-cn-background-1 sticky top-[55px] py-2">
+      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-lg' : '')} direction="column">
+        <ListActions.Root className="layer-high bg-cn-background-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2">
           <ListActions.Left>
             <Button
               size="md"

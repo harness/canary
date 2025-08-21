@@ -201,7 +201,7 @@ function PullRequestChangesInternal({
                 ) || []
 
               return (
-                <div className={`${blockIndex === 0 ? 'pt-2' : 'pt-4'}`} key={item.filePath}>
+                <div className="pt-2" key={item.filePath}>
                   <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}

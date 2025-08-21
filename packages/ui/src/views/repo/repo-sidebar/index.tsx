@@ -22,7 +22,7 @@ export const RepoSidebar = ({
   return (
     <>
       <div className="repo-files-height sticky top-[var(--cn-page-nav-full-height)]">
-        <Layout.Flex direction="column" className="max-h-full overflow-hidden px-5 pt-7" gapY="sm">
+        <Layout.Flex direction="column" className="pr-cn-lg pl-cn-2xl pt-cn-xl max-h-full overflow-hidden" gapY="sm">
           <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs">
             {branchSelectorRenderer}
             <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
@@ -30,15 +30,10 @@ export const RepoSidebar = ({
             </Button>
           </Layout.Grid>
 
-          <SearchFiles
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            searchInputSize="md"
-            contentClassName="w-[800px]"
-          />
+          <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
 
           <ScrollArea
-            className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5"
+            className="pb-cn-xl pr-cn-lg -mr-5 grid-cols-[100%]"
             preserveScrollPosition={true}
             storageKey={repoRef ? `fileExplorer_${repoRef}` : undefined}
           >

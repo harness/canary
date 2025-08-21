@@ -125,4 +125,4 @@ export const RouterContextProvider = ({
   )
 }
 
-export { NavLinkProps }
+export { NavLinkProps, LinkProps }

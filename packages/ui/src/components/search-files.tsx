@@ -52,7 +52,7 @@ interface SearchFilesProps {
 export const SearchFiles = ({
   navigateToFile,
   filesList,
-  searchInputSize = 'sm',
+  searchInputSize = 'md',
   inputContainerClassName,
   contentClassName
 }: SearchFilesProps) => {
@@ -150,7 +150,7 @@ export const SearchFiles = ({
 
       <DropdownMenu.Content
         ref={contentRef}
-        className={cn('max-h-96', 'width-popover-max-width', contentClassName)}
+        className={cn('w-[800px]', contentClassName)}
         align="start"
         onKeyDownCapture={handleContentKeyDownCapture}
         onOpenAutoFocus={event => event.preventDefault()}

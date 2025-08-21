@@ -192,9 +192,7 @@ export function RepoSummaryView({
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}
-                    searchInputSize="md"
                     inputContainerClassName="max-w-80 min-w-40 w-full"
-                    contentClassName="w-[800px]"
                   />
                 </ButtonLayout>
               </ListActions.Left>

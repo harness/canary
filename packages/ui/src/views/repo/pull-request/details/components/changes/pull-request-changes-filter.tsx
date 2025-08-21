@@ -160,9 +160,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     <Layout.Horizontal
       align="center"
       justify="between"
-      className="layer-high sticky top-[55px] gap-x-5 bg-cn-background-1 py-2"
+      className="layer-high bg-cn-background-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2"
     >
-      <Layout.Horizontal className="grow gap-x-5">
+      <Layout.Horizontal className="grow gap-x-5" align="center">
         <Button
           size="md"
           title={showExplorer ? 'Collapse Sidebar' : 'Expand Sidebar'}
@@ -218,9 +218,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 
-        <div className="mt-2.5">
-          <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={setJumpToDiff} />
-        </div>
+        <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={setJumpToDiff} />
       </Layout.Horizontal>
 
       <Layout.Horizontal className="gap-x-7">

@@ -38,7 +38,7 @@
 }
 
 .diff-add-widget-wrapper {
-  z-index: 200 !important;
+  z-index: 10 !important;
   position: absolute !important;
 }
 

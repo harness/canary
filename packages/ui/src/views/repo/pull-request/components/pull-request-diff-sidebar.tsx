@@ -1,4 +1,4 @@
-import { ScrollArea, SearchFiles } from '@/components'
+import { Layout, ScrollArea, SearchFiles } from '@/components'
 
 import { SIDEBAR_MAX_WIDTH, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
 import {
@@ -23,19 +23,17 @@ export const PullRequestDiffSidebar: React.FC<PullRequestDiffSidebarProps> = ({
 }) => {
   return (
     <div
-      className={`h-screen sticky top-[55px] shrink-0 min-w-[${SIDEBAR_MIN_WIDTH}px] max-w-[${SIDEBAR_MAX_WIDTH}px] pr-cn-xs overflow-hidden`}
+      className="nested-sidebar-height pr-cn-lg sticky top-[var(--cn-breadcrumbs-height)] -ml-8 overflow-hidden"
       style={{
-        width: `${sidebarWidth}px`
+        width: `${sidebarWidth}px`,
+        minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+        maxWidth: `${SIDEBAR_MAX_WIDTH}px`
       }}
     >
-      <div className="flex h-[calc(100vh-55px)] flex-col gap-3 pt-1.5">
-        <SearchFiles
-          navigateToFile={file => {
-            setJumpToDiff(file)
-          }}
-          filesList={filePaths}
-        />
-        <ScrollArea className="pb-cn-xl -mr-cn-xs pr-cn-xs">
+      <Layout.Flex direction="column" className="pt-cn-xl max-h-full pl-8" gapY="sm">
+        <SearchFiles navigateToFile={setJumpToDiff} filesList={filePaths} />
+
+        <ScrollArea className="pr-cn-lg -mr-cn-lg grid-cols-[100%] pb-7">
           <PullRequestChangesExplorer
             paths={filePaths}
             setJumpToDiff={setJumpToDiff}
@@ -43,7 +41,7 @@ export const PullRequestDiffSidebar: React.FC<PullRequestDiffSidebarProps> = ({
             diffsData={diffsData}
           />
         </ScrollArea>
-      </div>
+      </Layout.Flex>
     </div>
   )
 }

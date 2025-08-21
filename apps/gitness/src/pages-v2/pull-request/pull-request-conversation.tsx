@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useMutation } from '@tanstack/react-query'
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
 
@@ -12,6 +13,7 @@ import {
   OpenapiMergePullReq,
   OpenapiStatePullReqRequest,
   RebaseBranchRequestBody,
+  RepoRepositoryOutput,
   reviewerAddPullReq,
   reviewerDeletePullReq,
   statePullReq,
@@ -47,8 +49,9 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
-import { filenameToLanguage } from '../../utils/git-utils'
+import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
@@ -164,6 +167,12 @@ const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
 
   url.searchParams.set('commentId', commentId.toString())
   copy(url.toString())
+}
+
+interface AiPullRequestSummaryParams {
+  repoMetadata: RepoRepositoryOutput
+  baseRef: string
+  headRef: string
 }
 
 export default function PullRequestConversationPage() {
@@ -360,6 +369,36 @@ export default function PullRequestConversationPage() {
     },
     [updateTitle, refetchPullReq]
   )
+
+  const getApiPath = useAPIPath()
+
+  const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
+    return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
+      method: 'POST',
+      body: JSON.stringify({
+        base_ref: baseRef,
+        head_ref: headRef
+      })
+    })
+      .then(res => res.json())
+      .then(json => ({
+        summary: json.summary
+      }))
+  })
+
+  const handleAiPullRequestSummary = useCallback(async () => {
+    if (repoMetadata && repoMetadata.path && pullReqMetadata?.source_branch && pullReqMetadata?.target_branch) {
+      return await mutation.mutateAsync({
+        repoMetadata,
+        baseRef: normalizeGitRef(pullReqMetadata?.target_branch) || '',
+        headRef: normalizeGitRef(pullReqMetadata.source_branch) || ''
+      })
+    }
+
+    return Promise.resolve({
+      summary: ''
+    })
+  }, [mutation])
 
   const onDeleteBranch = useCallback(() => {
     const onSuccessDeleteCommon = () => {
@@ -801,6 +840,7 @@ export default function PullRequestConversationPage() {
     () => ({
       toCommitDetails: ({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
       handleUpdateDescription,
+      handleAiPullRequestSummary,
       handleDeleteComment: deleteComment,
       handleUpdateComment: updateComment,
       data: activities,
@@ -827,6 +867,7 @@ export default function PullRequestConversationPage() {
     [
       routes,
       handleUpdateDescription,
+      handleAiPullRequestSummary,
       deleteComment,
       updateComment,
       activities,

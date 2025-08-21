@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { Avatar, Button, DropdownMenu, IconV2, Layout, MarkdownViewer, Text, TimeAgoCard } from '@/components'
-import { HandleUploadType, PrincipalPropsType } from '@/views'
+import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType } from '@/views'
 import { noop } from 'lodash-es'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
@@ -15,6 +15,7 @@ export interface PullRequestDescBoxProps {
   createdAt?: number
   description?: string
   handleUpdateDescription: (title: string, description: string) => Promise<void>
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
   handleUpload: HandleUploadType
   principalProps: PrincipalPropsType
 }
@@ -28,6 +29,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   handleUpdateDescription,
   title,
   handleUpload,
+  handleAiPullRequestSummary,
   principalProps
 }) => {
   const [comment, setComment] = useState(description || '')
@@ -105,6 +107,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
               principalsMentionMap={{}}
               setPrincipalsMentionMap={noop}
               handleUpload={handleUpload}
+              handleAiPullRequestSummary={handleAiPullRequestSummary}
               onSaveComment={() => {
                 return handleUpdateDescription(title || '', comment)
                   .then(() => {

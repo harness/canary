@@ -3,6 +3,7 @@ import { FC, useMemo } from 'react'
 import {
   CommentItem,
   GeneralPayload,
+  HandleAiPullRequestSummaryType,
   HandleUploadType,
   isCodeComment,
   isComment,
@@ -53,6 +54,7 @@ export interface PullRequestOverviewProps
   diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
   toCode?: ({ sha }: { sha: string }) => string
   handleUpload: HandleUploadType
+  handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
   principalProps: PrincipalPropsType
   spaceId?: string
   repoId?: string
@@ -78,6 +80,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   filenameToLanguage,
   toggleConversationStatus,
   handleUpdateDescription,
+  handleAiPullRequestSummary,
   toCommitDetails,
   toCode,
   principalProps
@@ -180,6 +183,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
             handleUpload={handleUpload}
             title={pullReqMetadata?.title}
             handleUpdateDescription={handleUpdateDescription}
+            handleAiPullRequestSummary={handleAiPullRequestSummary}
             createdAt={pullReqMetadata?.created}
             isLast={!(activityBlocks?.length > 0)}
             author={pullReqMetadata?.author?.display_name}

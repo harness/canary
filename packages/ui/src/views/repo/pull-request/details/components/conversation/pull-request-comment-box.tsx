@@ -307,7 +307,6 @@ export const PullRequestCommentBox = ({
   }, [])
 
   useEffect(() => {
-    console.debug('textSelection', textSelection)
     if (textAreaRef.current) {
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
     }
@@ -676,7 +675,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="min-h-24 pb-8 text-cn-foreground-1"
+                className="min-h-32 pb-8 text-cn-foreground-1"
                 autoFocus={!!autofocus || !!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -727,7 +726,7 @@ export const PullRequestCommentBox = ({
             </div>
           </Tabs.Content>
           <Tabs.Content className="w-full" value={TABS_KEYS.PREVIEW}>
-            <div className="min-h-24 w-full">
+            <div className="min-h-32 w-full">
               {comment ? (
                 <MarkdownViewer
                   markdownClassName="pr-section bg-transparent w-full"

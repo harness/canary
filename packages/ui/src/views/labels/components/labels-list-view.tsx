@@ -119,14 +119,14 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               }
             }}
           >
-            <Table.Cell className="align-top">
+            <Table.Cell className="relative align-top">
               {values?.[label.key]?.length > 0 ? (
                 <Button
                   variant="ghost"
                   size="2xs"
                   iconOnly
                   onClick={e => toggleRow(label.key, e)}
-                  className="mt-cn-2xs"
+                  className="mt-cn-2xs absolute right-0"
                 >
                   <IconV2 name={expandedRows[label.key] ? 'nav-arrow-up' : 'nav-arrow-down'} />
                 </Button>

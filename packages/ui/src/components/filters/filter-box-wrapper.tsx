@@ -67,23 +67,15 @@ const FilterBoxWrapper = ({
         <DropdownMenu.Header>
           <Layout.Flex align="center" justify="between">
             <Text as="span">{filterLabel}</Text>
-
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
-                <IconV2
-                  className="text-icons-1 transition-colors duration-200 group-hover:text-cn-foreground-1"
-                  name="more-horizontal"
-                  size="2xs"
-                />
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Content align="start">
-                <DropdownMenu.IconItem
-                  icon="trash"
-                  onSelect={handleRemoveFilter}
-                  title={t('component:filter.delete', 'Delete filter')}
-                />
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
+            <Button
+              iconOnly
+              variant="outline"
+              size="2xs"
+              onClick={handleRemoveFilter}
+              aria-label={t('component:filter.delete', 'Delete filter')}
+            >
+              <IconV2 name="trash" skipSize />
+            </Button>
           </Layout.Flex>
         </DropdownMenu.Header>
 

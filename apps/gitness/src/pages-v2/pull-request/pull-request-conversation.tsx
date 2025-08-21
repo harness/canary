@@ -84,9 +84,7 @@ const getMockPullRequestActions = (
             id: '0',
             title: 'Open for review',
             description: 'Open this pull request for review.',
-            action: () => {
-              handlePrState('open')
-            }
+            action: () => handlePrState('open')
           }
         ]
       : pullReqMetadata?.is_draft
@@ -95,17 +93,7 @@ const getMockPullRequestActions = (
               id: '0',
               title: 'Ready for review',
               description: 'Open this pull request for review.',
-              action: () => {
-                handlePrState('open')
-              }
-            },
-            {
-              id: '1',
-              title: 'Close pull request',
-              description: 'Close this pull request. You can still re-open the request after closing.',
-              action: () => {
-                handlePrState('closed')
-              }
+              action: () => handlePrState('open')
             }
           ]
         : [

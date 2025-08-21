@@ -297,8 +297,7 @@ const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
     isOpen,
     isDraft,
     isUnchecked: pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
-    isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
-    isShowMoreTooltip: isOpen && !isDraft
+    isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
   }
 }
 
@@ -479,7 +478,7 @@ const PullRequestPanel = ({
     setAccordionValues(data)
   }, [])
 
-  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable, isShowMoreTooltip } =
+  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable } =
     getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
@@ -575,17 +574,23 @@ const PullRequestPanel = ({
     'text-cn-foreground-danger': prState === PrState.Error
   })
 
+  const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
+
+  const shouldShowSplitButton =
+    actions?.length > 1 &&
+    !pullReqMetadata?.closed &&
+    !showActionBtn &&
+    !isMerging &&
+    !pullReqMetadata?.merged &&
+    !mergeInitiated
+
+  const shouldShowMoreActions = !shouldShowConfirmation && isOpen
+
   return (
     <>
       <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
         <StackedList.Item
-          className={cn(
-            'items-center py-2 border-cn-borders-3',
-            {
-              'pr-1.5': isShowMoreTooltip
-            },
-            headerRowBgClass
-          )}
+          className={cn('items-center py-2 border-cn-borders-3', { 'pr-1.5': shouldShowMoreActions }, headerRowBgClass)}
           disableHover
         >
           <StackedList.Field
@@ -628,6 +633,7 @@ const PullRequestPanel = ({
                         <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
                       </Button>
                     )}
+
                     {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
                       <Checkbox
                         className="flex-1"
@@ -643,99 +649,86 @@ const PullRequestPanel = ({
                         truncateLabel={false}
                       />
                     )}
-                    {(() => {
-                      // Only show SplitButton if we're not in any merge-related state
-                      const shouldShowSplitButton =
-                        actions &&
-                        !pullReqMetadata?.closed &&
-                        !showActionBtn &&
-                        !isMerging &&
-                        !pullReqMetadata?.merged &&
-                        !mergeInitiated
-                      return shouldShowSplitButton ? (
-                        <SplitButton
-                          // because of the complex SplitButtonProps type, we need to cast the theme and variant to const
-                          {...(buttonState.variant === 'primary'
-                            ? { theme: 'default' as const, variant: 'primary' as const }
-                            : {
-                                theme: (buttonState.theme || 'default') as 'success' | 'danger' | 'default',
-                                variant: 'outline' as const
-                              })}
-                          disabled={buttonState.disabled}
-                          loading={actions[parseInt(mergeButtonValue)]?.loading}
-                          handleOptionChange={handleMergeTypeSelect}
-                          options={actions.map(action => {
-                            return {
-                              value: action.id,
-                              label: action.title,
-                              description: action.description,
-                              disabled: action.disabled
-                            }
-                          })}
-                          handleButtonClick={() => {
-                            const selectedAction = actions[parseInt(mergeButtonValue)]
-                            if (!selectedAction.disabled) {
-                              const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
-                              const isMergeAction = mergeActionTitles.has(selectedAction.title)
 
-                              if (!isMergeAction) {
-                                selectedAction.action?.()
-                              } else {
-                                handleMergeTypeSelect(mergeButtonValue)
-                              }
+                    {/*Only show SplitButton if we're not in any merge-related state*/}
+                    {shouldShowSplitButton && (
+                      <SplitButton
+                        theme={buttonState.variant === 'primary' ? 'default' : (buttonState.theme ?? 'default')}
+                        variant={buttonState.variant}
+                        disabled={buttonState.disabled}
+                        loading={actions[parseInt(mergeButtonValue)]?.loading}
+                        handleOptionChange={handleMergeTypeSelect}
+                        options={actions.map(action => {
+                          return {
+                            value: action.id,
+                            label: action.title,
+                            description: action.description,
+                            disabled: action.disabled
+                          }
+                        })}
+                        handleButtonClick={() => {
+                          const selectedAction = actions[parseInt(mergeButtonValue)]
+                          if (!selectedAction.disabled) {
+                            const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+                            const isMergeAction = mergeActionTitles.has(selectedAction.title)
+
+                            if (!isMergeAction) {
+                              selectedAction.action?.()
+                            } else {
+                              handleMergeTypeSelect(mergeButtonValue)
                             }
-                          }}
-                          size="md"
-                        >
-                          {actions[parseInt(mergeButtonValue)].title}
-                        </SplitButton>
-                      ) : null
-                    })()}
+                          }
+                        }}
+                        size="md"
+                      >
+                        {actions[parseInt(mergeButtonValue)].title}
+                      </SplitButton>
+                    )}
+
                     {/* When in merge input mode or merging, show Cancel/Confirm buttons */}
-                    {(() => {
-                      const shouldShowButtonLayout =
-                        actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
+                    {shouldShowConfirmation && (
+                      <ButtonLayout>
+                        <Button
+                          variant="outline"
+                          onClick={handleCancelMerge}
+                          loading={cancelInitiated}
+                          disabled={isMerging || mergeInitiated}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          theme="success"
+                          onClick={handleConfirmMerge}
+                          loading={isMerging || mergeInitiated}
+                          disabled={cancelInitiated || shouldDisableFastForwardMerge()}
+                        >
+                          Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
+                        </Button>
+                      </ButtonLayout>
+                    )}
 
-                      if (!shouldShowButtonLayout) return null
-                      const selectedAction = actions[parseInt(mergeButtonValue || '0')]
-                      return (
-                        <ButtonLayout>
-                          <Button
-                            variant="outline"
-                            onClick={handleCancelMerge}
-                            loading={cancelInitiated}
-                            disabled={isMerging || mergeInitiated}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            theme="success"
-                            onClick={handleConfirmMerge}
-                            loading={isMerging || mergeInitiated}
-                            disabled={cancelInitiated || shouldDisableFastForwardMerge()}
-                          >
-                            Confirm {selectedAction?.title || 'Merge'}
-                          </Button>
-                        </ButtonLayout>
-                      )
-                    })()}
-                    {actions && pullReqMetadata?.closed ? (
-                      <Button variant="primary" theme="default" size="sm" onClick={actions[0].action}>
+                    {actions?.length === 1 && (
+                      <Button variant="primary" theme="default" onClick={actions[0].action}>
                         {actions[0].title}
                       </Button>
-                    ) : null}
-                    {isShowMoreTooltip && (
+                    )}
+
+                    {shouldShowMoreActions && (
                       <MoreActionsTooltip
                         className="!ml-2"
                         iconName="more-horizontal"
                         sideOffset={4}
                         alignOffset={0}
                         actions={[
-                          {
-                            title: 'Mark as draft',
-                            onClick: () => handlePrState('draft'),
-                            iconName: 'page-edit'
-                          },
+                          ...(!isDraft
+                            ? [
+                                {
+                                  title: 'Mark as draft',
+                                  onClick: () => handlePrState('draft'),
+                                  iconName: 'page-edit' as const
+                                }
+                              ]
+                            : []),
                           {
                             title: 'Close pull request',
                             onClick: () => handlePrState('closed'),

@@ -1,24 +1,12 @@
 import { useMemo, useRef, useState } from 'react'
 
-import {
-  Button,
-  DropdownMenu,
-  getScopeType,
-  IconV2,
-  Layout,
-  Link,
-  LinkProps,
-  scopeTypeToIconMap,
-  SearchInput,
-  Tag,
-  Text
-} from '@/components'
+import { Button, DropdownMenu, IconV2, Layout, Link, LinkProps, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
   ILabelType,
-  LabelAddIndicator,
   LabelAssignmentType,
+  LabelTag,
   LabelType,
   LabelValuesType,
   TypesLabelAssignment,
@@ -162,16 +150,14 @@ export const LabelsHeader = ({
                   onSelect={handleOnSelect(label)}
                   title={
                     <Layout.Grid gapX="xs" align="center" className="grid-flow-col">
-                      <Tag
-                        icon={scopeTypeToIconMap[getScopeType(label.scope ?? 0)]}
-                        variant="secondary"
-                        size="sm"
-                        theme={label.color}
-                        label={label.key}
-                        value={(label.values?.length || '').toString()}
+                      <LabelTag
+                        scope={label.scope ?? 0}
+                        color={label.color as ILabelType['color']}
+                        labelKey={label.key ?? ''}
+                        labelValue={(label.values?.length || '').toString()}
+                        withIndicator={label.type === LabelType.DYNAMIC}
+                        tagProps={{ size: 'sm' }}
                       />
-
-                      {label.type === 'dynamic' && <LabelAddIndicator />}
                     </Layout.Grid>
                   }
                   // TODO: add description when it is available from PR Labels call

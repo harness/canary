@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { getScopeType, scopeTypeToIconMap, Tag, Text } from '@/components'
+import { Text } from '@/components'
 import { useTranslation } from '@/context'
-import { LabelMarkerProps, PRListLabelType } from '@/views'
+import { LabelMarkerProps, LabelTag, PRListLabelType } from '@/views'
 import { cn } from '@utils/cn'
 
 type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
@@ -28,28 +28,24 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
   return (
     <div className={cn('flex flex-wrap gap-1.5', className)}>
       {labels.map(label => (
-        <Tag
+        <LabelTag
           key={label.key}
-          variant="secondary"
-          size="sm"
-          icon={scopeTypeToIconMap[getScopeType(label.scope)]}
-          label={label.key}
-          value={label.value || ''}
-          theme={label.color}
-          onActionClick={label.onDelete}
-          actionIcon={showReset ? 'xmark' : undefined}
-          className="grid max-w-full grid-flow-col content-center"
-          labelClassName="grid grid-flow-col content-center"
-          valueClassName="grid grid-flow-col content-center"
-          onClick={
-            onClick
+          scope={label.scope}
+          color={label.color}
+          labelKey={label.key}
+          labelValue={label.value || ''}
+          tagProps={{
+            size: 'sm',
+            onActionClick: label.onDelete,
+            actionIcon: showReset ? 'xmark' : undefined,
+            onClick: onClick
               ? e => {
                   e.stopPropagation()
                   e.preventDefault()
                   onClick?.(label)
                 }
               : undefined
-          }
+          }}
         />
       ))}
     </div>

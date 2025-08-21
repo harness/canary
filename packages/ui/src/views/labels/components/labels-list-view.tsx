@@ -1,21 +1,9 @@
 import { FC, Fragment, useState } from 'react'
 
-import {
-  Button,
-  getScopeType,
-  IconV2,
-  Layout,
-  MoreActionsTooltip,
-  NoData,
-  ScopeTag,
-  scopeTypeToIconMap,
-  Table,
-  Tag,
-  Text
-} from '@/components'
+import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ILabelType, LabelAddIndicator, LabelType, LabelValuesType } from '@/views'
+import { ILabelType, LabelTag, LabelType, LabelValuesType } from '@/views'
 
 export interface LabelsListViewProps {
   labels: ILabelType[]
@@ -147,35 +135,24 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             <Table.Cell className="align-top">
               <Layout.Vertical align="start" gap="xs">
                 <Layout.Grid gap="xs" align="center" className="mt-cn-2xs grid-cols-[auto_auto]">
-                  <Tag
-                    icon={scopeTypeToIconMap[getScopeType(label.scope)]}
-                    variant="secondary"
-                    size="md"
-                    theme={label.color}
-                    label={label.key}
-                    value={(values?.[label.key]?.length || '').toString()}
-                    className="grid grid-cols-[auto_auto]"
-                    labelClassName="grid grid-cols-[auto_auto]"
-                    valueClassName="grid grid-cols-[auto]"
+                  <LabelTag
+                    scope={label.scope ?? 0}
+                    labelKey={label.key}
+                    color={label.color}
+                    labelValue={(values?.[label.key]?.length || '').toString()}
+                    withIndicator={label.type === LabelType.DYNAMIC}
                   />
-
-                  {label.type === LabelType.DYNAMIC && <LabelAddIndicator />}
                 </Layout.Grid>
 
                 {!!values?.[label.key]?.length &&
                   expandedRows[label.key] &&
                   values?.[label.key].map(item => (
-                    <Tag
+                    <LabelTag
                       key={item.id}
-                      icon={scopeTypeToIconMap[getScopeType(label.scope)]}
-                      variant="secondary"
-                      size="md"
-                      theme={item?.color || label.color}
-                      label={label.key}
-                      value={item.value}
-                      className="grid grid-cols-[auto_auto]"
-                      labelClassName="grid grid-cols-[auto_auto]"
-                      valueClassName="grid grid-cols-[auto]"
+                      scope={label.scope}
+                      labelKey={label.key}
+                      color={item?.color || label.color}
+                      labelValue={item.value}
                     />
                   ))}
               </Layout.Vertical>

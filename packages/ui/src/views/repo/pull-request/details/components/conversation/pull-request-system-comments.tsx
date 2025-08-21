@@ -1,17 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import {
-  Avatar,
-  BranchTag,
-  CommitCopyActions,
-  getScopeType,
-  IconPropsV2,
-  IconV2,
-  scopeTypeToIconMap,
-  Tag,
-  Text,
-  TimeAgoCard
-} from '@/components'
+import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -19,6 +8,7 @@ import {
   CommentType,
   GeneralPayload,
   LabelActivity,
+  LabelTag,
   MergeStrategy,
   PrincipalPropsType,
   ReviewerAddActivity,
@@ -367,14 +357,12 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
                 </Text>
-                <Tag
-                  icon={scopeTypeToIconMap[getScopeType(scope as number)]}
-                  variant="secondary"
-                  size="sm"
-                  key={label as string}
-                  label={label as string}
-                  value={value as string}
-                  theme={(value_color ?? label_color) as ColorsEnum}
+                <LabelTag
+                  scope={scope as number}
+                  color={(value_color ?? label_color) as ColorsEnum}
+                  labelKey={label as string}
+                  labelValue={value as string}
+                  tagProps={{ size: 'sm' }}
                 />
                 <Text variant="body-single-line-normal" color="foreground-3">
                   label

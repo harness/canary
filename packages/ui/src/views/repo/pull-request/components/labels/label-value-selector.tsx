@@ -1,10 +1,10 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, getScopeType, IconV2, scopeTypeToIconMap, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, getScopeType, IconV2, scopeTypeToIconMap, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
-import { EnumLabelColor, HandleAddLabelType, TypesLabelValueInfo } from '@/views'
+import { ColorsEnum, EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 
@@ -100,13 +100,14 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         >
           <div className="pr-2">
-            <Tag
-              icon={scopeTypeToIconMap[getScopeType(label.scope ?? 0)]}
-              className="max-w-20"
-              variant="secondary"
-              size="sm"
-              theme={label.color}
-              value={label.key ?? ''}
+            <LabelTag
+              scope={label.scope ?? 0}
+              color={label.color as ColorsEnum}
+              labelKey={label.key ?? ''}
+              tagProps={{
+                className: 'max-w-20',
+                size: 'sm'
+              }}
             />
           </div>
         </SearchBox.Root>

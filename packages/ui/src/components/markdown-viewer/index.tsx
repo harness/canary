@@ -1,6 +1,6 @@
-import { CSSProperties, useCallback, useEffect, useMemo, useRef } from 'react'
+import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { CopyButton } from '@/components'
+import { CopyButton, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
 import rehypeExternalLinks from 'rehype-external-links'
 import { getCodeString, RehypeRewriteOptions } from 'rehype-rewrite'
@@ -28,10 +28,11 @@ type MarkdownViewerProps = {
   className?: string
   suggestionBlock?: SuggestionBlock
   suggestionCheckSum?: string
-  isSuggestion?: boolean
   markdownClassName?: string
   showLineNumbers?: boolean
   onCheckboxChange?: (source: string) => void
+  suggestionTitle?: string
+  suggestionFooter?: ReactNode
 }
 
 export function MarkdownViewer({
@@ -40,11 +41,11 @@ export function MarkdownViewer({
   withBorder = false,
   className,
   suggestionBlock,
-  suggestionCheckSum,
-  isSuggestion,
   markdownClassName,
   showLineNumbers = false,
-  onCheckboxChange
+  onCheckboxChange,
+  suggestionTitle,
+  suggestionFooter
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -55,6 +56,8 @@ export function MarkdownViewer({
 
   // Reset checkbox counter at the start of each render
   checkboxCounter.current = 0
+
+  const filteredSource = useMemo(() => source.split('\n').filter(line => line !== '' && line !== '```'), [source])
 
   const styles: CSSProperties = maxHeight ? { maxHeight } : {}
 
@@ -168,6 +171,18 @@ export function MarkdownViewer({
     [onCheckboxChange, source]
   )
 
+  const getIsSuggestion = useCallback(
+    (code: string) => {
+      const trimmedCode = code.trim()
+      const codeLines = trimmedCode.split('\n')
+      const codeIndex = filteredSource.findIndex(line => line.includes(codeLines[0] || ''))
+      const isSuggestion = codeIndex !== -1 && filteredSource[codeIndex - 1].includes('suggestion')
+
+      return { isSuggestion, codeLines }
+    },
+    [filteredSource]
+  )
+
   useEffect(() => {
     const container = ref.current
 
@@ -183,23 +198,9 @@ export function MarkdownViewer({
   return (
     <div className={cn({ 'rounded-b-md border-x border-b py-6 px-16': withBorder }, className)}>
       <div ref={ref} style={styles}>
-        {isSuggestion && (
-          <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
-            <span className="text-2 text-cn-foreground-1">
-              {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
-                ? 'Suggestion applied'
-                : 'Suggested change'}
-            </span>
-          </div>
-        )}
-
         <MarkdownPreview
           source={source}
-          className={cn(
-            'prose prose-invert',
-            { '[&>div>pre]:rounded-t-none [&>div>pre]:mb-2': isSuggestion },
-            markdownClassName
-          )}
+          className={cn('prose prose-invert', markdownClassName)}
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
@@ -235,14 +236,33 @@ export function MarkdownViewer({
                 codeContent = code
               }
 
-              const trimmedCode = codeContent.trim()
-              const codeLines = trimmedCode.split('\n')
+              const { isSuggestion, codeLines } = getIsSuggestion(codeContent)
+
               const filteredLines =
                 codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
               const hasLineNumbers = showLineNumbers && filteredLines.length > 1
 
+              if (isSuggestion) {
+                return (
+                  <div className="rounded-2 overflow-hidden border">
+                    <div className="bg-cn-background-2 px-cn-md py-cn-sm border-b">
+                      <Text variant="body-strong" color="foreground-1" className="!m-0">
+                        {suggestionTitle}
+                      </Text>
+                    </div>
+                    <pre>{children}</pre>
+                    <div className="p-cn-md">{suggestionFooter}</div>
+                  </div>
+                )
+              }
+
               return (
-                <div className="mb-cn-md relative">
+                <div
+                  className={cn(
+                    'min-h-[52px] mb-cn-md rounded-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
+                    { '!pt-[15px]': codeLines.length === 1 }
+                  )}
+                >
                   <CopyButton
                     className="absolute right-3 top-3 z-10"
                     buttonVariant="outline"
@@ -250,7 +270,7 @@ export function MarkdownViewer({
                     iconSize="xs"
                     size="xs"
                   />
-                  <pre className={cn('min-h-[52px]', { '!pt-[15px]': codeLines.length === 1 })}>
+                  <pre>
                     {hasLineNumbers ? (
                       <div className="relative flex w-full bg-transparent">
                         <div className="bg-cn-background-2 flex-none select-none text-right">
@@ -272,16 +292,20 @@ export function MarkdownViewer({
             code: ({ children = [], className: _className, ...props }) => {
               const code = props.node && props.node.children ? getCodeString(props.node.children) : children
 
-              if (
+              const isPossibleSuggestion =
                 typeof code === 'string' &&
-                isSuggestion &&
                 typeof _className === 'string' &&
                 'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
-              ) {
-                return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
+
+              if (isPossibleSuggestion) {
+                const { isSuggestion } = getIsSuggestion(code)
+
+                if (isSuggestion) {
+                  return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
+                }
               }
 
-              return <code className={`!whitespace-pre-wrap ${String(_className)}`}>{children}</code>
+              return <code className={`mr-cn-3xl !whitespace-pre-wrap ${String(_className)}`}>{children}</code>
             }
           }}
         />

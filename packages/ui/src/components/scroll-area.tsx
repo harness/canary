@@ -19,8 +19,13 @@ export type ScrollAreaProps = {
   direction?: 'ltr' | 'rtl'
   className?: string
   classNameContent?: string
+  preserveScrollPosition?: boolean
+  storageKey?: string
 } & ScrollAreaIntersectionProps &
   HTMLAttributes<HTMLDivElement>
+
+const MAX_AGE = 30 * 60 * 1000 // 30 minutes
+const PERSIST_DEBOUNCE = 1000 // 1s debounce
 
 const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
   (
@@ -38,16 +43,106 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       className,
       classNameContent,
 
+      preserveScrollPosition = false,
+      storageKey,
+
       ...rest
     },
     ref
   ) => {
     const viewportRef = useRef<HTMLDivElement | null>(null)
+    const scrollTimeoutRef = useRef<NodeJS.Timeout>()
 
     const topMarkerRef = useRef<HTMLDivElement | null>(null)
     const bottomMarkerRef = useRef<HTMLDivElement | null>(null)
     const leftMarkerRef = useRef<HTMLDivElement | null>(null)
     const rightMarkerRef = useRef<HTMLDivElement | null>(null)
+
+    // Save scroll position to sessionStorage
+    const saveScrollPosition = useCallback(() => {
+      if (!preserveScrollPosition || !storageKey || !viewportRef.current) return
+
+      const scrollTop = viewportRef.current.scrollTop
+
+      try {
+        sessionStorage.setItem(`scroll_${storageKey}`, JSON.stringify({ scrollTop, timestamp: Date.now() }))
+      } catch (error) {
+        // Fail silently
+        console.warn('Failed to save scroll position:', error)
+      }
+    }, [preserveScrollPosition, storageKey])
+
+    // Restore scroll position from sessionStorage
+    const restoreScrollPosition = useCallback(() => {
+      if (!preserveScrollPosition || !storageKey || !viewportRef.current) return
+
+      try {
+        const stored = sessionStorage.getItem(`scroll_${storageKey}`)
+        if (stored) {
+          const { scrollTop, timestamp } = JSON.parse(stored)
+
+          if (Date.now() - timestamp < MAX_AGE) {
+            viewportRef.current.scrollTop = scrollTop
+          } else {
+            sessionStorage.removeItem(`scroll_${storageKey}`)
+          }
+        }
+      } catch (error) {
+        // Fail silently
+        console.warn('Failed to restore scroll position:', error)
+      }
+    }, [preserveScrollPosition, storageKey])
+
+    // Handle scroll events with debouncing
+    const handleScroll = useCallback(() => {
+      if (!preserveScrollPosition) return
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      scrollTimeoutRef.current = setTimeout(() => {
+        saveScrollPosition()
+      }, PERSIST_DEBOUNCE)
+    }, [preserveScrollPosition, saveScrollPosition])
+
+    // scroll position clean up
+    useEffect(() => {
+      if (!preserveScrollPosition || !storageKey) return
+      try {
+        const keysToRemove: string[] = []
+        for (let i = 0; i < sessionStorage.length; i++) {
+          const key = sessionStorage.key(i)
+          if (key?.startsWith('scroll_') && key !== `scroll_${storageKey}`) {
+            keysToRemove.push(key)
+          }
+        }
+        keysToRemove.forEach(key => sessionStorage.removeItem(key))
+      } catch (error) {
+        // Fail silently
+      }
+    }, [preserveScrollPosition, storageKey])
+
+    // Restore scroll position on mount
+    useEffect(() => {
+      if (!preserveScrollPosition || !storageKey) return
+      const timer = setTimeout(() => {
+        restoreScrollPosition()
+      }, 0)
+      return () => clearTimeout(timer)
+    }, [preserveScrollPosition, restoreScrollPosition, storageKey])
+
+    useEffect(() => {
+      const viewport = viewportRef.current
+      if (!viewport) return
+
+      viewport.addEventListener('scroll', handleScroll, { passive: true })
+
+      return () => {
+        viewport.removeEventListener('scroll', handleScroll)
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current)
+        }
+      }
+    }, [handleScroll])
 
     const createObserver = useCallback(
       (

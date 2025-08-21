@@ -4,7 +4,7 @@ import { cn } from '@utils/cn'
 
 interface DraggableSidebarDividerProps {
   width: number
-  setWidth: (width: number | ((prev: number) => number)) => void
+  setWidth: (width: number) => void
   containerRef?: RefObject<HTMLElement>
   minWidth?: number
   maxWidth?: number
@@ -54,11 +54,11 @@ export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = (
       switch (e.key) {
         case 'ArrowLeft':
           e.preventDefault()
-          setWidth(prev => Math.max(minWidth, prev - step))
+          setWidth(Math.max(minWidth, width - step))
           break
         case 'ArrowRight':
           e.preventDefault()
-          setWidth(prev => Math.min(maxWidth, prev + step))
+          setWidth(Math.min(maxWidth, width + step))
           break
         case 'Home':
           e.preventDefault()
@@ -70,7 +70,7 @@ export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = (
           break
       }
     },
-    [setWidth, minWidth, maxWidth]
+    [setWidth, minWidth, maxWidth, width]
   )
 
   return (

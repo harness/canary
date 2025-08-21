@@ -8,6 +8,7 @@ interface RepoSidebarProps {
   filesList?: string[]
   children: ReactNode
   branchSelectorRenderer: ReactNode
+  repoRef?: string
 }
 
 export const RepoSidebar = ({
@@ -15,7 +16,8 @@ export const RepoSidebar = ({
   branchSelectorRenderer,
   navigateToFile,
   filesList,
-  children
+  children,
+  repoRef
 }: RepoSidebarProps) => {
   return (
     <>
@@ -35,7 +37,13 @@ export const RepoSidebar = ({
             contentClassName="w-[800px]"
           />
 
-          <ScrollArea className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5">{children}</ScrollArea>
+          <ScrollArea
+            className="pb-cn-xl -mr-5 grid-cols-[100%] pr-5"
+            preserveScrollPosition={true}
+            storageKey={repoRef ? `fileExplorer_${repoRef}` : undefined}
+          >
+            {children}
+          </ScrollArea>
         </Layout.Flex>
       </div>
     </>

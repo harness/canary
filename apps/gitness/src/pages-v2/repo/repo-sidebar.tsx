@@ -24,6 +24,7 @@ import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import Explorer from '../../components-v2/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useLocalStorage from '../../framework/hooks/useLocalStorage'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPARATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
@@ -40,7 +41,7 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
-  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
+  const [sidebarWidth, setSidebarWidth] = useLocalStorage<number>('sidebarWidth', SIDEBAR_MIN_WIDTH)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const {
@@ -208,6 +209,7 @@ export const RepoSidebar = () => {
             navigateToNewFile={navigateToNewFile}
             navigateToFile={navigateToFile}
             filesList={filesList}
+            repoRef={repoRef}
             branchSelectorRenderer={
               <BranchSelectorContainer
                 onSelectBranchorTag={selectBranchOrTag}

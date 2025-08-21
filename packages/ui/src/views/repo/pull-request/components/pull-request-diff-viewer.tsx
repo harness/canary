@@ -22,13 +22,14 @@ import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
+import { scopeLinesRangeToOneBlock } from '../details/components/conversation/diff-utils'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
-import { ExtendedDiffViewProps } from './extended-diff-view/extended-diff-view-types'
+import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view/extended-diff-view-types'
 
 interface Thread {
   parent: CommentItem<TypesPullReqActivity>
@@ -81,6 +82,7 @@ interface PullRequestDiffviewerProps {
 
 const PullRequestDiffViewer = ({
   data,
+  blocks,
   highlight,
   fontsize,
   mode,
@@ -370,7 +372,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="bg-cn-background-1 flex w-full flex-col p-4">
+        <div className="flex w-full flex-col bg-cn-background-1 p-4">
           <PullRequestCommentBox
             autofocus
             handleUpload={handleUpload}
@@ -401,6 +403,7 @@ const PullRequestDiffViewer = ({
             lineNumber={lineNumber}
             lineFromNumber={lineFromNumber}
             sideKey={sideKey}
+            blocks={blocks}
             diff={data}
             lang={lang}
             comment={commentText}
@@ -532,6 +535,7 @@ const PullRequestDiffViewer = ({
                             onCancelClick={() => {
                               toggleEditMode(componentId, '')
                             }}
+                            blocks={blocks}
                             diff={data}
                             lang={lang}
                             comment={replaceMentionIdWithEmail(
@@ -621,6 +625,7 @@ const PullRequestDiffViewer = ({
                                     onCancelClick={() => {
                                       toggleEditMode(replyComponentId, '')
                                     }}
+                                    blocks={blocks}
                                     diff={data}
                                     lang={lang}
                                     comment={replaceMentionIdWithEmail(
@@ -692,6 +697,11 @@ const PullRequestDiffViewer = ({
 
   const contextValue = useExpandedCommentsContext()
 
+  const scopeMultilineSelectionToOneHunk = useCallback(
+    (linesRange: LinesRange) => (blocks ? scopeLinesRangeToOneBlock(blocks, linesRange) : linesRange),
+    [blocks]
+  )
+
   return (
     <ExpandedCommentsContext.Provider value={contextValue}>
       <div data-diff-file-path={fileName}>
@@ -701,7 +711,7 @@ const PullRequestDiffViewer = ({
             {/* @ts-ignore */}
             <ExtendedDiffView<Thread[]>
               ref={ref}
-              className="bg-tr text-cn-foreground-1 w-full"
+              className="bg-tr w-full text-cn-foreground-1"
               renderWidgetLine={renderWidgetLine}
               renderExtendLine={renderExtendLine}
               diffFile={diffFileInstance}
@@ -714,6 +724,7 @@ const PullRequestDiffViewer = ({
               // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
               diffViewAddWidget={addWidget && mode === DiffModeEnum.Split}
               diffViewTheme={isLightTheme ? 'light' : 'dark'}
+              scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
             />
           </div>
         )}

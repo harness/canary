@@ -387,6 +387,7 @@ export const PullRequestAccordion: React.FC<{
                 <PullRequestDiffViewer
                   principalProps={principalProps}
                   handleUpload={handleUpload}
+                  blocks={header.diffData.blocks}
                   data={rawDiffData}
                   fontsize={fontsize}
                   highlight={highlight}

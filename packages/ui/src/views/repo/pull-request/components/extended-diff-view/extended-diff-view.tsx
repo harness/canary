@@ -25,7 +25,7 @@ export const ExtendedDiffView = forwardRef(
       getDiffFileInstance: () => DiffFile
     }>
   ) => {
-    const { extendData, renderWidgetLine, diffViewAddWidget } = props
+    const { extendData, renderWidgetLine, diffViewAddWidget, scopeMultilineSelectionToOneHunk } = props
 
     const enableMultiSelect = !!diffViewAddWidget
 
@@ -81,7 +81,9 @@ export const ExtendedDiffView = forwardRef(
         if (!line) return
 
         if (line !== null && selectedRangeRef.current) {
-          selectedRangeRef.current = { ...selectedRangeRef.current, end: line }
+          selectedRangeRef.current = scopeMultilineSelectionToOneHunk
+            ? scopeMultilineSelectionToOneHunk({ ...selectedRangeRef.current, end: line })
+            : { ...selectedRangeRef.current, end: line }
           updateSelection(containerRef.current, selectedRangeRef.current, preselectedLinesRef.current)
         }
       }

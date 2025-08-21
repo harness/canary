@@ -23,6 +23,7 @@ import {
   Text
 } from '@/components'
 import {
+  DiffBlock,
   HandleAiPullRequestSummaryType,
   handleFileDrop,
   handlePaste,
@@ -36,7 +37,7 @@ import { cn } from '@utils/cn'
 import { getErrorMessage } from '@utils/utils'
 import { isEmpty, isUndefined } from 'lodash-es'
 
-import { getDiffLinesRange, parseDiffToLines } from './diff-utils'
+import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
@@ -88,6 +89,7 @@ export interface PullRequestCommentBoxProps {
   className?: string
   comment: string
   lang?: string
+  blocks?: DiffBlock[]
   diff?: string
   lineNumber?: number
   lineFromNumber?: number
@@ -129,6 +131,7 @@ export const PullRequestCommentBox = ({
   inReplyMode = false,
   autofocus = false,
   onCancelClick,
+  blocks,
   diff = '',
   lang = '',
   sideKey,
@@ -418,7 +421,7 @@ export const PullRequestCommentBox = ({
       }
       case BuildBehavior.Parse: {
         const injectedParseString = isEmpty(commentMetadata.selection.text)
-          ? `${commentMetadata.action.injectedPreString}${parseDiff(diff, sideKey, lineNumber, lineFromNumber)}${commentMetadata.action.injectedPostString}`
+          ? `${commentMetadata.action.injectedPreString}${parseDiff(blocks, sideKey, lineNumber, lineFromNumber)}${commentMetadata.action.injectedPostString}`
           : `${commentMetadata.action.injectedPreString}${commentMetadata.selection.text}${commentMetadata.action.injectedPostString}`
 
         return `${commentMetadata.selection.textBefore}${injectedParseString}${commentMetadata.selection.textAfter}`
@@ -427,7 +430,7 @@ export const PullRequestCommentBox = ({
   }
 
   const parseDiff = (
-    diff: string = '',
+    blocks: DiffBlock[] = [],
     sideKey?: 'oldFile' | 'newFile',
     lineNumber?: number,
     lineFromNumber?: number
@@ -436,11 +439,13 @@ export const PullRequestCommentBox = ({
       return ''
     }
 
-    const diffLines = diff.split('\n')
-    const lines = parseDiffToLines(diffLines)
-    const rangeArr = getDiffLinesRange(lines, sideKey === 'newFile' ? 'new' : 'old', lineFromNumber, lineNumber)
-
-    return rangeArr.map(item => item.content).join('\n')
+    const linesFromBlocks = getLinesFromBlocks(
+      blocks,
+      sideKey === 'newFile' ? 'new' : 'old',
+      lineFromNumber,
+      lineNumber
+    )
+    return linesFromBlocks.map(item => item.cleanContent).join('\n')
   }
 
   const toolbar: ToolbarItem[] = useMemo(() => {

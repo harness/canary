@@ -6,8 +6,11 @@ import type {
   NavLinkProps,
   OutletProps,
   Params,
+  SetURLSearchParams,
   UIMatch
 } from 'react-router-dom'
+
+import { noop } from 'lodash-es'
 
 import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
 
@@ -54,7 +57,7 @@ const navigateFnDefault: NavigateFunction = to => {
 }
 
 const useSearchParamsDefault = () => {
-  const setSearchParams = (_params: URLSearchParams | ((currentParams: URLSearchParams) => URLSearchParams)): void => {}
+  const setSearchParams: SetURLSearchParams = noop
   return [new URLSearchParams(), setSearchParams] as const
 }
 

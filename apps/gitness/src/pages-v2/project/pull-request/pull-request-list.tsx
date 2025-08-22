@@ -21,7 +21,8 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
-import { parseAsInteger, useQueryState } from '../../../framework/hooks/useQueryState'
+import { useQueryState } from '../../../framework/hooks/useQueryState'
+import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
 import { getPullRequestUrl, getScopeType } from '../../../utils/scope-url-utils'
@@ -38,7 +39,7 @@ export default function PullRequestListPage() {
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [filterValues, setFilterValues] = useState<ListSpacePullReqQueryQueryParams>({ include_subspaces: false })
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
@@ -172,11 +173,6 @@ export default function PullRequestListPage() {
       setPullRequests(pullRequestData.pullRequestData, pullRequestData.headers)
     }
   }, [pullRequestData, setPullRequests])
-
-  useEffect(() => {
-    setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
 
   useEffect(() => {
     if (labelBy) {

@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+
+import { useRouterContext } from '@harnessio/ui/context'
 
 interface Parser<T> {
   parse: (value: string | null) => T
@@ -10,6 +11,7 @@ const useQueryState = <T = string>(
   key: string,
   parser: Parser<T> = parseAsString as unknown as Parser<T> // Default parser is for strings
 ): [T, (value: T | null) => void] => {
+  const { useSearchParams } = useRouterContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   // Parse the current value or fallback to the default value
@@ -25,7 +27,7 @@ const useQueryState = <T = string>(
       } else {
         newParams.set(key, String(newValue))
       }
-      setSearchParams(newParams)
+      setSearchParams(newParams, { replace: true })
     },
     [key, setSearchParams]
   )

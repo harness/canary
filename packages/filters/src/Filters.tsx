@@ -59,7 +59,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       }
     })
     const mergedParams = mergeURLSearchParams(paramsOtherthanFilters, params)
-    routerUpdateURL(mergedParams)
+    routerUpdateURL(mergedParams, true)
   }
 
   const setFiltersMapTrigger = (filtersMap: Record<FilterKeys, FilterType>) => {
@@ -201,7 +201,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     const query = createQueryString(newFiltersOrder, map)
     debug('Updating URL with query: %s', query)
-    updateURL(new URLSearchParams(query))
+
+    if (query) {
+      updateURL(new URLSearchParams(query))
+    }
 
     // remove setVisibleFilters
     initialFiltersRef.current = map

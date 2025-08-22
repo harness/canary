@@ -17,7 +17,8 @@ import {
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
-import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
+import { useQueryState } from '../../framework/hooks/useQueryState'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -35,7 +36,7 @@ export default function PullRequestListPage() {
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
@@ -237,11 +238,6 @@ export default function PullRequestListPage() {
     const { num_open_pulls = 0, num_closed_pulls = 0, num_merged_pulls = 0 } = repoData || {}
     setOpenClosePullRequests(num_open_pulls, num_closed_pulls, num_merged_pulls)
   }, [repoData, setOpenClosePullRequests, filtersCnt])
-
-  useEffect(() => {
-    setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
 
   useEffect(() => {
     if (labelBy) {

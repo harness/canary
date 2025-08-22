@@ -147,8 +147,8 @@ export function getParserConfig() {
 
       return result
     },
-    serialize: (value: LabelsValue): string => {
-      const parts = Object.entries(value)
+    serialize: (value?: LabelsValue): string => {
+      const parts = Object.entries(value ?? {})
         .map(([key, val]) => {
           if (!val) return ''
           return `${key}:${val}`

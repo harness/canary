@@ -84,7 +84,7 @@ export default function RepoSummaryPage() {
   // Navigate to default branch if no branch is selected
   useEffect(() => {
     if (!fullGitRefWoDefault && prefixedDefaultBranch && fullGitRef) {
-      navigate(routes.toRepoSummary({ spaceId, repoId, '*': fullGitRef }))
+      navigate(routes.toRepoSummary({ spaceId, repoId, '*': fullGitRef }), { replace: true })
     }
   }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef])
 

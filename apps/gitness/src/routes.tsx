@@ -156,7 +156,7 @@ const rulesRoute = {
       }
     },
     {
-      path: ':ruleId',
+      path: ':ruleId/edit',
       element: <ProjectRulesContainer />,
       handle: {
         breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>,
@@ -524,6 +524,10 @@ export const repoRoutes: CustomRouteObject[] = [
             ]
           },
           {
+            path: 'webhooks',
+            element: <Navigate to="../settings/webhooks" replace />
+          },
+          {
             path: 'settings',
             element: <RepoSettingsLayout />,
             handle: {
@@ -575,7 +579,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   },
                   {
-                    path: ':identifier',
+                    path: ':identifier/edit',
                     element: <RepoRulesContainer />,
                     handle: {
                       breadcrumb: ({ identifier }: { identifier: string }) => <span>{identifier}</span>,

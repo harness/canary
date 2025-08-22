@@ -340,8 +340,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
-
-                <Text>{prBranchCombinationExists.description}</Text>
               </div>
             </div>
             <Button

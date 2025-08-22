@@ -46,29 +46,45 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
     ref
   ) => {
     const { portalContainer } = usePortal()
-    const { direction } = useDrawerContext()
+    const { direction, modal } = useDrawerContext()
+
+    const withCustomOverlay = forceWithOverlay && modal === false
+
+    const Content = (
+      <DrawerPrimitive.Content
+        ref={ref}
+        className={cn(
+          drawerContentVariants({ size, direction: direction as DrawerContentVariantsDirection }),
+          className
+        )}
+        {...props}
+      >
+        {!hideClose && (
+          <DrawerPrimitive.Close asChild>
+            <Button className="cn-drawer-close-button" variant="transparent" iconOnly>
+              <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
+            </Button>
+          </DrawerPrimitive.Close>
+        )}
+        {children}
+      </DrawerPrimitive.Content>
+    )
 
     return (
       <DrawerPrimitive.Portal container={portalContainer}>
-        <DrawerOverlay className={overlayClassName} forceWithOverlay={forceWithOverlay} />
-
-        <DrawerPrimitive.Content
-          ref={ref}
-          className={cn(
-            drawerContentVariants({ size, direction: direction as DrawerContentVariantsDirection }),
-            className
-          )}
-          {...props}
-        >
-          {!hideClose && (
-            <DrawerPrimitive.Close asChild>
-              <Button className="cn-drawer-close-button" variant="transparent" iconOnly>
-                <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
-              </Button>
-            </DrawerPrimitive.Close>
-          )}
-          {children}
-        </DrawerPrimitive.Content>
+        {/* !!! */}
+        {/* For the scroll to work when using the Drawer with modal === true in Shadow DOM, the Overlay needs to wrap the Content */}
+        {/* Here’s the issue for the scroll bug in Shadow DOM, works same for Vaul - https://github.com/radix-ui/primitives/issues/3353 */}
+        {modal ? (
+          <DrawerOverlay className={overlayClassName} withCustomOverlay={withCustomOverlay}>
+            {Content}
+          </DrawerOverlay>
+        ) : (
+          <>
+            <DrawerOverlay className={overlayClassName} withCustomOverlay={withCustomOverlay} />
+            {Content}
+          </>
+        )}
       </DrawerPrimitive.Portal>
     )
   }

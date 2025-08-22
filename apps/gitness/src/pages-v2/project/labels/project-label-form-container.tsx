@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useSaveSpaceLabelMutation } from '@harnessio/code-service-client'
-import { CreateLabelFormFields, LabelFormPage } from '@harnessio/ui/views'
+import { CreateLabelFormFields, LabelFormPage, SandboxLayout } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { PathParams } from '../../../RouteDefinitions'
@@ -36,14 +36,16 @@ export const ProjectLabelFormContainer = () => {
   }
 
   return (
-    <LabelFormPage
-      className="mx-auto"
-      useLabelsStore={useLabelsStore}
-      isSaving={isSaving}
-      onSubmit={onSubmit}
-      onFormCancel={onFormCancel}
-      error={createError?.message}
-      labelId={labelId}
-    />
+    <SandboxLayout.Content>
+      <LabelFormPage
+        className="mx-auto"
+        useLabelsStore={useLabelsStore}
+        isSaving={isSaving}
+        onSubmit={onSubmit}
+        onFormCancel={onFormCancel}
+        error={createError?.message}
+        labelId={labelId}
+      />
+    </SandboxLayout.Content>
   )
 }

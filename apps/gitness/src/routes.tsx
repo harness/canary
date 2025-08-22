@@ -1256,7 +1256,7 @@ export const routes: CustomRouteObject[] = [
   }
 ]
 
-export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | null = null): CustomRouteObject[] => [
+export const getMFERoutes = (mfeProjectId?: string): CustomRouteObject[] => [
   {
     path: '/',
     element: (
@@ -1264,7 +1264,6 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
         <PageTitleProvider>
           <AppProvider>
             <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
-              {mfeRouteRenderer}
               <AppShellMFE />
             </ComponentProvider>
           </AppProvider>

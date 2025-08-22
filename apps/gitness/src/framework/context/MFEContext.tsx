@@ -65,7 +65,7 @@ export interface Hooks {
 
 export type Unknown = any
 
-export interface IMFEContext {
+export interface MFEContextProps {
   /**
    * Scope will be later referred from "Scope" from @harness/microfrontends
    *  */
@@ -101,9 +101,11 @@ export interface IMFEContext {
   }>
   hooks: Hooks
   setMFETheme: (newTheme: string) => void
+  parentLocationPath: string
+  onRouteChange: (updatedLocationPathname: string) => void
 }
 
-export const MFEContext = createContext<IMFEContext>({
+export const MFEContext = createContext<MFEContextProps>({
   scope: { accountId: '' },
   parentContextObj: {
     appStoreContext: createContext({
@@ -118,5 +120,7 @@ export const MFEContext = createContext<IMFEContext>({
   routes: {},
   routeUtils: {},
   hooks: {},
-  setMFETheme: noop
+  setMFETheme: noop,
+  parentLocationPath: '',
+  onRouteChange: noop
 })

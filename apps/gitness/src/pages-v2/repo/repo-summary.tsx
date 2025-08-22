@@ -24,6 +24,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
+import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -66,6 +67,9 @@ export default function RepoSummaryPage() {
     setPreSelectedTab,
     prefixedDefaultBranch
   } = useGitRef()
+
+  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
+  const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState('')
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -314,8 +318,10 @@ export default function RepoSummaryPage() {
         branchSelectorRenderer={
           <BranchSelectorContainer
             onSelectBranchorTag={selectBranchOrTag}
+            setCreateBranchDialogOpen={setCreateBranchDialogOpen}
             selectedBranch={{ name: gitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
             preSelectedTab={preSelectedTab}
+            onBranchQueryChange={setBranchQueryForNewBranch}
           />
         }
         toRepoFileDetails={({ path }: { path: string }) => path}
@@ -326,6 +332,15 @@ export default function RepoSummaryPage() {
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
         showContributeBtn={showContributeBtn}
         scheduleFileMetaFetch={scheduleFileMetaFetch}
+      />
+      <CreateBranchDialog
+        open={isCreateBranchDialogOpen}
+        onClose={() => setCreateBranchDialogOpen(false)}
+        onSuccess={() => navigate(routes.toRepoSummary({ spaceId, repoId, '*': branchQueryForNewBranch }))}
+        onBranchQueryChange={setBranchQueryForNewBranch}
+        preselectedBranchOrTag={fullGitRef ? { name: gitRefName, sha: '' } : null}
+        preselectedTab={preSelectedTab}
+        prefilledName={branchQueryForNewBranch}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, IconV2, Text, type ButtonSizes } from '@/components'
+import { Button, IconV2, Popover, Text, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -22,7 +22,6 @@ interface BranchSelectorProps {
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
-  isFilesPage?: boolean
   setCreateBranchDialogOpen?: (open: boolean) => void
   className?: string
   disabled?: boolean
@@ -43,7 +42,6 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
   setSearchQuery,
   dynamicWidth = false,
   preSelectedTab,
-  isFilesPage = false,
   setCreateBranchDialogOpen,
   className,
   disabled
@@ -53,8 +51,8 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
     : false
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
+    <Popover.Root>
+      <Popover.Trigger asChild>
         <Button className={cn('min-w-0', className)} variant="outline" size={buttonSize} disabled={disabled}>
           {!hideIcon && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
           {selectedBranch || selectedBranchorTag ? (
@@ -68,7 +66,7 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
           )}
           <IconV2 name="nav-arrow-down" size="xs" className="ml-auto" />
         </Button>
-      </DropdownMenu.Trigger>
+      </Popover.Trigger>
       <BranchSelectorDropdown
         isBranchOnly={isBranchOnly}
         branchList={branchList}
@@ -81,10 +79,9 @@ export const BranchSelectorV2: FC<BranchSelectorProps> = ({
         setSearchQuery={setSearchQuery}
         dynamicWidth={dynamicWidth}
         preSelectedTab={preSelectedTab}
-        isFilesPage={isFilesPage}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         disabled={disabled}
       />
-    </DropdownMenu.Root>
+    </Popover.Root>
   )
 }

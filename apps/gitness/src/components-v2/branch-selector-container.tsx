@@ -15,7 +15,6 @@ interface BranchSelectorContainerProps {
   isBranchOnly?: boolean
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
-  isFilesPage?: boolean
   setCreateBranchDialogOpen?: (open: boolean) => void
   onBranchQueryChange?: (query: string) => void
   className?: string
@@ -31,7 +30,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
   dynamicWidth = false,
   preSelectedTab,
   setCreateBranchDialogOpen,
-  isFilesPage = false,
   onBranchQueryChange,
   branchPrefix,
   className,
@@ -123,7 +121,6 @@ export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = (
       isBranchOnly={isBranchOnly}
       dynamicWidth={dynamicWidth}
       preSelectedTab={preSelectedTab}
-      isFilesPage={isFilesPage}
       setCreateBranchDialogOpen={setCreateBranchDialogOpen}
       branchPrefix={branchPrefix}
       disabled={disabled}

@@ -152,7 +152,6 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
           ref={mergedRef}
           sideOffset={sideOffset}
           className={cn('cn-dropdown-menu', className)}
-          onCloseAutoFocus={event => event.preventDefault()}
           onKeyDownCapture={onKeyDownCaptureHandler}
           {...props}
         >

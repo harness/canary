@@ -215,7 +215,6 @@ export const RepoSidebar = () => {
                 onSelectBranchorTag={selectBranchOrTag}
                 selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
                 preSelectedTab={preSelectedTab}
-                isFilesPage
                 setCreateBranchDialogOpen={setCreateBranchDialogOpen}
                 onBranchQueryChange={setBranchQueryForNewBranch}
               />

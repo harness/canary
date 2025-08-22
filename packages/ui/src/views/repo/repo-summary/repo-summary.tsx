@@ -246,14 +246,12 @@ export function RepoSummaryView({
                 <StackedList.Field
                   right
                   title={
-                    <Button variant="outline" iconOnly asChild>
-                      <Link
-                        to={`${toRepoFiles?.()}/${doesReadmeExistInFiles(files) ? 'edit' : 'new'}/${gitRef || selectedBranchOrTag?.name}/~/${README_PATH}`}
-                        aria-label={t('views:repos.editReadme', 'Edit README.md')}
-                      >
-                        <IconV2 name="edit-pencil" className="text-icons-3" />
-                      </Link>
-                    </Button>
+                    <Link
+                      to={`${toRepoFiles?.()}/${doesReadmeExistInFiles(files) ? 'edit' : 'new'}/${gitRef || selectedBranchOrTag?.name}/~/${README_PATH}`}
+                      aria-label={t('views:repos.editReadme', 'Edit README.md')}
+                    >
+                      <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
+                    </Link>
                   }
                 />
               </StackedList.Item>

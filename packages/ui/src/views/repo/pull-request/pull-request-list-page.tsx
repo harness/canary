@@ -129,13 +129,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     )
 
   const userSelectOptions = useMemo(() => {
-    const otherUserOptions = computedPrincipalData
-      .filter(user => !currentUser?.id || String(user?.id) !== String(currentUser?.id))
-      .map(user => ({
-        label: generateAuthorLabel(user),
-        value: String(user?.id)
-      }))
+    const allUsersOptions = computedPrincipalData.map(user => ({
+      label: generateAuthorLabel(user),
+      value: String(user?.id)
+    }))
 
+    const otherUserOptions = allUsersOptions.filter(user => user?.value !== String(currentUser?.id))
+
+    // is searchQuery is empty, move currentUser to start of list
     if (currentUser?.id && !principalsSearchQuery) {
       const currentUserOption = {
         label: generateAuthorLabel(currentUser),
@@ -144,7 +145,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       return [currentUserOption, ...otherUserOptions]
     }
 
-    return otherUserOptions
+    // if searchQuery is present, return all users
+    return allUsersOptions
   }, [computedPrincipalData, currentUser, principalsSearchQuery])
 
   const labelsFilterConfig: CustomFilterOptionConfig<keyof PRListFilters, LabelsValue> = {

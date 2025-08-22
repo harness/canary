@@ -184,6 +184,10 @@
         "tryAgain": "Try again"
       }
     },
+    "noFiles": {
+      "title": "No files yet",
+      "description": "This repository is empty. Add your first file to get started."
+    },
     "repositories": "Dépôts",
     "createRepository": "Créer un dépôt",
     "importRepository": "Importer un dépôt",
@@ -271,6 +275,12 @@
     },
     "readme": "README.md",
     "editReadme": "Edit README.md",
+    "createReadme": "Create README.md",
+    "addReadme": {
+      "title": "Créer un README",
+      "description": "Aidez les personnes intéressées par ce référentiel à comprendre votre projet en créant un README.",
+      "button": "Créer un README"
+    },
     "openPullReq": "Requêtes de tirage ouvertes",
     "BlockTagCreation": "Block tag creation",
     "BlockTagCreationDescription": "Only allow users with bypass permission to create matching tags",

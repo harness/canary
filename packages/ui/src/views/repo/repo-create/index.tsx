@@ -229,7 +229,7 @@ export function RepoCreatePage({
                           id="readme"
                           checked={readmeValue}
                           onCheckedChange={handleReadmeChange}
-                          label="Add a README file"
+                          label="Create a README file"
                           caption="This is where you can write a long description for your project."
                         />
                         <Link

@@ -110,7 +110,22 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   )
 
   useEffect(() => {
-    const currentFileName = isNew ? '' : repoDetails?.name || ''
+    let currentFileName = ''
+    if (isNew) {
+      // For new files, check if filename is provided via query parameter
+      // This enables pre-filling filename when navigating from "Create README" button
+      try {
+        const urlParams = new URLSearchParams(window.location.search)
+        currentFileName = urlParams.get('name') || ''
+      } catch (error) {
+        // Fallback to empty string if URL parsing fails
+        currentFileName = ''
+      }
+    } else {
+      // For existing files, use the file's actual name
+      currentFileName = repoDetails?.name || ''
+    }
+
     setFileName(currentFileName)
     setLanguage(filenameToLanguage(currentFileName) || '')
     const decodedContent = decodeGitContent(repoDetails?.content?.data)

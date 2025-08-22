@@ -1,4 +1,4 @@
-import { cloneElement } from 'react'
+import { cloneElement, useCallback } from 'react'
 
 import {
   Button,
@@ -6,6 +6,7 @@ import {
   IconV2,
   ListActions,
   MarkdownViewer,
+  NoData,
   SearchFiles,
   Skeleton,
   Spacer,
@@ -28,6 +29,14 @@ import BranchCompareBannerList from '../components/branch-banner/branch-compare-
 import { CloneRepoDialog } from './components/clone-repo-dialog'
 import SummaryPanel from './components/summary-panel'
 import { RepoEmptyView } from './repo-empty-view'
+
+// Local interface for README info to avoid external dependencies
+interface ReadmeInfo {
+  name: string
+  path: string
+  type: string
+  content?: string
+}
 
 interface RoutingProps {
   toRepoFiles: () => string
@@ -57,7 +66,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   repoEntryPathToFileTypeMap: Map<string, any>
   files: RepoFile[]
-  decodedReadmeContent: string
+  readmeInfo?: ReadmeInfo
   summaryDetails: {
     default_branch_commit_count?: number
     branch_count?: number
@@ -100,7 +109,7 @@ export function RepoSummaryView({
   prCandidateBranches,
   repository,
   files,
-  decodedReadmeContent,
+  readmeInfo,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
   gitRef,
   latestCommitInfo,
@@ -125,6 +134,18 @@ export function RepoSummaryView({
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
   const { t } = useTranslation()
+
+  // Helper function to construct README creation path
+  const getReadmeCreationPath = useCallback(() => {
+    return `${toRepoFiles?.()}/new/${selectedBranchOrTag?.name || repository?.default_branch}/~/?name=${README_PATH}`
+  }, [toRepoFiles, selectedBranchOrTag?.name, repository?.default_branch])
+
+  // Helper function to construct README edit path
+  const getReadmeEditPath = useCallback(() => {
+    const action = doesReadmeExistInFiles(files) ? 'edit' : 'new'
+    const gitReference = gitRef || selectedBranchOrTag?.name
+    return `${toRepoFiles?.()}/${action}/${gitReference}/~/${README_PATH}`
+  }, [toRepoFiles, doesReadmeExistInFiles, files, gitRef, selectedBranchOrTag?.name])
 
   if (loading) {
     return (
@@ -233,30 +254,73 @@ export function RepoSummaryView({
               scheduleFileMetaFetch={scheduleFileMetaFetch}
             />
             <Spacer size={5} />
-            <StackedList.Root onlyTopRounded borderBackground>
-              <StackedList.Item className="py-2" isHeader disableHover>
-                <StackedList.Field
-                  className="grid"
-                  title={
-                    <Text variant="caption-single-line-normal" color="foreground-1">
-                      {t('views:repos.readme', 'README.md')}
-                    </Text>
-                  }
-                />
-                <StackedList.Field
-                  right
-                  title={
-                    <Link
-                      to={`${toRepoFiles?.()}/${doesReadmeExistInFiles(files) ? 'edit' : 'new'}/${gitRef || selectedBranchOrTag?.name}/~/${README_PATH}`}
-                      aria-label={t('views:repos.editReadme', 'Edit README.md')}
-                    >
-                      <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
-                    </Link>
-                  }
-                />
-              </StackedList.Item>
-            </StackedList.Root>
-            <MarkdownViewer source={decodedReadmeContent || ''} withBorder className="text-wrap" />
+            {/* README Section - Show existing content or Create README prompt */}
+            {readmeInfo && readmeInfo.content ? (
+              // Existing README with content
+              <>
+                <StackedList.Root onlyTopRounded borderBackground>
+                  <StackedList.Item className="py-2" isHeader disableHover>
+                    <StackedList.Field
+                      className="grid"
+                      title={
+                        <Text variant="caption-single-line-normal" color="foreground-1">
+                          {t('views:repos.readme', 'README.md')}
+                        </Text>
+                      }
+                    />
+                    <StackedList.Field
+                      right
+                      title={
+                        <Link to={getReadmeEditPath()} aria-label={t('views:repos.editReadme', 'Edit README.md')}>
+                          <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
+                        </Link>
+                      }
+                    />
+                  </StackedList.Item>
+                </StackedList.Root>
+                <MarkdownViewer source={readmeInfo.content} withBorder className="text-wrap" />
+              </>
+            ) : (
+              // No README content - show Create README prompt
+              <StackedList.Root onlyTopRounded borderBackground>
+                <StackedList.Item className="py-2" isHeader disableHover>
+                  <StackedList.Field
+                    className="grid"
+                    title={
+                      <Text variant="caption-single-line-normal" color="foreground-1">
+                        {t('views:repos.readme', 'README.md')}
+                      </Text>
+                    }
+                  />
+                  <StackedList.Field
+                    right
+                    title={
+                      <Link to={getReadmeCreationPath()} aria-label={t('views:repos.createReadme', 'Create README.md')}>
+                        <IconV2 name="plus" className="text-icons-3" size="sm" />
+                      </Link>
+                    }
+                  />
+                </StackedList.Item>
+                <StackedList.Item className="py-2" disableHover>
+                  <NoData
+                    imageName="no-data-folder"
+                    title={t('views:repos.addReadme.title', 'Create a README')}
+                    description={[
+                      t(
+                        'views:repos.addReadme.description',
+                        'Help people interested in this repository understand your project by creating a README.'
+                      )
+                    ]}
+                    primaryButton={{
+                      label: t('views:repos.addReadme.button', 'Create a README'),
+                      icon: 'plus',
+                      to: getReadmeCreationPath()
+                    }}
+                    className="!py-2 !gap-1 [&_.gap-xl]:!gap-2 [&_.py-cn-4xl]:!py-2"
+                  />
+                </StackedList.Item>
+              </StackedList.Root>
+            )}
           </SandboxLayout.Content>
         </SandboxLayout.Column>
         <SandboxLayout.Column>

@@ -160,16 +160,6 @@ export default function RepoSummaryPage() {
     }
   }, [fullGitRefWoDefault, repoData?.default_branch, calculateDivergence])
 
-  const { data: { body: readmeContent } = {} } = useGetContentQuery({
-    path: 'README.md',
-    repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef) }
-  })
-
-  const decodedReadmeContent = useMemo(() => {
-    return decodeGitContent(readmeContent?.content?.data)
-  }, [readmeContent])
-
   const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
@@ -240,6 +230,33 @@ export default function RepoSummaryPage() {
     return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry.path, entry.type]))
   }, [repoDetails?.content?.entries])
 
+  // Use @harness approach: find README info from the unified content
+  const readmeInfo = useMemo(() => {
+    const entries = repoDetails?.content?.entries
+    if (!entries?.length) return undefined
+
+    return entries.find(entry => entry.type === 'file' && /^readme(.md)?$/i.test(entry?.name || ''))
+  }, [repoDetails?.content?.entries])
+
+  // Fetch README content only when readmeInfo exists
+  const { data: { body: readmeContent } = {} } = useGetContentQuery({
+    path: 'README.md',
+    repo_ref: repoRef,
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef) }
+  })
+
+  // Prepare README info with content for the UI component
+  const readmeInfoWithContent = useMemo(() => {
+    if (!readmeInfo?.name || !readmeInfo?.path || !readmeInfo?.type || !readmeContent?.content?.data) return undefined
+
+    return {
+      name: readmeInfo.name,
+      path: readmeInfo.path,
+      type: readmeInfo.type,
+      content: decodeGitContent(readmeContent.content.data)
+    }
+  }, [readmeInfo, readmeContent])
+
   const { files, loading, scheduleFileMetaFetch } = useRepoFileContentDetails({
     repoRef,
     fullGitRef,
@@ -300,7 +317,7 @@ export default function RepoSummaryPage() {
         handleCreateToken={handleCreateToken}
         repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
         files={files}
-        decodedReadmeContent={decodedReadmeContent}
+        readmeInfo={readmeInfoWithContent}
         summaryDetails={summaryDetails}
         gitRef={fullGitRef}
         latestCommitInfo={latestCommitInfo}

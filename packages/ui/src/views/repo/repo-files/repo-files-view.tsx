@@ -75,6 +75,10 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
+  const isEmptyRepository = useMemo(() => {
+    return isRepoEmpty === true || repoDetailsError?.message?.includes("path './' wasn't found")
+  }, [isRepoEmpty, repoDetailsError])
+
   const content = useMemo(() => {
     if (!isView) return children
 
@@ -114,27 +118,37 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         </>
       )
 
+    // Show NoData for empty repositories
+    // Prioritize root path error as strong indicator of empty repo (even if files array has stale data)
+    if (isEmptyRepository) {
+      return (
+        <NoData
+          withBorder
+          imageName="no-data-folder"
+          title={t('views:repos.noFiles.title', 'No files yet')}
+          description={[
+            t('views:repos.noFiles.description', 'This repository is empty. Add your first file to get started.')
+          ]}
+          primaryButton={{
+            label: (
+              <>
+                <IconV2 name="plus" />
+                {t('views:repos.createFile', 'Create File')}
+              </>
+            ),
+            to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`
+          }}
+          className="py-cn-2 gap-cn-1"
+        />
+      )
+    }
+
+    // Show 404 for invalid file paths when repository has files
     if (repoDetailsError) {
       return <NotFoundPage errorMessage={repoDetailsError.message} />
     }
 
-    return (
-      <NoData
-        withBorder
-        imageName="no-data-folder"
-        title="No files yet"
-        description={['There are no files in this repository yet.']}
-        primaryButton={{
-          label: (
-            <>
-              <IconV2 name="plus" />
-              {t('views:repos.createFile', 'Create File')}
-            </>
-          ),
-          to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`
-        }}
-      />
-    )
+    return null
   }, [
     isView,
     children,
@@ -147,23 +161,29 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     currentBranchDivergence.ahead,
     currentBranchDivergence.behind,
     isLoadingRepoDetails,
-    isRepoEmpty,
+    repoDetailsError,
     t,
-    toCommitDetails
+    toCommitDetails,
+    spaceId,
+    repoId,
+    gitRef,
+    isEmptyRepository
   ])
 
   return (
     <SandboxLayout.Main className="repo-files-height bg-transparent">
-      <SandboxLayout.Content className="pl-cn-lg gap-y-cn-md pt-cn-xl flex h-full flex-col">
-        {isView && !isRepoEmpty && (
-          <PathActionBar
-            codeMode={codeMode}
-            pathParts={pathParts}
-            pathNewFile={pathNewFile}
-            pathUploadFiles={pathUploadFiles}
-            selectedRefType={selectedRefType}
-            fullResourcePath={fullResourcePath}
-          />
+      <SandboxLayout.Content className="pl-cn-lg gap-y-cn-md flex h-full flex-col">
+        {isView && !isEmptyRepository && (
+          <div className="-mt-1">
+            <PathActionBar
+              codeMode={codeMode}
+              pathParts={pathParts}
+              pathNewFile={pathNewFile}
+              pathUploadFiles={pathUploadFiles}
+              selectedRefType={selectedRefType}
+              fullResourcePath={fullResourcePath}
+            />
+          </div>
         )}
         {content}
       </SandboxLayout.Content>

@@ -9,6 +9,7 @@ interface RepoSidebarProps {
   children: ReactNode
   branchSelectorRenderer: ReactNode
   repoRef?: string
+  isRepoEmpty?: boolean
 }
 
 export const RepoSidebar = ({
@@ -17,7 +18,8 @@ export const RepoSidebar = ({
   navigateToFile,
   filesList,
   children,
-  repoRef
+  repoRef,
+  isRepoEmpty = false
 }: RepoSidebarProps) => {
   return (
     <>
@@ -25,9 +27,11 @@ export const RepoSidebar = ({
         <Layout.Flex direction="column" className="pr-cn-lg pl-cn-2xl pt-cn-xl max-h-full overflow-hidden" gapY="sm">
           <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs">
             {branchSelectorRenderer}
-            <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
-              <IconV2 name="plus" className="text-icons-3" />
-            </Button>
+            {!isRepoEmpty && (
+              <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
+                <IconV2 name="plus" className="text-icons-3" />
+              </Button>
+            )}
           </Layout.Grid>
 
           <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />

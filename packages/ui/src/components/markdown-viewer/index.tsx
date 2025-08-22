@@ -176,7 +176,7 @@ export function MarkdownViewer({
       const trimmedCode = code.trim()
       const codeLines = trimmedCode.split('\n')
       const codeIndex = filteredSource.findIndex(line => line.includes(codeLines[0] || ''))
-      const isSuggestion = codeIndex !== -1 && filteredSource[codeIndex - 1].includes('suggestion')
+      const isSuggestion = codeIndex !== -1 && filteredSource[codeIndex - 1]?.includes('suggestion')
 
       return { isSuggestion, codeLines }
     },

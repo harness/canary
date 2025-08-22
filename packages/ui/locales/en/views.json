@@ -637,6 +637,13 @@
     "changereq": "Changes Requested",
     "split": "Split",
     "unified": "Unified",
+    "comments": {
+      "suggestionApplied": "Suggestion applied",
+      "codeSuggestion": "Code suggestion",
+      "commitSuggestion": "Commit suggestion",
+      "removeSuggestion": "Remove suggestion from batch",
+      "addSuggestion": "Add suggestion to batch"
+    },
     "deleted": "Deleted",
     "searchUsers": "Search users",
     "compareChangesFormDescriptionLabel": "Description",

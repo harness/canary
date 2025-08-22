@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Button, ButtonLayout, CounterBadge, MarkdownViewer } from '@/components'
+import { useTranslation } from '@/context'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
@@ -25,6 +26,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   removeSuggestionFromBatch,
   parentItem
 }) => {
+  const { t } = useTranslation()
   const pathSegments = commentItem?.payload?.code_comment?.path?.split('/') || []
   const fileLang = filenameToLanguage?.(pathSegments.pop() || '') || ''
 
@@ -51,11 +53,13 @@ const PRCommentView: FC<PRCommentViewProps> = ({
       }}
       suggestionCheckSum={suggestionCheckSum}
       suggestionTitle={
-        appliedCheckSum && appliedCheckSum === suggestionCheckSum ? 'Suggestion applied' : 'Suggested change'
+        appliedCheckSum && appliedCheckSum === suggestionCheckSum
+          ? t('views:pullRequests.comments.suggestionApplied', 'Suggestion applied')
+          : t('views:pullRequests.comments.codeSuggestion', 'Code suggestion')
       }
       suggestionFooter={
         !isApplied && (
-          <ButtonLayout>
+          <ButtonLayout className="flex-wrap">
             <Button
               className="gap-x-2"
               variant="outline"
@@ -66,12 +70,12 @@ const PRCommentView: FC<PRCommentViewProps> = ({
                 })
               }}
             >
-              Commit suggestion
+              {t('views:pullRequests.comments.commitSuggestion', 'Commit suggestion')}
               {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
             </Button>
             {isInBatch ? (
               <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
-                Remove suggestion from batch
+                {t('views:pullRequests.comments.removeSuggestion', 'Remove suggestion from batch')}
               </Button>
             ) : (
               <Button
@@ -83,7 +87,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
                   })
                 }
               >
-                Add suggestion to batch
+                {t('views:pullRequests.comments.addSuggestion', 'Add suggestion to batch')}
               </Button>
             )}
           </ButtonLayout>

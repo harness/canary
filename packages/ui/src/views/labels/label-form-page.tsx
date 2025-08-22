@@ -6,7 +6,6 @@ import {
   Button,
   ButtonLayout,
   ControlGroup,
-  Fieldset,
   FormInput,
   FormWrapper,
   IconV2,
@@ -152,53 +151,50 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
         {isLoading && <Skeleton.Form />}
 
         {!isLoading && (
-          <FormWrapper {...formMethods} className="gap-cn-xl" onSubmit={handleSubmit(onSubmit)}>
-            <Fieldset>
-              <ControlGroup>
-                <Label htmlFor="label-name">{t('views:labelData.form.labelName', 'Label name')}</Label>
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+            <ControlGroup>
+              <Label htmlFor="label-name">{t('views:labelData.form.labelName', 'Label name')}</Label>
 
-                <LabelFormColorAndNameGroup
-                  selectProps={{ ...register('color') }}
-                  inputProps={{ id: 'label-name', ...register('key'), autoFocus: !key }}
-                />
+              <LabelFormColorAndNameGroup
+                selectProps={{ ...register('color') }}
+                inputProps={{ id: 'label-name', ...register('key'), autoFocus: !key }}
+              />
+            </ControlGroup>
+
+            <FormInput.Text
+              {...register('description')}
+              placeholder={t('views:repos.descriptionPlaceholder', 'Enter a short description for the label')}
+              label={t('views:repos.description', 'Description')}
+              name="description"
+              id="description"
+              optional
+            />
+
+            <Layout.Vertical gap={values.length > 0 ? 'sm' : 'xs'}>
+              <ControlGroup>
+                <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
+                {values.map((_, idx) => (
+                  <LabelFormColorAndNameGroup
+                    isValue
+                    key={idx}
+                    handleDeleteValue={() => handleDeleteValue(idx)}
+                    selectProps={{ ...register(`values.${idx}.color`) }}
+                    inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
+                  />
+                ))}
               </ControlGroup>
 
-              <FormInput.Text
-                {...register('description')}
-                placeholder={t('views:repos.descriptionPlaceholder', 'Enter a short description for the label')}
-                label={t('views:repos.description', 'Description')}
-                name="description"
-                id="description"
-                optional
-              />
+              <Button className="h-auto self-start" variant="link" onClick={handleAddValue}>
+                <IconV2 name="plus" />
+                {t('views:labelData.form.addValue', 'Add a value')}
+              </Button>
+            </Layout.Vertical>
 
-              <Layout.Vertical gap={values.length > 0 ? 'sm' : 'xs'}>
-                <ControlGroup>
-                  <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
-                  {values.map((_, idx) => (
-                    <LabelFormColorAndNameGroup
-                      isValue
-                      key={idx}
-                      className=" first-of-type:mt-0"
-                      handleDeleteValue={() => handleDeleteValue(idx)}
-                      selectProps={{ ...register(`values.${idx}.color`) }}
-                      inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
-                    />
-                  ))}
-                </ControlGroup>
-
-                <Button className="h-auto self-start" variant="link" onClick={handleAddValue}>
-                  <IconV2 name="plus" />
-                  {t('views:labelData.form.addValue', 'Add a value')}
-                </Button>
-              </Layout.Vertical>
-
-              <FormInput.Checkbox
-                id="isDynamic"
-                label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}
-                {...register('isDynamic')}
-              />
-            </Fieldset>
+            <FormInput.Checkbox
+              id="isDynamic"
+              label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}
+              {...register('isDynamic')}
+            />
 
             <Layout.Vertical className="mt-cn-xl" gap="md">
               <Text as="h3" variant="body-single-line-normal">
@@ -233,16 +229,17 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               </Alert.Root>
             )}
 
-            <Layout.Horizontal gap="sm" className={cn('mt-cn-2xl', { 'mt-cn-xl': values.length > 0 })}>
-              <ButtonLayout horizontalAlign="start">
-                <Button type="submit" disabled={isSaving}>
-                  {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
-                </Button>
-                <Button type="reset" variant="outline" onClick={onFormCancel}>
-                  {t('views:repos.cancel', 'Cancel')}
-                </Button>
-              </ButtonLayout>
-            </Layout.Horizontal>
+            <ButtonLayout
+              className={cn('mt-cn-2xl gap-cn-sm', { 'mt-cn-md': values.length > 0 })}
+              horizontalAlign="start"
+            >
+              <Button type="submit" disabled={isSaving}>
+                {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
+              </Button>
+              <Button type="reset" variant="outline" onClick={onFormCancel}>
+                {t('views:repos.cancel', 'Cancel')}
+              </Button>
+            </ButtonLayout>
           </FormWrapper>
         )}
       </Layout.Vertical>

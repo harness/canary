@@ -8,9 +8,10 @@ import { MainContentLayout } from '@harnessio/ui/views'
 import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../../data/pinned-items'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useLocationChange } from '../../framework/hooks/useLocationChange'
-import { useRepoImportEvents } from '../../framework/hooks/useRepoImportEvent'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
+import useSpaceSSEWithPubSub from '../../framework/hooks/useSpaceSSEWithPubSub'
 import { PathParams } from '../../RouteDefinitions'
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 import { useGetBreadcrumbs } from '../breadcrumbs/useGetBreadcrumbs'
@@ -28,6 +29,7 @@ export const AppShell: FC = () => {
   const { isMobile } = useSidebar()
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
+  const spaceURL = useGetSpaceURLParam() ?? ''
   const { pinnedMenu, setRecent, setNavLinks } = useNav()
   const { t } = useTranslation()
   const selectedSpaceId = useSelectedSpaceId(spaceId)
@@ -64,7 +66,9 @@ export const AppShell: FC = () => {
     }
   }, [spaceIdPathParam])
 
-  useRepoImportEvents()
+  useSpaceSSEWithPubSub({
+    space: spaceURL
+  })
 
   return (
     <>

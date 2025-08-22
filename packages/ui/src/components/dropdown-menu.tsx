@@ -9,7 +9,7 @@ import {
 } from 'react'
 
 import { usePortal, useTranslation } from '@/context'
-import { cn, filterChildrenByDisplayNames, useMergeRefs } from '@/utils'
+import { cn, filterChildrenByDisplayNames, getShadowActiveElement, useMergeRefs } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
 import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
@@ -121,9 +121,9 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
       const rootEl = contentRef.current
       if (!rootEl) return
 
-      const rootNode = rootEl.getRootNode()
+      const { isShadowRoot, activeEl } = getShadowActiveElement(rootEl)
 
-      if (!(rootNode instanceof ShadowRoot)) return
+      if (!isShadowRoot) return
 
       const items = Array.from(
         rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])[role*="menuitem"]')
@@ -131,7 +131,6 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
 
       if (!items.length) return
 
-      const activeEl = rootNode instanceof ShadowRoot ? rootNode.activeElement : document.activeElement
       let idx = items.findIndex(el => el === activeEl || (activeEl instanceof Element && el.contains(activeEl)))
 
       if (idx === -1) {

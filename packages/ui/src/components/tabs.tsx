@@ -2,11 +2,14 @@ import {
   ComponentPropsWithoutRef,
   createContext,
   ElementRef,
+  FocusEvent,
   forwardRef,
+  KeyboardEvent,
   ReactNode,
   Ref,
   useContext,
   useEffect,
+  useRef,
   useState
 } from 'react'
 
@@ -14,6 +17,7 @@ import { CounterBadge } from '@/components/counter-badge'
 import { IconPropsV2, IconV2 } from '@/components/icon-v2'
 import { LogoPropsV2, LogoV2 } from '@/components/logo-v2'
 import { NavLinkProps, useRouterContext } from '@/context'
+import { afterFrames, getShadowActiveElement, useMergeRefs } from '@/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -123,18 +127,103 @@ interface TabsListProps
 
 const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
   ({ className, children, variant, activeClassName, ...props }, ref) => {
+    const contentRef = useRef<HTMLDivElement | null>(null)
     const { type } = useContext(TabsContext)
+
+    const mergedRef = useMergeRefs<HTMLDivElement>([
+      node => {
+        if (!node) return
+
+        contentRef.current = node
+      },
+      ref
+    ])
+
+    /**
+     * !!! This code is executed only when inside a ShadowRoot
+     *
+     * For correct focus on the active tab when navigating through tabs using the Tab key
+     */
+    const handleFocusCapture = (e: FocusEvent<HTMLDivElement>) => {
+      props?.onFocusCapture?.(e)
+      if (e.defaultPrevented) return
+
+      const rootEl = contentRef.current
+      if (!rootEl) return
+
+      const { isShadowRoot } = getShadowActiveElement(rootEl)
+      if (!isShadowRoot) return
+
+      if (e.currentTarget.contains(e.relatedTarget as Node)) return
+
+      const active = rootEl.querySelector<HTMLElement>('[role="tab"][data-state="active"]')
+      afterFrames(() => active?.focus())
+    }
+
+    /**
+     * !!! This code is executed only when inside a ShadowRoot
+     *
+     * To navigate between tabs using the left and right arrow keys
+     */
+    const handleKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+      props?.onKeyDownCapture?.(e)
+
+      if (e.defaultPrevented) return
+      const rootEl = contentRef.current
+      if (!rootEl) return
+
+      const { isShadowRoot, activeEl } = getShadowActiveElement(rootEl)
+      if (!isShadowRoot) return
+
+      const orientation = rootEl.getAttribute('aria-orientation') || 'horizontal'
+      const cssDir = getComputedStyle(rootEl).direction
+
+      const isPrev =
+        (orientation === 'horizontal' &&
+          ((cssDir === 'ltr' && e.key === 'ArrowLeft') || (cssDir === 'rtl' && e.key === 'ArrowRight'))) ||
+        (orientation === 'vertical' && e.key === 'ArrowUp')
+
+      const isNext =
+        (orientation === 'horizontal' &&
+          ((cssDir === 'ltr' && e.key === 'ArrowRight') || (cssDir === 'rtl' && e.key === 'ArrowLeft'))) ||
+        (orientation === 'vertical' && e.key === 'ArrowDown')
+
+      if (!isPrev && !isNext) return
+
+      const triggers = Array.from(rootEl.querySelectorAll<HTMLElement>('[role="tab"]:not([data-disabled])'))
+      if (!triggers.length) return
+
+      let i = Math.max(
+        0,
+        triggers.findIndex(el => el === activeEl || (activeEl && el.contains(activeEl)))
+      )
+
+      i = (i + (isNext ? 1 : -1) + triggers.length) % triggers.length
+
+      e.preventDefault()
+      e.stopPropagation()
+
+      const next = triggers[i]
+      next.focus()
+      next.click()
+    }
 
     return (
       <TabsListContext.Provider value={{ activeClassName, variant }}>
         {type === 'tabs' && (
-          <TabsPrimitive.List ref={ref} className={cn(tabsListVariants({ variant }), className)} {...props}>
+          <TabsPrimitive.List
+            ref={mergedRef}
+            className={cn(tabsListVariants({ variant }), className)}
+            {...props}
+            onFocusCapture={handleFocusCapture}
+            onKeyDownCapture={handleKeyDownCapture}
+          >
             {children}
           </TabsPrimitive.List>
         )}
 
         {type === 'tabsnav' && (
-          <nav ref={ref} className={cn(tabsListVariants({ variant }), className)} {...props}>
+          <nav ref={mergedRef} className={cn(tabsListVariants({ variant }), className)} {...props}>
             {children}
           </nav>
         )}

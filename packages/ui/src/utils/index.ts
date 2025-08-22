@@ -6,5 +6,6 @@ export * from './mergeUtils'
 export * from './TimeUtils'
 export * from './getComponentDisplayName'
 export * from './after-frames'
+export * from './get-shadow-active-element'
 
 export { formatDistanceToNow } from 'date-fns'

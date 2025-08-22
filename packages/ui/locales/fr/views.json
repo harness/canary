@@ -515,6 +515,7 @@
     "form": {
       "colorValuePlaceholder": "Enter value name",
       "colorLabelPlaceholder": "Enter label name",
+      "removeValue": "Remove a value",
       "editTitle": "Label details",
       "createTitle": "Create a label",
       "labelName": "Label name",

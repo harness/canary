@@ -5,7 +5,7 @@ import { getScopeType, IconV2, scopeTypeToIconMap, Tag, TagProps } from '@/compo
 import { ILabelType } from '../types'
 
 type LabelTagProps = {
-  scope: ILabelType['scope']
+  scope?: ILabelType['scope']
   color: ILabelType['color']
   labelKey: ILabelType['key']
   labelValue?: string
@@ -23,7 +23,7 @@ export const LabelTag: FC<LabelTagProps> = ({
 }) => (
   <>
     <Tag
-      icon={scopeTypeToIconMap[getScopeType(scope)]}
+      icon={scope !== undefined ? scopeTypeToIconMap[getScopeType(scope)] : undefined}
       variant="secondary"
       size="md"
       theme={color}

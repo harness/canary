@@ -50,4 +50,21 @@ export class InputFactory {
   listRegisteredComponents(): string[] {
     return Array.from(this.componentBank.keys())
   }
+
+  /**
+   * Clone factory with all registered input components
+   *
+   * @returns new input factory
+   */
+  clone() {
+    const cloneFactory = new InputFactory({
+      allowOverride: this.allowOverride
+    })
+
+    this.listRegisteredComponents().forEach(inputType => {
+      cloneFactory.registerComponent(this.componentBank.get(inputType) as InputComponent<unknown>)
+    })
+
+    return cloneFactory
+  }
 }

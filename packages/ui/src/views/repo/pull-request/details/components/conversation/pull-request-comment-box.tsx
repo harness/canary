@@ -158,6 +158,8 @@ export const PullRequestCommentBox = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [dirty, setDirty] = useState<boolean>(false)
+  const [initialComment, setInitialComment] = useState<string | undefined>(undefined)
   const [textSelection, setTextSelection] = useState({ start: 0, end: 0 })
   const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
@@ -310,6 +312,18 @@ export const PullRequestCommentBox = ({
   }, [])
 
   useEffect(() => {
+    if (!dirty) {
+      setInitialComment(comment)
+    }
+  }, [comment])
+
+  useEffect(() => {
+    if (!isUndefined(initialComment)) {
+      setTextSelection({ start: initialComment.length, end: initialComment.length })
+    }
+  }, [initialComment])
+
+  useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
     }
@@ -333,7 +347,7 @@ export const PullRequestCommentBox = ({
 
     const commentLines = originalComment.split('\n')
 
-    const comment: ParsedComment = {
+    const parsedComment: ParsedComment = {
       text: originalComment,
       textLines: commentLines,
       textLinesSelectionStartIndex: 0,
@@ -348,11 +362,11 @@ export const PullRequestCommentBox = ({
       const selectionEndHere = textSelection.end >= lowerBound && textSelection.end <= upperBound
 
       if (selectionStartHere) {
-        comment.textLinesSelectionStartIndex = lineIndex
+        parsedComment.textLinesSelectionStartIndex = lineIndex
       }
 
       if (selectionEndHere) {
-        comment.textLinesSelectionEndIndex = lineIndex
+        parsedComment.textLinesSelectionEndIndex = lineIndex
       }
 
       return upperBound
@@ -362,9 +376,9 @@ export const PullRequestCommentBox = ({
     const injectedNewline = injectNewline ? '\n' : ''
 
     const selectionText = originalComment.substring(textSelection.start, textSelection.end)
-    const selectionTextLines = comment.textLines.slice(
-      comment.textLinesSelectionStartIndex,
-      comment.textLinesSelectionEndIndex + 1
+    const selectionTextLines = parsedComment.textLines.slice(
+      parsedComment.textLinesSelectionStartIndex,
+      parsedComment.textLinesSelectionEndIndex + 1
     )
     const selectionTextBefore = originalComment.substring(0, textSelection.start) + injectedNewline
     const newTextSelectionStart = textSelection.start + injectedPreString.length + injectedNewline.length
@@ -382,7 +396,7 @@ export const PullRequestCommentBox = ({
 
     return {
       action: action,
-      comment: comment,
+      comment: parsedComment,
       selection: selection
     }
   }
@@ -565,6 +579,7 @@ export const PullRequestCommentBox = ({
     replaceHistory?: CommentHistory[],
     replaceFuture?: CommentHistory[]
   ): void => {
+    setDirty(true)
     setTextSelection(textSelection)
     setComment(comment)
 

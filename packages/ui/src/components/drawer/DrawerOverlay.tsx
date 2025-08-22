@@ -7,11 +7,9 @@ import { useDrawerContext } from './drawer-context'
 
 export const DrawerOverlay = forwardRef<
   ElementRef<typeof DrawerPrimitive.Overlay>,
-  ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay> & { forceWithOverlay?: boolean }
->(({ className, forceWithOverlay, ...props }, ref) => {
-  const { nested, isParentOpen, modal } = useDrawerContext()
-
-  const withCustomOverlay = forceWithOverlay && modal === false
+  ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay> & { withCustomOverlay?: boolean }
+>(({ className, withCustomOverlay = false, ...props }, ref) => {
+  const { nested, isParentOpen } = useDrawerContext()
 
   if (withCustomOverlay) {
     return (

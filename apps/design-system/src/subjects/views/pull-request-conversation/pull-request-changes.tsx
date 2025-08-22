@@ -98,10 +98,11 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         commitSuggestionsBatchCount={0}
         onCommitSuggestionsBatch={noop}
         onGetFullDiff={() => Promise.resolve()}
-        scrolledToComment={undefined}
-        setScrolledToComment={noop}
-        jumpToDiff=""
-        setJumpToDiff={noop}
+        setCommentId={noop}
+        diffPathQuery={undefined}
+        setDiffPathQuery={noop}
+        initiatedJumpToDiff={false}
+        setInitiatedJumpToDiff={noop}
       />
     </>
   )

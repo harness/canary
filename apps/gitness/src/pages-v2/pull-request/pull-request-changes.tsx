@@ -83,10 +83,10 @@ export default function PullRequestChanges() {
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [commentId] = useQueryState('commentId')
-  const [scrolledToComment, setScrolledToComment] = useState(false)
+  const [commentId, setCommentIdQuery] = useQueryState('commentId')
+  const [diffPathQuery, setDiffPathQuery] = useQueryState('path')
+  const [initiatedJumpToDiff, setInitiatedJumpToDiff] = useState(false)
   const [searchPrincipalsQuery, setSearchPrincipalsQuery] = useState('')
-  const [jumpToDiff, setJumpToDiff] = useState('')
   const [isApproving, setIsApproving] = useState(false)
   const isMfe = useIsMFE()
 
@@ -537,9 +537,12 @@ export default function PullRequestChanges() {
     }
   }, [commitSHA, pullReqCommits?.commits, defaultCommitFilter])
 
+  // copying link to a comment
   const onCopyClick = (commentId?: number) => {
     if (commentId) {
       const url = new URL(window.location.href)
+      // should purely have commentId
+      url.searchParams.delete('path')
       url.searchParams.set('commentId', commentId.toString())
       copy(url.toString())
     }
@@ -618,6 +621,9 @@ export default function PullRequestChanges() {
         unmarkViewed={handleUnmarkViewed}
         activities={activities}
         commentId={commentId}
+        setCommentId={(commentId?: string) => setCommentIdQuery(commentId!)}
+        diffPathQuery={diffPathQuery}
+        setDiffPathQuery={(filepath?: string) => setDiffPathQuery(filepath!)}
         onCopyClick={onCopyClick}
         onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
         onCommitSuggestion={onCommitSuggestion}
@@ -629,15 +635,13 @@ export default function PullRequestChanges() {
         commitSuggestionsBatchCount={suggestionsBatch?.length}
         onCommitSuggestionsBatch={onCommitSuggestionsBatch}
         onGetFullDiff={onGetFullDiff}
-        scrolledToComment={scrolledToComment}
-        setScrolledToComment={setScrolledToComment}
-        jumpToDiff={jumpToDiff}
-        setJumpToDiff={setJumpToDiff}
         toRepoFileDetails={({ path }: { path: string }) =>
           isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
         }
         isApproving={isApproving}
         currentRefForDiff={currentRefForDiff}
+        initiatedJumpToDiff={initiatedJumpToDiff}
+        setInitiatedJumpToDiff={setInitiatedJumpToDiff}
       />
     </>
   )

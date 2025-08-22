@@ -57,7 +57,7 @@ export interface PullRequestChangesFilterProps {
     addedLines: number
     deletedLines: number
   }[]
-  setJumpToDiff: (fileName: string) => void
+  goToDiff: (fileName: string) => void
 }
 
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
@@ -80,7 +80,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   showExplorer,
   setShowExplorer,
   diffData,
-  setJumpToDiff
+  goToDiff
 }) => {
   const { t } = useTranslation()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -218,7 +218,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 
-        <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={setJumpToDiff} />
+        <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={goToDiff} />
       </Layout.Horizontal>
 
       <Layout.Horizontal className="gap-x-7">

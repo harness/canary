@@ -334,10 +334,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isNotCodeComment: true,
         contentHeader: (
           <Layout.Horizontal gap="sm" align="center">
-            <Link
-              to={`../changes?path=${encodeURIComponent(payload?.code_comment?.path || '')}&commentId=${payload?.id}`}
-              className="font-medium leading-tight text-cn-foreground-1"
-            >
+            <Link to={`../changes?commentId=${payload?.id}`} className="font-medium leading-tight text-cn-foreground-1">
               {payload?.code_comment?.path}
             </Link>
             <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />

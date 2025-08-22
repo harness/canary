@@ -1,4 +1,4 @@
-import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, RefObject, useCallback, useEffect, useState } from 'react'
 
 import {
   CommentItem,
@@ -20,13 +20,13 @@ import {
   IN_VIEWPORT_DETECTION_MARGIN,
   innerBlockName,
   outterBlockName,
-  PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE,
   shouldRetainDiffChildren
 } from '@views/repo/pull-request/utils'
-import { chunk } from 'lodash-es'
 
 interface DataProps {
   data: HeaderProps[]
+  diffBlocks: HeaderProps[][]
+  diffsContainerRef: RefObject<HTMLDivElement>
   diffMode: DiffModeEnum
   currentUser?: string
   comments: CommentItem<TypesPullReqActivity>[][]
@@ -48,18 +48,36 @@ interface DataProps {
   toggleConversationStatus: (status: string, parentId?: number) => void
   handleUpload?: HandleUploadType
   onGetFullDiff: (path?: string) => Promise<string | void>
-  scrolledToComment?: boolean
-  setScrolledToComment?: (val: boolean) => void
-  jumpToDiff?: string
-  setJumpToDiff: (filePath: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
   pullReqMetadata?: TypesPullReq
   principalProps: PrincipalPropsType
   currentRefForDiff?: string
+  diffPathQuery?: string
+  initiatedJumpToDiff: boolean
+  setInitiatedJumpToDiff: (initiatedJumpToDiff: boolean) => void
+}
+
+export const getFileComments = (diffItem: HeaderProps, comments: CommentItem<TypesPullReqActivity>[][]) => {
+  return (
+    comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
+      thread.some((comment: CommentItem<TypesPullReqActivity>) => {
+        const commentPath = comment.payload?.payload?.code_comment?.path
+        if (!commentPath) return false
+        // Handle renamed files: check both old and new paths
+        if (diffItem.isRename && diffItem.oldName && diffItem.newName) {
+          return commentPath === diffItem.oldName || commentPath === diffItem.newName
+        }
+        // For non-renamed files
+        return commentPath === diffItem.text
+      })
+    ) || []
+  )
 }
 
 function PullRequestChangesInternal({
   data,
+  diffBlocks,
+  diffsContainerRef,
   diffMode,
   currentUser,
   comments,
@@ -81,41 +99,21 @@ function PullRequestChangesInternal({
   toggleConversationStatus,
   handleUpload,
   onGetFullDiff,
-  scrolledToComment,
-  setScrolledToComment,
-  jumpToDiff,
-  setJumpToDiff,
   toRepoFileDetails,
   pullReqMetadata,
   principalProps,
-  currentRefForDiff
+  currentRefForDiff,
+  diffPathQuery,
+  initiatedJumpToDiff,
+  setInitiatedJumpToDiff
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
-  const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
-  const diffsContainerRef = useRef<HTMLDivElement | null>(null)
-
-  const getFileComments = (diffItem: HeaderProps) => {
-    return (
-      comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-        thread.some((comment: CommentItem<TypesPullReqActivity>) => {
-          const commentPath = comment.payload?.payload?.code_comment?.path
-          if (!commentPath) return false
-          // Handle renamed files: check both old and new paths
-          if (diffItem.isRename && diffItem.oldName && diffItem.newName) {
-            return commentPath === diffItem.oldName || commentPath === diffItem.newName
-          }
-          // For non-renamed files
-          return commentPath === diffItem.text
-        })
-      ) || []
-    )
-  }
 
   useEffect(() => {
     if (data.length > 0) {
       const itemsToOpen: string[] = []
       data.map(diffItem => {
-        const fileComments = getFileComments(diffItem)
+        const fileComments = getFileComments(diffItem, comments)
         const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
         if (commentId && diffHasComment) {
           itemsToOpen.push(diffItem.text)
@@ -159,19 +157,24 @@ function PullRequestChangesInternal({
   )
 
   useEffect(() => {
-    if (jumpToDiff) {
-      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff, undefined, diffsContainerRef)
-    }
-    if (commentId) {
-      data.map(diffItem => {
-        const fileComments = getFileComments(diffItem)
-        const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
-        if (commentId && diffHasComment) {
-          jumpToFile(diffItem.text, diffBlocks, setJumpToDiff, commentId, diffsContainerRef)
-        }
+    if (!data.length || initiatedJumpToDiff) return
+    if (diffPathQuery) {
+      const diffItem = data.find(item => item.filePath === diffPathQuery)
+      if (diffItem) {
+        jumpToFile(diffItem.filePath, diffBlocks, undefined, diffsContainerRef)
+        setInitiatedJumpToDiff(true)
+      }
+    } else if (commentId) {
+      const diffItem = data.find(item => {
+        const fileComments = getFileComments(item, comments)
+        return fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
       })
+      if (diffItem) {
+        jumpToFile(diffItem.filePath, diffBlocks, commentId, diffsContainerRef)
+        setInitiatedJumpToDiff(true)
+      }
     }
-  }, [jumpToDiff, diffBlocks, setJumpToDiff, commentId])
+  }, [commentId, diffPathQuery, data])
 
   return (
     <div className="flex flex-col" ref={diffsContainerRef}>
@@ -234,8 +237,6 @@ function PullRequestChangesInternal({
                       filenameToLanguage={filenameToLanguage}
                       toggleConversationStatus={toggleConversationStatus}
                       onGetFullDiff={onGetFullDiff}
-                      scrolledToComment={scrolledToComment}
-                      setScrolledToComment={setScrolledToComment}
                       openItems={openItems}
                       isOpen={isOpen(item.text)}
                       onToggle={() => toggleOpen(item.text)}

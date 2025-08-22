@@ -1,4 +1,4 @@
-import { FC, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
 import { Layout, Skeleton } from '@/components'
 import { TypesUser } from '@/types'
@@ -11,12 +11,13 @@ import {
   SandboxLayout,
   TypesCommit
 } from '@views/index'
-import { orderBy } from 'lodash-es'
+import { chunk, orderBy } from 'lodash-es'
 
 import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
 import { PullRequestDiffSidebar } from '../components/pull-request-diff-sidebar'
 import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
-import { PullRequestChanges } from './components/changes/pull-request-changes'
+import { PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE } from '../utils'
+import { getFileComments, PullRequestChanges } from './components/changes/pull-request-changes'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
 import {
   orderSortDate,
@@ -49,7 +50,6 @@ interface RepoPullRequestChangesPageProps {
   setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>
   markViewed: (filePath: string, checksumAfter: string) => void
   unmarkViewed: (filePath: string) => void
-  commentId?: string
   onCopyClick?: (commentId?: number) => void
   onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
   suggestionsBatch: CommitSuggestion[]
@@ -62,13 +62,15 @@ interface RepoPullRequestChangesPageProps {
   onCommitSuggestionsBatch: () => void
   handleUpload?: HandleUploadType
   onGetFullDiff: (path?: string) => Promise<string | void>
-  scrolledToComment?: boolean
-  setScrolledToComment?: (val: boolean) => void
-  jumpToDiff?: string
-  setJumpToDiff: (fileName: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
   currentRefForDiff?: string
   principalProps: PrincipalPropsType
+  commentId?: string
+  setCommentId: (commentId?: string) => void
+  diffPathQuery?: string
+  setDiffPathQuery: (path?: string) => void
+  initiatedJumpToDiff: boolean
+  setInitiatedJumpToDiff: (initiatedJumpToDiff: boolean) => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   loadingReviewers: _loadingReviewers,
@@ -92,7 +94,6 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   setSelectedCommits,
   markViewed,
   unmarkViewed,
-  commentId,
   onCopyClick,
   onCommentSaveAndStatusChange,
   suggestionsBatch,
@@ -105,18 +106,54 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   onCommitSuggestionsBatch,
   handleUpload,
   onGetFullDiff,
-  scrolledToComment,
-  setScrolledToComment,
-  jumpToDiff,
-  setJumpToDiff,
   toRepoFileDetails,
   principalProps,
-  currentRefForDiff
+  currentRefForDiff,
+  commentId,
+  setCommentId,
+  diffPathQuery,
+  setDiffPathQuery,
+  initiatedJumpToDiff,
+  setInitiatedJumpToDiff
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
   const containerRef = useRef<HTMLDivElement>(null)
   const [showExplorer, setShowExplorer] = useState(true)
+  const diffData = useMemo(
+    () =>
+      diffs?.map(item => ({
+        text: item.isRename ? `${item.oldName} → ${item.newName}` : item.filePath,
+        addedLines: item.addedLines,
+        deletedLines: item.deletedLines,
+        data: item.raw,
+        title: item.filePath,
+        lang: item.filePath.split('.')[1],
+        fileViews: item.fileViews,
+        checksumAfter: item.checksumAfter,
+        filePath: item.filePath,
+        diffData: item,
+        isDeleted: !!item.isDeleted,
+        unchangedPercentage: item.unchangedPercentage,
+        isBinary: item.isBinary,
+        isRename: !!item.isRename,
+        oldName: item.oldName,
+        newName: item.newName
+      })) || [],
+    [diffs]
+  )
+  const diffBlocks = useMemo(() => chunk(diffData, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [diffData])
+  const diffsContainerRef = useRef<HTMLDivElement | null>(null)
+
+  // when jumping to a diff from explorer, clear the commentId as it is not relevant for the new diff
+  const goToDiff = useCallback(
+    (fileName: string) => {
+      setInitiatedJumpToDiff(false)
+      setCommentId(undefined)
+      setDiffPathQuery(fileName)
+    },
+    [setCommentId, setDiffPathQuery]
+  )
 
   // Convert activities to comment threads
   const activityBlocks = useMemo(() => {
@@ -145,6 +182,19 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
       return count + (isInFileViewsAndNotObsolete ? 1 : 0)
     }, 0) ?? 0
 
+  // active diff file if jumped to a diff or path passed in url searchparams
+  const activeDiffFile = useMemo(() => {
+    if (diffPathQuery) return diffPathQuery
+    if (commentId) {
+      const diffItem = diffData.find(item => {
+        const fileComments = getFileComments(item, activityBlocks)
+        return fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
+      })
+      if (diffItem) return diffItem.filePath
+    }
+    return
+  }, [diffData, diffPathQuery, commentId, activityBlocks])
+
   const renderContent = () => {
     if (loadingRawDiff) {
       return <Skeleton.List />
@@ -153,26 +203,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
       <PullRequestChanges
         handleUpload={handleUpload}
         principalProps={principalProps}
-        data={
-          diffs?.map(item => ({
-            text: item.isRename ? `${item.oldName} → ${item.newName}` : item.filePath,
-            addedLines: item.addedLines,
-            deletedLines: item.deletedLines,
-            data: item.raw,
-            title: item.filePath,
-            lang: item.filePath.split('.')[1],
-            fileViews: item.fileViews,
-            checksumAfter: item.checksumAfter,
-            filePath: item.filePath,
-            diffData: item,
-            isDeleted: !!item.isDeleted,
-            unchangedPercentage: item.unchangedPercentage,
-            isBinary: item.isBinary,
-            isRename: !!item.isRename,
-            oldName: item.oldName,
-            newName: item.newName
-          })) || []
-        }
+        data={diffData}
+        diffBlocks={diffBlocks}
         diffMode={diffMode}
         currentUser={currentUser?.display_name}
         comments={activityBlocks}
@@ -193,13 +225,13 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         filenameToLanguage={filenameToLanguage}
         toggleConversationStatus={toggleConversationStatus}
         onGetFullDiff={onGetFullDiff}
-        scrolledToComment={scrolledToComment}
-        setScrolledToComment={setScrolledToComment}
-        jumpToDiff={jumpToDiff}
-        setJumpToDiff={setJumpToDiff}
         toRepoFileDetails={toRepoFileDetails}
         pullReqMetadata={pullReqMetadata}
         currentRefForDiff={currentRefForDiff}
+        diffsContainerRef={diffsContainerRef}
+        diffPathQuery={diffPathQuery}
+        initiatedJumpToDiff={initiatedJumpToDiff}
+        setInitiatedJumpToDiff={setInitiatedJumpToDiff}
       />
     )
   }
@@ -211,7 +243,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
           <PullRequestDiffSidebar
             sidebarWidth={sidebarWidth}
             filePaths={diffs?.map(diff => diff.filePath) || []}
-            setJumpToDiff={setJumpToDiff}
+            goToDiff={goToDiff}
+            activeDiff={activeDiffFile}
             diffsData={
               diffs?.map(item => ({
                 addedLines: item.addedLines,
@@ -253,7 +286,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
               addedLines: diff.addedLines,
               deletedLines: diff.deletedLines
             }))}
-            setJumpToDiff={setJumpToDiff}
+            goToDiff={goToDiff}
           />
           {renderContent()}
         </SandboxLayout.Content>

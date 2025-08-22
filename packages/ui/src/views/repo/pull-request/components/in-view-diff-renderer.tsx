@@ -93,9 +93,9 @@ const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
       data-block={blockName}
       data-rendered={showChildren}
       ref={setContainerRef}
-      className={cn('diffViewBlock', { hiddenDiff: !inView })}
+      className={cn('diffViewBlock', { hiddenDiff: !showChildren })}
     >
-      {showChildren ? children : null}
+      {children}
     </div>
   )
 }

@@ -87,8 +87,6 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setDesc: (desc: string) => void
   prTemplate?: string
   isFetchingCommits?: boolean
-  jumpToDiff: string
-  setJumpToDiff: (fileName: string) => void
   labelsList?: ILabelType[]
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
@@ -132,8 +130,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   setDesc,
   prTemplate,
   isFetchingCommits,
-  jumpToDiff,
-  setJumpToDiff,
   onGetFullDiff,
   toRepoFileDetails,
   sourceBranch,
@@ -454,8 +450,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     diffData={diffData}
                     currentUser={currentUser}
                     diffStats={diffStats}
-                    jumpToDiff={jumpToDiff}
-                    setJumpToDiff={setJumpToDiff}
                     onGetFullDiff={onGetFullDiff}
                     toRepoFileDetails={toRepoFileDetails}
                     sourceBranch={sourceBranch}

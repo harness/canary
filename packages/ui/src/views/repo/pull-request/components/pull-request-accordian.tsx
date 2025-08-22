@@ -64,9 +64,6 @@ interface DataProps {
   handleUpload?: HandleUploadType
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
-  setScrolledToComment?: (val: boolean) => void
-  jumpToDiff?: string
-  setJumpToDiff: (filePath: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
   pullReqMetadata?: TypesPullReq
   principalProps: PrincipalPropsType
@@ -190,8 +187,6 @@ export const PullRequestAccordion: React.FC<{
   toggleConversationStatus?: (status: string, parentId?: number) => void
   handleUpload?: DataProps['handleUpload']
   onGetFullDiff?: (path?: string) => Promise<string | void>
-  scrolledToComment?: boolean
-  setScrolledToComment?: (val: boolean) => void
   openItems: string[]
   isOpen?: boolean
   onToggle: () => void
@@ -224,8 +219,6 @@ export const PullRequestAccordion: React.FC<{
   toggleConversationStatus,
   handleUpload,
   onGetFullDiff,
-  scrolledToComment,
-  setScrolledToComment,
   openItems,
   isOpen,
   onToggle,
@@ -408,8 +401,6 @@ export const PullRequestAccordion: React.FC<{
                   removeSuggestionFromBatch={removeSuggestionFromBatch}
                   filenameToLanguage={filenameToLanguage}
                   toggleConversationStatus={toggleConversationStatus}
-                  scrolledToComment={scrolledToComment}
-                  setScrolledToComment={setScrolledToComment}
                   collapseDiff={() => setCollapsed(true)}
                 />
               </>

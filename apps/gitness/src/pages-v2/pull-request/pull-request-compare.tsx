@@ -104,7 +104,6 @@ export const CreatePullRequest = () => {
   const sourceRef = useMemo(() => selectedSourceBranch?.name, [selectedSourceBranch])
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const [mergeability, setMergeabilty] = useState<boolean>()
-  const [jumpToDiff, setJumpToDiff] = useState('')
   const diffApiPath = useMemo(() => {
     if (!targetRef || !sourceRef) return ''
     // show range of commits and user selected subrange
@@ -610,8 +609,6 @@ export const CreatePullRequest = () => {
         handleAddReviewer={handleAddReviewer}
         handleDeleteReviewer={handleDeleteReviewer}
         isFetchingCommits={isFetchingCommits}
-        jumpToDiff={jumpToDiff}
-        setJumpToDiff={setJumpToDiff}
         labelsList={labelsList}
         labelsValues={labelsValues}
         PRLabels={labels}

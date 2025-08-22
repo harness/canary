@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+
 import { Layout, ScrollArea, SearchFiles } from '@/components'
 
 import { SIDEBAR_MAX_WIDTH, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
@@ -9,18 +11,19 @@ import {
 interface PullRequestDiffSidebarProps {
   sidebarWidth: number
   filePaths: string[]
-  setJumpToDiff: (fileName: string) => void
-  activePath?: string
+  goToDiff: (fileName: string) => void
+  activeDiff?: string
   diffsData?: ExplorerDiffData[]
 }
 
 export const PullRequestDiffSidebar: React.FC<PullRequestDiffSidebarProps> = ({
   sidebarWidth,
   filePaths,
-  setJumpToDiff,
-  activePath,
+  goToDiff,
+  activeDiff,
   diffsData
 }) => {
+  const scrollAreaRef = useRef<HTMLDivElement>(null)
   return (
     <div
       className="nested-sidebar-height pr-cn-lg sticky top-[var(--cn-breadcrumbs-height)] -ml-8 overflow-hidden"
@@ -31,14 +34,15 @@ export const PullRequestDiffSidebar: React.FC<PullRequestDiffSidebarProps> = ({
       }}
     >
       <Layout.Flex direction="column" className="pt-cn-xl max-h-full pl-8" gapY="sm">
-        <SearchFiles navigateToFile={setJumpToDiff} filesList={filePaths} />
+        <SearchFiles navigateToFile={goToDiff} filesList={filePaths} />
 
-        <ScrollArea className="pr-cn-lg -mr-cn-lg grid-cols-[100%] pb-7">
+        <ScrollArea className="pr-cn-lg -mr-cn-lg grid-cols-[100%] pb-7" ref={scrollAreaRef}>
           <PullRequestChangesExplorer
             paths={filePaths}
-            setJumpToDiff={setJumpToDiff}
-            activePath={activePath}
+            goToDiff={goToDiff}
+            activeDiff={activeDiff}
             diffsData={diffsData}
+            scrollAreaRef={scrollAreaRef}
           />
         </ScrollArea>
       </Layout.Flex>

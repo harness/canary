@@ -1,6 +1,7 @@
 import { RefObject } from 'react'
 
 import { TypesUser } from '@/types'
+import { createRequestIdleCallbackTaskPool } from '@/utils/task'
 import { dispatchCustomEvent } from '@hooks/use-event-listener'
 import { get, isEmpty } from 'lodash-es'
 
@@ -294,28 +295,30 @@ function isInViewport(ele: HTMLElement) {
 export const jumpToFile = (
   filePath: string,
   diffBlocks: DiffHeaderProps[][],
-  setJumpToDiff: (filePath: string) => void,
   commentId?: string,
   diffsContainerRef?: RefObject<Element>
 ) => {
+  // idle callback scheduling to avoid blocking main thread and for virtualized content that may not exist initially in DOM
+  const { scheduleTask, cancelTask } = createRequestIdleCallbackTaskPool()
   let loopCount = 0
-  let timeoutId: NodeJS.Timeout | null = null
+  let taskId = 0
 
   const blockIndex = diffBlocks.findIndex(block => block.some(diff => diff.filePath === filePath))
   if (blockIndex < 0) return () => {} // Return empty cleanup function
 
-  function attemptScroll() {
-    // Retrieve the top-level block + the sub-block + the final diff DOM
-    const outerDOM = diffsContainerRef?.current?.querySelector(
+  const dispatchScrollIntoView = () => {
+    const outerBlockDOM = diffsContainerRef?.current?.querySelector(
       `[data-block="${outterBlockName(blockIndex)}"]`
     ) as HTMLElement | null
-    const innerDOM = outerDOM?.querySelector(`[data-block="${innerBlockName(filePath)}"]`) as HTMLElement | null
-    const diffDOM = innerDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
+    const innerBlockDOM = outerBlockDOM?.querySelector(
+      `[data-block="${innerBlockName(filePath)}"]`
+    ) as HTMLElement | null
+    const diffDOM = innerBlockDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
 
-    // Scroll them all in order outterBlock + innerBlock + the final diff
-    outerDOM?.scrollIntoView(false)
-    innerDOM?.scrollIntoView(false)
-    diffDOM?.scrollIntoView({ block: 'center', inline: 'center' })
+    outerBlockDOM?.scrollIntoView(false)
+    innerBlockDOM?.scrollIntoView(false)
+    const diffDomScroll: boolean | ScrollIntoViewOptions = commentId ? true : { block: 'center', inline: 'center' }
+    diffDOM?.scrollIntoView(diffDomScroll)
 
     if (diffDOM && commentId) {
       dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {
@@ -324,34 +327,33 @@ export const jumpToFile = (
       })
     }
 
-    // Re-check after a short delay if it's truly in viewport
-    // If not in viewport and loopCount < 100 => re-run
-    timeoutId = setTimeout(() => {
+    taskId = scheduleTask(() => {
       if (loopCount++ < 100) {
         if (
-          !outerDOM ||
-          !innerDOM ||
+          !outerBlockDOM ||
+          !innerBlockDOM ||
           !diffDOM ||
-          !isInViewport(outerDOM) ||
-          !isInViewport(innerDOM) ||
+          !isInViewport(outerBlockDOM) ||
+          !isInViewport(innerBlockDOM) ||
           !isInViewport(diffDOM)
         ) {
-          attemptScroll()
+          dispatchScrollIntoView()
+        } else {
+          cancelTask(taskId)
         }
       } else {
-        setJumpToDiff('')
-        timeoutId = null
+        cancelTask(taskId)
       }
-    }, 0)
+    })
   }
 
-  attemptScroll()
+  if (blockIndex >= 0) {
+    dispatchScrollIntoView()
+  }
 
-  // Return cleanup function
   return () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId)
-      timeoutId = null
+    if (taskId) {
+      cancelTask(taskId)
     }
   }
 }

@@ -72,8 +72,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       searchCommitQuery={null}
       setSearchCommitQuery={noop}
       isLoading={false}
-      jumpToDiff=""
-      setJumpToDiff={noop}
       editLabelsProps={{ to: '' }}
       branchSelectorRenderer={
         <BranchSelectorV2

@@ -31,8 +31,6 @@ interface PullRequestCompareDiffListProps {
   diffData: HeaderProps[]
   currentUser?: string
   sourceBranch?: string
-  jumpToDiff?: string
-  setJumpToDiff: (fileName: string) => void
   principalProps: PrincipalPropsType
   onGetFullDiff: (path?: string) => Promise<string | void>
   toRepoFileDetails?: ({ path }: { path: string }) => string
@@ -42,9 +40,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   diffStats,
   diffData,
   currentUser,
-  jumpToDiff,
   sourceBranch,
-  setJumpToDiff,
   principalProps,
   onGetFullDiff,
   toRepoFileDetails
@@ -76,10 +72,13 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     },
     [setOpenItems]
   )
-  useEffect(() => {
-    if (!jumpToDiff) return
-    jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff, undefined, diffsContainerRef)
-  }, [jumpToDiff, diffBlocks, setJumpToDiff])
+
+  const goToDiff = useCallback(
+    (fileName: string) => {
+      jumpToFile(fileName, diffBlocks, undefined, diffsContainerRef)
+    },
+    [diffBlocks]
+  )
 
   const setCollapsed = useCallback(
     (fileText: string, val: boolean) => {
@@ -101,7 +100,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           <PullRequestDiffSidebar
             sidebarWidth={sidebarWidth}
             filePaths={diffData?.map(diff => diff.filePath) || []}
-            setJumpToDiff={setJumpToDiff}
+            goToDiff={goToDiff}
             diffsData={
               diffData?.map(item => ({
                 addedLines: item.addedLines || 0,
@@ -127,7 +126,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
             >
               <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
             </Button>
-            <ChangedFilesShortInfo diffData={diffData} diffStats={diffStats} goToDiff={setJumpToDiff} />
+            <ChangedFilesShortInfo diffData={diffData} diffStats={diffStats} goToDiff={goToDiff} />
           </ListActions.Left>
           <ListActions.Right>
             <ListActions.Dropdown

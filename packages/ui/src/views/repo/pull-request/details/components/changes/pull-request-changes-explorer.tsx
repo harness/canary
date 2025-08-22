@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef, useState } from 'react'
+import { memo, RefObject, useEffect, useMemo, useRef, useState } from 'react'
 
 import { FileExplorer, Layout, StatusBadge } from '@/components'
 
@@ -208,14 +208,15 @@ export function getFilePathsInTreeOrder(rawPaths: string[]): string[] {
 
 interface PullRequestChangesExplorerProps {
   paths: string[]
-  activePath?: string
+  activeDiff?: string
   onFolderValueChange?: (values: string[]) => void
-  setJumpToDiff: (fileName: string) => void
+  goToDiff: (fileName: string) => void
   diffsData?: ExplorerDiffData[]
+  scrollAreaRef?: RefObject<HTMLDivElement>
 }
 
 export const PullRequestChangesExplorer: React.FC<PullRequestChangesExplorerProps> = memo(
-  ({ paths, activePath, onFolderValueChange, setJumpToDiff, diffsData }) => {
+  ({ paths, activeDiff, onFolderValueChange, goToDiff, diffsData, scrollAreaRef }) => {
     // build once per paths change
     const tree = useMemo(() => buildFileTree(paths), [paths])
 
@@ -260,9 +261,48 @@ export const PullRequestChangesExplorer: React.FC<PullRequestChangesExplorerProp
       onFolderValueChange?.(arr)
     }
 
+    useEffect(() => {
+      if (activeDiff) {
+        // Small delay to ensure the file item and diff is rendered
+        const timeoutId = setTimeout(() => {
+          const activeElement = scrollAreaRef?.current?.querySelector(
+            `[data-explorer-path="${activeDiff}"]`
+          ) as HTMLElement
+
+          if (activeElement && scrollAreaRef?.current) {
+            const scrollContainer = scrollAreaRef.current.parentElement as HTMLDivElement
+
+            // Get the element's position relative to the actual scroll container
+            const elementRect = activeElement.getBoundingClientRect()
+            const viewportRect = scrollContainer.getBoundingClientRect()
+
+            // Calculate element position relative to the scroll container's content area
+            const elementTop = elementRect.top - viewportRect.top + scrollContainer.scrollTop
+            const elementHeight = elementRect.height
+            const elementBottom = elementTop + elementHeight
+
+            // Get the viewport's current scroll position and visible area
+            const containerScrollTop = scrollContainer.scrollTop
+            const containerHeight = scrollContainer.getBoundingClientRect().height
+            const visibleTop = containerScrollTop
+            const visibleBottom = containerScrollTop + containerHeight
+
+            // Check if element is fully visible within the scrollable viewport
+            const isVisible = elementTop >= visibleTop && elementBottom <= visibleBottom
+
+            if (!isVisible) {
+              activeElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+            }
+          }
+        }, 500)
+
+        return () => clearTimeout(timeoutId)
+      }
+    }, [activeDiff])
+
     return (
       <FileExplorer.Root value={openFolders} onValueChange={handleValueChange}>
-        {renderTree(tree, setJumpToDiff, activePath, diffsData)}
+        {renderTree(tree, goToDiff, activeDiff, diffsData)}
       </FileExplorer.Root>
     )
   }
@@ -273,32 +313,30 @@ PullRequestChangesExplorer.displayName = 'PullRequestChangesExplorer'
 /**
  * Recursively renders tree structure into React file explorer components.
  * @param nodes - Tree nodes to render at current level
- * @param setJumpToDiff - Navigation handler for file selection
- * @param activePath - Currently active file path for highlighting
+ * @param goToDiff - Navigation handler for file selection
+ * @param activeDiff - Currently active file path for highlighting
  * @returns Array of React elements representing the tree structure
  */
 function renderTree(
   nodes: TreeNode[],
-  setJumpToDiff: (fileName: string) => void,
-  activePath?: string,
+  goToDiff: (fileName: string) => void,
+  activeDiff?: string,
   diffsData?: ExplorerDiffData[]
 ): React.ReactNode[] {
   return nodes.map(({ level, ...node }) => {
     if (node.type === 'folder') {
-      const isActive = activePath?.startsWith(node.path)
       return (
         <FileExplorer.FolderItem
           key={node.path}
           value={node.path}
-          isActive={isActive}
           level={level}
-          content={<>{renderTree(node.children, setJumpToDiff, activePath, diffsData)}</>}
+          content={<>{renderTree(node.children, goToDiff, activeDiff, diffsData)}</>}
         >
           {node.name}
         </FileExplorer.FolderItem>
       )
     } else {
-      const isActive = activePath === node.path
+      const isActive = activeDiff === node.path
       const addedLines = getDiffFileAddedLines(diffsData || [], node.path)
       const deletedLines = getDiffFileDeletedLines(diffsData || [], node.path)
       return (
@@ -306,7 +344,7 @@ function renderTree(
           key={node.path}
           isActive={isActive}
           level={level}
-          onClick={() => setJumpToDiff(node.path)}
+          onClick={() => goToDiff(node.path)}
           tooltip={
             <Layout.Flex gapX="3xs" align="center">
               {addedLines > 0 && (
@@ -322,7 +360,7 @@ function renderTree(
             </Layout.Flex>
           }
         >
-          {node.name}
+          <div data-explorer-path={node.path}>{node.name}</div>
         </FileExplorer.FileItem>
       )
     }

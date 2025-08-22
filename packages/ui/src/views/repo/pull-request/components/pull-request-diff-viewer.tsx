@@ -74,8 +74,6 @@ interface PullRequestDiffviewerProps {
   filenameToLanguage?: (fileName: string) => string | undefined
   toggleConversationStatus?: (status: string, parentId?: number) => void
   handleUpload?: HandleUploadType
-  scrolledToComment?: boolean
-  setScrolledToComment?: (val: boolean) => void
   collapseDiff?: () => void
   principalProps: PrincipalPropsType
 }
@@ -104,8 +102,6 @@ const PullRequestDiffViewer = ({
   filenameToLanguage,
   toggleConversationStatus,
   handleUpload,
-  scrolledToComment,
-  setScrolledToComment,
   collapseDiff,
   principalProps
 }: PullRequestDiffviewerProps) => {
@@ -676,22 +672,18 @@ const PullRequestDiffViewer = ({
 
   useCustomEventListener<DiffViewerCustomEvent>(
     fileName,
-    useCallback(
-      event => {
-        const { action, commentId } = event.detail
-        if (!commentId || scrolledToComment || action !== DiffViewerEvent.SCROLL_INTO_VIEW) return
-        // Slight timeout so the UI has time to expand/hydrate
-        const timeoutId = setTimeout(() => {
-          const elem = document.getElementById(`comment-${commentId}`)
-          if (!elem) return
-          elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          setScrolledToComment?.(true)
-        }, 500)
+    useCallback(event => {
+      const { action, commentId } = event.detail
+      if (!commentId || action !== DiffViewerEvent.SCROLL_INTO_VIEW) return
+      // Slight timeout so the UI has time to expand/hydrate
+      const timeoutId = setTimeout(() => {
+        const elem = document.getElementById(`comment-${commentId}`)
+        if (!elem) return
+        elem.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+      }, 500)
 
-        return () => clearTimeout(timeoutId)
-      },
-      [scrolledToComment, setScrolledToComment]
-    ),
+      return () => clearTimeout(timeoutId)
+    }, []),
     () => !!fileName
   )
 

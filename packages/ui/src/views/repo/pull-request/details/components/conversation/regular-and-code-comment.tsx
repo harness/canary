@@ -113,7 +113,6 @@ const BaseComp: FC<BaseCompProps> = ({
       currentUser={currentUser?.display_name}
       toggleConversationStatus={toggleConversationStatus}
       parentCommentId={payload?.id}
-      hideEditDelete={payload?.author?.uid !== currentUser?.uid}
       payload={payload}
       header={[
         {

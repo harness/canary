@@ -1,10 +1,7 @@
-import { useEffect, useRef } from 'react'
-
-import { EventSourcePolyfill } from 'event-source-polyfill'
+import { useEffect } from 'react'
 
 import { useAPIPath } from '../../hooks/useAPIPath'
-import { SSEEvent } from '../../types'
-import { eventManager } from '../event/EventManager'
+import { sseConnectionManager } from '../event/SSEConnectionManager'
 
 type UseSpaceSSEProps = {
   space: string
@@ -12,63 +9,21 @@ type UseSpaceSSEProps = {
 
 /**
  * Hook that establishes a single SSE connection and publishes all events to the EventManager
- * regardless of the events array
+ * This uses the SSEConnectionManager singleton to ensure a single persistent connection
+ * across component mounts/unmounts and route changes
  */
 const useSpaceSSEWithPubSub = ({ space }: UseSpaceSSEProps) => {
   const apiPath = useAPIPath()
-  const eventSourceRef = useRef<EventSource | null>(null)
-
-  // Get all event types from the SSEEvent enum
-  const allEventTypes = Object.values(SSEEvent)
 
   useEffect(() => {
-    // Conditionally establish the event stream
-    if (!eventSourceRef.current) {
-      const pathAndQuery = apiPath(`/api/v1/spaces/${space}/+/events`)
-
-      const options: { heartbeatTimeout: number; headers?: { Authorization?: string } } = {
-        heartbeatTimeout: 999999999
-      }
-
-      eventSourceRef.current = new EventSourcePolyfill(pathAndQuery, options)
-
-      // Handle messages by publishing to the EventManager
-      const handleMessage = (event: MessageEvent) => {
-        try {
-          const data = JSON.parse(event.data)
-          eventManager.publish(event.type, data)
-        } catch (error) {
-          console.error('Error parsing event data:', error)
-        }
-      }
-
-      // Handle errors
-      const handleError = (event: Event) => {
-        eventManager.publish('error', event)
-        eventSourceRef?.current?.close()
-      }
-
-      // Register error handler
-      eventSourceRef?.current?.addEventListener('error', handleError)
-
-      // Register listeners for all event types from the SSEEvent enum
-      for (const eventType of allEventTypes) {
-        eventSourceRef?.current?.addEventListener(eventType, handleMessage)
-      }
-
-      return () => {
-        eventSourceRef.current?.removeEventListener('error', handleError)
-
-        // Remove all event type listeners
-        for (const eventType of allEventTypes) {
-          eventSourceRef.current?.removeEventListener(eventType, handleMessage)
-        }
-
-        eventSourceRef.current?.close()
-        eventSourceRef.current = null
-      }
+    if (space) {
+      // Use the singleton connection manager to establish/maintain the connection
+      sseConnectionManager.connect(space, apiPath)
     }
-  }, [space])
+
+    // No cleanup needed here - the connection is managed by the singleton
+    // and will persist even when this component unmounts
+  }, [space, apiPath])
 }
 
 export default useSpaceSSEWithPubSub

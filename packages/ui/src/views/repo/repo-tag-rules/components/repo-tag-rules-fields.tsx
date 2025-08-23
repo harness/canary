@@ -12,6 +12,7 @@ import {
   SplitButton,
   Switch
 } from '@/components'
+import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
@@ -211,13 +212,14 @@ export const TagSettingsRuleListField: FC<{
   return (
     <ControlGroup>
       <Label className="mb-4">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      <Fieldset className="gap-y-4">
-        {tagRules.map(rule => {
+      <Fieldset className="gap-y-5">
+        {tagRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)
           const { checked: isChecked = false, disabled: isDisabled = false } = matchingRule || {}
 
           return (
-            <Fieldset key={rule.id} className="gap-y-4">
+            <Fieldset key={rule.id} className="gap-y-1">
+              {index > 0 && <Separator className="mb-cn-md" />}
               <Checkbox
                 id={rule.id}
                 checked={isChecked}
@@ -225,6 +227,7 @@ export const TagSettingsRuleListField: FC<{
                 disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
+                captionVariant="caption-soft"
               />
             </Fieldset>
           )

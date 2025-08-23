@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { FormCaption, IconV2, Label } from '@/components'
+import { FormCaption, IconV2, Label, TextProps } from '@/components'
 import { cn } from '@/utils/cn'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { cva } from 'class-variance-authority'
@@ -22,6 +22,7 @@ export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxP
   error?: boolean
   showOptionalLabel?: boolean
   truncateLabel?: boolean
+  captionVariant?: TextProps['variant']
 }
 
 /**
@@ -29,7 +30,7 @@ export interface CheckboxProps extends ComponentPropsWithoutRef<typeof CheckboxP
  * Built on top of Radix UI Checkbox primitive with additional styling.
  */
 const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<CheckboxProps, 'required'>>(
-  ({ className, label, caption, error, showOptionalLabel, truncateLabel = true, ...props }, ref) => {
+  ({ className, label, caption, error, showOptionalLabel, truncateLabel = true, captionVariant, ...props }, ref) => {
     const checkboxId = props.id || `checkbox-${Math.random().toString(36).slice(2, 11)}`
 
     return (
@@ -57,7 +58,9 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
             >
               {label}
             </Label>
-            <FormCaption disabled={props.disabled}>{caption}</FormCaption>
+            <FormCaption disabled={props.disabled} variant={captionVariant}>
+              {caption}
+            </FormCaption>
           </div>
         )}
       </div>

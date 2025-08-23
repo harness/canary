@@ -16,6 +16,7 @@ import {
   SplitButton,
   Switch
 } from '@/components'
+import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import {
@@ -306,7 +307,7 @@ export const BranchSettingsRuleListField: FC<{
   return (
     <ControlGroup>
       <Label className="mb-4">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      <Fieldset className="gap-y-4">
+      <Fieldset className="gap-y-5">
         {branchRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)
           const {
@@ -317,7 +318,10 @@ export const BranchSettingsRuleListField: FC<{
 
           return (
             !isHidden && (
-              <Fieldset key={rule.id} className={clsx('gap-y-4', rule.isNested && 'pl-[26px]')}>
+              <Fieldset key={rule.id} className={clsx('gap-y-1', rule.isNested && 'pl-[26px]')}>
+                {/* Divider between rules for better scan-ability */}
+                {index > 0 && <Separator className="mb-cn-md" />}
+
                 <Checkbox
                   id={rule.id}
                   checked={isChecked}
@@ -325,6 +329,7 @@ export const BranchSettingsRuleListField: FC<{
                   disabled={isDisabled}
                   label={rule.label}
                   caption={rule.description}
+                  captionVariant="caption-soft"
                 />
 
                 {/* Conditionally render the submenu if this rule has a submenu and is checked */}

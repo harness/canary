@@ -2,7 +2,7 @@ import { forwardRef, PropsWithChildren } from 'react'
 
 import { cn } from '@/utils'
 import { IconV2 } from '@components/icon-v2'
-import { Text, textVariants } from '@components/text'
+import { Text, TextProps, textVariants } from '@components/text'
 import { VariantProps } from 'class-variance-authority'
 
 type ThemeVariants = 'default' | 'success' | 'danger' | 'warning'
@@ -12,10 +12,11 @@ type FormCaptionProps = {
   theme?: ThemeVariants
   className?: string
   disabled?: boolean
+  variant?: TextProps['variant']
 }
 
 export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<FormCaptionProps>>(
-  ({ theme = 'default', className, disabled, children }, ref) => {
+  ({ theme = 'default', className, disabled, variant, children }, ref) => {
     /**
      * Return null if no message, errorMessage, or warningMessage is provided
      */
@@ -43,7 +44,7 @@ export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<Fo
     }
 
     return (
-      <Text color={getColor(theme, disabled)} className={cn('cn-caption', className)} ref={ref}>
+      <Text variant={variant} color={getColor(theme, disabled)} className={cn('cn-caption', className)} ref={ref}>
         {canShowIcon && <IconV2 name={effectiveIconName} size="md" />}
         <span>{children}</span>
       </Text>

@@ -183,6 +183,7 @@ export default function ReposListPage() {
       isLoading={isFetching}
       isError={isError}
       errorMessage={error?.message}
+      queryFilterValues={{ favorite: favorite, recursive: recursive }}
       searchQuery={query}
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}

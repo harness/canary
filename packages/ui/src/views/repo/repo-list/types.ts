@@ -35,6 +35,17 @@ export type RepoListFilters = {
   recursive?: ComboBoxOptions
 }
 
+export interface RepoListQueryFilters {
+  /*
+   * Warning: Hack attack!
+   *
+   * Typed as boolean | string because the useQueryState() used in repo-list.tsx is typed and
+   * uses the values as booleans, but when inspected they are actually strings.
+   */
+  favorite: boolean | string
+  recursive: boolean | string
+}
+
 export interface FilterProps {
   onFilterChange: (filters: RepoListFilters) => void
 }
@@ -52,6 +63,7 @@ export interface RepoListPageProps extends Partial<RoutingProps>, FavoriteProps,
   isError: boolean
   errorMessage?: string
   searchQuery?: string | null
+  queryFilterValues?: RepoListQueryFilters
   setSearchQuery: (query: string | null) => void
   setQueryPage: (page: number) => void
   scope: Scope

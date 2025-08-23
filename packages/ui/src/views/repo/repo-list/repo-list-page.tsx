@@ -19,6 +19,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   isLoading,
   isError,
   errorMessage,
+  queryFilterValues,
   searchQuery,
   setSearchQuery,
   setQueryPage,
@@ -31,11 +32,12 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   scope,
   ...routingProps
 }) => {
-  const { RbacSplitButton } = useComponents()
   const { t } = useTranslation()
+  const { RbacSplitButton } = useComponents()
   const { navigate } = useRouterContext()
   const [showScope, setShowScope] = useState(false)
   const filterRef = useRef<FilterGroupRef>(null)
+  const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -48,6 +50,16 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   // State for storing saved filters and sorts
   // null means no saved state exists
   const { repositories, totalItems, page, setPage, pageSize } = useRepoStore()
+
+  const { projectIdentifier, orgIdentifier, accountId } = scope
+
+  const FilterSortOptions = [
+    { label: 'Name (A->Z, 0->9)', value: RepoSortMethod.Identifier_Asc },
+    { label: 'Name (Z->A, 9->0)', value: RepoSortMethod.Identifier_Desc },
+    { label: 'Newest', value: RepoSortMethod.Newest },
+    { label: 'Oldest', value: RepoSortMethod.Oldest },
+    { label: 'Last push', value: RepoSortMethod.LastPush }
+  ]
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -83,35 +95,12 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     )
   }
 
-  const handleResetFiltersQueryAndPages = () => {
-    filterRef.current?.resetSearch?.()
-    filterRef.current?.resetFilters?.()
-    setSearchQuery(null)
-    setPage(1)
-  }
+  const buildFilterOptions = (): FilterOptionConfig<keyof RepoListFilters>[] => {
+    const favoriteFilterDefaultValue = false
 
-  const onFilterValueChange = (filterValues: RepoListFilters) => {
-    onFilterChange(filterValues)
-    /**
-     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
-     */
-    setShowScope([ExtendedScope.All, ExtendedScope.OrgProg].includes(filterValues.recursive?.value as ExtendedScope))
-  }
-
-  const { projectIdentifier, orgIdentifier, accountId } = scope
-
-  const FilterSortOptions = [
-    { label: 'Name (A->Z, 0->9)', value: RepoSortMethod.Identifier_Asc },
-    { label: 'Name (Z->A, 9->0)', value: RepoSortMethod.Identifier_Desc },
-    { label: 'Newest', value: RepoSortMethod.Newest },
-    { label: 'Oldest', value: RepoSortMethod.Oldest },
-    { label: 'Last push', value: RepoSortMethod.LastPush }
-  ]
-
-  const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
-  const filterOptions: FilterOptionConfig<keyof RepoListFilters>[] = [
-    {
-      defaultValue: false,
+    const favoriteFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
+      defaultValue: favoriteFilterDefaultValue,
+      isDefaultValue: queryFilterValues?.favorite === String(favoriteFilterDefaultValue),
       label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
@@ -121,41 +110,67 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
       },
       parser: booleanParser
     }
-  ]
 
-  if (!projectIdentifier) {
-    filterOptions.push({
-      label: t('views:scope.label', 'Scope'),
-      value: 'recursive',
-      type: FilterFieldTypes.ComboBox,
-      defaultValue: scopeFilterDefaultValue,
-      filterFieldConfig: {
-        options: scopeFilterOptions,
-        placeholder: 'Select scope',
-        allowSearch: false
-      },
-      parser: {
-        parse: (value: string): ComboBoxOptions => {
-          let selectedValue: string
-          if (accountId && orgIdentifier) {
-            selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
-          } else if (accountId) {
-            selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
-          }
+    if (!projectIdentifier) {
+      const parse = (value: string): ComboBoxOptions => {
+        let selectedValue: string
+        if (accountId && orgIdentifier) {
+          selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
+        } else if (accountId) {
+          selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
+        }
 
-          return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+        return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+      }
+
+      const recursiveFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
+        defaultValue: scopeFilterDefaultValue,
+        isDefaultValue: parse(String(queryFilterValues?.recursive)).value === String(scopeFilterDefaultValue.value),
+        label: t('views:scope.label', 'Scope'),
+        value: 'recursive',
+        type: FilterFieldTypes.ComboBox,
+        filterFieldConfig: {
+          options: scopeFilterOptions,
+          placeholder: 'Select scope',
+          allowSearch: false
         },
-        serialize: (value: ComboBoxOptions): string => {
-          const selected = value?.value
+        parser: {
+          parse: parse,
+          serialize: (value: ComboBoxOptions): string => {
+            const selected = value?.value
 
-          if (accountId && orgIdentifier && projectIdentifier) return ''
-          if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-          if (accountId) return String(selected === ExtendedScope.All)
+            if (accountId && orgIdentifier && projectIdentifier) return ''
+            if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+            if (accountId) return String(selected === ExtendedScope.All)
 
-          return ''
+            return ''
+          }
         }
       }
-    })
+
+      return [favoriteFilterOption, recursiveFilterOption]
+    }
+    return [favoriteFilterOption]
+  }
+
+  let filterOptions = buildFilterOptions()
+
+  const handleResetFiltersQueryAndPages = () => {
+    filterRef.current?.resetSearch?.()
+    filterRef.current?.resetFilters?.()
+    setSearchQuery(null)
+    setPage(1)
+  }
+
+  const onFilterValueChange = (filterValues: RepoListFilters) => {
+    onFilterChange(filterValues)
+
+    filterOptions = buildFilterOptions()
+
+    /**
+     * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
+     */
+    setShowScope([ExtendedScope.All, ExtendedScope.OrgProg].includes(filterValues.recursive?.value as ExtendedScope))
   }
 
   return (

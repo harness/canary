@@ -29,6 +29,7 @@ interface FilterOptionConfigBase<Key extends string, V = undefined> {
   value: Key
   parser?: Parser<V>
   defaultValue?: V
+  isDefaultValue?: boolean
   sticky?: boolean
 }
 

@@ -56,31 +56,37 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
     addFilter,
     resetFilters,
     availableFilters
-  }: FilterOptionsRendererProps<Extract<keyof T, string>>) => (
-    <>
-      <SearchableDropdown
-        options={filterOptions.filter(option => availableFilters.includes(option.value))}
-        dropdownAlign="start"
-        onChange={(option: { value: any }) => {
-          addFilter(option.value)
-          setOpenedFilter(option.value)
-        }}
-        onReset={() => resetFilters()}
-        inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-        buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-        displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
-      />
-      <Button
-        size="sm"
-        variant="transparent"
-        onClick={() => resetFilters()}
-        className="hover:text-cn-foreground-danger"
-      >
-        <IconV2 name="xmark" size="2xs" />
-        {t('component:filter.reset', 'Reset')}
-      </Button>
-    </>
-  )
+  }: FilterOptionsRendererProps<Extract<keyof T, string>>) => {
+    const showFilterResetButton = filterOptions.some(filterOption => !filterOption.isDefaultValue)
+
+    return (
+      <>
+        <SearchableDropdown
+          options={filterOptions.filter(option => availableFilters.includes(option.value))}
+          dropdownAlign="start"
+          onChange={(option: { value: any }) => {
+            addFilter(option.value)
+            setOpenedFilter(option.value)
+          }}
+          onReset={() => resetFilters()}
+          inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+          buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+          displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
+        />
+        {showFilterResetButton && (
+          <Button
+            size="sm"
+            variant="transparent"
+            onClick={() => resetFilters()}
+            className="hover:text-cn-foreground-danger"
+          >
+            <IconV2 name="xmark" size="2xs" />
+            {t('component:filter.reset', 'Reset')}
+          </Button>
+        )}
+      </>
+    )
+  }
 
   const isListControlVisible = selectedFiltersCnt > 0 || (sortSelectionsCnt ?? 0) > 0
 

@@ -51,7 +51,7 @@ export default {
   '.cn-breadcrumb-link': {
     '@apply transition-colors': '',
 
-    '&:focus': {
+    '&:focus-visible': {
       outline: 'var(--cn-focus)'
     }
   },

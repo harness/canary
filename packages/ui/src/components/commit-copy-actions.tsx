@@ -32,6 +32,7 @@ export const CommitCopyActions = ({ sha, toCommitDetails, size = 'xs' }: CommitC
               </Text>
             </Link>
           ),
+          tabIndex: -1,
           onKeyDown: handleKeyDown,
           className: 'font-mono'
         },

@@ -70,9 +70,6 @@ export default function RepoSummaryPage() {
     prefixedDefaultBranch
   } = useGitRef()
 
-  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
-  const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState('')
-
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
@@ -339,7 +336,6 @@ export default function RepoSummaryPage() {
             onSelectBranchorTag={selectBranchOrTag}
             setCreateBranchDialogOpen={setCreateBranchDialogOpen}
             selectedBranch={{ name: gitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
-            onSelectBranchorTag={selectBranchOrTag}
             preSelectedTab={preSelectedTab}
             onBranchQueryChange={setBranchQueryForNewBranch}
           />

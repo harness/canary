@@ -26,6 +26,8 @@ export const RepoSettingsGeneralForm: FC<{
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  setCreateBranchDialogOpen: (open: boolean) => void
+  onBranchQueryChange: (query: string) => void
 }> = ({
   handleRepoUpdate,
   apiError,
@@ -33,7 +35,9 @@ export const RepoSettingsGeneralForm: FC<{
   isUpdatingRepoData,
   isRepoUpdateSuccess,
   branchSelectorRenderer,
-  repoData
+  repoData,
+  setCreateBranchDialogOpen,
+  onBranchQueryChange
 }) => {
   const { t } = useTranslation()
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
@@ -143,6 +147,8 @@ export const RepoSettingsGeneralForm: FC<{
           selectedBranch={{ name: branchValue, sha: '' }}
           isUpdating={isUpdatingRepoData}
           disabled={isUpdatingRepoData}
+          setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+          onBranchQueryChange={onBranchQueryChange}
           className="w-fit max-w-full"
         />
       </ControlGroup>

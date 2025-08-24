@@ -1,5 +1,5 @@
 import { useRoutes } from '../framework/context/NavigationContext'
-import { isRefACommitSHA, isRefATag } from '../utils/git-utils'
+import { isRefACommitSHA, isRefATag, REFS_TAGS_PREFIX } from '../utils/git-utils'
 
 export function useRepoCommits() {
   const routes = useRoutes()
@@ -15,12 +15,15 @@ export function useRepoCommits() {
     fullGitRef: string
     gitRefName: string
   }) => {
+    const spaceSegment = spaceId ? `/${spaceId}` : ''
+
     if (isRefATag(fullGitRef)) {
-      return routes.toRepoTagCommits({ spaceId, repoId, tagId: encodeURIComponent(gitRefName) })
+      return `${spaceSegment}/repos/${repoId}/commits/${REFS_TAGS_PREFIX}${gitRefName}`
     } else if (isRefACommitSHA(fullGitRef)) {
       return routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: fullGitRef })
     }
-    return routes.toRepoBranchCommits({ spaceId, repoId, branchId: encodeURIComponent(gitRefName) })
+
+    return `${spaceSegment}/repos/${repoId}/commits/${gitRefName}`
   }
 
   return { toRepoCommits }

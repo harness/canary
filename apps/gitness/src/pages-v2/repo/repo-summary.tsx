@@ -51,6 +51,8 @@ export default function RepoSummaryPage() {
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [tokenGenerationError, setTokenGenerationError] = useState<string | null>(null)
+  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
+  const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
@@ -337,6 +339,7 @@ export default function RepoSummaryPage() {
             onSelectBranchorTag={selectBranchOrTag}
             setCreateBranchDialogOpen={setCreateBranchDialogOpen}
             selectedBranch={{ name: gitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
+            onSelectBranchorTag={selectBranchOrTag}
             preSelectedTab={preSelectedTab}
             onBranchQueryChange={setBranchQueryForNewBranch}
           />
@@ -367,6 +370,18 @@ export default function RepoSummaryPage() {
           tokenData={createdTokenData}
         />
       )}
+      <CreateBranchDialog
+        open={isCreateBranchDialogOpen}
+        onClose={() => setCreateBranchDialogOpen(false)}
+        onSuccess={() => {
+          setCreateBranchDialogOpen(false)
+          navigate(routes.toRepoFiles({ spaceId, repoId, '*': branchQueryForNewBranch }))
+        }}
+        onBranchQueryChange={setBranchQueryForNewBranch}
+        preselectedBranchOrTag={fullGitRef ? { name: gitRefName, sha: '' } : null}
+        preselectedTab={preSelectedTab}
+        prefilledName={branchQueryForNewBranch}
+      />
     </>
   )
 }

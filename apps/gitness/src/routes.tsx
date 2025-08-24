@@ -258,19 +258,11 @@ export const repoRoutes: CustomRouteObject[] = [
                 }
               },
               {
-                path: ':branchId',
+                path: '*',
                 element: <RepoCommitsPage />,
                 handle: {
                   pageTitle: Page.Commits,
                   routeName: RouteConstants.toRepoBranchCommits
-                }
-              },
-              {
-                path: 'refs/tags/:tagId',
-                element: <RepoCommitsPage />,
-                handle: {
-                  pageTitle: Page.Commits,
-                  routeName: RouteConstants.toRepoTagCommits
                 }
               }
             ]

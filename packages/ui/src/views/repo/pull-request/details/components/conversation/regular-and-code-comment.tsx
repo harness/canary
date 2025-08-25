@@ -252,6 +252,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               onEditClick: () => toggleEditMode(componentId, commentItem.payload?.text || ''),
               contentClassName: 'border-0 pb-0 rounded-none',
               icon: avatar,
+              hideEditDelete: commentItem?.payload?.author?.uid !== currentUser?.uid,
               content: commentItem.deleted ? (
                 <TextInput value={t('views:pullRequests.deletedComment')} disabled />
               ) : editModes[componentId] ? (
@@ -340,6 +341,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
             <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />
           </Layout.Horizontal>
         ),
+        hideEditDelete: payload?.author?.uid !== currentUser?.uid,
         content: (
           <div className="flex flex-col">
             {!!startingLine && (
@@ -398,7 +400,8 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         icon: <IconV2 name="pr-comment" size="xs" />,
         isLast,
         handleSaveComment,
-        content: renderContentItemsBlock()
+        content: renderContentItemsBlock(),
+        hideEditDelete: payload?.author?.uid !== currentUser?.uid
       }}
     />
   )

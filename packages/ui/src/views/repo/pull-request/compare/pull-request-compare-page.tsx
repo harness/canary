@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Spacer, Tabs, Text } from '@/components'
 import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
-import { TypesDiffStats } from '@/types'
+import { TypesDiffStats, TypesUser } from '@/types'
 import {
   CommitSelectorListItem,
   CommitsList,
@@ -77,7 +77,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   useRepoCommitsStore: () => ICommitSelectorStore
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
-  currentUser?: string
+  currentUser?: TypesUser
 
   reviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
@@ -367,7 +367,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Tabs.Content className="pt-7" value="overview">
                   <Layout.Flex gap="xl">
                     <Layout.Horizontal className="flex-1" gap="sm">
-                      {currentUser && <Avatar name={currentUser} rounded />}
+                      {currentUser && <Avatar name={currentUser?.display_name} rounded />}
                       <div className="flex-1">
                         <PullRequestCompareForm
                           principalProps={principalProps}
@@ -389,7 +389,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         isReviewersLoading={principalProps?.isPrincipalsLoading}
                         isLabelsLoading={isLabelsLoading}
                         addReviewers={handleAddReviewer}
-                        currentUserId={currentUser}
+                        currentUserId={currentUser?.uid}
                         pullRequestMetadata={{ source_sha: '' }}
                         processReviewDecision={mockProcessReviewDecision}
                         refetchReviewers={noop}

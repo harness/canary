@@ -1,5 +1,6 @@
 import { memo, RefObject, useCallback, useEffect, useState } from 'react'
 
+import { TypesUser } from '@/types'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -28,7 +29,7 @@ interface DataProps {
   diffBlocks: HeaderProps[][]
   diffsContainerRef: RefObject<HTMLDivElement>
   diffMode: DiffModeEnum
-  currentUser?: string
+  currentUser?: TypesUser
   comments: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment: (comment: string, parentId?: number) => Promise<void>
   deleteComment: (id: number) => Promise<void>

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { TypesUser } from '@/types'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -167,7 +168,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
 export const PullRequestAccordion: React.FC<{
   header: HeaderProps
   diffMode: DiffModeEnum
-  currentUser?: string
+  currentUser?: TypesUser
   comments?: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment?: (comment: string, parentId?: number) => Promise<void>
   deleteComment?: (id: number) => Promise<void>

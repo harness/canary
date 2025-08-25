@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTheme, useTranslation } from '@/context'
+import { TypesUser } from '@/types'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -61,7 +62,7 @@ interface PullRequestDiffviewerProps {
   deleted?: boolean
   unchangedPercentage?: number
   blocks?: DiffBlock[]
-  currentUser?: string
+  currentUser?: TypesUser
   comments?: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment?: (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => Promise<void>
   deleteComment?: (id: number) => Promise<void>
@@ -391,7 +392,7 @@ const PullRequestDiffViewer = ({
                 })
               }
             }}
-            currentUser={currentUser}
+            currentUser={currentUser?.display_name}
             onCancelClick={() => {
               onClose()
               setNewComments(prev => ({ ...prev, [commentKey]: '' }))
@@ -440,7 +441,8 @@ const PullRequestDiffViewer = ({
                 isLast={true}
                 contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pb-2"
                 header={[]}
-                currentUser={currentUser}
+                currentUser={currentUser?.display_name}
+                hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
                 isComment
                 replyBoxClassName="p-4"
                 hideReplyHere={hideReplyHeres[parent?.id]}
@@ -488,6 +490,7 @@ const PullRequestDiffViewer = ({
                       onQuoteReply={(parentId: number, rawText: string) =>
                         handleQuoteReply(parentId, rawText, parent?.payload?.mentions || {})
                       }
+                      hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
                       icon={<Avatar name={parentInitials} rounded />}
                       header={[
                         {
@@ -527,7 +530,7 @@ const PullRequestDiffViewer = ({
                                 })
                               }
                             }}
-                            currentUser={currentUser}
+                            currentUser={currentUser?.display_name}
                             onCancelClick={() => {
                               toggleEditMode(componentId, '')
                             }}
@@ -586,6 +589,7 @@ const PullRequestDiffViewer = ({
                               onQuoteReply={(parentId: number, rawText: string) =>
                                 handleQuoteReply(parentId, rawText, reply?.payload?.mentions || {})
                               }
+                              hideEditDelete={reply?.payload?.author?.uid !== currentUser?.uid}
                               icon={<Avatar name={replyInitials} rounded />}
                               header={[
                                 {
@@ -617,7 +621,7 @@ const PullRequestDiffViewer = ({
                                         })
                                       }
                                     }}
-                                    currentUser={currentUser}
+                                    currentUser={currentUser?.display_name}
                                     onCancelClick={() => {
                                       toggleEditMode(replyComponentId, '')
                                     }}

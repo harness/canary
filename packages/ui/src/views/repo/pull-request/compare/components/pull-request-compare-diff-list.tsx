@@ -1,6 +1,7 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Button, IconV2, Layout, ListActions } from '@/components'
+import { TypesUser } from '@/types'
 import {
   ChangedFilesShortInfo,
   DiffModeOptions,
@@ -29,7 +30,7 @@ import {
 interface PullRequestCompareDiffListProps {
   diffStats: TypesDiffStats
   diffData: HeaderProps[]
-  currentUser?: string
+  currentUser?: TypesUser
   sourceBranch?: string
   principalProps: PrincipalPropsType
   onGetFullDiff: (path?: string) => Promise<string | void>

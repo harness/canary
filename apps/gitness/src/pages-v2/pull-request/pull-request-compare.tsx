@@ -548,7 +548,7 @@ export const CreatePullRequest = () => {
         toPullRequestConversation={({ pullRequestId }: { pullRequestId: number }) =>
           routes.toPullRequestConversation({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
         }
-        currentUser={currentUser?.display_name}
+        currentUser={currentUser}
         setSearchCommitQuery={setQuery}
         searchCommitQuery={query}
         useRepoCommitsStore={useRepoCommitsStore}

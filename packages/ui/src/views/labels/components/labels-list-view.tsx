@@ -126,15 +126,14 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             </Table.Cell>
             <Table.Cell className="align-top">
               <Layout.Vertical align="start" gap="xs">
-                <Layout.Grid gap="xs" align="center" className="mt-cn-2xs grid-cols-[auto_auto]">
-                  <LabelTag
-                    scope={label.scope ?? 0}
-                    labelKey={label.key}
-                    color={label.color}
-                    labelValue={(values?.[label.key]?.length || '').toString()}
-                    withIndicator={label.type === LabelType.DYNAMIC}
-                  />
-                </Layout.Grid>
+                <LabelTag
+                  className="mt-cn-2xs"
+                  scope={label.scope ?? 0}
+                  labelKey={label.key}
+                  color={label.color}
+                  labelValue={(values?.[label.key]?.length || '').toString()}
+                  withIndicator={label.type === LabelType.DYNAMIC}
+                />
 
                 {!!values?.[label.key]?.length &&
                   expandedRows[label.key] &&

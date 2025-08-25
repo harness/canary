@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, useState } from 'react'
 
 import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -57,12 +57,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
           secondaryButton={{
-            label: (
-              <>
-                <IconV2 name="trash" />
-                {t('views:noData.clearSearch', 'Clear search')}
-              </>
-            ),
+            icon: 'trash',
+            label: t('views:noData.clearSearch', 'Clear search'),
             onClick: handleResetQueryAndPages
           }}
         />
@@ -76,12 +72,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
         primaryButton={{
-          label: (
-            <>
-              <IconV2 name="plus" />
-              {t('views:projectSettings.newLabels', 'Create Label')}
-            </>
-          ),
+          icon: 'plus',
+          label: t('views:projectSettings.newLabels', 'Create Label'),
           to: 'create'
         }}
       />
@@ -134,15 +126,14 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             </Table.Cell>
             <Table.Cell className="align-top">
               <Layout.Vertical align="start" gap="xs">
-                <Layout.Grid gap="xs" align="center" className="mt-cn-2xs grid-cols-[auto_auto]">
-                  <LabelTag
-                    scope={label.scope ?? 0}
-                    labelKey={label.key}
-                    color={label.color}
-                    labelValue={(values?.[label.key]?.length || '').toString()}
-                    withIndicator={label.type === LabelType.DYNAMIC}
-                  />
-                </Layout.Grid>
+                <LabelTag
+                  className="mt-cn-2xs"
+                  scope={label.scope ?? 0}
+                  labelKey={label.key}
+                  color={label.color}
+                  labelValue={(values?.[label.key]?.length || '').toString()}
+                  withIndicator={label.type === LabelType.DYNAMIC}
+                />
 
                 {!!values?.[label.key]?.length &&
                   expandedRows[label.key] &&

@@ -6,14 +6,12 @@ import {
   Button,
   ButtonLayout,
   ControlGroup,
-  Fieldset,
   FormInput,
   FormWrapper,
   IconV2,
   Label,
   Layout,
   Skeleton,
-  Tag,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -23,9 +21,9 @@ import {
   CreateLabelFormFields,
   createLabelFormSchema,
   ILabelsStore,
+  LabelTag,
   LabelType,
-  NotFoundPage,
-  SandboxLayout
+  NotFoundPage
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -142,18 +140,18 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className={cn('!flex-none w-[610px]', className)}>
-      <Text as="h1" variant="heading-section" className="mb-6">
+    <Layout.Vertical gapY="xl" className={cn('settings-form-width', className)}>
+      <Text as="h1" variant="heading-section">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
           : t('views:labelData.form.createTitle', 'Create a label')}
       </Text>
 
-      {isLoading && <Skeleton.Form />}
+      <Layout.Vertical>
+        {isLoading && <Skeleton.Form />}
 
-      {!isLoading && (
-        <FormWrapper {...formMethods} className="gap-y-10" onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset className="gap-y-6">
+        {!isLoading && (
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             <ControlGroup>
               <Label htmlFor="label-name">{t('views:labelData.form.labelName', 'Label name')}</Label>
 
@@ -172,67 +170,65 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               optional
             />
 
-            <ControlGroup>
-              <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
-              {values.map((_, idx) => (
-                <LabelFormColorAndNameGroup
-                  isValue
-                  key={idx}
-                  className=" first-of-type:mt-0"
-                  handleDeleteValue={() => handleDeleteValue(idx)}
-                  selectProps={{ ...register(`values.${idx}.color`) }}
-                  inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
-                />
-              ))}
+            <Layout.Vertical gap={values.length > 0 ? 'sm' : 'xs'}>
+              <ControlGroup>
+                <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
+                {values.map((_, idx) => (
+                  <LabelFormColorAndNameGroup
+                    isValue
+                    key={idx}
+                    handleDeleteValue={() => handleDeleteValue(idx)}
+                    selectProps={{ ...register(`values.${idx}.color`) }}
+                    inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
+                  />
+                ))}
+              </ControlGroup>
 
-              <Button className="mt-1 h-auto gap-x-1 self-start" variant="link" onClick={handleAddValue}>
-                <IconV2 name="plus" size="2xs" />
+              <Button className="h-auto self-start" variant="link" onClick={handleAddValue}>
+                <IconV2 name="plus" />
                 {t('views:labelData.form.addValue', 'Add a value')}
               </Button>
-            </ControlGroup>
+            </Layout.Vertical>
 
             <FormInput.Checkbox
               id="isDynamic"
               label={t('views:labelData.form.allowUsersCheckboxLabel', 'Allow users to add values')}
               {...register('isDynamic')}
             />
-          </Fieldset>
 
-          <Layout.Vertical className="mt-1 " gap="lg">
-            <Text as="h3" variant="body-single-line-normal">
-              {t('views:labelData.form.previewLabel', 'Label preview')}
-            </Text>
+            <Layout.Vertical className="mt-cn-lg" gap="md">
+              <Text as="h3">{t('views:labelData.form.previewLabel', 'Label preview')}</Text>
 
-            <Layout.Vertical gap="xs" align="start">
-              <Tag
-                variant="secondary"
-                size="sm"
-                theme={color}
-                value={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
-              />
-              {values.map((value, idx) => (
-                <Tag
-                  key={`${value.value}-${idx}`}
-                  variant="secondary"
-                  size="sm"
-                  theme={value.color}
-                  label={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
-                  value={value.value.length ? value.value : t('views:labelData.form.valueName', 'Label value')}
+              <Layout.Vertical gap="xs" align="start">
+                <LabelTag
+                  color={color}
+                  labelKey={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
+                  labelValue={values.length > 0 ? String(values.length) : ''}
+                  withIndicator={isDynamic}
                 />
-              ))}
+                {values.map((value, idx) => (
+                  <LabelTag
+                    key={`${value.value}-${idx}`}
+                    color={value.color}
+                    labelKey={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
+                    labelValue={value.value.length ? value.value : t('views:labelData.form.valueName', 'Label value')}
+                  />
+                ))}
+              </Layout.Vertical>
             </Layout.Vertical>
-          </Layout.Vertical>
 
-          {!!error?.length && (
-            <Alert.Root theme="danger">
-              <Alert.Title>
-                {t('views:repos.error', 'Error:')} {error}
-              </Alert.Title>
-            </Alert.Root>
-          )}
+            {!!error?.length && (
+              <Alert.Root theme="danger">
+                <Alert.Title>
+                  {t('views:repos.error', 'Error:')} {error}
+                </Alert.Title>
+              </Alert.Root>
+            )}
 
-          <Fieldset>
-            <ButtonLayout horizontalAlign="start">
+            <ButtonLayout
+              className={cn('mt-cn-2xl gap-cn-sm', { 'mt-cn-md': values.length > 0 || !!error?.length })}
+              horizontalAlign="start"
+            >
               <Button type="submit" disabled={isSaving}>
                 {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
               </Button>
@@ -240,9 +236,9 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
                 {t('views:repos.cancel', 'Cancel')}
               </Button>
             </ButtonLayout>
-          </Fieldset>
-        </FormWrapper>
-      )}
-    </SandboxLayout.Content>
+          </FormWrapper>
+        )}
+      </Layout.Vertical>
+    </Layout.Vertical>
   )
 }

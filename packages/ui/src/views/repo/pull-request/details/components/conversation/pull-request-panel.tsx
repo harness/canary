@@ -624,7 +624,6 @@ const PullRequestPanel = ({
             <>
               <StackedList.Field
                 right
-                disableTruncate
                 title={
                   <Layout.Horizontal align="center" justify="center" gap="xs">
                     {!!commitSuggestionsBatchCount && (

@@ -32,6 +32,8 @@ interface RepoSettingsGeneralPageProps {
   useRepoRulesStore: () => IRepoStore
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
   showVulnerabilityScanning?: boolean
+  setCreateBranchDialogOpen: (open: boolean) => void
+  onBranchQueryChange: (query: string) => void
 }
 
 export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
@@ -45,7 +47,9 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   openRepoArchiveDialog,
   useRepoRulesStore,
   branchSelectorRenderer,
-  showVulnerabilityScanning = false
+  showVulnerabilityScanning = false,
+  setCreateBranchDialogOpen,
+  onBranchQueryChange
 }) => {
   const { t } = useTranslation()
 
@@ -67,6 +71,8 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           isUpdatingRepoData={loadingStates.isUpdatingRepoData}
           isRepoUpdateSuccess={isRepoUpdateSuccess}
           branchSelectorRenderer={branchSelectorRenderer}
+          setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+          onBranchQueryChange={onBranchQueryChange}
         />
         <FormSeparator />
         <RepoSettingsSecurityForm

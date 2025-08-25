@@ -48,4 +48,6 @@ export interface BranchSelectorContainerProps {
   className?: string
   isUpdating?: boolean
   disabled?: boolean
+  setCreateBranchDialogOpen?: (open: boolean) => void
+  onBranchQueryChange?: (query: string) => void
 }

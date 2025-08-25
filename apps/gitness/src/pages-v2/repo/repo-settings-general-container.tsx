@@ -32,6 +32,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
+import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
@@ -42,7 +43,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const routes = useRoutes()
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
-  const { spaceId } = useParams<PathParams>()
+  const { spaceId, repoId } = useParams<PathParams>()
   const queryClient = useQueryClient()
   const {
     repoData: repoDataStore,
@@ -55,6 +56,8 @@ export const RepoSettingsGeneralPageContainer = () => {
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
   const [isRepoArchiveDialogOpen, setRepoArchiveDialogOpen] = useState(false)
+  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
+  const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
   const isMfe = useIsMFE()
 
   const closeAlertDeleteDialog = () => {
@@ -302,6 +305,8 @@ export const RepoSettingsGeneralPageContainer = () => {
         openRepoArchiveDialog={() => setRepoArchiveDialogOpen(true)}
         branchSelectorRenderer={BranchSelectorContainer}
         showVulnerabilityScanning={isMfe}
+        setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+        onBranchQueryChange={setBranchQueryForNewBranch}
       />
       <ExitConfirmDialog
         open={isRepoArchiveDialogOpen}
@@ -331,6 +336,17 @@ export const RepoSettingsGeneralPageContainer = () => {
         type="repository"
         deletionItemName={repoDataStore?.name}
         deletionKeyword={repoDataStore?.name}
+      />
+
+      <CreateBranchDialog
+        open={isCreateBranchDialogOpen}
+        onClose={() => setCreateBranchDialogOpen(false)}
+        onSuccess={() => {
+          setCreateBranchDialogOpen(false)
+          navigate(routes.toRepoFiles({ spaceId, repoId, '*': branchQueryForNewBranch }))
+        }}
+        onBranchQueryChange={setBranchQueryForNewBranch}
+        prefilledName={branchQueryForNewBranch}
       />
     </>
   )

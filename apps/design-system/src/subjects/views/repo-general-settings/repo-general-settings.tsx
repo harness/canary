@@ -43,6 +43,8 @@ export const RepoGeneralSettings = () => {
         branchSelectorRenderer={DummyComponent}
         openRepoArchiveDialog={() => {}}
         handleUpdateFeaturesSettings={noop}
+        setCreateBranchDialogOpen={noop}
+        onBranchQueryChange={noop}
       />
 
       <DeleteAlertDialog

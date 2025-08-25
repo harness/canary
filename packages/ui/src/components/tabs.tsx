@@ -175,19 +175,8 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const { isShadowRoot, activeEl } = getShadowActiveElement(rootEl)
       if (!isShadowRoot) return
 
-      const orientation = rootEl.getAttribute('aria-orientation') || 'horizontal'
-      const cssDir = getComputedStyle(rootEl).direction
-
-      const isPrev =
-        (orientation === 'horizontal' &&
-          ((cssDir === 'ltr' && e.key === 'ArrowLeft') || (cssDir === 'rtl' && e.key === 'ArrowRight'))) ||
-        (orientation === 'vertical' && e.key === 'ArrowUp')
-
-      const isNext =
-        (orientation === 'horizontal' &&
-          ((cssDir === 'ltr' && e.key === 'ArrowRight') || (cssDir === 'rtl' && e.key === 'ArrowLeft'))) ||
-        (orientation === 'vertical' && e.key === 'ArrowDown')
-
+      const isPrev = e.key === 'ArrowLeft'
+      const isNext = e.key === 'ArrowRight'
       if (!isPrev && !isNext) return
 
       const triggers = Array.from(rootEl.querySelectorAll<HTMLElement>('[role="tab"]:not([data-disabled])'))

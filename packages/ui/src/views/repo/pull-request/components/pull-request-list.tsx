@@ -118,7 +118,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   /**
    * Prioritize the `toPullRequest` prop if provided, otherwise use the on click handler.
    */
-  const prLinkClickHandler = (pullRequest: PullRequest) => (e: MouseEvent) => {
+  const prLinkClickHandler = (e: MouseEvent, pullRequest: PullRequest) => {
     if (toPullRequest) return
 
     e.preventDefault()
@@ -161,7 +161,14 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
           className="px-4 py-3"
           isLast={pullRequests.length - 1 === pullRequest_idx}
-          disableHover
+          to={
+            toPullRequest && pullRequest.number
+              ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
+              : ''
+          }
+          linkProps={{
+            onClick: e => prLinkClickHandler(e, pullRequest)
+          }}
         >
           {!!pullRequest.number && (
             <StackedList.Field
@@ -174,12 +181,6 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                     onLabelClick={onLabelClick}
                     scope={scope}
                     showScope={showScope}
-                    prLinkTo={
-                      toPullRequest && pullRequest.number
-                        ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
-                        : ''
-                    }
-                    prLinkClickHandler={prLinkClickHandler(pullRequest)}
                   />
                 )
               }

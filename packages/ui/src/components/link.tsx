@@ -40,11 +40,27 @@ interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, Var
    * The default value is false.
    */
   disabled?: boolean
+  /**
+   * In cases when we use the Link component as a wrapper around another component
+   * and we don’t need Links hover style.
+   */
+  withoutHover?: boolean
 }
 
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   (
-    { className, variant = 'default', children, prefixIcon, suffixIcon, disabled = false, size, onClick, ...props },
+    {
+      className,
+      variant = 'default',
+      children,
+      prefixIcon,
+      suffixIcon,
+      disabled = false,
+      size,
+      onClick,
+      withoutHover = false,
+      ...props
+    },
     ref
   ) => {
     const { Link: LinkBase } = useRouterContext()
@@ -61,7 +77,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     return (
       <LinkBase
         {...props}
-        className={cn(linkVariants({ variant, size }), className)}
+        className={cn(linkVariants({ variant, size }), { 'cn-link-no-hover': withoutHover }, className)}
         onClick={handleClick}
         data-disabled={disabled}
         aria-disabled={disabled}

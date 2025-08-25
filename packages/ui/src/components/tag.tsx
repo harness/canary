@@ -4,7 +4,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { Button } from './button'
-import { IconV2, IconV2NamesType } from './icon-v2'
+import { IconPropsV2, IconV2, IconV2NamesType } from './icon-v2'
 
 const tagVariants = cva('cn-tag', {
   variants: {
@@ -49,6 +49,7 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   theme?: VariantProps<typeof tagVariants>['theme']
   rounded?: boolean
   icon?: IconV2NamesType
+  iconProps?: Omit<IconPropsV2, 'name' | 'size' | 'fallback' | 'ref'>
   label?: string
   value: string
   disabled?: boolean
@@ -78,6 +79,7 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
       onActionClick,
       labelClassName,
       valueClassName,
+      iconProps,
       ...props
     },
     ref
@@ -123,7 +125,12 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
         {...props}
       >
         {icon && (
-          <IconV2 size="xs" name={icon} className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })} />
+          <IconV2
+            size="xs"
+            name={icon}
+            {...iconProps}
+            className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled }, iconProps?.className)}
+          />
         )}
         <span
           className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })}

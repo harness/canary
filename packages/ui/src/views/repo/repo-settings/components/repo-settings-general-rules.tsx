@@ -44,34 +44,33 @@ interface DescriptionProps {
 const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
   const { t } = useTranslation()
   return (
-    <div className="flex items-center gap-1.5 pl-7 text-sm">
-      {targetPatternsCount !== 0 ? (
+    <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit pl-7">
+      {targetPatternsCount !== 0 && (
         <>
-          <Text variant="body-normal">
+          <Text truncate>
             {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
           </Text>
           <Separator orientation="vertical" className="h-3" />
         </>
-      ) : null}
-      <Text variant="body-normal">
+      )}
+      <Text truncate>
         {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
       </Text>
-      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
       <Separator orientation="vertical" className="h-3" />
-      <span className="flex items-center gap-1">
+      <Layout.Flex align="center" gapX="3xs">
         {bypassAllowed ? (
           <>
-            <IconV2 className="text-icons-success" name="check" size="2xs" />
-            <Text variant="body-normal"> {t('views:repos.bypassAllowed', 'bypass allowed')}</Text>
+            <IconV2 className="text-icons-success" name="check" size="xs" />
+            <Text truncate>{t('views:repos.bypassAllowed', 'bypass allowed')}</Text>
           </>
         ) : (
           <>
-            <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
-            <Text variant="body-normal">{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</Text>
+            <IconV2 className="text-icons-danger" name="warning-triangle" size="xs" />
+            <Text truncate>{t('views:repos.bypassNotAllowed', 'bypass not allowed')}</Text>
           </>
         )}
-      </span>
-    </div>
+      </Layout.Flex>
+    </Layout.Grid>
   )
 }
 
@@ -183,7 +182,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
                   <StackedList.Item
-                    className="py-4 pr-1.5"
+                    className="p-cn-md pr-cn-xs"
                     key={rule.identifier}
                     linkProps={{
                       onClick: e => handleToProjectRuleDetails(e, rule)
@@ -191,9 +190,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   >
                     <>
                       <StackedList.Field
-                        className="grid gap-1.5"
+                        className="gap-cn-xs grid"
                         title={
-                          <div className="flex items-center gap-2">
+                          <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit">
                             {rule.state === 'active' ? (
                               <IconV2 className="text-icons-success" name="check-circle" size="md" />
                             ) : (
@@ -203,21 +202,25 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                               {rule.identifier}
                             </Text>
                             {rule.type && (
-                              <Tag
-                                variant="outline"
-                                size="sm"
-                                theme={rule.type === 'branch' ? 'blue' : 'purple'}
-                                value={rule.type === 'branch' ? 'Branch Rule' : 'Tag Rule'}
-                                icon={rule.type === 'branch' ? 'git-branch' : 'tag'}
-                                rounded={rule.type === 'tag'}
-                              />
+                              <>
+                                <Separator orientation="vertical" className="h-3" />
+                                <Tag
+                                  variant="outline"
+                                  size="sm"
+                                  theme={rule.type === 'branch' ? 'blue' : 'purple'}
+                                  value={rule.type === 'branch' ? 'Branch Rule' : 'Tag Rule'}
+                                  icon={rule.type === 'branch' ? 'git-branch' : 'tag'}
+                                  rounded={rule.type === 'tag'}
+                                />
+                              </>
                             )}
+                            <Separator orientation="vertical" className="h-3" />
                             <ScopeTag
                               scopeType={getScopeType(rule.scope ?? 0)}
                               scopedPath={getScopeType(rule.scope ?? 0)}
                               size="sm"
                             />
-                          </div>
+                          </Layout.Grid>
                         }
                         description={
                           <Description

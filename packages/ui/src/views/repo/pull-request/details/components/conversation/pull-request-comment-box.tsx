@@ -464,7 +464,7 @@ export const PullRequestCommentBox = ({
 
   const toolbar: ToolbarItem[] = useMemo(() => {
     const aiButton: ToolbarItem[] = handleAiPullRequestSummary
-      ? [{ icon: 'ai' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
+      ? [{ icon: 'ai-solid' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
       : []
 
     const suggestionButton: ToolbarItem[] =

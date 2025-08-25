@@ -293,6 +293,11 @@
       "$value": "8rem",
       "$description": "128px"
     },
+    "half": {
+      "$type": "fontSizes",
+      "$value": "0.788rem",
+      "$description": "12.6px"
+    },
     "min": {
       "$type": "fontSizes",
       "$value": "0.55rem",
@@ -688,6 +693,32 @@
       "loose": {
         "$type": "lineHeights",
         "$value": "1.75"
+      }
+    },
+    "half": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.half}*{lineHeight.multiplier.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.half}*{lineHeight.multiplier.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.half}*{lineHeight.multiplier.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.half}*{lineHeight.multiplier.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.half}*{lineHeight.multiplier.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{fontSize.half}*{lineHeight.multiplier.loose}"
       }
     }
   }

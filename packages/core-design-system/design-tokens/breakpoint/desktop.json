@@ -114,8 +114,8 @@
       "$value": {
         "fontFamily": "{fontFamily.mono}",
         "fontWeight": "{fontWeight.default.normal.300}",
-        "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.normal}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
@@ -126,8 +126,8 @@
         "$value": {
           "fontFamily": "{fontFamily.mono}",
           "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "{fontSize.2}",
-          "lineHeight": "{lineHeight.2.none}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
@@ -196,9 +196,9 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.mono}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.1}",
-        "lineHeight": "{lineHeight.1.snug}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{fontSize.half}",
+        "lineHeight": "{lineHeight.half.snug}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       }
@@ -240,9 +240,9 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.default.normal.400}",
-          "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.none}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{fontSize.half}",
+          "lineHeight": "{lineHeight.half.none}",
           "letterSpacing": "{tracking.normal}"
         }
       }

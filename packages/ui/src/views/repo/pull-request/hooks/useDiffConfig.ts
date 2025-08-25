@@ -18,7 +18,7 @@ type DiffConfigAction =
 const initialState: DiffConfig = {
   highlight: true,
   wrap: true,
-  fontsize: 14,
+  fontsize: 12.6,
   mode: DiffModeEnum.Unified
 }
 

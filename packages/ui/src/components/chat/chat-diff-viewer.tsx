@@ -78,7 +78,7 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
           style={{ '--diff-plain-lineNumber--': 'var(--cn-bg-1)' } as CSSProperties}
           className="w-full text-cn-foreground-1"
           diffFile={diffFileInstance}
-          diffViewFontSize={14}
+          diffViewFontSize={12.6}
           diffViewHighlight={true}
           diffViewMode={4}
           registerHighlighter={highlighter}

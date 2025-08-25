@@ -1,20 +1,21 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, Fragment, useMemo, useState } from 'react'
 
 import {
-  Button,
   Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
-  IconV2,
   Input,
   Label,
+  Layout,
   Message,
   MessageTheme,
   MultiSelect,
   MultiSelectOption,
+  ResetTag,
   SplitButton,
-  Switch
+  Switch,
+  Text
 } from '@/components'
 import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
@@ -31,7 +32,6 @@ import {
 } from '@/views'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import clsx from 'clsx'
 import { isEmpty } from 'lodash-es'
 
 import { getIcon } from '../utils'
@@ -97,10 +97,10 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
   }
 
   return (
-    <Fieldset className="gap-y-4">
+    <Layout.Grid gapY="md">
       <ControlGroup>
         <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
-        <div className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
+        <Layout.Grid columns="1fr auto" className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
           <FormInput.Text
             id="pattern"
             {...register!('pattern')}
@@ -111,7 +111,6 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
           />
           <SplitButton<PatternsButtonType>
-            // buttonClassName="px-0 w-full"
             handleButtonClick={handleAddPattern}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
@@ -128,34 +127,25 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           >
             {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
           </SplitButton>
-        </div>
-        {!!patterns.length && (
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {patterns.map(pattern => (
-              <Button
-                key={pattern.pattern}
-                className="group flex h-6 items-center gap-x-1.5"
-                size="sm"
-                type="button"
-                variant="secondary"
-                onClick={() => handleRemovePattern(pattern.pattern)}
-              >
-                <span className="flex items-center gap-1">
-                  <IconV2
-                    className={cn('text-icons-success', {
-                      'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
-                    })}
-                    name="plus-circle"
-                    size="2xs"
-                  />
-                  {pattern.pattern}
-                </span>
-                <IconV2 name="xmark" size="2xs" />
-              </Button>
-            ))}
-          </div>
-        )}
+        </Layout.Grid>
       </ControlGroup>
+
+      {!!patterns.length && (
+        <Layout.Flex wrap="wrap" gap="xs">
+          {patterns.map(({ pattern, option }) => (
+            <ResetTag
+              key={pattern}
+              value={pattern}
+              onReset={() => handleRemovePattern(pattern)}
+              icon={option === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'}
+              iconProps={{
+                className:
+                  option === PatternsButtonType.INCLUDE ? '!text-cn-foreground-success' : '!text-cn-foreground-danger'
+              }}
+            />
+          ))}
+        </Layout.Flex>
+      )}
 
       <ControlGroup>
         <FormInput.Checkbox
@@ -166,7 +156,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
 
         {!!errors?.default && <Message theme={MessageTheme.ERROR}>{errors?.default?.message?.toString()}</Message>}
       </ControlGroup>
-    </Fieldset>
+    </Layout.Grid>
   )
 }
 
@@ -198,19 +188,17 @@ export const BranchSettingsRuleBypassListField: FC<
   }, [bypassOptions])
 
   return (
-    <Fieldset className="gap-y-4">
-      <ControlGroup>
-        <FormInput.MultiSelect
-          label={t('views:repos.bypassList', 'Bypass list')}
-          name="bypass"
-          options={multiSelectOptions}
-          placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
-          searchQuery={debouncedPrincipalsSearchQuery}
-          setSearchQuery={handleStringSearchChange}
-          disallowCreation
-          error={errors?.bypass?.message?.toString()}
-        />
-      </ControlGroup>
+    <Fieldset className="gap-y-cn-md">
+      <FormInput.MultiSelect
+        label={t('views:repos.bypassList', 'Bypass list')}
+        name="bypass"
+        options={multiSelectOptions}
+        placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
+        searchQuery={debouncedPrincipalsSearchQuery}
+        setSearchQuery={handleStringSearchChange}
+        disallowCreation
+        error={errors?.bypass?.message?.toString()}
+      />
 
       <ControlGroup>
         <FormInput.Checkbox
@@ -230,13 +218,21 @@ export const BranchSettingsRuleBypassListField: FC<
 
 export const BranchSettingsRuleDefaultReviewersField: FC<
   FieldProps & {
+    className?: string
     rule?: Rule
     defaultReviewersOptions?: PrincipalType[] | null
     principalsSearchQuery?: string
     setPrincipalsSearchQuery?: (val: string) => void
     handleSelectChangeForRule: (ruleId: string, options: MultiSelectOption[]) => void
   }
-> = ({ defaultReviewersOptions, rule, setPrincipalsSearchQuery, principalsSearchQuery, handleSelectChangeForRule }) => {
+> = ({
+  className,
+  defaultReviewersOptions,
+  rule,
+  setPrincipalsSearchQuery,
+  principalsSearchQuery,
+  handleSelectChangeForRule
+}) => {
   const { t } = useTranslation()
   const { validationMessage, selectOptions } = rule || {}
   const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
@@ -255,7 +251,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
   }, [defaultReviewersOptions])
 
   return (
-    <>
+    <ControlGroup className={className}>
       <MultiSelect
         value={selectOptions?.map(option => ({
           id: option.id?.toString() || '',
@@ -277,7 +273,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
             : validationMessage.message}
         </Message>
       )}
-    </>
+    </ControlGroup>
   )
 }
 
@@ -305,9 +301,12 @@ export const BranchSettingsRuleListField: FC<{
   const { t } = useTranslation()
   const branchRules = getBranchRules(t)
   return (
-    <ControlGroup>
-      <Label className="mb-4">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      <Fieldset className="gap-y-5">
+    <Layout.Vertical gapY="xl">
+      <Text as="h4" variant="body-strong">
+        {t('views:repos.rulesTitle', 'Rules: select all that apply')}
+      </Text>
+
+      <Layout.Vertical gapY="lg">
         {branchRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)
           const {
@@ -318,10 +317,8 @@ export const BranchSettingsRuleListField: FC<{
 
           return (
             !isHidden && (
-              <Fieldset key={rule.id} className={clsx('gap-y-1', rule.isNested && 'pl-[26px]')}>
-                {/* Divider between rules for better scan-ability */}
-                {index > 0 && <Separator className="mb-cn-md" />}
-
+              <Fragment key={rule.id}>
+                {index > 0 && <Separator className={cn('w-auto', rule.isNested && 'ml-[26px]')} />}
                 <Checkbox
                   id={rule.id}
                   checked={isChecked}
@@ -330,11 +327,12 @@ export const BranchSettingsRuleListField: FC<{
                   label={rule.label}
                   caption={rule.description}
                   captionVariant="caption-soft"
+                  className={cn(rule.isNested && 'ml-[26px]')}
                 />
 
                 {/* Conditionally render the submenu if this rule has a submenu and is checked */}
                 {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
-                  <Fieldset className="gap-y-4 pl-[26px]">
+                  <Layout.Vertical className="ml-[26px]" gapY="md">
                     {rule.submenuOptions.map(subOption => (
                       <Checkbox
                         key={`${rule.id}-${subOption.id}`}
@@ -344,56 +342,53 @@ export const BranchSettingsRuleListField: FC<{
                         label={subOption.label}
                       />
                     ))}
-                  </Fieldset>
+                  </Layout.Vertical>
                 )}
 
                 {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.STATUS_CHECKS && (
-                  <div className="pl-[26px]">
-                    <MultiSelect
-                      value={rules[index].selectOptions.map(option => ({ id: option?.id, key: option?.key }))}
-                      placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                      onChange={options => {
-                        handleSelectChangeForRule(rule.id, options)
-                      }}
-                      options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
-                      disallowCreation
-                    />
-                  </div>
+                  <MultiSelect
+                    wrapperClassName="ml-[26px]"
+                    value={rules[index].selectOptions.map(option => ({ id: option?.id, key: option?.key }))}
+                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                    onChange={options => {
+                      handleSelectChangeForRule(rule.id, options)
+                    }}
+                    options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
+                    disallowCreation
+                  />
                 )}
 
                 {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.ENABLE_DEFAULT_REVIEWERS && (
-                  <div className="pl-[26px]">
-                    <BranchSettingsRuleDefaultReviewersField
-                      defaultReviewersOptions={defaultReviewersOptions}
-                      rule={rules[index]}
-                      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-                      principalsSearchQuery={principalsSearchQuery}
-                      handleSelectChangeForRule={handleSelectChangeForRule}
-                    />
-                  </div>
+                  <BranchSettingsRuleDefaultReviewersField
+                    className="ml-[26px]"
+                    defaultReviewersOptions={defaultReviewersOptions}
+                    rule={rules[index]}
+                    setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+                    principalsSearchQuery={principalsSearchQuery}
+                    handleSelectChangeForRule={handleSelectChangeForRule}
+                  />
                 )}
 
                 {!!rule?.hasInput && isChecked && (
-                  <div className="pl-[26px]">
-                    <Input
-                      id="name"
-                      size="md"
-                      type="number"
-                      placeholder={
-                        rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT
-                          ? t('views:repos.enterMinDefaultReviewers', 'Enter minimum number of default reviewers')
-                          : t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')
-                      }
-                      value={rules[index].input || ''}
-                      onChange={e => handleInputChange(rule.id, e.target.value)}
-                    />
-                  </div>
+                  <Input
+                    id="name"
+                    size="md"
+                    type="number"
+                    wrapperClassName={cn('ml-[26px]', { 'ml-[52px]': rule.isNested })}
+                    placeholder={
+                      rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT
+                        ? t('views:repos.enterMinDefaultReviewers', 'Enter minimum number of default reviewers')
+                        : t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')
+                    }
+                    value={rules[index].input || ''}
+                    onChange={e => handleInputChange(rule.id, e.target.value)}
+                  />
                 )}
-              </Fieldset>
+              </Fragment>
             )
           )
         })}
-      </Fieldset>
-    </ControlGroup>
+      </Layout.Vertical>
+    </Layout.Vertical>
   )
 }

@@ -134,7 +134,7 @@
     "enterMinDefaultReviewers": "Enter minimum number of default reviewers",
     "enterMinReviewers": "Enter minimum number of reviewers",
     "updateBranchRule": "Update branch rule",
-    "createBranchRule": "Create branch rule",
+    "createBranchRule": "Create a branch rule",
     "updateRuleButton": "Update Rule",
     "createRuleButton": "Create Rule",
     "updatingRuleButton": "Updating Rule...",

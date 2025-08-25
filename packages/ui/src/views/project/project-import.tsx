@@ -86,7 +86,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[570px]">
+      <SandboxLayout.Content className="settings-form-width mx-auto">
         <Spacer size={5} />
         <Text variant="heading-section">Import a Project</Text>
         <Spacer size={10} />

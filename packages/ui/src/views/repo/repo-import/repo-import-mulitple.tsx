@@ -146,7 +146,7 @@ export function RepoImportMultiplePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content key={providerValue} className="mx-auto w-[570px]">
+      <SandboxLayout.Content key={providerValue} className="settings-form-width mx-auto">
         <Text variant="heading-section">Import Repositories</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>

@@ -39,7 +39,7 @@ const PullRequestCheckSection = ({
           />
         )
       default:
-        return <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />
+        return <IconV2 color="success" size="lg" name="check-circle-solid" className="text-cn-foreground-success" />
     }
   }
 
@@ -73,7 +73,7 @@ const PullRequestCheckSection = ({
                   <Table.Cell className="w-72">
                     <Text color="foreground-3">
                       {check?.check?.status === ExecutionState.SUCCESS ||
-                      check?.check?.status === ExecutionState.FAILURE_IGNORED
+                        check?.check?.status === ExecutionState.FAILURE_IGNORED
                         ? `Succeeded in ${time}`
                         : check?.check?.status === ExecutionState.FAILURE
                           ? `Failed in ${time}`

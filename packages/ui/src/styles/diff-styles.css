@@ -26,7 +26,33 @@
     --diff-empty-content--: var(--cn-comp-diff-empty-content);
     --diff-hunk-content-color--: var(--cn-comp-diff-hunk-content-color);
     --diff-border--: var(--cn-border-2);
-    /* Monaco Editor monospace font override */
-    --monaco-monospace-font: var(--cn-font-family-mono);
+  }
+}
+
+/* Git-diff-view component font overrides */
+@layer components {
+  /* Target all code content in git-diff-view components */
+  .diff-view,
+  .diff-view *,
+  .diff-view pre,
+  .diff-view code,
+  .diff-view .diff-line,
+  .diff-view .diff-line-content,
+  .diff-view .diff-line-number,
+  .diff-view .diff-code,
+  .diff-view .diff-text,
+  .diff-view .hljs,
+  [class*="diff-"] pre,
+  [class*="diff-"] code,
+  [class*="diff-"] .hljs {
+    font-family: var(--cn-font-family-mono) !important;
+  }
+  
+  /* Ensure Monaco Editor elements also use the correct font */
+  .monaco-editor,
+  .monaco-editor *,
+  .monaco-editor code,
+  .monaco-hover code {
+    font-family: var(--cn-font-family-mono) !important;
   }
 }

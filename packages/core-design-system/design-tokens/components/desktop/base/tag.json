@@ -37,7 +37,7 @@
         "radius": {
           "r": {
             "$type": "borderRadius",
-            "$value": "{rounded.2}"
+            "$value": "{tag.radius.default}"
           },
           "l": {
             "$type": "borderRadius",
@@ -53,7 +53,7 @@
           },
           "l": {
             "$type": "borderRadius",
-            "$value": "{rounded.2}"
+            "$value": "{tag.radius.default}"
           }
         }
       },

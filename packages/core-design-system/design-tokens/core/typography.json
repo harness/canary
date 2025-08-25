@@ -295,8 +295,8 @@
     },
     "half": {
       "$type": "fontSizes",
-      "$value": "0.781rem",
-      "$description": "12.5px"
+      "$value": "0.788rem",
+      "$description": "12.6px"
     },
     "min": {
       "$type": "fontSizes",

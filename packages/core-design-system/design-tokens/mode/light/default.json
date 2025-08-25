@@ -492,6 +492,14 @@
           "$type": "color",
           "$value": "{yellow.300}",
           "$description": "Background color for prominent yellow surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{yellow.400}"
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{yellow.400}"
         }
       },
       "soft": {
@@ -555,6 +563,14 @@
           "$type": "color",
           "$value": "{blue.600}",
           "$description": "Background color for prominent blue surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{blue.700}"
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{blue.700}"
         }
       },
       "soft": {
@@ -572,6 +588,10 @@
           "$type": "color",
           "$value": "{blue.100}",
           "$description": "Hover background color for subdued blue surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{blue.100}"
         }
       },
       "surface": {
@@ -613,6 +633,14 @@
           "$type": "color",
           "$value": "{purple.700}",
           "$description": "Background color for prominent purple surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{purple.800}"
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.800}"
         }
       },
       "soft": {
@@ -630,6 +658,10 @@
           "$type": "color",
           "$value": "{purple.100}",
           "$description": "Hover background color for subdued purple surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.100}"
         }
       },
       "surface": {

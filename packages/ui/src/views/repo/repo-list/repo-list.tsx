@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react'
+
 import {
   Favorite,
   IconV2,
@@ -10,12 +12,10 @@ import {
   Text,
   TimeAgoCard
 } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
+import { RepositoryType, Scope } from '@/views'
 import { determineScope, getScopedPath } from '@components/scope/utils'
-import { cn } from '@utils/cn'
-import { Scope } from '@views/common'
 
-import { RepositoryType } from '../repo.types'
 import { FavoriteProps, RoutingProps } from './types'
 
 export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
@@ -87,7 +87,6 @@ export function RepoList({
   scope,
   showScope = false
 }: RepoListProps) {
-  const { Link } = useRouterContext()
   const { t } = useTranslation()
 
   if (isLoading) {
@@ -133,12 +132,20 @@ export function RepoList({
     )
   }
 
+  const handleOnClickRepo = (repo: RepositoryType) => (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (repo.importing) return
+
+    onClickRepo?.(repo)
+  }
+
   return (
     <StackedList.Root>
       {repos.map((repo, repo_idx) => (
         <StackedList.Item
           key={repo.name}
-          asChild
           className="py-3"
           isLast={repos.length - 1 === repo_idx}
           actions={
@@ -149,58 +156,51 @@ export function RepoList({
               />
             )
           }
+          linkProps={{
+            onClick: e => handleOnClickRepo?.(repo)(e)
+          }}
         >
-          <Link
-            to="#"
-            onClick={e => {
-              e.preventDefault()
-              e.stopPropagation()
-              onClickRepo?.(repo)
-            }}
-            className={cn({ 'pointer-events-none': repo.importing })}
-          >
-            <StackedList.Field
-              className="grid"
-              primary
-              description={
-                repo.importing ? (
-                  t('views:repos.importing', 'Importing…')
-                ) : repo?.description ? (
-                  <Text truncate>{repo.description}</Text>
-                ) : undefined
-              }
-              title={
-                <Title
-                  repoName={repo.name}
-                  isPrivate={repo.private}
-                  isArchived={repo.archived}
-                  repoPath={repo.path}
-                  scope={scope}
-                  showScope={showScope}
-                />
-              }
-            />
-            {!repo.importing && (
-              <StackedList.Field
-                title={
-                  <>
-                    {t('views:repos.updated', 'Updated')}{' '}
-                    <TimeAgoCard
-                      timestamp={repo.timestamp}
-                      cutoffDays={3}
-                      beforeCutoffPrefix=""
-                      afterCutoffPrefix="on"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                    />
-                  </>
-                }
-                description={<Stats pulls={repo.pulls} />}
-                className="grow-0"
-                right
-                label
+          <StackedList.Field
+            className="grid"
+            primary
+            description={
+              repo.importing ? (
+                t('views:repos.importing', 'Importing…')
+              ) : repo?.description ? (
+                <Text truncate>{repo.description}</Text>
+              ) : undefined
+            }
+            title={
+              <Title
+                repoName={repo.name}
+                isPrivate={repo.private}
+                isArchived={repo.archived}
+                repoPath={repo.path}
+                scope={scope}
+                showScope={showScope}
               />
-            )}
-          </Link>
+            }
+          />
+          {!repo.importing && (
+            <StackedList.Field
+              title={
+                <>
+                  {t('views:repos.updated', 'Updated')}{' '}
+                  <TimeAgoCard
+                    timestamp={repo.timestamp}
+                    cutoffDays={3}
+                    beforeCutoffPrefix=""
+                    afterCutoffPrefix="on"
+                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                  />
+                </>
+              }
+              description={<Stats pulls={repo.pulls} />}
+              className="grow-0"
+              right
+              label
+            />
+          )}
         </StackedList.Item>
       ))}
     </StackedList.Root>

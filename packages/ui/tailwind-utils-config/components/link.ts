@@ -25,17 +25,19 @@ export default {
     },
 
     '&:where([data-disabled="false"])': {
-      '&:where(.cn-link-default)': {
+      '&:not(.cn-link-no-hover)': {
+        '&:where(.cn-link-default)': {
+          '&:hover, &:where([data-hovered="true"])': {
+            color: 'var(--cn-comp-link-text-hover)'
+          }
+        },
+
         '&:hover, &:where([data-hovered="true"])': {
-          color: 'var(--cn-comp-link-text-hover)'
-        }
+          textDecorationColor: 'inherit'
+        },
       },
 
-      '&:hover, &:where([data-hovered="true"])': {
-        textDecorationColor: 'inherit'
-      },
-
-      '&:focus': {
+      '&:focus-visible': {
         outline: 'var(--cn-focus)'
       }
     },

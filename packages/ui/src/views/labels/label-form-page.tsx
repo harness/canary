@@ -200,14 +200,12 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               <Text as="h3">{t('views:labelData.form.previewLabel', 'Label preview')}</Text>
 
               <Layout.Vertical gap="xs" align="start">
-                <Layout.Horizontal gap="xs" align="center">
-                  <LabelTag
-                    color={color}
-                    labelKey={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
-                    labelValue={values.length > 0 ? String(values.length) : ''}
-                    withIndicator={isDynamic}
-                  />
-                </Layout.Horizontal>
+                <LabelTag
+                  color={color}
+                  labelKey={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
+                  labelValue={values.length > 0 ? String(values.length) : ''}
+                  withIndicator={isDynamic}
+                />
                 {values.map((value, idx) => (
                   <LabelTag
                     key={`${value.value}-${idx}`}

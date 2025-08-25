@@ -2,7 +2,7 @@ import { KeyboardEvent, ReactNode, useCallback, useEffect, useRef, useState } fr
 
 import { DropdownMenu, SearchInput, SearchInputProps, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { afterFrames } from '@/utils'
+import { afterFrames, getShadowActiveElement } from '@/utils'
 import { cn } from '@utils/cn'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
@@ -120,15 +120,18 @@ export const SearchFiles = ({
   }
 
   const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+    const rootEl = contentRef.current
+    if (!rootEl) return
+
+    const { activeEl } = getShadowActiveElement(rootEl)
     const items = getItems()
 
     if (!items.length) return
 
     const first = items[0]
     const last = items[items.length - 1]
-    const activeElement = document.activeElement?.shadowRoot?.activeElement ?? document.activeElement
 
-    if ((e.key === 'ArrowUp' && activeElement === first) || (e.key === 'ArrowDown' && activeElement === last)) {
+    if ((e.key === 'ArrowUp' && activeEl === first) || (e.key === 'ArrowDown' && activeEl === last)) {
       e.preventDefault()
       inputRef.current?.focus()
       setIsOpen(true)

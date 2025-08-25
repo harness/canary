@@ -106,7 +106,9 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
     ])
 
     /**
-     * This code is executed only when inside a ShadowRoot
+     * !!! This code is executed only when inside a ShadowRoot
+     *
+     * To navigate between items using the top and down arrow keys
      */
     const onKeyDownCaptureHandler = (e: KeyboardEvent<HTMLDivElement>) => {
       /**

@@ -5,6 +5,7 @@
 
 import Account from './icons/account.svg'
 import Agile from './icons/agile.svg'
+import AiSolid from './icons/ai-solid.svg'
 import Ai from './icons/ai.svg'
 import AppNotification from './icons/app-notification.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
@@ -484,6 +485,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   account: Account,
   agile: Agile,
+  'ai-solid': AiSolid,
   ai: Ai,
   'app-notification': AppNotification,
   'apple-shortcut': AppleShortcut,

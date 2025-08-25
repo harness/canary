@@ -12,8 +12,6 @@ import {
 
 import { RouterContextProvider } from '@harnessio/ui/context'
 
-import { MFERouteRenderer } from '../../MFERouteRenderer'
-
 interface AppRouterProviderProps {
   children: ReactNode
 }
@@ -23,21 +21,18 @@ const AppRouterProvider: FC<AppRouterProviderProps> = ({ children }) => {
   const location = useLocation()
 
   return (
-    <>
-      <MFERouteRenderer />
-      <RouterContextProvider
-        Link={Link}
-        NavLink={NavLink}
-        Outlet={Outlet}
-        location={location}
-        navigate={navigate}
-        useSearchParams={useSearchParams}
-        useMatches={useMatches}
-        useParams={useParams}
-      >
-        {children}
-      </RouterContextProvider>
-    </>
+    <RouterContextProvider
+      Link={Link}
+      NavLink={NavLink}
+      Outlet={Outlet}
+      location={location}
+      navigate={navigate}
+      useSearchParams={useSearchParams}
+      useMatches={useMatches}
+      useParams={useParams}
+    >
+      {children}
+    </RouterContextProvider>
   )
 }
 

@@ -140,7 +140,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
   }
 
   return (
-    <Layout.Vertical gapY="xl" className={cn('w-[570px]', className)}>
+    <Layout.Vertical gapY="xl" className={cn('settings-form-width', className)}>
       <Text as="h1" variant="heading-section">
         {labelId
           ? t('views:labelData.form.editTitle', 'Label details')
@@ -196,10 +196,8 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               {...register('isDynamic')}
             />
 
-            <Layout.Vertical className="mt-cn-xl" gap="md">
-              <Text as="h3" variant="body-single-line-normal">
-                {t('views:labelData.form.previewLabel', 'Label preview')}
-              </Text>
+            <Layout.Vertical className="mt-cn-lg" gap="md">
+              <Text as="h3">{t('views:labelData.form.previewLabel', 'Label preview')}</Text>
 
               <Layout.Vertical gap="xs" align="start">
                 <Layout.Horizontal gap="xs" align="center">
@@ -230,7 +228,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             )}
 
             <ButtonLayout
-              className={cn('mt-cn-2xl gap-cn-sm', { 'mt-cn-md': values.length > 0 })}
+              className={cn('mt-cn-2xl gap-cn-sm', { 'mt-cn-md': values.length > 0 || !!error?.length })}
               horizontalAlign="start"
             >
               <Button type="submit" disabled={isSaving}>

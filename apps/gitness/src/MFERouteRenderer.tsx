@@ -1,5 +1,7 @@
 import { useEffect, useMemo } from 'react'
-import { matchPath, useLocation, useNavigate } from 'react-router-dom'
+import { matchPath } from 'react-router-dom'
+
+import { useRouterContext } from '@harnessio/ui/context'
 
 import { useMFEContext } from './framework/hooks/useMFEContext'
 import { extractRedirectRouteObjects } from './framework/routing/utils'
@@ -7,8 +9,7 @@ import { repoRoutes } from './routes'
 import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export const MFERouteRenderer: React.FC = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const { navigate, location } = useRouterContext()
   const { renderUrl, parentLocationPath, onRouteChange } = useMFEContext()
   const parentPath = parentLocationPath.replace(renderUrl, '')
 

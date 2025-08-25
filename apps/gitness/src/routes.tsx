@@ -20,6 +20,7 @@ import { PageTitleProvider } from './framework/context/PageTitleContext'
 import { RbacButton } from './framework/rbac/rbac-button'
 import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
+import { MFERouteRenderer } from './MFERouteRenderer'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
@@ -1264,6 +1265,7 @@ export const getMFERoutes = (mfeProjectId?: string): CustomRouteObject[] => [
         <PageTitleProvider>
           <AppProvider>
             <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+              <MFERouteRenderer />
               <AppShellMFE />
             </ComponentProvider>
           </AppProvider>

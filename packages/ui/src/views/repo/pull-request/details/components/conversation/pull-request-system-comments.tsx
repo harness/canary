@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Tag, Text, TimeAgoCard } from '@/components'
+import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -8,6 +8,7 @@ import {
   CommentType,
   GeneralPayload,
   LabelActivity,
+  LabelTag,
   MergeStrategy,
   PrincipalPropsType,
   ReviewerAddActivity,
@@ -132,7 +133,8 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
       label,
       label_color,
       value,
-      value_color
+      value_color,
+      scope
     } = payload as GeneralPayload
 
     const openFromDraft = old_draft === true && new_draft === false
@@ -355,13 +357,12 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   {labelType ? labelActivityToTitleDict[labelType] : 'modified'}
                 </Text>
-                <Tag
-                  variant="secondary"
-                  size="sm"
-                  key={label as string}
-                  label={label as string}
-                  value={value as string}
-                  theme={(value_color ?? label_color) as ColorsEnum}
+                <LabelTag
+                  scope={scope as number}
+                  color={(value_color ?? label_color) as ColorsEnum}
+                  labelKey={label as string}
+                  labelValue={value as string}
+                  tagProps={{ size: 'sm' }}
                 />
                 <Text variant="body-single-line-normal" color="foreground-3">
                   label
@@ -379,7 +380,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 
         return {
           header: {
-            description: <span className="text-sm text-cn-foreground-3">{String(type)}</span>
+            description: <span className="text-cn-foreground-3 text-sm">{String(type)}</span>
           }
         }
     }

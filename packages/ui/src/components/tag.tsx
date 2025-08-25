@@ -56,6 +56,8 @@ type TagProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'role' | 'tabIndex'> 
   enableHover?: boolean
   actionIcon?: IconV2NamesType
   onActionClick?: () => void
+  labelClassName?: string
+  valueClassName?: string
 }
 
 const Tag = forwardRef<HTMLDivElement, TagProps>(
@@ -74,6 +76,8 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
       title,
       actionIcon,
       onActionClick,
+      labelClassName,
+      valueClassName,
       ...props
     },
     ref
@@ -94,7 +98,10 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
             value,
             disabled,
             enableHover: Boolean(props.onClick),
-            onClick: props.onClick
+            onClick: props.onClick,
+            className,
+            labelClassName,
+            valueClassName
           }}
         />
       )
@@ -166,31 +173,33 @@ const TagSplit = forwardRef<HTMLDivElement, TagProps>(
       label = '',
       disabled = false,
       enableHover = false,
-      onClick
+      onClick,
+      className,
+      labelClassName,
+      valueClassName
     },
     ref
   ) => {
-    const sharedProps = { variant, size, theme, rounded, icon, disabled, onClick }
+    const sharedProps = { variant, size, theme, rounded, disabled, onClick }
 
     return (
       <div
-        className={cn('cn-tag-split flex w-fit items-center justify-center', {
+        className={cn('cn-tag-split flex w-fit items-center justify-center', className, {
           'cursor-not-allowed': disabled,
           'cn-tag-split-hoverable': !disabled && enableHover
         })}
         ref={ref}
       >
         {/* LEFT TAG - should never have a Reset Icon */}
-        <Tag {...sharedProps} icon={icon} value={label} className="cn-tag-split-left" />
+        <Tag {...sharedProps} icon={icon} value={label} className={cn('cn-tag-split-left', labelClassName)} />
 
         {/* RIGHT TAG - should never have a tag Icon */}
         <Tag
           {...sharedProps}
-          icon={icon}
           actionIcon={actionIcon}
           onActionClick={onActionClick}
           value={value}
-          className="cn-tag-split-right"
+          className={cn('cn-tag-split-right', valueClassName)}
         />
       </div>
     )

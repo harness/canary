@@ -1,11 +1,12 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Tag, Text } from '@/components'
+import { Button, DropdownMenu, IconV2, Layout, Link, LinkProps, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
+  LabelTag,
   LabelType,
   LabelValuesType,
   TypesLabelAssignment,
@@ -127,7 +128,7 @@ export const LabelsHeader = ({
         )}
 
         {!labelWithValuesToShow && (
-          <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+          <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
             <DropdownMenu.Header>
               <SearchInput
                 size="sm"
@@ -148,13 +149,16 @@ export const LabelsHeader = ({
                   key={`${label.id}-${idx}`}
                   onSelect={handleOnSelect(label)}
                   title={
-                    <Tag
-                      variant="secondary"
-                      size="sm"
-                      theme={label.color}
-                      label={label.key}
-                      value={(label.values?.length || '').toString()}
-                    />
+                    <Layout.Grid gapX="xs" align="center" className="grid-flow-col">
+                      <LabelTag
+                        scope={label.scope ?? 0}
+                        color={label.color as ILabelType['color']}
+                        labelKey={label.key ?? ''}
+                        labelValue={(label.values?.length || '').toString()}
+                        withIndicator={label.type === LabelType.DYNAMIC}
+                        tagProps={{ size: 'sm' }}
+                      />
+                    </Layout.Grid>
                   }
                   // TODO: add description when it is available from PR Labels call
                   // description={<Text truncate>{label.description}</Text>}

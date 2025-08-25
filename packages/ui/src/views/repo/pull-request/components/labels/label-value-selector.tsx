@@ -1,10 +1,10 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, SearchBox, Tag } from '@/components'
+import { Button, DropdownMenu, getScopeType, IconV2, scopeTypeToIconMap, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
-import { EnumLabelColor, HandleAddLabelType, TypesLabelValueInfo } from '@/views'
+import { ColorsEnum, EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 
@@ -87,7 +87,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
   }
 
   return (
-    <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+    <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
       <DropdownMenu.Header className="relative">
         <SearchBox.Root
           className="w-full"
@@ -100,7 +100,15 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         >
           <div className="pr-2">
-            <Tag className="max-w-20" variant="secondary" size="sm" theme={label.color} value={label.key ?? ''} />
+            <LabelTag
+              scope={label.scope ?? 0}
+              color={label.color as ColorsEnum}
+              labelKey={label.key ?? ''}
+              tagProps={{
+                className: 'max-w-20',
+                size: 'sm'
+              }}
+            />
           </div>
         </SearchBox.Root>
 
@@ -134,8 +142,19 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
       {isAllowAddNewValue && !!label?.isCustom && (
         <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
+            className="[&>.cn-dropdown-menu-base-item]:gap-0"
             onSelect={handleAddNewValue}
-            tag={{ variant: 'secondary', size: 'sm', theme: label.color, value: searchState, label: label.key }}
+            tag={{
+              variant: 'secondary',
+              size: 'sm',
+              theme: label.color,
+              value: searchState,
+              label: label.key,
+              icon: scopeTypeToIconMap[getScopeType(label.scope ?? 0)],
+              className: 'grid grid-flow-col',
+              labelClassName: 'grid grid-flow-col',
+              valueClassName: 'grid grid-flow-col content-center'
+            }}
           />
         </DropdownMenu.Group>
       )}

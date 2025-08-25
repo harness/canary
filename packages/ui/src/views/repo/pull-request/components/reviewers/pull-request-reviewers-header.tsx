@@ -47,7 +47,7 @@ const ReviewersHeader = ({
             <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-80" align="end" sideOffset={-6} alignOffset={10}>
+        <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
           <DropdownMenu.Header role="presentation" onKeyDown={e => e.stopPropagation()}>
             <SearchInput size="sm" autoFocus id="search" defaultValue={searchQuery} onChange={handleSearchQuery} />
           </DropdownMenu.Header>

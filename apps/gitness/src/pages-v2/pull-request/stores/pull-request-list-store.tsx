@@ -63,7 +63,8 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
           key: label?.key || '',
           value: label?.value || undefined,
           color: (label?.value_color || label?.color) as ColorsEnum,
-          id: label?.id
+          id: label?.id,
+          scope: label?.scope || 0
         })) || []
     }))
 

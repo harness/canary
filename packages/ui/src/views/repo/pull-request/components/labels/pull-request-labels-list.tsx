@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
-import { LabelMarkerProps, PRListLabelType } from '@/views'
-import { Tag } from '@components/tag'
+import { Text } from '@/components'
+import { useTranslation } from '@/context'
+import { LabelMarkerProps, LabelTag, PRListLabelType } from '@/views'
 import { cn } from '@utils/cn'
 
 type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
@@ -14,31 +15,37 @@ interface LabelsListProps {
 }
 
 export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, onClick }) => {
+  const { t } = useTranslation()
+
   if (!labels.length) {
-    return <span className="text-2 font-medium text-cn-foreground-3">No labels</span>
+    return (
+      <Text variant="body-strong" color="foreground-3">
+        {t('views:pullRequests.noLabelsSidebar', 'No labels')}
+      </Text>
+    )
   }
 
   return (
     <div className={cn('flex flex-wrap gap-1.5', className)}>
       {labels.map(label => (
-        <Tag
+        <LabelTag
           key={label.key}
-          variant="secondary"
-          size="sm"
-          label={label.key}
-          value={label.value || ''}
-          theme={label.color}
-          onActionClick={label.onDelete}
-          actionIcon={showReset ? 'xmark' : undefined}
-          onClick={
-            onClick
+          scope={label.scope}
+          color={label.color}
+          labelKey={label.key}
+          labelValue={label.value || ''}
+          tagProps={{
+            size: 'sm',
+            onActionClick: label.onDelete,
+            actionIcon: showReset ? 'xmark' : undefined,
+            onClick: onClick
               ? e => {
                   e.stopPropagation()
                   e.preventDefault()
                   onClick?.(label)
                 }
               : undefined
-          }
+          }}
         />
       ))}
     </div>

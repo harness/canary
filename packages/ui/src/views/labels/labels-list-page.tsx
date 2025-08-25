@@ -94,19 +94,20 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         {isLoading && <Skeleton.Table countRows={5} countColumns={3} />}
 
         {!isLoading && (
-          <LabelsListView
-            {...labelsListViewProps}
-            labels={spaceLabels}
-            labelContext={{ space: space_ref, repo: repo_ref }}
-            handleResetQueryAndPages={handleResetQueryAndPages}
-            searchQuery={searchQuery}
-            values={spaceValues}
-            toRepoLabelDetails={toRepoLabelDetails}
-          />
+          <Layout.Vertical grow gapY="none">
+            <LabelsListView
+              {...labelsListViewProps}
+              labels={spaceLabels}
+              labelContext={{ space: space_ref, repo: repo_ref }}
+              handleResetQueryAndPages={handleResetQueryAndPages}
+              searchQuery={searchQuery}
+              values={spaceValues}
+              toRepoLabelDetails={toRepoLabelDetails}
+            />
+            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+          </Layout.Vertical>
         )}
       </Layout.Vertical>
-
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
     </Layout.Vertical>
   )
 }

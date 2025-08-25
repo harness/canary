@@ -193,6 +193,7 @@ export const TimeAgoCard = memo(
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
           <Popover.Trigger
+            tabIndex={-1}
             className={cn('cn-time-ago-card-trigger', triggerClassName)}
             ref={ref}
             onMouseEnter={handleMouseEnter}

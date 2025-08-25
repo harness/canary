@@ -86,7 +86,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </Layout.Horizontal>
 
         <Layout.Horizontal gap="sm" align="center">
-          <StatusBadge icon={stateObject.icon} variant="outline" theme={stateObject.theme}>
+          <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme}>
             {stateObject.text}
           </StatusBadge>
 

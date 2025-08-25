@@ -1,5 +1,4 @@
-import { CopyTag } from '@/components'
-import { useRouterContext } from '@/context'
+import { CopyTag, Link } from '@/components'
 
 import type { TagProps } from './tag'
 
@@ -22,10 +21,8 @@ const BranchTag: React.FC<BranchTagProps> = ({
   variant = 'secondary',
   size = 'md'
 }) => {
-  const { Link } = useRouterContext()
-
   return (
-    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}>
+    <Link noHoverUnderline to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}>
       <CopyTag
         variant={variant}
         theme={theme}

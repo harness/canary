@@ -46,6 +46,10 @@ export default {
       '&:hover, &:focus': {
         cursor: 'not-allowed'
       }
+    },
+
+    '&:where(.cn-link-no-underline):hover': {
+      textDecorationColor: 'transparent'
     }
   }
 }

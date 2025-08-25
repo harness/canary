@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
-import { Accordion, Alert, Layout, Skeleton, Spacer, Tag, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { Accordion, Alert, Layout, Link, Skeleton, Spacer, Tag, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 const DEFAULT_NUM_ITEMS_TO_SHOW = 1
@@ -47,7 +47,6 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
-  const { Link } = useRouterContext()
 
   if (isLoading) {
     return <Skeleton.List />
@@ -95,17 +94,17 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
         <Accordion.Trigger className="gap-4 px-4 py-3">
           <Layout.Horizontal className="w-full" gap="md">
             {!isRepoScope ? (
-              <Link to={toRepo({ repoPath: item.repo_path })}>
+              <Link noHoverUnderline variant="secondary" to={toRepo({ repoPath: item.repo_path })}>
                 <Tag value={item.repo_path} icon="repository" />
               </Link>
             ) : null}
             <Link
+              variant="secondary"
               to={toRepoFileDetails({
                 repoPath: item.repo_path,
                 filePath: item.file_name,
                 branch: item.repo_branch
               })}
-              className="hover:underline"
             >
               <Text variant="body-strong">{item.file_name}</Text>
             </Link>

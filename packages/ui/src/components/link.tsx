@@ -16,6 +16,9 @@ export const linkVariants = cva('cn-link', {
     size: {
       md: '',
       sm: 'cn-link-sm'
+    },
+    noHoverUnderline: {
+      true: 'cn-link-no-underline'
     }
   },
   defaultVariants: {
@@ -40,11 +43,28 @@ interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, Var
    * The default value is false.
    */
   disabled?: boolean
+
+  /**
+   * If true, the underline on hover will be disabled.
+   * The default value is false.
+   */
+  noHoverUnderline?: boolean
 }
 
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   (
-    { className, variant = 'default', children, prefixIcon, suffixIcon, disabled = false, size, onClick, ...props },
+    {
+      className,
+      variant = 'default',
+      children,
+      prefixIcon,
+      suffixIcon,
+      noHoverUnderline = false,
+      disabled = false,
+      size,
+      onClick,
+      ...props
+    },
     ref
   ) => {
     const { Link: LinkBase } = useRouterContext()
@@ -61,7 +81,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     return (
       <LinkBase
         {...props}
-        className={cn(linkVariants({ variant, size }), className)}
+        className={cn(linkVariants({ variant, size, noHoverUnderline }), className)}
         onClick={handleClick}
         data-disabled={disabled}
         aria-disabled={disabled}

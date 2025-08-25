@@ -16,7 +16,7 @@ interface LineDescriptionProps {
 
 export const LineTitle = ({ ...props }: LineTitleProps) => {
   return (
-    <Layout.Horizontal gap="xs" align="center">
+    <Layout.Horizontal gap="2xs" align="center">
       {props?.icon}
       <Text as="h3" variant="body-single-line-strong" className={cn('text-cn-foreground-1', props?.textClassName)}>
         {props?.text}

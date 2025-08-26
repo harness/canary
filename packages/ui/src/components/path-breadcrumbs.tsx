@@ -26,7 +26,6 @@ const InputPathBreadcrumbItem = ({
     <Layout.Flex align="center" gap="2xs">
       <TextInput
         className="w-[200px]"
-        size="sm"
         id="fileName"
         value={path}
         placeholder="Add a file name"
@@ -102,8 +101,8 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
   const isRenderInput = isNew || isEdit
 
   return (
-    <Layout.Flex gap="2xs" align="center" wrap="wrap">
-      <Breadcrumb.Root>
+    <Layout.Flex gap="sm" wrap={isRenderInput ? 'wrap' : 'nowrap'} align="start">
+      <Breadcrumb.Root className="mt-2">
         <Breadcrumb.List>
           {items.map(({ parentPath, path }, idx) => (
             <Fragment key={idx}>
@@ -123,11 +122,12 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
 
       {items.length > 0 && !isRenderInput && (
         <CopyButton
+          className="mt-1"
+          size="xs"
           name={items
             .slice(1)
             .map(item => item.path)
             .join('/')}
-          className="ml-cn-2xs"
         />
       )}
     </Layout.Flex>

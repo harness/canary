@@ -13,7 +13,7 @@ interface DraggableSidebarDividerProps {
 }
 
 export const SIDEBAR_MIN_WIDTH = 264
-export const SIDEBAR_MAX_WIDTH = 700
+export const SIDEBAR_MAX_WIDTH = 528
 
 export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = ({
   width,

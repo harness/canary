@@ -32,8 +32,9 @@ export default {
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
 
-    '&:where(:not([disabled])):focus': {
-      outline: 'var(--cn-focus)'
+    '&:where(:not([disabled])):focus-visible': {
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'var(--cn-size-px)'
     },
 
     '&:where(:not([disabled])):hover': {

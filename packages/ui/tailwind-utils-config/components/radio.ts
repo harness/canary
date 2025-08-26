@@ -33,7 +33,7 @@ export default {
     borderRadius: '50%',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
 
-    '&:where(:not([disabled])):focus': {
+    '&:where(:not([disabled])):focus-visible': {
       outline: 'var(--cn-focus)'
     },
 

@@ -376,6 +376,9 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
 
         'border-spin': 'border-spin 7s linear infinite'
+      },
+      outlineOffset: {
+        'cn-tight': 'calc(var(--cn-size-px) * -2)'
       }
     }
   },

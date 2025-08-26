@@ -23,9 +23,9 @@ export default {
     backgroundColor: `var(--cn-comp-selection-unselected-bg)`,
     borderColor: `var(--cn-comp-selection-unselected-border)`,
 
-    '&:where(:not([disabled])):focus': {
+    '&:where(:not([disabled])):focus-visible': {
       outline: 'var(--cn-focus)',
-      outlineOffset: 'calc(var(--cn-size-px) * -2)'
+      '@apply outline-offset-cn-tight': ''
     },
 
     '&:where(:not([disabled])):hover': {

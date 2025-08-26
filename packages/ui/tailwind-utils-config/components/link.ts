@@ -35,8 +35,9 @@ export default {
         textDecorationColor: 'inherit'
       },
 
-      '&:focus': {
-        outline: 'var(--cn-focus)'
+      '&:focus-visible': {
+        outline: 'var(--cn-focus)',
+        '@apply outline-offset-cn-tight': ''
       }
     },
 

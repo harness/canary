@@ -44,9 +44,9 @@ export default {
       borderColor: 'var(--cn-border-brand)'
     },
 
-    '&:where(:not([data-disabled])):focus': {
+    '&:where(:not([data-disabled])):focus-visible': {
       outline: 'var(--cn-focus)',
-      outlineOffset: 'calc(var(--cn-size-px) * -2)'
+      '@apply outline-offset-cn-tight': ''
     },
 
     '&:where([data-disabled])': {

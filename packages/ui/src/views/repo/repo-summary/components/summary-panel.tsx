@@ -7,11 +7,12 @@ import {
   IconPropsV2,
   IconV2,
   Layout,
+  Link,
   Separator,
   Text,
   TimeAgoCard
 } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -52,8 +53,6 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   const onSave = (description: string) => {
     saveDescription(description)
   }
-
-  const { Link } = useRouterContext()
 
   return (
     <>
@@ -102,7 +101,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
 
         <Layout.Grid gapY="sm">
           {details?.map(item => (
-            <Link key={item.id} to={item.to}>
+            <Link variant="secondary" key={item.id} to={item.to}>
               <Layout.Flex className="cursor-pointer gap-1.5" align="center" gap="2xs">
                 <IconV2 name={item.iconName} size="xs" className="text-cn-foreground-2" />
                 <Text color="foreground-1">{item.name}</Text>

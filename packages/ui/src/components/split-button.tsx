@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, MouseEvent, ReactNode, useCallback, useState } from 'react'
 
-import { Button, buttonVariants } from '@/components/button'
+import { Button, ButtonProps, buttonVariants } from '@/components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { cn } from '@utils/cn'
 
@@ -32,8 +32,8 @@ interface SplitButtonBaseProps<T extends string> {
 
 // Base props with all possible variants and themes
 export interface SplitButtonProps<T extends string> extends SplitButtonBaseProps<T> {
-  variant?: 'primary' | 'outline'
-  theme?: 'default' | 'success' | 'danger'
+  variant?: ButtonProps['variant']
+  theme?: ButtonProps['theme']
 }
 
 /**

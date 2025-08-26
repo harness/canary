@@ -75,10 +75,11 @@ export const getApprovalStateTheme = (state: PullReqReviewDecision) => {
 export const getApprovalStateVariant = (state: PullReqReviewDecision) => {
   switch (state) {
     case PullReqReviewDecision.approved:
+      return 'secondary'
     case PullReqReviewDecision.changeReq:
-      return 'primary'
+      return 'secondary'
     case PullReqReviewDecision.approve:
-      return 'outline'
+      return 'primary'
     default:
       return 'outline'
   }

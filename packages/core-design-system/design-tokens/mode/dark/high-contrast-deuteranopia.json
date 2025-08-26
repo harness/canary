@@ -1234,12 +1234,12 @@
       },
       "add-widget": {
         "$type": "color",
-        "$value": "{chrome.900}",
+        "$value": "{set.brand.solid.bg}",
         "$description": "Background for interactive UI elements related to added content."
       },
       "add-widget-color": {
         "$type": "color",
-        "$value": "{text.1}",
+        "$value": "{set.brand.solid.text}",
         "$description": "Text/icon color for add-related interactive elements, ensuring readability."
       },
       "del-content": {

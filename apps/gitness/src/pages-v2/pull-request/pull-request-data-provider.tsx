@@ -1,9 +1,10 @@
-import { FC, HTMLAttributes, PropsWithChildren, useEffect } from 'react'
+import { FC, HTMLAttributes, PropsWithChildren, useCallback, useEffect, useMemo, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { isEqual } from 'lodash-es'
 
 import {
+  TypesPullReq,
   useFindRepositoryQuery,
   useGetPullReqQuery,
   useListCommitsQuery,
@@ -11,15 +12,20 @@ import {
 } from '@harnessio/code-service-client'
 import { RepoRepositoryOutput } from '@harnessio/ui/views'
 
+import { eventManager } from '../../framework/event/EventManager'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import useSpaceSSEWithPubSub from '../../framework/hooks/useSpaceSSEWithPubSub'
 import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
 import { PathParams } from '../../RouteDefinitions'
+import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { usePRChecksDecision } from './hooks/usePRChecksDecision'
 import { extractSpecificViolations, getCommentsInfoData } from './pull-request-utils'
 import { POLLING_INTERVAL, PR_RULES, usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
+  const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
@@ -42,7 +48,9 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     setPullReqMetadata,
     setRepoMetadata,
     setPullReqCommits,
-    pullReqCommits
+    pullReqCommits,
+    setRefreshNeeded,
+    refreshNeeded
   } = store
 
   const {
@@ -79,28 +87,66 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     repo_ref: repoRef
   })
   const pullReqChecksDecision = usePRChecksDecision({ repoMetadata, pullReqMetadata: pullReqData })
+  const prevTabRef = useRef<PullRequestTab | undefined>(undefined)
 
-  /**
-   * @todo enable it with proper implementation
-   */
-  // const handleEvent = useCallback(
-  //   (data: TypesPullReq) => {
-  //     if (data && String(data?.number) === pullRequestId) {
-  //       refetchPullReq()
-  //     }
-  //   },
-  //   [pullRequestId, refetchPullReq]
-  // )
-  // useSpaceSSE({
-  //   space: spaceURL,
-  //   events: [SSEEvent.PULLREQ_UPDATED],
-  //   onEvent: handleEvent,
-  //   shouldRun: !!(spaceURL && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
-  // })
+  const handleEvent = useCallback(
+    (data: TypesPullReq) => {
+      if (data && String(data?.number) === pullRequestId) {
+        // If we're in Changes tab, don't automatically refresh to avoid losing active comment edits
+
+        refetchPullReq().then(response => {
+          const newPRData = response?.data?.body
+          if (
+            // TODO : Remove the SHA comparison logic once the SSE is fixed to handle push events
+            (prevTabRef.current === PullRequestTab.CHANGES || pullRequestTab === PullRequestTab.CHANGES) &&
+            (pullReqMetadata?.source_sha !== newPRData?.source_sha ||
+              pullReqMetadata?.merge_base_sha !== newPRData?.merge_base_sha)
+          ) {
+            setRefreshNeeded(true)
+          }
+        })
+      }
+    },
+    [pullRequestId, refetchPullReq, pullRequestTab, setRefreshNeeded, pullReqMetadata]
+  )
+
+  useEffect(() => {
+    prevTabRef.current = pullRequestTab || undefined
+    if (pullRequestTab !== PullRequestTab.CHANGES) {
+      setRefreshNeeded(false)
+    }
+  }, [pullRequestTab, setRefreshNeeded])
+
+  // Use the singleton SSE connection manager for a persistent connection
+  useSpaceSSEWithPubSub({
+    space: spaceURL
+  })
+
+  // Subscribe to the specific event
+  useEffect(() => {
+    if (spaceURL && pullRequestId) {
+      const unsubscribe = eventManager.subscribe(SSEEvent.PULLREQ_UPDATED, handleEvent)
+
+      // Cleanup subscription when component unmounts or dependencies change
+      return unsubscribe
+    }
+  }, [spaceURL, pullRequestId, handleEvent])
+
+  // TODO : Remove the SHA comparison logic once the SSE is fixed to handle push events
+  const shouldUpdatePullReqState = useMemo(() => {
+    return (
+      pullRequestTab !== PullRequestTab.CHANGES ||
+      (pullReqMetadata?.source_sha === pullReqData?.source_sha &&
+        pullReqMetadata?.merge_base_sha === pullReqData?.merge_base_sha) ||
+      !refreshNeeded
+    )
+  }, [pullRequestTab, pullReqMetadata, pullReqData, refreshNeeded])
 
   useEffect(() => {
     if (!pullReqData || isEqual(pullReqMetadata, pullReqData)) return
-    setPullReqMetadata(pullReqData)
+    if (shouldUpdatePullReqState) {
+      setPullReqMetadata(pullReqData)
+    }
 
     const mergeBaseChanged = pullReqMetadata?.merge_base_sha !== pullReqData.merge_base_sha
     const sourceShaChanged = pullReqMetadata?.source_sha !== pullReqData.source_sha
@@ -108,7 +154,7 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     if (mergeBaseChanged || sourceShaChanged) {
       refetchCommits()
     }
-  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchCommits])
+  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchCommits, refreshNeeded])
 
   useEffect(() => {
     const hasChanges =
@@ -119,33 +165,34 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
 
     if (hasChanges) {
       setResolvedCommentArr(undefined)
-      store.updateState({
-        repoMetadata: repoMetadata as RepoRepositoryOutput,
-        setPullReqMetadata,
-        pullReqMetadata: pullReqData ? pullReqData : undefined,
-        pullReqCommits: commits,
-        pullReqActivities: activities,
-        loading: pullReqLoading || activitiesLoading,
-        error: pullReqError || activitiesError || commitsError,
-        pullReqChecksDecision,
-        refetchActivities,
-        refetchCommits,
-        refetchPullReq,
-        retryOnErrorFunc: () => {
-          if (pullReqError) {
-            refetchPullReq()
-          } else if (commitsError) {
-            refetchCommits()
-          } else {
-            refetchActivities()
+      shouldUpdatePullReqState &&
+        store.updateState({
+          repoMetadata: repoMetadata as RepoRepositoryOutput,
+          setPullReqMetadata,
+          pullReqMetadata: pullReqData ? pullReqData : undefined,
+          pullReqCommits: commits,
+          pullReqActivities: activities,
+          loading: pullReqLoading || activitiesLoading,
+          error: pullReqError || activitiesError || commitsError,
+          pullReqChecksDecision,
+          refetchActivities,
+          refetchCommits,
+          refetchPullReq,
+          retryOnErrorFunc: () => {
+            if (pullReqError) {
+              refetchPullReq()
+            } else if (commitsError) {
+              refetchCommits()
+            } else {
+              refetchActivities()
+            }
+          },
+          prPanelData: {
+            ...prPanelData,
+            resolvedCommentArr: undefined,
+            commentsInfoData: prPanelData?.commentsInfoData
           }
-        },
-        prPanelData: {
-          ...prPanelData,
-          resolvedCommentArr: undefined,
-          commentsInfoData: prPanelData?.commentsInfoData
-        }
-      })
+        })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

@@ -71,7 +71,10 @@ interface RepoPullRequestChangesPageProps {
   setDiffPathQuery: (path?: string) => void
   initiatedJumpToDiff: boolean
   setInitiatedJumpToDiff: (initiatedJumpToDiff: boolean) => void
+  refreshNeeded?: boolean
+  handleManualRefresh?: () => void
 }
+
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   loadingReviewers: _loadingReviewers,
   usePullRequestProviderStore,
@@ -109,6 +112,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   toRepoFileDetails,
   principalProps,
   currentRefForDiff,
+  refreshNeeded,
+  handleManualRefresh,
   commentId,
   setCommentId,
   diffPathQuery,
@@ -287,6 +292,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
               deletedLines: diff.deletedLines
             }))}
             goToDiff={goToDiff}
+            refreshNeeded={refreshNeeded}
+            handleManualRefresh={handleManualRefresh}
           />
           {renderContent()}
         </SandboxLayout.Content>

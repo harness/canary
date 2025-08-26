@@ -58,6 +58,8 @@ export interface PullRequestChangesFilterProps {
     deletedLines: number
   }[]
   goToDiff: (fileName: string) => void
+  refreshNeeded?: boolean
+  handleManualRefresh?: () => void
 }
 
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
@@ -80,7 +82,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   showExplorer,
   setShowExplorer,
   diffData,
-  goToDiff
+  goToDiff,
+  refreshNeeded,
+  handleManualRefresh
 }) => {
   const { t } = useTranslation()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -234,6 +238,14 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         )}
 
         <Layout.Horizontal align="center" className="gap-x-2.5">
+          {refreshNeeded && handleManualRefresh && (
+            // update the styles once supported
+            <Button variant="secondary" onClick={handleManualRefresh}>
+              <IconV2 name="refresh" size="sm" />
+              Refresh
+            </Button>
+          )}
+
           {commitSuggestionsBatchCount > 0 ? (
             <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
               Commit suggestion

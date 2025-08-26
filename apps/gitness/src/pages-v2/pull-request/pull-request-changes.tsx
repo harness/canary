@@ -69,7 +69,9 @@ export default function PullRequestChanges() {
     pullReqCommits,
     updateCommentStatus,
     setPullReqStats,
-    dryMerge
+    dryMerge,
+    refreshNeeded,
+    handleManualRefresh
   } = usePullRequestProviderStore()
   const { spaceId, repoId, pullRequestId, commitSHA } = useParams<PathParams>()
   const { currentUser } = useAppContext()
@@ -642,6 +644,8 @@ export default function PullRequestChanges() {
         currentRefForDiff={currentRefForDiff}
         initiatedJumpToDiff={initiatedJumpToDiff}
         setInitiatedJumpToDiff={setInitiatedJumpToDiff}
+        refreshNeeded={refreshNeeded}
+        handleManualRefresh={handleManualRefresh}
       />
     </>
   )

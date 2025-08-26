@@ -19,7 +19,13 @@ export enum PR_RULES {
   MERGE_BLOCK = 'pullreq.merge.block'
 }
 
-export const usePullRequestProviderStore = create<PullRequestDataState>((set, get) => ({
+export const usePullRequestProviderStore = create<
+  PullRequestDataState & {
+    refreshNeeded: boolean
+    setRefreshNeeded: (needed: boolean) => void
+    handleManualRefresh: () => void
+  }
+>((set, get) => ({
   repoMetadata: undefined,
   setRepoMetadata: metadata =>
     set(
@@ -283,5 +289,18 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
       produce(draft => {
         draft.diffStats = diffStats
       })
-    )
+    ),
+  refreshNeeded: false,
+  setRefreshNeeded: (needed: boolean) =>
+    set(
+      produce(draft => {
+        draft.refreshNeeded = needed
+      })
+    ),
+  handleManualRefresh: () => {
+    const { refetchPullReq, refetchCommits, setRefreshNeeded } = get()
+    refetchPullReq()
+    refetchCommits()
+    setRefreshNeeded(false)
+  }
 }))

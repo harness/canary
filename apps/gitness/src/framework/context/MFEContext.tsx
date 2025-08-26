@@ -79,6 +79,7 @@ export interface MFEContextProps {
   }>
   customUtils: Partial<{
     navigateToUserProfile: Unknown
+    navigate: (url: string | number) => void
   }>
   routes: Partial<{
     toAccountSettings: () => string

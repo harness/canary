@@ -26,6 +26,7 @@ import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
   const routes = useRoutes()
+  // const {routes} = useMFEContext()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
   const {
@@ -146,6 +147,7 @@ export default function ReposListPage() {
   const { accountId, orgIdentifier, projectIdentifier } = scope
 
   const handleOnClickRepo = (repo: RepositoryType) => {
+    console.log('on click repo')
     /** Scope where the repo is currently displayed */
     const currentRepoScopeType = getScopeType(scope)
     /** Scope where the repo actually belongs to */
@@ -159,20 +161,23 @@ export default function ReposListPage() {
     const repoSummaryPath = routes.toRepoSummary({ spaceId, repoId: repo.name })
 
     if (!isMFE || isSameScope) {
+      console.log('is not mfe', repoSummaryPath)
       navigate(repoSummaryPath)
     } else {
-      if (routeUtils?.toCODERepository) {
+      console.log('is mfe')
+      // if (routeUtils?.toCODERepository) {
         // Navigate with parent app's React Router
-        routeUtils.toCODERepository?.({ repoPath: repo.path })
-      } else {
-        // TODO: Remove this fallback once the routeUtils is available in all release branches
-        const fullPath = `${basename}${getRepoUrl({
-          repo,
-          scope,
-          repoSubPath: repoSummaryPath
-        })}`
-        window.location.href = fullPath
-      }
+        // routeUtils.toCODERepository?.({ repoPath: repo.path })
+        navigate(repoSummaryPath)
+      // } else {
+      //   // TODO: Remove this fallback once the routeUtils is available in all release branches
+      //   const fullPath = `${basename}${getRepoUrl({
+      //     repo,
+      //     scope,
+      //     repoSubPath: repoSummaryPath
+      //   })}`
+      //   window.location.href = fullPath
+      // }
     }
   }
 

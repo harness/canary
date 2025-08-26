@@ -5,19 +5,22 @@ import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Toast, TooltipProvider } from '@harnessio/ui/components'
-import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
+import { ComponentProvider, PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
-import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
-import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
-import { NavigationProvider } from './framework/context/NavigationContext'
-import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
-import { queryClient } from './framework/queryClient'
-import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
-import i18n from './i18n/i18n'
-import { useTranslationStore } from './i18n/stores/i18n-store'
+import ShadowRootWrapper from '../components-v2/shadow-root-wrapper'
+import { ExitConfirmProvider } from '../framework/context/ExitConfirmContext'
+import { MFEContext, MFEContextProps } from '../framework/context/MFEContext'
+import { NavigationProvider } from '../framework/context/NavigationContext'
+import { ThemeProvider, useThemeStore } from '../framework/context/ThemeContext'
+import { queryClient } from '../framework/queryClient'
+import { useLoadMFEStyles } from '../hooks/useLoadMFEStyles'
+import i18n from '../i18n/i18n'
+import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { RbacButton } from '../framework/rbac/rbac-button'
+import { RbacSplitButton } from '../framework/rbac/rbac-split-button'
+import { ProjectGeneralSettingsPageContainer } from '../pages-v2/project/project-general-settings-container'
 
-interface AppMFEProps extends MFEContextProps {
+interface ProjectSettingsPageProps extends MFEContextProps {
   on401?: () => void
   useMFEThemeContext: () => { theme: string; setTheme: (newTheme: string) => void }
 }
@@ -26,7 +29,7 @@ function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
 }
 
-export default function AppMFE({
+export default function ProjectSettingsPage({
   scope,
   renderUrl,
   parentContextObj,
@@ -39,7 +42,7 @@ export default function AppMFE({
   routes,
   routeUtils,
   hooks
-}: AppMFEProps) {
+}: ProjectSettingsPageProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
       `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
@@ -83,12 +86,10 @@ export default function AppMFE({
   const { t } = useTranslationStore()
 
   return (
-    <div ref={shadowRef} id="code-mfe-root">
+    <div ref={shadowRef} id="code-mfe-project-settings">
       <ShadowRootWrapper>
-        {/* Radix UI elements need to be rendered inside the following div with the theme class */}
         <div className={theme.toLowerCase()} ref={portalRef}>
           {!isStylesLoaded ? (
-            // Replace it with spinner once it is available
             <ShadowRootLoader theme={theme} />
           ) : (
             <PortalProvider portalContainer={portalContainer}>
@@ -115,8 +116,9 @@ export default function AppMFE({
                           <TooltipProvider>
                             <ExitConfirmProvider>
                               <NavigationProvider routes={[]}>
-                                {/* This component now serves as a wrapper for host app routing */}
-                                <div>MFE App Root - Routes handled by host</div>
+                                <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+                                  <ProjectGeneralSettingsPageContainer />
+                                </ComponentProvider>
                               </NavigationProvider>
                             </ExitConfirmProvider>
                           </TooltipProvider>
@@ -138,7 +140,7 @@ function ShadowRootLoader({ theme }: { theme: string }) {
   return (
     <>
       <div className="loading-container">
-        <p className="loading-text">Loading, please wait...</p>
+        <p className="loading-text">Loading project settings...</p>
       </div>
       <style>
         {`

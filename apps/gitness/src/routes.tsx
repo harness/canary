@@ -1,4 +1,4 @@
-import { Navigate, redirect } from 'react-router-dom'
+// React Router imports removed - routing now handled by host app
 
 import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import { ComponentProvider } from '@harnessio/ui/context'

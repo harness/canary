@@ -1,4 +1,4 @@
-import { memo, RefObject, useCallback, useEffect, useState } from 'react'
+import { memo, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
 import { TypesUser } from '@/types'
 import {
@@ -109,6 +109,7 @@ function PullRequestChangesInternal({
   setInitiatedJumpToDiff
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     if (data.length > 0) {
@@ -116,7 +117,7 @@ function PullRequestChangesInternal({
       data.map(diffItem => {
         const fileComments = getFileComments(diffItem, comments)
         const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
-        if (commentId && diffHasComment) {
+        if (commentId && diffHasComment && !initiatedJumpToDiff) {
           itemsToOpen.push(diffItem.text)
         } else {
           const isFileViewed =
@@ -148,15 +149,34 @@ function PullRequestChangesInternal({
     (fileText: string, val: boolean) => {
       setOpenItems(items => {
         if (val) {
+          // Clear any existing timeout
+          if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current)
+          }
+
+          // Find the file that's being collapsed/marked as viewed
+          const collapsedFile = data.find(item => item.text === fileText)
+          if (collapsedFile) {
+            // Find current file index
+            const currentIndex = data.findIndex(item => item.filePath === collapsedFile.filePath)
+            if (currentIndex !== -1) {
+              const nextDiff = data[currentIndex + 1]
+              scrollTimeoutRef.current = setTimeout(() => {
+                jumpToFile(nextDiff.filePath, diffBlocks, undefined, diffsContainerRef)
+                scrollTimeoutRef.current = null
+              }, 150) // Small delay to allow collapse animation
+            }
+          }
           return items.filter(item => item !== fileText)
         } else {
           return items.includes(fileText) ? items : [...items, fileText]
         }
       })
     },
-    [setOpenItems]
+    [setOpenItems, data, diffBlocks, diffsContainerRef]
   )
 
+  // if diffPath or commentId provided in url search params, jump to diff
   useEffect(() => {
     if (!data.length || initiatedJumpToDiff) return
     if (diffPathQuery) {
@@ -176,6 +196,15 @@ function PullRequestChangesInternal({
       }
     }
   }, [commentId, diffPathQuery, data])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div className="flex flex-col" ref={diffsContainerRef}>

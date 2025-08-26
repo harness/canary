@@ -31,7 +31,7 @@ export const RepoLabelFormContainer = () => {
 
   return (
     <LabelFormPage
-      className="px-0 settings-form-width"
+      className="settings-form-width px-0"
       useLabelsStore={useLabelsStore}
       isSaving={isSaving}
       onSubmit={onSubmit}

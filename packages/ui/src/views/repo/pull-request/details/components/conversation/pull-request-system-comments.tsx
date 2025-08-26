@@ -41,9 +41,7 @@ const formatListWithAndFragment = (names: string[]): React.ReactNode => {
           <Text as="span" variant="body-single-line-normal" color="foreground-1">
             {names[0]}
           </Text>
-          <Text as="span" variant="body-single-line-normal" color="foreground-3">
-            &nbsp;and&nbsp;
-          </Text>
+          and
           <Text as="span" variant="body-single-line-normal" color="foreground-1">
             {names[1]}
           </Text>
@@ -60,9 +58,7 @@ const formatListWithAndFragment = (names: string[]): React.ReactNode => {
               </Text>
             </>
           ))}
-          <Text as="span" variant="body-single-line-normal" color="foreground-3">
-            &nbsp;and&nbsp;
-          </Text>
+          and
           <Text as="span" variant="body-single-line-normal" color="foreground-1">
             {names[names.length - 1]}
           </Text>
@@ -324,7 +320,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         return {
           header: {
             description: (
-              <Text variant="body-single-line-normal" color="foreground-3">
+              <>
                 {reviewer_type === ReviewerAddActivity.SELF_ASSIGNED && 'self-requested a review'}
                 {reviewer_type === ReviewerAddActivity.ASSIGNED && <>assigned {activityMentions} as a reviewer</>}
                 {reviewer_type === ReviewerAddActivity.REQUESTED && <>requested a review from {activityMentions}</>}
@@ -340,7 +336,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                     {principalNameList?.length > 1 ? 'default reviewers' : 'default reviewer'}
                   </>
                 )}
-              </Text>
+              </>
             )
           },
           icon: <IconV2 name="eye" size="xs" />

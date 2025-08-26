@@ -119,31 +119,33 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
 
     return (
       <Layout.Horizontal className="flex-1" justify="between">
-        <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="wrap">
-          {/**
-           * ============
-           * Avatar and Name
-           * ============
-           */}
+        <Text asChild variant="body-single-line-normal" color="foreground-3">
+          <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="wrap">
+            {/**
+             * ============
+             * Avatar and Name
+             * ============
+             */}
 
-          {!!avatar && <div className="mr-0.5">{avatar}</div>}
-          {!!name && (
-            <Text variant="body-single-line-normal" color="foreground-1">
-              {name}
+            {!!avatar && <div className="mr-0.5">{avatar}</div>}
+            {!!name && (
+              <Text variant="body-single-line-normal" color="foreground-1">
+                {name}
+              </Text>
+            )}
+
+            {/**
+             * ============
+             * Description
+             * ============
+             */}
+            {description}
+
+            <Text variant="body-single-line-normal" color="foreground-3">
+              {selectStatus}
             </Text>
-          )}
-
-          {/**
-           * ============
-           * Description
-           * ============
-           */}
-          {description}
-
-          <Text variant="body-single-line-normal" color="foreground-3">
-            {selectStatus}
-          </Text>
-        </Layout.Horizontal>
+          </Layout.Horizontal>
+        </Text>
         {isComment && !isDeleted && !isResolved && (
           <MoreActionsTooltip iconName="more-horizontal" sideOffset={4} alignOffset={0} actions={actions} />
         )}

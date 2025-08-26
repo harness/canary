@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, useState } from 'react'
 
 import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -57,12 +57,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
           secondaryButton={{
-            label: (
-              <>
-                <IconV2 name="trash" />
-                {t('views:noData.clearSearch', 'Clear search')}
-              </>
-            ),
+            icon: 'trash',
+            label: t('views:noData.clearSearch', 'Clear search'),
             onClick: handleResetQueryAndPages
           }}
         />
@@ -76,12 +72,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
         primaryButton={{
-          label: (
-            <>
-              <IconV2 name="plus" />
-              {t('views:projectSettings.newLabels', 'Create Label')}
-            </>
-          ),
+          icon: 'plus',
+          label: t('views:projectSettings.newLabels', 'Create Label'),
           to: 'create'
         }}
       />
@@ -94,14 +86,14 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     <Table.Root size="compact">
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-[44px]" />
+          <Table.Head className="w-10 truncate" />
           <Table.Head className={cn('min-w-[150px] w-[25%]')} hideDivider>
             <Text variant="caption-strong">{t('views:labelData.table.name', 'Name')}</Text>
           </Table.Head>
           <Table.Head className={cn('min-w-[150px] w-[25%]', { 'min-w-[100px]': isSmallWidth })}>
             <Text variant="caption-strong">{t('views:labelData.table.created', 'Created in')}</Text>
           </Table.Head>
-          <Table.Head className={cn('min-w-[200px] w-[40%]', { 'min-w-[150px]': isSmallWidth })}>
+          <Table.Head className={cn('min-w-[200px]', { 'min-w-[150px]': isSmallWidth })}>
             <Text variant="caption-strong">{t('views:labelData.table.description', 'Description')}</Text>
           </Table.Head>
           <Table.Head className="w-[68px]" hideDivider />
@@ -109,87 +101,91 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       </Table.Header>
 
       <Table.Body>
-        {labels.map(label => (
-          <Table.Row
-            className="cursor-pointer"
-            key={label.id}
-            onClick={() => {
-              if (toRepoLabelDetails) {
-                toRepoLabelDetails({ labelId: label.key, scope: label.scope })
-              }
-            }}
-          >
-            <Table.Cell className="relative align-top">
-              {values?.[label.key]?.length > 0 ? (
-                <Button
-                  variant="ghost"
-                  size="2xs"
-                  iconOnly
-                  onClick={e => toggleRow(label.key, e)}
-                  className="mt-cn-2xs absolute right-0"
-                >
-                  <IconV2 name={expandedRows[label.key] ? 'nav-arrow-up' : 'nav-arrow-down'} />
-                </Button>
-              ) : null}
-            </Table.Cell>
-            <Table.Cell className="align-top">
-              <Layout.Vertical align="start" gap="xs">
-                <Layout.Grid gap="xs" align="center" className="mt-cn-2xs grid-cols-[auto_auto]">
+        {labels.map(label => {
+          const isExpanded = expandedRows[label.key]
+          const valuesCount = values?.[label.key]?.length
+          const showValues = isExpanded && valuesCount > 0
+
+          return (
+            <Table.Row
+              className="cursor-pointer"
+              key={label.id}
+              onClick={() => {
+                if (toRepoLabelDetails) {
+                  toRepoLabelDetails({ labelId: label.key, scope: label.scope })
+                }
+              }}
+            >
+              <Table.Cell className="pr-0 align-top">
+                {valuesCount > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="2xs"
+                    iconOnly
+                    onClick={e => toggleRow(label.key, e)}
+                    className="mt-cn-2xs"
+                  >
+                    <IconV2 name={isExpanded ? 'nav-arrow-up' : 'nav-arrow-down'} />
+                  </Button>
+                )}
+              </Table.Cell>
+              <Table.Cell className="align-top">
+                <Layout.Vertical align="start" gap="xs">
                   <LabelTag
+                    className="mt-cn-2xs"
                     scope={label.scope ?? 0}
                     labelKey={label.key}
                     color={label.color}
-                    labelValue={(values?.[label.key]?.length || '').toString()}
+                    labelValue={(valuesCount || '').toString()}
                     withIndicator={label.type === LabelType.DYNAMIC}
                   />
-                </Layout.Grid>
 
-                {!!values?.[label.key]?.length &&
-                  expandedRows[label.key] &&
-                  values?.[label.key].map(item => (
-                    <LabelTag
-                      key={item.id}
-                      scope={label.scope}
-                      labelKey={label.key}
-                      color={item?.color || label.color}
-                      labelValue={item.value}
-                    />
-                  ))}
-              </Layout.Vertical>
-            </Table.Cell>
-            <Table.Cell className="align-top leading-none">
-              <ScopeTag
-                className="mt-cn-2xs grid max-w-full grid-cols-[auto_auto]"
-                scopedPath={getScopeType(label.scope)}
-                scopeType={getScopeType(label.scope)}
-              />
-            </Table.Cell>
-            <Table.Cell className="align-top">
-              <Text lineClamp={2} className="mt-cn-xs">
-                {label?.description || ''}
-              </Text>
-            </Table.Cell>
-            <Table.Cell className="align-top">
-              <MoreActionsTooltip
-                isInTable
-                iconName="more-horizontal"
-                actions={[
-                  {
-                    title: t('views:labelData.edit', 'Edit label'),
-                    iconName: 'edit-pencil',
-                    onClick: () => handleEditLabel(label)
-                  },
-                  {
-                    isDanger: true,
-                    title: t('views:labelData.delete', 'Delete label'),
-                    iconName: 'trash',
-                    onClick: () => handleDeleteLabel(label.key)
-                  }
-                ]}
-              />
-            </Table.Cell>
-          </Table.Row>
-        ))}
+                  {showValues &&
+                    values?.[label.key].map(item => (
+                      <LabelTag
+                        key={item.id}
+                        scope={label.scope}
+                        labelKey={label.key}
+                        color={item?.color || label.color}
+                        labelValue={item.value}
+                      />
+                    ))}
+                </Layout.Vertical>
+              </Table.Cell>
+              <Table.Cell className="align-top leading-none">
+                <ScopeTag
+                  className="mt-cn-2xs grid max-w-full grid-cols-[auto_auto]"
+                  scopedPath={getScopeType(label.scope)}
+                  scopeType={getScopeType(label.scope)}
+                />
+              </Table.Cell>
+              <Table.Cell className="align-top">
+                <Text lineClamp={2} className="mt-cn-xs">
+                  {label?.description || ''}
+                </Text>
+              </Table.Cell>
+              <Table.Cell className="align-top">
+                <MoreActionsTooltip
+                  isInTable
+                  iconName="more-horizontal"
+                  actions={[
+                    {
+                      title: t('views:labelData.edit', 'Edit label'),
+                      iconName: 'edit-pencil',
+                      onClick: () => handleEditLabel(label)
+                    },
+                    {
+                      isDanger: true,
+                      title: t('views:labelData.delete', 'Delete label'),
+                      iconName: 'trash',
+                      onClick: () => handleDeleteLabel(label.key)
+                    }
+                  ]}
+                />
+              </Table.Cell>
+            </Table.Row>
+          )
+        })}
       </Table.Body>
     </Table.Root>
   )

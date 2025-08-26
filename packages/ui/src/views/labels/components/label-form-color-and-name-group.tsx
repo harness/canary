@@ -1,6 +1,6 @@
 import { ComponentProps, FC } from 'react'
 
-import { Button, FormInput, FormSelectProps, IconV2, SelectValueOption } from '@/components'
+import { Button, FormInput, FormSelectProps, IconV2, Layout, SelectValueOption, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ColorsEnum } from '@/views'
@@ -26,21 +26,20 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
 
   const options: SelectValueOption<ColorsEnum>[] = Object.values(ColorsEnum).map(color => ({
     label: (
-      <div className="flex max-w-full items-center gap-x-1.5">
-        <div className={`bg-label-foreground-${color} size-2 min-h-2 min-w-2 rounded-full`} />
-        <span className="truncate text-cn-foreground-1">{color}</span>
-      </div>
+      <Layout.Horizontal gap="2xs" className="max-w-full" align="center">
+        <div className={`cn-dropdown-menu-item-indicator cn-dropdown-menu-item-indicator-${color}`} />
+        <Text as="span" truncate color="foreground-1">
+          {color}
+        </Text>
+      </Layout.Horizontal>
     ),
     value: color
   }))
 
   return (
-    <div
-      className={cn(
-        'grid grid-cols-[8rem_1fr] gap-x-2.5',
-        isWithDeleteButton && 'grid-cols-[8rem_1fr_auto]',
-        className
-      )}
+    <Layout.Grid
+      gapX="xs"
+      className={cn('grid-cols-[128px_1fr]', isWithDeleteButton && 'grid-cols-[128px_1fr_auto]', className)}
     >
       <FormInput.Select options={options} {...selectProps} />
 
@@ -55,14 +54,16 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
 
       {isWithDeleteButton && (
         <Button
-          className="size-4 flex-none self-center text-icons-1 hover:text-icons-2"
+          className="mt-[2px]"
           variant="ghost"
           iconOnly
           onClick={handleDeleteValue}
+          size="sm"
+          aria-label={t('views:labelData.form.removeValue', 'Remove a value')}
         >
-          <IconV2 name="xmark" size="2xs" />
+          <IconV2 name="xmark" />
         </Button>
       )}
-    </div>
+    </Layout.Grid>
   )
 }

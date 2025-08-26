@@ -1,16 +1,17 @@
 import { FC } from 'react'
 
-import { getScopeType, IconV2, scopeTypeToIconMap, Tag, TagProps } from '@/components'
+import { getScopeType, IconV2, Layout, scopeTypeToIconMap, Tag, TagProps } from '@/components'
 
 import { ILabelType } from '../types'
 
 type LabelTagProps = {
-  scope: ILabelType['scope']
+  scope?: ILabelType['scope']
   color: ILabelType['color']
   labelKey: ILabelType['key']
   labelValue?: string
   withIndicator?: boolean
   tagProps?: Partial<TagProps>
+  className?: string
 }
 
 export const LabelTag: FC<LabelTagProps> = ({
@@ -19,11 +20,12 @@ export const LabelTag: FC<LabelTagProps> = ({
   labelKey,
   labelValue,
   withIndicator = false,
-  tagProps
+  tagProps,
+  className
 }) => (
-  <>
+  <Layout.Grid gap="xs" align="center" columns="auto auto" className={className}>
     <Tag
-      icon={scopeTypeToIconMap[getScopeType(scope)]}
+      icon={scope !== undefined ? scopeTypeToIconMap[getScopeType(scope)] : undefined}
       variant="secondary"
       size="md"
       theme={color}
@@ -36,5 +38,5 @@ export const LabelTag: FC<LabelTagProps> = ({
     />
 
     {withIndicator && <IconV2 size="xs" name="plus-circle" className="text-cn-foreground-3" role="presentation" />}
-  </>
+  </Layout.Grid>
 )

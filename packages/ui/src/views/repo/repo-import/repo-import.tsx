@@ -134,7 +134,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
   }
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto w-[570px]">
+      <SandboxLayout.Content className="settings-form-width mx-auto">
         <Text variant="heading-section">{t('views:repos.importRepo', 'Import a repository')}</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>

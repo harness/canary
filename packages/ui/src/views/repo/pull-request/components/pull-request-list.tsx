@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { IconV2, NoData, StackedList } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { IconV2, Link, NoData, StackedList } from '@/components'
+import { useTranslation } from '@/context'
 import { PRState, PullRequestListProps } from '@/views'
 import { noop } from 'lodash-es'
 
@@ -139,7 +139,6 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   showScope = false
 }) => {
   const { identifier: repoId } = repo || {}
-  const { Link } = useRouterContext()
 
   const onOpenClick = () => {
     setHeaderFilter(['open'])
@@ -202,6 +201,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       </StackedList.Item>
       {pullRequests.map((pullRequest, pullRequest_idx) => (
         <Link
+          noHoverUnderline
+          className="w-full"
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
           to={
             toPullRequest && pullRequest.number

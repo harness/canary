@@ -34,8 +34,42 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     const [commandValue, setCommandValue] = useState('')
 
     const [dropdownOpen, setDropdownOpen] = useState(false)
+    // const [supportsFieldSizing, setSupportsFieldSizing] = useState(false)
 
     const { setSearchPrincipalsQuery, principals, isPrincipalsLoading } = principalProps || {}
+
+    const supportsFieldSizing = CSS.supports('field-sizing', 'content')
+
+    // // Check if field-sizing: content is supported
+    // useEffect(() => {
+    //   console.log('CSS.supports', CSS.supports('field-sizing', 'content'))
+
+    //   setSupportsFieldSizing(CSS.supports('field-sizing', 'content'))
+    // }, [])
+
+    const autoResizeTextarea = useCallback(
+      (textarea: HTMLTextAreaElement) => {
+        if (supportsFieldSizing) {
+          // If field-sizing is supported, the CSS class will handle it
+          return
+        }
+
+        // Fallback: programmatic height adjustment
+        textarea.style.height = 'auto'
+        const scrollHeight = textarea.scrollHeight
+        const maxHeight = 384
+        textarea.style.height = Math.min(scrollHeight, maxHeight) + 'px'
+      },
+      [supportsFieldSizing]
+    )
+
+    // Auto-resize when value changes (for external updates)
+    useEffect(() => {
+      const textarea = textareaRef.current
+      if (textarea && !supportsFieldSizing) {
+        autoResizeTextarea(textarea)
+      }
+    }, [value, autoResizeTextarea, supportsFieldSizing])
 
     const handleBlur = useCallback(() => {
       const dropdown = dropdownRef.current
@@ -55,17 +89,22 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     }, [commandValue, setSearchPrincipalsQuery])
 
     // Combine refs to handle both forward ref and internal ref
-    const setRefs = (element: HTMLTextAreaElement | null) => {
-      // Save to local ref
-      textareaRef.current = element
+    const setRefs = useCallback(
+      (element: HTMLTextAreaElement | null) => {
+        textareaRef.current = element
+        if (typeof ref === 'function') {
+          ref(element)
+        } else if (ref) {
+          ref.current = element
+        }
 
-      // Forward to external ref
-      if (typeof ref === 'function') {
-        ref(element)
-      } else if (ref) {
-        ref.current = element
-      }
-    }
+        // // Initial auto-resize when element is mounted
+        // if (element) {
+        //   autoResizeTextarea(element)
+        // }
+      },
+      [ref, autoResizeTextarea]
+    )
 
     const handleKeyDown = useCallback(
       (e: KeyboardEvent) => {
@@ -104,6 +143,10 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
           const currentWord = getCurrentWord(textarea)
           setValue(text)
+
+          // Auto-resize textarea
+          autoResizeTextarea(textarea)
+
           // Only show dropdown when typing @ followed by at least one character
           if (currentWord.startsWith('@')) {
             setCommandValue(currentWord)
@@ -124,7 +167,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           }
         }
       },
-      [setValue, commandValue]
+      [setValue, commandValue, autoResizeTextarea]
     )
 
     const onCommandSelect = useCallback((value: string) => {
@@ -211,8 +254,8 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       <div className="relative w-full">
         <Textarea
           {...textareaProps}
-          className={cn('field-sizing-content max-h-96', className)}
-          resizable
+          className={cn('max-h-96', { 'field-sizing-content': supportsFieldSizing }, className)}
+          resizable={!supportsFieldSizing}
           value={value}
           onChange={e => {
             onTextValueChange(e)

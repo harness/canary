@@ -4,7 +4,7 @@ import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 import { ComponentStyles } from './tailwind-utils-config/components'
-import { fieldSizing, typography as typographyStyles } from './tailwind-utils-config/utilities'
+import { typography as typographyStyles } from './tailwind-utils-config/utilities'
 
 export default {
   darkMode: ['class'],
@@ -392,7 +392,7 @@ export default {
      */
     plugin(({ addUtilities }) => {
       addUtilities(typographyStyles)
-      addUtilities(fieldSizing)
+      // addUtilities(fieldSizing)
     }),
     plugin(({ addComponents }) => {
       addComponents(ComponentStyles)

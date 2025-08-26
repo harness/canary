@@ -25,6 +25,7 @@ export default {
 
     '&:where(:not([disabled])):focus-visible': {
       outline: 'var(--cn-focus)',
+      boxShadow: 'inset 0 0 0 2px var(--cn-chrome-25)',
       '@apply outline-offset-cn-tight': ''
     },
 

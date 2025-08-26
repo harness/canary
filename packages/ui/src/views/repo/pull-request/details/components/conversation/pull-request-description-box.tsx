@@ -99,6 +99,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
           {/* Edit mode */}
           {edit ? (
             <PullRequestCommentBox
+              buttonTitle="Save"
               allowEmptyValue
               isEditMode
               preserveCommentOnSave

@@ -723,10 +723,10 @@ export const PullRequestCommentBox = ({
 
               <Layout.Flex
                 align="center"
-                className="absolute bottom-px left-px w-[calc(100%-10px)] rounded bg-cn-background-1 p-cn-3xs border-t"
+                gap="4xs"
+                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-background-1 p-cn-3xs"
               >
                 {toolbar.map((item, index) => {
-                  const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
                       <Button
@@ -738,7 +738,6 @@ export const PullRequestCommentBox = ({
                       >
                         <IconV2 name={item.icon} />
                       </Button>
-                      {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>
                   )
                 })}

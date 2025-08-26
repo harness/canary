@@ -26,7 +26,12 @@ export const CommitCopyActions = ({ sha, toCommitDetails, size = 'xs' }: CommitC
       buttonsProps={[
         {
           children: (
-            <Link to={toCommitDetails?.({ sha: sha || '' }) || ''} variant="secondary" className="hover:no-underline">
+            <Link
+              noHoverUnderline
+              to={toCommitDetails?.({ sha: sha || '' }) || ''}
+              variant="secondary"
+              className="hover:no-underline"
+            >
               <Text className="font-mono" color="inherit">
                 {sha.substring(0, 6)}
               </Text>

@@ -6,6 +6,7 @@ import {
   CommitCopyActions,
   IconV2,
   Layout,
+  Link,
   NodeGroup,
   StackedList,
   Text,
@@ -30,7 +31,7 @@ interface CommitProps extends Partial<RoutingProps> {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequest, toCode, className }) => {
-  const { Link } = useRouterContext()
+  // const { Link } = useRouterContext()
 
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
@@ -65,7 +66,11 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                       isLast={commitData.length - 1 === idx}
                       asChild
                     >
-                      <Link className="grow overflow-hidden" to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
+                      <Link
+                        noHoverUnderline
+                        className="grow overflow-hidden w-full"
+                        to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                      >
                         <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
                           <Layout.Vertical gap="2xs" className="truncate">
                             <CommitTitleWithPRLink
@@ -101,7 +106,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                                 asChild
                                 iconOnly
                               >
-                                <Link to={toCode?.({ sha: commit?.sha || '' }) || ''}>
+                                <Link noHoverUnderline to={toCode?.({ sha: commit?.sha || '' }) || ''}>
                                   <IconV2 name="code" />
                                 </Link>
                               </Button>

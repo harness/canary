@@ -20,6 +20,7 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitPrompt } from '../framework/hooks/useExitPrompt'
 import useCodePathDetails from '../hooks/useCodePathDetails'
+import { useGitRef } from '../hooks/useGitRef'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPARATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
@@ -35,6 +36,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   const routes = useRoutes()
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
+  const { repoData } = useGitRef()
   const { repoId, spaceId } = useParams<PathParams>()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
@@ -170,9 +172,11 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
    * Navigate to file view route
    */
   const handleCancelFileEdit = useCallback(() => {
-    const navigateTo = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+    const navigateTo = repoData?.is_empty
+      ? `${routes.toRepoSummary({ spaceId, repoId })}`
+      : `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
-  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, routes])
+  }, [fullGitRef, fullResourcePath, navigate, repoData?.is_empty, repoId, spaceId, routes])
 
   /**
    * Change view handler

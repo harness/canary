@@ -194,6 +194,7 @@ export default {
         strokeWidth: 'var(--cn-icon-stroke-width-sm)'
       }
     },
+
     '&:where(.cn-button-icon-only.cn-button-xs)': {
       width: 'var(--cn-btn-size-xs)',
       height: 'var(--cn-btn-size-xs)',
@@ -205,6 +206,7 @@ export default {
         strokeWidth: 'var(--cn-icon-stroke-width-xs)'
       }
     },
+
     '&:where(.cn-button-icon-only.cn-button-2xs)': {
       width: 'var(--cn-btn-size-2xs)',
       height: 'var(--cn-btn-size-2xs)',
@@ -216,6 +218,7 @@ export default {
         strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
       }
     },
+
     '&:where(.cn-button-icon-only.cn-button-3xs)': {
       width: 'var(--cn-btn-size-3xs)',
       height: 'var(--cn-btn-size-3xs)',

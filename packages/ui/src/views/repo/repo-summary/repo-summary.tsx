@@ -4,6 +4,7 @@ import {
   Button,
   ButtonLayout,
   IconV2,
+  Link,
   ListActions,
   MarkdownViewer,
   NoData,
@@ -13,7 +14,7 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
 import {
   BranchSelectorListItem,
   CommitDivergenceType,
@@ -132,7 +133,6 @@ export function RepoSummaryView({
   scheduleFileMetaFetch,
   ...props
 }: RepoSummaryViewProps) {
-  const { Link } = useRouterContext()
   const { t } = useTranslation()
 
   // Helper function to construct README creation path
@@ -222,6 +222,8 @@ export function RepoSummaryView({
                   {refType === BranchSelectorTab.BRANCHES ? (
                     <Button variant="outline" asChild>
                       <Link
+                        variant="secondary"
+                        noHoverUnderline
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
@@ -271,7 +273,11 @@ export function RepoSummaryView({
                     <StackedList.Field
                       right
                       title={
-                        <Link to={getReadmeEditPath()} aria-label={t('views:repos.editReadme', 'Edit README.md')}>
+                        <Link
+                          variant="secondary"
+                          to={getReadmeEditPath()}
+                          aria-label={t('views:repos.editReadme', 'Edit README.md')}
+                        >
                           <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
                         </Link>
                       }
@@ -295,7 +301,11 @@ export function RepoSummaryView({
                   <StackedList.Field
                     right
                     title={
-                      <Link to={getReadmeCreationPath()} aria-label={t('views:repos.createReadme', 'Create README.md')}>
+                      <Link
+                        variant="secondary"
+                        to={getReadmeCreationPath()}
+                        aria-label={t('views:repos.createReadme', 'Create README.md')}
+                      >
                         <IconV2 name="plus" className="text-icons-3" size="sm" />
                       </Link>
                     }

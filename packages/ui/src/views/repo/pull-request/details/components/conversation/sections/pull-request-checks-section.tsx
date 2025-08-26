@@ -26,20 +26,20 @@ const PullRequestCheckSection = ({
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <IconV2 size="md" name="clock-solid" className="text-cn-foreground-warning" />
+        return <IconV2 size="lg" name="clock-solid" className="text-cn-foreground-warning" />
       case ExecutionState.RUNNING:
-        return <IconV2 size="md" className="text-cn-foreground-warning animate-spin" name="loader" />
+        return <IconV2 size="lg" className="text-cn-foreground-warning animate-spin" name="loader" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
         return (
           <IconV2
-            size="md"
+            size="lg"
             name={isTitle ? 'warning-triangle-solid' : 'xmark-circle-solid'}
             className="text-cn-foreground-danger"
           />
         )
       default:
-        return <IconV2 size="md" name="check-circle-solid" className="text-cn-foreground-success" />
+        return <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />
     }
   }
 
@@ -63,9 +63,9 @@ const PullRequestCheckSection = ({
               return (
                 <Table.Row key={check.check?.identifier}>
                   <Table.Cell className="pl-0 w-80">
-                    <Layout.Horizontal align="center" gap="xs">
+                    <Layout.Horizontal align="center" gap="2xs">
                       {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                      <Text color="foreground-1" truncate className="overflow-hidden pl-2">
+                      <Text color="foreground-1" truncate className="overflow-hidden">
                         {check?.check?.identifier}
                       </Text>
                     </Layout.Horizontal>

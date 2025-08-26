@@ -695,7 +695,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="min-h-32 pb-8 text-cn-foreground-1"
+                className="min-h-32 pb-cn-3xl text-cn-foreground-1"
                 autoFocus={!!autofocus || !!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -723,7 +723,7 @@ export const PullRequestCommentBox = ({
 
               <Layout.Flex
                 align="center"
-                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-background-1"
+                className="absolute bottom-px left-px w-[calc(100%-10px)] rounded bg-cn-background-1 p-cn-3xs border-t"
               >
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0

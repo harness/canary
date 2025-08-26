@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, Layout, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, Link, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -21,7 +21,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   targetBranch,
   timestamp
 }) => {
-  const { Link, location } = useRouterContext()
+  const { location } = useRouterContext()
   const fullPath = location.pathname
   const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
 
@@ -52,13 +52,13 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
       {sourceBranch && (
         <Layout.Horizontal align="center" gap="2xs">
-          <Link to={`${relativePath}/files/${targetBranch}`}>
+          <Link noHoverUnderline to={`${relativePath}/files/${targetBranch}`}>
             <Tag value={targetBranch} {...branchTagProps} />
           </Link>
 
           <IconV2 className="text-cn-foreground-3" name="arrow-long-left" />
 
-          <Link to={`${relativePath}/files/${sourceBranch}`}>
+          <Link noHoverUnderline to={`${relativePath}/files/${sourceBranch}`}>
             <Tag value={sourceBranch} {...branchTagProps} />
           </Link>
         </Layout.Horizontal>
@@ -66,3 +66,4 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
     </div>
   )
 }
+PullRequestItemDescription.displayName = 'PullRequestItemDescription'

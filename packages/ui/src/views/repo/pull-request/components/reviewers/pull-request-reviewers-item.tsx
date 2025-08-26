@@ -6,13 +6,13 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
   const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
     switch (decision) {
       case PullReqReviewDecision.outdated:
-        return <IconV2 size="md" name="refresh-circle-solid" className="text-cn-foreground-disabled" />
+        return <IconV2 size="lg" name="refresh-circle-solid" className="text-cn-foreground-disabled" />
       case PullReqReviewDecision.approved:
-        return <IconV2 size="md" name="check-circle-solid" className="text-cn-icon-success" />
+        return <IconV2 size="lg" name="check-circle-solid" className="text-cn-icon-success" />
       case PullReqReviewDecision.changeReq:
-        return <IconV2 size="md" name="warning-triangle-solid" className="text-cn-foreground-danger" />
+        return <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-danger" />
       case PullReqReviewDecision.pending:
-        return <IconV2 size="md" name="clock-solid" className="text-cn-foreground-warning" />
+        return <IconV2 size="lg" name="clock-solid" className="text-cn-foreground-warning" />
       default:
         return null
     }

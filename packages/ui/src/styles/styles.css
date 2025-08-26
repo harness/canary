@@ -491,8 +491,9 @@
   }
 }
 
+/* Default focus outline */
 :where(:focus-visible) {
-  outline: none;
+  outline: var(--cn-focus);
 }
 
 mark {

@@ -7,6 +7,7 @@ import {
   IconPropsV2,
   IconV2,
   Layout,
+  Link,
   MoreActionsTooltip,
   Separator,
   Skeleton,
@@ -16,7 +17,7 @@ import {
   Text,
   TimeAgoCard
 } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
@@ -33,7 +34,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslation()
-  const { Link } = useRouterContext()
 
   if (isLoading) {
     return <Skeleton.Table countRows={12} countColumns={6} />
@@ -137,6 +137,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
               <Table.Cell disableLink>
                 {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                   <Link
+                    noHoverUnderline
+                    variant="secondary"
                     to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                     onClick={e => e.stopPropagation()}
                     className="focus-visible:shadow-ring-focus rounded-2 inline-flex"

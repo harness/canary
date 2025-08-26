@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, Layout, ListActions, SearchInput, Skeleton, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { Button, IconV2, Layout, Link, ListActions, SearchInput, Skeleton, Text } from '@/components'
+import { useTranslation } from '@/context'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { RepoWebhookListPageProps } from './types'
@@ -16,7 +16,6 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   toRepoWebhookDetails,
   toRepoWebhookCreate
 }) => {
-  const { Link } = useRouterContext()
   const { t } = useTranslation()
   const { webhooks, totalItems, pageSize, page, setPage, error } = useWebhookStore()
 
@@ -63,7 +62,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <Button asChild>
-                  <Link to="create">
+                  <Link noHoverUnderline variant="secondary" to="create">
                     <IconV2 name="plus" />
                     {t('views:webhookData.create', 'Create Webhook')}
                   </Link>

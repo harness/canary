@@ -119,17 +119,11 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
       return
     }
 
-    setValue('values', [...values, { color, value: '' }])
+    setValue('values', [...values, { color, value: '', id: Math.ceil(Math.random() * 1000) }])
   }
 
   const handleDeleteValue = (idx: number) => {
-    const newValues = values.reduce<CreateLabelFormFields['values']>((acc, item, index) => {
-      if (index !== idx) {
-        acc.push(item)
-      }
-
-      return acc
-    }, [])
+    const newValues = values.filter((_, index) => index !== idx)
 
     setValue('values', newValues)
     trigger()
@@ -173,10 +167,10 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             <Layout.Vertical gap={values.length > 0 ? 'sm' : 'xs'}>
               <ControlGroup>
                 <Label optional>{t('views:labelData.form.valueName', 'Label value')}</Label>
-                {values.map((_, idx) => (
+                {values.map(({ id }, idx) => (
                   <LabelFormColorAndNameGroup
                     isValue
-                    key={idx}
+                    key={id}
                     handleDeleteValue={() => handleDeleteValue(idx)}
                     selectProps={{ ...register(`values.${idx}.color`) }}
                     inputProps={{ ...register(`values.${idx}.value` as keyof CreateLabelFormFields) }}
@@ -197,7 +191,9 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
             />
 
             <Layout.Vertical className="mt-cn-lg" gap="md">
-              <Text as="h3">{t('views:labelData.form.previewLabel', 'Label preview')}</Text>
+              <Text as="h3" color="foreground-1">
+                {t('views:labelData.form.previewLabel', 'Label preview')}
+              </Text>
 
               <Layout.Vertical gap="xs" align="start">
                 <LabelTag
@@ -225,10 +221,7 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
               </Alert.Root>
             )}
 
-            <ButtonLayout
-              className={cn('mt-cn-2xl gap-cn-sm', { 'mt-cn-md': values.length > 0 || !!error?.length })}
-              horizontalAlign="start"
-            >
+            <ButtonLayout className="gap-cn-sm mt-cn-md" horizontalAlign="start">
               <Button type="submit" disabled={isSaving}>
                 {isSaving ? t('views:repos.saving', 'Saving…') : t('views:repos.save', 'Save')}
               </Button>

@@ -381,7 +381,7 @@ function SelectInner<T = string>(
             className={cn(selectVariants({ theme, size }), triggerClassName)}
           >
             <div className="cn-select-trigger">
-              <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate>
+              <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate as="div">
                 {selectedOption ? selectedOption.label : placeholder}
               </Text>
               <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />

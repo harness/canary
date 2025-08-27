@@ -108,6 +108,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
               setPrincipalsMentionMap={noop}
               handleUpload={handleUpload}
               handleAiPullRequestSummary={handleAiPullRequestSummary}
+              buttonTitle="Save"
               onSaveComment={() => {
                 return handleUpdateDescription(title || '', comment)
                   .then(() => {

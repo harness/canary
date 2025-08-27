@@ -15,7 +15,6 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   searchQuery,
   setSearchQuery,
   handleCreatePipeline,
-  LinkComponent,
   toPipelineDetails
 }) => {
   const { pipelines, totalItems, pageSize, page, setPage } = usePipelineListStore()
@@ -70,7 +69,6 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
         )}
         <PipelineList
           pipelines={pipelines}
-          LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
           handleResetQuery={handleResetSearch}
           isLoading={isLoading}

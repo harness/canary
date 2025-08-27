@@ -80,14 +80,18 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   }
 
   return (
-    <StackedList.Root className="bg-cn-background-2" onlyTopRounded={view !== 'history'}>
-      <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs gap-cn-sm flex-nowrap">
-        <Tabs.List variant="ghost">
-          {isMarkdown && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}
-          <Tabs.Trigger value="code">Code</Tabs.Trigger>
-          <Tabs.Trigger value="blame">Blame</Tabs.Trigger>
-          <Tabs.Trigger value="history">History</Tabs.Trigger>
-        </Tabs.List>
+    <StackedList.Root {...(view !== 'history' ? { rounded: 'top' } : {})}>
+      <StackedList.Item className="gap-cn-sm" paddingX="md" paddingY="2xs" disableHover isHeader>
+        <StackedList.Field
+          title={
+            <Tabs.List variant="ghost">
+              {isMarkdown && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}
+              <Tabs.Trigger value="code">Code</Tabs.Trigger>
+              <Tabs.Trigger value="blame">Blame</Tabs.Trigger>
+              <Tabs.Trigger value="history">History</Tabs.Trigger>
+            </Tabs.List>
+          }
+        />
         <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>
     </StackedList.Root>

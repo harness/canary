@@ -15,8 +15,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   errorMessage,
   searchQuery,
   setSearchQuery,
-  handleExecutePipeline,
-  LinkComponent
+  handleExecutePipeline
 }) => {
   const { Link } = useRouterContext()
   const { executions, pageSize, totalItems, page, setPage } = useExecutionListStore()
@@ -75,7 +74,6 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
         <Spacer size={4} />
         <ExecutionList
           executions={executions}
-          LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
           handleResetQuery={handleResetSearch}
           isLoading={isLoading}

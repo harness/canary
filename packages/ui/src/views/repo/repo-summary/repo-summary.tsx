@@ -260,10 +260,9 @@ export function RepoSummaryView({
             {readmeInfo && readmeInfo.content ? (
               // Existing README with content
               <>
-                <StackedList.Root onlyTopRounded borderBackground>
-                  <StackedList.Item className="py-2" isHeader disableHover>
+                <StackedList.Root rounded="top">
+                  <StackedList.Item paddingY="xs" isHeader disableHover>
                     <StackedList.Field
-                      className="grid"
                       title={
                         <Text variant="caption-single-line-normal" color="foreground-1">
                           {t('views:repos.readme', 'README.md')}
@@ -271,7 +270,6 @@ export function RepoSummaryView({
                       }
                     />
                     <StackedList.Field
-                      right
                       title={
                         <Link
                           variant="secondary"
@@ -281,6 +279,7 @@ export function RepoSummaryView({
                           <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
                         </Link>
                       }
+                      right
                     />
                   </StackedList.Item>
                 </StackedList.Root>
@@ -288,10 +287,9 @@ export function RepoSummaryView({
               </>
             ) : (
               // No README content - show Create README prompt
-              <StackedList.Root onlyTopRounded borderBackground>
-                <StackedList.Item className="py-2" isHeader disableHover>
+              <StackedList.Root rounded="top">
+                <StackedList.Item paddingY="xs" isHeader disableHover>
                   <StackedList.Field
-                    className="grid"
                     title={
                       <Text variant="caption-single-line-normal" color="foreground-1">
                         {t('views:repos.readme', 'README.md')}
@@ -299,7 +297,6 @@ export function RepoSummaryView({
                     }
                   />
                   <StackedList.Field
-                    right
                     title={
                       <Link
                         variant="secondary"
@@ -309,9 +306,10 @@ export function RepoSummaryView({
                         <IconV2 name="plus" className="text-icons-3" size="sm" />
                       </Link>
                     }
+                    right
                   />
                 </StackedList.Item>
-                <StackedList.Item className="py-2" disableHover>
+                <StackedList.Item paddingY="xs" disableHover>
                   <NoData
                     imageName="no-data-folder"
                     title={t('views:repos.addReadme.title', 'Create a README')}

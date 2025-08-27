@@ -156,7 +156,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
           <Text
-            className="flex items-center space-x-1 text-[var(--cn-set-purple-surface-text)]"
+            className="flex flex-wrap items-center space-x-1 text-[var(--cn-set-purple-surface-text)]"
             variant="body-single-line-strong"
             as="h2"
             color="inherit"
@@ -588,13 +588,9 @@ const PullRequestPanel = ({
 
   return (
     <>
-      <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
-        <StackedList.Item
-          className={cn('items-center py-2 border-cn-borders-3', { 'pr-1.5': shouldShowMoreActions }, headerRowBgClass)}
-          disableHover
-        >
+      <StackedList.Root>
+        <StackedList.Item className={cn('pl-cn-md', headerRowBgClass)} paddingY="sm" paddingX="sm" disableHover>
           <StackedList.Field
-            className={cn({ 'w-full': !pullReqMetadata?.merged })}
             title={
               <div className={headerTitleColorClass}>
                 <HeaderTitle
@@ -778,61 +774,68 @@ const PullRequestPanel = ({
             </>
           )}
         </StackedList.Item>
-        <StackedList.Item disableHover className="cursor-default border-cn-borders-3 py-0 hover:bg-transparent">
-          {!isClosed ? (
-            <Accordion.Root
-              className="w-full"
-              type="multiple"
-              value={accordionValues}
-              onValueChange={handleAccordionValuesChange}
-            >
-              {!pullReqMetadata?.merged && (
-                <PullRequestChangesSection
-                  accordionValues={accordionValues}
-                  changesInfo={changesInfo}
-                  minApproval={prPanelData.minApproval}
-                  minReqLatestApproval={prPanelData.minReqLatestApproval}
-                  approvedEvaluations={approvedEvaluations}
-                  changeReqEvaluations={changeReqEvaluations}
-                  latestApprovalArr={latestApprovalArr}
-                  reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
-                  changeReqReviewer={changeReqReviewer}
-                  codeOwnersData={codeOwnersData}
-                  defaultReviewersData={defaultReviewersData}
-                  pullReqMetadata={pullReqMetadata}
-                />
-              )}
 
-              {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) &&
-                !pullReqMetadata?.merged && (
-                  <PullRequestCommentSection
-                    commentsInfo={prPanelData.commentsInfoData}
-                    handleAction={handleViewUnresolvedComments}
+        {!isClosed ? (
+          (!pullReqMetadata?.merged || !!checks?.length) && (
+            <StackedList.Item paddingX="md" paddingY="0" disableHover>
+              <Accordion.Root
+                className="w-full"
+                type="multiple"
+                value={accordionValues}
+                onValueChange={handleAccordionValuesChange}
+              >
+                {!pullReqMetadata?.merged && (
+                  <PullRequestChangesSection
+                    accordionValues={accordionValues}
+                    changesInfo={changesInfo}
+                    minApproval={prPanelData.minApproval}
+                    minReqLatestApproval={prPanelData.minReqLatestApproval}
+                    approvedEvaluations={approvedEvaluations}
+                    changeReqEvaluations={changeReqEvaluations}
+                    latestApprovalArr={latestApprovalArr}
+                    reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
+                    changeReqReviewer={changeReqReviewer}
+                    codeOwnersData={codeOwnersData}
+                    defaultReviewersData={defaultReviewersData}
+                    pullReqMetadata={pullReqMetadata}
                   />
                 )}
 
-              <PullRequestCheckSection
-                {...routingProps}
-                checkData={checks ?? []}
-                checksInfo={checksInfo}
-                accordionValues={accordionValues}
-              />
+                {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) &&
+                  !pullReqMetadata?.merged && (
+                    <PullRequestCommentSection
+                      commentsInfo={prPanelData.commentsInfoData}
+                      handleAction={handleViewUnresolvedComments}
+                    />
+                  )}
 
-              {!pullReqMetadata?.merged && (
-                <PullRequestMergeSection
-                  unchecked={isUnchecked}
-                  mergeable={isMergeable}
-                  pullReqMetadata={pullReqMetadata}
-                  conflictingFiles={prPanelData.conflictingFiles}
-                  accordionValues={accordionValues}
-                  setAccordionValues={setAccordionValues}
-                  handleRebaseBranch={handleRebaseBranch}
-                  isRebasing={isRebasing}
-                  selectedMergeMethod={getSelectedMergeMethod()}
-                />
-              )}
-            </Accordion.Root>
-          ) : (
+                {!!checks?.length && (
+                  <PullRequestCheckSection
+                    {...routingProps}
+                    checkData={checks}
+                    checksInfo={checksInfo}
+                    accordionValues={accordionValues}
+                  />
+                )}
+
+                {!pullReqMetadata?.merged && (
+                  <PullRequestMergeSection
+                    unchecked={isUnchecked}
+                    mergeable={isMergeable}
+                    pullReqMetadata={pullReqMetadata}
+                    conflictingFiles={prPanelData.conflictingFiles}
+                    accordionValues={accordionValues}
+                    setAccordionValues={setAccordionValues}
+                    handleRebaseBranch={handleRebaseBranch}
+                    isRebasing={isRebasing}
+                    selectedMergeMethod={getSelectedMergeMethod()}
+                  />
+                )}
+              </Accordion.Root>
+            </StackedList.Item>
+          )
+        ) : (
+          <StackedList.Item paddingX="md" paddingY="0" disableHover>
             <Layout.Horizontal gap="xs" align="center" justify="between" className="w-full py-4">
               <Layout.Horizontal gap="3xs" align="center" className="w-full">
                 <StatusBadge variant="secondary" size="sm">
@@ -857,8 +860,8 @@ const PullRequestPanel = ({
                 </Button>
               )}
             </Layout.Horizontal>
-          )}
-        </StackedList.Item>
+          </StackedList.Item>
+        )}
       </StackedList.Root>
       {!!error && (
         <Alert.Root theme="danger" className="mt-2">

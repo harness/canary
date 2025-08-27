@@ -47,15 +47,14 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>
-      <StackedList.Item disableHover isHeader className="gap-cn-md px-cn-md py-cn-xs">
+    <StackedList.Root {...(withoutBorder ? { border: false } : {})} {...(onlyTopRounded ? { rounded: 'top' } : {})}>
+      <StackedList.Item className="gap-cn-md" paddingX="md" paddingY="xs" disableHover isHeader>
         {props ? (
           <>
-            <StackedList.Field className="grid justify-start" title={<TopTitle {...props} />} />
+            <StackedList.Field title={<TopTitle {...props} />} />
             <StackedList.Field
-              className="flex-none"
-              right
               title={<TopDetails toCommitDetails={toCommitDetails} {...props} />}
+              right
               disableTruncate
             />
           </>

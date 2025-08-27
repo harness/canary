@@ -81,7 +81,7 @@ const CommitsAccordion: FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item disableHover isHeader className="cursor-default p-0">
+      <StackedList.Item paddingY="0" paddingX="0" disableHover isHeader>
         <Accordion.Root
           type="multiple"
           className="w-full"

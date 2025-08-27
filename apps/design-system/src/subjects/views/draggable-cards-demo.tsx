@@ -17,7 +17,7 @@ export const DraggableCardsDemo = () => {
     {
       id: '1',
       title: (
-        <div className="w-full flex items-center justify-between">
+        <div className="flex w-full items-center justify-between">
           <span className="flex items-center">
             <IconV2 name="ai" size="md" />
             <span className="ml-2">First Card</span>

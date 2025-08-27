@@ -24,7 +24,6 @@ export const SkeletonList: FC<SkeletonListProps> = ({ classNames = {}, linesCoun
       {Array.from({ length: linesCount }).map((_, index) => (
         <StackedList.Item
           key={index}
-          isLast={linesCount === index + 1}
           className={item}
           actions={hasActions && <Skeleton.Box className={cn('cn-skeleton-list-actions', actions)} />}
           disableHover

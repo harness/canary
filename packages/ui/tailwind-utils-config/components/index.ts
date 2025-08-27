@@ -39,6 +39,7 @@ import timeAgoCardStyles from './time-ago-card'
 import toggleStyles from './toggle'
 import toggleGroupStyles from './toggle-group'
 import tooltipStyles from './tooltip'
+import stackedListStyles from "./stacked-list";
 
 export const ComponentStyles = [
   accordionStyles,
@@ -73,6 +74,7 @@ export const ComponentStyles = [
   toggleGroupStyles,
   buttonGroupStyle,
   skeletonStyles,
+  stackedListStyles,
 
   // Form styles
   selectStyles,

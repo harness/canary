@@ -1,4 +1,4 @@
-import { PipelineExecutionStatus, TLinkComponent } from '@/views'
+import { PipelineExecutionStatus } from '@/views'
 import { MeterState } from '@components/meter'
 
 export interface IPipeline {
@@ -42,7 +42,6 @@ export interface IPipelineListPageProps extends Partial<RoutingProps> {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   handleCreatePipeline: () => void
-  LinkComponent: TLinkComponent
 }
 
 /**
@@ -50,7 +49,6 @@ export interface IPipelineListPageProps extends Partial<RoutingProps> {
  */
 export interface IPipelineListProps extends Partial<RoutingProps> {
   pipelines: IPipeline[] | null
-  LinkComponent: TLinkComponent
   query?: string
   handleResetQuery: () => void
   isLoading: boolean

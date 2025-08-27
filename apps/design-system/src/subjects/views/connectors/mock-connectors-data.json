@@ -3,7 +3,7 @@
     "connector": {
       "name": "connector-1",
       "identifier": "connector1",
-      "description": "",
+      "description": "asdasdasd",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
       "projectIdentifier": "project1",
@@ -74,9 +74,9 @@
   },
   {
     "connector": {
-      "name": "connector-2",
+      "name": "connector-2 with long long text, connector-2 with long long text",
       "identifier": "connector2",
-      "description": "",
+      "description": "desc 2 with long long text with long long text with long long text with long long text",
       "accountIdentifier": "account123",
       "orgIdentifier": "org1",
       "projectIdentifier": "project1",

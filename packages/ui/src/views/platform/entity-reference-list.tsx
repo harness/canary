@@ -52,10 +52,10 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   return (
     <StackedList.Root>
       {/* Breadcrumb header */}
-      <StackedList.Item isHeader disableHover className="sticky top-0 h-12 !bg-cn-background-3 p-2">
+      <StackedList.Item className="sticky top-0" paddingY="sm" paddingX="md" isHeader disableHover>
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            {showBreadcrumbEllipsis ? (
+            {!!showBreadcrumbEllipsis && (
               <>
                 <Breadcrumb.Item>
                   <Breadcrumb.Ellipsis className="ml-1 h-0 w-4" />
@@ -64,8 +64,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
                 </Breadcrumb.Separator>
               </>
-            ) : null}
-            {parentFolder ? (
+            )}
+            {!!parentFolder && (
               <>
                 <Breadcrumb.Item className={cn('items-center justify-center', { 'ml-1': !showBreadcrumbEllipsis })}>
                   <Breadcrumb.Link className="cursor-pointer" onClick={() => handleScopeChange(DirectionEnum.PARENT)}>
@@ -76,7 +76,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
                 </Breadcrumb.Separator>
               </>
-            ) : null}
+            )}
             <Breadcrumb.Page className={cn('cursor-pointer', { 'ml-1': !parentFolder })}>
               <Text variant="body-normal">{currentFolder}</Text>
             </Breadcrumb.Page>

@@ -58,14 +58,13 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': !viewBtn })}
+        className={cn('py-cn-sm', { '[&>.cn-accordion-trigger-indicator]:hidden': !viewBtn })}
         onClick={e => {
           if (!viewBtn) e.preventDefault()
         }}
       >
         <Layout.Flex>
           <StackedList.Field
-            className="flex"
             title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
             description={<LineDescription text={changesInfo.content} />}
           />

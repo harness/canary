@@ -116,8 +116,8 @@ export const ProjectRulesListContainer = () => {
         setPage={setPage}
         apiError={apiError}
         handleRuleClick={handleRuleEditClick}
-        toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
-        toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
+        toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ spaceId: space_ref })}
+        toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ spaceId: space_ref })}
         toProjectRuleDetails={(identifier, scope) => {
           getScopedRuleUrl({
             scope,

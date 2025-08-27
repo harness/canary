@@ -2,6 +2,7 @@ export default {
   '.cn-checkbox-wrapper': {
     display: 'flex',
     gap: 'var(--cn-spacing-2-half)',
+    position: 'relative',
     '&:has(.cn-checkbox-label-wrapper)': {
       width: '100%'
     },

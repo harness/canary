@@ -131,6 +131,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   if (!isShowRulesContent) {
     return (
       <NoData
+        withBorder
         textWrapperClassName="max-w-[350px]"
         imageName="no-data-cog"
         title={t('views:noData.noRules', 'No rules yet')}

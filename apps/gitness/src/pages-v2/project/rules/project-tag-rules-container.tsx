@@ -18,6 +18,7 @@ import {
   NotFoundPage,
   RepoTagSettingsFormFields,
   RepoTagSettingsRulesPage,
+  SandboxLayout,
   TagRulesActionType
 } from '@harnessio/ui/views'
 
@@ -227,19 +228,21 @@ export const ProjectTagRulesContainer = () => {
     : t('views:pullRequests.selectUsers', 'Select users')
 
   return (
-    <RepoTagSettingsRulesPage
-      handleRuleUpdate={handleRuleUpdate}
-      apiErrors={errors}
-      isLoading={addingRule || updatingRule}
-      useRepoRulesStore={useProjectRulesStore}
-      useTagRulesStore={useTagRulesStore}
-      handleCheckboxChange={handleCheckboxChange}
-      handleInitialRules={handleInitialRules}
-      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-      principalsSearchQuery={principalsSearchQuery}
-      isSubmitSuccess={isSubmitSuccess}
-      bypassListPlaceholder={searchPlaceholder}
-      projectScope
-    />
+    <SandboxLayout.Content>
+      <RepoTagSettingsRulesPage
+        handleRuleUpdate={handleRuleUpdate}
+        apiErrors={errors}
+        isLoading={addingRule || updatingRule}
+        useRepoRulesStore={useProjectRulesStore}
+        useTagRulesStore={useTagRulesStore}
+        handleCheckboxChange={handleCheckboxChange}
+        handleInitialRules={handleInitialRules}
+        setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+        principalsSearchQuery={principalsSearchQuery}
+        isSubmitSuccess={isSubmitSuccess}
+        bypassListPlaceholder={searchPlaceholder}
+        projectScope
+      />
+    </SandboxLayout.Content>
   )
 }

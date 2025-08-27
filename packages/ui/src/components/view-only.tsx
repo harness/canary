@@ -1,8 +1,10 @@
-import { ReactNode, useLayoutEffect, useRef, useState } from 'react'
+import { isValidElement, ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react'
 
 import { Layout, Separator, Spacer, Text } from '@/components'
 import { useResizeObserver } from '@/hooks'
 import { cn, wrapConditionalObjectElement } from '@/utils'
+
+export type ViewOnlyItemData = { label: string; value: ReactNode } | ReactNode
 
 function splitArray<T>(array: T[]): [T[], T[]] {
   if (array.length <= 2) {
@@ -16,7 +18,7 @@ function splitArray<T>(array: T[]): [T[], T[]] {
   return [firstHalf, secondHalf]
 }
 
-const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode }) => (
+export const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode }) => (
   <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
     <Text color="foreground-3" as="dt">
       {label}
@@ -31,7 +33,7 @@ const isWideEnoughForColumns = (width: number) => width >= 800
 
 export interface ViewOnlyProps {
   title?: string
-  data: { label: string; value: ReactNode }[]
+  data: ViewOnlyItemData[]
   layout?: 'singleColumn' | 'columns'
   className?: string
 }
@@ -59,6 +61,16 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
     200
   )
 
+  const renderItem = useCallback((item: ViewOnlyItemData) => {
+    if (item instanceof Object && 'label' in item && 'value' in item && typeof item.label === 'string') {
+      return <ViewOnlyItem key={item.label} label={item.label} value={item.value} />
+    } else if (isValidElement(item)) {
+      return item
+    }
+
+    return null
+  }, [])
+
   if (!data || data.length === 0) return null
 
   const isSeparatorVisible = isLayoutColumns && data.length > 2
@@ -77,22 +89,14 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
         align="start"
         {...wrapConditionalObjectElement({ columns: '1fr auto 1fr' }, isLayoutColumns)}
       >
-        <Layout.Grid className="gap-y-3.5">
-          {leftColumnData.map(({ label, value }) => (
-            <ViewOnlyItem key={label} label={label} value={value} />
-          ))}
-        </Layout.Grid>
+        <Layout.Grid className="gap-y-3.5">{leftColumnData.map(item => renderItem(item))}</Layout.Grid>
 
         {isLayoutColumns && (
           <Separator orientation="vertical" className={cn('ml-4 mr-5', { invisible: !isSeparatorVisible })} />
         )}
 
         {!!rightColumnData && (
-          <Layout.Grid className="gap-y-3.5">
-            {rightColumnData.map(({ label, value }) => (
-              <ViewOnlyItem key={label} label={label} value={value} />
-            ))}
-          </Layout.Grid>
+          <Layout.Grid className="gap-y-3.5">{rightColumnData.map(item => renderItem(item))}</Layout.Grid>
         )}
       </Layout.Grid>
 

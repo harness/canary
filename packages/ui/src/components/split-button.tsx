@@ -101,7 +101,7 @@ const SplitButtonInner = forwardRef(
           >
             <IconV2 name="nav-arrow-down" />
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className={cn('mt-1 max-w-80', dropdownContentClassName)} align="end">
+          <DropdownMenu.Content className={cn('max-w-80', dropdownContentClassName)} align="end">
             {selectedValue ? (
               <DropdownMenu.RadioGroup
                 value={String(selectedValue)}

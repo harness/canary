@@ -76,25 +76,16 @@ export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register })
   )
 }
 
-export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors }) => {
+export const BranchSettingsRuleTargetPatternsField: FC<
+  Pick<FieldProps, 'errors' | 'register'> & {
+    handleAdd: (option: PatternsButtonType) => void
+    handleRemove: (pattern: string) => void
+    patterns: { pattern: string; option: PatternsButtonType }[]
+  }
+> = ({ errors, register, handleAdd, handleRemove, patterns }) => {
   const { t } = useTranslation()
 
   const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
-
-  const patterns = watch!('patterns') || []
-
-  const handleAddPattern = () => {
-    const pattern = watch!('pattern')
-    if (pattern && !patterns.some(p => p.pattern === pattern)) {
-      setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
-      setValue!('pattern', '')
-    }
-  }
-
-  const handleRemovePattern = (patternVal: string) => {
-    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
-    setValue!('patterns', updatedPatterns)
-  }
 
   return (
     <Layout.Grid gapY="md">
@@ -111,7 +102,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
           />
           <SplitButton<PatternsButtonType>
-            handleButtonClick={handleAddPattern}
+            handleButtonClick={() => handleAdd(selectedOption)}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
             options={[
@@ -136,7 +127,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             <ResetTag
               key={pattern}
               value={pattern}
-              onReset={() => handleRemovePattern(pattern)}
+              onReset={() => handleRemove(pattern)}
               icon={option === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'}
               iconProps={{
                 className:

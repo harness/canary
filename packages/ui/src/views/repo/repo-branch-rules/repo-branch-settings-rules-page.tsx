@@ -15,7 +15,7 @@ import {
   BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
-import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
+import { IBranchRulesStore, PatternsButtonType, RepoBranchSettingsFormFields } from './types'
 import { combineAndNormalizePrincipalsAndGroups } from './utils'
 
 type BranchSettingsErrors = {
@@ -86,6 +86,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     watch,
     reset,
     clearErrors,
+    setError,
     formState: { errors }
   } = formMethods
 
@@ -94,6 +95,23 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     const formData = { ...data, rules }
     handleRuleUpdate(formData)
+  }
+
+  const pattern = watch('pattern')
+  const patterns = watch('patterns') || []
+
+  const handleAddPattern = (option: PatternsButtonType) => {
+    if (patterns.some(p => p.pattern === pattern)) {
+      setError('pattern', { message: 'Pattern already exists' })
+    } else if (pattern) {
+      setValue('patterns', [...patterns, { pattern, option }])
+      setValue('pattern', '')
+    }
+  }
+
+  const handleRemovePattern = (patternVal: string) => {
+    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
+    setValue('patterns', updatedPatterns)
   }
 
   useEffect(() => {
@@ -144,10 +162,11 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
         <Layout.Grid gapY="3xl">
           <BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
+            handleAdd={handleAddPattern}
+            handleRemove={handleRemovePattern}
+            patterns={patterns}
             errors={errors}
+            register={register}
           />
 
           <BranchSettingsRuleBypassListField
@@ -174,7 +193,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
           />
         </Layout.Grid>
 
-        <ButtonLayout horizontalAlign="start">
+        <ButtonLayout horizontalAlign="start" className="mt-cn-md">
           <Button type="submit" disabled={isLoading}>
             {!isLoading
               ? presetRuleData

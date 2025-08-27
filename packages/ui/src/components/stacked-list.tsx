@@ -86,7 +86,7 @@ const ListItem = ({
   return (
     <Comp
       className={cn(
-        'stacked-list-item relative flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle border-b',
+        'stacked-list-item relative flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle',
         className,
         { 'border-none': isLast },
         { 'bg-cn-background-2': isHeader },

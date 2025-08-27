@@ -44,14 +44,18 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
           {hasAhead && (
             <>
-              <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
+              <StyledLink
+                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+              >
                 {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
-            <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
+            <StyledLink
+              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+            >
               {behind} {easyPluralize(behind, 'commit', 'commits')} behind
             </StyledLink>
           )}

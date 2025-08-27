@@ -347,7 +347,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
         isNew={false}
       />
       <Tabs.Root
-        className="repo-files-height flex flex-col overflow-hidden"
+        className="flex flex-col overflow-hidden grow"
         value={view as string}
         onValueChange={val => {
           setSelectedLine(undefined)
@@ -404,7 +404,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
           )}
         </Tabs.Content>
 
-        <Tabs.Content value="code" className="grow">
+        <Tabs.Content value="code" className="grow min-h-0">
           {loading && <Loader />}
 
           {!loading && (
@@ -424,7 +424,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
           )}
         </Tabs.Content>
 
-        <Tabs.Content value="blame" className="grow">
+        <Tabs.Content value="blame" className="grow min-h-0">
           {loading && <Loader />}
 
           {!loading && (

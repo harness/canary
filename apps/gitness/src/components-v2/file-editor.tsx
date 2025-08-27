@@ -235,7 +235,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
       >
         <FileEditorControlBar showPreview={showPreview} />
 
-        <Tabs.Content value="edit" className="grow">
+        <Tabs.Content value="edit" className="grow min-h-0">
           {loading && <Loader />}
 
           {!loading && !isNew && !contentRevision.code && <Loader />}

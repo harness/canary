@@ -41,7 +41,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <Layout.Horizontal align="center" justify="between">
+    <Layout.Horizontal align="start" justify="between">
       <PathBreadcrumbs
         isEdit={codeMode === CodeModes.EDIT}
         isNew={codeMode === CodeModes.NEW}

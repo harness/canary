@@ -142,10 +142,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
       value: String(user?.id)
     }))
 
-    const otherUserOptions = allUsersOptions.filter(user => user?.value !== String(currentUser?.id))
+    let otherUserOptions = allUsersOptions
 
     // is searchQuery is empty, move currentUser to start of list
     if (currentUser?.id && !principalsSearchQuery) {
+      otherUserOptions = allUsersOptions.filter(user => user?.value !== String(currentUser?.id))
       const currentUserOption = {
         label: generateAuthorLabel(currentUser),
         value: String(currentUser.id)
@@ -161,7 +162,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     label: t('views:repos.prListFilterOptions.labels.label', 'Label'),
     value: 'label_by',
     type: FilterFieldTypes.Custom,
-    parser: getParserConfig(),
+    parser: getParserConfig(labels, labelValueOptions),
     filterFieldConfig: {
       renderCustomComponent: function ({ value, onChange }) {
         return (

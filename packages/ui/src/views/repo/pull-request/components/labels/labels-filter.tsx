@@ -3,10 +3,18 @@ import { useEffect, useRef, useState } from 'react'
 import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { SearchInput } from '@components/inputs'
-import { ILabelType, LabelValueType } from '@views/labels'
+import { ColorsEnum, ILabelType, LabelValueType } from '@views/labels'
 import { LabelMarker } from '@views/labels/components/label-marker'
 
-export type LabelsValue = Record<string, true | string>
+export type LabelsValue = Record<
+  string,
+  {
+    labelText: string
+    valueId?: string
+    valueText?: string
+    color?: ColorsEnum
+  }
+>
 
 const ANY_LABEL_VALUE = 'any'
 
@@ -80,7 +88,7 @@ export function LabelsFilter({
               onBlur={() => updateFocusState(option.id, 'parent', false)}
               onFocus={() => updateFocusState(option.id, 'parent', true)}
               title={<LabelMarker color={option.color} label={option.key} value={String(option.value_count)} />}
-              checked={value[option.id] ? value[option.id] === true || 'indeterminate' : false}
+              checked={value[option.id]?.valueId ? 'indeterminate' : !!value[option.id]}
               subMenuProps={{
                 open: open[option.id] as boolean,
                 onOpenChange: open => setOpen(prev => ({ ...prev, [option.id]: open }))
@@ -90,18 +98,37 @@ export function LabelsFilter({
                 onBlur: () => updateFocusState(option.id, 'subcontent', false)
               }}
               onCheckedChange={() => {
-                const { [option.id]: selectedIdValue, ...rest } = value
-                const newValue = selectedIdValue ? rest : { ...value, [option.id]: true }
+                const { [option.id]: selectedValue, ...rest } = value
+                const newValue =
+                  selectedValue?.valueId || selectedValue
+                    ? rest
+                    : {
+                        ...value,
+                        [option.id]: {
+                          labelText: option.key,
+                          color: option.color
+                        }
+                      }
                 onChange(newValue)
               }}
             >
               <DropdownMenu.RadioGroup
-                value={(() => {
-                  const labelValue = value[option.id]
-                  return labelValue === true ? ANY_LABEL_VALUE : labelValue
-                })()}
+                value={value[option.id]?.valueId || (value[option.id] ? ANY_LABEL_VALUE : undefined)}
                 onValueChange={selectedValue => {
-                  onChange({ ...value, [option.id]: selectedValue === ANY_LABEL_VALUE || selectedValue })
+                  let newValue: LabelsValue[keyof LabelsValue] = {
+                    labelText: option.key,
+                    color: option.color
+                  }
+
+                  if (selectedValue !== ANY_LABEL_VALUE) {
+                    newValue = {
+                      ...newValue,
+                      valueId: String(selectedValue),
+                      valueText: selectedValue
+                    }
+                  }
+
+                  onChange({ ...value, [option.id]: newValue })
                 }}
               >
                 <DropdownMenu.RadioItem
@@ -120,10 +147,21 @@ export function LabelsFilter({
           ) : (
             <DropdownMenu.CheckboxItem
               title={<LabelMarker color={option.color} label={option.key} />}
-              checked={value[option.id] === true}
+              checked={!!value[option.id]}
               key={option.id}
               onCheckedChange={selectedValue => {
-                onChange({ ...value, [option.id]: selectedValue })
+                if (selectedValue) {
+                  onChange({
+                    ...value,
+                    [option.id]: {
+                      labelText: option.key,
+                      color: option.color
+                    }
+                  })
+                } else {
+                  const { [option.id]: _, ...rest } = value
+                  onChange(rest)
+                }
               }}
             />
           )
@@ -134,15 +172,23 @@ export function LabelsFilter({
   )
 }
 
-export function getParserConfig() {
+export function getParserConfig(labelOptions: ILabelType[], valueOptions: Record<string, LabelValueType[]>) {
   return {
     parse: (value: string): LabelsValue => {
       const result: LabelsValue = {}
 
+      if (!value) return result
+
       value.split(';').forEach(entry => {
         const [key, valueStr = ''] = entry.split(':')
+        const labelDetails = labelOptions.find(label => String(label.id) === key) || { key: '', color: undefined }
+        const valueDetails = valueOptions[labelDetails.key]?.find(value => String(value.id) === valueStr) || {
+          value: ''
+        }
         if (!key) return
-        result[key] = valueStr === 'true' ? true : valueStr
+        result[key] = valueStr
+          ? { labelText: labelDetails.key, color: labelDetails.color, valueId: valueStr, valueText: valueDetails.value }
+          : { labelText: labelDetails.key, color: labelDetails.color }
       })
 
       return result
@@ -151,7 +197,7 @@ export function getParserConfig() {
       const parts = Object.entries(value ?? {})
         .map(([key, val]) => {
           if (!val) return ''
-          return `${key}:${val}`
+          return !val.valueId ? `${key}` : `${key}:${val.valueId}`
         })
         .filter(Boolean)
 
@@ -167,26 +213,32 @@ export interface FilterLabelRendererProps {
 }
 
 export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions }: FilterLabelRendererProps) {
-  const labelValuesArr = Object.entries(selectedValue ?? {}).filter(([_, value]) => value)
-  const [firstKey, firstValue] = labelValuesArr[0] || []
-  if (!firstValue) return ''
+  const selectedLabels = Object.entries(selectedValue ?? {}).filter(([_, value]) => value)
+  if (!selectedLabels.length) return ''
 
-  const labelDetails = labelOptions.find(label => String(label.id) === firstKey)
-  const valueDetails = valueOptions[labelDetails?.key ?? '']?.find(value => String(value.id) === firstValue)
+  const [labelId, labelValue] = selectedLabels[0]
 
-  const remainingLabelValues = labelValuesArr.length - 1
+  const label = labelOptions.find(l => String(l.id) === labelId) || {
+    key: labelValue.labelText,
+    color: labelValue.color
+  }
+
+  const value = valueOptions[label?.key || '']?.find(v => String(v.id) === labelValue.valueId) || {
+    value: labelValue.valueText
+  }
+
+  // If label text is not available, show the label marker
+  const CNT_BAGDE_THRESHOLD = label.key ? 1 : 0
+
   return (
     <div className="flex w-max items-center gap-1">
-      {labelDetails && (
-        <LabelMarker
-          key={firstKey}
-          color={labelDetails.color}
-          label={labelDetails.key}
-          value={valueDetails?.value || ''}
-        />
+      {label.key && label.color && (
+        <LabelMarker key={labelId} color={label.color} label={label.key} value={value?.value || ''} />
       )}
 
-      {remainingLabelValues > 0 && <CounterBadge>{`+ ${remainingLabelValues}`}</CounterBadge>}
+      {selectedLabels.length > CNT_BAGDE_THRESHOLD && (
+        <CounterBadge>{`+ ${selectedLabels.length - CNT_BAGDE_THRESHOLD}`}</CounterBadge>
+      )}
     </div>
   )
 }

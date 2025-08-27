@@ -319,14 +319,13 @@ describe('buildPRFilters', () => {
   it('should handle label_by with labelId and valueId', () => {
     const filterData = {
       label_by: {
-        '101': true,
-        '102': false,
-        '103': '201',
-        '104': '202'
+        '101': { labelText: 'Label 1', color: 'red' },
+        '103': { labelText: 'Label 3', color: 'blue', valueId: '201' },
+        '104': { labelText: 'Label 4', color: 'green', valueId: '202' }
       }
     }
     const result = buildPRFilters({ filterData: filterData as any })
-    expect(result.label_id).toEqual([101])
+    expect(result.label_id).toEqual([101, 103, 104])
     expect(result.value_id).toEqual([201, 202])
   })
 

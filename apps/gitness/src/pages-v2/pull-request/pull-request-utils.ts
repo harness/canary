@@ -651,44 +651,57 @@ export const buildPRFilters = ({
   scope?: Scope
   reviewerId?: number
 }) => {
-  const filters = Object.entries(filterData).reduce<
-    Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]>
-  >((acc, [key, value]) => {
-    if ((key === 'created_gt' || key === 'created_lt') && value instanceof Date) {
-      acc[key] = value.getTime().toString()
-    }
-    if (key === 'created_by' && typeof value === 'object' && 'value' in value) {
-      acc[key] = value.value
-    }
-    if (key === 'review_decision' && Array.isArray(value)) {
-      acc[key] = value.map((item: { value: string }) => item.value).join(',')
-    }
-    if (key === 'label_by') {
-      const defaultLabel: { labelId: string[]; valueId: string[] } = { labelId: [], valueId: [] }
-      const { labelId, valueId } = Object.entries(value).reduce((labelAcc, [labelKey, value]) => {
-        if (value === true) {
-          labelAcc.labelId.push(labelKey)
-        } else if (value) {
-          labelAcc.valueId.push(value)
-        }
-        return labelAcc
-      }, defaultLabel)
+  const filters: Record<string, ListPullReqQueryQueryParams[keyof ListPullReqQueryQueryParams]> = {}
+  if (filterData.created_gt instanceof Date) {
+    filters.created_gt = filterData.created_gt.getTime().toString()
+  }
 
-      acc['label_id'] = labelId.map(Number)
-      acc['value_id'] = valueId.map(Number)
-    }
-    if (key === 'include_subspaces' && typeof value === 'object' && 'value' in value) {
-      const { accountId, orgIdentifier, projectIdentifier } = scope || {}
-      if (accountId && orgIdentifier && projectIdentifier) {
-        acc[key] = 'false'
-      } else if (accountId && orgIdentifier) {
-        acc[key] = String(value.value === ExtendedScope.OrgProg)
-      } else if (accountId) {
-        acc[key] = String(value.value === ExtendedScope.All)
+  if (filterData.created_lt instanceof Date) {
+    filters.created_lt = filterData.created_lt.getTime().toString()
+  }
+
+  if (filterData.created_by && typeof filterData.created_by === 'object' && 'value' in filterData.created_by) {
+    filters.created_by = filterData.created_by.value
+  }
+
+  if (filterData.review_decision && Array.isArray(filterData.review_decision)) {
+    filters.review_decision = filterData.review_decision.map((item: { value: string }) => item.value).join(',')
+  }
+
+  if (filterData.label_by) {
+    const labelIds: string[] = []
+    const valueIds: string[] = []
+
+    for (const labelKey in filterData.label_by) {
+      const labelValue = filterData.label_by[labelKey]
+      if (labelValue) {
+        labelIds.push(labelKey)
+
+        if (typeof labelValue === 'object' && labelValue.valueId) {
+          valueIds.push(labelValue.valueId)
+        }
       }
     }
-    return acc
-  }, {})
+
+    filters.label_id = labelIds.map(Number)
+    filters.value_id = valueIds.map(Number)
+  }
+
+  if (
+    filterData.include_subspaces &&
+    typeof filterData.include_subspaces === 'object' &&
+    'value' in filterData.include_subspaces
+  ) {
+    const { accountId, orgIdentifier, projectIdentifier } = scope || {}
+
+    if (accountId && orgIdentifier && projectIdentifier) {
+      filters.include_subspaces = 'false'
+    } else if (accountId && orgIdentifier) {
+      filters.include_subspaces = String(filterData.include_subspaces.value === ExtendedScope.OrgProg)
+    } else if (accountId) {
+      filters.include_subspaces = String(filterData.include_subspaces.value === ExtendedScope.All)
+    }
+  }
 
   if (filters['review_decision']) {
     filters['reviewer_id'] = reviewerId

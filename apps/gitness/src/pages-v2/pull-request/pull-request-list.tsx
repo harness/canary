@@ -180,7 +180,7 @@ export default function PullRequestListPage() {
       const newParams = new URLSearchParams(searchParams)
 
       if (newLabelIds.length > 0) {
-        const labelByValue = newLabelIds.map(id => `${id}:true`).join(';')
+        const labelByValue = newLabelIds.map(id => `${id}`).join(';')
         newParams.set('label_by', labelByValue)
       } else {
         newParams.delete('label_by')

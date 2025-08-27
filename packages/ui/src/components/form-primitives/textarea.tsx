@@ -1,9 +1,11 @@
 import {
   ChangeEvent,
   forwardRef,
+  KeyboardEvent,
   TextareaHTMLAttributes,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState
@@ -36,6 +38,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   size?: VariantProps<typeof textareaVariants>['size']
   resizable?: boolean
   maxCharacters?: number
+  autoResize?: boolean
 }
 
 /**
@@ -57,6 +60,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       className,
       maxCharacters,
       resizable = false,
+      autoResize = false,
       labelSuffix,
       size,
       orientation,
@@ -77,6 +81,44 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const id = useMemo(() => defaultId || `textarea-${generateAlphaNumericHash(10)}`, [defaultId])
 
+    const supportsFieldSizing = useMemo(() => CSS.supports('field-sizing', 'content'), [])
+
+    const autoResizeTextarea = useCallback(
+      (textarea: HTMLTextAreaElement | null) => {
+        if (!textarea || supportsFieldSizing || !autoResize) {
+          // If field-sizing is supported, the CSS class will handle it
+          return
+        }
+
+        // Fallback: programmatic height adjustment
+        textarea.style.height = 'auto'
+        const scrollHeight = textarea.scrollHeight
+        textarea.style.height = scrollHeight + 'px'
+      },
+      [autoResize, supportsFieldSizing]
+    )
+
+    useLayoutEffect(() => {
+      const textarea = textareaRef.current
+      if (textarea && !supportsFieldSizing && autoResize) {
+        setTimeout(() => {
+          textarea.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+            inline: 'nearest'
+          })
+        }, 0)
+      }
+    }, [props.value, autoResizeTextarea, supportsFieldSizing, autoResize])
+
+    // Auto-resize when value changes (for external updates, paste, undo, redo etc.)
+    useEffect(() => {
+      const textarea = textareaRef.current
+      if (textarea && !supportsFieldSizing && autoResize) {
+        autoResizeTextarea(textarea)
+      }
+    }, [props.value, autoResizeTextarea, supportsFieldSizing, autoResize])
+
     const setCharactersCount = useCallback(
       (value: string) => {
         if (maxCharacters === undefined) return
@@ -87,8 +129,28 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     )
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+      if (autoResize) {
+        autoResizeTextarea(textareaRef.current)
+      }
       setCharactersCount(e.target.value)
       onChange?.(e)
+    }
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && textareaRef.current) {
+        const textarea = textareaRef.current
+        const { selectionStart, selectionEnd, value } = textarea
+
+        // Check if cursor is at the end of the text (bottom of textarea)
+        if (selectionStart === selectionEnd && selectionStart === value.length) {
+          // Use setTimeout to ensure the new line is added before scrolling
+          setTimeout(() => {
+            textarea.scrollTop = textarea.scrollHeight
+          }, 0)
+        }
+      }
+
+      props.onKeyDown?.(e)
     }
 
     const mergedRef = useMergeRefs<HTMLTextAreaElement>([
@@ -151,9 +213,14 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           <textarea
             id={id}
             ref={mergedRef}
-            className={cn(textareaVariants({ theme, size }), { 'cn-textarea-resizable': resizable }, className)}
+            className={cn(
+              textareaVariants({ theme, size }),
+              { 'cn-textarea-resizable': resizable, 'field-sizing-content': supportsFieldSizing && autoResize },
+              className
+            )}
             disabled={disabled}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             {...props}
           />
 

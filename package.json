@@ -41,18 +41,19 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-i18next": "^6.1.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-i18next": "^6.1.1",
     "eslint-plugin-tailwindcss": "^3.17.5",
     "husky": "^9.1.4",
     "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "rimraf": "^6.0.1",
+    "typescript": "^5.9.2",
     "typescript-eslint": "^8.14.0"
   }
 }

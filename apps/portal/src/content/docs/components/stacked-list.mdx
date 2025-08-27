@@ -1,0 +1,434 @@
+---
+title: Stacked List
+description: List component with stacking
+beta: true
+---
+
+The `StackedList` component provides a way to display entities in a vertically stacked list format. Supports flexible item rendering, integration with links or actions, and customizable layouts for presenting structured data consistently.
+
+It is composed of several subcomponents such as `StackedList.Root`, `StackedList.Item`, `StackedList.Field` to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item
+        thumbnail={<IconV2 name="connectors" size="xs" />}
+        actions={<Button>Action</Button>}
+        to="/"
+      >
+        <StackedList.Field title="Item 1" description="Description 1" />
+      </StackedList.Item>
+
+      <StackedList.Item
+        thumbnail={<IconV2 name="star" size="xs" />}
+        actions={<Button>Action</Button>}
+        to="/"
+      >
+        <StackedList.Field title="Item 2" description="Description 2" />
+        <StackedList.Field title="additional text" right />
+      </StackedList.Item>
+
+      <StackedList.Item
+        thumbnail={<IconV2 name="check" size="xs" />}
+        actions={<Button>Action</Button>}
+        to="/"
+      >
+        <StackedList.Field title="Item 3" description="Description 3" />
+      </StackedList.Item>
+    </StackedList.Root>
+
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { StackedList } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <StackedList.Root>
+    <StackedList.Item
+      thumbnail={<IconV2 name="connectors" size="xs" />}
+      actions={<Button>Action</Button>}
+      to="/"
+    >
+      <StackedList.Field title="Item 1" description="Description 1" />
+    </StackedList.Item>
+
+    <StackedList.Item
+      thumbnail={<IconV2 name="star" size="xs" />}
+      actions={<Button>Action</Button>}
+      to="/"
+    >
+      <StackedList.Field title="Item 2" description="Description 2" />
+    </StackedList.Item>
+
+    <StackedList.Item
+      thumbnail={<IconV2 name="check" size="xs" />}
+      actions={<Button>Action</Button>}
+      to="/"
+    >
+      <StackedList.Field title="Item 3" description="Description 3" />
+    </StackedList.Item>
+  </StackedList.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `StackedList` component can be imported and composed as required.
+
+```typescript jsx
+<StackedList.Root>
+    <StackedList.Item>
+        <StackedList.Field />
+        <StackedList.Field />
+    </StackedList.Item>
+
+    <StackedList.Item>
+        <StackedList.Field />
+    </StackedList.Item>
+</StackedList.Root>
+```
+
+## Item paddings
+
+The `StackedList.Item` can receive different paddings through the `paddingX` and `paddingY` props to match your design solution.
+
+They support the following values: `4xs`, `3xs`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `0`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item
+        paddingX="3xl"
+        paddingY="2xl"
+        thumbnail={<IconV2 name="connectors" size="xs" />}
+        actions={<Button>Action</Button>}
+        to="/"
+      >
+        <StackedList.Field title="Item 1" description="Description 1" />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## Linked item
+
+The `StackedList.Item` accepts the `linkProps` and `to` props, which allow you to turn the entire item into a `link`.
+
+If either of these props is provided, the whole item becomes clickable and navigates according to the link configuration. You can still use `links` and `buttons` inside as child elements — they will remain fully functional.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item
+        to="/"
+        actions={<Button>Action</Button>}
+      >
+        <StackedList.Field title="Item 1" description="Description 1" />
+      </StackedList.Item>
+      <StackedList.Item
+        linkProps={{ onClick: () => console.log('Clicked') }}
+        actions={<Button>Action</Button>}
+      >
+        <StackedList.Field title="Item 2" description="Description 2" />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## Header item
+
+The `StackedList.Item` accepts the `isHeader` prop, which allow you to turn the entire item into Header view.
+
+This implies a background change to visually distinguish it from regular items.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item
+        isHeader
+        disableHover
+        paddingY="xs"
+      >
+        <StackedList.Field title="Title" titleColor="foreground-2" />
+      </StackedList.Item>
+      <StackedList.Item
+        to="/"
+      >
+        <StackedList.Field title="Item 1" description="Description 1" />
+      </StackedList.Item>
+      <StackedList.Item
+        to="/"
+      >
+        <StackedList.Field title="Item 2" />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## Disable hover
+
+The `StackedList.Item` accepts the `disableHover` prop, which allows you to turn off hover affect.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item
+        isHeader
+        disableHover
+        paddingY="xs"
+      >
+        <StackedList.Field title="Title" titleColor="foreground-2" />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## Title and description
+
+The `StackedList.Field` component accepts optional `title` and `description` props.
+
+Both values are rendered directly inside a `Text` component, ensuring consistent typography and styling.
+
+## Title color
+
+The `StackedList.Field` can receive `titleColor` prop, which allows you to override the default `Title` color.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item disableHover>
+        <StackedList.Field title="Item 1" titleColor="success" />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## Truncating
+
+By default, both `title` and `description` have the `truncate` property enabled.
+To disable it, pass the `disableTruncate` prop to `StackedList.Field`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item disableHover>
+        <StackedList.Field
+            title="Exploring the Future of User Interface Design in Modern Web Applications with a Focus on Accessibility, Performance, and Cross-Platform Consistency"
+            description="As digital products continue to evolve, user interface design plays an increasingly critical role in delivering seamless and accessible experiences. From responsive layouts and micro-interactions to accessibility standards and performance optimizations, modern UI design focuses not only on aesthetics but also on functionality and inclusivity. This approach ensures that applications can adapt to diverse user needs while maintaining consistency across different platforms and devices."
+        />
+      </StackedList.Item>
+      <StackedList.Item disableHover>
+        <StackedList.Field
+            primary
+            title="Exploring the Future of User Interface Design in Modern Web Applications with a Focus on Accessibility, Performance, and Cross-Platform Consistency"
+            description="As digital products continue to evolve, user interface design plays an increasingly critical role in delivering seamless and accessible experiences. From responsive layouts and micro-interactions to accessibility standards and performance optimizations, modern UI design focuses not only on aesthetics but also on functionality and inclusivity. This approach ensures that applications can adapt to diverse user needs while maintaining consistency across different platforms and devices."
+            disableTruncate
+        />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## Field position
+
+The `StackedList.Field` component accepts the `right` prop, which positions the field on the right side of the `Item`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item disableHover>
+        <StackedList.Field title="Item 1" />
+        <StackedList.Field title="Additional text" right />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## API Reference
+
+### `Root`
+
+Contains [`StackedList.Item`](#item) and [`StackedList.Field`](#field) components.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Class to apply to the List.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "border",
+      description: "Remove border from the List.",
+      required: false,
+      value: "false",
+      defaultValue: "undefined",
+    },
+    {
+      name: "rounded",
+      description: "Keep rounded style only on the top side.",
+      required: false,
+      value: "'top'",
+      defaultValue: "undefined",
+    },
+  ]}
+/>
+
+### `Item`
+
+Contains [`StackedList.Field`](#field) components.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Class to apply to the Item.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "thumbnail",
+      description: "Thumbnail content to display.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "actions",
+      description: "Actions content to display.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
+    },
+    {
+      name: "to",
+      description:
+        "URL to navigate to when the Item is clicked. Renders the Item with a Link component.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "linkProps",
+      description:
+        "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
+      required: false,
+      value: "LinkProps",
+      defaultValue: "undefined",
+    },
+    {
+      name: "disableHover",
+      description: "Allows you to turn off hover affect.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "isHeader",
+      description: "Allow you to turn the entire item into Header view.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
+    },
+    {
+      name: "paddingX",
+      description: "Change paddingX value.",
+      required: false,
+      value:
+        "'4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '0'",
+      defaultValue: "'md'",
+    },
+    {
+      name: "paddingY",
+      description: "Change paddingY value.",
+      required: false,
+      value:
+        "'4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '0'",
+      defaultValue: "'md'",
+    },
+  ]}
+/>
+
+### `Field`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Class to apply to the Field.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "title",
+      description: "Title content to display.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "description",
+      description: "Description content to display.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "titleColor",
+      description: "The color of the Title.",
+      required: false,
+      value:
+        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'state-disabled' | 'success' | 'warning' | 'danger'",
+      defaultValue: "'foreground-1'",
+    },
+    {
+      name: "right",
+      description: "Render Field at the right side of the Item.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
+    },
+    {
+      name: "disableTruncate",
+      description: "Disable truncate of the Title and the Description.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

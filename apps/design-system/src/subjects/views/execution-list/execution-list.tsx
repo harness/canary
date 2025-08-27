@@ -7,8 +7,6 @@ import { ExecutionListPage, RepoSummaryViewProps, TLinkComponent } from '@harnes
 
 import { useExecutionListStore } from './execution-list.store'
 
-const LinkComponent: TLinkComponent = ({ to, children }) => <Link to={to}>{children}</Link>
-
 const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
   return (
     <ExecutionListPage
@@ -16,7 +14,6 @@ const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
       setSearchQuery={noop}
       isLoading={false}
       isError={false}
-      LinkComponent={LinkComponent}
       handleExecutePipeline={noop}
     />
   )

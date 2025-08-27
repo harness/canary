@@ -7,8 +7,6 @@ import { CreatePipelineDialog, PipelineListPage, RepoSummaryViewProps, TLinkComp
 
 import { usePipelineListStore } from './pipeline-list.store'
 
-const LinkComponent: TLinkComponent = ({ to, children }) => <Link to={to}>{children}</Link>
-
 const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
   const [createPipelineOpen, setCreatePipelineOpen] = useState(false)
   return (
@@ -19,7 +17,6 @@ const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
         isLoading={false}
         isError={false}
         handleCreatePipeline={() => setCreatePipelineOpen(true)}
-        LinkComponent={LinkComponent}
       />
       <CreatePipelineDialog
         isOpen={createPipelineOpen}

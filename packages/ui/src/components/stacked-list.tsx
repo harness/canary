@@ -1,25 +1,9 @@
 import * as React from 'react'
 
-import { Text } from '@/components'
+import { Link, LinkProps, Text } from '@/components'
 import { Slot, Slottable } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-const listItemVariants = cva(
-  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle',
-  {
-    variants: {
-      disabled: {
-        true: '',
-        false: ''
-      },
-      loading: {
-        true: '',
-        false: ''
-      }
-    }
-  }
-)
 
 const listFieldVariants = cva('gap-cn-2xs flex flex-1 flex-col items-stretch justify-start', {
   variants: {
@@ -29,13 +13,15 @@ const listFieldVariants = cva('gap-cn-2xs flex flex-1 flex-col items-stretch jus
   }
 })
 
-interface ListItemProps extends React.ComponentProps<'div'>, VariantProps<typeof listItemVariants> {
+interface ListItemProps extends React.ComponentProps<'div'> {
   thumbnail?: React.ReactNode
   actions?: React.ReactNode
   asChild?: boolean
   isLast?: boolean
   isHeader?: boolean
   disableHover?: boolean
+  to?: string
+  linkProps?: Omit<LinkProps, 'to'>
 }
 
 interface ListFieldProps extends Omit<React.ComponentProps<'div'>, 'title'>, VariantProps<typeof listFieldVariants> {
@@ -91,6 +77,8 @@ const ListItem = ({
   isLast,
   isHeader,
   disableHover = false,
+  to,
+  linkProps,
   ...props
 }: ListItemProps) => {
   const Comp = asChild ? Slot : ('div' as any)
@@ -98,17 +86,19 @@ const ListItem = ({
   return (
     <Comp
       className={cn(
-        'stacked-list-item',
-        listItemVariants({}),
+        'stacked-list-item relative flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle border-b',
         className,
-        isLast ? 'border-none' : 'border-b',
-        isHeader ? 'bg-cn-background-2' : '',
-        disableHover
-          ? ''
-          : 'focus:bg-cn-background-hover hover:bg-cn-background-hover cursor-pointer duration-150 ease-in-out'
+        { 'border-none': isLast },
+        { 'bg-cn-background-2': isHeader },
+        {
+          'focus:bg-cn-background-hover hover:bg-cn-background-hover cursor-pointer duration-150 ease-in-out':
+            !disableHover
+        },
+        { '[&_a]:z-10 [&_button]:relative [&_button]:z-10': to || linkProps }
       )}
       {...props}
     >
+      {(to || linkProps) && <Link className="absolute inset-0 w-full rounded-3" to={to || ''} {...(linkProps || {})} />}
       {thumbnail && <div className="mr-2 flex items-center">{thumbnail}</div>}
       <Slottable>{children}</Slottable>
       {actions && <div className="ml-2 flex items-center">{actions}</div>}

@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, MouseEvent, useCallback, useMemo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -105,7 +105,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   setRuleTypeFilter,
   toProjectRuleDetails
 }) => {
-  const { navigate, Link } = useRouterContext()
+  const { navigate } = useRouterContext()
   const { t } = useTranslation()
 
   const handleSearchChange = useCallback(
@@ -122,6 +122,12 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   const isShowRulesContent = useMemo(() => {
     return !!rules?.length || !!rulesSearchQuery?.length
   }, [rulesSearchQuery, rules])
+
+  const handleToProjectRuleDetails = (e: MouseEvent<HTMLAnchorElement>, rule: RuleDataType) => () => {
+    e.preventDefault()
+    e.stopPropagation()
+    toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
+  }
 
   return (
     <Layout.Vertical gapY="sm" grow>
@@ -176,15 +182,14 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             <StackedList.Root>
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
-                  <StackedList.Item className="py-4 pr-1.5" key={rule.identifier} asChild>
-                    <Link
-                      to="#"
-                      onClick={e => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
-                      }}
-                    >
+                  <StackedList.Item
+                    className="py-4 pr-1.5"
+                    key={rule.identifier}
+                    linkProps={{
+                      onClick: e => handleToProjectRuleDetails(e, rule)
+                    }}
+                  >
+                    <>
                       <StackedList.Field
                         className="grid gap-1.5"
                         title={
@@ -237,7 +242,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                           }
                         ]}
                       />
-                    </Link>
+                    </>
                   </StackedList.Item>
                 ) : (
                   <Fragment key={idx} />

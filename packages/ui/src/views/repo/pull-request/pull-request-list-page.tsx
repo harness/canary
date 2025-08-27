@@ -64,6 +64,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   setSearchQuery,
   onLabelClick,
   scope,
+  defaultSelectedAuthorError: _,
   ...routingProps
 }) => {
   const [showScope, setShowScope] = useState(false)
@@ -87,6 +88,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [_searchParams, setSearchParams] = useSearchParams()
   const [activeFilterGrp, setActiveFilterGrp] = useState<PRFilterGroupTogglerOptions>(PRFilterGroupTogglerOptions.All)
   const { labels, values: labelValueOptions, isLoading: isLabelsLoading } = useLabelsStore()
+
+  /**
+   * Initialize filters hook with handlers for managing filter state
+   */
+  const [openedFilter, setOpenedFilter] = useState<PRListFiltersKeys>()
+  const filtersRef = useRef<FilterRefType<PRListFilters> | null>(null)
+  const searchRef = useRef<HTMLInputElement | null>(null)
 
   const currentUserId = currentUser?.id
 
@@ -219,15 +227,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     [setSearchQuery]
   )
 
-  const handleResetQuery = () => {
+  const handleResetSearchAndFilters = () => {
+    filtersRef.current?.reset()
     setSearchQuery('')
+    if (searchRef.current) {
+      searchRef.current.value = ''
+    }
   }
-
-  /**
-   * Initialize filters hook with handlers for managing filter state
-   */
-  const [openedFilter, setOpenedFilter] = useState<PRListFiltersKeys>()
-  const filtersRef = useRef<FilterRefType<PRListFilters> | null>(null)
 
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
@@ -242,9 +248,26 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     setSelectedFiltersCnt(filterValues.length)
   }
 
-  const hasActiveFilters = selectedFiltersCnt > 0 || searchQuery
+  const hasActiveFilters = selectedFiltersCnt > 0 || (!!searchQuery && !!searchQuery?.length)
 
   const showTopBar = !noData || hasActiveFilters
+
+  const renderDirtyNoDataContent = () =>
+    hasActiveFilters ? (
+      <NoData
+        imageName="no-search-magnifying-glass"
+        title={t('views:noData.noResults', 'No search results')}
+        description={[
+          t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+          t('views:noData.changeSearch', 'or search for a different keyword.')
+        ]}
+        secondaryButton={{
+          icon: 'trash',
+          label: t('views:noData.clearSearch', 'Clear filters'),
+          onClick: handleResetSearchAndFilters
+        }}
+      />
+    ) : undefined
 
   const renderListContent = () => {
     if (isLoading) {
@@ -253,24 +276,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     if (noData) {
       return hasActiveFilters ? (
-        <StackedList.Root className="grow place-content-center">
-          <NoData
-            imageName="no-search-magnifying-glass"
-            title={t('views:noData.noResults', 'No search results')}
-            description={[
-              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-              t('views:noData.changeSearch', 'or search for a different keyword.')
-            ]}
-            secondaryButton={{
-              icon: 'trash',
-              label: t('views:noData.clearSearch', 'Clear filters'),
-              onClick: () => {
-                filtersRef.current?.reset()
-                handleResetQuery()
-              }
-            }}
-          />
-        </StackedList.Root>
+        <StackedList.Root className="grow place-content-center">{renderDirtyNoDataContent()}</StackedList.Root>
       ) : (
         <NoData
           imageName="no-data-pr"
@@ -312,6 +318,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         onLabelClick={onLabelClick}
         scope={scope}
         showScope={showScope}
+        dirtyNoDataContent={renderDirtyNoDataContent()}
         {...routingProps}
       />
     )
@@ -406,9 +413,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <Text as="h1" variant="heading-section" className="mb-6">
+            <Text as="h1" variant="heading-section">
               Pull requests
             </Text>
+            <Spacer size={6} />
 
             {!isEmpty(prCandidateBranches) && (
               <>
@@ -425,6 +433,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             <ListActions.Root>
               <ListActions.Left>
                 <SearchInput
+                  ref={searchRef}
                   defaultValue={searchQuery || ''}
                   placeholder={t('views:repos.search', 'Search')}
                   inputContainerClassName="max-w-80"

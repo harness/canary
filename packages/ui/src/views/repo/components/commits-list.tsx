@@ -50,7 +50,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
         <NodeGroup.Root className="pb-cn-xl grid-cols-[9px_1fr] gap-4 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
           <NodeGroup.Title>{date && <Text variant="body-single-line-normal">Commits on {date}</Text>}</NodeGroup.Title>
-          <NodeGroup.Content className="overflow-hidden">
+          <NodeGroup.Content>
             {!!commitData.length && (
               <StackedList.Root>
                 {commitData.map((commit, idx) => {
@@ -63,52 +63,50 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                       className="p-cn-sm pl-cn-xs flex items-start"
                       key={commit?.sha || idx}
                       isLast={commitData.length - 1 === idx}
-                      asChild
+                      to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                     >
-                      <Link className="grow overflow-hidden" to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
-                        <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
-                          <Layout.Vertical gap="2xs" className="truncate">
-                            <CommitTitleWithPRLink
-                              toPullRequest={toPullRequest}
-                              commitMessage={commit.title}
-                              title={commit.message || commit.title}
-                              textProps={{ variant: 'heading-base' }}
-                            />
-                            <div className="gap-cn-2xs flex items-center">
-                              {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
-                              <Text variant="body-single-line-strong">{authorName || ''}</Text>
-                              <Text variant="body-single-line-normal" color="foreground-3">
-                                committed{' '}
-                                <TimeAgoCard
-                                  timestamp={when}
-                                  cutoffDays={3}
-                                  beforeCutoffPrefix=""
-                                  afterCutoffPrefix="on"
-                                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                                  textProps={{ color: 'foreground-4' }}
-                                />
-                              </Text>
-                            </div>
-                          </Layout.Vertical>
+                      <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
+                        <Layout.Vertical gap="2xs" className="truncate">
+                          <CommitTitleWithPRLink
+                            toPullRequest={toPullRequest}
+                            commitMessage={commit.title}
+                            title={commit.message || commit.title}
+                            textProps={{ variant: 'heading-base' }}
+                          />
+                          <div className="gap-cn-2xs flex items-center">
+                            {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
+                            <Text variant="body-single-line-strong">{authorName || ''}</Text>
+                            <Text variant="body-single-line-normal" color="foreground-3">
+                              committed{' '}
+                              <TimeAgoCard
+                                timestamp={when}
+                                cutoffDays={3}
+                                beforeCutoffPrefix=""
+                                afterCutoffPrefix="on"
+                                dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                                textProps={{ color: 'foreground-4' }}
+                              />
+                            </Text>
+                          </div>
+                        </Layout.Vertical>
 
-                          {!!commit?.sha && (
-                            <Layout.Horizontal gap="xs" align="center">
-                              <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} size="sm" />
-                              <Button
-                                title="View repository at this point of history"
-                                variant="outline"
-                                size="sm"
-                                asChild
-                                iconOnly
-                              >
-                                <Link to={toCode?.({ sha: commit?.sha || '' }) || ''}>
-                                  <IconV2 name="code" />
-                                </Link>
-                              </Button>
-                            </Layout.Horizontal>
-                          )}
-                        </Layout.Grid>
-                      </Link>
+                        {!!commit?.sha && (
+                          <Layout.Horizontal gap="xs" align="center">
+                            <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} size="sm" />
+                            <Button
+                              title="View repository at this point of history"
+                              variant="outline"
+                              size="sm"
+                              asChild
+                              iconOnly
+                            >
+                              <Link to={toCode?.({ sha: commit?.sha || '' }) || ''}>
+                                <IconV2 name="code" />
+                              </Link>
+                            </Button>
+                          </Layout.Horizontal>
+                        )}
+                      </Layout.Grid>
                     </StackedList.Item>
                   )
                 })}

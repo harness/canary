@@ -31,7 +31,10 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    setCopied(true)
+
+    // Use clipboard-copy library for cross-browser compatibility
+    copy(copyData).then(() => setCopied(true))
+
     onClick?.(e)
   }
 
@@ -39,14 +42,13 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
     let timeoutId: number
 
     if (copied) {
-      copy(copyData)
       timeoutId = window.setTimeout(() => setCopied(false), 1000)
     }
 
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [copied, copyData])
+  }, [copied])
 
   const iconCopyStyle = copied ? 'success' : color
   const changeIcon = copied ? 'check' : 'copy'

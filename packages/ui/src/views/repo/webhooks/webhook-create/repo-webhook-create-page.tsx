@@ -56,6 +56,8 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
 
   const { preSetWebhookData } = useWebhookStore()
 
+  const isUpdatePage = preSetWebhookData !== null
+
   const triggerValue = watch('trigger')
 
   useEffect(() => {
@@ -100,72 +102,75 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   return (
     <Layout.Vertical className="settings-form-width" gapY="md">
       <Text as="h1" variant="heading-section">
-        {preSetWebhookData
+        {isUpdatePage
           ? t('views:repos.editWebhookTitle', 'Order Status Update Webhook')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-        <WebhookToggleField register={register} setValue={setValue} watch={watch} />
-        <FormSeparator />
+        <Layout.Vertical gapY="3xl">
+          <Layout.Vertical gapY="xl">
+            <WebhookToggleField register={register} setValue={setValue} watch={watch} />
+            <FormSeparator />
 
-        {preSetWebhookData && (
-          <Text as="h2" variant="heading-subsection">
-            {t('views:repos.webhookDetails', 'Details')}
-          </Text>
-        )}
+            {isUpdatePage && (
+              <Text as="h2" variant="heading-subsection">
+                {t('views:repos.webhookDetails', 'Details')}
+              </Text>
+            )}
 
-        <WebhookNameField register={register} />
-        <WebhookDescriptionField register={register} />
-        <WebhookPayloadUrlField register={register} />
-        <WebhookSecretField register={register} />
-        <WebhookSSLVerificationField register={register} />
+            <WebhookNameField register={register} />
+            <WebhookDescriptionField register={register} />
+            <WebhookPayloadUrlField register={register} />
+            <WebhookSecretField register={register} />
+          </Layout.Vertical>
 
-        <Fieldset>
-          <WebhookTriggerField register={register} />
-          {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
-            <>
-              <div className="flex justify-between">
+          <WebhookSSLVerificationField register={register} />
+
+          <Fieldset className="gap-y-cn-xl">
+            <WebhookTriggerField register={register} />
+            {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
+              <Layout.Flex justify="between">
                 {eventSettingsComponents.map(component => (
-                  <div key={component.fieldName} className="flex flex-col">
+                  <Layout.Vertical key={component.fieldName}>
                     <WebhookEventSettingsFieldset
                       register={register}
                       setValue={setValue}
                       watch={watch}
                       eventList={component.events}
                     />
-                  </div>
+                  </Layout.Vertical>
                 ))}
-              </div>
-              {formMethods.formState.errors.triggers && (
-                <Alert.Root theme="danger">
-                  <Alert.Title>{formMethods.formState.errors.triggers.message}</Alert.Title>
-                </Alert.Root>
-              )}
-            </>
+              </Layout.Flex>
+            )}
+            {formMethods.formState.errors.triggers && (
+              <Alert.Root theme="danger">
+                <Alert.Title>{formMethods.formState.errors.triggers.message}</Alert.Title>
+              </Alert.Root>
+            )}
+          </Fieldset>
+
+          {!!apiError && (
+            <Alert.Root theme="danger">
+              <Alert.Title>{apiError?.toString()}</Alert.Title>
+            </Alert.Root>
           )}
-        </Fieldset>
 
-        <ButtonLayout horizontalAlign="start">
-          <Button type="submit" disabled={isLoading}>
-            {isLoading
-              ? preSetWebhookData
-                ? t('views:repos.updatingWebhook', 'Updating Webhook...')
-                : t('views:repos.creatingWebhook', 'Creating Webhook...')
-              : preSetWebhookData
-                ? t('views:repos.updateWebhook', 'Update Webhook')
-                : t('views:repos.createWebhook', 'Create Webhook')}
-          </Button>
-          <Button type="button" variant="outline" onClick={onFormCancel}>
-            {t('views:repos.cancel', 'Cancel')}
-          </Button>
-        </ButtonLayout>
-
-        {!!apiError && (
-          <Alert.Root theme="danger">
-            <Alert.Title>{apiError?.toString()}</Alert.Title>
-          </Alert.Root>
-        )}
+          <ButtonLayout horizontalAlign="start">
+            <Button type="submit" disabled={isLoading}>
+              {isLoading
+                ? isUpdatePage
+                  ? t('views:repos.updatingWebhook', 'Updating Webhook...')
+                  : t('views:repos.creatingWebhook', 'Creating Webhook...')
+                : isUpdatePage
+                  ? t('views:repos.updateWebhook', 'Update Webhook')
+                  : t('views:repos.createWebhook', 'Create Webhook')}
+            </Button>
+            <Button type="button" variant="outline" onClick={onFormCancel}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Button>
+          </ButtonLayout>
+        </Layout.Vertical>
       </FormWrapper>
     </Layout.Vertical>
   )

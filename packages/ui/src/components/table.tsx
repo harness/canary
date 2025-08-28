@@ -173,7 +173,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       <Title />
     )
 
-    const contentElement = (
+    const contentElement = children ? (
       <Layout.Horizontal gap="xs" align="center" className="relative" {...containerProps}>
         {!hideDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
         {childrenWithTooltip}
@@ -185,7 +185,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
           </span>
         )}
       </Layout.Horizontal>
-    )
+    ) : null
 
     return (
       <th

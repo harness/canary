@@ -512,7 +512,7 @@ export interface ApprovalItems {
 export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
 export interface ReviewerItemProps {
-  reviewer?: { display_name?: string; id?: number }
+  reviewer?: { display_name?: string; id?: number; email?: string }
   reviewDecision?: EnumPullReqReviewDecision
   sha?: string
   sourceSHA?: string

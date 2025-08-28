@@ -435,7 +435,7 @@ export const CreatePullRequest = () => {
       setReviewers(prev => [
         ...prev,
         {
-          reviewer: { display_name: reviewer?.display_name || '', id: reviewer?.id || 0 },
+          reviewer: { display_name: reviewer?.display_name || '', id: reviewer?.id || 0, email: reviewer?.email || '' },
           review_decision: PullReqReviewDecision.pending,
           sha: ''
         }

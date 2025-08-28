@@ -1027,7 +1027,8 @@ export default function PullRequestConversationPage() {
           reviewers: reviewers?.map((val: TypesPullReqReviewer) => ({
             reviewer: {
               display_name: val.reviewer?.display_name || '',
-              id: val.reviewer?.id || 0
+              id: val.reviewer?.id || 0,
+              email: val.reviewer?.email || ''
             },
             review_decision: val.review_decision,
             sha: val.sha

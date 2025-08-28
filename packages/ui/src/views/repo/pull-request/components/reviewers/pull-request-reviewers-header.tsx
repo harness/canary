@@ -6,6 +6,8 @@ import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
 import { debounce } from 'lodash-es'
 
+import { ReviewerInfo } from './reviewer-info'
+
 interface ReviewersHeaderProps {
   usersList?: PrincipalType[]
   reviewers: PRReviewer[]
@@ -61,7 +63,7 @@ const ReviewersHeader = ({
             <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           ) : (
             <>
-              {usersList?.map(({ display_name, id, uid }) => {
+              {usersList?.map(({ display_name, email, id, uid }) => {
                 if (uid === currentUserId) return null
 
                 const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
@@ -69,7 +71,7 @@ const ReviewersHeader = ({
                 return (
                   <DropdownMenu.AvatarItem
                     name={display_name}
-                    title={display_name}
+                    title={<ReviewerInfo display_name={display_name || ''} email={email || ''} />}
                     checkmark={!!isSelected}
                     key={uid}
                     onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}

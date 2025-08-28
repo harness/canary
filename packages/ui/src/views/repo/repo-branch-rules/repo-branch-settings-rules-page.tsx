@@ -160,7 +160,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
         <BranchSettingsRuleDescriptionField register={register} errors={errors} />
 
-        <Layout.Grid gapY="3xl">
+        <Layout.Vertical gapY="3xl">
           <BranchSettingsRuleTargetPatternsField
             handleAdd={handleAddPattern}
             handleRemove={handleRemovePattern}
@@ -191,7 +191,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             handleSelectChangeForRule={handleSelectChangeForRule}
             handleInputChange={handleInputChange}
           />
-        </Layout.Grid>
+        </Layout.Vertical>
+
+        {!!apiErrorsValue && <Text color="danger">{apiErrorsValue}</Text>}
 
         <ButtonLayout horizontalAlign="start" className="mt-cn-md">
           <Button type="submit" disabled={isLoading}>
@@ -207,8 +209,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
           </Button>
         </ButtonLayout>
-
-        {!!apiErrorsValue && <Text color="danger">{apiErrorsValue}</Text>}
       </FormWrapper>
     </Layout.Vertical>
   )

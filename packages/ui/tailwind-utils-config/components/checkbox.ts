@@ -33,24 +33,47 @@ export default {
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
 
-    '&:where(:not([disabled])):focus-visible': {
-      outline: 'var(--cn-focus)',
-      outlineOffset: 'var(--cn-size-px)'
-    },
+    '&:where(:not([disabled]))': {
+      '&:focus-visible': {
+        outline: 'var(--cn-focus)',
+        outlineOffset: 'var(--cn-size-px)'
+      },
 
-    '&:where(:not([disabled])):hover': {
-      backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
-      borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
+      '&:hover': {
+        backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
+        borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
+      },
+
+      '&:where([data-state=checked]):hover': {
+        backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
+        borderColor: 'var(--cn-comp-selection-selected-border-hover)'
+      },
+
+      '&:where(.cn-checkbox-error:where(:not([data-state=checked]))):hover': {
+        backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+        borderColor: 'var(--cn-border-danger)',
+        boxShadow: `var(--cn-ring-danger-hover)`
+      },
+
+      '&:where([data-state=indeterminate])': {
+        '&:hover': {
+          backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
+          borderColor: 'var(--cn-comp-selection-selected-border-hover)'
+        },
+
+        '&:where(.cn-checkbox-error)': {
+          '&:hover': {
+            backgroundColor: 'var(--cn-set-red-solid-bg)',
+            borderColor: 'var(--cn-border-danger)',
+            boxShadow: `var(--cn-ring-danger-hover)`
+          }
+        }
+      }
     },
 
     '&:where(.cn-checkbox-error:where(:not([data-state=checked])))': {
       borderColor: 'var(--cn-border-danger)',
-      boxShadow: `var(--cn-ring-danger)`,
-      '&:hover': {
-        backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
-        borderColor: 'var(--cn-border-danger)',
-        boxShadow: `var(--cn-ring-danger-hover)`
-      }
+      boxShadow: `var(--cn-ring-danger)`
     },
 
     '&:where([disabled])': {
@@ -61,11 +84,7 @@ export default {
 
     '&:where([data-state=checked])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
-      borderColor: 'var(--cn-comp-selection-selected-border)',
-      '&:hover': {
-        backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
-        borderColor: 'var(--cn-comp-selection-selected-border-hover)'
-      }
+      borderColor: 'var(--cn-comp-selection-selected-border)'
     },
 
     '&:where([data-state=checked][disabled])': {
@@ -76,20 +95,11 @@ export default {
     '&:where([data-state=indeterminate])': {
       backgroundColor: 'var(--cn-comp-selection-selected-bg)',
       borderColor: 'var(--cn-comp-selection-selected-border)',
-      '&:hover': {
-        backgroundColor: 'var(--cn-comp-selection-selected-bg-hover)',
-        borderColor: 'var(--cn-comp-selection-selected-border-hover)'
-      },
 
       '&:where(.cn-checkbox-error)': {
         backgroundColor: 'var(--cn-set-red-solid-bg)',
         borderColor: 'var(--cn-border-danger)',
-        boxShadow: `var(--cn-ring-danger)`,
-        '&:hover': {
-          backgroundColor: 'var(--cn-set-red-solid-bg)',
-          borderColor: 'var(--cn-border-danger)',
-          boxShadow: `var(--cn-ring-danger-hover)`
-        }
+        boxShadow: `var(--cn-ring-danger)`
       }
     },
 
@@ -124,15 +134,6 @@ export default {
     color: 'var(--cn-text-1) !important',
     '&:where(.disabled)': {
       color: 'var(--cn-state-disabled-text) !important'
-    },
-    '@apply truncate': ''
-  },
-
-  '.cn-checkbox-label-no-truncate': {
-    '& .cn-label-text': {
-      '@apply overflow-visible': '',
-      'text-overflow': 'clip',
-      'white-space': 'nowrap'
     }
   },
 

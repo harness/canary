@@ -223,11 +223,9 @@ export default {
       width: 'var(--cn-btn-size-3xs)',
       height: 'var(--cn-btn-size-3xs)',
       '& > svg': {
-        width: 'var(--cn-icon-size-3xs)',
-        height: 'var(--cn-icon-size-3xs)',
-        minWidth: 'var(--cn-icon-size-3xs)',
-        minHeight: 'var(--cn-icon-size-3xs)',
-        strokeWidth: 'var(--cn-icon-stroke-width-3xs)'
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)',
+        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
       }
     },
 

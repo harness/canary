@@ -1467,28 +1467,6 @@
       }
     },
     "sidebar": {
-      "logo": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for Logo in sidebar navigation."
-        },
-        "icon": {
-          "$type": "color",
-          "$value": "{cyan.300}",
-          "$description": "Icon color for Logo in sidebar navigation."
-        }
-      },
-      "icon-asset": {
-        "bg": {
-          "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.sidebar.icon.bg.from} 0%, {gradient.sidebar.icon.bg.to} 80%)"
-        },
-        "item": {
-          "$type": "color",
-          "$value": "linear-gradient(180deg, {gradient.sidebar.icon.item.from} 0%, {gradient.sidebar.icon.item.to} 100%)"
-        }
-      },
       "fade-start": {
         "$type": "color",
         "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {bg.0} 100%)"
@@ -1684,6 +1662,18 @@
         "$type": "color",
         "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)"
       }
+    }
+  },
+  "logo": {
+    "text": {
+      "$type": "color",
+      "$value": "{text.1}",
+      "$description": "Text color for Logo in sidebar navigation."
+    },
+    "icon": {
+      "$type": "color",
+      "$value": "{cyan.300}",
+      "$description": "Icon color for Logo in sidebar navigation."
     }
   },
   "shadow": {
@@ -2237,28 +2227,6 @@
       }
     },
     "sidebar": {
-      "icon": {
-        "bg": {
-          "from": {
-            "$type": "color",
-            "$value": "{chrome.850}"
-          },
-          "to": {
-            "$type": "color",
-            "$value": "{chrome.950}"
-          }
-        },
-        "item": {
-          "from": {
-            "$type": "color",
-            "$value": "{chrome.25}"
-          },
-          "to": {
-            "$type": "color",
-            "$value": "{chrome.400}"
-          }
-        }
-      },
       "fade": {
         "$extensions": {
           "studio.tokens": {

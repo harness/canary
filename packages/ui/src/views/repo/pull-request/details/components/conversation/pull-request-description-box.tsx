@@ -35,10 +35,9 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
 
+  // Update local comment state whenever description prop changes
   useEffect(() => {
-    if (!comment) {
-      setComment(description || '')
-    }
+    setComment(description || '')
   }, [description])
 
   const moreTooltip = () => {

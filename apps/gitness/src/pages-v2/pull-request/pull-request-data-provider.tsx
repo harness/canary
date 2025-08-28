@@ -144,17 +144,20 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
 
   useEffect(() => {
     if (!pullReqData || isEqual(pullReqMetadata, pullReqData)) return
-    if (shouldUpdatePullReqState) {
+
+    // Always update when PR number changes (indicating navigation to a different PR)
+    const isDifferentPR = pullReqMetadata?.number !== pullReqData?.number
+    if (shouldUpdatePullReqState || isDifferentPR) {
       setPullReqMetadata(pullReqData)
     }
 
-    const mergeBaseChanged = pullReqMetadata?.merge_base_sha !== pullReqData.merge_base_sha
-    const sourceShaChanged = pullReqMetadata?.source_sha !== pullReqData.source_sha
+    const mergeBaseChanged = pullReqMetadata?.merge_base_sha !== pullReqData?.merge_base_sha
+    const sourceShaChanged = pullReqMetadata?.source_sha !== pullReqData?.source_sha
 
     if (mergeBaseChanged || sourceShaChanged) {
       refetchCommits()
     }
-  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchCommits, refreshNeeded])
+  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchCommits, refreshNeeded, shouldUpdatePullReqState])
 
   useEffect(() => {
     const hasChanges =
@@ -163,7 +166,9 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
       !isEqual(store.pullReqActivities, activities) ||
       !isEqual(store.pullReqChecksDecision, pullReqChecksDecision)
 
-    if (hasChanges) {
+    // Always update when PR number changes (different PR) to ensure fresh data
+    const isDifferentPR = store.pullReqMetadata?.number !== pullReqData?.number
+    if (hasChanges || isDifferentPR) {
       setResolvedCommentArr(undefined)
       shouldUpdatePullReqState &&
         store.updateState({
@@ -211,7 +216,8 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
     refetchCommits,
     refetchPullReq,
     setCommentsInfoData,
-    setResolvedCommentArr
+    setResolvedCommentArr,
+    shouldUpdatePullReqState
   ])
 
   useEffect(() => {

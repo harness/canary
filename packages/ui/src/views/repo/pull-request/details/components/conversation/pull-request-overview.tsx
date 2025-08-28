@@ -181,6 +181,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
       <Layout.Vertical gap="none">
         {activityFilter.value === PRCommentFilterType.SHOW_EVERYTHING && (
           <PullRequestDescBox
+            key={`pr-description-${pullReqMetadata?.number}-${pullReqMetadata?.updated}`}
             principalProps={principalProps}
             handleUpload={handleUpload}
             title={pullReqMetadata?.title}

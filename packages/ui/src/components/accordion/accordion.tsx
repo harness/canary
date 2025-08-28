@@ -23,7 +23,7 @@ const accordionVariants = cva('cn-accordion', {
     },
     variant: {
       default: '',
-      card: ''
+      card: 'cn-accordion-card'
     }
   },
   defaultVariants: {
@@ -68,7 +68,7 @@ const AccordionRoot = forwardRef<ElementRef<typeof AccordionPrimitive.Root>, Acc
       <AccordionPrimitive.Root
         ref={ref}
         {...props}
-        className={cn(accordionVariants({ size }), className)}
+        className={cn(accordionVariants({ size, variant }), className)}
         onValueChange={onValueChange}
       >
         <AccordionContext.Provider value={{ indicatorPosition, variant, cardSize }}>
@@ -87,7 +87,7 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 
     if (variant === 'card') {
       return (
-        <Card.Root size={cardSize} className="mb-2 w-full" wrapperClassname="!p-0">
+        <Card.Root size={cardSize} className="w-full" wrapperClassname="!py-0">
           <AccordionPrimitive.Item ref={ref} className="w-full" {...props} />
         </Card.Root>
       )

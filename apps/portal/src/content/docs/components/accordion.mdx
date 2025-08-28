@@ -65,7 +65,7 @@ import { DocsPage } from "@/components/docs-page";
 
         <div>
         <h5>Card Variant</h5>
-        <Accordion.Root type="single" collapsible indicatorPosition="left" variant="card" cardSize="sm">
+        <Accordion.Root type="single" collapsible indicatorPosition="left" variant="card" cardSize="md">
             <Accordion.Item value="item1">
                 <Accordion.Trigger suffix="3 items" prefix={<IconV2 name="info-circle" size="md" />}>
                   Item 1
@@ -74,6 +74,16 @@ import { DocsPage } from "@/components/docs-page";
                     <p>This is the content of item 1</p>
                     <p>This is the content of item 1</p>
                     <p>This is the content of item 1</p>
+                </Accordion.Content>
+            </Accordion.Item>
+            <Accordion.Item value="item3">
+                <Accordion.Trigger suffix="3 items" prefix={<IconV2 name="info-circle" size="md" />}>
+                  Item 2
+                </Accordion.Trigger>
+                <Accordion.Content>
+                    <p>This is the content of item 2</p>
+                    <p>This is the content of item 2</p>
+                    <p>This is the content of item 2</p>
                 </Accordion.Content>
             </Accordion.Item>
         </Accordion.Root>

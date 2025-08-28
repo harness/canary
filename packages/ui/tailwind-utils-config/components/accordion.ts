@@ -1,7 +1,13 @@
 export default {
   '.cn-accordion': {
+    display: 'flex',
+    flexDirection: 'column',
     '--cn-accordion-indicator-mt': '4px',
     minWidth: 'var(--cn-accordion-sm-min-width)',
+
+    '&.cn-accordion-card': {
+      gap: 'var(--cn-accordion-sm-card-gap-y)'
+    },
 
     '&-md': {
       minWidth: 'var(--cn-accordion-md-min-width)',
@@ -11,6 +17,10 @@ export default {
 
       '.cn-accordion-trigger-text': {
         '@apply font-heading-base': ''
+      },
+
+      '&.cn-accordion-card': {
+        gap: 'var(--cn-accordion-md-card-gap-y)'
       }
     },
 

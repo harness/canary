@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, ControlGroup, Fieldset, FormSeparator, FormWrapper, Layout, Text } from '@/components'
+import { Button, ButtonLayout, FormSeparator, FormWrapper, Layout, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -134,7 +134,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
 
         <TagSettingsRuleDescriptionField register={register} errors={errors} />
 
-        <div className="flex flex-col gap-y-10">
+        <Layout.Vertical gapY="3xl">
           <TagSettingsRuleTargetPatternsField watch={watch} setValue={setValue} register={register} errors={errors} />
 
           <TagSettingsRuleBypassListField
@@ -149,27 +149,24 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
           />
 
           <TagSettingsRuleListField rules={rules} handleCheckboxChange={handleCheckboxChange} />
-        </div>
-        <Fieldset className="mt-5">
-          <ControlGroup>
-            <ButtonLayout horizontalAlign="start">
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading
-                  ? presetRuleData
-                    ? t('views:repos.updateRuleButton', 'Update Rule')
-                    : t('views:repos.createRuleButton', 'Create Rule')
-                  : presetRuleData
-                    ? t('views:repos.updatingRuleButton', 'Updating Rule...')
-                    : t('views:repos.creatingRuleButton', 'Creating Rule...')}
-              </Button>
-              <Button type="button" variant="outline" asChild>
-                <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
-              </Button>
-            </ButtonLayout>
-          </ControlGroup>
-        </Fieldset>
+        </Layout.Vertical>
 
-        {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
+        {!!apiErrorsValue && <Text color="danger">{apiErrorsValue}</Text>}
+
+        <ButtonLayout horizontalAlign="start">
+          <Button type="submit" disabled={isLoading}>
+            {!isLoading
+              ? presetRuleData
+                ? t('views:repos.updateRuleButton', 'Update Rule')
+                : t('views:repos.createRuleButton', 'Create Rule')
+              : presetRuleData
+                ? t('views:repos.updatingRuleButton', 'Updating Rule...')
+                : t('views:repos.creatingRuleButton', 'Creating Rule...')}
+          </Button>
+          <Button type="button" variant="outline" asChild>
+            <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
+          </Button>
+        </ButtonLayout>
       </FormWrapper>
     </Layout.Vertical>
   )

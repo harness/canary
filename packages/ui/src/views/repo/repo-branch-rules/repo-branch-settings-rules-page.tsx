@@ -1,17 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import {
-  Button,
-  ButtonLayout,
-  ControlGroup,
-  Fieldset,
-  FormSeparator,
-  FormWrapper,
-  Layout,
-  MultiSelectOption,
-  Text
-} from '@/components'
+import { Button, ButtonLayout, FormSeparator, FormWrapper, Layout, MultiSelectOption, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -25,7 +15,7 @@ import {
   BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
-import { IBranchRulesStore, RepoBranchSettingsFormFields } from './types'
+import { IBranchRulesStore, PatternsButtonType, RepoBranchSettingsFormFields } from './types'
 import { combineAndNormalizePrincipalsAndGroups } from './utils'
 
 type BranchSettingsErrors = {
@@ -96,6 +86,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     watch,
     reset,
     clearErrors,
+    setError,
     formState: { errors }
   } = formMethods
 
@@ -104,6 +95,23 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     const formData = { ...data, rules }
     handleRuleUpdate(formData)
+  }
+
+  const pattern = watch('pattern')
+  const patterns = watch('patterns') || []
+
+  const handleAddPattern = (option: PatternsButtonType) => {
+    if (patterns.some(p => p.pattern === pattern)) {
+      setError('pattern', { message: 'Pattern already exists' })
+    } else if (pattern) {
+      setValue('patterns', [...patterns, { pattern, option }])
+      setValue('pattern', '')
+    }
+  }
+
+  const handleRemovePattern = (patternVal: string) => {
+    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
+    setValue('patterns', updatedPatterns)
   }
 
   useEffect(() => {
@@ -141,7 +149,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
       <Text as="h1" variant="heading-section">
         {presetRuleData
           ? t('views:repos.updateBranchRule', 'Update branch rule')
-          : t('views:repos.createBranchRule', 'Create branch rule')}
+          : t('views:repos.createBranchRule', 'Create a branch rule')}
       </Text>
 
       <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
@@ -152,12 +160,13 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
         <BranchSettingsRuleDescriptionField register={register} errors={errors} />
 
-        <div className="flex flex-col gap-y-10">
+        <Layout.Vertical gapY="3xl">
           <BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
+            handleAdd={handleAddPattern}
+            handleRemove={handleRemovePattern}
+            patterns={patterns}
             errors={errors}
+            register={register}
           />
 
           <BranchSettingsRuleBypassListField
@@ -182,27 +191,24 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             handleSelectChangeForRule={handleSelectChangeForRule}
             handleInputChange={handleInputChange}
           />
-        </div>
-        <Fieldset className="mt-5">
-          <ControlGroup>
-            <ButtonLayout horizontalAlign="start">
-              <Button type="submit" disabled={isLoading}>
-                {!isLoading
-                  ? presetRuleData
-                    ? t('views:repos.updateRuleButton', 'Update Rule')
-                    : t('views:repos.createRuleButton', 'Create Rule')
-                  : presetRuleData
-                    ? t('views:repos.updatingRuleButton', 'Updating Rule...')
-                    : t('views:repos.creatingRuleButton', 'Creating Rule...')}
-              </Button>
-              <Button type="button" variant="outline" asChild>
-                <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
-              </Button>
-            </ButtonLayout>
-          </ControlGroup>
-        </Fieldset>
+        </Layout.Vertical>
 
-        {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
+        {!!apiErrorsValue && <Text color="danger">{apiErrorsValue}</Text>}
+
+        <ButtonLayout horizontalAlign="start" className="mt-cn-md">
+          <Button type="submit" disabled={isLoading}>
+            {!isLoading
+              ? presetRuleData
+                ? t('views:repos.updateRuleButton', 'Update Rule')
+                : t('views:repos.createRuleButton', 'Create Rule')
+              : presetRuleData
+                ? t('views:repos.updatingRuleButton', 'Updating Rule...')
+                : t('views:repos.creatingRuleButton', 'Creating Rule...')}
+          </Button>
+          <Button type="button" variant="outline" asChild>
+            <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
+          </Button>
+        </ButtonLayout>
       </FormWrapper>
     </Layout.Vertical>
   )

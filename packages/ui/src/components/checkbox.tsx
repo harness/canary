@@ -50,11 +50,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
             <Label
               htmlFor={checkboxId}
               optional={showOptionalLabel}
-              className={cn(
-                'cn-checkbox-label',
-                { disabled: props.disabled },
-                { 'cn-checkbox-label-no-truncate': !truncateLabel }
-              )}
+              className={cn('cn-checkbox-label', { disabled: props.disabled, truncate: truncateLabel })}
             >
               {label}
             </Label>

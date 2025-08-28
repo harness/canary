@@ -1,21 +1,20 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, Fragment, useMemo, useState } from 'react'
 
 import {
-  Button,
   Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
-  IconV2,
   Label,
+  Layout,
   MultiSelectOption,
+  ResetTag,
   SplitButton,
   Switch
 } from '@/components'
 import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { cn } from '@utils/cn'
 import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
 import { getIcon } from '@views/repo/repo-branch-rules/utils'
 
@@ -77,16 +76,16 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
     }
   }
 
-  const handleRemovePattern = (patternVal: string) => {
+  const handleRemove = (patternVal: string) => {
     const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
     setValue!('patterns', updatedPatterns)
   }
 
   return (
-    <Fieldset className="gap-y-4">
+    <Layout.Grid gapY="md">
       <ControlGroup>
         <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
-        <div className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
+        <Layout.Grid columns="1fr auto" className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
           <FormInput.Text
             id="pattern"
             {...register!('pattern')}
@@ -113,35 +112,25 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
           >
             {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
           </SplitButton>
-        </div>
-        {!!patterns.length && (
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {patterns.map(pattern => (
-              <Button
-                key={pattern.pattern}
-                className="group flex h-6 items-center gap-x-1.5"
-                size="sm"
-                type="button"
-                variant="secondary"
-                onClick={() => handleRemovePattern(pattern.pattern)}
-              >
-                <span className="flex items-center gap-1">
-                  <IconV2
-                    className={cn('text-icons-success', {
-                      'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
-                    })}
-                    name="plus-circle"
-                    size="2xs"
-                  />
-                  {pattern.pattern}
-                </span>
-                <IconV2 name="xmark" size="2xs" />
-              </Button>
-            ))}
-          </div>
-        )}
+        </Layout.Grid>
       </ControlGroup>
-    </Fieldset>
+      {!!patterns.length && (
+        <Layout.Flex wrap="wrap" gap="xs">
+          {patterns.map(({ pattern, option }) => (
+            <ResetTag
+              key={pattern}
+              value={pattern}
+              onReset={() => handleRemove(pattern)}
+              icon={option === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'}
+              iconProps={{
+                className:
+                  option === PatternsButtonType.INCLUDE ? '!text-cn-foreground-success' : '!text-cn-foreground-danger'
+              }}
+            />
+          ))}
+        </Layout.Flex>
+      )}
+    </Layout.Grid>
   )
 }
 
@@ -174,19 +163,17 @@ export const TagSettingsRuleBypassListField: FC<
   }, [bypassOptions])
 
   return (
-    <Fieldset className="gap-y-4">
-      <ControlGroup>
-        <FormInput.MultiSelect
-          label={t('views:repos.bypassList', 'Bypass list')}
-          name="bypass"
-          options={multiSelectOptions}
-          placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
-          searchQuery={debouncedPrincipalsSearchQuery}
-          setSearchQuery={handleStringSearchChange}
-          disallowCreation
-          error={errors?.bypass?.message?.toString()}
-        />
-      </ControlGroup>
+    <Fieldset className="gap-y-cn-md">
+      <FormInput.MultiSelect
+        label={t('views:repos.bypassList', 'Bypass list')}
+        name="bypass"
+        options={multiSelectOptions}
+        placeholder={bypassListPlaceholder || t('views:repos.selectUsers', 'Select users')}
+        searchQuery={debouncedPrincipalsSearchQuery}
+        setSearchQuery={handleStringSearchChange}
+        disallowCreation
+        error={errors?.bypass?.message?.toString()}
+      />
 
       <ControlGroup>
         <FormInput.Checkbox
@@ -210,16 +197,16 @@ export const TagSettingsRuleListField: FC<{
   const tagRules = getTagRules(t)
 
   return (
-    <ControlGroup>
-      <Label className="mb-4">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      <Fieldset className="gap-y-5">
+    <Layout.Vertical gapY="xl">
+      <Label>{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Layout.Vertical gapY="lg">
         {tagRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)
           const { checked: isChecked = false, disabled: isDisabled = false } = matchingRule || {}
 
           return (
-            <Fieldset key={rule.id} className="gap-y-1">
-              {index > 0 && <Separator className="mb-cn-md" />}
+            <Fragment key={rule.id}>
+              {index > 0 && <Separator />}
               <Checkbox
                 id={rule.id}
                 checked={isChecked}
@@ -229,10 +216,10 @@ export const TagSettingsRuleListField: FC<{
                 caption={rule.description}
                 captionVariant="caption-soft"
               />
-            </Fieldset>
+            </Fragment>
           )
         })}
-      </Fieldset>
-    </ControlGroup>
+      </Layout.Vertical>
+    </Layout.Vertical>
   )
 }

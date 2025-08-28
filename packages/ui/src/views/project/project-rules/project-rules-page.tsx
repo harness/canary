@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
-import { Checkbox, NoData, Pagination, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Checkbox, Layout, NoData, Pagination, Text } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
 
@@ -44,46 +44,57 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   toProjectRuleDetails
 }) => {
   const { t } = useTranslation()
+  const { navigate } = useRouterContext()
   const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
+  if (!rulesData?.length && !isDirtyList && !isLoading) {
+    return (
+      <NoData
+        textWrapperClassName="max-w-[350px]"
+        imageName="no-data-cog"
+        title={t('views:noData.noRules', 'No rules yet')}
+        description={[
+          t(
+            'views:noData.noRulesDescription',
+            'There are no rules in this project. Click on the button below to start adding rules.'
+          )
+        ]}
+        splitButton={{
+          icon: 'plus',
+          label: t('views:repos.createBranchRuleButton', 'Create Branch Rule'),
+          options: [{ value: 'tag-rule', label: t('views:repos.createTagRuleButton', 'Create Tag Rule') }],
+          handleOptionChange: option => {
+            if (option === 'tag-rule') {
+              navigate(toProjectTagRuleCreate?.() || '')
+            }
+          },
+          handleButtonClick: () => navigate(toProjectBranchRuleCreate?.() || '')
+        }}
+      />
+    )
+  }
+
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content>
-        <Text as="h1" variant="heading-section" className="mb-6">
+      <SandboxLayout.Content className="gap-y-cn-xl">
+        <Text as="h1" variant="heading-section">
           {t('views:projectSettings.rules', 'Rules')}
         </Text>
-        {showParentScopeLabelsCheckbox && (
-          <div className="mb-[18px]">
+
+        <Layout.Vertical grow>
+          {showParentScopeLabelsCheckbox && (
             <Checkbox
               id="parent-labels"
               checked={parentScopeLabelsChecked}
               onCheckedChange={onParentScopeLabelsChange}
               label={t('views:rules.showParentRules', 'Show rules from parent scopes')}
             />
-          </div>
-        )}
-        {!rulesData?.length && !isDirtyList && !isLoading ? (
-          <NoData
-            withBorder
-            textWrapperClassName="max-w-[350px]"
-            imageName="no-data-members"
-            title={t('views:noData.rules', 'No rules yet')}
-            description={[
-              t(
-                'views:noData.noRules',
-                'There are no rules in this project. Click on the button below to start adding rules.'
-              )
-            ]}
-            primaryButton={{
-              label: t('views:projectSettings.addRule', 'Add new rule'),
-              to: 'create/branch'
-            }}
-          />
-        ) : (
+          )}
+
           <RepoSettingsGeneralRules
             rules={rulesData}
             isLoading={isLoading}
@@ -99,7 +110,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             ruleTypeFilter={ruleTypeFilter}
             setRuleTypeFilter={setRuleTypeFilter}
           />
-        )}
+        </Layout.Vertical>
 
         <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>

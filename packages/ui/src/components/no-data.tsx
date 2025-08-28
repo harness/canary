@@ -37,6 +37,7 @@ export interface NoDataProps {
   className?: string
   splitButton?: {
     label: ReactNode | string
+    icon?: IconPropsV2['name']
     options: { value: string; label: string }[]
     handleOptionChange: (option: string) => void
     handleButtonClick: () => void
@@ -112,7 +113,7 @@ export const NoData: FC<NoDataProps> = ({
               ))}
             {splitButton && (
               <SplitButton<string>
-                dropdownContentClassName="mt-0 min-w-[170px]"
+                dropdownContentClassName="min-w-[170px]"
                 handleButtonClick={() => splitButton.handleButtonClick()}
                 handleOptionChange={option => {
                   if (option === 'tag-rule') {
@@ -121,6 +122,7 @@ export const NoData: FC<NoDataProps> = ({
                 }}
                 options={splitButton.options}
               >
+                {splitButton.icon && <IconV2 name={splitButton.icon} size="sm" />}
                 {splitButton.label}
               </SplitButton>
             )}

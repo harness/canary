@@ -38,6 +38,7 @@ export const RepoSettingsRulesListContainer = () => {
 
   const closeAlertDeleteDialog = () => {
     isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
+    setApiError(null)
   }
   const openRulesAlertDeleteDialog = (identifier: string) => {
     setAlertDeleteParams(identifier)

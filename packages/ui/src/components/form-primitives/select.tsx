@@ -311,7 +311,7 @@ function SelectInner<T = string>(
       if (isValueOption(option)) {
         return (
           <DropdownMenu.Item
-            key={option.value?.toString()}
+            key={(option.value ?? option.label)?.toString()}
             title={option.label}
             disabled={option.disabled}
             onSelect={() => handleSelect(option.value)}

@@ -16,9 +16,7 @@ import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
-import { getScopedRuleUrl } from '../../utils/rule-url-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsRulesListContainer = () => {
@@ -44,12 +42,6 @@ export const RepoSettingsRulesListContainer = () => {
     setAlertDeleteParams(identifier)
     setRuleIsAlertDeleteDialogOpen(true)
   }
-
-  const {
-    routes: { toAccountSettings, toOrgSettings, toProjectSettings },
-    routeUtils,
-    scope: { accountId, orgIdentifier, projectIdentifier }
-  } = useMFEContext()
 
   const {
     data: { body: rulesData } = {},
@@ -124,22 +116,9 @@ export const RepoSettingsRulesListContainer = () => {
         showParentScopeLabelsCheckbox
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
-        toProjectRuleDetails={(identifier, scope) => {
-          return getScopedRuleUrl({
-            scope,
-            identifier,
-            toCODEManageRepositories: routeUtils.toCODEManageRepositories,
-            toCODERule: routeUtils.toCODERule,
-            toAccountSettings,
-            toOrgSettings,
-            toProjectSettings,
-            toRepoBranchRule: routes.toRepoBranchRule,
-            spaceId,
-            repoId: repoName,
-            accountId,
-            orgIdentifier,
-            projectIdentifier
-          })
+        toProjectRuleDetails={(identifier, _scope) => {
+          // This ensures the URL is properly constructed with the rule identifier
+          navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
         }}
       />
 

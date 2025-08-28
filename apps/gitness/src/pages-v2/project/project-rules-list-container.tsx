@@ -10,11 +10,9 @@ import { ErrorTypes, ProjectRulesPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
-import { getScopedRuleUrl } from '../../utils/rule-url-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesListContainer = () => {
@@ -28,11 +26,6 @@ export const ProjectRulesListContainer = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { setRules } = useProjectRulesStore()
-  const {
-    routes: { toAccountSettings, toOrgSettings, toProjectSettings },
-    routeUtils,
-    scope: { accountId, orgIdentifier, projectIdentifier }
-  } = useMFEContext()
 
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
@@ -101,7 +94,7 @@ export const ProjectRulesListContainer = () => {
   }
 
   const handleRuleEditClick = (identifier: string) => {
-    navigate(`${identifier}`)
+    navigate(`${identifier}/edit`)
   }
 
   return (
@@ -118,19 +111,9 @@ export const ProjectRulesListContainer = () => {
         handleRuleClick={handleRuleEditClick}
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ spaceId: space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ spaceId: space_ref })}
-        toProjectRuleDetails={(identifier, scope) => {
-          getScopedRuleUrl({
-            scope,
-            identifier,
-            toCODEManageRepositories: routeUtils?.toCODEManageRepositories,
-            toCODERule: routeUtils?.toCODERule,
-            toAccountSettings,
-            toOrgSettings,
-            toProjectSettings,
-            accountId,
-            orgIdentifier,
-            projectIdentifier
-          })
+        toProjectRuleDetails={(identifier, _scope) => {
+          // This ensures the URL is properly constructed with the rule identifier
+          navigate(`${identifier}/edit`)
         }}
         showParentScopeLabelsCheckbox={space_ref?.includes('/')}
         parentScopeLabelsChecked={showParentRules}

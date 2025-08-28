@@ -122,7 +122,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     return !!rules?.length || !!rulesSearchQuery?.length
   }, [rulesSearchQuery, rules])
 
-  const handleToProjectRuleDetails = (e: MouseEvent<HTMLAnchorElement>, rule: RuleDataType) => () => {
+  const handleToProjectRuleDetails = (e: MouseEvent<HTMLAnchorElement>, rule: RuleDataType) => {
     e.preventDefault()
     e.stopPropagation()
     toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)

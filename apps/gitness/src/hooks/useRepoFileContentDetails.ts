@@ -16,6 +16,7 @@ interface UseRepoContentDetailsProps {
   repoId?: string
   batchSize?: number
   throttleDelay?: number
+  forceRefresh?: boolean
 }
 
 interface UseRepoContentDetailsResult {
@@ -37,7 +38,8 @@ export const useRepoFileContentDetails = ({
   fullResourcePath,
   pathToTypeMap,
   spaceId,
-  repoId
+  repoId,
+  forceRefresh = false
 }: UseRepoContentDetailsProps): UseRepoContentDetailsResult => {
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)
@@ -49,6 +51,37 @@ export const useRepoFileContentDetails = ({
   // Batching and throttling refs
   const pendingPathsRef = useRef(new Set<string>())
   const throttleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Helper function to clear all caches
+  const clearAllCaches = useCallback(() => {
+    metadataLoadedRef.current.clear()
+    pendingPathsRef.current.clear()
+    if (throttleTimeoutRef.current) {
+      clearTimeout(throttleTimeoutRef.current)
+      throttleTimeoutRef.current = null
+    }
+  }, [])
+
+  // Helper function to clean up deleted files from state
+  const cleanupDeletedFiles = useCallback(() => {
+    setFiles(prevFiles => {
+      const currentPaths = new Set(pathToTypeMap.keys())
+      return prevFiles.filter(file => currentPaths.has(file.id))
+    })
+  }, [pathToTypeMap])
+
+  // Combined effect to handle all cache clearing and file cleanup scenarios
+  useEffect(() => {
+    // Clear all caches when any of these conditions are met
+    if (forceRefresh || pathToTypeMap.size !== files.length) {
+      clearAllCaches()
+
+      // Only cleanup files if the path map size changed (files added/removed)
+      if (pathToTypeMap.size !== files.length) {
+        cleanupDeletedFiles()
+      }
+    }
+  }, [forceRefresh, pathToTypeMap.size, files.length, clearAllCaches, cleanupDeletedFiles])
 
   // convert content type to summary item type
   const getSummaryItemType = useCallback((type: OpenapiGetContentOutput['type']): SummaryItemType => {
@@ -113,8 +146,10 @@ export const useRepoFileContentDetails = ({
     async (paths: string[]) => {
       if (!paths.length || !repoRef || !fullGitRef) return
 
-      // Filter out paths that already have metadata
-      const pathsToLoad = paths.filter(path => !metadataLoadedRef.current.has(path))
+      // Filter out paths that already have metadata or no longer exist
+      const pathsToLoad = paths.filter(
+        path => !metadataLoadedRef.current.has(path) && pathToTypeMap.has(path) // Only load metadata for files that still exist
+      )
       if (!pathsToLoad.length) return
 
       try {
@@ -149,7 +184,7 @@ export const useRepoFileContentDetails = ({
         console.error('Error loading metadata for paths:', paths, error)
       }
     },
-    [repoRef, fullGitRef, createFileObjectWithMetadata]
+    [repoRef, fullGitRef, createFileObjectWithMetadata, pathToTypeMap]
   )
 
   // Batch and throttle metadata loading
@@ -213,8 +248,8 @@ export const useRepoFileContentDetails = ({
       const basicFiles = allPaths.map(path => createBasicFileObject(path))
       setFiles(basicFiles)
 
-      // Clear metadata cache for new repo/ref
-      metadataLoadedRef.current.clear()
+      // Clear metadata cache for new repo/ref or when files change
+      clearAllCaches()
 
       // Set loading to false immediately since we're showing files
       setLoading(false)
@@ -222,7 +257,7 @@ export const useRepoFileContentDetails = ({
       // No files to show
       setFiles([])
       setLoading(false)
-      metadataLoadedRef.current.clear()
+      clearAllCaches()
     }
 
     return () => {
@@ -231,7 +266,7 @@ export const useRepoFileContentDetails = ({
       }
       pendingPathsRef.current.clear()
     }
-  }, [pathToTypeMap, allPaths, createBasicFileObject, repoRef, fullGitRef, fullResourcePath])
+  }, [pathToTypeMap, allPaths, createBasicFileObject, repoRef, fullGitRef, fullResourcePath, clearAllCaches])
 
   return {
     files,

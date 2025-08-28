@@ -12,6 +12,12 @@
       "min-width": {
         "$type": "sizing",
         "$value": "{size.56}"
+      },
+      "card": {
+        "gap-y": {
+          "$type": "spacing",
+          "$value": "{spacing.3}"
+        }
       }
     },
     "md": {
@@ -26,6 +32,12 @@
       "min-width": {
         "$type": "sizing",
         "$value": "{size.64}"
+      },
+      "card": {
+        "gap-y": {
+          "$type": "spacing",
+          "$value": "{spacing.4}"
+        }
       }
     }
   }

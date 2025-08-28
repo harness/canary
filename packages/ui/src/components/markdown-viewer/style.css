@@ -228,7 +228,7 @@
     }
 
     a {
-      font: var(--cn-comp-markdown-content-emphasized);
+      font: var(--cn-comp-markdown-content-paragraph);
       @apply text-cn-foreground-accent hover:text-[var(--cn-comp-link-text-hover)] hover:no-underline;
     }
 
@@ -236,7 +236,7 @@
       @apply font-body-code px-cn-2xs py-cn-4xs text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] !text-[var(--cn-set-blue-soft-text)] before:hidden after:hidden;
     }
 
-    :not(p) > code {
+    :is(h1, h2, h3, h4, h5, h6) > code {
       font-size: inherit;
       line-height: inherit;
     }

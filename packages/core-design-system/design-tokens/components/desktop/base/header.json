@@ -1,0 +1,20 @@
+{
+  "header": {
+    "height": {
+      "value": "{size.11}",
+      "type": "sizing"
+    },
+    "pl": {
+      "value": "{spacing.5}",
+      "type": "spacing"
+    },
+    "pr": {
+      "value": "{spacing.1-half}",
+      "type": "spacing"
+    },
+    "py": {
+      "value": "{spacing.2}",
+      "type": "spacing"
+    }
+  }
+}

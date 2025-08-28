@@ -1,4 +1,13 @@
-import { ComponentPropsWithRef, ComponentType, createContext, forwardRef, ReactNode, useContext } from 'react'
+import {
+  Children,
+  ComponentPropsWithRef,
+  ComponentType,
+  createContext,
+  forwardRef,
+  isValidElement,
+  ReactNode,
+  useContext
+} from 'react'
 import type {
   LinkProps,
   Location,
@@ -13,6 +22,11 @@ import type {
 import { noop } from 'lodash-es'
 
 import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
+
+interface SwitchProps {
+  children?: React.ReactNode
+  location?: Location
+}
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
@@ -48,6 +62,48 @@ NavLinkDefault.displayName = 'NavLinkDefault'
 
 const OutletDefault: ComponentType<OutletProps> = ({ children }) => <>{children}</>
 
+const SwitchDefault: ComponentType<SwitchProps> = ({ children }) => {
+  const currentPath = window.location.pathname
+  const childrenArray = Children.toArray(children)
+
+  for (const child of childrenArray) {
+    if (!isValidElement(child)) continue
+
+    if ('path' in child.props) {
+      const pathProp = child.props.path
+      if (!pathProp) continue
+
+      const exactProp = !!child.props.exact
+      const isMatch = exactProp ? currentPath === pathProp : currentPath.includes(pathProp)
+
+      if (isMatch) return child
+    } else {
+      return child
+    }
+  }
+
+  return null
+}
+
+interface ExtendedRouteProps {
+  path?: string
+  exact?: boolean
+  render?: (props: object) => ReactNode
+  children?: ReactNode
+}
+
+const RouteDefault: ComponentType<ExtendedRouteProps> = ({ render, children, ...props }) => {
+  if (children) {
+    return <>{children}</>
+  }
+
+  if (render) {
+    return <>{render(props)}</>
+  }
+
+  return null
+}
+
 const navigateFnDefault: NavigateFunction = to => {
   if (typeof to === 'number') {
     window.history.go(to) // Supports navigate(-1), navigate(1), etc.
@@ -75,6 +131,8 @@ interface RouterContextType {
   Link: ComponentType<ComponentPropsWithRef<typeof LinkDefault>>
   NavLink: ComponentType<ComponentPropsWithRef<typeof NavLinkDefault>>
   Outlet: ComponentType<OutletProps>
+  Switch: ComponentType<SwitchProps>
+  Route: ComponentType<ExtendedRouteProps>
   location: Location
   navigate: NavigateFunction
   useSearchParams: typeof useSearchParamsDefault
@@ -86,6 +144,8 @@ const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
   Outlet: OutletDefault,
+  Switch: SwitchDefault,
+  Route: RouteDefault,
   location: defaultLocation,
   navigate: navigateFnDefault,
   useSearchParams: useSearchParamsDefault,
@@ -100,6 +160,8 @@ export const RouterContextProvider = ({
   Link = LinkDefault,
   NavLink = NavLinkDefault,
   Outlet = OutletDefault,
+  Switch = SwitchDefault,
+  Route = RouteDefault,
   location = defaultLocation,
   navigate = navigateFnDefault,
   useSearchParams = useSearchParamsDefault,
@@ -114,6 +176,8 @@ export const RouterContextProvider = ({
         Link,
         NavLink,
         Outlet,
+        Switch,
+        Route,
         location,
         navigate,
         useSearchParams,

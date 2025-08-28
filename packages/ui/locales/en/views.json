@@ -445,6 +445,7 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noActivity": "There is no secret activity in this project yet.",
     "noSecrets": "No secrets yet",
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
@@ -683,6 +684,13 @@
     "fileNoChanges": "File without changes.",
     "binaryNotShown": "Binary file not shown."
   },
+  "secretDetails": {
+    "backToSecrets": "Back to secrets",
+    "configuration": "Configuration",
+    "references": "References",
+    "activity": "Activity",
+    "configurationView": "Secret Configuration"
+  },
   "profileSettings": {
     "newSshKey": "New SSH key",
     "enterNamePlaceholder": "Enter the name",
@@ -839,6 +847,18 @@
     "create": "Create Webhook",
     "edit": "Edit Webhook",
     "delete": "Delete Webhook"
+  },
+  "secretActivity": {
+    "event": "Event",
+    "type": "Type",
+    "scope": "Scope",
+    "timestamp": "Timestamp"
+  },
+  "secretReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
   },
   "secrets": {
     "createNew": "Create Secret",

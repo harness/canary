@@ -72,6 +72,7 @@ import PullRequestLayoutWrapper from './pull-request-layout-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
+import SecretDetailsLayoutWrapper from './secret-details-layout-wrapper'
 import ViewSettings from './view-settings'
 
 export interface ViewPreviewGroup {
@@ -544,6 +545,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'secrets-multi-select-page': {
         label: 'Secrets Multi Select Page',
         element: <SecretsMultiSelectPage />
+      },
+      'secret-details': {
+        label: 'Secret Details Page',
+        element: <SecretDetailsLayoutWrapper />
       },
       'connectors-list-page': {
         label: 'Connectors List Page',

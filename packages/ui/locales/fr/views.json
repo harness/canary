@@ -358,6 +358,8 @@
     "viewDocumentation": "Voir la documentation",
     "activity": "Activité",
     "time": "Heure",
+    "connectorName": "Connector name",
+    "connectorId": "Connector ID",
     "success": "Succès",
     "failure": "Échec",
     "delete": "Supprimer",
@@ -456,6 +458,10 @@
   },
   "common": {
     "details": "Details",
+    "overview": "Overview",
+    "type": "Type",
+    "createdOn": "Created on",
+    "modifiedOn": "Modified on",
     "manager": "Manager",
     "lastActivity": "Last Activity",
     "created": "Created"

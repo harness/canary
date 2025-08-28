@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
 
 import { Alert, Button, ButtonLayout } from '@/components'
 import { useTranslation } from '@/context'
-import { EntityIntent, InputConfigType } from '@/views'
+import { EntityIntent } from '@/views'
 
 import {
   getDefaultValuesFromFormDefinition,
@@ -21,7 +21,7 @@ export type SecretEntityFormHandle = {
 
 interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
-  secretsFormDefinition?: IFormDefinition<InputConfigType>
+  secretsFormDefinition?: IFormDefinition
   onBack?: () => void
   inputComponentFactory: InputFactory
   apiError?: string | null

@@ -368,6 +368,8 @@
     "viewDocumentation": "View Documentation",
     "activity": "Activity",
     "time": "Time",
+    "connectorName": "Connector name",
+    "connectorId": "Connector ID",
     "success": "Success",
     "failure": "Failed",
     "delete": "Delete",
@@ -466,6 +468,10 @@
   },
   "common": {
     "details": "Details",
+    "overview": "Overview",
+    "type": "Type",
+    "createdOn": "Created on",
+    "modifiedOn": "Modified on",
     "manager": "Manager",
     "lastActivity": "Last Activity",
     "created": "Created"

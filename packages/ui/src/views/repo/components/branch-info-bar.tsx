@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, DropdownMenu, IconV2, Layout, Link as StyledLink, Tag, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { Button, DropdownMenu, IconV2, Layout, Link, Link as StyledLink, Tag, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/views'
 
 interface BranchInfoBarProps {
@@ -27,7 +27,6 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   showContributeBtn
 }) => {
   const { t } = useTranslation()
-  const { Link } = useRouterContext()
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
   const hasAhead = !!ahead
@@ -115,15 +114,15 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                 </Layout.Grid>
 
                 {hasAhead && (
-                  <ButtonLayout>
-                    <Button className="w-full" variant="outline" asChild>
-                      <Link
-                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-                      >
-                        Compare
-                      </Link>
-                    </Button>
-                  </ButtonLayout>
+                  <Button className="w-full" variant="outline" asChild>
+                    <Link
+                      noHoverUnderline
+                      variant="secondary"
+                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                    >
+                      Compare
+                    </Link>
+                  </Button>
                 )}
               </Layout.Grid>
             </DropdownMenu.Slot>

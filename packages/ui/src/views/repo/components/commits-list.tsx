@@ -6,12 +6,12 @@ import {
   CommitCopyActions,
   IconV2,
   Layout,
+  Link,
   NodeGroup,
   StackedList,
   Text,
   TimeAgoCard
 } from '@/components'
-import { useRouterContext } from '@/context'
 import { formatDate } from '@/utils'
 import { TypesCommit } from '@/views'
 
@@ -30,8 +30,6 @@ interface CommitProps extends Partial<RoutingProps> {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequest, toCode, className }) => {
-  const { Link } = useRouterContext()
-
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}

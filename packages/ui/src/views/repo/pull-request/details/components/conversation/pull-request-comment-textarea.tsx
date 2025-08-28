@@ -55,17 +55,17 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     }, [commandValue, setSearchPrincipalsQuery])
 
     // Combine refs to handle both forward ref and internal ref
-    const setRefs = (element: HTMLTextAreaElement | null) => {
-      // Save to local ref
-      textareaRef.current = element
-
-      // Forward to external ref
-      if (typeof ref === 'function') {
-        ref(element)
-      } else if (ref) {
-        ref.current = element
-      }
-    }
+    const setRefs = useCallback(
+      (element: HTMLTextAreaElement | null) => {
+        textareaRef.current = element
+        if (typeof ref === 'function') {
+          ref(element)
+        } else if (ref) {
+          ref.current = element
+        }
+      },
+      [ref]
+    )
 
     const handleKeyDown = useCallback(
       (e: KeyboardEvent) => {
@@ -104,6 +104,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
           const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
           const currentWord = getCurrentWord(textarea)
           setValue(text)
+
           // Only show dropdown when typing @ followed by at least one character
           if (currentWord.startsWith('@')) {
             setCommandValue(currentWord)
@@ -211,8 +212,9 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       <div className="relative w-full">
         <Textarea
           {...textareaProps}
-          className={cn('field-sizing-content max-h-96', className)}
+          autoResize
           resizable
+          className={cn('min-h-cn-textarea max-h-cn-textarea', className)}
           value={value}
           onChange={e => {
             onTextValueChange(e)

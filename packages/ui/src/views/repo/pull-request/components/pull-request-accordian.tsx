@@ -143,7 +143,13 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           <Tag value={t('views:pullRequests.changedSinceLastView')} theme="orange" />
         )}
         {showViewed ? (
-          <Button variant="ghost" size="sm" className="gap-x-2.5 px-2.5 py-1.5" onClick={e => e.stopPropagation()}>
+          <Button
+            tabIndex={-1}
+            variant="ghost"
+            size="sm"
+            className="gap-x-2.5 px-2.5 py-1.5"
+            onClick={e => e.stopPropagation()}
+          >
             <Checkbox
               checked={viewed}
               onCheckedChange={checked => {

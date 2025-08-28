@@ -90,6 +90,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
     <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
       <DropdownMenu.Header className="relative">
         <SearchBox.Root
+          autoFocus
           className="w-full"
           inputClassName="pl-1.5 pr-8"
           placeholder={getSearchBoxPlaceholder()}

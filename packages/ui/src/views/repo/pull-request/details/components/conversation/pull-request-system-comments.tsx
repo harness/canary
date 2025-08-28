@@ -269,11 +269,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             description: (
               <>
                 <Text variant="body-single-line-normal" color="foreground-3">
-                  changed title from &nbsp;
+                  changed title from&nbsp;
                   <Text className="line-through" as="span" variant="body-single-line-normal" color="foreground-1">
                     {String(old)}
                   </Text>
-                  &nbsp; to &nbsp;
+                  &nbsp;to&nbsp;
                   <Text as="span" variant="body-single-line-normal" color="foreground-1">
                     {String(newData)}
                   </Text>
@@ -298,7 +298,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                     'removed their request for review'
                   ) : (
                     <>
-                      removed the request for review from &nbsp;
+                      removed the request for review from&nbsp;
                       <Text as="span" variant="body-single-line-normal" color="foreground-1">
                         {mentionDisplayName}
                       </Text>
@@ -326,13 +326,13 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 {reviewer_type === ReviewerAddActivity.REQUESTED && <>requested a review from {activityMentions}</>}
                 {reviewer_type === ReviewerAddActivity.CODEOWNERS && (
                   <>
-                    requested a review from {principalMentions} as &nbsp;
+                    requested a review from {principalMentions} as&nbsp;
                     {principalNameList?.length > 1 ? 'code owners' : 'code owner'}
                   </>
                 )}
                 {reviewer_type === ReviewerAddActivity.DEFAULT && (
                   <>
-                    requested a review from {principalMentions} as &nbsp;
+                    requested a review from {principalMentions} as&nbsp;
                     {principalNameList?.length > 1 ? 'default reviewers' : 'default reviewer'}
                   </>
                 )}

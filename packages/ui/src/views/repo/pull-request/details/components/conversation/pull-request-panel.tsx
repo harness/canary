@@ -266,7 +266,7 @@ const getButtonState = ({
       return {
         disabled: !checkboxBypass,
         theme: checkboxBypass ? 'danger' : 'default',
-        variant: checkboxBypass ? 'outline' : 'primary'
+        variant: 'primary'
       }
     }
   }
@@ -275,14 +275,14 @@ const getButtonState = ({
     return {
       disabled: false,
       theme: 'success',
-      variant: 'outline'
+      variant: 'primary'
     }
   }
 
   return {
     disabled: true,
     theme: 'default',
-    variant: 'outline'
+    variant: 'primary'
   }
 }
 
@@ -653,7 +653,7 @@ const PullRequestPanel = ({
                     {/*Only show SplitButton if we're not in any merge-related state*/}
                     {shouldShowSplitButton && (
                       <SplitButton
-                        theme={buttonState.variant === 'primary' ? 'default' : (buttonState.theme ?? 'default')}
+                        theme={buttonState.theme}
                         variant={buttonState.variant}
                         disabled={buttonState.disabled}
                         loading={actions[parseInt(mergeButtonValue)]?.loading}

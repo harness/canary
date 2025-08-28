@@ -36,6 +36,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   size?: VariantProps<typeof textareaVariants>['size']
   resizable?: boolean
   maxCharacters?: number
+  autoResize?: boolean
 }
 
 /**
@@ -64,6 +65,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       informerContent,
       wrapperClassName,
       autoFocus,
+      autoResize = false,
       ...props
     },
     ref
@@ -151,7 +153,11 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           <textarea
             id={id}
             ref={mergedRef}
-            className={cn(textareaVariants({ theme, size }), { 'cn-textarea-resizable': resizable }, className)}
+            className={cn(
+              textareaVariants({ theme, size }),
+              { 'cn-textarea-resizable': resizable, 'field-sizing-content': autoResize },
+              className
+            )}
             disabled={disabled}
             onChange={handleChange}
             {...props}

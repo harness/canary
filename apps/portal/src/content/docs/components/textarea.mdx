@@ -77,6 +77,31 @@ return (
 `}
 />
 
+## Auto Resize
+
+The `Textarea` component supports automatic height adjustment based on content with the `autoResize` prop. When enabled, the textarea will automatically grow and shrink to fit its content, eliminating the need for manual scrolling.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
+    <Textarea
+      id="auto-resize"
+      name="auto-resize"
+      label="Auto Resize"
+      placeholder="Start typing and watch the textarea grow automatically..."
+      autoResize
+    />
+  </Layout.Vertical>
+`}
+/>
+
+**Key Features:**
+
+- **Modern CSS Support**: Uses native `field-sizing: content` when supported by the browser
+- **Known Firefox issue**: The `autoResize` prop may not work as expected in Firefox due to its support of `field-sizing: content`.
+- **Max Height Constraint**: Respects maximum height limits to prevent excessive growth
+
 ## Theme
 
 The `Textarea` component accepts a `theme` prop, which defines the visual state of the input: either `warning`, or `danger`.
@@ -281,6 +306,14 @@ interface InformerProps extends Omit<TooltipProps, "children"> {
     {
       name: "optional",
       description: "Indicate if the textarea is optional.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "autoResize",
+      description:
+        "Indicate if the textarea should automatically adjust its height based on content.",
       required: false,
       value: "boolean",
       defaultValue: "false",

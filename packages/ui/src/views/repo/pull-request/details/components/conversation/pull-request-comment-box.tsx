@@ -666,7 +666,7 @@ export const PullRequestCommentBox = ({
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
       <Layout.Vertical
         gap="md"
-        className={cn('p-4 pt-3 flex-1', {
+        className={cn('p-4 pt-3 flex-1 w-full', {
           'border rounded-md': !inReplyMode || isEditMode,
           'bg-cn-background-1': !inReplyMode,
           'bg-cn-background-2 border-t': inReplyMode
@@ -723,10 +723,10 @@ export const PullRequestCommentBox = ({
 
               <Layout.Flex
                 align="center"
-                className="absolute bottom-px left-px w-[calc(100%-10px)] rounded bg-cn-background-1 p-cn-3xs border-t"
+                gap="4xs"
+                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-background-1 p-cn-3xs"
               >
                 {toolbar.map((item, index) => {
-                  const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
                       <Button
@@ -738,7 +738,6 @@ export const PullRequestCommentBox = ({
                       >
                         <IconV2 name={item.icon} />
                       </Button>
-                      {isFirst && <div className="h-4 w-px bg-cn-background-3" />}
                     </Fragment>
                   )
                 })}
@@ -773,7 +772,7 @@ export const PullRequestCommentBox = ({
               />
               <Button variant="ghost" onClick={handleFileSelect}>
                 <IconV2 name="attachment-image" />
-                Drag & drop, select, or paste to attach files
+                Attach files
               </Button>
             </>
           )}

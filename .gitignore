@@ -40,3 +40,9 @@ yaml-editor-test/
 
 #cursor
 .cursor
+
+#playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

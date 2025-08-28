@@ -34,6 +34,13 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader']
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/, // handle Monaco's codicon.ttf
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]'
+        }
       }
     ]
   },
@@ -47,11 +54,11 @@ module.exports = {
       shared: {
         react: {
           singleton: true,
-          requiredVersion: false,
+          requiredVersion: false
         },
         'react-dom': {
           singleton: true,
-          requiredVersion: false,
+          requiredVersion: false
         }
       }
     }),

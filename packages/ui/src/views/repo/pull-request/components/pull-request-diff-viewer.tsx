@@ -708,7 +708,7 @@ const PullRequestDiffViewer = ({
               registerHighlighter={highlighter}
               diffViewWrap={wrap}
               // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
-              diffViewAddWidget={addWidget && mode === DiffModeEnum.Split}
+              diffViewAddWidget={addWidget}
               diffViewTheme={isLightTheme ? 'light' : 'dark'}
               scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
             />

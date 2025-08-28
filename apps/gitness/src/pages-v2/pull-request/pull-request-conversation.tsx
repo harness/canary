@@ -827,6 +827,8 @@ export default function PullRequestConversationPage() {
   const overviewProps = useMemo(
     () => ({
       toCommitDetails: ({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
+      toPullRequestChange: ({ pullRequestId, commitSHA }: { pullRequestId: number; commitSHA: string }) =>
+        routes.toPullRequestChange({ spaceId, repoId, pullRequestId: pullRequestId.toString(), commitSHA }),
       handleUpdateDescription,
       handleAiPullRequestSummary,
       handleDeleteComment: deleteComment,

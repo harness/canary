@@ -5,10 +5,18 @@ import { ButtonGroup, ButtonGroupButtonProps, ButtonProps, Link, Text, useCopyBu
 interface CommitCopyActionsProps {
   sha: string
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  pullRequestId?: number
+  toPullRequestChange?: ({ pullRequestId, commitSHA }: { pullRequestId: number; commitSHA: string }) => string
   size?: ButtonProps['size']
 }
 
-export const CommitCopyActions = ({ sha, toCommitDetails, size = 'xs' }: CommitCopyActionsProps) => {
+export const CommitCopyActions = ({
+  sha,
+  toCommitDetails,
+  pullRequestId,
+  toPullRequestChange,
+  size = 'xs'
+}: CommitCopyActionsProps) => {
   const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs', color: 'surfaceGray' })
 
   const handleNavigation = (ev: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent) => {
@@ -26,7 +34,15 @@ export const CommitCopyActions = ({ sha, toCommitDetails, size = 'xs' }: CommitC
       buttonsProps={[
         {
           children: (
-            <Link noHoverUnderline to={toCommitDetails?.({ sha: sha || '' }) || ''} variant="secondary">
+            <Link
+              to={
+                toCommitDetails?.({ sha: sha || '' }) ||
+                toPullRequestChange?.({ pullRequestId: pullRequestId || 0, commitSHA: sha || '' }) ||
+                ''
+              }
+              variant="secondary"
+              noHoverUnderline
+            >
               <Text className="font-mono" color="inherit">
                 {sha.substring(0, 6)}
               </Text>

@@ -73,6 +73,7 @@ interface SystemCommentProps extends TypesPullReq {
   isLast: boolean
   pullReqMetadata: TypesPullReq | undefined
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequestChange?: ({ pullRequestId, commitSHA }: { pullRequestId: number; commitSHA: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
   principalProps: PrincipalPropsType
   spaceId?: string
@@ -83,6 +84,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   isLast,
   pullReqMetadata,
   toCommitDetails,
+  toPullRequestChange,
   toCode,
   principalProps,
   spaceId,
@@ -192,7 +194,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   pushed a new commit
                 </Text>
-                <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
+                <CommitCopyActions
+                  toPullRequestChange={toPullRequestChange}
+                  pullRequestId={pullReqMetadata?.number ?? 0}
+                  sha={String(newData)}
+                />
                 <TimeAgoCard timestamp={created} />
               </>
             ) : (
@@ -200,11 +206,19 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   forced pushed
                 </Text>
-                <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(old)} />
+                <CommitCopyActions
+                  toPullRequestChange={toPullRequestChange}
+                  pullRequestId={pullReqMetadata?.number ?? 0}
+                  sha={String(old)}
+                />
                 <Text variant="body-single-line-normal" color="foreground-3">
                   to
                 </Text>
-                <CommitCopyActions toCommitDetails={toCommitDetails} sha={String(newData)} />
+                <CommitCopyActions
+                  toPullRequestChange={toPullRequestChange}
+                  pullRequestId={pullReqMetadata?.number ?? 0}
+                  sha={String(newData)}
+                />
                 <TimeAgoCard timestamp={created} />
               </>
             )

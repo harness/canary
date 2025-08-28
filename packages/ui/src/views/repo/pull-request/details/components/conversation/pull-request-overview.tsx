@@ -37,6 +37,7 @@ export const activityToCommentItem = (activity: TypesPullReqActivity): CommentIt
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequestChange?: ({ pullRequestId, commitSHA }: { pullRequestId: number; commitSHA: string }) => string
 }
 
 export interface PullRequestOverviewProps
@@ -82,6 +83,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   handleUpdateDescription,
   handleAiPullRequestSummary,
   toCommitDetails,
+  toPullRequestChange,
   toCode,
   principalProps
 }) => {
@@ -200,6 +202,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                 principalProps={principalProps}
                 key={commentItems[0].id}
                 toCommitDetails={toCommitDetails}
+                toPullRequestChange={toPullRequestChange}
                 commentItems={commentItems}
                 isLast={isLast}
                 pullReqMetadata={pullReqMetadata}

@@ -7,10 +7,15 @@ import type { IInputDefinition } from '../../types/types'
 export interface InputRowProps {
   input: IInputDefinition
   factory: InputFactory
+  withoutWrapper?: boolean
 }
 
-export function Row({ input, factory }: InputRowProps): React.ReactElement {
+export function Row({ input, factory, withoutWrapper = false }: InputRowProps): React.ReactElement {
   const { prefix = '' } = {} //useRootFormikContext()
+
+  if (withoutWrapper) {
+    return <InputComponentRenderer path={`${prefix}${input.path}`} factory={factory} readonly={false} input={input} />
+  }
 
   return (
     <div>

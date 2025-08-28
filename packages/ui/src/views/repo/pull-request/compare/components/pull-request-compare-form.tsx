@@ -77,9 +77,9 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               allowEmptyValue
               isLoading={isLoading}
               buttonTitle="Create Pull Request"
-              onSaveComment={newComment => {
+              onSaveComment={formattedComment => {
                 if (isEmpty(errors)) {
-                  onFormSubmit({ title: formMethods.getValues('title'), description: newComment })
+                  onFormSubmit({ title: formMethods.getValues('title'), description: formattedComment })
                 }
               }}
               textareaPlaceholder={t(

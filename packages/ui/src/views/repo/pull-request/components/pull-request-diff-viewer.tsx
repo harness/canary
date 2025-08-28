@@ -25,7 +25,7 @@ import { OverlayScrollbars } from 'overlayscrollbars'
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import { scopeLinesRangeToOneBlock } from '../details/components/conversation/diff-utils'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
-import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
+import { replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
@@ -377,10 +377,9 @@ const PullRequestDiffViewer = ({
             setPrincipalsMentionMap={setPrincipalsMentionMap}
             isEditMode
             principalProps={principalProps}
-            onSaveComment={() => {
-              const trimmedComment = commentText.trim()
-              if (trimmedComment && handleSaveComment) {
-                return handleSaveComment(replaceMentionEmailWithId(trimmedComment, principalsMentionMap), undefined, {
+            onSaveComment={formattedComment => {
+              if (formattedComment && handleSaveComment) {
+                return handleSaveComment(formattedComment, undefined, {
                   line_end: lineNumber,
                   line_end_new: sideKey === 'newFile',
                   line_start: lineFromNumber,
@@ -520,12 +519,9 @@ const PullRequestDiffViewer = ({
                             principalProps={principalProps}
                             handleUpload={handleUpload}
                             isEditMode
-                            onSaveComment={() => {
+                            onSaveComment={formattedComment => {
                               if (parent?.id) {
-                                return updateComment?.(
-                                  parent?.id,
-                                  replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
-                                ).then(() => {
+                                return updateComment?.(parent?.id, formattedComment).then(() => {
                                   toggleEditMode(componentId, '')
                                 })
                               }
@@ -608,15 +604,9 @@ const PullRequestDiffViewer = ({
                                     principalProps={principalProps}
                                     handleUpload={handleUpload}
                                     isEditMode
-                                    onSaveComment={() => {
+                                    onSaveComment={formattedComment => {
                                       if (reply?.id) {
-                                        return updateComment?.(
-                                          reply?.id,
-                                          replaceMentionEmailWithId(
-                                            editComments[replyComponentId],
-                                            principalsMentionMap
-                                          )
-                                        ).then(() => {
+                                        return updateComment?.(reply?.id, formattedComment).then(() => {
                                           toggleEditMode(replyComponentId, '')
                                         })
                                       }

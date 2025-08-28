@@ -23,7 +23,7 @@ import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
 import { useExpandedComments } from '../../context/pull-request-comments-context'
-import { replaceEmailAsKey, replaceMentionEmailWithId } from './utils'
+import { replaceEmailAsKey } from './utils'
 
 //Utility function to calculate thread spacing based on position
 const getThreadSpacingClasses = (threadIndex?: number, totalThreads?: number, isLast?: boolean) => {
@@ -376,11 +376,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     handleUpload={handleUpload}
                     isEditMode
                     currentUser={currentUser}
-                    onSaveComment={() => {
-                      return handleSaveComment?.(
-                        replaceMentionEmailWithId(comment, principalsMentionMap),
-                        parentCommentId
-                      ).then(() => {
+                    onSaveComment={formattedComment => {
+                      return handleSaveComment?.(formattedComment, parentCommentId).then(() => {
                         setComment('')
                       })
                     }}
@@ -404,11 +401,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         principalProps={principalProps}
                         handleUpload={handleUpload}
                         inReplyMode
-                        onSaveComment={() => {
-                          return handleSaveComment?.(
-                            replaceMentionEmailWithId(comment, principalsMentionMap),
-                            parentCommentId
-                          )
+                        onSaveComment={formattedComment => {
+                          return handleSaveComment?.(formattedComment, parentCommentId)
                             .then(() => {
                               setHideReplyHere?.(false)
                             })

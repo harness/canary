@@ -23,7 +23,7 @@ import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get } from 'lodash-es'
 
-import { replaceEmailAsKey, replaceMentionEmailWithId, replaceMentionIdWithEmail } from './utils'
+import { replaceEmailAsKey, replaceMentionIdWithEmail } from './utils'
 
 const getAvatar = (name?: string) => <Avatar name={name} rounded />
 
@@ -263,12 +263,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   principalProps={principalProps}
                   handleUpload={handleUpload}
                   isEditMode
-                  onSaveComment={() => {
+                  onSaveComment={formattedComment => {
                     if (commentItem.id) {
-                      return handleUpdateComment?.(
-                        commentItem.id,
-                        replaceMentionEmailWithId(editComments[componentId], principalsMentionMap)
-                      ).then(() => {
+                      return handleUpdateComment?.(commentItem.id, formattedComment).then(() => {
                         toggleEditMode(componentId, '')
                       })
                     }

@@ -109,8 +109,8 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
               handleUpload={handleUpload}
               handleAiPullRequestSummary={handleAiPullRequestSummary}
               buttonTitle="Save"
-              onSaveComment={() => {
-                return handleUpdateDescription(title || '', comment)
+              onSaveComment={formattedComment => {
+                return handleUpdateDescription(title || '', formattedComment)
                   .then(() => {
                     setEdit(false)
                   })

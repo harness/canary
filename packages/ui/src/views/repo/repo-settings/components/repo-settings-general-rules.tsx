@@ -210,28 +210,28 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
             return (
               <StackedList.Item
-                  key={rule.identifier}
-                  className="pr-cn-xs"
-                  linkProps={{
-                      onClick: e => handleToProjectRuleDetails(e, rule)
-                  }}
-                  actions={
-                      <MoreActionsTooltip
-                          actions={[
-                              {
-                                  title: t('views:rules.edit', 'Edit Rule'),
-                                  iconName: 'edit-pencil',
-                                  onClick: () => handleRuleClick(rule.identifier!)
-                              },
-                              {
-                                  isDanger: true,
-                                  title: t('views:rules.delete', 'Delete Rule'),
-                                  iconName: 'trash',
-                                  onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
-                              }
-                          ]}
-                      />
-                  }
+                key={rule.identifier}
+                className="pr-cn-xs"
+                linkProps={{
+                  onClick: e => handleToProjectRuleDetails(e, rule)
+                }}
+                actions={
+                  <MoreActionsTooltip
+                    actions={[
+                      {
+                        title: t('views:rules.edit', 'Edit Rule'),
+                        iconName: 'edit-pencil',
+                        onClick: () => handleRuleClick(rule.identifier!)
+                      },
+                      {
+                        isDanger: true,
+                        title: t('views:rules.delete', 'Delete Rule'),
+                        iconName: 'trash',
+                        onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                      }
+                    ]}
+                  />
+                }
               >
                 <StackedList.Field
                   title={

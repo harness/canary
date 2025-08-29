@@ -14,6 +14,7 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { PRCommentViewProps } from '@views/repo/pull-request/details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem, {
@@ -23,6 +24,7 @@ import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get } from 'lodash-es'
 
+import { useExpandedComments } from '../../context/pull-request-comments-context'
 import { replaceEmailAsKey, replaceMentionIdWithEmail } from './utils'
 
 const getAvatar = (name?: string) => <Avatar name={name} rounded />
@@ -204,9 +206,14 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
     }))
   }, [])
 
+  const { isExpanded: getIsExpanded } = useExpandedComments()
+
   const renderContentItemsBlock = () => (
     <div className="px-4 pt-4">
       {commentItems?.map((commentItem, idx) => {
+        const expandedKey = payload?.id || commentItem?.id || 0
+        const isExpanded = !payload?.resolved || getIsExpanded(expandedKey)
+
         const componentId = `activity-comment-${commentItem.id}`
         const commentIdAttr = `comment-${commentItem.id}`
         const name = commentItem.payload?.author?.display_name
@@ -250,8 +257,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isDeleted: !!commentItem.deleted,
               handleDeleteComment: () => handleDeleteComment(commentItem.id),
               onEditClick: () => toggleEditMode(componentId, commentItem.payload?.text || ''),
-              contentClassName: 'border-0 pb-0 rounded-none',
+              contentClassName: cn('border-0 pb-0 rounded-none', { 'line-clamp-1': !isExpanded }),
               icon: avatar,
+              isExpanded,
               hideEditDelete: commentItem?.payload?.author?.uid !== currentUser?.uid,
               content: commentItem.deleted ? (
                 <TextInput value={t('views:pullRequests.deletedComment')} disabled />
@@ -315,7 +323,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   <TimeAgoCard timestamp={payload.created} />
                   {payload?.code_comment?.outdated && (
                     <>
-                      <Separator orientation="vertical" className="h-3.5 mx-1" />
+                      <Separator orientation="vertical" className="mx-1 h-3.5" />
                       <Tag key={'outdated'} value="Outdated" theme="orange" />
                     </>
                   )}
@@ -332,7 +340,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isNotCodeComment: true,
         contentHeader: (
           <Layout.Horizontal gap="sm" align="center">
-            <Link to={`../changes?commentId=${payload?.id}`} className="font-medium leading-tight text-cn-foreground-1">
+            <Link to={`../changes?commentId=${payload?.id}`} className="text-cn-foreground-1 font-medium leading-tight">
               {payload?.code_comment?.path}
             </Link>
             <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />

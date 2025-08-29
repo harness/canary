@@ -214,6 +214,7 @@
       @apply list-none [counter-reset:custom-counter];
 
       li {
+        min-height: 1.25rem;
         &:before {
           content: counter(custom-counter) '.';
           counter-increment: custom-counter;
@@ -222,7 +223,7 @@
           top: 0;
         }
 
-        @apply my-cn-xs relative;
+        @apply my-cn-2xs relative;
       }
     }
 

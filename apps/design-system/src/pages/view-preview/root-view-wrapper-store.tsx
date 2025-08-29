@@ -37,7 +37,7 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 4,
-          iconName: 'artifact',
+          iconName: 'artifacts',
           title: 'Artifacts',
           description: 'Validate service resilience.',
           to: '/artifacts'
@@ -51,7 +51,7 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 6,
-          iconName: 'featured-flags',
+          iconName: 'feature-flags',
           title: 'Feature Flags',
           description: 'Optimize feature rollout velocity.',
           to: '/feature-flags'
@@ -65,21 +65,21 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 7,
-          iconName: 'dev-portal',
+          iconName: 'portal',
           title: 'Developer Portal',
           description: 'Built for developers, onboard in minutes.',
           to: '/developer/portal'
         },
         {
           id: 8,
-          iconName: 'developer-environments',
-          title: 'Developer Environments',
+          iconName: 'workspaces',
+          title: 'Workspaces',
           description: 'Integrated & familiar git experience.',
           to: '/developer/environments'
         },
         {
           id: 9,
-          iconName: 'developer-insights',
+          iconName: 'engineering-insights',
           title: 'Developer Insights',
           description: 'Actionable insights on SDLC.',
           to: '/developer/insights'
@@ -93,7 +93,7 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 10,
-          iconName: 'security-test',
+          iconName: 'security-tests',
           title: 'Security Tests',
           description: 'Shift left security testing.',
           to: '/security-tests'
@@ -135,7 +135,7 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 14,
-          iconName: 'chaos-engineering',
+          iconName: 'chaos-tests',
           title: 'Chaos Engineering',
           description: 'Validate service resilience.',
           to: '/chaos'

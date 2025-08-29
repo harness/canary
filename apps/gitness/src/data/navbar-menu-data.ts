@@ -34,7 +34,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
       },
       {
         id: 4,
-        iconName: 'artifact',
+        iconName: 'artifacts',
         title: t('component:navbar.artifacts'),
         description: 'Validate service resilience.',
         to: routes.toArtifacts()
@@ -48,7 +48,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
       },
       {
         id: 6,
-        iconName: 'featured-flags',
+        iconName: 'feature-flags',
         title: t('component:navbar.feature-flags'),
         description: 'Optimize feature rollout velocity.',
         to: routes.toFeatureFlags()
@@ -62,21 +62,21 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
     items: [
       {
         id: 7,
-        iconName: 'dev-portal',
+        iconName: 'portal',
         title: t('component:navbar.developer-portal'),
         description: 'Built for developers, onboard in minutes.',
         to: routes.toDevPortal()
       },
       {
         id: 8,
-        iconName: 'developer-environments',
+        iconName: 'workspaces',
         title: t('component:navbar.developer-environments'),
         description: 'Integrated & familiar git experience.',
         to: routes.toDevEnvironments()
       },
       {
         id: 9,
-        iconName: 'developer-insights',
+        iconName: 'engineering-insights',
         title: t('component:navbar.developer-insights'),
         description: 'Actionable insights on SDLC.',
         to: routes.toDevInsights()
@@ -90,7 +90,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
     items: [
       {
         id: 10,
-        iconName: 'security-test',
+        iconName: 'security-tests',
         title: t('component:navbar.security-tests'),
         description: 'Shift left security testing.',
         to: routes.toSecurityTests()
@@ -132,7 +132,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
       },
       {
         id: 14,
-        iconName: 'chaos-engineering',
+        iconName: 'chaos-tests',
         title: t('component:navbar.chaos-engineering'),
         description: 'Validate service resilience.',
         to: routes.toChaos()

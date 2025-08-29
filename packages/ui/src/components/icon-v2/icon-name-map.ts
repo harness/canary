@@ -3,11 +3,20 @@
  * Generated icon map - DO NOT EDIT DIRECTLY
  */
 
+import AccountSolid from './icons/account-solid.svg'
 import Account from './icons/account.svg'
 import Agile from './icons/agile.svg'
+import AiMlOpsSolid from './icons/ai-ml-ops-solid.svg'
+import AiMlOps from './icons/ai-ml-ops.svg'
 import AiSolid from './icons/ai-solid.svg'
+import AiTestSolid from './icons/ai-test-solid.svg'
+import AiTest from './icons/ai-test.svg'
 import Ai from './icons/ai.svg'
+import AppDiscoverySolid from './icons/app-discovery-solid.svg'
+import AppDiscovery from './icons/app-discovery.svg'
 import AppNotification from './icons/app-notification.svg'
+import AppSecurityTestsSolid from './icons/app-security-tests-solid.svg'
+import AppSecurityTests from './icons/app-security-tests.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
 import Archive from './icons/archive.svg'
 import AreaSearch from './icons/area-search.svg'
@@ -33,7 +42,8 @@ import ArrowUpRightCircle from './icons/arrow-up-right-circle.svg'
 import ArrowUpRight from './icons/arrow-up-right.svg'
 import ArrowUp from './icons/arrow-up.svg'
 import ArrowsUpdown from './icons/arrows-updown.svg'
-import Artifact from './icons/artifact.svg'
+import ArtifactsSolid from './icons/artifacts-solid.svg'
+import Artifacts from './icons/artifacts.svg'
 import AtSignCircle from './icons/at-sign-circle.svg'
 import AtSign from './icons/at-sign.svg'
 import AttachmentImage from './icons/attachment-image.svg'
@@ -66,6 +76,8 @@ import BubbleStar from './icons/bubble-star.svg'
 import BubbleUpload from './icons/bubble-upload.svg'
 import BubbleWarning from './icons/bubble-warning.svg'
 import BubbleXmark from './icons/bubble-xmark.svg'
+import BuildsSolid from './icons/builds-solid.svg'
+import Builds from './icons/builds.svg'
 import Calculator from './icons/calculator.svg'
 import CalendarArrowDown from './icons/calendar-arrow-down.svg'
 import CalendarArrowUp from './icons/calendar-arrow-up.svg'
@@ -76,7 +88,8 @@ import CalendarRotate from './icons/calendar-rotate.svg'
 import CalendarXmark from './icons/calendar-xmark.svg'
 import Calendar from './icons/calendar.svg'
 import Cell2x2 from './icons/cell2x2.svg'
-import ChaosEngineering from './icons/chaos-engineering.svg'
+import ChaosTestsSolid from './icons/chaos-tests-solid.svg'
+import ChaosTests from './icons/chaos-tests.svg'
 import ChatBubbleCheck from './icons/chat-bubble-check.svg'
 import ChatBubbleEmpty from './icons/chat-bubble-empty.svg'
 import ChatBubbleQuestion from './icons/chat-bubble-question.svg'
@@ -97,6 +110,7 @@ import ClockSolid from './icons/clock-solid.svg'
 import Clock from './icons/clock.svg'
 import CloudBookmark from './icons/cloud-bookmark.svg'
 import CloudCheck from './icons/cloud-check.svg'
+import CloudCostsSolid from './icons/cloud-costs-solid.svg'
 import CloudCosts from './icons/cloud-costs.svg'
 import CloudDesync from './icons/cloud-desync.svg'
 import CloudDownload from './icons/cloud-download.svg'
@@ -114,8 +128,6 @@ import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import Community from './icons/community.svg'
-import Connect from './icons/connect.svg'
-import ConnectorsSolid from './icons/connectors-solid.svg'
 import Connectors from './icons/connectors.svg'
 import ControlSlider from './icons/control-slider.svg'
 import Cookie from './icons/cookie.svg'
@@ -127,6 +139,7 @@ import CursorPointer from './icons/cursor-pointer.svg'
 import CustomSecretManager from './icons/custom-secret-manager.svg'
 import CustomizeNavigation from './icons/customize-navigation.svg'
 import DashboardDots from './icons/dashboard-dots.svg'
+import DashboardSolid from './icons/dashboard-solid.svg'
 import DashboardSpeed from './icons/dashboard-speed.svg'
 import Dashboard from './icons/dashboard.svg'
 import DatabaseBackup from './icons/database-backup.svg'
@@ -142,10 +155,11 @@ import DatabaseTag from './icons/database-tag.svg'
 import DatabaseWarning from './icons/database-warning.svg'
 import DatabaseXmark from './icons/database-xmark.svg'
 import Database from './icons/database.svg'
+import DatabasesSolid from './icons/databases-solid.svg'
+import Databases from './icons/databases.svg'
 import Delegates from './icons/delegates.svg'
-import DevPortal from './icons/dev-portal.svg'
-import DeveloperEnvironments from './icons/developer-environments.svg'
-import DeveloperInsights from './icons/developer-insights.svg'
+import DeploymentsSolid from './icons/deployments-solid.svg'
+import Deployments from './icons/deployments.svg'
 import Developer from './icons/developer.svg'
 import DocMagnifyingGlassIn from './icons/doc-magnifying-glass-in.svg'
 import DocMagnifyingGlass from './icons/doc-magnifying-glass.svg'
@@ -163,6 +177,8 @@ import Edit from './icons/edit.svg'
 import Eject from './icons/eject.svg'
 import EmptyPage from './icons/empty-page.svg'
 import EnergyUsageWindow from './icons/energy-usage-window.svg'
+import EngineeringInsightsSolid from './icons/engineering-insights-solid.svg'
+import EngineeringInsights from './icons/engineering-insights.svg'
 import Enlarge from './icons/enlarge.svg'
 import Environments from './icons/environments.svg'
 import Erase from './icons/erase.svg'
@@ -179,7 +195,8 @@ import FastArrowLeft from './icons/fast-arrow-left.svg'
 import FastArrowRight from './icons/fast-arrow-right.svg'
 import FastArrowUp from './icons/fast-arrow-up.svg'
 import FavouriteWindow from './icons/favourite-window.svg'
-import FeaturedFlags from './icons/featured-flags.svg'
+import FeatureFlagsSolid from './icons/feature-flags-solid.svg'
+import FeatureFlags from './icons/feature-flags.svg'
 import FilterAlt from './icons/filter-alt.svg'
 import FilterListCircle from './icons/filter-list-circle.svg'
 import FilterList from './icons/filter-list.svg'
@@ -188,8 +205,6 @@ import Filter from './icons/filter.svg'
 import Finder from './icons/finder.svg'
 import FingerprintWindow from './icons/fingerprint-window.svg'
 import FlagSolid from './icons/flag-solid.svg'
-import FlashSolid from './icons/flash-solid.svg'
-import Flash from './icons/flash.svg'
 import FolderMinus from './icons/folder-minus.svg'
 import FolderPlus from './icons/folder-plus.svg'
 import FolderSettings from './icons/folder-settings.svg'
@@ -231,8 +246,11 @@ import Heart from './icons/heart.svg'
 import HelpCircleSolid from './icons/help-circle-solid.svg'
 import HelpCircle from './icons/help-circle.svg'
 import Import from './icons/import.svg'
+import IncidentsSolid from './icons/incidents-solid.svg'
+import Incidents from './icons/incidents.svg'
 import InfoCircleSolid from './icons/info-circle-solid.svg'
 import InfoCircle from './icons/info-circle.svg'
+import InfrastructureSolid from './icons/infrastructure-solid.svg'
 import Infrastructure from './icons/infrastructure.svg'
 import InputSearch from './icons/input-search.svg'
 import Internet from './icons/internet.svg'
@@ -254,8 +272,6 @@ import Loader from './icons/loader.svg'
 import LockSlash from './icons/lock-slash.svg'
 import LockSquare from './icons/lock-square.svg'
 import Lock from './icons/lock.svg'
-import LogIn from './icons/log-in.svg'
-import LogOut from './icons/log-out.svg'
 import Logout from './icons/logout.svg'
 import MagicWand from './icons/magic-wand.svg'
 import MailIn from './icons/mail-in.svg'
@@ -315,6 +331,7 @@ import OpenInBrowser from './icons/open-in-browser.svg'
 import OpenInWindow from './icons/open-in-window.svg'
 import OpenNewWindow from './icons/open-new-window.svg'
 import OpenSelectHandGesture from './icons/open-select-hand-gesture.svg'
+import OrganizationSolid from './icons/organization-solid.svg'
 import Organizations from './icons/organizations.svg'
 import Overrides from './icons/overrides.svg'
 import PageDown from './icons/page-down.svg'
@@ -346,6 +363,7 @@ import PinSlashSolid from './icons/pin-slash-solid.svg'
 import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
 import Pin from './icons/pin.svg'
+import PipelineSolid from './icons/pipeline-solid.svg'
 import Pipeline from './icons/pipeline.svg'
 import PlaySolid from './icons/play-solid.svg'
 import Play from './icons/play.svg'
@@ -354,6 +372,8 @@ import PlusCircle from './icons/plus-circle.svg'
 import PlusSquare from './icons/plus-square.svg'
 import Plus from './icons/plus.svg'
 import Podcast from './icons/podcast.svg'
+import PortalSolid from './icons/portal-solid.svg'
+import Portal from './icons/portal.svg'
 import PrComment from './icons/pr-comment.svg'
 import Presentation from './icons/presentation.svg'
 import PrivacyPolicy from './icons/privacy-policy.svg'
@@ -376,12 +396,15 @@ import ReloadWindow from './icons/reload-window.svg'
 import ReminderHandGesture from './icons/reminder-hand-gesture.svg'
 import ReplyToMessage from './icons/reply-to-message.svg'
 import Reply from './icons/reply.svg'
+import RepositorySolid from './icons/repository-solid.svg'
 import Repository from './icons/repository.svg'
 import Restart from './icons/restart.svg'
 import Roles from './icons/roles.svg'
 import Ruler from './icons/ruler.svg'
 import RunTest from './icons/run-test.svg'
 import Run from './icons/run.svg'
+import RuntimeSecuritySolid from './icons/runtime-security-solid.svg'
+import RuntimeSecurity from './icons/runtime-security.svg'
 import Safari from './icons/safari.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
@@ -389,7 +412,8 @@ import SearchEngine from './icons/search-engine.svg'
 import SearchWindow from './icons/search-window.svg'
 import Search from './icons/search.svg'
 import SecurityPass from './icons/security-pass.svg'
-import SecurityTest from './icons/security-test.svg'
+import SecurityTestsSolid from './icons/security-tests-solid.svg'
+import SecurityTests from './icons/security-tests.svg'
 import SelectWindow from './icons/select-window.svg'
 import SendDiagonal from './icons/send-diagonal.svg'
 import SendMail from './icons/send-mail.svg'
@@ -398,6 +422,8 @@ import ServiceAccounts from './icons/service-accounts.svg'
 import Services from './icons/services.svg'
 import Settings from './icons/settings.svg'
 import ShareIos from './icons/share-ios.svg'
+import ShareSolid from './icons/share-solid.svg'
+import Share from './icons/share.svg'
 import Shield from './icons/shield.svg'
 import Sidebar from './icons/sidebar.svg'
 import SingleView from './icons/single-view.svg'
@@ -427,6 +453,7 @@ import Strategy from './icons/strategy.svg'
 import SubmitDocument from './icons/submit-document.svg'
 import Suggestion from './icons/suggestion.svg'
 import SunLight from './icons/sun-light.svg'
+import SupplyChainSolid from './icons/supply-chain-solid.svg'
 import SupplyChain from './icons/supply-chain.svg'
 import SystemRestart from './icons/system-restart.svg'
 import TableRows from './icons/table-rows.svg'
@@ -473,6 +500,8 @@ import WarningCircle from './icons/warning-circle.svg'
 import WarningTriangleSolid from './icons/warning-triangle-solid.svg'
 import WarningTriangle from './icons/warning-triangle.svg'
 import Webhook from './icons/webhook.svg'
+import WorkspacesSolid from './icons/workspaces-solid.svg'
+import Workspaces from './icons/workspaces.svg'
 import WrapText from './icons/wrap-text.svg'
 import Www from './icons/www.svg'
 import XmarkCircleSolid from './icons/xmark-circle-solid.svg'
@@ -483,11 +512,20 @@ import ZoomIn from './icons/zoom-in.svg'
 import ZoomOut from './icons/zoom-out.svg'
 
 export const IconNameMapV2 = {
+  'account-solid': AccountSolid,
   account: Account,
   agile: Agile,
+  'ai-ml-ops-solid': AiMlOpsSolid,
+  'ai-ml-ops': AiMlOps,
   'ai-solid': AiSolid,
+  'ai-test-solid': AiTestSolid,
+  'ai-test': AiTest,
   ai: Ai,
+  'app-discovery-solid': AppDiscoverySolid,
+  'app-discovery': AppDiscovery,
   'app-notification': AppNotification,
+  'app-security-tests-solid': AppSecurityTestsSolid,
+  'app-security-tests': AppSecurityTests,
   'apple-shortcut': AppleShortcut,
   archive: Archive,
   'area-search': AreaSearch,
@@ -513,7 +551,8 @@ export const IconNameMapV2 = {
   'arrow-up-right': ArrowUpRight,
   'arrow-up': ArrowUp,
   'arrows-updown': ArrowsUpdown,
-  artifact: Artifact,
+  'artifacts-solid': ArtifactsSolid,
+  artifacts: Artifacts,
   'at-sign-circle': AtSignCircle,
   'at-sign': AtSign,
   'attachment-image': AttachmentImage,
@@ -546,6 +585,8 @@ export const IconNameMapV2 = {
   'bubble-upload': BubbleUpload,
   'bubble-warning': BubbleWarning,
   'bubble-xmark': BubbleXmark,
+  'builds-solid': BuildsSolid,
+  builds: Builds,
   calculator: Calculator,
   'calendar-arrow-down': CalendarArrowDown,
   'calendar-arrow-up': CalendarArrowUp,
@@ -556,7 +597,8 @@ export const IconNameMapV2 = {
   'calendar-xmark': CalendarXmark,
   calendar: Calendar,
   cell2x2: Cell2x2,
-  'chaos-engineering': ChaosEngineering,
+  'chaos-tests-solid': ChaosTestsSolid,
+  'chaos-tests': ChaosTests,
   'chat-bubble-check': ChatBubbleCheck,
   'chat-bubble-empty': ChatBubbleEmpty,
   'chat-bubble-question': ChatBubbleQuestion,
@@ -577,6 +619,7 @@ export const IconNameMapV2 = {
   clock: Clock,
   'cloud-bookmark': CloudBookmark,
   'cloud-check': CloudCheck,
+  'cloud-costs-solid': CloudCostsSolid,
   'cloud-costs': CloudCosts,
   'cloud-desync': CloudDesync,
   'cloud-download': CloudDownload,
@@ -594,8 +637,6 @@ export const IconNameMapV2 = {
   'collapse-sidebar': CollapseSidebar,
   collapse: Collapse,
   community: Community,
-  connect: Connect,
-  'connectors-solid': ConnectorsSolid,
   connectors: Connectors,
   'control-slider': ControlSlider,
   cookie: Cookie,
@@ -607,6 +648,7 @@ export const IconNameMapV2 = {
   'custom-secret-manager': CustomSecretManager,
   'customize-navigation': CustomizeNavigation,
   'dashboard-dots': DashboardDots,
+  'dashboard-solid': DashboardSolid,
   'dashboard-speed': DashboardSpeed,
   dashboard: Dashboard,
   'database-backup': DatabaseBackup,
@@ -622,10 +664,11 @@ export const IconNameMapV2 = {
   'database-warning': DatabaseWarning,
   'database-xmark': DatabaseXmark,
   database: Database,
+  'databases-solid': DatabasesSolid,
+  databases: Databases,
   delegates: Delegates,
-  'dev-portal': DevPortal,
-  'developer-environments': DeveloperEnvironments,
-  'developer-insights': DeveloperInsights,
+  'deployments-solid': DeploymentsSolid,
+  deployments: Deployments,
   developer: Developer,
   'doc-magnifying-glass-in': DocMagnifyingGlassIn,
   'doc-magnifying-glass': DocMagnifyingGlass,
@@ -643,6 +686,8 @@ export const IconNameMapV2 = {
   eject: Eject,
   'empty-page': EmptyPage,
   'energy-usage-window': EnergyUsageWindow,
+  'engineering-insights-solid': EngineeringInsightsSolid,
+  'engineering-insights': EngineeringInsights,
   enlarge: Enlarge,
   environments: Environments,
   erase: Erase,
@@ -659,7 +704,8 @@ export const IconNameMapV2 = {
   'fast-arrow-right': FastArrowRight,
   'fast-arrow-up': FastArrowUp,
   'favourite-window': FavouriteWindow,
-  'featured-flags': FeaturedFlags,
+  'feature-flags-solid': FeatureFlagsSolid,
+  'feature-flags': FeatureFlags,
   'filter-alt': FilterAlt,
   'filter-list-circle': FilterListCircle,
   'filter-list': FilterList,
@@ -668,8 +714,6 @@ export const IconNameMapV2 = {
   finder: Finder,
   'fingerprint-window': FingerprintWindow,
   'flag-solid': FlagSolid,
-  'flash-solid': FlashSolid,
-  flash: Flash,
   'folder-minus': FolderMinus,
   'folder-plus': FolderPlus,
   'folder-settings': FolderSettings,
@@ -711,8 +755,11 @@ export const IconNameMapV2 = {
   'help-circle-solid': HelpCircleSolid,
   'help-circle': HelpCircle,
   import: Import,
+  'incidents-solid': IncidentsSolid,
+  incidents: Incidents,
   'info-circle-solid': InfoCircleSolid,
   'info-circle': InfoCircle,
+  'infrastructure-solid': InfrastructureSolid,
   infrastructure: Infrastructure,
   'input-search': InputSearch,
   internet: Internet,
@@ -734,8 +781,6 @@ export const IconNameMapV2 = {
   'lock-slash': LockSlash,
   'lock-square': LockSquare,
   lock: Lock,
-  'log-in': LogIn,
-  'log-out': LogOut,
   logout: Logout,
   'magic-wand': MagicWand,
   'mail-in': MailIn,
@@ -795,6 +840,7 @@ export const IconNameMapV2 = {
   'open-in-window': OpenInWindow,
   'open-new-window': OpenNewWindow,
   'open-select-hand-gesture': OpenSelectHandGesture,
+  'organization-solid': OrganizationSolid,
   organizations: Organizations,
   overrides: Overrides,
   'page-down': PageDown,
@@ -826,6 +872,7 @@ export const IconNameMapV2 = {
   'pin-slash': PinSlash,
   'pin-solid': PinSolid,
   pin: Pin,
+  'pipeline-solid': PipelineSolid,
   pipeline: Pipeline,
   'play-solid': PlaySolid,
   play: Play,
@@ -834,6 +881,8 @@ export const IconNameMapV2 = {
   'plus-square': PlusSquare,
   plus: Plus,
   podcast: Podcast,
+  'portal-solid': PortalSolid,
+  portal: Portal,
   'pr-comment': PrComment,
   presentation: Presentation,
   'privacy-policy': PrivacyPolicy,
@@ -856,12 +905,15 @@ export const IconNameMapV2 = {
   'reminder-hand-gesture': ReminderHandGesture,
   'reply-to-message': ReplyToMessage,
   reply: Reply,
+  'repository-solid': RepositorySolid,
   repository: Repository,
   restart: Restart,
   roles: Roles,
   ruler: Ruler,
   'run-test': RunTest,
   run: Run,
+  'runtime-security-solid': RuntimeSecuritySolid,
+  'runtime-security': RuntimeSecurity,
   safari: Safari,
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
@@ -869,7 +921,8 @@ export const IconNameMapV2 = {
   'search-window': SearchWindow,
   search: Search,
   'security-pass': SecurityPass,
-  'security-test': SecurityTest,
+  'security-tests-solid': SecurityTestsSolid,
+  'security-tests': SecurityTests,
   'select-window': SelectWindow,
   'send-diagonal': SendDiagonal,
   'send-mail': SendMail,
@@ -878,6 +931,8 @@ export const IconNameMapV2 = {
   services: Services,
   settings: Settings,
   'share-ios': ShareIos,
+  'share-solid': ShareSolid,
+  share: Share,
   shield: Shield,
   sidebar: Sidebar,
   'single-view': SingleView,
@@ -907,6 +962,7 @@ export const IconNameMapV2 = {
   'submit-document': SubmitDocument,
   suggestion: Suggestion,
   'sun-light': SunLight,
+  'supply-chain-solid': SupplyChainSolid,
   'supply-chain': SupplyChain,
   'system-restart': SystemRestart,
   'table-rows': TableRows,
@@ -953,6 +1009,8 @@ export const IconNameMapV2 = {
   'warning-triangle-solid': WarningTriangleSolid,
   'warning-triangle': WarningTriangle,
   webhook: Webhook,
+  'workspaces-solid': WorkspacesSolid,
+  workspaces: Workspaces,
   'wrap-text': WrapText,
   www: Www,
   'xmark-circle-solid': XmarkCircleSolid,

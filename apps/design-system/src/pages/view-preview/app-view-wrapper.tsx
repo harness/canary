@@ -48,7 +48,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 7,
-      iconName: 'dev-portal',
+      iconName: 'portal',
       title: 'Developer Portal',
       description: 'Built for developers, onboard in minutes.',
       to: '/developer/portal'
@@ -61,7 +61,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
     },
     {
       id: 9,
-      iconName: 'developer-insights',
+      iconName: 'engineering-insights',
       title: 'Developer Insights',
       description: 'Actionable insights on SDLC.',
       to: '/developer/insights'

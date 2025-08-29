@@ -46,7 +46,7 @@ export function SecretActivityList({ secretActivity, isLoading }: SecretActivity
             </Table.Cell>
             <Table.Cell>
               <Layout.Horizontal>
-                <IconV2 name="connect" size="sm" />
+                <IconV2 name="connectors" size="sm" />
                 <Text variant="body-normal" className="text-cn-foreground-2">
                   {activity.type}
                 </Text>

@@ -33,6 +33,7 @@ import {
 
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
+import { useGetRawFile } from '../../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
@@ -485,6 +486,69 @@ export default function PullRequestChanges() {
     }
   }
 
+  const { mutateAsync: getRawFile } = useGetRawFile()
+  const [fullFileContentsMap, setFullFileContentsMap] = useState<Map<string, string>>(new Map())
+  const [loadingFilesMap, setLoadingFilesMap] = useState<Map<string, boolean>>(new Map())
+
+  // Function to fetch the raw content for a file
+  const fetchFullFileContent = useCallback(
+    async (filePath: string) => {
+      // Skip if we already have this file or it's already loading
+      if (fullFileContentsMap.has(filePath) || loadingFilesMap.get(filePath)) {
+        return
+      }
+
+      try {
+        setLoadingFilesMap(prev => {
+          const newMap = new Map(prev)
+          newMap.set(filePath, true)
+          return newMap
+        })
+
+        // Fetch raw content
+        const blob = await getRawFile({
+          repoRef,
+          resourcePath: filePath,
+          gitRef: pullReqMetadata?.source_branch
+            ? pullReqMetadata?.source_branch
+            : (pullReqMetadata?.source_sha ?? pullReqMetadata?.merge_base_sha ?? pullReqMetadata?.target_branch ?? '')
+        })
+
+        // Store the content if successful
+        if (blob) {
+          const text = await blob.text()
+          setFullFileContentsMap(prev => {
+            const newMap = new Map(prev)
+            newMap.set(filePath, text)
+            return newMap
+          })
+        }
+      } catch (error) {
+        console.error(`Failed to load content for ${filePath}:`, error)
+      } finally {
+        // Mark as no longer loading
+        setLoadingFilesMap(prev => {
+          const newMap = new Map(prev)
+          newMap.delete(filePath)
+          return newMap
+        })
+      }
+    },
+    [fullFileContentsMap, loadingFilesMap, repoRef, pullReqMetadata]
+  )
+
+  // Batch loader function to be passed down to components
+  const loadFullFileContents = useCallback(
+    async (filePaths: string[]) => {
+      const promises = filePaths
+        .filter(path => !fullFileContentsMap.has(path) && !loadingFilesMap.get(path))
+        .map(path => fetchFullFileContent(path))
+
+      await Promise.all(promises)
+    },
+    [fetchFullFileContent, fullFileContentsMap, loadingFilesMap]
+  )
+
   useEffect(() => {
     const commitSHA: string[] = []
     selectedCommits.map(commit => {
@@ -582,6 +646,8 @@ export default function PullRequestChanges() {
         setInitiatedJumpToDiff={setInitiatedJumpToDiff}
         refreshNeeded={refreshNeeded}
         handleManualRefresh={handleManualRefresh}
+        fullFileContentsMap={fullFileContentsMap}
+        loadFullFileContents={loadFullFileContents}
       />
     </>
   )

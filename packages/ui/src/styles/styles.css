@@ -559,6 +559,10 @@
   scrollbar-width: none;
 }
 
+.diff-widget-tooltip:after {
+  color: var(--cn-text-1);
+}
+
 .sub-menu-icon-bg {
   stop {
     stop-color: var(--cn-text-2);

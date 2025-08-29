@@ -1272,7 +1272,7 @@
       },
       "empty-content": {
         "$type": "color",
-        "$value": "{bg.1}",
+        "$value": "{chrome.25}",
         "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
       },
       "hunk-content": {

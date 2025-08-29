@@ -117,8 +117,7 @@ export default {
     },
 
     ':where(.cn-badge-icon)': {
-      width: 'var(--cn-icon-size-sm)',
-      height: 'var(--cn-icon-size-sm)'
+      '@apply cn-icon cn-icon-sm': ''
     },
 
     /** Variants */

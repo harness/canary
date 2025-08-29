@@ -107,6 +107,17 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   const linkPath = isRename ? newName : filePath
   const copyText = isRename ? newName || text : text
 
+  const handleToggleViewed = (newViewed: boolean) => {
+    setViewed(newViewed)
+    if (newViewed) {
+      setCollapsed(true)
+      markViewed(filePath, checksumAfter ?? 'unknown')
+    } else {
+      setCollapsed(false)
+      unmarkViewed(filePath)
+    }
+  }
+
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">
@@ -148,22 +159,12 @@ export const LineTitle: React.FC<LineTitleProps> = ({
             variant="ghost"
             size="sm"
             className="gap-x-2.5 px-2.5 py-1.5"
-            onClick={e => e.stopPropagation()}
+            onClick={e => {
+              e.stopPropagation()
+              handleToggleViewed(!viewed)
+            }}
           >
-            <Checkbox
-              checked={viewed}
-              onCheckedChange={checked => {
-                setViewed(checked === true)
-                if (checked) {
-                  setCollapsed(true)
-                  markViewed(filePath, checksumAfter ?? 'unknown')
-                } else {
-                  setCollapsed(false)
-                  unmarkViewed(filePath)
-                }
-              }}
-              label={t('views:pullRequests.markViewed')}
-            />
+            <Checkbox checked={viewed} label={t('views:pullRequests.markViewed')} />
           </Button>
         ) : null}
       </div>

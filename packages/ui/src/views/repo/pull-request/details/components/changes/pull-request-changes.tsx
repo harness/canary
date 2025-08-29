@@ -161,10 +161,12 @@ function PullRequestChangesInternal({
             const currentIndex = data.findIndex(item => item.filePath === collapsedFile.filePath)
             if (currentIndex !== -1) {
               const nextDiff = data[currentIndex + 1]
-              scrollTimeoutRef.current = setTimeout(() => {
-                jumpToFile(nextDiff.filePath, diffBlocks, undefined, diffsContainerRef)
-                scrollTimeoutRef.current = null
-              }, 150) // Small delay to allow collapse animation
+              if (nextDiff) {
+                scrollTimeoutRef.current = setTimeout(() => {
+                  jumpToFile(nextDiff.filePath, diffBlocks, undefined, diffsContainerRef)
+                  scrollTimeoutRef.current = null
+                }, 150) // Small delay to allow collapse animation
+              }
             }
           }
           return items.filter(item => item !== fileText)

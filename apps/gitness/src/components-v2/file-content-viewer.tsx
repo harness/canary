@@ -294,7 +294,8 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
     downloadFile({
       repoRef,
       resourcePath: fullResourcePath || '',
-      gitRef: fullGitRef || ''
+      gitRef: fullGitRef || '',
+      filename: fileName
     })
   }
   const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || ''), [headers])

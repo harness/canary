@@ -388,7 +388,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     setComment={setComment}
                   />
                 ) : (
-                  <div className={cn(isExpanded ? '' : 'line-clamp-1')}>{renderContent()}</div>
+                  renderContent()
                 )}
 
                 {!hideReplySection && (!isResolved || isExpanded) && (

@@ -1,11 +1,21 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, Layout, ListActions, StackedList, StatusBadge, Tabs, Text, TimeAgoCard } from '@/components'
+import {
+  Button,
+  Layout,
+  ListActions,
+  ScrollArea,
+  StackedList,
+  StatusBadge,
+  Tabs,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { ModeType, useTheme, useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
 
-import { CodeEditor } from '@harnessio/yaml-editor'
+import { CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import {
   getBranchAndTagEvents,
@@ -69,6 +79,20 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
   const isError = ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
   const isSuccess = execution?.result === 'success'
 
+  const CodePreview = ({ language, codeRevision }: Pick<CodeEditorProps<never>, 'language' | 'codeRevision'>) => (
+    <ScrollArea className="h-full grid-cols-[100%]">
+      <CodeEditor
+        height="100%"
+        className="overflow-hidden"
+        language={language}
+        codeRevision={codeRevision}
+        themeConfig={themeConfig}
+        theme={monacoTheme}
+        options={{ readOnly: true }}
+      />
+    </ScrollArea>
+  )
+
   return (
     <Layout.Vertical gap="xl" grow>
       <ListActions.Root>
@@ -124,8 +148,8 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
           </Layout.Grid>
         </Layout.Grid>
 
-        <Tabs.Root defaultValue={view} onValueChange={onChangeView} className="w-full">
-          <StackedList.Item disableHover isHeader className="py-cn-2xs px-cn-md rounded-t-3 border">
+        <Tabs.Root defaultValue={view} onValueChange={onChangeView} className="flex w-full grow flex-col">
+          <StackedList.Item disableHover isHeader className="py-cn-2xs px-cn-md rounded-t-3 flex-none border">
             <Tabs.List variant="ghost">
               <Tabs.Trigger value={WebhookExecutionView.PAYLOAD}>
                 {t('views:repos.webhookExecution.code.payload', 'Payload')}
@@ -136,25 +160,14 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
             </Tabs.List>
           </StackedList.Item>
 
-          <Tabs.Content value={WebhookExecutionView.PAYLOAD}>
-            <CodeEditor
-              height="500px"
+          <Tabs.Content value={WebhookExecutionView.PAYLOAD} className="grow">
+            <CodePreview
               language="json"
               codeRevision={{ code: unescapeAndEscapeToJson(execution?.request?.body ?? '') }}
-              themeConfig={themeConfig}
-              theme={monacoTheme}
-              options={{ readOnly: true }}
             />
           </Tabs.Content>
-          <Tabs.Content value={WebhookExecutionView.SERVER_RESPONSE}>
-            <CodeEditor
-              height="500px"
-              language="html"
-              codeRevision={{ code: formatHtml(execution?.response?.body ?? '') }}
-              themeConfig={themeConfig}
-              theme={monacoTheme}
-              options={{ readOnly: true }}
-            />
+          <Tabs.Content value={WebhookExecutionView.SERVER_RESPONSE} className="grow">
+            <CodePreview language="html" codeRevision={{ code: formatHtml(execution?.response?.body ?? '') }} />
           </Tabs.Content>
         </Tabs.Root>
       </Layout.Vertical>

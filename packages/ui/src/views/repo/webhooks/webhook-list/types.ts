@@ -93,14 +93,3 @@ export type EnumWebhookTrigger =
   | 'artifact_created'
   | 'artifact_deleted'
   | 'pullreq_target_branch_changed'
-
-export interface RepoWebhookListPageProps {
-  useWebhookStore: () => WebhookStore
-  openDeleteWebhookDialog: (id: number) => void
-  searchQuery?: string | null
-  setSearchQuery: (query: string | null) => void
-  webhookLoading: boolean
-  handleEnableWebhook: (id: number, enabled: boolean) => void
-  toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
-  toRepoWebhookCreate?: () => string
-}

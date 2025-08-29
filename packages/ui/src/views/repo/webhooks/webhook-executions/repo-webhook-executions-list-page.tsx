@@ -79,10 +79,10 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
             <Table.Root size="compact">
               <Table.Header>
                 <Table.Row>
-                  <Table.Head className="w-1/6">{t('views:repos.webhookExecutions.table.id', 'ID')}</Table.Head>
+                  <Table.Head className="w-32">{t('views:repos.webhookExecutions.table.id', 'ID')}</Table.Head>
                   <Table.Head>{t('views:repos.webhookExecutions.table.event', 'Event')}</Table.Head>
                   <Table.Head className="w-1/6">{t('views:repos.webhookExecutions.table.status', 'Status')}</Table.Head>
-                  <Table.Head className="w-1/5" containerProps={{ align: 'end' }}>
+                  <Table.Head className="w-1/5" containerProps={{ justify: 'end' }}>
                     {t('views:repos.webhookExecutions.table.lastTriggeredAt', 'Last triggered at')}
                   </Table.Head>
                 </Table.Row>
@@ -113,7 +113,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                         </StatusBadge>
                       </Table.Cell>
 
-                      <Table.Cell className="relative text-right">
+                      <Table.Cell className="relative" linkProps={{ className: 'justify-end' }}>
                         <TimeAgoCard timestamp={execution.created ?? Date.now()} />
                       </Table.Cell>
                     </Table.Row>

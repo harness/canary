@@ -5,7 +5,18 @@ import { useRouterContext, useTranslation } from '@/context'
 import { NotFoundPage } from '@views/not-found-page'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
-import { RepoWebhookListPageProps } from './types'
+import { WebhookStore } from './types'
+
+interface RepoWebhookListPageProps {
+  useWebhookStore: () => WebhookStore
+  openDeleteWebhookDialog: (id: number) => void
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
+  webhookLoading: boolean
+  handleEnableWebhook: (id: number, enabled: boolean) => void
+  toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
+  toRepoWebhookCreate?: () => string
+}
 
 const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   useWebhookStore,
@@ -50,46 +61,23 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
     return <NotFoundPage errorMessage={error} />
   }
 
-  if (!webhooks?.length) {
+  if (!webhooks?.length && !isDirtyList) {
     return (
       <NoData
         textWrapperClassName="max-w-[350px]"
-        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-webhooks'}
-        title={
-          isDirtyList
-            ? t('views:noData.noResults', 'No search results')
-            : t('views:noData.noWebhooks', 'No webhooks yet')
-        }
+        imageName={'no-data-webhooks'}
+        title={t('views:noData.noWebhooks', 'No webhooks yet')}
         description={[
-          isDirtyList
-            ? t(
-                'views:noData.noResultsDescription',
-                'No webhooks match your search. Try adjusting your keywords or filters.',
-                { type: 'webhooks' }
-              )
-            : t(
-                'views:noData.noWebhooksDescription',
-                'Add or manage webhooks to automate tasks and connect external services to your project.'
-              )
+          t(
+            'views:noData.noWebhooksDescription',
+            'Add or manage webhooks to automate tasks and connect external services to your project.'
+          )
         ]}
-        secondaryButton={
-          isDirtyList
-            ? {
-                icon: 'trash',
-                label: t('views:noData.clearSearch', 'Clear Search'),
-                onClick: handleResetFiltersQueryAndPages
-              }
-            : undefined
-        }
-        primaryButton={
-          isDirtyList
-            ? undefined
-            : {
-                icon: 'plus',
-                label: t('views:webhookData.create', 'New Webhook'),
-                onClick: handleNavigate
-              }
-        }
+        primaryButton={{
+          icon: 'plus',
+          label: t('views:webhookData.create', 'New Webhook'),
+          onClick: handleNavigate
+        }}
       />
     )
   }
@@ -123,8 +111,26 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
           </ListActions.Root>
         )}
 
-        {webhookLoading ? (
-          <Skeleton.List />
+        {webhookLoading && <Skeleton.List />}
+
+        {!webhooks?.length && isDirtyList ? (
+          <NoData
+            textWrapperClassName="max-w-[350px]"
+            imageName={'no-search-magnifying-glass'}
+            title={t('views:noData.noResults', 'No search results')}
+            description={[
+              t(
+                'views:noData.noResultsDescription',
+                'No webhooks match your search. Try adjusting your keywords or filters.',
+                { type: 'webhooks' }
+              )
+            ]}
+            secondaryButton={{
+              icon: 'trash',
+              label: t('views:noData.clearSearch', 'Clear Search'),
+              onClick: handleResetFiltersQueryAndPages
+            }}
+          />
         ) : (
           <RepoWebhookList
             webhooks={webhooks || []}

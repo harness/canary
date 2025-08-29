@@ -43,7 +43,7 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
         {secretReferences.map(reference => (
           <Table.Row key={reference.name} className="cursor-pointer">
             <Table.Cell className="w-2/4 content-center truncate">
-              <Text variant="body-normal" className="text-cn-foreground-2">
+              <Text variant="body-normal" className="text-cn-foreground-2" truncate>
                 {reference.name}
               </Text>
             </Table.Cell>

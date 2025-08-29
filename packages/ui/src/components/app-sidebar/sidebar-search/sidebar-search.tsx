@@ -21,7 +21,7 @@ export function SidebarSearch() {
         size="sm"
         placeholder={t('component:navbar.search', 'Search')}
         className="pointer-events-none"
-        inputContainerClassName="border-cn-borders-2 [&>.cn-input-prefix]:w-[34px] max-w-full overflow-hidden"
+        inputContainerClassName="border-cn-2 [&>.cn-input-prefix]:w-[34px] max-w-full overflow-hidden"
         suffix={<Shortcut className="mr-1.5 transition-opacity group-data-[state=collapsed]:opacity-0">⌘K</Shortcut>}
         readOnly
         aria-hidden="true"

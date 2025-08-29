@@ -57,7 +57,7 @@ const List: React.FC<ListProps> = ({
       },
       onlyTopRounded ? 'rounded-t-3' : 'rounded-3',
       withoutBorder ? 'border-none' : '',
-      borderBackground ? 'border-cn-borders-2' : '',
+      borderBackground ? 'border-cn-2' : '',
       className
     )}
     {...props}

@@ -21,7 +21,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
           <span className="text-cn-foreground-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-1 bg-cn-background-softgray/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-1 bg-cn-background-softgray/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
             <IconV2 name="clock-solid" />
             <span className="text-cn-foreground-disabled">Pending</span>
@@ -68,7 +68,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
           <span className="text-cn-foreground-success">Success</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-borders-success bg-cn-background-success/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-success bg-cn-background-success/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5 text-cn-foreground-success">
             <IconV2 name="check-circle-solid" />
             <span>Success</span>

@@ -57,8 +57,8 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
 
       <div
         className={cn('absolute inset-0 -z-10 rounded-md border-[1.2px] bg-graph-background-1', {
-          'border-cn-borders-4': !selected,
-          'border-cn-borders-3': selected,
+          'border-cn-3': !selected,
+          'border-cn-2': selected,
           'bg-graph-background-2 border-graph-border-1': collapsed
         })}
       />

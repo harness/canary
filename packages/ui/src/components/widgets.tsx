@@ -56,7 +56,7 @@ const Item: FC<WidgetsItemProps> = ({ children, title, moreLink, isWidgetTable =
       <div
         className={cn(
           '[contain:inline-size]',
-          { 'border border-cn-borders-3 rounded-3 p-[var(--cn-spacing-5)]': !isWidgetTable },
+          { 'border border-cn-3 rounded-3 p-[var(--cn-spacing-5)]': !isWidgetTable },
           className
         )}
       >

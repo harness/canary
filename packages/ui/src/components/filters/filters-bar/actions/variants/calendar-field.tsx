@@ -122,7 +122,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
       <SearchInput
         inputContainerClassName={cn(
           {
-            'border-cn-borders-danger focus:border-cn-borders-danger': singleState.input.isError
+            'border-cn-danger focus:border-cn-danger': singleState.input.isError
           },
           'w-auto mx-1.5 mt-2 mb-2.5'
         )}

@@ -34,7 +34,7 @@ function Icon({
         className={cn(
           {
             'text-cn-foreground-1 shadow-commit-list-bullet': simpleNodeIcon,
-            'border-cn-borders-3 bg-cn-background-2 text-cn-foreground-1 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
+            'border-cn-3 bg-cn-background-2 text-cn-foreground-1 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
               !simpleNodeIcon
           },
           className
@@ -60,10 +60,7 @@ function Content({ children, className }: { children: ReactNode; className?: str
 
 function Connector({ className }: { className?: string }) {
   return (
-    <div
-      className={cn('absolute bottom-0 left-[4px] top-5 z-10 w-1 border-l border-cn-borders-4', className)}
-      data-connector
-    />
+    <div className={cn('absolute bottom-0 left-[4px] top-5 z-10 w-1 border-l border-cn-3', className)} data-connector />
   )
 }
 

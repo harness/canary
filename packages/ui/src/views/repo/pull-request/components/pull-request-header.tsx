@@ -105,7 +105,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               from
             </Text>
             <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
-            <span className="mx-1.5 h-4 w-px bg-cn-borders-3" />
+            <span className="bg-cn-separator-subtle mx-1.5 h-4 w-px" />
             <TimeAgoCard timestamp={created} />
           </Layout.Horizontal>
         </Layout.Horizontal>

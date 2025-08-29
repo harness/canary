@@ -66,7 +66,7 @@ export const NoData: FC<NoDataProps> = ({
       justify="center"
       className={cn(
         'h-full w-full my-auto py-cn-4xl',
-        { 'h-auto grow border border-cn-borders-3 rounded-md': withBorder },
+        { 'h-auto grow border border-cn-3 rounded-md': withBorder },
         className
       )}
     >

@@ -700,7 +700,7 @@ export const PullRequestCommentBox = ({
                 </div>
               )}
               {isDragging && (
-                <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+                <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-2" />
               )}
 
               <Layout.Flex

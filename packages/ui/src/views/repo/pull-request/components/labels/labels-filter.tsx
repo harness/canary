@@ -242,3 +242,4 @@ export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions 
     </div>
   )
 }
+LabelsFilter.displayName = 'LabelsFilter'

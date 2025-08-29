@@ -588,9 +588,9 @@ const PullRequestPanel = ({
 
   return (
     <>
-      <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
+      <StackedList.Root className="border-cn-3 bg-cn-background-1">
         <StackedList.Item
-          className={cn('items-center py-2 border-cn-borders-3', { 'pr-1.5': shouldShowMoreActions }, headerRowBgClass)}
+          className={cn('items-center py-2 border-cn-3', { 'pr-1.5': shouldShowMoreActions }, headerRowBgClass)}
           disableHover
         >
           <StackedList.Field
@@ -751,7 +751,7 @@ const PullRequestPanel = ({
               />
               {showMergeInputs && (
                 <Layout.Vertical className="mt-2 w-full items-center pr-cn-xs pb-cn-xs">
-                  <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-borders-3 bg-cn-background-1 p-3">
+                  <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-3 bg-cn-background-1 p-3">
                     <TextInput
                       id="merge-title"
                       label="Commit message"
@@ -778,7 +778,7 @@ const PullRequestPanel = ({
             </>
           )}
         </StackedList.Item>
-        <StackedList.Item disableHover className="cursor-default border-cn-borders-3 py-0 hover:bg-transparent">
+        <StackedList.Item disableHover className="cursor-default border-cn-3 py-0 hover:bg-transparent">
           {!isClosed ? (
             <Accordion.Root
               className="w-full"

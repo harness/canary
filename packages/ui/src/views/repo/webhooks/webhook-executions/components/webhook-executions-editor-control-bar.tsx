@@ -19,7 +19,7 @@ export interface FileEditorControlBarProps {
 
 export const WebhookExecutionEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onChangeView }) => {
   return (
-    <StackedList.Root onlyTopRounded borderBackground className="border-cn-borders-3">
+    <StackedList.Root onlyTopRounded borderBackground className="border-cn-3">
       <StackedList.Item disableHover isHeader className="px-4 py-1">
         <Tabs.Root defaultValue={view} onValueChange={onChangeView}>
           <Tabs.List variant="ghost">

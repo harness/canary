@@ -60,7 +60,7 @@ ul.top-level {
 }
 
 ul.top-level ul {
-  @apply border-b border-cn-borders-3 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
+  @apply border-b border-cn-3 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
 }
 
 ul.top-level li {
@@ -110,23 +110,23 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li ul {
-  @apply pl-4 border-l border-cn-borders-3;
+  @apply pl-4 border-l border-cn-3;
 }
 
 /* Search override */
 
 [aria-label="Search"] {
-  @apply bg-cn-background-3 border border-cn-borders-3 rounded-md h-[36px] !important;
+  @apply bg-cn-background-3 border border-cn-3 rounded-md h-[36px] !important;
 }
 
 [aria-label="Search"] > kbd:first-of-type {
-  @apply bg-cn-background-2 border border-cn-borders-2 !important;
+  @apply bg-cn-background-2 border border-cn-2 !important;
 }
 
 /* Code/Preview override */
 
 .expressive-code pre {
-  @apply rounded-md overflow-hidden border border-cn-borders-3 bg-cn-background-3 !important;
+  @apply rounded-md overflow-hidden border border-cn-3 bg-cn-background-3 !important;
 }
 
 .expressive-code .frame {
@@ -144,7 +144,7 @@ pre.prism-code {
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-cn-borders-3 rounded-md text-2 text-cn-foreground-3;
+  @apply border border-cn-3 rounded-md text-2 text-cn-foreground-3;
 }
 
 .pagination-links a .link-title {

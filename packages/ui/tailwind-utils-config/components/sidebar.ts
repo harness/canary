@@ -84,7 +84,7 @@ export default {
     },
 
     '&-separator': {
-      backgroundColor: 'var(--cn-borders-2)'
+      backgroundColor: 'var(--cn-border-2)'
     },
 
     '&-group': {

@@ -247,7 +247,7 @@
     }
 
     pre {
-      @apply font-body-code bg-cn-background-1 border-cn-borders-3 text-cn-foreground-1 mb-0 rounded-none border-0 p-0;
+      @apply font-body-code bg-cn-background-1 border-cn-3 text-cn-foreground-1 mb-0 rounded-none border-0 p-0;
 
       code {
         @apply bg-cn-background-1 !text-cn-foreground-1 rounded-none p-0;

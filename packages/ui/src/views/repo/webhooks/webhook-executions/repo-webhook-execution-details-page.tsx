@@ -154,7 +154,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
           options={{
             readOnly: true
           }}
-          className="rounded-b-3 border-cn-borders-3 max-w-full"
+          className="rounded-b-3 border-cn-3 max-w-full"
         />
       </div>
     </Layout.Vertical>

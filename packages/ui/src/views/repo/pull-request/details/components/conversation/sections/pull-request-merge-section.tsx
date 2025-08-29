@@ -27,7 +27,7 @@ const StepInfo: FC<StepInfoProps> = item => {
             <Layout.Horizontal
               align="center"
               justify="between"
-              className="border border-cn-borders-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
+              className="border border-cn-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
             >
               <Text variant="body-normal" className="font-mono">
                 {item.code}
@@ -224,7 +224,7 @@ const PullRequestMergeSection = ({
           <Accordion.Content className="ml-7">
             <>
               {showCommandLineInfo && (
-                <Card.Root className="mb-3.5 bg-transparent border-cn-borders-3" size="sm">
+                <Card.Root className="mb-3.5 bg-transparent border-cn-3" size="sm">
                   <Card.Content className="px-4 py-2">
                     <Layout.Vertical gap="sm">
                       <Text variant="heading-small">Resolve conflicts via command line</Text>
@@ -256,7 +256,7 @@ const PullRequestMergeSection = ({
 
       {/* Fast-Forward merge error section - Using proper StackedList.Item */}
       {fastForwardState.isFastForwardNotPossible && (
-        <StackedList.Item disableHover className="border-t border-cn-borders-3 py-3 -ml-4">
+        <StackedList.Item disableHover className="border-t border-cn-3 py-3 -ml-4">
           <StackedList.Field
             className="flex gap-y-1"
             title={

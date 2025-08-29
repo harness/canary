@@ -4,7 +4,7 @@ import { Chat } from '@/components'
 
 export const ChatEmptyPreviewWrapper: FC = () => {
   return (
-    <div className="border-cn-borders-4 h-[calc(100vh-var(--cn-page-nav-full-height))] border-r">
+    <div className="border-cn-3 h-[calc(100vh-var(--cn-page-nav-full-height))] border-r">
       <Chat.Root>
         <Chat.Body>
           <Chat.EmptyState />

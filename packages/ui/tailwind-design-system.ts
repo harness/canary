@@ -25,6 +25,220 @@ export default {
       maxHeight: {
         'cn-textarea': '35lh'
       },
+      backgroundColor: {
+        // Separator bg colors
+        'cn-separator-subtle': 'var(--cn-border-3)',
+        'cn-separator': 'var(--cn-border-2)',
+
+        // Theme colors
+        'cn-green': {
+          solid: 'var(--cn-set-green-solid-bg)',
+          soft: 'var(--cn-set-green-soft-bg)',
+          surface: 'var(--cn-set-green-surface-bg)'
+        },
+        'cn-gray': {
+          solid: 'var(--cn-set-gray-solid-bg)',
+          soft: 'var(--cn-set-gray-soft-bg)',
+          surface: 'var(--cn-set-gray-surface-bg)'
+        },
+        'cn-red': {
+          solid: 'var(--cn-set-red-solid-bg)',
+          soft: 'var(--cn-set-red-soft-bg)',
+          surface: 'var(--cn-set-red-surface-bg)'
+        },
+        'cn-yellow': {
+          solid: 'var(--cn-set-yellow-solid-bg)',
+          soft: 'var(--cn-set-yellow-soft-bg)',
+          surface: 'var(--cn-set-yellow-surface-bg)'
+        },
+        'cn-blue': {
+          solid: 'var(--cn-set-blue-solid-bg)',
+          soft: 'var(--cn-set-blue-soft-bg)',
+          surface: 'var(--cn-set-blue-surface-bg)'
+        },
+        'cn-purple': {
+          solid: 'var(--cn-set-purple-solid-bg)',
+          soft: 'var(--cn-set-purple-soft-bg)',
+          surface: 'var(--cn-set-purple-surface-bg)'
+        },
+        'cn-brown': {
+          solid: 'var(--cn-set-brown-solid-bg)',
+          soft: 'var(--cn-set-brown-soft-bg)',
+          surface: 'var(--cn-set-brown-surface-bg)'
+        },
+        'cn-cyan': {
+          solid: 'var(--cn-set-cyan-solid-bg)',
+          soft: 'var(--cn-set-cyan-soft-bg)',
+          surface: 'var(--cn-set-cyan-surface-bg)'
+        },
+        'cn-indigo': {
+          solid: 'var(--cn-set-indigo-solid-bg)',
+          soft: 'var(--cn-set-indigo-soft-bg)',
+          surface: 'var(--cn-set-indigo-surface-bg)'
+        },
+        'cn-lime': {
+          solid: 'var(--cn-set-lime-solid-bg)',
+          soft: 'var(--cn-set-lime-soft-bg)',
+          surface: 'var(--cn-set-lime-surface-bg)'
+        },
+        'cn-mint': {
+          solid: 'var(--cn-set-mint-solid-bg)',
+          soft: 'var(--cn-set-mint-soft-bg)',
+          surface: 'var(--cn-set-mint-surface-bg)'
+        },
+        'cn-orange': {
+          solid: 'var(--cn-set-orange-solid-bg)',
+          soft: 'var(--cn-set-orange-soft-bg)',
+          surface: 'var(--cn-set-orange-surface-bg)'
+        },
+        'cn-pink': {
+          solid: 'var(--cn-set-pink-solid-bg)',
+          soft: 'var(--cn-set-pink-soft-bg)',
+          surface: 'var(--cn-set-pink-surface-bg)'
+        },
+        'cn-violet': {
+          solid: 'var(--cn-set-violet-solid-bg)',
+          soft: 'var(--cn-set-violet-soft-bg)',
+          surface: 'var(--cn-set-violet-surface-bg)'
+        }
+      },
+      textColor: {
+        'cn-green': {
+          solid: 'var(--cn-set-green-solid-text)',
+          soft: 'var(--cn-set-green-soft-text)',
+          surface: 'var(--cn-set-green-surface-text)'
+        },
+        'cn-gray': {
+          solid: 'var(--cn-set-gray-solid-text)',
+          soft: 'var(--cn-set-gray-soft-text)',
+          surface: 'var(--cn-set-gray-surface-text)'
+        },
+        'cn-red': {
+          solid: 'var(--cn-set-red-solid-text)',
+          soft: 'var(--cn-set-red-soft-text)',
+          surface: 'var(--cn-set-red-surface-text)'
+        },
+        'cn-yellow': {
+          solid: 'var(--cn-set-yellow-solid-text)',
+          soft: 'var(--cn-set-yellow-soft-text)',
+          surface: 'var(--cn-set-yellow-surface-text)'
+        },
+        'cn-blue': {
+          solid: 'var(--cn-set-blue-solid-text)',
+          soft: 'var(--cn-set-blue-soft-text)',
+          surface: 'var(--cn-set-blue-surface-text)'
+        },
+        'cn-purple': {
+          solid: 'var(--cn-set-purple-solid-text)',
+          soft: 'var(--cn-set-purple-soft-text)',
+          surface: 'var(--cn-set-purple-surface-text)'
+        },
+        'cn-brown': {
+          solid: 'var(--cn-set-brown-solid-text)',
+          soft: 'var(--cn-set-brown-soft-text)',
+          surface: 'var(--cn-set-brown-surface-text)'
+        },
+        'cn-cyan': {
+          solid: 'var(--cn-set-cyan-solid-text)',
+          soft: 'var(--cn-set-cyan-soft-text)',
+          surface: 'var(--cn-set-cyan-surface-text)'
+        },
+        'cn-indigo': {
+          solid: 'var(--cn-set-indigo-solid-text)',
+          soft: 'var(--cn-set-indigo-soft-text)',
+          surface: 'var(--cn-set-indigo-surface-text)'
+        },
+        'cn-lime': {
+          solid: 'var(--cn-set-lime-solid-text)',
+          soft: 'var(--cn-set-lime-soft-text)',
+          surface: 'var(--cn-set-lime-surface-text)'
+        },
+        'cn-mint': {
+          solid: 'var(--cn-set-mint-solid-text)',
+          soft: 'var(--cn-set-mint-soft-text)',
+          surface: 'var(--cn-set-mint-surface-text)'
+        },
+        'cn-orange': {
+          solid: 'var(--cn-set-orange-solid-text)',
+          soft: 'var(--cn-set-orange-soft-text)',
+          surface: 'var(--cn-set-orange-surface-text)'
+        },
+        'cn-pink': {
+          solid: 'var(--cn-set-pink-solid-text)',
+          soft: 'var(--cn-set-pink-soft-text)',
+          surface: 'var(--cn-set-pink-surface-text)'
+        },
+        'cn-violet': {
+          solid: 'var(--cn-set-violet-solid-text)',
+          soft: 'var(--cn-set-violet-soft-text)',
+          surface: 'var(--cn-set-violet-surface-text)'
+        }
+      },
+      borderColor: {
+        // Application default
+        DEFAULT: 'var(--cn-border-3)',
+
+        // theme borders
+        'cn-1': 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
+        'cn-2': 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
+        'cn-3': 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
+
+        // State borders
+        'cn-disabled': 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
+
+        // status borders
+        'cn-warning': 'var(--cn-border-warning)',
+        'cn-danger': 'var(--cn-border-danger)',
+        'cn-success': 'var(--cn-border-success)',
+        'cn-brand': 'var(--cn-border-brand)',
+
+        // Colored borders
+        'cn-green': {
+          surface: 'var(--cn-green-surface-border)'
+        },
+        'cn-gray': {
+          surface: 'var(--cn-gray-surface-border)'
+        },
+        'cn-red': {
+          surface: 'var(--cn-red-surface-border)'
+        },
+        'cn-yellow': {
+          surface: 'var(--cn-yellow-surface-border)'
+        },
+        'cn-blue': {
+          surface: 'var(--cn-blue-surface-border)'
+        },
+        'cn-purple': {
+          surface: 'var(--cn-purple-surface-border)'
+        },
+        'cn-brown': {
+          surface: 'var(--cn-brown-surface-border)'
+        },
+        'cn-cyan': {
+          surface: 'var(--cn-cyan-surface-border)'
+        },
+        'cn-indigo': {
+          surface: 'var(--cn-indigo-surface-border)'
+        },
+        'cn-lime': {
+          surface: 'var(--cn-lime-surface-border)'
+        },
+        'cn-mint': {
+          surface: 'var(--cn-mint-surface-border)'
+        },
+        'cn-orange': {
+          surface: 'var(--cn-orange-surface-border)'
+        },
+        'cn-pink': {
+          surface: 'var(--cn-pink-surface-border)'
+        },
+        'cn-violet': {
+          surface: 'var(--cn-violet-surface-border)'
+        }
+      },
+      ringColor: {
+        'cn-brand': 'var(--cn-border-brand)'
+      },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         code: ['JetBrains Mono', 'monospace']
@@ -93,22 +307,6 @@ export default {
           },
           solidgray: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
         },
-        'cn-borders': {
-          1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
-          2: 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
-          3: 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
-          warning: 'var(--cn-border-warning)',
-          danger: 'var(--cn-border-danger)',
-          success: 'var(--cn-border-success)',
-          accent: 'var(--cn-border-brand)',
-
-          // remove
-          // update to focus, disabled, success, danger, warning
-          disabled: 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
-          brand: 'lch(from var(--cn-set-brand-solid-border) l c h / <alpha-value>)',
-          solidred: 'var(--cn-set-red-solid-border)',
-          risk: 'var(--cn-icon-risk)'
-        },
         'cn-icon': {
           yellow: 'var(--cn-set-yellow-solid-bg)',
           success: 'var(--cn-set-green-soft-text)'
@@ -124,105 +322,6 @@ export default {
             danger: {
               default: 'hsla(var(--canary-toast-icon-danger-default))',
               hover: 'hsla(var(--canary-toast-icon-danger-hover))'
-            }
-          }
-        },
-        // Remove Tag Colors once Toast component is removed
-        tag: {
-          border: {
-            gray: {
-              1: 'hsla(var(--canary-tag-border-gray-01))'
-            },
-            purple: {
-              1: 'hsla(var(--canary-tag-border-purple-01))'
-            },
-            blue: {
-              1: 'hsla(var(--canary-tag-border-blue-01))'
-            },
-            mint: {
-              1: 'hsla(var(--canary-tag-border-mint-01))'
-            },
-            amber: {
-              1: 'hsla(var(--canary-tag-border-amber-01))'
-            },
-            peach: {
-              1: 'hsla(var(--canary-tag-border-peach-01))'
-            },
-            red: {
-              1: 'hsla(var(--canary-tag-border-red-01))'
-            }
-          },
-          foreground: {
-            gray: {
-              1: 'hsl(var(--canary-tag-foreground-gray-01))'
-            },
-            purple: {
-              1: 'hsl(var(--canary-tag-foreground-purple-01))'
-            },
-            blue: {
-              1: 'hsl(var(--canary-tag-foreground-blue-01))'
-            },
-            mint: {
-              1: 'hsl(var(--canary-tag-foreground-mint-01))'
-            },
-            amber: {
-              1: 'hsl(var(--canary-tag-foreground-amber-01))'
-            },
-            peach: {
-              1: 'hsl(var(--canary-tag-foreground-peach-01))'
-            },
-            red: {
-              1: 'hsl(var(--canary-tag-foreground-red-01))'
-            },
-            code: {
-              1: 'hsl(var(--canary-code-foreground-01))',
-              2: 'hsl(var(--canary-code-foreground-02))',
-              3: 'hsl(var(--canary-code-foreground-03))',
-              4: 'hsl(var(--canary-code-foreground-04))',
-              5: 'hsl(var(--canary-code-foreground-05))',
-              6: 'hsl(var(--canary-code-foreground-06))',
-              7: 'hsl(var(--canary-code-foreground-07))',
-              8: 'hsl(var(--canary-code-foreground-08))'
-            }
-          },
-          background: {
-            gray: {
-              1: 'hsla(var(--canary-tag-background-gray-01))',
-              2: 'hsla(var(--canary-tag-background-gray-02))'
-            },
-            purple: {
-              1: 'hsla(var(--canary-tag-background-purple-01))',
-              2: 'hsla(var(--canary-tag-background-purple-02))'
-            },
-            blue: {
-              1: 'hsla(var(--canary-tag-background-blue-01))',
-              2: 'hsla(var(--canary-tag-background-blue-02))'
-            },
-            mint: {
-              1: 'hsla(var(--canary-tag-background-mint-01))',
-              2: 'hsla(var(--canary-tag-background-mint-02))'
-            },
-            amber: {
-              1: 'hsla(var(--canary-tag-background-amber-01))',
-              2: 'hsla(var(--canary-tag-background-amber-02))'
-            },
-            peach: {
-              1: 'hsla(var(--canary-tag-background-peach-01))',
-              2: 'hsla(var(--canary-tag-background-peach-02))'
-            },
-            red: {
-              1: 'hsla(var(--canary-tag-background-red-01))',
-              2: 'hsla(var(--canary-tag-background-red-02))'
-            },
-            code: {
-              1: 'hsla(var(--canary-code-background-01))',
-              2: 'hsla(var(--canary-code-background-02))',
-              3: 'hsla(var(--canary-code-background-03))',
-              4: 'hsla(var(--canary-code-background-04))',
-              5: 'hsla(var(--canary-code-background-05))',
-              6: 'hsla(var(--canary-code-background-06))',
-              7: 'hsla(var(--canary-code-background-07))',
-              8: 'hsla(var(--canary-code-background-08))'
             }
           }
         },
@@ -320,9 +419,7 @@ export default {
           '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)'
       },
       // Remove borderColor - removing the Default is causing border issues in dark mode
-      borderColor: {
-        DEFAULT: 'var(--cn-border-3)'
-      },
+
       borderRadius: {
         1: 'var(--cn-rounded-1)',
         2: 'var(--cn-rounded-2)',
@@ -461,11 +558,9 @@ export default {
     'prose-code',
     /** New design system Variants  */
     { pattern: /^bg-cn-background-/ },
-    { pattern: /^border-cn-borders-/ },
+    { pattern: /^border-cn-/ },
     { pattern: /^text-cn-foreground-/ },
-    { pattern: /^border-cn-borders-/ },
     { pattern: /^hover:text-cn-foreground-/ },
-    { pattern: /^hover:border-cn-borders-/ },
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },

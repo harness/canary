@@ -78,7 +78,7 @@ export const DraggableSidebarDivider: React.FC<DraggableSidebarDividerProps> = (
       onMouseDown={handleMouseDown}
       onKeyDown={handleKeyDown}
       className={cn(
-        'after:bg-cn-borders-3 focus:after:bg-cn-borders-accent relative w-px shrink-0 cursor-col-resize select-none after:transition-[width,background,left] before:absolute before:left-[-150%] before:top-0 before:h-full before:w-1 after:absolute after:top-0 after:left-0 after:h-full after:w-px hover:after:left-[-150%] hover:after:w-1 focus:after:left-[-150%] focus:after:w-1',
+        'after:bg-cn-3 focus:after:bg-cn-brand relative w-px shrink-0 cursor-col-resize select-none after:transition-[width,background,left] before:absolute before:left-[-150%] before:top-0 before:h-full before:w-1 after:absolute after:top-0 after:left-0 after:h-full after:w-px hover:after:left-[-150%] hover:after:w-1 focus:after:left-[-150%] focus:after:w-1',
         className
       )}
       role="slider"

@@ -112,7 +112,7 @@ https://tailwindcss.com/docs/adding-custom-styles#using-css-and-layer
 
 @layer base {
   * {
-    @apply border-cn-borders-1;
+    @apply border-cn-1;
   }
   body {
     @apply bg-cn-background text-cn-foreground-2;

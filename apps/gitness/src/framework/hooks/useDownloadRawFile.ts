@@ -48,3 +48,18 @@ export function useDownloadRawFile() {
 
   return downloadFile
 }
+
+export const useGetRawFile = () => {
+  const apiPath = useAPIPath()
+  const mutation = useMutation(async ({ repoRef, resourcePath, gitRef }: UseDownloadRawFileParams) => {
+    const url = apiPath(`/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref=${gitRef ?? ''}`)
+
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`Error fetching file: ${response.statusText}`)
+    }
+    return response.blob()
+  })
+
+  return mutation
+}

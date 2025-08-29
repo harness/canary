@@ -679,7 +679,10 @@ export const PullRequestCommentBox = ({
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
                 value={textComment}
-                setValue={setTextComment}
+                setValue={value => {
+                  setTextComment(value)
+                  setComment(value)
+                }}
                 onChange={e => onCommentChange(e)}
                 onKeyUp={e => onKeyUp(e)}
                 onKeyDown={e => onKeyDown(e)}

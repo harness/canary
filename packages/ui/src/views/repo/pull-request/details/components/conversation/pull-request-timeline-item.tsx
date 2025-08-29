@@ -204,7 +204,6 @@ export interface TimelineItemProps {
   payload?: TypesPullReqActivity
   threadIndex?: number
   totalThreads?: number
-  isExpanded?: boolean
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -248,13 +247,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   mentions,
   payload,
   threadIndex,
-  totalThreads,
-  isExpanded
+  totalThreads
 }) => {
   const [comment, setComment] = useState('')
-  const { toggleExpanded } = useExpandedComments()
+  const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
 
   const expandedKey = parentCommentId || commentId || 0
+  const isExpanded = !isResolved || getIsExpanded(expandedKey)
 
   const handleToggleExpanded = useCallback(() => {
     toggleExpanded(expandedKey)

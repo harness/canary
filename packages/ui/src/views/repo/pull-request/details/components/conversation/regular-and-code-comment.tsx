@@ -259,7 +259,6 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               onEditClick: () => toggleEditMode(componentId, commentItem.payload?.text || ''),
               contentClassName: cn('border-0 pb-0 rounded-none', { 'line-clamp-1': !isExpanded }),
               icon: avatar,
-              isExpanded,
               hideEditDelete: commentItem?.payload?.author?.uid !== currentUser?.uid,
               content: commentItem.deleted ? (
                 <TextInput value={t('views:pullRequests.deletedComment')} disabled />

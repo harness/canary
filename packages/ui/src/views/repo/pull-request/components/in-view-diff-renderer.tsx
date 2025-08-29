@@ -14,6 +14,7 @@ interface InViewDiffRendererProps {
   children: ReactNode
   shouldRetainChildren: (containerDOM: HTMLElement | null) => boolean
   detectionMargin: number
+  onVisibilityChange?: (isVisible: boolean) => void
 }
 
 const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
@@ -21,7 +22,8 @@ const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
   blockName,
   children,
   shouldRetainChildren,
-  detectionMargin
+  detectionMargin,
+  onVisibilityChange
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const isMounted = useIsMounted()
@@ -88,6 +90,11 @@ const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
     [showChildren, isMounted]
   )
 
+  useEffect(() => {
+    // Call visibility change handler when inView status changes
+    onVisibilityChange?.(inView)
+  }, [inView, onVisibilityChange])
+
   return (
     <div
       data-block={blockName}
@@ -95,7 +102,7 @@ const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
       ref={setContainerRef}
       className={cn('diffViewBlock', { hiddenDiff: !showChildren })}
     >
-      {children}
+      {showChildren ? children : null}
     </div>
   )
 }

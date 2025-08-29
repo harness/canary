@@ -204,6 +204,7 @@ export const PullRequestAccordion: React.FC<{
   hideViewedCheckbox?: boolean
   addWidget?: boolean
   currentRefForDiff?: string
+  fullFileContent?: string
 }> = ({
   header,
   diffMode,
@@ -235,7 +236,8 @@ export const PullRequestAccordion: React.FC<{
   principalProps,
   hideViewedCheckbox = false,
   addWidget = true,
-  currentRefForDiff
+  currentRefForDiff,
+  fullFileContent
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -389,6 +391,7 @@ export const PullRequestAccordion: React.FC<{
                   handleUpload={handleUpload}
                   blocks={header.diffData.blocks}
                   data={rawDiffData}
+                  fullContent={fullFileContent}
                   fontsize={fontsize}
                   highlight={highlight}
                   mode={diffMode}

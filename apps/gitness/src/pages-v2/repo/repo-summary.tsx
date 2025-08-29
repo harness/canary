@@ -2,12 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
+  OpenapiContentInfo,
   OpenapiGetContentOutput,
   UpdateRepositoryErrorResponse,
   useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
   useGetContentQuery,
-  useListCommitsQuery,
   useListPathsQuery,
   usePrCandidatesQuery,
   useSummaryQuery,
@@ -159,37 +159,11 @@ export default function RepoSummaryPage() {
     }
   }, [fullGitRefWoDefault, repoData?.default_branch, calculateDivergence])
 
-  const {
-    data: { body: repoDetails } = {},
-    isLoading: isLoadingRepoDetails,
-    error: contentError
-  } = useGetContentQuery({
+  const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: {
-      include_commit: true,
-      git_ref: normalizeGitRef(fullGitRef)
-    }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef) }
   })
-
-  // Fallback: If content API doesn't return commit info, try commits API
-  const {
-    data: { body: commitsData } = {},
-    isLoading: _isLoadingCommits,
-    refetch: refetchCommits
-  } = useListCommitsQuery({
-    repo_ref: repoRef,
-    queryParams: {
-      git_ref: normalizeGitRef(fullGitRef),
-      limit: 1,
-      page: 1
-    }
-  })
-
-  // Determine if we should use fallback data as primary
-  const shouldUseFallback = useMemo(() => {
-    return !repoDetails?.latest_commit || contentError
-  }, [repoDetails?.latest_commit, contentError])
 
   const { mutate: createToken } = useCreateTokenMutation(
     { body: {} },
@@ -244,54 +218,35 @@ export default function RepoSummaryPage() {
     return gitRefName !== repoData?.default_branch && !isRefACommitSHA(fullGitRef) && !isRefATag(fullGitRef)
   }, [repoData?.default_branch, gitRefName])
 
-  // Get file paths from the working paths API
-  const { data: filesData } = useListPathsQuery({
-    repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(fullGitRef || '') }
-  })
-
   const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
-    // Use the working paths API data instead of the failing content API
-    const paths = filesData?.body?.files || []
+    const entries = repoDetails?.content?.entries
 
-    if (!paths.length) {
+    if (!entries?.length) {
       return new Map()
     }
+    const nonEmtpyPathEntries = entries.filter(entry => entry.path)
 
-    // This ensures we use the working API data instead of stale content API data
-    return new Map(paths.map(path => [path, 'file' as OpenapiGetContentOutput['type']]))
-  }, [filesData?.body?.files]) // Changed dependency to use working API data
+    return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry.path, entry.type]))
+  }, [repoDetails?.content?.entries])
 
-  //find README info from the working paths API
+  // Use @harness approach: find README info from the unified content
   const readmeInfo = useMemo(() => {
-    const paths = filesData?.body?.files || []
-    const readmePath = paths.find(path => /^readme\.md$/i.test(path))
+    const entries = repoDetails?.content?.entries
+    if (!entries?.length) return undefined
 
-    return readmePath
-      ? {
-          name: 'README.md',
-          path: readmePath,
-          type: 'file' as const
-        }
-      : undefined
-  }, [filesData?.body?.files])
+    return entries.find(entry => entry.type === 'file' && /^readme(.md)?$/i.test(entry?.name || ''))
+  }, [repoDetails?.content?.entries])
 
   // Fetch README content only when readmeInfo exists
-  const { data: { body: readmeContent } = {} } = useGetContentQuery(
-    {
-      path: 'README.md',
-      repo_ref: repoRef,
-      queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef) }
-    },
-    {
-      // Only fetch content when README file actually exists
-      enabled: !!readmeInfo?.path
-    }
-  )
+  const { data: { body: readmeContent } = {} } = useGetContentQuery({
+    path: 'README.md',
+    repo_ref: repoRef,
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef) }
+  })
 
   // Prepare README info with content for the UI component
   const readmeInfoWithContent = useMemo(() => {
-    if (!readmeInfo?.path || !readmeContent?.content?.data) return undefined
+    if (!readmeInfo?.name || !readmeInfo?.path || !readmeInfo?.type || !readmeContent?.content?.data) return undefined
 
     return {
       name: readmeInfo.name,
@@ -301,22 +256,18 @@ export default function RepoSummaryPage() {
     }
   }, [readmeInfo, readmeContent])
 
-  // Force refresh commits data when file list changes to get updated commit information
-  useEffect(() => {
-    if (filesData?.body?.files) {
-      // Refetch commits to ensure we have the latest commit info after file changes
-      refetchCommits()
-    }
-  }, [filesData?.body?.files, refetchCommits])
-
   const { files, loading, scheduleFileMetaFetch } = useRepoFileContentDetails({
     repoRef,
     fullGitRef,
     fullResourcePath: '',
     pathToTypeMap: repoEntryPathToFileTypeMap,
     spaceId,
-    repoId,
-    forceRefresh: true // Always force refresh when file list changes
+    repoId
+  })
+
+  const { data: filesData } = useListPathsQuery({
+    repo_ref: repoRef,
+    queryParams: { git_ref: normalizeGitRef(fullGitRef || '') }
   })
 
   const filesList = filesData?.body?.files || []
@@ -329,35 +280,14 @@ export default function RepoSummaryPage() {
   )
 
   const latestCommitInfo = useMemo(() => {
-    // Helper function to validate and parse timestamp
-    const parseTimestamp = (timestamp: string | undefined): string => {
-      if (!timestamp) return ''
-      const date = new Date(timestamp)
-      return !isNaN(date.getTime()) ? timestamp : ''
+    const { author, message, sha } = repoDetails?.latest_commit || {}
+    return {
+      userName: author?.identity?.name || '',
+      message: message || '',
+      timestamp: author?.when ?? '',
+      sha: sha ?? null
     }
-
-    // Helper function to get commit data with fallbacks
-    const getCommitData = (primaryCommit: any, fallbackCommit: any) => {
-      const commitObj = primaryCommit || fallbackCommit
-      return {
-        timestamp: parseTimestamp(commitObj?.author?.when) || '',
-        message: commitObj?.message || 'No commit information available',
-        sha: commitObj?.sha || 'N/A',
-        userName: commitObj?.author?.identity?.name || 'Unknown'
-      }
-    }
-
-    // If primary API failed, use fallback data directly
-    if (shouldUseFallback && commitsData?.commits?.[0]) {
-      return getCommitData(null, commitsData.commits[0])
-    }
-
-    // Try to use primary API data with fallback
-    const primaryCommit = repoDetails?.latest_commit
-    const fallbackCommit = commitsData?.commits?.[0]
-
-    return getCommitData(primaryCommit, fallbackCommit)
-  }, [repoDetails?.latest_commit, commitsData, shouldUseFallback])
+  }, [repoDetails?.latest_commit])
 
   const summaryDetails = useMemo(
     () => ({

@@ -73,6 +73,8 @@ interface RepoPullRequestChangesPageProps {
   setInitiatedJumpToDiff: (initiatedJumpToDiff: boolean) => void
   refreshNeeded?: boolean
   handleManualRefresh?: () => void
+  fullFileContentsMap: Map<string, string>
+  loadFullFileContents: (filePaths: string[]) => Promise<void>
 }
 
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
@@ -119,7 +121,9 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   diffPathQuery,
   setDiffPathQuery,
   initiatedJumpToDiff,
-  setInitiatedJumpToDiff
+  setInitiatedJumpToDiff,
+  loadFullFileContents,
+  fullFileContentsMap
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
@@ -237,6 +241,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         diffPathQuery={diffPathQuery}
         initiatedJumpToDiff={initiatedJumpToDiff}
         setInitiatedJumpToDiff={setInitiatedJumpToDiff}
+        fullFileContentsMap={fullFileContentsMap}
+        loadFullFileContents={loadFullFileContents}
       />
     )
   }

@@ -309,7 +309,11 @@ const PullRequestDiffViewer = ({
 
   useEffect(() => {
     if (data) {
-      setDiffInstanceCb(fileName, lang, data, fullContent)
+      if (fullContent) {
+        setDiffInstanceCb(fileName, lang, data, fullContent)
+      } else {
+        setDiffInstanceCb(fileName, lang, data)
+      }
     }
   }, [data, fileName, lang, fullContent, setDiffInstanceCb])
 

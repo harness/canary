@@ -50,6 +50,8 @@ interface DataProps {
   pullReqMetadata?: TypesPullReq
   principalProps: PrincipalPropsType
   currentRefForDiff?: string
+  fullFileContentsMap?: Map<string, string>
+  loadFullFileContents?: (filePaths: string[]) => Promise<void>
   diffPathQuery?: string
   initiatedJumpToDiff: boolean
   setInitiatedJumpToDiff: (initiatedJumpToDiff: boolean) => void
@@ -103,10 +105,41 @@ function PullRequestChangesInternal({
   currentRefForDiff,
   diffPathQuery,
   initiatedJumpToDiff,
-  setInitiatedJumpToDiff
+  setInitiatedJumpToDiff,
+  fullFileContentsMap,
+  loadFullFileContents
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const preloadFilesForDiffs = useCallback(
+    (items: HeaderProps[]) => {
+      if (!loadFullFileContents) return
+
+      const pathsToLoad = items
+        .map(item => item.filePath)
+        .filter(Boolean)
+        .filter(path => !fullFileContentsMap?.has(path)) // Skip files we already have
+
+      if (pathsToLoad.length > 0) {
+        loadFullFileContents(pathsToLoad)
+      }
+    },
+    [loadFullFileContents, fullFileContentsMap]
+  )
+
+  // Handle inner file visibility to prioritize loading
+  const handleFileVisibilityChange = useCallback(
+    (isVisible: boolean, filePath: string) => {
+      if (isVisible && filePath) {
+        const diffItem = data.find(item => item.filePath === filePath)
+        if (diffItem) {
+          preloadFilesForDiffs([diffItem])
+        }
+      }
+    },
+    [data, preloadFilesForDiffs]
+  )
   const [hasInitializedOpenItems, setHasInitializedOpenItems] = useState(false)
 
   // Scroll position cache scoped to current PR
@@ -343,6 +376,7 @@ function PullRequestChangesInternal({
                       toRepoFileDetails={toRepoFileDetails}
                       sourceBranch={pullReqMetadata?.source_branch}
                       currentRefForDiff={currentRefForDiff}
+                      fullFileContent={fullFileContentsMap?.get(item.filePath)}
                       commentLayout="compact"
                     />
                   </div>

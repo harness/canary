@@ -327,6 +327,38 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "webhookExecution": {
+      "status": {
+        "success": "Success",
+        "failed": "Failed",
+        "invalid": "Invalid"
+      },
+      "retrigger": {
+        "loading": "Re-triggering Execution",
+        "default": "Re-trigger Execution"
+      },
+      "topBar": {
+        "triggerEvent": "Trigger Event:",
+        "time": "Time:",
+        "duration": "Duration:"
+      },
+      "code": {
+        "payload": "Payload",
+        "serverResponse": "Server Response"
+      }
+    },
+    "webhookExecutions": {
+      "title": "Executions",
+      "table": {
+        "id": "ID",
+        "event": "Event",
+        "status": "Status",
+        "lastTriggeredAt": "Last triggered at",
+        "success": "Success",
+        "failed": "Failed",
+        "invalid": "Invalid"
+      }
+    },
     "newPullReq": "Nouvelle requête de tirage",
     "createBranchButton": "Créer une branche",
     "viewRules": "Voir les règles",
@@ -829,9 +861,10 @@
     "prCommentUpdated": "PR comment updated",
     "prReviewSubmitted": "PR review submitted",
     "prLabelAssigned": "PR label assigned",
-    "create": "Create webhook",
+    "editWebhookDescription": "This webhook triggers every time an order status is updated, sending data to the specified endpoint for real-time tracking",
     "edit": "Edit webhook",
-    "delete": "Delete webhook"
+    "delete": "Delete webhook",
+    "create": "Create webhook"
   },
   "secretActivity": {
     "event": "Event",

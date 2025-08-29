@@ -1,18 +1,32 @@
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
-import { Button, Layout, ListActions, StatusBadge, Text, TimeAgoCard } from '@/components'
+import {
+  Button,
+  Layout,
+  ListActions,
+  ScrollArea,
+  StackedList,
+  StatusBadge,
+  Tabs,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { ModeType, useTheme, useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
 
-import { CodeEditor } from '@harnessio/yaml-editor'
+import { CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import {
   getBranchAndTagEvents,
   getPrActivityEvents,
   getPrEvents
 } from '../webhook-create/components/create-webhook-form-data'
-import { WebhookExecutionEditorControlBar } from './components/webhook-executions-editor-control-bar'
+
+enum WebhookExecutionView {
+  PAYLOAD = 'payload',
+  SERVER_RESPONSE = 'server-response'
+}
 
 interface RepoWebhookExecutionDetailsPageProps {
   useWebhookStore: () => WebhookStore
@@ -27,30 +41,16 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
 }) => {
   const { t } = useTranslation()
   const { executionId, executions } = useWebhookStore()
-  const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
   const [view, setView] = useState('payload')
   const { isLightTheme } = useTheme()
 
   const monacoTheme = useMemo(() => (isLightTheme ? ModeType.Light : ModeType.Dark), [isLightTheme])
-
-  const themeConfig = useMemo(
-    () => ({
-      defaultTheme: monacoTheme
-      //   themes
-    }),
-    [monacoTheme]
-  )
-
-  const execution = useMemo(() => {
-    return executions?.find(e => e.id === executionId)
-  }, [executions, executionId])
+  const themeConfig = useMemo(() => ({ defaultTheme: monacoTheme }), [monacoTheme])
+  const execution = useMemo(() => executions?.find(e => e.id === executionId), [executions, executionId])
 
   const unescapeAndEscapeToJson = (escapedString: string) => {
     try {
-      //  Unescape the string by parsing it
       const unescapedValue = JSON.parse(escapedString)
-
-      //  Escape the unescaped value back into a JSON string
       const escapedJson = JSON.stringify(unescapedValue, null, 4)
 
       return escapedJson
@@ -67,96 +67,110 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
       return htmlString
     }
   }
-  useEffect(() => {
-    if (execution) {
-      if (view === 'payload') {
-        setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
-      } else if (view === 'server-response') {
-        setCodeEditorContent({ code: formatHtml(execution.response?.body ?? '') })
-      }
-    }
-  }, [execution, view])
 
   const events = useMemo(() => {
     return [...getBranchAndTagEvents(t), ...getPrEvents(t), ...getPrActivityEvents(t)]
-  }, [])
+  }, [t])
 
   const onChangeView = (value: string) => {
     setView(value)
   }
 
+  const isError = ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
+  const isSuccess = execution?.result === 'success'
+
+  const CodePreview = ({ language, codeRevision }: Pick<CodeEditorProps<never>, 'language' | 'codeRevision'>) => (
+    <ScrollArea className="h-full grid-cols-[100%]">
+      <CodeEditor
+        height="100%"
+        className="overflow-hidden"
+        language={language}
+        codeRevision={codeRevision}
+        themeConfig={themeConfig}
+        theme={monacoTheme}
+        options={{ readOnly: true }}
+      />
+    </ScrollArea>
+  )
+
   return (
     <Layout.Vertical gap="xl" grow>
       <ListActions.Root>
         <ListActions.Left>
-          <Text as="h1" variant="heading-section">
-            #{executionId}
-          </Text>
-          <StatusBadge
-            variant="status"
-            theme={
-              execution?.result === 'success'
-                ? 'success'
-                : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
-                  ? 'danger'
-                  : 'muted'
-            }
-          >
-            {execution?.result === 'success'
-              ? 'Success'
-              : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
-                ? 'Failed'
-                : 'Invalid'}
-          </StatusBadge>
+          <Layout.Flex gapX="sm" align="center">
+            <Text as="h1" variant="heading-section">
+              #{executionId}
+            </Text>
+            <StatusBadge variant="status" theme={isSuccess ? 'success' : isError ? 'danger' : 'muted'}>
+              {isSuccess
+                ? t('views:repos.webhookExecution.status.success', 'Success')
+                : isError
+                  ? t('views:repos.webhookExecution.status.failed', 'Failed')
+                  : t('views:repos.webhookExecution.status.invalid', 'Invalid')}
+            </StatusBadge>
+          </Layout.Flex>
         </ListActions.Left>
         <ListActions.Right>
           <Button onClick={handleRetriggerExecution} disabled={isLoading}>
-            {isLoading ? 'Re-triggering Execution' : 'Re-trigger Execution'}
+            {isLoading
+              ? t('views:repos.webhookExecution.retrigger.loading', 'Re-triggering Execution')
+              : t('views:repos.webhookExecution.retrigger.default', 'Re-trigger Execution')}
           </Button>
         </ListActions.Right>
       </ListActions.Root>
 
-      <div className="flex items-center gap-10">
-        <div className="flex items-center gap-1">
-          <Text variant="body-single-line-normal" className="text-cn-foreground-3">
-            Trigger Event:
-          </Text>
-          <Text className="text-cn-foreground-1" variant="body-single-line-normal">
-            {' '}
-            {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}
-          </Text>
-        </div>
-        <div className="flex items-center gap-1">
-          <Text className="text-cn-foreground-3 flex items-center" variant="body-single-line-normal">
-            Time:
-          </Text>
-          <TimeAgoCard timestamp={execution?.created} />
-        </div>
-        <div className="flex items-center gap-1">
-          <Text className="text-cn-foreground-3" variant="body-single-line-normal">
-            Duration:
-          </Text>
-          <Text className="text-cn-foreground-1" variant="body-single-line-normal">
-            {formatDuration(execution?.duration ?? 0, 'ns')}
-          </Text>
-        </div>
-      </div>
+      <Layout.Vertical gapY="2xl" grow>
+        <Layout.Grid flow="column" gapX="3xl" align="center" className="w-fit">
+          <Layout.Grid flow="column" gapX="xs" align="center">
+            <Text variant="body-single-line-normal" color="foreground-3">
+              {t('views:repos.webhookExecution.topBar.triggerEvent', 'Trigger Event:')}
+            </Text>
+            <Text variant="body-single-line-normal" color="foreground-1" truncate>
+              {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}
+            </Text>
+          </Layout.Grid>
+          <Layout.Grid flow="column" gapX="xs" align="center">
+            <Text variant="body-single-line-normal" color="foreground-3">
+              {t('views:repos.webhookExecution.topBar.time', 'Time:')}
+            </Text>
+            <TimeAgoCard
+              timestamp={execution?.created}
+              textProps={{ variant: 'body-single-line-normal', color: 'foreground-1', truncate: true }}
+            />
+          </Layout.Grid>
+          <Layout.Grid flow="column" gapX="xs" align="center">
+            <Text variant="body-single-line-normal" color="foreground-3">
+              {t('views:repos.webhookExecution.topBar.duration', 'Duration:')}
+            </Text>
+            <Text variant="body-single-line-normal" color="foreground-1">
+              {formatDuration(execution?.duration ?? 0, 'ns')}
+            </Text>
+          </Layout.Grid>
+        </Layout.Grid>
 
-      <div>
-        <WebhookExecutionEditorControlBar view={view} onChangeView={onChangeView} />
-        <CodeEditor
-          height="500px"
-          language={view === 'payload' ? 'json' : 'html'}
-          codeRevision={codeEditorContent}
-          onCodeRevisionChange={() => {}}
-          themeConfig={themeConfig}
-          theme={monacoTheme}
-          options={{
-            readOnly: true
-          }}
-          className="rounded-b-3 border-cn-borders-3 max-w-full"
-        />
-      </div>
+        <Tabs.Root defaultValue={view} onValueChange={onChangeView} className="flex w-full grow flex-col">
+          <StackedList.Item disableHover isHeader className="py-cn-2xs px-cn-md rounded-t-3 flex-none border">
+            <Tabs.List variant="ghost">
+              <Tabs.Trigger value={WebhookExecutionView.PAYLOAD}>
+                {t('views:repos.webhookExecution.code.payload', 'Payload')}
+              </Tabs.Trigger>
+              <Tabs.Trigger value={WebhookExecutionView.SERVER_RESPONSE}>
+                {t('views:repos.webhookExecution.code.serverResponse', 'Server Response')}
+              </Tabs.Trigger>
+            </Tabs.List>
+          </StackedList.Item>
+
+          <Tabs.Content value={WebhookExecutionView.PAYLOAD} className="grow">
+            <CodePreview
+              language="json"
+              codeRevision={{ code: unescapeAndEscapeToJson(execution?.request?.body ?? '') }}
+            />
+          </Tabs.Content>
+          <Tabs.Content value={WebhookExecutionView.SERVER_RESPONSE} className="grow">
+            <CodePreview language="html" codeRevision={{ code: formatHtml(execution?.response?.body ?? '') }} />
+          </Tabs.Content>
+        </Tabs.Root>
+      </Layout.Vertical>
     </Layout.Vertical>
   )
 }

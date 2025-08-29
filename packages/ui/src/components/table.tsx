@@ -9,12 +9,13 @@ import {
   ThHTMLAttributes
 } from 'react'
 
+import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2 } from './icon-v2'
 import { FlexProps, Layout } from './layout'
-import { Link, type LinkProps } from './link'
+import { type LinkProps } from './link'
 import { Separator } from './separator'
 import { Text } from './text'
 import { Tooltip, type TooltipProps } from './tooltip'
@@ -79,39 +80,49 @@ interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
   let rowChildren = props.children
+  let isFirstLink = true
+
   rowChildren = Children.map(rowChildren, (_child, index) => {
-    if (isValidElement(_child)) {
-      let child = _child
+    if (!isValidElement(_child)) return
 
-      if ((_child.type as any).displayName === 'TableHead') {
-        if (index === 0) {
-          child = cloneElement(child, {
-            hideDivider: true
-          } as TableHeadProps)
-        }
+    let child = _child
 
-        if (index > 0 && _child.props.hideDivider === undefined) {
-          child = cloneElement(child, {
-            hideDivider: false
-          } as TableHeadProps)
-        }
+    if ((_child.type as any).displayName === 'TableHead') {
+      if (index === 0) {
+        child = cloneElement(child, {
+          hideDivider: true
+        } as TableHeadProps)
       }
 
-      if (props.to || props.linkProps) {
-        // Don't add link props if the cell already has its own link props or if disableLink is true
-        if (child.props.to || child.props.linkProps || child.props.disableLink) {
-          return child
-        }
-
-        return cloneElement(child, {
-          to: props.to,
-          linkProps: props.linkProps,
-          tableLinkChildrenIndex: index + 1
-        } as any)
+      if (index > 0 && _child.props.hideDivider === undefined) {
+        child = cloneElement(child, {
+          hideDivider: false
+        } as TableHeadProps)
       }
-
-      return child
     }
+
+    if (props.to || props.linkProps) {
+      if (child.props.disableLink) return child
+
+      const currentTabIndex = isFirstLink ? 0 : -1
+
+      if (child.props.to || child.props.linkProps) {
+        const updatedChild = cloneElement(child, {
+          linkProps: { ...child.props.linkProps, tabIndex: currentTabIndex }
+        } as any)
+        isFirstLink = false
+        return updatedChild
+      }
+
+      const updatedChild = cloneElement(child, {
+        to: props.to,
+        linkProps: { ...props.linkProps, tabIndex: currentTabIndex }
+      } as any)
+
+      isFirstLink = false
+      return updatedChild
+    }
+    return child
   })
 
   return (
@@ -173,7 +184,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       <Title />
     )
 
-    const contentElement = (
+    const contentElement = children ? (
       <Layout.Horizontal gap="xs" align="center" className="relative" {...containerProps}>
         {!hideDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
         {childrenWithTooltip}
@@ -185,7 +196,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
           </span>
         )}
       </Layout.Horizontal>
-    )
+    ) : null
 
     return (
       <th
@@ -210,12 +221,11 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   to?: string
   linkProps?: Omit<LinkProps, 'to'>
   disableLink?: boolean
-  // This prop is used for keyboard navigation. When the first link receives focus, the <tr> gets visually highlighted, and all other links receive tabIndex="-1".
-  tableLinkChildrenIndex?: number
 }
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, to, linkProps, tableLinkChildrenIndex, children, disableLink = false, ...props }, ref) => {
+  ({ className, to, linkProps, children, disableLink = false, ...props }, ref) => {
+    const { Link } = useRouterContext()
     const shouldRenderLink = !disableLink && (to || linkProps)
 
     if (shouldRenderLink) {
@@ -224,9 +234,8 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
           <Link
             to={to || ''}
             variant="secondary"
-            className={cn('cn-table-v2-cell-link', linkProps?.className)}
             {...(linkProps || {})}
-            {...(!!tableLinkChildrenIndex && tableLinkChildrenIndex !== 1 ? { tabIndex: -1 } : {})}
+            className={cn('cn-table-v2-cell-link', linkProps?.className)}
           >
             {children}
           </Link>

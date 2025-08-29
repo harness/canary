@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Checkbox, ControlGroup, FormInput, Radio, Switch } from '@/components'
+import { Checkbox, FormInput, Radio, Switch } from '@/components'
 import { useTranslation } from '@/context'
 import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
@@ -130,14 +130,13 @@ export const WebhookEventSettingsFieldset: FC<WebhookFormFieldProps & { eventLis
   return (
     <>
       {eventList.map(event => (
-        <ControlGroup key={event.id} className="min-h-8 justify-center">
-          <Checkbox
-            checked={currentArray?.includes(event.id as WebhookTriggerEnum)}
-            onCheckedChange={() => handleCheckboxChange(event.id as WebhookTriggerEnum)}
-            id={`${event.id}`}
-            label={event.event}
-          />
-        </ControlGroup>
+        <Checkbox
+          key={event.id}
+          checked={currentArray?.includes(event.id as WebhookTriggerEnum)}
+          onCheckedChange={() => handleCheckboxChange(event.id as WebhookTriggerEnum)}
+          id={`${event.id}`}
+          label={event.event}
+        />
       ))}
     </>
   )

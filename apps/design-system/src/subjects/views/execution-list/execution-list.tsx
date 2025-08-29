@@ -1,9 +1,8 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
 import { noop } from '@utils/viewUtils'
 
-import { ExecutionListPage, RepoSummaryViewProps, TLinkComponent } from '@harnessio/ui/views'
+import { ExecutionListPage, RepoSummaryViewProps } from '@harnessio/ui/views'
 
 import { useExecutionListStore } from './execution-list.store'
 

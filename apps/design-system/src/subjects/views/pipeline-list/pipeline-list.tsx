@@ -1,9 +1,8 @@
 import { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { noop } from '@utils/viewUtils'
 
-import { CreatePipelineDialog, PipelineListPage, RepoSummaryViewProps, TLinkComponent } from '@harnessio/ui/views'
+import { CreatePipelineDialog, PipelineListPage, RepoSummaryViewProps } from '@harnessio/ui/views'
 
 import { usePipelineListStore } from './pipeline-list.store'
 

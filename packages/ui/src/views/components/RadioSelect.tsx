@@ -18,6 +18,9 @@ interface RadioSelectProps<T extends string> {
   className?: string
 }
 
+/**
+ * @deprecated Use `CardSelect` instead.
+ */
 export const RadioSelect = <T extends string>({
   options,
   value,
@@ -45,7 +48,6 @@ export const RadioSelect = <T extends string>({
                   })}
                   aria-disabled={option.disabled}
                   isHeader
-                  isLast
                   disableHover
                   onClick={() => !option.disabled && onValueChange(option.value)}
                 >

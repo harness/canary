@@ -14,7 +14,6 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
       <Accordion.Trigger className="py-3 [&>.cn-accordion-trigger-indicator]:hidden" onClick={handleAction}>
         <Layout.Flex>
           <StackedList.Field
-            className="flex gap-y-1"
             title={
               <LineTitle
                 textClassName={isSuccess ? '' : 'text-cn-foreground-danger'}

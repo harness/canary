@@ -210,12 +210,30 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
             return (
               <StackedList.Item
-                className="p-cn-md pr-cn-xs gap-x-cn-md last:border-b-0"
-                linkProps={{ onClick: e => handleToProjectRuleDetails(e, rule) }}
                 key={rule.identifier}
+                className="pr-cn-xs"
+                linkProps={{
+                  onClick: e => handleToProjectRuleDetails(e, rule)
+                }}
+                actions={
+                  <MoreActionsTooltip
+                    actions={[
+                      {
+                        title: t('views:rules.edit', 'Edit Rule'),
+                        iconName: 'edit-pencil',
+                        onClick: () => handleRuleClick(rule.identifier!)
+                      },
+                      {
+                        isDanger: true,
+                        title: t('views:rules.delete', 'Delete Rule'),
+                        iconName: 'trash',
+                        onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                      }
+                    ]}
+                  />
+                }
               >
                 <StackedList.Field
-                  className="gap-cn-xs grid"
                   title={
                     <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit">
                       {rule.state === 'active' ? (
@@ -254,21 +272,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                       bypassAllowed={rule.bypassAllowed ?? false}
                     />
                   }
-                />
-                <MoreActionsTooltip
-                  actions={[
-                    {
-                      title: t('views:rules.edit', 'Edit Rule'),
-                      iconName: 'edit-pencil',
-                      onClick: () => handleRuleClick(rule.identifier!)
-                    },
-                    {
-                      isDanger: true,
-                      title: t('views:rules.delete', 'Delete Rule'),
-                      iconName: 'trash',
-                      onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
-                    }
-                  ]}
                 />
               </StackedList.Item>
             )

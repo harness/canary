@@ -67,8 +67,10 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
 
     return (
       <StackedList.Item
+        className={cn({ 'bg-cn-background-hover': isSelected })}
+        paddingY="sm"
+        paddingX="md"
         onClick={() => onSelect(entity)}
-        className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={
           connectorLogo ? (
             <LogoV2 name={connectorLogo} size="xs" />
@@ -77,13 +79,7 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
           )
         }
       >
-        <div title={entity.connector.name}>
-          <StackedList.Field
-            title={entity.connector.name}
-            description={entity.connector.description}
-            className="max-w-sm overflow-hidden truncate text-nowrap"
-          />
-        </div>
+        <StackedList.Field title={entity.connector.name} description={entity.connector.description} />
       </StackedList.Item>
     )
   }

@@ -1,7 +1,6 @@
-import { ComponentType, JSXElementConstructor, ReactElement, ReactNode } from 'react'
+import { JSXElementConstructor, ReactElement } from 'react'
 
 import { CiStatus, PipelineExecutionStatus } from '@/views'
-import { TLinkComponent } from '@views/types/link-types'
 
 export type IExecutionType = string | ReactElement<unknown, string | JSXElementConstructor<unknown>>
 
@@ -34,12 +33,10 @@ export interface IExecutionListPageProps {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   handleExecutePipeline: () => void
-  LinkComponent: TLinkComponent
 }
 
 export interface IExecutionListProps {
   executions: IExecution[] | null
-  LinkComponent: ComponentType<{ to: string; children: ReactNode }>
   query?: string
   handleResetQuery: () => void
   isLoading: boolean

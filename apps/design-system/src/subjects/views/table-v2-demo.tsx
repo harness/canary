@@ -57,8 +57,8 @@ const users: User[] = [
 
 export const TableV2Demo: React.FC = () => {
   return (
-    <SandboxLayout.Main className="justify-center items-center">
-      <SandboxLayout.Content className="max-w-[600px] justify-center items-center">
+    <SandboxLayout.Main className="items-center justify-center">
+      <SandboxLayout.Content className="max-w-[600px] items-center justify-center">
         <Table.Root size="compact">
           <Table.Header>
             <Table.Row>

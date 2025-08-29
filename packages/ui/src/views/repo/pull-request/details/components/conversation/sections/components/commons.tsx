@@ -3,14 +3,6 @@ import { FC } from 'react'
 import { Avatar, Layout, StackedList, Text } from '@/components'
 import { AvatarTooltipProps, AvatarWithTooltip } from '@components/avatar'
 
-interface HeaderItemProps {
-  header: string
-}
-
-export const HeaderItem: FC<HeaderItemProps> = ({ header }) => {
-  return <span className="text-1 text-cn-foreground-1">{header}</span>
-}
-
 export interface AvatarUser {
   id?: number
   display_name?: string
@@ -24,7 +16,6 @@ interface AvatarItemProps {
 export const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
   return (
     <StackedList.Field
-      className="pb-0"
       title={
         <div className="flex items-center">
           {users &&

@@ -103,6 +103,8 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         setDiffPathQuery={noop}
         initiatedJumpToDiff={false}
         setInitiatedJumpToDiff={noop}
+        fullFileContentsMap={new Map<string, string>()}
+        loadFullFileContents={() => Promise.resolve()}
       />
     </>
   )

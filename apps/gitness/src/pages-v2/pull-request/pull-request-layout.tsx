@@ -15,10 +15,12 @@ import { usePageTitleContext } from '../../framework/context/PageTitleContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useGetPullRequestTab from '../../hooks/useGetPullRequestTab'
 import { PathParams } from '../../RouteDefinitions'
+import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 import { usePullRequestStore } from './stores/pull-request-store'
 
 const PullRequestLayout = () => {
   const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
+  const { setPullReqMetadata } = usePullRequestProviderStore()
 
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
 
@@ -37,6 +39,12 @@ const PullRequestLayout = () => {
   })
 
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
+
+  useEffect(() => {
+    return () => {
+      setPullReqMetadata(undefined)
+    }
+  }, [setPullReqMetadata])
 
   useEffect(() => {
     if (!pullReqData && !pullRequestTab) return

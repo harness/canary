@@ -115,6 +115,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 
         {!webhooks?.length && isDirtyList ? (
           <NoData
+            withBorder
             textWrapperClassName="max-w-[350px]"
             imageName={'no-search-magnifying-glass'}
             title={t('views:noData.noResults', 'No search results')}

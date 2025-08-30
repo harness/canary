@@ -15,9 +15,9 @@ interface SecretDetailsLayoutProps {
 }
 
 enum SecretDetailsTabsKeys {
-  CONFIGURATION = 'configuration',
+  OVERVIEW = 'overview',
   REFERENCES = 'references',
-  ACTIVITY = 'activity'
+  RUNTIME_USAGE = 'runtime-usage'
 }
 
 const DATE_FORMAT_OPTIONS = {
@@ -89,7 +89,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
         <Spacer size={6} />
         <Tabs.NavRoot>
           <Tabs.List className="-mx-8 px-8" variant="overlined">
-            <Tabs.Trigger value={SecretDetailsTabsKeys.CONFIGURATION}>
+            <Tabs.Trigger value={SecretDetailsTabsKeys.OVERVIEW}>
               {t('views:secretDetails.configuration', 'Configuration')}
             </Tabs.Trigger>
 
@@ -97,7 +97,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
               {t('views:secretDetails.references', 'References')}
             </Tabs.Trigger>
 
-            <Tabs.Trigger value={SecretDetailsTabsKeys.ACTIVITY}>
+            <Tabs.Trigger value={SecretDetailsTabsKeys.RUNTIME_USAGE}>
               {t('views:secretDetails.activity', 'Activity')}
             </Tabs.Trigger>
           </Tabs.List>
@@ -105,7 +105,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
 
         <Switch>
           <Route
-            path="/configuration"
+            path="/overview"
             render={() =>
               configurationView || (
                 <SandboxLayout.Content>
@@ -118,7 +118,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             }
           />
           <Route path="/references">{referencesView}</Route>
-          <Route path="/activity">{activityView}</Route>
+          <Route path="/runtime-usage">{activityView}</Route>
         </Switch>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

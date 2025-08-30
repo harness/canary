@@ -84,7 +84,10 @@ export const ProjectRulesListContainer = () => {
       const formattedRules = rulesData.map(rule => ({
         targetPatternsCount: (rule.pattern?.include?.length ?? 0) + (rule.pattern?.exclude?.length ?? 0),
         rulesAppliedCount: getTotalRulesApplied(rule),
-        bypassAllowed: rule.definition?.bypass?.repo_owners === true,
+        bypassAllowed:
+          (rule.definition?.bypass?.user_ids?.length ?? 0) > 0 ||
+          (rule.definition?.bypass?.user_group_ids?.length ?? 0) > 0 ||
+          rule.definition?.bypass?.repo_owners === true,
         identifier: rule.identifier,
         state: rule.state ? String(rule.state) : undefined,
         type: rule.type as 'branch' | 'tag',

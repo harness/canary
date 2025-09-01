@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 
-import { Button, Dialog, FormInput, IconV2, Layout, Radio, Text } from '@/components'
+import { Button, ButtonLayout, Dialog, FormInput, IconV2, Layout, Radio, Text } from '@/components'
 import { useTranslation } from '@/context'
 
 import { FormFields } from '.'
@@ -94,12 +94,12 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
           </Dialog.Body>
 
           <Dialog.Footer>
-            <Layout.Horizontal gap="sm" justify="end">
+            <ButtonLayout>
               <Dialog.Close>Cancel</Dialog.Close>
               <Button variant="primary" onClick={handleConfirm}>
                 Save
               </Button>
-            </Layout.Horizontal>
+            </ButtonLayout>
           </Dialog.Footer>
         </Dialog.Content>
       </Dialog.Root>

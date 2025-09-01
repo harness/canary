@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, KeyboardEvent, useMemo, useState } from 'react'
 
 import { Button, Command, IconV2, Layout, Link, Popover, SearchInput, Tabs, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -34,6 +34,12 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
     activeTab === BranchSelectorTab.BRANCHES
       ? `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/branches`
       : `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/tags`
+
+  const onLinkEnter = (event: KeyboardEvent<HTMLAnchorElement>) => {
+    if (event.key === 'Enter') {
+      event.stopPropagation()
+    }
+  }
 
   return (
     <Popover.Content
@@ -114,7 +120,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         </Command.List>
 
         <div className="px-cn-sm border-cn-borders-3 border-t border-solid py-2.5">
-          <Link to={viewAllUrl} variant="secondary" className="w-full">
+          <Link to={viewAllUrl} variant="secondary" className="w-full" onKeyDown={onLinkEnter}>
             {t('views:repos.viewAll', `View all ${activeTab}`, {
               type:
                 activeTab === BranchSelectorTab.BRANCHES

@@ -93,6 +93,7 @@ export interface ConnectorDetailsLayoutProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
+  onEdit: () => void
   children: React.ReactNode
   toConnectorsList?: () => string
 }
@@ -116,6 +117,7 @@ export interface ConnectorDetailsHeaderProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
   onDelete: (connectorId: string) => void
+  onEdit: () => void
   toConnectorsList?: () => string
 }
 

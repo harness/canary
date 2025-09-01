@@ -5,20 +5,20 @@ import {
   Alert,
   Button,
   ButtonLayout,
+  CardSelect,
   Drawer,
   EntityFormLayout,
   Fieldset,
   FormInput,
   FormSeparator,
   FormWrapper,
-  Link,
   Spacer,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
 import { DelegateConnectivityList, DelegateItem } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { RadioSelect, RadioSelectOption } from '@views/components/RadioSelect'
+import { RadioSelectOption } from '@views/components/RadioSelect'
 import { z } from 'zod'
 
 const componentsMap: Record<
@@ -158,23 +158,22 @@ export const DelegateSelectorForm: FC<DelegateSelectorFormProps> = ({
   return (
     <>
       <Body {...bodyProps}>
-        <div className="flex">
-          {t('views:delegates.noDelegatesInstalled', `Haven't installed a delegate yet?`)}
-          {/* TODO: Design system : Update Attachment icon */}
-          <Link className="ml-1 flex flex-row items-center" to="#" suffixIcon="supply-chain">
-            {t('views:delegates.installDelegate', 'Install Delegate')}
-          </Link>
-        </div>
         <Spacer size={5} />
         <FormWrapper {...formMethods} className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset className="mb-0">
-            <RadioSelect
-              id="type"
+            <CardSelect.Root
+              type="single"
               {...register('type')}
-              options={options}
               value={delegateType}
-              onValueChange={value => setValue('type', value)}
-            />
+              onValueChange={(value: unknown) => setValue('type', value as DelegateSelectionTypes)}
+            >
+              {options.map(option => (
+                <CardSelect.Item value={option.value} key={option.value?.toString()} disabled={option.disabled}>
+                  <CardSelect.Title>{option.title}</CardSelect.Title>
+                  {option.description && <CardSelect.Description>{option.description}</CardSelect.Description>}
+                </CardSelect.Item>
+              ))}
+            </CardSelect.Root>
           </Fieldset>
 
           {apiError && (

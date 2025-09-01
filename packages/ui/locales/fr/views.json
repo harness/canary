@@ -394,7 +394,8 @@
     "connectorId": "Connector ID",
     "success": "Succès",
     "failure": "Échec",
-    "delete": "Supprimer",
+    "editConnector": "modifier connecteur",
+    "deleteConnector": "supprimer connecteur",
     "configuration": "Configuration",
     "references": "Références",
     "activityHistory": "Historique des activités",
@@ -404,6 +405,7 @@
     "id": "ID du connecteur",
     "connectivityStatus": "État de la connexion",
     "updated": "Dernière mise à jour",
+    "delete": "Supprimer",
     "filterOptions": {
       "statusOption": {
         "success": "Succès",
@@ -507,12 +509,12 @@
     "useAnyDelegate": "Use any available delegate",
     "delegateTags": "Delegate with tags",
     "useDelegateTags": "Use delegate with following tags",
-    "noDelegatesInstalled": "Haven't installed a delegate yet?",
-    "installDelegate": "Install Delegate",
     "enterTags": "Enter tags",
     "testDelegate": "Test Delegate connectivity",
     "delegateMatches": "Matches:",
-    "connectDelegates": "Connect "
+    "connectDelegates": "Connect ",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install Delegate"
   },
   "createProject": {
     "backButton": "Retour",

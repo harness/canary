@@ -381,7 +381,6 @@
     "RequireMinDefaultReviewers": "Require a minimum number of default reviewers",
     "RequireMinDefaultReviewersDescription": "Require approval on pull requests from a minimum number of default reviewers",
     "newRule": "New branch rule",
-    "deleteConnector": "Delete Connector",
     "deleteSecret": "Delete Secret",
     "status": "Status",
     "branchCreated": "Branch created",
@@ -404,7 +403,8 @@
     "connectorId": "Connector ID",
     "success": "Success",
     "failure": "Failed",
-    "delete": "Delete",
+    "editConnector": "Edit Connector",
+    "deleteConnector": "Delete Connector",
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
@@ -414,6 +414,7 @@
     "id": "Connector ID",
     "connectivityStatus": "Connectivity status",
     "updated": "Last updated",
+    "delete": "Delete",
     "filterOptions": {
       "statusOption": {
         "success": "Success",
@@ -517,12 +518,12 @@
     "useAnyDelegate": "Use any available delegate",
     "delegateTags": "Delegate with tags",
     "useDelegateTags": "Use delegate with following tags",
-    "noDelegatesInstalled": "Haven't installed a delegate yet?",
-    "installDelegate": "Install delegate",
     "enterTags": "Enter tags",
     "testDelegate": "Test Delegate connectivity",
     "delegateMatches": "Matches: ",
-    "connectDelegates": "Connect "
+    "connectDelegates": "Connect ",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install delegate"
   },
   "createProject": {
     "backButton": "Back",

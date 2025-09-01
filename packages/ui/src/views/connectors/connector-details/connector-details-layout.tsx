@@ -11,6 +11,7 @@ const ConnectorDetailsLayout = ({
   connectorDetails,
   onTest,
   onDelete,
+  onEdit,
   children,
   toConnectorsList
 }: ConnectorDetailsLayoutProps) => {
@@ -28,6 +29,7 @@ const ConnectorDetailsLayout = ({
             connectorDetails={connectorDetails}
             onTest={onTest}
             onDelete={onDelete}
+            onEdit={onEdit}
             toConnectorsList={toConnectorsList}
           />
           <Tabs.Root

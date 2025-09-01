@@ -65,6 +65,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       connectorDetails={connectorDetails}
       onTest={noop}
       onDelete={noop}
+      onEdit={noop}
       toConnectorsList={() => '/connectors'}
     >
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>

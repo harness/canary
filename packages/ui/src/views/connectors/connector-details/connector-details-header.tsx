@@ -10,6 +10,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   connectorDetails,
   onTest,
   onDelete,
+  onEdit,
   toConnectorsList
 }) => {
   const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status, type } = connectorDetails
@@ -90,8 +91,13 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           <MoreActionsTooltip
             actions={[
               {
+                isDanger: false,
+                title: t('views:connectors.editConnector', 'Edit connector'),
+                onClick: () => onEdit()
+              },
+              {
                 isDanger: true,
-                title: t('views:connectors.delete', 'Delete connector'),
+                title: t('views:connectors.deleteConnector', 'Delete connector'),
                 onClick: () => onDelete(connectorDetails.identifier)
               }
             ]}

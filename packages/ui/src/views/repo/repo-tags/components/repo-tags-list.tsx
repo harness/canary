@@ -120,11 +120,11 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[33%]">{t('views:repos.description', 'Description')}</Table.Head>
-          <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
+          <Table.Head className="w-[30%]">{t('views:repos.description', 'Description')}</Table.Head>
+          <Table.Head className="w-48">{t('views:repos.commit', 'Commit')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
-          <Table.Head className="w-[7%]" />
+          <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>
 

@@ -68,7 +68,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-[15%] whitespace-nowrap">
             <Text variant="caption-strong">{t('views:repos.pullRequest', 'Pull Request')}</Text>
           </Table.Head>
-          <Table.Head className="w-[7%]" />
+          <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>
 

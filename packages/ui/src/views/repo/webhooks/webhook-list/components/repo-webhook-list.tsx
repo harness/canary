@@ -57,7 +57,7 @@ export function RepoWebhookList({
                   </StatusBadge>
                 </Table.Cell>
 
-                <Table.Cell>
+                <Table.Cell disableLink>
                   <MoreActionsTooltip
                     iconName="more-horizontal"
                     actions={[

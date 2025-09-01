@@ -69,7 +69,6 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
       <StackedList.Item
         className={cn({ 'bg-cn-background-hover': isSelected })}
         paddingY="sm"
-        paddingX="md"
         onClick={() => onSelect(entity)}
         thumbnail={
           connectorLogo ? (

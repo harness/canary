@@ -52,7 +52,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   return (
     <StackedList.Root>
       {/* Breadcrumb header */}
-      <StackedList.Item className="sticky top-0" paddingY="sm" paddingX="md" isHeader disableHover>
+      <StackedList.Header className="sticky top-0" paddingY="sm">
         <Breadcrumb.Root>
           <Breadcrumb.List>
             {!!showBreadcrumbEllipsis && (
@@ -82,7 +82,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             </Breadcrumb.Page>
           </Breadcrumb.List>
         </Breadcrumb.Root>
-      </StackedList.Item>
+      </StackedList.Header>
 
       <ScrollArea className="max-h-[calc(100vh-530px)] overflow-y-auto">
         {/* scopes */}

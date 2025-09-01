@@ -90,7 +90,7 @@ export const ExecutionList = ({
   return (
     <StackedList.Root>
       {executions.map(execution => (
-        <StackedList.Item key={execution.name} paddingX="md" paddingY="sm" to={execution.id}>
+        <StackedList.Item key={execution.name} paddingY="sm" to={execution.id}>
           <StackedList.Field
             title={<Title status={execution.status} title={execution.name || ''} />}
             description={

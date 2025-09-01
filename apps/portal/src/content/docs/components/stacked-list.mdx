@@ -6,7 +6,7 @@ beta: true
 
 The `StackedList` component provides a way to display entities in a vertically stacked list format. Supports flexible item rendering, integration with links or actions, and customizable layouts for presenting structured data consistently.
 
-It is composed of several subcomponents such as `StackedList.Root`, `StackedList.Item`, `StackedList.Field` to offer a structured and customizable interface.
+It is composed of several subcomponents such as `StackedList.Root`, `StackedList.Header`, `StackedList.Item`, `StackedList.Field` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -15,6 +15,9 @@ import { DocsPage } from "@/components/docs-page";
   contentClassName={"!block ![place-items:normal]"}
   code={`
     <StackedList.Root>
+      <StackedList.Header>
+        <StackedList.Field title="Title" />
+      </StackedList.Header>
       <StackedList.Item
         thumbnail={<IconV2 name="connectors" size="xs" />}
         actions={<Button>Action</Button>}
@@ -53,6 +56,9 @@ import { StackedList } from '@harnessio/ui/components'
 
 return (
   <StackedList.Root>
+    <StackedList.Header>
+      <StackedList.Field title="Title" />
+    </StackedList.Header>
     <StackedList.Item
       thumbnail={<IconV2 name="connectors" size="xs" />}
       actions={<Button>Action</Button>}
@@ -86,6 +92,10 @@ All parts of the `StackedList` component can be imported and composed as require
 
 ```typescript jsx
 <StackedList.Root>
+    <StackedList.Header>
+        <StackedList.Field />
+    <StackedList.Header>
+
     <StackedList.Item>
         <StackedList.Field />
         <StackedList.Field />
@@ -148,38 +158,6 @@ If either of these props is provided, the whole item becomes clickable and navig
 `}
 />
 
-## Header item
-
-The `StackedList.Item` accepts the `isHeader` prop, which allow you to turn the entire item into Header view.
-
-This implies a background change to visually distinguish it from regular items.
-
-<DocsPage.ComponentExample
-  client:only
-  contentClassName={"!block ![place-items:normal]"}
-  code={`
-    <StackedList.Root>
-      <StackedList.Item
-        isHeader
-        disableHover
-        paddingY="xs"
-      >
-        <StackedList.Field title="Title" titleColor="foreground-2" />
-      </StackedList.Item>
-      <StackedList.Item
-        to="/"
-      >
-        <StackedList.Field title="Item 1" description="Description 1" />
-      </StackedList.Item>
-      <StackedList.Item
-        to="/"
-      >
-        <StackedList.Field title="Item 2" />
-      </StackedList.Item>
-    </StackedList.Root>
-`}
-/>
-
 ## Disable hover
 
 The `StackedList.Item` accepts the `disableHover` prop, which allows you to turn off hover affect.
@@ -190,11 +168,10 @@ The `StackedList.Item` accepts the `disableHover` prop, which allows you to turn
   code={`
     <StackedList.Root>
       <StackedList.Item
-        isHeader
         disableHover
         paddingY="xs"
       >
-        <StackedList.Field title="Title" titleColor="foreground-2" />
+        <StackedList.Field title="Item 1" />
       </StackedList.Item>
     </StackedList.Root>
 `}
@@ -299,6 +276,12 @@ Contains [`StackedList.Item`](#item) and [`StackedList.Field`](#field) component
   ]}
 />
 
+### `Header`
+
+Contains [`StackedList.Field`](#field) components.
+
+All props are the same as in [`StackedList.Item`](#item), except for `disableHover` (which is already set to `true`).
+
 ### `Item`
 
 Contains [`StackedList.Field`](#field) components.
@@ -356,13 +339,6 @@ Contains [`StackedList.Field`](#field) components.
       required: false,
       value: "boolean",
       defaultValue: "false",
-    },
-    {
-      name: "isHeader",
-      description: "Allow you to turn the entire item into Header view.",
-      required: false,
-      value: "boolean",
-      defaultValue: "undefined",
     },
     {
       name: "paddingX",

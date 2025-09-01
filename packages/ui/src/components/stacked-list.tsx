@@ -44,9 +44,6 @@ export const stackedListItemVariants = cva('cn-stacked-list-item', {
     disableHover: {
       true: '',
       false: 'cn-stacked-list-item-with-hover'
-    },
-    isHeader: {
-      true: 'cn-stacked-list-item-header'
     }
   },
   defaultVariants: {
@@ -73,7 +70,6 @@ const ListItem = ({
   to,
   linkProps,
   disableHover = false,
-  isHeader,
   paddingX = 'md',
   paddingY = 'md',
   ...props
@@ -84,7 +80,7 @@ const ListItem = ({
   return (
     <Comp
       className={cn(
-        stackedListItemVariants({ paddingX, paddingY, disableHover, isHeader }),
+        stackedListItemVariants({ paddingX, paddingY, disableHover }),
         { 'cn-stacked-list-item-with-link': withLink },
         className
       )}
@@ -98,6 +94,13 @@ const ListItem = ({
   )
 }
 ListItem.displayName = 'StackedListItem'
+
+const ListHeader = ({ className, paddingY = 'xs', ...props }: Omit<ListItemProps, 'disableHover'>) => {
+  return (
+    <ListItem className={cn('cn-stacked-list-item-header', className)} paddingY={paddingY} disableHover {...props} />
+  )
+}
+ListHeader.displayName = 'StackedListHeader'
 
 /**
  * Field
@@ -145,6 +148,7 @@ ListField.displayName = 'StackedListField'
 
 const StackedList = {
   Root: List,
+  Header: ListHeader,
   Item: ListItem,
   Field: ListField
 }

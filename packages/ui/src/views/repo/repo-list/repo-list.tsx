@@ -147,7 +147,6 @@ export function RepoList({
         <StackedList.Item
           key={repo.name}
           paddingY="sm"
-          paddingX="md"
           actions={
             !repo.importing && (
               <Favorite

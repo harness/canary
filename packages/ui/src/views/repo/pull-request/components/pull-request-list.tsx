@@ -133,7 +133,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
 
   return (
     <StackedList.Root className={isEmptyState ? 'flex flex-col grow' : ''}>
-      <StackedList.Item className={cn({ 'grow-0': isEmptyState })} paddingX="md" paddingY="xs" isHeader disableHover>
+      <StackedList.Header className={cn({ 'grow-0': isEmptyState })}>
         <StackedList.Field
           title={
             <PullRequestListHeader
@@ -145,7 +145,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             />
           }
         />
-      </StackedList.Item>
+      </StackedList.Header>
 
       {isEmptyState &&
         (DirtyNoDataContent ? DirtyNoDataContent : <EmptyStateView repoId={repoId} spaceId={spaceId} state={state} />)}
@@ -153,7 +153,6 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       {pullRequests.map(pullRequest => (
         <StackedList.Item
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
-          paddingX="md"
           paddingY="sm"
           to={
             toPullRequest && pullRequest.number

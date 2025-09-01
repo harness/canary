@@ -134,7 +134,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         className={cn({ 'bg-cn-background-hover': isSelected })}
         paddingY="sm"
-        paddingX="md"
         onClick={() => onSelect?.(entity)}
         thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}
       >
@@ -147,7 +146,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         paddingY="sm"
-        paddingX="md"
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<IconV2 name="folder" size="xs" className="text-cn-foreground-3" />}
       >
@@ -160,7 +158,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         paddingY="sm"
-        paddingX="md"
         onClick={() => onSelect?.(folder)}
         thumbnail={<IconV2 name="folder" size="xs" className="text-cn-foreground-3" />}
       >

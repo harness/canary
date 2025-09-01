@@ -261,7 +261,7 @@ export function RepoSummaryView({
               // Existing README with content
               <>
                 <StackedList.Root rounded="top">
-                  <StackedList.Item paddingY="xs" isHeader disableHover>
+                  <StackedList.Header>
                     <StackedList.Field
                       title={
                         <Text variant="caption-single-line-normal" color="foreground-1">
@@ -281,14 +281,14 @@ export function RepoSummaryView({
                       }
                       right
                     />
-                  </StackedList.Item>
+                  </StackedList.Header>
                 </StackedList.Root>
                 <MarkdownViewer source={readmeInfo.content} withBorder className="text-wrap" />
               </>
             ) : (
               // No README content - show Create README prompt
               <StackedList.Root rounded="top">
-                <StackedList.Item paddingY="xs" isHeader disableHover>
+                <StackedList.Header>
                   <StackedList.Field
                     title={
                       <Text variant="caption-single-line-normal" color="foreground-1">
@@ -308,7 +308,7 @@ export function RepoSummaryView({
                     }
                     right
                   />
-                </StackedList.Item>
+                </StackedList.Header>
                 <StackedList.Item paddingY="xs" disableHover>
                   <NoData
                     imageName="no-data-folder"

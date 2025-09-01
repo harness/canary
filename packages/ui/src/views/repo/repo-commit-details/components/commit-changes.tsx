@@ -81,7 +81,7 @@ const CommitsAccordion: FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item paddingY="0" paddingX="0" disableHover isHeader>
+      <StackedList.Header paddingY="0" paddingX="0">
         <Accordion.Root
           type="multiple"
           className="w-full"
@@ -146,7 +146,7 @@ const CommitsAccordion: FC<{
             </Accordion.Content>
           </Accordion.Item>
         </Accordion.Root>
-      </StackedList.Item>
+      </StackedList.Header>
     </StackedList.Root>
   )
 }

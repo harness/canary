@@ -48,7 +48,7 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
 
   return (
     <StackedList.Root {...(withoutBorder ? { border: false } : {})} {...(onlyTopRounded ? { rounded: 'top' } : {})}>
-      <StackedList.Item className="gap-cn-md" paddingX="md" paddingY="xs" disableHover isHeader>
+      <StackedList.Header>
         {props ? (
           <>
             <StackedList.Field title={<TopTitle {...props} />} />
@@ -61,7 +61,7 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
         ) : (
           <Text>{t('views:repos.noFile', 'No files available')}</Text>
         )}
-      </StackedList.Item>
+      </StackedList.Header>
     </StackedList.Root>
   )
 }

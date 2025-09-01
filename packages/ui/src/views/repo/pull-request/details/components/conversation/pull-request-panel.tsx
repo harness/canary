@@ -777,7 +777,7 @@ const PullRequestPanel = ({
 
         {!isClosed ? (
           (!pullReqMetadata?.merged || !!checks?.length) && (
-            <StackedList.Item paddingX="md" paddingY="0" disableHover>
+            <StackedList.Item paddingY="0" disableHover>
               <Accordion.Root
                 className="w-full"
                 type="multiple"
@@ -835,7 +835,7 @@ const PullRequestPanel = ({
             </StackedList.Item>
           )
         ) : (
-          <StackedList.Item paddingX="md" paddingY="0" disableHover>
+          <StackedList.Item paddingY="0" disableHover>
             <Layout.Horizontal gap="xs" align="center" justify="between" className="w-full py-4">
               <Layout.Horizontal gap="3xs" align="center" className="w-full">
                 <StatusBadge variant="secondary" size="sm">

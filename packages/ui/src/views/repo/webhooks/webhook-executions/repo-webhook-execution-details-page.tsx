@@ -150,7 +150,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
 
         <Tabs.Root className="flex w-full grow flex-col" defaultValue={view} onValueChange={onChangeView}>
           <StackedList.Root rounded="top">
-            <StackedList.Item paddingY="2xs" disableHover isHeader>
+            <StackedList.Header paddingY="2xs">
               <StackedList.Field
                 title={
                   <Tabs.List variant="ghost">
@@ -163,7 +163,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
                   </Tabs.List>
                 }
               />
-            </StackedList.Item>
+            </StackedList.Header>
           </StackedList.Root>
 
           <Tabs.Content value={WebhookExecutionView.PAYLOAD} className="grow">

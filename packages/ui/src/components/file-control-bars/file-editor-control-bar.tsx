@@ -9,7 +9,7 @@ export interface FileEditorControlBarProps {
 export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ showPreview = true }) => {
   return (
     <StackedList.Root rounded="top">
-      <StackedList.Item paddingX="md" paddingY="2xs" disableHover isHeader>
+      <StackedList.Header paddingY="2xs">
         <StackedList.Field
           title={
             <Tabs.List variant="ghost">
@@ -18,7 +18,7 @@ export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ showPrevie
             </Tabs.List>
           }
         />
-      </StackedList.Item>
+      </StackedList.Header>
     </StackedList.Root>
   )
 }

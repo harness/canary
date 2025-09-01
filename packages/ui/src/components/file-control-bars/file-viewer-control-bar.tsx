@@ -81,7 +81,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
 
   return (
     <StackedList.Root {...(view !== 'history' ? { rounded: 'top' } : {})}>
-      <StackedList.Item className="gap-cn-sm" paddingX="md" paddingY="2xs" disableHover isHeader>
+      <StackedList.Header paddingY="2xs">
         <StackedList.Field
           title={
             <Tabs.List variant="ghost">
@@ -93,7 +93,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           }
         />
         <StackedList.Field right title={<RightDetails />} />
-      </StackedList.Item>
+      </StackedList.Header>
     </StackedList.Root>
   )
 }

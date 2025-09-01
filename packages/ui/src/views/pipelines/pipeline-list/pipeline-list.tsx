@@ -83,7 +83,7 @@ export const PipelineList = ({
   return (
     <StackedList.Root>
       {pipelines.map(pipeline => (
-        <StackedList.Item key={pipeline.name} paddingX="md" paddingY="sm" to={toPipelineDetails?.(pipeline) || ''}>
+        <StackedList.Item key={pipeline.name} paddingY="sm" to={toPipelineDetails?.(pipeline) || ''}>
           <StackedList.Field
             title={<Title status={pipeline.status} title={pipeline.name || ''} />}
             description={

@@ -59,7 +59,6 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                   return (
                     <StackedList.Item
                       className="items-start"
-                      paddingX="md"
                       paddingY="sm"
                       key={commit?.sha || idx}
                       to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}

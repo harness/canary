@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, IconV2, Layout, Link, Link as StyledLink, Tag, Text } from '@/components'
+import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/views'
 
@@ -65,8 +65,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       </Text>
 
       {showContributeBtn && (
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
+        <Popover.Root>
+          <Popover.Trigger asChild>
             <Button
               className="group/contribute data-[state=open]:border-cn-borders-9 py-2 data-[state=open]:text-cn-foreground-1"
               variant="outline"
@@ -79,55 +79,53 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                 size="2xs"
               />
             </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content align="end" className="w-80">
-            <DropdownMenu.Slot>
-              <Layout.Grid gapY="xs" className="p-2">
-                <Layout.Grid flow="column" gapX="xs">
-                  <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
-                    <IconV2 name="git-pull-request" size="md" />
-                  </div>
-                  <Layout.Grid gapY="xs">
-                    <Text variant="body-single-line-strong" color="foreground-1">
-                      {hasAhead
-                        ? `This branch is ${ahead} ${easyPluralize(ahead, 'commit', 'commits')} ahead of`
-                        : 'This branch is not ahead of'}
-                      &nbsp;
-                      <Tag
-                        className="mt-0.5 align-sub"
-                        variant="secondary"
-                        theme="gray"
-                        value={defaultBranchName}
-                        icon="git-branch"
-                      />
-                    </Text>
-
-                    <Text color="foreground-3">
-                      {hasAhead
-                        ? t(
-                            'views:repos.compareBranchesToSeeChanges',
-                            'Open a pull request to contribute your changes upstream.'
-                          )
-                        : t('views:repos.noNewCommits', 'No new commits yet.')}
-                    </Text>
-                  </Layout.Grid>
-                </Layout.Grid>
-
-                {hasAhead && (
-                  <Button className="w-full" variant="outline" asChild>
-                    <Link
-                      noHoverUnderline
+          </Popover.Trigger>
+          <Popover.Content align="end" className="w-80" hideArrow>
+            <Layout.Grid gapY="xs">
+              <Layout.Grid flow="column" gapX="xs">
+                <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
+                  <IconV2 name="git-pull-request" size="md" />
+                </div>
+                <Layout.Grid gapY="xs">
+                  <Text variant="body-single-line-strong" color="foreground-1">
+                    {hasAhead
+                      ? `This branch is ${ahead} ${easyPluralize(ahead, 'commit', 'commits')} ahead of`
+                      : 'This branch is not ahead of'}
+                    &nbsp;
+                    <Tag
+                      className="mt-0.5 align-sub"
                       variant="secondary"
-                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-                    >
-                      Compare
-                    </Link>
-                  </Button>
-                )}
+                      theme="gray"
+                      value={defaultBranchName}
+                      icon="git-branch"
+                    />
+                  </Text>
+
+                  <Text color="foreground-3">
+                    {hasAhead
+                      ? t(
+                          'views:repos.compareBranchesToSeeChanges',
+                          'Open a pull request to contribute your changes upstream.'
+                        )
+                      : t('views:repos.noNewCommits', 'No new commits yet.')}
+                  </Text>
+                </Layout.Grid>
               </Layout.Grid>
-            </DropdownMenu.Slot>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
+
+              {hasAhead && (
+                <Button className="w-full" variant="outline" asChild>
+                  <Link
+                    noHoverUnderline
+                    variant="secondary"
+                    to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                  >
+                    Compare
+                  </Link>
+                </Button>
+              )}
+            </Layout.Grid>
+          </Popover.Content>
+        </Popover.Root>
       )}
     </Layout.Flex>
   )

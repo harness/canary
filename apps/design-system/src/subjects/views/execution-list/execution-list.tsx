@@ -1,13 +1,10 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
 
 import { noop } from '@utils/viewUtils'
 
-import { ExecutionListPage, RepoSummaryViewProps, TLinkComponent } from '@harnessio/ui/views'
+import { ExecutionListPage, RepoSummaryViewProps } from '@harnessio/ui/views'
 
 import { useExecutionListStore } from './execution-list.store'
-
-const LinkComponent: TLinkComponent = ({ to, children }) => <Link to={to}>{children}</Link>
 
 const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
   return (
@@ -16,7 +13,6 @@ const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
       setSearchQuery={noop}
       isLoading={false}
       isError={false}
-      LinkComponent={LinkComponent}
       handleExecutePipeline={noop}
     />
   )

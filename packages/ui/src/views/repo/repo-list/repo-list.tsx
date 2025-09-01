@@ -143,11 +143,10 @@ export function RepoList({
 
   return (
     <StackedList.Root>
-      {repos.map((repo, repo_idx) => (
+      {repos.map(repo => (
         <StackedList.Item
           key={repo.name}
-          className="py-3"
-          isLast={repos.length - 1 === repo_idx}
+          paddingY="sm"
           actions={
             !repo.importing && (
               <Favorite
@@ -161,15 +160,6 @@ export function RepoList({
           }}
         >
           <StackedList.Field
-            className="grid"
-            primary
-            description={
-              repo.importing ? (
-                t('views:repos.importing', 'Importing…')
-              ) : repo?.description ? (
-                <Text truncate>{repo.description}</Text>
-              ) : undefined
-            }
             title={
               <Title
                 repoName={repo.name}
@@ -180,6 +170,7 @@ export function RepoList({
                 showScope={showScope}
               />
             }
+            description={repo.importing ? t('views:repos.importing', 'Importing…') : repo?.description}
           />
           {!repo.importing && (
             <StackedList.Field
@@ -196,9 +187,8 @@ export function RepoList({
                 </>
               }
               description={<Stats pulls={repo.pulls} />}
-              className="grow-0"
+              titleColor="foreground-2"
               right
-              label
             />
           )}
         </StackedList.Item>

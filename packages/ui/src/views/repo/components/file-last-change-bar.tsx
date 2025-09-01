@@ -47,22 +47,21 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>
-      <StackedList.Item disableHover isHeader className="gap-cn-md px-cn-md py-cn-xs">
+    <StackedList.Root {...(withoutBorder ? { border: false } : {})} {...(onlyTopRounded ? { rounded: 'top' } : {})}>
+      <StackedList.Header>
         {props ? (
           <>
-            <StackedList.Field className="grid justify-start" title={<TopTitle {...props} />} />
+            <StackedList.Field title={<TopTitle {...props} />} />
             <StackedList.Field
-              className="flex-none"
-              right
               title={<TopDetails toCommitDetails={toCommitDetails} {...props} />}
+              right
               disableTruncate
             />
           </>
         ) : (
           <Text>{t('views:repos.noFile', 'No files available')}</Text>
         )}
-      </StackedList.Item>
+      </StackedList.Header>
     </StackedList.Root>
   )
 }

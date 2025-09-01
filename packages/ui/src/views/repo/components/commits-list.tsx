@@ -58,12 +58,12 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="p-cn-sm pl-cn-xs flex items-start"
+                      className="items-start"
+                      paddingY="sm"
                       key={commit?.sha || idx}
-                      isLast={commitData.length - 1 === idx}
                       to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                     >
-                      <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
+                      <Layout.Grid flow="column" className="w-full" columns="1fr auto" gap="md">
                         <Layout.Vertical gap="2xs" className="truncate">
                           <CommitTitleWithPRLink
                             toPullRequest={toPullRequest}

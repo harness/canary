@@ -158,7 +158,6 @@ const PullRequestMergeSection = ({
         >
           <Layout.Flex>
             <StackedList.Field
-              className="flex gap-y-1"
               title={
                 <LineTitle
                   textClassName={isConflicted ? 'text-cn-foreground-danger' : ''}
@@ -256,9 +255,8 @@ const PullRequestMergeSection = ({
 
       {/* Fast-Forward merge error section - Using proper StackedList.Item */}
       {fastForwardState.isFastForwardNotPossible && (
-        <StackedList.Item disableHover className="border-t border-cn-borders-3 py-3 -ml-4">
+        <StackedList.Item className="!border-t" paddingX="0" paddingY="sm" disableHover>
           <StackedList.Field
-            className="flex gap-y-1"
             title={
               <LineTitle
                 textClassName="text-cn-foreground-danger"

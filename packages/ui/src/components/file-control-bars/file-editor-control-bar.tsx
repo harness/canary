@@ -8,13 +8,17 @@ export interface FileEditorControlBarProps {
 
 export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ showPreview = true }) => {
   return (
-    <StackedList.Root className="bg-cn-background-2" onlyTopRounded>
-      <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs">
-        <Tabs.List variant="ghost">
-          <Tabs.Trigger value="edit">Edit</Tabs.Trigger>
-          {showPreview && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}
-        </Tabs.List>
-      </StackedList.Item>
+    <StackedList.Root rounded="top">
+      <StackedList.Header paddingY="2xs">
+        <StackedList.Field
+          title={
+            <Tabs.List variant="ghost">
+              <Tabs.Trigger value="edit">Edit</Tabs.Trigger>
+              {showPreview && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}
+            </Tabs.List>
+          }
+        />
+      </StackedList.Header>
     </StackedList.Root>
   )
 }

@@ -37,7 +37,6 @@ const Description = ({ sha, description, version }: { sha?: string; description?
 
 export const PipelineList = ({
   pipelines,
-  LinkComponent,
   handleResetQuery,
   isLoading,
   query,
@@ -83,19 +82,16 @@ export const PipelineList = ({
 
   return (
     <StackedList.Root>
-      {pipelines.map((pipeline, idx) => (
-        <LinkComponent key={pipeline.id} to={toPipelineDetails?.(pipeline) || ''}>
-          <StackedList.Item className="py-3" key={pipeline.name} isLast={pipelines.length - 1 === idx}>
-            <StackedList.Field
-              className="grid gap-y-1.5"
-              title={<Title status={pipeline.status} title={pipeline.name || ''} />}
-              description={
-                <Description sha={pipeline.sha} description={pipeline.description} version={pipeline.version} />
-              }
-            />
-            <StackedList.Field title={<Meter data={pipeline.meter} />} label right />
-          </StackedList.Item>
-        </LinkComponent>
+      {pipelines.map(pipeline => (
+        <StackedList.Item key={pipeline.name} paddingY="sm" to={toPipelineDetails?.(pipeline) || ''}>
+          <StackedList.Field
+            title={<Title status={pipeline.status} title={pipeline.name || ''} />}
+            description={
+              <Description sha={pipeline.sha} description={pipeline.description} version={pipeline.version} />
+            }
+          />
+          <StackedList.Field title={<Meter data={pipeline.meter} />} right />
+        </StackedList.Item>
       ))}
     </StackedList.Root>
   )

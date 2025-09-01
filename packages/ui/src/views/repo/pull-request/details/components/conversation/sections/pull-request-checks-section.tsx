@@ -2,7 +2,6 @@ import { Accordion, IconV2, Layout, Link, StackedList, StatusBadge, Table, Text 
 import { timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
-import { isEmpty } from 'lodash-es'
 
 import { PullRequestRoutingProps } from '../../../pull-request-details-types'
 import { LineDescription, LineTitle } from './pull-request-line-title'
@@ -43,12 +42,11 @@ const PullRequestCheckSection = ({
     }
   }
 
-  return !isEmpty(checkData) ? (
+  return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger className="py-3">
         <Layout.Flex>
           <StackedList.Field
-            className="flex gap-y-1"
             title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status, true)} />}
             description={<LineDescription text={checksInfo.content} />}
           />
@@ -105,7 +103,7 @@ const PullRequestCheckSection = ({
         </Table.Root>
       </Accordion.Content>
     </Accordion.Item>
-  ) : null
+  )
 }
 
 PullRequestCheckSection.displayName = 'PullRequestCheckSection'

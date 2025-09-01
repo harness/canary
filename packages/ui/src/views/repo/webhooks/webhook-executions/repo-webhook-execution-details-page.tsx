@@ -148,17 +148,23 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
           </Layout.Grid>
         </Layout.Grid>
 
-        <Tabs.Root defaultValue={view} onValueChange={onChangeView} className="flex w-full grow flex-col">
-          <StackedList.Item disableHover isHeader className="py-cn-2xs px-cn-md rounded-t-3 flex-none border">
-            <Tabs.List variant="ghost">
-              <Tabs.Trigger value={WebhookExecutionView.PAYLOAD}>
-                {t('views:repos.webhookExecution.code.payload', 'Payload')}
-              </Tabs.Trigger>
-              <Tabs.Trigger value={WebhookExecutionView.SERVER_RESPONSE}>
-                {t('views:repos.webhookExecution.code.serverResponse', 'Server Response')}
-              </Tabs.Trigger>
-            </Tabs.List>
-          </StackedList.Item>
+        <Tabs.Root className="flex w-full grow flex-col" defaultValue={view} onValueChange={onChangeView}>
+          <StackedList.Root rounded="top">
+            <StackedList.Header paddingY="2xs">
+              <StackedList.Field
+                title={
+                  <Tabs.List variant="ghost">
+                    <Tabs.Trigger value={WebhookExecutionView.PAYLOAD}>
+                      {t('views:repos.webhookExecution.code.payload', 'Payload')}
+                    </Tabs.Trigger>
+                    <Tabs.Trigger value={WebhookExecutionView.SERVER_RESPONSE}>
+                      {t('views:repos.webhookExecution.code.serverResponse', 'Server Response')}
+                    </Tabs.Trigger>
+                  </Tabs.List>
+                }
+              />
+            </StackedList.Header>
+          </StackedList.Root>
 
           <Tabs.Content value={WebhookExecutionView.PAYLOAD} className="grow">
             <CodePreview

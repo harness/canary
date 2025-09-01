@@ -132,16 +132,12 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const defaultEntityRenderer = ({ entity, isSelected, onSelect, showCheckbox }: EntityRendererProps<T>) => {
     return (
       <StackedList.Item
+        className={cn({ 'bg-cn-background-hover': isSelected })}
+        paddingY="sm"
         onClick={() => onSelect?.(entity)}
-        className={cn('h-12 p-3', { 'bg-cn-background-hover': isSelected })}
         thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}
       >
-        <div title={entity.name}>
-          <StackedList.Field
-            title={entity.name}
-            className="max-w-sm overflow-hidden truncate text-nowrap text-cn-foreground-2"
-          />
-        </div>
+        <StackedList.Field title={entity.name} />
       </StackedList.Item>
     )
   }
@@ -149,11 +145,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const parentFolderRenderer = ({ parentFolder, onSelect }: ParentFolderRendererProps<S>) => {
     return (
       <StackedList.Item
+        paddingY="sm"
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<IconV2 name="folder" size="xs" className="text-cn-foreground-3" />}
-        className="h-12 p-3"
       >
-        <StackedList.Field title={<span className="capitalize">..</span>} />
+        <StackedList.Field title=".." />
       </StackedList.Item>
     )
   }
@@ -161,11 +157,11 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const childFolderRenderer = ({ folder, onSelect }: ChildFolderRendererProps<F>) => {
     return (
       <StackedList.Item
+        paddingY="sm"
         onClick={() => onSelect?.(folder)}
         thumbnail={<IconV2 name="folder" size="xs" className="text-cn-foreground-3" />}
-        className="h-12 p-3"
       >
-        <StackedList.Field title={<span className="capitalize">{String(folder)}</span>} />
+        <StackedList.Field className="grid capitalize" title={String(folder)} />
       </StackedList.Item>
     )
   }

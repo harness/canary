@@ -50,7 +50,7 @@ export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boo
         isSubmitting={false}
       />
       <Tabs.Root
-        className="flex flex-col h-full"
+        className="flex h-full flex-col"
         value={view as string}
         onValueChange={val => onChangeView(val as ViewTypeValue)}
       >

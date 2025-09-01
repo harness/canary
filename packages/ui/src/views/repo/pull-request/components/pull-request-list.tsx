@@ -133,13 +133,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
 
   return (
     <StackedList.Root className={isEmptyState ? 'flex flex-col grow' : ''}>
-      <StackedList.Item
-        className={cn('py-cn-sm gap-cn-lg', {
-          'grow-0': isEmptyState
-        })}
-        isHeader
-        disableHover
-      >
+      <StackedList.Header className={cn({ 'grow-0': isEmptyState })}>
         <StackedList.Field
           title={
             <PullRequestListHeader
@@ -151,16 +145,15 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             />
           }
         />
-      </StackedList.Item>
+      </StackedList.Header>
 
       {isEmptyState &&
         (DirtyNoDataContent ? DirtyNoDataContent : <EmptyStateView repoId={repoId} spaceId={spaceId} state={state} />)}
 
-      {pullRequests.map((pullRequest, pullRequest_idx) => (
+      {pullRequests.map(pullRequest => (
         <StackedList.Item
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
-          className="px-4 py-3"
-          isLast={pullRequests.length - 1 === pullRequest_idx}
+          paddingY="sm"
           to={
             toPullRequest && pullRequest.number
               ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
@@ -172,7 +165,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         >
           {!!pullRequest.number && (
             <StackedList.Field
-              className="grid gap-cn-2xs justify-normal"
+              className="gap-cn-2xs"
               disableTruncate
               title={
                 pullRequest.name && (

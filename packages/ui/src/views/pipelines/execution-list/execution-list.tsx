@@ -45,7 +45,6 @@ const Description = ({
 
 export const ExecutionList = ({
   executions,
-  LinkComponent,
   handleResetQuery,
   isLoading,
   query,
@@ -90,24 +89,21 @@ export const ExecutionList = ({
 
   return (
     <StackedList.Root>
-      {executions.map((execution, idx) => (
-        <LinkComponent key={execution.id} to={execution.id}>
-          <StackedList.Item className="py-3" key={execution.name} isLast={executions.length - 1 === idx}>
-            <StackedList.Field
-              className="grid gap-y-1.5"
-              title={<Title status={execution.status} title={execution.name || ''} />}
-              description={
-                <Description sha={execution.sha} description={execution.description} version={execution.version} />
-              }
-            />
-            <StackedList.Field
-              title={`${timeDistance(execution.finished, execution.started)}`}
-              description={<TimeAgoCard timestamp={execution.started} />}
-              right
-              label
-            />
-          </StackedList.Item>
-        </LinkComponent>
+      {executions.map(execution => (
+        <StackedList.Item key={execution.name} paddingY="sm" to={execution.id}>
+          <StackedList.Field
+            title={<Title status={execution.status} title={execution.name || ''} />}
+            description={
+              <Description sha={execution.sha} description={execution.description} version={execution.version} />
+            }
+          />
+          <StackedList.Field
+            title={`${timeDistance(execution.finished, execution.started)}`}
+            description={<TimeAgoCard timestamp={execution.started} />}
+            titleColor="foreground-2"
+            right
+          />
+        </StackedList.Item>
       ))}
     </StackedList.Root>
   )

@@ -18,6 +18,9 @@ interface RadioSelectProps<T extends string> {
   className?: string
 }
 
+/**
+ * @deprecated Use `CardSelect` instead.
+ */
 export const RadioSelect = <T extends string>({
   options,
   value,
@@ -38,15 +41,14 @@ export const RadioSelect = <T extends string>({
                   'border-cn-borders-2': value === option.value
                 })}
               >
-                <StackedList.Item
-                  className={cn('cursor-pointer !rounded px-5 py-3', {
+                <StackedList.Header
+                  className={cn('cursor-pointer !rounded', {
                     'bg-gradient-to-b from-white/[0.04] to-white/0': value === option.value,
                     'cursor-not-allowed': option.disabled
                   })}
+                  paddingY="sm"
+                  paddingX="lg"
                   aria-disabled={option.disabled}
-                  isHeader
-                  isLast
-                  disableHover
                   onClick={() => !option.disabled && onValueChange(option.value)}
                 >
                   <StackedList.Field
@@ -54,7 +56,7 @@ export const RadioSelect = <T extends string>({
                     description={option.description}
                     className={`${value !== option.value && 'text-cn-foreground-4'}`}
                   />
-                </StackedList.Item>
+                </StackedList.Header>
               </StackedList.Root>
             }
           />

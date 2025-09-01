@@ -26,7 +26,7 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
 
   // Callbacks
   onScopeChange: (direction: DirectionEnum) => void
-  onFilterChange?: (filter: string) => void
+  onFilterChange?: (filter: any) => void
 
   // UI Configuration
   showFilter?: boolean

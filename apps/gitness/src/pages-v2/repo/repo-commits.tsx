@@ -54,7 +54,7 @@ export default function RepoCommitsPage() {
       setPreSelectedTab(type)
       navigate(toRepoCommits({ spaceId, repoId, fullGitRef: newRef, gitRefName: branchTagName.name }))
     },
-    [spaceId]
+    [navigate, repoId, spaceId, toRepoCommits]
   )
 
   return (

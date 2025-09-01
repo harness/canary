@@ -112,33 +112,17 @@ function PullRequestChangesInternal({
   const [openItems, setOpenItems] = useState<string[]>([])
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const preloadFilesForDiffs = useCallback(
-    (items: HeaderProps[]) => {
-      if (!loadFullFileContents) return
-
-      const pathsToLoad = items
-        .map(item => item.filePath)
-        .filter(Boolean)
-        .filter(path => !fullFileContentsMap?.has(path)) // Skip files we already have
-
-      if (pathsToLoad.length > 0) {
-        loadFullFileContents(pathsToLoad)
-      }
-    },
-    [loadFullFileContents, fullFileContentsMap]
-  )
-
   // Handle inner file visibility to prioritize loading
   const handleFileVisibilityChange = useCallback(
     (isVisible: boolean, filePath: string) => {
       if (isVisible && filePath) {
         const diffItem = data.find(item => item.filePath === filePath)
-        if (diffItem) {
-          preloadFilesForDiffs([diffItem])
+        if (diffItem && !fullFileContentsMap?.has(diffItem.filePath) && !diffItem.isDeleted && !diffItem.isBinary) {
+          loadFullFileContents?.([diffItem.filePath])
         }
       }
     },
-    [data, preloadFilesForDiffs]
+    [data, loadFullFileContents, fullFileContentsMap]
   )
   const [hasInitializedOpenItems, setHasInitializedOpenItems] = useState(false)
 

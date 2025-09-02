@@ -27,7 +27,7 @@ const PullRequestCheckSection = ({
       case ExecutionState.BLOCKED:
         return <IconV2 size="lg" color="warning" name="clock-solid" />
       case ExecutionState.RUNNING:
-        return <IconV2 size="lg" color="warning" name="loader" />
+        return <IconV2 size="lg" color="warning" className="animate-spin" name="loader" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
         return <IconV2 size="lg" color="danger" name={isTitle ? 'warning-triangle-solid' : 'xmark-circle-solid'} />
@@ -48,13 +48,13 @@ const PullRequestCheckSection = ({
         </Layout.Flex>
       </Accordion.Trigger>
       <Accordion.Content className="pl-3">
-        <Table.Root className="rounded-none border-0 border-t ml-4">
+        <Table.Root className="ml-4 rounded-none border-0 border-t">
           <Table.Body>
             {checkData.map(check => {
               const time = timeDistance(check?.check?.created, check?.check?.updated)
               return (
                 <Table.Row key={check.check?.identifier}>
-                  <Table.Cell className="pl-0 w-80">
+                  <Table.Cell className="w-80 pl-0">
                     <Layout.Horizontal align="center" gap="2xs">
                       {getStatusIcon(check?.check?.status as EnumCheckStatus)}
                       <Text color="foreground-1" truncate className="overflow-hidden">

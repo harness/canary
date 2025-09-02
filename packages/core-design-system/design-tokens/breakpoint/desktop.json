@@ -215,6 +215,17 @@
         },
         "$description": "Component-specific annotation style with zero line-height for precise positioning. Designed for compact UI elements requiring single-line supporting text with consistent vertical alignment."
       },
+      "normal-caps": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.none}",
+          "letterSpacing": "{tracking.normal}",
+          "textCase": "{textCase.uppercase}"
+        }
+      },
       "soft": {
         "$type": "typography",
         "$value": {

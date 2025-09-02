@@ -11,8 +11,9 @@ import { Tooltip, TooltipProps } from './tooltip'
 export const avatarVariants = cva('cn-avatar', {
   variants: {
     size: {
-      md: '',
+      xs: 'cn-avatar-xs',
       sm: 'cn-avatar-sm',
+      md: 'cn-avatar-md',
       lg: 'cn-avatar-lg'
     },
     rounded: {
@@ -21,7 +22,7 @@ export const avatarVariants = cva('cn-avatar', {
     }
   },
   defaultVariants: {
-    size: 'md',
+    size: 'sm',
     rounded: false
   }
 })

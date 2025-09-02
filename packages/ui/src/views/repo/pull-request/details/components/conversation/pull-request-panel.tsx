@@ -161,7 +161,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             as="h2"
             color="inherit"
           >
-            <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded size="sm" />
+            <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded size="xs" />
             <span>{pullReqMetadata?.merger?.display_name}</span>
             <span>{areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`}</span>
             <span>into</span>

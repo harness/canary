@@ -37,7 +37,7 @@ export const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
                   <AvatarWithTooltip
                     key={user?.id || idx}
                     name={user?.display_name || ''}
-                    size="md"
+                    size="sm"
                     rounded
                     tooltipProps={tooltipProps}
                   />
@@ -59,7 +59,7 @@ export const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
                           key={email}
                           className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-0"
                         >
-                          <Avatar name={email} size="md" rounded className="mr-1" />
+                          <Avatar name={email} size="sm" rounded className="mr-1" />
                           <Text>{email}</Text>
                         </div>
                       ))}
@@ -71,7 +71,7 @@ export const AvatarItem: FC<AvatarItemProps> = ({ users }) => {
                   <AvatarWithTooltip
                     key={idx}
                     name={`+ ${users.length - 2}`}
-                    size="md"
+                    size="sm"
                     rounded
                     tooltipProps={tooltipProps}
                   />

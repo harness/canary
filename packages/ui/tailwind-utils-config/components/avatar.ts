@@ -1,3 +1,32 @@
+import { CSSRuleObject } from 'tailwindcss/types/config'
+
+const sizes = ['md', 'sm', 'lg', 'xs'] as const
+
+function createAvatarSizeStyles() {
+  const styles: CSSRuleObject = {}
+
+  sizes.forEach(size => {
+    if (size === 'xs') {
+      styles[`&:where(.cn-avatar-${size})`] = {
+        height: `var(--cn-avatar-size-${size})`,
+        width: `var(--cn-avatar-size-${size})`,
+        fontSize: `var(--cn-font-size-min)`,
+        letterSpacing: `var(--cn-tracking-wide)`,
+        fontWeight: `var(--cn-font-weight-default-normal-600)`
+      }
+    } else {
+      styles[`&:where(.cn-avatar-${size})`] = {
+        height: `var(--cn-avatar-size-${size})`,
+        width: `var(--cn-avatar-size-${size})`,
+        fontSize: `var(--cn-font-size-2)`,
+        fontWeight: `var(--cn-font-weight-default-normal-400)`
+      }
+    }
+  })
+
+  return styles
+}
+
 export default {
   '.cn-avatar': {
     display: 'inline-flex',
@@ -5,27 +34,12 @@ export default {
     justifyContent: 'center',
     overflow: 'hidden',
     position: 'relative',
-    height: `var(--cn-avatar-size-md)`,
-    width: `var(--cn-avatar-size-md)`,
     borderRadius: `var(--cn-avatar-radius-default)`,
     boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
-    fontSize: `var(--cn-font-size-0)`,
-    fontWeight: `var(--cn-font-weight-default-normal-500)`,
+    letterSpacing: `var(--cn-tracking-tight)`,
     '@apply shrink-0': '',
 
-    '&:where(.cn-avatar-sm)': {
-      height: `var(--cn-avatar-size-sm)`,
-      width: `var(--cn-avatar-size-sm)`,
-      fontSize: `var(--cn-font-size-min)`,
-      letterSpacing: `var(--cn-tracking-wide)`,
-      fontWeight: `var(--cn-font-weight-default-normal-600)`
-    },
-    '&:where(.cn-avatar-lg)': {
-      height: `var(--cn-avatar-size-lg)`,
-      width: `var(--cn-avatar-size-lg)`,
-      fontSize: `var(--cn-font-size-2)`,
-      fontWeight: `var(--cn-font-weight-default-normal-400)`
-    },
+    ...createAvatarSizeStyles(),
 
     '&:where(.cn-avatar-rounded)': {
       borderRadius: `var(--cn-avatar-radius-rounded)`

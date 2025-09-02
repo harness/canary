@@ -72,7 +72,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
                 {formatDistanceToNow(commitInfo.author?.when)}
               </Text>
               <Layout.Flex align="center" gapX="xs">
-                <Avatar name={name} rounded title={name + '\n' + email} />
+                <Avatar size="md" name={name} rounded title={name + '\n' + email} />
                 <Text
                   style={{ width: '250px' }}
                   className="cursor-pointer hover:underline"

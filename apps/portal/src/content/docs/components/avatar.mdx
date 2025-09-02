@@ -14,48 +14,54 @@ import { DocsPage } from "../../../components/docs-page";
     <div>
       <h6 className="font-semibold mb-2 text-center">Image (Default)</h6>
       <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" src="/avatar.png" size="xs" />
         <Avatar name="John Doe" src="/avatar.png" size="sm" />
-        <Avatar name="John Doe" src="/avatar.png" />
+        <Avatar name="John Doe" src="/avatar.png" size="md" />
         <Avatar name="John Doe" src="/avatar.png" size="lg" />
       </div>
     </div>
     <div>
       <h6 className="font-semibold mb-2 text-center">Image (Rounded)</h6>
       <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" src="/avatar.png" size="xs" rounded />
         <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
-        <Avatar name="John Doe" src="/avatar.png" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="md" rounded />
         <Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
       </div>
     </div>
     <div>
       <h6 className="font-semibold mb-2 text-center">Initials (Default)</h6>
       <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" size="xs" />
         <Avatar name="John Doe" size="sm" />
-        <Avatar name="John Doe" />
+        <Avatar name="John Doe" size="md" />
         <Avatar name="John Doe" size="lg" />
       </div>
     </div>
     <div>
       <h6 className="font-semibold mb-2 text-center">Initials (Rounded)</h6>
       <div className="flex items-center justify-center gap-6">
+        <Avatar name="John Doe" size="xs" rounded />
         <Avatar name="John Doe" size="sm" rounded />
-        <Avatar name="John Doe" rounded />
+        <Avatar name="John Doe" size="md" rounded />
         <Avatar name="John Doe" size="lg" rounded />
       </div>
     </div>
     <div>
       <h6 className="font-semibold mb-2 text-center">Avatar Icon (Default)</h6>
       <div className="flex items-center justify-center gap-6">
+        <Avatar size="xs" />
         <Avatar size="sm" />
-        <Avatar />
+        <Avatar size="md" />
         <Avatar size="lg" />
       </div>
     </div>
     <div>
       <h6 className="font-semibold mb-2 text-center">Avatar Icon (Rounded)</h6>
       <div className="flex items-center justify-center gap-6">
+        <Avatar size="xs" rounded />
         <Avatar size="sm" rounded />
-        <Avatar rounded />
+        <Avatar size="md" rounded />
         <Avatar size="lg" rounded />
       </div>
     </div>
@@ -70,19 +76,20 @@ import { Avatar } from '@harnessio/ui'
 // ...
 
 return (
-  <Avatar name="John Doe" src="/avatar.png" size="sm" />
+  <Avatar name="John Doe" src="/avatar.png" />
 )
 ```
 
 ## Sizes
 
-The `Avatar` component supports three sizes: `sm`, `md`, and `lg`.
+The `Avatar` component supports four sizes: `xs`, `sm`, `md`, and `lg`. The default size is `sm`.
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex items-center gap-6">
+    <Avatar name="John Doe" src="/avatar.png" size="xs" />
     <Avatar name="John Doe" src="/avatar.png" size="sm" />
-    <Avatar name="John Doe" src="/avatar.png" />
+    <Avatar name="John Doe" src="/avatar.png" size="md" />
     <Avatar name="John Doe" src="/avatar.png" size="lg" />
 </div>`}
 />
@@ -123,10 +130,11 @@ The `Avatar` component has several props to control its appearance:
     },
     {
       name: "size",
-      description: "The size of the avatar. Can be one of 'sm', 'md', or 'lg'.",
+      description:
+        "The size of the avatar. Can be one of 'xs', 'sm', 'md', or 'lg'.",
       required: false,
-      value: "'sm' | 'md' | 'lg'",
-      defaultValue: "'md'",
+      value: "'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'sm'",
     },
     {
       name: "rounded",

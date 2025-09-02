@@ -146,7 +146,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               <Layout.Horizontal gap="xs">
                 {tag.tagger?.identity.name ? (
                   <>
-                    <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
+                    <Avatar name={tag.tagger?.identity.name} size="xs" rounded />
                     <Text variant="body-normal" className="block" truncate>
                       {tag.tagger?.identity.name}
                     </Text>

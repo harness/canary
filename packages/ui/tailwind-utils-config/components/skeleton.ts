@@ -1,6 +1,6 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
-const sizesAvatar = ['sm', 'md', 'lg'] as const
+const sizesAvatar = ['sm', 'md', 'lg', 'xs'] as const
 const iconSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'] as const
 const logoSizes = ['xs', 'sm', 'md', 'lg'] as const
 const inputSizes = ['sm'] as const

@@ -23,7 +23,7 @@
     "md": {
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.6}"
+        "$value": "{spacing.4-half}"
       },
       "gap": {
         "$type": "spacing",

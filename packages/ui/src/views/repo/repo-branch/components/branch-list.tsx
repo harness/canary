@@ -89,7 +89,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
 
               <Table.Cell disableLink>
                 <Layout.Flex align="center" gapX="xs">
-                  <AvatarWithTooltip name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
+                  <AvatarWithTooltip name={branch?.user?.name} src={branch?.user?.avatarUrl} size="xs" rounded />
                   <TimeAgoCard
                     timestamp={branch?.timestamp}
                     dateTimeFormatOptions={{ dateStyle: 'medium' }}

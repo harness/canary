@@ -72,7 +72,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                             textProps={{ variant: 'heading-base' }}
                           />
                           <div className="gap-cn-2xs flex items-center">
-                            {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
+                            {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
                             <Text variant="body-single-line-strong">{authorName || ''}</Text>
                             <Text variant="body-single-line-normal" color="foreground-3">
                               committed{' '}

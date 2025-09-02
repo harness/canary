@@ -34,7 +34,7 @@ export const Contributors = (props: ContributorsProps) => {
             <AvatarWithTooltip
               key={contributor.email}
               name={contributor.name}
-              size="sm"
+              size="xs"
               rounded
               tooltipProps={tooltipProps}
               className="[&:not(:first-child)]:-ml-1"

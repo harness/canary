@@ -9,6 +9,7 @@ import { SkeletonBase } from './components/skeleton'
 const skeletonAvatarVariants: typeof avatarVariants = cva('cn-skeleton-avatar', {
   variants: {
     size: {
+      xs: 'cn-skeleton-avatar-xs',
       sm: 'cn-skeleton-avatar-sm',
       md: 'cn-skeleton-avatar-md',
       lg: 'cn-skeleton-avatar-lg'
@@ -19,7 +20,7 @@ const skeletonAvatarVariants: typeof avatarVariants = cva('cn-skeleton-avatar', 
     }
   },
   defaultVariants: {
-    size: 'md',
+    size: 'sm',
     rounded: false
   }
 })
@@ -31,7 +32,7 @@ export interface SkeletonAvatarProps {
 }
 
 export const SkeletonAvatar = forwardRef<HTMLDivElement, SkeletonAvatarProps>(
-  ({ size = 'md', rounded = false, className, ...props }, ref) => {
+  ({ size = 'sm', rounded = false, className, ...props }, ref) => {
     return <SkeletonBase className={cn(skeletonAvatarVariants({ size, rounded }), className)} ref={ref} {...props} />
   }
 )

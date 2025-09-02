@@ -80,7 +80,7 @@ function createButtonVariantStyles() {
         }
       }
 
-      combinationStyles[`&:where(.cn-button-${variant}.cn-button-${theme})`] = style
+      combinationStyles[`&.cn-button-${variant}.cn-button-${theme}`] = style
     })
   })
 
@@ -156,14 +156,16 @@ export default {
 
     // Ghost style
     '&:where(.cn-button-ghost)': {
-      color: 'var(--cn-set-gray-surface-text)',
+      color: 'var(--cn-text-2)',
       '@apply border-transparent': '',
 
-      '&:hover:not(:disabled, .cn-button-disabled)': {
-        backgroundColor: 'var(--cn-set-gray-surface-bg-hover)'
+      '&:where(:hover:not(:disabled, .cn-button-disabled))': {
+        color: 'var(--cn-text-1)',
+        backgroundColor: 'var(--cn-state-hover)'
       },
-      '&:active:not(:disabled, .cn-button-disabled)': {
-        backgroundColor: 'var(--cn-set-gray-surface-bg-selected)'
+      '&:where(:active:not(:disabled, .cn-button-disabled))': {
+        color: 'var(--cn-text-1)',
+        backgroundColor: 'var(--cn-state-selected)'
       }
     },
 

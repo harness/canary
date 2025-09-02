@@ -87,7 +87,12 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
     if (connectorDefinition) {
       const formDef = {
         ...connectorDefinition.formDefinition,
-        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'connectorMeta.name')
+        inputs: addNameInput(connectorDefinition.formDefinition.inputs, 'connectorMeta.name', {
+          required: true,
+          inputConfig: {
+            allowedValueTypes: ['fixed']
+          }
+        })
       }
 
       formDef.inputs = formDef.inputs.map(input => {

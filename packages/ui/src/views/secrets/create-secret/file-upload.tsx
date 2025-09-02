@@ -6,9 +6,10 @@ export interface FileUploadProps {
   selectedFile?: File
   onFileChange: (file?: File) => void
   error?: string
+  accept?: string
 }
 
-export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProps) {
+export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +106,7 @@ export function FileUpload({ selectedFile, onFileChange, error }: FileUploadProp
       <Input
         id="secret-file-input"
         type="file"
+        accept={accept}
         ref={fileInputRef}
         onChange={handleFileChange}
         style={{ display: 'none' }}

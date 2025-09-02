@@ -5,11 +5,13 @@ import {
   HTMLAttributes,
   KeyboardEvent,
   ReactNode,
+  useCallback,
+  useMemo,
   useRef
 } from 'react'
 
 import { usePortal, useTranslation } from '@/context'
-import { cn, filterChildrenByDisplayNames, getShadowActiveElement, useMergeRefs } from '@/utils'
+import { afterFrames, cn, filterChildrenByDisplayNames, getShadowActiveElement, useMergeRefs } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
 import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
@@ -538,6 +540,96 @@ const DropdownMenuSlot = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElemen
 ))
 DropdownMenuSlot.displayName = displayNames.slot
 
+const useSearchableDropdownKeyboardNavigation = ({
+  onFirstItemKeyDown,
+  onLastItemKeyDown,
+  itemsLength
+}: {
+  onFirstItemKeyDown?: () => void
+  onLastItemKeyDown?: () => void
+  itemsLength: number
+}) => {
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+  const firstItemRef = useRef<HTMLDivElement | null>(null)
+  const lastItemRef = useRef<HTMLDivElement | null>(null)
+
+  const isSingleItem = useMemo(() => itemsLength === 1, [itemsLength])
+
+  const handleSearchKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        afterFrames(() => {
+          firstItemRef.current?.focus()
+        })
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        afterFrames(() => {
+          lastItemRef.current?.focus()
+        })
+      }
+
+      if (e.key === 'ArrowUp' && isSingleItem) {
+        e.preventDefault()
+        afterFrames(() => {
+          firstItemRef.current?.focus()
+        })
+      }
+    },
+    [isSingleItem]
+  )
+
+  const handleFirstItemKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+        onFirstItemKeyDown?.()
+      }
+
+      if (e.key === 'ArrowDown' && isSingleItem) {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+        onLastItemKeyDown?.()
+      }
+    },
+    [isSingleItem, onFirstItemKeyDown, onLastItemKeyDown]
+  )
+
+  const handleLastItemKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLElement>) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+        onLastItemKeyDown?.()
+      }
+    },
+    [onLastItemKeyDown]
+  )
+
+  const getItemProps = useCallback(
+    (index: number) => {
+      return {
+        ref: index === 0 ? firstItemRef : index === itemsLength - 1 ? lastItemRef : undefined,
+        onKeyDown: index === 0 ? handleFirstItemKeyDown : index === itemsLength - 1 ? handleLastItemKeyDown : undefined
+      }
+    },
+    [firstItemRef, lastItemRef, handleFirstItemKeyDown, handleLastItemKeyDown, itemsLength]
+  )
+
+  return {
+    searchInputRef,
+    firstItemRef,
+    lastItemRef,
+    handleSearchKeyDown,
+    handleFirstItemKeyDown,
+    handleLastItemKeyDown,
+    getItemProps
+  }
+}
+
 const DropdownMenu = {
   Root: DropdownMenuRoot,
   Trigger: DropdownMenuTrigger,
@@ -559,4 +651,4 @@ const DropdownMenu = {
   Slot: DropdownMenuSlot
 }
 
-export { DropdownMenu, DropdownMenuItemProps }
+export { DropdownMenu, useSearchableDropdownKeyboardNavigation, DropdownMenuItemProps }

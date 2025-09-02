@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { DropdownMenu, ScrollArea, SearchInput } from '@components/index'
+import { DropdownMenu, ScrollArea, SearchInput, useSearchableDropdownKeyboardNavigation } from '@components/index'
 
 export interface ComboBoxOptions {
   label: string | ReactNode
@@ -30,6 +30,10 @@ export default function ComboBox({
 }: ComboBoxProps) {
   const selectedFilterValue = filterValue?.value
 
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    itemsLength: options.length
+  })
+
   const renderContent = () => {
     if (isLoading) {
       return <DropdownMenu.Spinner />
@@ -41,11 +45,15 @@ export default function ComboBox({
 
     return (
       <ScrollArea className="max-h-64">
-        {options.map(option => {
+        {options.map((option, index) => {
           const { label, value } = option
+          const { ref, onKeyDown } = getItemProps(index)
+
           return (
             <DropdownMenu.Item
               key={value}
+              ref={ref}
+              onKeyDown={onKeyDown}
               onSelect={() => onUpdateFilter(value === selectedFilterValue ? undefined : option)}
               checkmark={value === selectedFilterValue}
               title={label}
@@ -58,17 +66,21 @@ export default function ComboBox({
 
   return (
     <>
-      {allowSearch ? (
+      {allowSearch && (
         <DropdownMenu.Header>
           <SearchInput
+            ref={searchInputRef}
             inputContainerClassName="mb-0.5"
             placeholder={placeholder}
             autoFocus
-            onKeyDown={e => e.stopPropagation()}
+            onKeyDown={e => {
+              e.stopPropagation()
+              handleSearchKeyDown(e)
+            }}
             onChange={value => onSearch?.(value)}
           />
         </DropdownMenu.Header>
-      ) : null}
+      )}
       {renderContent()}
     </>
   )

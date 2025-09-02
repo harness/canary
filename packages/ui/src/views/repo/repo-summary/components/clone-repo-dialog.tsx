@@ -1,6 +1,6 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
-import { Alert, Button, CopyButton, DropdownMenu, IconV2, Layout, Tabs, Text, TextInput } from '@/components'
+import { Alert, Button, CopyButton, IconV2, Layout, Popover, Tabs, TextInput } from '@/components'
 import { useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
@@ -21,49 +21,32 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   handleCreateToken,
   tokenGenerationError
 }) => {
-  const [currentTab, setCurrentTab] = useState(CloneRepoTabs.HTTPS)
   const { t } = useTranslation()
 
-  const isSSHAvailable = !!sshUrl
-
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
+    <Popover.Root>
+      <Popover.Trigger asChild>
         <Button>
           <IconV2 name="copy" size="sm" />
           {t('views:repos.cloneRepo', 'Clone Repository')}
         </Button>
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content
+      </Popover.Trigger>
+      <Popover.Content
+        className="w-[360px]"
         align="end"
-        className="w-[360px] [&>.cn-dropdown-menu-container-header]:border-b-0 [&>.cn-dropdown-menu-container-header]:pb-0"
+        title={t('views:repos.cloneRepo', 'Clone repository')}
+        hideArrow
       >
-        <DropdownMenu.Header className="pb-0">
-          <Layout.Grid gapY="sm">
-            <Text variant="body-single-line-strong" color="foreground-1">
-              {t('views:repos.cloneRepo', 'Clone repository')}
-            </Text>
+        <Tabs.Root defaultValue={CloneRepoTabs.HTTPS}>
+          <Tabs.List className="-mx-[var(--cn-popover-py)] px-[var(--cn-popover-py)] mb-cn-sm" variant="overlined">
+            <Tabs.Trigger value={CloneRepoTabs.HTTPS}>{t('views:repos.cloneHttps', 'HTTPS')}</Tabs.Trigger>
+            <Tabs.Trigger value={CloneRepoTabs.SSH} disabled={!sshUrl}>
+              {t('views:repos.cloneSsh', 'SSH')}
+            </Tabs.Trigger>
+          </Tabs.List>
 
-            <Tabs.Root value={currentTab} onValueChange={val => setCurrentTab(val as CloneRepoTabs)}>
-              <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
-                <Tabs.Trigger value={CloneRepoTabs.HTTPS} onClick={() => setCurrentTab(CloneRepoTabs.HTTPS)}>
-                  {t('views:repos.cloneHttps', 'HTTPS')}
-                </Tabs.Trigger>
-                <Tabs.Trigger
-                  value={CloneRepoTabs.SSH}
-                  onClick={() => setCurrentTab(CloneRepoTabs.SSH)}
-                  disabled={!isSSHAvailable}
-                >
-                  {t('views:repos.cloneSsh', 'SSH')}
-                </Tabs.Trigger>
-              </Tabs.List>
-            </Tabs.Root>
-          </Layout.Grid>
-        </DropdownMenu.Header>
-
-        <DropdownMenu.Slot className="p-3">
-          {currentTab === 'https' ? (
-            <>
+          <Tabs.Content value={CloneRepoTabs.HTTPS}>
+            <Layout.Vertical gap="sm">
               <TextInput
                 className="truncate"
                 label={t('views:repos.gitCloneUrl', 'Git clone URL')}
@@ -71,35 +54,36 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 readOnly
                 value={httpsUrl}
                 suffix={<CopyButton name={httpsUrl} buttonVariant="transparent" />}
+                caption={t(
+                  'views:repos.generateCredential',
+                  'Please generate a clone credential if its your first time.'
+                )}
               />
-              <Text className="mt-4" color="foreground-3">
-                {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
-              </Text>
-            </>
-          ) : (
+
+              <Button onClick={handleCreateToken} className="w-full">
+                {t('views:repos.cloneCredential', 'Generate Clone Credential')}
+              </Button>
+
+              {!!tokenGenerationError && (
+                <Alert.Root theme="danger">
+                  <Alert.Description>{tokenGenerationError}</Alert.Description>
+                </Alert.Root>
+              )}
+            </Layout.Vertical>
+          </Tabs.Content>
+
+          <Tabs.Content value={CloneRepoTabs.SSH}>
             <TextInput
               className="truncate"
               id="sshUrl"
               label={t('views:repos.gitCloneUrl', 'Git clone URL')}
               readOnly
-              value={sshUrl}
+              value={sshUrl ?? ''}
               suffix={<CopyButton name={sshUrl || ''} buttonVariant="transparent" />}
             />
-          )}
-        </DropdownMenu.Slot>
-        {currentTab === 'https' && (
-          <DropdownMenu.Footer>
-            <Button onClick={handleCreateToken} className="w-full">
-              {t('views:repos.cloneCredential', 'Generate Clone Credential')}
-            </Button>
-            {tokenGenerationError && (
-              <Alert.Root theme="danger" className="mt-2">
-                <Alert.Description>{tokenGenerationError}</Alert.Description>
-              </Alert.Root>
-            )}
-          </DropdownMenu.Footer>
-        )}
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+          </Tabs.Content>
+        </Tabs.Root>
+      </Popover.Content>
+    </Popover.Root>
   )
 }

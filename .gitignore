@@ -42,6 +42,7 @@ yaml-editor-test/
 .cursor
 
 #playwright
+__results/
 test-results/
 playwright-report/
 blob-report/

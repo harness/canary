@@ -1,1 +1,1 @@
-export const CONTENT_SELECTOR: string = '.cn-sandbox-layout-content'
+export const CONTENT_SELECTOR: string = '#main-content-layout'

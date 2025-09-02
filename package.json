@@ -16,7 +16,7 @@
     "test": "pnpm -r test",
     "playwright:test": "npx playwright test",
     "playwright:update-snapshots": "npx playwright test --update-snapshots",
-    "playwright:report": "exec playwright show-report",
+    "playwright:report": "exec playwright show-report packages/tests/__results/html-results",
     "gitness:build": "pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/gitness build",
     "gitness:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/gitness dev",
     "portal:build": "pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/portal build",

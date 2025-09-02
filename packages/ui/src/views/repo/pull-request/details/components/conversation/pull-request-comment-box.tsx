@@ -641,7 +641,7 @@ export const PullRequestCommentBox = ({
   }
 
   return (
-    <Layout.Horizontal align="start" className={cn('gap-x-3 font-sans', className)} data-comment-editor-shown="true">
+    <Layout.Horizontal align="start" className={cn('gap-x-3', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
       <Layout.Vertical
         gap="md"
@@ -700,7 +700,7 @@ export const PullRequestCommentBox = ({
                 </div>
               )}
               {isDragging && (
-                <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-borders-2" />
+                <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-2" />
               )}
 
               <Layout.Flex

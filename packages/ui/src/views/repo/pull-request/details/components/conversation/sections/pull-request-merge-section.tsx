@@ -27,7 +27,7 @@ const StepInfo: FC<StepInfoProps> = item => {
             <Layout.Horizontal
               align="center"
               justify="between"
-              className="border border-cn-borders-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
+              className="border border-cn-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
             >
               <Text variant="body-normal" className="font-mono">
                 {item.code}
@@ -170,11 +170,11 @@ const PullRequestMergeSection = ({
                   }
                   icon={
                     unchecked ? (
-                      <IconV2 size="lg" name="clock-solid" className="text-cn-foreground-warning" />
+                      <IconV2 size="lg" name="clock-solid" color="warning" />
                     ) : (
                       <IconV2
                         size="lg"
-                        className={mergeable ? 'text-cn-icon-success' : 'text-cn-foreground-danger'}
+                        color={mergeable ? 'success' : 'danger'}
                         name={mergeable ? 'check-circle-solid' : 'warning-triangle-solid'}
                       />
                     )
@@ -223,7 +223,7 @@ const PullRequestMergeSection = ({
           <Accordion.Content className="ml-7">
             <>
               {showCommandLineInfo && (
-                <Card.Root className="mb-3.5 bg-transparent border-cn-borders-3" size="sm">
+                <Card.Root className="mb-3.5 bg-transparent border-cn-3" size="sm">
                   <Card.Content className="px-4 py-2">
                     <Layout.Vertical gap="sm">
                       <Text variant="heading-small">Resolve conflicts via command line</Text>
@@ -261,7 +261,7 @@ const PullRequestMergeSection = ({
               <LineTitle
                 textClassName="text-cn-foreground-danger"
                 text="This branch is out-of-date with the base branch"
-                icon={<IconV2 size="lg" className="text-cn-foreground-danger" name="warning-triangle-solid" />}
+                icon={<IconV2 size="lg" color="danger" name="warning-triangle-solid" />}
               />
             }
             description={<LineDescription text={renderBranchTags()} />}

@@ -30,34 +30,34 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
     const getData = () => {
       if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
         return {
-          icon: <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-warning" />,
+          icon: <IconV2 size="lg" color="warning" name="warning-triangle-solid" />,
           text: "Waiting on default reviewer's reviews of latest changes"
         }
       }
 
       if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
         return {
-          icon: <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-warning" />,
+          icon: <IconV2 size="lg" color="warning" name="warning-triangle-solid" />,
           text: 'Changes are pending approval from default reviewers'
         }
       }
 
       if (defReviewerLatestApprovalRequiredByRule && defReviewerApprovedLatestChanges) {
         return {
-          icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+          icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
           text: 'Latest changes were approved by default reviewers'
         }
       }
 
       if (defReviewerApprovalRequiredByRule && defReviewerApprovedChanges) {
         return {
-          icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+          icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
           text: 'Changes were approved by default reviewers'
         }
       }
 
       return {
-        icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+        icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
         text: 'Default reviewers were added to the PR'
       }
     }

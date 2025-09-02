@@ -176,11 +176,11 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </Button>
 
             <div className="mt-3 flex items-center justify-center gap-2">
-              <div className="w-[145px] shrink border-t border-cn-borders-3" />
+              <div className="w-[145px] shrink border-t border-cn-3" />
               <Text color="foreground-3" as="span">
                 {t('views:createProject.or', 'or')}
               </Text>
-              <div className="w-[145px] shrink border-t border-cn-borders-3" />
+              <div className="w-[145px] shrink border-t border-cn-3" />
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}

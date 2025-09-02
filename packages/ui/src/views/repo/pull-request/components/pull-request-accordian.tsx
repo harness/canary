@@ -338,7 +338,7 @@ export const PullRequestAccordion: React.FC<{
       <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
           className="rounded-t-3 bg-cn-background-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="z-[18] sticky top-[119px] border-cn-borders-2 border rounded-t-3"
+          headerClassName="z-[18] sticky top-[119px] border-cn-2 border rounded-t-3"
         >
           <LineTitle
             header={header}
@@ -355,7 +355,7 @@ export const PullRequestAccordion: React.FC<{
             currentRefForDiff={currentRefForDiff}
           />
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0" containerClassName="rounded-b-3 border-x border-b border-cn-borders-2">
+        <Accordion.Content className="pb-0" containerClassName="rounded-b-3 border-x border-b border-cn-2">
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">

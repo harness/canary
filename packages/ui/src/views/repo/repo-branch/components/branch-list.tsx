@@ -76,6 +76,19 @@ export const BranchesList: FC<BranchListPageProps> = ({
         {branches.map(branch => {
           const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
+          const checkStateColor = () => {
+            switch (checkState) {
+              case 'success':
+                return 'success'
+              case 'failure':
+                return 'danger'
+              case 'running':
+                return 'warning'
+              default:
+                return 'neutral'
+            }
+          }
+
           return (
             <Table.Row key={branch.id} className="cursor-pointer" to={toCode?.({ branchName: branch.name })}>
               <Table.Cell>
@@ -102,11 +115,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <Table.Cell>
                   <Layout.Flex align="center" gapX="xs">
                     <IconV2
-                      className={cn('shrink-0', {
-                        'text-cn-foreground-success': checkState === 'success',
-                        'text-cn-foreground-danger': checkState === 'failure',
-                        'text-cn-foreground-warning': checkState === 'running'
-                      })}
+                      color={checkStateColor()}
+                      className={cn('shrink-0')}
                       name={
                         cn({
                           check: checkState === 'success',
@@ -141,7 +151,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     variant="secondary"
                     to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
                     onClick={e => e.stopPropagation()}
-                    className="focus-visible:shadow-ring-focus rounded-2 inline-flex"
+                    className="rounded-2 inline-flex"
                   >
                     {/* TODO: Merged state is not shown in the branch list, because the PR gets removed from 'branch.pullRequests' */}
                     <StatusBadge

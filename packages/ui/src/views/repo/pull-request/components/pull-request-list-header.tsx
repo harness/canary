@@ -35,7 +35,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
           name="git-pull-request"
         />
         <Text
-          color={headerFilter.includes('open') ? 'foreground-1' : 'foreground-4'}
+          color={headerFilter.includes('open') ? 'foreground-1' : 'foreground-3'}
           variant={headerFilter.includes('open') ? 'body-single-line-strong' : 'body-single-line-normal'}
         >
           {openPRs} Open
@@ -50,7 +50,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
           name="git-merge"
         />
         <Text
-          color={headerFilter.includes('merged') ? 'foreground-1' : 'foreground-4'}
+          color={headerFilter.includes('merged') ? 'foreground-1' : 'foreground-3'}
           variant={headerFilter.includes('merged') ? 'body-single-line-strong' : 'body-single-line-normal'}
         >
           {mergedPRs} Merged
@@ -65,7 +65,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
           name="check"
         />
         <Text
-          color={headerFilter.includes('closed') ? 'foreground-1' : 'foreground-4'}
+          color={headerFilter.includes('closed') ? 'foreground-1' : 'foreground-3'}
           variant={headerFilter.includes('closed') ? 'body-single-line-strong' : 'body-single-line-normal'}
         >
           {closedPRs} Closed

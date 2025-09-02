@@ -13,13 +13,13 @@ import { LineDescription, LineTitle } from './pull-request-line-title'
 const getStatusIcon = (status: string) => {
   switch (status) {
     case 'pending':
-      return <IconV2 size="lg" name="clock-solid" className="text-cn-foreground-warning" />
+      return <IconV2 size="lg" color="warning" name="clock-solid" />
     case 'warning':
-      return <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-warning" />
+      return <IconV2 size="lg" color="warning" name="warning-triangle-solid" />
     case 'error':
-      return <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-danger" />
+      return <IconV2 size="lg" color="danger" name="warning-triangle-solid" />
     default:
-      return <IconV2 size="lg" name="check-circle-solid" className="text-cn-icon-success" />
+      return <IconV2 size="lg" color="success" name="check-circle-solid" />
   }
 }
 
@@ -80,7 +80,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 size="lg" name="check-circle-solid" className="text-cn-icon-success" />
+                  <IconV2 size="lg" color="success" name="check-circle-solid" />
                   <Text variant="body-single-line-normal" color="foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </Text>
@@ -89,15 +89,12 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 <div className="flex items-center gap-x-2">
                   <IconV2
                     size="lg"
+                    color={Number(approvedEvaluations?.length) >= Number(minApproval) ? 'success' : 'warning'}
                     name={
                       Number(approvedEvaluations?.length) >= Number(minApproval)
                         ? 'check-circle-solid'
                         : 'warning-triangle-solid'
                     }
-                    className={cn({
-                      'text-cn-icon-success': Number(approvedEvaluations?.length) >= Number(minApproval),
-                      'text-cn-foreground-warning': Number(approvedEvaluations?.length) < Number(minApproval)
-                    })}
                   />
                   <Text variant="body-single-line-normal" color="foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
@@ -114,7 +111,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 size="lg" name="clock-solid" className="text-cn-icon-success" />
+                  <IconV2 size="lg" color="success" name="clock-solid" />
                   <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (
@@ -132,14 +129,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           {!isEmpty(changeReqEvaluations) && (
             <div className="ml-7 flex items-center justify-between">
               <div className="flex items-center gap-x-2">
-                <IconV2
-                  size="lg"
-                  name="warning-triangle-solid"
-                  className={cn({
-                    'text-cn-foreground-danger': reqNoChangeReq,
-                    'text-cn-foreground-warning': !reqNoChangeReq
-                  })}
-                />
+                <IconV2 size="lg" color={reqNoChangeReq ? 'danger' : 'warning'} name="warning-triangle-solid" />
                 <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
               {reqNoChangeReq && <StatusBadge variant="outline">Required</StatusBadge>}

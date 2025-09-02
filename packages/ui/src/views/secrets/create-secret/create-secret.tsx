@@ -180,7 +180,7 @@ export function CreateSecretPage({
                 Secret File
               </Text>
               <div
-                className="rounded-md border-2 border-dashed border-cn-borders-2 p-4"
+                className="rounded-md border-2 border-dashed border-cn-2 p-4"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
               >

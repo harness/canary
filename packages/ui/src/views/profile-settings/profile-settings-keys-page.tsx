@@ -76,7 +76,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
           )}
         </Fieldset>
 
-        <FormSeparator className="border-cn-borders-4" />
+        <FormSeparator className="border-cn-3" />
 
         <Fieldset className="gap-y-5">
           <div className="flex items-end justify-between">

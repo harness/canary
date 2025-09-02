@@ -82,7 +82,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                                 beforeCutoffPrefix=""
                                 afterCutoffPrefix="on"
                                 dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                                textProps={{ color: 'foreground-4' }}
+                                textProps={{ color: 'foreground-3' }}
                               />
                             </Text>
                           </div>

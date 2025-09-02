@@ -30,9 +30,25 @@ IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, `lg`
   </Layout.Flex>`}
 />
 
-## Colored Icon
+## Color Variants
 
-By default, IconV2 components will inherit the color from the parent. You can also set the color explicitly using the `className` prop.
+IconV2 supports predefined color variants through the `color` prop: `inherit`, `danger`, `warning`, `success`, `info`, and `disabled`. The default color is `inherit`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" align="center">
+    <IconV2 name="check" size="md" color="inherit" />
+    <IconV2 name="warning-triangle-solid" size="md" color="danger" />
+    <IconV2 name="warning-triangle-solid" size="md" color="warning" />
+    <IconV2 name="check" size="md" color="success" />
+    <IconV2 name="info" size="md" color="info" />
+    <IconV2 name="check" size="md" color="neutral" />
+  </Layout.Flex>`}
+/>
+
+## Custom Colors
+
+You can also set custom colors using the `className` prop to override the default styling.
 
 <DocsPage.ComponentExample
   client:only
@@ -40,6 +56,7 @@ By default, IconV2 components will inherit the color from the parent. You can al
     <div className="text-cn-foreground-success">
       <IconV2 name="check" size="md" />
     </div>
+    
     <IconV2 className="text-cn-foreground-danger" name="xmark" size="md" />
   </Layout.Flex>`}
 />
@@ -62,6 +79,7 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
 <IconV2
   name="double-tick"   // name of the icon
   size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg, xl)
+  color="inherit"     // [OPTIONAL] color variant (inherit, danger, warning, success, info, disabled)
   className="my-class" // [OPTIONAL] custom class name
   skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
 />
@@ -81,6 +99,14 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
       required: false,
       value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'",
       defaultValue: "'sm'",
+    },
+    {
+      name: "color",
+      description: "Color variant of the icon",
+      required: false,
+      value:
+        "'inherit' | 'danger' | 'warning' | 'success' | 'info' | 'disabled'",
+      defaultValue: "'inherit'",
     },
     {
       name: "skipSize",

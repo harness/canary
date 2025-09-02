@@ -18,7 +18,7 @@ function createAvatarSizeStyles() {
       styles[`&:where(.cn-avatar-${size})`] = {
         height: `var(--cn-avatar-size-${size})`,
         width: `var(--cn-avatar-size-${size})`,
-        fontSize: `var(--cn-font-size-2)`,
+        fontSize: size === 'lg' ? `var(--cn-font-size-2)` : `var(--cn-font-size-0)`,
         fontWeight: `var(--cn-font-weight-default-normal-400)`
       }
     }

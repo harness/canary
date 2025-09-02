@@ -136,10 +136,10 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'border-cn-borders-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
+                        ? 'border-cn-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
                         : file.status === FileStatus.MEDIUM_RISK
-                          ? 'border-cn-borders-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
-                          : 'border-cn-borders-danger absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
+                          ? 'border-cn-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
+                          : 'border-cn-danger absolute left-0 top-1/2 -translate-y-1/2 border-l-2'
                       : ''
                   }`}
                 >

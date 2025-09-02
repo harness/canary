@@ -120,7 +120,7 @@ const Separator = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-cn-borders-3', className)} {...props} />
+  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-cn-separator-subtle', className)} {...props} />
 ))
 Separator.displayName = 'Separator'
 
@@ -128,7 +128,7 @@ const Shortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>
   return (
     <span
       className={cn(
-        'ml-auto px-[6px] flex gap-0.5 rounded-sm text-2 tracking-tight border border-cn-borders-2 bg-cn-background-3 text-cn-foreground-2',
+        'ml-auto px-[6px] flex gap-0.5 rounded-sm text-2 tracking-tight border border-cn-2 bg-cn-background-3 text-cn-foreground-2',
         className
       )}
       {...props}

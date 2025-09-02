@@ -69,12 +69,11 @@ export const textVariants = cva('', {
       'foreground-1': 'text-cn-foreground-1',
       'foreground-2': 'text-cn-foreground-2',
       'foreground-3': 'text-cn-foreground-3',
-      'foreground-4': 'text-cn-foreground-4',
-      disabled: 'text-cn-foreground-disabled',
-      success: 'text-cn-foreground-success',
-      warning: 'text-cn-foreground-warning',
-      danger: 'text-cn-foreground-danger',
-      accent: 'text-cn-foreground-accent'
+      disabled: 'text-cn-disabled',
+      success: 'text-cn-success',
+      warning: 'text-cn-warning',
+      danger: 'text-cn-danger',
+      accent: 'text-cn-brand'
     },
     lineClamp: {
       default: '',

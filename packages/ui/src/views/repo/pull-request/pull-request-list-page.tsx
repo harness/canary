@@ -128,7 +128,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     display_name !== email ? (
       <Layout.Flex align="center" className="gap-x-1">
         <Text wrap="nowrap">{display_name}</Text>
-        <Text color="foreground-4" variant="body-single-line-normal" lineClamp={1}>
+        <Text color="foreground-3" variant="body-single-line-normal" lineClamp={1}>
           ({email})
         </Text>
       </Layout.Flex>

@@ -119,7 +119,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           })}
         </Command.List>
 
-        <div className="px-cn-sm border-cn-borders-3 border-t border-solid py-2.5">
+        <div className="px-cn-sm border-cn-3 border-t border-solid py-2.5">
           <Link to={viewAllUrl} variant="secondary" className="w-full" onKeyDown={onLinkEnter}>
             {t('views:repos.viewAll', `View all ${activeTab}`, {
               type:

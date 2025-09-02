@@ -16,7 +16,7 @@ const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle 
     selected={isFavorite}
     prefixIcon={isFavorite ? 'star-solid' : 'star'}
     prefixIconProps={{
-      className: isFavorite ? 'text-cn-icon-yellow' : 'text-cn-foreground-2',
+      className: isFavorite ? 'text-cn-icon-warning' : 'text-cn-foreground-2',
       size: '2xs'
     }}
     onChange={(selected: boolean) => onFavoriteToggle(selected)}

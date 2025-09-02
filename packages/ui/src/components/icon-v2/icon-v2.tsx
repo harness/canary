@@ -9,6 +9,23 @@ export const IconV2DisplayName = 'IconV2'
 
 export type IconV2NamesType = keyof typeof IconNameMapV2
 
+export const iconColorVariants = cva('', {
+  variants: {
+    color: {
+      inherit: '',
+      danger: 'text-cn-icon-danger',
+      warning: 'text-cn-icon-warning',
+      success: 'text-cn-icon-success',
+      info: 'text-cn-icon-info',
+      neutral: 'text-cn-disabled',
+      merged: 'text-cn-icon-merged'
+    }
+  },
+  defaultVariants: {
+    color: 'inherit'
+  }
+})
+
 export const iconVariants = cva('cn-icon', {
   variants: {
     size: {
@@ -25,10 +42,11 @@ export const iconVariants = cva('cn-icon', {
   }
 })
 
-interface BaseIconPropsV2 extends SVGProps<SVGSVGElement> {
+interface BaseIconPropsV2 extends Omit<SVGProps<SVGSVGElement>, 'color'> {
   size?: VariantProps<typeof iconVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
+  color?: VariantProps<typeof iconColorVariants>['color']
 }
 
 interface IconDefaultPropsV2 extends BaseIconPropsV2 {
@@ -44,15 +62,18 @@ interface IconFallbackPropsV2 extends BaseIconPropsV2 {
 export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
 
 const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
-  ({ name, size = 'sm', className, skipSize = false, fallback }, ref) => {
+  ({ name, size = 'sm', className, skipSize = false, fallback, color = 'inherit' }, ref) => {
     const Component = name ? IconNameMapV2[name] : undefined
+
     const sizeClasses = skipSize ? '' : iconVariants({ size })
+
+    const colorClasses = iconColorVariants({ color })
 
     if (!Component && fallback) {
       console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
       const FallbackComponent = IconNameMapV2[fallback]
 
-      return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} />
+      return <FallbackComponent className={cn(sizeClasses, colorClasses, className)} ref={ref} />
     }
 
     if (!Component) {
@@ -60,7 +81,7 @@ const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
       return null
     }
 
-    return <Component className={cn(sizeClasses, className)} ref={ref} />
+    return <Component className={cn(sizeClasses, colorClasses, className)} ref={ref} />
   }
 )
 

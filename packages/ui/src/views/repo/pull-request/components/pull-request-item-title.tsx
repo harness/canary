@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import { IconV2, Layout, ScopeTag, Separator, Tag, Text } from '@/components'
 import { cn } from '@/utils'
@@ -28,17 +28,21 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   const scopeType = determineScope(repoScopeParams)
   const scopedPath = getScopedPath(repoScopeParams)
 
+  const iconColor = useMemo(() => {
+    if (state === 'open' && !isDraft) {
+      return 'success'
+    } else if (state === 'open' && isDraft) {
+      return 'inherit'
+    } else if (state === 'closed') {
+      return 'danger'
+    } else if (isSuccess) {
+      return 'merged'
+    }
+  }, [state, isDraft, isSuccess])
+
   return (
     <Layout.Horizontal gap="xs" justify="start" align="baseline">
-      <IconV2
-        className={cn('translate-y-0.5', {
-          'text-icons-success': state === 'open' && !isDraft,
-          'text-icons-1': state === 'open' && isDraft,
-          'text-icons-danger': state === 'closed',
-          'text-icons-merged': isSuccess
-        })}
-        name={getPrState(isDraft, merged, state).icon}
-      />
+      <IconV2 color={iconColor} className={cn('translate-y-0.5', {})} name={getPrState(isDraft, merged, state).icon} />
 
       <div className="[&>*:not(:last-child)]:mr-cn-xs">
         {repoId && <Tag className="align-bottom" value={repoId} icon="repository" theme="gray" />}

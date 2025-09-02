@@ -116,10 +116,6 @@ export default {
       }
     },
 
-    ':where(.cn-badge-icon)': {
-      '@apply cn-icon cn-icon-sm': ''
-    },
-
     /** Variants */
     ...createBadgeVariantStyles()
   }

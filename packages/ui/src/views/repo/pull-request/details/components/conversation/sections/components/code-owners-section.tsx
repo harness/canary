@@ -2,7 +2,6 @@ import { FC, useMemo } from 'react'
 
 import { IconV2, StatusBadge, Table } from '@/components'
 import { CodeOwnersSectionProps, PullReqReviewDecision, TypesOwnerEvaluation } from '@/views'
-import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
 import { AvatarItem, AvatarUser } from './commons'
@@ -30,14 +29,14 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
     const getData = () => {
       if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval) {
         return {
-          icon: <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-warning" />,
+          icon: <IconV2 size="lg" color="warning" name="warning-triangle-solid" />,
           text: 'Waiting on code owner reviews of latest changes'
         }
       }
 
       if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval) {
         return {
-          icon: <IconV2 size="lg" name="warning-triangle-solid" className="text-cn-foreground-warning" />,
+          icon: <IconV2 size="lg" color="warning" name="warning-triangle-solid" />,
           text: 'Changes are pending approval from code owners'
         }
       }
@@ -51,14 +50,14 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
 
       if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval) {
         return {
-          icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+          icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
           text: 'Latest changes were approved by code owners'
         }
       }
 
       if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval) {
         return {
-          icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+          icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
           text: 'Changes were approved by code owners'
         }
       }
@@ -71,19 +70,19 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
           latestCodeOwnerApprovalArr?.length < minReqLatestApproval
         ) {
           return {
-            icon: <IconV2 size="lg" name="clock-solid" className="text-cn-foreground-warning" />,
+            icon: <IconV2 size="lg" color="warning" name="clock-solid" />,
             text: 'Latest changes are pending approval from required reviewers'
           }
         }
 
         return {
-          icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+          icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
           text: 'Changes were approved by code owners'
         }
       }
 
       return {
-        icon: <IconV2 size="lg" name="check-circle-solid" className="text-cn-foreground-success" />,
+        icon: <IconV2 size="lg" color="success" name="check-circle-solid" />,
         text: 'No codeowner reviews required'
       }
     }
@@ -117,10 +116,11 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
             <IconV2
               size="lg"
               name="warning-triangle-solid"
-              className={cn({
-                'text-cn-foreground-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
-                'text-cn-foreground-warning': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
-              })}
+              // color={cn({
+              //   danger: reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
+              //   warning: !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
+              // })}
+              color={reqCodeOwnerApproval || reqCodeOwnerLatestApproval ? 'danger' : 'warning'}
             />
             <span className="text-2 text-cn-foreground-1">{'Code owners requested changes to the pull request'}</span>
           </div>

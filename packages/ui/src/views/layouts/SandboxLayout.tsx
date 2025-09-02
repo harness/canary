@@ -19,10 +19,7 @@ function Root({ children }: { children: ReactNode }) {
 function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="sticky top-0 z-50 h-screen">
-      <nav
-        className={cn('h-full w-[220px] border-cn-borders-3 max-md:hidden', className)}
-        aria-label="Left Navigation Panel"
-      >
+      <nav className={cn('h-full w-[220px] border-cn-3 max-md:hidden', className)} aria-label="Left Navigation Panel">
         {children}
       </nav>
     </div>
@@ -32,7 +29,7 @@ function LeftPanel({ children, className }: { children: ReactNode; className?: s
 function LeftSubPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <section
-      className={cn('border-cn-borders-4 w-[300px] h-full overflow-y-auto border-r', className)}
+      className={cn('border-cn-3 w-[300px] h-full overflow-y-auto border-r', className)}
       aria-label="Left Sub Navigation Panel"
     >
       {children}

@@ -4,7 +4,7 @@ export default {
 
     // Table container
     '&-container': {
-      '@apply relative w-full overflow-auto border-cn-borders-3': '',
+      '@apply relative w-full overflow-auto border-cn-3': '',
       borderWidth: 'var(--cn-table-border)',
       borderRadius: 'var(--cn-table-radius)',
       borderColor: 'var(--cn-border-3)'
@@ -70,7 +70,7 @@ export default {
 
     // Row
     '&-row': {
-      '@apply border-b border-cn-borders-3 transition-colors overflow-hidden': '',
+      '@apply border-b border-cn-3 transition-colors overflow-hidden': '',
       '@apply last:border-b-0': '',
 
       '&:where(.row-link-no-underline)': {

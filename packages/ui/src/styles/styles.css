@@ -115,7 +115,7 @@
   @apply text-cn-foreground-danger text-2 mt-2 font-light;
 }
 .form-input {
-  @apply border-cn-borders-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
+  @apply border-cn-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
   @apply placeholder:text-cn-foreground-1/50 !important;
 }
 
@@ -183,7 +183,7 @@
   }
 
   .diff-line-extend-old-placeholder {
-    @apply border-cn-borders-2 border-r;
+    @apply border-cn-2 border-r;
   }
 
   .hljs {
@@ -566,7 +566,7 @@ mark {
 }
 
 .monaco-editor .overflow-guard {
-  @apply border-cn-borders-3 rounded-b-3 border border-t-0;
+  @apply border-cn-3 rounded-b-3 border border-t-0;
 }
 
 .monaco-diff-editor .monaco-editor .overflow-guard {
@@ -587,7 +587,7 @@ mark {
 }
 
 .monaco-diff-editor.side-by-side .editor.modified {
-  @apply !border-cn-borders-2 !border-l !border-solid !shadow-none;
+  @apply !border-cn-2 !border-l !border-solid !shadow-none;
 }
 
 /* In View Diff Renderer */

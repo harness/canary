@@ -33,7 +33,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="min-h-[3.25rem] rounded-md border border-cn-borders-2 bg-cn-background-2 py-2 pl-4 pr-2"
+      className="min-h-[3.25rem] rounded-md border border-cn-2 bg-cn-background-2 py-2 pl-4 pr-2"
       align="center"
       justify="between"
       gapX="xs"
@@ -67,17 +67,10 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       {showContributeBtn && (
         <Popover.Root>
           <Popover.Trigger asChild>
-            <Button
-              className="group/contribute data-[state=open]:border-cn-borders-9 py-2 data-[state=open]:text-cn-foreground-1"
-              variant="outline"
-            >
+            <Button variant="outline">
               <IconV2 name="git-pull-request" size="xs" />
               Contribute
-              <IconV2
-                className="chevron-down text-icons-7 group-data-[state=open]/contribute:text-icons-2"
-                name="nav-arrow-down"
-                size="2xs"
-              />
+              <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
             </Button>
           </Popover.Trigger>
           <Popover.Content align="end" className="w-80" hideArrow>

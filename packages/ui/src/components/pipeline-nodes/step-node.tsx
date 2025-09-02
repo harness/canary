@@ -67,10 +67,10 @@ export function StepNode(props: StepNodeProps) {
             'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-graph-gradient-1 cursor-pointer p-2.5 pt-2 shadow-4',
             {
               'border-graph-border-1': !selected,
-              'border-cn-borders-3': selected,
-              'border-cn-borders-success': executionStatus === 'success',
-              'border-cn-borders-warning': executionStatus === 'warning',
-              'border-cn-borders-danger': executionStatus === 'error',
+              'border-cn-3': selected,
+              'border-cn-success': executionStatus === 'success',
+              'border-cn-warning': executionStatus === 'warning',
+              'border-cn-danger': executionStatus === 'error',
               'border-transparent': executionStatus === 'executing'
             }
           )}

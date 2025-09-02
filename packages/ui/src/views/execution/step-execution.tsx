@@ -25,30 +25,19 @@ const StepExecutionToolbar: FC<
         handleChange={handleInputChange}
         value={query}
       >
-        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-borders-2 bg-cn-background-3">
+        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-2 bg-cn-background-3">
           <IconV2 className="text-icons-3" name="apple-shortcut" size="2xs" />
           <span className="text-1 leading-none">F</span>
         </div>
       </SearchBox.Root>
       <div className="flex">
-        <Button
-          variant="outline"
-          size="sm"
-          iconOnly
-          className="rounded-r-none border-r-0 border-cn-borders-2"
-          onClick={onCopy}
-        >
+        <Button variant="outline" size="sm" iconOnly className="rounded-r-none border-r-0 border-cn-2" onClick={onCopy}>
           <IconV2 name="copy" className="size-4 text-icons-3" />
         </Button>
-        <Button variant="outline" size="sm" className="rounded-none border-cn-borders-2" onClick={onEdit}>
+        <Button variant="outline" size="sm" className="rounded-none border-cn-2" onClick={onEdit}>
           <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
         </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="rounded-l-none border-l-0 border-cn-borders-2"
-          onClick={onDownload}
-        >
+        <Button variant="outline" size="sm" className="rounded-l-none border-l-0 border-cn-2" onClick={onDownload}>
           <IconV2 name="download" className="text-icons-3" size="sm" />
         </Button>
       </div>

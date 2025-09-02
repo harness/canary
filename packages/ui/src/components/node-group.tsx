@@ -12,7 +12,10 @@ interface NodeGroupRootProps {
 function Root({ className, children }: NodeGroupRootProps) {
   return (
     <div
-      className={cn('relative grid grid-cols-[26px_1fr] grid-rows-[auto_1fr] items-center gap-x-3 gap-y-2', className)}
+      className={cn(
+        'relative grid grid-cols-[26px_1fr] grid-rows-[auto_1fr] items-center gap-x-cn-sm gap-y-cn-xs',
+        className
+      )}
     >
       {children}
     </div>
@@ -49,7 +52,7 @@ function Icon({
 function Title({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="col-start-2 row-start-1">
-      <div className={cn('inline-flex items-center gap-1.5', className)}>{children}</div>
+      <div className={cn('inline-flex items-center gap-cn-2xs', className)}>{children}</div>
     </div>
   )
 }

@@ -342,18 +342,33 @@ export default function PullRequestChanges() {
 
         // Helper function to check if two files might be a rename
         const isRenameCandidate = (oldBaseName: string, newBaseName: string): boolean => {
+          // Extract file extensions
+          const oldExtMatch = /\.([^.]+)$/.exec(oldBaseName)
+          const newExtMatch = /\.([^.]+)$/.exec(newBaseName)
+          const oldExt = oldExtMatch?.[1] ?? ''
+          const newExt = newExtMatch?.[1] ?? ''
+
           const oldBaseWithoutExt = oldBaseName.replace(/\.[^.]*$/, '')
           const newBaseWithoutExt = newBaseName.replace(/\.[^.]*$/, '')
 
+          // For rename detection, we use a conservative approach:
+          // 1. Exact filename match (including extension)
+          // 2. Same base name with same extension
+          // 3. Same base name with no extension on either file
+          // 4. Partial name matches only if extensions are identical
+
           return (
-            // Exact matches
+            // Exact matches (same filename)
             oldBaseName === newBaseName ||
-            // Same name without extension
-            oldBaseWithoutExt === newBaseWithoutExt ||
-            // New name contains old name
-            (oldBaseWithoutExt.length > 1 && newBaseWithoutExt.includes(oldBaseWithoutExt)) ||
-            // Old name contains new name (reverse case)
-            (newBaseWithoutExt.length > 1 && oldBaseWithoutExt.includes(newBaseWithoutExt))
+            // Same base name without extension, and both have the same extension
+            (oldBaseWithoutExt === newBaseWithoutExt && oldExt === newExt) ||
+            // Same base name where at least one file has no extension
+            (oldBaseWithoutExt === newBaseWithoutExt && (oldExt === '' || newExt === '')) ||
+            // Partial matches only allowed if extensions are identical and names are sufficiently long
+            (oldExt === newExt &&
+              oldBaseWithoutExt.length > 1 &&
+              newBaseWithoutExt.length > 1 &&
+              (newBaseWithoutExt.includes(oldBaseWithoutExt) || oldBaseWithoutExt.includes(newBaseWithoutExt)))
           )
         }
 
@@ -364,8 +379,8 @@ export default function PullRequestChanges() {
 
         for (const deletedFile of deletedFiles) {
           for (const newFile of newFiles) {
-            const oldBaseName = deletedFile.oldName?.split('/').pop() || ''
-            const newBaseName = newFile.newName?.split('/').pop() || ''
+            const oldBaseName = deletedFile.oldName?.split('/').pop() ?? ''
+            const newBaseName = newFile.newName?.split('/').pop() ?? ''
 
             if (isRenameCandidate(oldBaseName, newBaseName)) {
               potentialRenames.push({
@@ -377,7 +392,7 @@ export default function PullRequestChanges() {
         }
 
         // Helper function to apply rename information to diff objects
-        const applyRenameInfo = (diff: any, matchingRename: { oldPath: string; newPath: string }) => {
+        const applyRenameInfo = (diff: DiffFileEntry, matchingRename: { oldPath: string; newPath: string }) => {
           diff.isRename = true
           if (diff.isDeleted) {
             diff.newName = matchingRename.newPath
@@ -387,7 +402,7 @@ export default function PullRequestChanges() {
         }
 
         // Helper function to check if diff is a basic rename (root-level)
-        const isBasicRename = (diff: any): boolean => {
+        const isBasicRename = (diff: DiffFileEntry): boolean => {
           return !!(
             diff.oldName &&
             diff.newName &&
@@ -422,6 +437,7 @@ export default function PullRequestChanges() {
             return !diff.isDeleted
           }
 
+          // Keep all files that aren't part of a rename (including deleted files)
           return true
         })
 

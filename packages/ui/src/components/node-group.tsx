@@ -33,7 +33,7 @@ function Icon({
       <div
         className={cn(
           {
-            'text-cn-foreground-1 shadow-commit-list-bullet': simpleNodeIcon,
+            'text-cn-foreground-1': simpleNodeIcon,
             'border-cn-3 bg-cn-background-2 text-cn-foreground-1 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
               !simpleNodeIcon
           },

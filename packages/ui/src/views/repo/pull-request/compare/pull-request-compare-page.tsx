@@ -285,7 +285,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-5 rounded-md border border-cn-2 bg-cn-background-2 px-4 py-3"
+            className="border-cn-2 bg-cn-background-2 mt-5 rounded-md border px-4 py-3"
           >
             <Text variant="body-normal" color="foreground-1">
               {isBranchSelected ? (
@@ -324,7 +324,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-4 rounded-md border border-cn-2 bg-cn-background-2 p-4"
+            className="border-cn-2 bg-cn-background-2 mt-4 rounded-md border p-4"
           >
             <div className="flex items-center gap-x-1.5">
               <div>
@@ -364,7 +364,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 </Tabs.Trigger>
               </Tabs.List>
               {!prBranchCombinationExists && (
-                <Tabs.Content className="pt-7" value="overview">
+                <Tabs.Content className="pt-cn-lg" value="overview">
                   <Layout.Flex gap="xl">
                     <Layout.Horizontal className="flex-1" gap="sm">
                       {currentUser && <Avatar name={currentUser?.display_name} rounded />}
@@ -412,7 +412,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   </Layout.Flex>
                 </Tabs.Content>
               )}
-              <Tabs.Content className="pt-7" value="commits">
+              <Tabs.Content className="pt-cn-lg" value="commits">
                 {/* TODO: add pagination to this */}
                 {isFetchingCommits ? (
                   <Skeleton.List />

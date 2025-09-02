@@ -1,8 +1,13 @@
-import { KeyboardEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 
-import { DropdownMenu, SearchInput, SearchInputProps, Text } from '@/components'
+import {
+  DropdownMenu,
+  SearchInput,
+  SearchInputProps,
+  Text,
+  useSearchableDropdownKeyboardNavigation
+} from '@/components'
 import { useTranslation } from '@/context'
-import { afterFrames, getShadowActiveElement } from '@/utils'
 import { cn } from '@utils/cn'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
@@ -59,9 +64,13 @@ export const SearchFiles = ({
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
   const [currentQuery, setCurrentQuery] = useState('')
-  const inputRef = useRef<HTMLInputElement | null>(null)
-  const contentRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
+
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    onFirstItemKeyDown: () => setIsOpen(true),
+    onLastItemKeyDown: () => setIsOpen(true),
+    itemsLength: filteredFiles.length
+  })
 
   useEffect(() => {
     if (!filesList || !currentQuery) {
@@ -97,79 +106,40 @@ export const SearchFiles = ({
     setCurrentQuery(searchQuery)
   }, [])
 
-  const getItems = useCallback(() => {
-    if (!contentRef.current) return []
-    return Array.from(
-      contentRef.current?.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
-    )
-  }, [])
-
-  const focusItem = useCallback(
-    (isFirst = true) => {
-      const items = getItems()
-      items[isFirst ? 0 : items.length - 1]?.focus()
-    },
-    [getItems]
-  )
-
-  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-      e.preventDefault()
-      afterFrames(() => focusItem(e.key === 'ArrowDown'))
-    }
-  }
-
-  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
-    const rootEl = contentRef.current
-    if (!rootEl) return
-
-    const { activeEl } = getShadowActiveElement(rootEl)
-    const items = getItems()
-
-    if (!items.length) return
-
-    const first = items[0]
-    const last = items[items.length - 1]
-
-    if ((e.key === 'ArrowUp' && activeEl === first) || (e.key === 'ArrowDown' && activeEl === last)) {
-      e.preventDefault()
-      inputRef.current?.focus()
-      setIsOpen(true)
-      return
-    }
-  }
-
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>
       <div className={cn('relative', inputContainerClassName)}>
         <DropdownMenu.Trigger className="pointer-events-none absolute inset-0 -z-0" tabIndex={-1} />
         <SearchInput
-          ref={inputRef}
+          ref={searchInputRef}
           size={searchInputSize}
           onChange={handleInputChange}
-          onKeyDown={handleInputKeyDown}
+          onKeyDown={handleSearchKeyDown}
         />
       </div>
 
       <DropdownMenu.Content
-        ref={contentRef}
         className={cn('w-[800px]', contentClassName)}
         align="start"
-        onKeyDownCapture={handleContentKeyDownCapture}
         onOpenAutoFocus={event => event.preventDefault()}
       >
         {filteredFiles.length ? (
-          filteredFiles?.map(({ file, element }) => (
-            <DropdownMenu.IconItem
-              key={file}
-              onSelect={() => {
-                navigateToFile(file)
-                setIsOpen(false)
-              }}
-              title={element}
-              icon="empty-page"
-            />
-          ))
+          filteredFiles?.map(({ file, element }, index) => {
+            const { ref, onKeyDown } = getItemProps(index)
+            return (
+              <DropdownMenu.IconItem
+                key={file}
+                ref={ref}
+                onKeyDown={onKeyDown}
+                onSelect={() => {
+                  navigateToFile(file)
+                  setIsOpen(false)
+                }}
+                title={element}
+                icon="empty-page"
+              />
+            )
+          })
         ) : (
           <DropdownMenu.NoOptions className="!p-2">
             {t('component:searchFile.noFile', 'No file found.')}

@@ -1,7 +1,8 @@
-import { useMemo, useRef, useState } from 'react'
+import { KeyboardEvent, useCallback, useMemo, useRef, useState } from 'react'
 
 import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { afterFrames, getShadowActiveElement } from '@/utils'
 import {
   HandleAddLabelType,
   ILabelType,
@@ -52,6 +53,9 @@ export const LabelsHeader = ({
   isLabelsLoading
 }: LabelsHeaderProps) => {
   const { t } = useTranslation()
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const footerLinkRef = useRef<HTMLAnchorElement | null>(null)
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
 
   const handleSearchQuery = (query: string) => {
@@ -106,6 +110,57 @@ export const LabelsHeader = ({
     }, 300)
   ).current
 
+  const getItems = useCallback(() => {
+    if (!contentRef.current) return []
+    return Array.from(
+      contentRef.current?.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
+    )
+  }, [])
+
+  const focusItem = useCallback(() => {
+    const items = getItems()
+    items[0]?.focus()
+  }, [getItems])
+
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      afterFrames(focusItem)
+    }
+  }
+
+  const handleLinkKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      inputRef.current?.focus()
+    }
+  }
+
+  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+    const rootEl = contentRef.current
+    if (!rootEl) return
+
+    const { activeEl } = getShadowActiveElement(rootEl)
+    const items = getItems()
+
+    if (!items.length) return
+
+    const first = items[0]
+    const last = items[items.length - 1]
+
+    if (e.key === 'ArrowUp' && activeEl === first) {
+      e.preventDefault()
+      inputRef.current?.focus()
+      return
+    }
+
+    if ((e.key === 'ArrowDown' && activeEl === last) || e.key === 'Tab') {
+      e.preventDefault()
+      footerLinkRef.current?.focus()
+      return
+    }
+  }
+
   return (
     <article className="flex items-center justify-between">
       <Text as="h5" variant="body-strong" color="foreground-1">
@@ -128,16 +183,23 @@ export const LabelsHeader = ({
         )}
 
         {!labelWithValuesToShow && (
-          <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
+          <DropdownMenu.Content
+            ref={contentRef}
+            className="w-80"
+            align="end"
+            sideOffset={2}
+            onKeyDownCapture={handleContentKeyDownCapture}
+          >
             <DropdownMenu.Header>
               <SearchInput
+                ref={inputRef}
                 size="sm"
                 autoFocus
                 id="search"
                 defaultValue={searchQuery}
                 placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
                 onChange={handleSearchQuery}
-                onKeyDown={e => e.stopPropagation()}
+                onKeyDown={handleInputKeyDown}
               />
             </DropdownMenu.Header>
 
@@ -169,7 +231,13 @@ export const LabelsHeader = ({
             )}
 
             <DropdownMenu.Footer>
-              <Link className="font-body-single-line-strong" variant="secondary" {...editLabelsProps}>
+              <Link
+                ref={footerLinkRef}
+                className="font-body-single-line-strong"
+                variant="secondary"
+                onKeyDown={handleLinkKeyDown}
+                {...editLabelsProps}
+              >
                 {t('views:pullRequests.editLabels', 'Edit labels')}
               </Link>
             </DropdownMenu.Footer>

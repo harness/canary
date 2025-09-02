@@ -37,6 +37,7 @@ export function MainContentLayout({
 
   return (
     <Layout.Flex
+      id="main-content-layout"
       direction="column"
       className={cn(
         'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] mx-[var(--cn-inset-layout-indent)] my-[var(--cn-inset-layout-indent)] border-[var(--cn-inset-border-width)] bg-cn-background-1',

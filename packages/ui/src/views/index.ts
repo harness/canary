@@ -13,6 +13,7 @@ export * from './layouts/SecretDetailsLayout'
 
 // components
 export * from './components/RadioSelect'
+export * from './components/FilterGroup'
 export * from './components/page'
 export * from './components/contributors'
 
@@ -70,9 +71,6 @@ export * from './secrets'
 
 // entity-reference
 export * from './platform'
-
-// connectors
-export * from './connectors'
 
 // sidebar-view
 export * from './sidebar-view/sidebar-view'

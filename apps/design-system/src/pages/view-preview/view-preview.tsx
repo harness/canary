@@ -6,10 +6,6 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
-import { ConnectorsDetailsPageWrapper } from '@subjects/views/connectors/connector-details'
-import { ConnectorsPage } from '@subjects/views/connectors/connectors'
-import { ConnectorInputExample } from '@subjects/views/connectors/connectors-input'
-import { ConnectorsListPageWrapper } from '@subjects/views/connectors/connectors-list'
 import DataTableDemo from '@subjects/views/data-table-demo'
 import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
 import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
@@ -549,22 +545,6 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'secret-details': {
         label: 'Secret Details Page',
         element: <SecretDetailsLayoutWrapper />
-      },
-      'connectors-list-page': {
-        label: 'Connectors List Page',
-        element: <ConnectorsListPageWrapper />
-      },
-      'connectors-details-page': {
-        label: 'Connectors Details Page',
-        element: <ConnectorsDetailsPageWrapper />
-      },
-      'create-edit-connector': {
-        label: 'Create or Edit Connector',
-        element: <ConnectorsPage />
-      },
-      'connector-reference': {
-        label: 'Connector Reference',
-        element: <ConnectorInputExample />
       },
       'delegate-selector': {
         label: 'Delegate Selector',

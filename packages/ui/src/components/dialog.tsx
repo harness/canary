@@ -1,4 +1,15 @@
-import { Children, forwardRef, HTMLAttributes, isValidElement, ReactNode } from 'react'
+import {
+  Children,
+  createContext,
+  forwardRef,
+  HTMLAttributes,
+  isValidElement,
+  MutableRefObject,
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef
+} from 'react'
 
 import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
@@ -36,22 +47,57 @@ const headerVariants = cva('cn-modal-dialog-header', {
   }
 })
 
+interface DialogContextValue {
+  triggerRef: MutableRefObject<HTMLElement | null>
+  setTrigger: (element: HTMLElement | null) => void
+}
+
+const DialogContext = createContext<DialogContextValue | undefined>(undefined)
+
+export const useDialogContext = () => {
+  const context = useContext(DialogContext)
+  if (!context) {
+    throw new Error('useDialogContext must be used within DialogProvider')
+  }
+  return context
+}
+
+export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
+  const triggerRef = useRef<HTMLElement | null>(null)
+
+  const setTrigger = (element: HTMLElement | null) => {
+    triggerRef.current = element
+  }
+
+  return <DialogContext.Provider value={{ triggerRef, setTrigger }}>{children}</DialogContext.Provider>
+}
+
 export type ModalDialogRootProps = Pick<DialogPrimitive.DialogProps, 'open' | 'onOpenChange' | 'children'>
 
 const Root = ({ children, ...props }: ModalDialogRootProps) => {
   return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
 }
 
-const Trigger = DialogPrimitive.Trigger
+const TriggerPrimitive = DialogPrimitive.Trigger
 
 interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<typeof contentVariants> {
   size?: 'sm' | 'md' | 'lg'
   hideClose?: boolean
 }
 
+// In your dialog.tsx file, update the Content component:
+
 const Content = forwardRef<HTMLDivElement, ContentProps>(
   ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => {
     const { portalContainer } = usePortal()
+    const dialogContext = useContext(DialogContext)
+
+    useEffect(() => {
+      return () => {
+        if (!dialogContext?.triggerRef.current) return
+        setTimeout(() => dialogContext.triggerRef.current?.focus(), 0)
+      }
+    }, [dialogContext])
 
     return (
       <DialogPrimitive.Portal container={portalContainer}>
@@ -59,7 +105,17 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
         {/* For the scroll to work when using the dialog in Shadow DOM, the Overlay needs to wrap the Content */}
         {/* Here’s the issue for the scroll bug in Shadow DOM - https://github.com/radix-ui/primitives/issues/3353 */}
         <DialogPrimitive.Overlay className="cn-modal-dialog-overlay">
-          <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
+          <DialogPrimitive.Content
+            ref={ref}
+            className={cn(contentVariants({ size }), className)}
+            onCloseAutoFocus={event => {
+              if (dialogContext?.triggerRef.current) {
+                event.preventDefault()
+                dialogContext.triggerRef.current.focus()
+              }
+            }}
+            {...props}
+          >
             {!hideClose && (
               <DialogPrimitive.Close asChild>
                 <Button className="cn-modal-dialog-close" variant="transparent" iconOnly ignoreIconOnlyTooltip>
@@ -169,9 +225,30 @@ const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className,
 ))
 Close.displayName = 'Dialog.Close'
 
+type DialogTriggerProps = ButtonProps & {
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+const Trigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(({ onClick, ...props }, forwardedRef) => {
+  const { setTrigger } = useDialogContext()
+  const internalRef = useRef<HTMLButtonElement>(null)
+
+  const ref = forwardedRef || internalRef
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setTrigger(event.currentTarget)
+    onClick?.(event)
+  }
+
+  return <Button ref={ref} onClick={handleClick} {...props} />
+})
+
+Trigger.displayName = 'DialogTrigger'
+
 const Dialog = {
   Root,
   Trigger,
+  TriggerPrimitive,
   Content,
   Close,
   Header,

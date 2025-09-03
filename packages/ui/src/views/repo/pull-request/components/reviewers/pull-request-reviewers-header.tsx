@@ -1,9 +1,8 @@
-import { KeyboardEvent, useCallback, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
-import { Button, DropdownMenu, IconV2, SearchInput, Text } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchInput, Text, useSearchableDropdownKeyboardNavigation } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
-import { afterFrames, getShadowActiveElement } from '@/utils'
 import { PRReviewer } from '@/views'
 import { debounce } from 'lodash-es'
 
@@ -31,53 +30,17 @@ const ReviewersHeader = ({
   isReviewersLoading
 }: ReviewersHeaderProps) => {
   const { t } = useTranslation()
-  const contentRef = useRef<HTMLDivElement | null>(null)
-  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  const filteredUsersList = useMemo(() => {
+    return usersList ? usersList.filter(user => user?.uid !== currentUserId) : []
+  }, [currentUserId, usersList])
+
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    itemsLength: filteredUsersList.length
+  })
 
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query)
-  }
-
-  const getItems = useCallback(() => {
-    if (!contentRef.current) return []
-    return Array.from(
-      contentRef.current?.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
-    )
-  }, [])
-
-  const focusItem = useCallback(() => {
-    const items = getItems()
-    items[0]?.focus()
-  }, [getItems])
-
-  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      afterFrames(focusItem)
-    }
-  }
-
-  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
-    const rootEl = contentRef.current
-    if (!rootEl) return
-
-    const { activeEl } = getShadowActiveElement(rootEl)
-    const items = getItems()
-
-    if (!items.length) return
-
-    const first = items[0]
-    const last = items[items.length - 1]
-
-    if (
-      (e.key === 'ArrowUp' && activeEl === first) ||
-      (e.key === 'ArrowDown' && activeEl === last) ||
-      e.key === 'Tab'
-    ) {
-      e.preventDefault()
-      inputRef.current?.focus()
-      return
-    }
   }
 
   const handleCloseValuesView = useRef(debounce(() => handleSearchQuery(''), 300)).current
@@ -94,51 +57,41 @@ const ReviewersHeader = ({
             <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          ref={contentRef}
-          className="w-80"
-          align="end"
-          sideOffset={2}
-          onKeyDownCapture={handleContentKeyDownCapture}
-        >
+        <DropdownMenu.Content className="w-80" align="end" sideOffset={2}>
           <DropdownMenu.Header role="presentation">
             <SearchInput
-              ref={inputRef}
+              ref={searchInputRef}
               id="search"
               size="sm"
               defaultValue={searchQuery}
               onChange={handleSearchQuery}
               autoFocus
-              onKeyDown={handleInputKeyDown}
+              onKeyDown={handleSearchKeyDown}
             />
           </DropdownMenu.Header>
 
-          {isReviewersLoading && <DropdownMenu.Spinner />}
+          {!!isReviewersLoading && <DropdownMenu.Spinner />}
 
-          {!usersList?.length && !isReviewersLoading && (
+          {!filteredUsersList.length && !isReviewersLoading && (
             <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           )}
-          {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
-            <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
-          ) : (
-            <>
-              {usersList?.map(({ display_name, email, id, uid }) => {
-                if (uid === currentUserId) return null
 
-                const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+          {filteredUsersList.map(({ display_name, email, id, uid }, index) => {
+            const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+            const { ref, onKeyDown } = getItemProps(index)
 
-                return (
-                  <DropdownMenu.AvatarItem
-                    name={display_name}
-                    title={<ReviewerInfo display_name={display_name || ''} email={email || ''} />}
-                    checkmark={!!isSelected}
-                    key={uid}
-                    onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
-                  />
-                )
-              })}
-            </>
-          )}
+            return (
+              <DropdownMenu.AvatarItem
+                ref={ref}
+                name={display_name}
+                title={<ReviewerInfo display_name={display_name || ''} email={email || ''} />}
+                checkmark={!!isSelected}
+                key={uid ?? index}
+                onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
+                onKeyDown={onKeyDown}
+              />
+            )
+          })}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

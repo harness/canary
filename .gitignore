@@ -40,3 +40,13 @@ yaml-editor-test/
 
 #cursor
 .cursor
+
+#local environment
+.env
+
+#playwright
+test-results/
+blob-report/
+playwright-report/
+playwright-results/
+playwright/.cache/

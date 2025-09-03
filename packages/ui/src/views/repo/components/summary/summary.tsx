@@ -185,6 +185,7 @@ export const Summary = ({
                     timestamp={file.timestamp}
                     dateTimeFormatOptions={{ dateStyle: 'medium' }}
                     textProps={{ color: 'foreground-3', wrap: 'nowrap', align: 'right' }}
+                    triggerProps={{ tabIndex: -1 }}
                   />
                 ) : (
                   <Skeleton.Box className="h-5 w-full" />

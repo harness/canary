@@ -122,10 +122,15 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     return !!rules?.length || !!rulesSearchQuery?.length
   }, [rulesSearchQuery, rules])
 
-  const handleToProjectRuleDetails = (e: MouseEvent<HTMLAnchorElement>, rule: RuleDataType) => () => {
+  const handleToProjectRuleDetails = (e: MouseEvent<HTMLAnchorElement>, rule: RuleDataType) => {
     e.preventDefault()
     e.stopPropagation()
-    toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
+
+    if (rule.scope === 0) {
+      handleRuleClick(rule.identifier ?? '')
+    } else {
+      toProjectRuleDetails?.(rule.identifier ? `${rule.identifier}/edit` : '', rule.scope ?? 0)
+    }
   }
 
   if (!isShowRulesContent) {
@@ -221,7 +226,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                       {
                         title: t('views:rules.edit', 'Edit Rule'),
                         iconName: 'edit-pencil',
-                        onClick: () => handleRuleClick(rule.identifier!)
+                        onClick: () => handleRuleClick(`${rule.identifier}${rule.scope === 0 ? '' : '/edit'}`)
                       },
                       {
                         isDanger: true,

@@ -101,6 +101,10 @@ export default {
 
       '&:where(:not([disabled]):hover)': {
         color: 'var(--cn-text-brand)'
+      },
+
+      '&:where(:not([disabled]):focus-visible)': {
+        '@apply z-[1]': ''
       }
     },
 

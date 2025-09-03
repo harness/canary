@@ -139,10 +139,10 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 {tag?.message}
               </Text>
             </Table.Cell>
-            <Table.Cell disableLink>
+            <Table.Cell>
               <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
-            <Table.Cell disableLink>
+            <Table.Cell>
               <Layout.Horizontal gap="xs">
                 {tag.tagger?.identity.name ? (
                   <>
@@ -164,7 +164,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="text-right" disableLink>
+            <Table.Cell className="text-right">
               <MoreActionsTooltip
                 actions={getTableActions(tag).map(action => ({
                   ...action,

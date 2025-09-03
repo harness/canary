@@ -73,6 +73,11 @@ export default {
       '@apply border-b border-cn-3 transition-colors overflow-hidden': '',
       '@apply last:border-b-0': '',
 
+      '&:has(.cn-table-v2-cell-link:focus-visible)': {
+        outline: 'var(--cn-focus)',
+        outlineOffset: 'calc(2px*-1)'
+      },
+
       '&:where(.row-link-no-underline)': {
         '@apply [&_.cn-table-v2-cell-link]:no-underline': ''
       },
@@ -122,7 +127,11 @@ export default {
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
       paddingLeft: 'var(--cn-table-cell-px)',
       paddingRight: 'var(--cn-table-cell-px)',
-      gap: 'var(--cn-table-cell-gap)'
+      gap: 'var(--cn-table-cell-gap)',
+
+      'a, button': {
+        zIndex: '1'
+      }
     },
 
     // Cell link

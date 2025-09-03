@@ -38,7 +38,7 @@ export function RepoWebhookList({
             const webhooksUrl = toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`
             return (
               <Table.Row to={webhooksUrl} key={webhook.id}>
-                <Table.Cell className="!pr-0" disableLink>
+                <Table.Cell className="!pr-0">
                   <Switch checked={webhook.enabled} onClick={() => handleEnableWebhook(webhook.id, !webhook.enabled)} />
                 </Table.Cell>
 
@@ -57,7 +57,7 @@ export function RepoWebhookList({
                   </StatusBadge>
                 </Table.Cell>
 
-                <Table.Cell disableLink>
+                <Table.Cell>
                   <MoreActionsTooltip
                     iconName="more-horizontal"
                     actions={[

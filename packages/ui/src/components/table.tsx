@@ -233,7 +233,7 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
         <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
           <Link to={to || ''} {...(linkProps || {})} className={cn('cn-table-v2-cell-link', linkProps?.className)} />
 
-          <div className="relative z-[1] flex">{children}</div>
+          {children}
         </td>
       )
     }

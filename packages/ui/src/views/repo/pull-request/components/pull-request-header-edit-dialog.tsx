@@ -146,7 +146,7 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
               </Alert.Root>
             )}
 
-            {error && <p className="text-cn-foreground-danger">{error}</p>}
+            {error && <p className="text-cn-danger">{error}</p>}
           </FormWrapper>
         </Dialog.Body>
 

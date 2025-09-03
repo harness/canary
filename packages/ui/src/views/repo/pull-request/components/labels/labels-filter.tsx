@@ -167,7 +167,7 @@ export function LabelsFilter({
           )
         )}
 
-      {description && <div className="mx-2 my-4 text-sm text-cn-foreground-3">{description}</div>}
+      {description && <div className="mx-2 my-4 text-sm text-cn-3">{description}</div>}
     </>
   )
 }

@@ -123,8 +123,7 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
               onReset={() => handleRemove(pattern)}
               icon={option === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'}
               iconProps={{
-                className:
-                  option === PatternsButtonType.INCLUDE ? '!text-cn-foreground-success' : '!text-cn-foreground-danger'
+                className: option === PatternsButtonType.INCLUDE ? '!text-cn-success' : '!text-cn-danger'
               }}
             />
           ))}

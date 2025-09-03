@@ -35,7 +35,7 @@
 
 @layer base {
   body {
-    @apply bg-cn-background-0 text-cn-foreground-2 font-body-normal overscroll-y-none;
+    @apply bg-cn-background-0 text-cn-2 font-body-normal overscroll-y-none;
   }
 }
 
@@ -96,7 +96,7 @@
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */
-  @apply text-cn-foreground-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+  @apply text-cn-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
 }
 
 /* Card utilities */
@@ -112,11 +112,11 @@
 
 /* Form utilities */
 .text-form-error {
-  @apply text-cn-foreground-danger text-2 mt-2 font-light;
+  @apply text-cn-danger text-2 mt-2 font-light;
 }
 .form-input {
   @apply border-cn-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
-  @apply placeholder:text-cn-foreground-1/50 !important;
+  @apply placeholder:text-cn-1/50 !important;
 }
 
 /* Temporary studio controls override */

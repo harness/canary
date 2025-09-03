@@ -68,7 +68,7 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
               />
             </Fieldset>
 
-            {createUserError && <span className="text-2 text-cn-foreground-danger">{createUserError}</span>}
+            {createUserError && <span className="text-2 text-cn-danger">{createUserError}</span>}
           </FormWrapper>
         </Dialog.Body>
 

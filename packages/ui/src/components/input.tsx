@@ -9,12 +9,12 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-cn-background-2 px-3 py-1 text-cn-foreground-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-foreground-3',
+  'bg-cn-background-2 px-3 py-1 text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-3',
   {
     variants: {
       variant: {
         default:
-          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-foreground-3 focus-visible:rounded focus-visible:outline-none',
+          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-cn-3 focus-visible:rounded focus-visible:outline-none',
         extended: 'grow border-none focus-visible:outline-none'
       },
       size: {
@@ -23,7 +23,7 @@ const inputVariants = cva(
       },
       theme: {
         default:
-          'border-cn-2 focus-within:border-cn-1 focus-visible:border-cn-1 disabled:border-cn-disabled disabled:placeholder:text-cn-foreground-disabled',
+          'border-cn-2 focus-within:border-cn-1 focus-visible:border-cn-1 disabled:border-cn-disabled disabled:placeholder:text-cn-disabled',
         danger: 'border-cn-danger',
         clean: 'bg-transparent outline-none focus:outline-none'
       }
@@ -137,7 +137,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         return (
           <div
             className={cn(
-              'flex items-center text-cn-foreground-3 rounded border',
+              'flex items-center text-cn-3 rounded border',
               rightElementVariant === 'filled' ? 'bg-cn-background-softgray border-l' : '',
               className
             )}
@@ -174,7 +174,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </Message>
         )}
 
-        {caption && <Caption className={cn({ 'text-cn-foreground-disabled': disabled })}>{caption}</Caption>}
+        {caption && <Caption className={cn({ 'text-cn-disabled': disabled })}>{caption}</Caption>}
       </ControlGroup>
     )
   }

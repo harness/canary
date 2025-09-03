@@ -120,7 +120,10 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
       propOnKeyDownCapture?.(e)
       if (e.defaultPrevented || e.isDefaultPrevented?.()) return
 
-      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Tab') {
+        e.stopPropagation()
+        return
+      }
 
       const rootEl = contentRef.current
       if (!rootEl) return

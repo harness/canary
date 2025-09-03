@@ -107,7 +107,7 @@ describe('pipelineInputs2FormInputs', () => {
       inputs: [
         {
           inputType: 'group',
-          path: '',
+          path: 'group_Main_Group',
           label: 'Main Group'
         }
       ]

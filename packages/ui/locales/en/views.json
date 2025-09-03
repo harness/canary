@@ -510,6 +510,12 @@
     "lastActivity": "Last Activity",
     "created": "Created"
   },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
+  },
   "delegates": {
     "delegate": "Delegate",
     "heartbeat": "Heartbeat",
@@ -887,12 +893,6 @@
     "type": "Type",
     "scope": "Scope",
     "timestamp": "Timestamp"
-  },
-  "secretReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
   },
   "secrets": {
     "createNew": "Create Secret",

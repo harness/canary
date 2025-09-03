@@ -1,6 +1,15 @@
-import { useMemo, useRef, useState } from 'react'
+import { KeyboardEvent, useMemo, useRef, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Link, LinkProps, SearchInput, Text } from '@/components'
+import {
+  Button,
+  DropdownMenu,
+  IconV2,
+  Link,
+  LinkProps,
+  SearchInput,
+  Text,
+  useSearchableDropdownKeyboardNavigation
+} from '@/components'
 import { useTranslation } from '@/context'
 import {
   HandleAddLabelType,
@@ -52,6 +61,7 @@ export const LabelsHeader = ({
   isLabelsLoading
 }: LabelsHeaderProps) => {
   const { t } = useTranslation()
+  const footerLinkRef = useRef<HTMLAnchorElement | null>(null)
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
 
   const handleSearchQuery = (query: string) => {
@@ -106,6 +116,25 @@ export const LabelsHeader = ({
     }, 300)
   ).current
 
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    itemsLength: labelsListWithValues?.length ?? 0
+  })
+
+  const handleLinkKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      searchInputRef.current?.focus()
+    }
+  }
+
+  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      footerLinkRef.current?.focus()
+      return
+    }
+  }
+
   return (
     <article className="flex items-center justify-between">
       <Text as="h5" variant="body-strong" color="foreground-1">
@@ -128,48 +157,66 @@ export const LabelsHeader = ({
         )}
 
         {!labelWithValuesToShow && (
-          <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
+          <DropdownMenu.Content
+            className="w-80"
+            align="end"
+            sideOffset={2}
+            onKeyDownCapture={handleContentKeyDownCapture}
+          >
             <DropdownMenu.Header>
               <SearchInput
+                ref={searchInputRef}
                 size="sm"
                 autoFocus
                 id="search"
                 defaultValue={searchQuery}
                 placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
                 onChange={handleSearchQuery}
-                onKeyDown={e => e.stopPropagation()}
+                onKeyDown={handleSearchKeyDown}
               />
             </DropdownMenu.Header>
 
-            {isLabelsLoading && <DropdownMenu.Spinner />}
+            {!!isLabelsLoading && <DropdownMenu.Spinner />}
 
             {!isLabelsLoading &&
-              labelsListWithValues?.map((label, idx) => (
-                <DropdownMenu.Item
-                  key={`${label.id}-${idx}`}
-                  onSelect={handleOnSelect(label)}
-                  title={
-                    <LabelTag
-                      scope={label.scope ?? 0}
-                      color={label.color as ILabelType['color']}
-                      labelKey={label.key ?? ''}
-                      labelValue={(label.values?.length || '').toString()}
-                      withIndicator={label.type === LabelType.DYNAMIC}
-                      tagProps={{ size: 'sm' }}
-                    />
-                  }
-                  // TODO: add description when it is available from PR Labels call
-                  // description={<Text truncate>{label.description}</Text>}
-                  checkmark={label.isSelected}
-                />
-              ))}
+              labelsListWithValues?.map((label, idx) => {
+                const { ref, onKeyDown } = getItemProps(idx)
+
+                return (
+                  <DropdownMenu.Item
+                    key={`${label.id}-${idx}`}
+                    ref={ref}
+                    onSelect={handleOnSelect(label)}
+                    title={
+                      <LabelTag
+                        scope={label.scope ?? 0}
+                        color={label.color as ILabelType['color']}
+                        labelKey={label.key ?? ''}
+                        labelValue={(label.values?.length || '').toString()}
+                        withIndicator={label.type === LabelType.DYNAMIC}
+                        tagProps={{ size: 'sm' }}
+                      />
+                    }
+                    // TODO: add description when it is available from PR Labels call
+                    // description={<Text truncate>{label.description}</Text>}
+                    checkmark={label.isSelected}
+                    onKeyDown={onKeyDown}
+                  />
+                )
+              })}
 
             {isEmpty(labelsListWithValues) && !isLabelsLoading && (
               <DropdownMenu.NoOptions>{t('views:pullRequests.noLabels', 'No labels found')}</DropdownMenu.NoOptions>
             )}
 
             <DropdownMenu.Footer>
-              <Link className="font-body-single-line-strong" variant="secondary" {...editLabelsProps}>
+              <Link
+                ref={footerLinkRef}
+                className="font-body-single-line-strong"
+                variant="secondary"
+                onKeyDown={handleLinkKeyDown}
+                {...editLabelsProps}
+              >
                 {t('views:pullRequests.editLabels', 'Edit labels')}
               </Link>
             </DropdownMenu.Footer>

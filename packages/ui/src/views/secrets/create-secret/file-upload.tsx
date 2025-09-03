@@ -67,7 +67,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           ) : (
             <div className="flex w-full flex-col">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-cn-foreground-2">
+                <span className="text-sm text-cn-2">
                   Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
                 </span>
                 <div className="flex gap-2">
@@ -100,7 +100,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           )}
         </div>
       </div>
-      {error && <div className="mt-1 text-sm text-cn-foreground-danger">{error}</div>}
+      {error && <div className="mt-1 text-sm text-cn-danger">{error}</div>}
 
       {/* Hidden file input */}
       <Input

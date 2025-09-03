@@ -71,7 +71,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
                         truncate
                         variant={isActive ? 'body-single-line-strong' : 'body-single-line-normal'}
                         className={cn(
-                          'hover:bg-cn-background-hover hover:text-cn-foreground-1 z-10 w-full rounded-md px-3 py-2 duration-0 ease-in-out bg-transparent transition-colors select-none',
+                          'hover:bg-cn-background-hover hover:text-cn-1 z-10 w-full rounded-md px-3 py-2 duration-0 ease-in-out bg-transparent transition-colors select-none',
                           { 'bg-cn-background-hover': isActive }
                         )}
                       >

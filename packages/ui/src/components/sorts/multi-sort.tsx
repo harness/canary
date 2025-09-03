@@ -152,7 +152,7 @@ export default function MultiSort() {
             name={getSortTriggerLabel(sortSelections, sortOptions).icon}
             size="2xs"
           />
-          <span className="text-cn-foreground-1">{getSortTriggerLabel(sortSelections, sortOptions).label}</span>
+          <span className="text-cn-1">{getSortTriggerLabel(sortSelections, sortOptions).label}</span>
           <IconV2 className="chevron-down ml-3 text-icons-1" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
@@ -209,12 +209,7 @@ export default function MultiSort() {
               }
             />
           )}
-          <Button
-            size="sm"
-            variant="transparent"
-            className="hover:text-cn-foreground-danger"
-            onClick={handleResetSorts}
-          >
+          <Button size="sm" variant="transparent" className="hover:text-cn-danger" onClick={handleResetSorts}>
             <IconV2 name="trash" size="2xs" />
             Delete sort
           </Button>

@@ -1,7 +1,9 @@
 import {
+  cloneElement,
   ForwardedRef,
   forwardRef,
   InputHTMLAttributes,
+  KeyboardEvent,
   ReactElement,
   ReactNode,
   useCallback,
@@ -19,7 +21,8 @@ import {
   IconV2,
   Label,
   SearchInput,
-  Text
+  Text,
+  useSearchableDropdownKeyboardNavigation
 } from '@/components'
 import { useTranslation } from '@/context'
 import { cn, generateAlphaNumericHash } from '@/utils'
@@ -164,6 +167,7 @@ function SelectInner<T = string>(
   const [options, setOptions] = useState<SelectOption<T>[]>([])
   const [isLoadingOptions, setIsLoadingOptions] = useState(false)
   const [searchQuery, setSearchQuery] = useState(searchValue || '')
+  const flatIndexRef = useRef(0)
 
   const { t } = useTranslation()
 
@@ -253,6 +257,10 @@ function SelectInner<T = string>(
 
   const hiddenInputRef = useRef<HTMLInputElement>(null)
 
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    itemsLength: allValueOptions?.length ?? 0
+  })
+
   const handleSelect = useCallback(
     (optionValue: T) => {
       if (!isControlled) {
@@ -273,7 +281,11 @@ function SelectInner<T = string>(
   )
 
   // Render options recursively
-  const renderOptions = (options: SelectOption<T>[], level = 0) => {
+  const renderOptions = (options: SelectOption<T>[], level = 0, resetFlatIndex = true) => {
+    if (resetFlatIndex) {
+      flatIndexRef.current = 0
+    }
+
     return options.map((option, index) => {
       if (isSeparatorOption(option)) {
         return <DropdownMenu.Separator key={`separator-${level}-${index}`} />
@@ -282,10 +294,14 @@ function SelectInner<T = string>(
       if (isGroupOption(option)) {
         return (
           <DropdownMenu.Group key={`group-${level}-${index}`} label={option.label}>
-            {renderOptions(option.options, level + 1)}
+            {renderOptions(option.options, level + 1, false)}
           </DropdownMenu.Group>
         )
       }
+
+      const currentIndex = flatIndexRef.current++
+
+      const { ref, onKeyDown } = getItemProps(currentIndex)
 
       if (optionRenderer) {
         const element = optionRenderer(option)
@@ -305,17 +321,26 @@ function SelectInner<T = string>(
             )
           }
         }
-        return element
+
+        return cloneElement(element as ReactElement, {
+          ref,
+          onKeyDown: (e: KeyboardEvent<HTMLDivElement>) => {
+            onKeyDown?.(e)
+            ;(element.props as any)?.onKeyDown?.(e)
+          }
+        })
       }
 
       if (isValueOption(option)) {
         return (
           <DropdownMenu.Item
+            ref={ref}
             key={(option.value ?? option.label)?.toString()}
             title={option.label}
             disabled={option.disabled}
             onSelect={() => handleSelect(option.value)}
             checkmark={option.value === selectedValue}
+            onKeyDown={onKeyDown}
           />
         )
       }
@@ -418,12 +443,13 @@ function SelectInner<T = string>(
               <DropdownMenu.Header>
                 {allowSearch && (
                   <SearchInput
+                    ref={searchInputRef}
                     placeholder="Search"
                     value={searchQuery}
                     onChange={setSearchQuery}
                     debounce={false}
                     autoFocus
-                    onKeyDown={e => e.stopPropagation()}
+                    onKeyDown={handleSearchKeyDown}
                   />
                 )}
 

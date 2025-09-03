@@ -35,15 +35,10 @@ export interface EntityDetail {
 }
 
 export interface ConnectorReferenceItem {
-  accountIdentifier: string
-  referredEntity: ReferredEntity
-  referredByEntity: ReferredEntity
-  detail: EntityDetail | null
+  name: string
+  type: string
+  scope: string
   createdAt: number
-}
-
-export interface ConnectorReferenceList {
-  content: ConnectorReferenceItem[]
 }
 
 export interface ConnectorActivityList {
@@ -60,10 +55,9 @@ export interface ConnectorActivityItem {
 }
 
 export interface ConnectorReferenceListProps {
-  entities: ConnectorReferenceList
+  connectorReferences: ConnectorReferenceItem[]
   isLoading: boolean
-  toEntity: (entity: string) => void
-  toScope: (scope: string) => void
+  toScope: (scope: string) => string
 }
 
 export interface ConnectorDetailsReferenceListProps {}
@@ -107,9 +101,8 @@ export interface ConnectorDetailsReferenceProps {
   pageSize: number
   goToPage: (page: number) => void
   isLoading: boolean
-  entities: ConnectorReferenceList
-  toEntity: (entity: string) => void
-  toScope: (scope: string) => void
+  connectorReferences: ConnectorReferenceItem[]
+  toScope: (scope: string) => string
   toConnectorsList?: () => string
 }
 

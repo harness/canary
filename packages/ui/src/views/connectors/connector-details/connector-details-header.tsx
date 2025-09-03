@@ -46,38 +46,38 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         <div className="flex justify-between gap-11">
           {createdAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-3">Created</span>
+              <span className="leading-tight text-cn-3">Created</span>
               <TimeAgoCard timestamp={createdAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastModifiedAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-3">Last updated</span>
+              <span className="leading-tight text-cn-3">Last updated</span>
               <TimeAgoCard timestamp={lastModifiedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastTestedAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-3">Last status check</span>
+              <span className="leading-tight text-cn-3">Last status check</span>
               <TimeAgoCard timestamp={lastTestedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {lastConnectedAt ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-3">Last successful check</span>
+              <span className="leading-tight text-cn-3">Last successful check</span>
               <TimeAgoCard timestamp={lastConnectedAt} textProps={{ color: 'foreground-1' }} />
             </div>
           ) : null}
           {status ? (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-3">Connection status</span>
+              <span className="leading-tight text-cn-3">Connection status</span>
               <StatusBadge
                 className="leading-none"
                 size="sm"
                 variant="status"
                 theme={status.toLowerCase() === 'success' ? 'success' : 'danger'}
               >
-                <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+                <Text className="transition-colors duration-200 group-hover:text-cn-1">
                   {status.toLowerCase() === 'success'
                     ? t('views:connectors.success', 'Success')
                     : t('views:connectors.failure', 'Failed')}

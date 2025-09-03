@@ -10,7 +10,7 @@ const copyIconVariants = cva('transition-colors duration-200', {
     color: {
       gray: 'text-icons-1 hover:text-icons-2',
       white: 'text-icons-3 hover:text-icons-2',
-      surfaceGray: 'text-cn-foreground-surface-gray',
+      surfaceGray: 'text-cn-gray-surface',
       success: 'text-icons-success'
     }
   },

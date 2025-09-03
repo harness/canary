@@ -19,7 +19,7 @@ function createAvatarSizeStyles() {
         height: `var(--cn-avatar-size-${size})`,
         width: `var(--cn-avatar-size-${size})`,
         fontSize: size === 'lg' ? `var(--cn-font-size-2)` : `var(--cn-font-size-0)`,
-        fontWeight: `var(--cn-font-weight-default-normal-400)`
+        fontWeight: `var(--cn-font-weight-default-normal-500)`
       }
     }
   })

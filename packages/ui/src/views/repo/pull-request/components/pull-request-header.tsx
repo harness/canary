@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Avatar, BranchTag, Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
+import { Avatar, BranchTag, Button, IconV2, Layout, Separator, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
@@ -64,17 +64,14 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <>
       <Layout.Vertical gap="md" className={cn(className)}>
-        <Layout.Horizontal gap="sm" align="end">
-          <Text as="h1" variant="heading-section" className="break-all [&>*]:ml-cn-xs">
-            {title}
-            <Text as="span" variant="heading-section" color="foreground-3">
-              #{number}
-            </Text>
+        <Text as="h1" variant="heading-section" className="gap- break-all">
+          {title}
+          <Text as="span" variant="heading-section" color="foreground-3" className="ml-cn-xs inline-block">
+            #{number}
           </Text>
-
           <Button
-            className="group"
-            variant="outline"
+            className="ml-cn-xs group inline-flex"
+            variant="ghost"
             iconOnly
             aria-label="Edit"
             onClick={() => {
@@ -83,30 +80,31 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           >
             <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
           </Button>
-        </Layout.Horizontal>
+        </Text>
 
         <Layout.Horizontal gap="sm" align="center">
-          <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme}>
-            {stateObject.text}
-          </StatusBadge>
-
-          <Layout.Horizontal gap="3xs" align="center" wrap="wrap">
-            <Avatar name={author?.display_name || author?.email || ''} rounded />
-            <Text variant="body-single-line-strong" color="foreground-1">
-              {author?.display_name || author?.email || ''}
-            </Text>
-            <Text variant="body-single-line-normal" color="foreground-2">
-              {merged ? 'merged' : ' wants to merge'} {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}{' '}
-              into
-            </Text>
-
-            <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
-            <Text variant="body-single-line-normal" color="foreground-2">
-              from
-            </Text>
-            <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
-            <span className="bg-cn-separator-subtle mx-1.5 h-4 w-px" />
-            <TimeAgoCard timestamp={created} />
+          <Layout.Horizontal align="center" gap="xs" wrap="wrap">
+            <Layout.Horizontal gap="2xs" align="center" wrap="wrap">
+              <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme} className="mr-1">
+                {stateObject.text}
+              </StatusBadge>
+              <Avatar name={author?.display_name || author?.email || ''} rounded size="sm" />
+              <Text variant="body-single-line-strong" color="foreground-1">
+                {author?.display_name || author?.email || ''}
+              </Text>
+              <Text variant="body-single-line-normal">
+                {merged ? 'merged' : ' wants to merge'}{' '}
+                <Text color="foreground-1" as="span">
+                  {stats?.commits}
+                </Text>{' '}
+                {stats?.commits === 1 ? 'commit' : 'commits'} into
+              </Text>
+              <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+              <Text variant="body-single-line-normal">from</Text>
+              <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+              <Separator orientation="vertical" className="mx-0.5 h-4" />
+              <TimeAgoCard timestamp={created} />
+            </Layout.Horizontal>
           </Layout.Horizontal>
         </Layout.Horizontal>
       </Layout.Vertical>

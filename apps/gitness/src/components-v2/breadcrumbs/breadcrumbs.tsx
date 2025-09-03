@@ -43,7 +43,7 @@ export const Breadcrumbs = ({
                 <>
                   {!isFirst && (
                     <Breadcrumb.Separator>
-                      <IconV2 name="nav-arrow-right" className="text-cn-foreground-accent" size="2xs" />
+                      <IconV2 name="nav-arrow-right" className="text-cn-brand" size="2xs" />
                     </Breadcrumb.Separator>
                   )}
                   {isLast || !asLink ? (

@@ -98,7 +98,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         )}
                       />
                       {mode === value && (
-                        <IconV2 className="text-cn-foreground-1 absolute bottom-2 left-2" name="check-circle-solid" />
+                        <IconV2 className="text-cn-1 absolute bottom-2 left-2" name="check-circle-solid" />
                       )}
                       <div
                         className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
@@ -113,7 +113,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         aria-hidden
                       />
                     </div>
-                    <span className="text-2 text-cn-foreground-1 leading-tight">{key}</span>
+                    <span className="text-2 text-cn-1 leading-tight">{key}</span>
                   </button>
                 )
               })}

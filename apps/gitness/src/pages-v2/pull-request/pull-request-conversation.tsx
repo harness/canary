@@ -46,11 +46,13 @@ import {
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { eventManager } from '../../framework/event/EventManager.ts'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
+import { SSEEvent } from '../../types.ts'
 import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
@@ -259,6 +261,21 @@ export default function PullRequestConversationPage() {
     prId,
     refetchData: refetchActivities
   })
+
+  const handleEvent = useCallback(() => {
+    refetchReviewers()
+    refetchActivities()
+    refetchPullReq()
+  }, [pullRequestId, repoRef, refetchActivities, refetchPullReq, refetchReviewers])
+  // Subscribe to the specific event
+  useEffect(() => {
+    if (repoRef && pullRequestId) {
+      const unsubscribe = eventManager.subscribe(SSEEvent.PULLREQ_UPDATED, handleEvent)
+
+      // Cleanup subscription when component unmounts or dependencies change
+      return unsubscribe
+    }
+  }, [repoRef, pullRequestId, handleEvent])
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
 

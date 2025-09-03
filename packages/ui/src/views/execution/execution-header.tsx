@@ -46,8 +46,8 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
     <div className={cn('px-6 py-5', className)}>
       <div className="flex flex-col gap-[18px]">
         <Text as="h1" variant="heading-subsection" className="max-w-[600px]">
-          {title.number && <span className="text-cn-foreground-2">#{title.number} </span>}
-          <span className="text-cn-foreground-1">{title.title}</span>
+          {title.number && <span className="text-cn-2">#{title.number} </span>}
+          <span className="text-cn-1">{title.title}</span>
         </Text>
       </div>
 
@@ -64,22 +64,22 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
         <div className="flex h-full items-end gap-11">
           {storage && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Storage</span>
-              <span className="text-cn-foreground-1">{storage}</span>
+              <span className="leading-tight text-cn-2">Storage</span>
+              <span className="text-cn-1">{storage}</span>
             </div>
           )}
           {storageAverage && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Storage (average)</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="leading-tight text-cn-2">Storage (average)</span>
+              <span className="inline-flex gap-x-1.5 text-cn-1">
                 {storageAverage} <span className="size-3.5 rounded-full border border-icons-7" />
               </span>
             </div>
           )}
           {simpleOperation && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Simple Operation</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="leading-tight text-cn-2">Simple Operation</span>
+              <span className="inline-flex gap-x-1.5 text-cn-1">
                 {simpleOperation}
                 <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
@@ -87,8 +87,8 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
           )}
           {advancedOperations && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Advanced Operations</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="leading-tight text-cn-2">Advanced Operations</span>
+              <span className="inline-flex gap-x-1.5 text-cn-1">
                 {advancedOperations}
                 <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>
@@ -96,8 +96,8 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
           )}
           {dataTransfer && (
             <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-foreground-2">Data Transfer</span>
-              <span className="inline-flex gap-x-1.5 text-cn-foreground-1">
+              <span className="leading-tight text-cn-2">Data Transfer</span>
+              <span className="inline-flex gap-x-1.5 text-cn-1">
                 {dataTransfer}
                 <IconV2 className="text-icons-7" name="circle-with-sector" size="xs" />
               </span>

@@ -244,7 +244,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
             optional
           />
 
-          {!!apiErrorsValue && <span className="text-2 text-cn-foreground-danger">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && <span className="text-2 text-cn-danger">{apiErrorsValue}</span>}
 
           {/* SUBMIT BUTTONS */}
           <Fieldset className="mt-6">

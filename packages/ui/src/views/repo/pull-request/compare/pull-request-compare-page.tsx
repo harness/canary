@@ -266,7 +266,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
                         <Text variant="body-single-line-normal" color="danger">
                           {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                          <span className="text-cn-foreground-2">
+                          <span className="text-cn-2">
                             {t(
                               'views:pullRequests.compareChangesCantMergeDescription',
                               'You can still create the pull request.'
@@ -333,7 +333,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <Text color="foreground-1">{prBranchCombinationExists.title}</Text>
-                    <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
+                    <span className="text-cn-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
               </div>

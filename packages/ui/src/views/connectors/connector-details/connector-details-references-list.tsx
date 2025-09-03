@@ -40,14 +40,14 @@ const ConnectorDetailsReferenceList = ({
         {connectorReferences.map(reference => (
           <Table.Row key={reference.name} className="cursor-pointer">
             <Table.Cell className="w-2/4 content-center truncate">
-              <Text variant="body-normal" className="text-cn-foreground-2" truncate>
+              <Text variant="body-normal" className="text-cn-2" truncate>
                 {reference.name}
               </Text>
             </Table.Cell>
             <Table.Cell>
               <Layout.Horizontal>
                 <IconV2 name="connectors" size="sm" />
-                <Text variant="body-normal" className="text-cn-foreground-2">
+                <Text variant="body-normal" className="text-cn-2">
                   {reference.type}
                 </Text>
               </Layout.Horizontal>

@@ -136,7 +136,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           </Button>
           <Link
             to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
-            className="font-medium leading-tight text-cn-foreground-1"
+            className="font-medium leading-tight text-cn-1"
           >
             {displayText}
           </Link>
@@ -360,7 +360,7 @@ export const PullRequestAccordion: React.FC<{
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">
                 <Button
-                  className="text-cn-foreground-accent"
+                  className="text-cn-brand"
                   variant="link"
                   size="sm"
                   aria-label="show diff"

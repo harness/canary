@@ -37,16 +37,10 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
               <Table.Row key={key.identifier}>
                 <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
-                    <IconV2
-                      name="ssh-key"
-                      size="lg"
-                      className="rounded-md bg-cn-background-softgray text-cn-foreground-2"
-                    />
+                    <IconV2 name="ssh-key" size="lg" className="rounded-md bg-cn-background-softgray text-cn-2" />
                     <div className="flex flex-col">
-                      <span className="block w-[200px] truncate font-medium text-cn-foreground-1">
-                        {key.identifier}
-                      </span>
-                      <span className="w-[200px] truncate text-1 text-cn-foreground-3">{key.fingerprint}</span>
+                      <span className="block w-[200px] truncate font-medium text-cn-1">{key.identifier}</span>
+                      <span className="w-[200px] truncate text-1 text-cn-3">{key.fingerprint}</span>
                     </div>
                   </div>
                 </Table.Cell>
@@ -55,7 +49,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
                 </Table.Cell>
                 <Table.Cell className="h-1 content-center">
                   {/* TODO: pass the data to KeysList item about last used date */}
-                  {/* <span className="text-cn-foreground-1">
+                  {/* <span className="text-cn-1">
                   {key.last_used ? new Date(key.last_used).toLocaleString() : 'Never used'}
                 </span> */}
                 </Table.Cell>
@@ -76,7 +70,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
           ) : (
             <Table.Row className="hover:bg-transparent">
               <Table.Cell className="content-center !p-4" colSpan={4}>
-                <p className="text-center text-2 text-cn-foreground-2">
+                <p className="text-center text-2 text-cn-2">
                   {t(
                     'views:profileSettings.noDataKeysDescription',
                     'There are no SSH keys associated with this account.'

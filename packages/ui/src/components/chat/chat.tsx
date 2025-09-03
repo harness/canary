@@ -10,7 +10,7 @@ const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
-      <p className="text-16 font-medium text-cn-foreground-1">Harness AI</p>
+      <p className="text-16 font-medium text-cn-1">Harness AI</p>
       <Button size="sm" iconOnly variant="ghost" onClick={onClose}>
         <IconV2 name="xmark" />
         <span className="sr-only">Close</span>
@@ -54,7 +54,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         })}
       >
         <div
-          className={cn('text-2 text-cn-foreground-1 leading-relaxed', {
+          className={cn('text-2 text-cn-1 leading-relaxed', {
             'px-3.5 py-2 bg-cn-background-softgray rounded-[8px_8px_2px_8px]': self
           })}
         >
@@ -119,11 +119,11 @@ const EmptyState: FC = () => {
   return (
     <div className="mt-auto flex flex-col gap-5">
       <div>
-        <span className="block text-5 font-semibold leading-none text-cn-foreground-2">Hello Steven,</span>
-        <span className="mt-[3px] block text-5 font-semibold leading-none text-cn-foreground-1">how can I help?</span>
+        <span className="block text-5 font-semibold leading-none text-cn-2">Hello Steven,</span>
+        <span className="mt-[3px] block text-5 font-semibold leading-none text-cn-1">how can I help?</span>
       </div>
       <div>
-        <span className="text-2 leading-relaxed text-cn-foreground-2">
+        <span className="text-2 leading-relaxed text-cn-2">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
         <ul className="mt-3 flex flex-col gap-y-1.5">

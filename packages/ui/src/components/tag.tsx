@@ -116,7 +116,7 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
         className={cn(
           tagVariants({ variant, size, theme, rounded }),
           {
-            'text-cn-foreground-disabled cursor-not-allowed': disabled,
+            'text-cn-disabled cursor-not-allowed': disabled,
             'cn-tag-hoverable': !disabled && (enableHover || props.onClick),
             'cursor-pointer': !disabled && props.onClick
           },
@@ -129,13 +129,10 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
             size="xs"
             name={icon}
             {...iconProps}
-            className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled }, iconProps?.className)}
+            className={cn('cn-tag-icon', { 'text-cn-disabled': disabled }, iconProps?.className)}
           />
         )}
-        <span
-          className={cn('cn-tag-text', { 'text-cn-foreground-disabled': disabled })}
-          title={title || value || label}
-        >
+        <span className={cn('cn-tag-text', { 'text-cn-disabled': disabled })} title={title || value || label}>
           {value || label}
         </span>
 
@@ -153,11 +150,7 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
               onActionClick?.()
             }}
           >
-            <IconV2
-              skipSize
-              name={actionIcon}
-              className={cn('cn-tag-icon', { 'text-cn-foreground-disabled': disabled })}
-            />
+            <IconV2 skipSize name={actionIcon} className={cn('cn-tag-icon', { 'text-cn-disabled': disabled })} />
           </Button>
         )}
       </div>

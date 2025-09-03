@@ -32,12 +32,12 @@ function Icon({
   className?: string
 }) {
   return (
-    <div className="col-start-1 row-start-1 flex size-full items-center justify-center self-start">
+    <div className="col-start-1 row-start-1 size-full self-start">
       <div
         className={cn(
           {
-            'text-cn-foreground-1': simpleNodeIcon,
-            'border-cn-3 bg-cn-background-2 text-cn-foreground-1 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
+            'text-cn-1': simpleNodeIcon,
+            'border-cn-3 bg-cn-background-2 text-cn-1 relative flex size-cn-7 place-content-center place-items-center rounded-full border layer-medium':
               !simpleNodeIcon
           },
           className

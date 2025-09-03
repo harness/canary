@@ -29,8 +29,8 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
       <Button onClick={() => onClick('open')} size={'xs'} variant={'transparent'}>
         <IconV2
           className={cn({
-            'text-cn-foreground-success': headerFilter.includes('open'),
-            'text-cn-foreground-4': !headerFilter.includes('open')
+            'text-cn-success': headerFilter.includes('open'),
+            'text-cn-3': !headerFilter.includes('open')
           })}
           name="git-pull-request"
         />
@@ -44,8 +44,8 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
       <Button onClick={() => onClick('merged')} size={'xs'} variant="transparent">
         <IconV2
           className={cn({
-            'text-cn-foreground-success': headerFilter.includes('merged'),
-            'text-cn-foreground-4': !headerFilter.includes('merged')
+            'text-cn-merged': headerFilter.includes('merged'),
+            'text-cn-3': !headerFilter.includes('merged')
           })}
           name="git-merge"
         />
@@ -59,8 +59,8 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
       <Button onClick={() => onClick('closed')} size={'xs'} variant="transparent">
         <IconV2
           className={cn({
-            'text-cn-foreground-success': headerFilter.includes('closed'),
-            'text-cn-foreground-4': !headerFilter.includes('closed')
+            'text-cn-danger': headerFilter.includes('closed'),
+            'text-cn-3': !headerFilter.includes('closed')
           })}
           name="check"
         />

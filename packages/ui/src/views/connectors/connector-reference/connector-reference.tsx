@@ -74,7 +74,7 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
           connectorLogo ? (
             <LogoV2 name={connectorLogo} size="xs" />
           ) : (
-            <IconV2 name="connectors" size="xs" className="text-cn-foreground-3" />
+            <IconV2 name="connectors" size="xs" className="text-cn-3" />
           )
         }
       >

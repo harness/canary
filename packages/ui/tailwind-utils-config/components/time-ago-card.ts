@@ -3,10 +3,10 @@ export default {
     '&-trigger': {
       '@apply leading-snug whitespace-nowrap': '',
       ':where(time)': {
-        '@apply data-[state=open]:text-cn-foreground-1 hover:text-cn-foreground-1': ''
+        '@apply data-[state=open]:text-cn-1 hover:text-cn-1': ''
       },
       '&:where(:focus-visible) time': {
-        '@apply text-cn-foreground-1': '',
+        '@apply text-cn-1': '',
         outline: 'var(--cn-focus)'
       }
     },

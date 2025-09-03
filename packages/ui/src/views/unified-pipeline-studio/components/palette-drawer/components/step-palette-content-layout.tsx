@@ -16,7 +16,7 @@ const StepsPaletteContentLayout = {
   }),
 
   SectionHeader: function SectionHeader({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-row justify-between text-cn-foreground-1">{children}</div>
+    return <div className="flex flex-row justify-between text-cn-1">{children}</div>
   },
 
   SectionItem: function SectionHeader({ children }: { children: React.ReactNode }) {

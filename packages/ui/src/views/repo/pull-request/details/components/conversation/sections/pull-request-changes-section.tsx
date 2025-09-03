@@ -112,12 +112,12 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
                   <IconV2 size="lg" color="success" name="clock-solid" />
-                  <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
+                  <span className="text-2 text-cn-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
                   <IconV2 size="lg" name="circle" className="fill-transparent text-icons-7" />
-                  <span className="text-2 text-cn-foreground-1">
+                  <span className="text-2 text-cn-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>
                 </div>
@@ -130,7 +130,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             <div className="ml-7 flex items-center justify-between">
               <div className="flex items-center gap-x-2">
                 <IconV2 size="lg" color={reqNoChangeReq ? 'danger' : 'warning'} name="warning-triangle-solid" />
-                <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
+                <span className="text-2 text-cn-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
               {reqNoChangeReq && <StatusBadge variant="outline">Required</StatusBadge>}
             </div>

@@ -63,7 +63,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         className={cn({ 'bg-cn-background-hover': isSelected })}
         paddingY="sm"
         onClick={() => onSelect(entity)}
-        // thumbnail={<IconV2 name="lock" size="xs" className="ml-2 text-cn-foreground-3" />}
+        // thumbnail={<IconV2 name="lock" size="xs" className="ml-2 text-cn-3" />}
       >
         <StackedList.Field title={entity.secret.name} />
       </StackedList.Item>

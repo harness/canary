@@ -20,7 +20,7 @@ export const PopoverCommitInfo = {
           <Avatar name={authorName} src={avatarUrl} size="lg" rounded />
           <span>{authorName}</span>
         </div>
-        <div className="text-cn-foreground-3">{commit}</div>
+        <div className="text-cn-3">{commit}</div>
       </div>
     )
   },

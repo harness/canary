@@ -147,7 +147,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         paddingY="sm"
         onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<IconV2 name="folder" size="xs" className="text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="folder" size="xs" className="text-cn-3" />}
       >
         <StackedList.Field title=".." />
       </StackedList.Item>
@@ -159,7 +159,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
       <StackedList.Item
         paddingY="sm"
         onClick={() => onSelect?.(folder)}
-        thumbnail={<IconV2 name="folder" size="xs" className="text-cn-foreground-3" />}
+        thumbnail={<IconV2 name="folder" size="xs" className="text-cn-3" />}
       >
         <StackedList.Field className="grid capitalize" title={String(folder)} />
       </StackedList.Item>

@@ -6,7 +6,7 @@ import { ExecutionState } from '@views/index'
 import { ConnectorActivityItem, ConnectorDetailsActivitiesListProps } from './types'
 
 const Activity = ({ activity }: { activity: React.ReactNode }): JSX.Element => (
-  <span className="block max-w-full truncate py-2.5 text-sm font-medium leading-tight tracking-tight text-cn-foreground-1">
+  <span className="block max-w-full truncate py-2.5 text-sm font-medium leading-tight tracking-tight text-cn-1">
     {activity}
   </span>
 )
@@ -26,7 +26,7 @@ const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
   return (
     <div className="inline-flex items-center gap-2 py-2.5">
       <div className={cn('size-2 rounded-full', currentStatus?.color)} />
-      <span className="text-cn-foreground-2 ">{currentStatus?.status}</span>
+      <span className="text-cn-2 ">{currentStatus?.status}</span>
     </div>
   )
 }
@@ -54,9 +54,9 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
     <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.activity', 'Activity')}</Table.Head>
-          <Table.Head className="w-96 text-cn-foreground-4">{t('views:connectors.time', 'Time')}</Table.Head>
-          <Table.Head className="w-44 text-cn-foreground-4">{t('views:connectors.status', 'Status')}</Table.Head>
+          <Table.Head className="w-96 text-cn-3">{t('views:connectors.activity', 'Activity')}</Table.Head>
+          <Table.Head className="w-96 text-cn-3">{t('views:connectors.time', 'Time')}</Table.Head>
+          <Table.Head className="w-44 text-cn-3">{t('views:connectors.status', 'Status')}</Table.Head>
         </Table.Row>
       </Table.Header>
 
@@ -78,7 +78,7 @@ const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDeta
                 ) : null}
               </Table.Cell>
 
-              <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-foreground-4">
+              <Table.Cell className="max-w-full content-center truncate p-2.5 text-left text-sm font-normal leading-tight tracking-tight text-cn-3">
                 <ConnectivityStatus status={activityStatus.toLowerCase()} />
               </Table.Cell>
             </Table.Row>

@@ -127,7 +127,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       size="2xs"
                     />
 
-                    <Text variant="body-single-line-strong" className="text-cn-foreground-surface-gray">
+                    <Text variant="body-single-line-strong" className="text-cn-gray-surface">
                       <span>{branch?.checks?.done || 0}</span>
                       <span>/</span>
                       <span>{branch?.checks?.total || 0}</span>

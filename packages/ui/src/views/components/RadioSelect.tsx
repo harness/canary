@@ -54,7 +54,7 @@ export const RadioSelect = <T extends string>({
                   <StackedList.Field
                     title={option.title}
                     description={option.description}
-                    className={`${value !== option.value && 'text-cn-foreground-4'}`}
+                    className={`${value !== option.value && 'text-cn-3'}`}
                   />
                 </StackedList.Header>
               </StackedList.Root>

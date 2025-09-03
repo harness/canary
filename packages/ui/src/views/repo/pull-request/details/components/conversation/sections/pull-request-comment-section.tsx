@@ -16,12 +16,12 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
           <StackedList.Field
             title={
               <LineTitle
-                textClassName={isSuccess ? '' : 'text-cn-foreground-danger'}
+                textClassName={isSuccess ? '' : 'text-cn-danger'}
                 text={commentsInfo.header}
                 icon={
                   <IconV2
                     size="lg"
-                    className={isSuccess ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                    className={isSuccess ? 'text-cn-success' : 'text-cn-danger'}
                     name={isSuccess ? 'check-circle-solid' : 'warning-triangle'}
                   />
                 }

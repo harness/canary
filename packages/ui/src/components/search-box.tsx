@@ -119,7 +119,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
         {hasShortcut && !!shortcutLetter && (
           <div
             className={cn(
-              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-cn-background-3 px-1 text-cn-foreground-2 duration-100 ease-in-out'
+              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-cn-background-3 px-1 text-cn-2 duration-100 ease-in-out'
             )}
           >
             <IconV2 name="apple-shortcut" size="2xs" />

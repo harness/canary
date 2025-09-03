@@ -4,7 +4,7 @@ import { useTranslation } from '@/context'
 import { SecretListProps } from './types'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate font-medium">{title}</span>
+  <span className="text-cn-1 max-w-full truncate font-medium">{title}</span>
 )
 
 export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret }: SecretListProps): JSX.Element {

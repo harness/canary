@@ -34,12 +34,10 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                 </StepsPaletteItemLayout.Left>
                 <StepsPaletteItemLayout.Right>
                   <StepsPaletteItemLayout.Header>
-                    <StepsPaletteItemLayout.Title className="text-cn-foreground-1">
-                      {connector.name}
-                    </StepsPaletteItemLayout.Title>
+                    <StepsPaletteItemLayout.Title className="text-cn-1">{connector.name}</StepsPaletteItemLayout.Title>
                   </StepsPaletteItemLayout.Header>
                   {showCategory && (
-                    <StepsPaletteItemLayout.Description className="text-cn-foreground-4">
+                    <StepsPaletteItemLayout.Description className="text-cn-3">
                       {connector.category}
                     </StepsPaletteItemLayout.Description>
                   )}

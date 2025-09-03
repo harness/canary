@@ -53,16 +53,14 @@ export const UsersList = () => {
                 <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
-                    <span className="truncate whitespace-nowrap text-sm font-medium text-cn-foreground-1">
-                      {user.uid}
-                    </span>
+                    <span className="truncate whitespace-nowrap text-sm font-medium text-cn-1">{user.uid}</span>
                   </div>
                 </Table.Cell>
 
                 {/* EMAIL */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
-                    <span className="truncate whitespace-nowrap text-sm text-cn-foreground-3">{user.email}</span>
+                    <span className="truncate whitespace-nowrap text-sm text-cn-3">{user.email}</span>
                   </div>
                 </Table.Cell>
 

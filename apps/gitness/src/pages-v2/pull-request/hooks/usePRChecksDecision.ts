@@ -35,8 +35,8 @@ export function usePRChecksDecision({
   })
 
   const [count, setCount] = useState(DEFAULT_COUNTS)
-  const [color, setColor] = useState<string>('text-cn-foreground-success')
-  const [background, setBackground] = useState<string>('text-cn-foreground-success')
+  const [color, setColor] = useState<string>('text-cn-success')
+  const [background, setBackground] = useState<string>('text-cn-success')
   const [message, setMessage] = useState('')
   const [complete, setComplete] = useState(true)
   const [summaryText, setSummaryText] = useState('')
@@ -94,43 +94,43 @@ export function usePRChecksDecision({
       -------- */
       if (_count.error) {
         _status = ExecutionState.ERROR
-        setColor('text-cn-foreground-danger')
-        setBackground('text-cn-foreground-danger')
+        setColor('text-cn-danger')
+        setBackground('text-cn-danger')
         setMessage(`${_count.error}/${total} ${pluralize('check', _count.error)} errored out.`)
       } else if (_count.failure) {
         _status = ExecutionState.FAILURE
-        setColor('text-cn-foreground-danger')
-        setBackground('text-cn-foreground-danger')
+        setColor('text-cn-danger')
+        setBackground('text-cn-danger')
         setMessage(`${_count.failure}/${total} ${pluralize('check', _count.failure)} failed.`)
       } else if (_count.killed) {
         _status = ExecutionState.KILLED
-        setColor('text-cn-foreground-danger')
-        setBackground('text-cn-foreground-danger')
+        setColor('text-cn-danger')
+        setBackground('text-cn-danger')
         setMessage(`${_count.killed}/${total} ${pluralize('check', _count.killed)} killed.`)
       } else if (_count.running) {
         _status = ExecutionState.RUNNING
-        setColor('text-cn-foreground-warning')
-        setBackground('text-cn-foreground-warning')
+        setColor('text-cn-warning')
+        setBackground('text-cn-warning')
         setMessage(`${_count.running}/${total} ${pluralize('check', _count.running)} running.`)
       } else if (_count.pending) {
         _status = ExecutionState.PENDING
-        setColor('text-cn-foreground-3')
-        setBackground('text-cn-foreground-3')
+        setColor('text-cn-3')
+        setBackground('text-cn-3')
         setMessage(`${_count.pending}/${total} ${pluralize('check', _count.pending)} pending.`)
       } else if (_count.skipped) {
         _status = ExecutionState.SKIPPED
-        setColor('text-cn-foreground-3')
-        setBackground('text-cn-foreground-3')
+        setColor('text-cn-3')
+        setBackground('text-cn-3')
         setMessage(`${_count.skipped}/${total} ${pluralize('check', _count.skipped)} skipped.`)
       } else if (_count.failure_ignored) {
         _status = ExecutionState.FAILURE_IGNORED
-        setColor('text-cn-foreground-success')
-        setBackground('text-cn-foreground-success')
+        setColor('text-cn-success')
+        setBackground('text-cn-success')
         setMessage(`${_count.failure_ignored}/${total} ${pluralize('check', _count.failure_ignored)} failure ignored.`)
       } else if (_count.success) {
         _status = ExecutionState.SUCCESS
-        setColor('text-cn-foreground-success')
-        setBackground('text-cn-foreground-success')
+        setColor('text-cn-success')
+        setBackground('text-cn-success')
         setMessage(`${_count.success}/${total} ${pluralize('check', _count.success)} succeeded.`)
       }
 

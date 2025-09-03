@@ -19,6 +19,52 @@ export default {
       }
     },
     extend: {
+      size: {
+        'cn-0': 'var(--cn-size-0)',
+        'cn-1': 'var(--cn-size-1)',
+        'cn-2': 'var(--cn-size-2)',
+        'cn-3': 'var(--cn-size-3)',
+        'cn-4': 'var(--cn-size-4)',
+        'cn-5': 'var(--cn-size-5)',
+        'cn-6': 'var(--cn-size-6)',
+        'cn-7': 'var(--cn-size-7)',
+        'cn-8': 'var(--cn-size-8)',
+        'cn-9': 'var(--cn-size-9)',
+        'cn-10': 'var(--cn-size-10)',
+        'cn-11': 'var(--cn-size-11)',
+        'cn-12': 'var(--cn-size-12)',
+        'cn-14': 'var(--cn-size-14)',
+        'cn-15': 'var(--cn-size-15)',
+        'cn-16': 'var(--cn-size-16)',
+        'cn-17': 'var(--cn-size-17)',
+        'cn-20': 'var(--cn-size-20)',
+        'cn-24': 'var(--cn-size-24)',
+        'cn-25': 'var(--cn-size-25)',
+        'cn-28': 'var(--cn-size-28)',
+        'cn-32': 'var(--cn-size-32)',
+        'cn-36': 'var(--cn-size-36)',
+        'cn-40': 'var(--cn-size-40)',
+        'cn-44': 'var(--cn-size-44)',
+        'cn-48': 'var(--cn-size-48)',
+        'cn-52': 'var(--cn-size-52)',
+        'cn-56': 'var(--cn-size-56)',
+        'cn-58': 'var(--cn-size-58)',
+        'cn-60': 'var(--cn-size-60)',
+        'cn-64': 'var(--cn-size-64)',
+        'cn-72': 'var(--cn-size-72)',
+        'cn-80': 'var(--cn-size-80)',
+        'cn-90': 'var(--cn-size-90)',
+        'cn-96': 'var(--cn-size-96)',
+        'cn-5-half': 'var(--cn-size-5-half)',
+        'cn-6-half': 'var(--cn-size-6-half)',
+        'cn-11-half': 'var(--cn-size-11-half)',
+        'cn-px': 'var(--cn-size-px)',
+        'cn-half': 'var(--cn-size-half)',
+        'cn-1-half': 'var(--cn-size-1-half)',
+        'cn-2-half': 'var(--cn-size-2-half)',
+        'cn-3-half': 'var(--cn-size-3-half)',
+        'cn-4-half': 'var(--cn-size-4-half)'
+      },
       minHeight: {
         'cn-textarea': '7lh'
       },
@@ -113,6 +159,7 @@ export default {
         }
       },
       textColor: {
+        DEFAULT: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
         // based on the lightness
         'cn-1': 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
         'cn-2': 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
@@ -122,8 +169,16 @@ export default {
         'cn-success': 'var(--cn-text-success)',
         'cn-danger': 'var(--cn-text-danger)',
         'cn-warning': 'var(--cn-text-warning)',
-        'cn-brand': 'var(--cn-text-brand)',
+        'cn-merged': 'var(--cn-text-merged)',
         'cn-disabled': 'var(--cn-state-disabled-text)',
+
+        // logo colors
+        'cn-logo-icon': 'var(--cn-logo-icon)',
+        'cn-logo-text': 'var(--cn-logo-text)',
+
+        // brand text
+        'cn-brand': 'var(--cn-text-brand)',
+        'cn-brand-hover': 'var(--cn-comp-link-text-hover)',
 
         // use only for icons
         'cn-icon': {
@@ -618,8 +673,13 @@ export default {
     /** New design system Variants  */
     { pattern: /^bg-cn-background-/ },
     { pattern: /^border-cn-/ },
+
+    // 👉 Remove this after updating platform ui
     { pattern: /^text-cn-foreground-/ },
     { pattern: /^hover:text-cn-foreground-/ },
+
+    { pattern: /^text-cn-/ },
+    { pattern: /^hover:text-cn-/ },
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },

@@ -16,7 +16,7 @@ export const PanelAccordionShowButton: FC<PanelAccordionShowButtonProps> = ({
   if (!isShowButton) return <></>
 
   return (
-    <Text color="foreground-2" className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+    <Text color="foreground-2" className="transition-colors duration-200 group-hover:text-cn-1">
       Show {accordionValues.includes(value) ? 'less' : 'more'}
     </Text>
   )

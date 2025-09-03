@@ -50,7 +50,7 @@ module.exports = {
      * Soon it will be converted to "error"
      * once all the old variants are removed
      */
-    'no-restricted-syntax': ['warn', ...classNameRules],
+    'no-restricted-syntax': ['error', ...classNameRules],
 
     'jsx-a11y/click-events-have-key-events': 'warn',
     'jsx-a11y/no-autofocus': 'off',

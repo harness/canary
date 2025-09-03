@@ -43,7 +43,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
 
       if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length) {
         return {
-          icon: <IconV2 size="lg" name="clock-solid" className="text-cn-foreground-3" />,
+          icon: <IconV2 size="lg" name="clock-solid" className="text-cn-3" />,
           text: 'Some changes were approved by code owners'
         }
       }
@@ -92,7 +92,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
     return (
       <div className="flex items-center gap-x-2">
         {data.icon}
-        <span className="text-2 text-cn-foreground-1">{data.text}</span>
+        <span className="text-2 text-cn-1">{data.text}</span>
       </div>
     )
   }, [
@@ -122,7 +122,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
               // })}
               color={reqCodeOwnerApproval || reqCodeOwnerLatestApproval ? 'danger' : 'warning'}
             />
-            <span className="text-2 text-cn-foreground-1">{'Code owners requested changes to the pull request'}</span>
+            <span className="text-2 text-cn-1">{'Code owners requested changes to the pull request'}</span>
           </div>
         ) : (
           codeOwnerStatus

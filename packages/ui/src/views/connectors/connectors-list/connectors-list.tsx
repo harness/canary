@@ -21,7 +21,7 @@ import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-foreground-1 max-w-full truncate font-medium" title={title}>
+  <span className="text-cn-1 max-w-full truncate font-medium" title={title}>
     {title}
   </span>
 )
@@ -34,7 +34,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
   return isSuccess ? (
     <div className="flex items-center gap-2">
       <IconV2 name="circle" size="2xs" className="text-icons-success" />
-      <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
+      <Text className="group-hover:text-cn-1 transition-colors duration-200">
         {t('views:connectors.success', 'Success')}
       </Text>
     </div>
@@ -54,7 +54,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
       >
         <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
           <IconV2 name="circle" size="2xs" className="text-icons-danger" />
-          <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
+          <Text className="group-hover:text-cn-1 transition-colors duration-200">
             {t('views:connectors.failure', 'Failed')}
           </Text>
         </Button>

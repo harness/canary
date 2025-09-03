@@ -42,7 +42,7 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         })}
       >
         <div
-          className={cn('text-cn-foreground-3 leading-relaxed', {
+          className={cn('text-cn-3 leading-relaxed', {
             'px-3 py-2 bg-cn-background-softgray rounded-lg': self
           })}
         >
@@ -70,7 +70,7 @@ const Typing: React.FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-3">
       {avatar}
-      <div className="flex gap-1 text-lg font-medium text-cn-foreground-success" aria-live="polite">
+      <div className="flex gap-1 text-lg font-medium text-cn-success" aria-live="polite">
         <span className="dot animate-bounce">&middot;</span>
         <span className="dot animate-bounce" style={{ animationDelay: '0.15s' }}>
           &middot;

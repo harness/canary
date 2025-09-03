@@ -81,13 +81,6 @@ const buttonVariants = cva('cn-button', {
       variant: 'outline',
       theme: 'default',
       class: 'cn-button-muted'
-    },
-
-    // Default Ghost
-    {
-      variant: 'ghost',
-      theme: 'default',
-      class: 'cn-button-muted'
     }
   ],
   defaultVariants: {

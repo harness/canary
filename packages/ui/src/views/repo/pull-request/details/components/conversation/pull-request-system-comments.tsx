@@ -179,9 +179,9 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           },
           icon:
             decision === 'approved' ? (
-              <IconV2 name="check-circle-solid" size="md" className="text-cn-foreground-success" />
+              <IconV2 name="check-circle-solid" size="md" className="text-cn-success" />
             ) : (
-              <IconV2 name="warning-triangle-solid" size="md" className="text-cn-foreground-danger" />
+              <IconV2 name="warning-triangle-solid" size="md" className="text-cn-danger" />
             )
         }
 
@@ -390,7 +390,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 
         return {
           header: {
-            description: <span className="text-cn-foreground-3 text-sm">{String(type)}</span>
+            description: <span className="text-cn-3 text-sm">{String(type)}</span>
           }
         }
     }

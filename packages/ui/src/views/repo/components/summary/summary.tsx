@@ -149,11 +149,11 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'text-cn-foreground-warning ml-3'
+                            ? 'text-cn-warning ml-3'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'text-cn-foreground-warning ml-3'
-                              : 'text-cn-foreground-danger ml-3'
-                        : 'text-cn-foreground-2'
+                              ? 'text-cn-warning ml-3'
+                              : 'text-cn-danger ml-3'
+                        : 'text-cn-2'
                     }
                     name={
                       file.status

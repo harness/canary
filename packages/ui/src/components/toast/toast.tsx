@@ -84,7 +84,7 @@ const ToastTitle = forwardRef<
   ElementRef<typeof ToastPrimitives.Title>,
   ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Title ref={ref} className={cn('text-sm leading-tight text-cn-foreground-1', className)} {...props} />
+  <ToastPrimitives.Title ref={ref} className={cn('text-sm leading-tight text-cn-1', className)} {...props} />
 ))
 ToastTitle.displayName = ToastPrimitives.Title.displayName
 
@@ -92,11 +92,7 @@ const ToastDescription = forwardRef<
   ElementRef<typeof ToastPrimitives.Description>,
   ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Description
-    ref={ref}
-    className={cn('text-sm leading-tight text-cn-foreground-1', className)}
-    {...props}
-  />
+  <ToastPrimitives.Description ref={ref} className={cn('text-sm leading-tight text-cn-1', className)} {...props} />
 ))
 ToastDescription.displayName = ToastPrimitives.Description.displayName
 

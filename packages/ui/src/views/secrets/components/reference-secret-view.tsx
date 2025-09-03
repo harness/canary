@@ -21,7 +21,7 @@ export const ReferenceSecretView: React.FC<ReferenceSecretViewProps> = ({ onTest
           Test
         </Button>
       </div>
-      <Caption className="text-cn-foreground-4">
+      <Caption className="text-cn-3">
         Enter the path to an existing secret in your Vault instance. Click Test to verify the secret exists.
       </Caption>
     </div>

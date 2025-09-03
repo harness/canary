@@ -90,7 +90,7 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
                     className="mb-0 flex grow cursor-[inherit] justify-between"
                   />
                   {allowShowWarning && errorPerGroup[idx] ? (
-                    <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
+                    <IconV2 name="warning-triangle" className="text-cn-danger" />
                   ) : null}
                 </Layout.Horizontal>
               </Accordion.Trigger>

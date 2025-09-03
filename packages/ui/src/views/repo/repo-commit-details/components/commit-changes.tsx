@@ -101,7 +101,7 @@ const CommitsAccordion: FC<{
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical align="center" className="w-full py-5">
                     <Button
-                      className="text-cn-foreground-accent"
+                      className="text-cn-brand"
                       variant="link"
                       size="sm"
                       aria-label="show diff"

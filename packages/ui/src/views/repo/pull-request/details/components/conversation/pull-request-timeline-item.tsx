@@ -212,7 +212,6 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   content,
   icon,
   isLast = false,
-  hideIconBorder,
   hideReplySection = false,
   contentWrapperClassName,
   contentClassName,
@@ -331,7 +330,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     <>
       <div id={id}>
         <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
-          {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
+          {!!icon && <NodeGroup.Icon>{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
             {!!header.length && (

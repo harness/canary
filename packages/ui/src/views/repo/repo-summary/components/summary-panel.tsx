@@ -103,7 +103,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           {details?.map(item => (
             <Link variant="secondary" key={item.id} to={item.to}>
               <Layout.Flex className="cursor-pointer gap-1.5" align="center" gap="2xs">
-                <IconV2 name={item.iconName} size="xs" className="text-cn-foreground-2" />
+                <IconV2 name={item.iconName} size="xs" className="text-cn-2" />
                 <Text color="foreground-1">{item.name}</Text>
                 <CounterBadge>{item.count}</CounterBadge>
               </Layout.Flex>

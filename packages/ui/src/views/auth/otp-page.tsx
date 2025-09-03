@@ -87,15 +87,14 @@ export function OTPPage({
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-foreground-1">
+      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-1">
         <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
           <Text className="mt-3" variant="heading-section" align="center" as="h1">
             Verify your email
           </Text>
           <Text className="mt-0.5" align="center">
-            Please enter the verification code we’ve sent to your email{' '}
-            <span className="text-cn-foreground-1">{email}</span>
+            Please enter the verification code we’ve sent to your email <span className="text-cn-1">{email}</span>
           </Text>
         </div>
         {serverError && (

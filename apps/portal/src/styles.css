@@ -1,5 +1,5 @@
 body {
-  @apply text-cn-foreground-2 text-base overscroll-none !important;
+  @apply text-cn-2 text-base overscroll-none !important;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
   font-smooth: auto;
@@ -64,15 +64,15 @@ ul.top-level ul {
 }
 
 ul.top-level li {
-  @apply font-normal text-cn-foreground-2 text-sm border-none p-0 m-0;
+  @apply font-normal text-cn-2 text-sm border-none p-0 m-0;
 }
 
 ul.top-level li a {
-  @apply py-1 px-2 m-0 text-cn-foreground-3 hover:text-cn-foreground-1;
+  @apply py-1 px-2 m-0 text-cn-3 hover:text-cn-1;
 }
 
 ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-cn-background-1 rounded-md text-cn-foreground-1;
+  @apply font-normal bg-cn-background-1 rounded-md text-cn-1;
 }
 
 ul.top-level li details summary {
@@ -84,11 +84,11 @@ ul.top-level li details summary .group-label {
 }
 
 ul.top-level summary .group-label span {
-  @apply font-normal text-sm text-cn-foreground-disabled;
+  @apply font-normal text-sm text-cn-disabled;
 }
 
 ul.top-level summary svg {
-  @apply font-normal text-cn-foreground-disabled text-lg;
+  @apply font-normal text-cn-disabled text-lg;
 }
 
 /* Right-hand page sidebar overrides */
@@ -98,7 +98,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel h2 {
-  @apply font-normal text-cn-foreground-2 text-sm;
+  @apply font-normal text-cn-2 text-sm;
 }
 
 .right-sidebar-panel ul {
@@ -106,7 +106,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li a {
-  @apply m-0 p-0 text-cn-foreground-3;
+  @apply m-0 p-0 text-cn-3;
 }
 
 .right-sidebar-panel li ul {
@@ -144,7 +144,7 @@ pre.prism-code {
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-cn-3 rounded-md text-2 text-cn-foreground-3;
+  @apply border border-cn-3 rounded-md text-2 text-cn-3;
 }
 
 .pagination-links a .link-title {

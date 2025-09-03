@@ -93,7 +93,7 @@ export default {
 
     // Head cell
     '&-head': {
-      '@apply text-cn-foreground-4 text-left align-middle font-medium overflow-hidden': '',
+      '@apply text-cn-3 text-left align-middle font-medium overflow-hidden': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
       paddingLeft: 'var(--cn-table-header-px)',
@@ -148,7 +148,7 @@ export default {
 
     // Caption
     '&-caption': {
-      '@apply text-cn-foreground-3 mt-4 text-sm': ''
+      '@apply text-cn-3 mt-4 text-sm': ''
     }
   }
 }

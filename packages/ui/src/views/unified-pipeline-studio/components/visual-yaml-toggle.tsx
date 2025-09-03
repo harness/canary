@@ -19,7 +19,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
   const prefixIcon = !isYamlValid ? 'xmark-circle-solid' : undefined
 
   const prefixIconProps: IconPropsV2 | undefined = !isYamlValid
-    ? { name: 'xmark-circle-solid', className: 'text-cn-foreground-danger' }
+    ? { name: 'xmark-circle-solid', className: 'text-cn-danger' }
     : undefined
 
   return (

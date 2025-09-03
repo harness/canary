@@ -152,7 +152,7 @@
 
   &.wmde-markdown {
     font: var(--cn-comp-markdown-content-paragraph);
-    @apply text-cn-foreground-2 !max-w-full;
+    @apply text-cn-2 !max-w-full;
 
     &::-webkit-scrollbar-thumb {
       background-color: var(--cn-comp-scrollbar-thumb);
@@ -164,7 +164,7 @@
     h4,
     h5,
     h6 {
-      @apply text-cn-foreground-1 border-none pb-0;
+      @apply text-cn-1 border-none pb-0;
     }
 
     h1 {
@@ -206,7 +206,7 @@
     }
 
     li {
-      @apply marker:text-cn-foreground-2 my-cn-2xs ps-0;
+      @apply marker:text-cn-2 my-cn-2xs ps-0;
     }
 
     ol {
@@ -229,11 +229,11 @@
 
     a {
       font: var(--cn-comp-markdown-content-paragraph);
-      @apply text-cn-foreground-accent hover:text-[var(--cn-comp-link-text-hover)] hover:no-underline;
+      @apply text-cn-brand hover:!text-cn-brand-hover hover:no-underline;
     }
 
     code {
-      @apply font-body-code px-cn-2xs py-cn-4xs text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] !text-[var(--cn-set-blue-soft-text)] before:hidden after:hidden;
+      @apply font-body-code px-cn-2xs py-cn-4xs !text-cn-blue-soft text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] before:hidden after:hidden;
     }
 
     :is(h1, h2, h3, h4, h5, h6) > code {
@@ -243,27 +243,27 @@
 
     strong {
       font: var(--cn-comp-markdown-content-emphasized);
-      @apply text-cn-foreground-2;
+      @apply text-cn-2;
     }
 
     pre {
-      @apply font-body-code bg-cn-background-1 border-cn-3 text-cn-foreground-1 mb-0 rounded-none border-0 p-0;
+      @apply font-body-code bg-cn-background-1 border-cn-3 text-cn-1 mb-0 rounded-none border-0 p-0;
 
       code {
-        @apply bg-cn-background-1 !text-cn-foreground-1 rounded-none p-0;
+        @apply bg-cn-background-1 !text-cn-1 rounded-none p-0;
       }
     }
 
     blockquote {
       font: var(--cn-comp-markdown-content-paragraph);
-      @apply text-cn-foreground-3 my-cn-md relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm before:bg-[var(--cn-border-2)];
+      @apply text-cn-3 my-cn-md relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm before:bg-[var(--cn-border-2)];
     }
 
     table {
       @apply my-cn-md;
 
       th {
-        @apply text-cn-foreground-1 font-heading-small border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10;
+        @apply text-cn-1 font-heading-small border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10;
       }
 
       td {

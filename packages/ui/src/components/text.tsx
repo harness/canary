@@ -66,12 +66,13 @@ export const textVariants = cva('', {
     },
     color: {
       inherit: 'text-inherit',
-      'foreground-1': 'text-cn-foreground-1',
-      'foreground-2': 'text-cn-foreground-2',
-      'foreground-3': 'text-cn-foreground-3',
+      'foreground-1': 'text-cn-1',
+      'foreground-2': 'text-cn-2',
+      'foreground-3': 'text-cn-3',
       disabled: 'text-cn-disabled',
       success: 'text-cn-success',
       warning: 'text-cn-warning',
+      merged: 'text-cn-merged',
       danger: 'text-cn-danger',
       accent: 'text-cn-brand'
     },

@@ -46,9 +46,7 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
           </Dialog.Description>
         </Dialog.Header>
 
-        <Dialog.Body>
-          {deleteUserError && <span className="text-2 text-cn-foreground-danger">{deleteUserError}</span>}
-        </Dialog.Body>
+        <Dialog.Body>{deleteUserError && <span className="text-2 text-cn-danger">{deleteUserError}</span>}</Dialog.Body>
 
         <Dialog.Footer>
           <ButtonLayout>

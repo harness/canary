@@ -275,7 +275,7 @@ export function MarkdownViewer({
                       <div className="relative flex w-full bg-transparent">
                         <div className="bg-cn-background-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
-                            <span key={i} className="text-cn-foreground-7 block pr-3 pt-[0.5px] text-sm">
+                            <span key={i} className="text-cn-2 block pr-3 pt-[0.5px] text-sm">
                               {i + 1}
                             </span>
                           ))}

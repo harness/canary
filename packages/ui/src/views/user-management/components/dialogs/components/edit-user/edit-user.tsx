@@ -85,7 +85,7 @@ export function EditUserDialog({ handleUpdateUser, open, onClose }: EditUserDial
               label={t('views:userManagement.displayName', 'Display name')}
             />
 
-            {updateUserError && <span className="text-2 text-cn-foreground-danger">{updateUserError}</span>}
+            {updateUserError && <span className="text-2 text-cn-danger">{updateUserError}</span>}
           </FormWrapper>
         </Dialog.Body>
 

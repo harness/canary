@@ -158,18 +158,18 @@ export function determineStatusMessage(
     ) {
       title = 'Some required checks have failed'
       content = `${message}`
-      color = 'text-cn-foreground-danger'
+      color = 'text-cn-danger'
       status = 'failure'
     } else if (checks.some(check => check.required && check.check.status === ExecutionState.PENDING)) {
       title = 'Some required checks are pending'
       status = 'pending'
       content = `${message}`
-      color = 'text-cn-foreground-warning'
+      color = 'text-cn-warning'
     } else if (checks.some(check => check.required && check.check.status === ExecutionState.RUNNING)) {
       title = 'Some required checks are running'
       status = 'running'
       content = `${message}`
-      color = 'text-cn-foreground-warning'
+      color = 'text-cn-warning'
     } else if (
       checks.every(
         check =>
@@ -179,12 +179,12 @@ export function determineStatusMessage(
     ) {
       title = 'All checks have succeeded'
       content = `${message}`
-      color = 'text-cn-foreground-3'
+      color = 'text-cn-3'
     } else {
       title = 'All required checks passed'
       content = `${message}`
       status = 'success'
-      color = 'text-cn-foreground-success'
+      color = 'text-cn-success'
     }
   } else {
     if (
@@ -193,17 +193,17 @@ export function determineStatusMessage(
       title = 'Some checks have failed'
       content = ` ${message}`
       status = 'failure'
-      color = 'text-cn-foreground-danger'
+      color = 'text-cn-danger'
     } else if (checks.some(check => check.check.status === ExecutionState.PENDING)) {
       title = 'Some checks haven’t been completed yet'
       status = 'pending'
       content = `${message}`
-      color = 'text-cn-foreground-warning'
+      color = 'text-cn-warning'
     } else if (checks.some(check => check.check.status === ExecutionState.RUNNING)) {
       title = 'Some checks are running'
       content = `${message}`
       status = 'running'
-      color = 'text-cn-foreground-warning'
+      color = 'text-cn-warning'
     } else if (
       checks.every(
         check =>
@@ -213,7 +213,7 @@ export function determineStatusMessage(
     ) {
       title = 'All checks have succeeded'
       content = `${message}`
-      color = 'text-cn-foreground-3'
+      color = 'text-cn-3'
       status = 'success'
     }
   }
@@ -407,7 +407,7 @@ export const extractInfoForPRPanelChanges = ({
   ) {
     if (mergeBlockedViaRule) {
       title = 'Base branch does not allow updates'
-      statusColor = 'text-cn-foreground-danger'
+      statusColor = 'text-cn-danger'
       statusIcon = 'warning'
     } else if (
       codeOwnerChangeReqEntries &&
@@ -416,22 +416,22 @@ export const extractInfoForPRPanelChanges = ({
     ) {
       title = 'Changes requested by code owner'
       statusMessage = 'Code owner requested changes'
-      statusColor = 'text-cn-foreground-danger'
+      statusColor = 'text-cn-danger'
       statusIcon = 'warning'
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0 && reqNoChangeReq) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
-      statusColor = 'text-cn-foreground-danger'
+      statusColor = 'text-cn-danger'
       statusIcon = 'error'
     } else if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Latest changes are pending approval from code owners'
-      statusColor = 'text-cn-foreground-warning'
+      statusColor = 'text-cn-warning'
       statusIcon = 'pending'
     } else if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
       title = 'Approvals pending from code owners'
       statusMessage = 'Changes are pending approval from code owners'
-      statusColor = 'text-cn-foreground-warning'
+      statusColor = 'text-cn-warning'
       statusIcon = 'pending'
     } else if (
       minReqLatestApproval &&
@@ -441,33 +441,33 @@ export const extractInfoForPRPanelChanges = ({
     ) {
       title = 'Approvals pending'
       statusMessage = 'Latest changes are pending approval from required reviewers'
-      statusColor = 'text-cn-foreground-warning'
+      statusColor = 'text-cn-warning'
       statusIcon = 'pending'
     } else if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
       title = 'Approvals pending'
       statusMessage = 'Latest changes are pending approval from default reviewers'
-      statusColor = 'text-cn-foreground-warning'
+      statusColor = 'text-cn-warning'
       statusIcon = 'pending'
     } else if (minApproval && approvedEvaluations && approvedEvaluations?.length < minApproval && minApproval > 0) {
       title = 'Approvals pending'
       statusMessage = 'Changes are pending approval from required reviewers'
 
-      statusColor = 'text-cn-foreground-warning'
+      statusColor = 'text-cn-warning'
       statusIcon = 'pending'
     } else if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
       title = 'Approvals pending'
       statusMessage = 'Changes are pending approval from default reviewers'
-      statusColor = 'text-cn-foreground-warning'
+      statusColor = 'text-cn-warning'
       statusIcon = 'pending'
     } else if (reqCodeOwnerLatestApproval && latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Latest changes were approved by code owners'
-      statusColor = 'text-cn-foreground-success'
+      statusColor = 'text-cn-success'
       statusIcon = 'success'
     } else if (reqCodeOwnerApproval && codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by code owners'
-      statusColor = 'text-cn-foreground-success'
+      statusColor = 'text-cn-success'
       statusIcon = 'success'
     } else if (
       minReqLatestApproval &&
@@ -477,22 +477,22 @@ export const extractInfoForPRPanelChanges = ({
     ) {
       title = 'Changes approved'
       statusMessage = 'Latest changes were approved by required reviewers'
-      statusColor = 'text-cn-foreground-success'
+      statusColor = 'text-cn-success'
       statusIcon = 'success'
     } else if (minApproval && minApproval > 0 && approvedEvaluations && approvedEvaluations?.length >= minApproval) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by required reviewers'
-      statusColor = 'text-cn-foreground-success'
+      statusColor = 'text-cn-success'
       statusIcon = 'success'
     } else if (approvedEvaluations && approvedEvaluations?.length > 0) {
       title = 'Changes approved'
       statusMessage = 'Changes were approved by reviewers'
-      statusColor = 'text-cn-foreground-success'
+      statusColor = 'text-cn-success'
       statusIcon = 'success'
     } else {
       title = 'No reviews required'
       statusMessage = 'Pull request can be merged without any reviews'
-      statusColor = 'text-cn-foreground-3'
+      statusColor = 'text-cn-3'
       statusIcon = 'success'
     }
   } else {

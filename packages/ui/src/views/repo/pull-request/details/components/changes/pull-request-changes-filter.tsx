@@ -229,7 +229,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
             <div className="py-1">
-              <FileViewGauge.Content className="text-cn-foreground-3">
+              <FileViewGauge.Content className="text-cn-3">
                 {viewedFiles}/{pullReqStats?.files_changed} file{pullReqStats?.files_changed === 1 ? '' : 's'} viewed
               </FileViewGauge.Content>
               <FileViewGauge.Bar total={pullReqStats?.files_changed || 0} filled={viewedFiles} />

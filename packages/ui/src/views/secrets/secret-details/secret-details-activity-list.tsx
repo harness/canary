@@ -40,14 +40,14 @@ export function SecretActivityList({ secretActivity, isLoading }: SecretActivity
         {secretActivity.map(activity => (
           <Table.Row key={activity.event} className="cursor-pointer">
             <Table.Cell className="w-2/4 content-center truncate">
-              <Text variant="body-normal" className="text-cn-foreground-2">
+              <Text variant="body-normal" className="text-cn-2">
                 {activity.event}
               </Text>
             </Table.Cell>
             <Table.Cell>
               <Layout.Horizontal>
                 <IconV2 name="connectors" size="sm" />
-                <Text variant="body-normal" className="text-cn-foreground-2">
+                <Text variant="body-normal" className="text-cn-2">
                   {activity.type}
                 </Text>
               </Layout.Horizontal>

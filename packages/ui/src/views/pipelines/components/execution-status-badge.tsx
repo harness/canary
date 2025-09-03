@@ -18,15 +18,15 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 rounded-full bg-cn-background-softgray" />
-          <span className="text-cn-foreground-disabled">Pending</span>
+          <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-cn-1 bg-cn-background-softgray/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
             <IconV2 name="clock-solid" />
-            <span className="text-cn-foreground-disabled">Pending</span>
+            <span className="text-cn-disabled">Pending</span>
           </div>
-          {duration && <span className="text-cn-foreground-disabled">{duration}</span>}
+          {duration && <span className="text-cn-disabled">{duration}</span>}
         </div>
       )
     case PipelineExecutionStatus.RUNNING:
@@ -38,7 +38,7 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       ) : (
         <div className="border-studio-3/[0.12] bg-studio-3/10 flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
           <div className="flex items-center gap-1">
-            <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
+            <IconV2 name="loader" className="animate-spin text-cn-warning" />
             <span className="text-studio-3">Running</span>
           </div>
           {duration && <span className="text-studio-3">{duration}</span>}
@@ -50,30 +50,30 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 rounded-full bg-[#ED5E5E]" />
-          <span className="text-[#ED5E5E]">Failed</span>
+          <span className="text-cn-danger">Failed</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-[#F76E6E1F] bg-[#F76E6E1A]/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
-            <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />
-            <span className="text-[#ED5E5E]">Failed</span>
+            <IconV2 name="xmark-circle-solid" className="text-cn-danger" />
+            <span className="text-cn-danger">Failed</span>
           </div>
-          {duration && <span className="text-[#ED5E5E]">{duration}</span>}
+          {duration && <span className="text-cn-danger">{duration}</span>}
         </div>
       )
     case PipelineExecutionStatus.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 rounded-full bg-cn-background-success" />
-          <span className="text-cn-foreground-success">Success</span>
+          <span className="text-cn-success">Success</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md border border-solid border-cn-success bg-cn-background-success/[0.1] px-1 py-0.5">
-          <div className="flex items-center gap-0.5 text-cn-foreground-success">
+          <div className="flex items-center gap-0.5 text-cn-success">
             <IconV2 name="check-circle-solid" />
             <span>Success</span>
           </div>
-          {duration && <span className="text-cn-foreground-success">{duration}</span>}
+          {duration && <span className="text-cn-success">{duration}</span>}
         </div>
       )
     case PipelineExecutionStatus.SKIPPED:

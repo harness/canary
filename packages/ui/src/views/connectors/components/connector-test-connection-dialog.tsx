@@ -64,7 +64,7 @@ export const ConnectorTestConnectionDialog = ({
       <div className="inline-flex items-center gap-2">
         <div className={cn('size-2 rounded-full', currentStatus?.color)} />
 
-        <span className="text-cn-foreground-1">{currentStatus?.status}</span>
+        <span className="text-cn-1">{currentStatus?.status}</span>
       </div>
     )
   }
@@ -75,10 +75,10 @@ export const ConnectorTestConnectionDialog = ({
           <Dialog.Title>{title}</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
-          <div className="text-cn-foreground-4 text-sm font-normal">
+          <div className="text-cn-3 text-sm font-normal">
             <Layout.Horizontal gap="xs" align="center">
               <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
-              <span className="text-cn-foreground-1">{apiUrl}</span>
+              <span className="text-cn-1">{apiUrl}</span>
 
               {status === 'error' && (
                 <Button type="button" variant="outline" className="ml-auto">
@@ -89,7 +89,7 @@ export const ConnectorTestConnectionDialog = ({
             <Layout.Horizontal gap="xs">
               <span>{t('views:connectors.status', 'Status') + ':'}</span>
 
-              <div className="text-cn-foreground-1">
+              <div className="text-cn-1">
                 <ConnectivityStatus status={status as ExecutionState} />
               </div>
             </Layout.Horizontal>
@@ -99,12 +99,12 @@ export const ConnectorTestConnectionDialog = ({
             <Layout.Horizontal gap="xs" align="center" className="text-center">
               {(status === 'success' || status === 'error') && (
                 <IconV2
-                  className={status === 'success' ? 'text-cn-foreground-success' : 'text-cn-foreground-danger'}
+                  className={status === 'success' ? 'text-cn-success' : 'text-cn-danger'}
                   name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
                   size="xs"
                 />
               )}
-              <div className="letter-spacing-1 text-cn-foreground-1 text-base font-medium">{description}</div>
+              <div className="letter-spacing-1 text-cn-1 text-base font-medium">{description}</div>
             </Layout.Horizontal>
 
             {status === 'running' && (
@@ -117,17 +117,17 @@ export const ConnectorTestConnectionDialog = ({
                 {errorMessage && (
                   <div className="mb-1 mt-2">
                     <div className="gap-x-0 space-x-2">
-                      <span className="text-cn-foreground-4 text-sm font-normal">
+                      <span className="text-cn-3 text-sm font-normal">
                         {errorMessage}
                         {viewDocClick && (
-                          <span className="text-cn-foreground-accent ml-1">
+                          <span className="text-cn-brand ml-1">
                             <Button
                               variant="link"
                               onClick={viewDocClick}
-                              className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-foreground-accent')}
+                              className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-brand')}
                             >
                               {t('views:connectors.viewDocumentation', 'View Documentation')}
-                              <IconV2 name="open-new-window" className="text-cn-foreground-accent ml-1" size="2xs" />
+                              <IconV2 name="open-new-window" className="text-cn-brand ml-1" size="2xs" />
                             </Button>
                           </span>
                         )}

@@ -42,7 +42,7 @@ function createButtonVariantStyles() {
       } else {
         // Default styles
         style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
-        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text) !important`
         style[`borderColor`] =
           `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 

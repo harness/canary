@@ -68,9 +68,7 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInput
           <Layout.Horizontal align="center">
             <InputLabel label={label} required={required} className="mb-0" />
             <FormCaption>{description}</FormCaption>
-            {allowShowWarning && groupError ? (
-              <IconV2 name="warning-triangle" className="text-cn-foreground-danger" />
-            ) : null}
+            {allowShowWarning && groupError ? <IconV2 name="warning-triangle" className="text-cn-danger" /> : null}
           </Layout.Horizontal>
         </Accordion.Trigger>
         <Accordion.Content className="mt-4 space-y-4" forceMount={forceMount}>

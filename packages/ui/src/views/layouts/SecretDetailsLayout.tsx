@@ -30,7 +30,7 @@ const getSecretInfo = (created?: string | number, lastUsed?: string | number, la
   return (
     <Layout.Horizontal gap="3xl">
       <Layout.Vertical gap="sm">
-        <Text variant="body-normal" className="text-cn-foreground-3">
+        <Text variant="body-normal" className="text-cn-3">
           Created
         </Text>
         {created ? (
@@ -40,7 +40,7 @@ const getSecretInfo = (created?: string | number, lastUsed?: string | number, la
         )}
       </Layout.Vertical>
       <Layout.Vertical gap="sm">
-        <Text variant="body-normal" className="text-cn-foreground-3">
+        <Text variant="body-normal" className="text-cn-3">
           Last used
         </Text>
         {lastUsed ? (
@@ -50,7 +50,7 @@ const getSecretInfo = (created?: string | number, lastUsed?: string | number, la
         )}
       </Layout.Vertical>
       <Layout.Vertical gap="sm">
-        <Text variant="body-normal" className="text-cn-foreground-3">
+        <Text variant="body-normal" className="text-cn-3">
           Last updated
         </Text>
         {lastUpdated ? (

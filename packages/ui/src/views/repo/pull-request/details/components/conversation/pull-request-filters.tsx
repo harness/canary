@@ -15,9 +15,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
-        <span className="text-cn-foreground-2 transition-colors duration-200 group-hover:text-cn-foreground-1">
-          {selectedItem.label}
-        </span>
+        <span className="text-cn-2 transition-colors duration-200 group-hover:text-cn-1">{selectedItem.label}</span>
         <IconV2 name="nav-solid-arrow-down" size="2xs" className="chevron-down text-icons-7" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end">

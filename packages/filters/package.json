@@ -47,8 +47,8 @@
   "license": "Apache-2.0",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint ./src --fix",
-      "prettier ./src --write"
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }

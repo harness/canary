@@ -51,7 +51,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md,mdx,astro}": [
       "astro check",
-      "prettier ./src --write"
+      "prettier --write"
     ]
   }
 }

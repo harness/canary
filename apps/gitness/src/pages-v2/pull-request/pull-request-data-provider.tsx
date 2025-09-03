@@ -15,7 +15,6 @@ import { RepoRepositoryOutput } from '@harnessio/ui/views'
 import { eventManager } from '../../framework/event/EventManager'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import useSpaceSSEWithPubSub from '../../framework/hooks/useSpaceSSEWithPubSub'
 import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
 import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types'
@@ -116,11 +115,6 @@ const PullRequestDataProvider: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>
       setRefreshNeeded(false)
     }
   }, [pullRequestTab, setRefreshNeeded])
-
-  // Use the singleton SSE connection manager for a persistent connection
-  useSpaceSSEWithPubSub({
-    space: spaceURL
-  })
 
   // Subscribe to the specific event
   useEffect(() => {

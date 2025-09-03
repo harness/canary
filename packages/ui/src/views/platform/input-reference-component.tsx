@@ -61,6 +61,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   className?: string
 
   /**
+   * Additional className for styling Control Group
+   */
+  wrapperClassName?: string
+
+  /**
    * Icon to display at the start of the input
    */
   icon?: IconPropsV2['name']
@@ -105,6 +110,7 @@ export const InputReference = <T,>({
   optional = false,
   renderValue,
   suffix,
+  wrapperClassName = '',
   ...props
 }: InputReferenceProps<T>) => {
   // Determine what to display: rendered value if value exists, otherwise placeholder
@@ -128,7 +134,7 @@ export const InputReference = <T,>({
   const state = disabled ? 'disabled' : 'default'
 
   return (
-    <ControlGroup>
+    <ControlGroup className={wrapperClassName}>
       {!!label && (
         <Label className="mb-2" disabled={disabled} optional={optional}>
           {label}

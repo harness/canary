@@ -33,10 +33,10 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
     <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-2/5">{t('views:secretReference.entity', 'Entity')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:secretReference.type', 'Type')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:secretReference.scope', 'Scope')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:secretReference.created', 'Created')}</Table.Head>
+          <Table.Head className="w-2/5">{t('views:entityReference.entity', 'Entity')}</Table.Head>
+          <Table.Head className="w-1/5">{t('views:entityReference.type', 'Type')}</Table.Head>
+          <Table.Head className="w-1/5">{t('views:entityReference.scope', 'Scope')}</Table.Head>
+          <Table.Head className="w-1/5">{t('views:entityReference.created', 'Created')}</Table.Head>
         </Table.Row>
       </Table.Header>
       <Table.Body>

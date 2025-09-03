@@ -64,16 +64,13 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <>
       <Layout.Vertical gap="md" className={cn(className)}>
-        <Layout.Horizontal gap="xs" align="end">
-          <Text as="h1" variant="heading-section" className="gap-x-cn-xs flex items-center break-all">
-            {title}
-            <Text as="span" variant="heading-section" color="foreground-3">
-              #{number}
-            </Text>
+        <Text as="h1" variant="heading-section" className="gap- break-all">
+          {title}
+          <Text as="span" variant="heading-section" color="foreground-3" className="ml-cn-xs inline-block">
+            #{number}
           </Text>
-
           <Button
-            className="group"
+            className="ml-cn-xs group inline-flex"
             variant="ghost"
             iconOnly
             aria-label="Edit"
@@ -83,15 +80,14 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           >
             <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
           </Button>
-        </Layout.Horizontal>
+        </Text>
 
         <Layout.Horizontal gap="sm" align="center">
-          <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme}>
-            {stateObject.text}
-          </StatusBadge>
-
           <Layout.Horizontal align="center" gap="xs" wrap="wrap">
             <Layout.Horizontal gap="2xs" align="center" wrap="wrap">
+              <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme} className="mr-1">
+                {stateObject.text}
+              </StatusBadge>
               <Avatar name={author?.display_name || author?.email || ''} rounded size="sm" />
               <Text variant="body-single-line-strong" color="foreground-1">
                 {author?.display_name || author?.email || ''}
@@ -106,9 +102,9 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
               <Text variant="body-single-line-normal">from</Text>
               <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+              <Separator orientation="vertical" className="mx-0.5 h-4" />
+              <TimeAgoCard timestamp={created} />
             </Layout.Horizontal>
-            <Separator orientation="vertical" className="h-4" />
-            <TimeAgoCard timestamp={created} />
           </Layout.Horizontal>
         </Layout.Horizontal>
       </Layout.Vertical>

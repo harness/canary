@@ -1,6 +1,5 @@
 import { expect, Page, PageAssertionsToHaveScreenshotOptions, TestDetails } from '@playwright/test'
 
-import { VIEW_PREVIEW_BASE_URL } from '../../../playwright.config'
 import { SCREENSHOT_TAG, URL_ANNOTATION } from './config'
 import { CONTENT_SELECTOR } from './selectors'
 
@@ -12,7 +11,7 @@ export const testDetails = (pageRoute: string): TestDetails => ({
   tag: SCREENSHOT_TAG,
   annotation: {
     type: URL_ANNOTATION,
-    description: `${VIEW_PREVIEW_BASE_URL}${pageRoute}`
+    description: `${process.env.VIEW_PREVIEW_BASE_URL}${pageRoute}`
   }
 })
 

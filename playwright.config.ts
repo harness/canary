@@ -1,19 +1,17 @@
 import { defineConfig, devices } from '@playwright/test'
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+import { config } from 'dotenv'
 
-export const VIEW_PREVIEW_BASE_URL: string = 'https://harness-xd-review.netlify.app/view-preview/'
-export const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
+config()
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
+
 export default defineConfig({
   /* Directory that will be recursively scanned for test files */
   testDir: './packages/tests',
@@ -54,7 +52,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: VIEW_PREVIEW_BASE_URL,
+    baseURL: process.env.VIEW_PREVIEW_BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

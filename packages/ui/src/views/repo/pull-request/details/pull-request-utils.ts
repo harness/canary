@@ -317,9 +317,8 @@ export const jumpToFile = (
     const diffDOM = innerBlockDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
 
     outerBlockDOM?.scrollIntoView(false)
-    innerBlockDOM?.scrollIntoView(false)
-    const diffDomScroll: boolean | ScrollIntoViewOptions = commentId ? true : { block: 'center', inline: 'center' }
-    diffDOM?.scrollIntoView(diffDomScroll)
+    const innerBlockDomScroll: boolean | ScrollIntoViewOptions = { block: 'center', inline: 'center' }
+    innerBlockDOM?.scrollIntoView(innerBlockDomScroll)
 
     if (diffDOM && commentId) {
       dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {
@@ -329,15 +328,8 @@ export const jumpToFile = (
     }
 
     taskId = scheduleTask(() => {
-      if (loopCount++ < 100) {
-        if (
-          !outerBlockDOM ||
-          !innerBlockDOM ||
-          !diffDOM ||
-          !isInViewport(outerBlockDOM) ||
-          !isInViewport(innerBlockDOM) ||
-          !isInViewport(diffDOM)
-        ) {
+      if (loopCount++ < 25) {
+        if (!outerBlockDOM || !innerBlockDOM || !isInViewport(outerBlockDOM) || !isInViewport(innerBlockDOM)) {
           dispatchScrollIntoView()
         } else {
           cancelTask(taskId)

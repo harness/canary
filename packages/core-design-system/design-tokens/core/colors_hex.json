@@ -106,7 +106,7 @@
   },
   "blue": {
     "25": {
-      "$value": "#f9faff"
+      "$value": "#f5f6ff"
     },
     "50": {
       "$value": "#e9edff"
@@ -586,7 +586,7 @@
   },
   "purple": {
     "25": {
-      "$value": "#fcf9fd"
+      "$value": "#fcf6fd"
     },
     "50": {
       "$value": "#f1e6f9"

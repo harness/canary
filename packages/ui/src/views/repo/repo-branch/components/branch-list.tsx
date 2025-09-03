@@ -68,7 +68,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <Table.Head className="w-[15%] whitespace-nowrap">
             <Text variant="caption-strong">{t('views:repos.pullRequest', 'Pull Request')}</Text>
           </Table.Head>
-          <Table.Head className="w-[7%]" />
+          <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>
 
@@ -100,7 +100,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 />
               </Table.Cell>
 
-              <Table.Cell disableLink>
+              <Table.Cell>
                 <Layout.Flex align="center" gapX="xs">
                   <AvatarWithTooltip name={branch?.user?.name} src={branch?.user?.avatarUrl} size="xs" rounded />
                   <TimeAgoCard
@@ -138,13 +138,15 @@ export const BranchesList: FC<BranchListPageProps> = ({
               {/* calculated divergence bar & default branch */}
               <Table.Cell>
                 {branch?.behindAhead?.default ? (
-                  <Tag className="m-auto" value={t('views:repos.default', 'Default')} rounded />
+                  <Layout.Flex>
+                    <Tag className="m-auto" value={t('views:repos.default', 'Default')} rounded />
+                  </Layout.Flex>
                 ) : (
                   <DivergenceGauge className="m-auto" behindAhead={branch?.behindAhead || {}} />
                 )}
               </Table.Cell>
 
-              <Table.Cell disableLink>
+              <Table.Cell>
                 {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                   <Link
                     noHoverUnderline
@@ -180,7 +182,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   </Link>
                 )}
               </Table.Cell>
-              <Table.Cell className="text-right" disableLink>
+              <Table.Cell className="text-right">
                 <MoreActionsTooltip
                   iconName="more-horizontal"
                   actions={[

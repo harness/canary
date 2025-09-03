@@ -73,6 +73,11 @@ export default {
       '@apply border-b border-cn-3 transition-colors overflow-hidden': '',
       '@apply last:border-b-0': '',
 
+      '&:has(.cn-table-v2-cell-link:focus-visible)': {
+        outline: 'var(--cn-focus)',
+        outlineOffset: 'calc(2px*-1)'
+      },
+
       '&:where(.row-link-no-underline)': {
         '@apply [&_.cn-table-v2-cell-link]:no-underline': ''
       },
@@ -116,32 +121,29 @@ export default {
 
     // Data cell
     '&-cell': {
+      position: 'relative',
       '@apply align-middle': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
       paddingLeft: 'var(--cn-table-cell-px)',
       paddingRight: 'var(--cn-table-cell-px)',
-      gap: 'var(--cn-table-cell-gap)'
+      gap: 'var(--cn-table-cell-gap)',
+
+      'a, button': {
+        position: 'relative',
+        zIndex: '1'
+      }
     },
 
     // Cell link
     '&-cell-link': {
-      '@apply block w-full h-full flex items-center no-underline inset-0 text-cn-foreground-2': '',
-      paddingLeft: 'var(--cn-table-cell-px)',
-      paddingRight: 'var(--cn-table-cell-px)'
-    },
+      position: 'absolute !important',
+      inset: '0',
+      zIndex: '0 !important',
 
-    '&:where(.cn-table-v2-normal) .cn-table-v2-cell-link': {
-      paddingTop: 'var(--cn-table-cell-py-normal)',
-      paddingBottom: 'var(--cn-table-cell-py-normal)'
-    },
-    '&:where(.cn-table-v2-relaxed) .cn-table-v2-cell-link': {
-      paddingTop: 'var(--cn-table-cell-py-relaxed)',
-      paddingBottom: 'var(--cn-table-cell-py-relaxed)'
-    },
-    '&:where(.cn-table-v2-compact) .cn-table-v2-cell-link': {
-      paddingTop: 'var(--cn-table-cell-py-compact)',
-      paddingBottom: 'var(--cn-table-cell-py-compact)'
+      '&:focus-within': {
+        outline: 'none'
+      }
     },
 
     // Caption

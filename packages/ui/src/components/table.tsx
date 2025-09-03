@@ -56,7 +56,7 @@ TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn('cn-table-v2-header pointer-events-none select-none', className)} {...props} />
+    <thead ref={ref} className={cn('cn-table-v2-header select-none', className)} {...props} />
   )
 )
 TableHeader.displayName = 'TableHeader'
@@ -230,15 +230,10 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
 
     if (shouldRenderLink) {
       return (
-        <td ref={ref} className={cn('cn-table-v2-cell !p-0', className)} {...props}>
-          <Link
-            to={to || ''}
-            variant="secondary"
-            {...(linkProps || {})}
-            className={cn('cn-table-v2-cell-link', linkProps?.className)}
-          >
-            {children}
-          </Link>
+        <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+          <Link to={to || ''} {...(linkProps || {})} className={cn('cn-table-v2-cell-link', linkProps?.className)} />
+
+          {children}
         </td>
       )
     }

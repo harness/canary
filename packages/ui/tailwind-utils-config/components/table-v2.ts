@@ -130,6 +130,7 @@ export default {
       gap: 'var(--cn-table-cell-gap)',
 
       'a, button': {
+        position: 'relative',
         zIndex: '1'
       }
     },
@@ -138,6 +139,7 @@ export default {
     '&-cell-link': {
       position: 'absolute',
       inset: '0',
+      zIndex: '0 !important',
 
       '&:focus-within': {
         outline: 'none'

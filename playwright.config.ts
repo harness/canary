@@ -8,11 +8,17 @@ import { defineConfig, devices } from '@playwright/test'
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+export const VIEW_PREVIEW_BASE_URL: string = 'https://harness-xd-review.netlify.app/view-preview/'
+export const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  /* Directory that will be recursively scanned for test files */
   testDir: './packages/tests',
+  /* The output directory for files created during test execution */
+  outputDir: PLAYWRIGHT_OUTPUT_DIR,
   /* Directory of reference screenshots to compare against */
   snapshotPathTemplate: '{testDir}/__screenshots/{testFilePath}/{projectName}-{testName}{ext}',
   /* Run tests in files in parallel */
@@ -37,13 +43,18 @@ export default defineConfig({
         open: 'never'
       }
     ],
-    ['junit'],
+    [
+      'junit',
+      {
+        outputFile: `${PLAYWRIGHT_OUTPUT_DIR}/junit-results.xml`
+      }
+    ],
     ['github']
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://harness-xd-review.netlify.app/view-preview/',
+    baseURL: VIEW_PREVIEW_BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

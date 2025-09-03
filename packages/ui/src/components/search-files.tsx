@@ -109,7 +109,7 @@ export const SearchFiles = ({
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>
       <div className={cn('relative', inputContainerClassName)}>
-        <DropdownMenu.Trigger className="pointer-events-none absolute inset-0 -z-0" tabIndex={-1} />
+        <DropdownMenu.Trigger className="pointer-events-none absolute inset-0 -z-0 !outline-0" tabIndex={-1} />
         <SearchInput
           ref={searchInputRef}
           size={searchInputSize}

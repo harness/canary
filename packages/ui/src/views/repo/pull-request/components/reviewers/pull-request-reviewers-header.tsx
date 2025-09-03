@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 
-import { Button, DropdownMenu, IconV2, SearchInput, Text } from '@/components'
+import { Button, DropdownMenu, IconV2, SearchInput, Text, useSearchableDropdownKeyboardNavigation } from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
@@ -31,6 +31,14 @@ const ReviewersHeader = ({
 }: ReviewersHeaderProps) => {
   const { t } = useTranslation()
 
+  const filteredUsersList = useMemo(() => {
+    return usersList ? usersList.filter(user => user?.uid !== currentUserId) : []
+  }, [currentUserId, usersList])
+
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    itemsLength: filteredUsersList.length
+  })
+
   const handleSearchQuery = (query: string) => {
     setSearchQuery(query)
   }
@@ -49,37 +57,41 @@ const ReviewersHeader = ({
             <IconV2 name="more-vert" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
-          <DropdownMenu.Header role="presentation" onKeyDown={e => e.stopPropagation()}>
-            <SearchInput size="sm" autoFocus id="search" defaultValue={searchQuery} onChange={handleSearchQuery} />
+        <DropdownMenu.Content className="w-80" align="end" sideOffset={2}>
+          <DropdownMenu.Header role="presentation">
+            <SearchInput
+              ref={searchInputRef}
+              id="search"
+              size="sm"
+              defaultValue={searchQuery}
+              onChange={handleSearchQuery}
+              autoFocus
+              onKeyDown={handleSearchKeyDown}
+            />
           </DropdownMenu.Header>
 
-          {isReviewersLoading && <DropdownMenu.Spinner />}
+          {!!isReviewersLoading && <DropdownMenu.Spinner />}
 
-          {!usersList?.length && !isReviewersLoading && (
+          {!filteredUsersList.length && !isReviewersLoading && (
             <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           )}
-          {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
-            <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
-          ) : (
-            <>
-              {usersList?.map(({ display_name, email, id, uid }) => {
-                if (uid === currentUserId) return null
 
-                const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+          {filteredUsersList.map(({ display_name, email, id, uid }, index) => {
+            const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+            const { ref, onKeyDown } = getItemProps(index)
 
-                return (
-                  <DropdownMenu.AvatarItem
-                    name={display_name}
-                    title={<ReviewerInfo display_name={display_name || ''} email={email || ''} />}
-                    checkmark={!!isSelected}
-                    key={uid}
-                    onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
-                  />
-                )
-              })}
-            </>
-          )}
+            return (
+              <DropdownMenu.AvatarItem
+                ref={ref}
+                name={display_name}
+                title={<ReviewerInfo display_name={display_name || ''} email={email || ''} />}
+                checkmark={!!isSelected}
+                key={uid ?? index}
+                onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
+                onKeyDown={onKeyDown}
+              />
+            )
+          })}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

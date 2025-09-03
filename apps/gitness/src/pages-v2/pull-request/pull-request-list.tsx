@@ -45,7 +45,7 @@ export default function PullRequestListPage() {
   const labelBy = searchParams.get('label_by')
   const { scope } = useMFEContext()
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
-  const filtersCnt = Object.keys(filterValues).length
+  const filtersCnt = Object.keys(filterValues).length + (query?.length ? 1 : 0)
 
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
 

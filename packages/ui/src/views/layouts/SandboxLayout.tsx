@@ -82,7 +82,10 @@ interface ContentProps {
 
 function Content({ children, maxWidth, className }: ContentProps) {
   return (
-    <div className={cn('cn-sandbox-layout-content', { [`max-w-${maxWidth} mx-auto`]: !!maxWidth }, className)}>
+    <div
+      id="sandbox-layout-content"
+      className={cn('cn-sandbox-layout-content', { [`max-w-${maxWidth} mx-auto`]: !!maxWidth }, className)}
+    >
       {children}
     </div>
   )

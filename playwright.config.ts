@@ -8,10 +8,17 @@ import { config } from 'dotenv'
 config()
 
 /**
- * See https://playwright.dev/docs/test-configuration.
+ * Shared configuration constants
  */
+export const SCREENSHOT_TAG: string = '@screenshot'
+export const URL_ANNOTATION: string = 'Link to Page Under Test'
+
 const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
 
+/**
+ * Main test configuration
+ * See https://playwright.dev/docs/test-configuration.
+ */
 export default defineConfig({
   /* Directory that will be recursively scanned for test files */
   testDir: './packages/tests',

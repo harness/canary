@@ -60,14 +60,15 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.VIEW_PREVIEW_BASE_URL,
-
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-
     /* Viewport size for Page object */
     viewport: { width: 1500, height: 1500 }
   },
-
+  /* Configuration for the expect assertion library. See https://playwright.dev/docs/test-configuration#expect-options */
+  expect: {
+    timeout: 20000 // A couple of the tests have large renders and currently require increasing the timeout
+  },
   /* Configure projects for major browsers */
   projects: [
     {

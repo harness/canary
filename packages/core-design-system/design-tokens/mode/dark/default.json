@@ -52,6 +52,11 @@
       "$value": "{set.yellow.soft.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     },
+    "merged": {
+      "$type": "color",
+      "$value": "{set.purple.surface.text}",
+      "$description": "Primary color for text and icons in merged content.\n\nCommon uses: Merge message text."
+    },
     "brand": {
       "$type": "color",
       "$value": "{cyan.200}"

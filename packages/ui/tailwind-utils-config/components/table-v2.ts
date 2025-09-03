@@ -137,7 +137,7 @@ export default {
 
     // Cell link
     '&-cell-link': {
-      position: 'absolute',
+      position: 'absolute !important',
       inset: '0',
       zIndex: '0 !important',
 

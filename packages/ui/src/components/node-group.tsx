@@ -12,7 +12,10 @@ interface NodeGroupRootProps {
 function Root({ className, children }: NodeGroupRootProps) {
   return (
     <div
-      className={cn('relative grid grid-cols-[26px_1fr] grid-rows-[auto_1fr] items-center gap-x-3 gap-y-2', className)}
+      className={cn(
+        'relative grid grid-cols-[26px_1fr] grid-rows-[auto_1fr] items-center gap-x-cn-sm gap-y-cn-xs',
+        className
+      )}
     >
       {children}
     </div>
@@ -33,7 +36,7 @@ function Icon({
       <div
         className={cn(
           {
-            'text-cn-foreground-1 shadow-commit-list-bullet': simpleNodeIcon,
+            'text-cn-foreground-1': simpleNodeIcon,
             'border-cn-3 bg-cn-background-2 text-cn-foreground-1 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium':
               !simpleNodeIcon
           },
@@ -49,7 +52,7 @@ function Icon({
 function Title({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="col-start-2 row-start-1">
-      <div className={cn('inline-flex items-center gap-1.5', className)}>{children}</div>
+      <div className={cn('inline-flex items-center gap-cn-2xs', className)}>{children}</div>
     </div>
   )
 }

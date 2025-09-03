@@ -3,7 +3,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 # install pnpm
 RUN npm install -g pnpm@latest-9
-COPY . /canary
+COPY . /canary test
 WORKDIR /canary
 
 FROM base AS prod-deps

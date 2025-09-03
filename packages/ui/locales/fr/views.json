@@ -497,6 +497,10 @@
     "type": "Type",
     "createdOn": "Created on",
     "modifiedOn": "Modified on",
+    "credentials": "Credentials",
+    "metadata": "Metadata",
+    "labels": "Labels",
+    "description": "Description",
     "manager": "Manager",
     "lastActivity": "Last Activity",
     "created": "Created"
@@ -868,6 +872,13 @@
     "delete": "Delete webhook",
     "create": "Create webhook"
   },
+  "secrets": {
+    "secretName": "Secret name",
+    "createNew": "Créer un secret",
+    "delete": "Supprimer le secret",
+    "secretId": "Secret ID",
+    "secretsTitle": "Secrets"
+  },
   "secretActivity": {
     "event": "Event",
     "type": "Type",
@@ -879,11 +890,6 @@
     "type": "Type",
     "scope": "Scope",
     "created": "Created"
-  },
-  "secrets": {
-    "createNew": "Créer un secret",
-    "delete": "Supprimer le secret",
-    "secretsTitle": "Secrets"
   },
   "secret": {
     "title": "Secret"

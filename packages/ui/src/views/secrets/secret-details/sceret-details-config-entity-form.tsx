@@ -1,7 +1,8 @@
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 import { useTranslation } from '@/context'
-import { Alert, TimeAgoCard, ViewOnly, Widgets } from '@components/index'
+import { Alert, ViewOnly, Widgets } from '@components/index'
+import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
 import { IFormDefinition, InputFactory, RenderForm, RootForm } from '@harnessio/forms'
 
@@ -52,29 +53,23 @@ export const SecretDetailsConfigEntityForm: FC<SecretDetailsConfigEntityFormProp
   //   }, [connector.name, connector?.spec, connector.type, getConnectorDefinition, connector?.description, connector?.tags])
 
   return (
-    <>
+    <SandboxLayout.Content className={'px-0'}>
       <Widgets.Root>
         <Widgets.Item title={t('views:common.details', 'Details')}>
           <ViewOnly
             title={t('views:common.overview', 'Overview')}
+            data={[{ label: t('views:secrets.secretName', 'Secret name'), value: secret.name }]}
+          />
+          <ViewOnly
+            title={t('views:common.credentials', 'Credentials')}
+            data={[{ label: t('views:common.type', 'Type'), value: secret.spec?.secretManagerIdentifier }]}
+          />
+          <ViewOnly
+            title={t('views:common.metadata', 'Metadata')}
             data={[
-              { label: t('views:secrets.secretName', 'Secret name'), value: secret.name },
-              { label: t('views:secrets.secretId', 'Secret ID'), value: secret.identifier },
-              { label: t('views:common.type', 'Type'), value: secret.spec?.secretManagerIdentifier },
-              {
-                label: t('views:common.createdOn', 'Created on'),
-                value: <TimeAgoCard timestamp={secret.createdAt} cutoffDays={0} />
-              },
-              {
-                label: t('views:common.modifiedOn', 'Modified on'),
-                value: <TimeAgoCard timestamp={secret.updatedAt} cutoffDays={0} />
-              }
-              // TODO: update or delete
-              // { label: 'Created by', value: '' },
-              // { label: 'Term of service aggreed to', value: '' },
-              // { label: 'Updated by', value: '' }
+              { label: t('views:common.labels', 'Labels'), value: secret.tags?.join(', ') },
+              { label: t('views:common.description', 'Description'), value: secret.description }
             ]}
-            layout="columns"
           />
           <RootForm defaultValues={secretValues} resolver={undefined} mode="onSubmit" onSubmit={() => {}}>
             <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
@@ -86,6 +81,6 @@ export const SecretDetailsConfigEntityForm: FC<SecretDetailsConfigEntityFormProp
           <Alert.Description>{apiError.toString()}</Alert.Description>
         </Alert.Root>
       )}
-    </>
+    </SandboxLayout.Content>
   )
 }

@@ -10,6 +10,8 @@ export interface SecretListItem {
   }
   createdAt?: number
   updatedAt?: number
+  description?: string
+  tags?: string[]
 }
 
 export interface SecretListProps extends Partial<RoutingProps> {

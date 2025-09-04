@@ -19,7 +19,7 @@ export const testScreenshot = async (page: Page, pageRoute: string): Promise<voi
     waitUntil: 'domcontentloaded'
   })
 
-  const $element = page.locator(buildSelectorString()).first()
+  const $element = page.locator(buildSelectorString()).last() // last() should find the deepest ID from CONTENT_SELECTOR_IDS
 
   await expect($element).toHaveScreenshot(SCREENSHOT_CONFIG)
 }

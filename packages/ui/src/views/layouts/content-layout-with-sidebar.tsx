@@ -65,7 +65,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
                 )}
 
                 {group.items.map(item => (
-                  <NavLink key={item.id} to={item.to}>
+                  <NavLink key={item.id} to={item.to} className="outline-offset-cn-tight rounded-md">
                     {({ isActive }) => (
                       <Text
                         truncate

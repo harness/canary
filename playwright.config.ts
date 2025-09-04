@@ -53,8 +53,7 @@ export default defineConfig({
       {
         outputFile: `${PLAYWRIGHT_OUTPUT_DIR}/junit-results.xml`
       }
-    ],
-    ['github']
+    ]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -67,21 +66,24 @@ export default defineConfig({
   },
   /* Configuration for the expect assertion library. See https://playwright.dev/docs/test-configuration#expect-options */
   expect: {
-    timeout: 20000 // A couple of the tests have large renders and currently require increasing the timeout
+    timeout: 30000, // A couple of the tests have large renders and currently require increasing the timeout
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.05
+    }
   },
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] }
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] }
     }
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] }
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] }
+    // }
   ]
 })

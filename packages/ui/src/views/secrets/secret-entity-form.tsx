@@ -1,8 +1,8 @@
-import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 
 import { Alert, Button, ButtonLayout } from '@/components'
 import { useTranslation } from '@/context'
-import { EntityIntent } from '@/views'
+import { EntityIntent, SecretListItem } from '@/views'
 
 import {
   getDefaultValuesFromFormDefinition,
@@ -21,6 +21,7 @@ export type SecretEntityFormHandle = {
 
 interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
+  initialSecretValues?: SecretListItem
   secretsFormDefinition?: IFormDefinition
   onBack?: () => void
   inputComponentFactory: InputFactory
@@ -31,11 +32,21 @@ interface SecretEntityFormProps {
 
 export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityFormProps>(
   (
-    { apiError = null, onFormSubmit, secretsFormDefinition, onBack, inputComponentFactory, intent, isDrawer = false },
+    {
+      apiError = null,
+      onFormSubmit,
+      secretsFormDefinition,
+      onBack,
+      inputComponentFactory,
+      intent,
+      isDrawer = false,
+      initialSecretValues
+    },
     ref
   ) => {
     const { t: _t } = useTranslation()
     const formRef = useRef<SecretEntityFormHandle | null>(null)
+    const [secretEditValues, setSecretEditValues] = useState({})
 
     useImperativeHandle(ref, () => ({
       submitForm: () => formRef.current?.submitForm?.()
@@ -51,9 +62,27 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
       return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
     }, [secretsFormDefinition])
 
+    useEffect(() => {
+      if (intent === EntityIntent.EDIT && initialSecretValues) {
+        const mappedValues = {
+          secret: {
+            name: initialSecretValues.name || '',
+            identifier: initialSecretValues.identifier,
+            spec: {
+              ...initialSecretValues.spec,
+              secretManagerIdentifier: initialSecretValues.spec?.secretManagerIdentifier
+            },
+            description: initialSecretValues.description,
+            tags: Object.keys(initialSecretValues.tags ?? {}).join(',')
+          }
+        }
+
+        setSecretEditValues(mappedValues)
+      }
+    }, [initialSecretValues, secretsFormDefinition, intent])
     return (
       <RootForm
-        defaultValues={defaultSecretValues}
+        defaultValues={intent === EntityIntent.EDIT ? secretEditValues : defaultSecretValues}
         autoFocusPath={secretsFormDefinition?.inputs[0]?.path}
         resolver={resolver}
         mode="onSubmit"

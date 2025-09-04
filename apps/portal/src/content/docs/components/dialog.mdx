@@ -12,9 +12,9 @@ import { Aside } from "@astrojs/starlight/components";
 <DocsPage.ComponentExample
   client:only
   code={`<Dialog.Root>
-      <Dialog.TriggerPrimitive asChild>
+      <Dialog.Trigger asChild>
         <Button>Open Dialog</Button>
-      </Dialog.TriggerPrimitive>
+      </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>Generate Clone Credential</Dialog.Title>
@@ -70,9 +70,9 @@ import { Dialog } from "@harnessio/ui/components";
 
 return (
   <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>Open Dialog</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
 
     <Dialog.Content size="md">
       <Dialog.Header icon="plus-circle">
@@ -103,9 +103,9 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Small (Default)</h3>
     <Dialog.Root>
-      <Dialog.TriggerPrimitive asChild>
+      <Dialog.Trigger asChild>
         <Button>Small Dialog</Button>
-      </Dialog.TriggerPrimitive>
+      </Dialog.Trigger>
       <Dialog.Content size="sm">
         <Dialog.Header>
           <Dialog.Title>Small Dialog</Dialog.Title>
@@ -121,9 +121,9 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
 <div className="space-y-2">
   <h3 className="text-lg font-semibold">Medium</h3>
   <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>Medium Dialog</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
     <Dialog.Content size="md">
       <Dialog.Header>
         <Dialog.Title>Medium Dialog</Dialog.Title>
@@ -139,9 +139,9 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Large</h3>
     <Dialog.Root>
-      <Dialog.TriggerPrimitive asChild>
+      <Dialog.Trigger asChild>
         <Button>Large Dialog</Button>
-      </Dialog.TriggerPrimitive>
+      </Dialog.Trigger>
       <Dialog.Content size="lg">
         <Dialog.Header>
           <Dialog.Title>Large Dialog</Dialog.Title>
@@ -166,9 +166,9 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Default Theme</h3>
     <Dialog.Root>
-      <Dialog.TriggerPrimitive asChild>
+      <Dialog.Trigger asChild>
         <Button>Default</Button>
-      </Dialog.TriggerPrimitive>
+      </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Header icon="info-circle">
           <Dialog.Title>Information</Dialog.Title>
@@ -184,9 +184,9 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Warning Theme</h3>
     <Dialog.Root>
-      <Dialog.TriggerPrimitive asChild>
+      <Dialog.Trigger asChild>
         <Button>Warning</Button>
-      </Dialog.TriggerPrimitive>
+      </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Header icon="warning-triangle" theme="warning">
           <Dialog.Title>Warning</Dialog.Title>
@@ -204,9 +204,9 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Danger Theme</h3>
     <Dialog.Root>
-      <Dialog.TriggerPrimitive asChild>
+      <Dialog.Trigger asChild>
         <Button>Danger</Button>
-      </Dialog.TriggerPrimitive>
+      </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Header icon="trash" theme="danger">
           <Dialog.Title>Delete Item</Dialog.Title>
@@ -232,9 +232,9 @@ Headers can display a logo or an icon:
   client:only
   code={`<div className="flex flex-col gap-4">
     <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>With Logo</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
     <Dialog.Content>
       <Dialog.Header logo="jira">
         <Dialog.Title>Connect to Jira</Dialog.Title>
@@ -250,9 +250,9 @@ Headers can display a logo or an icon:
   </Dialog.Root>
 
   <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>With Icon</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
     <Dialog.Content>
       <Dialog.Header icon="git-branch">
         <Dialog.Title>Create Branch</Dialog.Title>
@@ -277,9 +277,9 @@ You can hide the close button in the top-right corner using the `hideClose` prop
   client:only
   code={`<div className="flex flex-col space-y-4">
   <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>Open Dialog</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
     <Dialog.Content hideClose>
       <Dialog.Header>
         <Dialog.Title>Hidden Close Button</Dialog.Title>
@@ -301,9 +301,9 @@ The Body component automatically handles scrolling for long content:
   client:only
   code={`<div className="flex flex-col space-y-4">
   <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>Default</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
     <Dialog.Content>
       <Dialog.Header icon="plus-circle">
         <Dialog.Title>Long Content</Dialog.Title>
@@ -326,9 +326,9 @@ The Body component automatically handles scrolling for long content:
   </Dialog.Root>
 
   <Dialog.Root>
-    <Dialog.TriggerPrimitive asChild>
+    <Dialog.Trigger asChild>
       <Button>Fixed Height</Button>
-    </Dialog.TriggerPrimitive>
+    </Dialog.Trigger>
     <Dialog.Content className="h-1/2">
       <Dialog.Header icon="plus-circle">
         <Dialog.Title>Long Content</Dialog.Title>
@@ -358,7 +358,7 @@ All parts of the `Dialog` component can be imported and composed as required.
 
 ```tsx
 <Dialog.Root>
-  <Dialog.TriggerPrimitive />
+  <Dialog.Trigger />
   <Dialog.Content>
     <Dialog.Header>
       <Dialog.Title />

@@ -1,7 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Dialog,
+  FormInput,
+  FormWrapper,
+  Label,
+  LanguageDialog,
+  LanguageInterface,
+  languages
+} from '@/components'
 import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -105,6 +117,25 @@ export function CreateBranchDialog({
     onClose()
   }
 
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open)
+  }
+
+  const handleChange = (language: LanguageInterface) => {
+    console.log(language)
+  }
+
+  const handleSave = (language: LanguageInterface) => {
+    console.log(language)
+  }
+
+  const handleCancel = () => {
+    console.log('Cancelled')
+    setIsOpen(false)
+  }
+
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
       <Dialog.Content aria-describedby={undefined} className="max-w-2xl">
@@ -129,7 +160,7 @@ export function CreateBranchDialog({
 
             {violation && (
               <Alert.Root theme="warning">
-                <Alert.Description className="break-all overflow-hidden">
+                <Alert.Description className="overflow-hidden break-all">
                   {bypassable
                     ? t(
                         'component:branchDialog.violationMessages.bypassed',
@@ -145,13 +176,35 @@ export function CreateBranchDialog({
 
             {error && (
               <Alert.Root theme="danger">
-                <Alert.Description className="break-all overflow-hidden">
+                <Alert.Description className="overflow-hidden break-all">
                   {t('views:repos.error', 'Error:')} {error}
                 </Alert.Description>
               </Alert.Root>
             )}
+
+            <Dialog.Root>
+              <Dialog.Trigger>Open test dialog</Dialog.Trigger>
+              <Dialog.Content>
+                <Dialog.Header>
+                  <Dialog.Title>Test dialog</Dialog.Title>
+                </Dialog.Header>
+                <Dialog.Body>
+                  <p>This is a test dialog.</p>
+                  <Dialog.Trigger onClick={() => setIsOpen(true)}>Select Language</Dialog.Trigger>
+                </Dialog.Body>
+              </Dialog.Content>
+            </Dialog.Root>
           </FormWrapper>
         </Dialog.Body>
+
+        <LanguageDialog
+          open={isOpen}
+          onOpenChange={handleOpenChange}
+          onChange={handleChange}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          supportedLanguages={languages}
+        />
 
         <Dialog.Footer>
           <ButtonLayout>

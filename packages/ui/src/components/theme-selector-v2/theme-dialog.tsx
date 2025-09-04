@@ -64,7 +64,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      {!!children && <Dialog.TriggerPrimitive asChild>{children}</Dialog.TriggerPrimitive>}
+      {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
       <Dialog.Content size="md">
         <Dialog.Header>
           <Dialog.Title>Appearance settings</Dialog.Title>

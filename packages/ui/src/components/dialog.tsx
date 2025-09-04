@@ -4,11 +4,12 @@ import {
   forwardRef,
   HTMLAttributes,
   isValidElement,
-  MutableRefObject,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
-  useRef
+  useRef,
+  useState
 } from 'react'
 
 import { usePortal } from '@/context'
@@ -47,57 +48,131 @@ const headerVariants = cva('cn-modal-dialog-header', {
   }
 })
 
-interface DialogContextValue {
-  triggerRef: MutableRefObject<HTMLElement | null>
-  setTrigger: (element: HTMLElement | null) => void
+interface FocusEntry {
+  triggerId: string
+  triggerElement: HTMLElement
 }
 
-const DialogContext = createContext<DialogContextValue | undefined>(undefined)
+interface DialogFocusContextValue {
+  registerTrigger: (entry: FocusEntry) => void
+  unregisterTrigger: (id: string) => void
+  restoreFocus: (id: string) => void
+  getLastTrigger: () => FocusEntry | undefined
+}
 
-export const useDialogContext = () => {
+const DialogContext = createContext<DialogFocusContextValue | undefined>(undefined)
+
+const useDialogFocusManager = () => {
   const context = useContext(DialogContext)
-  if (!context) {
-    throw new Error('useDialogContext must be used within DialogProvider')
-  }
+
   return context
 }
 
-export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
-  const triggerRef = useRef<HTMLElement | null>(null)
+const DialogProvider = ({ children }: { children: ReactNode }) => {
+  const focusStack = useRef<FocusEntry[]>([])
 
-  const setTrigger = (element: HTMLElement | null) => {
-    triggerRef.current = element
-  }
+  const unregisterTrigger = useCallback((id: string) => {
+    focusStack.current = focusStack.current.filter(e => e.triggerId !== id)
+  }, [])
 
-  return <DialogContext.Provider value={{ triggerRef, setTrigger }}>{children}</DialogContext.Provider>
+  const registerTrigger = useCallback((entry: FocusEntry) => {
+    unregisterTrigger(entry.triggerId)
+    focusStack.current.push(entry)
+  }, [])
+
+  const restoreFocus = useCallback((id: string) => {
+    const entryIndex = focusStack.current.findIndex(e => e.triggerId === id)
+
+    if (entryIndex !== -1) {
+      const entry = focusStack.current[entryIndex]
+      if (entry.triggerElement) {
+        setTimeout(() => entry.triggerElement.focus(), 0)
+      }
+      unregisterTrigger(entry.triggerId)
+    } else {
+      const lastEntry = focusStack.current.at(-1)
+      if (lastEntry?.triggerElement) {
+        setTimeout(() => lastEntry.triggerElement.focus(), 0)
+      }
+    }
+  }, [])
+
+  const getLastTrigger = useCallback(() => {
+    return focusStack.current.at(-1)
+  }, [])
+
+  return (
+    <DialogContext.Provider value={{ registerTrigger, unregisterTrigger, restoreFocus, getLastTrigger }}>
+      {children}
+    </DialogContext.Provider>
+  )
+}
+
+let triggerCounter = 0
+
+const useTriggerId = (_id?: string) => {
+  const id = useRef(`${_id || 'dialog-trigger'}-${triggerCounter++}`)
+  return id.current
 }
 
 export type ModalDialogRootProps = Pick<DialogPrimitive.DialogProps, 'open' | 'onOpenChange' | 'children'>
 
-const Root = ({ children, ...props }: ModalDialogRootProps) => {
-  return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
+interface DialogOpenContextValue {
+  open?: boolean
 }
 
-const TriggerPrimitive = DialogPrimitive.Trigger
+const DialogOpenContext = createContext<DialogOpenContextValue | undefined>(undefined)
+const useDialogOpen = () => {
+  const context = useContext(DialogOpenContext)
+  if (!context) {
+    throw new Error('useDialogOpen must be used within a DialogOpenProvider')
+  }
+  return context
+}
+
+const Root = ({ children, open, ...props }: ModalDialogRootProps) => {
+  return (
+    <DialogOpenContext.Provider value={{ open }}>
+      <DialogPrimitive.Root {...props} open={open}>
+        {children}
+      </DialogPrimitive.Root>
+    </DialogOpenContext.Provider>
+  )
+}
 
 interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<typeof contentVariants> {
   size?: 'sm' | 'md' | 'lg'
   hideClose?: boolean
 }
 
-// In your dialog.tsx file, update the Content component:
-
 const Content = forwardRef<HTMLDivElement, ContentProps>(
   ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => {
     const { portalContainer } = usePortal()
-    const dialogContext = useContext(DialogContext)
+    const focusManager = useDialogFocusManager()
+    const [triggerId, setTriggerId] = useState<string>('')
+    const { open } = useDialogOpen()
+
+    const handleCloseAutoFocus = useCallback(() => {
+      if (focusManager) {
+        focusManager.restoreFocus(triggerId)
+      }
+    }, [focusManager, triggerId])
+
+    useEffect(() => {
+      if (focusManager && open) {
+        const triggerId = focusManager.getLastTrigger()?.triggerId
+        if (!triggerId) return
+        setTriggerId(triggerId)
+      }
+    }, [open])
 
     useEffect(() => {
       return () => {
-        if (!dialogContext?.triggerRef.current) return
-        setTimeout(() => dialogContext.triggerRef.current?.focus(), 0)
+        if (focusManager) {
+          focusManager.unregisterTrigger(triggerId)
+        }
       }
-    }, [dialogContext])
+    }, [focusManager, triggerId])
 
     return (
       <DialogPrimitive.Portal container={portalContainer}>
@@ -108,12 +183,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
           <DialogPrimitive.Content
             ref={ref}
             className={cn(contentVariants({ size }), className)}
-            onCloseAutoFocus={event => {
-              if (dialogContext?.triggerRef.current) {
-                event.preventDefault()
-                dialogContext.triggerRef.current.focus()
-              }
-            }}
+            onCloseAutoFocus={handleCloseAutoFocus}
             {...props}
           >
             {!hideClose && (
@@ -225,30 +295,33 @@ const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className,
 ))
 Close.displayName = 'Dialog.Close'
 
-type DialogTriggerProps = ButtonProps & {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-}
+const Trigger = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, id, ...props }, ref) => {
+  const triggerId = useTriggerId(id)
+  const focusManager = useDialogFocusManager()
 
-const Trigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(({ onClick, ...props }, forwardedRef) => {
-  const { setTrigger } = useDialogContext()
-  const internalRef = useRef<HTMLButtonElement>(null)
-
-  const ref = forwardedRef || internalRef
+  const dialogContext = useContext(DialogOpenContext)
+  const isInsideDialog = dialogContext !== undefined
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setTrigger(event.currentTarget)
+    if (focusManager) {
+      focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
+    }
     onClick?.(event)
   }
 
-  return <Button ref={ref} onClick={handleClick} {...props} />
-})
+  const trigger = <Button ref={ref} onClick={handleClick} {...props} id={triggerId} />
 
+  if (isInsideDialog && !onClick) {
+    return <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+  }
+
+  return trigger
+})
 Trigger.displayName = 'DialogTrigger'
 
 const Dialog = {
   Root,
   Trigger,
-  TriggerPrimitive,
   Content,
   Close,
   Header,
@@ -258,4 +331,4 @@ const Dialog = {
   Footer
 }
 
-export { Dialog }
+export { Dialog, DialogProvider }

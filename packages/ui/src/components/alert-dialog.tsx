@@ -46,7 +46,7 @@ const Root = ({
   )
 }
 
-const Trigger = Dialog.TriggerPrimitive
+const Trigger = Dialog.Trigger
 
 interface ContentProps {
   title: string

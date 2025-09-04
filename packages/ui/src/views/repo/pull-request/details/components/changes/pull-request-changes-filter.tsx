@@ -176,7 +176,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
         </Button>
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
+          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5" asChild>
             <Button size="sm" variant="transparent">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
@@ -201,7 +201,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
+          <DropdownMenu.Trigger className="text-2 group flex items-center gap-x-1.5" asChild>
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
               <IconV2 name="nav-solid-arrow-down" size="2xs" />

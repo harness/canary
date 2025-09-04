@@ -75,9 +75,7 @@ const Example: FC<ExampleProps> = ({
       element: (
         <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
           <TranslationProvider>
-            <TooltipProvider>
-              <LivePreview />
-            </TooltipProvider>
+            <LivePreview />
           </TranslationProvider>
         </RouterContextProvider>
       ),
@@ -85,6 +83,7 @@ const Example: FC<ExampleProps> = ({
   ]);
 
   return (
+      <TooltipProvider>
     <div className="bg-cn-1 not-content my-12 overflow-hidden rounded-md border">
       <LiveProvider code={currentCode} scope={scopeWithLayout} enableTypeScript>
         <div className={cn("grid place-items-center p-12", contentClassName)}>
@@ -110,6 +109,7 @@ const Example: FC<ExampleProps> = ({
         )}
       </LiveProvider>
     </div>
+      </TooltipProvider>
   );
 };
 

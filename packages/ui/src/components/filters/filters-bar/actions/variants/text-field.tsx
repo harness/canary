@@ -26,7 +26,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
       onChange={handleInputChange}
       prefix={false}
       suffix={
-        <Button iconOnly size="sm" variant="transparent" onClick={handleClear}>
+        <Button iconOnly size="sm" variant="transparent" onClick={handleClear} ignoreIconOnlyTooltip>
           <IconV2 name="xmark" size="2xs" />
         </Button>
       }

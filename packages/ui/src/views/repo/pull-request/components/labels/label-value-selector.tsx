@@ -1,8 +1,15 @@
 import { FC, useMemo, useState } from 'react'
 
-import { Button, DropdownMenu, getScopeType, IconV2, scopeTypeToIconMap, SearchBox } from '@/components'
+import {
+  Button,
+  DropdownMenu,
+  getScopeType,
+  IconV2,
+  scopeTypeToIconMap,
+  SearchInput,
+  useSearchableDropdownKeyboardNavigation
+} from '@/components'
 import { useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { wrapConditionalObjectElement } from '@/utils'
 import { ColorsEnum, EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
 
@@ -17,11 +24,6 @@ export interface LabelValueSelectorProps {
 export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleAddOrRemoveLabel, onSearchClean }) => {
   const { t } = useTranslation()
   const [searchState, setSearchState] = useState('')
-
-  const { search, handleSearchChange } = useDebounceSearch({
-    handleChangeSearchValue: setSearchState,
-    searchValue: searchState
-  })
 
   const { values, isAllowAddNewValue } = useMemo(() => {
     if (!label?.values)
@@ -86,22 +88,32 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
     return ''
   }
 
+  const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
+    itemsLength: values.length + (isAllowAddNewValue && !!label?.isCustom ? 1 : 0)
+  })
+
+  const { ref: refForNewValue, onKeyDown: onKeyDownForNewValue } = useMemo(() => getItemProps(values.length), [values])
+
   return (
-    <DropdownMenu.Content className="w-80" align="end" sideOffset={2} alignOffset={0}>
-      <DropdownMenu.Header className="relative">
-        <SearchBox.Root
+    <DropdownMenu.Content className="w-80" align="end" sideOffset={2}>
+      <DropdownMenu.Header>
+        <SearchInput
+          ref={searchInputRef}
+          size="sm"
           autoFocus
-          className="w-full"
-          inputClassName="pl-1.5 pr-8"
+          id="search"
+          defaultValue={searchState}
+          onChange={setSearchState}
           placeholder={getSearchBoxPlaceholder()}
-          value={search}
-          handleChange={handleSearchChange}
-          showOnFocus
-          hasSearchIcon={false}
-          {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
-        >
-          <div className="pr-2">
+          onKeyDown={handleSearchKeyDown}
+          suffix={
+            <Button iconOnly size="xs" variant="transparent" onClick={onSearchClean}>
+              <IconV2 name="xmark" size="2xs" />
+            </Button>
+          }
+          prefix={
             <LabelTag
+              className="border-0 pl-cn-xs"
               scope={label.scope ?? 0}
               color={label.color as ColorsEnum}
               labelKey={label.key ?? ''}
@@ -110,39 +122,37 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
                 size: 'sm'
               }}
             />
-          </div>
-        </SearchBox.Root>
-
-        <Button
-          iconOnly
-          size="xs"
-          className="absolute right-2 top-2 z-20"
-          variant="transparent"
-          onClick={onSearchClean}
-        >
-          <IconV2 name="xmark" size="2xs" />
-        </Button>
+          }
+          {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
+        />
       </DropdownMenu.Header>
 
-      {values.map(value => (
-        <DropdownMenu.Item
-          key={value.id}
-          onSelect={handleOnSelect(value)}
-          tag={{
-            variant: 'secondary',
-            size: 'sm',
-            theme: value.color as EnumLabelColor,
-            value: value.value ?? ''
-          }}
-          checkmark={label.selectedValueId === value.id}
-        />
-      ))}
+      {values.map((value, idx) => {
+        const { ref, onKeyDown } = getItemProps(idx)
+
+        return (
+          <DropdownMenu.Item
+            key={value.id}
+            ref={ref}
+            onSelect={handleOnSelect(value)}
+            tag={{
+              variant: 'secondary',
+              size: 'sm',
+              theme: value.color as EnumLabelColor,
+              value: value.value ?? ''
+            }}
+            checkmark={label.selectedValueId === value.id}
+            onKeyDown={onKeyDown}
+          />
+        )
+      })}
 
       {isAllowAddNewValue && !!label?.isCustom && !!values.length && <DropdownMenu.Separator />}
 
       {isAllowAddNewValue && !!label?.isCustom && (
         <DropdownMenu.Group label={t('views:pullRequests.addValue', 'Add new value')}>
           <DropdownMenu.Item
+            ref={refForNewValue}
             className="[&>.cn-dropdown-menu-base-item]:gap-0"
             onSelect={handleAddNewValue}
             tag={{
@@ -156,11 +166,12 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
               labelClassName: 'grid grid-flow-col',
               valueClassName: 'grid grid-flow-col content-center'
             }}
+            onKeyDown={onKeyDownForNewValue}
           />
         </DropdownMenu.Group>
       )}
 
-      {!values.length && !label?.isCustom && (
+      {!values.length && (!label?.isCustom || (!!label?.isCustom && !isAllowAddNewValue)) && (
         <DropdownMenu.NoOptions>{t('views:pullRequests.labelNotFound', 'Label not found')}</DropdownMenu.NoOptions>
       )}
     </DropdownMenu.Content>

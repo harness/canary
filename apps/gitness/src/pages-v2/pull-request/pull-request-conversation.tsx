@@ -357,7 +357,7 @@ export default function PullRequestConversationPage() {
 
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
 
-  const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
+  const { mutateAsync: updateTitle, isLoading: isUpdatingPR } = useUpdatePullReqMutation({
     repo_ref: repoRef,
     pullreq_number: Number(pullRequestId)
   })
@@ -869,7 +869,8 @@ export default function PullRequestConversationPage() {
       handleUpload,
       toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`,
       spaceId,
-      repoId
+      repoId,
+      isUpdatingPR
     }),
     [
       routes,
@@ -889,7 +890,8 @@ export default function PullRequestConversationPage() {
       removeSuggestionFromBatch,
       handleUpload,
       spaceId,
-      repoId
+      repoId,
+      isUpdatingPR
     ]
   )
 

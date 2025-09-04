@@ -64,9 +64,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   )
 
   const isNew = useMemo(() => !repoDetails || repoDetails?.type === 'dir', [repoDetails])
-  const [parentPath, setParentPath] = useState(
-    isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPARATOR).slice(0, -1).join(FILE_SEPARATOR)
-  )
+  const [parentPath, setParentPath] = useState('')
   const fileResourcePath = useMemo(
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPARATOR),
     [parentPath, fileName]
@@ -84,10 +82,14 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   }, [isNew, parentPath, fileName, fullResourcePath])
 
   useEffect(() => {
-    if (isNew && fullResourcePath && parentPath !== fullResourcePath) {
-      setParentPath(fullResourcePath)
+    if (!fullResourcePath) return
+
+    const newPath = isNew ? fullResourcePath : fullResourcePath.split(FILE_SEPARATOR).slice(0, -1).join(FILE_SEPARATOR)
+
+    if (parentPath !== newPath) {
+      setParentPath(newPath)
     }
-  }, [isNew, fullResourcePath, parentPath])
+  }, [isNew, fullResourcePath])
 
   useEffect(() => {
     setLanguage(filenameToLanguage(fileName) || '')

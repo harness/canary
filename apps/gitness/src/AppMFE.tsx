@@ -111,7 +111,7 @@ export default function AppMFE({
                     <TooltipProvider>
                       <ExitConfirmProvider>
                         <NavigationProvider routes={mfeRoutes}>
-                          <RouterProvider router={router} />
+                          <RouterProvider router={router} key={renderUrl} />
                         </NavigationProvider>
                       </ExitConfirmProvider>
                     </TooltipProvider>

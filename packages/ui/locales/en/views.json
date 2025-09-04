@@ -897,6 +897,7 @@
   "secrets": {
     "createNew": "Create Secret",
     "delete": "Delete Secret",
+    "edit": "Edit Secret",
     "secretsTitle": "Secrets"
   },
   "secret": {

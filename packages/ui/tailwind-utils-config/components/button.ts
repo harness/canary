@@ -239,7 +239,10 @@ export default {
       // This is to prevent focus outline from being hidden by dropdown
       position: 'relative',
       zIndex: '1',
-      '@apply outline-offset-cn-tight': ''
+
+      '&:not(.cn-button-link)': {
+        '@apply outline-offset-cn-tight': ''
+      }
     },
 
     /**

@@ -7,7 +7,13 @@ const Title = ({ title }: { title: string }): JSX.Element => (
   <span className="text-cn-1 max-w-full truncate font-medium">{title}</span>
 )
 
-export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret }: SecretListProps): JSX.Element {
+export function SecretList({
+  secrets,
+  isLoading,
+  toSecretDetails,
+  onDeleteSecret,
+  onEditSecret
+}: SecretListProps): JSX.Element {
   const { t } = useTranslation()
 
   if (isLoading) {
@@ -61,6 +67,10 @@ export function SecretList({ secrets, isLoading, toSecretDetails, onDeleteSecret
                     isDanger: true,
                     title: t('views:secrets.delete', 'Delete Secret'),
                     onClick: () => onDeleteSecret(secret.identifier)
+                  },
+                  {
+                    title: t('views:secrets.edit', 'Edit Secret'),
+                    onClick: () => onEditSecret(secret)
                   }
                 ]}
               />

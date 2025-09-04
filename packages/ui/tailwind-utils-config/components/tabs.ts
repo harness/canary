@@ -88,13 +88,13 @@ export default {
       marginBottom: '-1px', // a compensation to overlap the bottom border of the container
       color: 'var(--cn-text-2)',
       border: 'var(--cn-tabs-item-overlined-border) solid transparent',
+      borderRadius:
+        'var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rb) var(--cn-tabs-item-overlined-rb)',
       '@apply font-body-normal': '',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
         borderColor: 'var(--cn-border-3)',
         borderBottomColor: 'transparent',
-        borderRadius:
-          'var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rb) var(--cn-tabs-item-overlined-rb)',
         backgroundColor: 'var(--cn-bg-1)',
         color: 'var(--cn-text-1)'
       },
@@ -104,7 +104,7 @@ export default {
       },
 
       '&:where(:not([disabled]):focus-visible)': {
-        '@apply z-[1]': ''
+        '@apply z-[1] outline-offset-cn-tight': ''
       }
     },
 

@@ -101,12 +101,12 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
         const dropdown = dropdownRef.current
 
         if (textarea && dropdown) {
-          const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
           const currentWord = getCurrentWord(textarea)
           setValue(text)
 
           // Only show dropdown when typing @ followed by at least one character
           if (currentWord.startsWith('@')) {
+            const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
             setCommandValue(currentWord)
 
             // Account for textarea scroll position when positioning dropdown

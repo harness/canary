@@ -33,7 +33,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="min-h-[3.25rem] rounded-md border border-cn-2 bg-cn-background-2 py-2 pl-4 pr-2"
+      className="border-cn-2 bg-cn-background-2 min-h-[3.25rem] rounded-md border py-2 pl-4 pr-2"
       align="center"
       justify="between"
       gapX="xs"
@@ -61,7 +61,9 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           {!hasAhead && !hasBehind && 'up to date with'}
         </span>
 
-        <Tag variant="secondary" theme="gray" icon="git-branch" value={defaultBranchName} className="align-middle" />
+        <Link noHoverUnderline to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${defaultBranchName}`}>
+          <Tag variant="secondary" theme="gray" icon="git-branch" value={defaultBranchName} className="align-middle" />
+        </Link>
       </Text>
 
       {showContributeBtn && (
@@ -76,7 +78,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <Popover.Content align="end" className="w-80" hideArrow>
             <Layout.Grid gapY="xs">
               <Layout.Grid flow="column" gapX="xs">
-                <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
+                <div className="border-cn-borders-4 rounded-2 flex size-8 shrink-0 items-center justify-center border">
                   <IconV2 name="git-pull-request" size="md" />
                 </div>
                 <Layout.Grid gapY="xs">

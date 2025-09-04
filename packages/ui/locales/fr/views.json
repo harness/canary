@@ -883,6 +883,7 @@
   "secrets": {
     "createNew": "Créer un secret",
     "delete": "Supprimer le secret",
+    "edit": "Edit Secret",
     "secretsTitle": "Secrets"
   },
   "secret": {

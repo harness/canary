@@ -5,10 +5,12 @@ import {
   isValidElement,
   PropsWithChildren,
   ReactElement,
-  ReactNode
+  ReactNode,
+  useEffect,
+  useRef
 } from 'react'
 
-import { cn } from '@utils/cn'
+import { cn, useMergeRefs } from '@/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 function InputAffix({ children, isPrefix = false }: PropsWithChildren<{ isPrefix?: boolean }>) {
@@ -49,7 +51,26 @@ export interface InputProps extends BaseInputProps {
 }
 
 const BaseInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ theme, size, className, inputContainerClassName, prefix = null, suffix = null, ...props }, ref) => {
+  ({ theme, size, className, inputContainerClassName, prefix = null, suffix = null, autoFocus, ...props }, ref) => {
+    const inputRef = useRef<HTMLInputElement | null>(null)
+
+    const mergedRef = useMergeRefs<HTMLInputElement>([
+      node => {
+        if (!node) return
+
+        inputRef.current = node
+      },
+      ref
+    ])
+
+    useEffect(() => {
+      if (autoFocus && inputRef.current) {
+        const t = setTimeout(() => inputRef.current?.focus(), 0)
+
+        return () => clearTimeout(t)
+      }
+    }, [autoFocus])
+
     // Check if prefix/suffix is a valid React element
     const isPrefixComponent = isValidElement(prefix)
     const isSuffixComponent = isValidElement(suffix)
@@ -74,7 +95,7 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn(inputVariants({ size, theme }), inputContainerClassName)}>
         {wrappedPrefix}
-        <input className={cn('cn-input-input', className)} ref={ref} {...props} />
+        <input className={cn('cn-input-input', className)} ref={mergedRef} {...props} />
         {wrappedSuffix}
       </div>
     )

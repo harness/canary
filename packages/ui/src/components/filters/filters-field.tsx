@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 
-import { Button } from '@components/button'
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
 import { cn } from '@utils/cn'
@@ -102,17 +101,18 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       const checkboxFilter = filter as FilterField<boolean>
       const checkboxId = `checkbox-${uniqId}`
       return (
-        // TODO Need to remove button once we get the designs for checkbox filter
-        <Button variant="secondary" size="sm" className="gap-x-2.5 px-2.5 py-1.5">
+        <Label
+          className="rounded-3 bg-cn-gray-soft border-cn-background-softgray cursor-pointer border px-2.5 py-1.5 [&>.cn-label-text]:flex [&>.cn-label-text]:items-center [&>.cn-label-text]:gap-x-2.5"
+          htmlFor={checkboxId}
+        >
           <Checkbox
             id={checkboxId}
             checked={checkboxFilter.value}
             onCheckedChange={value => onUpdateFilter(value as V)}
+            className="relative z-[1]"
           />
-          <Label className="grid-cols-none" htmlFor={checkboxId}>
-            <span>{filterOption.filterFieldConfig?.label}</span>
-          </Label>
-        </Button>
+          {filterOption.filterFieldConfig?.label}
+        </Label>
       )
     }
     default:

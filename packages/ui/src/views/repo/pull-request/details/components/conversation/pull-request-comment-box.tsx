@@ -175,6 +175,16 @@ export const PullRequestCommentBox = ({
   const [commentHistory, setCommentHistory] = useState<CommentHistory[]>([initialCommentHistory])
   const [commentFuture, setCommentFuture] = useState<CommentHistory[]>([])
 
+  const hasInitialized = useRef(false)
+
+  useEffect(() => {
+    if (initialComment && !hasInitialized.current) {
+      setTextComment(initialComment)
+      setTextSelection({ start: initialComment.length, end: initialComment.length })
+      hasInitialized.current = true
+    }
+  }, [initialComment])
+
   const {
     principalsMentionMap,
     setPrincipalsMentionMap

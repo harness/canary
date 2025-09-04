@@ -7,9 +7,16 @@ export interface SecretListItem {
   name?: string
   spec?: {
     secretManagerIdentifier?: string
+    valueType?: string
+    value?: string
+    additionalMetadata?: string
   }
   createdAt?: number
   updatedAt?: number
+  description?: string
+  tags?: {
+    [key: string]: string
+  }
 }
 
 export interface SecretListProps extends Partial<RoutingProps> {

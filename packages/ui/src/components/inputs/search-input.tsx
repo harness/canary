@@ -7,13 +7,19 @@ import { debounce as debounceFn } from 'lodash-es'
 import { BaseInput, InputProps } from './base-input'
 
 // Custom onChange handler for search that works with strings instead of events
-export interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' | 'label' | 'prefix'> {
+export interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' | 'label'> {
   onChange?: (value: string) => void
   debounce?: number | boolean
 }
 
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-  ({ placeholder = 'Search', className, debounce = true, onChange, ...props }, ref) => {
+  ({ placeholder = 'Search', className, debounce = true, onChange, prefix: prefixProp, ...props }, ref) => {
+    const prefix = prefixProp ?? (
+      <div className="ml-1 grid w-8 shrink-0 place-items-center border-r-0">
+        <IconV2 name="search" size="sm" />
+      </div>
+    )
+
     const effectiveDebounce = useMemo(() => {
       if (debounce === true) {
         return 300
@@ -58,11 +64,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         ref={ref}
         className={cn('cn-input-search', className)}
         onChange={handleInputChange}
-        prefix={
-          <div className="ml-1 grid w-8 shrink-0 place-items-center border-r-0">
-            <IconV2 name="search" size="sm" />
-          </div>
-        }
+        prefix={prefix}
         placeholder={placeholder}
         {...props}
       />

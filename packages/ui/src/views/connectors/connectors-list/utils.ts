@@ -32,6 +32,7 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['ElasticSearch', 'elastic'],
   ['AzureKeyVault', 'azure'],
   ['Azure', 'azure'],
+  ['AzureRepo', 'azure'],
   ['Artifactory', 'artifactory'],
   ['OciHelmRepo', 'helm'],
   ['Tas', 'tanzu'],
@@ -39,5 +40,10 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['Jenkins', 'jenkins'],
   ['Bamboo', 'bamboo'],
   ['PagerDuty', 'pagerduty'],
-  ['JDBC', 'java']
+  ['JDBC', 'java'],
+  ['SumoLogic', 'sumo-logic'],
+  ['Slack', 'slack'],
+  ['Zoom', 'zoom'],
+  ['MsTeams', 'ms-teams'],
+  ['Confluence', 'confluence']
 ])

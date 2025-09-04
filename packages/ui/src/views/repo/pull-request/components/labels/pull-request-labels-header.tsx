@@ -1,4 +1,4 @@
-import { KeyboardEvent, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import {
   Button,
@@ -61,7 +61,6 @@ export const LabelsHeader = ({
   isLabelsLoading
 }: LabelsHeaderProps) => {
   const { t } = useTranslation()
-  const footerLinkRef = useRef<HTMLAnchorElement | null>(null)
   const [labelWithValuesToShow, setLabelWithValuesToShow] = useState<LabelsWithValueType | null>(null)
 
   const handleSearchQuery = (query: string) => {
@@ -120,21 +119,6 @@ export const LabelsHeader = ({
     itemsLength: labelsListWithValues?.length ?? 0
   })
 
-  const handleLinkKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      searchInputRef.current?.focus()
-    }
-  }
-
-  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      footerLinkRef.current?.focus()
-      return
-    }
-  }
-
   return (
     <article className="flex items-center justify-between">
       <Text as="h5" variant="body-strong" color="foreground-1">
@@ -157,12 +141,7 @@ export const LabelsHeader = ({
         )}
 
         {!labelWithValuesToShow && (
-          <DropdownMenu.Content
-            className="w-80"
-            align="end"
-            sideOffset={2}
-            onKeyDownCapture={handleContentKeyDownCapture}
-          >
+          <DropdownMenu.Content className="w-80" align="end" sideOffset={2}>
             <DropdownMenu.Header>
               <SearchInput
                 ref={searchInputRef}
@@ -210,13 +189,7 @@ export const LabelsHeader = ({
             )}
 
             <DropdownMenu.Footer>
-              <Link
-                ref={footerLinkRef}
-                className="font-body-single-line-strong"
-                variant="secondary"
-                onKeyDown={handleLinkKeyDown}
-                {...editLabelsProps}
-              >
+              <Link className="font-body-single-line-strong" variant="secondary" {...editLabelsProps}>
                 {t('views:pullRequests.editLabels', 'Edit labels')}
               </Link>
             </DropdownMenu.Footer>

@@ -11,10 +11,10 @@ function createIconandLogoSizeStyles(entity: 'icon' | 'logo') {
 
   sizes.forEach(size => {
     const style: CSSRuleObject = {}
-    style[`width`] = `var(--cn-icon-size-${size})`
-    style[`min-width`] = `var(--cn-icon-size-${size})`
-    style[`height`] = `var(--cn-icon-size-${size})`
-    style[`min-height`] = `var(--cn-icon-size-${size})`
+    style[`width`] = `var(--cn-${entity}-size-${size})`
+    style[`min-width`] = `var(--cn-${entity}-size-${size})`
+    style[`height`] = `var(--cn-${entity}-size-${size})`
+    style[`min-height`] = `var(--cn-${entity}-size-${size})`
 
     if (entity === 'icon') {
       style['stroke-width'] = `var(--cn-icon-stroke-width-${size})`

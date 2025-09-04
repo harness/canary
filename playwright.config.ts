@@ -20,6 +20,8 @@ const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  /* Path to the global setup file. This file will be required and run before all the tests. */
+  globalSetup: require.resolve('./packages/tests/common/global-setup'),
   /* Directory that will be recursively scanned for test files */
   testDir: './packages/tests',
   /* The output directory for files created during test execution */

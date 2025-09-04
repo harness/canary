@@ -15,7 +15,9 @@ export const testDetails = (pageRoute: string): TestDetails => ({
 })
 
 export const testScreenshot = async (page: Page, pageRoute: string): Promise<void> => {
-  await page.goto(pageRoute)
+  await page.goto(pageRoute, {
+    waitUntil: 'domcontentloaded'
+  })
 
   const $element = page.locator(buildSelectorString()).first()
 

@@ -101,7 +101,7 @@ const SheetContent = forwardRef<ElementRef<typeof SheetPrimitive.Content>, Sheet
             className="absolute right-1 top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
             asChild
           >
-            <Button className={closeClassName} variant="ghost" size="sm" iconOnly>
+            <Button className={closeClassName} variant="ghost" size="sm" iconOnly ignoreIconOnlyTooltip>
               <IconV2 name="xmark" />
               <span className="sr-only">Close</span>
             </Button>

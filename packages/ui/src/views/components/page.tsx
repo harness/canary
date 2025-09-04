@@ -62,7 +62,7 @@ const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, c
           {!!moreActions && (
             <DropdownMenu.Root>
               <DropdownMenu.Trigger aria-label="More actions" asChild>
-                <Button variant="outline" iconOnly>
+                <Button variant="outline" iconOnly tooltipProps={{ content: 'More actions' }}>
                   <IconV2 name="more-vert" />
                 </Button>
               </DropdownMenu.Trigger>

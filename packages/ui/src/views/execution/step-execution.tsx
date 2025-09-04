@@ -31,7 +31,16 @@ const StepExecutionToolbar: FC<
         </div>
       </SearchBox.Root>
       <div className="flex">
-        <Button variant="outline" size="sm" iconOnly className="rounded-r-none border-r-0 border-cn-2" onClick={onCopy}>
+        <Button
+          className="rounded-r-none border-r-0 border-cn-2"
+          variant="outline"
+          size="sm"
+          iconOnly
+          onClick={onCopy}
+          tooltipProps={{
+            content: 'Copy'
+          }}
+        >
           <IconV2 name="copy" className="size-4 text-icons-3" />
         </Button>
         <Button variant="outline" size="sm" className="rounded-none border-cn-2" onClick={onEdit}>

@@ -1,7 +1,6 @@
-import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { forwardRef, useMemo } from 'react'
 
 import { CommonInputsProp, ControlGroup, FormCaption, Label } from '@/components'
-import { useMergeRefs } from '@/utils'
 
 import { BaseInput, InputProps } from './base-input'
 
@@ -22,10 +21,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
     orientation,
     informerProps,
     informerContent,
-    autoFocus,
     ...restProps
   } = props
-  const inputRef = useRef<HTMLInputElement | null>(null)
   const isHorizontal = orientation === 'horizontal'
 
   // override theme based on error and warning
@@ -33,23 +30,6 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
 
   // Generate a unique ID if one isn't provided
   const inputId = useMemo(() => props.id || `input-${Math.random().toString(36).substring(2, 9)}`, [props.id])
-
-  const mergedRef = useMergeRefs<HTMLInputElement>([
-    node => {
-      if (!node) return
-
-      inputRef.current = node
-    },
-    ref
-  ])
-
-  useEffect(() => {
-    if (autoFocus && inputRef.current) {
-      const t = setTimeout(() => inputRef.current?.focus(), 0)
-
-      return () => clearTimeout(t)
-    }
-  }, [autoFocus])
 
   return (
     <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
@@ -72,7 +52,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
       )}
 
       <ControlGroup.InputWrapper>
-        <BaseInput {...restProps} ref={mergedRef} theme={theme} id={inputId} disabled={disabled} />
+        <BaseInput {...restProps} ref={ref} theme={theme} id={inputId} disabled={disabled} />
 
         {error ? (
           <FormCaption disabled={disabled} theme="danger">

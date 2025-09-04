@@ -2,7 +2,7 @@ import { test } from '@playwright/test'
 
 import { testDetails, testScreenshot } from './common/test'
 
-const PAGE_ROUTE: string = 'secrets-multi-select-pag'
+const PAGE_ROUTE: string = 'secrets-multi-select-page'
 
 test.describe(PAGE_ROUTE, testDetails(PAGE_ROUTE), () => {
   test('matches screenshot', async ({ page }) => {

@@ -63,6 +63,8 @@ export default defineConfig({
     baseURL: process.env.VIEW_PREVIEW_BASE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    /* Whether to automatically capture a screenshot after each test. */
+    screenshot: 'on',
     /* Viewport size for Page object */
     viewport: { width: 1500, height: 1500 }
   },

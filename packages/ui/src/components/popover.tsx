@@ -1,4 +1,12 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, PropsWithChildren, ReactNode } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  forwardRef,
+  PropsWithChildren,
+  ReactNode,
+  useEffect,
+  useState
+} from 'react'
 
 import { Text } from '@/components/text'
 import { usePortal } from '@/context'
@@ -76,18 +84,104 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
 )
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
+type TriggerType = 'click' | 'hover'
+
 interface PopoverProps
   extends PropsWithChildren<Omit<PopoverContentProps, 'children' | 'content'>>,
     Omit<ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>, 'children' | 'modal'> {
   content: ReactNode
+  triggerType?: TriggerType
+  hoverDelay?: number
+  closeDelay?: number
 }
 
-const PopoverComponent = ({ children, content, open, defaultOpen, onOpenChange, ...props }: PopoverProps) => (
-  <Popover.Root {...{ open, defaultOpen, onOpenChange }}>
-    <Popover.Trigger asChild>{children}</Popover.Trigger>
-    <Popover.Content {...props}>{content}</Popover.Content>
-  </Popover.Root>
-)
+const PopoverComponent = ({
+  children,
+  content,
+  open: controlledOpen,
+  defaultOpen,
+  onOpenChange,
+  triggerType = 'click',
+  hoverDelay = 200,
+  closeDelay = 300,
+  ...props
+}: PopoverProps) => {
+  const [internalOpen, setInternalOpen] = useState(defaultOpen || false)
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null)
+  const [closeTimeout, setCloseTimeout] = useState<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout)
+      }
+      if (closeTimeout) {
+        clearTimeout(closeTimeout)
+      }
+    }
+  }, [hoverTimeout, closeTimeout])
+
+  const open = controlledOpen !== undefined ? controlledOpen : internalOpen
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (controlledOpen === undefined) {
+      setInternalOpen(newOpen)
+    }
+    onOpenChange?.(newOpen)
+  }
+
+  const handleMouseEnter = () => {
+    if (closeTimeout) {
+      clearTimeout(closeTimeout)
+      setCloseTimeout(null)
+    }
+
+    const timeout = setTimeout(() => {
+      handleOpenChange(true)
+    }, hoverDelay)
+
+    setHoverTimeout(timeout)
+  }
+
+  const handleMouseLeave = () => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout)
+      setHoverTimeout(null)
+    }
+    const timeout = setTimeout(() => {
+      handleOpenChange(false)
+    }, closeDelay)
+
+    setCloseTimeout(timeout)
+  }
+
+  const triggerProps =
+    triggerType === 'hover'
+      ? {
+          onMouseEnter: handleMouseEnter,
+          onMouseLeave: handleMouseLeave
+        }
+      : {}
+
+  const contentProps =
+    triggerType === 'hover'
+      ? {
+          onMouseEnter: handleMouseEnter,
+          onMouseLeave: handleMouseLeave
+        }
+      : {}
+
+  return (
+    <Popover.Root open={open} onOpenChange={handleOpenChange}>
+      <Popover.Trigger {...triggerProps} asChild>
+        {children}
+      </Popover.Trigger>
+      <Popover.Content {...contentProps} {...props}>
+        {content}
+      </Popover.Content>
+    </Popover.Root>
+  )
+}
 
 const Popover = Object.assign(PopoverComponent, {
   Root: PopoverRoot,

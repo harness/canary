@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form'
 
 import { cloneDeep, set } from 'lodash-es'
 
+import { useRootFormContext } from '../hooks/useRootFormikContext'
 //import { useRootFormikContext } from '../context/RootFormikContext'
 import type { InputProps } from './InputComponent'
 
@@ -20,7 +21,8 @@ export function InputComponentRenderer<T = unknown>({
   input
 }: InputComponentRendererProps<T>): JSX.Element | null {
   const { formState, watch } = useFormContext()
-  const { metadata = {}, fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
+  const { fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
+  const { metadata } = useRootFormContext()
 
   const inputComponent = factory?.getComponent<T>(input.inputType as string)
 

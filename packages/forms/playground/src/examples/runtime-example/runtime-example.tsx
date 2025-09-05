@@ -4,6 +4,7 @@ import { collectDefaultValues, RenderForm, RootForm, useZodValidationResolver } 
 import { UpdateValues } from '../../helpers/update-values-btn'
 import inputComponentFactory from '../../implementation/factory/factory'
 import { formDefinition } from './form-definition'
+import { FormMetadata } from './types/types'
 
 function RuntimeExample() {
   const [formState, setFormState] = useState<{ isValid?: boolean; isSubmitted?: boolean }>({})
@@ -43,6 +44,11 @@ function RuntimeExample() {
     }
   })
 
+  const metadata: FormMetadata = {
+    prop1: '1',
+    prop2: '2'
+  }
+
   return (
     <div style={{ display: 'flex', gap: '50px', alignItems: 'flex-start' }}>
       <RootForm
@@ -52,6 +58,7 @@ function RuntimeExample() {
         mode={'onSubmit'}
         onValuesChange={onValuesChange}
         onValidationChange={onValidationChange}
+        metadata={metadata}
       >
         {rootForm => (
           <div style={{ border: '1px solid lightgray', padding: '10px', minWidth: '350px' }}>

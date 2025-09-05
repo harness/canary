@@ -10,7 +10,9 @@ import {
   UseFormReturn
 } from 'react-hook-form'
 
-export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any> {
+import { RootFormProvider } from '../context/RootFormContext'
+
+export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any, TMetadata = any> {
   defaultValues?: DefaultValues<TFieldValues>
   resolver: Resolver<TFieldValues, TContext> | undefined
   onValuesChange?: (values: DeepPartial<TFieldValues>) => void
@@ -29,7 +31,7 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
    *
    * ```isVisible?: (values: AnyFormikValue, metadata: any) => boolean```
    */
-  metadata?: any
+  metadata?: TMetadata
 
   /**
    * Provide fixed value that are required for defined inputs
@@ -46,8 +48,8 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
   autoFocusPath?: Path<TFieldValues>
 }
 
-export function RootForm<TFieldValues extends FieldValues = FieldValues, TContext = any>(
-  props: RootFormProps<TFieldValues, TContext>
+export function RootForm<TFieldValues extends FieldValues = FieldValues, TContext = any, TMetadata = any>(
+  props: RootFormProps<TFieldValues, TContext, TMetadata>
 ): ReactElement {
   const {
     mode = 'onSubmit',
@@ -61,7 +63,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     // validate,
     // validateDebounceInterval,
     // validationConfig,
-    // metadata,
+    metadata,
     children,
     // fixedValues
     autoFocusPath
@@ -148,20 +150,22 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   }, [methods])
 
   return (
-    <FormProvider {...methods}>
-      {typeof children === 'function'
-        ? children({
-            ...methods,
-            submitForm: async () => {
-              if (onSubmit) {
-                submittedRef.current = true
-                handleSubmit(values => {
-                  onSubmit(values)
-                })()
+    <RootFormProvider metadata={metadata}>
+      <FormProvider {...methods}>
+        {typeof children === 'function'
+          ? children({
+              ...methods,
+              submitForm: async () => {
+                if (onSubmit) {
+                  submittedRef.current = true
+                  handleSubmit(values => {
+                    onSubmit(values)
+                  })()
+                }
               }
-            }
-          })
-        : children}
-    </FormProvider>
+            })
+          : children}
+      </FormProvider>
+    </RootFormProvider>
   )
 }

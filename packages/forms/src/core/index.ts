@@ -13,3 +13,5 @@ export * from './utils/zod-resolver'
 export * from './utils/transform-utils'
 export * from './utils/default-value-utils'
 export * from './transformers/transformers'
+
+export * from './hooks/useRootFormikContext'

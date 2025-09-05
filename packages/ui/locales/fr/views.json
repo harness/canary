@@ -403,7 +403,8 @@
     "errorEncountered": "Erreur rencontrée",
     "viewDetails": "Voir les détails",
     "id": "ID du connecteur",
-    "connectivityStatus": "État de la connexion",
+    "type": "Type",
+    "createdAt": "Created",
     "updated": "Dernière mise à jour",
     "delete": "Supprimer",
     "filterOptions": {
@@ -414,6 +415,7 @@
         "favorite": "Favorites"
       }
     },
+    "connectivityStatus": "État de la connexion",
     "created": "Créé"
   },
   "noData": {

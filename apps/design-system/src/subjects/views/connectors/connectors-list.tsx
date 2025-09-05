@@ -11,6 +11,7 @@ import {
 } from '@harnessio/ui/views'
 
 import mockConnectorsList from './mock-connectors-list.json'
+import mockConnectorsStats from './mock-connectors-stats.json'
 
 const ConnectorsListPageWrapper = (): JSX.Element => {
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
@@ -55,9 +56,11 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
               branch: connector.gitDetails.branch || '',
               objectId: connector.gitDetails.objectId || ''
             },
-            isFavorite: connector.isFavorite
+            isFavorite: connector.isFavorite,
+            createdAt: connector.createdAt
           })) as ConnectorListItem[]
         }
+        connectorStats={mockConnectorsStats.data}
         isLoading={false}
         onFilterChange={handleFilterChange}
         setSearchQuery={noop}

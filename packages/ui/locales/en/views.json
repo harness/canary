@@ -412,7 +412,8 @@
     "errorEncountered": "Error Encountered",
     "viewDetails": "View Details",
     "id": "Connector ID",
-    "connectivityStatus": "Connectivity status",
+    "type": "Type",
+    "createdAt": "Created",
     "updated": "Last updated",
     "delete": "Delete",
     "filterOptions": {
@@ -423,6 +424,7 @@
         "favorite": "Favorites"
       }
     },
+    "connectivityStatus": "Connectivity status",
     "created": "Created"
   },
   "noData": {

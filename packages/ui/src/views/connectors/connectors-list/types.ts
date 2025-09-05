@@ -1,4 +1,5 @@
 import { CheckboxOptions } from '@components/filters/types'
+import { MultiSelectOption } from '@components/multi-select'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorConfigType } from '../types'
@@ -21,6 +22,7 @@ export interface ConnectorListItem {
       code: number
     }[]
   }
+  createdAt?: number
   lastModifiedAt?: number
   lastTestedAt?: number
   spec?: {
@@ -44,9 +46,17 @@ export interface ConnectorListProps extends Partial<RoutingProps> {
 }
 
 export type ConnectorListFilters = {
+  type?: CheckboxOptions[]
   status?: CheckboxOptions[]
   text?: string
   favorite?: boolean
+  tags?: MultiSelectOption[]
+  connectorIdentifier?: string
+  description?: string
+}
+
+export interface ConnectorStats {
+  typeStats: Array<{ type: ConnectorConfigType; count: number }>
 }
 
 export interface ConnectorListPageProps extends ConnectorListProps {
@@ -61,4 +71,5 @@ export interface ConnectorListPageProps extends ConnectorListProps {
   onFilterChange?: (filterValues: ConnectorListFilters) => void
   onSortChange?: (sort: string) => void
   onCreate: () => void
+  connectorStats?: ConnectorStats
 }

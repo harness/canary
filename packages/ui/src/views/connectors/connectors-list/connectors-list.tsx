@@ -7,58 +7,54 @@ import {
   LogoV2,
   MoreActionsTooltip,
   NoData,
+  Popover,
   Skeleton,
   Table,
   Text,
-  TimeAgoCard,
-  Tooltip
+  TimeAgoCard
 } from '@/components'
 import { useTranslation } from '@/context'
+import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
 import { ConnectorListItem, ConnectorListProps } from './types'
-import { ConnectorTypeToLogoNameMap } from './utils'
+import { ConnectorDisplayNameMap, ConnectorTypeToLogoNameMap } from './utils'
 
-const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-1 max-w-full truncate font-medium" title={title}>
-    {title}
-  </span>
-)
+const isStatusSuccess = (status?: string) => status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
+
+const CELL_MIN_WIDTH = 'min-w-[136px]'
+const CELL_MIN_WIDTH_ICON = 'min-w-16'
 
 const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetailUrl: string }): JSX.Element => {
   const { t } = useTranslation()
-  const isSuccess = item?.status?.status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
+  const isSuccess = isStatusSuccess(item?.status?.status)
   const [errorConnectionOpen, setErrorConnectionOpen] = useState(false)
 
   return isSuccess ? (
-    <div className="flex items-center gap-2">
-      <IconV2 name="circle" size="2xs" className="text-icons-success" />
-      <Text className="group-hover:text-cn-1 transition-colors duration-200">
-        {t('views:connectors.success', 'Success')}
-      </Text>
+    <div className="gap-cn-4xs flex items-center">
+      <IconV2 name="circle" size="sm" color="success" />
+      <Text>{t('views:connectors.success', 'Success')}</Text>
     </div>
   ) : (
     <>
-      <Tooltip
-        side="bottom"
+      <Popover
+        triggerType="hover"
         title={t('views:connectors.errorEncountered', 'Error Encountered')}
         content={
           <>
             <Text className="whitespace-normal">{item?.status?.errorSummary}</Text>
-            <Button variant="link" onClick={() => setErrorConnectionOpen(true)}>
-              {t('views:connectors.viewDetails', 'View details')}
+            <Button className="mr-auto" variant="link" size="xs" onClick={() => setErrorConnectionOpen(true)}>
+              {t('views:connectors.viewDetails', 'View error details')}
             </Button>
           </>
         }
       >
-        <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
-          <IconV2 name="circle" size="2xs" className="text-icons-danger" />
-          <Text className="group-hover:text-cn-1 transition-colors duration-200">
-            {t('views:connectors.failure', 'Failed')}
-          </Text>
+        <Button className="gap-cn-4xs h-auto p-0 font-normal" variant="transparent">
+          <IconV2 name="circle" size="sm" color="danger" />
+          <Text color="inherit">{t('views:connectors.failure', 'Failed')}</Text>
         </Button>
-      </Tooltip>
+      </Popover>
 
       <ConnectorTestConnectionDialog
         title={item?.name}
@@ -101,41 +97,36 @@ export function ConnectorsList({
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      tableClassName="table-fixed"
-    >
+    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-[282px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
-          <Table.Head className="w-44">{t('views:common.details', 'Details')}</Table.Head>
-          <Table.Head className="w-44 whitespace-nowrap">
-            {t('views:connectors.connectivityStatus', 'Connectivity status')}
-          </Table.Head>
-          <Table.Head className="w-44">{t('views:connectors.updated', 'Last updated')}</Table.Head>
-          <Table.Head className="w-10" />
-          <Table.Head className="w-10" />
+          <Table.Head className="w-full max-w-[470px]">{t('views:connectors.id', 'Connector ID')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:connectors.type', 'Type')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:connectors.status', 'Status')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:connectors.createdAt', 'Created')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:connectors.updated', 'Updated')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH_ICON} />
+          <Table.Head className={CELL_MIN_WIDTH_ICON} />
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
+        {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, createdAt, isFavorite }) => {
           const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
+          const connectorType = type ? ConnectorDisplayNameMap.get(type) : ''
           const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
 
           return (
             <Table.Row className="[&_td]:py-5" key={identifier} to={connectorDetailUrl}>
-              <Table.Cell className="content-center truncate">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex w-full max-w-8 items-center justify-center">
-                    {connectorLogo ? <LogoV2 name={connectorLogo} size="lg" /> : <IconV2 name="connectors" size="lg" />}
-                  </div>
-                  <Title title={identifier} />
+              <Table.Cell className="w-full max-w-[470px] content-center truncate">
+                <Text truncate>{identifier}</Text>
+              </Table.Cell>
+              <Table.Cell className={CELL_MIN_WIDTH}>
+                <div className="flex w-full items-center gap-2">
+                  {connectorLogo ? <LogoV2 name={connectorLogo} size="lg" /> : <IconV2 name="connectors" size="lg" />}
+                  <Text truncate>{connectorType || ''}</Text>
                 </div>
               </Table.Cell>
-              <Table.Cell className="content-center truncate" title={spec?.url}>
-                {spec?.url}
-              </Table.Cell>
-              <Table.Cell className="content-center whitespace-nowrap">
+              <Table.Cell className={CELL_MIN_WIDTH} disableLink={!isStatusSuccess(status?.status)}>
                 {status ? (
                   <ConnectivityStatus
                     item={{ name, identifier, type, spec, status, lastModifiedAt }}
@@ -143,16 +134,23 @@ export function ConnectorsList({
                   />
                 ) : null}
               </Table.Cell>
-              <Table.Cell className="content-center">
-                {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
+              <Table.Cell className={CELL_MIN_WIDTH}>
+                {createdAt ? (
+                  <TimeAgoCard timestamp={createdAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                ) : null}
               </Table.Cell>
-              <Table.Cell className="content-center !p-1.5">
+              <Table.Cell className={CELL_MIN_WIDTH}>
+                {lastModifiedAt ? (
+                  <TimeAgoCard timestamp={lastModifiedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                ) : null}
+              </Table.Cell>
+              <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, '!p-0 text-center')} disableLink>
                 <Favorite
                   isFavorite={isFavorite}
                   onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
                 />
               </Table.Cell>
-              <Table.Cell className="content-center !p-0">
+              <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, '!p-0 text-center')} disableLink>
                 <MoreActionsTooltip
                   actions={[
                     {

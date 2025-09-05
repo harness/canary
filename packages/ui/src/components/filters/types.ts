@@ -1,6 +1,7 @@
 import { JSX, ReactNode } from 'react'
 
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
+import { MultiSelectOption, MultiSelectProps } from '@components/multi-select'
 
 import { Parser } from '@harnessio/filters'
 
@@ -10,7 +11,8 @@ export enum FilterFieldTypes {
   ComboBox = 'combobox',
   Custom = 'custom',
   MultiSelect = 'multiselect',
-  Checkbox = 'checkbox'
+  Checkbox = 'checkbox',
+  MultiTag = 'multitag'
 }
 
 export interface CheckboxOptions {
@@ -73,6 +75,12 @@ interface MultiSelectFilterOptionConfig<T extends string = string>
   }
 }
 
+interface MultiTagFilterOptionConfig<T extends string = string>
+  extends FilterOptionConfigBase<T, Array<MultiSelectOption>> {
+  type: FilterFieldTypes.MultiTag
+  filterFieldConfig?: MultiSelectProps
+}
+
 interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, boolean> {
   type: FilterFieldTypes.Checkbox
   filterFieldConfig?: {
@@ -86,6 +94,7 @@ type FilterOptionConfig<T extends string = string, V = Record<string, unknown>> 
   | TextFilterOptionConfig<T>
   | CheckboxFilterOptionConfig<T>
   | MultiSelectFilterOptionConfig<T>
+  | MultiTagFilterOptionConfig<T>
   | CustomFilterOptionConfig<T, V>
 
 type FilterValueTypes = string | number | unknown

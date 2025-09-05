@@ -2,12 +2,14 @@ import { useMemo, useState } from 'react'
 
 import { Checkbox } from '@components/checkbox'
 import { Label } from '@components/form-primitives'
+import { MultiSelectOption } from '@components/multi-select'
 import { cn } from '@utils/cn'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
+import MultiTagFilter from './filters-bar/actions/variants/multi-tag'
 import Text from './filters-bar/actions/variants/text-field'
 import {
   CheckboxOptions,
@@ -113,6 +115,17 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
           />
           {filterOption.filterFieldConfig?.label}
         </Label>
+      )
+    }
+
+    case FilterFieldTypes.MultiTag: {
+      const multiTagFilter = filter as FilterField<MultiSelectOption[]>
+      return (
+        <MultiTagFilter
+          filter={multiTagFilter.value || []}
+          onUpdateFilter={values => onUpdateFilter(values as V)}
+          filterFieldConfig={filterOption.filterFieldConfig}
+        />
       )
     }
     default:

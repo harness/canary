@@ -747,21 +747,12 @@ const PullRequestPanel = ({
                 }
               />
               {showMergeInputs && (
-<<<<<<< HEAD
                 <Layout.Vertical className="mt-2 w-full items-center pb-cn-xs">
                   <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-3 bg-cn-1 p-3">
                     <TextInput
                       id="merge-title"
                       label="Commit message"
                       className="w-full bg-cn-1"
-=======
-                <Layout.Vertical className="pb-cn-xs mt-2 w-full items-center">
-                  <Layout.Vertical className="border-cn-3 bg-cn-background-1 w-full gap-1 rounded-md border p-3">
-                    <TextInput
-                      id="merge-title"
-                      label="Commit message"
-                      className="bg-cn-background-1 w-full"
->>>>>>> dda76cf1d (add custom dialog triggers)
                       value={mergeTitle}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMergeTitle(e.target.value)}
                       optional
@@ -770,11 +761,7 @@ const PullRequestPanel = ({
                     <Textarea
                       id="merge-message"
                       label="Commit description"
-<<<<<<< HEAD
                       className="w-full bg-cn-1"
-=======
-                      className="bg-cn-background-1 w-full"
->>>>>>> dda76cf1d (add custom dialog triggers)
                       value={mergeMessage}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
                       optional

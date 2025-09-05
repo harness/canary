@@ -4,6 +4,7 @@ import {
   forwardRef,
   HTMLAttributes,
   isValidElement,
+  MouseEvent,
   ReactNode,
   useCallback,
   useContext,
@@ -12,7 +13,7 @@ import {
   useState
 } from 'react'
 
-import { usePortal } from '@/context'
+import { usePortal, useTranslation } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -73,18 +74,23 @@ const DialogProvider = ({ children }: { children: ReactNode }) => {
 
   const unregisterTrigger = useCallback((id: string) => {
     focusStack.current = focusStack.current.filter(e => e.triggerId !== id)
+    console.log('🚀 ~ unregisterTrigger ~ focusStack.current:', focusStack.current)
   }, [])
 
   const registerTrigger = useCallback((entry: FocusEntry) => {
     unregisterTrigger(entry.triggerId)
+    console.log('🚀 ~ registerTrigger ~ entry.triggerId:', entry.triggerId)
     focusStack.current.push(entry)
+    console.log('🚀 ~ registerTrigger ~ focusStack.current:', focusStack.current)
   }, [])
 
   const restoreFocus = useCallback((id: string) => {
+    console.log('🚀 ~ restoreFocus ~ focusStack.current:', focusStack.current)
     const entryIndex = focusStack.current.findIndex(e => e.triggerId === id)
 
     if (entryIndex !== -1) {
       const entry = focusStack.current[entryIndex]
+      console.log('🚀 ~ restoreFocus ~ entry:', entry)
       if (entry.triggerElement) {
         setTimeout(() => entry.triggerElement.focus(), 0)
       }
@@ -113,6 +119,20 @@ let triggerCounter = 0
 const useTriggerId = (_id?: string) => {
   const id = useRef(`${_id || 'dialog-trigger'}-${triggerCounter++}`)
   return id.current
+}
+
+const useCustomDialogTrigger = () => {
+  const focusManager = useDialogFocusManager()
+  const triggerId = useTriggerId()
+  const triggerRef = useRef<HTMLButtonElement>(null)
+
+  const registerTrigger = useCallback(() => {
+    if (focusManager && triggerRef.current) {
+      focusManager.registerTrigger({ triggerId, triggerElement: triggerRef.current })
+    }
+  }, [focusManager, triggerId])
+
+  return { triggerRef, registerTrigger }
 }
 
 export type ModalDialogRootProps = Pick<DialogPrimitive.DialogProps, 'open' | 'onOpenChange' | 'children'>
@@ -153,6 +173,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
     const { open } = useDialogOpen()
 
     const handleCloseAutoFocus = useCallback(() => {
+      console.log('🚀 ~ triggerId:', triggerId)
       if (focusManager) {
         focusManager.restoreFocus(triggerId)
       }
@@ -168,11 +189,12 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     useEffect(() => {
       return () => {
+        console.log('🚀 ~ return ():', focusManager)
         if (focusManager) {
           focusManager.unregisterTrigger(triggerId)
         }
       }
-    }, [focusManager, triggerId])
+    }, [])
 
     return (
       <DialogPrimitive.Portal container={portalContainer}>
@@ -210,6 +232,7 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 const Header = forwardRef<HTMLDivElement, HeaderProps>(
   ({ className, icon, logo, theme = 'default', children, ...props }, ref) => {
+    const { t } = useTranslation()
     if (icon && logo) {
       console.warn('Dialog.Header: Cannot use both icon and logo props together')
       return null
@@ -244,7 +267,13 @@ const Header = forwardRef<HTMLDivElement, HeaderProps>(
           )}
           {title}
         </div>
-        {description}
+        {description ? (
+          description
+        ) : (
+          <Description className="sr-only">
+            {t('component:dialog.noDescription', 'No description available')}
+          </Description>
+        )}
       </div>
     )
   }
@@ -302,8 +331,9 @@ const Trigger = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, id, ...pr
   const dialogContext = useContext(DialogOpenContext)
   const isInsideDialog = dialogContext !== undefined
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (focusManager) {
+      console.log('🚀 ~ focusManager:', focusManager)
       focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
     }
     onClick?.(event)
@@ -331,4 +361,4 @@ const Dialog = {
   Footer
 }
 
-export { Dialog, DialogProvider }
+export { Dialog, DialogProvider, useCustomDialogTrigger }

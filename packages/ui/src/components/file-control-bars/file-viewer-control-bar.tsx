@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   Tabs,
   Tag,
   Text,
+  useCustomDialogTrigger,
   ViewTypeValue
 } from '@/components'
 import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
@@ -36,14 +37,20 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   isGitLfsObject,
   handleDownloadFile,
   handleEditFile,
-  handleOpenDeleteDialog,
+  handleOpenDeleteDialog: _handleOpenDeleteDialog,
   refType = BranchSelectorTab.BRANCHES
 }) => {
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
   const handleViewRaw = () => {
     window.open(url, '_blank')
   }
 
-  const RightDetails = () => {
+  const handleOpenDeleteDialog = useCallback(() => {
+    registerTrigger()
+    _handleOpenDeleteDialog()
+  }, [_handleOpenDeleteDialog, registerTrigger])
+
+  const rightDetails = useMemo(() => {
     return (
       <Layout.Horizontal gap="xl" align="center">
         {isGitLfsObject && <Tag value="Stored with Git LFS" icon="info-circle" />}
@@ -59,6 +66,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           onEditClick={handleEditFile}
           additionalButtonsProps={[
             {
+              ref: triggerRef,
               children: <IconV2 name="more-horizontal" />,
               'aria-label': 'More actions',
               dropdownProps: {
@@ -77,7 +85,16 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
         />
       </Layout.Horizontal>
     )
-  }
+  }, [
+    fileBytesSize,
+    fileContent,
+    handleDownloadFile,
+    handleEditFile,
+    handleOpenDeleteDialog,
+    handleViewRaw,
+    isGitLfsObject,
+    refType
+  ])
 
   return (
     <StackedList.Root {...(view !== 'history' ? { rounded: 'top' } : {})}>
@@ -92,7 +109,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
             </Tabs.List>
           }
         />
-        <StackedList.Field right title={<RightDetails />} />
+        <StackedList.Field right title={rightDetails} />
       </StackedList.Header>
     </StackedList.Root>
   )

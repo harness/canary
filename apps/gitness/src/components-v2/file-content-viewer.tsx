@@ -85,8 +85,8 @@ const RenameHistorySection: React.FC<RenameHistorySectionProps> = ({
         <Accordion.Item value="rename-history" style={{ border: 'none' }}>
           <Accordion.Trigger indicatorProps={{ className: 'hidden' }}>
             <div className="flex items-center gap-cn-xs">
-              <IconV2 name="nav-arrow-down" size="xs" className="text-cn-foreground-3" />
-              <IconV2 name="git-commit" size="xs" className="text-cn-foreground-3" />
+              <IconV2 name="nav-arrow-down" size="xs" className="text-cn-3" />
+              <IconV2 name="git-commit" size="xs" className="text-cn-3" />
               <Text variant="body-single-line-normal" color="foreground-2">
                 Renamed from {titlePath} - {accordionValue ? 'Hide History' : 'Show History'}
               </Text>

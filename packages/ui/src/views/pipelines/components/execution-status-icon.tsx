@@ -15,11 +15,11 @@ export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props =>
     case PipelineExecutionStatus.KILLED:
     case PipelineExecutionStatus.FAILURE:
     case PipelineExecutionStatus.ERROR:
-      return <IconV2 name="xmark-circle-solid" className="text-cn-foreground-danger" />
+      return <IconV2 name="xmark-circle-solid" className="text-cn-danger" />
     case PipelineExecutionStatus.SUCCESS:
-      return <IconV2 name="check-circle-solid" className="text-cn-foreground-success" />
+      return <IconV2 name="check-circle-solid" className="text-cn-success" />
     case PipelineExecutionStatus.RUNNING:
-      return <IconV2 name="loader" className="animate-spin text-cn-foreground-warning" />
+      return <IconV2 name="loader" className="animate-spin text-cn-warning" />
     case PipelineExecutionStatus.SKIPPED:
     default:
       return <IconV2 name="clock-solid" className="opacity-50" />

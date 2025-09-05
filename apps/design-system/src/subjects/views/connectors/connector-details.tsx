@@ -71,7 +71,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
         <ConnectorDetailsConfiguration
           connectorDetails={connectorDetails}
-          onSave={noop}
           inputComponentFactory={inputComponentFactory}
           getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
           apiError={''}
@@ -79,9 +78,8 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       </Tabs.Content>
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.REFERENCES}>
         <ConnectorDetailsReference
-          toEntity={noop}
-          toScope={noop}
-          entities={mockConnectorRefList}
+          toScope={() => ''}
+          connectorReferences={mockConnectorRefList}
           searchQuery={''}
           apiConnectorRefError={undefined}
           isLoading={false}

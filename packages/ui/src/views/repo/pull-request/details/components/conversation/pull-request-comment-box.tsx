@@ -175,6 +175,16 @@ export const PullRequestCommentBox = ({
   const [commentHistory, setCommentHistory] = useState<CommentHistory[]>([initialCommentHistory])
   const [commentFuture, setCommentFuture] = useState<CommentHistory[]>([])
 
+  const hasInitialized = useRef(false)
+
+  useEffect(() => {
+    if (initialComment && !hasInitialized.current) {
+      setTextComment(initialComment)
+      setTextSelection({ start: initialComment.length, end: initialComment.length })
+      hasInitialized.current = true
+    }
+  }, [initialComment])
+
   const {
     principalsMentionMap,
     setPrincipalsMentionMap
@@ -674,7 +684,7 @@ export const PullRequestCommentBox = ({
                 resizable
                 ref={textAreaRef}
                 placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="min-h-32 pb-cn-3xl text-cn-foreground-1"
+                className="min-h-32 pb-cn-3xl text-cn-1"
                 autoFocus={!!autofocus || !!inReplyMode}
                 principalProps={principalProps}
                 setPrincipalsMentionMap={setPrincipalsMentionMap}

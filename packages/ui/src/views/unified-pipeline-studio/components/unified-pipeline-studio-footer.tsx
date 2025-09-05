@@ -56,30 +56,25 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
             <IconV2
               size="xs"
               name="xmark-circle"
-              className={problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-3'}
+              className={problemsCount.error > 0 ? 'text-cn-danger' : 'text-cn-3'}
             />
-            <span
-              className={cn(
-                'text-[12px]',
-                problemsCount.error > 0 ? 'text-cn-foreground-danger' : 'text-cn-foreground-1'
-              )}
-            >
+            <span className={cn('text-[12px]', problemsCount.error > 0 ? 'text-cn-danger' : 'text-cn-1')}>
               {problemsCount.error}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <IconV2 size="xs" name="warning-triangle" className="text-cn-foreground-3" />
-            <span className="text-[12px] text-cn-foreground-1">{problemsCount.warning}</span>
+            <IconV2 size="xs" name="warning-triangle" className="text-cn-3" />
+            <span className="text-[12px] text-cn-1">{problemsCount.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <IconV2 size="xs" name="info-circle" className="text-cn-foreground-3" />
-            <span className="text-[12px] text-cn-foreground-1">{problemsCount.info}</span>
+            <IconV2 size="xs" name="info-circle" className="text-cn-3" />
+            <span className="text-[12px] text-cn-1">{problemsCount.info}</span>
           </div>
         </div>
         {(branchesLoading || branches || currentBranch) && (
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
-              <span className="text-[12px] text-cn-foreground-3">Branch:</span>
+              <span className="text-[12px] text-cn-3">Branch:</span>
 
               <Select
                 options={branchOptions}
@@ -94,10 +89,10 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
       {committedTimeAgo && authorName && (
         <Popover.Root>
           <Popover.Trigger>
-            <div className="flex text-[12px] text-cn-foreground-3">
+            <div className="flex text-[12px] text-cn-3">
               Last edited
-              <span className="text-cn-foreground-1">&nbsp;{committedTimeAgo}&nbsp;</span> by
-              <span className="text-cn-foreground-1">&nbsp;{authorName}&nbsp;</span>
+              <span className="text-cn-1">&nbsp;{committedTimeAgo}&nbsp;</span> by
+              <span className="text-cn-1">&nbsp;{authorName}&nbsp;</span>
             </div>
           </Popover.Trigger>
           <Popover.Content side="top" className="mb-4 mr-4 w-80 p-0">

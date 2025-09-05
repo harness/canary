@@ -11,6 +11,7 @@ import { Link, LinkProps } from './link'
 const PopoverRoot = PopoverPrimitive.Root
 
 const PopoverTrigger = PopoverPrimitive.Trigger
+type PopoverTriggerProps = PopoverPrimitive.PopoverTriggerProps
 
 const PopoverAnchor = PopoverPrimitive.Anchor
 
@@ -95,4 +96,4 @@ const Popover = Object.assign(PopoverComponent, {
   Anchor: PopoverAnchor
 })
 
-export { Popover }
+export { Popover, PopoverTriggerProps }

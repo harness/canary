@@ -99,7 +99,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
             />
           </div>
         )}
-        {!!error?.message && <p className="text-sm text-cn-foreground-danger">{error.message}</p>}
+        {!!error?.message && <p className="text-sm text-cn-danger">{error.message}</p>}
       </Drawer.Body>
 
       <Drawer.Footer>

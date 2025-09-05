@@ -33,7 +33,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   }
 
   return (
-    <div className="text-2 text-cn-foreground-2 inline-flex flex-wrap max-w-full items-center gap-1.5 pl-[22px]">
+    <div className="text-2 text-cn-2 inline-flex flex-wrap max-w-full items-center gap-1.5 pl-[22px]">
       <Text variant="body-single-line-normal">
         {`#${number}`} opened <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
         <span className="inline-block max-w-[200px] truncate align-text-bottom">{author}</span>
@@ -56,7 +56,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
             <Tag value={targetBranch} {...branchTagProps} />
           </Link>
 
-          <IconV2 className="text-cn-foreground-3" name="arrow-long-left" />
+          <IconV2 className="text-cn-3" name="arrow-long-left" />
 
           <Link noHoverUnderline to={`${relativePath}/files/${sourceBranch}`}>
             <Tag value={sourceBranch} {...branchTagProps} />

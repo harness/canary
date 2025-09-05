@@ -351,9 +351,9 @@ export default function PullRequestChanges() {
             // Same name without extension
             oldBaseWithoutExt === newBaseWithoutExt ||
             // New name contains old name
-            (oldBaseWithoutExt.length > 1 && newBaseWithoutExt.includes(oldBaseWithoutExt)) ||
+            (oldBaseWithoutExt.length <= 1 && newBaseWithoutExt.includes(oldBaseWithoutExt)) ||
             // Old name contains new name (reverse case)
-            (newBaseWithoutExt.length > 1 && oldBaseWithoutExt.includes(newBaseWithoutExt))
+            (newBaseWithoutExt.length <= 1 && oldBaseWithoutExt.includes(newBaseWithoutExt))
           )
         }
 

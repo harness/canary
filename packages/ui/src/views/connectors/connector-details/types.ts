@@ -2,7 +2,7 @@ import { ExecutionState } from '@views/repo/pull-request'
 
 import { InputFactory } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorConfigType, onSubmitConnectorProps } from '../types'
+import { AnyConnectorDefinition, ConnectorConfigType } from '../types'
 
 export interface EntityRef {
   scope: string
@@ -35,15 +35,10 @@ export interface EntityDetail {
 }
 
 export interface ConnectorReferenceItem {
-  accountIdentifier: string
-  referredEntity: ReferredEntity
-  referredByEntity: ReferredEntity
-  detail: EntityDetail | null
+  name: string
+  type: string
+  scope: string
   createdAt: number
-}
-
-export interface ConnectorReferenceList {
-  content: ConnectorReferenceItem[]
 }
 
 export interface ConnectorActivityList {
@@ -60,10 +55,9 @@ export interface ConnectorActivityItem {
 }
 
 export interface ConnectorReferenceListProps {
-  entities: ConnectorReferenceList
+  connectorReferences: ConnectorReferenceItem[]
   isLoading: boolean
-  toEntity: (entity: string) => void
-  toScope: (scope: string) => void
+  toScope: (scope: string) => string
 }
 
 export interface ConnectorDetailsReferenceListProps {}
@@ -92,7 +86,7 @@ export interface ConnectorDetailsItem {
 export interface ConnectorDetailsLayoutProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
-  onDelete: (connectorId: string) => void
+  onDelete: () => void
   onEdit: () => void
   children: React.ReactNode
   toConnectorsList?: () => string
@@ -107,16 +101,15 @@ export interface ConnectorDetailsReferenceProps {
   pageSize: number
   goToPage: (page: number) => void
   isLoading: boolean
-  entities: ConnectorReferenceList
-  toEntity: (entity: string) => void
-  toScope: (scope: string) => void
+  connectorReferences: ConnectorReferenceItem[]
+  toScope: (scope: string) => string
   toConnectorsList?: () => string
 }
 
 export interface ConnectorDetailsHeaderProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
-  onDelete: (connectorId: string) => void
+  onDelete: () => void
   onEdit: () => void
   toConnectorsList?: () => string
 }
@@ -129,7 +122,6 @@ export enum ConnectorDetailsTabsKeys {
 
 export interface ConnectorDetailsConfigurationProps {
   connectorDetails: ConnectorDetailsItem
-  onSave: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
   apiError?: string

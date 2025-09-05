@@ -266,7 +266,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
                         <Text variant="body-single-line-normal" color="danger">
                           {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                          <span className="text-cn-foreground-2">
+                          <span className="text-cn-2">
                             {t(
                               'views:pullRequests.compareChangesCantMergeDescription',
                               'You can still create the pull request.'
@@ -285,7 +285,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-5 rounded-md border border-cn-2 bg-cn-background-2 px-4 py-3"
+            className="border-cn-2 bg-cn-background-2 mt-5 rounded-md border px-4 py-3"
           >
             <Text variant="body-normal" color="foreground-1">
               {isBranchSelected ? (
@@ -324,7 +324,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-4 rounded-md border border-cn-2 bg-cn-background-2 p-4"
+            className="border-cn-2 bg-cn-background-2 mt-4 rounded-md border p-4"
           >
             <div className="flex items-center gap-x-1.5">
               <div>
@@ -333,7 +333,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <Text color="foreground-1">{prBranchCombinationExists.title}</Text>
-                    <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
+                    <span className="text-cn-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
               </div>
@@ -364,7 +364,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 </Tabs.Trigger>
               </Tabs.List>
               {!prBranchCombinationExists && (
-                <Tabs.Content className="pt-7" value="overview">
+                <Tabs.Content className="pt-cn-lg" value="overview">
                   <Layout.Flex gap="xl">
                     <Layout.Horizontal className="flex-1" gap="sm">
                       {currentUser && <Avatar name={currentUser?.display_name} rounded />}
@@ -412,7 +412,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   </Layout.Flex>
                 </Tabs.Content>
               )}
-              <Tabs.Content className="pt-7" value="commits">
+              <Tabs.Content className="pt-cn-lg" value="commits">
                 {/* TODO: add pagination to this */}
                 {isFetchingCommits ? (
                   <Skeleton.List />

@@ -117,7 +117,7 @@ const processLayout = (
 
     const accordionItem = {
       inputType: 'group',
-      path: '',
+      path: label2GroupPath(item.title ?? ''),
       label: item.title,
       inputs: layoutedInputs,
       inputConfig: {
@@ -341,4 +341,15 @@ export function KeyValuePairsInputTransformer(): IInputTransformerFunc {
   return function (value: Record<string, string>) {
     return { value: fromKeyValueMap(value) }
   }
+}
+
+function label2GroupPath(label: string): string {
+  return `group_${label2Path(label)}`
+}
+
+function label2Path(label: string): string {
+  return label
+    .trim()
+    .replace(/\s+/g, '_') // replace spaces with underscore
+    .replace(/[^a-zA-Z0-9_]/g, '') // remove special characters
 }

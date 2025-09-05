@@ -1,6 +1,6 @@
 import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useCallback, useState } from 'react'
 
-import { Popover, StatusBadge, Text, TextProps } from '@/components'
+import { Popover, PopoverTriggerProps, StatusBadge, Text, TextProps } from '@/components'
 import { cn } from '@utils/cn'
 import { LOCALE } from '@utils/TimeUtils'
 import { formatDistanceToNow } from 'date-fns'
@@ -143,6 +143,7 @@ interface TimeAgoCardProps {
   }
   triggerClassName?: string
   contentClassName?: string
+  triggerProps?: Omit<PopoverTriggerProps, 'className'>
 }
 
 export const TimeAgoCard = memo(
@@ -156,7 +157,8 @@ export const TimeAgoCard = memo(
         afterCutoffPrefix,
         textProps,
         triggerClassName,
-        contentClassName
+        contentClassName,
+        triggerProps
       },
       ref
     ) => {
@@ -193,7 +195,7 @@ export const TimeAgoCard = memo(
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
           <Popover.Trigger
-            tabIndex={-1}
+            {...triggerProps}
             className={cn('cn-time-ago-card-trigger', triggerClassName)}
             ref={ref}
             onMouseEnter={handleMouseEnter}

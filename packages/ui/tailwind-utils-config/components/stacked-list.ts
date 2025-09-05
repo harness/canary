@@ -48,7 +48,7 @@ export default {
             },
 
             '&-link': {
-                '@apply absolute inset-0 w-full rounded-3': ''
+                '@apply absolute inset-0 w-full rounded-3 !z-0': ''
             },
 
             '&-thumbnail': {

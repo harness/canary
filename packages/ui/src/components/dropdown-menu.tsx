@@ -108,11 +108,12 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
     ])
 
     /**
-     * !!! This code is executed only when inside a ShadowRoot
-     *
      * To navigate between items using the top and down arrow keys
      */
     const onKeyDownCaptureHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+      const target = e.target
+      const isTargetInput = target instanceof HTMLElement && !!target.closest('input')
+
       /**
        * To block further code execution in onKeyDownCaptureHandler,
        * need to call e.preventDefault() inside propOnKeyDownCapture.
@@ -120,7 +121,7 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
       propOnKeyDownCapture?.(e)
       if (e.defaultPrevented || e.isDefaultPrevented?.()) return
 
-      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Tab') {
+      if ((isTargetInput && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') || e.key === 'Tab') {
         e.stopPropagation()
         return
       }
@@ -132,6 +133,9 @@ const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.C
 
       if (!isShadowRoot) return
 
+      /**
+       * !!! This code is executed only when inside a ShadowRoot
+       */
       const items = Array.from(
         rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])[role*="menuitem"]')
       )
@@ -213,10 +217,13 @@ const DropdownBaseItem = ({
 }: DropdownBaseItemProps) => (
   <div className={cn('cn-dropdown-menu-base-item', className)}>
     {children}
-    <Layout.Grid gapX="2xs" className="w-fit">
-      {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
-      {typeof description === 'string' ? <Text>{description}</Text> : description}
-    </Layout.Grid>
+    {(!!title || !!description) && (
+      <Layout.Grid gapX="2xs" className="w-fit">
+        {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
+        {typeof description === 'string' ? <Text>{description}</Text> : description}
+      </Layout.Grid>
+    )}
+
     {tag && <Tag {...tag} />}
 
     <div className="ml-auto">

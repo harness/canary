@@ -501,6 +501,12 @@
     "lastActivity": "Last Activity",
     "created": "Created"
   },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
+  },
   "delegates": {
     "delegate": "Delegate",
     "heartbeat": "Heartbeat",
@@ -711,6 +717,14 @@
     "activity": "Activity",
     "configurationView": "Secret Configuration"
   },
+  "entity": {
+    "cantDelete": "Can't delete {{entity}}",
+    "cantDeleteMessage": "The {{entity}} [{{entityId}}] is being referenced in other entities. Please remove the referenced {{entity}} from affected entities before deleting.",
+    "viewReferences": "View references",
+    "forceDelete": "Forcefully delete this {{entity}} now",
+    "forceDeleteWarning": "Forceful deletion might render entities referencing this {{entity}} invalid and will need to be updated.",
+    "delete": "Delete"
+  },
   "profileSettings": {
     "newSshKey": "Nouvelle clé SSH",
     "enterNamePlaceholder": "Entrez le nom",
@@ -874,15 +888,10 @@
     "scope": "Scope",
     "timestamp": "Timestamp"
   },
-  "secretReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
-  },
   "secrets": {
     "createNew": "Créer un secret",
     "delete": "Supprimer le secret",
+    "edit": "Edit Secret",
     "secretsTitle": "Secrets"
   },
   "secret": {

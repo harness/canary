@@ -10,7 +10,7 @@ import {
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
-const markedFileClassName = 'w-full text-cn-foreground-1'
+const markedFileClassName = 'w-full text-cn-1'
 const MAX_FILES = 50
 
 /**

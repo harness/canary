@@ -156,7 +156,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
           <Text
-            className="flex flex-wrap items-center space-x-1 text-[var(--cn-set-purple-surface-text)]"
+            className="flex flex-wrap items-center space-x-1 text-cn-merged"
             variant="body-single-line-strong"
             as="h2"
             color="inherit"
@@ -169,7 +169,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
               branchName={pullReqMetadata?.target_branch || ''}
               spaceId={spaceId}
               repoId={repoId}
-              theme="violet"
+              theme="purple"
               variant="secondary"
             />
             <span>from</span>
@@ -177,7 +177,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
               branchName={pullReqMetadata?.source_branch || ''}
               spaceId={spaceId}
               repoId={repoId}
-              theme="violet"
+              theme="purple"
               variant="secondary"
             />
             <TimeAgoCard timestamp={pullReqMetadata?.merged} />
@@ -199,7 +199,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-1 text-cn-foreground-danger">{headerMsg}</span>
+            <span className="text-1 text-cn-danger">{headerMsg}</span>
           </div>
         )}
       </>
@@ -570,8 +570,8 @@ const PullRequestPanel = ({
   })
 
   const headerTitleColorClass = cn({
-    'text-cn-foreground-success': prState === PrState.Success,
-    'text-cn-foreground-danger': prState === PrState.Error
+    'text-cn-success': prState === PrState.Success,
+    'text-cn-danger': prState === PrState.Error
   })
 
   const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
@@ -847,7 +847,7 @@ const PullRequestPanel = ({
                     {pullReqMetadata?.source_branch}
                   </Link>
                 </StatusBadge>
-                <span className="text-2 text-cn-foreground-1"> branch has unmerged changes.</span>
+                <span className="text-2 text-cn-1"> branch has unmerged changes.</span>
               </Layout.Horizontal>
               {showDeleteBranchButton && (
                 <Button theme="danger" size="sm" onClick={onDeleteBranch}>

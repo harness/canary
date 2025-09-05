@@ -12,9 +12,7 @@ enum PageKey {
   PIPELINES = 'pipelines'
 }
 
-const renderIcon = (name: NonNullable<IconPropsV2['name']>) => (
-  <IconV2 name={name} size="xs" className="text-cn-foreground-3" />
-)
+const renderIcon = (name: NonNullable<IconPropsV2['name']>) => <IconV2 name={name} size="xs" className="text-cn-3" />
 
 interface CommandOption {
   label: string

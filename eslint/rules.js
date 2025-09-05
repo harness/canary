@@ -7,21 +7,25 @@
  *
  */
 function getClassNameRules() {
-  const classVariants = ['foreground', 'background', 'borders']
-  return classVariants.flatMap(variant => [
+  // const classVariants = ['background']
+  const deprecatedCnVariants = ['foreground']
+
+  const deprecatedCnRules = deprecatedCnVariants.flatMap(variant => [
     {
-      selector: `JSXAttribute[name.name='className'][value.value=/(?<!cn)-${variant}-/]`,
-      message: `Use of '-${variant}-' class is not allowed. Use '-cn-${variant}-' instead`
+      selector: `JSXAttribute[name.name='className'][value.value=/-cn-${variant}-/]`,
+      message: `Use of '-cn-${variant}-' class is deprecated and not allowed. Use the variant directly now. Example: 'text-cn-1'`
     },
     {
-      selector: `CallExpression[callee.name='cva'] > Literal[value=/(?<!cn)-${variant}-/]`,
-      message: `Use of '-${variant}-' class is not allowed. Use '-cn-${variant}-' instead`
+      selector: `CallExpression[callee.name='cva'] > Literal[value=/-cn-${variant}-/]`,
+      message: `Use of '-cn-${variant}-' class is deprecated and not allowed. Use the variant directly now. Example: 'text-cn-1'`
     },
     {
-      selector: `CallExpression[callee.name='cn'] > Literal[value=/(?<!cn)-${variant}-/]`,
-      message: `Use of '-${variant}-' class is not allowed. Use '-cn-${variant}-' instead`
+      selector: `CallExpression[callee.name='cn'] > Literal[value=/-cn-${variant}-/]`,
+      message: `Use of '-cn-${variant}-' class is deprecated and not allowed. Use the variant directly now. Example: 'text-cn-1'`
     }
   ])
+
+  return deprecatedCnRules
 }
 
 module.exports = {

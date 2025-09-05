@@ -149,11 +149,11 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'text-cn-foreground-warning ml-3'
+                            ? 'text-cn-warning ml-3'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'text-cn-foreground-warning ml-3'
-                              : 'text-cn-foreground-danger ml-3'
-                        : 'text-cn-foreground-2'
+                              ? 'text-cn-warning ml-3'
+                              : 'text-cn-danger ml-3'
+                        : 'text-cn-2'
                     }
                     name={
                       file.status
@@ -176,18 +176,19 @@ export const Summary = ({
                 {file.lastCommitMessage ? (
                   <Text className="line-clamp-1">{file.lastCommitMessage}</Text>
                 ) : (
-                  <Skeleton.Box className="w-full h-5" />
+                  <Skeleton.Box className="h-5 w-full" />
                 )}
               </Table.Cell>
-              <Table.Cell className="text-right" disableLink>
+              <Table.Cell className="text-right">
                 {file.timestamp ? (
                   <TimeAgoCard
                     timestamp={file.timestamp}
                     dateTimeFormatOptions={{ dateStyle: 'medium' }}
                     textProps={{ color: 'foreground-3', wrap: 'nowrap', align: 'right' }}
+                    triggerProps={{ tabIndex: -1 }}
                   />
                 ) : (
-                  <Skeleton.Box className="w-full h-5" />
+                  <Skeleton.Box className="h-5 w-full" />
                 )}
               </Table.Cell>
             </Table.Row>

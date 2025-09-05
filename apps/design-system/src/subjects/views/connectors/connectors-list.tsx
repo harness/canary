@@ -3,19 +3,30 @@ import { useState } from 'react'
 import { noop } from 'lodash-es'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { ConnectorListFilters, ConnectorListItem, ConnectorsListPage } from '@harnessio/ui/views'
+import {
+  ConnectorListFilters,
+  ConnectorListItem,
+  ConnectorsListPage,
+  EntityDeleteHandleDialog
+} from '@harnessio/ui/views'
 
 import mockConnectorsList from './mock-connectors-list.json'
 
 const ConnectorsListPageWrapper = (): JSX.Element => {
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
   const [isAlertDeleteDialogOpen, setIsAlertDeleteDialogOpen] = useState(false)
+  const [isEntityDeleteDialogOpen, setIsEntityDeleteDialogOpen] = useState(false)
 
-  const closeAlertDeleteDialog = () => setIsAlertDeleteDialogOpen(false)
   const openAlertDeleteDialog = (identifier: string) => {
     setAlertDeleteParams(identifier)
     setIsAlertDeleteDialogOpen(true)
   }
+
+  const onDeleteConnector = () => {
+    setIsAlertDeleteDialogOpen(false)
+    setIsEntityDeleteDialogOpen(true)
+  }
+
   const [filterValues, setFilterValues] = useState<ConnectorListFilters>({})
   const filteredMockConnectorsList = mockConnectorsList.filter(connector => {
     return filterValues?.favorite ? connector.isFavorite : true
@@ -63,11 +74,19 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
 
       <DeleteAlertDialog
         open={isAlertDeleteDialogOpen}
-        onClose={closeAlertDeleteDialog}
-        deleteFn={noop}
+        onClose={() => setIsAlertDeleteDialogOpen(false)}
+        deleteFn={onDeleteConnector}
         error={null}
         type="connector"
         identifier={alertDeleteParams}
+      />
+      <EntityDeleteHandleDialog
+        isOpen={isEntityDeleteDialogOpen}
+        onClose={() => setIsEntityDeleteDialogOpen(false)}
+        forceDeleteCallback={noop}
+        entityType="connector"
+        entityId={alertDeleteParams}
+        onViewReferences={noop}
       />
     </>
   )

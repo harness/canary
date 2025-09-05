@@ -16,9 +16,9 @@ export interface Problem<T = unknown> {
 const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {
   switch (severity) {
     case 'error':
-      return <IconV2 name="xmark-circle-solid" className="text-cn-foreground-error" />
+      return <IconV2 name="xmark-circle-solid" className="text-cn-danger" />
     case 'warning':
-      return <IconV2 name="warning-triangle-solid" className="text-cn-foreground-warning" />
+      return <IconV2 name="warning-triangle-solid" className="text-cn-warning" />
     case 'info':
       return <IconV2 name="info-circle" />
   }
@@ -40,7 +40,7 @@ const ProblemsComponent = {
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className="width-100 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-4 py-0.5 text-cn-foreground-1"
+        className="width-100 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-4 py-0.5 text-cn-1"
       >
         {children}
       </div>
@@ -110,7 +110,7 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
 function NoProblemsFound(): JSX.Element {
   return (
     <div className="flex items-center gap-2 pl-4">
-      <IconV2 name="check-circle-solid" className="text-cn-foreground-success" /> No problems found
+      <IconV2 name="check-circle-solid" className="text-cn-success" /> No problems found
     </div>
   )
 }

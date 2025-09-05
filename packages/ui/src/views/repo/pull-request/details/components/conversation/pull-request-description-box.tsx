@@ -18,6 +18,7 @@ export interface PullRequestDescBoxProps {
   handleAiPullRequestSummary?: HandleAiPullRequestSummaryType
   handleUpload: HandleUploadType
   principalProps: PrincipalPropsType
+  isUpdatingPR?: boolean
 }
 
 const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
@@ -30,7 +31,8 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   title,
   handleUpload,
   handleAiPullRequestSummary,
-  principalProps
+  principalProps,
+  isUpdatingPR
 }) => {
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
@@ -135,6 +137,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                     setComment(updatedDescription)
                     handleUpdateDescription(title || '', updatedDescription)
                   }}
+                  isLoading={isUpdatingPR}
                 />
               )}
             </Text>

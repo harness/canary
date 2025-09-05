@@ -33,6 +33,7 @@ type MarkdownViewerProps = {
   onCheckboxChange?: (source: string) => void
   suggestionTitle?: string
   suggestionFooter?: ReactNode
+  isLoading?: boolean
 }
 
 export function MarkdownViewer({
@@ -45,7 +46,8 @@ export function MarkdownViewer({
   showLineNumbers = false,
   onCheckboxChange,
   suggestionTitle,
-  suggestionFooter
+  suggestionFooter,
+  isLoading = false
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -220,8 +222,7 @@ export function MarkdownViewer({
                     {...props}
                     data-checkbox-index={checkboxCounter.current}
                     onChange={handleCheckboxChange}
-                    // Removed disabled to make checkbox interactive
-                    disabled={undefined}
+                    disabled={isLoading}
                   />
                 )
               }
@@ -275,7 +276,7 @@ export function MarkdownViewer({
                       <div className="relative flex w-full bg-transparent">
                         <div className="bg-cn-background-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
-                            <span key={i} className="text-cn-foreground-7 block pr-3 pt-[0.5px] text-sm">
+                            <span key={i} className="text-cn-2 block pr-3 pt-[0.5px] text-sm">
                               {i + 1}
                             </span>
                           ))}

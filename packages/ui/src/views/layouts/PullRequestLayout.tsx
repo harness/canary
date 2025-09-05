@@ -39,7 +39,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
       <SandboxLayout.Content>
         {pullRequest && (
           <PullRequestHeader
-            className="mb-cn-3xl"
+            className="mb-cn-xl"
             updateTitle={(title: string) => {
               updateTitleAndDescription(title, pullRequest.description ?? '')
             }}

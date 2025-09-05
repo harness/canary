@@ -342,7 +342,7 @@ const TabsContent = forwardRef<ElementRef<typeof TabsPrimitive.Content>, TabsCon
       return <div ref={ref} className={cn('cn-tabs-content', className)} {...props} />
     }
 
-    return <TabsPrimitive.Content ref={ref} className={cn('cn-tabs-content', className)} {...props} />
+    return <TabsPrimitive.Content ref={ref} className={cn('cn-tabs-content', className)} {...props} tabIndex={-1} />
   }
 )
 TabsContent.displayName = TabsPrimitive.Content.displayName

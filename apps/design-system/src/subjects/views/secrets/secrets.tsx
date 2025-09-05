@@ -129,6 +129,15 @@ export const SecretsPage = ({
             secretsFormDefinition={secretsFormDefinition}
             onFormSubmit={onSubmit}
             onBack={handleCancel}
+            initialSecretValues={{
+              name: 'Harness-Oauth-access-token-f7fe7bdf-ef83-481c-a510-7e455865bc33',
+              identifier: 'harnessoauthaccesstoken_github_1744646284170',
+
+              tags: {},
+              spec: {
+                secretManagerIdentifier: 'harnessSecretManager'
+              }
+            }}
             isDrawer
           />
         )

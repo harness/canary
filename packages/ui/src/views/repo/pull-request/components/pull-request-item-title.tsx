@@ -64,7 +64,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
 
       {!!comments && (
         <Layout.Horizontal className="ml-auto translate-y-0.5" as="span" gap="3xs">
-          <IconV2 className="text-cn-foreground-2" name="pr-comment" />
+          <IconV2 className="text-cn-2" name="pr-comment" />
           <Text variant="body-single-line-normal" color="foreground-1">
             {comments}
           </Text>

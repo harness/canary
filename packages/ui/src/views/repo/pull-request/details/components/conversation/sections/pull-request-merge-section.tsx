@@ -160,7 +160,7 @@ const PullRequestMergeSection = ({
             <StackedList.Field
               title={
                 <LineTitle
-                  textClassName={isConflicted ? 'text-cn-foreground-danger' : ''}
+                  textClassName={isConflicted ? 'text-cn-danger' : ''}
                   text={
                     unchecked
                       ? 'Merge check in progress...'
@@ -259,7 +259,7 @@ const PullRequestMergeSection = ({
           <StackedList.Field
             title={
               <LineTitle
-                textClassName="text-cn-foreground-danger"
+                textClassName="text-cn-danger"
                 text="This branch is out-of-date with the base branch"
                 icon={<IconV2 size="lg" color="danger" name="warning-triangle-solid" />}
               />

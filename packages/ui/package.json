@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "0.0.107",
+  "version": "0.0.110",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -173,8 +173,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint ./src --fix",
-      "prettier ./src --write"
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }

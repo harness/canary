@@ -18,7 +18,7 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
 const Description = ({ sha, description, version }: { sha?: string; description?: string; version?: string }) => {
   return (
     <div className="text-2 inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] leading-tight">
-      {description && <span className="text-cn-foreground-3 w-full overflow-hidden break-words">{description}</span>}
+      {description && <span className="text-cn-3 w-full overflow-hidden break-words">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <IconV2 size="2xs" name="version" />
@@ -26,7 +26,7 @@ const Description = ({ sha, description, version }: { sha?: string; description?
         </div>
       )}
       {sha && (
-        <div className="bg-cn-background-softgray text-1 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
+        <div className="bg-cn-background-softgray text-1 text-cn-1 flex h-4 items-center gap-1 rounded px-1.5">
           <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>

@@ -67,7 +67,7 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
     return (
       <div className="flex items-center gap-x-2">
         {data.icon}
-        <span className="text-2 text-cn-foreground-1">{data.text}</span>
+        <span className="text-2 text-cn-1">{data.text}</span>
       </div>
     )
   }, [

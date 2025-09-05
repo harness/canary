@@ -42,7 +42,7 @@ function createButtonVariantStyles() {
       } else {
         // Default styles
         style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
-        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text) !important`
         style[`borderColor`] =
           `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
@@ -239,7 +239,10 @@ export default {
       // This is to prevent focus outline from being hidden by dropdown
       position: 'relative',
       zIndex: '1',
-      '@apply outline-offset-cn-tight': ''
+
+      '&:not(.cn-button-link)': {
+        '@apply outline-offset-cn-tight': ''
+      }
     },
 
     /**

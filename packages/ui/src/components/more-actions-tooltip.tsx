@@ -68,7 +68,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
               {action.iconName ? (
                 <DropdownMenu.IconItem
                   icon={action.iconName}
-                  iconClassName={cn({ 'text-cn-foreground-danger': action.isDanger })}
+                  iconClassName={cn({ 'text-cn-danger': action.isDanger })}
                   title={
                     <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                       {action.title}
@@ -93,7 +93,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
                   {action.title}
                 </Text>
               }
-              iconClassName={cn({ 'text-cn-foreground-danger': action.isDanger })}
+              iconClassName={cn({ 'text-cn-danger': action.isDanger })}
               key={`${action.title}-${idx}`}
               onClick={e => {
                 e.stopPropagation()

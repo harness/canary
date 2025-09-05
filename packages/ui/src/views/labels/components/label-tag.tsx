@@ -37,6 +37,6 @@ export const LabelTag: FC<LabelTagProps> = ({
       {...tagProps}
     />
 
-    {withIndicator && <IconV2 size="xs" name="plus-circle" className="text-cn-foreground-3" role="presentation" />}
+    {withIndicator && <IconV2 size="xs" name="plus-circle" className="text-cn-3" role="presentation" />}
   </Layout.Grid>
 )

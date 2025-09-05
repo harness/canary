@@ -41,6 +41,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   refType = BranchSelectorTab.BRANCHES
 }) => {
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
   const handleViewRaw = () => {
     window.open(url, '_blank')
   }
@@ -50,6 +51,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
     _handleOpenDeleteDialog()
   }, [_handleOpenDeleteDialog, registerTrigger])
 
+  // Memoization here prevents items from re-rendering. Important for focusing the dialog trigger on close
   const rightDetails = useMemo(() => {
     return (
       <Layout.Horizontal gap="xl" align="center">

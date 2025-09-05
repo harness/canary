@@ -14,6 +14,8 @@ interface PullRequestChangesProps extends PropsWithChildren<React.HTMLAttributes
 }
 
 const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
+  const isCommitDialogOpen = false
+
   const usePullRequestProviderStore = useCallback(
     () => ({
       ...pullRequestProviderStore,
@@ -45,7 +47,7 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
   return (
     <>
       <CommitSuggestionsDialog
-        isOpen={false}
+        isOpen={isCommitDialogOpen}
         onClose={noop}
         onFormSubmit={() => Promise.resolve()}
         isSubmitting={false}

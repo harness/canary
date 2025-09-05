@@ -69,28 +69,27 @@ const useDialogFocusManager = () => {
   return context
 }
 
+/**
+ * DialogProvider component manages focus for dialog triggers.
+ * It ensures that the last focused element is restored when the dialog is closed.
+ */
 const DialogProvider = ({ children }: { children: ReactNode }) => {
   const focusStack = useRef<FocusEntry[]>([])
 
   const unregisterTrigger = useCallback((id: string) => {
     focusStack.current = focusStack.current.filter(e => e.triggerId !== id)
-    console.log('🚀 ~ unregisterTrigger ~ focusStack.current:', focusStack.current)
   }, [])
 
   const registerTrigger = useCallback((entry: FocusEntry) => {
     unregisterTrigger(entry.triggerId)
-    console.log('🚀 ~ registerTrigger ~ entry.triggerId:', entry.triggerId)
     focusStack.current.push(entry)
-    console.log('🚀 ~ registerTrigger ~ focusStack.current:', focusStack.current)
   }, [])
 
   const restoreFocus = useCallback((id: string) => {
-    console.log('🚀 ~ restoreFocus ~ focusStack.current:', focusStack.current)
     const entryIndex = focusStack.current.findIndex(e => e.triggerId === id)
 
     if (entryIndex !== -1) {
       const entry = focusStack.current[entryIndex]
-      console.log('🚀 ~ restoreFocus ~ entry:', entry)
       if (entry.triggerElement) {
         setTimeout(() => entry.triggerElement.focus(), 0)
       }
@@ -121,6 +120,11 @@ const useTriggerId = (_id?: string) => {
   return id.current
 }
 
+/**
+ * Custom hook to manage dialog trigger elements.
+ * It provides a ref for the trigger element and a callback to register the trigger.
+ * Useful when a dialog is opened from a complex components like dropdowns, etc.
+ */
 const useCustomDialogTrigger = () => {
   const focusManager = useDialogFocusManager()
   const triggerId = useTriggerId()
@@ -173,7 +177,6 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
     const { open } = useDialogOpen()
 
     const handleCloseAutoFocus = useCallback(() => {
-      console.log('🚀 ~ triggerId:', triggerId)
       if (focusManager) {
         focusManager.restoreFocus(triggerId)
       }
@@ -189,7 +192,6 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     useEffect(() => {
       return () => {
-        console.log('🚀 ~ return ():', focusManager)
         if (focusManager) {
           focusManager.unregisterTrigger(triggerId)
         }
@@ -324,6 +326,10 @@ const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className,
 ))
 Close.displayName = 'Dialog.Close'
 
+/**
+ * Dialog trigger component is essential for opening dialogs.
+ * It registers the trigger element with the dialog focus manager.
+ */
 const Trigger = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, id, ...props }, ref) => {
   const triggerId = useTriggerId(id)
   const focusManager = useDialogFocusManager()
@@ -333,7 +339,6 @@ const Trigger = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, id, ...pr
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (focusManager) {
-      console.log('🚀 ~ focusManager:', focusManager)
       focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
     }
     onClick?.(event)

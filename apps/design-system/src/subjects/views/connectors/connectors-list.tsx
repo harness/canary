@@ -7,6 +7,7 @@ import {
   ConnectorListFilters,
   ConnectorListItem,
   ConnectorsListPage,
+  ConnectorStats,
   EntityDeleteHandleDialog
 } from '@harnessio/ui/views'
 
@@ -60,7 +61,7 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
             createdAt: connector.createdAt
           })) as ConnectorListItem[]
         }
-        connectorStats={mockConnectorsStats.data}
+        connectorStats={mockConnectorsStats.data as ConnectorStats}
         isLoading={false}
         onFilterChange={handleFilterChange}
         setSearchQuery={noop}

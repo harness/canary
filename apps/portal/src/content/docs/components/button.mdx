@@ -179,7 +179,7 @@ Secondary buttons can be styled with different themes for various contexts.
       Success Loading
     </Button>
   </div>
-  
+
   <div className="flex gap-3">
     <Button variant="secondary" theme="danger" disabled>
       Danger Disabled
@@ -428,34 +428,38 @@ Transparent buttons have no background or border and don't accept theme props.
 
 ## Additional Features
 
+When the `iconOnly` prop is used, you must also provide `tooltipProps` to display content in the tooltip.
+
+If you need to skip showing the tooltip, you should set `ignoreIconOnlyTooltip`.
+
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
 <h4>Icon Only Buttons</h4>
 
 <div className="flex gap-3">
-  <Button iconOnly>
+  <Button iconOnly tooltipProps={{ content: "Add" }}>
     <IconV2 name="plus" skipSize />
   </Button>
-  <Button variant="secondary" size="sm" iconOnly>
+  <Button variant="secondary" size="sm" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="git-branch" skipSize />
   </Button>
-  <Button variant="transparent" size="sm" iconOnly>
+  <Button variant="transparent" size="sm" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="xmark" skipSize />
   </Button>
-  <Button variant="outline" size="xs" iconOnly>
+  <Button variant="outline" size="xs" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="check" skipSize />
   </Button>
-  <Button variant="outline" size="2xs" iconOnly>
+  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="check" skipSize />
   </Button>
-  <Button variant="outline" size="3xs" iconOnly>
+  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="check" skipSize />
   </Button>
-  <Button variant="outline" size="2xs" iconOnly>
+  <Button variant="outline" size="2xs" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="xmark" skipSize />
   </Button>
-  <Button variant="outline" size="3xs" iconOnly>
+  <Button variant="outline" size="3xs" iconOnly ignoreIconOnlyTooltip>
     <IconV2 name="xmark" skipSize />
   </Button>
 </div>
@@ -515,7 +519,7 @@ import { Button } from '@harnessio/ui/components'
 <Button rounded>Rounded Button</Button>
 
 // Icon only button
-<Button iconOnly>
+<Button iconOnly tooltipProps={{ content: 'Add' }}>
   <IconV2 name="plus" />
 </Button>
 
@@ -617,6 +621,22 @@ This ensures type safety and provides proper development-time feedback on invali
       description: "Content to display inside the button.",
       required: true,
       value: "ReactNode",
+    },
+    {
+      name: "tooltipProps",
+      description:
+        "If provided, wraps the Button in a tooltip with the specified properties.",
+      required: false,
+      defaultValue: "undefined",
+      value: "Pick<TooltipProps, 'title' | 'content' | 'side'>",
+    },
+    {
+      name: "ignoreIconOnlyTooltip",
+      description:
+        "Allows skipping the required tooltipProps when using iconOnly.",
+      required: false,
+      value: "boolean",
+      defaultValue: "undefined",
     },
   ]}
 />

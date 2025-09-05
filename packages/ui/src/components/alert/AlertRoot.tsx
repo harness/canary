@@ -90,6 +90,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
             size="sm"
             iconOnly
             aria-label={t('component:alert.close', 'Close alert')}
+            ignoreIconOnlyTooltip
           >
             <IconV2 className="cn-alert-close-button-icon" name="xmark" skipSize />
           </Button>

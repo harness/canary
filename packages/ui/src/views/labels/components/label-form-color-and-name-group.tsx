@@ -60,6 +60,9 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
           onClick={handleDeleteValue}
           size="sm"
           aria-label={t('views:labelData.form.removeValue', 'Remove a value')}
+          tooltipProps={{
+            content: t('views:labelData.form.removeValue', 'Remove a value')
+          }}
         >
           <IconV2 name="xmark" />
         </Button>

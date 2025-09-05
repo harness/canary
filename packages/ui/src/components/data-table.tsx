@@ -157,6 +157,9 @@ export function DataTable<TData>({
                 size="xs"
                 iconOnly
                 role="button"
+                tooltipProps={{
+                  content: 'Toggle Row Expanded'
+                }}
               >
                 <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-up'} size="2xs" />
               </Button>

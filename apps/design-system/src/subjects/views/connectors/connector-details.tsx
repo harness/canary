@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { getHarnessConnectorDefinition } from '@utils/connectors/utils'
 import { noop } from 'lodash-es'
 
@@ -39,6 +41,10 @@ inputComponentFactory.registerComponent(new SeparatorFormInput())
 inputComponentFactory.registerComponent(new CardsFormInput())
 
 const ConnectorsDetailsPageWrapper = (): JSX.Element => {
+  const [activeTab, setActiveTab] = useState(ConnectorDetailsTabsKeys.CONFIGURATION)
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab as ConnectorDetailsTabsKeys)
+  }
   const connectorDetails = {
     name: mockConnectorDetails.connector.name,
     identifier: mockConnectorDetails.connector.identifier,
@@ -67,6 +73,8 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       onDelete={noop}
       onEdit={noop}
       toConnectorsList={() => '/connectors'}
+      activeTab={activeTab}
+      handleTabChange={handleTabChange}
     >
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
         <ConnectorDetailsConfiguration

@@ -80,7 +80,7 @@ export interface ConnectorDetailsItem {
     objectId?: string
   }
   createdAt: number
-  lastConnectedAt: number
+  lastConnectedAt?: number
 }
 
 export interface ConnectorDetailsLayoutProps {
@@ -90,6 +90,8 @@ export interface ConnectorDetailsLayoutProps {
   onEdit: () => void
   children: React.ReactNode
   toConnectorsList?: () => string
+  activeTab: ConnectorDetailsTabsKeys
+  handleTabChange: (tab: string) => void
 }
 
 export interface ConnectorDetailsReferenceProps {

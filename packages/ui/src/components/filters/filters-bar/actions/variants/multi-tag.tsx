@@ -7,11 +7,7 @@ export interface MultiTagFilterProps {
 }
 
 export const MultiTagFilter = ({ filter, onUpdateFilter, filterFieldConfig }: MultiTagFilterProps): JSX.Element => {
-  return (
-    <div onKeyDownCapture={e => e.stopPropagation()}>
-      <MultiSelect value={filter} onChange={onUpdateFilter} {...filterFieldConfig} />
-    </div>
-  )
+  return <MultiSelect value={filter} onChange={onUpdateFilter} {...filterFieldConfig} />
 }
 
 export default MultiTagFilter

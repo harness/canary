@@ -359,8 +359,9 @@ function renderTree(
               )}
             </Layout.Flex>
           }
+          data-explorer-path={node.path}
         >
-          <div data-explorer-path={node.path}>{node.name}</div>
+          {node.name}
         </FileExplorer.FileItem>
       )
     }

@@ -32,7 +32,7 @@ interface RBACProps {
  * Types for RBAC-enabled components.
  * These components will automatically handle RBAC checks based on the provided `rbac` prop.
  */
-export interface RbacButtonProps extends Omit<ButtonProps, 'resource'>, RBACProps {
+export interface RbacButtonProps extends Omit<ButtonProps, 'resource' | 'tooltipProps'>, RBACProps {
   tooltip?: Pick<TooltipProps, 'title' | 'content'>
 }
 

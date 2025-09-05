@@ -60,7 +60,17 @@ export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, ComponentPro
     )
 
     return (
-      <Button ref={ref} size="xs" variant="ghost" iconOnly onClick={onClickHandler} {...props}>
+      <Button
+        ref={ref}
+        size="xs"
+        variant="ghost"
+        iconOnly
+        onClick={onClickHandler}
+        tooltipProps={{
+          content: t('component:sidebar.toggle', 'Toggle sidebar')
+        }}
+        {...props}
+      >
         <IconV2 name="sidebar" />
         <span className="sr-only">{t('component:sidebar.toggle', 'Toggle sidebar')}</span>
       </Button>

@@ -67,6 +67,9 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
           onClick={handleDismiss}
           aria-label={t('views:repos.dismiss', 'Dismiss')}
           title={t('views:repos.dismiss', 'Dismiss')}
+          tooltipProps={{
+            content: t('views:repos.dismiss', 'Dismiss')
+          }}
         >
           <IconV2 name="xmark" size="xs" />
         </Button>

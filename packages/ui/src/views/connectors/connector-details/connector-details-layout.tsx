@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { Tabs } from '@components/index'
@@ -13,14 +11,12 @@ const ConnectorDetailsLayout = ({
   onDelete,
   onEdit,
   children,
-  toConnectorsList
+  toConnectorsList,
+  activeTab,
+  handleTabChange
 }: ConnectorDetailsLayoutProps) => {
   const { t } = useTranslation()
-  const [activeTab, setActiveTab] = useState<ConnectorDetailsTabsKeys>(ConnectorDetailsTabsKeys.CONFIGURATION)
 
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab as ConnectorDetailsTabsKeys)
-  }
   return (
     <div>
       <SandboxLayout.Main>
@@ -34,7 +30,7 @@ const ConnectorDetailsLayout = ({
           />
           <Tabs.Root
             className="mb-7 mt-9 px-8"
-            defaultValue={ConnectorDetailsTabsKeys.CONFIGURATION}
+            defaultValue={activeTab ?? ConnectorDetailsTabsKeys.CONFIGURATION}
             value={activeTab}
             onValueChange={handleTabChange}
           >

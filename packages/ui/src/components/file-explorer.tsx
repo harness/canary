@@ -108,16 +108,17 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
   )
 }
 
-interface FileItemProps {
+type FileItemProps = {
   level: number
   children: ReactNode
   isActive?: boolean
   link?: string
   onClick?: () => void
   tooltip?: TooltipProps['content']
+  [key: `data-${string}`]: any
 }
 
-function FileItem({ children, isActive, level, link, onClick, tooltip }: FileItemProps) {
+function FileItem({ children, isActive, level, link, onClick, tooltip, ...dataProps }: FileItemProps) {
   const comp = (
     <Item
       icon="empty-page"
@@ -126,6 +127,7 @@ function FileItem({ children, isActive, level, link, onClick, tooltip }: FileIte
       style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level} + 8px)` : '24px' }}
       onClick={onClick}
       link={link}
+      {...dataProps}
     >
       {children}
     </Item>

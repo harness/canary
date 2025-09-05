@@ -77,6 +77,9 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             onClick={() => {
               setIsEditing(true)
             }}
+            tooltipProps={{
+              content: 'Edit'
+            }}
           >
             <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
           </Button>

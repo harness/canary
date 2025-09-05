@@ -56,7 +56,10 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
   const copyButtonProps: ButtonProps = {
     iconOnly: true,
     'aria-label': 'Copy',
-    onClick: handleClick
+    onClick: handleClick,
+    tooltipProps: {
+      content: 'Copy'
+    }
   }
 
   return {

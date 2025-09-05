@@ -2,7 +2,7 @@ import { ExecutionState } from '@views/repo/pull-request'
 
 import { InputFactory } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorConfigType, onSubmitConnectorProps } from '../types'
+import { AnyConnectorDefinition, ConnectorConfigType } from '../types'
 
 export interface EntityRef {
   scope: string
@@ -80,16 +80,18 @@ export interface ConnectorDetailsItem {
     objectId?: string
   }
   createdAt: number
-  lastConnectedAt: number
+  lastConnectedAt?: number
 }
 
 export interface ConnectorDetailsLayoutProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
-  onDelete: (connectorId: string) => void
+  onDelete: () => void
   onEdit: () => void
   children: React.ReactNode
   toConnectorsList?: () => string
+  activeTab: ConnectorDetailsTabsKeys
+  handleTabChange: (tab: string) => void
 }
 
 export interface ConnectorDetailsReferenceProps {
@@ -109,7 +111,7 @@ export interface ConnectorDetailsReferenceProps {
 export interface ConnectorDetailsHeaderProps {
   connectorDetails: ConnectorDetailsItem
   onTest: (connectorId: string) => void
-  onDelete: (connectorId: string) => void
+  onDelete: () => void
   onEdit: () => void
   toConnectorsList?: () => string
 }
@@ -122,7 +124,6 @@ export enum ConnectorDetailsTabsKeys {
 
 export interface ConnectorDetailsConfigurationProps {
   connectorDetails: ConnectorDetailsItem
-  onSave: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
   apiError?: string

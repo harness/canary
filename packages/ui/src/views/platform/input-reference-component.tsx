@@ -159,10 +159,10 @@ export const InputReference = <T,>({
           <div className="flex-1 truncate">{displayContent}</div>
           {hasValue && !disabled && (
             <div className="ml-3 flex items-center">
-              <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly>
+              <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Edit' }}>
                 <IconV2 name="edit-pencil" />
               </Button>
-              <Button onClick={handleClear} size="sm" variant="ghost" iconOnly>
+              <Button onClick={handleClear} size="sm" variant="ghost" iconOnly ignoreIconOnlyTooltip>
                 <IconV2 name="xmark" className="text-cn-danger" />
               </Button>
             </div>

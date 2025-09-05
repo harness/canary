@@ -61,7 +61,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       >
         {!hideClose && (
           <DrawerPrimitive.Close asChild>
-            <Button className="cn-drawer-close-button" variant="transparent" iconOnly>
+            <Button className="cn-drawer-close-button" variant="transparent" iconOnly ignoreIconOnlyTooltip>
               <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
             </Button>
           </DrawerPrimitive.Close>

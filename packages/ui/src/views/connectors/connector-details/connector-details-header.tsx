@@ -13,14 +13,14 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   onEdit,
   toConnectorsList
 }) => {
-  const { createdAt, lastModifiedAt, lastTestedAt, lastConnectedAt, status, type } = connectorDetails
+  const { createdAt, lastModifiedAt, status, type } = connectorDetails
   const { t } = useTranslation()
   const logoName = ConnectorTypeToLogoNameMap.get(type)
 
   return (
-    <div className="px-8">
+    <Layout.Vertical className="px-8" gap="sm">
       {toConnectorsList ? (
-        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()} className="mb-3">
+        <Link variant="secondary" size="sm" prefixIcon to={toConnectorsList()}>
           Back to Connectors
         </Link>
       ) : null}
@@ -30,46 +30,22 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {connectorDetails.name}
         </Text>
       </Layout.Horizontal>
-      {!!connectorDetails.description && <Text className="mt-3">{connectorDetails.description}</Text>}
-      {connectorDetails.tags ? (
-        <Layout.Horizontal gap="xs" className="mt-5">
-          <Text>Labels:</Text>
-          {Object.entries(connectorDetails.tags || {}).map(([key, value]) => (
-            <StatusBadge key={`${key}-${value}`} variant="outline" theme="merged" size="sm">
-              {key}
-              {value ? `: ${value}` : ''}
-            </StatusBadge>
-          ))}
-        </Layout.Horizontal>
-      ) : null}
-      <div className="mt-6 flex w-full flex-wrap justify-between gap-6 text-2 leading-none">
-        <div className="flex justify-between gap-11">
+      <Layout.Horizontal className="mt-6 w-full text-2 leading-none" justify="between" gap="lg">
+        <Layout.Horizontal justify="between" gap="xl">
           {createdAt ? (
-            <div className="flex flex-col gap-1.5">
+            <Layout.Vertical gap="xs">
               <span className="leading-tight text-cn-3">Created</span>
               <TimeAgoCard timestamp={createdAt} textProps={{ color: 'foreground-1' }} />
-            </div>
+            </Layout.Vertical>
           ) : null}
           {lastModifiedAt ? (
-            <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-3">Last updated</span>
+            <Layout.Vertical gap="xs">
+              <span className="leading-tight text-cn-3">Updated</span>
               <TimeAgoCard timestamp={lastModifiedAt} textProps={{ color: 'foreground-1' }} />
-            </div>
-          ) : null}
-          {lastTestedAt ? (
-            <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-3">Last status check</span>
-              <TimeAgoCard timestamp={lastTestedAt} textProps={{ color: 'foreground-1' }} />
-            </div>
-          ) : null}
-          {lastConnectedAt ? (
-            <div className="flex flex-col gap-1.5">
-              <span className="leading-tight text-cn-3">Last successful check</span>
-              <TimeAgoCard timestamp={lastConnectedAt} textProps={{ color: 'foreground-1' }} />
-            </div>
+            </Layout.Vertical>
           ) : null}
           {status ? (
-            <div className="flex flex-col gap-1.5">
+            <Layout.Vertical gap="xs">
               <span className="leading-tight text-cn-3">Connection status</span>
               <StatusBadge
                 className="leading-none"
@@ -83,10 +59,10 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
                     : t('views:connectors.failure', 'Failed')}
                 </Text>
               </StatusBadge>
-            </div>
+            </Layout.Vertical>
           ) : null}
-        </div>
-        <div className="flex h-full items-end gap-11">
+        </Layout.Horizontal>
+        <Layout.Horizontal align="end" gap="xs">
           <Button onClick={() => onTest(connectorDetails.identifier)}>Test Connection</Button>
           <MoreActionsTooltip
             actions={[
@@ -102,9 +78,9 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
               }
             ]}
           />
-        </div>
-      </div>
-    </div>
+        </Layout.Horizontal>
+      </Layout.Horizontal>
+    </Layout.Vertical>
   )
 }
 

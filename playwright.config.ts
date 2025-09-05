@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices, ViewportSize } from '@playwright/test'
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -16,6 +16,8 @@ export const CONTENT_SELECTOR_ANNOTATION: string = 'CSS Content Selectors'
 export const WAIT_FOR_SELECTOR_ANNOTATION: string = 'CSS Wait For Selectors'
 
 const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
+
+const viewportSize: ViewportSize = { width: 1600, height: 2000 }
 
 /**
  * Main test configuration
@@ -66,13 +68,11 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     /* Whether to automatically capture a screenshot after each test. */
-    // screenshot: 'on',
-    /* Viewport size for Page object */
-    viewport: { width: 1500, height: 200 }
+    screenshot: 'on'
   },
   /* Configuration for the expect assertion library. See https://playwright.dev/docs/test-configuration#expect-options */
   expect: {
-    timeout: 30000, // A couple of the tests have large renders and currently require increasing the timeout
+    timeout: 60000, // A couple of the tests have large renders and currently require increasing the timeout
     toHaveScreenshot: {
       maxDiffPixelRatio: 0.05
     }
@@ -81,15 +81,24 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: viewportSize
+      }
     }
     // {
     //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] }
-    // },
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     viewport: viewportSize
+    //   }
+    // }
     // {
     //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] }
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //     viewport: viewportSize
+    //   }
     // }
   ]
 })

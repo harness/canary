@@ -7,6 +7,6 @@ const WAIT_FOR_SELECTOR: string = '.cn-form'
 
 test.describe(PAGE_ROUTE, testDetails(PAGE_ROUTE, WAIT_FOR_SELECTOR), () => {
   test('matches screenshot', async ({ page }, testInfo) => {
-    await testScreenshot(page, testInfo, PAGE_ROUTE, WAIT_FOR_SELECTOR)
+    await testScreenshot(page, testInfo, PAGE_ROUTE, 0, WAIT_FOR_SELECTOR)
   })
 })

@@ -126,12 +126,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     email
   }: Pick<PrincipalType, 'display_name' | 'email'>): React.ReactNode =>
     display_name !== email ? (
-      <Layout.Horizontal gap="3xs" align="center" className="flex-wrap">
-        <Text wrap="nowrap">{display_name}</Text>
-        <Text color="foreground-3" variant="body-single-line-normal" lineClamp={1}>
+      <Layout.Grid gap="3xs" align="center" columns="auto auto">
+        <Text truncate>{display_name}</Text>
+        <Text color="foreground-3" variant="body-single-line-normal" truncate>
           ({email})
         </Text>
-      </Layout.Horizontal>
+      </Layout.Grid>
     ) : (
       <Text lineClamp={1}>{display_name}</Text>
     )

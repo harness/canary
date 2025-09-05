@@ -52,13 +52,15 @@ const FilterBoxWrapper = ({
     >
       <DropdownMenu.Trigger asChild>
         <Button variant="secondary" size="sm" className="px-2.5 py-1.5">
-          <div className="flex items-center gap-x-1.5 text-1">
-            <Text as="span" color="foreground-1">
+          <Layout.Grid align="center" columns="auto 1fr" gapX="2xs">
+            <Text as="span" color="foreground-1" truncate>
               {filterLabel}
               {!!valueLabel && ': '}
             </Text>
-            <Text as="span">{valueLabel}</Text>
-          </div>
+            <Text as="span" truncate>
+              {valueLabel}
+            </Text>
+          </Layout.Grid>
           <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>

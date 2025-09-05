@@ -19,9 +19,13 @@ export type SecretEntityFormHandle = {
   submitForm: () => void
 }
 
+interface SecretWrapper extends SecretListItem {
+  secretManagerRef?: any
+}
+
 interface SecretEntityFormProps {
   onFormSubmit?: (values: onSubmitSecretProps) => void
-  initialSecretValues?: SecretListItem
+  initialSecretValues?: SecretWrapper
   secretsFormDefinition?: IFormDefinition
   onBack?: () => void
   inputComponentFactory: InputFactory
@@ -74,7 +78,8 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
             },
             description: initialSecretValues.description,
             tags: Object.keys(initialSecretValues.tags ?? {}).join(',')
-          }
+          },
+          secretManagerRef: initialSecretValues?.secretManagerRef
         }
 
         setSecretEditValues(mappedValues)

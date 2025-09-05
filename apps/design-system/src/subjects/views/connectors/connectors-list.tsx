@@ -2,8 +2,12 @@ import { useState } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { ConnectorListFilters, ConnectorListItem, ConnectorsListPage } from '@harnessio/ui/views'
+import {
+  ConnectorListFilters,
+  ConnectorListItem,
+  ConnectorsListPage,
+  EntityDeleteHandleDialog
+} from '@harnessio/ui/views'
 
 import mockConnectorsList from './mock-connectors-list.json'
 
@@ -61,13 +65,13 @@ const ConnectorsListPageWrapper = (): JSX.Element => {
         onCreate={noop}
       />
 
-      <DeleteAlertDialog
-        open={isAlertDeleteDialogOpen}
+      <EntityDeleteHandleDialog
+        isOpen={isAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        deleteFn={noop}
-        error={null}
-        type="connector"
-        identifier={alertDeleteParams}
+        forceDeleteCallback={noop}
+        entityType="connector"
+        entityId={alertDeleteParams}
+        onViewReferences={noop}
       />
     </>
   )

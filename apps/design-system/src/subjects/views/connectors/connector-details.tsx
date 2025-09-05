@@ -71,7 +71,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
       <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.CONFIGURATION}>
         <ConnectorDetailsConfiguration
           connectorDetails={connectorDetails}
-          onSave={noop}
           inputComponentFactory={inputComponentFactory}
           getConnectorDefinition={type => getHarnessConnectorDefinition(type, { autoExpandGroups: true })}
           apiError={''}

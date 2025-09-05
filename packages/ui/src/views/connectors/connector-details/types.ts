@@ -2,7 +2,7 @@ import { ExecutionState } from '@views/repo/pull-request'
 
 import { InputFactory } from '@harnessio/forms'
 
-import { AnyConnectorDefinition, ConnectorConfigType, onSubmitConnectorProps } from '../types'
+import { AnyConnectorDefinition, ConnectorConfigType } from '../types'
 
 export interface EntityRef {
   scope: string
@@ -122,7 +122,6 @@ export enum ConnectorDetailsTabsKeys {
 
 export interface ConnectorDetailsConfigurationProps {
   connectorDetails: ConnectorDetailsItem
-  onSave: (values: onSubmitConnectorProps) => void
   getConnectorDefinition: (type: string) => AnyConnectorDefinition | undefined
   inputComponentFactory: InputFactory
   apiError?: string

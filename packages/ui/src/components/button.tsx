@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, forwardRef, Fragment } from 'react'
 
-import { Tooltip, TooltipProps } from '@/components'
+import { Tooltip, TooltipProps } from '@components/tooltip'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { filterChildrenByDisplayNames } from '@utils/utils'

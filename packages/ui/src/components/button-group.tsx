@@ -1,4 +1,4 @@
-import { ComponentProps, FC, forwardRef, ReactNode } from 'react'
+import { ComponentProps, FC, forwardRef, ReactNode, Ref } from 'react'
 
 import { Button, ButtonProps, DropdownMenu, toButtonProps, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
@@ -12,6 +12,7 @@ type DropdownPropsType = {
 }
 
 export type ButtonGroupButtonProps = BaseButtonProps & {
+  ref?: Ref<HTMLButtonElement>
   dropdownProps?: DropdownPropsType
 }
 
@@ -55,7 +56,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         ref={ref}
       >
         {buttonsProps.map((buttonProps, index) => {
-          const { className, variant, iconOnly: iconOnlyRest, ...restButtonProps } = buttonProps
+          const { className, variant, iconOnly: iconOnlyRest, ref: buttonRef, ...restButtonProps } = buttonProps
           const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
           const dropdownProps = 'dropdownProps' in buttonProps ? buttonProps.dropdownProps : undefined
           const iconOnly = iconOnlyProp ?? iconOnlyRest ?? false
@@ -69,6 +70,7 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
           return (
             <Wrapper key={index} dropdownProps={dropdownProps} orientation={orientation}>
               <Button
+                ref={buttonRef}
                 className={cn(
                   className,
                   { 'cn-button-group-first': !index },

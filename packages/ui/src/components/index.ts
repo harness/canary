@@ -91,7 +91,6 @@ export * from './stacked-list'
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'
 export * as SearchBox from './search-box'
-export * as NavbarProjectChooser from './navbar-project-chooser'
 
 export * as FileExplorer from './file-explorer'
 export * from './theme-selector-v2'

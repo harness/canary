@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, CounterBadge, MarkdownViewer } from '@/components'
+import { Button, ButtonLayout, CounterBadge, Dialog, MarkdownViewer } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 
@@ -60,7 +60,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
       suggestionFooter={
         !isApplied && (
           <ButtonLayout className="flex-wrap">
-            <Button
+            <Dialog.Trigger
               className="gap-x-2"
               variant="outline"
               onClick={() => {
@@ -72,7 +72,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
             >
               {t('views:pullRequests.comments.commitSuggestion', 'Commit suggestion')}
               {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
-            </Button>
+            </Dialog.Trigger>
             {isInBatch ? (
               <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
                 {t('views:pullRequests.comments.removeSuggestion', 'Remove suggestion from batch')}

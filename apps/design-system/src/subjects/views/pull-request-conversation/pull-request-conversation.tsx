@@ -34,8 +34,6 @@ interface PullRequestConversationProps extends PropsWithChildren<React.HTMLAttri
 }
 
 const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) => {
-  const isCommitDialogOpen = false
-
   const suggestionsBatch: CommitSuggestion[] = []
 
   const handleRebaseBranch = () => {}
@@ -86,7 +84,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
   return (
     <>
       <CommitSuggestionsDialog
-        isOpen={isCommitDialogOpen}
+        isOpen={false}
         onClose={noop}
         onFormSubmit={() => Promise.resolve()}
         isSubmitting={false}

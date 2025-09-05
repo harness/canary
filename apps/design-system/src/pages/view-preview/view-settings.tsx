@@ -56,6 +56,9 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
         onClick={() => setShowSettings(current => !current)}
         className={css.showHideButton}
         title={showSettings ? 'Hide view settings' : 'Show view settings'}
+        tooltipProps={{
+          content: showSettings ? 'Hide view settings' : 'Show view settings'
+        }}
       >
         <IconV2 name={showSettings ? 'xmark' : 'settings'} />
       </Button>

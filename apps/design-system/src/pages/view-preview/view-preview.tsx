@@ -59,7 +59,7 @@ import TableV2Demo from '@subjects/views/table-v2-demo'
 import { ViewOnlyView } from '@subjects/views/templates/view-only'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
-import { ChatEmptyPreviewWrapper, ChatPreviewWrapper, TooltipProvider } from '@harnessio/ui/components'
+import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { AppViewWrapper } from './app-view-wrapper'
@@ -606,7 +606,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
 
 const ViewPreview: FC = () => {
   return (
-    <TooltipProvider>
+    <>
       <Routes>
         {Object.entries(viewPreviews).map(([_, group]) =>
           Object.entries(group.items).map(([route, { element }]) => (
@@ -616,7 +616,7 @@ const ViewPreview: FC = () => {
         <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
       </Routes>
       <ViewSettings routes={Object.keys(viewPreviews)} />
-    </TooltipProvider>
+    </>
   )
 }
 

@@ -11,7 +11,7 @@ const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
       <p className="text-16 font-medium text-cn-1">Harness AI</p>
-      <Button size="sm" iconOnly variant="ghost" onClick={onClose}>
+      <Button size="sm" iconOnly variant="ghost" onClick={onClose} ignoreIconOnlyTooltip>
         <IconV2 name="xmark" />
         <span className="sr-only">Close</span>
       </Button>

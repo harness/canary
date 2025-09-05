@@ -204,6 +204,7 @@ export const PullRequestCommentBox = ({
 
   const clearComment = () => {
     if (!preserveCommentOnSave) {
+      setComment('')
       setCommentAndSelection('', { start: 0, end: 0 }) // Clear the comment box after saving
     }
   }

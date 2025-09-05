@@ -1,27 +1,54 @@
-import { expect, Page, PageAssertionsToHaveScreenshotOptions, TestDetails } from '@playwright/test'
+import { expect, Page, TestDetails, TestInfo } from '@playwright/test'
 
-import { SCREENSHOT_TAG, URL_ANNOTATION } from '../../../playwright.config'
+import {
+  CONTENT_SELECTOR_ANNOTATION,
+  SCREENSHOT_TAG,
+  URL_ANNOTATION,
+  WAIT_FOR_SELECTOR_ANNOTATION
+} from '../../../playwright.config'
 
-const SCREENSHOT_CONFIG: PageAssertionsToHaveScreenshotOptions = {
-  fullPage: true
-}
-
-export const testDetails = (pageRoute: string): TestDetails => ({
+export const testDetails = (pageRoute: string, waitForSelector?: string): TestDetails => ({
   tag: SCREENSHOT_TAG,
-  annotation: {
-    type: URL_ANNOTATION,
-    description: `${process.env.VIEW_PREVIEW_BASE_URL}${pageRoute}`
-  }
+  annotation: [
+    {
+      type: URL_ANNOTATION,
+      description: `${process.env.VIEW_PREVIEW_BASE_URL}${pageRoute}`
+    },
+    {
+      type: CONTENT_SELECTOR_ANNOTATION,
+      description: buildSelectorString()
+    },
+    ...(waitForSelector
+      ? [
+          {
+            type: WAIT_FOR_SELECTOR_ANNOTATION,
+            description: waitForSelector
+          }
+        ]
+      : [])
+  ]
 })
 
-export const testScreenshot = async (page: Page, pageRoute: string): Promise<void> => {
+export const testScreenshot = async (
+  page: Page,
+  testInfo: TestInfo,
+  pageRoute: string,
+  waitForSelector: string = buildSelectorString()
+): Promise<void> => {
   await page.goto(pageRoute, {
-    waitUntil: 'domcontentloaded'
+    waitUntil: 'load'
   })
+
+  await page.waitForSelector(waitForSelector)
 
   const $element = page.locator(buildSelectorString()).last() // last() should find the deepest ID from CONTENT_SELECTOR_IDS
 
-  await expect($element).toHaveScreenshot(SCREENSHOT_CONFIG)
+  await testInfo.attach('Screenshot of Element Under Test', {
+    body: await $element.screenshot(),
+    contentType: 'image/png'
+  })
+
+  await expect($element).toHaveScreenshot()
 }
 
 const buildSelectorString = (): string => {

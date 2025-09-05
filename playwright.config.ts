@@ -12,6 +12,8 @@ config()
  */
 export const SCREENSHOT_TAG: string = '@screenshot'
 export const URL_ANNOTATION: string = 'Link to Page Under Test'
+export const CONTENT_SELECTOR_ANNOTATION: string = 'CSS Content Selectors'
+export const WAIT_FOR_SELECTOR_ANNOTATION: string = 'CSS Wait For Selectors'
 
 const PLAYWRIGHT_OUTPUT_DIR: string = 'playwright-results'
 
@@ -64,9 +66,9 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     /* Whether to automatically capture a screenshot after each test. */
-    screenshot: 'on',
+    // screenshot: 'on',
     /* Viewport size for Page object */
-    viewport: { width: 1500, height: 1500 }
+    viewport: { width: 1500, height: 200 }
   },
   /* Configuration for the expect assertion library. See https://playwright.dev/docs/test-configuration#expect-options */
   expect: {

@@ -43,19 +43,22 @@ export const EntityDeleteHandleDialog = ({
           entity: entityType
         })}
       >
-        <Text className="break-words" wrap="wrap">
-          {customMessage ??
-            t(
-              'views:entity.cantDeleteMessage',
-              `The ${entityType} [${entityId}] is being referenced in other entities. Please remove the referenced ${entityType} from affected entities before deleting.`,
-              {
-                entity: entityType,
-                entityId
-              }
-            )}
-        </Text>
+        <Layout.Vertical gapY="xs" className="items-start">
+          <Text className="break-words" wrap="wrap">
+            {customMessage ??
+              t(
+                'views:entity.cantDeleteMessage',
+                `The ${entityType} [${entityId}] is being referenced in other entities. Please remove the referenced ${entityType} from affected entities before deleting.`,
+                {
+                  entity: entityType,
+                  entityId
+                }
+              )}
+          </Text>
 
-        <Layout.Vertical>
+          <Button variant="link" onClick={onViewReferences}>
+            {t('views:entity.viewReferences', 'View references')}
+          </Button>
           <Checkbox
             id="force-delete"
             checked={forcedDeleteEnabled}
@@ -79,15 +82,12 @@ export const EntityDeleteHandleDialog = ({
             </Alert.Root>
           )}
         </Layout.Vertical>
-
         {!!error && (
           <Alert.Root theme="danger">
             <Alert.Title>Failed to perform delete operation</Alert.Title>
             <Alert.Description>{error}</Alert.Description>
           </Alert.Root>
         )}
-
-        <Button onClick={onViewReferences}>{t('views:entity.viewReferences', 'View references')}</Button>
         <AlertDialog.Cancel />
         <AlertDialog.Confirm disabled={!forcedDeleteEnabled}>{t('views:entity.delete', 'Delete')}</AlertDialog.Confirm>
       </AlertDialog.Content>

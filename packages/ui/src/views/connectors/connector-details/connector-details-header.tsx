@@ -98,7 +98,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
               {
                 isDanger: true,
                 title: t('views:connectors.deleteConnector', 'Delete connector'),
-                onClick: () => onDelete(connectorDetails.identifier)
+                onClick: () => onDelete()
               }
             ]}
           />

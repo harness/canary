@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import ViewPreview from '@/pages/view-preview/view-preview'
 import { useThemeStore } from '@utils/theme-utils'
 
-import { TooltipProvider } from '@harnessio/ui/components'
+import { DialogProvider, TooltipProvider } from '@harnessio/ui/components'
 import { ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import AppRouterProvider from './AppRouterProvider'
@@ -26,7 +26,9 @@ const App: FC = () => {
     <ThemeProvider {...themeStore}>
       <TranslationProvider>
         <TooltipProvider>
-          <RouterProvider router={router} />
+          <DialogProvider>
+            <RouterProvider router={router} />
+          </DialogProvider>
         </TooltipProvider>
       </TranslationProvider>
     </ThemeProvider>

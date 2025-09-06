@@ -32,20 +32,14 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
               {
                 children: <IconV2 name="edit-pencil" />,
                 'aria-label': 'Edit',
-                onClick: onEditClick,
-                tooltipProps: {
-                  content: 'Edit'
-                }
+                onClick: onEditClick
               }
             ]
           : []),
         {
           children: <IconV2 name="download" />,
           'aria-label': 'Download',
-          onClick: onDownloadClick,
-          tooltipProps: {
-            content: 'Download'
-          }
+          onClick: onDownloadClick
         },
         ...additionalButtonsProps
       ]}

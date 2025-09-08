@@ -137,6 +137,27 @@ You can include any custom content inside the popover by using children.
 </Popover.Root>`}
 />
 
+## Hover Trigger Popover
+
+The popover can be triggered on hover instead of click using the `triggerType` prop set to `hover`. You can also customize the hover delay and close delay.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Popover
+    triggerType="hover"
+    hoverDelay={200}
+    closeDelay={300}
+    content={
+        <div className="p-2">
+            <Text as="p">Hover content that appears after a short delay</Text>
+            <Text as="p" color="foreground-2" className="mt-2">Mouse out to dismiss</Text>
+        </div>
+    }
+>
+    <Button variant="outline">Hover over me</Button>
+</Popover>`}
+/>
+
 ## Popover with Link
 
 The popover supports an integrated link using the `linkProps` prop.
@@ -336,6 +357,28 @@ a controlled or uncontrolled manner.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "triggerType",
+      description: "How the popover is triggered - click or hover",
+      required: false,
+      value: "'click' | 'hover'",
+      defaultValue: "'click'",
+    },
+    {
+      name: "hoverDelay",
+      description: "Delay in milliseconds before showing the popover on hover",
+      required: false,
+      value: "number",
+      defaultValue: "200",
+    },
+    {
+      name: "closeDelay",
+      description:
+        "Delay in milliseconds before hiding the popover on mouse out",
+      required: false,
+      value: "number",
+      defaultValue: "300",
     },
     {
       name: "modal",

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 
@@ -15,17 +15,11 @@ export interface UsePaginationQueryStateWithStoreProps {
  */
 const usePaginationQueryStateWithStore = ({ page, setPage }: UsePaginationQueryStateWithStoreProps) => {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const isFirstRender = useRef(true)
 
   /**
    * Update query state if store page change
    */
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
-
     setQueryPage(page)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
@@ -35,7 +29,8 @@ const usePaginationQueryStateWithStore = ({ page, setPage }: UsePaginationQueryS
    */
   useEffect(() => {
     setPage(queryPage)
-  }, [queryPage, setPage])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryPage])
 
   return {
     queryPage,

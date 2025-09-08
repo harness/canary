@@ -42,9 +42,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const handleSearch = useCallback(
     (query: string) => {
       setSearchQuery(query.length ? query : null)
-      setQueryPage(1)
     },
-    [setSearchQuery, setQueryPage]
+    [setSearchQuery]
   )
 
   // State for storing saved filters and sorts

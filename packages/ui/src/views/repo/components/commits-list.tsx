@@ -73,8 +73,8 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                         <Layout.Vertical gap="2xs" className="truncate">
                           <CommitTitleWithPRLink
                             toPullRequest={toPullRequest}
-                            commitMessage={commit.title}
-                            title={commit.message || commit.title}
+                            title={commit.title}
+                            commitMessage={commit.message || commit.title}
                             textProps={{ variant: 'heading-base' }}
                           />
                           <div className="gap-cn-2xs flex items-center">

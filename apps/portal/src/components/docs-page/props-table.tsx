@@ -29,8 +29,8 @@ const PropsTable: FC<PropsTableProps> = ({ props }) => (
         <Table.Row key={name}>
           <Table.Cell title={description}>{name}</Table.Cell>
           <Table.Cell>{required ? "true" : "false"}</Table.Cell>
-          <Table.Cell className="font-mono">{defaultValue}</Table.Cell>
-          <Table.Cell className="font-mono">{value}</Table.Cell>
+          <Table.Cell className="font-body-code">{defaultValue}</Table.Cell>
+          <Table.Cell className="font-body-code">{value}</Table.Cell>
         </Table.Row>
       ))}
     </Table.Body>

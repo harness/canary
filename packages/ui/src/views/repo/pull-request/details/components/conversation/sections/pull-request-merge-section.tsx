@@ -29,7 +29,7 @@ const StepInfo: FC<StepInfoProps> = item => {
               justify="between"
               className="border border-cn-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
             >
-              <Text variant="body-normal" className="font-mono">
+              <Text variant="body-normal" className="font-body-code">
                 {item.code}
               </Text>
               <CopyButton name={item.code} size="xs" />

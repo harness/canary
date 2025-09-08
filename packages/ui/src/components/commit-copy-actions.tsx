@@ -43,14 +43,14 @@ export const CommitCopyActions = ({
               variant="secondary"
               noHoverUnderline
             >
-              <Text className="font-mono" color="inherit">
+              <Text className="font-body-code" color="inherit">
                 {sha.substring(0, 6)}
               </Text>
             </Link>
           ),
           tabIndex: -1,
           onKeyDown: handleKeyDown,
-          className: 'font-mono'
+          className: 'font-body-code'
         },
         {
           ...(copyButtonProps as ButtonGroupButtonProps),

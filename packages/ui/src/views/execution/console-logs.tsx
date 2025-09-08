@@ -45,15 +45,15 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   const logText = useCallback(
     (log: string) => {
       if (!query?.length) {
-        return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
+        return <span className="ml-2 flex gap-1 font-body-code text-sm font-normal">{log}</span>
       }
 
       const match = log.match(new RegExp(query, 'i'))
-      if (!match) return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
+      if (!match) return <span className="ml-2 flex gap-1 font-body-code text-sm font-normal">{log}</span>
 
       const matchIndex = match.index ?? 0
       return (
-        <span className="flex gap-1 font-mono text-sm font-normal">
+        <span className="flex gap-1 font-body-code text-sm font-normal">
           {log.slice(0, matchIndex)}
           <mark>{log.slice(matchIndex, matchIndex + query.length)}</mark>
           {log.slice(matchIndex + query.length)}
@@ -73,7 +73,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
         return (
           <div
             key={index}
-            className={cn('text-2 flex w-full items-center pl-5  font-mono leading-normal', {
+            className={cn('text-2 flex w-full items-center pl-5  font-body-code leading-normal', {
               'bg-logs-background-6': type === LivelogLineType.WARNING,
               'bg-logs-background-7': type === LivelogLineType.ERROR,
               'pt-1.5': index !== 0

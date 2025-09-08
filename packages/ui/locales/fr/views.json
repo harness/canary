@@ -413,6 +413,15 @@
         "failure": "Échec",
         "label": "Statut",
         "favorite": "Favorites"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "connectorIdentifierOption": {
+        "label": "Connector Identifier"
+      },
+      "descriptionOption": {
+        "label": "Description"
       }
     },
     "connectivityStatus": "État de la connexion",

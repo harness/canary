@@ -422,6 +422,15 @@
         "failure": "Failure",
         "label": "Status",
         "favorite": "Favorites"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "connectorIdentifierOption": {
+        "label": "Connector Identifier"
+      },
+      "descriptionOption": {
+        "label": "Description"
       }
     },
     "connectivityStatus": "Connectivity status",

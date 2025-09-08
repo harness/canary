@@ -1,34 +1,52 @@
 import { ComponentProps, FC, forwardRef, ReactNode } from 'react'
 
-import { Button, ButtonProps, DropdownMenu, toButtonProps, TooltipProps } from '@/components'
+import { Button, ButtonProps, DropdownMenu, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
 import omit from 'lodash-es/omit'
 
+type ButtonGroupTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
+
 type BaseButtonProps = Omit<ButtonProps, 'size' | 'theme' | 'asChild' | 'rounded' | 'type'>
+
+type ButtonWithTooltip = BaseButtonProps & {
+  tooltipProps: ButtonGroupTooltipProps
+  dropdownProps?: undefined
+}
 
 type DropdownPropsType = {
   content: ReactNode
   contentProps?: ComponentProps<typeof DropdownMenu.Content>
 }
 
-export type ButtonGroupButtonProps = BaseButtonProps & {
-  dropdownProps?: DropdownPropsType
+type ButtonWithDropdown = BaseButtonProps & {
+  dropdownProps: DropdownPropsType
+  tooltipProps?: undefined
 }
 
-export interface ButtonGroupProps extends Pick<ButtonProps, 'size'> {
+export type ButtonGroupButtonProps = ButtonWithTooltip | ButtonWithDropdown | BaseButtonProps
+
+export interface ButtonGroupProps extends Pick<ButtonProps, 'size' | 'iconOnly'> {
   orientation?: 'horizontal' | 'vertical'
   buttonsProps: ButtonGroupButtonProps[]
   className?: string
-  iconOnly?: boolean
 }
 
 interface WrapperProps {
   children: ReactNode
+  tooltipProps?: ButtonGroupTooltipProps
   dropdownProps?: DropdownPropsType
   orientation: 'horizontal' | 'vertical'
 }
 
-const Wrapper: FC<WrapperProps> = ({ children, dropdownProps, orientation }) => {
+const Wrapper: FC<WrapperProps> = ({ children, tooltipProps, dropdownProps, orientation }) => {
+  if (tooltipProps) {
+    return (
+      <Tooltip side={orientation === 'vertical' ? 'right' : 'top'} {...tooltipProps}>
+        {children}
+      </Tooltip>
+    )
+  }
+
   if (dropdownProps) {
     return (
       <DropdownMenu.Root>
@@ -44,7 +62,7 @@ const Wrapper: FC<WrapperProps> = ({ children, dropdownProps, orientation }) => 
 }
 
 export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
-  ({ orientation = 'horizontal', buttonsProps, size = 'md', iconOnly: iconOnlyProp, className }, ref) => {
+  ({ orientation = 'horizontal', buttonsProps, size = 'md', iconOnly, className }, ref) => {
     return (
       <div
         className={cn(
@@ -55,19 +73,12 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         ref={ref}
       >
         {buttonsProps.map((buttonProps, index) => {
-          const { className, variant, iconOnly: iconOnlyRest, ...restButtonProps } = buttonProps
+          const { className, variant, ...restButtonProps } = buttonProps
           const tooltipProps = 'tooltipProps' in buttonProps ? buttonProps.tooltipProps : undefined
           const dropdownProps = 'dropdownProps' in buttonProps ? buttonProps.dropdownProps : undefined
-          const iconOnly = iconOnlyProp ?? iconOnlyRest ?? false
-          const mergedTooltip = tooltipProps
-            ? {
-                ...tooltipProps,
-                side: orientation === 'vertical' ? 'right' : ('top' as TooltipProps['side'])
-              }
-            : undefined
 
           return (
-            <Wrapper key={index} dropdownProps={dropdownProps} orientation={orientation}>
+            <Wrapper key={index} tooltipProps={tooltipProps} dropdownProps={dropdownProps} orientation={orientation}>
               <Button
                 className={cn(
                   className,
@@ -76,11 +87,8 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
                 )}
                 variant={variant ?? 'outline'}
                 size={size}
-                {...toButtonProps({
-                  ...omit(restButtonProps, ['tooltipProps', 'dropdownProps']),
-                  iconOnly,
-                  tooltipProps: mergedTooltip
-                })}
+                iconOnly={iconOnly}
+                {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
               />
             </Wrapper>
           )

@@ -2,8 +2,10 @@ import {
   ComponentPropsWithoutRef,
   createContext,
   ElementRef,
+  FC,
   forwardRef,
   PropsWithoutRef,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -11,22 +13,14 @@ import {
   useState
 } from 'react'
 
-import {
-  Button,
-  IconPropsV2,
-  IconV2,
-  IconV2NamesType,
-  toButtonProps,
-  TogglePropsIconOnly,
-  TogglePropsNotIconOnly,
-  toggleVariants
-} from '@/components'
+import { Button, IconPropsV2, IconV2, IconV2NamesType, toggleVariants, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@/utils'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
 import { VariantProps } from 'class-variance-authority'
 
 type ToggleGroupVariant = VariantProps<typeof toggleVariants>['variant']
 type ToggleGroupSelectedVariant = 'primary' | 'secondary'
+type ToggleTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 type SelectedValuesProp = Map<string, boolean>
 
 interface ToggleGroupContextValue {
@@ -60,13 +54,31 @@ export interface ToggleGroupProps
 
 export type ToggleGroupItemPropsBase = {
   value: string
+  tooltipProps?: ToggleTooltipProps
   disabled?: boolean
   suffixIcon?: IconV2NamesType
   suffixIconProps?: PropsWithoutRef<IconPropsV2>
   text?: string
 }
 
-export type ToggleGroupItemProps = ToggleGroupItemPropsBase & (TogglePropsIconOnly | TogglePropsNotIconOnly)
+type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
+  iconOnly: true
+  prefixIcon: IconV2NamesType
+  prefixIconProps: PropsWithoutRef<IconPropsV2>
+  suffixIcon: never
+  suffixIconProps: never
+}
+
+type TogglePropsNotIconOnly = ToggleGroupItemPropsBase & {
+  iconOnly?: false
+  prefixIcon?: IconV2NamesType
+  prefixIconProps?: PropsWithoutRef<IconPropsV2>
+}
+
+export type ToggleGroupItemProps = TogglePropsIconOnly | TogglePropsNotIconOnly
+
+const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
+  tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
 
 const ToggleGroupRoot = forwardRef<ElementRef<typeof ToggleGroupPrimitive.Root>, ToggleGroupProps>(
   (
@@ -192,18 +204,14 @@ const ToggleGroupItem = forwardRef<
 
     const renderContent = () => {
       if (iconOnly) {
-        return <IconV2 {...prefixIconProps} name={prefixIcon} fallback={prefixIconProps?.fallback ?? 'stop'} />
+        return <IconV2 {...prefixIconProps} name={prefixIcon} />
       }
 
       return (
         <>
-          {prefixIcon && (
-            <IconV2 {...prefixIconProps} name={prefixIcon} fallback={prefixIconProps?.fallback ?? 'stop'} />
-          )}
+          {prefixIcon && <IconV2 {...prefixIconProps} name={prefixIcon} />}
           {text}
-          {suffixIcon && (
-            <IconV2 {...suffixIconProps} name={suffixIcon} fallback={suffixIconProps?.fallback ?? 'stop'} />
-          )}
+          {suffixIcon && <IconV2 {...suffixIconProps} name={suffixIcon} />}
         </>
       )
     }
@@ -211,18 +219,20 @@ const ToggleGroupItem = forwardRef<
     const accessibilityProps = iconOnly && text ? { 'aria-label': text } : {}
 
     return (
-      <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
-        <Button
-          className={toggleVariants({ size, variant, iconOnly })}
-          variant={buttonVariant}
-          size={size}
-          disabled={finalDisabled}
-          {...accessibilityProps}
-          {...toButtonProps({ iconOnly, tooltipProps })}
-        >
-          {renderContent()}
-        </Button>
-      </ToggleGroupPrimitive.Item>
+      <TooltipWrapper tooltipProps={tooltipProps}>
+        <ToggleGroupPrimitive.Item ref={ref} asChild value={value} disabled={finalDisabled} {...props}>
+          <Button
+            className={toggleVariants({ size, variant, iconOnly })}
+            variant={buttonVariant}
+            size={size}
+            disabled={finalDisabled}
+            iconOnly={iconOnly}
+            {...accessibilityProps}
+          >
+            {renderContent()}
+          </Button>
+        </ToggleGroupPrimitive.Item>
+      </TooltipWrapper>
     )
   }
 )

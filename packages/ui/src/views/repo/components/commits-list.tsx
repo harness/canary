@@ -103,9 +103,6 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                               size="sm"
                               asChild
                               iconOnly
-                              tooltipProps={{
-                                content: 'View repository at this point of history'
-                              }}
                             >
                               <Link to={toCode?.({ sha: commit?.sha || '' }) || ''}>
                                 <IconV2 name="code" />

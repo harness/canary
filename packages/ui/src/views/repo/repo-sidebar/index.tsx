@@ -28,15 +28,7 @@ export const RepoSidebar = ({
           <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs">
             {branchSelectorRenderer}
             {!isRepoEmpty && (
-              <Button
-                iconOnly
-                variant="outline"
-                tooltipProps={{
-                  content: 'Create file'
-                }}
-                aria-label="Create file"
-                onClick={navigateToNewFile}
-              >
+              <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
                 <IconV2 name="plus" className="text-icons-3" />
               </Button>
             )}

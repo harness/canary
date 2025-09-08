@@ -218,9 +218,6 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
-        tooltipProps={{
-          content: 'Previous'
-        }}
         {...props}
       >
         <ArrowLeftIcon className="size-4" />
@@ -251,9 +248,6 @@ const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
-        tooltipProps={{
-          content: 'Next'
-        }}
         {...props}
       >
         <ArrowRightIcon className="size-4" />

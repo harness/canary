@@ -147,7 +147,6 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
                         requestClose()
                       }}
                       aria-label="Remove Stage"
-                      tooltipProps={{ content: 'Remove Stage' }}
                     >
                       <IconV2 name="trash" />
                     </Button>

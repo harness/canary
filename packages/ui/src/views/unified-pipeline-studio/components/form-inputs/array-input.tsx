@@ -78,7 +78,6 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
                         remove(idx)
                       }}
                       disabled={readonly}
-                      tooltipProps={{ content: 'Remove' }}
                     >
                       <IconV2 name="trash" />
                     </Button>

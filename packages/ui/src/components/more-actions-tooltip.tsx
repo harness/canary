@@ -46,8 +46,6 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           variant="ghost"
           iconOnly
           size="md"
-          aria-label="Show more actions"
-          ignoreIconOnlyTooltip
         >
           <IconV2 name={iconName} />
         </Button>

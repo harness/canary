@@ -179,9 +179,6 @@ export const ManageNavigation = ({
                                 onClick={() => {
                                   removeFromPinnedItems(item)
                                 }}
-                                tooltipProps={{
-                                  content: 'Unpin'
-                                }}
                               >
                                 <IconV2 name="xmark" size="xs" />
                               </Button>
@@ -220,15 +217,7 @@ export const ManageNavigation = ({
                       <Text color="foreground-1">{item.title}</Text>
                     </Layout.Flex>
 
-                    <Button
-                      iconOnly
-                      size="sm"
-                      variant="transparent"
-                      onClick={() => addToPinnedItems(item)}
-                      tooltipProps={{
-                        content: 'Toggle pin'
-                      }}
-                    >
+                    <Button iconOnly size="sm" variant="transparent" onClick={() => addToPinnedItems(item)}>
                       <IconV2 name="pin" size="xs" />
                     </Button>
                   </Layout.Flex>

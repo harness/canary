@@ -10,30 +10,8 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { Button, RbacButtonProps, SplitButton, toButtonProps, Tooltip } from '@harnessio/ui/components'
+import { Button, SplitButton } from '@harnessio/ui/components'
 import { ComponentProvider, RouterContextProvider } from '@harnessio/ui/context'
-
-const RbacButton = ({ rbac: _, tooltip, ...rest }: RbacButtonProps) => {
-  const hasPermission = true
-
-  const button = (
-    <Button
-      {...toButtonProps({
-        ...rest,
-        ignoreIconOnlyTooltip: true
-      })}
-      disabled={!hasPermission}
-    />
-  )
-
-  return !hasPermission ? (
-    <Tooltip title={tooltip?.title ?? 'You are missing the permission for this action.'} content={tooltip?.content}>
-      {button}
-    </Tooltip>
-  ) : (
-    button
-  )
-}
 
 const AppRouterProvider: FC = () => {
   const navigate = useNavigate()
@@ -50,7 +28,7 @@ const AppRouterProvider: FC = () => {
       useMatches={useMatches}
       useParams={useParams}
     >
-      <ComponentProvider components={{ RbacButton, RbacSplitButton: SplitButton }}>
+      <ComponentProvider components={{ RbacButton: Button, RbacSplitButton: SplitButton }}>
         <Outlet />
       </ComponentProvider>
     </RouterContextProvider>

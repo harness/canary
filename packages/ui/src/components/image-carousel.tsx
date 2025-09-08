@@ -57,9 +57,6 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
               }
             }}
             title="Zoom out"
-            tooltipProps={{
-              content: 'Zoom out'
-            }}
           >
             <IconV2 name="minus" />
           </Button>
@@ -74,9 +71,6 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
               }
             }}
             title="Zoom in"
-            tooltipProps={{
-              content: 'Zoom in'
-            }}
           >
             <IconV2 name="plus" />
           </Button>

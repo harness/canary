@@ -23,7 +23,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
         placeholder="Type a value..."
         onChange={handleInputChange}
         rightElement={
-          <Button iconOnly size="sm" variant="transparent" onClick={handleClear} ignoreIconOnlyTooltip>
+          <Button iconOnly size="sm" variant="transparent" onClick={handleClear}>
             <IconV2 name="xmark" size="2xs" />
           </Button>
         }

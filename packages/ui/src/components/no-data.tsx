@@ -9,8 +9,7 @@ import {
   IllustrationsNameType,
   Layout,
   SplitButton,
-  Text,
-  toButtonProps
+  Text
 } from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
@@ -86,32 +85,28 @@ export const NoData: FC<NoDataProps> = ({
           <Layout.Horizontal gap="sm">
             {primaryButton &&
               (primaryButton.to ? (
-                <Button asChild {...toButtonProps(omit(secondaryButton, ['to', 'label', 'icon']) as ButtonProps)}>
+                <Button asChild {...omit(primaryButton, ['to', 'label', 'icon'])}>
                   <NavLink to={primaryButton.to}>
                     {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                     {primaryButton.label}
                   </NavLink>
                 </Button>
               ) : (
-                <Button {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
+                <Button {...omit(primaryButton, ['label', 'icon'])}>
                   {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                   {primaryButton.label}
                 </Button>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button
-                  asChild
-                  variant="outline"
-                  {...toButtonProps(omit(secondaryButton, ['to', 'label', 'icon']) as ButtonProps)}
-                >
+                <Button variant="outline" asChild {...omit(secondaryButton, ['to', 'label', 'icon'])}>
                   <NavLink to={secondaryButton.to}>
                     {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                     {secondaryButton.label}
                   </NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
+                <Button variant="outline" {...omit(secondaryButton, ['label', 'icon'])}>
                   {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                   {secondaryButton.label}
                 </Button>

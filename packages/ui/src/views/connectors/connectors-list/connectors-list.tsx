@@ -160,13 +160,13 @@ export function ConnectorsList({
                   <TimeAgoCard timestamp={lastModifiedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
                 ) : null}
               </Table.Cell>
-              <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, '!p-0 text-center')} disableLink>
+              <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
                 <Favorite
                   isFavorite={isFavorite}
                   onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
                 />
               </Table.Cell>
-              <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, '!p-0 text-center')} disableLink>
+              <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
                 <MoreActionsTooltip
                   actions={[
                     {

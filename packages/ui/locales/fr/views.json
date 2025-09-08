@@ -920,8 +920,8 @@
       }
     },
     "createNew": "Créer un secret",
-    "delete": "Supprimer le secret",
     "edit": "Edit Secret",
+    "delete": "Supprimer le secret",
     "secretsTitle": "Secrets"
   },
   "secret": {

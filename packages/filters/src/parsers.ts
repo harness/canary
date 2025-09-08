@@ -7,7 +7,7 @@ export const defaultStringParser: Parser<unknown> = {
 
 export const booleanParser: Parser<boolean> = {
   parse: (value: string) => value === 'true',
-  serialize: (value: boolean) => (value ? 'true' : 'false')
+  serialize: (value: boolean) => (value === true ? 'true' : value === false ? 'false' : '')
 }
 
 export const stringArrayParser: Parser<string[]> = {

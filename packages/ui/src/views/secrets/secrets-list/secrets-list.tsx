@@ -1,7 +1,11 @@
 import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
+import { cn } from '@utils/cn'
 
 import { SecretListProps } from './types'
+
+const CELL_MIN_WIDTH = 'min-w-[150px]'
+const CELL_MIN_WIDTH_ICON = 'min-w-16'
 
 export function SecretList({
   secrets,
@@ -35,8 +39,8 @@ export function SecretList({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-full max-w-[470px]">{t('views:secret.title', 'Name')}</Table.Head>
-          <Table.Head className="min-w-[150px]">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
-          <Table.Head className="min-w-[150px]">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.manager', 'Secrets Manager')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
           <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>
@@ -46,26 +50,28 @@ export function SecretList({
             <Table.Cell className="w-full max-w-[470px]">
               <Text truncate>{secret.identifier}</Text>
             </Table.Cell>
-            <Table.Cell className="min-w-[150px]">
+            <Table.Cell className={CELL_MIN_WIDTH}>
               <Text truncate>{secret.spec?.secretManagerIdentifier}</Text>
             </Table.Cell>
-            <Table.Cell className="min-w-[150px]">
+            <Table.Cell className={CELL_MIN_WIDTH}>
               {secret?.updatedAt ? (
                 <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="min-w-16 text-center">
+            <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
               <MoreActionsTooltip
                 isInTable
                 actions={[
                   {
-                    isDanger: true,
-                    title: t('views:secrets.delete', 'Delete Secret'),
-                    onClick: () => onDeleteSecret(secret.identifier)
+                    title: t('views:secrets.edit', 'Edit Secret'),
+                    iconName: 'edit-pencil',
+                    onClick: () => onEditSecret(secret)
                   },
                   {
-                    title: t('views:secrets.edit', 'Edit Secret'),
-                    onClick: () => onEditSecret(secret)
+                    isDanger: true,
+                    title: t('views:secrets.delete', 'Delete Secret'),
+                    iconName: 'trash',
+                    onClick: () => onDeleteSecret(secret.identifier)
                   }
                 ]}
               />

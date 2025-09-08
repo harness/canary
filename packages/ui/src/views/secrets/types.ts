@@ -24,7 +24,7 @@ export enum SecretType {
 }
 
 export interface SecretData {
-  type: SecretCreationType
+  type: `${SecretCreationType}`
   name: string
   identifier: string
   orgIdentifier?: string

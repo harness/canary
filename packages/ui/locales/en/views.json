@@ -934,8 +934,8 @@
       }
     },
     "createNew": "Create Secret",
-    "delete": "Delete Secret",
     "edit": "Edit Secret",
+    "delete": "Delete Secret",
     "secretsTitle": "Secrets"
   },
   "secret": {

@@ -3,7 +3,6 @@ import {
   IconV2,
   ThemeDialog,
   type ThemeDialogProps,
-  TooltipProvider,
 } from "@harnessio/ui/components";
 import { useEffect, useState } from "react";
 
@@ -26,22 +25,16 @@ export function ThemeSelector() {
   }, [theme]);
 
   return (
-    <TooltipProvider>
-      <ThemeDialog
-        open={open}
-        onOpenChange={setOpen}
-        setTheme={setTheme}
-        theme={theme}
-      >
-        <Button
-          iconOnly
-          onClick={() => setOpen(true)}
-          tooltipProps={{ content: "Appearance settings" }}
-        >
-          <IconV2 name="theme" />
-        </Button>
-      </ThemeDialog>
-    </TooltipProvider>
+    <ThemeDialog
+      open={open}
+      onOpenChange={setOpen}
+      setTheme={setTheme}
+      theme={theme}
+    >
+      <Button iconOnly onClick={() => setOpen(true)}>
+        <IconV2 name="theme" />
+      </Button>
+    </ThemeDialog>
   );
 }
 
@@ -51,10 +44,8 @@ export default function ThemeSelectorWrapper() {
   }
 
   return (
-    <TooltipProvider>
-      <Button iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="theme" />
-      </Button>
-    </TooltipProvider>
+    <Button iconOnly>
+      <IconV2 name="theme" />
+    </Button>
   );
 }

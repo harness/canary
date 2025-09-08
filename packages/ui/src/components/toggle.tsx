@@ -1,15 +1,6 @@
-import { ElementRef, forwardRef, MouseEvent, PropsWithoutRef, useCallback, useState } from 'react'
+import { ElementRef, FC, forwardRef, PropsWithoutRef, ReactNode, useCallback, useState } from 'react'
 
-import {
-  Button,
-  ButtonProps,
-  ButtonPropsIconOnlyRequired,
-  ButtonPropsRegular,
-  IconPropsV2,
-  IconV2,
-  IconV2NamesType,
-  toButtonProps
-} from '@/components'
+import { Button, ButtonProps, IconPropsV2, IconV2, IconV2NamesType, Tooltip, TooltipProps } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -40,8 +31,9 @@ export const toggleVariants = cva('cn-toggle', {
 
 type ToggleVariant = VariantProps<typeof toggleVariants>['variant']
 type TypeSelectedVariant = 'primary' | 'secondary'
+type ToggleTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
-type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'disabled' | 'className'> & {
+type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'iconOnly' | 'disabled'> & {
   variant?: ToggleVariant
   selectedVariant?: TypeSelectedVariant
   onChange?: (selected: boolean) => void
@@ -51,21 +43,28 @@ type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'disabled' | 'className'> &
   suffixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
   selected?: boolean
   defaultValue?: boolean
+  tooltipProps?: ToggleTooltipProps
+  className?: string
 }
 
-type TogglePropsIconOnly = ButtonPropsIconOnlyRequired & {
+type TogglePropsIconOnly = TogglePropsBase & {
+  iconOnly: true
   prefixIcon: IconV2NamesType
   prefixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
   suffixIcon?: never
   suffixIconProps?: never
 }
 
-type TogglePropsNotIconOnly = ButtonPropsRegular & {
+type TogglePropsNotIconOnly = TogglePropsBase & {
+  iconOnly?: false
   prefixIcon?: IconV2NamesType
   prefixIconProps?: PropsWithoutRef<Omit<IconPropsV2, 'name'>>
 }
 
-export type ToggleProps = TogglePropsBase & (TogglePropsIconOnly | TogglePropsNotIconOnly)
+export type ToggleProps = TogglePropsIconOnly | TogglePropsNotIconOnly
+
+const TooltipWrapper: FC<{ children: ReactNode; tooltipProps?: ToggleTooltipProps }> = ({ children, tooltipProps }) =>
+  tooltipProps ? <Tooltip {...tooltipProps}>{children}</Tooltip> : <>{children}</>
 
 const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
   (
@@ -104,7 +103,7 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
       [isControlled, onChange]
     )
 
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
       e.stopPropagation()
       handleChange(!selected)
@@ -131,24 +130,24 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
     }
 
     return (
-      <TogglePrimitive.Root ref={ref} asChild pressed={selected} onClick={handleClick} disabled={disabled}>
-        <Button
-          className={cn(className, toggleVariants({ size, variant, iconOnly }))}
-          variant={selected ? selectedVariant : variant}
-          disabled={disabled}
-          size={size}
-          rounded={rounded}
-          {...accessibilityProps}
-          {...toButtonProps({ iconOnly, tooltipProps })}
-        >
-          {renderContent()}
-        </Button>
-      </TogglePrimitive.Root>
+      <TooltipWrapper tooltipProps={tooltipProps}>
+        <TogglePrimitive.Root ref={ref} asChild pressed={selected} onClick={handleClick} disabled={disabled}>
+          <Button
+            className={cn(className, toggleVariants({ size, variant, iconOnly }))}
+            variant={selected ? selectedVariant : variant}
+            disabled={disabled}
+            size={size}
+            rounded={rounded}
+            iconOnly={iconOnly}
+            {...accessibilityProps}
+          >
+            {renderContent()}
+          </Button>
+        </TogglePrimitive.Root>
+      </TooltipWrapper>
     )
   }
 )
 Toggle.displayName = TogglePrimitive.Root.displayName
 
 export { Toggle }
-
-export type { TogglePropsIconOnly, TogglePropsNotIconOnly }

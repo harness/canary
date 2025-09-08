@@ -107,7 +107,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
           placeholder={getSearchBoxPlaceholder()}
           onKeyDown={handleSearchKeyDown}
           suffix={
-            <Button iconOnly size="xs" variant="transparent" onClick={onSearchClean} ignoreIconOnlyTooltip>
+            <Button iconOnly size="xs" variant="transparent" onClick={onSearchClean}>
               <IconV2 name="xmark" size="2xs" />
             </Button>
           }

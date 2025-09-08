@@ -20,9 +20,6 @@ const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle 
       size: '2xs'
     }}
     onChange={(selected: boolean) => onFavoriteToggle(selected)}
-    tooltipProps={{
-      content: isFavorite ? 'Remove from favorite' : 'Add to favorite'
-    }}
   />
 )
 

@@ -257,7 +257,7 @@ export const ViewOnlyView = () => {
                     />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -281,7 +281,7 @@ export const ViewOnlyView = () => {
                     />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -305,7 +305,7 @@ export const ViewOnlyView = () => {
                     />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -329,7 +329,7 @@ export const ViewOnlyView = () => {
                     />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -353,7 +353,7 @@ export const ViewOnlyView = () => {
                     />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -377,7 +377,7 @@ export const ViewOnlyView = () => {
                     />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
-                    <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
+                    <Toggle prefixIcon="pin" iconOnly />
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>

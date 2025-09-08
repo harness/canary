@@ -107,14 +107,7 @@ const SortableItem = ({
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 
-      <Button
-        variant="transparent"
-        size="sm"
-        iconOnly
-        className="ml-auto"
-        onClick={() => onRemoveSort(index)}
-        ignoreIconOnlyTooltip
-      >
+      <Button variant="transparent" size="sm" iconOnly className="ml-auto" onClick={() => onRemoveSort(index)}>
         <IconV2 name="xmark" size="2xs" />
       </Button>
     </div>

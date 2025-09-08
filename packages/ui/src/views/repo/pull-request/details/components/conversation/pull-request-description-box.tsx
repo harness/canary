@@ -155,9 +155,6 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 iconOnly
                 size="sm"
                 variant="outline"
-                tooltipProps={{
-                  content: 'Edit'
-                }}
               >
                 <IconV2 name="edit-pencil" size="xs" />
               </Button>

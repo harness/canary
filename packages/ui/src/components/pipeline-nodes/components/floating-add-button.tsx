@@ -69,9 +69,6 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
           e.stopPropagation()
           onClick(e)
         }}
-        tooltipProps={{
-          content: 'Add'
-        }}
       >
         <IconV2 className="text-icons-3" name="plus" size="2xs" />
       </Button>

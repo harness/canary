@@ -149,7 +149,6 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
               e.preventDefault()
               onActionClick?.()
             }}
-            ignoreIconOnlyTooltip
           >
             <IconV2 skipSize name={actionIcon} className={cn('cn-tag-icon', { 'text-cn-disabled': disabled })} />
           </Button>

@@ -21,7 +21,6 @@ export const NodeMenuTrigger: FC<NodeMenuTriggerProps> = ({ onEllipsisClick }) =
       iconOnly
       onMouseDown={e => e.stopPropagation()}
       onClick={onEllipsisClick}
-      ignoreIconOnlyTooltip
     >
       <IconV2 className="text-icons-2" name="more-horizontal" size="2xs" />
     </Button>

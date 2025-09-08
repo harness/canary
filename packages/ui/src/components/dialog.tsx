@@ -62,7 +62,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
           <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
             {!hideClose && (
               <DialogPrimitive.Close asChild>
-                <Button className="cn-modal-dialog-close" variant="transparent" iconOnly ignoreIconOnlyTooltip>
+                <Button variant="transparent" className="cn-modal-dialog-close" iconOnly>
                   <IconV2 name="xmark" />
                 </Button>
               </DialogPrimitive.Close>

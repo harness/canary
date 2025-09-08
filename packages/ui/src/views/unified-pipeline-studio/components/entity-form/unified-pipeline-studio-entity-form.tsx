@@ -282,7 +282,6 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
                         requestClose()
                       }}
                       aria-label="Remove Step"
-                      tooltipProps={{ content: 'Remove Step' }}
                     >
                       <IconV2 name="trash" />
                     </Button>

@@ -52,9 +52,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
 
           <Table.Head className="w-[15%]" contentClassName="w-full">
             <Layout.Grid flow="column" columns="1fr auto 1fr" align="center" justify="center" gapX="2xs">
-              <Text align="right">{t('views:repos.behind', 'Behind')}</Text>
+              <span className="text-right">{t('views:repos.behind', 'Behind')}</span>
               <Separator orientation="vertical" />
-              <Text>{t('views:repos.ahead', 'Ahead')}</Text>
+              <span>{t('views:repos.ahead', 'Ahead')}</span>
             </Layout.Grid>
           </Table.Head>
           <Table.Head className="w-[15%] whitespace-nowrap">{t('views:repos.pullRequest', 'Pull Request')}</Table.Head>

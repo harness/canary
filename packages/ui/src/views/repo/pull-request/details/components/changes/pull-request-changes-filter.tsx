@@ -164,7 +164,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     <Layout.Horizontal
       align="center"
       justify="between"
-      className="layer-high bg-cn-background-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2"
+      className="layer-high bg-cn-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2"
     >
       <Layout.Horizontal className="grow gap-x-5" align="center">
         <Button
@@ -212,8 +212,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               <DropdownMenu.Item
                 title={item.name}
                 className={cn({
-                  'bg-cn-background-hover':
-                    diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+                  'bg-cn-hover': diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
                 })}
                 key={item.value}
                 onClick={() => handleDiffModeChange(item.value)}

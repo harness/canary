@@ -26,6 +26,6 @@ export const PopoverCommitInfo = {
   },
 
   CommitMessage: function Root({ children }: { children: string | React.ReactNode }) {
-    return <div className="bg-cn-background p-3">{children}</div>
+    return <div className="bg-cn-1 p-3">{children}</div>
   }
 }

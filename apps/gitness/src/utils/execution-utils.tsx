@@ -4,7 +4,7 @@ import { PipelineExecutionStatus } from '@harnessio/ui/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (
-    <div className="flex items-center gap-1 rounded-md bg-cn-background-1/10 px-1.5 font-mono">
+    <div className="flex items-center gap-1 rounded-md bg-cn-1/10 px-1.5 font-mono">
       <IconV2 name="git-branch" size="2xs" className="text-cn-3" />
       {branch}
     </div>

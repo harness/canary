@@ -4,12 +4,12 @@ import { Button, IconV2, Illustration, Input } from '@/components'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="flex size-full max-w-[460px] flex-col bg-cn-background-1">{children}</div>
+  return <div className="flex size-full max-w-[460px] flex-col bg-cn-1">{children}</div>
 }
 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="sticky top-0 flex items-center justify-between bg-cn-background-1 px-6 py-4">
+    <div className="sticky top-0 flex items-center justify-between bg-cn-1 px-6 py-4">
       <p className="text-16 font-medium text-cn-1">Harness AI</p>
       <Button size="sm" iconOnly variant="ghost" onClick={onClose}>
         <IconV2 name="xmark" />
@@ -28,7 +28,7 @@ const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 }
 
 const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="sticky bottom-0 z-10 bg-cn-background-1 px-6 py-3">{children}</div>
+  return <div className="sticky bottom-0 z-10 bg-cn-1 px-6 py-3">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -55,7 +55,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
       >
         <div
           className={cn('text-2 text-cn-1 leading-relaxed', {
-            'px-3.5 py-2 bg-cn-background-softgray rounded-[8px_8px_2px_8px]': self
+            'px-3.5 py-2 bg-cn-gray-soft rounded-[8px_8px_2px_8px]': self
           })}
         >
           {children}
@@ -70,7 +70,7 @@ const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, cl
   return (
     <code
       className={cn(
-        'inline-block rounded-[3px] border border-cn-2 bg-cn-background-softgray px-1.5 text-2 leading-[18px]',
+        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-soft px-1.5 text-2 leading-[18px]',
         className
       )}
     >
@@ -87,7 +87,7 @@ const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
       {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
-      <span className="size-2.5 rounded-full bg-cn-background-3" aria-hidden />
+      <span className="size-2.5 rounded-full bg-cn-3" aria-hidden />
     </div>
   )
 }

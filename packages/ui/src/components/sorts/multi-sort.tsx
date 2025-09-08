@@ -63,11 +63,7 @@ const SortableItem = ({
 
   return (
     <div className={cn('relative', isDragging && 'z-10', 'flex items-center gap-x-2')} ref={setNodeRef} style={style}>
-      <div
-        className="cursor-grab rounded p-1 hover:bg-cn-background-3 active:cursor-grabbing"
-        {...attributes}
-        {...listeners}
-      >
+      <div className="cursor-grab rounded p-1 hover:bg-cn-3 active:cursor-grabbing" {...attributes} {...listeners}>
         <IconV2 className="text-icons-1" name="grip-dots" size="2xs" />
       </div>
 

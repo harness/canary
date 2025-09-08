@@ -24,9 +24,9 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
     const { Link } = useRouterContext()
 
     const commonClassnames = cn(
-      'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 hover:bg-cn-background-hover focus-visible:text-cn-1 focus-visible:bg-cn-background-hover focus-visible:outline-none',
+      'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 hover:bg-cn-hover focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
       {
-        'bg-cn-background-selected text-cn-1': isActive,
+        'bg-cn-selected text-cn-1': isActive,
         'grid items-center justify-start gap-cn-2xs grid-flow-col': !!link
       },
       className
@@ -89,7 +89,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
   return (
     <Accordion.Item value={value} className="border-none ">
       <Accordion.Trigger
-        className=" bg-cn-background-1 pl-cn-2xs mb-cn-4xs relative z-[1] p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+        className=" bg-cn-1 pl-cn-2xs mb-cn-4xs relative z-[1] p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
         indicatorProps={{ size: '2xs' }}
         asChild
       >

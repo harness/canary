@@ -285,7 +285,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="border-cn-2 bg-cn-background-2 mt-5 rounded-md border px-4 py-3"
+            className="border-cn-2 bg-cn-2 mt-5 rounded-md border px-4 py-3"
           >
             <Text variant="body-normal" color="foreground-1">
               {isBranchSelected ? (
@@ -324,7 +324,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="border-cn-2 bg-cn-background-2 mt-4 rounded-md border p-4"
+            className="border-cn-2 bg-cn-2 mt-4 rounded-md border p-4"
           >
             <div className="flex items-center gap-x-1.5">
               <div>

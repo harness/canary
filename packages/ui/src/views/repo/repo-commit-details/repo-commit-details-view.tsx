@@ -53,7 +53,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               flow="column"
               justify="between"
               align="center"
-              className="border-cn-3 bg-cn-background-2 px-cn-md py-cn-sm border-b"
+              className="border-cn-3 bg-cn-2 px-cn-md py-cn-sm border-b"
               gapX="md"
             >
               <CommitTitleWithPRLink

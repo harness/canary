@@ -49,7 +49,7 @@ export default {
 
     // Header
     '&-header': {
-      '@apply border-b bg-cn-background-2': '',
+      '@apply border-b bg-cn-2': '',
       borderColor: 'var(--cn-border-3)'
     },
 
@@ -65,7 +65,7 @@ export default {
 
     // Footer
     '&-footer': {
-      '@apply bg-cn-background-softgray/50 border-t font-medium [&>tr]:last:border-b-0': ''
+      '@apply bg-cn-gray-soft/50 border-t font-medium [&>tr]:last:border-b-0': ''
     },
 
     // Row

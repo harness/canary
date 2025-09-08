@@ -110,7 +110,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             </Link>
           </Layout.Horizontal>
         </Accordion.Trigger>
-        <Accordion.Content className="border-t bg-cn-background-1 pb-0">
+        <Accordion.Content className="border-t bg-cn-1 pb-0">
           {item.matches && item.matches.length >= 1 && (
             <Layout.Vertical gap="none" className="mt-1">
               {item.matches
@@ -120,7 +120,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                     key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
                     className="px-4"
                   >
-                    <pre className={cn('bg-cn-background-1')}>
+                    <pre className={cn('bg-cn-1')}>
                       <code className="monospace">
                         {match.before.trim().length > 0 && (
                           <>
@@ -147,7 +147,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                   </div>
                 ))}
               {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
-                <div className="bg-cn-background-0 mt-2 py-1.5 pl-4">
+                <div className="bg-cn-0 mt-2 py-1.5 pl-4">
                   <Button
                     variant="link"
                     className="text-cn-2 font-caption-single-line-normal p-cn-4xs h-fit"

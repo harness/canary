@@ -37,7 +37,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
               <Table.Row key={key.identifier}>
                 <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
-                    <IconV2 name="ssh-key" size="lg" className="rounded-md bg-cn-background-softgray text-cn-2" />
+                    <IconV2 name="ssh-key" size="lg" className="rounded-md bg-cn-gray-soft text-cn-2" />
                     <div className="flex flex-col">
                       <span className="block w-[200px] truncate font-medium text-cn-1">{key.identifier}</span>
                       <span className="w-[200px] truncate text-1 text-cn-3">{key.fingerprint}</span>

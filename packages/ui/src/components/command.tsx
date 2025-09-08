@@ -12,7 +12,7 @@ const CommandRoot = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn('bg-cn-background-2 text-cn-1 flex h-full w-full flex-col overflow-hidden rounded', className)}
+    className={cn('bg-cn-2 text-cn-1 flex h-full w-full flex-col overflow-hidden rounded', className)}
     {...props}
   />
 ))
@@ -103,7 +103,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'data-[selected=true]:bg-cn-background-hover data-[selected=true]:text-cn-1 relative flex cursor-default select-none items-center rounded px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
+      'data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 relative flex cursor-default select-none items-center rounded px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className
     )}
     {...props}

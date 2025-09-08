@@ -1,4 +1,4 @@
-import { IconV2 } from '@/components'
+import { IconV2, StatusBadge } from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { BadgeProps, ExecutionStatusProps } from './types'
@@ -11,7 +11,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.PENDING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-cn-background-softgray" />
+          <div className="size-2 rounded-full bg-cn-gray-soft" />
           <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
@@ -26,13 +26,13 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 animate-pulse rounded-full bg-cn-background-warning duration-1000" />
+          <div className="size-2 animate-pulse rounded-full bg-cn-yellow-solid duration-1000" />
           <span className="text-studio-3">Running</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1.5">
-            <IconV2 name="loader" className="animate-spin text-cn-warning" />
+            <IconV2 name="loader" color="warning" className="animate-spin" />
             <span className="text-studio-3">Running</span>
           </div>
           {duration && <span className="text-studio-3">{duration}</span>}
@@ -42,31 +42,27 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.ERROR:
     case ExecutionState.FAILURE:
       return minimal ? (
-        <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-[#ED5E5E]" />
-          <span className="text-cn-danger">Failed</span>
-        </div>
+        <StatusBadge variant="status" theme="danger">
+          Failed
+        </StatusBadge>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
-          <div className="flex items-center gap-1.5">
-            <IconV2 name="xmark-circle-solid" className="text-cn-danger" />
-            <span className="text-cn-danger">Failed</span>
-          </div>
+          <StatusBadge icon="xmark-circle-solid" theme="danger" variant="ghost">
+            Failed
+          </StatusBadge>
           {duration && <span className="text-cn-danger">{duration}</span>}
         </div>
       )
     case ExecutionState.SUCCESS:
       return minimal ? (
-        <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-cn-background-success" />
-          <span className="text-cn-success">Success</span>
-        </div>
+        <StatusBadge variant="status" theme="success">
+          Success
+        </StatusBadge>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
-          <div className="flex items-center gap-1.5 text-cn-success">
-            <IconV2 name="check-circle-solid" />
-            <span>Success</span>
-          </div>
+          <StatusBadge icon="check-circle-solid" theme="success" variant="ghost">
+            Success
+          </StatusBadge>
           {duration && <span className="text-cn-success">{duration}</span>}
         </div>
       )
@@ -85,11 +81,11 @@ const Icon: React.FC<ExecutionStatusProps> = props => {
     case ExecutionState.KILLED:
     case ExecutionState.FAILURE:
     case ExecutionState.ERROR:
-      return <IconV2 name="xmark-circle-solid" className="text-cn-danger" />
+      return <IconV2 name="xmark-circle-solid" color="danger" />
     case ExecutionState.SUCCESS:
-      return <IconV2 name="check-circle-solid" className="text-cn-success" />
+      return <IconV2 name="check-circle-solid" color="success" />
     case ExecutionState.RUNNING:
-      return <IconV2 name="loader" className="animate-spin text-cn-warning" />
+      return <IconV2 name="loader" color="warning" className="animate-spin" />
     case ExecutionState.SKIPPED:
     default:
       return <></>

@@ -144,16 +144,16 @@ export const Summary = ({
                   }`}
                 >
                   <IconV2
-                    className={
+                    color={
                       file.status
                         ? file.status === FileStatus.SAFE
-                          ? 'text-icons-9'
+                          ? 'neutral'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'text-cn-warning ml-3'
+                            ? 'warning'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'text-cn-warning ml-3'
-                              : 'text-cn-danger ml-3'
-                        : 'text-cn-2'
+                              ? 'warning'
+                              : 'danger'
+                        : 'neutral'
                     }
                     name={
                       file.status

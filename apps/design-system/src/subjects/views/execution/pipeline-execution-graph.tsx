@@ -118,7 +118,7 @@ export function ApprovalStepNodeComponent({
   const { name } = node.data
   const approvalNode = (
     <div className="flex h-full items-center justify-center">
-      <div className="border-cn-2 bg-cn-background-2 absolute -z-10 rotate-45 border" style={{ inset: '18px' }}></div>
+      <div className="border-cn-2 bg-cn-2 absolute -z-10 rotate-45 border" style={{ inset: '18px' }}></div>
       <div>{name}</div>
     </div>
   )

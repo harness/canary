@@ -45,7 +45,7 @@ export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNod
   const { name, icon } = node.data
 
   return (
-    <div className={'bg-cn-background-2 border-cn-2 box-border size-full rounded-xl border'}>
+    <div className={'bg-cn-2 border-cn-2 box-border size-full rounded-xl border'}>
       <div>{icon}</div>
       <Text title={name} className="text-cn-1 m-2 line-clamp-2 cursor-default">
         {name}

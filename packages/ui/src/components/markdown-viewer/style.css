@@ -247,16 +247,16 @@
     }
 
     pre {
-      @apply font-body-code bg-cn-background-1 border-cn-3 text-cn-1 mb-0 rounded-none border-0 p-0;
+      @apply font-body-code bg-cn-1 border-cn-3 text-cn-1 mb-0 rounded-none border-0 p-0;
 
       code {
-        @apply bg-cn-background-1 !text-cn-1 rounded-none p-0;
+        @apply bg-cn-1 !text-cn-1 rounded-none p-0;
       }
     }
 
     blockquote {
       font: var(--cn-comp-markdown-content-paragraph);
-      @apply text-cn-3 my-cn-md relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm before:bg-[var(--cn-border-2)];
+      @apply text-cn-3 my-cn-md before:bg-cn-separator relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm;
     }
 
     table {

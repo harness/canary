@@ -16,9 +16,9 @@ export interface Problem<T = unknown> {
 const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {
   switch (severity) {
     case 'error':
-      return <IconV2 name="xmark-circle-solid" className="text-cn-danger" />
+      return <IconV2 name="xmark-circle-solid" color="danger" />
     case 'warning':
-      return <IconV2 name="warning-triangle-solid" className="text-cn-warning" />
+      return <IconV2 name="warning-triangle-solid" color="warning" />
     case 'info':
       return <IconV2 name="info-circle" />
   }

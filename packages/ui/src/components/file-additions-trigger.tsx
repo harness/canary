@@ -18,7 +18,7 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({ pathNewFil
         <Button className="relative overflow-hidden pl-4 pr-8" variant="outline">
           <IconV2 name="plus" />
           <span className="border-r pr-2.5">{t('views:repos.createFile', 'Create File')}</span>
-          <span className="absolute right-0 top-0 flex h-full w-8 items-center justify-center text-icons-7 transition-colors group-data-[state=open]:bg-cn-background-3 group-data-[state=open]:text-icons-9">
+          <span className="absolute right-0 top-0 flex h-full w-8 items-center justify-center text-icons-7 transition-colors group-data-[state=open]:bg-cn-3 group-data-[state=open]:text-icons-9">
             <IconV2 name="nav-arrow-down" size="2xs" />
           </span>
         </Button>

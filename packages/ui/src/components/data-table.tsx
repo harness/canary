@@ -271,7 +271,7 @@ export function DataTable<TData>({
                 ))}
               </Table.Row>
               {row.getIsExpanded() && renderSubComponent && (
-                <Table.Row key={`${row.id}-expanded`} className="bg-cn-background-2">
+                <Table.Row key={`${row.id}-expanded`} className="bg-cn-2">
                   <Table.Cell></Table.Cell>
                   <Table.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</Table.Cell>
                 </Table.Row>

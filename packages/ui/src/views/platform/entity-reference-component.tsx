@@ -132,7 +132,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const defaultEntityRenderer = ({ entity, isSelected, onSelect, showCheckbox }: EntityRendererProps<T>) => {
     return (
       <StackedList.Item
-        className={cn({ 'bg-cn-background-hover': isSelected })}
+        className={cn({ 'bg-cn-hover': isSelected })}
         paddingY="sm"
         onClick={() => onSelect?.(entity)}
         thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}

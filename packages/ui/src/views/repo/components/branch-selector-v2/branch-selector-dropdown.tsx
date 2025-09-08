@@ -72,7 +72,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                   setActiveTab(value as BranchSelectorTab)
                 }}
               >
-                <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-background-3" variant="overlined">
+                <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-3" variant="overlined">
                   <Tabs.Trigger value="branches" onClick={() => setActiveTab(BranchSelectorTab.BRANCHES)}>
                     {t('views:repos.branches.title', 'Branches')}
                   </Tabs.Trigger>

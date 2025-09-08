@@ -9,7 +9,7 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-cn-background-2 px-3 py-1 text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-background-3 disabled:text-cn-3',
+  'bg-cn-2 px-3 py-1 text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-3 disabled:text-cn-3',
   {
     variants: {
       variant: {
@@ -138,7 +138,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           <div
             className={cn(
               'flex items-center text-cn-3 rounded border',
-              rightElementVariant === 'filled' ? 'bg-cn-background-softgray border-l' : '',
+              rightElementVariant === 'filled' ? 'bg-cn-gray-soft border-l' : '',
               className
             )}
           >

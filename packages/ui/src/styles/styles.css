@@ -35,7 +35,7 @@
 
 @layer base {
   body {
-    @apply bg-cn-background-0 text-cn-2 font-body-normal overscroll-y-none;
+    @apply bg-cn-0 text-cn-2 font-body-normal overscroll-y-none;
   }
 }
 
@@ -115,7 +115,7 @@
   @apply text-cn-danger text-2 mt-2 font-light;
 }
 .form-input {
-  @apply border-cn-1/10 bg-cn-background-accent/5 mt-1 w-full rounded-[4px] text-sm font-light;
+  @apply border-cn-1/10 bg-cn-brand/5 mt-1 w-full rounded-[4px] text-sm font-light;
   @apply placeholder:text-cn-1/50 !important;
 }
 
@@ -543,7 +543,7 @@ mark {
 }
 
 .breadcrumbs {
-  @apply bg-cn-background-1 fixed top-0 z-30 ml-56 w-full;
+  @apply bg-cn-1 fixed top-0 z-30 ml-56 w-full;
 }
 
 .layer-high {

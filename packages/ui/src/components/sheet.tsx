@@ -27,8 +27,8 @@ const SheetOverlay = forwardRef<ElementRef<typeof SheetPrimitive.Overlay>, Sheet
       return (
         <SheetPrimitive.Overlay
           className={cn(
-            'bg-cn-background-1/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
-            { 'bg-cn-background-backdrop': isLightTheme },
+            'bg-cn-1/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            { 'bg-cn-backdrop': isLightTheme },
             className
           )}
           {...props}
@@ -41,8 +41,8 @@ const SheetOverlay = forwardRef<ElementRef<typeof SheetPrimitive.Overlay>, Sheet
       <div
         aria-hidden="true"
         className={cn(
-          'layer-high bg-cn-background-1/50 fixed left-0 top-0 h-full w-full',
-          { 'bg-cn-background-backdrop': isLightTheme },
+          'layer-high bg-cn-1/50 fixed left-0 top-0 h-full w-full',
+          { 'bg-cn-backdrop': isLightTheme },
           className
         )}
         onClick={e => handleClose?.(e)}
@@ -52,7 +52,7 @@ const SheetOverlay = forwardRef<ElementRef<typeof SheetPrimitive.Overlay>, Sheet
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('fixed z-50 gap-4 bg-cn-background p-6 shadow-lg transition ease-in-out', {
+const sheetVariants = cva('fixed z-50 gap-4 bg-cn-1 p-6 shadow-lg transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',

@@ -246,7 +246,7 @@ export function MarkdownViewer({
               if (isSuggestion) {
                 return (
                   <div className="rounded-2 overflow-hidden border">
-                    <div className="bg-cn-background-2 px-cn-md py-cn-sm border-b">
+                    <div className="bg-cn-2 px-cn-md py-cn-sm border-b">
                       <Text variant="body-strong" color="foreground-1" className="!m-0">
                         {suggestionTitle}
                       </Text>
@@ -274,7 +274,7 @@ export function MarkdownViewer({
                   <pre>
                     {hasLineNumbers ? (
                       <div className="relative flex w-full bg-transparent">
-                        <div className="bg-cn-background-2 flex-none select-none text-right">
+                        <div className="bg-cn-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
                             <span key={i} className="text-cn-2 block pr-3 pt-[0.5px] text-sm">
                               {i + 1}

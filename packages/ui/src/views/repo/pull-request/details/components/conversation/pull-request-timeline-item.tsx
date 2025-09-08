@@ -360,7 +360,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
-                  <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-background-2')}>
+                  <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-2')}>
                     {contentHeader}
                     {isResolved && renderToggleButton()}
                   </Layout.Horizontal>
@@ -416,7 +416,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         setComment={setComment}
                       />
                     ) : (
-                      <div className={cn('flex items-center gap-3 border-t bg-cn-background-2', replyBoxClassName)}>
+                      <div className={cn('flex items-center gap-3 border-t bg-cn-2', replyBoxClassName)}>
                         {!!currentUser && <Avatar name={currentUser} rounded />}
                         <TextInput
                           wrapperClassName="flex-1"

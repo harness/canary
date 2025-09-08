@@ -562,11 +562,11 @@ const PullRequestPanel = ({
 
   const prState = getPrState()
   const headerRowBgClass = cn({
-    'bg-[var(--cn-set-green-surface-bg)]': prState === PrState.Success,
-    'bg-cn-background-2': prState === PrState.Draft,
+    'bg-cn-green-surface': prState === PrState.Success,
+    'bg-cn-2': prState === PrState.Draft,
     'bg-label-background-red': prState === PrState.Error,
-    'bg-cn-background-softgray': prState === PrState.Closed,
-    'bg-[var(--cn-set-purple-surface-bg)]': prState === PrState.Merged
+    'bg-cn-gray-soft': prState === PrState.Closed,
+    'bg-cn-purple-surface': prState === PrState.Merged
   })
 
   const headerTitleColorClass = cn({
@@ -747,11 +747,11 @@ const PullRequestPanel = ({
               />
               {showMergeInputs && (
                 <Layout.Vertical className="mt-2 w-full items-center pb-cn-xs">
-                  <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-3 bg-cn-background-1 p-3">
+                  <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-3 bg-cn-1 p-3">
                     <TextInput
                       id="merge-title"
                       label="Commit message"
-                      className="w-full bg-cn-background-1"
+                      className="w-full bg-cn-1"
                       value={mergeTitle}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMergeTitle(e.target.value)}
                       optional
@@ -760,7 +760,7 @@ const PullRequestPanel = ({
                     <Textarea
                       id="merge-message"
                       label="Commit description"
-                      className="w-full bg-cn-background-1"
+                      className="w-full bg-cn-1"
                       value={mergeMessage}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
                       optional

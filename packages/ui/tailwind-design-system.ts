@@ -72,9 +72,34 @@ export default {
         'cn-textarea': '35lh'
       },
       backgroundColor: {
+        DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+
         // Separator bg colors
         'cn-separator-subtle': 'var(--cn-border-3)',
         'cn-separator': 'var(--cn-border-2)',
+
+        // Design system primary colors
+        // Remove opacity from the colors
+        'cn-0': 'lch(from var(--cn-bg-0) l c h / <alpha-value>)',
+        'cn-1': 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
+        'cn-2': 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
+        'cn-3': 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
+
+        // Brand colors
+        'cn-brand': {
+          DEFAULT: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
+          hover: 'lch(from var(--cn-set-brand-solid-bg-hover) l c h / <alpha-value>)',
+          selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)'
+        },
+
+        // States
+        'cn-hover': 'var(--cn-state-hover)',
+        'cn-selected': 'var(--cn-state-selected)',
+
+        // component related
+        'cn-backdrop': 'var(--cn-comp-dialog-backdrop)',
+        'cn-diff-success': 'var(--cn-comp-diff-add-content)',
+        'cn-diff-danger': 'var(--cn-comp-diff-del-content)',
 
         /**
          * These colors should be used along with their text pairs
@@ -94,7 +119,7 @@ export default {
         },
         'cn-gray': {
           solid: 'var(--cn-set-gray-solid-bg)',
-          soft: 'var(--cn-set-gray-soft-bg)',
+          soft: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           surface: 'var(--cn-set-gray-surface-bg)'
         },
         'cn-red': {
@@ -671,15 +696,18 @@ export default {
     'prose-img',
     'prose-code',
     /** New design system Variants  */
-    { pattern: /^bg-cn-background-/ },
+
     { pattern: /^border-cn-/ },
 
     // 👉 Remove this after updating platform ui
+    { pattern: /^bg-cn-background-/ },
     { pattern: /^text-cn-foreground-/ },
     { pattern: /^hover:text-cn-foreground-/ },
 
     { pattern: /^text-cn-/ },
+    { pattern: /^bg-cn-/ },
     { pattern: /^hover:text-cn-/ },
+    { pattern: /^hover:bg-cn-/ },
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },

@@ -85,13 +85,13 @@ const Example: FC<ExampleProps> = ({
   ]);
 
   return (
-    <div className="bg-cn-background-1 not-content my-12 overflow-hidden rounded-md border">
+    <div className="bg-cn-1 not-content my-12 overflow-hidden rounded-md border">
       <LiveProvider code={currentCode} scope={scopeWithLayout} enableTypeScript>
         <div className={cn("grid place-items-center p-12", contentClassName)}>
           <RouterProvider router={router} />
         </div>
         {!hideCode && (
-          <details className="relative example-expand bg-cn-background-2 border-t p-3">
+          <details className="relative example-expand bg-cn-2 border-t p-3">
             <CopyButton
               buttonVariant="transparent"
               className="absolute top-3 right-3"

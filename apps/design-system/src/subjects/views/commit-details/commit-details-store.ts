@@ -908,7 +908,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: '               <div className="bg-cn-background-1 sticky top-0 z-40">',
+              content: '               <div className="bg-cn-1 sticky top-0 z-40">',
               type: 'context',
               oldNumber: 62,
               newNumber: 53
@@ -1097,7 +1097,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'apps/design-system/src/pages/view-preview/root-view-wrapper.tsx::::apps/design-system/src/pages/view-preview/root-view-wrapper.tsx',
       filePath: 'apps/design-system/src/pages/view-preview/root-view-wrapper.tsx',
-      raw: 'diff --git a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\nindex 31551abd93ce31e564e2304d83638dca29b302f2..57549ac177fdd0b5197f562edb3983a2f0197a1f 100644\n--- a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n+++ b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from \'react-router-dom\'\n \n import { noop, useThemeStore, useTranslationStore } from \'@utils/viewUtils\'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Navbar,\n-  NavbarItemType,\n-  Topbar\n-} from \'@harnessio/ui/components\'\n+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from \'@harnessio/ui/components\'\n import { SandboxLayout } from \'@harnessio/ui/views\'\n \n const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {\n@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre\n               <div className="bg-cn-background-1 sticky top-0 z-40">\n                 <Topbar.Root>\n                   <Topbar.Left>\n-                    <Breadcrumb className="select-none">\n-                      <BreadcrumbList>\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>Dolor</BreadcrumbItem>\n-                      </BreadcrumbList>\n-                    </Breadcrumb>\n+                    <Breadcrumb.Root className="select-none">\n+                      <Breadcrumb.List>\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>\n+                      </Breadcrumb.List>\n+                    </Breadcrumb.Root>\n                   </Topbar.Left>\n                 </Topbar.Root>\n               </div>\n'
+      raw: 'diff --git a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\nindex 31551abd93ce31e564e2304d83638dca29b302f2..57549ac177fdd0b5197f562edb3983a2f0197a1f 100644\n--- a/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n+++ b/apps/design-system/src/pages/view-preview/root-view-wrapper.tsx\n@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from \'react-router-dom\'\n \n import { noop, useThemeStore, useTranslationStore } from \'@utils/viewUtils\'\n \n-import {\n-  Breadcrumb,\n-  BreadcrumbItem,\n-  BreadcrumbLink,\n-  BreadcrumbList,\n-  BreadcrumbSeparator,\n-  Navbar,\n-  NavbarItemType,\n-  Topbar\n-} from \'@harnessio/ui/components\'\n+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from \'@harnessio/ui/components\'\n import { SandboxLayout } from \'@harnessio/ui/views\'\n \n const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {\n@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre\n               <div className="bg-cn-1 sticky top-0 z-40">\n                 <Topbar.Root>\n                   <Topbar.Left>\n-                    <Breadcrumb className="select-none">\n-                      <BreadcrumbList>\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>\n-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>\n-                        </BreadcrumbItem>\n-                        <BreadcrumbSeparator />\n-                        <BreadcrumbItem>Dolor</BreadcrumbItem>\n-                      </BreadcrumbList>\n-                    </Breadcrumb>\n+                    <Breadcrumb.Root className="select-none">\n+                      <Breadcrumb.List>\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>\n+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>\n+                        </Breadcrumb.Item>\n+                        <Breadcrumb.Separator />\n+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>\n+                      </Breadcrumb.List>\n+                    </Breadcrumb.Root>\n                   </Topbar.Left>\n                 </Topbar.Root>\n               </div>\n'
     },
     {
       blocks: [
@@ -3664,13 +3664,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                "-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-background-2 before:bottom-0'",
+                "-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-2 before:bottom-0'",
               type: 'delete',
               oldNumber: 14
             },
             {
               content:
-                "+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-background-2'",
+                "+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-2'",
               type: 'insert',
               newNumber: 14
             },
@@ -3721,13 +3721,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                "-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-background-1'",
+                "-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'",
               type: 'delete',
               oldNumber: 33
             },
             {
               content:
-                "+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'",
+                "+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'",
               type: 'insert',
               newNumber: 33
             },
@@ -3770,7 +3770,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       fileId: 'packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       filePath: 'packages/ui/src/components/tabs.tsx',
-      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-3', {\n       underline: 'h-11 justify-center gap-4',\n       navigation: 'h-11 w-full justify-start gap-6 border-b border-cn-borders-2 px-6',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-background-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-background-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-background-1'\n+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-background-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
+      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-3', {\n       underline: 'h-11 justify-center gap-4',\n       navigation: 'h-11 w-full justify-start gap-6 border-b border-cn-borders-2 px-6',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'\n+          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
     },
     {
       blocks: [
@@ -3927,12 +3927,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 84
             },
             {
-              content: '-          <span className="w-px h-4 mx-1.5 bg-cn-background-3" />',
+              content: '-          <span className="w-px h-4 mx-1.5 bg-cn-3" />',
               type: 'delete',
               oldNumber: 85
             },
             {
-              content: '+          <span className="mx-1.5 h-4 w-px bg-cn-background-3" />',
+              content: '+          <span className="mx-1.5 h-4 w-px bg-cn-3" />',
               type: 'insert',
               newNumber: 85
             },
@@ -3978,7 +3978,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx::::packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
       filePath: 'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-4">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">\n+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-1.5 bg-cn-background-3" />\n+          <span className="mx-1.5 h-4 w-px bg-cn-background-3" />\n           <span className="text-cn-3">{formattedTime}</span>\n         </div>\n       </div>\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-4">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">\n+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-1.5 bg-cn-3" />\n+          <span className="mx-1.5 h-4 w-px bg-cn-3" />\n           <span className="text-cn-3">{formattedTime}</span>\n         </div>\n       </div>\n'
     },
     {
       blocks: [

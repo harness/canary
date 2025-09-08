@@ -369,7 +369,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col bg-cn-background-1 p-4">
+        <div className="flex w-full flex-col bg-cn-1 p-4">
           <PullRequestCommentBox
             autofocus
             handleUpload={handleUpload}
@@ -417,7 +417,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="bg-cn-background-1">
+        <div className="bg-cn-1">
           {threads.map((thread, idx) => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`

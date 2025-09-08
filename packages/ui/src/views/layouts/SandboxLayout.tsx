@@ -41,7 +41,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
   return (
     <header
       className={cn(
-        'bg-cn-background fixed transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[var(--cn-breadcrumbs-height)]',
+        'bg-cn-1 fixed transition-transform duration-200 ease-linear right-0 top-0 z-40 h-[var(--cn-breadcrumbs-height)]',
         className
       )}
       role="banner"
@@ -62,11 +62,7 @@ function SubHeader({ children, className }: { children: ReactNode; className?: s
 function Main({ children, fullWidth, className }: { children: ReactNode; fullWidth?: boolean; className?: string }) {
   return (
     <section
-      className={cn(
-        'flex flex-col grow w-full bg-cn-background-1 rounded-[inherit]',
-        { 'flex-1': fullWidth },
-        className
-      )}
+      className={cn('flex flex-col grow w-full bg-cn-1 rounded-[inherit]', { 'flex-1': fullWidth }, className)}
       aria-label="Main Content"
     >
       {children}

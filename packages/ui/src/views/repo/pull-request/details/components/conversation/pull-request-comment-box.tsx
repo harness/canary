@@ -658,14 +658,14 @@ export const PullRequestCommentBox = ({
         gap="md"
         className={cn('p-4 pt-3 flex-1 w-full', {
           'border rounded-md': !inReplyMode || isEditMode,
-          'bg-cn-background-1': !inReplyMode,
-          'bg-cn-background-2 border-t': inReplyMode
+          'bg-cn-1': !inReplyMode,
+          'bg-cn-2 border-t': inReplyMode
         })}
       >
         <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
           <Tabs.List
             className="-mx-4 mb-cn-md px-4"
-            activeClassName={inReplyMode ? 'bg-cn-background-2' : 'bg-cn-background-1'}
+            activeClassName={inReplyMode ? 'bg-cn-2' : 'bg-cn-1'}
             variant="overlined"
           >
             <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
@@ -717,7 +717,7 @@ export const PullRequestCommentBox = ({
               <Layout.Flex
                 align="center"
                 gap="4xs"
-                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-background-1 p-cn-3xs"
+                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-1 p-cn-3xs"
               >
                 {toolbar.map((item, index) => {
                   return (

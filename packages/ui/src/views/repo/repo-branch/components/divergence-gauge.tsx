@@ -44,7 +44,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
         <Layout.Grid columns={2} align="center" justify="center" className="mx-auto w-20">
           <Progress
-            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-softgray [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-softgray rotate-180 justify-self-end [&_.cn-progress-root]:rounded-l-none"
+            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-gray-soft [&_.cn-progress-root::-webkit-progress-value]:bg-cn-gray-soft rotate-180 justify-self-end [&_.cn-progress-root]:rounded-l-none"
             value={adjustedBehindPercentage / 100}
             size="sm"
             hideIcon
@@ -53,7 +53,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
             style={{ width: `${adjustedBehindPercentage}%` } as CSSProperties}
           />
           <Progress
-            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-solidgray [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-solidgray [&_.cn-progress-root]:rounded-l-none"
+            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-gray-solid [&_.cn-progress-root::-webkit-progress-value]:bg-cn-gray-solid [&_.cn-progress-root]:rounded-l-none"
             value={adjustedAheadPercentage / 100}
             size="sm"
             hideIcon

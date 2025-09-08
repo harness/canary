@@ -2,8 +2,9 @@ import { FC } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
+import { Link } from '@harnessio/ui/components'
 // Import directly from the package path
-import { SecretActivityPage } from '@harnessio/ui/views'
+import { ScopeType, SecretActivityPage } from '@harnessio/ui/views'
 
 import mockSecretActivity from './mock-secrets-activity-data.json'
 
@@ -24,8 +25,19 @@ const SecretDetailsActivity: FC = () => {
       secretActivity={mockSecretActivity.data.content.map(activity => ({
         event: activity.detail.usageDetail.usagetype,
         type: activity?.detail?.referredByEntity?.entityRef?.identifier || '',
-        scope: activity?.detail?.referredByEntity?.entityRef?.scope || '',
-        createdAt: activity.activityTime
+        scope:
+          activity?.detail?.referredByEntity?.entityRef?.scope === 'account'
+            ? ScopeType.Account
+            : activity?.detail?.referredByEntity?.entityRef?.scope === 'organization'
+              ? ScopeType.Organization
+              : ScopeType.Project,
+        scopedPath: `${activity?.detail?.referredByEntity?.entityRef?.accountIdentifier}/${activity?.detail?.referredByEntity?.entityRef?.orgIdentifier}/${activity?.detail?.referredByEntity?.entityRef?.projectIdentifier}`,
+        createdAt: activity.activityTime,
+        entityRenderer: (
+          <Link to="" prefixIcon="account">
+            {activity?.detail?.referredByEntity?.entityRef?.identifier}
+          </Link>
+        )
       }))}
     />
   )

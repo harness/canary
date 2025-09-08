@@ -899,9 +899,10 @@
   },
   "secretActivity": {
     "event": "Event",
-    "type": "Type",
+    "entity": "Entity",
     "scope": "Scope",
-    "timestamp": "Timestamp"
+    "timestamp": "Timestamp",
+    "type": "Type"
   },
   "secrets": {
     "filterOptions": {

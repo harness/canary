@@ -1,4 +1,4 @@
-import { IconV2, Layout, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { Layout, NoData, ScopeTag, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { SecretActivity } from './types'
@@ -31,7 +31,7 @@ export function SecretActivityList({ secretActivity, isLoading }: SecretActivity
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-2/5">{t('views:secretActivity.event', 'Event')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:secretActivity.type', 'Type')}</Table.Head>
+          <Table.Head className="w-1/5">{t('views:secretActivity.entity', 'Entity')}</Table.Head>
           <Table.Head className="w-1/5">{t('views:secretActivity.scope', 'Scope')}</Table.Head>
           <Table.Head className="w-1/5">{t('views:secretActivity.timestamp', 'Timestamp')}</Table.Head>
         </Table.Row>
@@ -45,14 +45,19 @@ export function SecretActivityList({ secretActivity, isLoading }: SecretActivity
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Layout.Horizontal>
-                <IconV2 name="connectors" size="sm" />
-                <Text variant="body-normal" className="text-cn-2">
-                  {activity.type}
-                </Text>
-              </Layout.Horizontal>
+              {activity.entityRenderer ? (
+                activity.entityRenderer
+              ) : (
+                <Layout.Horizontal>
+                  <Text variant="body-normal" className="text-cn-2">
+                    {activity.type}
+                  </Text>
+                </Layout.Horizontal>
+              )}
             </Table.Cell>
-            <Table.Cell className="content-center">{activity.scope}</Table.Cell>
+            <Table.Cell className="content-center">
+              <ScopeTag scopeType={activity.scope} scopedPath={activity.scopedPath} />
+            </Table.Cell>
             <Table.Cell className="content-center">
               {activity?.createdAt ? (
                 <TimeAgoCard

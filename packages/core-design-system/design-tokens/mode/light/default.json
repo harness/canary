@@ -131,7 +131,7 @@
     "disabled": {
       "text": {
         "$type": "color",
-        "$value": "{chrome.500}",
+        "$value": "{chrome.600}",
         "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
       },
       "bg": {

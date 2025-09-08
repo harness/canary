@@ -2,17 +2,17 @@
   "bg": {
     "0": {
       "$type": "color",
-      "$value": "{chrome.950}",
+      "$value": "{pure.black}",
       "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
     },
     "1": {
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "{chrome.1000}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.1000}",
+      "$value": "{chrome.900}",
       "$description": "Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.\n\nCommon uses: Cards, containers, form fields, dropdown menus."
     },
     "3": {
@@ -29,12 +29,12 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{chrome.150}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.500}",
+      "$value": "{chrome.400}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "success": {
@@ -65,7 +65,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.800}",
+      "$value": "{chrome.700}",
       "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
     },
     "2": {
@@ -74,13 +74,22 @@
       "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
     },
     "3": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.7",
+            "space": "lch"
+          }
+        }
+      },
       "$type": "color",
-      "$value": "{chrome.900}",
+      "$value": "{chrome.850}",
       "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
     },
     "brand": {
       "$type": "color",
-      "$value": "{blue.600}",
+      "$value": "{cyan.300}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
@@ -131,7 +140,7 @@
     "disabled": {
       "text": {
         "$type": "color",
-        "$value": "{chrome.700}",
+        "$value": "{chrome.500}",
         "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options."
       },
       "bg": {
@@ -166,22 +175,22 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{pure.black}",
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.600}",
+          "$value": "{cyan.200}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{cyan.150}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{cyan.150}",
           "$description": "Selected state background color for active brand items."
         }
       },
@@ -302,34 +311,34 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.200}",
+          "$value": "{chrome.100}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{chrome.850}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.800}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{chrome.800}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{chrome.150}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.1000}",
+          "$value": "{chrome.900}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
@@ -339,12 +348,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.950}",
+          "$value": "{chrome.850}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{chrome.850}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -353,71 +362,71 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{lime.1000}",
+          "$value": "{green.1000}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.300}",
+          "$value": "{green.200}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.200}",
+          "$value": "{green.150}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{lime.200}",
+          "$value": "{green.150}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{lime.150}",
+          "$value": "{green.150}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.950}",
+          "$value": "{green.950}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.900}",
+          "$value": "{green.900}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{lime.900}",
+          "$value": "{green.900}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{lime.150}",
+          "$value": "{green.150}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.1000}",
+          "$value": "{green.1000}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{lime.900}",
+          "$value": "{green.900}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.950}",
+          "$value": "{green.950}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{lime.900}",
+          "$value": "{green.900}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -448,7 +457,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{red.300}",
+          "$value": "{red.200}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -470,7 +479,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{red.300}",
+          "$value": "{red.200}",
           "$description": "Standard text color for red surfaces with balanced readability."
         },
         "bg": {
@@ -519,7 +528,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.200}",
+          "$value": "{yellow.150}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {
@@ -541,7 +550,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.200}",
+          "$value": "{yellow.150}",
           "$description": "Standard text color for yellow surfaces with balanced readability."
         },
         "bg": {
@@ -590,7 +599,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.150}",
           "$description": "Text color for subtle blue surfaces with good contrast."
         },
         "bg": {
@@ -611,7 +620,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.150}",
           "$description": "Standard text color for blue surfaces with balanced readability."
         },
         "bg": {
@@ -660,7 +669,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{purple.200}",
+          "$value": "{purple.150}",
           "$description": "Text color for subtle purple surfaces with good contrast."
         },
         "bg": {
@@ -682,7 +691,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{purple.200}",
+          "$value": "{purple.150}",
           "$description": "Standard text color for purple surfaces with balanced readability."
         },
         "bg": {
@@ -723,7 +732,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{brown.200}",
+          "$value": "{brown.150}",
           "$description": "Text color for subtle brown surfaces with good contrast."
         },
         "bg": {
@@ -740,7 +749,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{brown.200}",
+          "$value": "{brown.150}",
           "$description": "Standard text color for brown surfaces with balanced readability."
         },
         "bg": {
@@ -776,7 +785,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{cyan.200}",
+          "$value": "{cyan.150}",
           "$description": "Text color for subtle cyan surfaces with good contrast."
         },
         "bg": {
@@ -793,7 +802,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{cyan.200}",
+          "$value": "{cyan.150}",
           "$description": "Standard text color for cyan surfaces with balanced readability."
         },
         "bg": {
@@ -829,7 +838,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{indigo.200}",
+          "$value": "{indigo.150}",
           "$description": "Text color for subtle indigo surfaces with good contrast."
         },
         "bg": {
@@ -846,7 +855,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{indigo.200}",
+          "$value": "{indigo.150}",
           "$description": "Standard text color for indigo surfaces with balanced readability."
         },
         "bg": {
@@ -882,7 +891,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{lime.200}",
+          "$value": "{lime.150}",
           "$description": "Text color for subtle lime surfaces with good contrast."
         },
         "bg": {
@@ -899,7 +908,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{lime.200}",
+          "$value": "{lime.150}",
           "$description": "Standard text color for lime surfaces with balanced readability."
         },
         "bg": {
@@ -935,7 +944,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{mint.200}",
+          "$value": "{mint.150}",
           "$description": "Text color for subtle mint surfaces with good contrast."
         },
         "bg": {
@@ -952,7 +961,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{mint.200}",
+          "$value": "{mint.150}",
           "$description": "Standard text color for mint surfaces with balanced readability."
         },
         "bg": {
@@ -1041,7 +1050,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{pink.200}",
+          "$value": "{pink.150}",
           "$description": "Text color for subtle pink surfaces with good contrast."
         },
         "bg": {
@@ -1058,7 +1067,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{pink.200}",
+          "$value": "{pink.150}",
           "$description": "Standard text color for pink surfaces with balanced readability."
         },
         "bg": {
@@ -1094,7 +1103,7 @@
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{violet.200}",
+          "$value": "{violet.150}",
           "$description": "Text color for subtle violet surfaces with good contrast."
         },
         "bg": {
@@ -1111,7 +1120,7 @@
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{violet.200}",
+          "$value": "{violet.150}",
           "$description": "Standard text color for violet surfaces with balanced readability."
         },
         "bg": {

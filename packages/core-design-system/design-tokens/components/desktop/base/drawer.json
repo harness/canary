@@ -1,5 +1,9 @@
 {
   "drawer": {
+    "2xs": {
+      "$type": "sizing",
+      "$value": "280"
+    },
     "xs": {
       "$type": "sizing",
       "$value": "388"

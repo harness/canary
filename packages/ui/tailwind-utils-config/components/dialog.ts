@@ -16,7 +16,7 @@ export default {
 
   '.cn-modal-dialog-content': {
     '--cn-dialog-width': 'min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-sm))',
-    backgroundColor: 'var(--cn-bg-2)',
+    backgroundColor: 'var(--cn-bg-3)',
     borderRadius: 'var(--cn-dialog-radius)',
     border: '1px solid var(--cn-border-3)',
     borderWidth: 'var(--cn-dialog-border)',

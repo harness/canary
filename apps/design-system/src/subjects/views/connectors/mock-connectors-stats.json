@@ -1,0 +1,27 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "typeStats": [
+      {
+        "type": "Gcp",
+        "count": 2
+      },
+      {
+        "type": "GcpKms",
+        "count": 4
+      },
+      {
+        "type": "Github",
+        "count": 1
+      }
+    ],
+    "statusStats": [
+      {
+        "status": "SUCCESS",
+        "count": 3
+      }
+    ]
+  },
+  "metaData": null,
+  "correlationId": "52f6b8b2-da29-4fd2-843e-a91519c3479e"
+}

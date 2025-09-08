@@ -24,6 +24,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   isLoading,
   connectors,
   onSortChange,
+  connectorStats,
   onFilterChange,
   onCreate,
   ...props
@@ -32,7 +33,13 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   const { navigate } = useRouterContext()
   const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
-  const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t)
+  const connectorTypeOptions =
+    connectorStats?.typeStats.map(typeStat => ({
+      label: `${typeStat.type} (${typeStat.count})`,
+      value: typeStat.type
+    })) || []
+
+  const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t, connectorTypeOptions)
   const onFilterSelectionChange = (filterValues: ConnectorListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }

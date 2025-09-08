@@ -1,4 +1,4 @@
-import { Button, IconV2, Input } from '@/components'
+import { Button, IconV2, SearchInput } from '@/components'
 
 import { FilterFieldConfig } from '../../../types'
 
@@ -8,8 +8,8 @@ interface TextFilterProps {
 }
 
 const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onUpdateFilter(event.target.value)
+  const handleInputChange = (value: string) => {
+    onUpdateFilter(value)
   }
 
   const handleClear = () => {
@@ -17,18 +17,20 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
   }
 
   return (
-    <div className="p-3">
-      <Input
-        value={filter.value || ''}
-        placeholder="Type a value..."
-        onChange={handleInputChange}
-        rightElement={
-          <Button iconOnly size="sm" variant="transparent" onClick={handleClear}>
-            <IconV2 name="xmark" size="2xs" />
-          </Button>
-        }
-      />
-    </div>
+    <SearchInput
+      className="pl-cn-sm"
+      inputContainerClassName="mx-cn-xs my-cn-2xs w-auto"
+      defaultValue={filter.value || ''}
+      placeholder="Type a value..."
+      autoFocus
+      onChange={handleInputChange}
+      prefix={false}
+      suffix={
+        <Button iconOnly size="sm" variant="transparent" onClick={handleClear}>
+          <IconV2 name="xmark" size="2xs" />
+        </Button>
+      }
+    />
   )
 }
 

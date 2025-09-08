@@ -156,7 +156,7 @@
       "text-selected": {
         "$type": "color",
         "$value": "{chrome.1000}",
-        "$description": "Disabled text or icon element for selected component behavior."
+        "$description": "Disabled text or icon element for selected component behavior"
       },
       "bg-selected": {
         "$type": "color",

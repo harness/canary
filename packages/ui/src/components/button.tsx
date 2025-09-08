@@ -109,7 +109,7 @@ type ButtonPropsIconOnlyRequired = {
 type ButtonPropsIconOnlyIgnored = {
   iconOnly: true
   ignoreIconOnlyTooltip: true
-  tooltipProps?: ButtonTooltipProps
+  tooltipProps?: never
 }
 
 type ButtonPropsRegular = {
@@ -141,7 +141,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children: _children,
       type = 'button',
       tooltipProps,
-      ignoreIconOnlyTooltip: _,
+      ignoreIconOnlyTooltip,
       ...props
     },
     ref
@@ -174,7 +174,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       </Comp>
     )
 
-    if (tooltipProps) {
+    if (tooltipProps && !ignoreIconOnlyTooltip) {
       return (
         <Tooltip hideArrow {...tooltipProps}>
           {ButtonComp}

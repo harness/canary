@@ -46,7 +46,9 @@ export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { 
 )
 SidebarRoot.displayName = 'SidebarRoot'
 
-export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, ComponentProps<typeof Button>>(
+type SidebarTriggerProp = Omit<ComponentProps<typeof Button>, 'iconOnly' | 'tooltipProps' | 'ignoreIconOnlyTooltip'>
+
+export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, SidebarTriggerProp>(
   ({ onClick, ...props }, ref) => {
     const { toggleSidebar } = useSidebar()
     const { t } = useTranslation()

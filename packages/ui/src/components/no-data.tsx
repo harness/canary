@@ -86,14 +86,14 @@ export const NoData: FC<NoDataProps> = ({
           <Layout.Horizontal gap="sm">
             {primaryButton &&
               (primaryButton.to ? (
-                <Button asChild {...toButtonProps(omit(secondaryButton, ['to', 'label', 'icon']) as ButtonProps)}>
+                <Button asChild {...toButtonProps(omit(primaryButton, ['to', 'label', 'icon']) as ButtonProps)}>
                   <NavLink to={primaryButton.to}>
                     {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                     {primaryButton.label}
                   </NavLink>
                 </Button>
               ) : (
-                <Button {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
+                <Button {...toButtonProps(omit(primaryButton, ['label', 'icon']) as ButtonProps)}>
                   {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                   {primaryButton.label}
                 </Button>

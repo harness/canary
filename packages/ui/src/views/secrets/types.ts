@@ -13,7 +13,9 @@ export interface SecretDataType {
 
 export enum SecretCreationType {
   SECRET_TEXT = 'SecretText',
-  SECRET_FILE = 'SecretFile'
+  SECRET_FILE = 'SecretFile',
+  SSH_KEY = 'SSHKey',
+  WINRM_CREDENTIALS = 'WinRmCredentials'
 }
 
 export enum SecretType {
@@ -22,7 +24,7 @@ export enum SecretType {
 }
 
 export interface SecretData {
-  type: 'SecretFile' | 'SecretText' | 'SSHKey' | 'WinRmCredentials'
+  type: SecretCreationType
   name: string
   identifier: string
   orgIdentifier?: string

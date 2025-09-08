@@ -15,6 +15,12 @@ export enum FilterFieldTypes {
   MultiTag = 'multitag'
 }
 
+export type SecretListFilters = {
+  secretTypes?: CheckboxOptions[]
+  secretManagerIdentifiers?: CheckboxOptions[]
+  description?: string
+}
+
 export interface CheckboxOptions {
   label: string
   value: string
@@ -72,6 +78,12 @@ interface MultiSelectFilterOptionConfig<T extends string = string>
   type: FilterFieldTypes.MultiSelect
   filterFieldConfig?: {
     options?: Array<CheckboxOptions>
+    onSearch?: (query: string) => void
+    noResultsMessage?: string
+    loadingMessage?: string
+    placeholder?: string
+    isLoading?: boolean
+    allowSearch?: boolean
   }
 }
 

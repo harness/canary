@@ -56,7 +56,7 @@ export type ConnectorListFilters = {
 }
 
 export interface ConnectorStats {
-  typeStats: Array<{ type: ConnectorConfigType; count: number }>
+  typeStats?: Array<{ type?: ConnectorConfigType; count?: number }>
 }
 
 export interface ConnectorListPageProps extends ConnectorListProps {

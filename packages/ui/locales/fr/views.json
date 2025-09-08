@@ -406,6 +406,7 @@
     "type": "Type",
     "createdAt": "Created",
     "updated": "Dernière mise à jour",
+    "edit": "Edit",
     "delete": "Supprimer",
     "filterOptions": {
       "statusOption": {
@@ -413,6 +414,15 @@
         "failure": "Échec",
         "label": "Statut",
         "favorite": "Favorites"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "connectorIdentifierOption": {
+        "label": "Connector Identifier"
+      },
+      "descriptionOption": {
+        "label": "Description"
       }
     },
     "connectivityStatus": "État de la connexion",
@@ -891,6 +901,21 @@
     "timestamp": "Timestamp"
   },
   "secrets": {
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
     "createNew": "Créer un secret",
     "delete": "Supprimer le secret",
     "edit": "Edit Secret",

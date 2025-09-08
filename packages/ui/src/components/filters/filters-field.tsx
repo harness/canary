@@ -86,6 +86,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       const checkboxFilter = filter as FilterField<CheckboxOptions[]>
       return (
         <MultiSelectFilter
+          {...filterOption.filterFieldConfig}
           filter={checkboxFilter.value || []}
           filterOption={filterOption.filterFieldConfig?.options || []}
           onUpdateFilter={values => onUpdateFilter(values as V)}

@@ -1,10 +1,19 @@
 import { TFunctionWithFallback } from '@/context'
 import { CheckboxOptions, FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
+import { getMultiSelectParser } from '@components/filters/utils'
 import { IconV2 } from '@components/icon-v2'
 
 import { booleanParser } from '@harnessio/filters'
 
 import { ConnectorListFilters } from './types'
+
+export const CONNECTOR_SORT_OPTIONS = [
+  { label: 'Last modified', value: 'lastModifiedAt,DESC' },
+  { label: 'Newest', value: 'createdAt,DESC' },
+  { label: 'Oldest', value: 'createdAt,ASC' },
+  { label: 'Name (A->Z, 0->9)', value: 'name,ASC' },
+  { label: 'Name (Z->A, 9->0)', value: 'name,DESC' }
+]
 
 export const getConnectorListFilterOptions = (
   t: TFunctionWithFallback,
@@ -22,18 +31,7 @@ export const getConnectorListFilterOptions = (
       filterFieldConfig: {
         options: connectorTypeOptions
       },
-      parser: {
-        parse: (value: string) => {
-          // Since "," can be encoded while appending to URL
-          const valueArr = decodeURIComponent(value)
-            .split(',')
-            .filter(Boolean)
-            .map(val => connectorTypeOptions.find(option => option.value === val))
-            .filter((option): option is CheckboxOptions => option !== undefined)
-          return valueArr
-        },
-        serialize: (value?: CheckboxOptions[]) => value?.reduce((acc, val) => (acc += `${val.value},`), '') || ''
-      }
+      parser: getMultiSelectParser(connectorTypeOptions)
     },
     {
       label: t('views:connectors.filterOptions.statusOption.label', 'Connectivity Status'),
@@ -42,18 +40,7 @@ export const getConnectorListFilterOptions = (
       filterFieldConfig: {
         options
       },
-      parser: {
-        parse: (value: string) => {
-          // Since "," can be encoded while appending to URL
-          const valueArr = decodeURIComponent(value)
-            .split(',')
-            .filter(Boolean)
-            .map(val => options.find(option => option.value === val))
-            .filter((option): option is CheckboxOptions => option !== undefined)
-          return valueArr
-        },
-        serialize: (value?: CheckboxOptions[]) => value?.reduce((acc, val) => (acc += `${val.value},`), '') || ''
-      }
+      parser: getMultiSelectParser(options)
     },
     {
       label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),

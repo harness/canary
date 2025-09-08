@@ -1,11 +1,12 @@
 import { FC } from 'react'
 
-import { Button, IconV2, ListActions, NoData, Pagination, SearchBox, Spacer, Text } from '@/components'
+import { Button, IconV2, NoData, Pagination, SecretListFilters, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
+import FilterGroup from '@views/components/FilterGroup'
 
+import { getSecretListFilterOptions, SECRET_SORT_OPTIONS } from './filter-options'
 import { SecretList } from './secrets-list'
 import { SecretListPageProps } from './types'
 
@@ -19,18 +20,39 @@ const SecretListPage: FC<SecretListPageProps> = ({
   pageSize,
   goToPage,
   isLoading,
+  secretManagerIdentifiers,
+  isSecretManagerIdentifierLoading,
   secrets,
   onCreate,
+  setSecretManagerSearchQuery,
   onDeleteSecret,
+  onFilterChange,
+  onSortChange,
   ...props
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
-  const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : undefined),
-    searchValue: searchQuery || ''
+  const secretManagerFilterOptions = secretManagerIdentifiers.map(secretManager => {
+    return {
+      label: secretManager.name || '',
+      value: secretManager.identifier
+    }
   })
+  const SECRET_FILTER_OPTIONS = getSecretListFilterOptions(t, {
+    options: secretManagerFilterOptions,
+    allowSearch: true,
+    isLoading: isSecretManagerIdentifierLoading,
+    placeholder: t('views:secrets.filterOptions.secretManagerOption.placeholder', 'Select Secret Manager'),
+    onSearch: (query: string) => {
+      setSecretManagerSearchQuery(query)
+    }
+  })
+
+  const onFilterValueChange = (filterValues: SecretListFilters) => {
+    // Pass filter values to parent component if onFilterChange is provided
+    onFilterChange?.(filterValues)
+  }
 
   if (isError) {
     return (
@@ -69,23 +91,22 @@ const SecretListPage: FC<SecretListPageProps> = ({
           Secrets
         </Text>
         <Spacer size={6} />
-        <ListActions.Root className="mb-1">
-          <ListActions.Left>
-            <SearchBox.Root
-              width="full"
-              className="max-w-80"
-              value={searchInput}
-              handleChange={handleInputChange}
-              placeholder={t('views:search', 'Search')}
-            />
-          </ListActions.Left>
-          <ListActions.Right>
+        <FilterGroup<SecretListFilters, keyof SecretListFilters>
+          simpleSortConfig={{
+            sortOptions: SECRET_SORT_OPTIONS,
+            onSortChange,
+            defaultSort: 'lastModifiedAt,DESC'
+          }}
+          onFilterValueChange={onFilterValueChange}
+          handleInputChange={(value: string) => setSearchQuery(value)}
+          headerAction={
             <Button onClick={onCreate}>
               <IconV2 name="plus" />
               {t('views:secrets.createNew', 'Create Secret')}
             </Button>
-          </ListActions.Right>
-        </ListActions.Root>
+          }
+          filterOptions={SECRET_FILTER_OPTIONS}
+        />
         <Spacer size={4} />
         <SecretList secrets={secrets} isLoading={isLoading} onDeleteSecret={onDeleteSecret} {...props} />
         <Spacer size={8} />

@@ -73,6 +73,7 @@ export function ConnectorsList({
   connectors,
   isLoading,
   toConnectorDetails,
+  onEditConnector,
   onDeleteConnector,
   onToggleFavoriteConnector
 }: ConnectorListProps): JSX.Element {
@@ -110,7 +111,8 @@ export function ConnectorsList({
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, createdAt, isFavorite }) => {
+        {connectors.map(connector => {
+          const { name, identifier, type, spec, status, lastModifiedAt, createdAt, isFavorite } = connector
           const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
           const connectorType = type ? ConnectorDisplayNameMap.get(type) : ''
           const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
@@ -154,12 +156,14 @@ export function ConnectorsList({
                 <MoreActionsTooltip
                   actions={[
                     {
-                      title: t('views:connectors.viewDetails', 'View Details'),
-                      to: connectorDetailUrl
+                      title: t('views:connectors.edit', 'Edit'),
+                      iconName: 'edit-pencil',
+                      onClick: () => onEditConnector(connector)
                     },
                     {
                       isDanger: true,
                       title: t('views:connectors.delete', 'Delete'),
+                      iconName: 'trash',
                       onClick: () => onDeleteConnector(identifier)
                     }
                   ]}

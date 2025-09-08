@@ -415,6 +415,7 @@
     "type": "Type",
     "createdAt": "Created",
     "updated": "Last updated",
+    "edit": "Edit",
     "delete": "Delete",
     "filterOptions": {
       "statusOption": {
@@ -422,6 +423,15 @@
         "failure": "Failure",
         "label": "Status",
         "favorite": "Favorites"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "connectorIdentifierOption": {
+        "label": "Connector Identifier"
+      },
+      "descriptionOption": {
+        "label": "Description"
       }
     },
     "connectivityStatus": "Connectivity status",
@@ -905,6 +915,21 @@
     "timestamp": "Timestamp"
   },
   "secrets": {
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
     "createNew": "Create Secret",
     "delete": "Delete Secret",
     "edit": "Edit Secret",

@@ -7,7 +7,7 @@ import { cn } from '@utils/cn'
 import FilterGroup from '@views/components/FilterGroup'
 
 import { ConnectorsList } from './connectors-list'
-import { getConnectorListFilterOptions } from './filter-options'
+import { CONNECTOR_SORT_OPTIONS, getConnectorListFilterOptions } from './filter-options'
 import { ConnectorListFilters, ConnectorListPageProps } from './types'
 
 type ConnectorListFiltersKeys = keyof ConnectorListFilters
@@ -34,9 +34,9 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
   const [_selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const connectorTypeOptions =
-    connectorStats?.typeStats.map(typeStat => ({
-      label: `${typeStat.type} (${typeStat.count})`,
-      value: typeStat.type
+    connectorStats?.typeStats?.map(typeStat => ({
+      label: `${typeStat.type || ''} (${typeStat.count || 0})`,
+      value: typeStat.type || ''
     })) || []
 
   const CONNECTOR_FILTER_OPTIONS = getConnectorListFilterOptions(t, connectorTypeOptions)
@@ -88,13 +88,7 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
         <Spacer size={7} />
         <FilterGroup<ConnectorListFilters, keyof ConnectorListFilters>
           simpleSortConfig={{
-            sortOptions: [
-              { label: 'Last modified', value: 'lastModifiedAt,DESC' },
-              { label: 'Oldest', value: 'createdAt,ASC' },
-              { label: 'Newest', value: 'createdAt,DESC' },
-              { label: 'Name (A - Z, 0 - 9)', value: 'name,ASC' },
-              { label: 'Name (Z - A, 9 - 0)', value: 'name,DESC' }
-            ],
+            sortOptions: CONNECTOR_SORT_OPTIONS,
             onSortChange,
             defaultSort: 'lastModifiedAt,DESC'
           }}

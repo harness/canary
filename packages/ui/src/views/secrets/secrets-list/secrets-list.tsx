@@ -1,11 +1,7 @@
-import { IconV2, MoreActionsTooltip, NoData, Skeleton, Table, TimeAgoCard } from '@/components'
+import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { SecretListProps } from './types'
-
-const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="text-cn-1 max-w-full truncate font-medium">{title}</span>
-)
 
 export function SecretList({
   secrets,
@@ -38,28 +34,27 @@ export function SecretList({
     <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-1/3">{t('views:secret.title', 'Name')}</Table.Head>
-          <Table.Head className="w-1/3">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
-          <Table.Head className="w-1/3">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
+          <Table.Head className="w-full max-w-[470px]">{t('views:secret.title', 'Name')}</Table.Head>
+          <Table.Head className="min-w-[150px]">{t('views:common.manager', 'Secrets Manager')}</Table.Head>
+          <Table.Head className="min-w-[150px]">{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
           <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {secrets.map(secret => (
-          <Table.Row key={secret.identifier} className="cursor-pointer" to={toSecretDetails?.(secret)}>
-            <Table.Cell className="w-[361px] content-center truncate">
-              <div className="flex items-center gap-2.5">
-                <IconV2 name="ssh-key" size="md" />
-                <Title title={secret.identifier} />
-              </div>
+          <Table.Row key={secret.identifier} to={toSecretDetails?.(secret)}>
+            <Table.Cell className="w-full max-w-[470px]">
+              <Text truncate>{secret.identifier}</Text>
             </Table.Cell>
-            <Table.Cell className="w-[350px] content-center truncate">
-              {secret.spec?.secretManagerIdentifier}
+            <Table.Cell className="min-w-[150px]">
+              <Text truncate>{secret.spec?.secretManagerIdentifier}</Text>
             </Table.Cell>
-            <Table.Cell className="content-center">
-              {secret?.updatedAt ? <TimeAgoCard timestamp={secret.updatedAt} /> : null}
+            <Table.Cell className="min-w-[150px]">
+              {secret?.updatedAt ? (
+                <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+              ) : null}
             </Table.Cell>
-            <Table.Cell className="content-center text-right">
+            <Table.Cell className="min-w-16 text-center">
               <MoreActionsTooltip
                 isInTable
                 actions={[

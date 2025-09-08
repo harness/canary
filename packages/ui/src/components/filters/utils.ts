@@ -48,3 +48,18 @@ export const getFilterLabelValue = <
       return ''
   }
 }
+
+export const getMultiSelectParser = (options: CheckboxOptions[]) => {
+  return {
+    parse: (value: string) => {
+      // Since "," can be encoded while appending to URL
+      const valueArr = decodeURIComponent(value)
+        .split(',')
+        .filter(Boolean)
+        .map(val => options.find(option => option.value === val))
+        .filter((option): option is CheckboxOptions => option !== undefined)
+      return valueArr
+    },
+    serialize: (value?: CheckboxOptions[]) => value?.reduce((acc, val) => (acc += `${val.value},`), '') || ''
+  }
+}

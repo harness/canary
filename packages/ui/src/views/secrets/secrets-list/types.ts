@@ -1,3 +1,6 @@
+import { SecretListFilters } from '@components/filters'
+import { ConnectorListItem } from '@views/connectors/connectors-list'
+
 interface RoutingProps {
   toSecretDetails: (secret: SecretListItem) => string
 }
@@ -29,6 +32,9 @@ export interface SecretListProps extends Partial<RoutingProps> {
 export interface SecretListPageProps extends SecretListProps {
   searchQuery?: string
   setSearchQuery: (query?: string) => void
+  setSecretManagerSearchQuery: (query?: string) => void
+  secretManagerIdentifiers: Pick<ConnectorListItem, 'identifier' | 'name'>[]
+  isSecretManagerIdentifierLoading: boolean
   isError?: boolean
   errorMessage?: string
   onCreate: () => void
@@ -36,4 +42,6 @@ export interface SecretListPageProps extends SecretListProps {
   totalItems: number
   pageSize: number
   goToPage: (page: number) => void
+  onFilterChange?: (filters: SecretListFilters) => void
+  onSortChange?: (sort: string) => void
 }

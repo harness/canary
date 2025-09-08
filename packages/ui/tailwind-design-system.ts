@@ -633,6 +633,13 @@ export default {
     plugin(({ addUtilities }) => {
       addUtilities(typographyStyles)
     }),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.font-mono': {
+          font: 'var(--cn-body-code)'
+        }
+      })
+    }),
     plugin(({ addComponents }) => {
       addComponents(ComponentStyles)
     }),

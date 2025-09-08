@@ -4,6 +4,7 @@ import { Button, IconV2, Layout, ListActions, Pagination, SearchInput, Text } fr
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
+import { createPaginationLinks } from '@utils/utils'
 
 import { RepoTagsList } from './components/repo-tags-list'
 
@@ -37,13 +38,10 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
-  const getPrevPageLink = useCallback(() => {
-    return `?page=${xPrevPage}`
-  }, [xPrevPage])
-
-  const getNextPageLink = useCallback(() => {
-    return `?page=${xNextPage}`
-  }, [xNextPage])
+  const { getPrevPageLink, getNextPageLink } = useMemo(
+    () => createPaginationLinks(xPrevPage, xNextPage, searchQuery),
+    [xPrevPage, xNextPage, searchQuery]
+  )
 
   const canShowPagination = useMemo(() => {
     return !isLoading && !!tagsList.length

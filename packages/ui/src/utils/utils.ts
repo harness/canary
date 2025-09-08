@@ -54,3 +54,25 @@ export const getErrorMessage = (error: Error | string | null, defaultMessage: st
     (get(error, 'data.error', get(error, 'data.message', get(error, 'message', error))) as string) || defaultMessage
   )
 }
+
+/**
+ * Build pagination link with page number and optional search query
+ * @param pageNumber - The page number to navigate to
+ * @param searchQuery - Optional search query to preserve in URL
+ * @returns Query string for pagination link
+ */
+export function buildPaginationLink(pageNumber: number, searchQuery?: string | null): string {
+  const params = new URLSearchParams()
+  params.set('page', pageNumber.toString())
+  if (searchQuery) {
+    params.set('query', searchQuery)
+  }
+  return `?${params.toString()}`
+}
+
+export function createPaginationLinks(xPrevPage: number, xNextPage: number, searchQuery?: string | null) {
+  const getPrevPageLink = () => buildPaginationLink(xPrevPage, searchQuery)
+  const getNextPageLink = () => buildPaginationLink(xNextPage, searchQuery)
+
+  return { getPrevPageLink, getNextPageLink }
+}

@@ -2,6 +2,7 @@ import { FC, useCallback, useMemo } from 'react'
 
 import { Button, IconV2, Layout, ListActions, NoData, Pagination, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { createPaginationLinks } from '@/utils'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -40,13 +41,10 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   const noBranches = !branchList?.length && !isLoading && !isDirtyList
   const noSearchResults = !branchList?.length && !isLoading && isDirtyList
 
-  const getPrevPageLink = useCallback(() => {
-    return `?page=${xPrevPage}`
-  }, [xPrevPage])
-
-  const getNextPageLink = useCallback(() => {
-    return `?page=${xNextPage}`
-  }, [xNextPage])
+  const { getPrevPageLink, getNextPageLink } = useMemo(
+    () => createPaginationLinks(xPrevPage, xNextPage, searchQuery),
+    [xPrevPage, xNextPage, searchQuery]
+  )
 
   const canShowPagination = useMemo(() => {
     return !isLoading && !!branchList.length

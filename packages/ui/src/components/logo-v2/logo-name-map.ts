@@ -57,10 +57,12 @@ import Sfx from './logos/sfx.svg'
 import Slack from './logos/slack.svg'
 import SonarqubeServer from './logos/sonarqube-server.svg'
 import Splunk from './logos/splunk.svg'
+import Spot from './logos/spot.svg'
 import SumoLogic from './logos/sumo-logic.svg'
 import Tanzu from './logos/tanzu.svg'
 import Terraform from './logos/terraform.svg'
 import Terragrunt from './logos/terragrunt.svg'
+import VueJs from './logos/vue-js.svg'
 import Zoom from './logos/zoom.svg'
 
 export const LogoNameMapV2 = {
@@ -118,9 +120,11 @@ export const LogoNameMapV2 = {
   slack: Slack,
   'sonarqube-server': SonarqubeServer,
   splunk: Splunk,
+  spot: Spot,
   'sumo-logic': SumoLogic,
   tanzu: Tanzu,
   terraform: Terraform,
   terragrunt: Terragrunt,
+  'vue-js': VueJs,
   zoom: Zoom
 }

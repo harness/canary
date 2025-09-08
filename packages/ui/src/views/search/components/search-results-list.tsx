@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Accordion, Alert, Layout, Link, Skeleton, Spacer, Tag, Text } from '@/components'
+import { Accordion, Alert, Button, Layout, Link, Skeleton, Spacer, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -147,31 +147,23 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                   </div>
                 ))}
               {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
-                <Text
-                  variant="caption-single-line-normal"
-                  className="mt-2 cursor-pointer bg-cn-background-0 py-1.5 pl-4 hover:underline"
-                  tabIndex={0}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                  }}
-                  onClick={e => {
-                    e.stopPropagation()
-                    e.preventDefault()
-
-                    const key = `${item.repo_path}/${item.file_name}`
-                    setExpandedItems(prev => ({
-                      ...prev,
-                      [key]: !prev[key]
-                    }))
-                  }}
-                >
-                  {expandedItems[`${item.repo_path}/${item.file_name}`]
-                    ? t('views:search.showLess', '- Show Less')
-                    : t(
-                        'views:search.showMore',
-                        `+ Show ${item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW} more matches`
-                      )}
-                </Text>
+                <div className="bg-cn-background-0 mt-2 py-1.5 pl-4">
+                  <Button
+                    variant="link"
+                    className="text-cn-2 font-caption-single-line-normal p-cn-4xs h-fit"
+                    onClick={() => {
+                      const key = `${item.repo_path}/${item.file_name}`
+                      setExpandedItems(prev => ({ ...prev, [key]: !prev[key] }))
+                    }}
+                  >
+                    {expandedItems[`${item.repo_path}/${item.file_name}`]
+                      ? t('views:search.showLess', '- Show Less')
+                      : t(
+                          'views:search.showMore',
+                          `+ Show ${item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW} more matches`
+                        )}
+                  </Button>
+                </div>
               )}
             </Layout.Vertical>
           )}

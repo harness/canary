@@ -91,11 +91,11 @@ const ConnectorsListPageContent = (): JSX.Element => {
 
       <ConnectorTestConnectionDialog
         title="Test Connection"
-        apiUrl="https://docker.harness.io"
+        connectorType="DockerRegistry"
+        urlData={{ key: 'Docker Registry Url', url: 'https://connector.test.harness.io' }}
         status="error"
         percentageFilled={50}
         errorMessage="Error Encountered (Update the username & password. Check if the provided credentials are correct. Invalid Docker Registry credentials)."
-        description="Validating connector authentication and permissions"
         isOpen={testConnectionOpen}
         onClose={() => setTestConnectionOpen(false)}
         viewDocClick={() => {

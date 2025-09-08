@@ -385,8 +385,10 @@
   "search": "Rechercher",
   "connectors": {
     "connector": "Connecteur",
-    "viewConnectorDetails": "Voir les détails du connecteur",
     "status": "Status",
+    "successfullConnection": "",
+    "validatingConnection": "",
+    "failedConnection": "",
     "viewDocumentation": "Voir la documentation",
     "activity": "Activité",
     "time": "Heure",
@@ -425,6 +427,7 @@
         "label": "Description"
       }
     },
+    "viewConnectorDetails": "Voir les détails du connecteur",
     "connectivityStatus": "État de la connexion",
     "created": "Créé"
   },

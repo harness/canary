@@ -1,31 +1,31 @@
-import { ReactNode } from 'react'
-
+import { Alert, Button, Dialog, IconV2, Layout, MarkdownViewer, Progress, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { Button } from '@components/button'
-import { Dialog } from '@components/dialog'
-import { IconV2 } from '@components/icon-v2'
-import { Layout } from '@components/layout'
-import { MarkdownViewer } from '@components/markdown-viewer'
-import { Progress } from '@components/progress'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
+import { isEmpty } from 'lodash-es'
 
-import { ConnectorEntity } from '../types'
+import { ConnectorDisplayNameMap } from '../connectors-list/utils'
+import { ConnectorConfigType, ConnectorEntity } from '../types'
 
-export type ConnectorIconType = 'running' | 'success' | 'error'
+export type ConnectorStatusType = 'running' | 'success' | 'error'
 export interface ErrorDetail {
   code?: number
   message?: string
   reason?: string
 }
 
+export interface ConnectorURLDetails {
+  key: string
+  url: string
+}
 interface ConnectorTestConnectionDialogProps {
   isOpen: boolean
   onClose: () => void
-  status?: ConnectorIconType
-  apiUrl?: string
+  connectorType: ConnectorConfigType
+  status: ConnectorStatusType
+  urlData?: ConnectorURLDetails
+  inProgressMessage?: string
   title?: string
-  description?: ReactNode
   errorMessage?: string
   className?: string
   connector?: ConnectorEntity
@@ -37,10 +37,11 @@ interface ConnectorTestConnectionDialogProps {
 export const ConnectorTestConnectionDialog = ({
   isOpen,
   onClose,
+  connectorType,
   status,
-  apiUrl,
+  urlData,
+  inProgressMessage,
   title = 'Test Connection',
-  description = 'Validating connector authentication and permissions',
   percentageFilled = 50,
   errorMessage,
   errorData,
@@ -68,75 +69,87 @@ export const ConnectorTestConnectionDialog = ({
       </div>
     )
   }
+
+  const connectorDisplayName = connectorType ? ConnectorDisplayNameMap.get(connectorType) : ''
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={open => !open && onClose()}>
-      <Dialog.Content>
+      <Dialog.Content size="lg">
         <Dialog.Header>
           <Dialog.Title>{title}</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
-          <div className="text-cn-3 text-sm font-normal">
-            <Layout.Horizontal gap="xs" align="center">
-              <span className="items-center">{t('views:connectors.connector', 'Connector') + ':'}</span>
-              <span className="text-cn-1">{apiUrl}</span>
-
-              {status === 'error' && (
-                <Button type="button" variant="outline" className="ml-auto">
-                  {t('views:connectors.viewConnectorDetails', 'View Connector Details')}
-                </Button>
-              )}
-            </Layout.Horizontal>
+          <Layout.Vertical>
+            {!isEmpty(urlData?.url) ? (
+              <Layout.Horizontal gap="xs" align="center">
+                <span className="items-center">
+                  {urlData?.key ?? t('views:connectors.connector', 'Connector')}&#58;{' '}
+                </span>
+                <span className="text-cn-1">{urlData?.url}</span>
+              </Layout.Horizontal>
+            ) : null}
             <Layout.Horizontal gap="xs">
               <span>{t('views:connectors.status', 'Status') + ':'}</span>
-
-              <div className="text-cn-1">
-                <ConnectivityStatus status={status as ExecutionState} />
-              </div>
+              <ConnectivityStatus status={status as ExecutionState} />
             </Layout.Horizontal>
-          </div>
-
+          </Layout.Vertical>
           <div>
-            <Layout.Horizontal gap="xs" align="center" className="text-center">
-              {(status === 'success' || status === 'error') && (
-                <IconV2
-                  className={status === 'success' ? 'text-cn-success' : 'text-cn-danger'}
-                  name={status === 'success' ? 'check-circle-solid' : 'warning-triangle-solid'}
-                  size="xs"
-                />
-              )}
-              <div className="letter-spacing-1 text-cn-1 text-base font-medium">{description}</div>
-            </Layout.Horizontal>
+            {status === 'success' && (
+              <Alert.Root theme="success">
+                <Alert.Title>
+                  {t(
+                    'views:connectors.successfullConnection',
+                    `${connectorDisplayName} is connected and ready to use`,
+                    {
+                      connector: connectorDisplayName
+                    }
+                  )}
+                </Alert.Title>
+              </Alert.Root>
+            )}
 
             {status === 'running' && (
-              <div className="mb-1 mt-4">
+              <Layout.Vertical>
+                <Text className="letter-spacing-1 text-cn-1 text-base font-medium">
+                  {inProgressMessage ??
+                    t(
+                      'views:connectors.validatingConnection',
+                      `Validating ${connectorDisplayName} authentication and permissions`,
+                      {
+                        connector: connectorDisplayName
+                      }
+                    )}
+                </Text>
                 <Progress value={percentageFilled / 100} state="processing" size="sm" hideIcon hidePercentage />
-              </div>
+              </Layout.Vertical>
             )}
             {status === 'error' && (
-              <>
-                {errorMessage && (
-                  <div className="mb-1 mt-2">
-                    <div className="gap-x-0 space-x-2">
-                      <span className="text-cn-3 text-sm font-normal">
-                        {errorMessage}
-                        {viewDocClick && (
-                          <span className="text-cn-brand ml-1">
-                            <Button
-                              variant="link"
-                              onClick={viewDocClick}
-                              className={cn('h-auto', 'p-0', 'font-inherit', 'text-cn-brand')}
-                            >
-                              {t('views:connectors.viewDocumentation', 'View Documentation')}
-                              <IconV2 name="open-new-window" className="text-cn-brand ml-1" size="2xs" />
-                            </Button>
-                          </span>
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                )}
+              <Layout.Vertical>
+                <Alert.Root theme="danger">
+                  <Alert.Title>
+                    {t('views:connectors.failedConnection', `${connectorDisplayName} connection failed`, {
+                      connector: connectorDisplayName
+                    })}
+                  </Alert.Title>
+                  {errorMessage ? (
+                    <Alert.Description>
+                      {errorMessage}
+                      {viewDocClick && (
+                        <Button
+                          variant="link"
+                          onClick={viewDocClick}
+                          className="font-inherit text-cn-brand ml-1 h-auto p-0"
+                        >
+                          {t('views:connectors.viewDocumentation', 'View Documentation')}
+                          <IconV2 name="open-new-window" className="text-cn-brand ml-1" size="2xs" />
+                        </Button>
+                      )}
+                    </Alert.Description>
+                  ) : null}
+                </Alert.Root>
+
                 {errorData && (
-                  <div className="mb-1 mt-2">
+                  <Layout.Vertical>
                     <MarkdownViewer
                       source={`
 \`\`\`text
@@ -145,9 +158,9 @@ ${JSON.stringify(errorData, null, 2)}
 `}
                       showLineNumbers
                     />
-                  </div>
+                  </Layout.Vertical>
                 )}
-              </>
+              </Layout.Vertical>
             )}
           </div>
         </Dialog.Body>

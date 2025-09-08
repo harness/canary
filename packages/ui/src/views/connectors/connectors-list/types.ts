@@ -1,6 +1,5 @@
 import { CheckboxOptions } from '@components/filters/types'
 import { MultiSelectOption } from '@components/multi-select'
-import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorConfigType } from '../types'
 
@@ -8,13 +7,15 @@ interface RoutingProps {
   toConnectorDetails: (connector: ConnectorListItem) => string
 }
 
+export type ConnectorStatus = 'FAILURE' | 'PARTIAL' | 'PENDING' | 'SUCCESS' | 'UNKNOWN'
+
 export interface ConnectorListItem {
   identifier: string
-  type?: ConnectorConfigType
+  type: ConnectorConfigType
   name?: string
   description?: string
   status?: {
-    status: ExecutionState
+    status: ConnectorStatus
     errorSummary?: string
     errors?: {
       reason: string

@@ -394,8 +394,10 @@
   "search": "Search",
   "connectors": {
     "connector": "Connector",
-    "viewConnectorDetails": "View Connector Details",
     "status": "Status",
+    "successfullConnection": "{{connector}} is connected and ready to use",
+    "validatingConnection": "Validating {{connector}} authentication and permissions",
+    "failedConnection": "{{connector}} connection failed",
     "viewDocumentation": "View Documentation",
     "activity": "Activity",
     "time": "Time",
@@ -434,6 +436,7 @@
         "label": "Description"
       }
     },
+    "viewConnectorDetails": "View Connector Details",
     "connectivityStatus": "Connectivity status",
     "created": "Created"
   },

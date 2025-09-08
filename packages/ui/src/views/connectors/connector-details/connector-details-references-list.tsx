@@ -1,4 +1,4 @@
-import { IconV2, Layout, Link, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { Layout, Link, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { ConnectorReferenceListProps } from './types'
@@ -46,7 +46,8 @@ const ConnectorDetailsReferenceList = ({
             </Table.Cell>
             <Table.Cell>
               <Layout.Horizontal>
-                <IconV2 name="connectors" size="sm" />
+                {/* TODO: Add icon when approved by product */}
+                {/* <IconV2 name="connectors" size="sm" /> */}
                 <Text variant="body-normal" className="text-cn-2">
                   {reference.type}
                 </Text>

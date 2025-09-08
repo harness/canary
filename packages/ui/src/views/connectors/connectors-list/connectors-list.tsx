@@ -17,7 +17,7 @@ import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
-import { ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
+import { ConnectorStatusType, ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
 import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorDisplayNameMap, ConnectorTypeToLogoNameMap } from './utils'
 
@@ -25,6 +25,20 @@ const isStatusSuccess = (status?: string) => status?.toLowerCase() === Execution
 
 const CELL_MIN_WIDTH = 'min-w-[136px]'
 const CELL_MIN_WIDTH_ICON = 'min-w-16'
+
+const getConnectorTestConnectionStatus = (status?: string): ConnectorStatusType => {
+  switch (status) {
+    case 'SUCCESS':
+      return 'success'
+    case 'FAILURE':
+    case 'PARTIAL':
+      return 'error'
+    case 'PENDING':
+    case 'UNKNOWN':
+    default:
+      return 'running'
+  }
+}
 
 const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetailUrl: string }): JSX.Element => {
   const { t } = useTranslation()
@@ -58,8 +72,8 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
 
       <ConnectorTestConnectionDialog
         title={item?.name}
-        apiUrl={item?.spec?.url}
-        status="error"
+        connectorType={item?.type}
+        status={getConnectorTestConnectionStatus(item?.status?.status)}
         errorMessage={item?.status?.errorSummary}
         isOpen={errorConnectionOpen}
         onClose={() => setErrorConnectionOpen(false)}

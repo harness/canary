@@ -120,6 +120,17 @@
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
+    "soft": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.300}",
+        "fontSize": "{fontSize.2}",
+        "lineHeight": "{lineHeight.2.snug}",
+        "letterSpacing": "{tracking.tight}",
+        "paragraphSpacing": "0.375rem"
+      }
+    },
     "single-line": {
       "code": {
         "$type": "typography",
@@ -153,6 +164,16 @@
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
+      },
+      "soft": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontSize": "{fontSize.2}",
+          "lineHeight": "{lineHeight.2.none}",
+          "letterSpacing": "{tracking.tight}"
+        }
       }
     }
   },
@@ -168,18 +189,6 @@
         "paragraphSpacing": "0.375rem"
       },
       "$description": "Supporting typography for contextual information and annotations. Creates clear visual separation from body content through size contrast while maintaining readability for explanatory text.\n\nCommon uses: Image descriptions, Chart legends and labels, Source attributions, Supplementary clarifications, Figure captions."
-    },
-    "soft": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.300}",
-        "fontSize": "{fontSize.1}",
-        "lineHeight": "{lineHeight.1.snug}",
-        "letterSpacing": "{tracking.normal}",
-        "paragraphSpacing": "0.375rem"
-      },
-      "$description": "Reduced-emphasis supporting text for secondary information. Creates visual hierarchy through weight reduction while maintaining size consistency with normal captions. Visually recedes while remaining accessible.\n\nCommon uses: Timestamps, Metadata displays, Copyright information, Secondary attributions, Optional information."
     },
     "strong": {
       "$type": "typography",
@@ -202,6 +211,18 @@
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
       }
+    },
+    "soft": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.300}",
+        "fontSize": "{fontSize.1}",
+        "lineHeight": "{lineHeight.1.snug}",
+        "letterSpacing": "{tracking.normal}",
+        "paragraphSpacing": "0.375rem"
+      },
+      "$description": "Reduced-emphasis supporting text for secondary information. Creates visual hierarchy through weight reduction while maintaining size consistency with normal captions. Visually recedes while remaining accessible.\n\nCommon uses: Timestamps, Metadata displays, Copyright information, Secondary attributions, Optional information."
     },
     "single-line": {
       "normal": {
@@ -226,17 +247,6 @@
           "textCase": "{textCase.uppercase}"
         }
       },
-      "soft": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "{fontSize.1}",
-          "lineHeight": "{lineHeight.1.none}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
-      },
       "strong": {
         "$type": "typography",
         "$value": {
@@ -256,6 +266,17 @@
           "lineHeight": "{lineHeight.half.none}",
           "letterSpacing": "{tracking.normal}"
         }
+      },
+      "soft": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontSize": "{fontSize.1}",
+          "lineHeight": "{lineHeight.1.none}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
       }
     }
   },

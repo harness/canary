@@ -21,6 +21,9 @@ export default {
     '&-body-strong': {
       font: 'var(--cn-body-strong)'
     },
+    '&-body-soft': {
+      font: 'var(--cn-body-soft)'
+    },
     '&-body-code': {
       font: 'var(--cn-body-code)'
     },
@@ -44,6 +47,9 @@ export default {
     },
     '&-body-single-line-normal': {
       font: 'var(--cn-body-single-line-normal)'
+    },
+    '&-body-single-line-soft': {
+      font: 'var(--cn-body-single-line-soft)'
     },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)'

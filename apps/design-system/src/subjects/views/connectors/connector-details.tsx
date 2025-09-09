@@ -114,7 +114,6 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
         </Tabs.Content>
         <Tabs.Content className="mt-9" value={ConnectorDetailsTabsKeys.REFERENCES}>
           <ConnectorDetailsReference
-            toScope={() => ''}
             connectorReferences={mockConnectorRefList}
             searchQuery={''}
             apiConnectorRefError={undefined}

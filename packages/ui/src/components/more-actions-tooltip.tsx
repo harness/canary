@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { useRouterContext } from '@/context'
-import { Button } from '@components/button'
+import { Button, ButtonVariants } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
@@ -23,6 +23,7 @@ export interface MoreActionsTooltipProps {
   sideOffset?: number
   alignOffset?: number
   className?: string
+  buttonVariant?: ButtonVariants
 }
 
 /**
@@ -33,7 +34,8 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   iconName = 'more-vert',
   sideOffset = 2,
   alignOffset = 0,
-  className
+  className,
+  buttonVariant = 'ghost'
 }) => {
   const { Link } = useRouterContext()
   if (!actions.length) return <></>
@@ -43,7 +45,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button
           className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
-          variant="ghost"
+          variant={buttonVariant}
           iconOnly
           size="md"
         >

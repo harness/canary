@@ -17,8 +17,7 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
   pageSize,
   goToPage,
   isLoading,
-  connectorReferences,
-  toScope
+  connectorReferences
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
@@ -73,11 +72,7 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
         </ListActions.Left>
       </ListActions.Root>
       <Spacer size={4} />
-      <ConnectorDetailsReferenceList
-        connectorReferences={connectorReferences}
-        isLoading={isLoading}
-        toScope={toScope}
-      />
+      <ConnectorDetailsReferenceList connectorReferences={connectorReferences} isLoading={isLoading} />
       <Spacer size={8} />
       <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
     </div>

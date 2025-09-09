@@ -403,20 +403,23 @@
     "time": "Time",
     "connectorName": "Connector name",
     "connectorId": "Connector ID",
+    "backToConnectors": "Back to connectors",
+    "created": "Created",
+    "updated": "Updated",
+    "connectionStatus": "Connection status",
     "success": "Success",
     "failure": "Failed",
+    "testConnection": "Test connection",
     "editConnector": "Edit Connector",
     "deleteConnector": "Delete Connector",
     "configuration": "Configuration",
     "references": "References",
-    "activityHistory": "Activity history",
     "createNew": "Create Connector",
     "errorEncountered": "Error Encountered",
     "viewDetails": "View Details",
     "id": "Connector ID",
     "type": "Type",
     "createdAt": "Created",
-    "updated": "Last updated",
     "edit": "Edit",
     "delete": "Delete",
     "filterOptions": {
@@ -436,9 +439,8 @@
         "label": "Description"
       }
     },
-    "viewConnectorDetails": "View Connector Details",
-    "connectivityStatus": "Connectivity status",
-    "created": "Created"
+    "activityHistory": "Activity history",
+    "viewConnectorDetails": "View Connector Details"
   },
   "noData": {
     "noActivities": "No activities yet",

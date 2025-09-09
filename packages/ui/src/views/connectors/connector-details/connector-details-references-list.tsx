@@ -1,12 +1,13 @@
-import { Layout, Link, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { Layout, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { ConnectorReferenceListProps } from './types'
 
+const CELL_MIN_WIDTH = 'min-w-[140px]'
+
 const ConnectorDetailsReferenceList = ({
   connectorReferences,
-  isLoading,
-  toScope
+  isLoading
 }: ConnectorReferenceListProps): JSX.Element => {
   const { t } = useTranslation()
   if (isLoading) {
@@ -30,21 +31,21 @@ const ConnectorDetailsReferenceList = ({
     <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-2/5">{t('views:entityReference.entity', 'Entity')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:entityReference.type', 'Type')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:entityReference.scope', 'Scope')}</Table.Head>
-          <Table.Head className="w-1/5">{t('views:entityReference.created', 'Created')}</Table.Head>
+          <Table.Head className="w-full max-w-[734px]">{t('views:entityReference.entity', 'Entity')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:entityReference.type', 'Type')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:entityReference.scope', 'Scope')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:entityReference.created', 'Created')}</Table.Head>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {connectorReferences.map(reference => (
           <Table.Row key={reference.name} className="cursor-pointer">
-            <Table.Cell className="w-2/4 content-center truncate">
+            <Table.Cell className="w-full max-w-[734px] content-center truncate">
               <Text variant="body-normal" className="text-cn-2" truncate>
                 {reference.name}
               </Text>
             </Table.Cell>
-            <Table.Cell>
+            <Table.Cell className={CELL_MIN_WIDTH}>
               <Layout.Horizontal>
                 {/* TODO: Add icon when approved by product */}
                 {/* <IconV2 name="connectors" size="sm" /> */}
@@ -53,10 +54,8 @@ const ConnectorDetailsReferenceList = ({
                 </Text>
               </Layout.Horizontal>
             </Table.Cell>
-            <Table.Cell className="content-center">
-              <Link to={toScope(reference.scope)}>{reference.scope}</Link>
-            </Table.Cell>
-            <Table.Cell className="content-center">
+            <Table.Cell className={CELL_MIN_WIDTH}>{reference.scope}</Table.Cell>
+            <Table.Cell className={CELL_MIN_WIDTH}>
               {reference?.createdAt ? (
                 <TimeAgoCard
                   timestamp={reference.createdAt}

@@ -161,11 +161,9 @@ export const ConnectorEntityForm: FC<ConnectorEntityFormProps> = ({
     >
       {rootForm => (
         <Content>
-          {isCreate && (
-            <Header>
-              <Title>Connect to {connector.name}</Title>
-            </Header>
-          )}
+          <Header>
+            <Title>Connect to {connector.name}</Title>
+          </Header>
           <Body>
             <EntityFormLayout.Form>
               <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />

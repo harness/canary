@@ -29,7 +29,7 @@ const ConnectorDetailsLayout = ({
             toConnectorsList={toConnectorsList}
           />
           <Tabs.Root
-            className="mb-7 mt-9 px-8"
+            className="mb-10 mt-6 px-8"
             defaultValue={activeTab ?? ConnectorDetailsTabsKeys.CONFIGURATION}
             value={activeTab}
             onValueChange={handleTabChange}
@@ -41,9 +41,9 @@ const ConnectorDetailsLayout = ({
               <Tabs.Trigger value={ConnectorDetailsTabsKeys.REFERENCES}>
                 {t('views:connectors.references', 'References')}
               </Tabs.Trigger>
-              <Tabs.Trigger value={ConnectorDetailsTabsKeys.ACTIVITY}>
+              {/* <Tabs.Trigger value={ConnectorDetailsTabsKeys.ACTIVITY}>
                 {t('views:connectors.activityHistory', 'Activity history')}
-              </Tabs.Trigger>
+              </Tabs.Trigger> */}
             </Tabs.List>
             {children}
           </Tabs.Root>

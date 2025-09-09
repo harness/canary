@@ -57,7 +57,6 @@ export interface ConnectorActivityItem {
 export interface ConnectorReferenceListProps {
   connectorReferences: ConnectorReferenceItem[]
   isLoading: boolean
-  toScope: (scope: string) => string
 }
 
 export interface ConnectorDetailsReferenceListProps {}
@@ -104,7 +103,6 @@ export interface ConnectorDetailsReferenceProps {
   goToPage: (page: number) => void
   isLoading: boolean
   connectorReferences: ConnectorReferenceItem[]
-  toScope: (scope: string) => string
   toConnectorsList?: () => string
 }
 

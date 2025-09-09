@@ -29,7 +29,7 @@ const ConnectorDetailsLayout = ({
             toConnectorsList={toConnectorsList}
           />
           <Tabs.Root
-            className="mb-10 mt-6 px-8"
+            className="mt-6 px-8"
             defaultValue={activeTab ?? ConnectorDetailsTabsKeys.CONFIGURATION}
             value={activeTab}
             onValueChange={handleTabChange}

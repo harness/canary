@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
 import { useRouterContext, useTranslation } from '@/context'
+import { SandboxLayout } from '@/views'
 import { IconV2, ListActions, NoData, Pagination, SearchBox } from '@components/index'
-import { Spacer } from '@components/spacer'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 
 import ConnectorDetailsReferenceList from './connector-details-references-list'
@@ -58,9 +58,8 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
   }
 
   return (
-    <div>
-      <Spacer size={6} />
-      <ListActions.Root>
+    <SandboxLayout.Content className="h-full px-0">
+      <ListActions.Root className="pb-4">
         <ListActions.Left>
           <SearchBox.Root
             width="full"
@@ -71,11 +70,9 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
           />
         </ListActions.Left>
       </ListActions.Root>
-      <Spacer size={4} />
       <ConnectorDetailsReferenceList connectorReferences={connectorReferences} isLoading={isLoading} />
-      <Spacer size={8} />
       <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
-    </div>
+    </SandboxLayout.Content>
   )
 }
 

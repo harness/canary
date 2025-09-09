@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Layout } from '@components/index'
+import { SandboxLayout } from '@/views'
 
 import { ConnectorDetailsEntityFormView } from './connector-details-entity-form-view'
 import { ConnectorDetailsConfigurationProps } from './types'
@@ -12,14 +12,14 @@ const ConnectorDetailsConfiguration: FC<ConnectorDetailsConfigurationProps> = ({
   apiError
 }) => {
   return (
-    <Layout.Vertical gap="2xl">
+    <SandboxLayout.Content className="h-full px-0">
       <ConnectorDetailsEntityFormView
         connector={connectorDetails}
         inputComponentFactory={inputComponentFactory}
         getConnectorDefinition={getConnectorDefinition}
         apiError={apiError}
       />
-    </Layout.Vertical>
+    </SandboxLayout.Content>
   )
 }
 

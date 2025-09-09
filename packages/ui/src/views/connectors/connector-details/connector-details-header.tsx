@@ -36,7 +36,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {connectorDetails.name}
         </Text>
       </Layout.Horizontal>
-      <Layout.Horizontal className="text-2 mt-6 w-full leading-none" justify="between" gap="lg">
+      <Layout.Horizontal className="text-2 mt-4 w-full leading-none" justify="between" gap="lg">
         <Layout.Horizontal justify="between" gap="3xl">
           <Layout.Vertical gap="xs">
             <Text className="text-cn-3">{t('views:connectors.created', 'Created')}</Text>

@@ -10,6 +10,7 @@ const ConnectorDetailsLayout = ({
   onTest,
   onDelete,
   onEdit,
+  onFavoriteToggle,
   children,
   toConnectorsList,
   activeTab,
@@ -26,6 +27,7 @@ const ConnectorDetailsLayout = ({
             onTest={onTest}
             onDelete={onDelete}
             onEdit={onEdit}
+            onFavoriteToggle={onFavoriteToggle}
             toConnectorsList={toConnectorsList}
           />
           <Tabs.Root

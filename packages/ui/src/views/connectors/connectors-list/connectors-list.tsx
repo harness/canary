@@ -162,7 +162,7 @@ export function ConnectorsList({
               <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
                 <Favorite
                   isFavorite={isFavorite}
-                  onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
+                  onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, favorite)}
                 />
               </Table.Cell>
               <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>

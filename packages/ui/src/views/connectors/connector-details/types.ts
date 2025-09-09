@@ -64,6 +64,7 @@ export interface ConnectorDetailsReferenceListProps {}
 export interface ConnectorDetailsItem {
   identifier: string
   type: ConnectorConfigType
+  isFavorite?: boolean
   name?: string
   description?: string
   tags?: Record<string, string>
@@ -87,6 +88,7 @@ export interface ConnectorDetailsLayoutProps {
   onTest: (connectorId: string) => void
   onDelete: () => void
   onEdit: () => void
+  onFavoriteToggle: (isFavorite: boolean) => void
   children: React.ReactNode
   toConnectorsList?: () => string
   activeTab: ConnectorDetailsTabsKeys
@@ -112,6 +114,7 @@ export interface ConnectorDetailsHeaderProps {
   onDelete: () => void
   onEdit: () => void
   toConnectorsList?: () => string
+  onFavoriteToggle: (isFavorite: boolean) => void
 }
 
 export enum ConnectorDetailsTabsKeys {

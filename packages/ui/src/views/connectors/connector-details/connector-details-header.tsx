@@ -1,6 +1,16 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Layout, Link, MoreActionsTooltip, StatusBadge, Text, TimeAgoCard } from '@/components'
+import {
+  Button,
+  Favorite,
+  IconV2,
+  Layout,
+  Link,
+  MoreActionsTooltip,
+  StatusBadge,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useTranslation } from '@/context'
 
 import { ConnectorsLogo } from '../components/connectors-logo'
@@ -17,7 +27,8 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
   onTest,
   onDelete,
   onEdit,
-  toConnectorsList
+  toConnectorsList,
+  onFavoriteToggle
 }) => {
   const { createdAt, lastModifiedAt, status, type } = connectorDetails
   const { t } = useTranslation()
@@ -29,11 +40,12 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
           {t('views:connectors.backToConnectors', 'Back to connectors')}
         </Link>
       ) : null}
-      <Layout.Horizontal gap="xs" align="center">
-        <ConnectorsLogo type={type} iconSize="xl" logoSize="lg" />
-        <Text as="h1" variant="heading-section">
+      <Layout.Horizontal gap="none" align="center">
+        <ConnectorsLogo type={type} iconSize="xl" logoSize="md" />
+        <Text as="h1" variant="heading-section" className="ml-cn-xs mr-cn-3xs">
           {connectorDetails.name}
         </Text>
+        <Favorite isFavorite={connectorDetails.isFavorite} onFavoriteToggle={onFavoriteToggle} />
       </Layout.Horizontal>
       <Layout.Horizontal className="text-2 mt-4 w-full leading-none" justify="between" gap="lg">
         <Layout.Horizontal justify="between" gap="3xl">

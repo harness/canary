@@ -1,6 +1,5 @@
-import { KeyboardEvent } from 'react'
-
-import { ButtonGroup, ButtonGroupButtonProps, ButtonProps, Link, Text, useCopyButton } from '@/components'
+import { ButtonGroup, ButtonGroupButtonProps, ButtonProps, Text, useCopyButton } from '@/components'
+import { useRouterContext } from '@/context'
 
 interface CommitCopyActionsProps {
   sha: string
@@ -19,13 +18,15 @@ export const CommitCopyActions = ({
 }: CommitCopyActionsProps) => {
   const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs', color: 'surfaceGray' })
 
-  const handleNavigation = (ev: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent) => {
-    ev.stopPropagation()
-    toCommitDetails?.({ sha: sha || '' })
-  }
+  const { navigate } = useRouterContext()
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') handleNavigation(e)
+  const handleNavigation = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    const finalNavigationString =
+      toCommitDetails?.({ sha: sha || '' }) ||
+      toPullRequestChange?.({ pullRequestId: pullRequestId || 0, commitSHA: sha || '' }) ||
+      ''
+    ev.stopPropagation()
+    navigate(finalNavigationString)
   }
 
   return (
@@ -34,22 +35,12 @@ export const CommitCopyActions = ({
       buttonsProps={[
         {
           children: (
-            <Link
-              to={
-                toCommitDetails?.({ sha: sha || '' }) ||
-                toPullRequestChange?.({ pullRequestId: pullRequestId || 0, commitSHA: sha || '' }) ||
-                ''
-              }
-              variant="secondary"
-              noHoverUnderline
-            >
-              <Text className="font-body-code" color="inherit">
-                {sha.substring(0, 6)}
-              </Text>
-            </Link>
+            <Text className="font-body-code" color="inherit">
+              {sha.substring(0, 6)}
+            </Text>
           ),
-          tabIndex: -1,
-          onKeyDown: handleKeyDown,
+
+          onClick: handleNavigation,
           className: 'font-body-code'
         },
         {

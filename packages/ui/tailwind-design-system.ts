@@ -323,46 +323,46 @@ export default {
          * ❌ .text-cn-green-surface + .bg-cn-green-surface + .border-cn-red-surface
          */
         'cn-green': {
-          surface: 'var(--cn-green-surface-border)'
+          surface: 'var(--cn-set-green-surface-border)'
         },
         'cn-gray': {
-          surface: 'var(--cn-gray-surface-border)'
+          surface: 'var(--cn-set-gray-surface-border)'
         },
         'cn-red': {
-          surface: 'var(--cn-red-surface-border)'
+          surface: 'var(--cn-set-red-surface-border)'
         },
         'cn-yellow': {
-          surface: 'var(--cn-yellow-surface-border)'
+          surface: 'var(--cn-set-yellow-surface-border)'
         },
         'cn-blue': {
-          surface: 'var(--cn-blue-surface-border)'
+          surface: 'var(--cn-set-blue-surface-border)'
         },
         'cn-purple': {
-          surface: 'var(--cn-purple-surface-border)'
+          surface: 'var(--cn-set-purple-surface-border)'
         },
         'cn-brown': {
-          surface: 'var(--cn-brown-surface-border)'
+          surface: 'var(--cn-set-brown-surface-border)'
         },
         'cn-cyan': {
-          surface: 'var(--cn-cyan-surface-border)'
+          surface: 'var(--cn-set-cyan-surface-border)'
         },
         'cn-indigo': {
-          surface: 'var(--cn-indigo-surface-border)'
+          surface: 'var(--cn-set-indigo-surface-border)'
         },
         'cn-lime': {
-          surface: 'var(--cn-lime-surface-border)'
+          surface: 'var(--cn-set-lime-surface-border)'
         },
         'cn-mint': {
-          surface: 'var(--cn-mint-surface-border)'
+          surface: 'var(--cn-set-mint-surface-border)'
         },
         'cn-orange': {
-          surface: 'var(--cn-orange-surface-border)'
+          surface: 'var(--cn-set-orange-surface-border)'
         },
         'cn-pink': {
-          surface: 'var(--cn-pink-surface-border)'
+          surface: 'var(--cn-set-pink-surface-border)'
         },
         'cn-violet': {
-          surface: 'var(--cn-violet-surface-border)'
+          surface: 'var(--cn-set-violet-surface-border)'
         }
       },
       outlineOffset: {

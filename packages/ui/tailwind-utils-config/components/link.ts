@@ -27,7 +27,8 @@ export default {
     '&:where([data-disabled="false"])': {
       '&:where(.cn-link-default)': {
         '&:hover, &:where([data-hovered="true"])': {
-          color: 'var(--cn-comp-link-text-hover)'
+          // Adding important to override Blueprint reset CSS defaults
+          color: 'var(--cn-comp-link-text-hover) !important'
         }
       },
 

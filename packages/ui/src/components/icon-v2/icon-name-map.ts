@@ -63,7 +63,6 @@ import BinFull from './icons/bin-full.svg'
 import BinHalf from './icons/bin-half.svg'
 import BinMinusIn from './icons/bin-minus-in.svg'
 import BinPlusIn from './icons/bin-plus-in.svg'
-import Bin from './icons/bin.svg'
 import BoldSquere from './icons/bold-squere.svg'
 import Bold from './icons/bold.svg'
 import BookmarkSolid from './icons/bookmark-solid.svg'
@@ -182,6 +181,7 @@ import EngineeringInsights from './icons/engineering-insights.svg'
 import Enlarge from './icons/enlarge.svg'
 import Environments from './icons/environments.svg'
 import Erase from './icons/erase.svg'
+import ErrorTracking from './icons/error-tracking.svg'
 import Executions from './icons/executions.svg'
 import ExpandCode from './icons/expand-code.svg'
 import ExpandSidebar from './icons/expand-sidebar.svg'
@@ -223,10 +223,7 @@ import GitPullRequestDraft from './icons/git-pull-request-draft.svg'
 import GitPullRequest from './icons/git-pull-request.svg'
 import GitRebase from './icons/git-rebase.svg'
 import GitSquashMerge from './icons/git-squash-merge.svg'
-import Git from './icons/git.svg'
 import GithubAction from './icons/github-action.svg'
-import GithubCircleSolid from './icons/github-circle-solid.svg'
-import GitlabSolid from './icons/gitlab-solid.svg'
 import Globe from './icons/globe.svg'
 import GoogleDocs from './icons/google-docs.svg'
 import GoogleDriveCheck from './icons/google-drive-check.svg'
@@ -494,7 +491,6 @@ import ViewColumns3 from './icons/view-columns-3.svg'
 import ViewGrid from './icons/view-grid.svg'
 import ViewStructureDown from './icons/view-structure-down.svg'
 import ViewStructureUp from './icons/view-structure-up.svg'
-import VueJs from './icons/vue-js.svg'
 import WarningCircleSolid from './icons/warning-circle-solid.svg'
 import WarningCircle from './icons/warning-circle.svg'
 import WarningTriangleSolid from './icons/warning-triangle-solid.svg'
@@ -572,7 +568,6 @@ export const IconNameMapV2 = {
   'bin-half': BinHalf,
   'bin-minus-in': BinMinusIn,
   'bin-plus-in': BinPlusIn,
-  bin: Bin,
   'bold-squere': BoldSquere,
   bold: Bold,
   'bookmark-solid': BookmarkSolid,
@@ -691,6 +686,7 @@ export const IconNameMapV2 = {
   enlarge: Enlarge,
   environments: Environments,
   erase: Erase,
+  'error-tracking': ErrorTracking,
   executions: Executions,
   'expand-code': ExpandCode,
   'expand-sidebar': ExpandSidebar,
@@ -732,10 +728,7 @@ export const IconNameMapV2 = {
   'git-pull-request': GitPullRequest,
   'git-rebase': GitRebase,
   'git-squash-merge': GitSquashMerge,
-  git: Git,
   'github-action': GithubAction,
-  'github-circle-solid': GithubCircleSolid,
-  'gitlab-solid': GitlabSolid,
   globe: Globe,
   'google-docs': GoogleDocs,
   'google-drive-check': GoogleDriveCheck,
@@ -1003,7 +996,6 @@ export const IconNameMapV2 = {
   'view-grid': ViewGrid,
   'view-structure-down': ViewStructureDown,
   'view-structure-up': ViewStructureUp,
-  'vue-js': VueJs,
   'warning-circle-solid': WarningCircleSolid,
   'warning-circle': WarningCircle,
   'warning-triangle-solid': WarningTriangleSolid,

@@ -106,7 +106,7 @@ export const Summary = ({
     <>
       {!hideHeader && <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />}
 
-      <Table.Root>
+      <Table.Root tableClassName="table-fixed">
         {!hideHeader && (
           <Table.Header>
             <Table.Row>

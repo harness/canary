@@ -29,7 +29,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.150}",
+      "$value": "{chrome.200}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {

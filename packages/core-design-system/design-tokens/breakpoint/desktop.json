@@ -136,7 +136,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
           "letterSpacing": "{tracking.tight}"
@@ -147,7 +147,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
           "letterSpacing": "{tracking.tight}"

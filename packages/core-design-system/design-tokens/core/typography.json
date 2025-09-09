@@ -52,11 +52,11 @@
         },
         "500": {
           "$type": "fontWeights",
-          "$value": "Medium"
+          "$value": "450"
         },
         "600": {
           "$type": "fontWeights",
-          "$value": "SemiBold"
+          "$value": "550"
         },
         "700": {
           "$type": "fontWeights",

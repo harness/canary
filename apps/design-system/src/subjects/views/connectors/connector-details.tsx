@@ -51,6 +51,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
 
   const connectorDetails = {
     name: mockConnectorDetails.connector.name,
+    isFavorite: mockConnectorDetails.isFavorite,
     identifier: mockConnectorDetails.connector.identifier,
     type: mockConnectorDetails.connector.type,
     status: mockConnectorDetails.status.status,
@@ -101,6 +102,7 @@ const ConnectorsDetailsPageWrapper = (): JSX.Element => {
         onDelete={noop}
         onEdit={noop}
         toConnectorsList={() => '/connectors'}
+        onFavoriteToggle={noop}
         activeTab={activeTab}
         handleTabChange={handleTabChange}
       >

@@ -61,11 +61,9 @@ export default {
 
       '&-with-link': {
         'a, button': {
-          '@apply z-10': ''
-        },
-
-        button: {
-          '@apply relative': ''
+          '&:where(:not(.cn-stacked-list-item-link))': {
+            '@apply z-10 relative': ''
+          }
         }
       }
     },

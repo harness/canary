@@ -32,8 +32,7 @@ export const CommitTitleWithPRLink = (props: CommitTitleWithPRLinkProps) => {
           }
 
           return (
-            // TODO : Remove the relative className once we have a better way to handle this
-            <Text {...textProps} key={piece} className="relative">
+            <Text {...textProps} key={piece}>
               &nbsp;(
               <Link
                 title={title}

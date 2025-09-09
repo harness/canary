@@ -84,6 +84,10 @@ export default {
       }
     },
 
+    '&:where(.cn-tag-hoverable)': {
+      '@apply relative z-[1]': ''
+    },
+
     '&:where(.cn-tag-sm)': {
       height: `var(--cn-tag-size-sm)`,
       '@apply font-caption-single-line-normal': '',

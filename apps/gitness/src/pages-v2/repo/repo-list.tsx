@@ -33,6 +33,8 @@ export default function ReposListPage() {
     repositories,
     page,
     setPage,
+    totalItems,
+    pageSize,
     importRepoIdentifier,
     setImportRepoIdentifier,
     importToastId,
@@ -137,7 +139,7 @@ export default function ReposListPage() {
         })
       }
       const updated = repositories?.map(repo => (repo.id === repoId ? { ...repo, favorite: isFavorite } : repo)) ?? []
-      setRepositories(updated, updated.length, PAGE_SIZE)
+      setRepositories(updated, totalItems, pageSize)
     } catch {
       // TODO: Add error handling
     }

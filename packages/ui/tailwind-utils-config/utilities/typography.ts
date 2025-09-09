@@ -21,8 +21,8 @@ export default {
     '&-body-strong': {
       font: 'var(--cn-body-strong)'
     },
-    '&-body-soft': {
-      font: 'var(--cn-body-soft)'
+    '&-body-light': {
+      font: 'var(--cn-body-light)'
     },
     '&-body-code': {
       font: 'var(--cn-body-code)'
@@ -30,11 +30,8 @@ export default {
     '&-caption-normal': {
       font: 'var(--cn-caption-normal)'
     },
-    '&-caption-soft': {
-      font: 'var(--cn-caption-soft)'
-    },
-    '&-caption-strong': {
-      font: 'var(--cn-caption-strong)'
+    '&-caption-light': {
+      font: 'var(--cn-caption-light)'
     },
     '&-link-default': {
       font: 'var(--cn-comp-link-default)'
@@ -48,14 +45,14 @@ export default {
     '&-body-single-line-normal': {
       font: 'var(--cn-body-single-line-normal)'
     },
-    '&-body-single-line-soft': {
-      font: 'var(--cn-body-single-line-soft)'
+    '&-body-single-line-light': {
+      font: 'var(--cn-body-single-line-light)'
     },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)'
     },
-    '&-caption-single-line-soft': {
-      font: 'var(--cn-caption-single-line-soft)'
+    '&-caption-single-line-light': {
+      font: 'var(--cn-caption-single-line-light)'
     },
     '&-family-default': {
       font: 'var(--cn-font-family-default)'

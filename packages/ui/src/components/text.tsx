@@ -47,10 +47,10 @@ export const typographyVariantConfig = {
   'body-single-line-strong': 'font-body-single-line-strong',
   'body-code': 'font-body-code',
   'caption-normal': 'font-caption-normal',
-  'caption-soft': 'font-caption-soft',
+  'caption-light': 'font-caption-light',
   'caption-strong': 'font-caption-strong',
   'caption-single-line-normal': 'font-caption-single-line-normal',
-  'caption-single-line-soft': 'font-caption-single-line-soft'
+  'caption-single-line-light': 'font-caption-single-line-light'
 }
 
 export const textVariants = cva('', {
